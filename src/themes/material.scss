@@ -4,6 +4,27 @@
   -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
 
+	/**
+	 * Shared Styles
+	 */
+	.empty-row{
+		 height:50px;
+		 text-align: left;
+		 padding: .5rem 1.2rem;
+		 vertical-align: top;
+		 border-top: 0;
+	}
+
+	.loading-row{
+		 text-align: left;
+		 padding: .5rem 1.2rem;
+		 vertical-align: top;
+		 border-top: 0;
+	}
+
+	/**
+	 * Header Styles
+	 */
 	.datatable-header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 
@@ -20,6 +41,9 @@
     }
   }
 
+	/**
+	 * Body Styles
+	 */
 	.datatable-body {
 	  .datatable-body-row {
 	    .datatable-body-cell{
@@ -42,8 +66,65 @@
 	  }
 	}
 
+	/**
+	 * Footer Styles
+	 */
 	.datatable-footer {
-    border-top: 1px solid rgba(0, 0, 0, 0.12);
-    font-size:16px;
+		border-top: 1px solid rgba(0, 0, 0, 0.12);
+		font-size:16px;
+
+		.page-count{
+			line-height: 50px;
+			height:50px;
+			padding: 0 1.2rem;
+		}
+
+		.datatable-pager{
+			margin: 0 10px;
+	    line-height: 50px;
+
+			li {
+	    	vertical-align: middle;
+			}
+
+			a {
+				height: 24px;
+				min-width: 24px;
+				line-height: 26px;
+				padding: 0 6px;
+				border-radius: 3px;
+				margin: 6px 3px;
+				text-align: center;
+				vertical-align: top;
+				color: rgba(0,0,0,.54);
+				text-decoration: none;
+		    vertical-align: bottom;
+
+				&:hover{
+					color: rgba(0,0,0,.75);
+					background-color: rgba(158,158,158,0.2);
+				}
+			}
+
+			.icon-left,
+			.icon-skip,
+			.icon-right,
+			.icon-prev{
+				font-size:20px;
+				line-height: 20px;
+				padding:0 3px;
+			}
+
+			.disabled a{
+				cursor: not-allowed;
+				color:rgba(0, 0, 0, 0.26) !important;
+				background-color: transparent !important;
+			}
+
+			.active a{
+				background-color: rgba(158,158,158,0.2);
+				font-weight: bold;
+			}
+		}
 	}
 }

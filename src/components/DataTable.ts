@@ -30,7 +30,9 @@ import { DataTableFooter } from './footer/Footer';
         [state]="state">
       </datatable-body>
       <datatable-footer
-        [state]="state">
+        *ngIf="state.options.footerHeight"
+        [style.height]="state.options.footerHeight"
+        [paging]="state.options.paging">
       </datatable-footer>
     </div>
   `,

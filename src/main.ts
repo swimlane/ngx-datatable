@@ -24,6 +24,7 @@ class AppComponent {
 	options = {
     columnMode: 'force',
     headerHeight: 50,
+    footerHeight: 50,
     columns: [
       { name: "Name", width: 300 },
       { name: "Gender" },

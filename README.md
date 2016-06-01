@@ -2,7 +2,7 @@
 
 `angular2-data-table` is a AngularJS directive for presenting large and complex data.  It has all the features you would expect from any other table but in a light package with _no external depedencies_. The table was designed to be extremely flexible and light; it doesn't make any assumptions about your data or how you: filter, sort or page it.
 
-It was engineered from its conception to handle thousands of rows without sacrificing performance.  It was built for modern browsers using _TypeScript, CSS3 and HTML5_ and >= 2.0.0-rc1 Angular.
+It was engineered from its conception to handle thousands of rows without sacrificing performance.  It was built for modern browsers using _TypeScript, CSS3 and HTML5_ and Angular `>=2.0.0-rc1`. This is the sister project of the [angular-data-table](https://github.com/swimlane/angular-data-table) that is designed for Angular 1.x.
 
 ## Features
 - Handle large data sets ( Virtual DOM )
@@ -27,6 +27,8 @@ It was engineered from its conception to handle thousands of rows without sacrif
 - Row Grouping
 
 ## Tasks
+This project uses [npm tasks](http://blog.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/) for builds.
+
 ```
   "check-updates": "npm-check --skip-unused",
   "clean": "rimraf dist",
@@ -39,7 +41,7 @@ It was engineered from its conception to handle thousands of rows without sacrif
   "watch": "npm run clean && concurrently \"npm run watch:ts\" \"npm run watch:sass\"",
   "watch:ts": "tsc --watch",
   "watch:sass": "npm run build:sass && node-sass -o dist/ -w src/",
-  "start": "concurrently \"npm run build:bundle\"  \"npm run watch\" \"npm run start:server\"",
+  "start": "concurrently \"npm run build:bundle\" \"npm run watch\" \"npm run start:server\"",
   "start:server": "lite-server"
 ```
 
