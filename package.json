@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "preinstall": "npm install concurrently -g",
+    "postinstall": "jspm install --log warn",
+    "check-updates": "npm-check --skip-unused",
     "clean": "rm -rf dist && mkdir dist",
     "build": "npm run clean && npm run build:ts && npm run build:sass",
     "build:ts": "tsc",
