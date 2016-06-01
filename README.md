@@ -28,17 +28,19 @@ It was engineered from its conception to handle thousands of rows without sacrif
 
 ## Tasks
 ```
-  "clean": "rm -rf dist && mkdir dist",
+  "check-updates": "npm-check --skip-unused",
+  "clean": "rimraf dist",
   "build": "npm run clean && npm run build:ts && npm run build:sass",
   "build:ts": "tsc",
   "build:sass": "node-sass -o dist/ src/",
   "build:css": "postcss --use autoprefixer dist/*.css -d dist/",
   "build:bundle": "jspm bundle @angular/platform-browser-dynamic dist/bundle.js",
+  "build:release": "npm run build && jspm bundle dist/components/DataTable.js release/index.js",
   "watch": "npm run clean && concurrently \"npm run watch:ts\" \"npm run watch:sass\"",
   "watch:ts": "tsc --watch",
   "watch:sass": "npm run build:sass && node-sass -o dist/ -w src/",
   "start": "concurrently \"npm run build:bundle\"  \"npm run watch\" \"npm run start:server\"",
-  "start:server": "lite-server -c bs-config.json"
+  "start:server": "lite-server"
 ```
 
 ## Usage
