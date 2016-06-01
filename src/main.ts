@@ -2,7 +2,7 @@ import "reflect-metadata";
 import { Component } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
 
-import { DataTable } from './DataTable';
+import { DataTable } from './components/DataTable';
 
 @Component({
   selector: 'app',
@@ -19,11 +19,30 @@ import { DataTable } from './DataTable';
 })
 class AppComponent {
 
-	options = { };
+	options = {
+    headerHeight: 50,
+    columns: [
+      { name: "Name", width: 300 },
+      { name: "Gender" },
+      { name: "Company" }
+    ]
+  };
+
   selected = [];
-	rows = [
-		{ name: 'Henery', company: 'Foobar', age: 22 }
-	];
+
+	rows = [];
+
+  constructor() {
+    var req = new XMLHttpRequest();
+    req.open('GET', `demos/company.json`);
+
+    req.onload = () => {
+      let json = JSON.parse(req.response);
+      this.rows.push(...json);
+    };
+
+    req.send();
+  }
 
 }
 

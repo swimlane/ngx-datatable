@@ -1,5 +1,7 @@
 import { id } from './utils/id';
 import { camelCase } from './utils/camelCase';
+import { columnsByPin, columnGroupWidths } from './utils/column';
+
 import { tableDefaults } from './constants/defaults';
 import { columnDefaults } from './constants/columnDefaults';
 
@@ -17,6 +19,14 @@ export class State {
     bodyHeight: 300
   };
 
+  get columnsByPin() {
+    return columnsByPin(this.options.columns);
+  }
+
+  get columnGroupWidths() {
+    return columnGroupWidths(this.columnsByPin, this.columns);
+  }
+
   constructor(options = {}, rows = []) {
     this.transposeDefaults(options);
   	Object.assign(this, { options, rows });
@@ -28,9 +38,11 @@ export class State {
         options[attr] = tableDefaults[attr];
       }
     }
+
+    this.transposeColumnDefaults(options.columns);
   }
 
-  transposeColumnDefaults({ columns }) {
+  transposeColumnDefaults(columns) {
     for(let column of columns) {
       column.$id = id();
 

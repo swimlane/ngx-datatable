@@ -1,8 +1,12 @@
-datatable {
+.datatable {
   display: inline-block;
   overflow:hidden;
   justify-content: center;
   position: relative;
+
+  [hidden] {
+    display: none !important;
+  }
 
   *, *:before, *:after {
     -moz-box-sizing: border-box;
@@ -13,7 +17,8 @@ datatable {
   /**
    * Generic Styles
    */
-  datatable-row {
+  .datatable-body-row,
+  .datatable-header-inner {
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -29,9 +34,11 @@ datatable {
     flex-flow: row;
   }
 
-  datatable-cell {
+  .datatable-body-cell,
+  .datatable-header-cell {
     vertical-align: top;
     overflow: hidden;
+    display: inline-block;
 
     white-space: nowrap;
     line-height: 1.625;
@@ -45,22 +52,46 @@ datatable {
     user-select: none;
   }
 
+  .datatable-row-left,
+  .datatable-row-right{
+    z-index: 9;
+  }
+
+  .datatable-row-left,
+  .datatable-row-center,
+  .datatable-row-right{
+    position:relative;
+  }
+
   /**
    * Header Styles
    */
-  datatable-header {
+  .datatable-header {
     overflow:hidden;
+    display: inline-block;
+
+    .datatable-header-inner{
+      white-space: nowrap;
+      align-items: stretch;
+      -webkit-align-items: stretch;
+    }
+
+    .datatable-header-cell{
+      position:relative;
+      white-space: nowrap;
+      display:inline-block;
+    }
   }
 
   /**
    * Body Styles
    */
-  datatable-body {
+  .datatable-body {
     overflow:auto;
     position:relative;
     z-index:10;
 
-    datatable-row {
+    .datatable-body-row {
       backface-visibility: hidden;
       outline:none;
       white-space: nowrap;
@@ -78,7 +109,7 @@ datatable {
   /**
    * Footer Styles
    */
-  datatable-footer {
+  .datatable-footer {
 
   }
 }

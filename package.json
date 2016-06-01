@@ -14,7 +14,7 @@
     "watch": "npm run clean && concurrently \"npm run watch:ts\" \"npm run watch:sass\"",
     "watch:ts": "tsc --watch",
     "watch:sass": "npm run build:sass && node-sass -o dist/ -w src/",
-    "start": "concurrently \"npm run watch\" \"browser-sync start --server --files 'dist/**/*.css, index.html, dist/**/*.js'\""
+    "start": "concurrently \"npm run build:bundle\"  \"npm run watch\" \"browser-sync start --server --files 'dist/**/*.css, index.html, dist/**/*.js'\""
   },
   "repository": {
     "type": "git",

@@ -1,13 +1,13 @@
-datatable.material {
+.datatable.material {
 	background:#FFF;
   -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
   -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
 
-	datatable-header{
+	.datatable-header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 
-    .dt-header-cell{
+    .datatable-header-cell{
       text-align: left;
       padding: .5rem 1.2rem;
       font-weight: 400;
@@ -15,14 +15,14 @@ datatable.material {
       vertical-align: bottom;
     }
 
-    .dt-resize-handle{
+    .datatable-resize-handle{
       border-right:solid 1px #eee;
     }
   }
 
-	datatable-body {
-	  datatable-row {
-	    datatable-cell{
+	.datatable-body {
+	  .datatable-body-row {
+	    .datatable-body-cell{
 	      text-align: left;
 	      padding: .5rem 1.2rem;
 	      vertical-align: top;
@@ -42,7 +42,7 @@ datatable.material {
 	  }
 	}
 
-	datatable-footer {
+	.datatable-footer {
     border-top: 1px solid rgba(0, 0, 0, 0.12);
     font-size:16px;
 	}

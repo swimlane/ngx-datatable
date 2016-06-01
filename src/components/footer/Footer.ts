@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'datatable-footer',
@@ -9,5 +9,8 @@ import { Component } from '@angular/core';
   directives: []
 })
 export class DataTableFooter {
+
+  @HostBinding('class.datatable-footer')
+  private isFooter = true;
 
 }

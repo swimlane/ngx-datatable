@@ -8,8 +8,8 @@ import {
   HostBinding
 } from '@angular/core';
 
-import { State } from './State';
-import { scrollbarWidth } from './utils/scrollbarWidth';
+import { State } from '../State';
+import { scrollbarWidth } from '../utils/scrollbarWidth';
 
 import { DataTableHeader } from './header/Header';
 import { DataTableBody } from './body/Body';
@@ -49,7 +49,8 @@ export class DataTable {
 
   @Output() onSelectionChange = new EventEmitter();
 
-  @HostBinding('class.fixed')
+  @HostBinding('class.datatable')
+  private isDatatable = true;
 
   state: State;
   element: ElementRef;
@@ -61,11 +62,15 @@ export class DataTable {
   ngOnInit() {
     let { options, rows, selected } = this;
     this.state = new State(options, rows, selected);
+  }
+
+  ngAfterContentInit() {
+    setTimeout(() => this.resize(), 10);
     this.state.scrollbarWidth = scrollbarWidth();
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize() {
+  @HostListener('window:resize')
+  resize() {
     let { height, width } = this.element.getBoundingClientRect();
 
     this.state.internal.innerWidth = Math.floor(width);
