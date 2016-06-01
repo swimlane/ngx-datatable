@@ -19,6 +19,8 @@ import { DataTable } from './components/DataTable';
 })
 class AppComponent {
 
+  selected = [];
+	rows = [];
 	options = {
     headerHeight: 50,
     columns: [
@@ -27,10 +29,6 @@ class AppComponent {
       { name: "Company" }
     ]
   };
-
-  selected = [];
-
-	rows = [];
 
   constructor() {
     var req = new XMLHttpRequest();

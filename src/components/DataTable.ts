@@ -43,17 +43,17 @@ import { DataTableFooter } from './footer/Footer';
 })
 export class DataTable {
 
-	@Input() options: {};
-  @Input() rows: [];
-	@Input() selected: [];
+	@Input() options: Object;
+  @Input() rows: Array<Object>;
+	@Input() selected: Array<Object>;
 
   @Output() onSelectionChange = new EventEmitter();
 
   @HostBinding('class.datatable')
   private isDatatable = true;
 
-  state: State;
-  element: ElementRef;
+  public state: State;
+  private element: ElementRef;
 
   constructor(element: ElementRef) {
     this.element = element.nativeElement;

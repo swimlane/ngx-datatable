@@ -7,9 +7,9 @@ import { columnDefaults } from './constants/columnDefaults';
 
 export class State {
 
-  options: any;
-  rows: [];
-  selected: [];
+  options: Object;
+  rows: Array<Object>;
+  selected: Array<Object>;
   scrollbarWidth: number;
 
   internal = {
@@ -24,10 +24,13 @@ export class State {
   }
 
   get columnGroupWidths() {
-    return columnGroupWidths(this.columnsByPin, this.columns);
+    return columnGroupWidths(this.columnsByPin, this.options.columns);
   }
 
-  constructor(options = {}, rows = []) {
+  constructor(
+    options: Object = {},
+    rows: Array<Object> = [],
+    selected: Array<Object> = []) {
     this.transposeDefaults(options);
   	Object.assign(this, { options, rows });
   }

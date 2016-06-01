@@ -32,7 +32,7 @@ import { Component, Input, HostBinding } from '@angular/core';
 })
 export class DataTableHeaderCell {
 
-  @Input() column: {};
+  @Input() column: Object;
 
   @HostBinding('class.datatable-header-cell')
   private isHeader = true;

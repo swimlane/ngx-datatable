@@ -5,7 +5,7 @@ import { DataTableHeaderCell } from './HeaderCell';
   selector: 'datatable-header',
   template: `
   	<div
-      [style.width]="state.columnGroupWidths.all"
+      [style.width]="state.columnGroupWidths.total"
       class="datatable-header-inner">
 
       <div class="datatable-row-left">
@@ -39,7 +39,7 @@ import { DataTableHeaderCell } from './HeaderCell';
 })
 export class DataTableHeader {
 
-  @Input() state;
+  @Input() state: Object;
 
   @HostBinding('class.datatable-header')
   private isHeader = true;

@@ -34,8 +34,8 @@ import { DataTableBodyCell } from './BodyCell';
 })
 export class DataTableBodyRow {
 
-  @Input() state;
-  @Input() row;
+  @Input() state: Object;
+  @Input() row: Object;
 
   @HostBinding('class.datatable-body-row')
   private isRow = true;

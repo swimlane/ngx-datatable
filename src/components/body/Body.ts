@@ -10,8 +10,10 @@ import { DataTableScroll } from './Scroll';
       <datatable-progress
         [hidden]="showProgress">
       </datatable-progress>
-
-      <datatable-scroll>
+      <datatable-scroll
+        [rowHeight]="state.options.rowHeight"
+        [count]="state.rows.length"
+        [scrollWidth]="state.columnGroupWidths.total">
         <datatable-body-row
           *ngFor="let row of state.rows"
           [row]="row"
@@ -24,11 +26,15 @@ import { DataTableScroll } from './Scroll';
     ProgressBar,
     DataTableBodyRow,
     DataTableScroll
-  ]
+  ],
+  host: {
+    '[style.width]':'state.internal.innerWidth',
+    '[style.height]':'state.internal.bodyHeight'
+  }
 })
 export class DataTableBody {
 
-  @Input() state;
+  @Input() state: Object;
 
   @HostBinding('class.datatable-body')
   private isBody = true;

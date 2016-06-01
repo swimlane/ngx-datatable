@@ -90,6 +90,12 @@
     overflow:auto;
     position:relative;
     z-index:10;
+    display:inline-block;
+
+    .datatable-scroll{
+      white-space: nowrap;
+      display: inline-block;
+    }
 
     .datatable-body-row {
       backface-visibility: hidden;

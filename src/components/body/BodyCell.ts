@@ -18,8 +18,8 @@ import { Component, Input, HostBinding } from '@angular/core';
 })
 export class DataTableBodyCell {
 
-  @Input() column: {};
-  @Input() row: {};
+  @Input() column: Object;
+  @Input() row: Object;
 
   @HostBinding('class.datatable-body-cell')
   private isCell = true;
