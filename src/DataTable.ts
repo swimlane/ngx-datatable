@@ -1,10 +1,11 @@
-import { 
-  Component, 
-  Input, 
-  Output, 
-  ElementRef, 
+import {
+  Component,
+  Input,
+  Output,
+  ElementRef,
   EventEmitter,
-  HostListener
+  HostListener,
+  HostBinding
 } from '@angular/core';
 
 import { State } from './State';
@@ -33,7 +34,12 @@ import { DataTableFooter } from './footer/Footer';
     DataTableHeader,
     DataTableBody,
     DataTableFooter
-  ]
+  ],
+  host: {
+    '[class.fixed]':'options.scrollbarV',
+    '[class.selectable]':'options.selectable',
+    '[class.checkboxable]':'options.checkboxable'
+  }
 })
 export class DataTable {
 
@@ -42,6 +48,8 @@ export class DataTable {
 	@Input() selected: [];
 
   @Output() onSelectionChange = new EventEmitter();
+
+  @HostBinding('class.fixed')
 
   state: State;
   element: ElementRef;
@@ -77,5 +85,5 @@ export class DataTable {
 
     // this.adjustColumns();
   }
-	
+
 }
