@@ -10,6 +10,8 @@ import {
 
 import { State } from '../State';
 import { scrollbarWidth } from '../utils/scrollbarWidth';
+import { VisibilityDirective } from '../utils/visibility';
+import { forceFillColumnWidths, adjustColumnWidths } from '../utils/math';
 
 import { DataTableHeader } from './header/Header';
 import { DataTableBody } from './body/Body';
@@ -18,7 +20,9 @@ import { DataTableFooter } from './footer/Footer';
 @Component({
   selector: 'datatable',
   template: `
-  	<div>
+  	<div
+      visibility-observer
+      (onVisibilityChange)="resize()">
       <datatable-header
         [state]="state">
       </datatable-header>
@@ -33,7 +37,8 @@ import { DataTableFooter } from './footer/Footer';
   directives: [
     DataTableHeader,
     DataTableBody,
-    DataTableFooter
+    DataTableFooter,
+    VisibilityDirective
   ],
   host: {
     '[class.fixed]':'options.scrollbarV',
@@ -65,14 +70,13 @@ export class DataTable {
   }
 
   ngAfterContentInit() {
-    setTimeout(() => this.resize(), 10);
+    this.resize();
     this.state.scrollbarWidth = scrollbarWidth();
   }
 
   @HostListener('window:resize')
   resize() {
     let { height, width } = this.element.getBoundingClientRect();
-
     this.state.internal.innerWidth = Math.floor(width);
 
     if (this.options.scrollbarV) {
@@ -85,10 +89,23 @@ export class DataTable {
       }
 
       this.state.internal.bodyHeight = height;
-      // this.calculatePageSize();
+      this.state.options.paging.size = this.state.calcPageSize();
     }
 
-    // this.adjustColumns();
+    this.adjustColumns();
+  }
+
+  /**
+   * Adjusts the column widths to handle greed/etc.
+   * @param  {int} forceIdx
+   */
+  adjustColumns(forceIdx) {
+    const width = this.state.internal.innerWidth - this.state.internal.scrollBarWidth;
+    if(this.options.columnMode === 'force'){
+      forceFillColumnWidths(this.options.columns, width, forceIdx);
+    } else if(this.options.columnMode === 'flex') {
+      adjustColumnWidths(this.options.columns, width);
+    }
   }
 
 }

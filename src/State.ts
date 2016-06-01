@@ -15,6 +15,7 @@ export class State {
   internal = {
     offsetX: 0,
     offsetY: 0,
+    scrollBarWidth: 0,
     innerWidth: 0,
     bodyHeight: 300
   };
@@ -59,6 +60,10 @@ export class State {
         column.prop = camelCase(column.name);
       }
     }
+  }
+
+  calcPageSize() {
+    return Math.ceil(this.internal.bodyHeight / this.options.rowHeight) + 1;
   }
 
 }

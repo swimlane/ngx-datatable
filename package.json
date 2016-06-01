@@ -14,7 +14,8 @@
     "watch": "npm run clean && concurrently \"npm run watch:ts\" \"npm run watch:sass\"",
     "watch:ts": "tsc --watch",
     "watch:sass": "npm run build:sass && node-sass -o dist/ -w src/",
-    "start": "concurrently \"npm run build:bundle\"  \"npm run watch\" \"browser-sync start --server --files 'dist/**/*.css, index.html, dist/**/*.js'\""
+    "start": "concurrently \"npm run build:bundle\"  \"npm run watch\" \"npm run start:server\"",
+    "start:server": "lite-server -c bs-config.json"
   },
   "repository": {
     "type": "git",
@@ -35,6 +36,7 @@
     "browser-sync": "^2.12.10",
     "concurrent": "^0.3.2",
     "jspm": "^0.17.0-beta.17",
+    "lite-server": "^2.2.0",
     "node-sass": "^3.7.0",
     "typescript": "^1.9.0-dev.20160531-1.0"
   },

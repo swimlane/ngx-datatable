@@ -16,6 +16,8 @@
     "noImplicitReturns": false,
     "noImplicitUseStrict": false,
     "noFallthroughCasesInSwitch": false,
+    "allowSyntheticDefaultImports": true,
+    "suppressExcessPropertyErrors": true,
     "outDir": "dist",
     "baseUrl": "src",
     "paths": {

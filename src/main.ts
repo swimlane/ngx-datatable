@@ -22,6 +22,7 @@ class AppComponent {
   selected = [];
 	rows = [];
 	options = {
+    columnMode: 'force',
     headerHeight: 50,
     columns: [
       { name: "Name", width: 300 },
