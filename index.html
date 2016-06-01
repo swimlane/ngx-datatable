@@ -1,0 +1,46 @@
+<html>
+<head>
+  <title>Angular2 Datatable</title>
+
+  <style>
+    body{
+      font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
+      text-align: center;
+      font-style: normal;
+      font-weight: 300;
+      font-size: 1.4rem;
+      line-height: 2rem;
+      letter-spacing: 0.01rem;
+      color: #212121;
+      background-color: #f5f5f5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      margin:20px
+    }
+
+    datatable {
+    	text-align: left;
+    	width:700px;
+    	margin:0 auto;
+    	height:70vh;
+    }
+  </style>
+
+  <link rel="stylesheet" href="dist/datatable.css">
+  <link rel="stylesheet" href="dist/themes/material.css">
+  <link href="http://fontastic.s3.amazonaws.com/Jnf54BZCm7mSjGCxNRbfp3/icons.css" rel="stylesheet">
+</head>
+
+<body>
+  <app>Loading...</app>
+
+  <script src="jspm_packages/system.js"></script>
+  <script src="jspm.config.js"></script>
+  <script>
+    System.import('angular2-data-table')
+      .then(null, console.error.bind(console));
+  </script>
+</body>
+
+</html>

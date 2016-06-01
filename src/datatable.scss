@@ -1,0 +1,84 @@
+datatable {
+  display: inline-block;
+  overflow:hidden;
+  justify-content: center;
+  position: relative;
+
+  *, *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  /**
+   * Generic Styles
+   */
+  datatable-row {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    flex-direction: row;
+    -webkit-flex-flow: row;
+    -moz-flex-flow: row;
+    -ms-flex-flow: row;
+    -o-flex-flow: row;
+    flex-flow: row;
+    flex-flow: row;
+  }
+
+  datatable-cell {
+    vertical-align: top;
+    overflow: hidden;
+
+    white-space: nowrap;
+    line-height: 1.625;
+    text-overflow: ellipsis;
+
+    touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+  }
+
+  /**
+   * Header Styles
+   */
+  datatable-header {
+    overflow:hidden;
+  }
+
+  /**
+   * Body Styles
+   */
+  datatable-body {
+    overflow:auto;
+    position:relative;
+    z-index:10;
+
+    datatable-row {
+      backface-visibility: hidden;
+      outline:none;
+      white-space: nowrap;
+
+      > div {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+      }
+    }
+  }
+
+  /**
+   * Footer Styles
+   */
+  datatable-footer {
+
+  }
+}

@@ -1,0 +1,49 @@
+datatable.material {
+	background:#FFF;
+  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
+  -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
+
+	datatable-header{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+    .dt-header-cell{
+      text-align: left;
+      padding: .5rem 1.2rem;
+      font-weight: 400;
+      color: #757575;
+      vertical-align: bottom;
+    }
+
+    .dt-resize-handle{
+      border-right:solid 1px #eee;
+    }
+  }
+
+	datatable-body {
+	  datatable-row {
+	    datatable-cell{
+	      text-align: left;
+	      padding: .5rem 1.2rem;
+	      vertical-align: top;
+	      border-top: 0;
+
+	      -webkit-transition: width 0.3s ease;
+	      -o-transition: width 0.3s ease;
+	      transition: width 0.3s ease;
+	    }
+
+	    &:hover {
+	      background-color: #eee;
+	      transition-property: background;
+	      transition-duration: .3s;
+	      transition-timing-function: linear;
+	    }
+	  }
+	}
+
+	datatable-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    font-size:16px;
+	}
+}

@@ -1,0 +1,117 @@
+{
+  "name": "angular2-data-table",
+  "version": "1.0.0",
+  "description": "Angular2 Data Table",
+  "main": "index.js",
+  "scripts": {
+    "preinstall": "npm install concurrently -g",
+    "clean": "rm -rf dist && mkdir dist",
+    "build": "npm run clean && npm run build:ts && npm run build:sass",
+    "build:ts": "tsc",
+    "build:sass": "node-sass -o dist/ src/",
+    "build:css": "postcss --use autoprefixer dist/*.css -d dist/",
+    "watch": "npm run clean && concurrently \"npm run watch:ts\" \"npm run watch:sass\"",
+    "watch:ts": "tsc --watch",
+    "watch:sass": "npm run build:sass && node-sass -o dist/ -w src/",
+    "start": "concurrently \"npm run watch\" \"browser-sync start --server --files 'dist/**/*.css, index.html, dist/**/*.js'\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swimlane/angular2-data-table.git"
+  },
+  "keywords": [
+    "angularjs",
+    "angular",
+    "javascript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/swimlane/angular2-data-table/issues"
+  },
+  "homepage": "https://github.com/swimlane/angular2-data-table#readme",
+  "devDependencies": {
+    "browser-sync": "^2.12.10",
+    "concurrent": "^0.3.2",
+    "jspm": "^0.17.0-beta.17",
+    "node-sass": "^3.7.0",
+    "typescript": "^1.9.0-dev.20160531-1.0"
+  },
+  "jspm": {
+    "name": "angular2-data-table",
+    "main": "angular2-data-table.js",
+    "dependencies": {
+      "platform-browser-dynamic": "npm:@angular/platform-browser-dynamic@2.0.0-rc.1"
+    },
+    "devDependencies": {},
+    "peerDependencies": {
+      "@angular/common": "npm:@angular/common@2.0.0-rc.1",
+      "@angular/compiler": "npm:@angular/compiler@2.0.0-rc.1",
+      "@angular/core": "npm:@angular/core@2.0.0-rc.1",
+      "@angular/platform-browser": "npm:@angular/platform-browser@2.0.0-rc.1",
+      "@angular/platform-browser-dynamic": "npm:@angular/platform-browser-dynamic@2.0.0-rc.1",
+      "assert": "github:jspm/nodelibs-assert@^0.2.0-alpha",
+      "process": "github:jspm/nodelibs-process@^0.2.0-alpha",
+      "reflect-metadata": "npm:reflect-metadata@0.1.2",
+      "rxjs": "npm:rxjs@5.0.0-beta.6",
+      "zone.js": "npm:zone.js@^0.6.6"
+    },
+    "overrides": {
+      "npm:@angular/common@2.0.0-rc.1": {
+        "meta": {
+          "src/*.js": {
+            "deps": [
+              "reflect-metadata",
+              "zone.js"
+            ]
+          }
+        }
+      },
+      "npm:@angular/compiler@2.0.0-rc.1": {
+        "meta": {
+          "src/*.js": {
+            "deps": [
+              "reflect-metadata",
+              "zone.js"
+            ]
+          }
+        }
+      },
+      "npm:@angular/core@2.0.0-rc.1": {
+        "meta": {
+          "src/*.js": {
+            "deps": [
+              "reflect-metadata",
+              "zone.js"
+            ]
+          }
+        }
+      },
+      "npm:@angular/platform-browser-dynamic@2.0.0-rc.1": {
+        "meta": {
+          "src/*.js": {
+            "deps": [
+              "reflect-metadata",
+              "zone.js"
+            ]
+          }
+        }
+      },
+      "npm:@angular/platform-browser@2.0.0-rc.1": {
+        "meta": {
+          "src/*.js": {
+            "deps": [
+              "reflect-metadata",
+              "zone.js"
+            ]
+          }
+        }
+      },
+      "npm:reflect-metadata@0.1.2": {
+        "map": {
+          "crypto": "@empty"
+        }
+      }
+    }
+  }
+}
