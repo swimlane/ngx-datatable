@@ -23,8 +23,10 @@ class AppComponent {
 	rows = [];
 	options = {
     columnMode: 'force',
+    scrollbarV: false,
     headerHeight: 50,
     footerHeight: 50,
+    limit: 10,
     columns: [
       { name: "Name", width: 300 },
       { name: "Gender" },

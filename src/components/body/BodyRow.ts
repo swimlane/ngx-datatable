@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DataTableBodyCell } from './BodyCell';
 
 @Component({
@@ -12,7 +12,6 @@ import { DataTableBodyCell } from './BodyCell';
           [column]="column">
         </datatable-body-cell>
       </div>
-
       <div class="datatable-row-center">
         <datatable-body-cell
           *ngFor="let column of state.columnsByPin.center"
@@ -20,7 +19,6 @@ import { DataTableBodyCell } from './BodyCell';
           [column]="column">
         </datatable-body-cell>
       </div>
-
       <div class="datatable-row-right">
         <datatable-body-cell
           *ngFor="let column of state.columnsByPin.right"
@@ -30,14 +28,14 @@ import { DataTableBodyCell } from './BodyCell';
       </div>
     </div>
   `,
-  directives: [ DataTableBodyCell ]
+  directives: [ DataTableBodyCell ],
+  host: {
+    '[class.datatable-body-row]': 'true'
+  }
 })
 export class DataTableBodyRow {
 
   @Input() state: Object;
   @Input() row: Object;
-
-  @HostBinding('class.datatable-body-row')
-  private isRow = true;
 
 }

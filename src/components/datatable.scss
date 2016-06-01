@@ -14,6 +14,12 @@
     box-sizing: border-box;
   }
 
+  &.vertical-scroll {
+    .datatable-body {
+      overflow:auto;
+    }
+  }
+
   /**
    * Shared Styles
    */
@@ -87,7 +93,6 @@
    * Body Styles
    */
   .datatable-body {
-    overflow:auto;
     position:relative;
     z-index:10;
     display:inline-block;

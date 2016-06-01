@@ -1,31 +1,33 @@
-import { Component, Input, HostBinding } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DataTablePager } from './Pager';
 
 @Component({
   selector: 'datatable-footer',
   template: `
-    <div class="page-count">{{paging.count}} total</div>
+    <div class="page-count">{{count}} total</div>
     <datatable-pager
-      [page]="page"
-      [size]="paging.size"
-      [count]="paging.count"
+      [page]="offset + 1"
+      [size]="size"
+      [count]="count"
       (onPage)="onPaged(page)"
-      [hidden]="paging.count / paging.size">
+      [hidden]="!visible">
      </datatable-pager>
   `,
-  directives: [ DataTablePager ]
+  directives: [ DataTablePager ],
+  host: {
+    '[class.datatable-footer]': 'true'
+  }
 })
 export class DataTableFooter {
 
-  @Input() paging;
+  @Input() offset;
+  @Input() size;
+  @Input() count;
 
-  private page: number = 1;
-
-  @HostBinding('class.datatable-footer')
-  private isFooter = true;
-
-  onPaged(page) {
-
+  get visible() {
+    return (this.count / this.size) > 1;
   }
+
+  onPaged(page) {}
 
 }

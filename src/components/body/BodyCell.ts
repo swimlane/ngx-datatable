@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'datatable-body-cell',
@@ -13,16 +13,14 @@ import { Component, Input, HostBinding } from '@angular/core';
   directives: [],
   host: {
     '[style.width]':'column.width',
-    '[style.height]':'column.height'
+    '[style.height]':'column.height',
+    '[class.datatable-body-cell]': 'true'
   }
 })
 export class DataTableBodyCell {
 
   @Input() column: Object;
   @Input() row: Object;
-
-  @HostBinding('class.datatable-body-cell')
-  private isCell = true;
 
   get rowValue() {
     return this.row[this.column.prop];

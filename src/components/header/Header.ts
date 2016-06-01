@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DataTableHeaderCell } from './HeaderCell';
 
 @Component({
@@ -33,15 +33,13 @@ import { DataTableHeaderCell } from './HeaderCell';
   `,
   directives: [ DataTableHeaderCell ],
   host: {
-    '[style.width]':'state.internal.innerWidth',
+    '[class.datatable-header]': 'true',
+    '[style.width]':'state.innerWidth',
     '[style.height]':'state.options.headerHeight'
   }
 })
 export class DataTableHeader {
 
   @Input() state: Object;
-
-  @HostBinding('class.datatable-header')
-  private isHeader = true;
 
 }

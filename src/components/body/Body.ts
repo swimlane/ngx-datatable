@@ -6,21 +6,19 @@ import { DataTableScroll } from './Scroll';
 @Component({
   selector: 'datatable-body',
   template: `
-  	<div>
-      <datatable-progress
-        [hidden]="showProgress">
-      </datatable-progress>
-      <datatable-scroll
-        [rowHeight]="state.options.rowHeight"
-        [count]="state.rows.length"
-        [scrollWidth]="state.columnGroupWidths.total">
-        <datatable-body-row
-          *ngFor="let row of state.rows"
-          [row]="row"
-          [state]="state">
-        </datatable-body-row>
-      </datatable-scroll>
-    </div>
+    <datatable-progress
+      [hidden]="showProgress">
+    </datatable-progress>
+    <datatable-scroll
+      [rowHeight]="state.options.rowHeight"
+      [count]="state.rowCount"
+      [scrollWidth]="state.columnGroupWidths.total">
+      <datatable-body-row
+        *ngFor="let row of state.rows"
+        [row]="row"
+        [state]="state">
+      </datatable-body-row>
+    </datatable-scroll>
   `,
   directives: [
     ProgressBar,
@@ -28,17 +26,21 @@ import { DataTableScroll } from './Scroll';
     DataTableScroll
   ],
   host: {
-    '[style.width]':'state.internal.innerWidth',
-    '[style.height]':'state.internal.bodyHeight'
+    '[style.width]':'state.innerWidth',
+    '[style.height]':'bodyHeight',
+    '[class.datatable-body]': 'true'
   }
 })
 export class DataTableBody {
 
   @Input() state: Object;
 
-  @HostBinding('class.datatable-body')
-  private isBody = true;
-
   private showProgress = false;
+
+  get bodyHeight() {
+    if(this.state.options.scrollbarV)
+      return this.state.bodyHeight;
+    return 'auto';
+  }
 
 }

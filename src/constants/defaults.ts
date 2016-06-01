@@ -34,22 +34,20 @@ export const tableDefaults = {
   // pass falsey for no footer
   footerHeight: 0,
 
-  paging: {
-    // if external paging is turned on
-    externalPaging: false,
+  // if external paging is turned on
+  externalPaging: false,
 
-    // Page size
-    size: undefined,
+  // Page size
+  limit: undefined,
 
-    // Total count
-    count: 0,
+  // Total count
+  count: 0,
 
-    // Page offset
-    offset: 0,
+  // Page offset
+  offset: 0,
 
-    // Loading indicator
-    loadingIndicator: false
-  },
+  // Loading indicator
+  loadingIndicator: false,
 
   // if users can select itmes
   selectable: false,

@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'datatable-scroll',
@@ -7,7 +7,8 @@ import { Component, Input, HostBinding } from '@angular/core';
   `,
   host: {
     '[style.height]': 'count * rowHeight',
-    '[style.width]': 'scrollWidth'
+    '[style.width]': 'scrollWidth',
+    '[class.datatable-scroll]': 'true'
   }
 })
 export class DataTableScroll {
@@ -15,8 +16,5 @@ export class DataTableScroll {
   @Input() rowHeight: number;
   @Input() count: number;
   @Input() scrollWidth: number;
-
-  @HostBinding('class.datatable-scroll')
-  private isScroller = true;
 
 }

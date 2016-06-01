@@ -4,8 +4,7 @@ import {
   Output,
   ElementRef,
   EventEmitter,
-  HostListener,
-  HostBinding
+  HostListener
 } from '@angular/core';
 
 import { State } from '../State';
@@ -32,7 +31,9 @@ import { DataTableFooter } from './footer/Footer';
       <datatable-footer
         *ngIf="state.options.footerHeight"
         [style.height]="state.options.footerHeight"
-        [paging]="state.options.paging">
+        [offset]="state.options.offset"
+        [size]="state.pageSize"
+        [count]="state.pageCount">
       </datatable-footer>
     </div>
   `,
@@ -43,9 +44,10 @@ import { DataTableFooter } from './footer/Footer';
     VisibilityDirective
   ],
   host: {
-    '[class.fixed]':'options.scrollbarV',
-    '[class.selectable]':'options.selectable',
-    '[class.checkboxable]':'options.checkboxable'
+    '[class.datatable]': 'true',
+    '[class.vertical-scroll]': 'options.scrollbarV',
+    '[class.selectable]': 'options.selectable',
+    '[class.checkboxable]': 'options.checkboxable'
   }
 })
 export class DataTable {
@@ -55,9 +57,6 @@ export class DataTable {
 	@Input() selected: Array<Object>;
 
   @Output() onSelectionChange = new EventEmitter();
-
-  @HostBinding('class.datatable')
-  private isDatatable = true;
 
   public state: State;
   private element: ElementRef;
@@ -79,7 +78,7 @@ export class DataTable {
   @HostListener('window:resize')
   resize() {
     let { height, width } = this.element.getBoundingClientRect();
-    this.state.internal.innerWidth = Math.floor(width);
+    this.state.innerWidth = Math.floor(width);
 
     if (this.options.scrollbarV) {
       if (this.options.headerHeight) {
@@ -90,8 +89,7 @@ export class DataTable {
         height = height - this.options.footerHeight;
       }
 
-      this.state.internal.bodyHeight = height;
-      this.state.options.paging.size = this.state.calcPageSize();
+      this.state.bodyHeight = height;
     }
 
     this.adjustColumns();
@@ -102,7 +100,7 @@ export class DataTable {
    * @param  {int} forceIdx
    */
   adjustColumns(forceIdx) {
-    const width = this.state.internal.innerWidth - this.state.internal.scrollBarWidth;
+    const width = this.state.innerWidth - this.state.scrollbarWidth;
     if(this.options.columnMode === 'force'){
       forceFillColumnWidths(this.options.columns, width, forceIdx);
     } else if(this.options.columnMode === 'flex') {

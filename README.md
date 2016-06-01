@@ -66,5 +66,10 @@ This project uses [npm tasks](http://blog.keithcirkel.co.uk/how-to-use-npm-as-a-
   }
 ```
 
+## Notable Angular2 Table Projects
+- [ng2-table](https://github.com/valor-software/ng2-table)
+- [angular2-datatable](https://github.com/mariuszfoltak/angular2-datatable)
+- [sortable-table](https://github.com/FuelInteractive/fuel-ui)
+
 ## Credits
 `angular2-data-table` is a [Swimlane](http://swimlane.com) open-source project; we believe in giving back to the open-source community by sharing some of the projects we build for our application. Swimlane is an automated cyber security operations and incident response platform that enables cyber security teams to leverage threat intelligence, speed up incident response and automate security operations.

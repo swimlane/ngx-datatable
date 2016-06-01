@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'datatable-header-cell',
@@ -21,6 +21,7 @@ import { Component, Input, HostBinding } from '@angular/core';
   `,
   directives: [],
   host: {
+    '[class.datatable-header-cell]': 'true',
     '[class.sortable]': 'column.sortable',
     '[class.resizable]': 'column.resizable',
     '[style.width]':'column.width',
@@ -34,11 +35,6 @@ export class DataTableHeaderCell {
 
   @Input() column: Object;
 
-  @HostBinding('class.datatable-header-cell')
-  private isHeader = true;
-
-  onSort() {
-
-  }
+  onSort() {}
 
 }
