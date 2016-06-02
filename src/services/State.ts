@@ -1,17 +1,22 @@
-import { id } from './utils/id';
-import { camelCase } from './utils/camelCase';
-import { columnsByPin, columnGroupWidths } from './utils/column';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
-import { tableDefaults } from './constants/defaults';
-import { columnDefaults } from './constants/columnDefaults';
+import { id } from '../utils/id';
+import { camelCase } from '../utils/camelCase';
+import { columnsByPin, columnGroupWidths } from '../utils/column';
+import { scrollbarWidth } from '../utils/scrollbarWidth';
 
-export class State {
+import { tableDefaults } from '../constants/defaults';
+import { columnDefaults } from '../constants/columnDefaults';
+
+@Injectable()
+export class StateService {
 
   options: Object;
-  rows: Array<Object>;
-  selected: Array<Object>;
+  rows: Observer<Object[]>;
+  selected: Observer<Object[]>;
 
-  scrollbarWidth: number;
+  scrollbarWidth: number = scrollbarWidth();
   offsetX: number = 0;
   offsetY: number = 0;
   innerWidth: number = 0;
@@ -27,26 +32,14 @@ export class State {
 
   get pageCount() {
     if(!this.options.externalPaging)
-      return this.allRows.length;
+      return this.rows.array.length;
   }
 
   get pageSize() {
     if(this.options.scrollbarV)
       return Math.ceil(this.bodyHeight / this.options.rowHeight) + 1;
+      
     return this.options.limit;
-  }
-
-  set rows(val) {
-    this.rowsCache = false;
-    this.allRows = val;
-  }
-
-  get rows() {
-    if(this.rowsCache === false) {
-      this.rowsCache = this.allRows; //.splice(this.indexes.first, this.indexes.last);
-    }
-
-    return this.rowsCache;
   }
 
   get indexes(){
@@ -57,24 +50,39 @@ export class State {
           this.options.offsetY || 0) / this.options.rowHeight, 0), 0);
       last = Math.min(first + this.pageSize, this.pageCount);
     } else {
-      if(this.options.externalPaging){
-        first = Math.max(this.options.offset * this.options.limit, 0);
-        last = Math.min(first + this.pageSize, this.pageCount);
-      } else {
-        last = this.pageSize;
-      }
+      first = Math.max(this.options.offset * this.options.limit, 0);
+      last = Math.min(first + this.pageSize, this.pageCount);
     }
 
     return { first, last };
   }
 
-  constructor(
-    options: Object = {},
-    rows: Array<Object> = [],
-    selected: Array<Object> = []) {
+  get paginated() {
+    let { first, last } = this.indexes;
+    return this.rows
+      .skip(first)
+      .take(last)
+      .toArray();
+  }
 
+  setSelected(selected) {
+    this.selected = Observable.from(selected);
+    return this;
+  }
+
+  setRows(rows) {
+    this.rows = Observable.from(rows);
+    return this;
+  }
+
+  setOptions(options) {
     this.transposeDefaults(options);
-  	Object.assign(this, { options, rows });
+    this.options = options;
+    return this;
+  }
+
+  setPage({ page }) {
+    this.options.offset = page - 1;
   }
 
   transposeDefaults(options) {

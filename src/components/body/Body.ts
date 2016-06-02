@@ -2,6 +2,7 @@ import { Component, Input, HostBinding } from '@angular/core';
 import { ProgressBar } from './ProgressBar';
 import { DataTableBodyRow } from './BodyRow';
 import { DataTableScroll } from './Scroll';
+import { OrderByPipe } from '../../pipes/OrderBy';
 
 @Component({
   selector: 'datatable-body',
@@ -14,7 +15,7 @@ import { DataTableScroll } from './Scroll';
       [count]="state.rowCount"
       [scrollWidth]="state.columnGroupWidths.total">
       <datatable-body-row
-        *ngFor="let row of state.rows"
+        *ngFor="let row of state.paginated | async"
         [row]="row"
         [state]="state">
       </datatable-body-row>
@@ -29,7 +30,8 @@ import { DataTableScroll } from './Scroll';
     '[style.width]':'state.innerWidth',
     '[style.height]':'bodyHeight',
     '[class.datatable-body]': 'true'
-  }
+  },
+  pipes: [ OrderByPipe ]
 })
 export class DataTableBody {
 

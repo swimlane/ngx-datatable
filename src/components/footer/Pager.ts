@@ -35,7 +35,7 @@ export class DataTablePager {
   @Input() page = 1;
   @Input() size = 0;
   @Input() count = 0;
-  @Output() onPage = new EventEmitter();
+  @Output() onPaged = new EventEmitter();
 
   get totalPages() {
     const count = this.size < 1 ? 1 : Math.ceil(this.count / this.size);
@@ -63,7 +63,7 @@ export class DataTablePager {
   selectPage(page) {
     if (page > 0 && page <= this.totalPages) {
       this.page = page;
-      this.onPage.emit({ page });
+      this.onPaged.emit({ page });
     }
   }
 

@@ -7,8 +7,7 @@ import {
   HostListener
 } from '@angular/core';
 
-import { State } from '../State';
-import { scrollbarWidth } from '../utils/scrollbarWidth';
+import { StateService } from '../services/State';
 import { VisibilityDirective } from '../utils/visibility';
 import { forceFillColumnWidths, adjustColumnWidths } from '../utils/math';
 
@@ -25,15 +24,18 @@ import { DataTableFooter } from './footer/Footer';
       <datatable-header
         [state]="state">
       </datatable-header>
+
       <datatable-body
         [state]="state">
       </datatable-body>
+
       <datatable-footer
         *ngIf="state.options.footerHeight"
         [style.height]="state.options.footerHeight"
         [offset]="state.options.offset"
         [size]="state.pageSize"
-        [count]="state.pageCount">
+        [count]="state.pageCount"
+        (onPaged)="state.setPage($event)">
       </datatable-footer>
     </div>
   `,
@@ -48,7 +50,8 @@ import { DataTableFooter } from './footer/Footer';
     '[class.vertical-scroll]': 'options.scrollbarV',
     '[class.selectable]': 'options.selectable',
     '[class.checkboxable]': 'options.checkboxable'
-  }
+  },
+  providers: [ StateService ]
 })
 export class DataTable {
 
@@ -56,23 +59,21 @@ export class DataTable {
   @Input() rows: Array<Object>;
 	@Input() selected: Array<Object>;
 
-  @Output() onSelectionChange = new EventEmitter();
+  @Output() onChange = new EventEmitter();
 
-  public state: State;
+  public state: StateService;
   private element: ElementRef;
 
-  constructor(element: ElementRef) {
+  constructor(element: ElementRef, public state: StateService) {
     this.element = element.nativeElement;
   }
 
   ngOnInit() {
     let { options, rows, selected } = this;
-    this.state = new State(options, rows, selected);
-  }
-
-  ngAfterContentInit() {
-    this.resize();
-    this.state.scrollbarWidth = scrollbarWidth();
+    this.state
+      .setOptions(options)
+      .setRows(rows)
+      .setSelected(selected);
   }
 
   @HostListener('window:resize')
@@ -100,7 +101,11 @@ export class DataTable {
    * @param  {int} forceIdx
    */
   adjustColumns(forceIdx) {
-    const width = this.state.innerWidth - this.state.scrollbarWidth;
+    let width = this.state.innerWidth;
+    if(this.options.scrollbarV) {
+      width =- this.state.scrollbarWidth;
+    }
+
     if(this.options.columnMode === 'force'){
       forceFillColumnWidths(this.options.columns, width, forceIdx);
     } else if(this.options.columnMode === 'flex') {

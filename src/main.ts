@@ -7,13 +7,16 @@ import { DataTable } from './components/DataTable';
 @Component({
   selector: 'app',
   template: `
-  	<h3>Basic</h3>
-  	<datatable
-      class="material"
-  		[rows]="rows"
-  		[options]="options"
-      [selected]="selected">
-  	</datatable>
+    <div>
+    	<h3>Basic</h3>
+    	<datatable
+        class="material"
+    		[rows]="rows"
+    		[options]="options"
+        [selected]="selected"
+        (onChange)="changed($event)">
+    	</datatable>
+    </div>
   `,
   directives: [ DataTable ]
 })
@@ -21,6 +24,7 @@ class AppComponent {
 
   selected = [];
 	rows = [];
+
 	options = {
     columnMode: 'force',
     scrollbarV: false,
@@ -44,6 +48,10 @@ class AppComponent {
     };
 
     req.send();
+  }
+
+  changed(args) {
+    console.log('changed', args)
   }
 
 }
