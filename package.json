@@ -12,7 +12,9 @@
     "build:ts": "tsc",
     "build:sass": "node-sass -o dist/ src/",
     "build:css": "postcss --use autoprefixer dist/*.css -d dist/",
-    "build:bundle": "jspm bundle @angular/platform-browser-dynamic dist/bundle.js",
+    "build:bundle": "npm run build:bundle-ng && npm run build:bundle-core",
+    "build:bundle-ng": "jspm bundle @angular/platform-browser-dynamic dist/bundle-ng.js",
+    "build:bundle-core": "jspm bundle core-js dist/bundle-core.js",
     "build:release": "npm run build && jspm bundle dist/components/DataTable.js release/index.js",
     "watch": "npm run clean && concurrently \"npm run watch:ts\" \"npm run watch:sass\"",
     "watch:ts": "tsc --watch",
@@ -48,6 +50,7 @@
     "name": "angular2-data-table",
     "main": "angular2-data-table.js",
     "dependencies": {
+      "core-js": "npm:core-js@^2.4.0",
       "platform-browser-dynamic": "npm:@angular/platform-browser-dynamic@2.0.0-rc.1"
     },
     "devDependencies": {},
@@ -58,6 +61,8 @@
       "@angular/platform-browser": "npm:@angular/platform-browser@2.0.0-rc.1",
       "@angular/platform-browser-dynamic": "npm:@angular/platform-browser-dynamic@2.0.0-rc.1",
       "assert": "github:jspm/nodelibs-assert@^0.2.0-alpha",
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha",
+      "path": "github:jspm/nodelibs-path@^0.2.0-alpha",
       "process": "github:jspm/nodelibs-process@^0.2.0-alpha",
       "reflect-metadata": "npm:reflect-metadata@0.1.2",
       "rxjs": "npm:rxjs@5.0.0-beta.6",

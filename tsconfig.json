@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es5",
     "module": "system",
     "moduleResolution": "node",
     "declaration": false,
@@ -29,6 +29,9 @@
       ],
       "rxjs/*": [
         "../jspm_packages/npm/rxjs@5.0.0-beta.6/*"
+      ],
+      "core-js/*": [
+        "../jspm_packages/npm/core-js@2.4.0/*"
       ]
     }
   },
