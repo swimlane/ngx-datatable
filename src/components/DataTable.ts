@@ -11,6 +11,7 @@ import {
 import { StateService } from '../services/State';
 import { VisibilityDirective } from '../utils/visibility';
 import { forceFillColumnWidths, adjustColumnWidths } from '../utils/math';
+import { TableOptions } from '../models/TableOptions';
 
 import { DataTableHeader } from './header/Header';
 import { DataTableBody } from './body/Body';
@@ -52,7 +53,7 @@ import { DataTableFooter } from './footer/Footer';
 })
 export class DataTable {
 
-	@Input() options: Object;
+	@Input() options: TableOptions;
   @Input() rows: Array<Object>;
 	@Input() selected: Array<Object>;
 

@@ -1,7 +1,9 @@
 import { Component, Input, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { StateService } from '../../services/State';
+
 import { DataTableHeaderCell } from './HeaderCell';
 import { Draggable } from './Draggable';
+import { Resizable } from './Resizable';
 
 @Component({
   selector: 'datatable-header',
@@ -13,6 +15,9 @@ import { Draggable } from './Draggable';
       <div class="datatable-row-left">
         <datatable-header-cell
           *ngFor="let column of state.columnsByPin.left"
+          resizable
+          [resizeEnabled]="column.resizable"
+          (onResize)="columnResized($event, column)"
           draggable
           [dragX]="column.draggable"
           [dragY]="false"
@@ -25,6 +30,9 @@ import { Draggable } from './Draggable';
       <div class="datatable-row-center">
         <datatable-header-cell
           *ngFor="let column of state.columnsByPin.center"
+          resizable
+          [resizeEnabled]="column.resizable"
+          (onResize)="columnResized($event, column)"
           draggable
           [dragX]="column.draggable"
           [dragY]="false"
@@ -37,6 +45,11 @@ import { Draggable } from './Draggable';
       <div class="datatable-row-right">
         <datatable-header-cell
           *ngFor="let column of state.columnsByPin.right"
+          resizable
+          [resizeEnabled]="column.resizable"
+          [minWidth]="column.minWidth"
+          [maxWidth]="column.maxWidth"
+          (onResize)="columnResized($event, column)"
           draggable
           [dragX]="column.draggable"
           [dragY]="false"
@@ -50,7 +63,8 @@ import { Draggable } from './Draggable';
   `,
   directives: [
     DataTableHeaderCell,
-    Draggable
+    Draggable,
+    Resizable
   ],
   host: {
     '[style.width]':'state.innerWidth',
@@ -101,6 +115,10 @@ export class DataTableHeader {
     }
 
     element.style.left = 'auto';
+  }
+
+  columnResized(width, column) {
+    column.width = width;
   }
 
 }

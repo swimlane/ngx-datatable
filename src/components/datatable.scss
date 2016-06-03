@@ -121,9 +121,27 @@
       -webkit-align-items: stretch;
     }
 
-    .datatable-header-cell{
+    .datatable-header-cell {
       position:relative;
       display:inline-block;
+
+      .resize-handle{
+        display: inline-block;
+        position: absolute;
+        right:0;
+        top:0;
+        bottom: 0;
+        width:5px;
+        padding:0 5px;
+        visibility: hidden;
+        cursor: ew-resize;
+      }
+
+      &.resizable:hover {
+        .resize-handle{
+          visibility: visible;
+        }
+      }
     }
   }
 

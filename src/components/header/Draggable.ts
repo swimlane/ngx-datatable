@@ -27,28 +27,41 @@ export class Draggable {
   @Output() onDragging = new EventEmitter();
   @Output() onDragEnd = new EventEmitter();
 
+  private dragging: boolean = false;
+
   constructor(element: ElementRef) {
     this.element = element.nativeElement;
   }
 
-  @HostListener('mouseup', ['$event'])
+  @HostListener('document:mouseup', ['$event'])
   onMouseup(event) {
-    this.subcription && this.subcription.unsubscribe();
-    this.onDragEnd.emit({ event, element: this.element });
+    this.dragging = false;
+
+    if(this.subcription) {
+      this.subcription.unsubscribe();
+      this.onDragEnd.emit({ event, element: this.element });
+    }
   }
 
   @HostListener('mousedown', ['$event'])
   onMousedown(event) {
-    event.preventDefault();
+    const draggable = event.target.classList.contains('datatable-header-cell-label');
 
-    const mouseDownPos = { x: event.clientX, y: event.clientY };
-    this.subcription = Observable.fromEvent(document, 'mousemove')
-      .subscribe((event) => this.move(event, mouseDownPos));
+    if(draggable) {
+      event.preventDefault();
+      this.dragging = true;
 
-    this.onDragStart.emit({ event, element: this.element });
+      const mouseDownPos = { x: event.clientX, y: event.clientY };
+      this.subcription = Observable.fromEvent(document, 'mousemove')
+        .subscribe((event) => this.move(event, mouseDownPos));
+
+      this.onDragStart.emit({ event, element: this.element });
+    }
   }
 
   move(event, mouseDownPos) {
+    if(!this.dragging) return;
+
     const x = event.clientX - mouseDownPos.x;
     const y = event.clientY - mouseDownPos.y;
 

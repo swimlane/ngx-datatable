@@ -1,4 +1,9 @@
+import { TableColumn } from '../TableColumn';
+
 export class TableOptions {
+
+  // Columns
+  columns: Array<TableColumn>;
 
   // Enable vertical scrollbars
   scrollbarV = true;
