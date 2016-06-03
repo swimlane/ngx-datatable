@@ -31,17 +31,20 @@ This project uses [npm tasks](http://blog.keithcirkel.co.uk/how-to-use-npm-as-a-
 ```
   "check-updates": "npm-check --skip-unused",
   "clean": "rimraf dist",
-  "build": "npm run clean && npm run build:ts && npm run build:sass",
+  "build": "npm run clean && concurrently \"npm run build:ts\" \"npm run build:sass\"",
   "build:ts": "tsc",
   "build:sass": "node-sass -o dist/ src/",
   "build:css": "postcss --use autoprefixer dist/*.css -d dist/",
-  "build:bundle": "jspm bundle @angular/platform-browser-dynamic dist/bundle.js",
+  "build:bundle": "concurrently \"npm run build:bundle-ng\" \"npm run build:bundle-core\" \"npm run build:bundle-rx\"",
+  "build:bundle-ng": "jspm bundle @angular/platform-browser-dynamic dist/bundle-ng.js",
+  "build:bundle-core": "jspm bundle core-js dist/bundle-core.js",
+  "build:bundle-rx": "jspm bundle rxjs dist/bundle-rx.js",
   "build:release": "npm run build && jspm bundle dist/components/DataTable.js release/index.js",
   "watch": "npm run clean && concurrently \"npm run watch:ts\" \"npm run watch:sass\"",
   "watch:ts": "tsc --watch",
   "watch:sass": "npm run build:sass && node-sass -o dist/ -w src/",
   "start": "concurrently \"npm run build:bundle\" \"npm run watch\" \"npm run start:server\"",
-  "start:server": "lite-server"
+  "start:server": "lite-server -c bs-config.js"
 ```
 
 ## Usage
