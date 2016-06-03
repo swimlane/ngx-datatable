@@ -14,9 +14,55 @@
     box-sizing: border-box;
   }
 
-  &.vertical-scroll {
+  /**
+   * Vertical Scrolling Adjustments
+   */
+  &.scroll-vertical {
     .datatable-body {
-      overflow:auto;
+      overflow-y:auto;
+    }
+  }
+
+  /**
+   * Horizontal Scrolling Adjustments
+   */
+  &.scroll-horz {
+    .datatable-body {
+      overflow-x:auto;
+    }
+  }
+
+  /**
+   * Fixed Header Height Adjustments
+   */
+  &.fixed-header {
+    .datatable-header {
+      display: inline-block;
+      .datatable-header-inner{
+        white-space: nowrap;
+        .datatable-header-cell{
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+
+  /**
+   * Fixed row height adjustments
+   */
+  &.fixed-row {
+    .datatable-scroll{
+      white-space: nowrap;
+      .datatable-body-row {
+        white-space: nowrap;
+        .datatable-body-cell {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
     }
   }
 
@@ -43,14 +89,9 @@
   .datatable-body-cell,
   .datatable-header-cell {
     vertical-align: top;
-    overflow: hidden;
     display: inline-block;
-
-    white-space: nowrap;
     line-height: 1.625;
-    text-overflow: ellipsis;
 
-    touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -73,18 +114,15 @@
    * Header Styles
    */
   .datatable-header {
-    overflow:hidden;
     display: inline-block;
 
     .datatable-header-inner{
-      white-space: nowrap;
       align-items: stretch;
       -webkit-align-items: stretch;
     }
 
     .datatable-header-cell{
       position:relative;
-      white-space: nowrap;
       display:inline-block;
     }
   }
@@ -98,14 +136,11 @@
     display:inline-block;
 
     .datatable-scroll{
-      white-space: nowrap;
       display: inline-block;
     }
 
     .datatable-body-row {
-      backface-visibility: hidden;
       outline:none;
-      white-space: nowrap;
 
       > div {
         display: -webkit-box;

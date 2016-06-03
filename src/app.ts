@@ -30,6 +30,7 @@ class AppComponent {
     scrollbarV: false,
     headerHeight: 50,
     footerHeight: 50,
+    rowHeight: 'auto',
     limit: 10,
     columns: [
       new TableColumn({ name: "Name", width: 300 }),

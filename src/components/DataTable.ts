@@ -41,7 +41,10 @@ import { DataTableFooter } from './footer/Footer';
     VisibilityDirective
   ],
   host: {
-    '[class.vertical-scroll]': 'options.scrollbarV',
+    '[class.fixed-header]': 'options.headerHeight !== "auto"',
+    '[class.fixed-row]': 'options.rowHeight !== "auto"',
+    '[class.scroll-vertical]': 'options.scrollbarV',
+    '[class.scroll-horz]': 'options.scrollbarH',
     '[class.selectable]': 'options.selectable',
     '[class.checkboxable]': 'options.checkboxable'
   },

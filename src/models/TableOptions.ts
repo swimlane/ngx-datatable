@@ -4,7 +4,7 @@ export class TableOptions {
   scrollbarV = true;
 
   // Enable horz scrollbars
-  // scrollbarH = true;
+  scrollbarH = true;
 
   // The row height; which is necessary
   // to calculate the height for the lazy rendering.

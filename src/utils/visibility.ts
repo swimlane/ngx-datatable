@@ -106,7 +106,7 @@ export class VisibilityObserver {
 @Directive({ selector: '[visibility-observer]' })
 export class VisibilityDirective {
 
-  @HostBinding('class.visiblable') visible = false;
+  @HostBinding('class.visible') visible = false;
   @Output() onVisibilityChange = new EventEmitter();
 
   constructor(element: ElementRef) {
