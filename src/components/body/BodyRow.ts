@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ElementRef } from '@angular/core';
+import { StateService } from '../../services/State';
 import { DataTableBodyCell } from './BodyCell';
 
 @Component({
@@ -28,14 +29,16 @@ import { DataTableBodyCell } from './BodyCell';
       </div>
     </div>
   `,
-  directives: [ DataTableBodyCell ],
-  host: {
-    '[class.datatable-body-row]': 'true'
-  }
+  directives: [ DataTableBodyCell ]
 })
 export class DataTableBodyRow {
 
-  @Input() state: Object;
   @Input() row: Object;
+
+  private state: StateService;
+
+  constructor(private state: StateService, elm: ElementRef){
+    elm.nativeElement.classList.add('datatable-body-row');
+  }
 
 }

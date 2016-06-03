@@ -44,6 +44,9 @@ export const columnDefaults = {
   // Default sort asecending/descending for the column
   sort: undefined,
 
+  // can column be dragged
+  draggable: true,
+
   // The cell renderer that returns content for table column header
   headerRenderer: undefined,
 

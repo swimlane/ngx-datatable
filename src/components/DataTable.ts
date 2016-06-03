@@ -41,7 +41,6 @@ import { DataTableFooter } from './footer/Footer';
     VisibilityDirective
   ],
   host: {
-    '[class.datatable]': 'true',
     '[class.vertical-scroll]': 'options.scrollbarV',
     '[class.selectable]': 'options.selectable',
     '[class.checkboxable]': 'options.checkboxable'
@@ -61,6 +60,8 @@ export class DataTable {
 
   constructor(element: ElementRef, private state: StateService, differs: KeyValueDiffers) {
     this.element = element.nativeElement;
+    this.element.classList.add('datatable');
+
     this.differ = differs.find({}).create(null);
   }
 

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'datatable-body-cell',
@@ -13,8 +13,7 @@ import { Component, Input } from '@angular/core';
   directives: [],
   host: {
     '[style.width]':'column.width',
-    '[style.height]':'column.height',
-    '[class.datatable-body-cell]': 'true'
+    '[style.height]':'column.height'
   }
 })
 export class DataTableBodyCell {
@@ -24,6 +23,10 @@ export class DataTableBodyCell {
 
   get rowValue() {
     return this.row[this.column.prop];
+  }
+
+  constructor(elm: ElementRef){
+    elm.nativeElement.classList.add('datatable-body-cell');
   }
 
 }

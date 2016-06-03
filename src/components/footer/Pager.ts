@@ -2,7 +2,8 @@ import {
   Component,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
+  ElementRef
 } from '@angular/core';
 
 @Component({
@@ -33,7 +34,7 @@ import {
       <li [attr.disabled]="!canNext()">
         <a
           href="javascript:void(0)"
-          (click)="nextPage()" 
+          (click)="nextPage()"
           class="icon-right">
         </a>
       </li>
@@ -45,10 +46,7 @@ import {
         </a>
       </li>
     </ul>
-  `,
-  host: {
-    '[class.datatable-pager]': 'true'
-  }
+  `
 })
 export class DataTablePager {
 
@@ -60,6 +58,10 @@ export class DataTablePager {
   get totalPages() {
     const count = this.size < 1 ? 1 : Math.ceil(this.count / this.size);
     return Math.max(this.count || 0, 1);
+  }
+
+  constructor(elm: ElementRef){
+    elm.nativeElement.classList.add('datatable-pager');
   }
 
   canPrevious() {

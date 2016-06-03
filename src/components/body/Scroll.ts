@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'datatable-scroll',
@@ -7,8 +7,7 @@ import { Component, Input } from '@angular/core';
   `,
   host: {
     '[style.height]': 'count * rowHeight',
-    '[style.width]': 'scrollWidth',
-    '[class.datatable-scroll]': 'true'
+    '[style.width]': 'scrollWidth'
   }
 })
 export class DataTableScroll {
@@ -16,5 +15,9 @@ export class DataTableScroll {
   @Input() rowHeight: number;
   @Input() count: number;
   @Input() scrollWidth: number;
+
+  constructor(elm: ElementRef){
+    elm.nativeElement.classList.add('datatable-scroll');
+  }
 
 }

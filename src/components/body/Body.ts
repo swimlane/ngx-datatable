@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ElementRef } from '@angular/core';
 import { ProgressBar } from './ProgressBar';
 import { DataTableBodyRow } from './BodyRow';
 import { DataTableScroll } from './Scroll';
@@ -17,8 +17,7 @@ import { StateService } from '../../services/State';
       [scrollWidth]="state.columnGroupWidths.total">
       <datatable-body-row
         *ngFor="let row of rows"
-        [row]="row"
-        [state]="state">
+        [row]="row">
       </datatable-body-row>
     </datatable-scroll>
   `,
@@ -39,7 +38,9 @@ export class DataTableBody {
   private showProgress: boolean = false;
   private state: StateService;
 
-  constructor(private state: StateService) {}
+  constructor(private state: StateService, elm: ElementRef){
+    elm.nativeElement.classList.add('datatable-body');
+  }
 
   get bodyHeight() {
     if(this.state.options.scrollbarV)

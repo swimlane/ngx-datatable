@@ -2,7 +2,8 @@ import {
   Component,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
+  ElementRef
 } from '@angular/core';
 
 import { DataTablePager } from './Pager';
@@ -19,10 +20,7 @@ import { DataTablePager } from './Pager';
       [hidden]="!visible">
      </datatable-pager>
   `,
-  directives: [ DataTablePager ],
-  host: {
-    '[class.datatable-footer]': 'true'
-  }
+  directives: [ DataTablePager ]
 })
 export class DataTableFooter {
 
@@ -33,6 +31,10 @@ export class DataTableFooter {
 
   get visible() {
     return (this.count / this.size) > 1;
+  }
+
+  constructor(elm: ElementRef){
+    elm.nativeElement.classList.add('datatable-footer');
   }
 
 }
