@@ -10,19 +10,39 @@ import {
   template: `
     <ul class="pager">
       <li [attr.disabled]="!canPrevious()">
-        <a href="#" (click)="selectPage(1)" class="icon-prev"></a>
+        <a
+          href="javascript:void(0)"
+          (click)="selectPage(1)"
+          class="icon-prev">
+        </a>
       </li>
       <li [attr.disabled]="!canPrevious()">
-        <a href="#" (click)="prevPage()" class="icon-left"></a>
+        <a
+          href="javascript:void(0)"
+          (click)="prevPage()"
+          class="icon-left">
+        </a>
       </li>
       <li *ngFor="let pg of calcPages()" [class.active]="pg.active">
-        <a href="#" (click)="selectPage(pg.number)">{{pg.text}}</a>
+        <a
+          href="javascript:void(0)"
+          (click)="selectPage(pg.number)">
+          {{pg.text}}
+        </a>
       </li>
       <li [attr.disabled]="!canNext()">
-        <a href="#" (click)="nextPage()" class="icon-right"></a>
+        <a
+          href="javascript:void(0)"
+          (click)="nextPage()" 
+          class="icon-right">
+        </a>
       </li>
       <li [attr.disabled]="!canNext()">
-        <a href="#" (click)="selectPage(totalPages)" class="icon-skip"></a>
+        <a
+          href="javascript:void(0)"
+          (click)="selectPage(totalPages)"
+          class="icon-skip">
+        </a>
       </li>
     </ul>
   `,
