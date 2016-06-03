@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable, EventEmitter } from '@angular/core';
 
 import { id } from '../utils/id';
 import { camelCase } from '../utils/camelCase';
@@ -13,8 +12,11 @@ import { columnDefaults } from '../constants/columnDefaults';
 export class StateService {
 
   options: Object;
-  rows: Observer<Object[]>;
-  selected: Observer<Object[]>;
+  rows: any;
+  selected: any;
+
+  onRowsUpdate: EventEmitter = new EventEmitter();
+  onPageChange: EventEmitter = new EventEmitter();
 
   scrollbarWidth: number = scrollbarWidth();
   offsetX: number = 0;
@@ -32,13 +34,14 @@ export class StateService {
 
   get pageCount() {
     if(!this.options.externalPaging)
-      return this.rows.array.length;
+      //return this.rows.array.length;
+      return this.rows.length;
   }
 
   get pageSize() {
     if(this.options.scrollbarV)
       return Math.ceil(this.bodyHeight / this.options.rowHeight) + 1;
-      
+
     return this.options.limit;
   }
 
@@ -57,13 +60,16 @@ export class StateService {
     return { first, last };
   }
 
+  /*
   get paginated() {
     let { first, last } = this.indexes;
+
     return this.rows
       .skip(first)
       .take(last)
       .toArray();
   }
+  */
 
   setSelected(selected) {
     this.selected = Observable.from(selected);
@@ -71,7 +77,8 @@ export class StateService {
   }
 
   setRows(rows) {
-    this.rows = Observable.from(rows);
+    this.rows = [...rows];
+    this.onRowsUpdate.emit(rows);
     return this;
   }
 
@@ -83,6 +90,7 @@ export class StateService {
 
   setPage({ page }) {
     this.options.offset = page - 1;
+    this.onPageChange.emit(this.options.offset);
   }
 
   transposeDefaults(options) {

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { DataTableHeaderCell } from './HeaderCell';
+import { StateService } from '../../services/State';
 
 @Component({
   selector: 'datatable-header',
@@ -40,6 +41,8 @@ import { DataTableHeaderCell } from './HeaderCell';
 })
 export class DataTableHeader {
 
-  @Input() state: Object;
+  constructor(private state: StateService){
+
+  }
 
 }

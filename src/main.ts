@@ -45,6 +45,9 @@ class AppComponent {
     req.onload = () => {
       let json = JSON.parse(req.response);
       this.rows.push(...json);
+      setTimeout(() => {
+        this.rows.push(...json);
+      }, 500)
     };
 
     req.send();

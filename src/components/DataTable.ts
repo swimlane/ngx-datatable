@@ -4,7 +4,8 @@ import {
   Output,
   ElementRef,
   EventEmitter,
-  HostListener
+  HostListener,
+  KeyValueDiffers
 } from '@angular/core';
 
 import { StateService } from '../services/State';
@@ -21,14 +22,8 @@ import { DataTableFooter } from './footer/Footer';
   	<div
       visibility-observer
       (onVisibilityChange)="resize()">
-      <datatable-header
-        [state]="state">
-      </datatable-header>
-
-      <datatable-body
-        [state]="state">
-      </datatable-body>
-
+      <datatable-header></datatable-header>
+      <datatable-body></datatable-body>
       <datatable-footer
         *ngIf="state.options.footerHeight"
         [style.height]="state.options.footerHeight"
@@ -61,11 +56,12 @@ export class DataTable {
 
   @Output() onChange = new EventEmitter();
 
-  public state: StateService;
+  private state: StateService;
   private element: ElementRef;
 
-  constructor(element: ElementRef, public state: StateService) {
+  constructor(element: ElementRef, private state: StateService, differs: KeyValueDiffers) {
     this.element = element.nativeElement;
+    this.differ = differs.find({}).create(null);
   }
 
   ngOnInit() {
@@ -74,6 +70,12 @@ export class DataTable {
       .setOptions(options)
       .setRows(rows)
       .setSelected(selected);
+  }
+
+  ngDoCheck() {
+    if(this.differ.diff(this.rows)) {
+      this.state.setRows(this.rows);
+    }
   }
 
   @HostListener('window:resize')
