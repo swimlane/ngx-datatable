@@ -1,3 +1,7 @@
 {
-  "logLevel": "warn"
+  "logLevel": "silent",
+  "injectChanges": true,
+  "watchOptions": {
+    "ignored": ["node_modules", "jspm_packages"]
+  }
 }
