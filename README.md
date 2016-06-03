@@ -5,20 +5,19 @@
 It was engineered from its conception to handle thousands of rows without sacrificing performance.  It was built for modern browsers using _TypeScript, CSS3 and HTML5_ and Angular `>=2.0.0-rc1`. This is the sister project of the [angular-data-table](https://github.com/swimlane/angular-data-table) that is designed for Angular 1.x.
 
 ## Features
-- Handle large data sets ( Virtual DOM )
-- Left and Right Column Pinning
-- Column Reordering
-- Column Resizing
+- Light codebase / No external deps
+- Column Reordering & Resizing
 - Intelligent Column Width Algorithms ( Force fill / Flex-grow )
-- Horizontal/Vertical Scrolling
+- Horizontal & Vertical Scrolling
 - Virtual Paging WITH linked traditional pager
 - Checkbox and Row Selection ( multi / single / keyboard / touch )
-- Light codebase / No external deps
 - Fixed AND Fluid height
 - Decoupled themeing with included Google Material theme
-- Client-side AND Server Pagination / Sorting
+- Client/Server Pagination / Sorting
 
 ## Roadmap
+- Handle large data sets ( Virtual DOM )
+- Left and Right Column Pinning
 - Decoupled Cell tooltips on overflow
 - Decoupled Column Add/Removing Menu
 - Expressive Syntax
