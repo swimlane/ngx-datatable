@@ -1,64 +1,64 @@
-/**
- * Default Table Options
- * @type {object}
- */
-export const tableDefaults = {
+export class TableOptions {
 
   // Enable vertical scrollbars
-  scrollbarV: true,
+  scrollbarV = true;
 
   // Enable horz scrollbars
-  // scrollbarH: true,
+  // scrollbarH = true;
 
-  // The row height, which is necessary
+  // The row height; which is necessary
   // to calculate the height for the lazy rendering.
-  rowHeight: 30,
+  rowHeight = 30;
 
   // flex
   // force
   // standard
-  columnMode: 'standard',
+  columnMode = 'standard';
 
   // Loading message presented when the array is undefined
-  loadingMessage: 'Loading...',
+  loadingMessage = 'Loading...';
 
   // Message to show when array is presented
   // but contains no values
-  emptyMessage: 'No data to display',
+  emptyMessage = 'No data to display';
 
   // The minimum header height in pixels.
   // pass falsey for no header
-  headerHeight: 30,
+  headerHeight = 30;
 
   // The minimum footer height in pixels.
   // pass falsey for no footer
-  footerHeight: 0,
+  footerHeight = 0;
 
   // if external paging is turned on
-  externalPaging: false,
+  externalPaging = false;
 
   // Page size
-  limit: undefined,
+  limit = undefined;
 
   // Total count
-  count: 0,
+  count = 0;
 
   // Page offset
-  offset: 0,
+  offset = 0;
 
   // Loading indicator
-  loadingIndicator: false,
+  loadingIndicator = false;
 
   // if users can select itmes
-  selectable: false,
+  selectable = false;
 
   // if users can select mutliple items
-  multiSelect: false,
+  multiSelect = false;
 
   // checkbox selection vs row click
-  checkboxSelection: false,
+  checkboxSelection = false;
 
   // if you can reorder columns
-  reorderable: true
+  reorderable = true;
 
-};
+  constructor(props) {
+    Object.assign(this, props);
+  }
+
+}

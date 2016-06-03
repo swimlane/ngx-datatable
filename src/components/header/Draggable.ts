@@ -31,7 +31,7 @@ export class Draggable {
     this.element = element.nativeElement;
   }
 
-  @HostListener('document:mouseup', ['$event'])
+  @HostListener('mouseup', ['$event'])
   onMouseup(event) {
     this.subcription && this.subcription.unsubscribe();
     this.onDragEnd.emit({ event, element: this.element });
