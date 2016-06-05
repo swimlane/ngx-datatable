@@ -66,7 +66,7 @@ export class Resizable {
     this.prevScreenX = event.screenX;
 
     const overMinWidth = !this.minWidth || newWidth >= this.minWidth;
-    const underMaxWidth = !this.maxWidth || newWidth <= this.maxWidth);
+    const underMaxWidth = !this.maxWidth || newWidth <= this.maxWidth;
 
     if(overMinWidth && underMaxWidth) {
       this.element.style.width = `${newWidth}px`;

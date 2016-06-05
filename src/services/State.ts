@@ -1,14 +1,15 @@
 import { Injectable, EventEmitter } from '@angular/core';
 
+import { TableOptions } from '../models/TableOptions';
 import { columnsByPin, columnGroupWidths } from '../utils/column';
 import { scrollbarWidth } from '../utils/scrollbarWidth';
 
 @Injectable()
 export class StateService {
 
-  options: Object;
-  rows: Array<Object>;
-  selected: Array<Object>;
+  options: TableOptions;
+  rows: Array<any>;
+  selected: Array<any>;
 
   onRowsUpdate: EventEmitter = new EventEmitter();
   onPageChange: EventEmitter = new EventEmitter();
@@ -43,7 +44,7 @@ export class StateService {
 
     if(this.options.scrollbarV){
       first = Math.max(Math.floor((
-          this.options.offsetY || 0) / this.options.rowHeight, 0), 0);
+          this.offsetY || 0) / this.options.rowHeight, 0), 0);
       last = Math.min(first + this.pageSize, this.pageCount);
     } else {
       first = Math.max(this.options.offset * this.options.limit, 0);
@@ -54,7 +55,7 @@ export class StateService {
   }
 
   setSelected(selected) {
-    this.selected = Observable.from(selected);
+    // this.selected = Observable.from(selected);
     return this;
   }
 

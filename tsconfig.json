@@ -22,16 +22,16 @@
     "baseUrl": "src",
     "paths": {
       "@angular/core": [
-        "../jspm_packages/npm/@angular/core@2.0.0-rc.1"
+        "jspm_packages/npm/@angular/core@2.0.0-rc.1"
       ],
       "@angular/platform-browser-dynamic": [
-        "../jspm_packages/npm/@angular/platform-browser-dynamic@2.0.0-rc.1"
+        "jspm_packages/npm/@angular/platform-browser-dynamic@2.0.0-rc.1"
       ],
       "rxjs/*": [
-        "../jspm_packages/npm/rxjs@5.0.0-beta.6/*"
+        "jspm_packages/npm/rxjs@5.0.0-beta.6/*"
       ],
       "core-js/*": [
-        "../jspm_packages/npm/core-js@2.4.0/*"
+        "jspm_packages/npm/core-js@2.4.0/*"
       ]
     }
   },
