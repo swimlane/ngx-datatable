@@ -1,4 +1,4 @@
-import { TableColumn } from '../TableColumn';
+import { TableColumn } from './TableColumn';
 
 export enum ColumnMode {
   standard,

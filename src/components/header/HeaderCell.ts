@@ -1,4 +1,5 @@
 import { Component, Input, ElementRef } from '@angular/core';
+import { TableColumn } from '../../models/TableColumn';
 
 @Component({
   selector: 'datatable-header-cell',
@@ -32,9 +33,11 @@ import { Component, Input, ElementRef } from '@angular/core';
 })
 export class DataTableHeaderCell {
 
-  @Input() column: Object;
+  @Input() column: TableColumn;
 
-  onSort() {}
+  onSort() {
+    
+  }
 
   constructor(public element: ElementRef){
     element.nativeElement.classList.add('datatable-header-cell');
