@@ -1,6 +1,11 @@
 import { id } from '../utils/id';
 import { camelCase } from '../utils/camelCase';
 
+export enum SortDirection {
+  asc,
+  desc
+}
+
 /**
  * Default Column Options
  * @type {object}
@@ -20,7 +25,7 @@ export class TableColumn {
   className = undefined;
 
   // header cell css class name
-  headerClassName = undefined;
+  headerClassName: string = undefined;
 
   // The grow factor relative to other columns. Same as the flex-grow
   // API from http =//www.w3.org/TR/css3-flexbox/. Basically;
@@ -29,10 +34,10 @@ export class TableColumn {
   flexGrow: number = 0;
 
   // Minimum width of the column.
-  minWidth = 100;
+  minWidth: number = 100;
 
   //Maximum width of the column.
-  maxWidth = undefined;
+  maxWidth: number = undefined;
 
   // The width of the column; by default (in pixels).
   width = 150;
@@ -48,7 +53,7 @@ export class TableColumn {
   sortable: boolean = true;
 
   // Default sort asecending/descending for the column
-  sort = undefined;
+  sort: SortDirection = undefined;
 
   // can column be dragged
   draggable: boolean = true;
