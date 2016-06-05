@@ -4,13 +4,16 @@ import { StateService } from '../../services/State';
 import { DataTableHeaderCell } from './HeaderCell';
 import { Draggable } from './Draggable';
 import { Resizable } from './Resizable';
+import { Orderable } from './Orderable';
 
 @Component({
   selector: 'datatable-header',
   template: `
   	<div
       [style.width]="state.columnGroupWidths.total"
-      class="datatable-header-inner">
+      class="datatable-header-inner"
+      orderable
+      (onReorder)="columnReordered($event)">
 
       <div class="datatable-row-left">
         <datatable-header-cell
@@ -21,9 +24,7 @@ import { Resizable } from './Resizable';
           draggable
           [dragX]="column.draggable"
           [dragY]="false"
-          (onDragStart)="onDragStart()"
-          (onDragEnd)="onDragEnd($event, column)"
-          [column]="column">
+          [model]="column">
         </datatable-header-cell>
       </div>
 
@@ -36,9 +37,7 @@ import { Resizable } from './Resizable';
           draggable
           [dragX]="column.draggable"
           [dragY]="false"
-          (onDragStart)="onDragStart()"
-          (onDragEnd)="onDragEnd($event, column)"
-          [column]="column">
+          [model]="column">
         </datatable-header-cell>
       </div>
 
@@ -53,9 +52,7 @@ import { Resizable } from './Resizable';
           draggable
           [dragX]="column.draggable"
           [dragY]="false"
-          (onDragStart)="onDragStart()"
-          (onDragEnd)="onDragEnd($event, column)"
-          [column]="column">
+          [model]="column">
         </datatable-header-cell>
       </div>
 
@@ -64,7 +61,8 @@ import { Resizable } from './Resizable';
   directives: [
     DataTableHeaderCell,
     Draggable,
-    Resizable
+    Resizable,
+    Orderable
   ],
   host: {
     '[style.width]':'state.innerWidth',
@@ -73,52 +71,17 @@ import { Resizable } from './Resizable';
 })
 export class DataTableHeader {
 
-  @ViewChildren(DataTableHeaderCell)
-  private cells: QueryList<DataTableHeaderCell>;
-
-  private positions: Object;
-
   constructor(private state: StateService, elm: ElementRef){
     elm.nativeElement.classList.add('datatable-header');
   }
 
-  onDragStart() {
-    this.positions = {};
-
-    let i = 0;
-    for(let cell of this.cells.toArray()) {
-      let elm = cell.element.nativeElement;
-      this.positions[cell.column.prop] =  {
-        left: parseInt(elm.offsetLeft),
-        index: i++
-      };
-    }
-  }
-
-  onDragEnd({ element }, column) {
-    const newPos = parseInt(element.offsetLeft);
-    const prevPos = this.positions[column.prop];
-
-    let i = 0;
-    for(let prop in this.positions) {
-      let pos = this.positions[prop];
-
-      let movedLeft = newPos < pos.left && prevPos.left > pos.left;
-      let movedRight = newPos > pos.left && prevPos.left < pos.left;
-
-      if(movedLeft || movedRight) {
-        this.state.options.columns.splice(prevPos.index, 1);
-        this.state.options.columns.splice(i, 0, column);
-      }
-
-      i++;
-    }
-
-    element.style.left = 'auto';
-  }
-
   columnResized(width, column) {
     column.width = width;
+  }
+
+  columnReordered({ prevIndex, newIndex, model }) {
+    this.state.options.columns.splice(prevIndex, 1);
+    this.state.options.columns.splice(newIndex, 0, model);
   }
 
 }

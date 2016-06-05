@@ -20,6 +20,10 @@ import { Observable } from 'rxjs';
 @Directive({ selector: '[draggable]' })
 export class Draggable {
 
+  // this kinda a hack to get
+  // the model in the orderable
+  @Input() model;
+
   @Input() dragX = true;
   @Input() dragY = true;
 
@@ -28,6 +32,8 @@ export class Draggable {
   @Output() onDragEnd = new EventEmitter();
 
   private dragging: boolean = false;
+  element: any;
+  subscription: any;
 
   constructor(element: ElementRef) {
     this.element = element.nativeElement;
@@ -37,9 +43,13 @@ export class Draggable {
   onMouseup(event) {
     this.dragging = false;
 
-    if(this.subcription) {
-      this.subcription.unsubscribe();
-      this.onDragEnd.emit({ event, element: this.element });
+    if(this.subscription) {
+      this.subscription.unsubscribe();
+      this.onDragEnd.emit({ 
+        event, 
+        element: this.element,
+        model: this.model
+      });
     }
   }
 
@@ -52,10 +62,14 @@ export class Draggable {
       this.dragging = true;
 
       const mouseDownPos = { x: event.clientX, y: event.clientY };
-      this.subcription = Observable.fromEvent(document, 'mousemove')
+      this.subscription = Observable.fromEvent(document, 'mousemove')
         .subscribe((event) => this.move(event, mouseDownPos));
 
-      this.onDragStart.emit({ event, element: this.element });
+      this.onDragStart.emit({ 
+        event, 
+        element: this.element,
+        model: this.model 
+      });
     }
   }
 
@@ -68,7 +82,11 @@ export class Draggable {
     if(this.dragX) this.element.style.left = `${x}px`;
     if(this.dragY) this.element.style.top = `${y}px`;
 
-    this.onDragging.emit({ event, element: this.element });
+    this.onDragging.emit({ 
+      event, 
+      element: this.element,
+      model: this.model
+    });
   }
 
 }

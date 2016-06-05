@@ -9,31 +9,31 @@ import { TableColumn } from '../../models/TableColumn';
       <span
         class="datatable-header-cell-label"
         (click)="onSort()"
-        [innerHTML]="column.name">
+        [innerHTML]="model.name">
       </span>
       <span
         class="sort-btn"
-        [class.sort-asc]="column.sort === 'asc'"
-        [class.icon-up]="column.sort === 'asc'"
-        [class.sort-desc]="column.sort === 'desc'"
-        [class.icon-down]="column.sort === 'desc'">
+        [class.sort-asc]="model.sort === 'asc'"
+        [class.icon-up]="model.sort === 'asc'"
+        [class.sort-desc]="model.sort === 'desc'"
+        [class.icon-down]="model.sort === 'desc'">
       </span>
     </div>
   `,
   directives: [],
   host: {
-    '[class.sortable]': 'column.sortable',
-    '[class.resizable]': 'column.resizable',
-    '[style.width]':'column.width',
-    '[style.minWidth]':'column.minWidth',
-    '[style.maxWidth]':'column.maxWidth',
-    '[style.height]':'column.height',
-    '[attr.title]': 'column.name'
+    '[class.sortable]': 'model.sortable',
+    '[class.resizable]': 'model.resizable',
+    '[style.width]':'model.width',
+    '[style.minWidth]':'model.minWidth',
+    '[style.maxWidth]':'model.maxWidth',
+    '[style.height]':'model.height',
+    '[attr.title]': 'model.name'
   }
 })
 export class DataTableHeaderCell {
 
-  @Input() column: TableColumn;
+  @Input() model: TableColumn;
 
   onSort() {
     

@@ -81,6 +81,12 @@ export class TableColumn {
   // Whether the column can automatically resize to fill space in the table.
   canAutoResize: boolean = true;
 
+  // column name / label
+  name: string;
+
+  // property to bind to on the row
+  prop: string;
+
   constructor(props) {
     Object.assign(this, props);
 
