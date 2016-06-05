@@ -39,7 +39,6 @@
   },
   "homepage": "https://github.com/swimlane/angular2-data-table#readme",
   "devDependencies": {
-    "browser-sync": "^2.12.12",
     "concurrent": "^0.3.2",
     "jspm": "^0.17.0-beta.17",
     "lite-server": "^2.2.0",
