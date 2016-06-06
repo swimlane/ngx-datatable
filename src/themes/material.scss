@@ -76,8 +76,14 @@
 			}
 	  }
 
+		&.loading {
+			.progress-linear {
+				display:block;
+			}
+		}
+
 		.progress-linear {
-		  display: block;
+		  display: none;
 		  position: relative;
 		  width: 100%;
 		  height: 5px;

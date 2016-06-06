@@ -11,9 +11,7 @@ import { selectRows, selectRowsBetween } from '../../utils/selection';
   selector: 'datatable-body',
   template: `
     <div>
-      <datatable-progress
-        [hidden]="showProgress">
-      </datatable-progress>
+      <datatable-progress></datatable-progress>
       <datatable-scroll
         [rowHeight]="state.options.rowHeight"
         [count]="state.rowCount"
@@ -41,7 +39,8 @@ import { selectRows, selectRowsBetween } from '../../utils/selection';
   ],
   host: {
     '[style.width]':'state.innerWidth',
-    '[style.height]':'bodyHeight'
+    '[style.height]':'bodyHeight',
+    '[class.loading]': 'showProgress'
   }
 })
 export class DataTableBody {
@@ -73,14 +72,13 @@ export class DataTableBody {
     this.state.onPageChange.subscribe(page => {
       const { first, last } = this.state.indexes;
       this.rows = this.state.rows.slice(first, last);
-      setTimeout(() => this.showProgress = false, 100);
+      setTimeout(() => this.showProgress = false, 500);
     });
 
     this.state.onRowsUpdate.subscribe(rows => {
       const { first, last } = this.state.indexes;
       this.rows = rows.slice(first, last);
-      this.showProgress = false;
-      setTimeout(() => this.showProgress = false, 100);
+      setTimeout(() => this.showProgress = false, 500);
     });
   }
 
