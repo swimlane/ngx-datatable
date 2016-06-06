@@ -25,14 +25,7 @@ import { DataTableFooter } from './footer/Footer';
       (onVisibilityChange)="resize()">
       <datatable-header></datatable-header>
       <datatable-body></datatable-body>
-      <datatable-footer
-        *ngIf="state.options.footerHeight"
-        [style.height]="state.options.footerHeight"
-        [offset]="state.options.offset"
-        [size]="state.pageSize"
-        [count]="state.pageCount"
-        (onPaged)="state.setPage($event)">
-      </datatable-footer>
+      <datatable-footer></datatable-footer>
     </div>
   `,
   directives: [

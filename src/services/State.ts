@@ -75,7 +75,7 @@ export class StateService {
     return this;
   }
 
-  setPage({ page }) {
+  setPage(page) {
     this.options.offset = page - 1;
     this.onPageChange.emit(this.options.offset);
   }
@@ -98,7 +98,7 @@ export class StateService {
         this.options.sorts.splice(0, this.options.sorts.length);
       }
 
-      this.options.sorts.push(new Sort({ dir, prop: column.prop });
+      this.options.sorts.push(new Sort({ dir, prop: column.prop }));
     }
 
     if(!column.comparator) {

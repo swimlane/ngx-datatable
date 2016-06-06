@@ -24,7 +24,9 @@ import {
           class="icon-left">
         </a>
       </li>
-      <li *ngFor="let pg of calcPages()" [class.active]="pg.active">
+      <li
+        *ngFor="let pg of pages"
+        [class.active]="pg.number === page">
         <a
           href="javascript:void(0)"
           (click)="selectPage(pg.number)">
@@ -55,6 +57,8 @@ export class DataTablePager {
   @Input() count = 0;
   @Output() onPaged = new EventEmitter();
 
+  private _count: number;
+
   get totalPages() {
     const count = this.size < 1 ? 1 : Math.ceil(this.count / this.size);
     return Math.max(this.count || 0, 1);
@@ -62,6 +66,15 @@ export class DataTablePager {
 
   constructor(elm: ElementRef){
     elm.nativeElement.classList.add('datatable-pager');
+  }
+
+  set count(val) {
+    this._count = val;
+    this.pages = this.calcPages();
+  }
+
+  get count() {
+    return this._count;
   }
 
   canPrevious() {
@@ -85,7 +98,7 @@ export class DataTablePager {
   selectPage(page) {
     if (page > 0 && page <= this.totalPages) {
       this.page = page;
-      this.onPaged.emit({ page });
+      this.onPaged.emit(page);
     }
   }
 
@@ -106,8 +119,7 @@ export class DataTablePager {
     for (let number = startPage; number <= endPage; number++) {
       pages.push({
         number: number,
-        text: number,
-        active: number === page
+        text: number
       });
     }
 

@@ -188,9 +188,14 @@
    * Footer Styles
    */
   .datatable-footer {
-    display: flex;
-    align-items: center;
+    display: block;
     width:100%;
+
+    > div {
+      display: flex;
+      align-items: center;
+      width:100%;
+    }
 
     .page-count{
       display:inline-block;
