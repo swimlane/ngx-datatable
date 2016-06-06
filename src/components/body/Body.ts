@@ -26,6 +26,11 @@ import { selectRows, selectRowsBetween } from '../../utils/selection';
           (keydown)="rowKeydown($event, i, row)"
           [row]="row">
         </datatable-body-row>
+        <div
+          class="empty"
+          *ngIf="!rows.length"
+          [innerHTML]="state.options.emptyMessage">
+        </div>
       </datatable-scroll>
     </div>
   `,
@@ -44,7 +49,7 @@ export class DataTableBody {
   @Output() onRowClick = new EventEmitter();
   @Output() onRowSelect = new EventEmitter();
 
-  private showProgress: boolean = false;
+  private showProgress: boolean = true;
   private state: StateService;
   private prevIndex: number;
 
@@ -68,11 +73,14 @@ export class DataTableBody {
     this.state.onPageChange.subscribe(page => {
       const { first, last } = this.state.indexes;
       this.rows = this.state.rows.slice(first, last);
+      setTimeout(() => this.showProgress = false, 100);
     });
 
     this.state.onRowsUpdate.subscribe(rows => {
       const { first, last } = this.state.indexes;
       this.rows = rows.slice(first, last);
+      this.showProgress = false;
+      setTimeout(() => this.showProgress = false, 100);
     });
   }
 

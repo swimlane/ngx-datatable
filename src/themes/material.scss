@@ -75,6 +75,44 @@
         color:#FFF;
 			}
 	  }
+
+		.progress-linear {
+		  display: block;
+		  position: relative;
+		  width: 100%;
+		  height: 5px;
+		  padding: 0;
+		  margin: 0;
+      position: absolute;
+
+			.container {
+			  display: block;
+			  position: relative;
+			  overflow: hidden;
+			  width: 100%;
+			  height: 5px;
+			  -webkit-transform: translate(0,0) scale(1,1);
+			  transform: translate(0,0) scale(1,1);
+			  background-color: rgb(170,209,249);
+
+				.bar {
+				  transition: all .2s linear;
+				  -webkit-animation: query .8s infinite cubic-bezier(.39,.575,.565,1);
+				  animation: query .8s infinite cubic-bezier(.39,.575,.565,1);
+
+				  transition: -webkit-transform .2s linear;
+				  transition: transform .2s linear;
+				  background-color: rgb(16,108,200);
+
+				  position: absolute;
+				  left: 0;
+				  top: 0;
+				  bottom: 0;
+				  width: 100%;
+				  height: 5px;
+				}
+			}
+		}
 	}
 
 	/**
@@ -139,3 +177,28 @@
 		}
 	}
 }
+
+/**
+ * Progress bar animations
+ */
+@-webkit-keyframes query {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(35%) scale(.3, 1);
+            transform: translateX(35%) scale(.3, 1); }
+
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(-50%) scale(0, 1);
+            transform: translateX(-50%) scale(0, 1); } }
+
+@keyframes query {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(35%) scale(.3, 1);
+            transform: translateX(35%) scale(.3, 1); }
+
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(-50%) scale(0, 1);
+            transform: translateX(-50%) scale(0, 1); } }
