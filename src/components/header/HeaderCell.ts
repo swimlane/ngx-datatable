@@ -4,10 +4,9 @@ import { TableColumn } from '../../models/TableColumn';
 @Component({
   selector: 'datatable-header-cell',
   template: `
-  	<div
-      draggable="true">
+  	<div>
       <span
-        class="datatable-header-cell-label"
+        class="datatable-header-cell-label draggable"
         (click)="onSort()"
         [innerHTML]="model.name">
       </span>
@@ -36,7 +35,7 @@ export class DataTableHeaderCell {
   @Input() model: TableColumn;
 
   onSort() {
-    
+
   }
 
   constructor(public element: ElementRef){

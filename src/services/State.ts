@@ -39,7 +39,7 @@ export class StateService {
     return this.options.limit;
   }
 
-  get indexes(){
+  get indexes() {
     let first = 0, last = 0;
 
     if(this.options.scrollbarV){

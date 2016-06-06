@@ -1,11 +1,3 @@
-import {
-  Directive,
-  Output,
-  EventEmitter,
-  ElementRef,
-  HostBinding
-} from '@angular/core';
-
 /**
  * Observes changes to an elements visibility.
  * https://medium.com/@amcdnl/javascript-s-new-intersectionobserver-cdce8a73bef8#.evn5twug3
@@ -88,36 +80,6 @@ export class VisibilityObserver {
         }
       }
     });
-  }
-
-}
-
-/**
- * Visibility Observer Directive
- *
- * Usage:
- *
- * 		<div
- * 			visibility-observer
- * 			(onVisibilityChange)="doSomething($event)">
- * 		</div>
- *
- */
-@Directive({ selector: '[visibility-observer]' })
-export class VisibilityDirective {
-
-  @HostBinding('class.visible') visible = false;
-  @Output() onVisibilityChange = new EventEmitter();
-
-  constructor(element: ElementRef) {
-    new VisibilityObserver(
-      element.nativeElement,
-      this.visbilityChange.bind(this));
-  }
-
-  visbilityChange() {
-    this.visible = true;
-    this.onVisibilityChange.emit(true);
   }
 
 }

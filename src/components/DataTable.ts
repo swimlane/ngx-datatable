@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 
 import { StateService } from '../services/State';
-import { VisibilityDirective } from '../utils/visibility';
+import { Visibility } from '../directives/Visibility';
 import { forceFillColumnWidths, adjustColumnWidths } from '../utils/math';
 import { TableOptions } from '../models/TableOptions';
 
@@ -39,7 +39,7 @@ import { DataTableFooter } from './footer/Footer';
     DataTableHeader,
     DataTableBody,
     DataTableFooter,
-    VisibilityDirective
+    Visibility
   ],
   host: {
     '[class.fixed-header]': 'options.headerHeight !== "auto"',

@@ -45,8 +45,8 @@ export class Draggable {
 
     if(this.subscription) {
       this.subscription.unsubscribe();
-      this.onDragEnd.emit({ 
-        event, 
+      this.onDragEnd.emit({
+        event,
         element: this.element,
         model: this.model
       });
@@ -55,9 +55,7 @@ export class Draggable {
 
   @HostListener('mousedown', ['$event'])
   onMousedown(event) {
-    const draggable = event.target.classList.contains('datatable-header-cell-label');
-
-    if(draggable) {
+    if(event.target.classList.contains('draggable')) {
       event.preventDefault();
       this.dragging = true;
 
@@ -65,10 +63,10 @@ export class Draggable {
       this.subscription = Observable.fromEvent(document, 'mousemove')
         .subscribe((event) => this.move(event, mouseDownPos));
 
-      this.onDragStart.emit({ 
-        event, 
+      this.onDragStart.emit({
+        event,
         element: this.element,
-        model: this.model 
+        model: this.model
       });
     }
   }
@@ -82,11 +80,13 @@ export class Draggable {
     if(this.dragX) this.element.style.left = `${x}px`;
     if(this.dragY) this.element.style.top = `${y}px`;
 
-    this.onDragging.emit({ 
-      event, 
-      element: this.element,
-      model: this.model
-    });
+    if(this.dragX || this.dragY) {
+      this.onDragging.emit({
+        event,
+        element: this.element,
+        model: this.model
+      });
+    }
   }
 
 }

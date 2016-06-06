@@ -1,10 +1,13 @@
 import { Component, Input, ElementRef, ViewChildren, QueryList } from '@angular/core';
+
 import { StateService } from '../../services/State';
 
+import { LongPress } from '../../directives/LongPress';
+import { Draggable } from '../../directives/Draggable';
+import { Resizable } from '../../directives/Resizable';
+import { Orderable } from '../../directives/Orderable';
+
 import { DataTableHeaderCell } from './HeaderCell';
-import { Draggable } from './Draggable';
-import { Resizable } from './Resizable';
-import { Orderable } from './Orderable';
 
 @Component({
   selector: 'datatable-header',
@@ -14,55 +17,62 @@ import { Orderable } from './Orderable';
       class="datatable-header-inner"
       orderable
       (onReorder)="columnReordered($event)">
-
-      <div class="datatable-row-left">
+      <div
+        class="datatable-row-left">
         <datatable-header-cell
           *ngFor="let column of state.columnsByPin.left"
           resizable
           [resizeEnabled]="column.resizable"
           (onResize)="columnResized($event, column)"
+          long-press
+          (onLongPress)="draggable = true"
+          (onLongPressEnd)="draggable = false"
           draggable
-          [dragX]="column.draggable"
+          [dragX]="column.draggable && draggable"
           [dragY]="false"
           [model]="column">
         </datatable-header-cell>
       </div>
-
-      <div class="datatable-row-center">
+      <div
+        class="datatable-row-center">
         <datatable-header-cell
           *ngFor="let column of state.columnsByPin.center"
           resizable
           [resizeEnabled]="column.resizable"
           (onResize)="columnResized($event, column)"
+          long-press
+          (onLongPress)="draggable = true"
+          (onLongPressEnd)="draggable = false"
           draggable
-          [dragX]="column.draggable"
+          [dragX]="column.draggable && draggable"
           [dragY]="false"
           [model]="column">
         </datatable-header-cell>
       </div>
-
-      <div class="datatable-row-right">
+      <div
+        class="datatable-row-right">
         <datatable-header-cell
           *ngFor="let column of state.columnsByPin.right"
           resizable
           [resizeEnabled]="column.resizable"
-          [minWidth]="column.minWidth"
-          [maxWidth]="column.maxWidth"
           (onResize)="columnResized($event, column)"
+          long-press
+          (onLongPress)="draggable = true"
+          (onLongPressEnd)="draggable = false"
           draggable
-          [dragX]="column.draggable"
+          [dragX]="column.draggable && draggable"
           [dragY]="false"
           [model]="column">
         </datatable-header-cell>
       </div>
-
     </div>
   `,
   directives: [
     DataTableHeaderCell,
     Draggable,
     Resizable,
-    Orderable
+    Orderable,
+    LongPress
   ],
   host: {
     '[style.width]':'state.innerWidth',
