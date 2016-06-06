@@ -81,6 +81,8 @@ import { DataTableHeaderCell } from './HeaderCell';
 })
 export class DataTableHeader {
 
+  private state: StateService;
+  
   constructor(private state: StateService, elm: ElementRef){
     elm.nativeElement.classList.add('datatable-header');
   }

@@ -2,7 +2,12 @@ import "reflect-metadata";
 import { Component } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
 
-import { A2DT_DIRECTIVES, TableOptions, TableColumn } from './main';
+import {
+  A2DT_DIRECTIVES,
+  TableOptions,
+  TableColumn,
+  SelectionType
+} from './main';
 
 @Component({
   selector: 'app',
@@ -33,6 +38,7 @@ class AppComponent {
     rowHeight: 'auto',
     limit: 10,
     externalPaging: true,
+    selectionType: SelectionType.multi,
     columns: [
       new TableColumn({ name: "Name", width: 300 }),
       new TableColumn({ name: "Gender" }),

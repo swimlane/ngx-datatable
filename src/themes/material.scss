@@ -63,6 +63,17 @@
 	      transition-duration: .3s;
 	      transition-timing-function: linear;
 	    }
+
+			&:focus {
+				background-color: #ddd;
+			}
+
+			&.active,
+			&.active:focus,
+			&.active:hover {
+				background-color:#304FFE;
+        color:#FFF;
+			}
 	  }
 	}
 

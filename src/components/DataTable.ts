@@ -25,8 +25,13 @@ import { DataTableFooter } from './footer/Footer';
       visibility-observer
       (onVisibilityChange)="adjustSizes()">
       <datatable-header></datatable-header>
-      <datatable-body></datatable-body>
-      <datatable-footer></datatable-footer>
+      <datatable-body
+        (onRowClick)="onRowClick.emit($event)"
+        (onRowSelect)="state.setSelected($event)">
+      </datatable-body>
+      <datatable-footer
+        (onPageChange)="onPageChanged($event)">
+      </datatable-footer>
     </div>
   `,
   directives: [
@@ -53,6 +58,8 @@ export class DataTable {
 
   @Output() onPageChange = new EventEmitter();
   @Output() onRowsUpdate = new EventEmitter();
+  @Output() onRowClick = new EventEmitter();
+  @Output() onSelectionChange = new EventEmitter();
 
   private state: StateService;
   private element: ElementRef;
@@ -60,7 +67,6 @@ export class DataTable {
   constructor(element: ElementRef, private state: StateService, differs: KeyValueDiffers) {
     this.element = element.nativeElement;
     this.element.classList.add('datatable');
-
     this.differ = differs.find({}).create(null);
   }
 
@@ -73,7 +79,6 @@ export class DataTable {
       .setSelected(selected);
 
     // todo: better way to do this?
-    this.state.onPageChange.subscribe((e) => this.onPageChange.emit(e));
     this.state.onRowsUpdate.subscribe((e) => this.onRowsUpdate.emit(e));
   }
 
@@ -100,10 +105,6 @@ export class DataTable {
   @HostListener('window:resize')
   resize() { this.adjustSizes(); }
 
-  /**
-   * Adjusts the column widths to handle greed/etc.
-   * @param  {int} forceIdx
-   */
   adjustColumns(forceIdx) {
     let width = this.state.innerWidth;
     if(this.options.scrollbarV) {
@@ -115,6 +116,11 @@ export class DataTable {
     } else if(this.options.columnMode === 'flex') {
       adjustColumnWidths(this.options.columns, width);
     }
+  }
+
+  onPageChanged(event) {
+    this.state.setPage(event);
+    this.onPageChange.emit(event);
   }
 
 }

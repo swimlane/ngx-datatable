@@ -19,7 +19,7 @@ import { DataTablePager } from './Pager';
       <datatable-pager
         [page]="curPage"
         [size]="state.pageSize"
-        (onPaged)="state.setPage($event)"
+        (onPaged)="onPageChange.emit($event)"
         [count]="state.pageCount"
         [hidden]="!visible">
        </datatable-pager>
@@ -28,6 +28,10 @@ import { DataTablePager } from './Pager';
   directives: [ DataTablePager ]
 })
 export class DataTableFooter {
+
+  @Output() onPageChange = new EventEmitter();
+
+  private state: StateService;
 
   get visible() {
     return (this.state.pageCount / this.state.pageSize) > 1;

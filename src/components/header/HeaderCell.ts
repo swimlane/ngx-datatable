@@ -32,6 +32,8 @@ import { SortDirection } from '../../models/SortDirection';
 export class DataTableHeaderCell {
 
   @Input() model: TableColumn;
+  
+  private state: StateService;
 
   get sortDir() {
     let sort = this.state.options.sorts.find(s => {

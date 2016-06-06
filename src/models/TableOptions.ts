@@ -1,7 +1,9 @@
 import { TableColumn } from './TableColumn';
 import { Sort } from './Sort';
+
 import { ColumnMode } from './ColumnMode';
 import { SortType } from './SortType';
+import { SelectionType } from './SelectionType';
 
 export class TableOptions {
 
@@ -53,11 +55,8 @@ export class TableOptions {
   // Loading indicator
   loadingIndicator: boolean = false;
 
-  // if users can select itmes
-  selectable: boolean = false;
-
-  // if users can select mutliple items
-  multiSelect: boolean = false;
+  // Selections?
+  selectionType: SelectionType;
 
   // if you can reorder columns
   reorderable: boolean = true;
