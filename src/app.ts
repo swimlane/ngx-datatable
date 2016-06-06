@@ -35,23 +35,36 @@ class AppComponent {
     columns: [
       new TableColumn({ name: "Name", width: 300 }),
       new TableColumn({ name: "Gender" }),
-      new TableColumn({ name: "Company" })
+      new TableColumn({ name: "Company", comparator: this.sorter.bind(this) })
     ]
   });
 
   constructor() {
+    this.fetch((results) => {
+      this.rows.push(...results);
+      setTimeout(() => {
+        this.rows.push(...results);
+      }, 500);
+    });
+  }
+
+  fetch(cb) {
     var req = new XMLHttpRequest();
     req.open('GET', `demos/company.json`);
 
     req.onload = () => {
-      let json = JSON.parse(req.response);
-      this.rows.push(...json);
-      setTimeout(() => {
-        this.rows.push(...json);
-      }, 500)
+      cb(JSON.parse(req.response));
     };
 
     req.send();
+  }
+
+  sorter(rows, dirs) {
+    setTimeout(() => {
+      this.fetch((results) => {
+        this.rows = results;
+      });
+    }, 500);
   }
 
   changed(args) {

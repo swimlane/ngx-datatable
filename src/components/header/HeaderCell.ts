@@ -1,5 +1,7 @@
 import { Component, Input, ElementRef } from '@angular/core';
+import { StateService } from '../../services/State';
 import { TableColumn } from '../../models/TableColumn';
+import { SortDirection } from '../../models/SortDirection';
 
 @Component({
   selector: 'datatable-header-cell',
@@ -12,10 +14,7 @@ import { TableColumn } from '../../models/TableColumn';
       </span>
       <span
         class="sort-btn"
-        [class.sort-asc]="model.sort === 'asc'"
-        [class.icon-up]="model.sort === 'asc'"
-        [class.sort-desc]="model.sort === 'desc'"
-        [class.icon-down]="model.sort === 'desc'">
+        [ngClass]="sortClasses()">
       </span>
     </div>
   `,
@@ -34,11 +33,29 @@ export class DataTableHeaderCell {
 
   @Input() model: TableColumn;
 
-  onSort() {
+  get sortDir() {
+    let sort = this.state.options.sorts.find(s => {
+      return s.prop === this.model.prop
+    });
 
+    if(sort) return sort.dir;
   }
 
-  constructor(public element: ElementRef){
+  sortClasses(sort) {
+    let dir = this.sortDir;
+    return {
+      'sort-asc icon-down': dir === SortDirection.asc,
+      'sort-desc icon-up': dir === SortDirection.desc
+    };
+  }
+
+  onSort() {
+    if(this.model.sortable) {
+      this.state.nextSort(this.model);
+    }
+  }
+
+  constructor(public element: ElementRef, private state: StateService){
     element.nativeElement.classList.add('datatable-header-cell');
   }
 

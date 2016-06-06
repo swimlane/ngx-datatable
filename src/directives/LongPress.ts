@@ -1,5 +1,6 @@
 import {
   Directive,
+  Input,
   Output,
   EventEmitter,
   HostBinding,
@@ -8,6 +9,8 @@ import {
 
 @Directive({ selector: '[long-press]' })
 export class LongPress {
+
+  @Input() duration: number = 500;
 
   @Output() onLongPress = new EventEmitter();
   @Output() onLongPressing = new EventEmitter();
@@ -35,7 +38,7 @@ export class LongPress {
       this._interval = setInterval(() => {
         this.onLongPressing.emit(event);
       }, 50);
-    }, 300);
+    }, this.duration);
   }
 
   @HostListener('mouseup')

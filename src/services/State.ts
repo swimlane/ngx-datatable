@@ -1,8 +1,13 @@
 import { Injectable, EventEmitter } from '@angular/core';
 
-import { TableOptions } from '../models/TableOptions';
 import { columnsByPin, columnGroupWidths } from '../utils/column';
 import { scrollbarWidth } from '../utils/scrollbarWidth';
+import { nextSortDir, sortRows } from '../utils/sort';
+
+import { TableOptions } from '../models/TableOptions';
+import { TableColumn } from '../models/TableColumn';
+import { Sort } from '../models/Sort';
+import { SortType } from '../models/SortType';
 
 @Injectable()
 export class StateService {
@@ -55,7 +60,7 @@ export class StateService {
   }
 
   setSelected(selected) {
-    // this.selected = Observable.from(selected);
+    this.selected = selected;
     return this;
   }
 
@@ -73,6 +78,34 @@ export class StateService {
   setPage({ page }) {
     this.options.offset = page - 1;
     this.onPageChange.emit(this.options.offset);
+  }
+
+  nextSort(column: TableColumn) {
+    const idx = this.options.sorts.findIndex(s =>
+      { return s.prop === column.prop });
+
+    let curSort = this.options.sorts[idx];
+    let curDir = undefined;
+    if(curSort) curDir = curSort.dir;
+
+    const dir = nextSortDir(this.options.sortType, curDir);
+    if(dir === undefined) {
+      this.options.sorts.splice(idx, 1);
+    } else if(curSort) {
+      this.options.sorts[idx].dir = dir;
+    } else {
+      if(this.options.sortType === SortType.single) {
+        this.options.sorts.splice(0, this.options.sorts.length);
+      }
+
+      this.options.sorts.push(new Sort({ dir, prop: column.prop });
+    }
+
+    if(!column.comparator) {
+      this.setRows(sortRows(this.rows, this.options.sorts));
+    } else {
+      column.comparator(this.rows, this.options.sorts)
+    }
   }
 
 }

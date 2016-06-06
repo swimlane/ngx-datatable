@@ -1,10 +1,7 @@
 import { TableColumn } from './TableColumn';
-
-export enum ColumnMode {
-  standard,
-  flex,
-  force
-}
+import { Sort } from './Sort';
+import { ColumnMode } from './ColumnMode';
+import { SortType } from './SortType';
 
 export class TableOptions {
 
@@ -62,11 +59,14 @@ export class TableOptions {
   // if users can select mutliple items
   multiSelect: boolean = false;
 
-  // checkbox selection vs row click
-  // checkboxSelection = false;
-
   // if you can reorder columns
   reorderable: boolean = true;
+
+  // type of sorting
+  sortType: SortType = SortType.single;
+
+  // sorts
+  sorts: Array<Sort> = [];
 
   constructor(props) {
     Object.assign(this, props);

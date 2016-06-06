@@ -125,6 +125,20 @@
       position:relative;
       display:inline-block;
 
+      &.longpress {
+        cursor: move;
+      }
+
+      &.sortable {
+        cursor: hand;
+      }
+
+      .sort-btn {
+        line-height:100%;
+        vertical-align: middle;
+        display:inline-block;
+      }
+
       .resize-handle{
         display: inline-block;
         position: absolute;
@@ -132,7 +146,7 @@
         top:0;
         bottom: 0;
         width:5px;
-        padding:0 5px;
+        padding:0 8px;
         visibility: hidden;
         cursor: ew-resize;
       }

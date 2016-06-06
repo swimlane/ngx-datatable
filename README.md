@@ -9,14 +9,15 @@ It was engineered from its conception to handle thousands of rows without sacrif
 - Column Reordering & Resizing
 - Intelligent Column Width Algorithms ( Force fill / Flex-grow )
 - Horizontal & Vertical Scrolling
-- Virtual Paging WITH linked traditional pager
+- Integrated Pager
 - Checkbox and Row Selection ( multi / single / keyboard / touch )
 - Fixed AND Fluid height
-- Decoupled themeing with included Google Material theme
-- Client/Server Pagination / Sorting
+- Decoupled theme'ing with included Google Material theme
+- Client/Server Pagination & Sorting
 
 ## Roadmap
 - Handle large data sets ( Virtual DOM )
+- Virtual Paging
 - Left and Right Column Pinning
 - Decoupled Cell tooltips on overflow
 - Decoupled Column Add/Removing Menu
