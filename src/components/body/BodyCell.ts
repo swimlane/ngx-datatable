@@ -1,13 +1,11 @@
 import { Component, Input, ElementRef } from '@angular/core';
+import { deepValueGetter } from '../../utils/deepGetter';
 
 @Component({
   selector: 'datatable-body-cell',
   template: `
-  	<div>
-      <span
-        class="datatable-body-cell-label"
-        [innerHTML]="rowValue">
-      </span>
+  	<div class="datatable-body-cell-label">
+      <span [innerHTML]="rowValue"></span>
     </div>
   `,
   directives: [],
@@ -23,7 +21,7 @@ export class DataTableBodyCell {
 
   get rowValue() {
     if(!this.row) return '';
-    return this.row[this.column.prop];
+    return deepValueGetter(this.row, this.column.prop);
   }
 
   constructor(elm: ElementRef){
