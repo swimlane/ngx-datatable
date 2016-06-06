@@ -34,8 +34,10 @@ export class StateService {
   }
 
   get pageCount() {
-    if(!this.options.externalPaging)
+    if(!this.options.externalPaging) {
       return this.rows.length;
+    }
+    return this.options.count;
   }
 
   get pageSize() {
@@ -59,25 +61,30 @@ export class StateService {
     return { first, last };
   }
 
-  setSelected(selected) {
+  setSelected(selected: Array<any>) {
     this.selected = selected;
     return this;
   }
 
-  setRows(rows) {
+  setRows(rows: Array<any>) {
     this.rows = [...rows];
     this.onRowsUpdate.emit(rows);
     return this;
   }
 
-  setOptions(options) {
+  setOptions(options: TableOptions) {
     this.options = options;
     return this;
   }
 
-  setPage(page) {
+  setPage(page: number) {
     this.options.offset = page - 1;
-    this.onPageChange.emit(this.options.offset);
+
+    this.onPageChange.emit({
+      offset: this.options.offset,
+      limit: this.pageSize,
+      pageCount: this.pageCount
+    });
   }
 
   nextSort(column: TableColumn) {

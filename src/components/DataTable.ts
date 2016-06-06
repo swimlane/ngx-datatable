@@ -8,6 +8,7 @@ import {
   KeyValueDiffers
 } from '@angular/core';
 
+import { debounceable } from '../utils/debounce';
 import { StateService } from '../services/State';
 import { Visibility } from '../directives/Visibility';
 import { forceFillColumnWidths, adjustColumnWidths } from '../utils/math';
@@ -22,7 +23,7 @@ import { DataTableFooter } from './footer/Footer';
   template: `
   	<div
       visibility-observer
-      (onVisibilityChange)="resize()">
+      (onVisibilityChange)="adjustSizes()">
       <datatable-header></datatable-header>
       <datatable-body></datatable-body>
       <datatable-footer></datatable-footer>
@@ -50,7 +51,8 @@ export class DataTable {
   @Input() rows: Array<Object>;
 	@Input() selected: Array<Object>;
 
-  @Output() onChange = new EventEmitter();
+  @Output() onPageChange = new EventEmitter();
+  @Output() onRowsUpdate = new EventEmitter();
 
   private state: StateService;
   private element: ElementRef;
@@ -64,10 +66,15 @@ export class DataTable {
 
   ngOnInit() {
     let { options, rows, selected } = this;
+
     this.state
       .setOptions(options)
       .setRows(rows)
       .setSelected(selected);
+
+    // todo: better way to do this?
+    this.state.onPageChange.subscribe((e) => this.onPageChange.emit(e));
+    this.state.onRowsUpdate.subscribe((e) => this.onRowsUpdate.emit(e));
   }
 
   ngDoCheck() {
@@ -76,25 +83,22 @@ export class DataTable {
     }
   }
 
-  @HostListener('window:resize')
-  resize() {
+  adjustSizes() {
     let { height, width } = this.element.getBoundingClientRect();
     this.state.innerWidth = Math.floor(width);
 
     if (this.options.scrollbarV) {
-      if (this.options.headerHeight) {
-        height = height - this.options.headerHeight;
-      }
-
-      if (this.options.footerHeight) {
-        height = height - this.options.footerHeight;
-      }
-
+      if (this.options.headerHeight) height =- this.options.headerHeight;
+      if (this.options.footerHeight) height =- this.options.footerHeight;
       this.state.bodyHeight = height;
     }
 
     this.adjustColumns();
   }
+
+  @debounceable(10)
+  @HostListener('window:resize')
+  resize() { this.adjustSizes(); }
 
   /**
    * Adjusts the column widths to handle greed/etc.

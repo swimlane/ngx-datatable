@@ -52,20 +52,17 @@ import {
 })
 export class DataTablePager {
 
-  @Input() page = 1;
-  @Input() size = 0;
-  @Input() count = 0;
-  @Output() onPaged = new EventEmitter();
+  @Input() page: number = 1;
+  @Input() size: number = 0;
+  @Input() count: number = 0;
+  @Output() onPaged: EventEmitter = new EventEmitter();
 
   private _count: number;
+  private _page: number;
 
   get totalPages() {
     const count = this.size < 1 ? 1 : Math.ceil(this.count / this.size);
-    return Math.max(this.count || 0, 1);
-  }
-
-  constructor(elm: ElementRef){
-    elm.nativeElement.classList.add('datatable-pager');
+    return Math.max(count || 0, 1);
   }
 
   set count(val) {
@@ -75,6 +72,19 @@ export class DataTablePager {
 
   get count() {
     return this._count;
+  }
+
+  set page(val) {
+    this._page = val;
+    this.pages = this.calcPages();
+  }
+
+  get page() {
+    return this._page;
+  }
+
+  constructor(elm: ElementRef){
+    elm.nativeElement.classList.add('datatable-pager');
   }
 
   canPrevious() {

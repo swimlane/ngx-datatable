@@ -14,7 +14,7 @@ import { A2DT_DIRECTIVES, TableOptions, TableColumn } from './main';
     		[rows]="rows"
     		[options]="options"
         [selected]="selected"
-        (onChange)="changed($event)">
+        (onPageChange)="onPage($event)">
     	</datatable>
     </div>
   `,
@@ -32,6 +32,7 @@ class AppComponent {
     footerHeight: 50,
     rowHeight: 'auto',
     limit: 10,
+    externalPaging: true,
     columns: [
       new TableColumn({ name: "Name", width: 300 }),
       new TableColumn({ name: "Gender" }),
@@ -40,11 +41,28 @@ class AppComponent {
   });
 
   constructor() {
+    this.page();
+  }
+
+  page() {
     this.fetch((results) => {
-      this.rows.push(...results);
-      setTimeout(() => {
-        this.rows.push(...results);
-      }, 500);
+      this.options.count = results.length;
+      let start = this.options.offset * this.options.limit;
+      let end = start + this.options.limit;
+
+      let paged = results.slice(start, end);
+
+      // splice doesn't let u insert at
+      // a new out of bounds index :(
+      // this.rows.splice(0, this.rows.length);
+      // this.rows.push(...paged)
+      // this.rows.splice(start, 0, ...paged);
+
+      for (let i = start; i < end; i++) {
+        this.rows[i] = results[i];
+      }
+
+      console.log('updated', start, end, this.rows)
     });
   }
 
@@ -67,8 +85,9 @@ class AppComponent {
     }, 500);
   }
 
-  changed(args) {
-    console.log('changed', args)
+  onPage({ offset, limit, pageCount }) {
+    console.log('Paged!', offset, limit, pageCount);
+    this.page();
   }
 
 }

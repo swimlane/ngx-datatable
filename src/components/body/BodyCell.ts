@@ -22,6 +22,7 @@ export class DataTableBodyCell {
   @Input() row: Object;
 
   get rowValue() {
+    if(!this.row) return '';
     return this.row[this.column.prop];
   }
 
