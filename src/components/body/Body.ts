@@ -86,8 +86,8 @@ export class DataTableBody {
       this.selectRow(event, index, row);
     } else if(event.keyCode === Keys.up || event.keyCode === Keys.down) {
       let dom = event.keyCode === Keys.up ?
-        dom.previousElementSibling :
-        dom.nextElementSibling;
+        event.target.previousElementSibling :
+        event.target.nextElementSibling;
       if(dom) dom.focus();
     }
   }
@@ -95,12 +95,18 @@ export class DataTableBody {
   selectRow(event, index, row) {
     if(!this.selectEnabled) return;
 
+    const multiShift = this.state.options.selectionType === SelectionType.multiShift;
+    const multiClick = this.state.options.selectionType === SelectionType.multi;
+
     let selections = [];
-    if(this.state.options.selectionType === SelectionType.multi) {
-      let selected = [...this.state.selected]
-      if(event.shiftKey) {
-        selections = selectRowsBetween(selected, this.rows, index, prevIndex);
+    if(multiShift || multiClick) {
+      if(multiShift && event.shiftKey) {
+        let selected = [...this.state.selected];
+        selections = selectRowsBetween(selected, this.rows, index, this.prevIndex);
+      } else if(multiShift && !event.shiftKey) {
+        selections.push(row);
       } else {
+        let selected = [...this.state.selected];
         selections = selectRows(selected, row);
       }
     } else {

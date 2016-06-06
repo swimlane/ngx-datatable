@@ -38,7 +38,7 @@ class AppComponent {
     rowHeight: 'auto',
     limit: 10,
     externalPaging: true,
-    selectionType: SelectionType.multi,
+    selectionType: SelectionType.multiShift,
     columns: [
       new TableColumn({ name: "Name", width: 300 }),
       new TableColumn({ name: "Gender" }),

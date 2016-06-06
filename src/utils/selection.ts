@@ -23,12 +23,12 @@ export function selectRowsBetween(selected, rows, index, prevIndex) {
       range = {
         start: index,
         end: (prevIndex - index)
-      }
+      };
     } else {
       range = {
         start: prevIndex,
         end: index + 1
-      }
+      };
     }
 
     if((reverse && lesser) || (!reverse && greater)){
