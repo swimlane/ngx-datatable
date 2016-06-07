@@ -56,7 +56,7 @@
   },
   "jspm": {
     "name": "angular2-data-table",
-    "main": "angular2-data-table.js",
+    "main": "release/angular2-data-table.js",
     "dependencies": {
       "platform-browser-dynamic": "npm:@angular/platform-browser-dynamic@2.0.0-rc.1"
     },
