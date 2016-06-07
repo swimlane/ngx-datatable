@@ -3,10 +3,11 @@ import { Component } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
 
 import {
-  A2DT_DIRECTIVES,
+  DataTable,
   TableOptions,
   TableColumn,
   SelectionType
+//} from '../release/angular2-data-table.js';
 } from './main';
 
 @Component({
@@ -23,7 +24,7 @@ import {
     	</datatable>
     </div>
   `,
-  directives: [ A2DT_DIRECTIVES ]
+  directives: [ DataTable ]
 })
 class AppComponent {
 

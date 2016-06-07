@@ -4,7 +4,8 @@
 
 It was engineered from its conception to handle thousands of rows without sacrificing performance.  It was built for modern browsers using _TypeScript, CSS3 and HTML5_ and Angular `>=2.0.0-rc1`. This is the sister project of the [angular-data-table](https://github.com/swimlane/angular-data-table) that is designed for Angular 1.x.
 
-For more information, check out the [documentation](https://swimlane.gitbooks.io/angular2-data-table/content/).
+- [Documentation](https://swimlane.gitbooks.io/angular2-data-table/content/)
+- [Demo](http://plnkr.co/edit/9LydEkpjKu2VY4r0fDZX?p=preview)
 
 ## Features
 - Light codebase / No external deps
