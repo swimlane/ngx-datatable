@@ -1,5 +1,5 @@
 export enum SelectionType {
-  single,
-  multi,
-  multiShift
+  single = 'single',
+  multi = 'multi',
+  multiShift = 'multiShift'
 }

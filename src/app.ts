@@ -6,7 +6,8 @@ import {
   DataTable,
   TableOptions,
   TableColumn,
-  SelectionType
+  SelectionType,
+  ColumnMode
 //} from '../release/angular2-data-table.js';
 } from './main';
 
@@ -43,14 +44,14 @@ class AppComponent {
   ];
 
 	options = new TableOptions({
-    columnMode: 'force',
+    columnMode: ColumnMode.force,
     headerHeight: 50,
     footerHeight: 50,
     rowHeight: 'auto',
     limit: 10,
     selectionType: SelectionType.multiShift,
     columns: [
-      new TableColumn({ name: "Name", width: 300 }),
+      new TableColumn({ name: "Name" }),
       new TableColumn({ name: "Gender" }),
       new TableColumn({ name: "Company", comparator: this.sorter.bind(this) })
     ]

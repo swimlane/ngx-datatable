@@ -11,6 +11,7 @@ import {
 import { StateService } from '../services/State';
 import { Visibility } from '../directives/Visibility';
 import { forceFillColumnWidths, adjustColumnWidths } from '../utils/math';
+import { ColumnMode } from '../models/ColumnMode';
 import { TableOptions } from '../models/TableOptions';
 
 import { DataTableHeader } from './header/Header';
@@ -114,9 +115,9 @@ export class DataTable {
       width =- this.state.scrollbarWidth;
     }
 
-    if(this.options.columnMode === 'force'){
+    if(this.options.columnMode === ColumnMode.force){
       forceFillColumnWidths(this.options.columns, width, forceIdx);
-    } else if(this.options.columnMode === 'flex') {
+    } else if(this.options.columnMode === ColumnMode.flex) {
       adjustColumnWidths(this.options.columns, width);
     }
   }

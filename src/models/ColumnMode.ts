@@ -1,5 +1,5 @@
 export enum ColumnMode {
-  standard,
-  flex,
-  force
+  standard = 'standard',
+  flex = 'flex',
+  force = 'force'
 }
