@@ -793,7 +793,7 @@ $__System.register("11", ["5", "e", "8", "b", "9", "c", "d"], function(exports_1
           get: function() {
             if (this.state.options.scrollbarH)
               return this.state.innerWidth;
-            return 'auto';
+            return '100%';
           },
           enumerable: true,
           configurable: true
@@ -1206,7 +1206,7 @@ $__System.register("19", ["5", "12", "15", "16", "e", "1a", "17", "18"], functio
           get: function() {
             if (this.state.options.scrollbarH)
               return this.state.innerWidth;
-            return 'auto';
+            return '100%';
           },
           enumerable: true,
           configurable: true
