@@ -894,7 +894,6 @@ SystemJS.config({
     "meta": {
       "*.js": {
         "deps": [
-          "dist/bundle-core.js",
           "dist/bundle-ng.js",
           "dist/bundle-rx.js"
         ]
@@ -903,15 +902,7 @@ SystemJS.config({
   },
   packages: {
     "angular2-data-table": {
-      "main": "main.js",
-      "meta": {
-        "main.js": {
-          "deps": [
-            "reflect-metadata",
-            "core-js"
-          ]
-        }
-      }
+      "main": "main.js"
     }
   }
 });
@@ -929,7 +920,6 @@ SystemJS.config({
     "@angular/platform-browser": "npm:@angular/platform-browser@2.0.0-rc.1",
     "@angular/platform-browser-dynamic": "npm:@angular/platform-browser-dynamic@2.0.0-rc.1",
     "assert": "github:jspm/nodelibs-assert@0.2.0-alpha",
-    "core-js": "npm:core-js@2.4.0",
     "fs": "github:jspm/nodelibs-fs@0.2.0-alpha",
     "path": "github:jspm/nodelibs-path@0.2.0-alpha",
     "process": "github:jspm/nodelibs-process@0.2.0-alpha",
