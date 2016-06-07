@@ -68,7 +68,7 @@ export class DataTableBody {
   get bodyWidth() {
     if(this.state.options.scrollbarH)
       return this.state.innerWidth;
-    return 'auto';
+    return '100%';
   }
 
   ngOnInit() {

@@ -86,7 +86,7 @@ export class DataTableHeader {
   get headerWidth() {
     if(this.state.options.scrollbarH)
       return this.state.innerWidth;
-    return 'auto';
+    return '100%';
   }
 
   constructor(private state: StateService, elm: ElementRef){
