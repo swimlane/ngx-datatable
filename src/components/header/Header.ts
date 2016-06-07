@@ -75,14 +75,20 @@ import { DataTableHeaderCell } from './HeaderCell';
     LongPress
   ],
   host: {
-    '[style.width]':'state.innerWidth',
+    '[style.width]':'headerWidth',
     '[style.height]':'state.options.headerHeight'
   }
 })
 export class DataTableHeader {
 
   private state: StateService;
-  
+
+  get headerWidth() {
+    if(this.state.options.scrollbarH)
+      return this.state.innerWidth;
+    return 'auto';
+  }
+
   constructor(private state: StateService, elm: ElementRef){
     elm.nativeElement.classList.add('datatable-header');
   }

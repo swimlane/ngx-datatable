@@ -28,6 +28,9 @@ export class LongPress {
 
   @HostListener('mousedown', ['$event'])
   onMouseDown(event) {
+    // don't do right/middle clicks
+    if(event.which !== 1) return;
+
     this._pressing = true;
     this._longPressing = false;
 

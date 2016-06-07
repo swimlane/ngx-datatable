@@ -82,6 +82,10 @@ export class DataTable {
     this.state.onRowsUpdate.subscribe((e) => this.onRowsUpdate.emit(e));
   }
 
+  ngAfterViewInit() {
+    this.adjustColumns();
+  }
+
   ngDoCheck() {
     if(this.differ.diff(this.rows)) {
       this.state.setRows(this.rows);

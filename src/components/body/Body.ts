@@ -37,7 +37,7 @@ import { selectRows, selectRowsBetween } from '../../utils/selection';
     DataTableScroll
   ],
   host: {
-    '[style.width]':'state.innerWidth',
+    '[style.width]':'bodyWidth',
     '[style.height]':'bodyHeight',
     '[class.loading]': 'showProgress'
   }
@@ -62,6 +62,12 @@ export class DataTableBody {
   get bodyHeight() {
     if(this.state.options.scrollbarV)
       return this.state.bodyHeight;
+    return 'auto';
+  }
+
+  get bodyWidth() {
+    if(this.state.options.scrollbarH)
+      return this.state.innerWidth;
     return 'auto';
   }
 
