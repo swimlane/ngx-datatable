@@ -342,6 +342,8 @@ $__System.register("8", ["5"], function(exports_1, context_1) {
         });
         LongPress.prototype.onMouseDown = function(event) {
           var _this = this;
+          if (event.which !== 1)
+            return;
           this._pressing = true;
           this._longPressing = false;
           this._timeout = setTimeout(function() {
@@ -787,6 +789,15 @@ $__System.register("11", ["5", "e", "8", "b", "9", "c", "d"], function(exports_1
           this.state = state;
           elm.nativeElement.classList.add('datatable-header');
         }
+        Object.defineProperty(DataTableHeader.prototype, "headerWidth", {
+          get: function() {
+            if (this.state.options.scrollbarH)
+              return this.state.innerWidth;
+            return 'auto';
+          },
+          enumerable: true,
+          configurable: true
+        });
         DataTableHeader.prototype.columnResized = function(width, column) {
           column.width = width;
         };
@@ -802,7 +813,7 @@ $__System.register("11", ["5", "e", "8", "b", "9", "c", "d"], function(exports_1
           template: "\n  \t<div\n      [style.width]=\"state.columnGroupWidths.total\"\n      class=\"datatable-header-inner\"\n      orderable\n      (onReorder)=\"columnReordered($event)\">\n      <div\n        class=\"datatable-row-left\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.left\"\n          resizable\n          [resizeEnabled]=\"column.resizable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"draggable = true\"\n          (onLongPressEnd)=\"draggable = false\"\n          draggable\n          [dragX]=\"column.draggable && draggable\"\n          [dragY]=\"false\"\n          [model]=\"column\">\n        </datatable-header-cell>\n      </div>\n      <div\n        class=\"datatable-row-center\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.center\"\n          resizable\n          [resizeEnabled]=\"column.resizable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"draggable = true\"\n          (onLongPressEnd)=\"draggable = false\"\n          draggable\n          [dragX]=\"column.draggable && draggable\"\n          [dragY]=\"false\"\n          [model]=\"column\">\n        </datatable-header-cell>\n      </div>\n      <div\n        class=\"datatable-row-right\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.right\"\n          resizable\n          [resizeEnabled]=\"column.resizable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"draggable = true\"\n          (onLongPressEnd)=\"draggable = false\"\n          draggable\n          [dragX]=\"column.draggable && draggable\"\n          [dragY]=\"false\"\n          [model]=\"column\">\n        </datatable-header-cell>\n      </div>\n    </div>\n  ",
           directives: [HeaderCell_1.DataTableHeaderCell, Draggable_1.Draggable, Resizable_1.Resizable, Orderable_1.Orderable, LongPress_1.LongPress],
           host: {
-            '[style.width]': 'state.innerWidth',
+            '[style.width]': 'headerWidth',
             '[style.height]': 'state.options.headerHeight'
           }
         }), __metadata('design:paramtypes', [State_1.StateService, (typeof(_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object])], DataTableHeader);
@@ -1191,6 +1202,15 @@ $__System.register("19", ["5", "12", "15", "16", "e", "1a", "17", "18"], functio
           enumerable: true,
           configurable: true
         });
+        Object.defineProperty(DataTableBody.prototype, "bodyWidth", {
+          get: function() {
+            if (this.state.options.scrollbarH)
+              return this.state.innerWidth;
+            return 'auto';
+          },
+          enumerable: true,
+          configurable: true
+        });
         DataTableBody.prototype.ngOnInit = function() {
           var _this = this;
           this.rows = this.state.rows.slice();
@@ -1258,7 +1278,7 @@ $__System.register("19", ["5", "12", "15", "16", "e", "1a", "17", "18"], functio
           template: "\n    <div>\n      <datatable-progress></datatable-progress>\n      <datatable-scroll\n        [rowHeight]=\"state.options.rowHeight\"\n        [count]=\"state.rowCount\"\n        [scrollWidth]=\"state.columnGroupWidths.total\">\n        <datatable-body-row\n          *ngFor=\"let row of rows; let i = index;\"\n          [attr.tabindex]=\"i\"\n          (click)=\"rowClicked($event, i, row)\"\n          (keydown)=\"rowKeydown($event, i, row)\"\n          [row]=\"row\">\n        </datatable-body-row>\n        <div\n          class=\"empty\"\n          *ngIf=\"!rows.length\"\n          [innerHTML]=\"state.options.emptyMessage\">\n        </div>\n      </datatable-scroll>\n    </div>\n  ",
           directives: [ProgressBar_1.ProgressBar, BodyRow_1.DataTableBodyRow, Scroll_1.DataTableScroll],
           host: {
-            '[style.width]': 'state.innerWidth',
+            '[style.width]': 'bodyWidth',
             '[style.height]': 'bodyHeight',
             '[class.loading]': 'showProgress'
           }
@@ -1859,6 +1879,9 @@ $__System.register("21", ["5", "2", "e", "4", "6", "22", "11", "19", "20"], func
           this.state.onRowsUpdate.subscribe(function(e) {
             return _this.onRowsUpdate.emit(e);
           });
+        };
+        DataTable.prototype.ngAfterViewInit = function() {
+          this.adjustColumns();
         };
         DataTable.prototype.ngDoCheck = function() {
           if (this.differ.diff(this.rows)) {
