@@ -2105,11 +2105,9 @@ $__System.register("1d", [], function(exports_1, context_1) {
 $__System.register("1", ["21", "22", "f", "1a", "23", "10", "1d"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
-  var DataTable_1;
-  var A2DT_DIRECTIVES;
   return {
     setters: [function(DataTable_1_1) {
-      DataTable_1 = DataTable_1_1;
+      exports_1({"DataTable": DataTable_1_1["DataTable"]});
     }, function(TableOptions_1_1) {
       exports_1({"TableOptions": TableOptions_1_1["TableOptions"]});
     }, function(TableColumn_1_1) {
@@ -2123,9 +2121,7 @@ $__System.register("1", ["21", "22", "f", "1a", "23", "10", "1d"], function(expo
     }, function(SortType_1_1) {
       exports_1({"SortType": SortType_1_1["SortType"]});
     }],
-    execute: function() {
-      exports_1("A2DT_DIRECTIVES", A2DT_DIRECTIVES = [DataTable_1.DataTable]);
-    }
+    execute: function() {}
   };
 });
 

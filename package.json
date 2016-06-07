@@ -25,7 +25,8 @@
     "release": "NODE_ENV=production npm run clean:release && npm run release:build && npm run release:minify && npm run release:css",
     "release:css": "node-sass -o release/ src/themes && node-sass -o release/ src/components",
     "release:minify": "uglifyjs release/angular2-data-table.js --source-map release/angular2-data-table.min.js.map --source-map-url release/angular2-data-table.js.map --compress --mangle --screw-ie8 --output release/angular2-data-table.min.js",
-    "release:build": "jspm build dist/main.js - npm:@angular/platform-browser-dynamic@2.0.0-rc.1 - npm:rxjs@5.0.0-beta.6 release/angular2-data-table.js"
+    "release:build": "jspm build dist/main.js - npm:@angular/platform-browser-dynamic@2.0.0-rc.1 - npm:rxjs@5.0.0-beta.6 release/angular2-data-table.js",
+    "release:build:umd": "jspm build dist/main.js - npm:@angular/platform-browser-dynamic@2.0.0-rc.1 - npm:rxjs@5.0.0-beta.6 release/angular2-data-table.js --format umd --global-name angular2DataTable --global-deps \"{'rxjs/Rx.js': 'Rxjs/Rx.js', '@angular/core/index.js': '@angular/core/index.js'}\""
   },
   "repository": {
     "type": "git",
