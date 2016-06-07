@@ -11,10 +11,10 @@ export class TableOptions {
   columns: Array<TableColumn>;
 
   // Enable vertical scrollbars
-  scrollbarV: boolean = true;
+  scrollbarV: boolean = false;
 
   // Enable horz scrollbars
-  scrollbarH: boolean = true;
+  scrollbarH: boolean = false;
 
   // The row height; which is necessary
   // to calculate the height for the lazy rendering.

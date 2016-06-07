@@ -1,4 +1,10 @@
-import { Component, Input, ElementRef, ViewChildren, QueryList } from '@angular/core';
+import {
+  Component,
+  Output,
+  Input,
+  ElementRef,
+  EventEmitter
+} from '@angular/core';
 
 import { StateService } from '../../services/State';
 
@@ -18,7 +24,9 @@ import { DataTableHeaderCell } from './HeaderCell';
       orderable
       (onReorder)="columnReordered($event)">
       <div
-        class="datatable-row-left">
+        class="datatable-row-left"
+        [style.width]="state.columnGroupWidths.left + 'px'"
+        *ngIf="state.columnsByPin.left.length">
         <datatable-header-cell
           *ngFor="let column of state.columnsByPin.left"
           resizable
@@ -30,11 +38,14 @@ import { DataTableHeaderCell } from './HeaderCell';
           draggable
           [dragX]="column.draggable && draggable"
           [dragY]="false"
-          [model]="column">
+          [model]="column"
+          (onColumnChange)="onColumnChange.emit($event)">
         </datatable-header-cell>
       </div>
       <div
-        class="datatable-row-center">
+        class="datatable-row-center"
+        [style.width]="state.columnGroupWidths.center + 'px'"
+        *ngIf="state.columnsByPin.center.length">
         <datatable-header-cell
           *ngFor="let column of state.columnsByPin.center"
           resizable
@@ -46,11 +57,14 @@ import { DataTableHeaderCell } from './HeaderCell';
           draggable
           [dragX]="column.draggable && draggable"
           [dragY]="false"
-          [model]="column">
+          [model]="column"
+          (onColumnChange)="onColumnChange.emit($event)">
         </datatable-header-cell>
       </div>
       <div
-        class="datatable-row-right">
+        class="datatable-row-right"
+        [style.width]="state.columnGroupWidths.right + 'px'"
+        *ngIf="state.columnsByPin.right.length">
         <datatable-header-cell
           *ngFor="let column of state.columnsByPin.right"
           resizable
@@ -62,7 +76,8 @@ import { DataTableHeaderCell } from './HeaderCell';
           draggable
           [dragX]="column.draggable && draggable"
           [dragY]="false"
-          [model]="column">
+          [model]="column"
+          (onColumnChange)="onColumnChange.emit($event)">
         </datatable-header-cell>
       </div>
     </div>
@@ -81,6 +96,8 @@ import { DataTableHeaderCell } from './HeaderCell';
 })
 export class DataTableHeader {
 
+  @Output() onColumnChange = new EventEmitter();
+
   private state: StateService;
 
   get headerWidth() {
@@ -95,11 +112,21 @@ export class DataTableHeader {
 
   columnResized(width, column) {
     column.width = width;
+
+    this.onColumnChange.emit({
+      type: 'resize',
+      value: column
+    });
   }
 
   columnReordered({ prevIndex, newIndex, model }) {
     this.state.options.columns.splice(prevIndex, 1);
     this.state.options.columns.splice(newIndex, 0, model);
+
+    this.onColumnChange.emit({
+      type: 'reorder',
+      value: model
+    });
   }
 
 }

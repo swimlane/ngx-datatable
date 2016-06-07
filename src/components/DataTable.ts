@@ -8,7 +8,6 @@ import {
   KeyValueDiffers
 } from '@angular/core';
 
-import { debounceable } from '../utils/debounce';
 import { StateService } from '../services/State';
 import { Visibility } from '../directives/Visibility';
 import { forceFillColumnWidths, adjustColumnWidths } from '../utils/math';
@@ -24,7 +23,9 @@ import { DataTableFooter } from './footer/Footer';
   	<div
       visibility-observer
       (onVisibilityChange)="adjustSizes()">
-      <datatable-header></datatable-header>
+      <datatable-header
+        (onColumnChange)="onColumnChange.emit($event)">
+      </datatable-header>
       <datatable-body
         (onRowClick)="onRowClick.emit($event)"
         (onRowSelect)="state.setSelected($event)">
@@ -60,6 +61,7 @@ export class DataTable {
   @Output() onRowsUpdate = new EventEmitter();
   @Output() onRowClick = new EventEmitter();
   @Output() onSelectionChange = new EventEmitter();
+  @Output() onColumnChange = new EventEmitter();
 
   private state: StateService;
   private element: ElementRef;
@@ -77,9 +79,6 @@ export class DataTable {
       .setOptions(options)
       .setRows(rows)
       .setSelected(selected);
-
-    // todo: better way to do this?
-    this.state.onRowsUpdate.subscribe((e) => this.onRowsUpdate.emit(e));
   }
 
   ngAfterViewInit() {
@@ -89,6 +88,7 @@ export class DataTable {
   ngDoCheck() {
     if(this.differ.diff(this.rows)) {
       this.state.setRows(this.rows);
+      this.onRowsUpdate.emit(this.rows);
     }
   }
 
@@ -105,7 +105,6 @@ export class DataTable {
     this.adjustColumns();
   }
 
-  @debounceable(10)
   @HostListener('window:resize')
   resize() { this.adjustSizes(); }
 

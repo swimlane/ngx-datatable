@@ -12,7 +12,7 @@ import { selectRows, selectRowsBetween } from '../../utils/selection';
   template: `
     <div>
       <datatable-progress
-        [hidden]="showProgress">
+        [hidden]="!state.options.loadingIndicator">
       </datatable-progress>
       <datatable-scroll
         [rowHeight]="state.options.rowHeight"
@@ -48,16 +48,11 @@ export class DataTableBody {
   @Output() onRowClick = new EventEmitter();
   @Output() onRowSelect = new EventEmitter();
 
-  private showProgress: boolean = true;
   private state: StateService;
   private prevIndex: number;
 
   get selectEnabled() {
     return this.state.options.selectionType !== undefined;
-  }
-
-  constructor(private state: StateService, elm: ElementRef){
-    elm.nativeElement.classList.add('datatable-body');
   }
 
   get bodyHeight() {
@@ -72,20 +67,30 @@ export class DataTableBody {
     return '100%';
   }
 
+  constructor(private state: StateService, elm: ElementRef){
+    elm.nativeElement.classList.add('datatable-body');
+  }
+
   ngOnInit() {
     this.rows = [...this.state.rows];
 
     this.state.onPageChange.subscribe(page => {
       const { first, last } = this.state.indexes;
       this.rows = this.state.rows.slice(first, last);
-      setTimeout(() => this.showProgress = false, 500);
+      this.hideIndicator();
     });
 
     this.state.onRowsUpdate.subscribe(rows => {
       const { first, last } = this.state.indexes;
       this.rows = rows.slice(first, last);
-      setTimeout(() => this.showProgress = false, 500);
+      this.hideIndicator();
     });
+  }
+
+  hideIndicator() {
+    setTimeout(() => {
+      this.state.options.loadingIndicator = false;
+    }, 500);
   }
 
   rowClicked(event, index, row) {

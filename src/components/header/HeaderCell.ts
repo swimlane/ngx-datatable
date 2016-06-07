@@ -1,4 +1,11 @@
-import { Component, Input, ElementRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  ElementRef,
+  EventEmitter,
+  Output
+} from '@angular/core';
+
 import { StateService } from '../../services/State';
 import { TableColumn } from '../../models/TableColumn';
 import { SortDirection } from '../../models/SortDirection';
@@ -32,7 +39,8 @@ import { SortDirection } from '../../models/SortDirection';
 export class DataTableHeaderCell {
 
   @Input() model: TableColumn;
-  
+  @Output() onColumnChange = new EventEmitter();
+
   private state: StateService;
 
   get sortDir() {
@@ -54,6 +62,11 @@ export class DataTableHeaderCell {
   onSort() {
     if(this.model.sortable) {
       this.state.nextSort(this.model);
+
+      this.onColumnChange.emit({
+        type: 'sort',
+        value: this.model
+      })
     }
   }
 
