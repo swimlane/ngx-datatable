@@ -35,7 +35,6 @@ export class TableColumn {
   resizable: boolean = true;
 
   // Custom sort comparator
-  // pass false if you want to server sort
   comparator: any = undefined;
 
   // If yes then the column can be sorted.
