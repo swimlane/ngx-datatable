@@ -1768,7 +1768,7 @@ $__System.register("1f", ["4", "d", "1e"], function(exports_1, context_1) {
   };
 });
 
-$__System.register("20", ["4", "d", "3", "5", "21", "10", "18", "1f"], function(exports_1, context_1) {
+$__System.register("20", ["4", "d", "3", "5", "21", "22", "10", "18", "1f"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
@@ -1791,6 +1791,7 @@ $__System.register("20", ["4", "d", "3", "5", "21", "10", "18", "1f"], function(
       State_1,
       Visibility_1,
       math_1,
+      ColumnMode_1,
       TableOptions_1,
       Header_1,
       Body_1,
@@ -1805,6 +1806,8 @@ $__System.register("20", ["4", "d", "3", "5", "21", "10", "18", "1f"], function(
       Visibility_1 = Visibility_1_1;
     }, function(math_1_1) {
       math_1 = math_1_1;
+    }, function(ColumnMode_1_1) {
+      ColumnMode_1 = ColumnMode_1_1;
     }, function(TableOptions_1_1) {
       TableOptions_1 = TableOptions_1_1;
     }, function(Header_1_1) {
@@ -1865,9 +1868,9 @@ $__System.register("20", ["4", "d", "3", "5", "21", "10", "18", "1f"], function(
           if (this.options.scrollbarV) {
             width = -this.state.scrollbarWidth;
           }
-          if (this.options.columnMode === 'force') {
+          if (this.options.columnMode === ColumnMode_1.ColumnMode.force) {
             math_1.forceFillColumnWidths(this.options.columns, width, forceIdx);
-          } else if (this.options.columnMode === 'flex') {
+          } else if (this.options.columnMode === ColumnMode_1.ColumnMode.flex) {
             math_1.adjustColumnWidths(this.options.columns, width);
           }
         };
@@ -1907,7 +1910,7 @@ $__System.register("20", ["4", "d", "3", "5", "21", "10", "18", "1f"], function(
   };
 });
 
-$__System.register("21", ["22", "1c"], function(exports_1, context_1) {
+$__System.register("22", ["21", "1c"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var ColumnMode_1,
@@ -2031,16 +2034,16 @@ $__System.register("19", [], function(exports_1, context_1) {
     setters: [],
     execute: function() {
       (function(SelectionType) {
-        SelectionType[SelectionType["single"] = 0] = "single";
-        SelectionType[SelectionType["multi"] = 1] = "multi";
-        SelectionType[SelectionType["multiShift"] = 2] = "multiShift";
+        SelectionType[SelectionType["single"] = 'single'] = "single";
+        SelectionType[SelectionType["multi"] = 'multi'] = "multi";
+        SelectionType[SelectionType["multiShift"] = 'multiShift'] = "multiShift";
       })(SelectionType || (SelectionType = {}));
       exports_1("SelectionType", SelectionType);
     }
   };
 });
 
-$__System.register("22", [], function(exports_1, context_1) {
+$__System.register("21", [], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var ColumnMode;
@@ -2048,9 +2051,9 @@ $__System.register("22", [], function(exports_1, context_1) {
     setters: [],
     execute: function() {
       (function(ColumnMode) {
-        ColumnMode[ColumnMode["standard"] = 0] = "standard";
-        ColumnMode[ColumnMode["flex"] = 1] = "flex";
-        ColumnMode[ColumnMode["force"] = 2] = "force";
+        ColumnMode[ColumnMode["standard"] = 'standard'] = "standard";
+        ColumnMode[ColumnMode["flex"] = 'flex'] = "flex";
+        ColumnMode[ColumnMode["force"] = 'force'] = "force";
       })(ColumnMode || (ColumnMode = {}));
       exports_1("ColumnMode", ColumnMode);
     }
@@ -2065,8 +2068,8 @@ $__System.register("f", [], function(exports_1, context_1) {
     setters: [],
     execute: function() {
       (function(SortDirection) {
-        SortDirection[SortDirection["asc"] = 0] = "asc";
-        SortDirection[SortDirection["desc"] = 1] = "desc";
+        SortDirection[SortDirection["asc"] = 'asc'] = "asc";
+        SortDirection[SortDirection["desc"] = 'desc'] = "desc";
       })(SortDirection || (SortDirection = {}));
       exports_1("SortDirection", SortDirection);
     }
@@ -2081,15 +2084,15 @@ $__System.register("1c", [], function(exports_1, context_1) {
     setters: [],
     execute: function() {
       (function(SortType) {
-        SortType[SortType["single"] = 0] = "single";
-        SortType[SortType["multi"] = 1] = "multi";
+        SortType[SortType["single"] = 'single'] = "single";
+        SortType[SortType["multi"] = 'multi'] = "multi";
       })(SortType || (SortType = {}));
       exports_1("SortType", SortType);
     }
   };
 });
 
-$__System.register("1", ["20", "21", "e", "19", "22", "f", "1c"], function(exports_1, context_1) {
+$__System.register("1", ["20", "22", "e", "19", "21", "f", "1c"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   return {
