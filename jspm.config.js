@@ -922,6 +922,7 @@ SystemJS.config({
     "assert": "github:jspm/nodelibs-assert@0.2.0-alpha",
     "fs": "github:jspm/nodelibs-fs@0.2.0-alpha",
     "path": "github:jspm/nodelibs-path@0.2.0-alpha",
+    "platform-browser-dynamic": "npm:@angular/platform-browser-dynamic@2.0.0-rc.1",
     "process": "github:jspm/nodelibs-process@0.2.0-alpha",
     "reflect-metadata": "npm:reflect-metadata@0.1.2",
     "rxjs": "npm:rxjs@5.0.0-beta.6",
