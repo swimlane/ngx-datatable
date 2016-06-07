@@ -54,10 +54,8 @@
   .datatable.material .datatable-body .datatable-body-row.active, .datatable.material .datatable-body .datatable-body-row.active:focus, .datatable.material .datatable-body .datatable-body-row.active:hover {
     background-color: #304FFE;
     color: #FFF; }
-  .datatable.material .datatable-body.loading .progress-linear {
-    display: block; }
   .datatable.material .datatable-body .progress-linear {
-    display: none;
+    display: block;
     position: relative;
     width: 100%;
     height: 5px;
