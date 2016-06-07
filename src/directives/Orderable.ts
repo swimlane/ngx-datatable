@@ -3,24 +3,24 @@ import {
   Input,
   Output,
   EventEmitter,
-  ContentChildren
+  ContentChildren,
+  QueryList
 } from '@angular/core';
+
 import { Draggable } from './Draggable';
 
-@Directive({
-  selector: '[orderable]'
-})
+@Directive({ selector: '[orderable]' })
 export class Orderable {
 
-  @Output() onReorder = new EventEmitter();
+  @Output() onReorder: EventEmitter = new EventEmitter();
 
-  @ContentChildren(Draggable) 
+  @ContentChildren(Draggable)
   private drags: QueryList<Draggable>;
 
-  private positions: Object;
+  private positions: any;
 
   ngAfterContentInit() {
-    this.drags.forEach(d => 
+    this.drags.forEach(d =>
       d.onDragStart.subscribe(this.onDragStart.bind(this)) &&
       d.onDragEnd.subscribe(this.onDragEnd.bind(this)));
   }

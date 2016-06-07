@@ -45,14 +45,14 @@ import { DataTableBodyCell } from './BodyCell';
 })
 export class DataTableBodyRow {
 
-  @Input() row: Object;
+  @Input() row: any;
+
+  private state: StateService;
 
   get isSelected() {
     return this.state.selected &&
       this.state.selected.indexOf(this.row) > -1;
   }
-
-  private state: StateService;
 
   constructor(private state: StateService, elm: ElementRef){
     elm.nativeElement.classList.add('datatable-body-row');

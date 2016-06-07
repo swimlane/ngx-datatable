@@ -52,7 +52,7 @@ export class TableColumn {
   // property to bind to on the row
   prop: string;
 
-  constructor(props) {
+  constructor(props: any) {
     Object.assign(this, props);
 
     if(!this.prop && this.name) {

@@ -6,8 +6,8 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
-import { Observable } from 'rxjs';
 
+import { Observable } from 'rxjs';
 
 /**
  * Draggable Directive for Angular2
@@ -22,18 +22,18 @@ export class Draggable {
 
   // this kinda a hack to get
   // the model in the orderable
-  @Input() model;
+  @Input() model: any;
 
-  @Input() dragX = true;
-  @Input() dragY = true;
+  @Input() dragX: boolean = true;
+  @Input() dragY: boolean = true;
 
-  @Output() onDragStart = new EventEmitter();
-  @Output() onDragging = new EventEmitter();
-  @Output() onDragEnd = new EventEmitter();
+  @Output() onDragStart: EventEmitter = new EventEmitter();
+  @Output() onDragging: EventEmitter = new EventEmitter();
+  @Output() onDragEnd: EventEmitter = new EventEmitter();
 
   private dragging: boolean = false;
-  element: any;
-  subscription: any;
+  private subscription: any;
+  element: HTMLElement;
 
   constructor(element: ElementRef) {
     this.element = element.nativeElement;

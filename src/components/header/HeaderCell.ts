@@ -25,7 +25,6 @@ import { SortDirection } from '../../models/SortDirection';
       </span>
     </div>
   `,
-  directives: [],
   host: {
     '[class.sortable]': 'model.sortable',
     '[class.resizable]': 'model.resizable',
@@ -45,7 +44,7 @@ export class DataTableHeaderCell {
 
   get sortDir() {
     let sort = this.state.options.sorts.find(s => {
-      return s.prop === this.model.prop
+      return s.prop === this.model.prop;
     });
 
     if(sort) return sort.dir;

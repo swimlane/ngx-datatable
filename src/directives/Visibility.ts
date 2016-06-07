@@ -5,6 +5,7 @@ import {
   ElementRef,
   HostBinding
 } from '@angular/core';
+
 import { VisibilityObserver } from '../utils/VisibilityObserver';
 
 /**
@@ -21,9 +22,9 @@ import { VisibilityObserver } from '../utils/VisibilityObserver';
 @Directive({ selector: '[visibility-observer]' })
 export class Visibility {
 
-  @HostBinding('class.visible') visible = false;
+  @HostBinding('class.visible') visible: boolean = false;
 
-  @Output() onVisibilityChange = new EventEmitter();
+  @Output() onVisibilityChange: EventEmitter = new EventEmitter();
 
   constructor(element: ElementRef) {
     new VisibilityObserver(

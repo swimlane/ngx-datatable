@@ -16,11 +16,11 @@ import { Observable } from 'rxjs';
 })
 export class Resizable {
 
-  @Input() resizeEnabled = true;
-  @Input() minWidth;
-  @Input() maxWidth;
+  @Input() resizeEnabled: boolean = true;
+  @Input() minWidth: number;
+  @Input() maxWidth: number;
 
-  @Output() onResize = new EventEmitter();
+  @Output() onResize: EventEmitter = new EventEmitter();
 
   private prevScreenX: number = 0;
   private resizing: boolean = false;

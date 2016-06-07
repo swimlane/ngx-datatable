@@ -1,11 +1,13 @@
 import { Component, Input, ElementRef, Output, EventEmitter } from '@angular/core';
-import { ProgressBar } from './ProgressBar';
-import { DataTableBodyRow } from './BodyRow';
-import { DataTableScroll } from './Scroll';
+
 import { StateService } from '../../services/State';
 import { SelectionType } from '../../models/SelectionType';
 import { Keys } from '../../utils/Keys';
 import { selectRows, selectRowsBetween } from '../../utils/selection';
+
+import { ProgressBar } from './ProgressBar';
+import { DataTableBodyRow } from './BodyRow';
+import { DataTableScroll } from './Scroll';
 
 @Component({
   selector: 'datatable-body',
@@ -45,8 +47,8 @@ import { selectRows, selectRowsBetween } from '../../utils/selection';
 })
 export class DataTableBody {
 
-  @Output() onRowClick = new EventEmitter();
-  @Output() onRowSelect = new EventEmitter();
+  @Output() onRowClick: EventEmitter = new EventEmitter();
+  @Output() onRowSelect: EventEmitter = new EventEmitter();
 
   private state: StateService;
   private prevIndex: number;

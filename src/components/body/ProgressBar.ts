@@ -1,4 +1,4 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'datatable-progress',
@@ -10,7 +10,6 @@ import { Component, HostBinding } from '@angular/core';
         <div class="bar"></div>
       </div>
     </div>
-  `,
-  directives: []
+  `
 })
 export class ProgressBar {}

@@ -6,7 +6,7 @@ export class Sort {
 
   dir: SortDirection;
 
-  constructor(props) {
+  constructor(props: any) {
     Object.assign(this, props);
   }
 

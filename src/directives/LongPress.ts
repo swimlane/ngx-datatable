@@ -12,9 +12,9 @@ export class LongPress {
 
   @Input() duration: number = 500;
 
-  @Output() onLongPress = new EventEmitter();
-  @Output() onLongPressing = new EventEmitter();
-  @Output() onLongPressEnd = new EventEmitter();
+  @Output() onLongPress: EventEmitter = new EventEmitter();
+  @Output() onLongPressing: EventEmitter = new EventEmitter();
+  @Output() onLongPressEnd: EventEmitter = new EventEmitter();
 
   private _pressing: boolean;
   private _longPressing: boolean;

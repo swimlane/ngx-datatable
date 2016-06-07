@@ -1,4 +1,5 @@
 import { Component, Input, ElementRef } from '@angular/core';
+import { TableColumn } from '../../models/TableColumn';
 import { deepValueGetter } from '../../utils/deepGetter';
 
 @Component({
@@ -16,8 +17,8 @@ import { deepValueGetter } from '../../utils/deepGetter';
 })
 export class DataTableBodyCell {
 
-  @Input() column: Object;
-  @Input() row: Object;
+  @Input() column: TableColumn;
+  @Input() row: any;
 
   get rowValue() {
     if(!this.row) return '';

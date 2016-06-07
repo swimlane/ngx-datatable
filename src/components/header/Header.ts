@@ -96,7 +96,7 @@ import { DataTableHeaderCell } from './HeaderCell';
 })
 export class DataTableHeader {
 
-  @Output() onColumnChange = new EventEmitter();
+  @Output() onColumnChange: EventEmitter = new EventEmitter();
 
   private state: StateService;
 
