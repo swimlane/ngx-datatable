@@ -59,13 +59,13 @@ export class DataTableBody {
 
   get bodyHeight() {
     if(this.state.options.scrollbarV)
-      return this.state.bodyHeight;
+      return this.state.bodyHeight + 'px';
     return 'auto';
   }
 
   get bodyWidth() {
     if(this.state.options.scrollbarH)
-      return this.state.innerWidth;
+      return this.state.innerWidth + 'px';
     return '100%';
   }
 

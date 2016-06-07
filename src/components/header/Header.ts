@@ -91,7 +91,7 @@ import { DataTableHeaderCell } from './HeaderCell';
   ],
   host: {
     '[style.width]':'headerWidth',
-    '[style.height]':'state.options.headerHeight'
+    '[style.height]':'headerHeight'
   }
 })
 export class DataTableHeader {
@@ -102,8 +102,14 @@ export class DataTableHeader {
 
   get headerWidth() {
     if(this.state.options.scrollbarH)
-      return this.state.innerWidth;
+      return this.state.innerWidth + 'px';
     return '100%';
+  }
+
+  get headerHeight() {
+    let height = this.state.options.headerHeight;
+    if(height !== 'auto') return `${height}px`;
+    return height;
   }
 
   constructor(private state: StateService, elm: ElementRef){

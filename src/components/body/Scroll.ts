@@ -7,7 +7,7 @@ import { Component, Input, ElementRef } from '@angular/core';
   `,
   host: {
     '[style.height]': 'scrollHeight',
-    '[style.width]': 'scrollWidth'
+    '[style.width]': 'scrollWidth + "px"'
   }
 })
 export class DataTableScroll {
@@ -17,7 +17,7 @@ export class DataTableScroll {
   @Input() scrollWidth: number;
 
   get scrollHeight() {
-    return this.count * this.rowHeight;
+    return (this.count * this.rowHeight) + 'px';
   }
 
   constructor(elm: ElementRef){

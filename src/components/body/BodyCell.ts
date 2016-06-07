@@ -11,8 +11,8 @@ import { deepValueGetter } from '../../utils/deepGetter';
   `,
   directives: [],
   host: {
-    '[style.width]':'column.width',
-    '[style.height]':'column.height'
+    '[style.width]':'column.width + "px"',
+    '[style.height]':'column.height + "px"'
   }
 })
 export class DataTableBodyCell {
