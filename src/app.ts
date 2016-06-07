@@ -29,16 +29,25 @@ import {
 class AppComponent {
 
   selected = [];
-	rows = [];
+	rows = [
+    {
+      "name": "Claudine Neal",
+      "gender": "female",
+      "company": "Sealoud"
+    },
+    {
+      "name": "Beryl Rice",
+      "gender": "female",
+      "company": "Velity"
+    }
+  ];
 
 	options = new TableOptions({
     columnMode: 'force',
-    scrollbarV: false,
     headerHeight: 50,
     footerHeight: 50,
     rowHeight: 'auto',
     limit: 10,
-    externalPaging: true,
     selectionType: SelectionType.multiShift,
     columns: [
       new TableColumn({ name: "Name", width: 300 }),
@@ -48,7 +57,7 @@ class AppComponent {
   });
 
   constructor() {
-    this.page();
+    // this.page();
   }
 
   page() {

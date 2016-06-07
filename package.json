@@ -1,6 +1,6 @@
 {
   "name": "a2dt",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "angular2-data-table is a Angular2 component for presenting large and complex data.",
   "main": "release/angular2-data-table.js",
   "scripts": {
