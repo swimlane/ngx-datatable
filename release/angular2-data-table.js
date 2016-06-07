@@ -1275,12 +1275,11 @@ $__System.register("19", ["5", "12", "15", "16", "e", "1a", "17", "18"], functio
         __decorate([core_1.Output(), __metadata('design:type', Object)], DataTableBody.prototype, "onRowSelect", void 0);
         DataTableBody = __decorate([core_1.Component({
           selector: 'datatable-body',
-          template: "\n    <div>\n      <datatable-progress></datatable-progress>\n      <datatable-scroll\n        [rowHeight]=\"state.options.rowHeight\"\n        [count]=\"state.rowCount\"\n        [scrollWidth]=\"state.columnGroupWidths.total\">\n        <datatable-body-row\n          *ngFor=\"let row of rows; let i = index;\"\n          [attr.tabindex]=\"i\"\n          (click)=\"rowClicked($event, i, row)\"\n          (keydown)=\"rowKeydown($event, i, row)\"\n          [row]=\"row\">\n        </datatable-body-row>\n        <div\n          class=\"empty\"\n          *ngIf=\"!rows.length\"\n          [innerHTML]=\"state.options.emptyMessage\">\n        </div>\n      </datatable-scroll>\n    </div>\n  ",
+          template: "\n    <div>\n      <datatable-progress\n        [hidden]=\"showProgress\">\n      </datatable-progress>\n      <datatable-scroll\n        [rowHeight]=\"state.options.rowHeight\"\n        [count]=\"state.rowCount\"\n        [scrollWidth]=\"state.columnGroupWidths.total\">\n        <datatable-body-row\n          *ngFor=\"let row of rows; let i = index;\"\n          [attr.tabindex]=\"i\"\n          (click)=\"rowClicked($event, i, row)\"\n          (keydown)=\"rowKeydown($event, i, row)\"\n          [row]=\"row\">\n        </datatable-body-row>\n        <div\n          class=\"empty\"\n          *ngIf=\"!rows.length\"\n          [innerHTML]=\"state.options.emptyMessage\">\n        </div>\n      </datatable-scroll>\n    </div>\n  ",
           directives: [ProgressBar_1.ProgressBar, BodyRow_1.DataTableBodyRow, Scroll_1.DataTableScroll],
           host: {
             '[style.width]': 'bodyWidth',
-            '[style.height]': 'bodyHeight',
-            '[class.loading]': 'showProgress'
+            '[style.height]': 'bodyHeight'
           }
         }), __metadata('design:paramtypes', [State_1.StateService, (typeof(_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object])], DataTableBody);
         return DataTableBody;

@@ -11,7 +11,9 @@ import { selectRows, selectRowsBetween } from '../../utils/selection';
   selector: 'datatable-body',
   template: `
     <div>
-      <datatable-progress></datatable-progress>
+      <datatable-progress
+        [hidden]="showProgress">
+      </datatable-progress>
       <datatable-scroll
         [rowHeight]="state.options.rowHeight"
         [count]="state.rowCount"
@@ -38,8 +40,7 @@ import { selectRows, selectRowsBetween } from '../../utils/selection';
   ],
   host: {
     '[style.width]':'bodyWidth',
-    '[style.height]':'bodyHeight',
-    '[class.loading]': 'showProgress'
+    '[style.height]':'bodyHeight'
   }
 })
 export class DataTableBody {
