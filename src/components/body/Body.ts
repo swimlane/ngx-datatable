@@ -19,7 +19,7 @@ import { selectRows, selectRowsBetween } from '../../utils/selection';
         <datatable-body-row
           *ngFor="let row of rows; let i = index;"
           [attr.tabindex]="i"
-          [class.active]="state.selected.includes(row)"
+          [class.active]="state.selected.indexOf(row) > -1"
           (click)="rowClicked($event, i, row)"
           (keydown)="rowKeydown($event, i, row)"
           [row]="row">
