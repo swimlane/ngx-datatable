@@ -102,8 +102,8 @@ class AppComponent {
     }, 500);
   }
 
-  onPage({ offset, limit, pageCount }) {
-    console.log('Paged!', offset, limit, pageCount);
+  onPage({ offset, limit, count }) {
+    console.log('Paged!', offset, limit, count);
     this.page();
   }
 

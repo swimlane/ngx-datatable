@@ -83,7 +83,7 @@ export class StateService {
     this.onPageChange.emit({
       offset: this.options.offset,
       limit: this.pageSize,
-      pageCount: this.pageCount
+      count: this.pageCount
     });
   }
 
