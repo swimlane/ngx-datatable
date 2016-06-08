@@ -1,17 +1,19 @@
 {
-  "gitbook": "3.0.3",
   "title": "angular2-data-table",
   "structure": {
     "summary": "docs/README.md"
   },
-  "plugins": ["edit-link", "prism", "-highlight", "github", "anker-enable"],
+  "plugins": [
+    "highlight",
+    "versions",
+    "github"
+  ],
   "pluginsConfig": {
-    "edit-link": {
-      "base": "https://github.com/swimlane/angular2-data-table/tree/master",
-      "label": "Edit This Page"
+    "versions": {
+      "type": "branches"
     },
     "github": {
-      "url": "swimlane/angular2-data-table"
+      "url": "https://github.com/swimlane/angular2-data-table/"
     }
   }
 }

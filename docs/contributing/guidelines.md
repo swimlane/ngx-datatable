@@ -1,4 +1,5 @@
-# Contributing Guidelines
+# Guidelines
+
 We would love for you to contribute to our project and help make it ever better! As a contributor, here are the guidelines we would like you to follow.
 
 ### Found an Issue?
@@ -25,3 +26,5 @@ If your issue appears to be a bug, and hasn't been reported, open a new issue. H
 - Screenshots - Due to the visual nature of angular-data-table, screenshots can help the team triage issues far more quickly than a text descrption.
 - Related Issues - has a similar issue been reported before?
 - Suggest a Fix - if you can't fix the bug yourself, perhaps you can point to what might be causing the problem (line of code or commit)
+
+
