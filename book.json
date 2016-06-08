@@ -1,19 +1,20 @@
 {
-  "gitbook": "3.x.x",
-  "title": "Swimlane",
-  "root": "/docs",
-  "plugins": [
-    "highlight",
-    "github",
-    "edit-link"
-  ],
-  "pluginsConfig": {
-    "edit-link": {
-      "base": "https://github.com/swimlane/angular2-data-table/tree/master",
-      "label": "Edit This Page"
-    },
-    "github": {
-      "url": "https://github.com/swimlane/angular2-data-table/"
+    "gitbook": "3.x.x",
+    "title": "Swimlane",
+    "root": "/docs",
+    "plugins": [
+        "highlight",
+        "github",
+        "edit-link",
+        "gistrun"
+    ],
+    "pluginsConfig": {
+        "github": {
+            "url": "https://github.com/swimlane/angular2-data-table/"
+        },
+        "edit-link": {
+            "base": "https://github.com/swimlane/angular2-data-table/tree/master",
+            "label": "Edit This Page"
+        }
     }
-  }
 }
