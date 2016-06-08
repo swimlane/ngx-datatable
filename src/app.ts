@@ -15,7 +15,7 @@ import {
   selector: 'app',
   template: `
     <div>
-    	<h3>Basic</h3>
+    	<h3>angular2-data-table</h3>
     	<datatable
         class="material"
     		[rows]="rows"
@@ -59,6 +59,9 @@ class AppComponent {
 
   constructor() {
     // this.page();
+    this.fetch((data) => {
+      this.rows.push(...data);
+    })
   }
 
   page() {
