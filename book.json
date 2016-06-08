@@ -1,7 +1,6 @@
 {
   "gitbook": "3.x.x",
   "title": "Swimlane",
-  "root": "./docs",
   "plugins": [
     "highlight"
   ],
