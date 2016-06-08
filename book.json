@@ -1,6 +1,9 @@
 {
   "gitbook": "3.x.x",
   "title": "Swimlane",
+  "structure": {
+    "summary": "docs/README.md"
+  },
   "plugins": [
     "highlight"
   ],

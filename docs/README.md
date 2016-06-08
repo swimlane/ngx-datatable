@@ -1,0 +1,20 @@
+# Summary
+
+* [Introduction](/README.md)
+   * [Features](/docs/introduction/features.md)
+   * [Installing](/docs/introduction/installing.md)
+   * [Themes](/docs/introduction/themes.md)
+* Examples
+   * [Basic](/docs/examples/basic.md)
+   * [Paging](/docs/examples/paging.md)
+   * [Sorting](/docs/examples/sorting.md)
+   * [Selection](/docs/examples/selection.md)
+* API
+   * [Table](/docs/api/table.md)
+   * [Options](/docs/api/options.md)
+   * [Column](/docs/api/column_options.md)
+* Contributing
+   * [Building](/docs/contributing/building.md)
+   * [Guidelines](/docs/contributing/guidelines.md)
+* [Credits](/docs/credits.md)
+* [License](/docs/license.md)
