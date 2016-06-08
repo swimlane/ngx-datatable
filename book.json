@@ -4,16 +4,7 @@
     "summary": "docs/README.md"
   },
   "plugins": [
-    "highlight",
-    "versions",
-    "github"
+    "highlight"
   ],
-  "pluginsConfig": {
-    "versions": {
-      "type": "branches"
-    },
-    "github": {
-      "url": "https://github.com/swimlane/angular2-data-table/"
-    }
-  }
+  "pluginsConfig": {}
 }
