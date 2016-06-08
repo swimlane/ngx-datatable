@@ -3,7 +3,17 @@
   "title": "Swimlane",
   "root": "/docs",
   "plugins": [
-    "highlight"
+    "highlight",
+    "github",
+    "edit-link"
   ],
-  "pluginsConfig": {}
+  "pluginsConfig": {
+    "edit-link": {
+      "base": "https://github.com/swimlane/angular2-data-table/tree/master",
+      "label": "Edit This Page"
+    },
+    "github": {
+      "url": "https://github.com/swimlane/angular2-data-table/"
+    }
+  }
 }
