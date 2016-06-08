@@ -1,8 +1,6 @@
 {
-  "title": "angular2-data-table",
-  "structure": {
-    "summary": "docs/README.md"
-  },
+  "gitbook": "3.x.x",
+  "root": "./docs",
   "plugins": [
     "highlight"
   ],
