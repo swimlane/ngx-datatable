@@ -64,8 +64,8 @@ export class DataTable {
   @Output() onSelectionChange = new EventEmitter();
   @Output() onColumnChange = new EventEmitter();
 
-  private state: StateService;
-  private element: ElementRef;
+  private element: HTMLElement;
+  private differ: any;
 
   constructor(element: ElementRef, private state: StateService, differs: KeyValueDiffers) {
     this.element = element.nativeElement;
@@ -109,7 +109,7 @@ export class DataTable {
   @HostListener('window:resize')
   resize() { this.adjustSizes(); }
 
-  adjustColumns(forceIdx) {
+  adjustColumns(forceIdx: any) {
     let width = this.state.innerWidth;
     if(this.options.scrollbarV) {
       width =- this.state.scrollbarWidth;

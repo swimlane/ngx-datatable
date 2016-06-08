@@ -24,7 +24,7 @@ export class Visibility {
 
   @HostBinding('class.visible') visible: boolean = false;
 
-  @Output() onVisibilityChange: EventEmitter = new EventEmitter();
+  @Output() onVisibilityChange: EventEmitter<any> = new EventEmitter();
 
   constructor(element: ElementRef) {
     new VisibilityObserver(

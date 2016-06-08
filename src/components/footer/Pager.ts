@@ -55,10 +55,11 @@ export class DataTablePager {
   @Input() page: number = 1;
   @Input() size: number = 0;
   @Input() count: number = 0;
-  @Output() onPaged: EventEmitter = new EventEmitter();
+  @Output() onPaged: EventEmitter<any> = new EventEmitter();
 
   private _count: number;
   private _page: number;
+  private pages: any;
 
   get totalPages() {
     const count = this.size < 1 ? 1 : Math.ceil(this.count / this.size);
@@ -105,14 +106,14 @@ export class DataTablePager {
     this.selectPage(++this.page);
   }
 
-  selectPage(page) {
+  selectPage(page: number) {
     if (page > 0 && page <= this.totalPages) {
       this.page = page;
       this.onPaged.emit(page);
     }
   }
 
-  calcPages(page) {
+  calcPages(page: number) {
     let pages = [],
       startPage = 1,
       endPage = this.totalPages,

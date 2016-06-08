@@ -12,13 +12,14 @@ export class LongPress {
 
   @Input() duration: number = 500;
 
-  @Output() onLongPress: EventEmitter = new EventEmitter();
-  @Output() onLongPressing: EventEmitter = new EventEmitter();
-  @Output() onLongPressEnd: EventEmitter = new EventEmitter();
+  @Output() onLongPress: EventEmitter<any> = new EventEmitter();
+  @Output() onLongPressing: EventEmitter<any> = new EventEmitter();
+  @Output() onLongPressEnd: EventEmitter<any> = new EventEmitter();
 
   private _pressing: boolean;
   private _longPressing: boolean;
-  private _timeout: boolean;
+  private _timeout: any;
+  private _interval: any;
 
   @HostBinding('class.press')
   get press() { return this._pressing; }

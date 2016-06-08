@@ -5,10 +5,10 @@ import { columnsByPin, columnGroupWidths } from './column';
  * @param {array} columns
  * @param {string} property width to get
  */
-export function columnTotalWidth(columns, prop) {
+export function columnTotalWidth(columns: any, prop: any) {
   let totalWidth = 0;
 
-  for(let column of allColumns) {
+  for(let column of columns) {
     const has = prop && column[prop];
     totalWidth = totalWidth + (has ? column[prop] : column.width);
   }
@@ -36,7 +36,7 @@ export function getTotalFlexGrow(columns){
  * @param {array} all columns
  * @param {int} width
  */
-export function adjustColumnWidths(allColumns, expectedWidth){
+export function adjustColumnWidths(allColumns: any, expectedWidth: any){
   let columnsWidth = columnTotalWidth(allColumns),
       totalFlexGrow = getTotalFlexGrow(allColumns),
       colsByGroup = columnsByPin(allColumns);
@@ -52,7 +52,7 @@ export function adjustColumnWidths(allColumns, expectedWidth){
  * @param {int} maxWidth
  * @param {int} totalFlexGrow
  */
-function scaleColumns(colsByGroup, maxWidth, totalFlexGrow) {
+function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
   // calculate total width and flexgrow points for coulumns that can be resized
   for(let attr in colsByGroup) {
     for(let column of colsByGroup[attr]) {
@@ -113,7 +113,7 @@ function scaleColumns(colsByGroup, maxWidth, totalFlexGrow) {
  * @param {array} allColumns
  * @param {int} expectedWidth
  */
-export function forceFillColumnWidths(allColumns, expectedWidth, startIdx){
+export function forceFillColumnWidths(allColumns: any, expectedWidth: any, startIdx: any){
   let contentWidth = 0,
       columnsToResize = startIdx > -1 ?
         allColumns.slice(startIdx, allColumns.length).filter((c) => { return c.canAutoResize }) :

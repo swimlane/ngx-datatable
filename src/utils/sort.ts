@@ -20,7 +20,7 @@ export function nextSortDir(sortType: SortType, current: SortDirection): SortDir
       return SortDirection.asc;
     } else if(current === SortDirection.asc){
       return SortDirection.desc;
-    } else if(currentSort === SortDirection.desc) {
+    } else if(current === SortDirection.desc) {
       return undefined;
     }
   }

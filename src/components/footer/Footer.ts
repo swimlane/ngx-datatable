@@ -29,7 +29,7 @@ import { DataTablePager } from './Pager';
 })
 export class DataTableFooter {
 
-  @Output() onPageChange: EventEmitter = new EventEmitter();
+  @Output() onPageChange: EventEmitter<any> = new EventEmitter();
 
   private state: StateService;
 

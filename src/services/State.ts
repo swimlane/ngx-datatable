@@ -16,8 +16,8 @@ export class StateService {
   rows: Array<any>;
   selected: Array<any>;
 
-  onRowsUpdate: EventEmitter = new EventEmitter();
-  onPageChange: EventEmitter = new EventEmitter();
+  onRowsUpdate: EventEmitter<any> = new EventEmitter();
+  onPageChange: EventEmitter<any> = new EventEmitter();
 
   scrollbarWidth: number = scrollbarWidth();
   offsetX: number = 0;

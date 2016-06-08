@@ -18,7 +18,7 @@ export function selectRowsBetween(selected, rows, index, prevIndex) {
     const greater = i >= prevIndex && i <= index;
     const lesser = i <= prevIndex && i >= index;
 
-    let range = {};
+    let range = { start: 0, end: 0 };
     if (reverse) {
       range = {
         start: index,

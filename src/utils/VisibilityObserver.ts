@@ -13,6 +13,7 @@
 export class VisibilityObserver {
 
   observer: IntersectionObserver;
+  callback: any;
 
   constructor(element, callback) {
     this.callback = callback;

@@ -27,9 +27,9 @@ export class Draggable {
   @Input() dragX: boolean = true;
   @Input() dragY: boolean = true;
 
-  @Output() onDragStart: EventEmitter = new EventEmitter();
-  @Output() onDragging: EventEmitter = new EventEmitter();
-  @Output() onDragEnd: EventEmitter = new EventEmitter();
+  @Output() onDragStart: EventEmitter<any> = new EventEmitter();
+  @Output() onDragging: EventEmitter<any> = new EventEmitter();
+  @Output() onDragEnd: EventEmitter<any> = new EventEmitter();
 
   private dragging: boolean = false;
   private subscription: any;

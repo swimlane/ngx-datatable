@@ -1,4 +1,4 @@
 export enum SortType {
-  single = 'single',
-  multi = 'multi'
+  single = 'single' as any,
+  multi = 'multi' as any
 }

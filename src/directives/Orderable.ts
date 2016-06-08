@@ -12,7 +12,7 @@ import { Draggable } from './Draggable';
 @Directive({ selector: '[orderable]' })
 export class Orderable {
 
-  @Output() onReorder: EventEmitter = new EventEmitter();
+  @Output() onReorder: EventEmitter<any> = new EventEmitter();
 
   @ContentChildren(Draggable)
   private drags: QueryList<Draggable>;

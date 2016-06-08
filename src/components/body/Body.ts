@@ -47,11 +47,12 @@ import { DataTableScroll } from './Scroll';
 })
 export class DataTableBody {
 
-  @Output() onRowClick: EventEmitter = new EventEmitter();
-  @Output() onRowSelect: EventEmitter = new EventEmitter();
+  @Output() onRowClick: EventEmitter<any> = new EventEmitter();
+  @Output() onRowSelect: EventEmitter<any> = new EventEmitter();
 
   private state: StateService;
   private prevIndex: number;
+  private rows: any;
 
   get selectEnabled() {
     return this.state.options.selectionType !== undefined;

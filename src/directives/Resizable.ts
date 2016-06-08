@@ -19,8 +19,10 @@ export class Resizable {
   @Input() resizeEnabled: boolean = true;
   @Input() minWidth: number;
   @Input() maxWidth: number;
+  element: HTMLElement;
+  subcription: any;
 
-  @Output() onResize: EventEmitter = new EventEmitter();
+  @Output() onResize: EventEmitter<any> = new EventEmitter();
 
   private prevScreenX: number = 0;
   private resizing: boolean = false;
