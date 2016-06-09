@@ -11,7 +11,7 @@ import {
   selector: 'app',
   template: `
     <div>
-    	<h3>basic</h3>
+    	<h3>client-paging</h3>
     	<datatable
         class="material"
     		[rows]="rows"
@@ -30,6 +30,7 @@ export class App {
     headerHeight: 50,
     footerHeight: 50,
     rowHeight: 'auto',
+    limit: 10,
     columns: [
       new TableColumn({ name: "Name" }),
       new TableColumn({ name: "Gender" }),
@@ -40,7 +41,7 @@ export class App {
   constructor() {
     this.fetch((data) => {
       this.rows.push(...data);
-    })
+    });
   }
 
   fetch(cb) {

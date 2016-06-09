@@ -11,7 +11,7 @@ import {
   selector: 'app',
   template: `
     <div>
-    	<h3>basic</h3>
+    	<h3>server-sorting</h3>
     	<datatable
         class="material"
     		[rows]="rows"
@@ -23,7 +23,18 @@ import {
 })
 export class App {
 
-	rows = [];
+	rows = [
+    {
+      "name": "Claudine Neal",
+      "gender": "female",
+      "company": "Sealoud"
+    },
+    {
+      "name": "Beryl Rice",
+      "gender": "female",
+      "company": "Velity"
+    }
+  ];
 
 	options = new TableOptions({
     columnMode: ColumnMode.force,
@@ -33,25 +44,16 @@ export class App {
     columns: [
       new TableColumn({ name: "Name" }),
       new TableColumn({ name: "Gender" }),
-      new TableColumn({ name: "Company" })
+      new TableColumn({ name: "Company", comparator: this.sorter.bind(this) })
     ]
   });
 
-  constructor() {
-    this.fetch((data) => {
-      this.rows.push(...data);
-    })
-  }
-
-  fetch(cb) {
-    var req = new XMLHttpRequest();
-    req.open('GET', `src/demos/company.json`);
-
-    req.onload = () => {
-      cb(JSON.parse(req.response));
-    };
-
-    req.send();
+  sorter(rows, dirs) {
+    console.log('sorting started!');
+    setTimeout(() => {
+      this.rows.reverse();
+      console.log('sorted!');
+    }, 500);
   }
 
 }

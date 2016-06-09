@@ -47,8 +47,6 @@ export class DataTableBodyRow {
 
   @Input() row: any;
 
-  private state: StateService;
-
   get isSelected() {
     return this.state.selected &&
       this.state.selected.indexOf(this.row) > -1;

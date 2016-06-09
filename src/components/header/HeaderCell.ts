@@ -38,9 +38,7 @@ import { SortDirection } from '../../models/SortDirection';
 export class DataTableHeaderCell {
 
   @Input() model: TableColumn;
-  @Output() onColumnChange = new EventEmitter();
-
-  private state: StateService;
+  @Output() onColumnChange: EventEmitter<any> = new EventEmitter();
 
   get sortDir() {
     let sort = this.state.options.sorts.find(s => {

@@ -31,8 +31,6 @@ export class DataTableFooter {
 
   @Output() onPageChange: EventEmitter<any> = new EventEmitter();
 
-  private state: StateService;
-
   get visible() {
     return (this.state.pageCount / this.state.pageSize) > 1;
   }

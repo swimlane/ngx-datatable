@@ -17,6 +17,7 @@ import { DataTableScroll } from './Scroll';
         [hidden]="!state.options.loadingIndicator">
       </datatable-progress>
       <datatable-scroll
+        *ngIf="state.rows.length"
         [rowHeight]="state.options.rowHeight"
         [count]="state.rowCount"
         [scrollWidth]="state.columnGroupWidths.total">
@@ -27,12 +28,12 @@ import { DataTableScroll } from './Scroll';
           (keydown)="rowKeydown($event, i, row)"
           [row]="row">
         </datatable-body-row>
-        <div
-          class="empty"
-          *ngIf="!rows.length"
-          [innerHTML]="state.options.emptyMessage">
-        </div>
       </datatable-scroll>
+      <div
+        class="empty-row"
+        *ngIf="!rows.length"
+        [innerHTML]="state.options.emptyMessage">
+      </div>
     </div>
   `,
   directives: [
@@ -50,7 +51,6 @@ export class DataTableBody {
   @Output() onRowClick: EventEmitter<any> = new EventEmitter();
   @Output() onRowSelect: EventEmitter<any> = new EventEmitter();
 
-  private state: StateService;
   private prevIndex: number;
   private rows: any;
 

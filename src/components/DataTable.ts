@@ -29,7 +29,7 @@ import { DataTableFooter } from './footer/Footer';
       </datatable-header>
       <datatable-body
         (onRowClick)="onRowClick.emit($event)"
-        (onRowSelect)="state.setSelected($event)">
+        (onRowSelect)="onRowSelect($event)">
       </datatable-body>
       <datatable-footer
         (onPageChange)="onPageChanged($event)">
@@ -55,14 +55,14 @@ import { DataTableFooter } from './footer/Footer';
 export class DataTable {
 
 	@Input() options: TableOptions;
-  @Input() rows: Array<Object>;
-	@Input() selected: Array<Object>;
+  @Input() rows: Array<any>;
+	@Input() selected: Array<any>;
 
-  @Output() onPageChange = new EventEmitter();
-  @Output() onRowsUpdate = new EventEmitter();
-  @Output() onRowClick = new EventEmitter();
-  @Output() onSelectionChange = new EventEmitter();
-  @Output() onColumnChange = new EventEmitter();
+  @Output() onPageChange: EventEmitter<any> = new EventEmitter();
+  @Output() onRowsUpdate: EventEmitter<any> = new EventEmitter();
+  @Output() onRowClick: EventEmitter<any> = new EventEmitter();
+  @Output() onSelectionChange: EventEmitter<any> = new EventEmitter();
+  @Output() onColumnChange: EventEmitter<any> = new EventEmitter();
 
   private element: HTMLElement;
   private differ: any;
@@ -125,6 +125,11 @@ export class DataTable {
   onPageChanged(event) {
     this.state.setPage(event);
     this.onPageChange.emit(event);
+  }
+
+  onRowSelect(event) {
+    this.state.setSelected(event);
+    this.onSelectionChange.emit(event);
   }
 
 }

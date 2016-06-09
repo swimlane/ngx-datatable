@@ -11,11 +11,12 @@ import {
   selector: 'app',
   template: `
     <div>
-    	<h3>basic</h3>
+    	<h3>server-paging</h3>
     	<datatable
         class="material"
     		[rows]="rows"
-    		[options]="options">
+    		[options]="options"
+        (onPageChange)="onPage($event)">
     	</datatable>
     </div>
   `,
@@ -30,6 +31,8 @@ export class App {
     headerHeight: 50,
     footerHeight: 50,
     rowHeight: 'auto',
+    externalPaging: true,
+    limit: 10,
     columns: [
       new TableColumn({ name: "Name" }),
       new TableColumn({ name: "Gender" }),
@@ -38,9 +41,29 @@ export class App {
   });
 
   constructor() {
-    this.fetch((data) => {
-      this.rows.push(...data);
-    })
+    this.page();
+  }
+
+  page() {
+    this.fetch((results) => {
+      this.options.count = results.length;
+      let start = this.options.offset * this.options.limit;
+      let end = start + this.options.limit;
+
+      let paged = results.slice(start, end);
+
+      // splice doesn't let u insert at
+      // a new out of bounds index :(
+      // this.rows.splice(0, this.rows.length);
+      // this.rows.push(...paged)
+      // this.rows.splice(start, 0, ...paged);
+
+      for (let i = start; i < end; i++) {
+        this.rows[i] = results[i];
+      }
+
+      console.log('updated', start, end, this.rows)
+    });
   }
 
   fetch(cb) {
@@ -52,6 +75,11 @@ export class App {
     };
 
     req.send();
+  }
+
+  onPage({ offset, limit, count }) {
+    console.log('Paged!', offset, limit, count);
+    this.page();
   }
 
 }

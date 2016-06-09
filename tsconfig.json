@@ -34,7 +34,8 @@
     }
   },
   "files": [
-    "src/app.ts"
+    "src/app.ts",
+    "src/main.ts"
   ],
   "compileOnSave": false
 }

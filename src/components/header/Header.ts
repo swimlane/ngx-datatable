@@ -98,8 +98,6 @@ export class DataTableHeader {
 
   @Output() onColumnChange: EventEmitter<any> = new EventEmitter();
 
-  private state: StateService;
-
   get headerWidth() {
     if(this.state.options.scrollbarH)
       return this.state.innerWidth + 'px';

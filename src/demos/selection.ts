@@ -4,6 +4,7 @@ import {
   DataTable,
   TableOptions,
   TableColumn,
+  SelectionType,
   ColumnMode
 } from 'angular2-data-table';
 
@@ -11,12 +12,25 @@ import {
   selector: 'app',
   template: `
     <div>
-    	<h3>basic</h3>
-    	<datatable
-        class="material"
-    		[rows]="rows"
-    		[options]="options">
-    	</datatable>
+    	<h3>selection</h3>
+      <div style="float:left;width:75%">
+      	<datatable
+          class="material"
+      		[rows]="rows"
+          [selected]="selections"
+      		[options]="options"
+          (onSelectionChange)="onSelectionChange($event)">
+      	</datatable>
+      </div>
+
+      <div class="selected-column" style="float:right;width:25%;">
+        <h4>Selections</h4>
+        <ul>
+          <li *ngFor="let sel of selections">
+            {{sel.name}}
+          </li>
+        </ul>
+      </div>
     </div>
   `,
   directives: [ DataTable ]
@@ -24,12 +38,15 @@ import {
 export class App {
 
 	rows = [];
+  selections = [];
 
 	options = new TableOptions({
     columnMode: ColumnMode.force,
     headerHeight: 50,
     footerHeight: 50,
+    limit: 5,
     rowHeight: 'auto',
+    selectionType: SelectionType.multi,
     columns: [
       new TableColumn({ name: "Name" }),
       new TableColumn({ name: "Gender" }),
@@ -52,6 +69,10 @@ export class App {
     };
 
     req.send();
+  }
+
+  onSelectionChange(selected) {
+    console.log('Selection!', selected)
   }
 
 }

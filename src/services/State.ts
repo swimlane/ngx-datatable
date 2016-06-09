@@ -16,6 +16,7 @@ export class StateService {
   rows: Array<any>;
   selected: Array<any>;
 
+  onSelectionChange: EventEmitter<any> = new EventEmitter();
   onRowsUpdate: EventEmitter<any> = new EventEmitter();
   onPageChange: EventEmitter<any> = new EventEmitter();
 
@@ -36,14 +37,19 @@ export class StateService {
   get pageCount() {
     if(!this.options.externalPaging) {
       return this.rows.length;
+    } else {
+      return this.options.count;
     }
-    return this.options.count;
   }
 
   get pageSize() {
-    if(this.options.scrollbarV)
+    if(this.options.scrollbarV) {
       return Math.ceil(this.bodyHeight / this.options.rowHeight) + 1;
-    return this.options.limit;
+    } else if(this.options.limit) {
+      return this.options.limit;
+    } else {
+      return this.rows.length;
+    }
   }
 
   get indexes() {
@@ -54,7 +60,7 @@ export class StateService {
           this.offsetY || 0) / this.options.rowHeight, 0), 0);
       last = Math.min(first + this.pageSize, this.pageCount);
     } else {
-      first = Math.max(this.options.offset * this.options.limit, 0);
+      first = Math.max(this.options.offset * this.pageSize, 0);
       last = Math.min(first + this.pageSize, this.pageCount);
     }
 
@@ -62,7 +68,14 @@ export class StateService {
   }
 
   setSelected(selected: Array<any>) {
-    this.selected = selected;
+    if(!this.selected) {
+      this.selected = selected || [];
+    } else {
+      this.selected.splice(0, this.selected.length);
+      this.selected.push(...selected);
+    }
+
+    this.onSelectionChange.emit(this.selected);
     return this;
   }
 
