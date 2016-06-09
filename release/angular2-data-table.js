@@ -109,11 +109,9 @@ $__System.register("3", ["4", "2"], function(exports_1, context_1) {
           this.onVisibilityChange.emit(true);
         };
         __decorate([core_1.HostBinding('class.visible'), __metadata('design:type', Boolean)], Visibility.prototype, "visible", void 0);
-        __decorate([core_1.Output(), __metadata('design:type', (typeof(_a = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _a) || Object)], Visibility.prototype, "onVisibilityChange", void 0);
-        Visibility = __decorate([core_1.Directive({selector: '[visibility-observer]'}), __metadata('design:paramtypes', [(typeof(_b = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _b) || Object])], Visibility);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], Visibility.prototype, "onVisibilityChange", void 0);
+        Visibility = __decorate([core_1.Directive({selector: '[visibility-observer]'}), __metadata('design:paramtypes', [core_1.ElementRef])], Visibility);
         return Visibility;
-        var _a,
-            _b;
       }());
       exports_1("Visibility", Visibility);
     }
@@ -127,8 +125,8 @@ $__System.register("5", ["6"], function(exports_1, context_1) {
   function columnTotalWidth(columns, prop) {
     var totalWidth = 0;
     for (var _i = 0,
-        allColumns_1 = allColumns; _i < allColumns_1.length; _i++) {
-      var column = allColumns_1[_i];
+        columns_1 = columns; _i < columns_1.length; _i++) {
+      var column = columns_1[_i];
       var has = prop && column[prop];
       totalWidth = totalWidth + (has ? column[prop] : column.width);
     }
@@ -138,8 +136,8 @@ $__System.register("5", ["6"], function(exports_1, context_1) {
   function getTotalFlexGrow(columns) {
     var totalFlexGrow = 0;
     for (var _i = 0,
-        columns_1 = columns; _i < columns_1.length; _i++) {
-      var c = columns_1[_i];
+        columns_2 = columns; _i < columns_2.length; _i++) {
+      var c = columns_2[_i];
       totalFlexGrow += c.flexGrow || 0;
     }
     return totalFlexGrow;
@@ -198,8 +196,8 @@ $__System.register("5", ["6"], function(exports_1, context_1) {
           return c.canAutoResize;
         });
     for (var _i = 0,
-        allColumns_2 = allColumns; _i < allColumns_2.length; _i++) {
-      var column = allColumns_2[_i];
+        allColumns_1 = allColumns; _i < allColumns_1.length; _i++) {
+      var column = allColumns_1[_i];
       if (!column.canAutoResize) {
         contentWidth += column.width;
       } else {
@@ -307,18 +305,15 @@ $__System.register("7", ["4"], function(exports_1, context_1) {
           this.onLongPressEnd.emit();
         };
         __decorate([core_1.Input(), __metadata('design:type', Number)], LongPress.prototype, "duration", void 0);
-        __decorate([core_1.Output(), __metadata('design:type', (typeof(_a = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _a) || Object)], LongPress.prototype, "onLongPress", void 0);
-        __decorate([core_1.Output(), __metadata('design:type', (typeof(_b = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _b) || Object)], LongPress.prototype, "onLongPressing", void 0);
-        __decorate([core_1.Output(), __metadata('design:type', (typeof(_c = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _c) || Object)], LongPress.prototype, "onLongPressEnd", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], LongPress.prototype, "onLongPress", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], LongPress.prototype, "onLongPressing", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], LongPress.prototype, "onLongPressEnd", void 0);
         __decorate([core_1.HostBinding('class.press'), __metadata('design:type', Object)], LongPress.prototype, "press", null);
         __decorate([core_1.HostBinding('class.longpress'), __metadata('design:type', Object)], LongPress.prototype, "longPress", null);
         __decorate([core_1.HostListener('mousedown', ['$event']), __metadata('design:type', Function), __metadata('design:paramtypes', [Object]), __metadata('design:returntype', void 0)], LongPress.prototype, "onMouseDown", null);
         __decorate([core_1.HostListener('mouseup'), __metadata('design:type', Function), __metadata('design:paramtypes', []), __metadata('design:returntype', void 0)], LongPress.prototype, "endPress", null);
         LongPress = __decorate([core_1.Directive({selector: '[long-press]'}), __metadata('design:paramtypes', [])], LongPress);
         return LongPress;
-        var _a,
-            _b,
-            _c;
       }());
       exports_1("LongPress", LongPress);
     }
@@ -399,16 +394,14 @@ $__System.register("8", ["4", "9"], function(exports_1, context_1) {
         __decorate([core_1.Input(), __metadata('design:type', Boolean)], Resizable.prototype, "resizeEnabled", void 0);
         __decorate([core_1.Input(), __metadata('design:type', Number)], Resizable.prototype, "minWidth", void 0);
         __decorate([core_1.Input(), __metadata('design:type', Number)], Resizable.prototype, "maxWidth", void 0);
-        __decorate([core_1.Output(), __metadata('design:type', (typeof(_a = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _a) || Object)], Resizable.prototype, "onResize", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], Resizable.prototype, "onResize", void 0);
         __decorate([core_1.HostListener('document:mouseup', ['$event']), __metadata('design:type', Function), __metadata('design:paramtypes', [Object]), __metadata('design:returntype', void 0)], Resizable.prototype, "onMouseup", null);
         __decorate([core_1.HostListener('mousedown', ['$event']), __metadata('design:type', Function), __metadata('design:paramtypes', [Object]), __metadata('design:returntype', void 0)], Resizable.prototype, "onMousedown", null);
         Resizable = __decorate([core_1.Directive({
           selector: '[resizable]',
           host: {'[class.resizable]': 'resizeEnabled'}
-        }), __metadata('design:paramtypes', [(typeof(_b = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _b) || Object])], Resizable);
+        }), __metadata('design:paramtypes', [core_1.ElementRef])], Resizable);
         return Resizable;
-        var _a,
-            _b;
       }());
       exports_1("Resizable", Resizable);
     }
@@ -504,17 +497,13 @@ $__System.register("a", ["4", "9"], function(exports_1, context_1) {
         __decorate([core_1.Input(), __metadata('design:type', Object)], Draggable.prototype, "model", void 0);
         __decorate([core_1.Input(), __metadata('design:type', Boolean)], Draggable.prototype, "dragX", void 0);
         __decorate([core_1.Input(), __metadata('design:type', Boolean)], Draggable.prototype, "dragY", void 0);
-        __decorate([core_1.Output(), __metadata('design:type', (typeof(_a = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _a) || Object)], Draggable.prototype, "onDragStart", void 0);
-        __decorate([core_1.Output(), __metadata('design:type', (typeof(_b = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _b) || Object)], Draggable.prototype, "onDragging", void 0);
-        __decorate([core_1.Output(), __metadata('design:type', (typeof(_c = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _c) || Object)], Draggable.prototype, "onDragEnd", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], Draggable.prototype, "onDragStart", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], Draggable.prototype, "onDragging", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], Draggable.prototype, "onDragEnd", void 0);
         __decorate([core_1.HostListener('document:mouseup', ['$event']), __metadata('design:type', Function), __metadata('design:paramtypes', [Object]), __metadata('design:returntype', void 0)], Draggable.prototype, "onMouseup", null);
         __decorate([core_1.HostListener('mousedown', ['$event']), __metadata('design:type', Function), __metadata('design:paramtypes', [Object]), __metadata('design:returntype', void 0)], Draggable.prototype, "onMousedown", null);
-        Draggable = __decorate([core_1.Directive({selector: '[draggable]'}), __metadata('design:paramtypes', [(typeof(_d = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _d) || Object])], Draggable);
+        Draggable = __decorate([core_1.Directive({selector: '[draggable]'}), __metadata('design:paramtypes', [core_1.ElementRef])], Draggable);
         return Draggable;
-        var _a,
-            _b,
-            _c,
-            _d;
       }());
       exports_1("Draggable", Draggable);
     }
@@ -594,12 +583,10 @@ $__System.register("b", ["4", "a"], function(exports_1, context_1) {
           }
           element.style.left = 'auto';
         };
-        __decorate([core_1.Output(), __metadata('design:type', (typeof(_a = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _a) || Object)], Orderable.prototype, "onReorder", void 0);
-        __decorate([core_1.ContentChildren(Draggable_1.Draggable), __metadata('design:type', (typeof(_b = typeof core_1.QueryList !== 'undefined' && core_1.QueryList) === 'function' && _b) || Object)], Orderable.prototype, "drags", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], Orderable.prototype, "onReorder", void 0);
+        __decorate([core_1.ContentChildren(Draggable_1.Draggable), __metadata('design:type', core_1.QueryList)], Orderable.prototype, "drags", void 0);
         Orderable = __decorate([core_1.Directive({selector: '[orderable]'}), __metadata('design:paramtypes', [])], Orderable);
         return Orderable;
-        var _a,
-            _b;
       }());
       exports_1("Orderable", Orderable);
     }
@@ -677,7 +664,7 @@ $__System.register("c", ["4", "d", "e", "f"], function(exports_1, context_1) {
           }
         };
         __decorate([core_1.Input(), __metadata('design:type', TableColumn_1.TableColumn)], DataTableHeaderCell.prototype, "model", void 0);
-        __decorate([core_1.Output(), __metadata('design:type', Object)], DataTableHeaderCell.prototype, "onColumnChange", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], DataTableHeaderCell.prototype, "onColumnChange", void 0);
         DataTableHeaderCell = __decorate([core_1.Component({
           selector: 'datatable-header-cell',
           template: "\n  \t<div>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"model.name\">\n      </span>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses()\">\n      </span>\n    </div>\n  ",
@@ -690,9 +677,8 @@ $__System.register("c", ["4", "d", "e", "f"], function(exports_1, context_1) {
             '[style.height]': 'model.height + "px"',
             '[attr.title]': 'model.name'
           }
-        }), __metadata('design:paramtypes', [(typeof(_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object, State_1.StateService])], DataTableHeaderCell);
+        }), __metadata('design:paramtypes', [core_1.ElementRef, State_1.StateService])], DataTableHeaderCell);
         return DataTableHeaderCell;
-        var _a;
       }());
       exports_1("DataTableHeaderCell", DataTableHeaderCell);
     }
@@ -786,7 +772,7 @@ $__System.register("10", ["4", "d", "7", "a", "8", "b", "c"], function(exports_1
             value: model
           });
         };
-        __decorate([core_1.Output(), __metadata('design:type', (typeof(_a = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _a) || Object)], DataTableHeader.prototype, "onColumnChange", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], DataTableHeader.prototype, "onColumnChange", void 0);
         DataTableHeader = __decorate([core_1.Component({
           selector: 'datatable-header',
           template: "\n  \t<div\n      [style.width]=\"state.columnGroupWidths.total\"\n      class=\"datatable-header-inner\"\n      orderable\n      (onReorder)=\"columnReordered($event)\">\n      <div\n        class=\"datatable-row-left\"\n        [style.width]=\"state.columnGroupWidths.left + 'px'\"\n        *ngIf=\"state.columnsByPin.left.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.left\"\n          resizable\n          [resizeEnabled]=\"column.resizable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"draggable = true\"\n          (onLongPressEnd)=\"draggable = false\"\n          draggable\n          [dragX]=\"column.draggable && draggable\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n      <div\n        class=\"datatable-row-center\"\n        [style.width]=\"state.columnGroupWidths.center + 'px'\"\n        *ngIf=\"state.columnsByPin.center.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.center\"\n          resizable\n          [resizeEnabled]=\"column.resizable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"draggable = true\"\n          (onLongPressEnd)=\"draggable = false\"\n          draggable\n          [dragX]=\"column.draggable && draggable\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n      <div\n        class=\"datatable-row-right\"\n        [style.width]=\"state.columnGroupWidths.right + 'px'\"\n        *ngIf=\"state.columnsByPin.right.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.right\"\n          resizable\n          [resizeEnabled]=\"column.resizable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"draggable = true\"\n          (onLongPressEnd)=\"draggable = false\"\n          draggable\n          [dragX]=\"column.draggable && draggable\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n    </div>\n  ",
@@ -795,10 +781,8 @@ $__System.register("10", ["4", "d", "7", "a", "8", "b", "c"], function(exports_1
             '[style.width]': 'headerWidth',
             '[style.height]': 'headerHeight'
           }
-        }), __metadata('design:paramtypes', [State_1.StateService, (typeof(_b = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _b) || Object])], DataTableHeader);
+        }), __metadata('design:paramtypes', [State_1.StateService, core_1.ElementRef])], DataTableHeader);
         return DataTableHeader;
-        var _a,
-            _b;
       }());
       exports_1("DataTableHeader", DataTableHeader);
     }
@@ -843,7 +827,10 @@ $__System.register("12", [], function(exports_1, context_1) {
       var row = rows[i];
       var greater = i >= prevIndex && i <= index;
       var lesser = i <= prevIndex && i >= index;
-      var range = {};
+      var range = {
+        start: 0,
+        end: 0
+      };
       if (reverse) {
         range = {
           start: index,
@@ -996,9 +983,8 @@ $__System.register("15", ["4", "e", "14"], function(exports_1, context_1) {
             '[style.width]': 'column.width + "px"',
             '[style.height]': 'column.height + "px"'
           }
-        }), __metadata('design:paramtypes', [(typeof(_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object])], DataTableBodyCell);
+        }), __metadata('design:paramtypes', [core_1.ElementRef])], DataTableBodyCell);
         return DataTableBodyCell;
-        var _a;
       }());
       exports_1("DataTableBodyCell", DataTableBodyCell);
     }
@@ -1055,9 +1041,8 @@ $__System.register("16", ["4", "d", "15"], function(exports_1, context_1) {
           template: "\n  \t<div>\n      <div\n        class=\"datatable-row-left\"\n        *ngIf=\"state.columnsByPin.left.length\"\n        [style.width]=\"state.columnGroupWidths.left + 'px'\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.left\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n      <div\n        class=\"datatable-row-center\"\n        [style.width]=\"state.columnGroupWidths.center + 'px'\"\n        *ngIf=\"state.columnsByPin.center.length\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.center\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n      <div\n        class=\"datatable-row-right\"\n        *ngIf=\"state.columnsByPin.right.length\"\n        [style.width]=\"state.columnGroupWidths.right + 'px'\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.right\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n    </div>\n  ",
           directives: [BodyCell_1.DataTableBodyCell],
           host: {'[class.active]': 'isSelected'}
-        }), __metadata('design:paramtypes', [State_1.StateService, (typeof(_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object])], DataTableBodyRow);
+        }), __metadata('design:paramtypes', [State_1.StateService, core_1.ElementRef])], DataTableBodyRow);
         return DataTableBodyRow;
-        var _a;
       }());
       exports_1("DataTableBodyRow", DataTableBodyRow);
     }
@@ -1111,9 +1096,8 @@ $__System.register("17", ["4"], function(exports_1, context_1) {
             '[style.height]': 'scrollHeight',
             '[style.width]': 'scrollWidth + "px"'
           }
-        }), __metadata('design:paramtypes', [(typeof(_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object])], DataTableScroll);
+        }), __metadata('design:paramtypes', [core_1.ElementRef])], DataTableScroll);
         return DataTableScroll;
-        var _a;
       }());
       exports_1("DataTableScroll", DataTableScroll);
     }
@@ -1261,21 +1245,18 @@ $__System.register("18", ["4", "d", "19", "11", "12", "13", "16", "17"], functio
           this.prevIndex = index;
           this.onRowSelect.emit(selections);
         };
-        __decorate([core_1.Output(), __metadata('design:type', (typeof(_a = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _a) || Object)], DataTableBody.prototype, "onRowClick", void 0);
-        __decorate([core_1.Output(), __metadata('design:type', (typeof(_b = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _b) || Object)], DataTableBody.prototype, "onRowSelect", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], DataTableBody.prototype, "onRowClick", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], DataTableBody.prototype, "onRowSelect", void 0);
         DataTableBody = __decorate([core_1.Component({
           selector: 'datatable-body',
-          template: "\n    <div>\n      <datatable-progress\n        [hidden]=\"!state.options.loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroll\n        [rowHeight]=\"state.options.rowHeight\"\n        [count]=\"state.rowCount\"\n        [scrollWidth]=\"state.columnGroupWidths.total\">\n        <datatable-body-row\n          *ngFor=\"let row of rows; let i = index;\"\n          [attr.tabindex]=\"i\"\n          (click)=\"rowClicked($event, i, row)\"\n          (keydown)=\"rowKeydown($event, i, row)\"\n          [row]=\"row\">\n        </datatable-body-row>\n        <div\n          class=\"empty\"\n          *ngIf=\"!rows.length\"\n          [innerHTML]=\"state.options.emptyMessage\">\n        </div>\n      </datatable-scroll>\n    </div>\n  ",
+          template: "\n    <div>\n      <datatable-progress\n        [hidden]=\"!state.options.loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroll\n        *ngIf=\"state.rows.length\"\n        [rowHeight]=\"state.options.rowHeight\"\n        [count]=\"state.rowCount\"\n        [scrollWidth]=\"state.columnGroupWidths.total\">\n        <datatable-body-row\n          *ngFor=\"let row of rows; let i = index;\"\n          [attr.tabindex]=\"i\"\n          (click)=\"rowClicked($event, i, row)\"\n          (keydown)=\"rowKeydown($event, i, row)\"\n          [row]=\"row\">\n        </datatable-body-row>\n      </datatable-scroll>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"state.options.emptyMessage\">\n      </div>\n    </div>\n  ",
           directives: [ProgressBar_1.ProgressBar, BodyRow_1.DataTableBodyRow, Scroll_1.DataTableScroll],
           host: {
             '[style.width]': 'bodyWidth',
             '[style.height]': 'bodyHeight'
           }
-        }), __metadata('design:paramtypes', [State_1.StateService, (typeof(_c = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _c) || Object])], DataTableBody);
+        }), __metadata('design:paramtypes', [State_1.StateService, core_1.ElementRef])], DataTableBody);
         return DataTableBody;
-        var _a,
-            _b,
-            _c;
       }());
       exports_1("DataTableBody", DataTableBody);
     }
@@ -1382,7 +1363,7 @@ $__System.register("1b", ["1c", "f"], function(exports_1, context_1) {
         return SortDirection_1.SortDirection.asc;
       } else if (current === SortDirection_1.SortDirection.asc) {
         return SortDirection_1.SortDirection.desc;
-      } else if (currentSort === SortDirection_1.SortDirection.desc) {
+      } else if (current === SortDirection_1.SortDirection.desc) {
         return undefined;
       }
     }
@@ -1496,6 +1477,7 @@ $__System.register("d", ["4", "6", "1a", "1b", "1d", "1c"], function(exports_1, 
     execute: function() {
       StateService = (function() {
         function StateService() {
+          this.onSelectionChange = new core_1.EventEmitter();
           this.onRowsUpdate = new core_1.EventEmitter();
           this.onPageChange = new core_1.EventEmitter();
           this.scrollbarWidth = scrollbarWidth_1.scrollbarWidth();
@@ -1522,17 +1504,22 @@ $__System.register("d", ["4", "6", "1a", "1b", "1d", "1c"], function(exports_1, 
           get: function() {
             if (!this.options.externalPaging) {
               return this.rows.length;
+            } else {
+              return this.options.count;
             }
-            return this.options.count;
           },
           enumerable: true,
           configurable: true
         });
         Object.defineProperty(StateService.prototype, "pageSize", {
           get: function() {
-            if (this.options.scrollbarV)
+            if (this.options.scrollbarV) {
               return Math.ceil(this.bodyHeight / this.options.rowHeight) + 1;
-            return this.options.limit;
+            } else if (this.options.limit) {
+              return this.options.limit;
+            } else {
+              return this.rows.length;
+            }
           },
           enumerable: true,
           configurable: true
@@ -1545,7 +1532,7 @@ $__System.register("d", ["4", "6", "1a", "1b", "1d", "1c"], function(exports_1, 
               first = Math.max(Math.floor((this.offsetY || 0) / this.options.rowHeight, 0), 0);
               last = Math.min(first + this.pageSize, this.pageCount);
             } else {
-              first = Math.max(this.options.offset * this.options.limit, 0);
+              first = Math.max(this.options.offset * this.pageSize, 0);
               last = Math.min(first + this.pageSize, this.pageCount);
             }
             return {
@@ -1557,8 +1544,15 @@ $__System.register("d", ["4", "6", "1a", "1b", "1d", "1c"], function(exports_1, 
           configurable: true
         });
         StateService.prototype.setSelected = function(selected) {
-          this.selected = selected;
+          if (!this.selected) {
+            this.selected = selected || [];
+          } else {
+            this.selected.splice(0, this.selected.length);
+            (_a = this.selected).push.apply(_a, selected);
+          }
+          this.onSelectionChange.emit(this.selected);
           return this;
+          var _a;
         };
         StateService.prototype.setRows = function(rows) {
           this.rows = rows.slice();
@@ -1574,7 +1568,7 @@ $__System.register("d", ["4", "6", "1a", "1b", "1d", "1c"], function(exports_1, 
           this.onPageChange.emit({
             offset: this.options.offset,
             limit: this.pageSize,
-            pageCount: this.pageCount
+            count: this.pageCount
           });
         };
         StateService.prototype.nextSort = function(column) {
@@ -1719,14 +1713,12 @@ $__System.register("1e", ["4"], function(exports_1, context_1) {
         __decorate([core_1.Input(), __metadata('design:type', Number)], DataTablePager.prototype, "page", void 0);
         __decorate([core_1.Input(), __metadata('design:type', Number)], DataTablePager.prototype, "size", void 0);
         __decorate([core_1.Input(), __metadata('design:type', Number)], DataTablePager.prototype, "count", void 0);
-        __decorate([core_1.Output(), __metadata('design:type', (typeof(_a = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _a) || Object)], DataTablePager.prototype, "onPaged", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], DataTablePager.prototype, "onPaged", void 0);
         DataTablePager = __decorate([core_1.Component({
           selector: 'datatable-pager',
           template: "\n    <ul class=\"pager\">\n      <li [attr.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(1)\"\n          class=\"icon-prev\">\n        </a>\n      </li>\n      <li [attr.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"prevPage()\"\n          class=\"icon-left\">\n        </a>\n      </li>\n      <li\n        *ngFor=\"let pg of pages\"\n        [class.active]=\"pg.number === page\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(pg.number)\">\n          {{pg.text}}\n        </a>\n      </li>\n      <li [attr.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"nextPage()\"\n          class=\"icon-right\">\n        </a>\n      </li>\n      <li [attr.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(totalPages)\"\n          class=\"icon-skip\">\n        </a>\n      </li>\n    </ul>\n  "
-        }), __metadata('design:paramtypes', [(typeof(_b = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _b) || Object])], DataTablePager);
+        }), __metadata('design:paramtypes', [core_1.ElementRef])], DataTablePager);
         return DataTablePager;
-        var _a,
-            _b;
       }());
       exports_1("DataTablePager", DataTablePager);
     }
@@ -1785,14 +1777,13 @@ $__System.register("1f", ["4", "d", "1e"], function(exports_1, context_1) {
           enumerable: true,
           configurable: true
         });
-        __decorate([core_1.Output(), __metadata('design:type', Object)], DataTableFooter.prototype, "onPageChange", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], DataTableFooter.prototype, "onPageChange", void 0);
         DataTableFooter = __decorate([core_1.Component({
           selector: 'datatable-footer',
           template: "\n    <div\n      *ngIf=\"state.options.footerHeight\"\n      [style.height]=\"state.options.footerHeight\">\n      <div class=\"page-count\">{{state.pageCount}} total</div>\n      <datatable-pager\n        [page]=\"curPage\"\n        [size]=\"state.pageSize\"\n        (onPaged)=\"onPageChange.emit($event)\"\n        [count]=\"state.pageCount\"\n        [hidden]=\"!visible\">\n       </datatable-pager>\n     </div>\n  ",
           directives: [Pager_1.DataTablePager]
-        }), __metadata('design:paramtypes', [(typeof(_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object, State_1.StateService])], DataTableFooter);
+        }), __metadata('design:paramtypes', [core_1.ElementRef, State_1.StateService])], DataTableFooter);
         return DataTableFooter;
-        var _a;
       }());
       exports_1("DataTableFooter", DataTableFooter);
     }
@@ -1909,18 +1900,22 @@ $__System.register("20", ["4", "d", "3", "5", "21", "22", "10", "18", "1f"], fun
           this.state.setPage(event);
           this.onPageChange.emit(event);
         };
+        DataTable.prototype.onRowSelect = function(event) {
+          this.state.setSelected(event);
+          this.onSelectionChange.emit(event);
+        };
         __decorate([core_1.Input(), __metadata('design:type', TableOptions_1.TableOptions)], DataTable.prototype, "options", void 0);
         __decorate([core_1.Input(), __metadata('design:type', Array)], DataTable.prototype, "rows", void 0);
         __decorate([core_1.Input(), __metadata('design:type', Array)], DataTable.prototype, "selected", void 0);
-        __decorate([core_1.Output(), __metadata('design:type', Object)], DataTable.prototype, "onPageChange", void 0);
-        __decorate([core_1.Output(), __metadata('design:type', Object)], DataTable.prototype, "onRowsUpdate", void 0);
-        __decorate([core_1.Output(), __metadata('design:type', Object)], DataTable.prototype, "onRowClick", void 0);
-        __decorate([core_1.Output(), __metadata('design:type', Object)], DataTable.prototype, "onSelectionChange", void 0);
-        __decorate([core_1.Output(), __metadata('design:type', Object)], DataTable.prototype, "onColumnChange", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], DataTable.prototype, "onPageChange", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], DataTable.prototype, "onRowsUpdate", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], DataTable.prototype, "onRowClick", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], DataTable.prototype, "onSelectionChange", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], DataTable.prototype, "onColumnChange", void 0);
         __decorate([core_1.HostListener('window:resize'), __metadata('design:type', Function), __metadata('design:paramtypes', []), __metadata('design:returntype', void 0)], DataTable.prototype, "resize", null);
         DataTable = __decorate([core_1.Component({
           selector: 'datatable',
-          template: "\n  \t<div\n      visibility-observer\n      (onVisibilityChange)=\"adjustSizes()\">\n      <datatable-header\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </datatable-header>\n      <datatable-body\n        (onRowClick)=\"onRowClick.emit($event)\"\n        (onRowSelect)=\"state.setSelected($event)\">\n      </datatable-body>\n      <datatable-footer\n        (onPageChange)=\"onPageChanged($event)\">\n      </datatable-footer>\n    </div>\n  ",
+          template: "\n  \t<div\n      visibility-observer\n      (onVisibilityChange)=\"adjustSizes()\">\n      <datatable-header\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </datatable-header>\n      <datatable-body\n        (onRowClick)=\"onRowClick.emit($event)\"\n        (onRowSelect)=\"onRowSelect($event)\">\n      </datatable-body>\n      <datatable-footer\n        (onPageChange)=\"onPageChanged($event)\">\n      </datatable-footer>\n    </div>\n  ",
           directives: [Header_1.DataTableHeader, Body_1.DataTableBody, Footer_1.DataTableFooter, Visibility_1.Visibility],
           host: {
             '[class.fixed-header]': 'options.headerHeight !== "auto"',
@@ -1931,10 +1926,8 @@ $__System.register("20", ["4", "d", "3", "5", "21", "22", "10", "18", "1f"], fun
             '[class.checkboxable]': 'options.checkboxable'
           },
           providers: [State_1.StateService]
-        }), __metadata('design:paramtypes', [(typeof(_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object, State_1.StateService, (typeof(_b = typeof core_1.KeyValueDiffers !== 'undefined' && core_1.KeyValueDiffers) === 'function' && _b) || Object])], DataTable);
+        }), __metadata('design:paramtypes', [core_1.ElementRef, State_1.StateService, core_1.KeyValueDiffers])], DataTable);
         return DataTable;
-        var _a,
-            _b;
       }());
       exports_1("DataTable", DataTable);
     }
