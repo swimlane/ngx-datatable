@@ -1,4 +1,4 @@
-# angular2-data-table
+# angular2-data-table  [![Join the chat at https://gitter.im/swimlane/angular2-data-table](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/swimlane/angular2-data-table?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 `angular2-data-table` is a Angular2 component for presenting large and complex data.  It has all the features you would expect from any other table but in a light package with _no external dependencies_. The table was designed to be extremely flexible and light; it doesn't make any assumptions about your data or how you: filter, sort or page it.
 
