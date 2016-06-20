@@ -57,25 +57,25 @@
     "name": "angular2-data-table",
     "main": "release/angular2-data-table.js",
     "dependencies": {
-      "platform-browser-dynamic": "npm:@angular/platform-browser-dynamic@2.0.0-rc.1"
+      "platform-browser-dynamic": "npm:@angular/platform-browser-dynamic@2.0.0-rc.2"
     },
     "devDependencies": {},
     "peerDependencies": {
-      "@angular/common": "npm:@angular/common@2.0.0-rc.1",
-      "@angular/compiler": "npm:@angular/compiler@2.0.0-rc.1",
-      "@angular/core": "npm:@angular/core@2.0.0-rc.1",
-      "@angular/platform-browser": "npm:@angular/platform-browser@2.0.0-rc.1",
+      "@angular/common": "npm:@angular/common@2.0.0-rc.2",
+      "@angular/compiler": "npm:@angular/compiler@2.0.0-rc.2",
+      "@angular/core": "npm:@angular/core@2.0.0-rc.2",
+      "@angular/platform-browser": "npm:@angular/platform-browser@2.0.0-rc.2",
       "@angular/platform-browser-dynamic": "npm:@angular/platform-browser-dynamic@2.0.0-rc.1",
       "assert": "github:jspm/nodelibs-assert@^0.2.0-alpha",
       "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha",
       "path": "github:jspm/nodelibs-path@^0.2.0-alpha",
       "process": "github:jspm/nodelibs-process@^0.2.0-alpha",
-      "reflect-metadata": "npm:reflect-metadata@0.1.2",
+      "reflect-metadata": "npm:reflect-metadata@0.1.3",
       "rxjs": "npm:rxjs@5.0.0-beta.6",
       "zone.js": "npm:zone.js@^0.6.6"
     },
     "overrides": {
-      "npm:@angular/common@2.0.0-rc.1": {
+      "npm:@angular/common@2.0.0-rc.2": {
         "meta": {
           "src/*.js": {
             "deps": [
@@ -85,7 +85,7 @@
           }
         }
       },
-      "npm:@angular/compiler@2.0.0-rc.1": {
+      "npm:@angular/compiler@2.0.0-rc.2": {
         "meta": {
           "src/*.js": {
             "deps": [
@@ -95,7 +95,7 @@
           }
         }
       },
-      "npm:@angular/core@2.0.0-rc.1": {
+      "npm:@angular/core@2.0.0-rc.2": {
         "meta": {
           "src/*.js": {
             "deps": [
@@ -105,7 +105,7 @@
           }
         }
       },
-      "npm:@angular/platform-browser-dynamic@2.0.0-rc.1": {
+      "npm:@angular/platform-browser-dynamic@2.0.0-rc.2": {
         "meta": {
           "src/*.js": {
             "deps": [
@@ -115,7 +115,7 @@
           }
         }
       },
-      "npm:@angular/platform-browser@2.0.0-rc.1": {
+      "npm:@angular/platform-browser@2.0.0-rc.2": {
         "meta": {
           "src/*.js": {
             "deps": [
@@ -125,7 +125,7 @@
           }
         }
       },
-      "npm:reflect-metadata@0.1.2": {
+      "npm:reflect-metadata@0.1.3": {
         "map": {
           "crypto": "@empty"
         }
