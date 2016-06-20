@@ -110,6 +110,8 @@ export class DataTable {
   resize() { this.adjustSizes(); }
 
   adjustColumns(forceIdx: any) {
+    if(!this.options.columns) return;
+
     let width = this.state.innerWidth;
     if(this.options.scrollbarV) {
       width =- this.state.scrollbarWidth;

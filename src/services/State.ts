@@ -80,8 +80,10 @@ export class StateService {
   }
 
   setRows(rows: Array<any>) {
-    this.rows = [...rows];
-    this.onRowsUpdate.emit(rows);
+    if(rows) {
+      this.rows = [...rows];
+      this.onRowsUpdate.emit(rows);
+    }
     return this;
   }
 

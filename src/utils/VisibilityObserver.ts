@@ -18,12 +18,17 @@ export class VisibilityObserver {
   constructor(element, callback) {
     this.callback = callback;
 
+    /*
+    // this is not working...
     if(window.IntersectionObserver) {
       this.observer = new IntersectionObserver(
         this.processChanges.bind(this), { threshold: [0.5] });
 
       this.observer.observe(element);
     } else { this.runPolyfill(element); }
+    */
+
+   this.runPolyfill(element);
   }
 
   runPolyfill(element) {
