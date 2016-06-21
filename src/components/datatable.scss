@@ -1,5 +1,5 @@
 .datatable {
-  display: inline-block;
+  display: block;
   overflow:hidden;
   justify-content: center;
   position: relative;
@@ -114,7 +114,7 @@
    * Header Styles
    */
   .datatable-header {
-    display: inline-block;
+    display: block;
 
     .datatable-header-inner{
       align-items: stretch;
@@ -165,7 +165,7 @@
   .datatable-body {
     position:relative;
     z-index:10;
-    display:inline-block;
+    display:block;
 
     .datatable-scroll{
       display: inline-block;
