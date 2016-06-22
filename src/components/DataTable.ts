@@ -65,12 +65,14 @@ export class DataTable {
   @Output() onColumnChange: EventEmitter<any> = new EventEmitter();
 
   private element: HTMLElement;
-  private differ: any;
+  private rowDiffer: any;
+  private colDiffer: any;
 
   constructor(element: ElementRef, private state: StateService, differs: KeyValueDiffers) {
     this.element = element.nativeElement;
     this.element.classList.add('datatable');
-    this.differ = differs.find({}).create(null);
+    this.rowDiffer = differs.find({}).create(null);
+    this.colDiffer = differs.find({}).create(null);
   }
 
   ngOnInit() {
@@ -87,9 +89,36 @@ export class DataTable {
   }
 
   ngDoCheck() {
-    if(this.differ.diff(this.rows)) {
+    if(this.rowDiffer.diff(this.rows)) {
       this.state.setRows(this.rows);
       this.onRowsUpdate.emit(this.rows);
+    }
+
+    this.checkColumnToggles();
+  }
+
+  checkColumnToggles() {
+    let colDiff = this.colDiffer.diff(this.options.columns);
+    if(colDiff) {
+      let chngd = false;
+
+      colDiff.forEachAddedItem(c => {
+        chngd = true;
+        return false;
+      });
+
+      if(!chngd) {
+        colDiff.forEachRemovedItem(c => {
+          chngd = true;
+          return false;
+        });
+      }
+
+      if(chngd) {
+        // if a column was added or removed
+        // we need to re-adjust columns
+        this.adjustColumns();
+      }
     }
   }
 
