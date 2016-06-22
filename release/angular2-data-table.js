@@ -265,17 +265,19 @@ $__System.register("7", ["4"], function(exports_1, context_1) {
           this.onLongPress = new core_1.EventEmitter();
           this.onLongPressing = new core_1.EventEmitter();
           this.onLongPressEnd = new core_1.EventEmitter();
+          this.mouseX = 0;
+          this.mouseY = 0;
         }
         Object.defineProperty(LongPress.prototype, "press", {
           get: function() {
-            return this._pressing;
+            return this.pressing;
           },
           enumerable: true,
           configurable: true
         });
         Object.defineProperty(LongPress.prototype, "longPress", {
           get: function() {
-            return this._longPressing;
+            return this.longPressing;
           },
           enumerable: true,
           configurable: true
@@ -284,22 +286,43 @@ $__System.register("7", ["4"], function(exports_1, context_1) {
           var _this = this;
           if (event.which !== 1)
             return;
-          this._pressing = true;
-          this._longPressing = false;
-          this._timeout = setTimeout(function() {
-            _this._longPressing = true;
+          this.mouseX = event.clientX;
+          this.mouseY = event.clientY;
+          this.pressing = true;
+          this.longPressing = false;
+          this.timeout = setTimeout(function() {
+            _this.longPressing = true;
             _this.onLongPress.emit(event);
-            _this._interval = setInterval(function() {
-              _this.onLongPressing.emit(event);
-            }, 50);
+            _this.loop(event);
           }, this.duration);
+          this.loop(event, this.duration);
+        };
+        LongPress.prototype.onMouseMove = function(event) {
+          if (this.pressing && !this.longPressing) {
+            var xThres = (event.clientX - this.mouseX) > 10;
+            var yThres = (event.clientY - this.mouseY) > 10;
+            if (xThres || yThres) {
+              this.endPress();
+            }
+          }
+        };
+        LongPress.prototype.loop = function(event) {
+          var _this = this;
+          if (this.longPressing) {
+            this.timeout = setTimeout(function() {
+              _this.onLongPressing.emit(event);
+              _this.loop(event);
+            }, 50);
+          }
         };
         LongPress.prototype.endPress = function() {
-          clearTimeout(this._timeout);
-          clearInterval(this._interval);
-          this._longPressing = false;
-          this._pressing = false;
+          clearTimeout(this.timeout);
+          this.longPressing = false;
+          this.pressing = false;
           this.onLongPressEnd.emit();
+        };
+        LongPress.prototype.onMouseUp = function() {
+          this.endPress();
         };
         __decorate([core_1.Input(), __metadata('design:type', Number)], LongPress.prototype, "duration", void 0);
         __decorate([core_1.Output(), __metadata('design:type', (typeof(_a = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _a) || Object)], LongPress.prototype, "onLongPress", void 0);
@@ -308,7 +331,8 @@ $__System.register("7", ["4"], function(exports_1, context_1) {
         __decorate([core_1.HostBinding('class.press'), __metadata('design:type', Object)], LongPress.prototype, "press", null);
         __decorate([core_1.HostBinding('class.longpress'), __metadata('design:type', Object)], LongPress.prototype, "longPress", null);
         __decorate([core_1.HostListener('mousedown', ['$event']), __metadata('design:type', Function), __metadata('design:paramtypes', [Object]), __metadata('design:returntype', void 0)], LongPress.prototype, "onMouseDown", null);
-        __decorate([core_1.HostListener('mouseup'), __metadata('design:type', Function), __metadata('design:paramtypes', []), __metadata('design:returntype', void 0)], LongPress.prototype, "endPress", null);
+        __decorate([core_1.HostListener('mousemove', ['$event']), __metadata('design:type', Function), __metadata('design:paramtypes', [Object]), __metadata('design:returntype', void 0)], LongPress.prototype, "onMouseMove", null);
+        __decorate([core_1.HostListener('mouseup'), __metadata('design:type', Function), __metadata('design:paramtypes', []), __metadata('design:returntype', void 0)], LongPress.prototype, "onMouseUp", null);
         LongPress = __decorate([core_1.Directive({selector: '[long-press]'}), __metadata('design:paramtypes', [])], LongPress);
         return LongPress;
         var _a,
@@ -451,6 +475,7 @@ $__System.register("a", ["4", "9"], function(exports_1, context_1) {
         }
         Draggable.prototype.onMouseup = function(event) {
           this.dragging = false;
+          this.element.classList.remove('dragging');
           if (this.subscription) {
             this.subscription.unsubscribe();
             this.onDragEnd.emit({
@@ -489,6 +514,7 @@ $__System.register("a", ["4", "9"], function(exports_1, context_1) {
           if (this.dragY)
             this.element.style.top = y + "px";
           if (this.dragX || this.dragY) {
+            this.element.classList.add('dragging');
             this.onDragging.emit({
               event: event,
               element: this.element,
@@ -785,7 +811,7 @@ $__System.register("10", ["4", "d", "7", "a", "8", "b", "c"], function(exports_1
         __decorate([core_1.Output(), __metadata('design:type', (typeof(_a = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _a) || Object)], DataTableHeader.prototype, "onColumnChange", void 0);
         DataTableHeader = __decorate([core_1.Component({
           selector: 'datatable-header',
-          template: "\n  \t<div\n      [style.width]=\"state.columnGroupWidths.total\"\n      class=\"datatable-header-inner\"\n      orderable\n      (onReorder)=\"columnReordered($event)\">\n      <div\n        class=\"datatable-row-left\"\n        [style.width]=\"state.columnGroupWidths.left + 'px'\"\n        *ngIf=\"state.columnsByPin.left.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.left\"\n          resizable\n          [resizeEnabled]=\"column.resizable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"draggable = true\"\n          (onLongPressEnd)=\"draggable = false\"\n          draggable\n          [dragX]=\"column.draggable && draggable\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n      <div\n        class=\"datatable-row-center\"\n        [style.width]=\"state.columnGroupWidths.center + 'px'\"\n        *ngIf=\"state.columnsByPin.center.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.center\"\n          resizable\n          [resizeEnabled]=\"column.resizable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"draggable = true\"\n          (onLongPressEnd)=\"draggable = false\"\n          draggable\n          [dragX]=\"column.draggable && draggable\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n      <div\n        class=\"datatable-row-right\"\n        [style.width]=\"state.columnGroupWidths.right + 'px'\"\n        *ngIf=\"state.columnsByPin.right.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.right\"\n          resizable\n          [resizeEnabled]=\"column.resizable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"draggable = true\"\n          (onLongPressEnd)=\"draggable = false\"\n          draggable\n          [dragX]=\"column.draggable && draggable\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n    </div>\n  ",
+          template: "\n  \t<div\n      [style.width]=\"state.columnGroupWidths.total\"\n      class=\"datatable-header-inner\"\n      orderable\n      (onReorder)=\"columnReordered($event)\">\n      <div\n        class=\"datatable-row-left\"\n        [style.width]=\"state.columnGroupWidths.left + 'px'\"\n        *ngIf=\"state.columnsByPin.left.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.left\"\n          resizable\n          [resizeEnabled]=\"column.resizable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"drag = true\"\n          (onLongPressEnd)=\"drag = false\"\n          draggable\n          [dragX]=\"column.draggable && drag\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n      <div\n        class=\"datatable-row-center\"\n        [style.width]=\"state.columnGroupWidths.center + 'px'\"\n        *ngIf=\"state.columnsByPin.center.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.center\"\n          resizable\n          [resizeEnabled]=\"column.resizable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"drag = true\"\n          (onLongPressEnd)=\"drag = false\"\n          draggable\n          [dragX]=\"column.draggable && drag\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n      <div\n        class=\"datatable-row-right\"\n        [style.width]=\"state.columnGroupWidths.right + 'px'\"\n        *ngIf=\"state.columnsByPin.right.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.right\"\n          resizable\n          [resizeEnabled]=\"column.resizable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"drag = true\"\n          (onLongPressEnd)=\"drag = false\"\n          draggable\n          [dragX]=\"column.draggable && drag\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n    </div>\n  ",
           directives: [HeaderCell_1.DataTableHeaderCell, Draggable_1.Draggable, Resizable_1.Resizable, Orderable_1.Orderable, LongPress_1.LongPress],
           host: {
             '[style.width]': 'headerWidth',
@@ -1736,7 +1762,7 @@ $__System.register("1e", ["4"], function(exports_1, context_1) {
         __decorate([core_1.Output(), __metadata('design:type', (typeof(_a = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _a) || Object)], DataTablePager.prototype, "onPaged", void 0);
         DataTablePager = __decorate([core_1.Component({
           selector: 'datatable-pager',
-          template: "\n    <ul class=\"pager\">\n      <li [attr.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(1)\"\n          class=\"icon-prev\">\n        </a>\n      </li>\n      <li [attr.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"prevPage()\"\n          class=\"icon-left\">\n        </a>\n      </li>\n      <li\n        *ngFor=\"let pg of pages\"\n        [class.active]=\"pg.number === page\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(pg.number)\">\n          {{pg.text}}\n        </a>\n      </li>\n      <li [attr.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"nextPage()\"\n          class=\"icon-right\">\n        </a>\n      </li>\n      <li [attr.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(totalPages)\"\n          class=\"icon-skip\">\n        </a>\n      </li>\n    </ul>\n  "
+          template: "\n    <ul class=\"pager\">\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(1)\"\n          class=\"icon-prev\">\n        </a>\n      </li>\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"prevPage()\"\n          class=\"icon-left\">\n        </a>\n      </li>\n      <li\n        *ngFor=\"let pg of pages\"\n        [class.active]=\"pg.number === page\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(pg.number)\">\n          {{pg.text}}\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"nextPage()\"\n          class=\"icon-right\">\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(totalPages)\"\n          class=\"icon-skip\">\n        </a>\n      </li>\n    </ul>\n  "
         }), __metadata('design:paramtypes', [(typeof(_b = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _b) || Object])], DataTablePager);
         return DataTablePager;
         var _a,
@@ -1874,7 +1900,8 @@ $__System.register("20", ["4", "d", "3", "5", "21", "22", "10", "18", "1f"], fun
           this.onColumnChange = new core_1.EventEmitter();
           this.element = element.nativeElement;
           this.element.classList.add('datatable');
-          this.differ = differs.find({}).create(null);
+          this.rowDiffer = differs.find({}).create(null);
+          this.colDiffer = differs.find({}).create(null);
         }
         DataTable.prototype.ngOnInit = function() {
           var _a = this,
@@ -1887,9 +1914,29 @@ $__System.register("20", ["4", "d", "3", "5", "21", "22", "10", "18", "1f"], fun
           this.adjustColumns();
         };
         DataTable.prototype.ngDoCheck = function() {
-          if (this.differ.diff(this.rows)) {
+          if (this.rowDiffer.diff(this.rows)) {
             this.state.setRows(this.rows);
             this.onRowsUpdate.emit(this.rows);
+          }
+          this.checkColumnToggles();
+        };
+        DataTable.prototype.checkColumnToggles = function() {
+          var colDiff = this.colDiffer.diff(this.options.columns);
+          if (colDiff) {
+            var chngd_1 = false;
+            colDiff.forEachAddedItem(function(c) {
+              chngd_1 = true;
+              return false;
+            });
+            if (!chngd_1) {
+              colDiff.forEachRemovedItem(function(c) {
+                chngd_1 = true;
+                return false;
+              });
+            }
+            if (chngd_1) {
+              this.adjustColumns();
+            }
           }
         };
         DataTable.prototype.adjustSizes = function() {

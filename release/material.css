@@ -34,6 +34,10 @@
       font-weight: 400;
       color: #757575;
       vertical-align: bottom; }
+      .datatable.material .datatable-header .datatable-header-cell.longpress {
+        color: #00E676; }
+      .datatable.material .datatable-header .datatable-header-cell.dragging .resize-handle {
+        border-right: none; }
     .datatable.material .datatable-header .resize-handle {
       border-right: solid 1px #eee; }
   .datatable.material .datatable-body .datatable-body-row .datatable-body-cell {
@@ -96,10 +100,16 @@
       line-height: 50px; }
       .datatable.material .datatable-footer .datatable-pager li {
         vertical-align: middle; }
+        .datatable.material .datatable-footer .datatable-pager li.disabled a {
+          color: rgba(0, 0, 0, 0.26) !important;
+          background-color: transparent !important; }
+        .datatable.material .datatable-footer .datatable-pager li.active a {
+          background-color: rgba(158, 158, 158, 0.2);
+          font-weight: bold; }
       .datatable.material .datatable-footer .datatable-pager a {
-        height: 24px;
+        height: 22px;
         min-width: 24px;
-        line-height: 26px;
+        line-height: 22px;
         padding: 0 6px;
         border-radius: 3px;
         margin: 6px 3px;
@@ -118,13 +128,6 @@
         font-size: 20px;
         line-height: 20px;
         padding: 0 3px; }
-      .datatable.material .datatable-footer .datatable-pager .disabled a {
-        cursor: not-allowed;
-        color: rgba(0, 0, 0, 0.26) !important;
-        background-color: transparent !important; }
-      .datatable.material .datatable-footer .datatable-pager .active a {
-        background-color: rgba(158, 158, 158, 0.2);
-        font-weight: bold; }
 
 /**
  * Progress bar animations

@@ -1,5 +1,5 @@
 .datatable {
-  display: inline-block;
+  display: block;
   overflow: hidden;
   justify-content: center;
   position: relative;
@@ -85,7 +85,7 @@
   .datatable .datatable-row-right {
     position: relative; }
   .datatable .datatable-header {
-    display: inline-block; }
+    display: block; }
     .datatable .datatable-header .datatable-header-inner {
       align-items: stretch;
       -webkit-align-items: stretch; }
@@ -95,7 +95,7 @@
       .datatable .datatable-header .datatable-header-cell.longpress {
         cursor: move; }
       .datatable .datatable-header .datatable-header-cell.sortable {
-        cursor: hand; }
+        cursor: pointer; }
       .datatable .datatable-header .datatable-header-cell .sort-btn {
         line-height: 100%;
         vertical-align: middle;
@@ -115,7 +115,7 @@
   .datatable .datatable-body {
     position: relative;
     z-index: 10;
-    display: inline-block; }
+    display: block; }
     .datatable .datatable-body .datatable-scroll {
       display: inline-block; }
     .datatable .datatable-body .datatable-body-row {
@@ -148,3 +148,8 @@
         list-style: none; }
       .datatable .datatable-footer .datatable-pager .pager li, .datatable .datatable-footer .datatable-pager .pager li a {
         outline: none; }
+      .datatable .datatable-footer .datatable-pager .pager li a {
+        cursor: pointer;
+        display: inline-block; }
+      .datatable .datatable-footer .datatable-pager .pager li.disabled a {
+        cursor: not-allowed; }
