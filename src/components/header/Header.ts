@@ -33,10 +33,10 @@ import { DataTableHeaderCell } from './HeaderCell';
           [resizeEnabled]="column.resizable"
           (onResize)="columnResized($event, column)"
           long-press
-          (onLongPress)="draggable = true"
-          (onLongPressEnd)="draggable = false"
+          (onLongPress)="drag = true"
+          (onLongPressEnd)="drag = false"
           draggable
-          [dragX]="column.draggable && draggable"
+          [dragX]="column.draggable && drag"
           [dragY]="false"
           [model]="column"
           (onColumnChange)="onColumnChange.emit($event)">
@@ -52,10 +52,10 @@ import { DataTableHeaderCell } from './HeaderCell';
           [resizeEnabled]="column.resizable"
           (onResize)="columnResized($event, column)"
           long-press
-          (onLongPress)="draggable = true"
-          (onLongPressEnd)="draggable = false"
+          (onLongPress)="drag = true"
+          (onLongPressEnd)="drag = false"
           draggable
-          [dragX]="column.draggable && draggable"
+          [dragX]="column.draggable && drag"
           [dragY]="false"
           [model]="column"
           (onColumnChange)="onColumnChange.emit($event)">
@@ -71,10 +71,10 @@ import { DataTableHeaderCell } from './HeaderCell';
           [resizeEnabled]="column.resizable"
           (onResize)="columnResized($event, column)"
           long-press
-          (onLongPress)="draggable = true"
-          (onLongPressEnd)="draggable = false"
+          (onLongPress)="drag = true"
+          (onLongPressEnd)="drag = false"
           draggable
-          [dragX]="column.draggable && draggable"
+          [dragX]="column.draggable && drag"
           [dragY]="false"
           [model]="column"
           (onColumnChange)="onColumnChange.emit($event)">

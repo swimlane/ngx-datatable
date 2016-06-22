@@ -42,6 +42,7 @@ export class Draggable {
   @HostListener('document:mouseup', ['$event'])
   onMouseup(event) {
     this.dragging = false;
+    this.element.classList.remove('dragging');
 
     if(this.subscription) {
       this.subscription.unsubscribe();
@@ -81,6 +82,8 @@ export class Draggable {
     if(this.dragY) this.element.style.top = `${y}px`;
 
     if(this.dragX || this.dragY) {
+      this.element.classList.add('dragging');
+
       this.onDragging.emit({
         event,
         element: this.element,

@@ -16,43 +16,66 @@ export class LongPress {
   @Output() onLongPressing: EventEmitter<any> = new EventEmitter();
   @Output() onLongPressEnd: EventEmitter<any> = new EventEmitter();
 
-  private _pressing: boolean;
-  private _longPressing: boolean;
-  private _timeout: any;
-  private _interval: any;
+  private pressing: boolean;
+  private longPressing: boolean;
+  private timeout: any;
+  private mouseX = 0: number;
+  private mouseY = 0: number;
 
   @HostBinding('class.press')
-  get press() { return this._pressing; }
+  get press() { return this.pressing; }
 
   @HostBinding('class.longpress')
-  get longPress() { return this._longPressing; }
+  get longPress() { return this.longPressing; }
 
   @HostListener('mousedown', ['$event'])
   onMouseDown(event) {
     // don't do right/middle clicks
     if(event.which !== 1) return;
 
-    this._pressing = true;
-    this._longPressing = false;
+    this.mouseX = event.clientX;
+    this.mouseY = event.clientY;
 
-    this._timeout = setTimeout(() => {
-      this._longPressing = true;
+    this.pressing = true;
+    this.longPressing = false;
+
+    this.timeout = setTimeout(() => {
+      this.longPressing = true;
       this.onLongPress.emit(event);
-
-      this._interval = setInterval(() => {
-        this.onLongPressing.emit(event);
-      }, 50);
+      this.loop(event);
     }, this.duration);
+
+    this.loop(event, this.duration)
+  }
+
+  @HostListener('mousemove', ['$event'])
+  onMouseMove(event) {
+    if(this.pressing && !this.longPressing) {
+      const xThres = (event.clientX - this.mouseX) > 10;
+      const yThres = (event.clientY - this.mouseY) > 10;
+      if(xThres || yThres) {
+        this.endPress();
+      }
+    }
+  }
+
+  loop(event) {
+    if(this.longPressing) {
+      this.timeout = setTimeout(() => {
+        this.onLongPressing.emit(event);
+        this.loop(event);
+      }, 50);
+    }
+  }
+
+  endPress() {
+    clearTimeout(this.timeout);
+    this.longPressing = false;
+    this.pressing = false;
+    this.onLongPressEnd.emit();
   }
 
   @HostListener('mouseup')
-  endPress() {
-    clearTimeout(this._timeout);
-    clearInterval(this._interval);
-
-    this._longPressing = false;
-    this._pressing = false;
-    this.onLongPressEnd.emit();
-  }
+  onMouseUp() { this.endPress(); }
 
 }
