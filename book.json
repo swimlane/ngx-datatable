@@ -14,7 +14,7 @@
         },
         "edit-link": {
             "base": "https://github.com/swimlane/angular2-data-table/tree/master",
-            "label": "Edit This Page"
+            "label": "Edit"
         }
     }
 }
