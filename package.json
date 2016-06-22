@@ -51,7 +51,7 @@
     "node-sass": "^3.7.0",
     "rimraf": "^2.5.2",
     "typescript": ">=1.9.0-dev.20160608-1.0",
-    "uglify-js": "^2.6.2"
+    "uglify-js": "^2.6.4"
   },
   "jspm": {
     "name": "angular2-data-table",
