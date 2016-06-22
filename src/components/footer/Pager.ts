@@ -10,14 +10,14 @@ import {
   selector: 'datatable-pager',
   template: `
     <ul class="pager">
-      <li [attr.disabled]="!canPrevious()">
+      <li [class.disabled]="!canPrevious()">
         <a
           href="javascript:void(0)"
           (click)="selectPage(1)"
           class="icon-prev">
         </a>
       </li>
-      <li [attr.disabled]="!canPrevious()">
+      <li [class.disabled]="!canPrevious()">
         <a
           href="javascript:void(0)"
           (click)="prevPage()"
@@ -33,14 +33,14 @@ import {
           {{pg.text}}
         </a>
       </li>
-      <li [attr.disabled]="!canNext()">
+      <li [class.disabled]="!canNext()">
         <a
           href="javascript:void(0)"
           (click)="nextPage()"
           class="icon-right">
         </a>
       </li>
-      <li [attr.disabled]="!canNext()">
+      <li [class.disabled]="!canNext()">
         <a
           href="javascript:void(0)"
           (click)="selectPage(totalPages)"

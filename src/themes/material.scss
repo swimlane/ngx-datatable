@@ -28,15 +28,25 @@
 	.datatable-header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 
-    .datatable-header-cell{
+    .datatable-header-cell {
       text-align: left;
       padding: .5rem 1.2rem;
       font-weight: 400;
       color: #757575;
       vertical-align: bottom;
+
+			&.longpress {
+				color:#00E676;
+			}
+
+			&.dragging {
+				.resize-handle {
+					border-right: none;
+				}
+			}
     }
 
-    .resize-handle{
+    .resize-handle {
       border-right:solid 1px #eee;
     }
   }
@@ -46,7 +56,7 @@
 	 */
 	.datatable-body {
 	  .datatable-body-row {
-	    .datatable-body-cell{
+	    .datatable-body-cell {
 	      text-align: left;
 	      padding: .5rem 1.2rem;
 	      vertical-align: top;
@@ -128,18 +138,28 @@
 			padding: 0 1.2rem;
 		}
 
-		.datatable-pager{
+		.datatable-pager {
 			margin: 0 10px;
 	    line-height: 50px;
 
 			li {
 	    	vertical-align: middle;
+
+				&.disabled a{
+					color:rgba(0, 0, 0, 0.26) !important;
+					background-color: transparent !important;
+				}
+
+				&.active a{
+					background-color: rgba(158,158,158,0.2);
+					font-weight: bold;
+				}
 			}
 
 			a {
-				height: 24px;
+				height: 22px;
 				min-width: 24px;
-				line-height: 26px;
+				line-height: 22px;
 				padding: 0 6px;
 				border-radius: 3px;
 				margin: 6px 3px;
@@ -162,17 +182,6 @@
 				font-size:20px;
 				line-height: 20px;
 				padding:0 3px;
-			}
-
-			.disabled a{
-				cursor: not-allowed;
-				color:rgba(0, 0, 0, 0.26) !important;
-				background-color: transparent !important;
-			}
-
-			.active a{
-				background-color: rgba(158,158,158,0.2);
-				font-weight: bold;
 			}
 		}
 	}

@@ -215,9 +215,20 @@
         list-style:none;
       }
 
-      .pager{
+      .pager {
         li, li a{
           outline:none;
+        }
+
+        li {
+          a {
+            cursor: pointer;
+            display: inline-block;
+          }
+
+          &.disabled a {
+            cursor: not-allowed;
+          }
         }
       }
     }
