@@ -19,8 +19,8 @@ export class LongPress {
   private pressing: boolean;
   private longPressing: boolean;
   private timeout: any;
-  private mouseX = 0: number;
-  private mouseY = 0: number;
+  private mouseX: number = 0;
+  private mouseY: number = 0;
 
   @HostBinding('class.press')
   get press() { return this.pressing; }
