@@ -1,6 +1,6 @@
 {
   "name": "angular2-data-table",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "angular2-data-table is a Angular2 component for presenting large and complex data.",
   "main": "release/angular2-data-table.js",
   "scripts": {
@@ -14,9 +14,7 @@
     "build:ts": "tsc -p tsconfig.json; true",
     "build:sass": "node-sass -o dist/ src/",
     "build:css": "postcss --use autoprefixer dist/*.css -d dist/",
-    "build:bundle": "concurrently \"npm run build:bundle-ng\" \"npm run build:bundle-rx\"",
-    "build:bundle-ng": "jspm bundle @angular/platform-browser-dynamic dist/bundle-ng.js --log warn",
-    "build:bundle-rx": "jspm bundle rxjs dist/bundle-rx.js --log warn",
+    "build:bundle": "jspm bundle rxjs + @angular/platform-browser-dynamic dist/bundle.js --log warn",
     "watch": "npm run clean:dist && concurrently \"npm run watch:ts\" \"npm run watch:sass\"",
     "watch:ts": "tsc --watch -p tsconfig.json",
     "watch:sass": "npm run build:sass && node-sass -o dist/ -w src/",
@@ -57,14 +55,14 @@
     "name": "angular2-data-table",
     "main": "release/angular2-data-table.js",
     "dependencies": {
-      "platform-browser-dynamic": "npm:@angular/platform-browser-dynamic@2.0.0-rc.2"
+      "platform-browser-dynamic": "npm:@angular/platform-browser-dynamic@2.0.0-rc.3"
     },
     "devDependencies": {},
     "peerDependencies": {
-      "@angular/common": "npm:@angular/common@2.0.0-rc.2",
-      "@angular/compiler": "npm:@angular/compiler@2.0.0-rc.2",
-      "@angular/core": "npm:@angular/core@2.0.0-rc.2",
-      "@angular/platform-browser": "npm:@angular/platform-browser@2.0.0-rc.2",
+      "@angular/common": "npm:@angular/common@2.0.0-rc.3",
+      "@angular/compiler": "npm:@angular/compiler@2.0.0-rc.3",
+      "@angular/core": "npm:@angular/core@2.0.0-rc.3",
+      "@angular/platform-browser": "npm:@angular/platform-browser@2.0.0-rc.3",
       "@angular/platform-browser-dynamic": "npm:@angular/platform-browser-dynamic@2.0.0-rc.1",
       "assert": "github:jspm/nodelibs-assert@^0.2.0-alpha",
       "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha",
@@ -75,7 +73,7 @@
       "zone.js": "npm:zone.js@^0.6.6"
     },
     "overrides": {
-      "npm:@angular/common@2.0.0-rc.2": {
+      "npm:@angular/common@2.0.0-rc.3": {
         "meta": {
           "src/*.js": {
             "deps": [
@@ -85,7 +83,7 @@
           }
         }
       },
-      "npm:@angular/compiler@2.0.0-rc.2": {
+      "npm:@angular/compiler@2.0.0-rc.3": {
         "meta": {
           "src/*.js": {
             "deps": [
@@ -95,7 +93,7 @@
           }
         }
       },
-      "npm:@angular/core@2.0.0-rc.2": {
+      "npm:@angular/core@2.0.0-rc.3": {
         "meta": {
           "src/*.js": {
             "deps": [
@@ -115,7 +113,17 @@
           }
         }
       },
-      "npm:@angular/platform-browser@2.0.0-rc.2": {
+      "npm:@angular/platform-browser-dynamic@2.0.0-rc.3": {
+        "meta": {
+          "src/*.js": {
+            "deps": [
+              "reflect-metadata",
+              "zone.js"
+            ]
+          }
+        }
+      },
+      "npm:@angular/platform-browser@2.0.0-rc.3": {
         "meta": {
           "src/*.js": {
             "deps": [
