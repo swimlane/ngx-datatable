@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import {
-  DataTable,
+  DATATABLE_COMPONENTS,
   TableOptions,
   TableColumn,
   SelectionType,
@@ -33,7 +33,7 @@ import {
       </div>
     </div>
   `,
-  directives: [ DataTable ]
+  directives: [ DATATABLE_COMPONENTS ]
 })
 export class App {
 
