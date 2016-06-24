@@ -9,7 +9,7 @@
    * [Paging](examples/paging.md)
    * [Sorting](examples/sorting.md)
    * [Selection](examples/selection.md)
-   * [Column Toggling](examples/column-toggling.md)
+   * [Column Toggling](examples/column-toggle.md)
 * API
    * [Table](api/table.md)
    * [Options](api/options.md)
