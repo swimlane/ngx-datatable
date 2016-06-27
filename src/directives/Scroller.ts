@@ -1,16 +1,13 @@
-import { Component, Input, ElementRef } from '@angular/core';
+import { Directive, Input, ElementRef } from '@angular/core';
 
-@Component({
-  selector: 'datatable-scroll',
-  template: `
-    <ng-content></ng-content>
-  `,
+@Directive({
+  selector: '[scroller]',
   host: {
     '[style.height]': 'scrollHeight',
     '[style.width]': 'scrollWidth + "px"'
   }
 })
-export class DataTableScroll {
+export class Scroller {
 
   @Input() rowHeight: number;
   @Input() count: number;
@@ -21,7 +18,7 @@ export class DataTableScroll {
   }
 
   constructor(elm: ElementRef){
-    elm.nativeElement.classList.add('datatable-scroll');
+    elm.nativeElement.classList.add('scroller');
   }
 
 }

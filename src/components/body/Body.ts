@@ -7,7 +7,7 @@ import { selectRows, selectRowsBetween } from '../../utils/selection';
 
 import { ProgressBar } from './ProgressBar';
 import { DataTableBodyRow } from './BodyRow';
-import { DataTableScroll } from './Scroll';
+import { Scroller } from '../../directives/Scroller';
 
 @Component({
   selector: 'datatable-body',
@@ -16,7 +16,8 @@ import { DataTableScroll } from './Scroll';
       <datatable-progress
         [hidden]="!state.options.loadingIndicator">
       </datatable-progress>
-      <datatable-scroll
+      <div
+        scroller
         *ngIf="state.rows.length"
         [rowHeight]="state.options.rowHeight"
         [count]="state.rowCount"
@@ -28,7 +29,7 @@ import { DataTableScroll } from './Scroll';
           (keydown)="rowKeydown($event, i, row)"
           [row]="row">
         </datatable-body-row>
-      </datatable-scroll>
+      </div>
       <div
         class="empty-row"
         *ngIf="!rows.length"
@@ -39,7 +40,7 @@ import { DataTableScroll } from './Scroll';
   directives: [
     ProgressBar,
     DataTableBodyRow,
-    DataTableScroll
+    Scroller
   ],
   host: {
     '[style.width]':'bodyWidth',
