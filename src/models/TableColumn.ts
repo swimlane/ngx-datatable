@@ -10,6 +10,9 @@ export class TableColumn {
   // unique id
   $id: string = id();
 
+  // defines if its expressive
+  isExpressive: boolean = false;
+
   // pinned to the left
   frozenLeft: boolean = false;
 

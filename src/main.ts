@@ -1,5 +1,6 @@
 // Components
 import { DataTable } from './components/DataTable';
+import { DataTableColumn } from './components/DataTableColumn';
 
 // Models
 import { TableOptions } from './models/TableOptions';
@@ -12,7 +13,8 @@ import { SortDirection } from './models/SortDirection';
 import { SortType } from './models/SortType';
 
 const DATATABLE_COMPONENTS = [
-  DataTable
+  DataTable,
+  DataTableColumn
 ];
 
 export {

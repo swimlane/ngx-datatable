@@ -5,7 +5,8 @@ import {
   ElementRef,
   EventEmitter,
   HostListener,
-  KeyValueDiffers
+  KeyValueDiffers,
+  ContentChildren
 } from '@angular/core';
 
 import { StateService } from '../services/State';
@@ -13,7 +14,9 @@ import { Visibility } from '../directives/Visibility';
 import { forceFillColumnWidths, adjustColumnWidths } from '../utils/math';
 import { ColumnMode } from '../models/ColumnMode';
 import { TableOptions } from '../models/TableOptions';
+import { TableColumn } from '../models/TableColumn';
 
+import { DataTableColumn } from './DataTableColumn';
 import { DataTableHeader } from './header/Header';
 import { DataTableBody } from './body/Body';
 import { DataTableFooter } from './footer/Footer';
@@ -64,6 +67,8 @@ export class DataTable {
   @Output() onSelectionChange: EventEmitter<any> = new EventEmitter();
   @Output() onColumnChange: EventEmitter<any> = new EventEmitter();
 
+  @ContentChildren(DataTableColumn) columns;
+
   private element: HTMLElement;
   private rowDiffer: any;
   private colDiffer: any;
@@ -86,6 +91,17 @@ export class DataTable {
 
   ngAfterViewInit() {
     this.adjustColumns();
+
+    console.log('chil', this.columns.toArray())
+
+    setTimeout(() => {
+      for(let col of this.columns.toArray()) {
+        this.options.columns.push(new TableColumn({
+          name: col.name,
+          isExpressive: true
+        }));
+      }
+    });
   }
 
   ngDoCheck() {
@@ -101,7 +117,6 @@ export class DataTable {
     let colDiff = this.colDiffer.diff(this.options.columns);
     if(colDiff) {
       let chngd = false;
-
       colDiff.forEachAddedItem(c => {
         chngd = true;
         return false;
@@ -114,11 +129,9 @@ export class DataTable {
         });
       }
 
-      if(chngd) {
-        // if a column was added or removed
-        // we need to re-adjust columns
-        this.adjustColumns();
-      }
+      // if a column was added or removed
+      // we need to re-adjust columns
+      if(chngd) this.adjustColumns();
     }
   }
 

@@ -7,8 +7,11 @@ import { SelectionType } from './SelectionType';
 
 export class TableOptions {
 
+  // View ref
+  ref: any;
+
   // Columns
-  columns: Array<TableColumn>;
+  columns: Array<TableColumn> = [];
 
   // Enable vertical scrollbars
   scrollbarV: boolean = false;
