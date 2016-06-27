@@ -17,7 +17,7 @@ import {
     		[rows]="rows"
     		[options]="options">
         <datatable-column name="Name">
-          Meow
+          <span>Meow</span>
         </datatable-column>
         <datatable-column name="Gender">
           Blah

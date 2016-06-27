@@ -12,7 +12,8 @@ import {
 import { StateService } from '../services/State';
 import { Visibility } from '../directives/Visibility';
 import { forceFillColumnWidths, adjustColumnWidths } from '../utils/math';
-import { ColumnMode } from '../models/ColumnMode';
+
+import { ColumnMode } from '../enums/ColumnMode';
 import { TableOptions } from '../models/TableOptions';
 import { TableColumn } from '../models/TableColumn';
 

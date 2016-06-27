@@ -8,7 +8,7 @@ import {
 
 import { StateService } from '../../services/State';
 import { TableColumn } from '../../models/TableColumn';
-import { SortDirection } from '../../models/SortDirection';
+import { SortDirection } from '../../enums/SortDirection';
 
 @Component({
   selector: 'datatable-header-cell',

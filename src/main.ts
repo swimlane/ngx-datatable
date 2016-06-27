@@ -5,12 +5,13 @@ import { DataTableColumn } from './components/DataTableColumn';
 // Models
 import { TableOptions } from './models/TableOptions';
 import { TableColumn } from './models/TableColumn';
+import { Sort } from './models/Sort';
 
 // Types
-import { SelectionType } from './models/SelectionType';
-import { ColumnMode } from './models/ColumnMode';
-import { SortDirection } from './models/SortDirection';
-import { SortType } from './models/SortType';
+import { SelectionType } from './enums/SelectionType';
+import { ColumnMode } from './enums/ColumnMode';
+import { SortDirection } from './enums/SortDirection';
+import { SortType } from './enums/SortType';
 
 const DATATABLE_COMPONENTS = [
   DataTable,
@@ -21,6 +22,7 @@ export {
   DataTable,
   TableOptions,
   TableColumn,
+  Sort,
   SelectionType,
   ColumnMode,
   SortDirection,

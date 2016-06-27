@@ -1,7 +1,7 @@
 import { Component, Input, ElementRef, Output, EventEmitter } from '@angular/core';
 
 import { StateService } from '../../services/State';
-import { SelectionType } from '../../models/SelectionType';
+import { SelectionType } from '../../enums/SelectionType';
 import { Keys } from '../../utils/Keys';
 import { selectRows, selectRowsBetween } from '../../utils/selection';
 

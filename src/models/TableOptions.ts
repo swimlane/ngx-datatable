@@ -1,9 +1,9 @@
 import { TableColumn } from './TableColumn';
 import { Sort } from './Sort';
 
-import { ColumnMode } from './ColumnMode';
-import { SortType } from './SortType';
-import { SelectionType } from './SelectionType';
+import { ColumnMode } from '../enums/ColumnMode';
+import { SortType } from '../enums/SortType';
+import { SelectionType } from '../enums/SelectionType';
 
 export class TableOptions {
 

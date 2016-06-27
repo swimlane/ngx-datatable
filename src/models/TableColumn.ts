@@ -8,7 +8,7 @@ import { camelCase } from '../utils/camelCase';
 export class TableColumn {
 
   // unique id
-  $id: string = id();
+  $$id: string = id();
 
   // defines if its expressive
   isExpressive: boolean = false;
