@@ -7,7 +7,7 @@ import { nextSortDir, sortRows } from '../utils/sort';
 import { TableOptions } from '../models/TableOptions';
 import { TableColumn } from '../models/TableColumn';
 import { Sort } from '../models/Sort';
-import { SortType } from '../models/SortType';
+import { SortType } from '../enums/SortType';
 
 @Injectable()
 export class StateService {
