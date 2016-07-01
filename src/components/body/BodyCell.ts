@@ -56,7 +56,6 @@ export class DataTableBodyCell {
   }
 
   ngOnInit() {
-    //Cleanup the old component
     if (this.componentRef) this.componentRef.destroy();
 
     this.componentResolver.resolveComponent(DataTableColumn)
@@ -66,8 +65,6 @@ export class DataTableBodyCell {
 
         this.componentRef.instance.row = this.row;
         this.componentRef.instance.column = this.column;
-
-        console.log('col', this.column, this.componentRef)
       });
   }
 
