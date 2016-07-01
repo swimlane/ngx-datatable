@@ -1,4 +1,4 @@
-import { Sort } from '../enums/Sort';
+import { Sort } from '../models/Sort';
 import { SortType } from '../enums/SortType';
 import { SortDirection } from '../enums/SortDirection';
 
