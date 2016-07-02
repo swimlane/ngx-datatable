@@ -1,0 +1,26 @@
+{
+  "extends": "tslint:latest",
+  "rules": {
+    "indent": [true, "spaces"],
+    "quotemark": [true, "single"],
+    "object-literal-sort-keys": false,
+    "trailing-comma": false,
+    "class-name": true,
+    "semicolon": [true, "always"],
+    "triple-equals": [true, "allow-null-check"],
+    "eofline": true,
+    "jsdoc-format": true,
+    "member-access": false,
+    "whitespace": [true,
+      "check-decl",
+      "check-operator",
+      "check-separator",
+      "check-type"
+    ],
+    "no-require-imports": true,
+    "no-reference": true,
+    "ordered-imports": false,
+    "no-trailing-whitespace": false
+  },
+  "rulesDirectory": []
+}
