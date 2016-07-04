@@ -45,7 +45,7 @@ export class LongPress {
       this.loop(event);
     }, this.duration);
 
-    this.loop(event, this.duration)
+    this.loop(event);
   }
 
   @HostListener('mousemove', ['$event'])
