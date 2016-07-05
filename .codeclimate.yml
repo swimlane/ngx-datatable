@@ -2,6 +2,9 @@
 engines:
   duplication:
     enabled: true
+    config:
+      languages:
+        - javascript
 exclude_paths:
   - "release/"
   - "docs/"
