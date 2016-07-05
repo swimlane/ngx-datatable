@@ -14,6 +14,7 @@ The table was designed to be *extremely flexible and light*; it doesn't make any
 ### Roadmap
 We are really excited about the table and wanted to get it out into the open as quickly as possible so we had to delay some of the features but we plan to add the following:
 
+- Better RxJS Support
 - Horizontal Scrolling
 - Touch selection support
 - Handle large data sets ( Virtual DOM )
