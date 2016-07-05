@@ -295,7 +295,7 @@ $__System.register("7", ["4"], function(exports_1, context_1) {
             _this.onLongPress.emit(event);
             _this.loop(event);
           }, this.duration);
-          this.loop(event, this.duration);
+          this.loop(event);
         };
         LongPress.prototype.onMouseMove = function(event) {
           if (this.pressing && !this.longPressing) {
@@ -966,7 +966,68 @@ $__System.register("14", [], function(exports_1, context_1) {
   };
 });
 
-$__System.register("15", ["4", "e", "14"], function(exports_1, context_1) {
+$__System.register("15", ["4"], function(exports_1, context_1) {
+  "use strict";
+  var __moduleName = context_1 && context_1.id;
+  var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
+    var c = arguments.length,
+        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+        d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+      r = Reflect.decorate(decorators, target, key, desc);
+    else
+      for (var i = decorators.length - 1; i >= 0; i--)
+        if (d = decorators[i])
+          r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+  };
+  var __metadata = (this && this.__metadata) || function(k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
+      return Reflect.metadata(k, v);
+  };
+  var core_1;
+  var TemplateWrapper;
+  return {
+    setters: [function(core_1_1) {
+      core_1 = core_1_1;
+    }],
+    execute: function() {
+      TemplateWrapper = (function() {
+        function TemplateWrapper(viewContainer) {
+          this.viewContainer = viewContainer;
+        }
+        TemplateWrapper.prototype.ngOnChanges = function(changes) {
+          if (changes['templateWrapper']) {
+            if (this.embeddedViewRef) {
+              this.embeddedViewRef.destroy();
+            }
+            this.embeddedViewRef = this.viewContainer.createEmbeddedView(this.templateWrapper, {
+              value: this.value,
+              row: this.row,
+              column: this.column
+            });
+          }
+          if (this.embeddedViewRef) {
+            this.embeddedViewRef.context.value = this.value;
+            this.embeddedViewRef.context.row = this.row;
+            this.embeddedViewRef.context.column = this.column;
+          }
+        };
+        __decorate([core_1.Input(), __metadata('design:type', (typeof(_a = typeof core_1.TemplateRef !== 'undefined' && core_1.TemplateRef) === 'function' && _a) || Object)], TemplateWrapper.prototype, "templateWrapper", void 0);
+        __decorate([core_1.Input(), __metadata('design:type', Object)], TemplateWrapper.prototype, "value", void 0);
+        __decorate([core_1.Input(), __metadata('design:type', Object)], TemplateWrapper.prototype, "row", void 0);
+        __decorate([core_1.Input(), __metadata('design:type', Object)], TemplateWrapper.prototype, "column", void 0);
+        TemplateWrapper = __decorate([core_1.Directive({selector: '[templateWrapper]'}), __metadata('design:paramtypes', [(typeof(_b = typeof core_1.ViewContainerRef !== 'undefined' && core_1.ViewContainerRef) === 'function' && _b) || Object])], TemplateWrapper);
+        return TemplateWrapper;
+        var _a,
+            _b;
+      }());
+      exports_1("TemplateWrapper", TemplateWrapper);
+    }
+  };
+});
+
+$__System.register("16", ["4", "e", "14", "15"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
@@ -987,7 +1048,8 @@ $__System.register("15", ["4", "e", "14"], function(exports_1, context_1) {
   };
   var core_1,
       TableColumn_1,
-      deepGetter_1;
+      deepGetter_1,
+      TemplateWrapper_1;
   var DataTableBodyCell;
   return {
     setters: [function(core_1_1) {
@@ -996,13 +1058,18 @@ $__System.register("15", ["4", "e", "14"], function(exports_1, context_1) {
       TableColumn_1 = TableColumn_1_1;
     }, function(deepGetter_1_1) {
       deepGetter_1 = deepGetter_1_1;
+    }, function(TemplateWrapper_1_1) {
+      TemplateWrapper_1 = TemplateWrapper_1_1;
     }],
     execute: function() {
       DataTableBodyCell = (function() {
-        function DataTableBodyCell(elm) {
+        function DataTableBodyCell(elm, viewContainerRef, componentResolver) {
+          this.elm = elm;
+          this.viewContainerRef = viewContainerRef;
+          this.componentResolver = componentResolver;
           elm.nativeElement.classList.add('datatable-body-cell');
         }
-        Object.defineProperty(DataTableBodyCell.prototype, "rowValue", {
+        Object.defineProperty(DataTableBodyCell.prototype, "value", {
           get: function() {
             if (!this.row)
               return '';
@@ -1015,22 +1082,24 @@ $__System.register("15", ["4", "e", "14"], function(exports_1, context_1) {
         __decorate([core_1.Input(), __metadata('design:type', Object)], DataTableBodyCell.prototype, "row", void 0);
         DataTableBodyCell = __decorate([core_1.Component({
           selector: 'datatable-body-cell',
-          template: "\n  \t<div class=\"datatable-body-cell-label\">\n      <span [innerHTML]=\"rowValue\"></span>\n    </div>\n  ",
-          directives: [],
+          template: "\n  \t<div class=\"datatable-body-cell-label\">\n      <span\n        *ngIf=\"!column.template\"\n        [innerHTML]=\"value\">\n      </span>\n      <template\n        *ngIf=\"column.template\"\n        [value]=\"value\"\n        [row]=\"row\"\n        [column]=\"column\"\n        [templateWrapper]=\"column.template\">\n      </template>\n    </div>\n  ",
           host: {
             '[style.width]': 'column.width + "px"',
             '[style.height]': 'column.height + "px"'
-          }
-        }), __metadata('design:paramtypes', [(typeof(_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object])], DataTableBodyCell);
+          },
+          directives: [TemplateWrapper_1.TemplateWrapper]
+        }), __metadata('design:paramtypes', [(typeof(_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object, (typeof(_b = typeof core_1.ViewContainerRef !== 'undefined' && core_1.ViewContainerRef) === 'function' && _b) || Object, (typeof(_c = typeof core_1.ComponentResolver !== 'undefined' && core_1.ComponentResolver) === 'function' && _c) || Object])], DataTableBodyCell);
         return DataTableBodyCell;
-        var _a;
+        var _a,
+            _b,
+            _c;
       }());
       exports_1("DataTableBodyCell", DataTableBodyCell);
     }
   };
 });
 
-$__System.register("16", ["4", "d", "15"], function(exports_1, context_1) {
+$__System.register("17", ["4", "d", "16"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
@@ -1089,7 +1158,7 @@ $__System.register("16", ["4", "d", "15"], function(exports_1, context_1) {
   };
 });
 
-$__System.register("17", ["4"], function(exports_1, context_1) {
+$__System.register("18", ["4"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
@@ -1109,43 +1178,42 @@ $__System.register("17", ["4"], function(exports_1, context_1) {
       return Reflect.metadata(k, v);
   };
   var core_1;
-  var DataTableScroll;
+  var Scroller;
   return {
     setters: [function(core_1_1) {
       core_1 = core_1_1;
     }],
     execute: function() {
-      DataTableScroll = (function() {
-        function DataTableScroll(elm) {
-          elm.nativeElement.classList.add('datatable-scroll');
+      Scroller = (function() {
+        function Scroller(elm) {
+          elm.nativeElement.classList.add('scroller');
         }
-        Object.defineProperty(DataTableScroll.prototype, "scrollHeight", {
+        Object.defineProperty(Scroller.prototype, "scrollHeight", {
           get: function() {
             return (this.count * this.rowHeight) + 'px';
           },
           enumerable: true,
           configurable: true
         });
-        __decorate([core_1.Input(), __metadata('design:type', Number)], DataTableScroll.prototype, "rowHeight", void 0);
-        __decorate([core_1.Input(), __metadata('design:type', Number)], DataTableScroll.prototype, "count", void 0);
-        __decorate([core_1.Input(), __metadata('design:type', Number)], DataTableScroll.prototype, "scrollWidth", void 0);
-        DataTableScroll = __decorate([core_1.Component({
-          selector: 'datatable-scroll',
-          template: "\n    <ng-content></ng-content>\n  ",
+        __decorate([core_1.Input(), __metadata('design:type', Number)], Scroller.prototype, "rowHeight", void 0);
+        __decorate([core_1.Input(), __metadata('design:type', Number)], Scroller.prototype, "count", void 0);
+        __decorate([core_1.Input(), __metadata('design:type', Number)], Scroller.prototype, "scrollWidth", void 0);
+        Scroller = __decorate([core_1.Directive({
+          selector: '[scroller]',
           host: {
             '[style.height]': 'scrollHeight',
             '[style.width]': 'scrollWidth + "px"'
           }
-        }), __metadata('design:paramtypes', [(typeof(_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object])], DataTableScroll);
-        return DataTableScroll;
+        }), __metadata('design:paramtypes', [(typeof(_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object])], Scroller);
+        return Scroller;
         var _a;
       }());
-      exports_1("DataTableScroll", DataTableScroll);
+      exports_1("Scroller", Scroller);
     }
   };
 });
 
-$__System.register("18", ["4", "d", "19", "11", "12", "13", "16", "17"], function(exports_1, context_1) {
+$__System.register("19", ["4", "d", "1a", "11", "12", "13", "17", "18"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
@@ -1171,7 +1239,7 @@ $__System.register("18", ["4", "d", "19", "11", "12", "13", "16", "17"], functio
       selection_1,
       ProgressBar_1,
       BodyRow_1,
-      Scroll_1;
+      Scroller_1;
   var DataTableBody;
   return {
     setters: [function(core_1_1) {
@@ -1188,8 +1256,8 @@ $__System.register("18", ["4", "d", "19", "11", "12", "13", "16", "17"], functio
       ProgressBar_1 = ProgressBar_1_1;
     }, function(BodyRow_1_1) {
       BodyRow_1 = BodyRow_1_1;
-    }, function(Scroll_1_1) {
-      Scroll_1 = Scroll_1_1;
+    }, function(Scroller_1_1) {
+      Scroller_1 = Scroller_1_1;
     }],
     execute: function() {
       DataTableBody = (function() {
@@ -1290,8 +1358,8 @@ $__System.register("18", ["4", "d", "19", "11", "12", "13", "16", "17"], functio
         __decorate([core_1.Output(), __metadata('design:type', (typeof(_b = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _b) || Object)], DataTableBody.prototype, "onRowSelect", void 0);
         DataTableBody = __decorate([core_1.Component({
           selector: 'datatable-body',
-          template: "\n    <div>\n      <datatable-progress\n        [hidden]=\"!state.options.loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroll\n        *ngIf=\"state.rows.length\"\n        [rowHeight]=\"state.options.rowHeight\"\n        [count]=\"state.rowCount\"\n        [scrollWidth]=\"state.columnGroupWidths.total\">\n        <datatable-body-row\n          *ngFor=\"let row of rows; let i = index;\"\n          [attr.tabindex]=\"i\"\n          (click)=\"rowClicked($event, i, row)\"\n          (keydown)=\"rowKeydown($event, i, row)\"\n          [row]=\"row\">\n        </datatable-body-row>\n      </datatable-scroll>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"state.options.emptyMessage\">\n      </div>\n    </div>\n  ",
-          directives: [ProgressBar_1.ProgressBar, BodyRow_1.DataTableBodyRow, Scroll_1.DataTableScroll],
+          template: "\n    <div>\n      <datatable-progress\n        [hidden]=\"!state.options.loadingIndicator\">\n      </datatable-progress>\n      <div\n        scroller\n        *ngIf=\"state.rows.length\"\n        [rowHeight]=\"state.options.rowHeight\"\n        [count]=\"state.rowCount\"\n        [scrollWidth]=\"state.columnGroupWidths.total\">\n        <datatable-body-row\n          *ngFor=\"let row of rows; let i = index;\"\n          [attr.tabindex]=\"i\"\n          (click)=\"rowClicked($event, i, row)\"\n          (keydown)=\"rowKeydown($event, i, row)\"\n          [row]=\"row\">\n        </datatable-body-row>\n      </div>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"state.options.emptyMessage\">\n      </div>\n    </div>\n  ",
+          directives: [ProgressBar_1.ProgressBar, BodyRow_1.DataTableBodyRow, Scroller_1.Scroller],
           host: {
             '[style.width]': 'bodyWidth',
             '[style.height]': 'bodyHeight'
@@ -1363,7 +1431,7 @@ $__System.register("6", [], function(exports_1, context_1) {
   };
 });
 
-$__System.register("1a", [], function(exports_1, context_1) {
+$__System.register("1b", [], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   function scrollbarWidth() {
@@ -1390,7 +1458,7 @@ $__System.register("1a", [], function(exports_1, context_1) {
   };
 });
 
-$__System.register("1b", ["1c", "f"], function(exports_1, context_1) {
+$__System.register("1c", ["1d", "f"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var SortType_1,
@@ -1460,25 +1528,7 @@ $__System.register("1b", ["1c", "f"], function(exports_1, context_1) {
   };
 });
 
-$__System.register("1d", [], function(exports_1, context_1) {
-  "use strict";
-  var __moduleName = context_1 && context_1.id;
-  var Sort;
-  return {
-    setters: [],
-    execute: function() {
-      Sort = (function() {
-        function Sort(props) {
-          Object.assign(this, props);
-        }
-        return Sort;
-      }());
-      exports_1("Sort", Sort);
-    }
-  };
-});
-
-$__System.register("d", ["4", "6", "1a", "1b", "1d", "1c"], function(exports_1, context_1) {
+$__System.register("d", ["4", "6", "1b", "1c", "1e", "1d"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
@@ -1653,7 +1703,7 @@ $__System.register("d", ["4", "6", "1a", "1b", "1d", "1c"], function(exports_1, 
   };
 });
 
-$__System.register("1e", ["4"], function(exports_1, context_1) {
+$__System.register("1f", ["4"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
@@ -1773,7 +1823,7 @@ $__System.register("1e", ["4"], function(exports_1, context_1) {
   };
 });
 
-$__System.register("1f", ["4", "d", "1e"], function(exports_1, context_1) {
+$__System.register("20", ["4", "d", "1f"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
@@ -1840,7 +1890,7 @@ $__System.register("1f", ["4", "d", "1e"], function(exports_1, context_1) {
   };
 });
 
-$__System.register("20", ["4", "d", "3", "5", "21", "22", "10", "18", "1f"], function(exports_1, context_1) {
+$__System.register("21", ["4", "d", "3", "5", "22", "23", "e", "24", "10", "19", "20"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
@@ -1865,6 +1915,8 @@ $__System.register("20", ["4", "d", "3", "5", "21", "22", "10", "18", "1f"], fun
       math_1,
       ColumnMode_1,
       TableOptions_1,
+      TableColumn_1,
+      DataTableColumn_1,
       Header_1,
       Body_1,
       Footer_1;
@@ -1882,6 +1934,10 @@ $__System.register("20", ["4", "d", "3", "5", "21", "22", "10", "18", "1f"], fun
       ColumnMode_1 = ColumnMode_1_1;
     }, function(TableOptions_1_1) {
       TableOptions_1 = TableOptions_1_1;
+    }, function(TableColumn_1_1) {
+      TableColumn_1 = TableColumn_1_1;
+    }, function(DataTableColumn_1_1) {
+      DataTableColumn_1 = DataTableColumn_1_1;
     }, function(Header_1_1) {
       Header_1 = Header_1_1;
     }, function(Body_1_1) {
@@ -1911,7 +1967,15 @@ $__System.register("20", ["4", "d", "3", "5", "21", "22", "10", "18", "1f"], fun
           this.state.setOptions(options).setRows(rows).setSelected(selected);
         };
         DataTable.prototype.ngAfterViewInit = function() {
+          var _this = this;
           this.adjustColumns();
+          setTimeout(function() {
+            for (var _i = 0,
+                _a = _this.columns.toArray(); _i < _a.length; _i++) {
+              var col = _a[_i];
+              _this.options.columns.push(new TableColumn_1.TableColumn(col));
+            }
+          });
         };
         DataTable.prototype.ngDoCheck = function() {
           if (this.rowDiffer.diff(this.rows)) {
@@ -1934,9 +1998,8 @@ $__System.register("20", ["4", "d", "3", "5", "21", "22", "10", "18", "1f"], fun
                 return false;
               });
             }
-            if (chngd_1) {
+            if (chngd_1)
               this.adjustColumns();
-            }
           }
         };
         DataTable.prototype.adjustSizes = function() {
@@ -1985,6 +2048,7 @@ $__System.register("20", ["4", "d", "3", "5", "21", "22", "10", "18", "1f"], fun
         __decorate([core_1.Output(), __metadata('design:type', (typeof(_c = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _c) || Object)], DataTable.prototype, "onRowClick", void 0);
         __decorate([core_1.Output(), __metadata('design:type', (typeof(_d = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _d) || Object)], DataTable.prototype, "onSelectionChange", void 0);
         __decorate([core_1.Output(), __metadata('design:type', (typeof(_e = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _e) || Object)], DataTable.prototype, "onColumnChange", void 0);
+        __decorate([core_1.ContentChildren(DataTableColumn_1.DataTableColumn), __metadata('design:type', Object)], DataTable.prototype, "columns", void 0);
         __decorate([core_1.HostListener('window:resize'), __metadata('design:type', Function), __metadata('design:paramtypes', []), __metadata('design:returntype', void 0)], DataTable.prototype, "resize", null);
         DataTable = __decorate([core_1.Component({
           selector: 'datatable',
@@ -2014,7 +2078,50 @@ $__System.register("20", ["4", "d", "3", "5", "21", "22", "10", "18", "1f"], fun
   };
 });
 
-$__System.register("22", ["21", "1c"], function(exports_1, context_1) {
+$__System.register("24", ["4", "e"], function(exports_1, context_1) {
+  "use strict";
+  var __moduleName = context_1 && context_1.id;
+  var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
+    var c = arguments.length,
+        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+        d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+      r = Reflect.decorate(decorators, target, key, desc);
+    else
+      for (var i = decorators.length - 1; i >= 0; i--)
+        if (d = decorators[i])
+          r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+  };
+  var __metadata = (this && this.__metadata) || function(k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
+      return Reflect.metadata(k, v);
+  };
+  var core_1,
+      TableColumn_1;
+  var DataTableColumn;
+  return {
+    setters: [function(core_1_1) {
+      core_1 = core_1_1;
+    }, function(TableColumn_1_1) {
+      TableColumn_1 = TableColumn_1_1;
+    }],
+    execute: function() {
+      DataTableColumn = (function() {
+        function DataTableColumn() {}
+        __decorate([core_1.ContentChild(core_1.TemplateRef), __metadata('design:type', Object)], DataTableColumn.prototype, "template", void 0);
+        DataTableColumn = __decorate([core_1.Directive({
+          selector: 'datatable-column',
+          inputs: TableColumn_1.TableColumn.getProps()
+        }), __metadata('design:paramtypes', [])], DataTableColumn);
+        return DataTableColumn;
+      }());
+      exports_1("DataTableColumn", DataTableColumn);
+    }
+  };
+});
+
+$__System.register("23", ["22", "1d"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var ColumnMode_1,
@@ -2029,6 +2136,7 @@ $__System.register("22", ["21", "1c"], function(exports_1, context_1) {
     execute: function() {
       TableOptions = (function() {
         function TableOptions(props) {
+          this.columns = [];
           this.scrollbarV = false;
           this.scrollbarH = false;
           this.rowHeight = 30;
@@ -2054,7 +2162,7 @@ $__System.register("22", ["21", "1c"], function(exports_1, context_1) {
   };
 });
 
-$__System.register("23", [], function(exports_1, context_1) {
+$__System.register("25", [], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   function id() {
@@ -2069,7 +2177,7 @@ $__System.register("23", [], function(exports_1, context_1) {
   };
 });
 
-$__System.register("24", [], function(exports_1, context_1) {
+$__System.register("26", [], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   function camelCase(str) {
@@ -2090,7 +2198,7 @@ $__System.register("24", [], function(exports_1, context_1) {
   };
 });
 
-$__System.register("e", ["23", "24"], function(exports_1, context_1) {
+$__System.register("e", ["25", "26"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var id_1,
@@ -2105,7 +2213,8 @@ $__System.register("e", ["23", "24"], function(exports_1, context_1) {
     execute: function() {
       TableColumn = (function() {
         function TableColumn(props) {
-          this.$id = id_1.id();
+          this.$$id = id_1.id();
+          this.isExpressive = false;
           this.frozenLeft = false;
           this.frozenRight = false;
           this.flexGrow = 0;
@@ -2122,6 +2231,14 @@ $__System.register("e", ["23", "24"], function(exports_1, context_1) {
             this.prop = camelCase_1.camelCase(this.name);
           }
         }
+        TableColumn.getProps = function() {
+          var props = ['name', 'prop'];
+          var col = new TableColumn();
+          for (var prop in col) {
+            props.push(prop);
+          }
+          return props;
+        };
         return TableColumn;
       }());
       exports_1("TableColumn", TableColumn);
@@ -2130,7 +2247,25 @@ $__System.register("e", ["23", "24"], function(exports_1, context_1) {
   };
 });
 
-$__System.register("19", [], function(exports_1, context_1) {
+$__System.register("1e", [], function(exports_1, context_1) {
+  "use strict";
+  var __moduleName = context_1 && context_1.id;
+  var Sort;
+  return {
+    setters: [],
+    execute: function() {
+      Sort = (function() {
+        function Sort(props) {
+          Object.assign(this, props);
+        }
+        return Sort;
+      }());
+      exports_1("Sort", Sort);
+    }
+  };
+});
+
+$__System.register("1a", [], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var SelectionType;
@@ -2147,7 +2282,7 @@ $__System.register("19", [], function(exports_1, context_1) {
   };
 });
 
-$__System.register("21", [], function(exports_1, context_1) {
+$__System.register("22", [], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var ColumnMode;
@@ -2180,7 +2315,7 @@ $__System.register("f", [], function(exports_1, context_1) {
   };
 });
 
-$__System.register("1c", [], function(exports_1, context_1) {
+$__System.register("1d", [], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var SortType;
@@ -2196,26 +2331,51 @@ $__System.register("1c", [], function(exports_1, context_1) {
   };
 });
 
-$__System.register("1", ["20", "22", "e", "19", "21", "f", "1c"], function(exports_1, context_1) {
+$__System.register("1", ["21", "24", "23", "e", "1e", "1a", "22", "f", "1d"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
+  var DataTable_1,
+      DataTableColumn_1,
+      TableOptions_1,
+      TableColumn_1,
+      Sort_1,
+      SelectionType_1,
+      ColumnMode_1,
+      SortDirection_1,
+      SortType_1;
+  var DATATABLE_COMPONENTS;
   return {
     setters: [function(DataTable_1_1) {
-      exports_1({"DataTable": DataTable_1_1["DataTable"]});
+      DataTable_1 = DataTable_1_1;
+    }, function(DataTableColumn_1_1) {
+      DataTableColumn_1 = DataTableColumn_1_1;
     }, function(TableOptions_1_1) {
-      exports_1({"TableOptions": TableOptions_1_1["TableOptions"]});
+      TableOptions_1 = TableOptions_1_1;
     }, function(TableColumn_1_1) {
-      exports_1({"TableColumn": TableColumn_1_1["TableColumn"]});
+      TableColumn_1 = TableColumn_1_1;
+    }, function(Sort_1_1) {
+      Sort_1 = Sort_1_1;
     }, function(SelectionType_1_1) {
-      exports_1({"SelectionType": SelectionType_1_1["SelectionType"]});
+      SelectionType_1 = SelectionType_1_1;
     }, function(ColumnMode_1_1) {
-      exports_1({"ColumnMode": ColumnMode_1_1["ColumnMode"]});
+      ColumnMode_1 = ColumnMode_1_1;
     }, function(SortDirection_1_1) {
-      exports_1({"SortDirection": SortDirection_1_1["SortDirection"]});
+      SortDirection_1 = SortDirection_1_1;
     }, function(SortType_1_1) {
-      exports_1({"SortType": SortType_1_1["SortType"]});
+      SortType_1 = SortType_1_1;
     }],
-    execute: function() {}
+    execute: function() {
+      DATATABLE_COMPONENTS = [DataTable_1.DataTable, DataTableColumn_1.DataTableColumn];
+      exports_1("DataTable", DataTable_1.DataTable);
+      exports_1("TableOptions", TableOptions_1.TableOptions);
+      exports_1("TableColumn", TableColumn_1.TableColumn);
+      exports_1("Sort", Sort_1.Sort);
+      exports_1("SelectionType", SelectionType_1.SelectionType);
+      exports_1("ColumnMode", ColumnMode_1.ColumnMode);
+      exports_1("SortDirection", SortDirection_1.SortDirection);
+      exports_1("SortType", SortType_1.SortType);
+      exports_1("DATATABLE_COMPONENTS", DATATABLE_COMPONENTS);
+    }
   };
 });
 
