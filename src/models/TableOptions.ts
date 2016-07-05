@@ -7,9 +7,6 @@ import { SelectionType } from '../enums/SelectionType';
 
 export class TableOptions {
 
-  // View ref
-  ref: any;
-
   // Columns
   columns: Array<TableColumn> = [];
 

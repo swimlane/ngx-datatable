@@ -11,3 +11,4 @@
 * `canAutoResize`: Whether the column can automatically resize to fill extra space. Default value: `true`
 * `name`: Column label
 * `prop`: The property to bind the row values to. If `undefined`, it will camelcase the name value.
+* `template`: A Angular TemplateRef mainly used internally by expressive columns
