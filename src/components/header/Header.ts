@@ -115,6 +115,12 @@ export class DataTableHeader {
   }
 
   columnResized(width, column) {
+    if (width <= column.minWidth){
+      width = column.minWidth;
+    } else if(width >= column.maxWidth) {
+      width = column.maxWidth;
+    }
+
     column.width = width;
 
     this.onColumnChange.emit({
