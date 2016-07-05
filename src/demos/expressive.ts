@@ -17,14 +17,18 @@ import {
     		[rows]="rows"
     		[options]="options">
         <datatable-column name="Name">
-          <span>Meow
-          {{cellValue}}
-          </span>
+          <template>
+            <span>Meow
+            {{cellValue}}
+            </span>
+          </template>
         </datatable-column>
         <datatable-column name="Gender">
-          <div>Blah
-            <div [innerHTML]="cellValue"></div>
-          </div>
+          <template>
+            <div>Blah
+              <div [innerHTML]="cellValue"></div>
+            </div>
+          </template>
         </datatable-column>
     	</datatable>
     </div>

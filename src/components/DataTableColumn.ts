@@ -3,24 +3,16 @@ import {
   Input,
   ElementRef,
   ViewContainerRef,
-  Directive
+  Directive,
+  TemplateRef,
+  ContentChild
 } from '@angular/core';
 
-@Directive({
-  selector: 'datatable-column'
-})
+@Directive({ selector: 'datatable-column' })
 export class DataTableColumn {
 
+  @ContentChild(TemplateRef) template;
+
   @Input() name: string;
-
-  public row: any = {};
-  public column: any = {};
-
-  constructor(private elementRef: ElementRef) {
-  }
-
-  get template() {
-    return this.elementRef.nativeElement.innerHTML;
-  }
 
 }

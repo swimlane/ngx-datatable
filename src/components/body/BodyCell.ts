@@ -13,8 +13,7 @@ import {
 import { TableColumn } from '../../models/TableColumn';
 import { DataTableColumn } from '../DataTableColumn';
 import { deepValueGetter } from '../../utils/deepGetter';
-import { DynamicHTMLOutlet } from '../../directives/DynamicHTMLOutlet';
-
+import { TemplateWrapper } from '../../directives/TemplateWrapper';
 
 @Component({
   selector: 'datatable-body-cell',
@@ -24,20 +23,20 @@ import { DynamicHTMLOutlet } from '../../directives/DynamicHTMLOutlet';
         *ngIf="!column.isExpressive"
         [innerHTML]="cellValue">
       </span>
-      <dynamic-html-outlet
+      <template
         *ngIf="column.isExpressive"
-        [column]="column"
-        [row]="row"
         [cellValue]="cellValue"
-        [src]="column.dom.template">
-      </dynamic-html-outlet>
+        [row]="row"
+        [column]="column"
+        [templateWrapper]="column.template">
+      </template>
     </div>
   `,
   host: {
     '[style.width]':'column.width + "px"',
     '[style.height]':'column.height + "px"'
   },
-  directives: [ DynamicHTMLOutlet ]
+  directives: [ TemplateWrapper ]
 })
 export class DataTableBodyCell {
 

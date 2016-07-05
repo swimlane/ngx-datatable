@@ -38,9 +38,6 @@ import { DataTableFooter } from './footer/Footer';
       <datatable-footer
         (onPageChange)="onPageChanged($event)">
       </datatable-footer>
-      <div style="display:none">
-        <ng-content></ng-content>
-      </div>
     </div>
   `,
   directives: [
@@ -101,7 +98,7 @@ export class DataTable {
         this.options.columns.push(new TableColumn({
           name: col.name,
           isExpressive: true,
-          dom: col
+          template: col.template
         }));
       }
     });
