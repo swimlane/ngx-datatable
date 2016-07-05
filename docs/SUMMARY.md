@@ -11,6 +11,7 @@
    * [Selection](examples/selection.md)
    * [Column Show/Hide](examples/column-toggle.md)
    * [Filtering](examples/filtering.md)
+   * [Expressive](examples/expressive.md)
 * API
    * [Table](api/table.md)
    * [Options](api/options.md)
