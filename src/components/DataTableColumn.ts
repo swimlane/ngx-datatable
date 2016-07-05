@@ -7,12 +7,14 @@ import {
   TemplateRef,
   ContentChild
 } from '@angular/core';
+import { TableColumn } from '../models/TableColumn';
 
-@Directive({ selector: 'datatable-column' })
+@Directive({
+  selector: 'datatable-column',
+  inputs: TableColumn.getProps()
+})
 export class DataTableColumn {
 
   @ContentChild(TemplateRef) template;
-
-  @Input() name: string;
 
 }

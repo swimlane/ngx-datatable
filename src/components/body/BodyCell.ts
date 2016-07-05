@@ -20,12 +20,12 @@ import { TemplateWrapper } from '../../directives/TemplateWrapper';
   template: `
   	<div class="datatable-body-cell-label">
       <span
-        *ngIf="!column.isExpressive"
-        [innerHTML]="cellValue">
+        *ngIf="!column.template"
+        [innerHTML]="value">
       </span>
       <template
-        *ngIf="column.isExpressive"
-        [cellValue]="cellValue"
+        *ngIf="column.template"
+        [value]="value"
         [row]="row"
         [column]="column"
         [templateWrapper]="column.template">
@@ -43,7 +43,7 @@ export class DataTableBodyCell {
   @Input() column: TableColumn;
   @Input() row: any;
 
-  get cellValue() {
+  get value() {
     if(!this.row) return '';
     return deepValueGetter(this.row, this.column.prop);
   }

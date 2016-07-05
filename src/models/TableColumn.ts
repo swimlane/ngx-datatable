@@ -55,6 +55,9 @@ export class TableColumn {
   // property to bind to on the row
   prop: string;
 
+  // ng2 template ref
+  template: any;
+
   constructor(props: any) {
     Object.assign(this, props);
 
@@ -62,4 +65,16 @@ export class TableColumn {
       this.prop = camelCase(this.name);
     }
   }
+
+  static getProps() {
+    let props = ['name', 'prop'];
+    let col = new TableColumn();
+
+    for(let prop in col) {
+      props.push(prop);
+    }
+
+    return props;
+  }
+
 };

@@ -95,11 +95,7 @@ export class DataTable {
 
     setTimeout(() => {
       for(let col of this.columns.toArray()) {
-        this.options.columns.push(new TableColumn({
-          name: col.name,
-          isExpressive: true,
-          template: col.template
-        }));
+        this.options.columns.push(new TableColumn(col));
       }
     });
   }

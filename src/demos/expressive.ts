@@ -11,22 +11,26 @@ import {
   selector: 'app',
   template: `
     <div>
-    	<h3>basic</h3>
+    	<h3>expressive</h3>
     	<datatable
         class="material"
     		[rows]="rows"
     		[options]="options">
         <datatable-column name="Name">
-          <template>
-            <span>Meow
-            {{cellValue}}
-            </span>
+          <template let-value="value">
+            Hi: <strong>{{value}}</strong>
           </template>
         </datatable-column>
         <datatable-column name="Gender">
-          <template>
-            <div>Blah
-              <div [innerHTML]="cellValue"></div>
+          <template  let-row="row" let-value="value">
+            My name is: <i [innerHTML]="row['name']"></i> and <i>{{value}}</i>
+            <div>{{joke}}</div>
+          </template>
+        </datatable-column>
+        <datatable-column name="Age">
+          <template let-value="value">
+            <div style="border:solid 1px #ddd;margin:5px;padding:3px">
+              <div style="background:#999;height:10px" [style.width]="value + '%'"></div>
             </div>
           </template>
         </datatable-column>
@@ -38,6 +42,7 @@ import {
 export class App {
 
 	rows = [];
+  joke = 'knock knock';
 
 	options = new TableOptions({
     columnMode: ColumnMode.force,
