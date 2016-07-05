@@ -13,36 +13,38 @@ import {
 import { TableColumn } from '../../models/TableColumn';
 import { DataTableColumn } from '../DataTableColumn';
 import { deepValueGetter } from '../../utils/deepGetter';
+import { DynamicHTMLOutlet } from '../../directives/DynamicHTMLOutlet';
+
 
 @Component({
   selector: 'datatable-body-cell',
   template: `
   	<div class="datatable-body-cell-label">
       <span
-        #cell
         *ngIf="!column.isExpressive"
-        [innerHTML]="rowValue">
+        [innerHTML]="cellValue">
       </span>
-      <span
-        #cell
-        *ngIf="column.isExpressive">
-      </span>
+      <dynamic-html-outlet
+        *ngIf="column.isExpressive"
+        [column]="column"
+        [row]="row"
+        [cellValue]="cellValue"
+        [src]="column.dom.template">
+      </dynamic-html-outlet>
     </div>
   `,
   host: {
     '[style.width]':'column.width + "px"',
     '[style.height]':'column.height + "px"'
-  }
+  },
+  directives: [ DynamicHTMLOutlet ]
 })
 export class DataTableBodyCell {
 
   @Input() column: TableColumn;
   @Input() row: any;
 
-  @ViewChild('cell', { read: ViewContainerRef })
-  cell: ViewContainerRef;
-
-  get rowValue() {
+  get cellValue() {
     if(!this.row) return '';
     return deepValueGetter(this.row, this.column.prop);
   }
@@ -53,19 +55,6 @@ export class DataTableBodyCell {
     private componentResolver: ComponentResolver) {
 
     elm.nativeElement.classList.add('datatable-body-cell');
-  }
-
-  ngOnInit() {
-    if (this.componentRef) this.componentRef.destroy();
-
-    this.componentResolver.resolveComponent(DataTableColumn)
-      .then((factory: ComponentFactory) => {
-        this.componentRef = this.cell.createComponent(
-          factory, 0, this.viewContainerRef.injector);
-
-        this.componentRef.instance.row = this.row;
-        this.componentRef.instance.column = this.column;
-      });
   }
 
 }

@@ -38,6 +38,9 @@ import { DataTableFooter } from './footer/Footer';
       <datatable-footer
         (onPageChange)="onPageChanged($event)">
       </datatable-footer>
+      <div style="display:none">
+        <ng-content></ng-content>
+      </div>
     </div>
   `,
   directives: [
@@ -93,13 +96,12 @@ export class DataTable {
   ngAfterViewInit() {
     this.adjustColumns();
 
-    console.log('chil', this.columns.toArray())
-
     setTimeout(() => {
       for(let col of this.columns.toArray()) {
         this.options.columns.push(new TableColumn({
           name: col.name,
-          isExpressive: true
+          isExpressive: true,
+          dom: col
         }));
       }
     });

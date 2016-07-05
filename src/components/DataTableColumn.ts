@@ -1,22 +1,13 @@
 import {
   Component,
   Input,
-  Output,
-  EventEmitter,
   ElementRef,
-  TemplateRef,
   ViewContainerRef,
-  ComponentResolver
+  Directive
 } from '@angular/core';
 
-@Component({
-  selector: 'datatable-column',
-  template: `
-    <div>
-      here {{column.name}}
-      <ng-content></ng-content>
-    </div>
-  `
+@Directive({
+  selector: 'datatable-column'
 })
 export class DataTableColumn {
 
@@ -25,7 +16,11 @@ export class DataTableColumn {
   public row: any = {};
   public column: any = {};
 
-  constructor(public viewContainerRef: ViewContainerRef) {
+  constructor(private elementRef: ElementRef) {
+  }
+
+  get template() {
+    return this.elementRef.nativeElement.innerHTML;
   }
 
 }
