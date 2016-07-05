@@ -1,0 +1,10 @@
+---
+engines:
+  duplication:
+    enabled: true
+exclude_paths:
+  - "release/"
+  - "docs/"
+ratings:
+   paths:
+   - "src/**/**.ts"
