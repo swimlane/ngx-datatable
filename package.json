@@ -1,12 +1,12 @@
 {
   "name": "angular2-data-table",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "angular2-data-table is a Angular2 component for presenting large and complex data.",
   "main": "release/angular2-data-table.js",
   "scripts": {
     "install:global": "npm install concurrently tslint@next -g",
     "install:jspm": "jspm install --log warn",
-    
+
     "check": "npm-check --skip-unused",
     "preversion": "npm test",
     "version": "npm run build",
