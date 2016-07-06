@@ -6,7 +6,10 @@
   "scripts": {
     "preinstall": "npm install concurrently tslint@next -g",
     "postinstall": "jspm install --log warn",
-    "check-updates": "npm-check --skip-unused",
+    "check": "npm-check --skip-unused",
+    "preversion": "npm test",
+    "version": "npm run build",
+    "postversion": "git push && git push --tags",
     "clean": "npm run clean:dist & npm run clean:release",
     "clean:dist": "rimraf dist",
     "clean:release": "rimraf release",
@@ -24,7 +27,11 @@
     "release:css": "node-sass -o release/ src/themes & node-sass -o release/ src/components",
     "release:minify": "uglifyjs release/angular2-data-table.js --source-map release/angular2-data-table.min.js.map --source-map-url release/angular2-data-table.js.map --compress --mangle --screw-ie8 --output release/angular2-data-table.min.js",
     "release:build": " npm run build:ts & npm run release:bundle",
-    "release:bundle": "jspm build dist/main.js - npm:@angular/platform-browser-dynamic@2.0.0-rc.4 - npm:rxjs@5.0.0-beta.6 release/angular2-data-table.js"
+    "release:bundle": "jspm build dist/main.js - npm:@angular/platform-browser-dynamic@2.0.0-rc.4 - npm:rxjs@5.0.0-beta.6 release/angular2-data-table.js",
+    "deploy": "npm run deploy:github",
+    "deploy:github": "",
+    "test": "karma start",
+    "ci": "npm run lint && npm test && npm run e2e"
   },
   "repository": {
     "type": "git",
@@ -47,9 +54,20 @@
     "lite-server": "^2.2.0",
     "node-sass": "^3.7.0",
     "rimraf": "^2.5.2",
-    "typescript": "^2.0.0-dev.20160701",
+    "uglify-js": "^2.6.4",
+    "ts-node": "^0.9.3",
     "tslint": "^3.12.0-dev.2",
-    "uglify-js": "^2.6.4"
+    "ts-helpers": "1.1.1",
+    "typescript": "^2.0.0-dev.20160701",
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-coverage": "^1.0.0",
+    "karma-jasmine": "^1.0.2",
+    "karma-mocha-reporter": "^2.0.0",
+    "karma-sourcemap-loader": "^0.3.7",
+    "protractor": "^3.2.2",
+    "istanbul-instrumenter-loader": "^0.2.0",
+    "remap-istanbul": "^0.6.3"
   },
   "jspm": {
     "name": "angular2-data-table",
@@ -94,16 +112,6 @@
         }
       },
       "npm:@angular/core@2.0.0-rc.4": {
-        "meta": {
-          "src/*.js": {
-            "deps": [
-              "reflect-metadata",
-              "zone.js"
-            ]
-          }
-        }
-      },
-      "npm:@angular/platform-browser-dynamic@2.0.0-rc.2": {
         "meta": {
           "src/*.js": {
             "deps": [
