@@ -1,4 +1,4 @@
-# Column Toggling
+# Expressive Cell Templates
 Below is a example that lets developers define the columns and the templates
 expressively in markup. This is especially useful for complex situations
 where you want rich controls within your grid.
