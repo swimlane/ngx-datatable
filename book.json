@@ -7,7 +7,9 @@
         "github",
         "edit-link",
         "gistrun",
-        "theme-api"
+        "theme-api",
+        "include-codeblock",
+        "versions"
     ],
     "pluginsConfig": {
         "github": {
@@ -19,6 +21,9 @@
         },
         "theme-api": {
             "theme": "dark"
+        },
+        "versions": {
+            "type": "tags"
         }
     }
 }
