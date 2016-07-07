@@ -62,7 +62,7 @@
     "typescript": "^2.0.0-dev.20160701",
     "karma": "^1.1.1",
     "karma-chrome-launcher": "^1.0.1",
-    "karma-coverage": "^1.0.0",
+    "karma-coverage": "^1.1.0",
     "karma-jasmine": "^1.0.2",
     "karma-mocha-reporter": "^2.0.0",
     "karma-sourcemap-loader": "^0.3.7",
