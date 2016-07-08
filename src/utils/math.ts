@@ -5,7 +5,7 @@ import { columnsByPin, columnGroupWidths } from './column';
  * @param {array} columns
  * @param {string} property width to get
  */
-export function columnTotalWidth(columns: any, prop: any) {
+export function columnTotalWidth(columns: any, prop?: any) {
   let totalWidth = 0;
 
   for(let column of columns) {

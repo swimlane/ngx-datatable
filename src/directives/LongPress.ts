@@ -72,7 +72,7 @@ export class LongPress {
     clearTimeout(this.timeout);
     this.longPressing = false;
     this.pressing = false;
-    this.onLongPressEnd.emit();
+    this.onLongPressEnd.emit(true);
   }
 
   @HostListener('mouseup')

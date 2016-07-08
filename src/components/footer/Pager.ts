@@ -52,9 +52,7 @@ import {
 })
 export class DataTablePager {
 
-  @Input() page: number = 1;
   @Input() size: number = 0;
-  @Input() count: number = 0;
   @Output() onPaged: EventEmitter<any> = new EventEmitter();
 
   private _count: number;
@@ -66,6 +64,7 @@ export class DataTablePager {
     return Math.max(count || 0, 1);
   }
 
+  @Input()
   set count(val) {
     this._count = val;
     this.pages = this.calcPages();
@@ -75,6 +74,7 @@ export class DataTablePager {
     return this._count;
   }
 
+  @Input()
   set page(val) {
     this._page = val;
     this.pages = this.calcPages();
@@ -113,7 +113,7 @@ export class DataTablePager {
     }
   }
 
-  calcPages(page: number) {
+  calcPages(page?: number) {
     let pages = [],
       startPage = 1,
       endPage = this.totalPages,

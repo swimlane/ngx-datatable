@@ -58,7 +58,7 @@ export class TableColumn {
   // ng2 template ref
   template: any;
 
-  constructor(props: any) {
+  constructor(props?: any) {
     Object.assign(this, props);
 
     if(!this.prop && this.name) {

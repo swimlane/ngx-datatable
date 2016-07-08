@@ -44,7 +44,7 @@ export function columnGroupWidths(groups, all){
  * @param {array} columns
  * @param {string} property width to get
  */
-export function columnTotalWidth(columns, prop) {
+export function columnTotalWidth(columns, prop?) {
   let totalWidth = 0;
 
   if(columns) {

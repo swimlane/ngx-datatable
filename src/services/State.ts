@@ -56,8 +56,8 @@ export class StateService {
     let first = 0, last = 0;
 
     if(this.options.scrollbarV){
-      first = Math.max(Math.floor((
-          this.offsetY || 0) / this.options.rowHeight, 0), 0);
+      const floor = Math.floor((this.offsetY || 0) / this.options.rowHeight);
+      first = Math.max(floor, 0);
       last = Math.min(first + this.pageSize, this.pageCount);
     } else {
       first = Math.max(this.options.offset * this.pageSize, 0);

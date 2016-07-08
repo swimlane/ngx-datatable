@@ -32,14 +32,14 @@ export class Orderable {
     for(let dragger of this.drags.toArray()) {
       let elm = dragger.element;
       this.positions[dragger.model.prop] =  {
-        left: parseInt(elm.offsetLeft),
+        left: parseInt(elm.offsetLeft.toString()),
         index: i++
       };
     }
   }
 
   onDragEnd({ element, model }) {
-    const newPos = parseInt(element.offsetLeft);
+    const newPos = parseInt(element.offsetLeft.toString());
     const prevPos = this.positions[model.prop];
 
     let i = 0;

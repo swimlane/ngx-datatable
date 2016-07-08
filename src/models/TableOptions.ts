@@ -34,7 +34,7 @@ export class TableOptions {
 
   // The minimum header height in pixels.
   // pass falsey for no header
-  headerHeight: number = 30;
+  headerHeight: number|string = 30;
 
   // The minimum footer height in pixels.
   // pass falsey for no footer

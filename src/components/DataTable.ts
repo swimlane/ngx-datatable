@@ -147,7 +147,7 @@ export class DataTable {
   @HostListener('window:resize')
   resize() { this.adjustSizes(); }
 
-  adjustColumns(forceIdx: any) {
+  adjustColumns(forceIdx?: number) {
     if(!this.options.columns) return;
 
     let width = this.state.innerWidth;
