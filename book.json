@@ -8,7 +8,8 @@
         "gistrun",
         "theme-api",
         "include-codeblock",
-        "versions"
+        "versions",
+        "anchors"
     ],
     "pluginsConfig": {
         "github": {
