@@ -6,40 +6,32 @@
   "scripts": {
     "install:global": "npm install concurrently npm-check jspm@beta -g",
     "install:jspm": "jspm install --log warn",
-
     "check": "npm-check --skip-unused",
     "test": "npm run lint && karma start",
     "lint": "./node_modules/tslint/bin/tslint ./src/**/*.ts",
-
     "version": "npm run build",
-      "preversion": "npm test",
-      "postversion": "git push && git push --tags",
-
+    "preversion": "npm test",
+    "postversion": "git push && git push --tags",
     "clean": "npm run clean:dist & npm run clean:release",
-      "clean:dist": "./node_modules/rimraf/bin.js dist",
-      "clean:release": "./node_modules/rimraf/bin.js release",
-
+    "clean:dist": "./node_modules/rimraf/bin.js dist",
+    "clean:release": "./node_modules/rimraf/bin.js release",
     "build": "npm run clean & concurrently \"npm run build:ts\" \"npm run build:sass\"",
-      "build:ts": "./node_modules/typescript/bin/tsc; true",
-      "build:sass": "node-sass -o dist/ src/",
-      "build:css": "postcss --use autoprefixer dist/*.css -d dist/",
-      "build:bundle": "jspm bundle rxjs + @angular/platform-browser-dynamic dist/bundle.js --log warn",
-
+    "build:ts": "./node_modules/typescript/bin/tsc; true",
+    "build:sass": "node-sass -o dist/ src/",
+    "build:css": "postcss --use autoprefixer dist/*.css -d dist/",
+    "build:bundle": "jspm bundle rxjs + @angular/platform-browser-dynamic dist/bundle.js --log warn",
     "watch": "concurrently \"npm run watch:ts\" \"npm run watch:sass\"",
-      "watch:ts": "./node_modules/typescript/bin/tsc --watch",
-      "watch:sass": "npm run build:sass && node-sass -o dist/ -w src/",
-
+    "watch:ts": "./node_modules/typescript/bin/tsc --watch",
+    "watch:sass": "npm run build:sass && node-sass -o dist/ -w src/",
     "start": "concurrently \"npm run build:bundle\" \"npm run watch\" && npm run start:server",
-      "start:server": "lite-server -c bs-config.js",
-
+    "start:server": "lite-server -c bs-config.js",
     "release": "NODE_ENV=production npm run clean && npm run release:build & npm run release:css && npm run release:minify",
-      "release:css": "node-sass -o release/ src/themes && node-sass -o release/ src/components",
-      "release:minify": "uglifyjs release/angular2-data-table.js --source-map release/angular2-data-table.min.js.map --source-map-url release/angular2-data-table.js.map --compress --mangle --screw-ie8 --output release/angular2-data-table.min.js",
-      "release:build": " npm run build:ts && npm run release:bundle",
-      "release:bundle": "jspm build dist/main.js - npm:@angular/platform-browser-dynamic@2.0.0-rc.4 - npm:rxjs@5.0.0-beta.6 release/angular2-data-table.js",
-
+    "release:css": "node-sass -o release/ src/themes && node-sass -o release/ src/components",
+    "release:minify": "uglifyjs release/angular2-data-table.js --source-map release/angular2-data-table.min.js.map --source-map-url release/angular2-data-table.js.map --compress --mangle --screw-ie8 --output release/angular2-data-table.min.js",
+    "release:build": " npm run build:ts && npm run release:bundle",
+    "release:bundle": "jspm build dist/main.js - npm:@angular/platform-browser-dynamic@2.0.0-rc.4 - npm:rxjs@5.0.0-beta.6 release/angular2-data-table.js",
     "deploy": "npm run deploy:github",
-      "deploy:github": ""
+    "deploy:github": ""
   },
   "repository": {
     "type": "git",
@@ -68,7 +60,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "lite-server": "^2.2.0",
     "node-sass": "^3.7.0",
-    "protractor": "^3.2.2",
+    "protractor": "^4.0.0",
     "remap-istanbul": "^0.6.3",
     "rimraf": "^2.5.2",
     "tslint": "^3.12.0-dev.2",
