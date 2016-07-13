@@ -1,4 +1,5 @@
-import "reflect-metadata";
+import 'reflect-metadata';
+import 'ts-helpers';
 import { bootstrap } from '@angular/platform-browser-dynamic';
 
 //import { App } from './demos/basic';

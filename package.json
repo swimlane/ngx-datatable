@@ -67,6 +67,7 @@
     "karma-mocha-reporter": "^2.0.0",
     "karma-sourcemap-loader": "^0.3.7",
     "lite-server": "^2.2.0",
+    "ts-helpers": "^1.1.1",
     "node-sass": "^3.7.0",
     "protractor": "^3.2.2",
     "remap-istanbul": "^0.6.3",
