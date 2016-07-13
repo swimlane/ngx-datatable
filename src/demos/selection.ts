@@ -6,7 +6,7 @@ import {
   TableColumn,
   SelectionType,
   ColumnMode
-} from 'angular2-data-table';
+} from '../main';
 
 @Component({
   selector: 'app',

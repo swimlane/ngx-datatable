@@ -2,7 +2,7 @@ import { Component, Input, ElementRef, Output, EventEmitter } from '@angular/cor
 
 import { StateService } from '../../services/State';
 import { SelectionType } from '../../enums/SelectionType';
-import { Keys } from '../../utils/Keys';
+import { Keys } from '../../utils/keys';
 import { selectRows, selectRowsBetween } from '../../utils/selection';
 
 import { ProgressBar } from './ProgressBar';

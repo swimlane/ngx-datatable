@@ -1,3 +1,14 @@
+export interface IntersectionObserver {
+  root: HTMLElement;
+  rootMargin: string;
+  thresholds: Array<number>;
+  disconnect: Function;
+  observe: Function;
+  takeRecords: Function;
+  unobserve: Function;
+}
+
+
 /**
  * Observes changes to an elements visibility.
  * https://medium.com/@amcdnl/javascript-s-new-intersectionobserver-cdce8a73bef8#.evn5twug3

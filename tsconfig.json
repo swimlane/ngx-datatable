@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "system",
+    "module": "commonjs",
     "moduleResolution": "node",
     "declaration": true,
     "removeComments": true,
@@ -20,21 +20,10 @@
     "allowSyntheticDefaultImports": true,
     "suppressExcessPropertyErrors": true,
     "suppressImplicitAnyIndexErrors": true,
-    "outDir": "dist",
-    "baseUrl": "src",
-    "paths": {
-      "@angular/core": [
-        "../jspm_packages/npm/@angular/core@2.0.0-rc.4"
-      ],
-      "@angular/platform-browser-dynamic": [
-        "../jspm_packages/npm/@angular/platform-browser-dynamic@2.0.0-rc.4"
-      ],
-      "rxjs": [
-        "../jspm_packages/npm/rxjs@5.0.0-beta.6/*"
-      ]
-    }
+    "outDir": "dist"
   },
   "files": [
+    "typings/index.d.ts",
     "src/app.ts",
     "src/main.ts"
   ],
