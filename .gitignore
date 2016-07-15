@@ -127,7 +127,8 @@ node_modules/
 jspm_packages/
 dist/
 typings/
-!release/
+release/
+lib/
 
 # Click-Once directory
 publish/

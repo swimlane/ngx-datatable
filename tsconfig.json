@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
+    "module": "umd",
     "moduleResolution": "node",
+    "lib": ["es6", "dom"],
     "declaration": true,
     "removeComments": true,
     "noLib": false,
@@ -20,10 +21,9 @@
     "allowSyntheticDefaultImports": true,
     "suppressExcessPropertyErrors": true,
     "suppressImplicitAnyIndexErrors": true,
-    "outDir": "dist"
+    "outDir": "lib"
   },
   "files": [
-    "typings/index.d.ts",
     "src/app.ts",
     "src/main.ts"
   ],
