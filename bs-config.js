@@ -1,18 +1,10 @@
 'use strict';
-var fallback = require('connect-history-api-fallback');
 
 module.exports = {
   logLevel: "warn",
+  reloadDelay: 200, //browserify stream write time
   injectChanges: true,
   watchOptions: {
-    ignored: ["node_modules", "jspm_packages"]
-  },
-  server: {
-    middleware: [
-      fallback({
-        index: '/index.html',
-        htmlAcceptHeaders: ['text/html', 'application/xhtml+xml'] // systemjs workaround
-      })
-    ]
+    ignored: ["node_modules"]
   }
 };

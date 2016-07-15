@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "system",
+    "module": "umd",
     "moduleResolution": "node",
+    "lib": ["es6", "dom"],
     "declaration": true,
     "removeComments": true,
     "noLib": false,
@@ -20,19 +21,7 @@
     "allowSyntheticDefaultImports": true,
     "suppressExcessPropertyErrors": true,
     "suppressImplicitAnyIndexErrors": true,
-    "outDir": "dist",
-    "baseUrl": "src",
-    "paths": {
-      "@angular/core": [
-        "../jspm_packages/npm/@angular/core@2.0.0-rc.4"
-      ],
-      "@angular/platform-browser-dynamic": [
-        "../jspm_packages/npm/@angular/platform-browser-dynamic@2.0.0-rc.4"
-      ],
-      "rxjs": [
-        "../jspm_packages/npm/rxjs@5.0.0-beta.6/*"
-      ]
-    }
+    "outDir": "lib"
   },
   "files": [
     "src/app.ts",

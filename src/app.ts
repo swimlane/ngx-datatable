@@ -1,5 +1,8 @@
-import 'reflect-metadata';
+import 'es6-shim';
 import 'ts-helpers';
+import "reflect-metadata";
+import 'zone.js/dist/zone';
+import 'zone.js/dist/long-stack-trace-zone';
 import { bootstrap } from '@angular/platform-browser-dynamic';
 
 //import { App } from './demos/basic';

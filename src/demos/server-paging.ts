@@ -5,7 +5,7 @@ import {
   TableOptions,
   TableColumn,
   ColumnMode
-} from 'angular2-data-table';
+} from '../main';
 
 @Component({
   selector: 'app',

@@ -126,7 +126,9 @@ DocProject/Help/html
 node_modules/
 jspm_packages/
 dist/
-!release/
+typings/
+release/
+lib/
 
 # Click-Once directory
 publish/
