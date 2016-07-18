@@ -1,3 +1,5 @@
+import { IntersectionObserver } from './IntersectionObserver';
+
 /**
  * Observes changes to an elements visibility.
  * https://medium.com/@amcdnl/javascript-s-new-intersectionobserver-cdce8a73bef8#.evn5twug3

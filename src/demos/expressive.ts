@@ -3,9 +3,10 @@ import { Component } from '@angular/core';
 import {
   DATATABLE_COMPONENTS,
   TableOptions,
-  TableColumn,
   ColumnMode
-} from 'angular2-data-table';
+} from '../main';
+import '../themes/material.scss';
+// 'angular2-data-table';
 
 @Component({
   selector: 'app',

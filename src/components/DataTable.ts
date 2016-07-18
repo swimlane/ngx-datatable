@@ -21,6 +21,7 @@ import { DataTableColumn } from './DataTableColumn';
 import { DataTableHeader } from './header/Header';
 import { DataTableBody } from './body/Body';
 import { DataTableFooter } from './footer/Footer';
+import './datatable.scss';
 
 @Component({
   selector: 'datatable',

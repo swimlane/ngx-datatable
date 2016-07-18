@@ -24,7 +24,7 @@
     	width:75%;
     	margin:0 auto;
     }
-    
+
     .datatable.vertical-scroll {
       height:70vh;
     }
@@ -37,20 +37,13 @@
     }
   </style>
 
-  <link rel="stylesheet" href="dist/components/datatable.css">
-  <link rel="stylesheet" href="dist/themes/material.css">
   <link rel="stylesheet" href="assets/icons.css">
 </head>
 
 <body>
   <app>Loading...</app>
 
-  <script src="jspm_packages/system.js"></script>
-  <script src="jspm.config.js"></script>
-  <script>
-    System.import('dist/app.js')
-      .then(null, console.error.bind(console));
-  </script>
+  <script src="/webpack-dev-server.js"></script>
 </body>
 
 </html>

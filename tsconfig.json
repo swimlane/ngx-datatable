@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "system",
+    "module": "commonjs",
     "moduleResolution": "node",
     "declaration": true,
     "removeComments": true,
-    "noLib": false,
     "noEmitHelpers": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -22,21 +21,21 @@
     "suppressImplicitAnyIndexErrors": true,
     "outDir": "dist",
     "baseUrl": "src",
-    "paths": {
-      "@angular/core": [
-        "../jspm_packages/npm/@angular/core@2.0.0-rc.4"
-      ],
-      "@angular/platform-browser-dynamic": [
-        "../jspm_packages/npm/@angular/platform-browser-dynamic@2.0.0-rc.4"
-      ],
-      "rxjs": [
-        "../jspm_packages/npm/rxjs@5.0.0-beta.6/*"
-      ]
-    }
+    "declarationDir": "dist",
+    "types": [
+      "core-js"
+    ]
   },
   "files": [
     "src/app.ts",
     "src/main.ts"
   ],
-  "compileOnSave": false
+  "exclude": [
+    "node_modules"
+  ],
+  "compileOnSave": false,
+  "buildOnSave": false,
+  "awesomeTypescriptLoaderOptions": {
+    "forkChecker": true
+  }
 }
