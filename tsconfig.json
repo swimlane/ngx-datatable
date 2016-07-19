@@ -21,14 +21,12 @@
     "suppressImplicitAnyIndexErrors": true,
     "outDir": "dist",
     "baseUrl": "src",
-    "declarationDir": "dist",
     "types": [
       "core-js"
     ]
   },
   "files": [
-    "src/app.ts",
-    "src/main.ts"
+    "src/angular2-data-table.ts"
   ],
   "exclude": [
     "node_modules"

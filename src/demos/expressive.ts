@@ -4,7 +4,7 @@ import {
   DATATABLE_COMPONENTS,
   TableOptions,
   ColumnMode
-} from '../main';
+} from '../angular2-data-table';
 import '../themes/material.scss';
 // 'angular2-data-table';
 

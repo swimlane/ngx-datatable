@@ -452,7 +452,7 @@ declare module "components/DataTable" {
         onRowSelect(event: any): void;
     }
 }
-declare module "main" {
+declare module "angular2-data-table" {
     import { DataTable } from "components/DataTable";
     import { DataTableColumn } from "components/DataTableColumn";
     import { TableOptions } from "models/TableOptions";

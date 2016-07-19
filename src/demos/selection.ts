@@ -6,7 +6,7 @@ import {
   TableColumn,
   SelectionType,
   ColumnMode
-} from '../main';
+} from '../angular2-data-table';
 import '../themes/material.scss';
 
 @Component({
