@@ -1,6 +1,6 @@
 {
   "name": "angular2-data-table",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "angular2-data-table is a Angular2 component for presenting large and complex data.",
   "main": "release/angular2-data-table.js",
   "scripts": {
@@ -29,14 +29,14 @@
     "start": "npm-run-all -s clean:* start:server",
       "start:server": "webpack-dev-server --progress --port 8000",
 
-    "release": "NODE_ENV=production npm-run-all -s clean:* release:css -p release:build:* -s release:minify",
-      "release:build:ts": "./node_modules/typescript/bin/tsc --outFile release/angular2-data-table.js --module system",
+    "release": "NODE_ENV=production npm-run-all -s clean:* release:css release:types -p release:build:* -s release:minify release:headers",
+      "release:types": "./node_modules/typescript/bin/tsc --outFile release/angular2-data-table.js --module system",
       "release:build:umd": "rollup -c -f umd -o release/angular2-data-table.js",
       "release:build:cjs": "rollup -c -f cjs -o release/angular2-data-table.cjs.js",
       "release:build:es": "rollup -c -f es6 -o release/angular2-data-table.es.js",
       "release:css": "node-sass -o release/ src/themes && node-sass -o release/ src/components",
       "release:minify": "uglifyjs release/angular2-data-table.js --source-map release/angular2-data-table.min.js.map --source-map-url release/angular2-data-table.js.map --compress --mangle --screw-ie8 --output release/angular2-data-table.min.js",
-      "release:headers": "headers ./release/*.js"
+      "release:headers": "header ./release/*.js"
   },
   "repository": {
     "type": "git",
