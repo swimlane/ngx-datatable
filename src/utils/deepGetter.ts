@@ -6,11 +6,11 @@
 export function deepValueGetter(obj, path) {
   if(!obj || !path) return obj;
 
-  var current = obj,
-      split = path.split('.');
+  let current = obj;
+  let split = path.split('.');
 
-  if(split.length){
-    for(var i=0, len=split.length; i < len; i++) {
+  if(split.length) {
+    for(let i = 0, len = split.length; i < len; i++) {
       current = current[split[i]];
     }
   }

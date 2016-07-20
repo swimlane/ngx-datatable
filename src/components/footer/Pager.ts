@@ -84,7 +84,7 @@ export class DataTablePager {
     return this._page;
   }
 
-  constructor(elm: ElementRef){
+  constructor(elm: ElementRef) {
     elm.nativeElement.classList.add('datatable-pager');
   }
 
@@ -114,11 +114,11 @@ export class DataTablePager {
   }
 
   calcPages(page?: number) {
-    let pages = [],
-      startPage = 1,
-      endPage = this.totalPages,
-      maxSize = 5,
-      isMaxSized = maxSize < this.totalPages;
+    let pages = [];
+    let startPage = 1;
+    let endPage = this.totalPages;
+    let maxSize = 5;
+    let isMaxSized = maxSize < this.totalPages;
 
     page = page || this.page;
 
@@ -127,10 +127,10 @@ export class DataTablePager {
       endPage = Math.min(startPage + maxSize - 1, this.totalPages);
     }
 
-    for (let number = startPage; number <= endPage; number++) {
+    for (let num = startPage; num <= endPage; num++) {
       pages.push({
-        number: number,
-        text: number
+        number: num,
+        text: num
       });
     }
 

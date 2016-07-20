@@ -4,20 +4,20 @@
  * @return {int} width
  */
 export function scrollbarWidth() {
-  var outer = document.createElement("div");
-  outer.style.visibility = "hidden";
-  outer.style.width = "100px";
-  outer.style.msOverflowStyle = "scrollbar";
+  let outer = document.createElement('div');
+  outer.style.visibility = 'hidden';
+  outer.style.width = '100px';
+  outer.style.msOverflowStyle = 'scrollbar';
   document.body.appendChild(outer);
 
-  var widthNoScroll = outer.offsetWidth;
-  outer.style.overflow = "scroll";
+  let widthNoScroll = outer.offsetWidth;
+  outer.style.overflow = 'scroll';
 
-  var inner = document.createElement("div");
-  inner.style.width = "100%";
+  let inner = document.createElement('div');
+  inner.style.width = '100%';
   outer.appendChild(inner);
 
-  var widthWithScroll = inner.offsetWidth;
+  let widthWithScroll = inner.offsetWidth;
   outer.parentNode.removeChild(outer);
 
   return widthNoScroll - widthWithScroll;

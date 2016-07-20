@@ -9,12 +9,12 @@ import {
 import { Observable } from 'rxjs';
 
 @Directive({
-  selector: '[resizable]',
+  selector: '[resizeable]',
   host: {
-    '[class.resizable]': 'resizeEnabled'
+    '[class.resizeable]': 'resizeEnabled'
   }
 })
-export class Resizable {
+export class Resizeable {
 
   @Input() resizeEnabled: boolean = true;
   @Input() minWidth: number;
@@ -31,7 +31,7 @@ export class Resizable {
     this.element = element.nativeElement;
 
     if(this.resizeEnabled) {
-      var node = document.createElement('span');
+      let node = document.createElement('span');
       node.classList.add('resize-handle');
       this.element.appendChild(node);
     }
@@ -56,7 +56,7 @@ export class Resizable {
       this.resizing = true;
 
       this.subcription = Observable.fromEvent(document, 'mousemove')
-        .subscribe((event) => this.move(event));
+        .subscribe((e) => this.move(e));
     }
   }
 

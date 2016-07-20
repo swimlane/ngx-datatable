@@ -13,7 +13,7 @@ import { SortDirection } from '../../enums/SortDirection';
 @Component({
   selector: 'datatable-header-cell',
   template: `
-  	<div>
+	 <div>
       <span
         class="datatable-header-cell-label draggable"
         (click)="onSort()"
@@ -28,9 +28,9 @@ import { SortDirection } from '../../enums/SortDirection';
   host: {
     '[class.sortable]': 'model.sortable',
     '[class.resizable]': 'model.resizable',
-    '[style.width]':'model.width + "px"',
-    '[style.minWidth]':'model.minWidth + "px"',
-    '[style.maxWidth]':'model.maxWidth + "px"',
+    '[style.width]': 'model.width + "px"',
+    '[style.minWidth]': 'model.minWidth + "px"',
+    '[style.maxWidth]': 'model.maxWidth + "px"',
     '[style.height]': 'model.height + "px"',
     '[attr.title]': 'model.name'
   }

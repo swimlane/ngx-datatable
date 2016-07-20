@@ -1,4 +1,4 @@
-import { columnsByPin, columnGroupWidths } from './column';
+import { columnsByPin } from './column';
 
 /**
  * Calculates the total width of all columns and their groups
@@ -132,7 +132,7 @@ export function forceFillColumnWidths(allColumns: any, expectedWidth: any, start
       exceedsWindow = contentWidth > expectedWidth;
 
   for(let column of columnsToResize) {
-    if(exceedsWindow){
+    if(exceedsWindow) {
       column.width = column.$$oldWidth || column.width;
     } else {
       if(!column.$$oldWidth){
@@ -140,9 +140,9 @@ export function forceFillColumnWidths(allColumns: any, expectedWidth: any, start
       }
 
       const newSize = column.$$oldWidth + additionWidthPerColumn;
-      if(column.minWith && newSize < column.minWidth){
+      if(column.minWith && newSize < column.minWidth) {
         column.width = column.minWidth;
-      } else if(column.maxWidth && newSize > column.maxWidth){
+      } else if(column.maxWidth && newSize > column.maxWidth) {
         column.width = column.maxWidth;
       } else {
         column.width = newSize;

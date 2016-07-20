@@ -156,7 +156,7 @@ export class DataTable {
       width =- this.state.scrollbarWidth;
     }
 
-    if(this.options.columnMode === ColumnMode.force){
+    if(this.options.columnMode === ColumnMode.force) {
       forceFillColumnWidths(this.options.columns, width, forceIdx);
     } else if(this.options.columnMode === ColumnMode.flex) {
       adjustColumnWidths(this.options.columns, width);

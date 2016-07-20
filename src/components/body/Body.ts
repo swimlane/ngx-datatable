@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, Output, EventEmitter } from '@angular/core';
 
 import { StateService } from '../../services/State';
 import { SelectionType } from '../../enums/SelectionType';
@@ -43,8 +43,8 @@ import { Scroller } from '../../directives/Scroller';
     Scroller
   ],
   host: {
-    '[style.width]':'bodyWidth',
-    '[style.height]':'bodyHeight'
+    '[style.width]': 'bodyWidth',
+    '[style.height]': 'bodyHeight'
   }
 })
 export class DataTableBody {
@@ -71,7 +71,7 @@ export class DataTableBody {
     return '100%';
   }
 
-  constructor(private state: StateService, elm: ElementRef){
+  constructor(private state: StateService, elm: ElementRef) {
     elm.nativeElement.classList.add('datatable-body');
   }
 

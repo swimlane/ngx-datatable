@@ -1,7 +1,7 @@
 export function selectRows(selected, row) {
   const selectedIndex = selected.indexOf(row);
 
-  if(selectedIndex > -1){
+  if(selectedIndex > -1) {
     selected.splice(selectedIndex, 1);
   } else {
     selected.push(row);
@@ -13,7 +13,7 @@ export function selectRows(selected, row) {
 export function selectRowsBetween(selected, rows, index, prevIndex) {
   const reverse = index < prevIndex;
 
-  for(var i = 0, len = rows.length; i < len; i++) {
+  for(let i = 0, len = rows.length; i < len; i++) {
     const row = rows[i];
     const greater = i >= prevIndex && i <= index;
     const lesser = i <= prevIndex && i >= index;
@@ -31,7 +31,7 @@ export function selectRowsBetween(selected, rows, index, prevIndex) {
       };
     }
 
-    if((reverse && lesser) || (!reverse && greater)){
+    if((reverse && lesser) || (!reverse && greater)) {
       const idx = selected.indexOf(row);
 
       // if reverse shift selection (unselect) and the
@@ -43,7 +43,7 @@ export function selectRowsBetween(selected, rows, index, prevIndex) {
 
       // if in the positive range to be added to `selected`, and
       // not already in the selected array, add it
-      if( i >= range.start && i < range.end){
+      if( i >= range.start && i < range.end) {
         if (idx === -1) {
           selected.push(row);
         }

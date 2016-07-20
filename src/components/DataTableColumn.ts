@@ -1,12 +1,9 @@
 import {
-  Component,
-  Input,
-  ElementRef,
-  ViewContainerRef,
   Directive,
   TemplateRef,
   ContentChild
 } from '@angular/core';
+
 import { TableColumn } from '../models/TableColumn';
 
 @Directive({

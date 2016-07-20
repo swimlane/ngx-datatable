@@ -3,12 +3,7 @@ import {
   Input,
   ElementRef,
   ViewContainerRef,
-  ViewChild,
-  ComponentResolver,
-  ComponentFactory,
-  ComponentRef,
-  DynamicComponentLoader,
-  Injector
+  ComponentResolver
 } from '@angular/core';
 import { TableColumn } from '../../models/TableColumn';
 import { DataTableColumn } from '../DataTableColumn';
@@ -33,8 +28,8 @@ import { TemplateWrapper } from '../../directives/TemplateWrapper';
     </div>
   `,
   host: {
-    '[style.width]':'column.width + "px"',
-    '[style.height]':'column.height + "px"'
+    '[style.width]': 'column.width + "px"',
+    '[style.height]': 'column.height + "px"'
   },
   directives: [ TemplateWrapper ]
 })

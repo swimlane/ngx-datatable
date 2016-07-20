@@ -17,8 +17,9 @@
       "check-separator",
       "check-type"
     ],
-    "no-require-imports": true,
-    "no-reference": true,
+    "curly": false,
+    "no-reference": false,
+    "no-var-requires": false,
     "ordered-imports": false,
     "no-trailing-whitespace": false
   },

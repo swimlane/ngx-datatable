@@ -53,9 +53,10 @@ export class StateService {
   }
 
   get indexes() {
-    let first = 0, last = 0;
+    let first = 0;
+    let last = 0;
 
-    if(this.options.scrollbarV){
+    if(this.options.scrollbarV) {
       const floor = Math.floor((this.offsetY || 0) / this.options.rowHeight);
       first = Math.max(floor, 0);
       last = Math.min(first + this.pageSize, this.pageCount);

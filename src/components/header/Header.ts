@@ -1,7 +1,6 @@
 import {
   Component,
   Output,
-  Input,
   ElementRef,
   EventEmitter
 } from '@angular/core';
@@ -10,7 +9,7 @@ import { StateService } from '../../services/State';
 
 import { LongPress } from '../../directives/LongPress';
 import { Draggable } from '../../directives/Draggable';
-import { Resizable } from '../../directives/Resizable';
+import { Resizeable } from '../../directives/Resizeable';
 import { Orderable } from '../../directives/Orderable';
 
 import { DataTableHeaderCell } from './HeaderCell';
@@ -29,8 +28,8 @@ import { DataTableHeaderCell } from './HeaderCell';
         *ngIf="state.columnsByPin.left.length">
         <datatable-header-cell
           *ngFor="let column of state.columnsByPin.left"
-          resizable
-          [resizeEnabled]="column.resizable"
+          resizeable
+          [resizeEnabled]="column.resizeable"
           (onResize)="columnResized($event, column)"
           long-press
           (onLongPress)="drag = true"
@@ -48,8 +47,8 @@ import { DataTableHeaderCell } from './HeaderCell';
         *ngIf="state.columnsByPin.center.length">
         <datatable-header-cell
           *ngFor="let column of state.columnsByPin.center"
-          resizable
-          [resizeEnabled]="column.resizable"
+          resizeable
+          [resizeEnabled]="column.resizeable"
           (onResize)="columnResized($event, column)"
           long-press
           (onLongPress)="drag = true"
@@ -67,8 +66,8 @@ import { DataTableHeaderCell } from './HeaderCell';
         *ngIf="state.columnsByPin.right.length">
         <datatable-header-cell
           *ngFor="let column of state.columnsByPin.right"
-          resizable
-          [resizeEnabled]="column.resizable"
+          resizeable
+          [resizeEnabled]="column.resizeable"
           (onResize)="columnResized($event, column)"
           long-press
           (onLongPress)="drag = true"
@@ -85,13 +84,13 @@ import { DataTableHeaderCell } from './HeaderCell';
   directives: [
     DataTableHeaderCell,
     Draggable,
-    Resizable,
+    Resizeable,
     Orderable,
     LongPress
   ],
   host: {
-    '[style.width]':'headerWidth',
-    '[style.height]':'headerHeight'
+    '[style.width]': 'headerWidth',
+    '[style.height]': 'headerHeight'
   }
 })
 export class DataTableHeader {
@@ -101,6 +100,7 @@ export class DataTableHeader {
   get headerWidth() {
     if(this.state.options.scrollbarH)
       return this.state.innerWidth + 'px';
+
     return '100%';
   }
 

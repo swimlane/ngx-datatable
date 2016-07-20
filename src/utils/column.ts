@@ -2,7 +2,7 @@
  * Returns the columns by pin.
  * @param {array} colsumns
  */
-export function columnsByPin(cols){
+export function columnsByPin(cols) {
   let ret = {
     left: [],
     center: [],
@@ -10,11 +10,10 @@ export function columnsByPin(cols){
   };
 
   if(cols) {
-    for(let i=0, len=cols.length; i < len; i++) {
-      let c = cols[i];
-      if(c.frozenLeft){
-        ret.left.push(c)
-      } else if(c.frozenRight){
+    for(let col of cols) {
+      if(c.frozenLeft) {
+        ret.left.push(c);
+      } else if(c.frozenRight) {
         ret.right.push(c);
       } else {
         ret.center.push(c);
@@ -30,7 +29,7 @@ export function columnsByPin(cols){
  * @param {object} groups
  * @param {array} all
  */
-export function columnGroupWidths(groups, all){
+export function columnGroupWidths(groups, all) {
   return {
     left: columnTotalWidth(groups.left),
     center: columnTotalWidth(groups.center),
@@ -48,8 +47,7 @@ export function columnTotalWidth(columns, prop?) {
   let totalWidth = 0;
 
   if(columns) {
-    for(let i=0, len=columns.length; i < len; i++) {
-      let c = columns[i];
+    for(let c of cols) {
       let has = prop && c[prop];
       totalWidth = totalWidth + (has ? c[prop] : c.width);
     }

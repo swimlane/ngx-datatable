@@ -52,7 +52,7 @@ export class DataTableBodyRow {
       this.state.selected.indexOf(this.row) > -1;
   }
 
-  constructor(private state: StateService, elm: ElementRef){
+  constructor(private state: StateService, elm: ElementRef) {
     elm.nativeElement.classList.add('datatable-body-row');
   }
 

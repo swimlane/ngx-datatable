@@ -7,6 +7,17 @@ import { camelCase } from '../utils/camelCase';
  */
 export class TableColumn {
 
+  static getProps() {
+    let props = ['name', 'prop'];
+    let col = new TableColumn();
+
+    for(const prop in col) {
+      props.push(prop);
+    }
+
+    return props;
+  }
+
   // unique id
   $$id: string = id();
 
@@ -28,14 +39,14 @@ export class TableColumn {
   // Minimum width of the column.
   minWidth: number = 100;
 
-  //Maximum width of the column.
+  // Maximum width of the column.
   maxWidth: number = undefined;
 
   // The width of the column; by default (in pixels).
   width: number = 150;
 
   // If yes then the column can be resized; otherwise it cannot.
-  resizable: boolean = true;
+  resizeable: boolean = true;
 
   // Custom sort comparator
   comparator: any = undefined;
@@ -64,17 +75,6 @@ export class TableColumn {
     if(!this.prop && this.name) {
       this.prop = camelCase(this.name);
     }
-  }
-
-  static getProps() {
-    let props = ['name', 'prop'];
-    let col = new TableColumn();
-
-    for(let prop in col) {
-      props.push(prop);
-    }
-
-    return props;
   }
 
 };
