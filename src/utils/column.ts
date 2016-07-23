@@ -11,12 +11,12 @@ export function columnsByPin(cols) {
 
   if(cols) {
     for(let col of cols) {
-      if(c.frozenLeft) {
-        ret.left.push(c);
-      } else if(c.frozenRight) {
-        ret.right.push(c);
+      if(col.frozenLeft) {
+        ret.left.push(col);
+      } else if(col.frozenRight) {
+        ret.right.push(col);
       } else {
-        ret.center.push(c);
+        ret.center.push(col);
       }
     }
   }
@@ -47,7 +47,7 @@ export function columnTotalWidth(columns, prop?) {
   let totalWidth = 0;
 
   if(columns) {
-    for(let c of cols) {
+    for(let c of columns) {
       let has = prop && c[prop];
       totalWidth = totalWidth + (has ? c[prop] : c.width);
     }
