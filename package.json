@@ -11,32 +11,27 @@
     "version": "npm run build",
     "preversion": "npm test",
     "postversion": "git push && git push --tags",
-
     "clean": "npm-run-all -p clean:*",
-      "clean:dist": "./node_modules/rimraf/bin.js dist",
-      "clean:release": "./node_modules/rimraf/bin.js release",
-
+    "clean:dist": "./node_modules/rimraf/bin.js dist",
+    "clean:release": "./node_modules/rimraf/bin.js release",
     "build:dev": "webpack --config webpack.config.js --progress --profile --bail",
     "build:ts": "./node_modules/typescript/bin/tsc; true",
     "build:sass": "node-sass -o dist/ src/",
     "build:css": "postcss --use autoprefixer dist/*.css -d dist/",
     "build:webpack": "webpack --config webpack.prod.config.js src/main.ts release/angular2-data-table.min.js",
-
     "watch": "npm run watch:ts && npm run watch:sass",
-      "watch:ts": "./node_modules/typescript/bin/tsc --watch",
-      "watch:sass": "npm run build:sass && node-sass -o dist/ -w src/",
-
+    "watch:ts": "./node_modules/typescript/bin/tsc --watch",
+    "watch:sass": "npm run build:sass && node-sass -o dist/ -w src/",
     "start": "npm-run-all -s clean:* start:server",
-      "start:server": "webpack-dev-server --progress --port 8000",
-
+    "start:server": "webpack-dev-server --progress --port 8000",
     "release": "NODE_ENV=production npm-run-all -s clean:* release:css release:types -p release:build:* -s release:minify release:headers",
-      "release:types": "./node_modules/typescript/bin/tsc --outFile release/angular2-data-table.js --module system",
-      "release:build:umd": "rollup -c -f umd -o release/angular2-data-table.js",
-      "release:build:cjs": "rollup -c -f cjs -o release/angular2-data-table.cjs.js",
-      "release:build:es": "rollup -c -f es6 -o release/angular2-data-table.es.js",
-      "release:css": "node-sass -o release/ src/themes && node-sass -o release/ src/components",
-      "release:minify": "uglifyjs release/angular2-data-table.js --source-map release/angular2-data-table.min.js.map --source-map-url release/angular2-data-table.js.map --compress --mangle --screw-ie8 --output release/angular2-data-table.min.js",
-      "release:headers": "header ./release/*.js"
+    "release:types": "./node_modules/typescript/bin/tsc --outFile release/angular2-data-table.js --module system",
+    "release:build:umd": "rollup -c -f umd -o release/angular2-data-table.js",
+    "release:build:cjs": "rollup -c -f cjs -o release/angular2-data-table.cjs.js",
+    "release:build:es": "rollup -c -f es6 -o release/angular2-data-table.es.js",
+    "release:css": "node-sass -o release/ src/themes && node-sass -o release/ src/components",
+    "release:minify": "uglifyjs release/angular2-data-table.js --source-map release/angular2-data-table.min.js.map --source-map-url release/angular2-data-table.js.map --compress --mangle --screw-ie8 --output release/angular2-data-table.min.js",
+    "release:headers": "header ./release/*.js"
   },
   "repository": {
     "type": "git",
@@ -68,7 +63,7 @@
   "devDependencies": {
     "@types/core-js": "^0.9.28",
     "autoprefixer": "^6.3.7",
-    "awesome-typescript-loader": "^2.0.3",
+    "awesome-typescript-loader": "^2.1.1",
     "css-loader": "^0.12.0",
     "html-webpack-plugin": "^2.22.0",
     "node-sass": "^3.7.0",
