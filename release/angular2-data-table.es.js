@@ -1,10 +1,10 @@
 /**
- * angular2-data-table v0.1.14 (https://github.com/swimlane/angular2-data-table#readme)
+ * angular2-data-table v0.1.15 (https://github.com/swimlane/angular2-data-table#readme)
  * Copyright 2016  
  * Licensed under MIT
  */
 import { KeyValueDiffers, ElementRef, Component, HostListener, ContentChildren, EventEmitter, Output, Input, Injectable, Directive, HostBinding, TemplateRef, ContentChild, QueryList, ComponentResolver, ViewContainerRef } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Rx';
 
 function __decorate(decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -24,16 +24,16 @@ function columnsByPin(cols) {
         right: []
     };
     if (cols) {
-        for (var i = 0, len = cols.length; i < len; i++) {
-            var c = cols[i];
-            if (c.frozenLeft) {
-                ret.left.push(c);
+        for (var _i = 0, cols_1 = cols; _i < cols_1.length; _i++) {
+            var col = cols_1[_i];
+            if (col.frozenLeft) {
+                ret.left.push(col);
             }
-            else if (c.frozenRight) {
-                ret.right.push(c);
+            else if (col.frozenRight) {
+                ret.right.push(col);
             }
             else {
-                ret.center.push(c);
+                ret.center.push(col);
             }
         }
     }
@@ -51,8 +51,8 @@ function columnGroupWidths(groups, all) {
 function columnTotalWidth(columns, prop) {
     var totalWidth = 0;
     if (columns) {
-        for (var i = 0, len = columns.length; i < len; i++) {
-            var c = columns[i];
+        for (var _i = 0, columns_1 = columns; _i < columns_1.length; _i++) {
+            var c = columns_1[_i];
             var has = prop && c[prop];
             totalWidth = totalWidth + (has ? c[prop] : c.width);
         }
@@ -62,15 +62,15 @@ function columnTotalWidth(columns, prop) {
 ;
 
 function scrollbarWidth() {
-    var outer = document.createElement("div");
-    outer.style.visibility = "hidden";
-    outer.style.width = "100px";
-    outer.style.msOverflowStyle = "scrollbar";
+    var outer = document.createElement('div');
+    outer.style.visibility = 'hidden';
+    outer.style.width = '100px';
+    outer.style.msOverflowStyle = 'scrollbar';
     document.body.appendChild(outer);
     var widthNoScroll = outer.offsetWidth;
-    outer.style.overflow = "scroll";
-    var inner = document.createElement("div");
-    inner.style.width = "100%";
+    outer.style.overflow = 'scroll';
+    var inner = document.createElement('div');
+    inner.style.width = '100%';
     outer.appendChild(inner);
     var widthWithScroll = inner.offsetWidth;
     outer.parentNode.removeChild(outer);
@@ -207,7 +207,8 @@ var StateService = (function () {
     });
     Object.defineProperty(StateService.prototype, "indexes", {
         get: function () {
-            var first = 0, last = 0;
+            var first = 0;
+            var last = 0;
             if (this.options.scrollbarV) {
                 var floor = Math.floor((this.offsetY || 0) / this.options.rowHeight);
                 first = Math.max(floor, 0);
@@ -515,7 +516,7 @@ var TableColumn = (function () {
         this.minWidth = 100;
         this.maxWidth = undefined;
         this.width = 150;
-        this.resizable = true;
+        this.resizeable = true;
         this.comparator = undefined;
         this.sortable = true;
         this.draggable = true;
@@ -762,8 +763,8 @@ var Draggable = (function () {
     var _a, _b, _c, _d;
 }());
 
-var Resizable = (function () {
-    function Resizable(element) {
+var Resizeable = (function () {
+    function Resizeable(element) {
         this.resizeEnabled = true;
         this.onResize = new EventEmitter();
         this.prevScreenX = 0;
@@ -775,24 +776,24 @@ var Resizable = (function () {
             this.element.appendChild(node);
         }
     }
-    Resizable.prototype.onMouseup = function (event) {
+    Resizeable.prototype.onMouseup = function (event) {
         this.resizing = false;
         if (this.subcription) {
             this.subcription.unsubscribe();
             this.onResize.emit(this.element.clientWidth);
         }
     };
-    Resizable.prototype.onMousedown = function (event) {
+    Resizeable.prototype.onMousedown = function (event) {
         var _this = this;
         var isHandle = event.target.classList.contains('resize-handle');
         if (isHandle) {
             event.stopPropagation();
             this.resizing = true;
             this.subcription = Observable.fromEvent(document, 'mousemove')
-                .subscribe(function (event) { return _this.move(event); });
+                .subscribe(function (e) { return _this.move(e); });
         }
     };
-    Resizable.prototype.move = function (event) {
+    Resizeable.prototype.move = function (event) {
         var movementX = event.movementX || event.mozMovementX || (event.screenX - this.prevScreenX);
         var width = this.element.clientWidth;
         var newWidth = width + (movementX || 0);
@@ -806,41 +807,41 @@ var Resizable = (function () {
     __decorate([
         Input(), 
         __metadata('design:type', Boolean)
-    ], Resizable.prototype, "resizeEnabled", void 0);
+    ], Resizeable.prototype, "resizeEnabled", void 0);
     __decorate([
         Input(), 
         __metadata('design:type', Number)
-    ], Resizable.prototype, "minWidth", void 0);
+    ], Resizeable.prototype, "minWidth", void 0);
     __decorate([
         Input(), 
         __metadata('design:type', Number)
-    ], Resizable.prototype, "maxWidth", void 0);
+    ], Resizeable.prototype, "maxWidth", void 0);
     __decorate([
         Output(), 
         __metadata('design:type', (typeof (_a = typeof EventEmitter !== 'undefined' && EventEmitter) === 'function' && _a) || Object)
-    ], Resizable.prototype, "onResize", void 0);
+    ], Resizeable.prototype, "onResize", void 0);
     __decorate([
         HostListener('document:mouseup', ['$event']), 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', [Object]), 
         __metadata('design:returntype', void 0)
-    ], Resizable.prototype, "onMouseup", null);
+    ], Resizeable.prototype, "onMouseup", null);
     __decorate([
         HostListener('mousedown', ['$event']), 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', [Object]), 
         __metadata('design:returntype', void 0)
-    ], Resizable.prototype, "onMousedown", null);
-    Resizable = __decorate([
+    ], Resizeable.prototype, "onMousedown", null);
+    Resizeable = __decorate([
         Directive({
-            selector: '[resizable]',
+            selector: '[resizeable]',
             host: {
-                '[class.resizable]': 'resizeEnabled'
+                '[class.resizeable]': 'resizeEnabled'
             }
         }), 
         __metadata('design:paramtypes', [(typeof (_b = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _b) || Object])
-    ], Resizable);
-    return Resizable;
+    ], Resizeable);
+    return Resizeable;
     var _a, _b;
 }());
 
@@ -949,7 +950,7 @@ var DataTableHeaderCell = (function () {
     DataTableHeaderCell = __decorate([
         Component({
             selector: 'datatable-header-cell',
-            template: "\n  \t<div>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"model.name\">\n      </span>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses()\">\n      </span>\n    </div>\n  ",
+            template: "\n\t <div>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"model.name\">\n      </span>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses()\">\n      </span>\n    </div>\n  ",
             host: {
                 '[class.sortable]': 'model.sortable',
                 '[class.resizable]': 'model.resizable',
@@ -1020,11 +1021,11 @@ var DataTableHeader = (function () {
     DataTableHeader = __decorate([
         Component({
             selector: 'datatable-header',
-            template: "\n  \t<div\n      [style.width]=\"state.columnGroupWidths.total\"\n      class=\"datatable-header-inner\"\n      orderable\n      (onReorder)=\"columnReordered($event)\">\n      <div\n        class=\"datatable-row-left\"\n        [style.width]=\"state.columnGroupWidths.left + 'px'\"\n        *ngIf=\"state.columnsByPin.left.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.left\"\n          resizable\n          [resizeEnabled]=\"column.resizable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"drag = true\"\n          (onLongPressEnd)=\"drag = false\"\n          draggable\n          [dragX]=\"column.draggable && drag\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n      <div\n        class=\"datatable-row-center\"\n        [style.width]=\"state.columnGroupWidths.center + 'px'\"\n        *ngIf=\"state.columnsByPin.center.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.center\"\n          resizable\n          [resizeEnabled]=\"column.resizable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"drag = true\"\n          (onLongPressEnd)=\"drag = false\"\n          draggable\n          [dragX]=\"column.draggable && drag\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n      <div\n        class=\"datatable-row-right\"\n        [style.width]=\"state.columnGroupWidths.right + 'px'\"\n        *ngIf=\"state.columnsByPin.right.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.right\"\n          resizable\n          [resizeEnabled]=\"column.resizable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"drag = true\"\n          (onLongPressEnd)=\"drag = false\"\n          draggable\n          [dragX]=\"column.draggable && drag\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n    </div>\n  ",
+            template: "\n  \t<div\n      [style.width]=\"state.columnGroupWidths.total\"\n      class=\"datatable-header-inner\"\n      orderable\n      (onReorder)=\"columnReordered($event)\">\n      <div\n        class=\"datatable-row-left\"\n        [style.width]=\"state.columnGroupWidths.left + 'px'\"\n        *ngIf=\"state.columnsByPin.left.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.left\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"drag = true\"\n          (onLongPressEnd)=\"drag = false\"\n          draggable\n          [dragX]=\"column.draggable && drag\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n      <div\n        class=\"datatable-row-center\"\n        [style.width]=\"state.columnGroupWidths.center + 'px'\"\n        *ngIf=\"state.columnsByPin.center.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.center\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"drag = true\"\n          (onLongPressEnd)=\"drag = false\"\n          draggable\n          [dragX]=\"column.draggable && drag\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n      <div\n        class=\"datatable-row-right\"\n        [style.width]=\"state.columnGroupWidths.right + 'px'\"\n        *ngIf=\"state.columnsByPin.right.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.right\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"drag = true\"\n          (onLongPressEnd)=\"drag = false\"\n          draggable\n          [dragX]=\"column.draggable && drag\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n    </div>\n  ",
             directives: [
                 DataTableHeaderCell,
                 Draggable,
-                Resizable,
+                Resizeable,
                 Orderable,
                 LongPress
             ],
@@ -1115,7 +1116,8 @@ var ProgressBar = (function () {
 function deepValueGetter(obj, path) {
     if (!obj || !path)
         return obj;
-    var current = obj, split = path.split('.');
+    var current = obj;
+    var split = path.split('.');
     if (split.length) {
         for (var i = 0, len = split.length; i < len; i++) {
             current = current[split[i]];
@@ -1457,16 +1459,20 @@ var DataTablePager = (function () {
         }
     };
     DataTablePager.prototype.calcPages = function (page) {
-        var pages = [], startPage = 1, endPage = this.totalPages, maxSize = 5, isMaxSized = maxSize < this.totalPages;
+        var pages = [];
+        var startPage = 1;
+        var endPage = this.totalPages;
+        var maxSize = 5;
+        var isMaxSized = maxSize < this.totalPages;
         page = page || this.page;
         if (isMaxSized) {
             startPage = ((Math.ceil(page / maxSize) - 1) * maxSize) + 1;
             endPage = Math.min(startPage + maxSize - 1, this.totalPages);
         }
-        for (var number = startPage; number <= endPage; number++) {
+        for (var num = startPage; num <= endPage; num++) {
             pages.push({
-                number: number,
-                text: number
+                number: num,
+                text: num
             });
         }
         return pages;

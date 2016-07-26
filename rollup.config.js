@@ -5,7 +5,8 @@ var sass = require('rollup-plugin-sass');
 module.exports = {
   entry: './src/angular2-data-table.ts',
   sourceMap: true,
-  moduleName: 'angular2-data-table',
+  moduleId: 'angular2-data-table',
+  moduleName: 'angular2DataTable',
 
   external: [
 		'typescript'

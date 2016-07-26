@@ -52,6 +52,7 @@ declare module "utils/camelCase" {
 }
 declare module "models/TableColumn" {
     export class TableColumn {
+        static getProps(): string[];
         $$id: string;
         isExpressive: boolean;
         frozenLeft: boolean;
@@ -60,7 +61,7 @@ declare module "models/TableColumn" {
         minWidth: number;
         maxWidth: number;
         width: number;
-        resizable: boolean;
+        resizeable: boolean;
         comparator: any;
         sortable: boolean;
         draggable: boolean;
@@ -69,7 +70,6 @@ declare module "models/TableColumn" {
         prop: string;
         template: any;
         constructor(props?: any);
-        static getProps(): string[];
     }
 }
 declare module "enums/ColumnMode" {
@@ -236,9 +236,9 @@ declare module "directives/Draggable" {
         move(event: any, mouseDownPos: any): void;
     }
 }
-declare module "directives/Resizable" {
+declare module "directives/Resizeable" {
     import { ElementRef, EventEmitter } from '@angular/core';
-    export class Resizable {
+    export class Resizeable {
         resizeEnabled: boolean;
         minWidth: number;
         maxWidth: number;
@@ -303,7 +303,7 @@ declare module "components/header/Header" {
         }): void;
     }
 }
-declare module "utils/Keys" {
+declare module "utils/keys" {
     export enum Keys {
         up = 38,
         down = 40,

@@ -7,7 +7,7 @@ import {
   EventEmitter
 } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Rx';
 
 /**
  * Draggable Directive for Angular2

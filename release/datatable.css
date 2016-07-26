@@ -110,7 +110,7 @@
         padding: 0 8px;
         visibility: hidden;
         cursor: ew-resize; }
-      .datatable .datatable-header .datatable-header-cell.resizable:hover .resize-handle {
+      .datatable .datatable-header .datatable-header-cell.resizeable:hover .resize-handle {
         visibility: visible; }
   .datatable .datatable-body {
     position: relative;
