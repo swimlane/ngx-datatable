@@ -6,7 +6,7 @@ import { TemplateWrapper } from '../../directives/TemplateWrapper';
 @Component({
   selector: 'datatable-body-cell',
   template: `
-  	<div class="datatable-body-cell-label">
+    <div class="datatable-body-cell-label">
       <span
         *ngIf="!column.template"
         [innerHTML]="value">

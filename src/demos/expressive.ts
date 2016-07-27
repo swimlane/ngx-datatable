@@ -5,8 +5,7 @@ import {
   TableOptions,
   ColumnMode
 } from 'angular2-data-table';
-// import '../themes/material.scss';
-// 'angular2-data-table';
+import '../themes/material.scss';
 
 @Component({
   selector: 'app',
@@ -23,7 +22,7 @@ import {
           </template>
         </datatable-column>
         <datatable-column name="Gender">
-          <template  let-row="row" let-value="value">
+          <template let-row="row" let-value="value">
             My name is: <i [innerHTML]="row['name']"></i> and <i>{{value}}</i>
             <div>{{joke}}</div>
           </template>

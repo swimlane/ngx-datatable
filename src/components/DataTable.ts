@@ -59,9 +59,9 @@ import './datatable.scss';
 })
 export class DataTable {
 
-	@Input() options: TableOptions;
+  @Input() options: TableOptions;
   @Input() rows: Array<any>;
-	@Input() selected: Array<any>;
+  @Input() selected: Array<any>;
 
   @Output() onPageChange: EventEmitter<any> = new EventEmitter();
   @Output() onRowsUpdate: EventEmitter<any> = new EventEmitter();
@@ -78,6 +78,7 @@ export class DataTable {
   constructor(element: ElementRef, private state: StateService, differs: KeyValueDiffers) {
     this.element = element.nativeElement;
     this.element.classList.add('datatable');
+    
     this.rowDiffer = differs.find({}).create(null);
     this.colDiffer = differs.find({}).create(null);
   }
