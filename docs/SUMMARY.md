@@ -12,6 +12,7 @@
    * [Column Show/Hide](examples/column-toggle.md)
    * [Filtering](examples/filtering.md)
    * [Expressive](examples/expressive.md)
+   * [Templates](examples/templates.md)
 * API
    * [Table](api/table.md)
    * [Options](api/options.md)
