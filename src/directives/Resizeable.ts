@@ -48,7 +48,7 @@ export class Resizeable {
       event.stopPropagation();
       this.resizing = true;
 
-      this.subcription = Observable.fromEvent(document, 'mousemove')
+      this.subscription = Observable.fromEvent(document, 'mousemove')
         .subscribe((e) => this.move(e));
     }
   }

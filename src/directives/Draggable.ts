@@ -13,6 +13,8 @@ import { Subscription } from 'rxjs/Subscription';
 @Directive({ selector: '[draggable]' })
 export class Draggable {
 
+  public element: HTMLElement;
+
   // this kinda a hack to get
   // the model in the orderable
   @Input() model: any;
@@ -26,7 +28,6 @@ export class Draggable {
 
   private dragging: boolean = false;
   private subscription: Subscription;
-  private element: HTMLElement;
 
   constructor(element: ElementRef) {
     this.element = element.nativeElement;

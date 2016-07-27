@@ -25,7 +25,7 @@
       "watch:ts": "tsc --watch",
       "watch:sass": "npm run build:sass && node-sass -o dist/ -w src/",
 
-    "start": "npm-run-all -s clean:* start:server",
+    "start": "npm-run-all -s clean:dist start:server",
       "start:server": "webpack-dev-server --progress --port 8000",
 
     "release": "npm-run-all -s clean:* release:css release:types -p release:build:* -s release:minify release:headers",
