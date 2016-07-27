@@ -1,6 +1,6 @@
 /**
  * Returns the columns by pin.
- * @param {array} colsumns
+ * @param {array} cols
  */
 export function columnsByPin(cols) {
   let ret = {
@@ -22,7 +22,7 @@ export function columnsByPin(cols) {
   }
 
   return ret;
-};
+}
 
 /**
  * Returns the widths of all group sets of a column
@@ -41,7 +41,7 @@ export function columnGroupWidths(groups, all) {
 /**
  * Calculates the total width of all columns and their groups
  * @param {array} columns
- * @param {string} property width to get
+ * @param {string} prop width to get
  */
 export function columnTotalWidth(columns, prop?) {
   let totalWidth = 0;
@@ -54,4 +54,4 @@ export function columnTotalWidth(columns, prop?) {
   }
 
   return totalWidth;
-};
+}

@@ -1,12 +1,5 @@
-import {
-  Component,
-  Input,
-  ElementRef,
-  ViewContainerRef,
-  ComponentResolver
-} from '@angular/core';
+import { Component, Input, ElementRef } from '@angular/core';
 import { TableColumn } from '../../models/TableColumn';
-import { DataTableColumn } from '../DataTableColumn';
 import { deepValueGetter } from '../../utils/deepGetter';
 import { TemplateWrapper } from '../../directives/TemplateWrapper';
 
@@ -39,15 +32,11 @@ export class DataTableBodyCell {
   @Input() row: any;
 
   get value() {
-    if(!this.row) return '';
+    if (!this.row) return '';
     return deepValueGetter(this.row, this.column.prop);
   }
 
-  constructor(
-    private elm: ElementRef,
-    private viewContainerRef: ViewContainerRef,
-    private componentResolver: ComponentResolver) {
-
+  constructor(private elm: ElementRef) {
     elm.nativeElement.classList.add('datatable-body-cell');
   }
 

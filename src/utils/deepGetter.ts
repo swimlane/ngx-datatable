@@ -16,4 +16,4 @@ export function deepValueGetter(obj, path) {
   }
 
   return current;
-};
+}

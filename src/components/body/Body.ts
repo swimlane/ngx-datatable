@@ -1,4 +1,4 @@
-import { Component, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, Output, EventEmitter, OnInit } from '@angular/core';
 
 import { StateService } from '../../services/State';
 import { SelectionType } from '../../enums/SelectionType';
@@ -47,7 +47,7 @@ import { Scroller } from '../../directives/Scroller';
     '[style.height]': 'bodyHeight'
   }
 })
-export class DataTableBody {
+export class DataTableBody implements OnInit {
 
   @Output() onRowClick: EventEmitter<any> = new EventEmitter();
   @Output() onRowSelect: EventEmitter<any> = new EventEmitter();
@@ -75,10 +75,10 @@ export class DataTableBody {
     elm.nativeElement.classList.add('datatable-body');
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.rows = [...this.state.rows];
 
-    this.state.onPageChange.subscribe(page => {
+    this.state.onPageChange.subscribe(() => {
       const { first, last } = this.state.indexes;
       this.rows = this.state.rows.slice(first, last);
       this.hideIndicator();

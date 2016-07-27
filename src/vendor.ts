@@ -3,4 +3,5 @@ import '@angular/platform-browser-dynamic';
 import '@angular/core';
 import '@angular/common';
 
-import 'rxjs/Rx';
+// RxJS
+import 'rxjs/add/observable/fromEvent';

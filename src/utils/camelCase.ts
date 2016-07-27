@@ -16,4 +16,4 @@ export function camelCase(str) {
       return b.trim()+c.toUpperCase();
   });
   return str;
-};
+}
