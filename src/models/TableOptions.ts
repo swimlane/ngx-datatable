@@ -8,7 +8,7 @@ import { SelectionType } from '../enums/SelectionType';
 export class TableOptions {
 
   // Columns
-  columns: Array<TableColumn> = [];
+  columns: TableColumn[] = [];
 
   // Enable vertical scrollbars
   scrollbarV: boolean = false;
