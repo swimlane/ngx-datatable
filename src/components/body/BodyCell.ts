@@ -32,7 +32,7 @@ export class DataTableBodyCell {
   @Input() column: TableColumn;
   @Input() row: any;
 
-  @HostBinding('class.datatable-body-cell') isBodySell: boolean = true;
+  @HostBinding('class.datatable-body-cell') isBodyCell: boolean = true;
 
   get value() {
     if (!this.row) return '';
