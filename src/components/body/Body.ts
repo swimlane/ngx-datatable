@@ -12,8 +12,7 @@ import { Subscription } from 'rxjs/Subscription';
   selector: 'datatable-body',
   template: `
     <div>
-      <datatable-progress
-        [hidden]="!state.options.loadingIndicator">
+      <datatable-progress [visible]="!state.options.loadingIndicator">
       </datatable-progress>
       <div
         scroller
@@ -74,7 +73,7 @@ export class DataTableBody implements OnInit, OnDestroy {
 
   @HostBinding('class.datatable-body') isBody: boolean = true;
 
-  constructor(private state: StateService) {
+  constructor(public state: StateService) {
   }
 
   ngOnInit(): void {
@@ -94,9 +93,7 @@ export class DataTableBody implements OnInit, OnDestroy {
   }
 
   hideIndicator(): void {
-    setTimeout(() => {
-      this.state.options.loadingIndicator = false;
-    }, 500);
+    setTimeout(() => this.state.options.loadingIndicator = false, 500);
   }
 
   rowClicked(event, index, row): void {
