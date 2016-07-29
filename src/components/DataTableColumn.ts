@@ -1,9 +1,4 @@
-import {
-  Directive,
-  TemplateRef,
-  ContentChild
-} from '@angular/core';
-
+import { Directive, TemplateRef, ContentChild, QueryList } from '@angular/core';
 import { TableColumn } from '../models/TableColumn';
 
 @Directive({
@@ -12,6 +7,6 @@ import { TableColumn } from '../models/TableColumn';
 })
 export class DataTableColumn {
 
-  @ContentChild(TemplateRef) template;
+  @ContentChild(TemplateRef) template: QueryList<TemplateRef<any>>;
 
 }
