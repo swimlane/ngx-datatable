@@ -44,7 +44,8 @@ import { Scroller } from '../../directives/Scroller';
   ],
   host: {
     '[style.width]': 'bodyWidth',
-    '[style.height]': 'bodyHeight'
+    '[style.height]': 'bodyHeight',
+    '(scroll)': 'onScroll($event)',
   }
 })
 export class DataTableBody implements OnInit {
@@ -100,6 +101,12 @@ export class DataTableBody implements OnInit {
   rowClicked(event, index, row) {
     this.onRowClick.emit({ event, row });
     this.selectRow(event, index, row);
+  }
+
+ onScroll(event) {
+    if(this.state.options.scrollbarH){
+      this.state.HScrollPos = event.target.scrollLeft;
+    }
   }
 
   rowKeydown(event, index, row) {

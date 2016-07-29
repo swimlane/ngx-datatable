@@ -19,6 +19,7 @@ import { DataTableHeaderCell } from './HeaderCell';
   template: `
   	<div
       [style.width]="state.columnGroupWidths.total"
+      [style.left]="-state.HScrollPos + 'px'"
       class="datatable-header-inner"
       orderable
       (onReorder)="columnReordered($event)">
