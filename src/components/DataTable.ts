@@ -114,13 +114,13 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
       let chngd: boolean = false;
       colDiff.forEachAddedItem(() => {
         chngd = true;
-        return;
+        return false;
       });
 
       if (!chngd) {
         colDiff.forEachRemovedItem(() => {
           chngd = true;
-          return;
+          return false;
         });
       }
 
