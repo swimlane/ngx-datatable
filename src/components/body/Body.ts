@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs/Subscription';
   selector: 'datatable-body',
   template: `
     <div>
-      <datatable-progress [visible]="!state.options.loadingIndicator">
+      <datatable-progress *ngIf="!state.options.loadingIndicator">
       </datatable-progress>
       <div
         scroller

@@ -1,11 +1,9 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'datatable-progress',
   template: `
-    <div *ngIf= "visible"
-      class="progress-linear"
-      role="progressbar">
+    <div class="progress-linear" role="progressbar">
       <div class="container">
         <div class="bar"></div>
       </div>
@@ -14,7 +12,4 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProgressBar {
-
-  @Input() visible: boolean = false;
-
 }
