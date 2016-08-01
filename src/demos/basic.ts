@@ -32,9 +32,9 @@ export class App {
     footerHeight: 50,
     rowHeight: 'auto',
     columns: [
-      new TableColumn({ name: "Name" }),
-      new TableColumn({ name: "Gender" }),
-      new TableColumn({ name: "Company" })
+      new TableColumn({ prop: 'name' }),
+      new TableColumn({ name: 'Gender' }),
+      new TableColumn({ name: 'Company' })
     ]
   });
 

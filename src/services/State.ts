@@ -1,9 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
-
 import { columnsByPin, columnGroupWidths } from '../utils/column';
 import { scrollbarWidth } from '../utils/scrollbarWidth';
 import { nextSortDir, sortRows } from '../utils/sort';
-
 import { TableOptions } from '../models/TableOptions';
 import { TableColumn } from '../models/TableColumn';
 import { Sort } from '../models/Sort';
@@ -35,7 +33,7 @@ export class StateService {
   }
 
   get pageCount() {
-    if(!this.options.externalPaging) {
+    if (!this.options.externalPaging) {
       return this.rows.length;
     } else {
       return this.options.count;
@@ -43,9 +41,9 @@ export class StateService {
   }
 
   get pageSize() {
-    if(this.options.scrollbarV) {
+    if (this.options.scrollbarV) {
       return Math.ceil(this.bodyHeight / this.options.rowHeight) + 1;
-    } else if(this.options.limit) {
+    } else if (this.options.limit) {
       return this.options.limit;
     } else {
       return this.rows.length;
@@ -56,7 +54,7 @@ export class StateService {
     let first = 0;
     let last = 0;
 
-    if(this.options.scrollbarV) {
+    if (this.options.scrollbarV) {
       const floor = Math.floor((this.offsetY || 0) / this.options.rowHeight);
       first = Math.max(floor, 0);
       last = Math.min(first + this.pageSize, this.pageCount);
@@ -68,8 +66,8 @@ export class StateService {
     return { first, last };
   }
 
-  setSelected(selected: Array<any>) {
-    if(!this.selected) {
+  setSelected(selected: any[]) {
+    if (!this.selected) {
       this.selected = selected || [];
     } else {
       this.selected.splice(0, this.selected.length);
@@ -81,7 +79,7 @@ export class StateService {
   }
 
   setRows(rows: Array<any>) {
-    if(rows) {
+    if (rows) {
       this.rows = [...rows];
       this.onRowsUpdate.emit(rows);
     }
@@ -104,27 +102,28 @@ export class StateService {
   }
 
   nextSort(column: TableColumn) {
-    const idx = this.options.sorts.findIndex(s =>
-      { return s.prop === column.prop });
+    const idx = this.options.sorts.findIndex(s => {
+      return s.prop === column.prop
+    });
 
     let curSort = this.options.sorts[idx];
     let curDir = undefined;
-    if(curSort) curDir = curSort.dir;
+    if (curSort) curDir = curSort.dir;
 
     const dir = nextSortDir(this.options.sortType, curDir);
-    if(dir === undefined) {
+    if (dir === undefined) {
       this.options.sorts.splice(idx, 1);
-    } else if(curSort) {
+    } else if (curSort) {
       this.options.sorts[idx].dir = dir;
     } else {
-      if(this.options.sortType === SortType.single) {
+      if (this.options.sortType === SortType.single) {
         this.options.sorts.splice(0, this.options.sorts.length);
       }
 
-      this.options.sorts.push(new Sort({ dir, prop: column.prop }));
+      this.options.sorts.push(new Sort({dir, prop: column.prop}));
     }
 
-    if(!column.comparator) {
+    if (!column.comparator) {
       this.setRows(sortRows(this.rows, this.options.sorts));
     } else {
       column.comparator(this.rows, this.options.sorts)

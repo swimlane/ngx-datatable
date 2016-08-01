@@ -1,3 +1,4 @@
+import { PipeTransform } from '@angular/core';
 import { id } from '../utils/id';
 import { camelCase } from '../utils/camelCase';
 
@@ -51,6 +52,9 @@ export class TableColumn {
   // Custom sort comparator
   comparator: any = undefined;
 
+  // Custom pipe
+  pipe: PipeTransform = null;
+
   // If yes then the column can be sorted.
   sortable: boolean = true;
 
@@ -77,4 +81,4 @@ export class TableColumn {
     }
   }
 
-};
+}

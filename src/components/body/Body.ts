@@ -1,20 +1,18 @@
-import { Component, ElementRef, Output, EventEmitter, OnInit } from '@angular/core';
-
+import { Component, Output, EventEmitter, OnInit, HostBinding, OnDestroy, ElementRef } from '@angular/core';
 import { StateService } from '../../services/State';
 import { SelectionType } from '../../enums/SelectionType';
 import { Keys } from '../../utils/keys';
 import { selectRows, selectRowsBetween } from '../../utils/selection';
-
 import { ProgressBar } from './ProgressBar';
 import { DataTableBodyRow } from './BodyRow';
 import { Scroller } from '../../directives/Scroller';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'datatable-body',
   template: `
     <div>
-      <datatable-progress
-        [hidden]="!state.options.loadingIndicator">
+      <datatable-progress *ngIf="state.options.loadingIndicator">
       </datatable-progress>
       <div
         scroller
@@ -41,93 +39,93 @@ import { Scroller } from '../../directives/Scroller';
     ProgressBar,
     DataTableBodyRow,
     Scroller
-  ],
-  host: {
-    '[style.width]': 'bodyWidth',
-    '[style.height]': 'bodyHeight'
-  }
+  ]
 })
-export class DataTableBody implements OnInit {
+export class DataTableBody implements OnInit, OnDestroy {
 
   @Output() onRowClick: EventEmitter<any> = new EventEmitter();
   @Output() onRowSelect: EventEmitter<any> = new EventEmitter();
 
+  rows: any;
+
   private prevIndex: number;
-  private rows: any;
+  private sub: Subscription;
 
   get selectEnabled() {
-    return this.state.options.selectionType !== undefined;
+    return !!this.state.options.selectionType;
   }
 
-  get bodyHeight() {
-    if(this.state.options.scrollbarV)
+  constructor(public state: StateService, element: ElementRef) {
+    element.nativeElement.classList.add('datatable-body');
+  }
+
+  @HostBinding('style.height') get bodyHeight() {
+    if (this.state.options.scrollbarV) {
       return this.state.bodyHeight + 'px';
-    return 'auto';
+    } else {
+      return 'auto';
+    }
   }
 
-  get bodyWidth() {
-    if(this.state.options.scrollbarH)
+  @HostBinding('style.width') get bodyWidth() {
+    if (this.state.options.scrollbarH) {
       return this.state.innerWidth + 'px';
-    return '100%';
-  }
-
-  constructor(private state: StateService, elm: ElementRef) {
-    elm.nativeElement.classList.add('datatable-body');
+    } else {
+      return '100%';
+    }
   }
 
   ngOnInit(): void {
     this.rows = [...this.state.rows];
 
-    this.state.onPageChange.subscribe(() => {
-      const { first, last } = this.state.indexes;
+    this.sub = this.state.onPageChange.subscribe(() => {
+      const {first, last} = this.state.indexes;
       this.rows = this.state.rows.slice(first, last);
       this.hideIndicator();
     });
 
-    this.state.onRowsUpdate.subscribe(rows => {
-      const { first, last } = this.state.indexes;
+    this.sub.add(this.state.onRowsUpdate.subscribe(rows => {
+      const {first, last} = this.state.indexes;
       this.rows = rows.slice(first, last);
       this.hideIndicator();
-    });
+    }));
   }
 
-  hideIndicator() {
-    setTimeout(() => {
-      this.state.options.loadingIndicator = false;
-    }, 500);
+  hideIndicator(): void {
+    setTimeout(() => this.state.options.loadingIndicator = false, 500);
   }
 
-  rowClicked(event, index, row) {
-    this.onRowClick.emit({ event, row });
+  rowClicked(event, index, row): void {
+    this.onRowClick.emit({event, row});
     this.selectRow(event, index, row);
   }
 
   rowKeydown(event, index, row) {
-    if(event.keyCode === Keys.return && this.selectEnabled) {
+    if (event.keyCode === Keys.return && this.selectEnabled) {
       this.selectRow(event, index, row);
-    } else if(event.keyCode === Keys.up || event.keyCode === Keys.down) {
-      let dom = event.keyCode === Keys.up ?
+    } else if (event.keyCode === Keys.up || event.keyCode === Keys.down) {
+      const dom = event.keyCode === Keys.up ?
         event.target.previousElementSibling :
         event.target.nextElementSibling;
-      if(dom) dom.focus();
+      if (dom) dom.focus();
     }
   }
 
   selectRow(event, index, row) {
-    if(!this.selectEnabled) return;
+    if (!this.selectEnabled) return;
 
     const multiShift = this.state.options.selectionType === SelectionType.multiShift;
     const multiClick = this.state.options.selectionType === SelectionType.multi;
 
     let selections = [];
-    if(multiShift || multiClick) {
-      if(multiShift && event.shiftKey) {
-        let selected = [...this.state.selected];
+    if (multiShift || multiClick) {
+      if (multiShift && event.shiftKey) {
+        const selected = [...this.state.selected];
         selections = selectRowsBetween(selected, this.rows, index, this.prevIndex);
-      } else if(multiShift && !event.shiftKey) {
+      } else if (multiShift && !event.shiftKey) {
         selections.push(row);
       } else {
-        let selected = [...this.state.selected];
+        const selected = [...this.state.selected];
         selections = selectRows(selected, row);
       }
     } else {
@@ -136,6 +134,12 @@ export class DataTableBody implements OnInit {
 
     this.prevIndex = index;
     this.onRowSelect.emit(selections);
+  }
+
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 
 }
