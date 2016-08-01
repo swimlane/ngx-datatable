@@ -29,7 +29,7 @@ export class DataTableBodyCell {
   @Input() row: any;
 
   constructor(element: ElementRef) {
-    element.nativeElement.add('datatable-body-cell');
+    element.nativeElement.classList.add('datatable-body-cell');
   }
 
   get value() {

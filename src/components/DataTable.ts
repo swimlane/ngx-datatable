@@ -72,7 +72,7 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
 
   constructor(element: ElementRef, public state: StateService, differs: KeyValueDiffers) {
     this.element = element.nativeElement;
-    this.element.nativeElement.add('datatable');
+    this.element.classList.add('datatable');
 
     this.rowDiffer = differs.find({}).create(null);
     this.colDiffer = differs.find({}).create(null);

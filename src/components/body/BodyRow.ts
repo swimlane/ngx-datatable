@@ -38,7 +38,7 @@ import { DataTableBodyCell } from './BodyCell';
       </div>
     </div>
   `,
-  directives: [DataTableBodyCell]
+  directives: [ DataTableBodyCell ]
 })
 export class DataTableBodyRow {
 
@@ -49,7 +49,7 @@ export class DataTableBodyRow {
   }
 
   constructor(public state: StateService, element: ElementRef) {
-    element.nativeElement.add('datatable-body-row');
+    element.nativeElement.classList.add('datatable-body-row');
   }
 
 

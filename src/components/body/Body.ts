@@ -56,7 +56,7 @@ export class DataTableBody implements OnInit, OnDestroy {
   }
 
   constructor(public state: StateService, element: ElementRef) {
-    element.nativeElement.add('datatable-body');
+    element.nativeElement.classList.add('datatable-body');
   }
 
   @HostBinding('style.height') get bodyHeight() {
