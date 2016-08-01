@@ -20,10 +20,6 @@ import { TemplateWrapper } from '../../directives/TemplateWrapper';
       </template>
     </div>
   `,
-  host: {
-    '[style.width]': 'column.width + "px"',
-    '[style.height]': 'column.height + "px"'
-  },
   directives: [ TemplateWrapper ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -42,5 +38,14 @@ export class DataTableBodyCell {
     const userPipe: PipeTransform = this.column.pipe;
     return userPipe ? userPipe.transform(prop) : prop;
   }
+
+  @HostBinding('style.width') get width() {
+    return this.column.width + 'px';
+  }
+
+  // fixme there's no column.height property
+  // @HostBinding('style.height') get height() {
+  //   return this.column.height + 'px';
+  // }
 
 }
