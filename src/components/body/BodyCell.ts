@@ -1,4 +1,4 @@
-import { Component, Input, PipeTransform, HostBinding, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, PipeTransform, HostBinding, ChangeDetectionStrategy, ElementRef } from '@angular/core';
 import { TableColumn } from '../../models/TableColumn';
 import { deepValueGetter } from '../../utils/deepGetter';
 import { TemplateWrapper } from '../../directives/TemplateWrapper';
@@ -32,7 +32,9 @@ export class DataTableBodyCell {
   @Input() column: TableColumn;
   @Input() row: any;
 
-  @HostBinding('class.datatable-body-cell') isBodyCell: boolean = true;
+  constructor(element: ElementRef) {
+    element.nativeElement.add('datatable-body-cell');
+  }
 
   get value() {
     if (!this.row) return '';

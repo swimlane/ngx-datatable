@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnInit, HostBinding, OnDestroy } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, HostBinding, OnDestroy, ElementRef } from '@angular/core';
 import { StateService } from '../../services/State';
 import { SelectionType } from '../../enums/SelectionType';
 import { Keys } from '../../utils/keys';
@@ -55,6 +55,10 @@ export class DataTableBody implements OnInit, OnDestroy {
     return !!this.state.options.selectionType;
   }
 
+  constructor(public state: StateService, element: ElementRef) {
+    element.nativeElement.add('datatable-body');
+  }
+
   @HostBinding('style.height') get bodyHeight() {
     if (this.state.options.scrollbarV) {
       return this.state.bodyHeight + 'px';
@@ -69,11 +73,6 @@ export class DataTableBody implements OnInit, OnDestroy {
     } else {
       return '100%';
     }
-  }
-
-  @HostBinding('class.datatable-body') isBody: boolean = true;
-
-  constructor(public state: StateService) {
   }
 
   ngOnInit(): void {

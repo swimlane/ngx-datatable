@@ -70,10 +70,10 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
   private rowDiffer: IterableDiffer;
   private colDiffer: IterableDiffer;
 
-  @HostBinding('class.datatable') isDatatable: boolean = true;
-
-  constructor(element: ElementRef, private state: StateService, differs: KeyValueDiffers) {
+  constructor(element: ElementRef, public state: StateService, differs: KeyValueDiffers) {
     this.element = element.nativeElement;
+    this.element.nativeElement.add('datatable');
+
     this.rowDiffer = differs.find({}).create(null);
     this.colDiffer = differs.find({}).create(null);
   }

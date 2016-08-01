@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding } from '@angular/core';
+import { Component, Input, HostBinding, ElementRef } from '@angular/core';
 import { StateService } from '../../services/State';
 import { DataTableBodyCell } from './BodyCell';
 
@@ -38,19 +38,19 @@ import { DataTableBodyCell } from './BodyCell';
       </div>
     </div>
   `,
-  directives: [ DataTableBodyCell ]
+  directives: [DataTableBodyCell]
 })
 export class DataTableBodyRow {
 
   @Input() row: any;
 
-  constructor(private state: StateService) {
-  }
-
-  @HostBinding('class.datatable-body-row') isBodyRow: boolean = true;
-
   @HostBinding('class.active') get isSelected() {
     return this.state.selected && this.state.selected.indexOf(this.row) > -1;
   }
+
+  constructor(public state: StateService, element: ElementRef) {
+    element.nativeElement.add('datatable-body-row');
+  }
+
 
 }
