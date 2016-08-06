@@ -4,7 +4,6 @@ var webpack = require('webpack');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var WebpackNotifierPlugin = require('webpack-notifier');
 var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var ENV = process.env.NODE_ENV;
 var IS_PRODUCTION = ENV === 'production';
@@ -16,19 +15,46 @@ function root(args) {
 }
 
 module.exports = {
+
+  context: root(),
+  debug: true,
+  devtool: 'source-map',
+
   resolve: {
     extensions: ['', '.ts', '.js', '.json', '.css', '.scss', '.html'],
-    root: root('src'),
     descriptionFiles: ['package.json'],
+    // root: root('src'),
     modules: [
       root('src'),
       'node_modules'
     ]
   },
 
-  // context: root(),
-  debug: true,
-  devtool: 'cheap-module-source-map',
+  entry: {
+    'app': './src/app.ts',
+    'polyfills': './src/polyfills.ts',
+    'vendor': './src/vendor.ts'
+  },
+
+  devServer: {
+    // contentBase: './dist',
+    port: 9999,
+    inline: false,
+    historyApiFallback: true,
+    lazy: false,
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: 1000
+    }
+  },
+
+  output: {
+    path: root(),
+    // publicPath: '/dist/',
+    filename: 'dist/[name].js',
+    sourceMapFilename: 'dist/[name].map',
+    chunkFilename: 'dist/[id].chunk.js'
+  },
 
   module: {
     preLoaders: [
@@ -54,33 +80,6 @@ module.exports = {
     ]
   },
 
-  entry: {
-    'app': './src/app.ts',
-    'polyfills': './src/polyfills.ts',
-    'vendor': './src/vendor.ts'
-  },
-
-  devServer: {
-    outputPath: root('dist'),
-    watchOptions: {
-      poll: true
-    },
-    port: 9999,
-    stats: {
-      modules: false,
-      cached: false,
-      colors: true,
-      chunk: false
-    }
-  },
-
-  output: {
-    path: root('dist'),
-    filename: '[name].[hash].js',
-    sourceMapFilename: '[name].[hash].map',
-    chunkFilename: '[id].[hash].chunk.js'
-  },
-
   plugins: [
     new ForkCheckerPlugin(),
 
@@ -93,11 +92,6 @@ module.exports = {
       'ENV': JSON.stringify(ENV),
       'IS_PRODUCTION': IS_PRODUCTION,
       'APP_VERSION': VERSION
-    }),
-
-    new HtmlWebpackPlugin({
-      template: 'index.html',
-      chunksSortMode: 'dependency'
     }),
 
     new WebpackNotifierPlugin({

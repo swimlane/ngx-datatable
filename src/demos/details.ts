@@ -18,19 +18,21 @@ import '../themes/material.scss';
         [options]="options">
 
         <datatable-column [width]="50">
-          <template>
-            FOOb
+          <template let-row="row">
+            <span class="icon-left" [hidden]="expanded[row.name]"></span>
+            <span class="icon-down" [hidden]="!expanded[row.name]"></span>
           </template>
         </datatable-column>
 
         <datatable-column name="Gender">
           <template let-row="row" let-value="value">
-
+            Panda
           </template>
         </datatable-column>
+
         <datatable-column name="Age">
           <template let-value="value">
-
+            Chicken
           </template>
         </datatable-column>
 
@@ -42,6 +44,7 @@ import '../themes/material.scss';
 export class App {
 
   rows = [];
+  expanded = {};
 
   options = new TableOptions({
     columnMode: ColumnMode.force,
@@ -58,7 +61,7 @@ export class App {
 
   fetch(cb) {
     let req = new XMLHttpRequest();
-    req.open('GET', `src/demos/company.json`);
+    req.open('GET', `assets/data/company.json`);
 
     req.onload = () => {
       cb(JSON.parse(req.response));

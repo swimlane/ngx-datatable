@@ -17,7 +17,7 @@
       "clean:dist": "rimraf dist",
       "clean:release": "rimraf release",
 
-    "build:dev": "webpack --config webpack.config.js --progress --profile --bail",
+    "build:dev": "webpack --progress",
     "build:ts": "tsc",
     "build:sass": "node-sass -o dist/ src/",
     "build:css": "postcss --use autoprefixer dist/*.css -d dist/",
@@ -26,8 +26,7 @@
       "watch:ts": "tsc --watch",
       "watch:sass": "npm run build:sass && node-sass -o dist/ -w src/",
 
-    "start": "npm-run-all -s clean:dist start:server",
-      "start:server": "webpack-dev-server --progress --port 8000",
+    "start": "webpack-dev-server --progress --watch-poll",
 
     "release": "npm-run-all -s clean:* release:css release:types -p release:build:* -s release:minify release:headers",
       "release:types": "./node_modules/typescript/bin/tsc --outFile release/angular2-data-table.js --module system",

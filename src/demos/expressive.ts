@@ -59,7 +59,7 @@ export class App {
 
   fetch(cb) {
     var req = new XMLHttpRequest();
-    req.open('GET', `src/demos/company.json`);
+    req.open('GET', `assets/data/company.json`);
 
     req.onload = () => {
       cb(JSON.parse(req.response));

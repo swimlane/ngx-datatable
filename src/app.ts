@@ -9,8 +9,8 @@ import { bootstrap } from '@angular/platform-browser-dynamic';
 // import { App } from './demos/template';
 import { App } from './demos/details';
 
+// bootstrap when document is ready
 document.addEventListener('DOMContentLoaded', () => {
-  // bootstrap when document is ready
   bootstrap(App, [])
     .catch(err => console.error(err));
 });
