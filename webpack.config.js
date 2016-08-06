@@ -22,11 +22,10 @@ module.exports = {
 
   resolve: {
     extensions: ['', '.ts', '.js', '.json', '.css', '.scss', '.html'],
-    descriptionFiles: ['package.json'],
     // root: root('src'),
     modules: [
-      root('src'),
-      'node_modules'
+      'node_modules',
+      root('src')
     ]
   },
 
@@ -37,7 +36,7 @@ module.exports = {
   },
 
   devServer: {
-    // contentBase: './dist',
+    // contentBase: './src',
     port: 9999,
     inline: false,
     historyApiFallback: true,
@@ -49,11 +48,11 @@ module.exports = {
   },
 
   output: {
-    path: root(),
+    path: root('dist'),
     // publicPath: '/dist/',
-    filename: 'dist/[name].js',
-    sourceMapFilename: 'dist/[name].map',
-    chunkFilename: 'dist/[id].chunk.js'
+    filename: '[name].js',
+    sourceMapFilename: '[name].map',
+    chunkFilename: '[id].chunk.js'
   },
 
   module: {
