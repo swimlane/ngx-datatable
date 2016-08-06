@@ -17,11 +17,17 @@
       "check-separator",
       "check-type"
     ],
+    "no-string-literal": false,
+    "no-unused-new": false,
     "curly": false,
     "no-reference": false,
+    "forin": false,
     "no-var-requires": false,
     "ordered-imports": false,
-    "no-trailing-whitespace": false
+    "no-trailing-whitespace": false,
+    "interface-name": false,
+    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
+    "no-bitwise": false
   },
   "rulesDirectory": []
 }

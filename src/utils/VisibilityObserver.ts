@@ -1,5 +1,3 @@
-import { IntersectionObserver } from './IntersectionObserver';
-
 /**
  * Observes changes to an elements visibility.
  * https://medium.com/@amcdnl/javascript-s-new-intersectionobserver-cdce8a73bef8#.evn5twug3
@@ -9,8 +7,8 @@ import { IntersectionObserver } from './IntersectionObserver';
  * 		var elm = document.getElementById("panda");
  * 	 	new VisibilityObserver(elm, function() {
  * 			alert('PAndas rock!');
-* 	  });
-*
+ * 	  });
+ *
  */
 export class VisibilityObserver {
 
@@ -30,7 +28,7 @@ export class VisibilityObserver {
     } else { this.runPolyfill(element); }
     */
 
-   this.runPolyfill(element);
+    this.runPolyfill(element);
   }
 
   runPolyfill(element) {
@@ -38,7 +36,7 @@ export class VisibilityObserver {
       const { width, height } = element.getBoundingClientRect();
 
       if (width && height) {
-        this.callback && this.callback();
+        if(this.callback) this.callback();
       } else {
         setTimeout(() => checkVisibility(), 10);
       }
@@ -60,7 +58,7 @@ export class VisibilityObserver {
 
     if ('isVisible' in element) {
       delete element.isVisible;
-      this.callback && this.callback();
+      if(this.callback) this.callback();
       observer.unobserve(element);
     }
   }

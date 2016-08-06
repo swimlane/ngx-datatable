@@ -13,7 +13,7 @@ import { SortDirection } from '../../enums/SortDirection';
 @Component({
   selector: 'datatable-header-cell',
   template: `
-	 <div>
+    <div>
       <span
         class="datatable-header-cell-label draggable"
         (click)="onSort()"
@@ -48,6 +48,10 @@ export class DataTableHeaderCell {
     if(sort) return sort.dir;
   }
 
+  constructor(public element: ElementRef, private state: StateService) {
+    element.nativeElement.classList.add('datatable-header-cell');
+  }
+
   sortClasses(sort) {
     let dir = this.sortDir;
     return {
@@ -65,10 +69,6 @@ export class DataTableHeaderCell {
         value: this.model
       });
     }
-  }
-
-  constructor(public element: ElementRef, private state: StateService){
-    element.nativeElement.classList.add('datatable-header-cell');
   }
 
 }

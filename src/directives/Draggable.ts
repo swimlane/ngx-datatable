@@ -56,7 +56,7 @@ export class Draggable {
 
       const mouseDownPos = { x: event.clientX, y: event.clientY };
       this.subscription = Observable.fromEvent(document, 'mousemove')
-        .subscribe((event) => this.move(event, mouseDownPos));
+        .subscribe((ev) => this.move(ev, mouseDownPos));
 
       this.onDragStart.emit({
         event,

@@ -22,10 +22,12 @@
     "outDir": "dist",
     "baseUrl": "src",
     "types": [
-      "core-js"
+      "core-js",
+      "node"
     ]
   },
   "files": [
+    "src/custom-typings.d.ts",
     "src/angular2-data-table.ts"
   ],
   "exclude": [
@@ -34,6 +36,7 @@
   "compileOnSave": false,
   "buildOnSave": false,
   "awesomeTypescriptLoaderOptions": {
-    "forkChecker": true
+    "forkChecker": true,
+    "useWebpackText": true
   }
 }

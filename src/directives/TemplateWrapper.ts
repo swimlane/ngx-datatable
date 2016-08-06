@@ -5,17 +5,17 @@ import {
   Input,
   EmbeddedViewRef,
   SimpleChange
-} from "@angular/core";
+} from '@angular/core';
 
 @Directive({ selector: '[templateWrapper]' })
 export class TemplateWrapper {
-
-  private embeddedViewRef: EmbeddedViewRef<any>;
 
   @Input() templateWrapper: TemplateRef<any>;
   @Input() value: any;
   @Input() row: any;
   @Input() column: any;
+
+  private embeddedViewRef: EmbeddedViewRef<any>;
 
   constructor(private viewContainer: ViewContainerRef) { }
 

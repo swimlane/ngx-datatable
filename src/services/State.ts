@@ -103,7 +103,7 @@ export class StateService {
 
   nextSort(column: TableColumn) {
     const idx = this.options.sorts.findIndex(s => {
-      return s.prop === column.prop
+      return s.prop === column.prop;
     });
 
     let curSort = this.options.sorts[idx];
@@ -126,7 +126,7 @@ export class StateService {
     if (!column.comparator) {
       this.setRows(sortRows(this.rows, this.options.sorts));
     } else {
-      column.comparator(this.rows, this.options.sorts)
+      column.comparator(this.rows, this.options.sorts);
     }
   }
 

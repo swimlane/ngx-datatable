@@ -17,7 +17,7 @@ export class Scroller {
     return (this.count * this.rowHeight) + 'px';
   }
 
-  constructor(elm: ElementRef){
+  constructor(elm: ElementRef) {
     elm.nativeElement.classList.add('scroller');
   }
 

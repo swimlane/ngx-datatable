@@ -20,7 +20,7 @@ export function columnTotalWidth(columns: any, prop?: any) {
  * Calculates the Total Flex Grow
  * @param {array}
  */
-export function getTotalFlexGrow(columns){
+export function getTotalFlexGrow(columns) {
   let totalFlexGrow = 0;
 
   for (let c of columns) {
@@ -36,12 +36,12 @@ export function getTotalFlexGrow(columns){
  * @param {array} all columns
  * @param {int} width
  */
-export function adjustColumnWidths(allColumns: any, expectedWidth: any){
-  let columnsWidth = columnTotalWidth(allColumns),
-      totalFlexGrow = getTotalFlexGrow(allColumns),
-      colsByGroup = columnsByPin(allColumns);
+export function adjustColumnWidths(allColumns: any, expectedWidth: any) {
+  let columnsWidth = columnTotalWidth(allColumns);
+  let totalFlexGrow = getTotalFlexGrow(allColumns);
+  let colsByGroup = columnsByPin(allColumns);
 
-  if (columnsWidth !== expectedWidth){
+  if (columnsWidth !== expectedWidth) {
     scaleColumns(colsByGroup, expectedWidth, totalFlexGrow);
   }
 }
@@ -56,7 +56,7 @@ function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
   // calculate total width and flexgrow points for coulumns that can be resized
   for(let attr in colsByGroup) {
     for(let column of colsByGroup[attr]) {
-      if (!column.canAutoResize){
+      if (!column.canAutoResize) {
         maxWidth -= column.width;
         totalFlexGrow -= column.flexGrow;
       } else {
@@ -65,7 +65,7 @@ function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
     }
   }
 
-  let hasMinWidth = {}
+  let hasMinWidth = {};
   let remainingWidth = maxWidth;
 
   // resize columns until no width is left to be distributed
@@ -76,9 +76,9 @@ function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
     for(let attr in colsByGroup) {
       for(let column of colsByGroup[attr]) {
         // if the column can be resize and it hasn't reached its minimum width yet
-        if (column.canAutoResize && !hasMinWidth[column.prop]){
+        if (column.canAutoResize && !hasMinWidth[column.prop]) {
           let newWidth = column.width  + column.flexGrow * widthPerFlexPoint;
-          if (column.minWidth !== undefined && newWidth < column.minWidth){
+          if (column.minWidth !== undefined && newWidth < column.minWidth) {
             remainingWidth += newWidth - column.minWidth;
             column.width = column.minWidth;
             hasMinWidth[column.prop] = true;
@@ -113,29 +113,30 @@ function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
  * @param {array} allColumns
  * @param {int} expectedWidth
  */
-export function forceFillColumnWidths(allColumns: any, expectedWidth: any, startIdx: any){
-  let contentWidth = 0,
-      columnsToResize = startIdx > -1 ?
-        allColumns.slice(startIdx, allColumns.length).filter((c) => { return c.canAutoResize }) :
-        allColumns.filter((c) => { return c.canAutoResize });
+export function forceFillColumnWidths(allColumns: any, expectedWidth: any, startIdx: any) {
+  let contentWidth = 0;
+
+  let columnsToResize = startIdx > -1 ?
+    allColumns.slice(startIdx, allColumns.length).filter((c) => { return c.canAutoResize; }) :
+    allColumns.filter((c) => { return c.canAutoResize; });
 
   for(let column of allColumns) {
-    if(!column.canAutoResize){
+    if(!column.canAutoResize) {
       contentWidth += column.width;
     } else {
       contentWidth += (column.$$oldWidth || column.width);
     }
   }
 
-  let remainingWidth = expectedWidth - contentWidth,
-      additionWidthPerColumn = remainingWidth / columnsToResize.length,
-      exceedsWindow = contentWidth > expectedWidth;
+  let remainingWidth = expectedWidth - contentWidth;
+  let additionWidthPerColumn = remainingWidth / columnsToResize.length;
+  let exceedsWindow = contentWidth > expectedWidth;
 
   for(let column of columnsToResize) {
     if(exceedsWindow) {
       column.width = column.$$oldWidth || column.width;
     } else {
-      if(!column.$$oldWidth){
+      if(!column.$$oldWidth) {
         column.$$oldWidth = column.width;
       }
 

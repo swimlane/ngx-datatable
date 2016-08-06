@@ -17,7 +17,7 @@ import { DataTableHeaderCell } from './HeaderCell';
 @Component({
   selector: 'datatable-header',
   template: `
-  	<div
+    <div
       [style.width]="state.columnGroupWidths.total"
       class="datatable-header-inner"
       orderable
@@ -110,12 +110,12 @@ export class DataTableHeader {
     return height;
   }
 
-  constructor(private state: StateService, elm: ElementRef){
+  constructor(private state: StateService, elm: ElementRef) {
     elm.nativeElement.classList.add('datatable-header');
   }
 
   columnResized(width, column) {
-    if (width <= column.minWidth){
+    if (width <= column.minWidth) {
       width = column.minWidth;
     } else if(width >= column.maxWidth) {
       width = column.maxWidth;

@@ -51,6 +51,6 @@ export function debounceable (duration, immediate) {
 
         return this[key];
       }
-    }
-  }
+    };
+  };
 }

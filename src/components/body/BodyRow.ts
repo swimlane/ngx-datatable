@@ -5,7 +5,7 @@ import { DataTableBodyCell } from './BodyCell';
 @Component({
   selector: 'datatable-body-row',
   template: `
-  	<div>
+    <div>
       <div
         class="datatable-row-left"
         *ngIf="state.columnsByPin.left.length"
@@ -51,6 +51,5 @@ export class DataTableBodyRow {
   constructor(public state: StateService, element: ElementRef) {
     element.nativeElement.classList.add('datatable-body-row');
   }
-
 
 }

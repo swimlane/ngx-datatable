@@ -29,7 +29,7 @@ import './datatable.scss';
 @Component({
   selector: 'datatable',
   template: `
-  	<div
+    <div
       visibility-observer
       (onVisibilityChange)="adjustSizes()">
       <datatable-header
