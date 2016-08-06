@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef } from '@angular/core';
+import { Component, Input, PipeTransform, HostBinding, ChangeDetectionStrategy, ElementRef } from '@angular/core';
 import { TableColumn } from '../../models/TableColumn';
 import { deepValueGetter } from '../../utils/deepGetter';
 import { TemplateWrapper } from '../../directives/TemplateWrapper';
@@ -20,24 +20,32 @@ import { TemplateWrapper } from '../../directives/TemplateWrapper';
       </template>
     </div>
   `,
-  host: {
-    '[style.width]': 'column.width + "px"',
-    '[style.height]': 'column.height + "px"'
-  },
-  directives: [ TemplateWrapper ]
+  directives: [ TemplateWrapper ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableBodyCell {
 
   @Input() column: TableColumn;
   @Input() row: any;
 
-  get value() {
-    if (!this.row) return '';
-    return deepValueGetter(this.row, this.column.prop);
+  constructor(element: ElementRef) {
+    element.nativeElement.classList.add('datatable-body-cell');
   }
 
-  constructor(private elm: ElementRef) {
-    elm.nativeElement.classList.add('datatable-body-cell');
+  get value() {
+    if (!this.row) return '';
+    const prop: any = deepValueGetter(this.row, this.column.prop);
+    const userPipe: PipeTransform = this.column.pipe;
+    return userPipe ? userPipe.transform(prop) : prop;
   }
+
+  @HostBinding('style.width') get width() {
+    return this.column.width + 'px';
+  }
+
+  // fixme there's no column.height property
+  // @HostBinding('style.height') get height() {
+  //   return this.column.height + 'px';
+  // }
 
 }
