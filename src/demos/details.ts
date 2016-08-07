@@ -19,7 +19,7 @@ import '../themes/material.scss';
 
         <datatable-column [width]="50">
           <template let-row="row">
-            <span class="icon-left" [hidden]="expanded[row.name]"></span>
+            <span class="icon-right" [hidden]="expanded[row.name]"></span>
             <span class="icon-down" [hidden]="!expanded[row.name]"></span>
           </template>
         </datatable-column>

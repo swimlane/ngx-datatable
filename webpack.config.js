@@ -18,7 +18,7 @@ module.exports = {
 
   context: root(),
   debug: true,
-  devtool: 'source-map',
+  devtool: 'cheap-eval-source-map',
 
   resolve: {
     extensions: ['', '.ts', '.js', '.json', '.css', '.scss', '.html'],

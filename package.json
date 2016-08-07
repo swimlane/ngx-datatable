@@ -22,9 +22,10 @@
     "build:sass": "node-sass -o dist/ src/",
     "build:css": "postcss --use autoprefixer dist/*.css -d dist/",
 
-    "watch": "npm run watch:ts && npm run watch:sass",
+    "watch": "npm-run-all -p watch:ts watch:sass",
       "watch:ts": "tsc --watch",
       "watch:sass": "npm run build:sass && node-sass -o dist/ -w src/",
+      "watch:webpack": "webpack --progress --watch",
 
     "start": "webpack-dev-server --progress",
 
