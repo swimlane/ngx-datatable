@@ -18,7 +18,7 @@ module.exports = {
 
   context: root(),
   debug: true,
-  devtool: 'cheap-eval-source-map',
+  devtool: 'cheap-module-eval-source-map',
 
   resolve: {
     extensions: ['', '.ts', '.js', '.json', '.css', '.scss', '.html'],
@@ -96,8 +96,6 @@ module.exports = {
     new WebpackNotifierPlugin({
       excludeWarnings: true
     }),
-
-    new webpack.optimize.OccurrenceOrderPlugin(true),
 
     new CleanWebpackPlugin(['dist'], {
       root: root(),
