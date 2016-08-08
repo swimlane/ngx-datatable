@@ -34,9 +34,5 @@
     "node_modules"
   ],
   "compileOnSave": false,
-  "buildOnSave": false,
-  "awesomeTypescriptLoaderOptions": {
-    "forkChecker": true,
-    "useWebpackText": true
-  }
+  "buildOnSave": false
 }

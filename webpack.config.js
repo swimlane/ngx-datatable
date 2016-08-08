@@ -3,7 +3,6 @@ var webpack = require('webpack');
 
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var WebpackNotifierPlugin = require('webpack-notifier');
-var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 
 var ENV = process.env.NODE_ENV;
 var IS_PRODUCTION = ENV === 'production';
@@ -22,7 +21,8 @@ module.exports = {
 
   resolve: {
     extensions: ['', '.ts', '.js', '.json', '.css', '.scss', '.html'],
-    // root: root('src'),
+    root: root('src'),
+    descriptionFiles: ['package.json'],
     modules: [
       'node_modules',
       root('src')
@@ -36,20 +36,20 @@ module.exports = {
   },
 
   devServer: {
-    // contentBase: './src',
-    port: 9999,
-    inline: false,
-    historyApiFallback: true,
-    lazy: false,
+    outputPath: root('dist'),
     watchOptions: {
-      aggregateTimeout: 300,
-      poll: 1000
+      poll: true
+    },
+    port: 9999,
+    stats: {
+      modules: false,
+      cached: false,
+      chunk: false
     }
   },
 
   output: {
     path: root('dist'),
-    // publicPath: '/dist/',
     filename: '[name].js',
     sourceMapFilename: '[name].map',
     chunkFilename: '[id].chunk.js'
@@ -80,8 +80,6 @@ module.exports = {
   },
 
   plugins: [
-    new ForkCheckerPlugin(),
-
     new webpack.optimize.CommonsChunkPlugin({
       name: ['vendor', 'polyfills'],
       minChunks: Infinity
