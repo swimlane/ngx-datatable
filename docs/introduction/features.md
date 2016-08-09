@@ -29,3 +29,12 @@ We are really excited about the table and wanted to get it out into the open as 
 With all that said, there is some things that it doesn't do nor do we plan to do. Lets say you have a requirement to have the ability to edit cell values in the row. Thats a awesome feature but somewhat catered to your use case. How do you invoke the edit? What type of control do you show in the cell? If its a date, do you have controls for that? Its a slippery slope...if you do want to do that you can use the expressive column templates to put whatever components inside your table you want.
 
 What we wanted to do is design a table component that isn't bloated with features that won't fit every use case but instead make a component that does what it does the best possible and is flexible enough to allow you to do what you need to do to solve your requirement.
+
+### Alternatives
+This might not be the best fit for you give the above, there are some other great solutions that this project borrows from; heres a short like:
+
+- [ng2-super-table](https://github.com/andyperlitch/ng2-super-table)
+- [ng2-table](https://github.com/valor-software/ng2-table)
+- [vaadin-grid](https://github.com/vaadin/vaadin-grid)
+- [iron-data-table](https://github.com/Saulis/iron-data-table/)
+- [paper-datatable](https://github.com/David-Mulder/paper-datatable)
