@@ -31,7 +31,7 @@ With all that said, there is some things that it doesn't do nor do we plan to do
 What we wanted to do is design a table component that isn't bloated with features that won't fit every use case but instead make a component that does what it does the best possible and is flexible enough to allow you to do what you need to do to solve your requirement.
 
 ### Alternatives
-This might not be the best fit for you give the above, there are some other great solutions that this project borrows from; heres a short like:
+This might not be the best fit for you given the above, there are some other great solutions and some this project borrows from; heres a short list:
 
 - [ng2-super-table](https://github.com/andyperlitch/ng2-super-table)
 - [ng2-table](https://github.com/valor-software/ng2-table)
