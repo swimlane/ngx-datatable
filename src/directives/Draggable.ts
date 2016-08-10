@@ -1,6 +1,5 @@
 import { Directive, ElementRef, HostListener, Input, Output, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable, Subscription } from 'rxjs/Rx';
 
 /**
  * Draggable Directive for Angular2

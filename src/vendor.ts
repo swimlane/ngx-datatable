@@ -5,7 +5,7 @@ import { enableProdMode } from '@angular/core';
 import '@angular/common';
 
 // RxJS
-import 'rxjs/add/observable/fromEvent';
+import 'rxjs/Rx';
 
 // optimization for production
 // https://github.com/AngularClass/angular2-webpack-starter/blob/master/src/platform/environment.ts#L17
