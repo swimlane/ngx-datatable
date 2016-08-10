@@ -3,6 +3,8 @@ var webpack = require('webpack');
 
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var WebpackNotifierPlugin = require('webpack-notifier');
+var ProgressBarPlugin = require('progress-bar-webpack-plugin');
+var chalk = require('chalk');
 
 var ENV = process.env.NODE_ENV;
 var IS_PRODUCTION = ENV === 'production';
@@ -30,7 +32,7 @@ module.exports = {
   },
 
   entry: {
-    'app': './src/app.ts',
+    'app': './src/bootstrap.ts',
     'polyfills': './src/polyfills.ts',
     'vendor': './src/vendor.ts'
   },
@@ -99,6 +101,10 @@ module.exports = {
       root: root(),
       verbose: false,
       dry: false
+    }),
+
+    new ProgressBarPlugin({
+      format: chalk.yellow.bold('Webpack Building...') + ' [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)'
     })
   ],
 

@@ -1,4 +1,5 @@
-import { bootstrap } from '@angular/platform-browser-dynamic';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
 // import { App } from './demos/basic';
 // import { App } from './demos/client-paging';
@@ -9,8 +10,9 @@ import { bootstrap } from '@angular/platform-browser-dynamic';
 // import { App } from './demos/template';
 import { App } from './demos/details';
 
-// bootstrap when document is ready
-document.addEventListener('DOMContentLoaded', () => {
-  bootstrap(App, [])
-    .catch(err => console.error(err));
-});
+@NgModule({
+  declarations: [App],
+  imports: [BrowserModule],
+  bootstrap: [App]
+})
+export class AppModule {}
