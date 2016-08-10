@@ -51,6 +51,7 @@ declare module "utils/camelCase" {
     export function camelCase(str: any): any;
 }
 declare module "models/TableColumn" {
+    import { PipeTransform } from '@angular/core';
     export class TableColumn {
         static getProps(): string[];
         $$id: string;
@@ -63,6 +64,7 @@ declare module "models/TableColumn" {
         width: number;
         resizeable: boolean;
         comparator: any;
+        pipe: PipeTransform;
         sortable: boolean;
         draggable: boolean;
         canAutoResize: boolean;
@@ -93,7 +95,7 @@ declare module "models/TableOptions" {
     import { SortType } from "enums/SortType";
     import { SelectionType } from "enums/SelectionType";
     export class TableOptions {
-        columns: Array<TableColumn>;
+        columns: TableColumn[];
         scrollbarV: boolean;
         scrollbarH: boolean;
         rowHeight: number;
@@ -147,26 +149,14 @@ declare module "services/State" {
             first: number;
             last: number;
         };
-        setSelected(selected: Array<any>): this;
+        setSelected(selected: any[]): this;
         setRows(rows: Array<any>): this;
         setOptions(options: TableOptions): this;
         setPage(page: number): void;
         nextSort(column: TableColumn): void;
     }
 }
-declare module "utils/IntersectionObserver" {
-    export interface IntersectionObserver {
-        root: HTMLElement;
-        rootMargin: string;
-        thresholds: Array<number>;
-        disconnect: Function;
-        observe: Function;
-        takeRecords: Function;
-        unobserve: Function;
-    }
-}
 declare module "utils/VisibilityObserver" {
-    import { IntersectionObserver } from "utils/IntersectionObserver";
     export class VisibilityObserver {
         observer: IntersectionObserver;
         callback: any;
@@ -193,8 +183,9 @@ declare module "utils/math" {
     export function forceFillColumnWidths(allColumns: any, expectedWidth: any, startIdx: any): void;
 }
 declare module "components/DataTableColumn" {
+    import { TemplateRef, QueryList } from '@angular/core';
     export class DataTableColumn {
-        template: any;
+        template: QueryList<TemplateRef<any>>;
     }
 }
 declare module "directives/LongPress" {
@@ -221,6 +212,7 @@ declare module "directives/LongPress" {
 declare module "directives/Draggable" {
     import { ElementRef, EventEmitter } from '@angular/core';
     export class Draggable {
+        element: HTMLElement;
         model: any;
         dragX: boolean;
         dragY: boolean;
@@ -229,7 +221,6 @@ declare module "directives/Draggable" {
         onDragEnd: EventEmitter<any>;
         private dragging;
         private subscription;
-        element: HTMLElement;
         constructor(element: ElementRef);
         onMouseup(event: any): void;
         onMousedown(event: any): void;
@@ -242,13 +233,13 @@ declare module "directives/Resizeable" {
         resizeEnabled: boolean;
         minWidth: number;
         maxWidth: number;
-        element: HTMLElement;
-        subcription: any;
         onResize: EventEmitter<any>;
+        private element;
+        private subscription;
         private prevScreenX;
         private resizing;
         constructor(element: ElementRef);
-        onMouseup(event: any): void;
+        onMouseup(): void;
         onMousedown(event: any): void;
         move(event: any): void;
     }
@@ -278,12 +269,12 @@ declare module "components/header/HeaderCell" {
         model: TableColumn;
         onColumnChange: EventEmitter<any>;
         readonly sortDir: SortDirection;
+        constructor(element: ElementRef, state: StateService);
         sortClasses(sort: any): {
             'sort-asc icon-down': boolean;
             'sort-desc icon-up': boolean;
         };
         onSort(): void;
-        constructor(element: ElementRef, state: StateService);
     }
 }
 declare module "components/header/Header" {
@@ -323,14 +314,14 @@ declare module "utils/deepGetter" {
     export function deepValueGetter(obj: any, path: any): any;
 }
 declare module "directives/TemplateWrapper" {
-    import { TemplateRef, ViewContainerRef, SimpleChange } from "@angular/core";
+    import { TemplateRef, ViewContainerRef, SimpleChange } from '@angular/core';
     export class TemplateWrapper {
         private viewContainer;
-        private embeddedViewRef;
         templateWrapper: TemplateRef<any>;
         value: any;
         row: any;
         column: any;
+        private embeddedViewRef;
         constructor(viewContainer: ViewContainerRef);
         ngOnChanges(changes: {
             [key: string]: SimpleChange;
@@ -338,26 +329,24 @@ declare module "directives/TemplateWrapper" {
     }
 }
 declare module "components/body/BodyCell" {
-    import { ElementRef, ViewContainerRef, ComponentResolver } from '@angular/core';
+    import { ElementRef } from '@angular/core';
     import { TableColumn } from "models/TableColumn";
     export class DataTableBodyCell {
-        private elm;
-        private viewContainerRef;
-        private componentResolver;
         column: TableColumn;
         row: any;
+        constructor(element: ElementRef);
         readonly value: any;
-        constructor(elm: ElementRef, viewContainerRef: ViewContainerRef, componentResolver: ComponentResolver);
+        readonly width: string;
     }
 }
 declare module "components/body/BodyRow" {
     import { ElementRef } from '@angular/core';
     import { StateService } from "services/State";
     export class DataTableBodyRow {
-        private state;
+        state: StateService;
         row: any;
         readonly isSelected: boolean;
-        constructor(state: StateService, elm: ElementRef);
+        constructor(state: StateService, element: ElementRef);
     }
 }
 declare module "directives/Scroller" {
@@ -371,23 +360,25 @@ declare module "directives/Scroller" {
     }
 }
 declare module "components/body/Body" {
-    import { ElementRef, EventEmitter } from '@angular/core';
+    import { EventEmitter, OnInit, OnDestroy, ElementRef } from '@angular/core';
     import { StateService } from "services/State";
-    export class DataTableBody {
-        private state;
+    export class DataTableBody implements OnInit, OnDestroy {
+        state: StateService;
         onRowClick: EventEmitter<any>;
         onRowSelect: EventEmitter<any>;
+        rows: any;
         private prevIndex;
-        private rows;
+        private sub;
         readonly selectEnabled: boolean;
+        constructor(state: StateService, element: ElementRef);
         readonly bodyHeight: string;
         readonly bodyWidth: string;
-        constructor(state: StateService, elm: ElementRef);
         ngOnInit(): void;
         hideIndicator(): void;
         rowClicked(event: any, index: any, row: any): void;
         rowKeydown(event: any, index: any, row: any): void;
         selectRow(event: any, index: any, row: any): void;
+        ngOnDestroy(): void;
     }
 }
 declare module "components/footer/Pager" {
@@ -422,21 +413,22 @@ declare module "components/footer/Footer" {
     }
 }
 declare module "components/DataTable" {
-    import { ElementRef, EventEmitter, KeyValueDiffers } from '@angular/core';
+    import { ElementRef, EventEmitter, KeyValueDiffers, OnInit, QueryList, DoCheck, AfterViewInit } from '@angular/core';
     import { StateService } from "services/State";
     import { TableOptions } from "models/TableOptions";
+    import { DataTableColumn } from "components/DataTableColumn";
     import './datatable.scss';
-    export class DataTable {
-        private state;
+    export class DataTable implements OnInit, DoCheck, AfterViewInit {
+        state: StateService;
         options: TableOptions;
-        rows: Array<any>;
-        selected: Array<any>;
+        rows: any[];
+        selected: any[];
         onPageChange: EventEmitter<any>;
         onRowsUpdate: EventEmitter<any>;
         onRowClick: EventEmitter<any>;
         onSelectionChange: EventEmitter<any>;
         onColumnChange: EventEmitter<any>;
-        columns: any;
+        columns: QueryList<DataTableColumn>;
         private element;
         private rowDiffer;
         private colDiffer;
@@ -446,10 +438,16 @@ declare module "components/DataTable" {
         ngDoCheck(): void;
         checkColumnToggles(): void;
         adjustSizes(): void;
-        resize(): void;
         adjustColumns(forceIdx?: number): void;
         onPageChanged(event: any): void;
         onRowSelect(event: any): void;
+        resize(): void;
+        readonly isFixedHeader: boolean;
+        readonly isFixedRow: boolean;
+        readonly isVertScroll: boolean;
+        readonly isHorScroll: boolean;
+        readonly isSelectable: boolean;
+        readonly isCheckboxable: boolean;
     }
 }
 declare module "angular2-data-table" {
