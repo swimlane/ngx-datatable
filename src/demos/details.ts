@@ -17,22 +17,28 @@ import '../themes/material.scss';
         [rows]="rows"
         [options]="options">
 
-        <datatable-column [width]="50">
+        <datatable-column [width]="50" [canAutoResize]="false">
           <template let-row="row">
-            <span class="icon-right" [hidden]="expanded[row.name]"></span>
-            <span class="icon-down" [hidden]="!expanded[row.name]"></span>
+            <span
+              [class.icon-right]="!expanded[row.name]"
+              [class.icon-down]="expanded[row.name]"
+              (click)="toggle(row)">
+            </span>
           </template>
         </datatable-column>
 
         <datatable-column name="Gender">
           <template let-row="row" let-value="value">
-            Panda
+            {{value}}
+            <div [hidden]="!expanded[row.name]">
+              <h1>FOO</h1>
+            </div>
           </template>
         </datatable-column>
 
         <datatable-column name="Age">
           <template let-value="value">
-            Chicken
+            {{value}}
           </template>
         </datatable-column>
 
@@ -68,6 +74,10 @@ export class App {
     };
 
     req.send();
+  }
+
+  toggle(row) {
+    this.expanded[row.name] = !this.expanded[row.name];
   }
 
 }
