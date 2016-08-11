@@ -6,7 +6,7 @@ import '../themes/material.scss';
 
 @NgModule({
   imports:[
-    AppModule
+    AppModule 
   ]
 })
 
