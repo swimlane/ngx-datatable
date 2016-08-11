@@ -12,39 +12,39 @@ import '../themes/material.scss';
   selector: 'app',
   template: `
     <div>
-    	<h3>client filter / search</h3>
+      <h3>client filter / search</h3>
       <input
-        type="text"
-        style="padding:8px;margin:15px;width:30%;"
-        placeholder="Type to filter the name column..."
-        [ngModel]="val"
-        (ngModelChange)="updateFilter($event)"
+        type='text'
+        style='padding:8px;margin:15px;width:30%;'
+        placeholder='Type to filter the name column...'
+        [ngModel]='val'
+        (ngModelChange)='updateFilter($event)'
       />
-    	<datatable
-        class="material"
-    		[rows]="rows"
-    		[options]="options">
-    	</datatable>
+      <datatable
+        class='material'
+        [rows]='rows'
+        [options]='options'>
+        </datatable>
     </div>
   `,
   directives: [ DATATABLE_COMPONENTS ]
 })
 export class App {
 
-	rows = [];
+  rows = [];
 
   val: string = '';
 
-	options = new TableOptions({
+  options = new TableOptions({
     columnMode: ColumnMode.force,
     headerHeight: 50,
     footerHeight: 50,
     rowHeight: 'auto',
     limit: 10,
     columns: [
-      new TableColumn({ name: "Name" }),
-      new TableColumn({ name: "Gender" }),
-      new TableColumn({ name: "Company" })
+      new TableColumn({ name: 'Name' }),
+      new TableColumn({ name: 'Gender' }),
+      new TableColumn({ name: 'Company' })
     ]
   });
 
@@ -59,7 +59,7 @@ export class App {
   }
 
   fetch(cb) {
-    var req = new XMLHttpRequest();
+    const req = new XMLHttpRequest();
     req.open('GET', `assets/data/company.json`);
 
     req.onload = () => {

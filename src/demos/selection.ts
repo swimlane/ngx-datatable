@@ -13,21 +13,21 @@ import '../themes/material.scss';
   selector: 'app',
   template: `
     <div>
-    	<h3>selection</h3>
-      <div style="float:left;width:75%">
-      	<datatable
-          class="material"
-      		[rows]="rows"
-          [selected]="selections"
-      		[options]="options"
-          (onSelectionChange)="onSelectionChange($event)">
-      	</datatable>
+      <h3>selection</h3>
+      <div style='float:left;width:75%'>
+        <datatable
+          class='material'
+          [rows]='rows'
+          [selected]='selections'
+          [options]='options'
+          (onSelectionChange)='onSelectionChange($event)'>
+        </datatable>
       </div>
 
-      <div class="selected-column" style="float:right;width:25%;">
+      <div class='selected-column' style='float:right;width:25%;'>
         <h4>Selections</h4>
         <ul>
-          <li *ngFor="let sel of selections">
+          <li *ngFor='let sel of selections'>
             {{sel.name}}
           </li>
         </ul>
@@ -38,10 +38,10 @@ import '../themes/material.scss';
 })
 export class App {
 
-	rows = [];
+  rows = [];
   selections = [];
 
-	options = new TableOptions({
+  options = new TableOptions({
     columnMode: ColumnMode.force,
     headerHeight: 50,
     footerHeight: 50,
@@ -49,20 +49,20 @@ export class App {
     rowHeight: 'auto',
     selectionType: SelectionType.multi,
     columns: [
-      new TableColumn({ name: "Name" }),
-      new TableColumn({ name: "Gender" }),
-      new TableColumn({ name: "Company" })
+      new TableColumn({ name: 'Name' }),
+      new TableColumn({ name: 'Gender' }),
+      new TableColumn({ name: 'Company' })
     ]
   });
 
   constructor() {
     this.fetch((data) => {
       this.rows.push(...data);
-    })
+    });
   }
 
   fetch(cb) {
-    var req = new XMLHttpRequest();
+    const req = new XMLHttpRequest();
     req.open('GET', `assets/data/company.json`);
 
     req.onload = () => {
@@ -73,7 +73,7 @@ export class App {
   }
 
   onSelectionChange(selected) {
-    console.log('Selection!', selected)
+    console.log('Selection!', selected);
   }
 
 }

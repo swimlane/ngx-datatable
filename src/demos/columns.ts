@@ -12,21 +12,21 @@ import '../themes/material.scss';
   selector: 'app',
   template: `
     <div>
-    	<h3>column add/remove</h3>
-      <div style="width:60%;display:inline-block;">
-      	<datatable
-          style="width:100%"
-          class="material"
-      		[rows]="rows"
-      		[options]="options">
-      	</datatable>
+      <h3>column add/remove</h3>
+      <div style='width:60%;display:inline-block;'>
+        <datatable
+          style='width:100%'
+          class='material'
+          [rows]='rows'
+          [options]='options'>
+          </datatable>
       </div>
-      <div style="width:20%;display:inline-block;vertical-align:top;text-align:left;padding:20px;">
-        <div *ngFor="let col of columns">
+      <div style='width:20%;display:inline-block;vertical-align:top;text-align:left;padding:20px;'>
+        <div *ngFor='let col of columns'>
           <input
-            type="checkbox"
-            (click)="toggle(col)"
-            [checked]="isChecked(col)">
+            type='checkbox'
+            (click)='toggle(col)'
+            [checked]='isChecked(col)'>
             {{col.name}}
         </div>
       </div>
@@ -36,26 +36,26 @@ import '../themes/material.scss';
 })
 export class App {
 
-	rows = [
+  rows = [
     {
-      "name": "Claudine Neal",
-      "gender": "female",
-      "company": "Sealoud"
+      'name': 'Claudine Neal',
+      'gender': 'female',
+      'company': 'Sealoud'
     },
     {
-      "name": "Beryl Rice",
-      "gender": "female",
-      "company": "Velity"
+      'name': 'Beryl Rice',
+      'gender': 'female',
+      'company': 'Velity'
     }
   ];
 
   columns = [
-    new TableColumn({ name: "Name" }),
-    new TableColumn({ name: "Gender" }),
-    new TableColumn({ name: "Company" })
+    new TableColumn({ name: 'Name' }),
+    new TableColumn({ name: 'Gender' }),
+    new TableColumn({ name: 'Company' })
   ];
 
-	options = new TableOptions({
+  options = new TableOptions({
     columnMode: ColumnMode.force,
     headerHeight: 50,
     footerHeight: 50,

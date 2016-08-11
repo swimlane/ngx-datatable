@@ -12,30 +12,30 @@ import '../themes/material.scss';
   selector: 'app',
   template: `
     <div>
-    	<h3>client-paging</h3>
-    	<datatable
+      <h3>client-paging</h3>
+      <datatable
         class="material"
-    		[rows]="rows"
-    		[options]="options">
-    	</datatable>
+        [rows]="rows"
+        [options]="options">
+      </datatable>
     </div>
   `,
   directives: [ DATATABLE_COMPONENTS ]
 })
 export class App {
 
-	rows = [];
+  rows = [];
 
-	options = new TableOptions({
+  options = new TableOptions({
     columnMode: ColumnMode.force,
     headerHeight: 50,
     footerHeight: 50,
     rowHeight: 'auto',
     limit: 10,
     columns: [
-      new TableColumn({ name: "Name" }),
-      new TableColumn({ name: "Gender" }),
-      new TableColumn({ name: "Company" })
+      new TableColumn({ name: 'Name' }),
+      new TableColumn({ name: 'Gender' }),
+      new TableColumn({ name: 'Company' })
     ]
   });
 
@@ -46,7 +46,7 @@ export class App {
   }
 
   fetch(cb) {
-    var req = new XMLHttpRequest();
+    const req = new XMLHttpRequest();
     req.open('GET', `assets/data/company.json`);
 
     req.onload = () => {

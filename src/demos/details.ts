@@ -5,6 +5,7 @@ import {
   TableOptions,
   ColumnMode
 } from 'angular2-data-table';
+
 import '../themes/material.scss';
 
 @Component({
@@ -13,32 +14,25 @@ import '../themes/material.scss';
     <div>
       <h3>detail template</h3>
       <datatable
-        class="material"
-        [rows]="rows"
-        [options]="options">
-
-        <datatable-column [width]="50" [canAutoResize]="false">
-          <template let-row="row">
-            <span
-              [class.icon-right]="!expanded[row.name]"
-              [class.icon-down]="expanded[row.name]"
-              (click)="toggle(row)">
-            </span>
+        class='material'
+        [rows]='rows'
+        [options]='options'>
+        <datatable-column [width]='50'>
+          <template let-row='row'>
+            <span class='icon-right' [hidden]='expanded[row.name]'></span>
+            <span class='icon-down' [hidden]='!expanded[row.name]'></span>
           </template>
         </datatable-column>
 
-        <datatable-column name="Gender">
-          <template let-row="row" let-value="value">
-            {{value}}
-            <div [hidden]="!expanded[row.name]">
-              <h1>FOO</h1>
-            </div>
+        <datatable-column name='Gender'>
+          <template let-row='row' let-value='value'>
+            Panda
           </template>
         </datatable-column>
 
-        <datatable-column name="Age">
-          <template let-value="value">
-            {{value}}
+        <datatable-column name='Age'>
+          <template let-value='value'>
+            Chicken
           </template>
         </datatable-column>
 

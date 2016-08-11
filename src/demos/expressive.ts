@@ -11,11 +11,11 @@ import '../themes/material.scss';
   selector: 'app',
   template: `
     <div>
-    	<h3>expressive</h3>
-    	<datatable
+      <h3>expressive</h3>
+      <datatable
         class="material"
-    		[rows]="rows"
-    		[options]="options">
+        [rows]="rows"
+        [options]="options">
         <datatable-column name="Name">
           <template let-value="value">
             Hi: <strong>{{value}}</strong>
@@ -34,17 +34,17 @@ import '../themes/material.scss';
             </div>
           </template>
         </datatable-column>
-    	</datatable>
+        </datatable>
     </div>
   `,
   directives: [ DATATABLE_COMPONENTS ]
 })
 export class App {
 
-	rows = [];
+  rows = [];
   joke = 'knock knock';
 
-	options = new TableOptions({
+  options = new TableOptions({
     columnMode: ColumnMode.force,
     headerHeight: 50,
     footerHeight: 50,
@@ -58,7 +58,7 @@ export class App {
   }
 
   fetch(cb) {
-    var req = new XMLHttpRequest();
+    const req = new XMLHttpRequest();
     req.open('GET', `assets/data/company.json`);
 
     req.onload = () => {
