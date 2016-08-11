@@ -14,14 +14,15 @@ import {
   IterableDiffer,
   HostBinding
 } from '@angular/core';
+
 import { forceFillColumnWidths, adjustColumnWidths } from '../utils/math';
 import { ColumnMode } from '../enums/ColumnMode';
 import { TableOptions } from '../models/TableOptions';
 import { TableColumn } from '../models/TableColumn';
 import './datatable.scss';
 
-import {DataTableColumn} from "./DataTableColumn";
-import {StateService} from "../services/State";
+import { DataTableColumn } from './DataTableColumn';
+import { StateService } from '../services/State';
 
 @Component({
   selector: 'datatable',

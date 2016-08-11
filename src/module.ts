@@ -9,11 +9,11 @@ import { BrowserModule } from '@angular/platform-browser';
 // import { App } from './demos/expressive';
 // import { App } from './demos/template';
 import { App } from './demos/details';
-import {Angular2DataTableModule} from "./angular2-data-table";
+import { Angular2DataTableModule } from './angular2-data-table';
 
 @NgModule({
-  declarations: [App],
-  imports: [BrowserModule,Angular2DataTableModule],
-  bootstrap: [App]
+  declarations: [ App ],
+  imports: [ BrowserModule, Angular2DataTableModule ],
+  bootstrap: [ App ]
 })
-export class AppModule {}
+export class AppModule { }

@@ -7,13 +7,6 @@ import {
 
 import { StateService } from '../../services/State';
 
-import { LongPress } from '../../directives/LongPress';
-import { Draggable } from '../../directives/Draggable';
-import { Resizeable } from '../../directives/Resizeable';
-import { Orderable } from '../../directives/Orderable';
-
-import { DataTableHeaderCell } from './HeaderCell';
-
 @Component({
   selector: 'datatable-header',
   template: `
