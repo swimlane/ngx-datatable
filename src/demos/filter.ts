@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
 import {
-  DATATABLE_COMPONENTS,
   TableOptions,
   TableColumn,
   ColumnMode
@@ -26,12 +25,11 @@ import '../themes/material.scss';
         [options]='options'>
         </datatable>
     </div>
-  `,
-  directives: [ DATATABLE_COMPONENTS ]
+  `
 })
 export class App {
-
   rows = [];
+  temp = [];
 
   val: string = '';
 

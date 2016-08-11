@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
 import {
-  DATATABLE_COMPONENTS,
   TableOptions,
   TableColumn,
   ColumnMode
@@ -31,8 +30,7 @@ import '../themes/material.scss';
         </div>
       </div>
     </div>
-  `,
-  directives: [ DATATABLE_COMPONENTS ]
+  `
 })
 export class App {
 
