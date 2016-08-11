@@ -28,6 +28,7 @@
       "watch:webpack": "webpack --display-error-details --watch",
 
     "start": "webpack-dev-server",
+    "start:hmr": "webpack-dev-server --env.HMR",
 
     "release": "npm-run-all -s clean:* release:css release:types -p release:build:* -s release:minify release:headers",
       "release:types": "./node_modules/typescript/bin/tsc --outFile release/angular2-data-table.js --module system",

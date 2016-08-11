@@ -15,102 +15,104 @@ function root(args) {
   return path.join.apply(path, [__dirname].concat(args));
 }
 
-module.exports = {
+function webpackConfig(options = {}) {
 
-  context: root(),
-  debug: true,
-  devtool: 'cheap-module-eval-source-map',
+  return {
+    context: root(),
+    debug: true,
+    devtool: 'cheap-module-eval-source-map',
 
-  resolve: {
-    extensions: ['', '.ts', '.js', '.json', '.css', '.scss', '.html'],
-    root: root('src'),
-    descriptionFiles: ['package.json'],
-    modules: [
-      'node_modules',
-      root('src')
-    ]
-  },
-
-  entry: {
-    'app': './src/bootstrap.ts',
-    'polyfills': './src/polyfills.ts',
-    'vendor': './src/vendor.ts'
-  },
-
-  devServer: {
-    outputPath: root('dist'),
-    watchOptions: {
-      poll: true
+    resolve: {
+      extensions: ['', '.ts', '.js', '.json', '.css', '.scss', '.html'],
+      root: root('src'),
+      descriptionFiles: ['package.json'],
+      modules: [
+        'node_modules',
+        root('src')
+      ]
     },
-    port: 9999,
-    stats: {
-      modules: false,
-      cached: false,
-      chunk: false
-    }
-  },
 
-  output: {
-    path: root('dist'),
-    filename: '[name].js',
-    sourceMapFilename: '[name].map',
-    chunkFilename: '[id].chunk.js'
-  },
+    entry: {
+      'app': './src/bootstrap.ts',
+      'polyfills': './src/polyfills.ts',
+      'vendor': './src/vendor.ts'
+    },
 
-  module: {
-    preLoaders: [
-      {
+    devServer: {
+      outputPath: root('dist'),
+      watchOptions: {
+        poll: true
+      },
+      port: 9999,
+      hot: options.HMR,
+      stats: {
+        modules: false,
+        cached: false,
+        chunk: false
+      }
+    },
+
+    output: {
+      path: root('dist'),
+      filename: '[name].js',
+      sourceMapFilename: '[name].map',
+      chunkFilename: '[id].chunk.js'
+    },
+
+    module: {
+      preLoaders: [{
         test: /\.js$/,
         loader: 'source-map'
-      },
-      {
+      }, {
         test: /\.ts$/,
         loader: 'tslint'
-      }
-    ],
-    loaders: [
-      {
+      }],
+      loaders: [{
         test: /\.ts$/,
         loader: 'awesome-typescript-loader',
         exclude: /(node_modules)/
-      },
-      {
+      }, {
         test: /\.scss$/,
         loaders: ['style', 'css?sourceMap', 'sass?sourceMap']
-      }
-    ]
-  },
+      }]
+    },
 
-  plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: ['vendor', 'polyfills'],
-      minChunks: Infinity
-    }),
+    plugins: [
+      new webpack.HotModuleReplacementPlugin(),
 
-    new webpack.DefinePlugin({
-      'ENV': JSON.stringify(ENV),
-      'IS_PRODUCTION': IS_PRODUCTION,
-      'APP_VERSION': VERSION
-    }),
+      new webpack.optimize.CommonsChunkPlugin({
+        name: ['vendor', 'polyfills'],
+        minChunks: Infinity
+      }),
 
-    new WebpackNotifierPlugin({
-      excludeWarnings: true
-    }),
+      new webpack.DefinePlugin({
+        'ENV': JSON.stringify(ENV),
+        'IS_PRODUCTION': IS_PRODUCTION,
+        'APP_VERSION': VERSION
+      }),
 
-    new CleanWebpackPlugin(['dist'], {
-      root: root(),
-      verbose: false,
-      dry: false
-    }),
+      new WebpackNotifierPlugin({
+        excludeWarnings: true
+      }),
 
-    new ProgressBarPlugin({
-      format: chalk.yellow.bold('Webpack Building...') + ' [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)'
-    })
-  ],
+      new CleanWebpackPlugin(['dist'], {
+        root: root(),
+        verbose: false,
+        dry: false
+      }),
 
-  tslint: {
-    emitErrors: false,
-    failOnHint: false,
-    resourcePath: 'src'
+      new ProgressBarPlugin({
+        format: chalk.yellow.bold('Webpack Building...') + ' [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)'
+      })
+    ],
+
+    tslint: {
+      emitErrors: false,
+      failOnHint: false,
+      resourcePath: 'src'
+    }
   }
+
 };
+
+module.exports = webpackConfig;
