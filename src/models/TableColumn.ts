@@ -38,7 +38,7 @@ export class TableColumn {
   flexGrow: number = 0;
 
   // Minimum width of the column.
-  minWidth: number = 100;
+  minWidth: number = 0;
 
   // Maximum width of the column.
   maxWidth: number = undefined;
