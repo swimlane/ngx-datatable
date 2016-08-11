@@ -12,21 +12,21 @@ import '../themes/material.scss';
   selector: 'app',
   template: `
     <div>
-    	<h3>basic</h3>
-    	<datatable
-        class="material"
-    		[rows]="rows"
-    		[options]="options">
-    	</datatable>
+      <h3>basic</h3>
+      <datatable
+        class='material'
+        [rows]='rows'
+        [options]='options'>
+      </datatable>
     </div>
   `,
-  directives: [ DATATABLE_COMPONENTS ]
+  directives: [DATATABLE_COMPONENTS]
 })
 export class App {
 
-	rows = [];
+  rows = [];
 
-	options = new TableOptions({
+  options = new TableOptions({
     columnMode: ColumnMode.force,
     headerHeight: 50,
     footerHeight: 50,
@@ -41,11 +41,11 @@ export class App {
   constructor() {
     this.fetch((data) => {
       this.rows.push(...data);
-    })
+    });
   }
 
   fetch(cb) {
-    var req = new XMLHttpRequest();
+    const req = new XMLHttpRequest();
     req.open('GET', `assets/data/company.json`);
 
     req.onload = () => {

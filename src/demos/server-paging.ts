@@ -12,22 +12,22 @@ import '../themes/material.scss';
   selector: 'app',
   template: `
     <div>
-    	<h3>server-paging</h3>
-    	<datatable
-        class="material"
-    		[rows]="rows"
-    		[options]="options"
-        (onPageChange)="onPage($event)">
-    	</datatable>
+      <h3>server-paging</h3>
+      <datatable
+        class='material'
+        [rows]='rows'
+        [options]='options'
+        (onPageChange)='onPage($event)'>
+      </datatable>
     </div>
   `,
   directives: [ DATATABLE_COMPONENTS ]
 })
 export class App {
 
-	rows = [];
+  rows = [];
 
-	options = new TableOptions({
+  options = new TableOptions({
     columnMode: ColumnMode.force,
     headerHeight: 50,
     footerHeight: 50,
@@ -35,9 +35,9 @@ export class App {
     externalPaging: true,
     limit: 10,
     columns: [
-      new TableColumn({ name: "Name" }),
-      new TableColumn({ name: "Gender" }),
-      new TableColumn({ name: "Company" })
+      new TableColumn({ name: 'Name' }),
+      new TableColumn({ name: 'Gender' }),
+      new TableColumn({ name: 'Company' })
     ]
   });
 
@@ -51,7 +51,7 @@ export class App {
       let start = this.options.offset * this.options.limit;
       let end = start + this.options.limit;
 
-      let paged = results.slice(start, end);
+      // let paged = results.slice(start, end);
 
       // splice doesn't let u insert at
       // a new out of bounds index :(
@@ -63,12 +63,12 @@ export class App {
         this.rows[i] = results[i];
       }
 
-      console.log('updated', start, end, this.rows)
+      console.log('updated', start, end, this.rows);
     });
   }
 
   fetch(cb) {
-    var req = new XMLHttpRequest();
+    const req = new XMLHttpRequest();
     req.open('GET', `assets/data/company.json`);
 
     req.onload = () => {

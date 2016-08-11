@@ -1,5 +1,9 @@
 export function debounce(func, wait, immediate) {
-  let timeout, args, context, timestamp, result;
+  let timeout;
+  let args;
+  let context;
+  let timestamp;
+  let result;
 
   return function() {
     context = this;
@@ -7,7 +11,7 @@ export function debounce(func, wait, immediate) {
     timestamp = new Date();
 
     let later = function() {
-      var last = new Date() - timestamp;
+      const last = new Date() - timestamp;
       if (last < wait) {
         timeout = setTimeout(later, wait - last);
       } else {

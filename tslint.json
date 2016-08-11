@@ -19,6 +19,7 @@
     ],
     "no-string-literal": false,
     "no-unused-new": false,
+    "no-console": [true, "warn"],
     "curly": false,
     "no-reference": false,
     "forin": false,
