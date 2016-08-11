@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
-
-import {
-  DATATABLE_COMPONENTS,
-  TableOptions,
-  ColumnMode
-} from 'angular2-data-table';
+import {Component, NgModule} from '@angular/core';
+import {ColumnMode, TableOptions} from "../angular2-data-table";
+import {AppModule} from "../module";
 
 import '../themes/material.scss';
+
+@NgModule({
+  imports:[
+    AppModule
+  ]
+})
 
 @Component({
   selector: 'app',
@@ -38,8 +40,7 @@ import '../themes/material.scss';
 
       </datatable>
     </div>
-  `,
-  directives: [ DATATABLE_COMPONENTS ]
+  `
 })
 export class App {
 

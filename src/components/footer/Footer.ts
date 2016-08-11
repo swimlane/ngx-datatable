@@ -6,7 +6,6 @@ import {
 } from '@angular/core';
 
 import { StateService } from '../../services/State';
-import { DataTablePager } from './Pager';
 
 @Component({
   selector: 'datatable-footer',
@@ -23,8 +22,7 @@ import { DataTablePager } from './Pager';
         [hidden]="!visible">
        </datatable-pager>
      </div>
-  `,
-  directives: [ DataTablePager ]
+  `
 })
 export class DataTableFooter {
 

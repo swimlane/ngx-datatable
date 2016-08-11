@@ -3,9 +3,6 @@ import { StateService } from '../../services/State';
 import { SelectionType } from '../../enums/SelectionType';
 import { Keys } from '../../utils/keys';
 import { selectRows, selectRowsBetween } from '../../utils/selection';
-import { ProgressBar } from './ProgressBar';
-import { DataTableBodyRow } from './BodyRow';
-import { Scroller } from '../../directives/Scroller';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -34,12 +31,7 @@ import { Subscription } from 'rxjs/Subscription';
         [innerHTML]="state.options.emptyMessage">
       </div>
     </div>
-  `,
-  directives: [
-    ProgressBar,
-    DataTableBodyRow,
-    Scroller
-  ]
+  `
 })
 export class DataTableBody implements OnInit, OnDestroy {
 

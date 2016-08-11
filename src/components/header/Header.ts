@@ -81,13 +81,6 @@ import { DataTableHeaderCell } from './HeaderCell';
       </div>
     </div>
   `,
-  directives: [
-    DataTableHeaderCell,
-    Draggable,
-    Resizeable,
-    Orderable,
-    LongPress
-  ],
   host: {
     '[style.width]': 'headerWidth',
     '[style.height]': 'headerHeight'

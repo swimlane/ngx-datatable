@@ -13,36 +13,18 @@ declare module "utils/column" {
     };
     export function columnTotalWidth(columns: any, prop?: any): number;
 }
-declare module "utils/scrollbarWidth" {
-    export function scrollbarWidth(): number;
+declare module "utils/math" {
+    export function columnTotalWidth(columns: any, prop?: any): number;
+    export function getTotalFlexGrow(columns: any): number;
+    export function adjustColumnWidths(allColumns: any, expectedWidth: any): void;
+    export function forceFillColumnWidths(allColumns: any, expectedWidth: any, startIdx: any): void;
 }
-declare module "enums/SortDirection" {
-    export enum SortDirection {
-        asc,
-        desc,
+declare module "enums/ColumnMode" {
+    export enum ColumnMode {
+        standard,
+        flex,
+        force,
     }
-}
-declare module "models/Sort" {
-    import { SortDirection } from "enums/SortDirection";
-    export class Sort {
-        prop: string;
-        dir: SortDirection;
-        constructor(props: any);
-    }
-}
-declare module "enums/SortType" {
-    export enum SortType {
-        single,
-        multi,
-    }
-}
-declare module "utils/sort" {
-    import { Sort } from "models/Sort";
-    import { SortType } from "enums/SortType";
-    import { SortDirection } from "enums/SortDirection";
-    export function nextSortDir(sortType: SortType, current: SortDirection): SortDirection;
-    export function orderByComparator(a: any, b: any): number;
-    export function sortRows(rows: Array<any>, dirs: Array<Sort>): any[];
 }
 declare module "utils/id" {
     export function id(): string;
@@ -74,11 +56,24 @@ declare module "models/TableColumn" {
         constructor(props?: any);
     }
 }
-declare module "enums/ColumnMode" {
-    export enum ColumnMode {
-        standard,
-        flex,
-        force,
+declare module "enums/SortDirection" {
+    export enum SortDirection {
+        asc,
+        desc,
+    }
+}
+declare module "models/Sort" {
+    import { SortDirection } from "enums/SortDirection";
+    export class Sort {
+        prop: string;
+        dir: SortDirection;
+        constructor(props: any);
+    }
+}
+declare module "enums/SortType" {
+    export enum SortType {
+        single,
+        multi,
     }
 }
 declare module "enums/SelectionType" {
@@ -115,6 +110,23 @@ declare module "models/TableOptions" {
         sorts: Array<Sort>;
         constructor(props: any);
     }
+}
+declare module "components/DataTableColumn" {
+    import { TemplateRef, QueryList } from '@angular/core';
+    export class DataTableColumn {
+        template: QueryList<TemplateRef<any>>;
+    }
+}
+declare module "utils/scrollbarWidth" {
+    export function scrollbarWidth(): number;
+}
+declare module "utils/sort" {
+    import { Sort } from "models/Sort";
+    import { SortType } from "enums/SortType";
+    import { SortDirection } from "enums/SortDirection";
+    export function nextSortDir(sortType: SortType, current: SortDirection): SortDirection;
+    export function orderByComparator(a: any, b: any): number;
+    export function sortRows(rows: Array<any>, dirs: Array<Sort>): any[];
 }
 declare module "services/State" {
     import { EventEmitter } from '@angular/core';
@@ -156,36 +168,42 @@ declare module "services/State" {
         nextSort(column: TableColumn): void;
     }
 }
-declare module "utils/VisibilityObserver" {
-    export class VisibilityObserver {
-        observer: IntersectionObserver;
-        callback: any;
-        constructor(element: any, callback: any);
-        runPolyfill(element: any): void;
-        isVisible(boundingClientRect: any, intersectionRect: any): boolean;
-        visibleTimerCallback(element: any, observer: any): void;
-        processChanges(changes: any): void;
-    }
-}
-declare module "directives/Visibility" {
-    import { EventEmitter, ElementRef } from '@angular/core';
-    export class Visibility {
-        visible: boolean;
-        onVisibilityChange: EventEmitter<any>;
-        constructor(element: ElementRef);
-        visbilityChange(): void;
-    }
-}
-declare module "utils/math" {
-    export function columnTotalWidth(columns: any, prop?: any): number;
-    export function getTotalFlexGrow(columns: any): number;
-    export function adjustColumnWidths(allColumns: any, expectedWidth: any): void;
-    export function forceFillColumnWidths(allColumns: any, expectedWidth: any, startIdx: any): void;
-}
-declare module "components/DataTableColumn" {
-    import { TemplateRef, QueryList } from '@angular/core';
-    export class DataTableColumn {
-        template: QueryList<TemplateRef<any>>;
+declare module "components/DataTable" {
+    import { ElementRef, EventEmitter, KeyValueDiffers, OnInit, QueryList, DoCheck, AfterViewInit } from '@angular/core';
+    import { TableOptions } from "models/TableOptions";
+    import './datatable.scss';
+    import { DataTableColumn } from "components/DataTableColumn";
+    import { StateService } from "services/State";
+    export class DataTable implements OnInit, DoCheck, AfterViewInit {
+        state: StateService;
+        options: TableOptions;
+        rows: any[];
+        selected: any[];
+        onPageChange: EventEmitter<any>;
+        onRowsUpdate: EventEmitter<any>;
+        onRowClick: EventEmitter<any>;
+        onSelectionChange: EventEmitter<any>;
+        onColumnChange: EventEmitter<any>;
+        columns: QueryList<DataTableColumn>;
+        private element;
+        private rowDiffer;
+        private colDiffer;
+        constructor(element: ElementRef, state: StateService, differs: KeyValueDiffers);
+        ngOnInit(): void;
+        ngAfterViewInit(): void;
+        ngDoCheck(): void;
+        checkColumnToggles(): void;
+        adjustSizes(): void;
+        adjustColumns(forceIdx?: number): void;
+        onPageChanged(event: any): void;
+        onRowSelect(event: any): void;
+        resize(): void;
+        readonly isFixedHeader: boolean;
+        readonly isFixedRow: boolean;
+        readonly isVertScroll: boolean;
+        readonly isHorScroll: boolean;
+        readonly isSelectable: boolean;
+        readonly isCheckboxable: boolean;
     }
 }
 declare module "directives/LongPress" {
@@ -306,59 +324,6 @@ declare module "utils/selection" {
     export function selectRows(selected: any, row: any): any;
     export function selectRowsBetween(selected: any, rows: any, index: any, prevIndex: any): any;
 }
-declare module "components/body/ProgressBar" {
-    export class ProgressBar {
-    }
-}
-declare module "utils/deepGetter" {
-    export function deepValueGetter(obj: any, path: any): any;
-}
-declare module "directives/TemplateWrapper" {
-    import { TemplateRef, ViewContainerRef, SimpleChange } from '@angular/core';
-    export class TemplateWrapper {
-        private viewContainer;
-        templateWrapper: TemplateRef<any>;
-        value: any;
-        row: any;
-        column: any;
-        private embeddedViewRef;
-        constructor(viewContainer: ViewContainerRef);
-        ngOnChanges(changes: {
-            [key: string]: SimpleChange;
-        }): void;
-    }
-}
-declare module "components/body/BodyCell" {
-    import { ElementRef } from '@angular/core';
-    import { TableColumn } from "models/TableColumn";
-    export class DataTableBodyCell {
-        column: TableColumn;
-        row: any;
-        constructor(element: ElementRef);
-        readonly value: any;
-        readonly width: string;
-    }
-}
-declare module "components/body/BodyRow" {
-    import { ElementRef } from '@angular/core';
-    import { StateService } from "services/State";
-    export class DataTableBodyRow {
-        state: StateService;
-        row: any;
-        readonly isSelected: boolean;
-        constructor(state: StateService, element: ElementRef);
-    }
-}
-declare module "directives/Scroller" {
-    import { ElementRef } from '@angular/core';
-    export class Scroller {
-        rowHeight: number;
-        count: number;
-        scrollWidth: number;
-        readonly scrollHeight: string;
-        constructor(elm: ElementRef);
-    }
-}
 declare module "components/body/Body" {
     import { EventEmitter, OnInit, OnDestroy, ElementRef } from '@angular/core';
     import { StateService } from "services/State";
@@ -381,6 +346,17 @@ declare module "components/body/Body" {
         ngOnDestroy(): void;
     }
 }
+declare module "components/footer/Footer" {
+    import { EventEmitter, ElementRef } from '@angular/core';
+    import { StateService } from "services/State";
+    export class DataTableFooter {
+        private state;
+        onPageChange: EventEmitter<any>;
+        readonly visible: boolean;
+        readonly curPage: number;
+        constructor(elm: ElementRef, state: StateService);
+    }
+}
 declare module "components/footer/Pager" {
     import { EventEmitter, ElementRef } from '@angular/core';
     export class DataTablePager {
@@ -401,65 +377,88 @@ declare module "components/footer/Pager" {
         calcPages(page?: number): any[];
     }
 }
-declare module "components/footer/Footer" {
-    import { EventEmitter, ElementRef } from '@angular/core';
+declare module "components/body/BodyRow" {
+    import { ElementRef } from '@angular/core';
     import { StateService } from "services/State";
-    export class DataTableFooter {
-        private state;
-        onPageChange: EventEmitter<any>;
-        readonly visible: boolean;
-        readonly curPage: number;
-        constructor(elm: ElementRef, state: StateService);
+    export class DataTableBodyRow {
+        state: StateService;
+        row: any;
+        readonly isSelected: boolean;
+        constructor(state: StateService, element: ElementRef);
     }
 }
-declare module "components/DataTable" {
-    import { ElementRef, EventEmitter, KeyValueDiffers, OnInit, QueryList, DoCheck, AfterViewInit } from '@angular/core';
-    import { StateService } from "services/State";
-    import { TableOptions } from "models/TableOptions";
-    import { DataTableColumn } from "components/DataTableColumn";
-    import './datatable.scss';
-    export class DataTable implements OnInit, DoCheck, AfterViewInit {
-        state: StateService;
-        options: TableOptions;
-        rows: any[];
-        selected: any[];
-        onPageChange: EventEmitter<any>;
-        onRowsUpdate: EventEmitter<any>;
-        onRowClick: EventEmitter<any>;
-        onSelectionChange: EventEmitter<any>;
-        onColumnChange: EventEmitter<any>;
-        columns: QueryList<DataTableColumn>;
-        private element;
-        private rowDiffer;
-        private colDiffer;
-        constructor(element: ElementRef, state: StateService, differs: KeyValueDiffers);
-        ngOnInit(): void;
-        ngAfterViewInit(): void;
-        ngDoCheck(): void;
-        checkColumnToggles(): void;
-        adjustSizes(): void;
-        adjustColumns(forceIdx?: number): void;
-        onPageChanged(event: any): void;
-        onRowSelect(event: any): void;
-        resize(): void;
-        readonly isFixedHeader: boolean;
-        readonly isFixedRow: boolean;
-        readonly isVertScroll: boolean;
-        readonly isHorScroll: boolean;
-        readonly isSelectable: boolean;
-        readonly isCheckboxable: boolean;
+declare module "components/body/ProgressBar" {
+    export class ProgressBar {
+    }
+}
+declare module "utils/deepGetter" {
+    export function deepValueGetter(obj: any, path: any): any;
+}
+declare module "components/body/BodyCell" {
+    import { ElementRef } from '@angular/core';
+    import { TableColumn } from "models/TableColumn";
+    export class DataTableBodyCell {
+        column: TableColumn;
+        row: any;
+        constructor(element: ElementRef);
+        readonly value: any;
+        readonly width: string;
+    }
+}
+declare module "utils/VisibilityObserver" {
+    export class VisibilityObserver {
+        observer: IntersectionObserver;
+        callback: any;
+        constructor(element: any, callback: any);
+        runPolyfill(element: any): void;
+        isVisible(boundingClientRect: any, intersectionRect: any): boolean;
+        visibleTimerCallback(element: any, observer: any): void;
+        processChanges(changes: any): void;
+    }
+}
+declare module "directives/Visibility" {
+    import { EventEmitter, ElementRef } from '@angular/core';
+    export class Visibility {
+        visible: boolean;
+        onVisibilityChange: EventEmitter<any>;
+        constructor(element: ElementRef);
+        visbilityChange(): void;
+    }
+}
+declare module "directives/Scroller" {
+    import { ElementRef } from '@angular/core';
+    export class Scroller {
+        rowHeight: number;
+        count: number;
+        scrollWidth: number;
+        readonly scrollHeight: string;
+        constructor(elm: ElementRef);
+    }
+}
+declare module "directives/TemplateWrapper" {
+    import { TemplateRef, ViewContainerRef, SimpleChange } from '@angular/core';
+    export class TemplateWrapper {
+        private viewContainer;
+        templateWrapper: TemplateRef<any>;
+        value: any;
+        row: any;
+        column: any;
+        private embeddedViewRef;
+        constructor(viewContainer: ViewContainerRef);
+        ngOnChanges(changes: {
+            [key: string]: SimpleChange;
+        }): void;
     }
 }
 declare module "angular2-data-table" {
-    import { DataTable } from "components/DataTable";
-    import { DataTableColumn } from "components/DataTableColumn";
+    import { ColumnMode } from "enums/ColumnMode";
+    import { SortType } from "enums/SortType";
+    import { SortDirection } from "enums/SortDirection";
+    import { SelectionType } from "enums/SelectionType";
     import { TableOptions } from "models/TableOptions";
     import { TableColumn } from "models/TableColumn";
     import { Sort } from "models/Sort";
-    import { SelectionType } from "enums/SelectionType";
-    import { ColumnMode } from "enums/ColumnMode";
-    import { SortDirection } from "enums/SortDirection";
-    import { SortType } from "enums/SortType";
-    const DATATABLE_COMPONENTS: (typeof DataTable | typeof DataTableColumn)[];
-    export { DataTable, TableOptions, TableColumn, Sort, SelectionType, ColumnMode, SortDirection, SortType, DATATABLE_COMPONENTS };
+    export class Angular2DataTableModule {
+    }
+    export { TableOptions, TableColumn, Sort, SelectionType, ColumnMode, SortDirection, SortType };
 }

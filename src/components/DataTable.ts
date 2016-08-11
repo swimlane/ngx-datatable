@@ -14,17 +14,14 @@ import {
   IterableDiffer,
   HostBinding
 } from '@angular/core';
-import { StateService } from '../services/State';
-import { Visibility } from '../directives/Visibility';
 import { forceFillColumnWidths, adjustColumnWidths } from '../utils/math';
 import { ColumnMode } from '../enums/ColumnMode';
 import { TableOptions } from '../models/TableOptions';
 import { TableColumn } from '../models/TableColumn';
-import { DataTableColumn } from './DataTableColumn';
-import { DataTableHeader } from './header/Header';
-import { DataTableBody } from './body/Body';
-import { DataTableFooter } from './footer/Footer';
 import './datatable.scss';
+
+import {DataTableColumn} from "./DataTableColumn";
+import {StateService} from "../services/State";
 
 @Component({
   selector: 'datatable',
@@ -43,14 +40,7 @@ import './datatable.scss';
         (onPageChange)="onPageChanged($event)">
       </datatable-footer>
     </div>
-  `,
-  directives: [
-    DataTableHeader,
-    DataTableBody,
-    DataTableFooter,
-    Visibility
-  ],
-  providers: [StateService]
+  `
 })
 export class DataTable implements OnInit, DoCheck, AfterViewInit {
 

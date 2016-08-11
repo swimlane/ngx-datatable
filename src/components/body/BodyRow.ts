@@ -1,6 +1,5 @@
 import { Component, Input, HostBinding, ElementRef } from '@angular/core';
 import { StateService } from '../../services/State';
-import { DataTableBodyCell } from './BodyCell';
 
 @Component({
   selector: 'datatable-body-row',
@@ -37,8 +36,7 @@ import { DataTableBodyCell } from './BodyCell';
         </datatable-body-cell>
       </div>
     </div>
-  `,
-  directives: [ DataTableBodyCell ]
+  `
 })
 export class DataTableBodyRow {
 

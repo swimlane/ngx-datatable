@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
 import {
-  DATATABLE_COMPONENTS,
   TableOptions,
   TableColumn,
   ColumnMode
@@ -20,8 +19,7 @@ import '../themes/material.scss';
         (onPageChange)='onPage($event)'>
       </datatable>
     </div>
-  `,
-  directives: [ DATATABLE_COMPONENTS ]
+  `
 })
 export class App {
 

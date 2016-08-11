@@ -1,7 +1,6 @@
 import { Component, Input, PipeTransform, HostBinding, ChangeDetectionStrategy, ElementRef } from '@angular/core';
 import { TableColumn } from '../../models/TableColumn';
 import { deepValueGetter } from '../../utils/deepGetter';
-import { TemplateWrapper } from '../../directives/TemplateWrapper';
 
 @Component({
   selector: 'datatable-body-cell',
@@ -20,7 +19,6 @@ import { TemplateWrapper } from '../../directives/TemplateWrapper';
       </template>
     </div>
   `,
-  directives: [ TemplateWrapper ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableBodyCell {
