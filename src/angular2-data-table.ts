@@ -46,7 +46,7 @@ import { Sort } from './models/Sort';
     Resizeable,
     Orderable,
     LongPress,
-    TemplateWrapper
+    TemplateWrapper,
     Scroller,
     DataTable,
     DataTableColumn,
