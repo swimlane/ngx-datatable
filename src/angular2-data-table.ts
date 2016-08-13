@@ -26,10 +26,10 @@ import { Scroller } from './directives/Scroller';
 import { TemplateWrapper } from './directives/TemplateWrapper';
 
 // Enums
-import { ColumnMode } from 'enums/ColumnMode';
-import { SortType } from 'enums/SortType';
-import { SortDirection } from 'enums/SortDirection';
-import { SelectionType } from 'enums/SelectionType';
+import { ColumnMode } from './enums/ColumnMode';
+import { SortType } from './enums/SortType';
+import { SortDirection } from './enums/SortDirection';
+import { SelectionType } from './enums/SelectionType';
 
 // Models
 import { TableOptions } from './models/TableOptions';

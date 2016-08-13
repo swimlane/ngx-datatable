@@ -11,7 +11,7 @@ import { StateService } from '../../services/State';
   selector: 'datatable-header',
   template: `
     <div
-      [style.width]="state.columnGroupWidths.total"
+      [style.width]="state.columnGroupWidths.total + 'px'"
       class="datatable-header-inner"
       orderable
       (onReorder)="columnReordered($event)">

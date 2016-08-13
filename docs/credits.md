@@ -7,3 +7,4 @@
 * [DzmitryShylovich](https://github.com/DzmitryShylovich)
 * [Tempus35](https://github.com/Tempus35)
 * [d3viant0ne](https://github.com/d3viant0ne)
+* [wor-k](https://github.com/wor-k)
