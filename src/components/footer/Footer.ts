@@ -13,12 +13,12 @@ import { StateService } from '../../services/State';
     <div
       *ngIf="state.options.footerHeight"
       [style.height]="state.options.footerHeight">
-      <div class="page-count">{{state.pageCount}} total</div>
+      <div class="page-count">{{state.rowCount}} total</div>
       <datatable-pager
         [page]="curPage"
         [size]="state.pageSize"
         (onPaged)="onPageChange.emit($event)"
-        [count]="state.pageCount"
+        [count]="state.rowCount"
         [hidden]="!visible">
        </datatable-pager>
      </div>
@@ -29,7 +29,7 @@ export class DataTableFooter {
   @Output() onPageChange: EventEmitter<any> = new EventEmitter();
 
   get visible() {
-    return (this.state.pageCount / this.state.pageSize) > 1;
+    return (this.state.rowCount / this.state.pageSize) > 1;
   }
 
   get curPage() {

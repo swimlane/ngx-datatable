@@ -34,7 +34,7 @@ export class StateService {
     return columnGroupWidths(this.columnsByPin, this.options.columns);
   }
 
-  get pageCount() {
+  get rowCount() {
     if (!this.options.externalPaging) {
       return this.rows.length;
     } else {
@@ -59,10 +59,10 @@ export class StateService {
     if (this.options.scrollbarV) {
       const floor = Math.floor((this.offsetY || 0) / this.options.rowHeight);
       first = Math.max(floor, 0);
-      last = Math.min(first + this.pageSize, this.pageCount);
+      last = Math.min(first + this.pageSize, this.rowCount);
     } else {
       first = Math.max(this.options.offset * this.pageSize, 0);
-      last = Math.min(first + this.pageSize, this.pageCount);
+      last = Math.min(first + this.pageSize, this.rowCount);
     }
 
     return { first, last };
@@ -99,7 +99,7 @@ export class StateService {
     this.onPageChange.emit({
       offset: this.options.offset,
       limit: this.pageSize,
-      count: this.pageCount
+      count: this.rowCount
     });
   }
 
