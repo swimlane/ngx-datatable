@@ -1,0 +1,69 @@
+import { Component, NgModule } from '@angular/core';
+import { ColumnMode, TableOptions } from '../angular2-data-table';
+import { AppModule } from '../module';
+import '../themes/material.scss';
+
+@NgModule({
+  imports: [ AppModule ]
+})
+@Component({
+  selector: 'app',
+  template: `
+    <div>
+      <h3>virtual scroll</h3>
+
+      <datatable
+        class='material'
+        [rows]='rows'
+        [options]='options'>
+
+        <datatable-column name="Name">
+          <template let-value="value">
+            <strong>{{value}}</strong>
+          </template>
+        </datatable-column>
+
+        <datatable-column name="Gender">
+          <template let-row="row" let-value="value">
+            <i [innerHTML]="row['name']"></i> and <i>{{value}}</i>
+          </template>
+        </datatable-column>
+
+        <datatable-column name="Company">
+        </datatable-column>
+
+      </datatable>
+    </div>
+  `
+})
+export class App {
+
+  rows = [];
+  expanded = {};
+
+  options = new TableOptions({
+    columnMode: ColumnMode.force,
+    headerHeight: 50,
+    footerHeight: 50,
+    rowHeight: 40,
+    virtualVScroll: true
+  });
+
+  constructor() {
+    this.fetch((data) => {
+      this.rows.push(...data);
+    });
+  }
+
+  fetch(cb) {
+    let req = new XMLHttpRequest();
+    req.open('GET', `assets/data/company.json`);
+
+    req.onload = () => {
+      cb(JSON.parse(req.response));
+    };
+
+    req.send();
+  }
+
+}

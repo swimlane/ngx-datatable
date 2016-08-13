@@ -12,6 +12,9 @@ export class TableOptions {
   // Enable vertical scrollbars
   scrollbarV: boolean = false;
 
+  // Enable virtual vertical scrolling
+  virtualVScroll: boolean = false;
+
   // Enable horz scrollbars
   scrollbarH: boolean = false;
 

@@ -25,11 +25,13 @@ import { Draggable } from './directives/Draggable';
 import { Scroller } from './directives/Scroller';
 import { TemplateWrapper } from './directives/TemplateWrapper';
 
-// Model/Enums
+// Enums
 import { ColumnMode } from 'enums/ColumnMode';
 import { SortType } from 'enums/SortType';
 import { SortDirection } from 'enums/SortDirection';
 import { SelectionType } from 'enums/SelectionType';
+
+// Models
 import { TableOptions } from './models/TableOptions';
 import { TableColumn } from './models/TableColumn';
 import { Sort } from './models/Sort';
@@ -40,22 +42,22 @@ import { Sort } from './models/Sort';
   ],
   declarations: [
     Visibility,
-    DataTable,
-    DataTableColumn,
-    DataTableHeader,
-    DataTableHeaderCell,
     Draggable,
     Resizeable,
     Orderable,
     LongPress,
+    TemplateWrapper
+    Scroller,
+    DataTable,
+    DataTableColumn,
+    DataTableHeader,
+    DataTableHeaderCell,
     DataTableBody,
     DataTableFooter,
     DataTablePager,
     ProgressBar,
     DataTableBodyRow,
-    DataTableBodyCell,
-    Scroller,
-    TemplateWrapper
+    DataTableBodyCell
   ],
   providers: [
     StateService
