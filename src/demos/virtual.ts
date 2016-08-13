@@ -29,7 +29,7 @@ import '../themes/material.scss';
           </template>
         </datatable-column>
 
-        <datatable-column name="Company">
+        <datatable-column name="Age">
         </datatable-column>
 
       </datatable>
@@ -45,8 +45,8 @@ export class App {
     columnMode: ColumnMode.force,
     headerHeight: 50,
     footerHeight: 50,
-    rowHeight: 40,
-    virtualVScroll: true
+    rowHeight: 50,
+    scrollbarV: true
   });
 
   constructor() {
@@ -57,7 +57,7 @@ export class App {
 
   fetch(cb) {
     let req = new XMLHttpRequest();
-    req.open('GET', `assets/data/company.json`);
+    req.open('GET', `assets/data/100k.json`);
 
     req.onload = () => {
       cb(JSON.parse(req.response));
