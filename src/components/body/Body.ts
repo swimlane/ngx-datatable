@@ -18,6 +18,7 @@ import { Subscription } from 'rxjs/Subscription';
         [count]="state.rowCount"
         [scrollWidth]="state.columnGroupWidths.total">
         <datatable-body-row
+          [style.height]="state.options.rowHeight + 'px'"
           *ngFor="let row of rows; let i = index;"
           [attr.tabindex]="i"
           (click)="rowClicked($event, i, row)"
@@ -38,8 +39,7 @@ export class DataTableBody implements OnInit, OnDestroy {
   @Output() onRowClick: EventEmitter<any> = new EventEmitter();
   @Output() onRowSelect: EventEmitter<any> = new EventEmitter();
 
-  rows: any;
-
+  public rows: any;
   private prevIndex: number;
   private sub: Subscription;
 

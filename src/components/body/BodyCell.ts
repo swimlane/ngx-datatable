@@ -41,9 +41,4 @@ export class DataTableBodyCell {
     return this.column.width + 'px';
   }
 
-  // fixme there's no column.height property
-  // @HostBinding('style.height') get height() {
-  //   return this.column.height + 'px';
-  // }
-
 }
