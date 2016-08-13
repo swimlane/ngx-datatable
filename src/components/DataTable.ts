@@ -126,8 +126,8 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
     this.state.innerWidth = Math.floor(width);
 
     if (this.options.scrollbarV) {
-      if (this.options.headerHeight) height = -this.options.headerHeight;
-      if (this.options.footerHeight) height = -this.options.footerHeight;
+      if (this.options.headerHeight) height = height - this.options.headerHeight;
+      if (this.options.footerHeight) height = height - this.options.footerHeight;
       this.state.bodyHeight = height;
     }
 

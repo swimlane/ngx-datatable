@@ -1,7 +1,9 @@
 import { Injectable, EventEmitter } from '@angular/core';
+
 import { columnsByPin, columnGroupWidths } from '../utils/column';
 import { scrollbarWidth } from '../utils/scrollbarWidth';
 import { nextSortDir, sortRows } from '../utils/sort';
+
 import { TableOptions } from '../models/TableOptions';
 import { TableColumn } from '../models/TableColumn';
 import { Sort } from '../models/Sort';
