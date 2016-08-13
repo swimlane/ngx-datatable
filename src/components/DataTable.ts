@@ -139,7 +139,7 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
 
     let width: number = this.state.innerWidth;
     if (this.options.scrollbarV) {
-      width = -this.state.scrollbarWidth;
+      width = width - this.state.scrollbarWidth;
     }
 
     if (this.options.columnMode === ColumnMode.force) {
