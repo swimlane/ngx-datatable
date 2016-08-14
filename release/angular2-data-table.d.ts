@@ -97,7 +97,7 @@ declare module "models/TableOptions" {
         columnMode: ColumnMode;
         loadingMessage: string;
         emptyMessage: string;
-        headerHeight: number | string;
+        headerHeight: any;
         footerHeight: number;
         externalPaging: boolean;
         limit: number;
@@ -155,7 +155,7 @@ declare module "services/State" {
             right: number;
             total: number;
         };
-        readonly pageCount: number;
+        readonly rowCount: number;
         readonly pageSize: number;
         readonly indexes: {
             first: number;
@@ -171,9 +171,9 @@ declare module "services/State" {
 declare module "components/DataTable" {
     import { ElementRef, EventEmitter, KeyValueDiffers, OnInit, QueryList, DoCheck, AfterViewInit } from '@angular/core';
     import { TableOptions } from "models/TableOptions";
-    import './datatable.scss';
     import { DataTableColumn } from "components/DataTableColumn";
     import { StateService } from "services/State";
+    import './datatable.scss';
     export class DataTable implements OnInit, DoCheck, AfterViewInit {
         state: StateService;
         options: TableOptions;
@@ -188,11 +188,11 @@ declare module "components/DataTable" {
         private element;
         private rowDiffer;
         private colDiffer;
-        constructor(element: ElementRef, state: StateService, differs: KeyValueDiffers);
+        constructor(state: StateService, element: ElementRef, differs: KeyValueDiffers);
         ngOnInit(): void;
         ngAfterViewInit(): void;
         ngDoCheck(): void;
-        checkColumnToggles(): void;
+        checkColumnChanges(): void;
         adjustSizes(): void;
         adjustColumns(forceIdx?: number): void;
         onPageChanged(event: any): void;
@@ -203,97 +203,13 @@ declare module "components/DataTable" {
         readonly isVertScroll: boolean;
         readonly isHorScroll: boolean;
         readonly isSelectable: boolean;
-        readonly isCheckboxable: boolean;
     }
 }
-declare module "directives/LongPress" {
-    import { EventEmitter } from '@angular/core';
-    export class LongPress {
-        duration: number;
-        onLongPress: EventEmitter<any>;
-        onLongPressing: EventEmitter<any>;
-        onLongPressEnd: EventEmitter<any>;
-        private pressing;
-        private longPressing;
-        private timeout;
-        private mouseX;
-        private mouseY;
-        readonly press: boolean;
-        readonly longPress: boolean;
-        onMouseDown(event: any): void;
-        onMouseMove(event: any): void;
-        loop(event: any): void;
-        endPress(): void;
-        onMouseUp(): void;
-    }
+declare module "utils/prefixes" {
+    export function getVendorPrefixedName(property: any): any;
 }
-declare module "directives/Draggable" {
-    import { ElementRef, EventEmitter } from '@angular/core';
-    export class Draggable {
-        element: HTMLElement;
-        model: any;
-        dragX: boolean;
-        dragY: boolean;
-        onDragStart: EventEmitter<any>;
-        onDragging: EventEmitter<any>;
-        onDragEnd: EventEmitter<any>;
-        private dragging;
-        private subscription;
-        constructor(element: ElementRef);
-        onMouseup(event: any): void;
-        onMousedown(event: any): void;
-        move(event: any, mouseDownPos: any): void;
-    }
-}
-declare module "directives/Resizeable" {
-    import { ElementRef, EventEmitter } from '@angular/core';
-    export class Resizeable {
-        resizeEnabled: boolean;
-        minWidth: number;
-        maxWidth: number;
-        onResize: EventEmitter<any>;
-        private element;
-        private subscription;
-        private prevScreenX;
-        private resizing;
-        constructor(element: ElementRef);
-        onMouseup(): void;
-        onMousedown(event: any): void;
-        move(event: any): void;
-    }
-}
-declare module "directives/Orderable" {
-    import { EventEmitter } from '@angular/core';
-    export class Orderable {
-        onReorder: EventEmitter<any>;
-        private drags;
-        private positions;
-        ngAfterContentInit(): void;
-        onDragStart(): void;
-        onDragEnd({element, model}: {
-            element: any;
-            model: any;
-        }): void;
-    }
-}
-declare module "components/header/HeaderCell" {
-    import { ElementRef, EventEmitter } from '@angular/core';
-    import { StateService } from "services/State";
-    import { TableColumn } from "models/TableColumn";
-    import { SortDirection } from "enums/SortDirection";
-    export class DataTableHeaderCell {
-        element: ElementRef;
-        private state;
-        model: TableColumn;
-        onColumnChange: EventEmitter<any>;
-        readonly sortDir: SortDirection;
-        constructor(element: ElementRef, state: StateService);
-        sortClasses(sort: any): {
-            'sort-asc icon-down': boolean;
-            'sort-desc icon-up': boolean;
-        };
-        onSort(): void;
-    }
+declare module "utils/translate" {
+    export function translateXY(styles: any, x: any, y: any): void;
 }
 declare module "components/header/Header" {
     import { ElementRef, EventEmitter } from '@angular/core';
@@ -302,7 +218,7 @@ declare module "components/header/Header" {
         private state;
         onColumnChange: EventEmitter<any>;
         readonly headerWidth: string;
-        readonly headerHeight: number | string;
+        readonly headerHeight: any;
         constructor(state: StateService, elm: ElementRef);
         columnResized(width: any, column: any): void;
         columnReordered({prevIndex, newIndex, model}: {
@@ -310,6 +226,9 @@ declare module "components/header/Header" {
             newIndex: any;
             model: any;
         }): void;
+        stylesByGroup(group: any): {
+            width: string;
+        };
     }
 }
 declare module "utils/keys" {
@@ -339,6 +258,12 @@ declare module "components/body/Body" {
         readonly bodyHeight: string;
         readonly bodyWidth: string;
         ngOnInit(): void;
+        onBodyScroll(props: any): void;
+        updatePage(direction: any): void;
+        updateRows(refresh?: boolean): void;
+        getRowsStyles(row: any): {
+            height: string;
+        };
         hideIndicator(): void;
         rowClicked(event: any, index: any, row: any): void;
         rowKeydown(event: any, index: any, row: any): void;
@@ -355,6 +280,26 @@ declare module "components/footer/Footer" {
         readonly visible: boolean;
         readonly curPage: number;
         constructor(elm: ElementRef, state: StateService);
+    }
+}
+declare module "components/header/HeaderCell" {
+    import { ElementRef, EventEmitter } from '@angular/core';
+    import { StateService } from "services/State";
+    import { TableColumn } from "models/TableColumn";
+    import { SortDirection } from "enums/SortDirection";
+    export class DataTableHeaderCell {
+        element: ElementRef;
+        private state;
+        model: TableColumn;
+        onColumnChange: EventEmitter<any>;
+        readonly sortDir: SortDirection;
+        readonly name: string;
+        constructor(element: ElementRef, state: StateService);
+        sortClasses(sort: any): {
+            'sort-asc icon-down': boolean;
+            'sort-desc icon-up': boolean;
+        };
+        onSort(): void;
     }
 }
 declare module "components/footer/Pager" {
@@ -385,6 +330,9 @@ declare module "components/body/BodyRow" {
         row: any;
         readonly isSelected: boolean;
         constructor(state: StateService, element: ElementRef);
+        stylesByGroup(group: any): {
+            width: string;
+        };
     }
 }
 declare module "components/body/ProgressBar" {
@@ -425,14 +373,96 @@ declare module "directives/Visibility" {
         visbilityChange(): void;
     }
 }
+declare module "directives/LongPress" {
+    import { EventEmitter } from '@angular/core';
+    export class LongPress {
+        duration: number;
+        onLongPress: EventEmitter<any>;
+        onLongPressing: EventEmitter<any>;
+        onLongPressEnd: EventEmitter<any>;
+        private pressing;
+        private longPressing;
+        private timeout;
+        private mouseX;
+        private mouseY;
+        readonly press: boolean;
+        readonly longPress: boolean;
+        onMouseDown(event: any): void;
+        onMouseMove(event: any): void;
+        loop(event: any): void;
+        endPress(): void;
+        onMouseUp(): void;
+    }
+}
+declare module "directives/Resizeable" {
+    import { ElementRef, EventEmitter } from '@angular/core';
+    export class Resizeable {
+        resizeEnabled: boolean;
+        minWidth: number;
+        maxWidth: number;
+        onResize: EventEmitter<any>;
+        private element;
+        private subscription;
+        private prevScreenX;
+        private resizing;
+        constructor(element: ElementRef);
+        onMouseup(): void;
+        onMousedown(event: any): void;
+        move(event: any): void;
+    }
+}
+declare module "directives/Draggable" {
+    import { ElementRef, EventEmitter } from '@angular/core';
+    export class Draggable {
+        element: HTMLElement;
+        model: any;
+        dragX: boolean;
+        dragY: boolean;
+        onDragStart: EventEmitter<any>;
+        onDragging: EventEmitter<any>;
+        onDragEnd: EventEmitter<any>;
+        private dragging;
+        private subscription;
+        constructor(element: ElementRef);
+        onMouseup(event: any): void;
+        onMousedown(event: any): void;
+        move(event: any, mouseDownPos: any): void;
+    }
+}
+declare module "directives/Orderable" {
+    import { EventEmitter } from '@angular/core';
+    export class Orderable {
+        onReorder: EventEmitter<any>;
+        private drags;
+        private positions;
+        ngAfterContentInit(): void;
+        onDragStart(): void;
+        onDragEnd({element, model}: {
+            element: any;
+            model: any;
+        }): void;
+    }
+}
 declare module "directives/Scroller" {
-    import { ElementRef } from '@angular/core';
-    export class Scroller {
+    import { ElementRef, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+    export class Scroller implements OnInit, OnDestroy {
         rowHeight: number;
         count: number;
         scrollWidth: number;
+        scrollbarV: boolean;
+        onScroll: EventEmitter<any>;
+        private scrollYPos;
+        private scrollXPos;
+        private prevScrollYPos;
+        private prevScrollXPos;
+        private element;
+        private parentElement;
         readonly scrollHeight: string;
-        constructor(elm: ElementRef);
+        constructor(element: ElementRef);
+        ngOnInit(): void;
+        ngOnDestroy(): void;
+        onScrolled(event: any): void;
+        updateOffset(): void;
     }
 }
 declare module "directives/TemplateWrapper" {

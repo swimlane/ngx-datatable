@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v0.1.16 (https://github.com/swimlane/angular2-data-table#readme)
+ * angular2-data-table v0.2.0 (https://github.com/swimlane/angular2-data-table#readme)
  * Copyright 2016  
  * Licensed under MIT
  */
@@ -373,7 +373,7 @@ var StateService = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(StateService.prototype, "pageCount", {
+    Object.defineProperty(StateService.prototype, "rowCount", {
         get: function () {
             if (!this.options.externalPaging) {
                 return this.rows.length;
@@ -407,11 +407,11 @@ var StateService = (function () {
             if (this.options.scrollbarV) {
                 var floor = Math.floor((this.offsetY || 0) / this.options.rowHeight);
                 first = Math.max(floor, 0);
-                last = Math.min(first + this.pageSize, this.pageCount);
+                last = Math.min(first + this.pageSize, this.rowCount);
             }
             else {
                 first = Math.max(this.options.offset * this.pageSize, 0);
-                last = Math.min(first + this.pageSize, this.pageCount);
+                last = Math.min(first + this.pageSize, this.rowCount);
             }
             return { first: first, last: last };
         },
@@ -446,7 +446,7 @@ var StateService = (function () {
         this.onPageChange.emit({
             offset: this.options.offset,
             limit: this.pageSize,
-            count: this.pageCount
+            count: this.rowCount
         });
     };
     StateService.prototype.nextSort = function (column) {
@@ -485,7 +485,7 @@ var StateService = (function () {
 }());
 
 var DataTable = (function () {
-    function DataTable(element, state, differs) {
+    function DataTable(state, element, differs) {
         this.state = state;
         this.onPageChange = new EventEmitter();
         this.onRowsUpdate = new EventEmitter();
@@ -521,9 +521,9 @@ var DataTable = (function () {
             this.state.setRows(this.rows);
             this.onRowsUpdate.emit(this.rows);
         }
-        this.checkColumnToggles();
+        this.checkColumnChanges();
     };
-    DataTable.prototype.checkColumnToggles = function () {
+    DataTable.prototype.checkColumnChanges = function () {
         var colDiff = this.colDiffer.diff(this.options.columns);
         if (colDiff) {
             var chngd_1 = false;
@@ -546,9 +546,9 @@ var DataTable = (function () {
         this.state.innerWidth = Math.floor(width);
         if (this.options.scrollbarV) {
             if (this.options.headerHeight)
-                height = -this.options.headerHeight;
+                height = height - this.options.headerHeight;
             if (this.options.footerHeight)
-                height = -this.options.footerHeight;
+                height = height - this.options.footerHeight;
             this.state.bodyHeight = height;
         }
         this.adjustColumns();
@@ -558,7 +558,7 @@ var DataTable = (function () {
             return;
         var width = this.state.innerWidth;
         if (this.options.scrollbarV) {
-            width = -this.state.scrollbarWidth;
+            width = width - this.state.scrollbarWidth;
         }
         if (this.options.columnMode === ColumnMode.force) {
             forceFillColumnWidths(this.options.columns, width, forceIdx);
@@ -610,14 +610,7 @@ var DataTable = (function () {
     });
     Object.defineProperty(DataTable.prototype, "isSelectable", {
         get: function () {
-            return false;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(DataTable.prototype, "isCheckboxable", {
-        get: function () {
-            return false;
+            return this.options.selectionType !== undefined;
         },
         enumerable: true,
         configurable: true
@@ -684,20 +677,64 @@ var DataTable = (function () {
         HostBinding('class.selectable'), 
         __metadata('design:type', Object)
     ], DataTable.prototype, "isSelectable", null);
-    __decorate([
-        HostBinding('class.checkboxable'), 
-        __metadata('design:type', Object)
-    ], DataTable.prototype, "isCheckboxable", null);
     DataTable = __decorate([
         Component({
             selector: 'datatable',
             template: "\n    <div\n      visibility-observer\n      (onVisibilityChange)=\"adjustSizes()\">\n      <datatable-header\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </datatable-header>\n      <datatable-body\n        (onRowClick)=\"onRowClick.emit($event)\"\n        (onRowSelect)=\"onRowSelect($event)\">\n      </datatable-body>\n      <datatable-footer\n        (onPageChange)=\"onPageChanged($event)\">\n      </datatable-footer>\n    </div>\n  "
         }), 
-        __metadata('design:paramtypes', [(typeof (_h = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _h) || Object, (typeof (_j = typeof StateService !== 'undefined' && StateService) === 'function' && _j) || Object, (typeof (_k = typeof KeyValueDiffers !== 'undefined' && KeyValueDiffers) === 'function' && _k) || Object])
+        __metadata('design:paramtypes', [(typeof (_h = typeof StateService !== 'undefined' && StateService) === 'function' && _h) || Object, (typeof (_j = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _j) || Object, (typeof (_k = typeof KeyValueDiffers !== 'undefined' && KeyValueDiffers) === 'function' && _k) || Object])
     ], DataTable);
     return DataTable;
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
 }());
+
+var cache = {};
+var testStyle = document.createElement('div').style;
+var prefix = (function () {
+    var styles = window.getComputedStyle(document.documentElement, '');
+    var pre = (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/))[1];
+    var dom = ('WebKit|Moz|MS|O').match(new RegExp('(' + pre + ')', 'i'))[1];
+    return {
+        dom: dom,
+        lowercase: pre,
+        css: "-" + pre + "-",
+        js: pre[0].toUpperCase() + pre.substr(1)
+    };
+})();
+function getVendorPrefixedName(property) {
+    var name = camelCase(property);
+    if (!cache[name]) {
+        if (testStyle[prefix.css + property] !== undefined) {
+            cache[name] = prefix.css + property;
+        }
+        else if (testStyle[property] !== undefined) {
+            cache[name] = property;
+        }
+    }
+    return cache[name];
+}
+
+var transform = getVendorPrefixedName('transform');
+var backfaceVisibility = getVendorPrefixedName('backfaceVisibility');
+var hasCSSTransforms = !!getVendorPrefixedName('transform');
+var hasCSS3DTransforms = !!getVendorPrefixedName('perspective');
+var ua = window.navigator.userAgent;
+var isSafari = (/Safari\//).test(ua) && !(/Chrome\//).test(ua);
+function translateXY(styles, x, y) {
+    if (hasCSSTransforms) {
+        if (!isSafari && hasCSS3DTransforms) {
+            styles[transform] = "translate3d(" + x + "px, " + y + "px, 0)";
+            styles[backfaceVisibility] = 'hidden';
+        }
+        else {
+            styles[camelCase(transform)] = "translate(" + x + "px, " + y + "px)";
+        }
+    }
+    else {
+        styles.top = y + "px";
+        styles.left = x + "px";
+    }
+}
 
 var DataTableHeader = (function () {
     function DataTableHeader(state, elm) {
@@ -746,6 +783,22 @@ var DataTableHeader = (function () {
             value: model
         });
     };
+    DataTableHeader.prototype.stylesByGroup = function (group) {
+        var widths = this.state.columnGroupWidths;
+        var offsetX = this.state.offsetX;
+        var styles = {
+            width: widths[group] + "px"
+        };
+        if (group === 'center') {
+            translateXY(styles, offsetX * -1, 0);
+        }
+        else if (group === 'right') {
+            var totalDiff = widths.total - this.state.innerWidth;
+            var offset = totalDiff * -1;
+            translateXY(styles, offset, 0);
+        }
+        return styles;
+    };
     __decorate([
         Output(), 
         __metadata('design:type', (typeof (_a = typeof EventEmitter !== 'undefined' && EventEmitter) === 'function' && _a) || Object)
@@ -753,7 +806,7 @@ var DataTableHeader = (function () {
     DataTableHeader = __decorate([
         Component({
             selector: 'datatable-header',
-            template: "\n    <div\n      [style.width]=\"state.columnGroupWidths.total\"\n      class=\"datatable-header-inner\"\n      orderable\n      (onReorder)=\"columnReordered($event)\">\n      <div\n        class=\"datatable-row-left\"\n        [style.width]=\"state.columnGroupWidths.left + 'px'\"\n        *ngIf=\"state.columnsByPin.left.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.left\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"drag = true\"\n          (onLongPressEnd)=\"drag = false\"\n          draggable\n          [dragX]=\"column.draggable && drag\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n      <div\n        class=\"datatable-row-center\"\n        [style.width]=\"state.columnGroupWidths.center + 'px'\"\n        *ngIf=\"state.columnsByPin.center.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.center\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"drag = true\"\n          (onLongPressEnd)=\"drag = false\"\n          draggable\n          [dragX]=\"column.draggable && drag\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n      <div\n        class=\"datatable-row-right\"\n        [style.width]=\"state.columnGroupWidths.right + 'px'\"\n        *ngIf=\"state.columnsByPin.right.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.right\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"drag = true\"\n          (onLongPressEnd)=\"drag = false\"\n          draggable\n          [dragX]=\"column.draggable && drag\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n    </div>\n  ",
+            template: "\n    <div\n      [style.width]=\"state.columnGroupWidths.total + 'px'\"\n      class=\"datatable-header-inner\"\n      orderable\n      (onReorder)=\"columnReordered($event)\">\n      <div\n        class=\"datatable-row-left\"\n        [ngStyle]=\"stylesByGroup('left')\"\n        *ngIf=\"state.columnsByPin.left.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.left\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"drag = true\"\n          (onLongPressEnd)=\"drag = false\"\n          draggable\n          [dragX]=\"column.draggable && drag\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n      <div\n        class=\"datatable-row-center\"\n        [ngStyle]=\"stylesByGroup('center')\"\n        *ngIf=\"state.columnsByPin.center.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.center\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"drag = true\"\n          (onLongPressEnd)=\"drag = false\"\n          draggable\n          [dragX]=\"column.draggable && drag\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n      <div\n        class=\"datatable-row-right\"\n        [ngStyle]=\"stylesByGroup('right')\"\n        *ngIf=\"state.columnsByPin.right.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.right\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"drag = true\"\n          (onLongPressEnd)=\"drag = false\"\n          draggable\n          [dragX]=\"column.draggable && drag\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n    </div>\n  ",
             host: {
                 '[style.width]': 'headerWidth',
                 '[style.height]': 'headerHeight'
@@ -764,13 +817,6 @@ var DataTableHeader = (function () {
     return DataTableHeader;
     var _a, _b, _c;
 }());
-
-var SelectionType;
-(function (SelectionType) {
-    SelectionType[SelectionType["single"] = 'single'] = "single";
-    SelectionType[SelectionType["multi"] = 'multi'] = "multi";
-    SelectionType[SelectionType["multiShift"] = 'multiShift'] = "multiShift";
-})(SelectionType || (SelectionType = {}));
 
 var Keys;
 (function (Keys) {
@@ -825,6 +871,13 @@ function selectRowsBetween(selected, rows, index, prevIndex) {
     return selected;
 }
 
+var SelectionType;
+(function (SelectionType) {
+    SelectionType[SelectionType["single"] = 'single'] = "single";
+    SelectionType[SelectionType["multi"] = 'multi'] = "multi";
+    SelectionType[SelectionType["multiShift"] = 'multiShift'] = "multiShift";
+})(SelectionType || (SelectionType = {}));
+
 var DataTableBody = (function () {
     function DataTableBody(state, element) {
         this.state = state;
@@ -867,15 +920,60 @@ var DataTableBody = (function () {
         var _this = this;
         this.rows = this.state.rows.slice();
         this.sub = this.state.onPageChange.subscribe(function () {
-            var _a = _this.state.indexes, first = _a.first, last = _a.last;
-            _this.rows = _this.state.rows.slice(first, last);
+            _this.updateRows();
             _this.hideIndicator();
         });
         this.sub.add(this.state.onRowsUpdate.subscribe(function (rows) {
-            var _a = _this.state.indexes, first = _a.first, last = _a.last;
-            _this.rows = rows.slice(first, last);
+            _this.updateRows();
             _this.hideIndicator();
         }));
+    };
+    DataTableBody.prototype.onBodyScroll = function (props) {
+        this.state.offsetY = props.scrollYPos;
+        this.state.offsetX = props.scrollXPos;
+        this.updatePage(props.direction);
+        this.updateRows();
+    };
+    DataTableBody.prototype.updatePage = function (direction) {
+        var idxs = this.state.indexes;
+        var page = idxs.first / this.state.pageSize;
+        if (direction === 'up') {
+            page = Math.floor(page);
+        }
+        else if (direction === 'down') {
+            page = Math.ceil(page);
+        }
+        if (direction !== undefined && !isNaN(page)) {
+            this.state.options.offset = page;
+        }
+    };
+    DataTableBody.prototype.updateRows = function (refresh) {
+        var idxs = this.state.indexes;
+        var idx = 0;
+        var rowIndex = idxs.first;
+        var endSpliceIdx = refresh ? this.state.rowCount : idxs.last - idxs.first;
+        this.rows.splice(0, endSpliceIdx);
+        while (rowIndex < idxs.last && rowIndex < this.state.rowCount) {
+            var row = this.state.rows[rowIndex];
+            if (row) {
+                row.$$index = rowIndex;
+                this.rows[idx] = row;
+            }
+            idx++;
+            rowIndex++;
+        }
+    };
+    DataTableBody.prototype.getRowsStyles = function (row) {
+        var rowHeight = this.state.options.rowHeight;
+        var styles = {
+            height: rowHeight + 'px'
+        };
+        if (this.state.options.scrollbarV) {
+            var idx = row ? row.$$index : 0;
+            var pos = idx * rowHeight;
+            translateXY(styles, 0, pos);
+        }
+        return styles;
     };
     DataTableBody.prototype.hideIndicator = function () {
         var _this = this;
@@ -946,7 +1044,7 @@ var DataTableBody = (function () {
     DataTableBody = __decorate([
         Component({
             selector: 'datatable-body',
-            template: "\n    <div>\n      <datatable-progress *ngIf=\"state.options.loadingIndicator\">\n      </datatable-progress>\n      <div\n        scroller\n        *ngIf=\"state.rows.length\"\n        [rowHeight]=\"state.options.rowHeight\"\n        [count]=\"state.rowCount\"\n        [scrollWidth]=\"state.columnGroupWidths.total\">\n        <datatable-body-row\n          *ngFor=\"let row of rows; let i = index;\"\n          [attr.tabindex]=\"i\"\n          (click)=\"rowClicked($event, i, row)\"\n          (keydown)=\"rowKeydown($event, i, row)\"\n          [row]=\"row\">\n        </datatable-body-row>\n      </div>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"state.options.emptyMessage\">\n      </div>\n    </div>\n  "
+            template: "\n    <div>\n      <datatable-progress\n        *ngIf=\"state.options.loadingIndicator\">\n      </datatable-progress>\n      <div\n        scroller\n        (onScroll)=\"onBodyScroll($event)\"\n        *ngIf=\"state.rows.length\"\n        [rowHeight]=\"state.options.rowHeight\"\n        [scrollbarV]=\"state.options.scrollbarV\"\n        [count]=\"state.rowCount\"\n        [scrollWidth]=\"state.columnGroupWidths.total\">\n        <datatable-body-row\n          [ngStyle]=\"getRowsStyles(row)\"\n          [style.height]=\"state.options.rowHeight + 'px'\"\n          *ngFor=\"let row of rows; let i = index;\"\n          [attr.tabindex]=\"i\"\n          (click)=\"rowClicked($event, i, row)\"\n          (keydown)=\"rowKeydown($event, i, row)\"\n          [row]=\"row\">\n        </datatable-body-row>\n      </div>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"state.options.emptyMessage\">\n      </div>\n    </div>\n  "
         }), 
         __metadata('design:paramtypes', [(typeof (_c = typeof StateService !== 'undefined' && StateService) === 'function' && _c) || Object, (typeof (_d = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _d) || Object])
     ], DataTableBody);
@@ -962,7 +1060,7 @@ var DataTableFooter = (function () {
     }
     Object.defineProperty(DataTableFooter.prototype, "visible", {
         get: function () {
-            return (this.state.pageCount / this.state.pageSize) > 1;
+            return (this.state.rowCount / this.state.pageSize) > 1;
         },
         enumerable: true,
         configurable: true
@@ -981,7 +1079,7 @@ var DataTableFooter = (function () {
     DataTableFooter = __decorate([
         Component({
             selector: 'datatable-footer',
-            template: "\n    <div\n      *ngIf=\"state.options.footerHeight\"\n      [style.height]=\"state.options.footerHeight\">\n      <div class=\"page-count\">{{state.pageCount}} total</div>\n      <datatable-pager\n        [page]=\"curPage\"\n        [size]=\"state.pageSize\"\n        (onPaged)=\"onPageChange.emit($event)\"\n        [count]=\"state.pageCount\"\n        [hidden]=\"!visible\">\n       </datatable-pager>\n     </div>\n  "
+            template: "\n    <div\n      *ngIf=\"state.options.footerHeight\"\n      [style.height]=\"state.options.footerHeight\">\n      <div class=\"page-count\">{{state.rowCount}} total</div>\n      <datatable-pager\n        [page]=\"curPage\"\n        [size]=\"state.pageSize\"\n        (onPaged)=\"onPageChange.emit($event)\"\n        [count]=\"state.rowCount\"\n        [hidden]=\"!visible\">\n       </datatable-pager>\n     </div>\n  "
         }), 
         __metadata('design:paramtypes', [(typeof (_b = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _b) || Object, (typeof (_c = typeof StateService !== 'undefined' && StateService) === 'function' && _c) || Object])
     ], DataTableFooter);
@@ -1004,6 +1102,13 @@ var DataTableHeaderCell = (function () {
             });
             if (sort)
                 return sort.dir;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataTableHeaderCell.prototype, "name", {
+        get: function () {
+            return this.model.name || this.model.prop;
         },
         enumerable: true,
         configurable: true
@@ -1035,7 +1140,7 @@ var DataTableHeaderCell = (function () {
     DataTableHeaderCell = __decorate([
         Component({
             selector: 'datatable-header-cell',
-            template: "\n    <div>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"model.name\">\n      </span>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses()\">\n      </span>\n    </div>\n  ",
+            template: "\n    <div>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses()\">\n      </span>\n    </div>\n  ",
             host: {
                 '[class.sortable]': 'model.sortable',
                 '[class.resizable]': 'model.resizable',
@@ -1043,7 +1148,7 @@ var DataTableHeaderCell = (function () {
                 '[style.minWidth]': 'model.minWidth + "px"',
                 '[style.maxWidth]': 'model.maxWidth + "px"',
                 '[style.height]': 'model.height + "px"',
-                '[attr.title]': 'model.name'
+                '[attr.title]': 'name'
             }
         }), 
         __metadata('design:paramtypes', [(typeof (_c = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _c) || Object, (typeof (_d = typeof StateService !== 'undefined' && StateService) === 'function' && _d) || Object])
@@ -1163,11 +1268,29 @@ var DataTableBodyRow = (function () {
     }
     Object.defineProperty(DataTableBodyRow.prototype, "isSelected", {
         get: function () {
-            return this.state.selected && this.state.selected.indexOf(this.row) > -1;
+            return this.state.selected &&
+                this.state.selected.indexOf(this.row) > -1;
         },
         enumerable: true,
         configurable: true
     });
+    DataTableBodyRow.prototype.stylesByGroup = function (group) {
+        var widths = this.state.columnGroupWidths;
+        var offsetX = this.state.offsetX;
+        var styles = {
+            width: widths[group] + "px"
+        };
+        if (group === 'left') {
+            translateXY(styles, offsetX, 0);
+        }
+        else if (group === 'right') {
+            var totalDiff = widths.total - this.state.innerWidth;
+            var offsetDiff = totalDiff - offsetX;
+            var offset = (offsetDiff + this.state.scrollbarWidth) * -1;
+            translateXY(styles, offset, 0);
+        }
+        return styles;
+    };
     __decorate([
         Input(), 
         __metadata('design:type', Object)
@@ -1179,7 +1302,7 @@ var DataTableBodyRow = (function () {
     DataTableBodyRow = __decorate([
         Component({
             selector: 'datatable-body-row',
-            template: "\n    <div>\n      <div\n        class=\"datatable-row-left\"\n        *ngIf=\"state.columnsByPin.left.length\"\n        [style.width]=\"state.columnGroupWidths.left + 'px'\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.left\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n      <div\n        class=\"datatable-row-center\"\n        [style.width]=\"state.columnGroupWidths.center + 'px'\"\n        *ngIf=\"state.columnsByPin.center.length\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.center\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n      <div\n        class=\"datatable-row-right\"\n        *ngIf=\"state.columnsByPin.right.length\"\n        [style.width]=\"state.columnGroupWidths.right + 'px'\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.right\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n    </div>\n  "
+            template: "\n    <div>\n      <div\n        class=\"datatable-row-left\"\n        *ngIf=\"state.columnsByPin.left.length\"\n        [ngStyle]=\"stylesByGroup('left')\"\n        [style.width]=\"state.columnGroupWidths.left + 'px'\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.left\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n      <div\n        class=\"datatable-row-center\"\n        [style.width]=\"state.columnGroupWidths.center + 'px'\"\n        [ngStyle]=\"stylesByGroup('center')\"\n        *ngIf=\"state.columnsByPin.center.length\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.center\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n      <div\n        class=\"datatable-row-right\"\n        *ngIf=\"state.columnsByPin.right.length\"\n        [ngStyle]=\"stylesByGroup('right')\"\n        [style.width]=\"state.columnGroupWidths.right + 'px'\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.right\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n    </div>\n  "
         }), 
         __metadata('design:paramtypes', [(typeof (_a = typeof StateService !== 'undefined' && StateService) === 'function' && _a) || Object, (typeof (_b = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _b) || Object])
     ], DataTableBodyRow);
@@ -1688,8 +1811,15 @@ var Orderable = (function () {
 }());
 
 var Scroller = (function () {
-    function Scroller(elm) {
-        elm.nativeElement.classList.add('scroller');
+    function Scroller(element) {
+        this.scrollbarV = false;
+        this.onScroll = new EventEmitter();
+        this.scrollYPos = 0;
+        this.scrollXPos = 0;
+        this.prevScrollYPos = 0;
+        this.prevScrollXPos = 0;
+        this.element = element.nativeElement;
+        this.element.classList.add('datatable-scroll');
     }
     Object.defineProperty(Scroller.prototype, "scrollHeight", {
         get: function () {
@@ -1698,6 +1828,37 @@ var Scroller = (function () {
         enumerable: true,
         configurable: true
     });
+    Scroller.prototype.ngOnInit = function () {
+        if (this.scrollbarV) {
+            this.parentElement = this.element.parentElement.parentElement;
+            this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
+        }
+    };
+    Scroller.prototype.ngOnDestroy = function () {
+        this.parentElement.removeEventListener('scroll');
+    };
+    Scroller.prototype.onScrolled = function (event) {
+        var dom = event.currentTarget;
+        this.scrollYPos = dom.scrollTop;
+        this.scrollXPos = dom.scrollLeft;
+        requestAnimationFrame(this.updateOffset.bind(this));
+    };
+    Scroller.prototype.updateOffset = function () {
+        var direction;
+        if (this.scrollYPos < this.prevScrollYPos) {
+            direction = 'down';
+        }
+        else if (this.scrollYPos > this.prevScrollYPos) {
+            direction = 'up';
+        }
+        this.onScroll.emit({
+            direction: direction,
+            scrollYPos: this.scrollYPos,
+            scrollXPos: this.scrollXPos
+        });
+        this.prevScrollYPos = this.scrollYPos;
+        this.prevScrollXPos = this.scrollXPos;
+    };
     __decorate([
         Input(), 
         __metadata('design:type', Number)
@@ -1710,6 +1871,14 @@ var Scroller = (function () {
         Input(), 
         __metadata('design:type', Number)
     ], Scroller.prototype, "scrollWidth", void 0);
+    __decorate([
+        Input(), 
+        __metadata('design:type', Boolean)
+    ], Scroller.prototype, "scrollbarV", void 0);
+    __decorate([
+        Output(), 
+        __metadata('design:type', (typeof (_a = typeof EventEmitter !== 'undefined' && EventEmitter) === 'function' && _a) || Object)
+    ], Scroller.prototype, "onScroll", void 0);
     Scroller = __decorate([
         Directive({
             selector: '[scroller]',
@@ -1718,10 +1887,10 @@ var Scroller = (function () {
                 '[style.width]': 'scrollWidth + "px"'
             }
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _a) || Object])
+        __metadata('design:paramtypes', [(typeof (_b = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _b) || Object])
     ], Scroller);
     return Scroller;
-    var _a;
+    var _a, _b;
 }());
 
 var TemplateWrapper = (function () {
@@ -1779,22 +1948,22 @@ var Angular2DataTableModule = (function () {
             ],
             declarations: [
                 Visibility,
-                DataTable,
-                DataTableColumn,
-                DataTableHeader,
-                DataTableHeaderCell,
                 Draggable,
                 Resizeable,
                 Orderable,
                 LongPress,
+                TemplateWrapper,
+                Scroller,
+                DataTable,
+                DataTableColumn,
+                DataTableHeader,
+                DataTableHeaderCell,
                 DataTableBody,
                 DataTableFooter,
                 DataTablePager,
                 ProgressBar,
                 DataTableBodyRow,
-                DataTableBodyCell,
-                Scroller,
-                TemplateWrapper
+                DataTableBodyCell
             ],
             providers: [
                 StateService

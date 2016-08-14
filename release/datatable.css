@@ -35,6 +35,8 @@
     box-sizing: border-box; }
   .datatable.scroll-vertical .datatable-body {
     overflow-y: auto; }
+    .datatable.scroll-vertical .datatable-body .datatable-body-row {
+      position: absolute; }
   .datatable.scroll-horz .datatable-body {
     overflow-x: auto; }
   .datatable.fixed-header .datatable-header {
