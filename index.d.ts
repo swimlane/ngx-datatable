@@ -1,1 +1,1 @@
-export * from './src/angular2-data-table';
+export * from './release/angular2-data-table';

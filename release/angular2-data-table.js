@@ -1,12 +1,12 @@
 /**
- * angular2-data-table v0.2.0 (https://github.com/swimlane/angular2-data-table#readme)
+ * angular2-data-table v0.2.1 (https://github.com/swimlane/angular2-data-table#readme)
  * Copyright 2016  
  * Licensed under MIT
  */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('rxjs/Rx')) :
     typeof define === 'function' && define.amd ? define('angular2-data-table', ['exports', '@angular/core', '@angular/common', 'rxjs/Rx'], factory) :
-    (factory((global.angular2DataTable = global.angular2DataTable || {}),global._angular_core,global._angular_common,global.rxjs_Rx));
+    (factory((global.angular2DataTable = global.angular2DataTable || {}),global.ng.core,global.ng.common,global.Rx));
 }(this, function (exports,_angular_core,_angular_common,rxjs_Rx) { 'use strict';
 
     function __decorate(decorators, target, key, desc) {

@@ -13,6 +13,8 @@
    * [Filtering](examples/filtering.md)
    * [Expressive](examples/expressive.md)
    * [Templates](examples/templates.md)
+   * [100k Rows](examples/virtual.md)
+   * [Horizontal & Vertical Scrolling](examples/scrolling.md)
 * API
    * [Table](api/table.md)
    * [Options](api/options.md)

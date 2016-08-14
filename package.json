@@ -1,6 +1,6 @@
 {
   "name": "angular2-data-table",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "angular2-data-table is a Angular2 component for presenting large and complex data.",
   "main": "release/angular2-data-table.js",
   "typings": "release/angular2-data-table.d.ts",
@@ -34,7 +34,7 @@
       "release:types": "./node_modules/typescript/bin/tsc --outFile release/angular2-data-table.js --module system",
       "release:build:umd": "rollup -c -f umd -o release/angular2-data-table.js",
       "release:build:cjs": "rollup -c -f cjs -o release/angular2-data-table.cjs.js",
-      "release:build:es": "rollup -c -f es6 -o release/angular2-data-table.es.js",
+      "release:build:es": "rollup -c -f es -o release/angular2-data-table.es.js",
       "release:css": "node-sass -o release/ src/themes && node-sass -o release/ src/components",
       "release:minify": "uglifyjs release/angular2-data-table.js --source-map release/angular2-data-table.min.js.map --source-map-url release/angular2-data-table.js.map --compress --mangle --screw-ie8 --output release/angular2-data-table.min.js",
       "release:headers": "header ./release/*.js"
