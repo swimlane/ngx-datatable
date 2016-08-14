@@ -7,15 +7,17 @@ It was built for modern browsers using _TypeScript, CSS3 and HTML5_ and Angular 
 Check out the [documentation & demos](https://swimlane.gitbooks.io/angular2-data-table/content/) for more information!
 
 ## Features
-- Light codebase / No external dependencies
+- Handle large data sets ( Virtual DOM )
 - Expressive Column Templates
+- Horizontal & Vertical Scrolling
 - Column Reordering & Resizing
-- Client/Server Pagination & Sorting
+- Client & Server-side Pagination & Sorting
 - Intelligent Column Width Algorithms ( Force-fill & Flex-grow )
 - Integrated Pager
 - Row Selection ( Single & Multi )
 - Fixed AND Fluid height
 - Decoupled theme'ing with included Google Material theme
-
+- Light codebase / No external dependencies
+- 
 ## Credits
 `angular2-data-table` is a [Swimlane](http://swimlane.com) open-source project; we believe in giving back to the open-source community by sharing some of the projects we build for our application. Swimlane is an automated cyber security operations and incident response platform that enables cyber security teams to leverage threat intelligence, speed up incident response and automate security operations.
