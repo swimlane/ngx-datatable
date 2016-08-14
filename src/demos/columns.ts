@@ -5,8 +5,13 @@ import {
   TableColumn,
   ColumnMode
 } from '../angular2-data-table';
+
+import { AppModule } from './module';
 import '../themes/material.scss';
 
+@NgModule({
+  imports: [ AppModule ]
+})
 @Component({
   selector: 'app',
   template: `

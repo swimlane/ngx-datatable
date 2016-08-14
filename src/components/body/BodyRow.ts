@@ -73,8 +73,6 @@ export class DataTableBodyRow {
       translateXY(styles, offset, 0);
     }
 
-    console.log('hi', styles)
-
     return styles;
   }
 

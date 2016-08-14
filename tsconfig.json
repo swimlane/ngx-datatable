@@ -27,7 +27,7 @@
     ]
   },
   "files": [
-    "src/custom-typings.d.ts",
+    "src/typings.d.ts",
     "src/angular2-data-table.ts"
   ],
   "exclude": [

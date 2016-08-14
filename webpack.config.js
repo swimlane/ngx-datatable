@@ -33,7 +33,7 @@ function webpackConfig(options = {}) {
     },
 
     entry: {
-      'app': './src/bootstrap.ts',
+      'app': './src/demos/bootstrap.ts',
       'polyfills': './src/polyfills.ts',
       'vendor': './src/vendor.ts'
     },
