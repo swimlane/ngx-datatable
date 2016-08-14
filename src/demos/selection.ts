@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 
 import {
   TableOptions,
@@ -6,6 +6,7 @@ import {
   SelectionType,
   ColumnMode
 } from '../angular2-data-table';
+
 import { AppModule } from './module';
 import '../themes/material.scss';
 

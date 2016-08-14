@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild, NgModule } from '@angular/core';
 
 import {
   TableOptions,
