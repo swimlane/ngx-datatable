@@ -1,23 +1,38 @@
-import { Component, Output, EventEmitter, OnInit, HostBinding, OnDestroy, ElementRef } from '@angular/core';
-import { StateService } from '../../services/State';
-import { SelectionType } from '../../enums/SelectionType';
+import {
+  Component,
+  Output,
+  EventEmitter,
+  OnInit,
+  HostBinding,
+  OnDestroy,
+  ElementRef
+} from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
+
 import { Keys } from '../../utils/keys';
 import { selectRows, selectRowsBetween } from '../../utils/selection';
-import { Subscription } from 'rxjs/Subscription';
+import { translateXY } from '../../utils/translate';
+
+import { StateService } from '../../services/State';
+import { SelectionType } from '../../enums/SelectionType';
 
 @Component({
   selector: 'datatable-body',
   template: `
     <div>
-      <datatable-progress *ngIf="state.options.loadingIndicator">
+      <datatable-progress
+        *ngIf="state.options.loadingIndicator">
       </datatable-progress>
       <div
         scroller
+        (onScroll)="onBodyScroll($event)"
         *ngIf="state.rows.length"
         [rowHeight]="state.options.rowHeight"
+        [scrollbarV]="state.options.scrollbarV"
         [count]="state.rowCount"
         [scrollWidth]="state.columnGroupWidths.total">
         <datatable-body-row
+          [ngStyle]="getRowsStyles(row)"
           [style.height]="state.options.rowHeight + 'px'"
           *ngFor="let row of rows; let i = index;"
           [attr.tabindex]="i"
@@ -51,7 +66,8 @@ export class DataTableBody implements OnInit, OnDestroy {
     element.nativeElement.classList.add('datatable-body');
   }
 
-  @HostBinding('style.height') get bodyHeight() {
+  @HostBinding('style.height')
+  get bodyHeight() {
     if (this.state.options.scrollbarV) {
       return this.state.bodyHeight + 'px';
     } else {
@@ -59,7 +75,8 @@ export class DataTableBody implements OnInit, OnDestroy {
     }
   }
 
-  @HostBinding('style.width') get bodyWidth() {
+  @HostBinding('style.width')
+  get bodyWidth() {
     if (this.state.options.scrollbarH) {
       return this.state.innerWidth + 'px';
     } else {
@@ -71,16 +88,73 @@ export class DataTableBody implements OnInit, OnDestroy {
     this.rows = [...this.state.rows];
 
     this.sub = this.state.onPageChange.subscribe(() => {
-      const {first, last} = this.state.indexes;
-      this.rows = this.state.rows.slice(first, last);
+      this.updateRows();
       this.hideIndicator();
     });
 
     this.sub.add(this.state.onRowsUpdate.subscribe(rows => {
-      const {first, last} = this.state.indexes;
-      this.rows = rows.slice(first, last);
+      this.updateRows();
       this.hideIndicator();
     }));
+  }
+
+  onBodyScroll(props) {
+    this.updatePage(props);
+    this.updateRows();
+  }
+
+  updatePage({ scrollYPos, direction }) {
+    this.state.offsetY = scrollYPos;
+
+    const idxs = this.state.indexes;
+    let page = idxs.first / this.state.pageSize;
+
+    if(direction === 'up') {
+      page = Math.floor(page);
+    } else if(direction === 'down') {
+      page = Math.ceil(page);
+    }
+
+    if(direction !== undefined && !isNaN(page)) {
+      this.state.options.offset = page;
+    }
+  }
+
+  updateRows(refresh?: boolean) {
+    const idxs = this.state.indexes;
+    let idx = 0;
+    let rowIndex = idxs.first;
+
+    let endSpliceIdx = refresh ? this.state.rowCount : idxs.last - idxs.first;
+    this.rows.splice(0, endSpliceIdx);
+
+    while (rowIndex < idxs.last && rowIndex < this.state.rowCount) {
+      var row = this.state.rows[rowIndex];
+
+      if(row) {
+        row.$$index = rowIndex;
+        this.rows[idx] = row;
+      }
+
+      idx++;
+      rowIndex++;
+    }
+  }
+
+  getRowsStyles(row) {
+    const rowHeight = this.state.options.rowHeight;
+
+    let styles = {
+      height: rowHeight + 'px'
+    };
+
+    if(this.state.options.scrollbarV) {
+      const idx = row ? row.$$index : 0;
+      const pos = idx * rowHeight;
+      translateXY(styles, 0, pos);
+    }
+
+    return styles;
   }
 
   hideIndicator(): void {

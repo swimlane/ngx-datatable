@@ -19,10 +19,10 @@ import { forceFillColumnWidths, adjustColumnWidths } from '../utils/math';
 import { ColumnMode } from '../enums/ColumnMode';
 import { TableOptions } from '../models/TableOptions';
 import { TableColumn } from '../models/TableColumn';
-import './datatable.scss';
-
 import { DataTableColumn } from './DataTableColumn';
 import { StateService } from '../services/State';
+
+import './datatable.scss';
 
 @Component({
   selector: 'datatable',
@@ -61,7 +61,11 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
   private rowDiffer: IterableDiffer;
   private colDiffer: IterableDiffer;
 
-  constructor(element: ElementRef, public state: StateService, differs: KeyValueDiffers) {
+  constructor(
+    public state: StateService, 
+    element: ElementRef,
+    differs: KeyValueDiffers) {
+
     this.element = element.nativeElement;
     this.element.classList.add('datatable');
 
@@ -78,7 +82,7 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
       .setSelected(selected);
   }
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit() {
     this.adjustColumns();
 
     if (this.columns.length) {
@@ -90,17 +94,18 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
     }
   }
 
-  ngDoCheck(): void {
+  ngDoCheck() {
     if (this.rowDiffer.diff(this.rows)) {
       this.state.setRows(this.rows);
       this.onRowsUpdate.emit(this.rows);
     }
 
-    this.checkColumnToggles();
+    this.checkColumnChanges();
   }
 
-  checkColumnToggles(): void {
-    const colDiff: any = this.colDiffer.diff(this.options.columns);
+  checkColumnChanges() {
+    const colDiff = this.colDiffer.diff(this.options.columns);
+
     if (colDiff) {
       let chngd: boolean = false;
       colDiff.forEachAddedItem(() => {
@@ -121,8 +126,8 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
     }
   }
 
-  adjustSizes(): void {
-    let {height, width} = this.element.getBoundingClientRect();
+  adjustSizes() {
+    let { height, width } = this.element.getBoundingClientRect();
     this.state.innerWidth = Math.floor(width);
 
     if (this.options.scrollbarV) {
@@ -134,7 +139,7 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
     this.adjustColumns();
   }
 
-  adjustColumns(forceIdx?: number): void {
+  adjustColumns(forceIdx?: number) {
     if (!this.options.columns) return;
 
     let width: number = this.state.innerWidth;
@@ -149,46 +154,46 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
     }
   }
 
-  onPageChanged(event): void {
+  onPageChanged(event) {
     this.state.setPage(event);
     this.onPageChange.emit(event);
   }
 
-  onRowSelect(event): void {
+  onRowSelect(event) {
     this.state.setSelected(event);
     this.onSelectionChange.emit(event);
   }
 
-  @HostListener('window:resize') resize(): void {
+  @HostListener('window:resize')
+  resize() {
     this.adjustSizes();
   }
 
-  @HostBinding('class.fixed-header') get isFixedHeader() {
+  @HostBinding('class.fixed-header')
+  get isFixedHeader() {
     const headerHeight: number|string = this.options.headerHeight;
     return (typeof headerHeight === 'string') ? (<string>headerHeight) !== 'auto' : true;
   }
 
-  @HostBinding('class.fixed-row') get isFixedRow() {
+  @HostBinding('class.fixed-row')
+  get isFixedRow() {
     const rowHeight: number|string = this.options.rowHeight;
     return (typeof rowHeight === 'string') ? (<string>rowHeight) !== 'auto' : true;
   }
 
-  @HostBinding('class.scroll-vertical') get isVertScroll() {
+  @HostBinding('class.scroll-vertical')
+  get isVertScroll() {
     return this.options.scrollbarV;
   }
 
-  @HostBinding('class.scroll-horz') get isHorScroll() {
+  @HostBinding('class.scroll-horz')
+  get isHorScroll() {
     return this.options.scrollbarH;
   }
 
-  @HostBinding('class.selectable') get isSelectable() {
-    // return this.options.selectable; //fixme doesn't exist
-    return false;
-  }
-
-  @HostBinding('class.checkboxable') get isCheckboxable() {
-    // return this.options.checkboxable; //fixme doesn't exist
-    return false;
+  @HostBinding('class.selectable')
+  get isSelectable() {
+    return this.options.selectionType !== undefined;
   }
 
 }

@@ -20,6 +20,9 @@
   &.scroll-vertical {
     .datatable-body {
       overflow-y:auto;
+      .datatable-body-row {
+        position: absolute;
+      }
     }
   }
 
