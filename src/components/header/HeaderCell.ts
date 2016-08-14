@@ -17,7 +17,7 @@ import { SortDirection } from '../../enums/SortDirection';
       <span
         class="datatable-header-cell-label draggable"
         (click)="onSort()"
-        [innerHTML]="model.name">
+        [innerHTML]="name">
       </span>
       <span
         class="sort-btn"
@@ -32,7 +32,7 @@ import { SortDirection } from '../../enums/SortDirection';
     '[style.minWidth]': 'model.minWidth + "px"',
     '[style.maxWidth]': 'model.maxWidth + "px"',
     '[style.height]': 'model.height + "px"',
-    '[attr.title]': 'model.name'
+    '[attr.title]': 'name'
   }
 })
 export class DataTableHeaderCell {
@@ -46,6 +46,10 @@ export class DataTableHeaderCell {
     });
 
     if(sort) return sort.dir;
+  }
+
+  get name() {
+    return this.model.name || this.model.prop;
   }
 
   constructor(public element: ElementRef, private state: StateService) {
