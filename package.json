@@ -9,7 +9,7 @@
     "test": "npm run lint",
     "lint": "tslint ./src/**/*.ts",
 
-    "version": "npm run build",
+    "version": "npm run release",
     "preversion": "npm test",
     "postversion": "git push && git push --tags",
 
@@ -17,21 +17,18 @@
       "clean:dist": "rimraf dist",
       "clean:release": "rimraf release",
 
-    "build:dev": "webpack --display-error-details",
+    "build": "webpack --display-error-details",
     "build:ts": "tsc",
     "build:sass": "node-sass -o dist/ src/",
     "build:css": "postcss --use autoprefixer dist/*.css -d dist/",
 
-    "watch": "npm-run-all -p watch:ts watch:sass",
-      "watch:ts": "tsc --watch",
-      "watch:sass": "npm run build:sass && node-sass -o dist/ -w src/",
-      "watch:webpack": "webpack --display-error-details --watch",
+    "watch": "webpack --display-error-details --watch",
 
     "start": "webpack-dev-server",
     "start:hmr": "webpack-dev-server --env.HMR",
 
     "release": "npm-run-all -s clean:* release:css release:types -p release:build:* -s release:minify release:headers",
-      "release:types": "./node_modules/typescript/bin/tsc --outFile release/angular2-data-table.js --module system",
+      "release:types": "tsc --outFile release/angular2-data-table.js --module system",
       "release:build:umd": "rollup -c -f umd -o release/angular2-data-table.js",
       "release:build:cjs": "rollup -c -f cjs -o release/angular2-data-table.cjs.js",
       "release:build:es": "rollup -c -f es -o release/angular2-data-table.es.js",
