@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 
 import { StateService } from '../../services/State';
+import { translateXY } from '../../utils/translate';
 
 @Component({
   selector: 'datatable-header',
@@ -17,7 +18,7 @@ import { StateService } from '../../services/State';
       (onReorder)="columnReordered($event)">
       <div
         class="datatable-row-left"
-        [style.width]="state.columnGroupWidths.left + 'px'"
+        [ngStyle]="stylesByGroup('left')"
         *ngIf="state.columnsByPin.left.length">
         <datatable-header-cell
           *ngFor="let column of state.columnsByPin.left"
@@ -36,7 +37,7 @@ import { StateService } from '../../services/State';
       </div>
       <div
         class="datatable-row-center"
-        [style.width]="state.columnGroupWidths.center + 'px'"
+        [ngStyle]="stylesByGroup('center')"
         *ngIf="state.columnsByPin.center.length">
         <datatable-header-cell
           *ngFor="let column of state.columnsByPin.center"
@@ -55,7 +56,7 @@ import { StateService } from '../../services/State';
       </div>
       <div
         class="datatable-row-right"
-        [style.width]="state.columnGroupWidths.right + 'px'"
+        [ngStyle]="stylesByGroup('right')"
         *ngIf="state.columnsByPin.right.length">
         <datatable-header-cell
           *ngFor="let column of state.columnsByPin.right"
@@ -123,6 +124,25 @@ export class DataTableHeader {
       type: 'reorder',
       value: model
     });
+  }
+
+  stylesByGroup(group) {
+    const widths = this.state.columnGroupWidths;
+    const offsetX = this.state.offsetX;
+
+    let styles = {
+      width: `${widths[group]}px`
+    };
+
+    if(group === 'center') {
+      translateXY(styles, offsetX * -1, 0);
+    } else if(group === 'right') {
+      const totalDiff = widths.total - this.state.innerWidth;
+      const offset = totalDiff * -1;
+      translateXY(styles, offset, 0);
+    }
+
+    return styles;
   }
 
 }

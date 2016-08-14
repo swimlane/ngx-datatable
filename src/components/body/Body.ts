@@ -99,13 +99,14 @@ export class DataTableBody implements OnInit, OnDestroy {
   }
 
   onBodyScroll(props) {
-    this.updatePage(props);
+    this.state.offsetY = props.scrollYPos;
+    this.state.offsetX = props.scrollXPos;
+
+    this.updatePage(props.direction);
     this.updateRows();
   }
 
-  updatePage({ scrollYPos, direction }) {
-    this.state.offsetY = scrollYPos;
-
+  updatePage(direction) {
     const idxs = this.state.indexes;
     let page = idxs.first / this.state.pageSize;
 

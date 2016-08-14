@@ -24,7 +24,6 @@ export class Scroller implements OnInit, OnDestroy {
 
   @Output() onScroll: EventEmitter<any> = new EventEmitter();
 
-  private ticking: boolean = false;
   private scrollYPos: number = 0;
   private scrollXPos: number = 0;
   private prevScrollYPos: number = 0;
@@ -58,10 +57,7 @@ export class Scroller implements OnInit, OnDestroy {
     this.scrollYPos = dom.scrollTop;
     this.scrollXPos = dom.scrollLeft;
 
-    if(!this.ticking) {
-      requestAnimationFrame(this.updateOffset.bind(this));
-      this.ticking = true;
-    }
+    requestAnimationFrame(this.updateOffset.bind(this));
   }
 
   updateOffset() {
@@ -80,7 +76,6 @@ export class Scroller implements OnInit, OnDestroy {
 
     this.prevScrollYPos = this.scrollYPos;
     this.prevScrollXPos = this.scrollXPos;
-    this.ticking = false;
   }
 
 }
