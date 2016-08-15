@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v0.2.2 (https://github.com/swimlane/angular2-data-table#readme)
+ * angular2-data-table v0.2.3 (https://github.com/swimlane/angular2-data-table#readme)
  * Copyright 2016  
  * Licensed under MIT
  */
@@ -1833,7 +1833,9 @@
             }
         };
         Scroller.prototype.ngOnDestroy = function () {
-            this.parentElement.removeEventListener('scroll');
+            if (this.scrollbarV) {
+                this.parentElement.removeEventListener('scroll');
+            }
         };
         Scroller.prototype.onScrolled = function (event) {
             var dom = event.currentTarget;
