@@ -96,8 +96,7 @@
       height: 50px;
       padding: 0 1.2rem; }
     .datatable.material .datatable-footer .datatable-pager {
-      margin: 0 10px;
-      line-height: 50px; }
+      margin: 0 10px; }
       .datatable.material .datatable-footer .datatable-pager li {
         vertical-align: middle; }
         .datatable.material .datatable-footer .datatable-pager li.disabled a {

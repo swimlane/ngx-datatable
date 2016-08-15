@@ -10,8 +10,8 @@ import { Angular2DataTableModule } from '../angular2-data-table';
 // import { App } from './expressive';
 // import { App } from './template';
 // import { App } from './details';
-// import { App } from './virtual';
-import { App } from './scrolling';
+import { App } from './virtual';
+// import { App } from './scrolling';
 
 @NgModule({
   declarations: [ App ],
