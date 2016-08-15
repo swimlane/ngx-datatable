@@ -480,7 +480,7 @@ declare module "directives/TemplateWrapper" {
         }): void;
     }
 }
-declare module "angular2-data-table" {
+export declare module "angular2-data-table" {
     import { ColumnMode } from "enums/ColumnMode";
     import { SortType } from "enums/SortType";
     import { SortDirection } from "enums/SortDirection";
