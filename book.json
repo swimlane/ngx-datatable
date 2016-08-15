@@ -5,11 +5,11 @@
     "plugins": [
         "highlight",
         "github",
-        "gistrun",
         "theme-api",
         "include-codeblock",
         "versions",
-        "anchors"
+        "anchors",
+        "toc"
     ],
     "pluginsConfig": {
         "github": {

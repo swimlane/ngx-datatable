@@ -2,5 +2,4 @@
 
 Below is a basic example of server-side sorting.
 
-{% gistrun id="b445fca7fccdf84d66661f48fe7d20fa" %}
-{% endgistrun %}
+<iframe width="100%" height="300" src="https://embed.plnkr.co/mGIXTGGOJ7sMHX8Diccl/" />

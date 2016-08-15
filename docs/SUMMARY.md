@@ -6,7 +6,8 @@
    * [Themes](introduction/themes.md)
 * Examples
    * [Basic](examples/basic.md)
-   * [Paging](examples/paging.md)
+   * [Client-side Paging](examples/client-paging.md)
+   * [Server-side Paging](examples/server-paging.md)
    * [Sorting](examples/sorting.md)
    * [Selection](examples/selection.md)
    * [Column Show/Hide](examples/column-toggle.md)

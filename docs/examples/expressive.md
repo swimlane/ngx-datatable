@@ -3,8 +3,8 @@ Below is a example that lets developers define the columns and the templates
 expressively in markup. This is especially useful for complex situations
 where you want rich controls within your grid.
 
-{% gistrun id="d9beac09cb9c5429b4034b384264e4e0" %}
-{% endgistrun %}
+<iframe width="100%" height="300" src="https://embed.plnkr.co/iH1e7cIAdX5Ds4jY7WYc/" />
+
 
 ## Notes
 Its important to note, in order for you to project your column/row/value
