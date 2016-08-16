@@ -1,0 +1,35 @@
+import { ElementRef, EventEmitter, KeyValueDiffers, OnInit, QueryList, DoCheck, AfterViewInit } from '@angular/core';
+import { TableOptions } from '../models/TableOptions';
+import { DataTableColumn } from './DataTableColumn';
+import { StateService } from '../services/State';
+import './datatable.scss';
+export declare class DataTable implements OnInit, DoCheck, AfterViewInit {
+    state: StateService;
+    options: TableOptions;
+    rows: any[];
+    selected: any[];
+    onPageChange: EventEmitter<any>;
+    onRowsUpdate: EventEmitter<any>;
+    onRowClick: EventEmitter<any>;
+    onSelectionChange: EventEmitter<any>;
+    onColumnChange: EventEmitter<any>;
+    columns: QueryList<DataTableColumn>;
+    private element;
+    private rowDiffer;
+    private colDiffer;
+    constructor(state: StateService, element: ElementRef, differs: KeyValueDiffers);
+    ngOnInit(): void;
+    ngAfterViewInit(): void;
+    ngDoCheck(): void;
+    checkColumnChanges(): void;
+    adjustSizes(): void;
+    adjustColumns(forceIdx?: number): void;
+    onPageChanged(event: any): void;
+    onRowSelect(event: any): void;
+    resize(): void;
+    readonly isFixedHeader: boolean;
+    readonly isFixedRow: boolean;
+    readonly isVertScroll: boolean;
+    readonly isHorScroll: boolean;
+    readonly isSelectable: boolean;
+}

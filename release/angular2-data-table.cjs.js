@@ -1,6 +1,6 @@
 /**
- * angular2-data-table v0.2.3 (https://github.com/swimlane/angular2-data-table#readme)
- * Copyright 2016  
+ * angular2-data-table v0.2.3 (https://github.com/swimlane/angular2-data-table)
+ * Copyright 2016
  * Licensed under MIT
  */
 'use strict';
@@ -22,6 +22,10 @@ function __metadata(k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 }
 
+/**
+ * Returns the columns by pin.
+ * @param {array} cols
+ */
 function columnsByPin(cols) {
     var ret = {
         left: [],
@@ -44,6 +48,11 @@ function columnsByPin(cols) {
     }
     return ret;
 }
+/**
+ * Returns the widths of all group sets of a column
+ * @param {object} groups
+ * @param {array} all
+ */
 function columnGroupWidths(groups, all) {
     return {
         left: columnTotalWidth$1(groups.left),
@@ -52,6 +61,11 @@ function columnGroupWidths(groups, all) {
         total: columnTotalWidth$1(all)
     };
 }
+/**
+ * Calculates the total width of all columns and their groups
+ * @param {array} columns
+ * @param {string} prop width to get
+ */
 function columnTotalWidth$1(columns, prop) {
     var totalWidth = 0;
     if (columns) {
@@ -64,6 +78,11 @@ function columnTotalWidth$1(columns, prop) {
     return totalWidth;
 }
 
+/**
+ * Calculates the total width of all columns and their groups
+ * @param {array} columns
+ * @param {string} property width to get
+ */
 function columnTotalWidth(columns, prop) {
     var totalWidth = 0;
     for (var _i = 0, columns_1 = columns; _i < columns_1.length; _i++) {
@@ -73,6 +92,10 @@ function columnTotalWidth(columns, prop) {
     }
     return totalWidth;
 }
+/**
+ * Calculates the Total Flex Grow
+ * @param {array}
+ */
 function getTotalFlexGrow(columns) {
     var totalFlexGrow = 0;
     for (var _i = 0, columns_2 = columns; _i < columns_2.length; _i++) {
@@ -81,6 +104,12 @@ function getTotalFlexGrow(columns) {
     }
     return totalFlexGrow;
 }
+/**
+ * Adjusts the column widths.
+ * Inspired by: https://github.com/facebook/fixed-data-table/blob/master/src/FixedDataTableWidthHelper.js
+ * @param {array} all columns
+ * @param {int} width
+ */
 function adjustColumnWidths(allColumns, expectedWidth) {
     var columnsWidth = columnTotalWidth(allColumns);
     var totalFlexGrow = getTotalFlexGrow(allColumns);
@@ -89,7 +118,14 @@ function adjustColumnWidths(allColumns, expectedWidth) {
         scaleColumns(colsByGroup, expectedWidth, totalFlexGrow);
     }
 }
+/**
+ * Resizes columns based on the flexGrow property, while respecting manually set widths
+ * @param {array} colsByGroup
+ * @param {int} maxWidth
+ * @param {int} totalFlexGrow
+ */
 function scaleColumns(colsByGroup, maxWidth, totalFlexGrow) {
+    // calculate total width and flexgrow points for coulumns that can be resized
     for (var attr in colsByGroup) {
         for (var _i = 0, _a = colsByGroup[attr]; _i < _a.length; _i++) {
             var column = _a[_i];
@@ -104,12 +140,14 @@ function scaleColumns(colsByGroup, maxWidth, totalFlexGrow) {
     }
     var hasMinWidth = {};
     var remainingWidth = maxWidth;
+    // resize columns until no width is left to be distributed
     do {
         var widthPerFlexPoint = remainingWidth / totalFlexGrow;
         remainingWidth = 0;
         for (var attr in colsByGroup) {
             for (var _b = 0, _c = colsByGroup[attr]; _b < _c.length; _b++) {
                 var column = _c[_b];
+                // if the column can be resize and it hasn't reached its minimum width yet
                 if (column.canAutoResize && !hasMinWidth[column.prop]) {
                     var newWidth = column.width + column.flexGrow * widthPerFlexPoint;
                     if (column.minWidth !== undefined && newWidth < column.minWidth) {
@@ -125,6 +163,28 @@ function scaleColumns(colsByGroup, maxWidth, totalFlexGrow) {
         }
     } while (remainingWidth !== 0);
 }
+/**
+ * Forces the width of the columns to
+ * distribute equally but overflowing when nesc.
+ *
+ * Rules:
+ *
+ *  - If combined withs are less than the total width of the grid,
+ *    proporation the widths given the min / max / noraml widths to fill the width.
+ *
+ *  - If the combined widths, exceed the total width of the grid,
+ *    use the standard widths.
+ *
+ *  - If a column is resized, it should always use that width
+ *
+ *  - The proporational widths should never fall below min size if specified.
+ *
+ *  - If the grid starts off small but then becomes greater than the size ( + / - )
+ *    the width should use the orginial width; not the newly proporatied widths.
+ *
+ * @param {array} allColumns
+ * @param {int} expectedWidth
+ */
 function forceFillColumnWidths(allColumns, expectedWidth, startIdx) {
     var contentWidth = 0;
     var columnsToResize = startIdx > -1 ?
@@ -178,57 +238,116 @@ function forceFillColumnWidths(allColumns, expectedWidth, startIdx) {
 
 var TableOptions = (function () {
     function TableOptions(props) {
+        // Columns
         this.columns = [];
+        // Enable vertical scrollbars
         this.scrollbarV = false;
+        // Enable horz scrollbars
         this.scrollbarH = false;
+        // The row height; which is necessary
+        // to calculate the height for the lazy rendering.
         this.rowHeight = 30;
+        // flex
+        // force
+        // standard
         this.columnMode = exports.ColumnMode.standard;
+        // Loading message presented when the array is undefined
         this.loadingMessage = 'Loading...';
+        // Message to show when array is presented
+        // but contains no values
         this.emptyMessage = 'No data to display';
+        // The minimum header height in pixels.
+        // pass falsey for no header
+        // note: number|string does not work right
         this.headerHeight = 30;
+        // The minimum footer height in pixels.
+        // pass falsey for no footer
         this.footerHeight = 0;
+        // if external paging is turned on
         this.externalPaging = false;
+        // Page size
         this.limit = undefined;
+        // Total count
         this.count = 0;
+        // Page offset
         this.offset = 0;
+        // Loading indicator
         this.loadingIndicator = false;
+        // if you can reorder columns
         this.reorderable = true;
+        // type of sorting
         this.sortType = exports.SortType.single;
+        // sorts
         this.sorts = [];
         Object.assign(this, props);
     }
     return TableOptions;
 }());
 
+/**
+ * Creates a unique object id.
+ * http://stackoverflow.com/questions/6248666/how-to-generate-short-uid-like-ax4j9z-in-js
+ */
 function id() {
     return ('0000' + (Math.random() * Math.pow(36, 4) << 0).toString(36)).slice(-4);
 }
 
+/**
+ * Converts strings from something to camel case
+ * http://stackoverflow.com/questions/10425287/convert-dash-separated-string-to-camelcase
+ * @param  {string} str
+ * @return {string} camel case string
+ */
 function camelCase(str) {
+    // Replace special characters with a space
     str = str.replace(/[^a-zA-Z0-9 ]/g, ' ');
+    // put a space before an uppercase letter
     str = str.replace(/([a-z](?=[A-Z]))/g, '$1 ');
+    // Lower case first character and some other stuff
     str = str.replace(/([^a-zA-Z0-9 ])|^[0-9]+/g, '').trim().toLowerCase();
+    // uppercase characters preceded by a space or number
     str = str.replace(/([ 0-9]+)([a-zA-Z])/g, function (a, b, c) {
         return b.trim() + c.toUpperCase();
     });
     return str;
 }
 
+/**
+ * Default Column Options
+ * @type {object}
+ */
 var TableColumn = (function () {
     function TableColumn(props) {
+        // unique id
         this.$$id = id();
+        // defines if its expressive
         this.isExpressive = false;
+        // pinned to the left
         this.frozenLeft = false;
+        // pinned to the right
         this.frozenRight = false;
+        // The grow factor relative to other columns. Same as the flex-grow
+        // API from http =//www.w3.org/TR/css3-flexbox/. Basically;
+        // take any available extra width and distribute it proportionally
+        // according to all columns' flexGrow values.
         this.flexGrow = 0;
+        // Minimum width of the column.
         this.minWidth = 0;
+        // Maximum width of the column.
         this.maxWidth = undefined;
+        // The width of the column; by default (in pixels).
         this.width = 150;
+        // If yes then the column can be resized; otherwise it cannot.
         this.resizeable = true;
+        // Custom sort comparator
         this.comparator = undefined;
+        // Custom pipe
         this.pipe = null;
+        // If yes then the column can be sorted.
         this.sortable = true;
+        // can column be dragged
         this.draggable = true;
+        // Whether the column can automatically resize to fill space in the table.
         this.canAutoResize = true;
         Object.assign(this, props);
         if (!this.prop && this.name) {
@@ -264,6 +383,11 @@ var DataTableColumn = (function () {
     var _a;
 }());
 
+/**
+ * Gets the width of the scrollbar.  Nesc for windows
+ * http://stackoverflow.com/a/13382873/888165
+ * @return {int} width
+ */
 function scrollbarWidth() {
     var outer = document.createElement('div');
     outer.style.visibility = 'hidden';
@@ -286,6 +410,12 @@ function scrollbarWidth() {
     SortDirection[SortDirection["desc"] = 'desc'] = "desc";
 })(exports.SortDirection || (exports.SortDirection = {}));
 
+/**
+ * Gets the next sort direction
+ * @param  {SortType}      sortType
+ * @param  {SortDirection} currentSort
+ * @return {SortDirection}
+ */
 function nextSortDir(sortType, current) {
     if (sortType === exports.SortType.single) {
         if (current === exports.SortDirection.asc) {
@@ -308,25 +438,41 @@ function nextSortDir(sortType, current) {
     }
 }
 ;
+/**
+ * Adapted from fueld-ui on 6/216
+ * https://github.com/FuelInteractive/fuel-ui/tree/master/src/pipes/OrderBy
+ * @param  {any}    a
+ * @param  {any}    b
+ * @return {number} position
+ */
 function orderByComparator(a, b) {
     if (a === null || typeof a === 'undefined')
         a = 0;
     if (b === null || typeof b === 'undefined')
         b = 0;
     if ((isNaN(parseFloat(a)) || !isFinite(a)) || (isNaN(parseFloat(b)) || !isFinite(b))) {
+        // Isn't a number so lowercase the string to properly compare
         if (a.toLowerCase() < b.toLowerCase())
             return -1;
         if (a.toLowerCase() > b.toLowerCase())
             return 1;
     }
     else {
+        // Parse strings as numbers to compare properly
         if (parseFloat(a) < parseFloat(b))
             return -1;
         if (parseFloat(a) > parseFloat(b))
             return 1;
     }
+    // equal each other
     return 0;
 }
+/**
+ * Sorts the rows
+ * @param  {Array<any>}  rows
+ * @param  {Array<Sort>} dirs
+ * @return {Array<any>} results
+ */
 function sortRows(rows, dirs) {
     var temp = rows.slice();
     return temp.sort(function (a, b) {
@@ -335,9 +481,11 @@ function sortRows(rows, dirs) {
             var comparison = dir !== exports.SortDirection.desc ?
                 orderByComparator(a[prop], b[prop]) :
                 -orderByComparator(a[prop], b[prop]);
+            // Don't return 0 yet in case of needing to sort by next property
             if (comparison !== 0)
                 return comparison;
         }
+        // equal each other
         return 0;
     });
 }
@@ -538,6 +686,8 @@ var DataTable = (function () {
                     return false;
                 });
             }
+            // if a column was added or removed
+            // we need to re-adjust columns
             if (chngd_1)
                 this.adjustColumns();
         }
@@ -691,6 +841,8 @@ var DataTable = (function () {
 
 var cache = {};
 var testStyle = document.createElement('div').style;
+// Get Prefix
+// http://davidwalsh.name/vendor-prefix
 var prefix = (function () {
     var styles = window.getComputedStyle(document.documentElement, '');
     var pre = (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/))[1];
@@ -715,6 +867,7 @@ function getVendorPrefixedName(property) {
     return cache[name];
 }
 
+// browser detection and prefixing tools
 var transform = getVendorPrefixedName('transform');
 var backfaceVisibility = getVendorPrefixedName('backfaceVisibility');
 var hasCSSTransforms = !!getVendorPrefixedName('transform');
@@ -858,10 +1011,14 @@ function selectRowsBetween(selected, rows, index, prevIndex) {
         }
         if ((reverse && lesser) || (!reverse && greater)) {
             var idx = selected.indexOf(row);
+            // if reverse shift selection (unselect) and the
+            // row is already selected, remove it from selected
             if (reverse && idx > -1) {
                 selected.splice(idx, 1);
                 continue;
             }
+            // if in the positive range to be added to `selected`, and
+            // not already in the selected array, add it
             if (i >= range.start && i < range.end) {
                 if (idx === -1) {
                     selected.push(row);
@@ -1324,6 +1481,11 @@ var ProgressBar = (function () {
     return ProgressBar;
 }());
 
+/**
+ * Returns a deep object given a string. zoo['animal.type']
+ * @param {object} obj
+ * @param {string} path
+ */
 function deepValueGetter(obj, path) {
     if (!obj || !path)
         return obj;
@@ -1383,9 +1545,30 @@ var DataTableBodyCell = (function () {
     var _a, _b;
 }());
 
+/**
+ * Observes changes to an elements visibility.
+ * https://medium.com/@amcdnl/javascript-s-new-intersectionobserver-cdce8a73bef8#.evn5twug3
+ *
+ * Example:
+ *
+ * 		var elm = document.getElementById("panda");
+ * 	 	new VisibilityObserver(elm, function() {
+ * 			alert('PAndas rock!');
+ * 	  });
+ *
+ */
 var VisibilityObserver = (function () {
     function VisibilityObserver(element, callback) {
         this.callback = callback;
+        /*
+        // this is not working...
+        if(window.IntersectionObserver) {
+          this.observer = new IntersectionObserver(
+            this.processChanges.bind(this), { threshold: [0.5] });
+    
+          this.observer.observe(element);
+        } else { this.runPolyfill(element); }
+        */
         this.runPolyfill(element);
     }
     VisibilityObserver.prototype.runPolyfill = function (element) {
@@ -1408,6 +1591,7 @@ var VisibilityObserver = (function () {
     };
     VisibilityObserver.prototype.visibleTimerCallback = function (element, observer) {
         delete element.visibleTimeout;
+        // Process any pending observations
         this.processChanges(observer.takeRecords());
         if ('isVisible' in element) {
             delete element.isVisible;
@@ -1422,9 +1606,11 @@ var VisibilityObserver = (function () {
             var element = changeRecord.target;
             element.isVisible = _this.isVisible(changeRecord.boundingClientRect, changeRecord.intersectionRect);
             if ('isVisible' in element) {
+                // Transitioned from hidden to visible
                 element.visibleTimeout = setTimeout(_this.visibleTimerCallback.bind(_this), 1000, element, _this.observer);
             }
             else {
+                // Transitioned from visible to hidden
                 if ('visibleTimeout' in element) {
                     clearTimeout(element.visibleTimeout);
                     delete element.visibleTimeout;
@@ -1435,6 +1621,17 @@ var VisibilityObserver = (function () {
     return VisibilityObserver;
 }());
 
+/**
+ * Visibility Observer Directive
+ *
+ * Usage:
+ *
+ * 		<div
+ * 			visibility-observer
+ * 			(onVisibilityChange)="doSomething($event)">
+ * 		</div>
+ *
+ */
 var Visibility = (function () {
     function Visibility(element) {
         this.visible = false;
@@ -1482,6 +1679,7 @@ var LongPress = (function () {
     });
     LongPress.prototype.onMouseDown = function (event) {
         var _this = this;
+        // don't do right/middle clicks
         if (event.which !== 1)
             return;
         this.mouseX = event.clientX;
@@ -1652,6 +1850,14 @@ var Resizeable = (function () {
     var _a, _b;
 }());
 
+/**
+ * Draggable Directive for Angular2
+ *
+ * Inspiration:
+ *   https://github.com/AngularClass/angular2-examples/blob/master/rx-draggable/directives/draggable.ts
+ *   http://stackoverflow.com/questions/35662530/how-to-implement-drag-and-drop-in-angular2
+ *
+ */
 var Draggable = (function () {
     function Draggable(element) {
         this.dragX = true;
@@ -1829,6 +2035,7 @@ var Scroller = (function () {
         configurable: true
     });
     Scroller.prototype.ngOnInit = function () {
+        // manual bind so we don't always listen
         if (this.scrollbarV) {
             this.parentElement = this.element.parentElement.parentElement;
             this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
