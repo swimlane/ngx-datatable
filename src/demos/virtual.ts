@@ -16,7 +16,8 @@ import '../themes/material.scss';
       <datatable
         class='material'
         [rows]='rows'
-        [options]='options'>
+        [options]='options'
+        (onPageChange)="onChange($event)">
 
         <datatable-column name="Name">
           <template let-value="value">
@@ -67,4 +68,7 @@ export class App {
     req.send();
   }
 
+  onChange(event){
+    console.debug("Page",event);
+  }
 }

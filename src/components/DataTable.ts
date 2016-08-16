@@ -35,7 +35,8 @@ import './datatable.scss';
       </datatable-header>
       <datatable-body
         (onRowClick)="onRowClick.emit($event)"
-        (onRowSelect)="onRowSelect($event)">
+        (onRowSelect)="onRowSelect($event)"
+        (onScroll)="onScroll($event)">
       </datatable-body>
       <datatable-footer
         (onPageChange)="onPageChanged($event)">
@@ -156,6 +157,10 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
 
   onPageChanged(event) {
     this.state.setPage(event);
+    this.onPageChange.emit(event);
+  }
+
+  onScroll(event){
     this.onPageChange.emit(event);
   }
 
