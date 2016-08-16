@@ -1,7 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
 
-var CleanWebpackPlugin = require('clean-webpack-plugin');
 var WebpackNotifierPlugin = require('webpack-notifier');
 var ProgressBarPlugin = require('progress-bar-webpack-plugin');
 var chalk = require('chalk');
@@ -93,12 +92,6 @@ function webpackConfig(options = {}) {
 
       new WebpackNotifierPlugin({
         excludeWarnings: true
-      }),
-
-      new CleanWebpackPlugin(['dist'], {
-        root: root(),
-        verbose: false,
-        dry: false
       }),
 
       new ProgressBarPlugin({
