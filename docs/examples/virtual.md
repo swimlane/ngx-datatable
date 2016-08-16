@@ -1,7 +1,7 @@
 # Virtual Scrolling
-This table has 100k rows preloaded, only rows in view port are drawn for performance.
+Demonstration of a table preloaded with 100k rows.
 
-<iframe width="100%" height="450" frameborder="0" src="https://embed.plnkr.co/6h6oV3SpMywzR2hfDDWG?show=preview&autoCloseSidebar=true" />
+<iframe width="100%" height="450" frameborder="0" src="https://embed.plnkr.co/6h6oV3SpMywzR2hfDDWG?show=preview&autoCloseSidebar=true"></iframe>
 
 ## Details
 So how does this work? We use a technique called virtual scrolling, which does the following:

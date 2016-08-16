@@ -3,7 +3,7 @@ Below is a example that lets developers define the columns and the templates
 expressively in markup. This is especially useful for complex situations
 where you want rich controls within your grid.
 
-<iframe width="100%" height="450" frameborder="0" src="https://embed.plnkr.co/iH1e7cIAdX5Ds4jY7WYc?show=preview&autoCloseSidebar=true" />
+<iframe width="100%" height="450" frameborder="0" src="https://embed.plnkr.co/iH1e7cIAdX5Ds4jY7WYc?show=preview&autoCloseSidebar=true"></iframe>
 
 
 ## Details
