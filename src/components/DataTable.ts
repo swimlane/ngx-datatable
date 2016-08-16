@@ -160,7 +160,7 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
     this.onPageChange.emit(event);
   }
 
-  onScroll(event){
+  onScroll(event) {
     this.onPageChange.emit(event);
   }
 

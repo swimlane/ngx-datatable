@@ -68,7 +68,7 @@ export class App {
     req.send();
   }
 
-  onChange(event){
-    console.debug("Page",event);
+  onChange(event) {
+    console.debug('Page', event);
   }
 }
