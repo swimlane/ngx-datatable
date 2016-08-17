@@ -8,32 +8,26 @@
     "check": "npm-check --skip-unused",
     "test": "npm run lint",
     "lint": "tslint ./src/**/*.ts",
-
     "version": "npm run release",
     "preversion": "npm test",
     "postversion": "git push && git push --tags",
-
     "clean": "npm-run-all -p clean:*",
-      "clean:dist": "rimraf dist",
-      "clean:release": "rimraf release",
-
+    "clean:dist": "rimraf dist",
+    "clean:release": "rimraf release",
     "build": "webpack --display-error-details",
-      "build:ts": "tsc",
-      "build:sass": "node-sass -o dist/ src/",
-      "build:css": "postcss --use autoprefixer dist/*.css -d dist/",
-
+    "build:ts": "tsc",
+    "build:sass": "node-sass -o dist/ src/",
+    "build:css": "postcss --use autoprefixer dist/*.css -d dist/",
     "watch": "webpack --display-error-details --watch",
-
     "start": "webpack-dev-server",
-      "start:hmr": "webpack-dev-server --env.HMR",
-
+    "start:hmr": "webpack-dev-server --env.HMR",
     "release": "npm-run-all -s clean:* release:css -p release:build:* -s release:minify",
-      "release:build:ts": "tsc --project tsconfig.def.json",
-      "release:build:umd": "rollup -c -f umd -o release/angular2-data-table.umd.js",
-      "release:build:cjs": "rollup -c -f cjs -o release/angular2-data-table.cjs.js",
-      "release:build:es": "rollup -c -f es -o release/angular2-data-table.es.js",
-      "release:css": "node-sass -o release/ src/themes && node-sass -o release/ src/components",
-      "release:minify": "uglifyjs release/angular2-data-table.js --source-map release/angular2-data-table.min.js.map --source-map-url release/angular2-data-table.js.map --compress --mangle --screw-ie8 --output release/angular2-data-table.min.js"
+    "release:build:ts": "tsc --project tsconfig.def.json",
+    "release:build:umd": "rollup -c -f umd -o release/angular2-data-table.umd.js",
+    "release:build:cjs": "rollup -c -f cjs -o release/angular2-data-table.cjs.js",
+    "release:build:es": "rollup -c -f es -o release/angular2-data-table.es.js",
+    "release:css": "node-sass -o release/ src/themes && node-sass -o release/ src/components",
+    "release:minify": "uglifyjs release/angular2-data-table.js --source-map release/angular2-data-table.min.js.map --source-map-url release/angular2-data-table.js.map --compress --mangle --screw-ie8 --output release/angular2-data-table.min.js"
   },
   "repository": {
     "type": "git",
@@ -58,7 +52,7 @@
     "@angular/platform-browser-dynamic": "2.0.0-rc.5",
     "core-js": "^2.4.0",
     "rxjs": "5.0.0-beta.6",
-    "zone.js": "0.6.13"
+    "zone.js": "0.6.14"
   },
   "devDependencies": {
     "@types/core-js": "^0.9.28",
