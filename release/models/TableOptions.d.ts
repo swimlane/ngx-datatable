@@ -1,4 +1,3 @@
-/// <reference types="core-js" />
 import { TableColumn } from './TableColumn';
 import { Sort } from './Sort';
 import { ColumnMode } from '../enums/ColumnMode';
