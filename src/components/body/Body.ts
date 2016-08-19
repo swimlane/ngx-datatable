@@ -53,10 +53,13 @@ export class DataTableBody implements OnInit, OnDestroy {
 
   @Output() onRowClick: EventEmitter<any> = new EventEmitter();
   @Output() onRowSelect: EventEmitter<any> = new EventEmitter();
+  @Output() onScroll: EventEmitter<any> = new EventEmitter();
 
   public rows: any;
   private prevIndex: number;
   private sub: Subscription;
+
+  private lastPage:number;
 
   get selectEnabled() {
     return !!this.state.options.selectionType;
@@ -87,7 +90,7 @@ export class DataTableBody implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.rows = [...this.state.rows];
 
-    this.sub = this.state.onPageChange.subscribe(() => {
+    this.sub = this.state.onPageChange.subscribe((data) => {
       this.updateRows();
       this.hideIndicator();
     });
@@ -118,6 +121,10 @@ export class DataTableBody implements OnInit, OnDestroy {
 
     if(direction !== undefined && !isNaN(page)) {
       this.state.options.offset = page;
+      if(this.lastPage != page){
+        this.onScroll.emit(page);
+      }
+      this.lastPage = page;
     }
   }
 
