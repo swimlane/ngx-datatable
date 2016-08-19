@@ -80,7 +80,7 @@ var DataTableBody = (function () {
             page = Math.ceil(page);
         }
         if (direction !== undefined && !isNaN(page)) {
-            this.state.options.offset = page;
+            this.state.setPage(page + 1);
         }
     };
     DataTableBody.prototype.updateRows = function (refresh) {

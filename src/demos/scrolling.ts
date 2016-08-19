@@ -29,7 +29,6 @@ import '../themes/material.scss';
 export class App {
 
   rows = [];
-  expanded = {};
 
   options = new TableOptions({
     columnMode: ColumnMode.force,

@@ -117,7 +117,8 @@ export class DataTableBody implements OnInit, OnDestroy {
     }
 
     if(direction !== undefined && !isNaN(page)) {
-      this.state.options.offset = page;
+      // pages are offset + 1 ;)
+      this.state.setPage(page + 1);
     }
   }
 

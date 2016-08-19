@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v0.2.4 (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v0.2.5 (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -1101,7 +1101,8 @@ var DataTableBody = (function () {
             page = Math.ceil(page);
         }
         if (direction !== undefined && !isNaN(page)) {
-            this.state.options.offset = page;
+            // pages are offset + 1 ;)
+            this.state.setPage(page + 1);
         }
     };
     DataTableBody.prototype.updateRows = function (refresh) {
