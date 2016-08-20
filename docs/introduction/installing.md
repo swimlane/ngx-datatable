@@ -21,15 +21,15 @@ Additionally you will need to include `./release/datatable.css`.
 If you want to use material theme, include `./release/material.css`. For more information, visit the 'Themes' section.
 
 
-## Integration with angular-cli
+### Integration with angular-cli
 
-### 1. Install angular2-data-table via npm
+#### 1. Install angular2-data-table via npm
 
 ```bash
-npm install angular2-data-table --save
+npm i angular2-data-table --S
 ```
 
-### 2. Add angular2-data-table.js to angular-cli-build.js file to vendorNpmFiles array
+#### 2. Add `angular2-data-table.js` to `angular-cli-build.js` file to vendorNpmFiles array
 
 After setup the `angular-cli-build.js` should look like this:
 
@@ -39,7 +39,7 @@ var Angular2App = require('angular-cli/lib/broccoli/angular2-app');
 module.exports = function(defaults) {
   return new Angular2App(defaults, {
     vendorNpmFiles: [
-      // ...
+        // ...
         'angular2-data-table/**/*.js',
     ]
   });
@@ -50,12 +50,12 @@ After updating this file, make a fresh build to update the `dist` folder accordi
 ng build
 ```
 
-### 3. Configure SystemJS mappings to know where to look for moment.js
+#### 3. Configure SystemJS mappings to know where to look for the table
 
 SystemJS configuration is located in `system-config.ts` and after the custom configuration is done the related section should look like:
 
 
-```ts
+```javascript
 /** Map relative paths to URLs. */
 const map: any = {
   'angular2-data-table': 'vendor/angular2-data-table/release',
@@ -70,7 +70,7 @@ const packages: any = {
 };
 ```
 
-### 4. Edit the `tsconfig.json` configuration in `node_modules/angular2-data-table/tsconfig.json`
+#### 4. Edit the `tsconfig.json` configuration in `node_modules/angular2-data-table/tsconfig.json`
 
 ```
 {
@@ -84,7 +84,7 @@ const packages: any = {
  }
 ```
 
-### 5. Export the interface IntersectionObserver from `node_modules/angular2-data-table/release/angular2-data-table.js`
+#### 5. Export the interface IntersectionObserver from `node_modules/angular2-data-table/release/angular2-data-table.js`
 
 ```ts
 export interface IntersectionObserver {
@@ -100,7 +100,7 @@ export interface IntersectionObserver {
 
 Congratulations, you now have `angular2-data-table`  available to use in your project.
 
-### Development
+## Developing
 If you are wanting to run the demos locally, just do:
 
 - `npm i`
