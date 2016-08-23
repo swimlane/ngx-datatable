@@ -24,7 +24,7 @@ We are really excited about the table and wanted to get it out into the open as 
 - Row Grouping
 
 ## Community
-- [ng2-inline-editor](https://github.com/Caballerog/ng2-inline-editor/tree/master/demos/angular2-data-table) integrated with this project!
+- [ng2-inline-editor](https://github.com/Caballerog/ng2-inline-editor/tree/master/demos/angular2-data-table) - inline edit cell values with ng2-inline-editor and angular2-data-table projects.
 
 If you have a project using the table and would love to share with the community, please reach out on gh issues and we would love to add it to the growing list!
 
