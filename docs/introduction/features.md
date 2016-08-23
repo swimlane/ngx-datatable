@@ -23,6 +23,11 @@ We are really excited about the table and wanted to get it out into the open as 
 - Tree Grids
 - Row Grouping
 
+## Community
+- [ng2-inline-editor](https://github.com/Caballerog/ng2-inline-editor/tree/master/demos/angular2-data-table) integrated with this project!
+
+If you have a project using the table and would love to share with the community, please reach out on gh issues and we would love to add it to the growing list!
+
 ### Architecture Manifesto
 With all that said, there is some things that it doesn't do nor do we plan to do. Lets say you have a requirement to have the ability to edit cell values in the row. Thats a awesome feature but somewhat catered to your use case. How do you invoke the edit? What type of control do you show in the cell? If its a date, do you have controls for that? Its a slippery slope...if you do want to do that you can use the expressive column templates to put whatever components inside your table you want.
 
