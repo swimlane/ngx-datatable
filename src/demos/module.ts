@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
 import { Angular2DataTableModule } from '../angular2-data-table';
+import '../components/datatable.scss';
 
 import { App } from './basic';
 // import { App } from './client-paging';

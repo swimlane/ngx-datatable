@@ -22,8 +22,6 @@ import { TableColumn } from '../models/TableColumn';
 import { DataTableColumn } from './DataTableColumn';
 import { StateService } from '../services/State';
 
-import './datatable.scss';
-
 @Component({
   selector: 'datatable',
   template: `
@@ -62,7 +60,7 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
   private colDiffer: IterableDiffer;
 
   constructor(
-    public state: StateService, 
+    public state: StateService,
     element: ElementRef,
     differs: KeyValueDiffers) {
 
