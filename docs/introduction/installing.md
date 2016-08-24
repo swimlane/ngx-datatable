@@ -22,6 +22,8 @@ If you want to use material theme, include `./release/material.css`. For more in
 
 
 ### Integration with angular-cli
+NOTE: These docs are for the pre-webpack angular-cli version. Stay tuned in for a guide for the new version.
+
 
 #### 1. Install angular2-data-table via npm
 
