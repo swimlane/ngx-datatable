@@ -6,7 +6,6 @@ var TableOptions_1 = require('../models/TableOptions');
 var TableColumn_1 = require('../models/TableColumn');
 var DataTableColumn_1 = require('./DataTableColumn');
 var State_1 = require('../services/State');
-require('./datatable.scss');
 var DataTable = (function () {
     function DataTable(state, element, differs) {
         this.state = state;

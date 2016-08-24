@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v0.3.2 (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v0.3.3 (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -1250,6 +1250,7 @@ var DataTableHeaderCell = (function () {
         this.element = element;
         this.state = state;
         this.onColumnChange = new _angular_core.EventEmitter();
+        this.sort = this.onSort.bind(this);
         element.nativeElement.classList.add('datatable-header-cell');
     }
     Object.defineProperty(DataTableHeaderCell.prototype, "sortDir", {
@@ -1298,7 +1299,7 @@ var DataTableHeaderCell = (function () {
     DataTableHeaderCell = __decorate([
         _angular_core.Component({
             selector: 'datatable-header-cell',
-            template: "\n    <div>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        *ngIf=\"!model.headerTemplate\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <template\n        *ngIf=\"model.headerTemplate\"\n        [column]=\"model\"\n        [templateWrapper]=\"model.headerTemplate\">\n      </template>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses()\">\n      </span>\n    </div>\n  ",
+            template: "\n    <div>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        *ngIf=\"!model.headerTemplate\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <template\n        *ngIf=\"model.headerTemplate\"\n        [column]=\"model\"\n        [sort]=\"sort\"\n        [templateWrapper]=\"model.headerTemplate\">\n      </template>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses()\">\n      </span>\n    </div>\n  ",
             host: {
                 '[class.sortable]': 'model.sortable',
                 '[class.resizable]': 'model.resizable',
@@ -2119,13 +2120,15 @@ var TemplateWrapper = (function () {
             this.embeddedViewRef = this.viewContainer.createEmbeddedView(this.templateWrapper, {
                 value: this.value,
                 row: this.row,
-                column: this.column
+                column: this.column,
+                sort: this.sort
             });
         }
         if (this.embeddedViewRef) {
             this.embeddedViewRef.context.value = this.value;
             this.embeddedViewRef.context.row = this.row;
             this.embeddedViewRef.context.column = this.column;
+            this.embeddedViewRef.context.sort = this.sort;
         }
     };
     __decorate([
@@ -2144,6 +2147,10 @@ var TemplateWrapper = (function () {
         _angular_core.Input(), 
         __metadata('design:type', Object)
     ], TemplateWrapper.prototype, "column", void 0);
+    __decorate([
+        _angular_core.Input(), 
+        __metadata('design:type', Object)
+    ], TemplateWrapper.prototype, "sort", void 0);
     TemplateWrapper = __decorate([
         _angular_core.Directive({ selector: '[templateWrapper]' }), 
         __metadata('design:paramtypes', [(typeof (_b = typeof _angular_core.ViewContainerRef !== 'undefined' && _angular_core.ViewContainerRef) === 'function' && _b) || Object])

@@ -12,13 +12,15 @@ var TemplateWrapper = (function () {
             this.embeddedViewRef = this.viewContainer.createEmbeddedView(this.templateWrapper, {
                 value: this.value,
                 row: this.row,
-                column: this.column
+                column: this.column,
+                sort: this.sort
             });
         }
         if (this.embeddedViewRef) {
             this.embeddedViewRef.context.value = this.value;
             this.embeddedViewRef.context.row = this.row;
             this.embeddedViewRef.context.column = this.column;
+            this.embeddedViewRef.context.sort = this.sort;
         }
     };
     __decorate([
@@ -37,6 +39,10 @@ var TemplateWrapper = (function () {
         core_1.Input(), 
         __metadata('design:type', Object)
     ], TemplateWrapper.prototype, "column", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], TemplateWrapper.prototype, "sort", void 0);
     TemplateWrapper = __decorate([
         core_1.Directive({ selector: '[templateWrapper]' }), 
         __metadata('design:paramtypes', [core_1.ViewContainerRef])

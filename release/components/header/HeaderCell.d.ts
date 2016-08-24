@@ -1,3 +1,4 @@
+/// <reference types="core-js" />
 import { ElementRef, EventEmitter } from '@angular/core';
 import { StateService } from '../../services/State';
 import { TableColumn } from '../../models/TableColumn';
@@ -7,6 +8,7 @@ export declare class DataTableHeaderCell {
     private state;
     model: TableColumn;
     onColumnChange: EventEmitter<any>;
+    sort: Function;
     readonly sortDir: SortDirection;
     readonly name: string;
     constructor(element: ElementRef, state: StateService);

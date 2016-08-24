@@ -8,6 +8,7 @@ var DataTableHeaderCell = (function () {
         this.element = element;
         this.state = state;
         this.onColumnChange = new core_1.EventEmitter();
+        this.sort = this.onSort.bind(this);
         element.nativeElement.classList.add('datatable-header-cell');
     }
     Object.defineProperty(DataTableHeaderCell.prototype, "sortDir", {
@@ -56,7 +57,7 @@ var DataTableHeaderCell = (function () {
     DataTableHeaderCell = __decorate([
         core_1.Component({
             selector: 'datatable-header-cell',
-            template: "\n    <div>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        *ngIf=\"!model.headerTemplate\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <template\n        *ngIf=\"model.headerTemplate\"\n        [column]=\"model\"\n        [templateWrapper]=\"model.headerTemplate\">\n      </template>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses()\">\n      </span>\n    </div>\n  ",
+            template: "\n    <div>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        *ngIf=\"!model.headerTemplate\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <template\n        *ngIf=\"model.headerTemplate\"\n        [column]=\"model\"\n        [sort]=\"sort\"\n        [templateWrapper]=\"model.headerTemplate\">\n      </template>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses()\">\n      </span>\n    </div>\n  ",
             host: {
                 '[class.sortable]': 'model.sortable',
                 '[class.resizable]': 'model.resizable',

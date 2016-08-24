@@ -5,6 +5,7 @@ export declare class TemplateWrapper {
     value: any;
     row: any;
     column: any;
+    sort: any;
     private embeddedViewRef;
     constructor(viewContainer: ViewContainerRef);
     ngOnChanges(changes: {

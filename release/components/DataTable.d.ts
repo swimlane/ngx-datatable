@@ -2,7 +2,6 @@ import { ElementRef, EventEmitter, KeyValueDiffers, OnInit, QueryList, DoCheck, 
 import { TableOptions } from '../models/TableOptions';
 import { DataTableColumn } from './DataTableColumn';
 import { StateService } from '../services/State';
-import './datatable.scss';
 export declare class DataTable implements OnInit, DoCheck, AfterViewInit {
     state: StateService;
     options: TableOptions;
