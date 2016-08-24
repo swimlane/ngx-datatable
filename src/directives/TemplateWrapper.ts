@@ -14,6 +14,7 @@ export class TemplateWrapper {
   @Input() value: any;
   @Input() row: any;
   @Input() column: any;
+  @Input() sort: any;
 
   private embeddedViewRef: EmbeddedViewRef<any>;
 
@@ -29,7 +30,8 @@ export class TemplateWrapper {
         this.templateWrapper, {
           value: this.value,
           row: this.row,
-          column: this.column
+          column: this.column,
+          sort: this.sort
         });
     }
 
@@ -37,6 +39,7 @@ export class TemplateWrapper {
       this.embeddedViewRef.context.value = this.value;
       this.embeddedViewRef.context.row = this.row;
       this.embeddedViewRef.context.column = this.column;
+      this.embeddedViewRef.context.sort = this.sort;
     }
   }
 }

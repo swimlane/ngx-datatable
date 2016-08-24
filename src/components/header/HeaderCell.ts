@@ -23,6 +23,7 @@ import { SortDirection } from '../../enums/SortDirection';
       <template
         *ngIf="model.headerTemplate"
         [column]="model"
+        [sort]="sort"
         [templateWrapper]="model.headerTemplate">
       </template>
       <span
@@ -46,6 +47,8 @@ export class DataTableHeaderCell {
   @Input() model: TableColumn;
 
   @Output() onColumnChange: EventEmitter<any> = new EventEmitter();
+
+  sort: Function = this.onSort.bind(this);
 
   get sortDir() {
     let sort = this.state.options.sorts.find(s => {
