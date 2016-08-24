@@ -2,6 +2,7 @@
 
 * [Introduction](README.md)
    * [Features](introduction/features.md)
+   * [Architecture](introduction/architecture.md)
    * [Installing](introduction/installing.md)
    * [Themes](introduction/themes.md)
 * Examples
@@ -23,5 +24,6 @@
 * Contributing
    * [Building](contributing/building.md)
    * [Guidelines](contributing/guidelines.md)
-* [Credits](credits.md)
+   * [Community](community.md)
+   * [Credits](credits.md)
 * [License](license.md)
