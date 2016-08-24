@@ -16,9 +16,15 @@ import { SortDirection } from '../../enums/SortDirection';
     <div>
       <span
         class="datatable-header-cell-label draggable"
+        *ngIf="!model.headerTemplate"
         (click)="onSort()"
         [innerHTML]="name">
       </span>
+      <template
+        *ngIf="model.headerTemplate"
+        [column]="model"
+        [templateWrapper]="model.headerTemplate">
+      </template>
       <span
         class="sort-btn"
         [ngClass]="sortClasses()">
@@ -38,6 +44,7 @@ import { SortDirection } from '../../enums/SortDirection';
 export class DataTableHeaderCell {
 
   @Input() model: TableColumn;
+
   @Output() onColumnChange: EventEmitter<any> = new EventEmitter();
 
   get sortDir() {

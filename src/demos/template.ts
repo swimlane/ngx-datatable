@@ -22,6 +22,10 @@ import '../themes/material.scss';
         [options]="options">
       </datatable>
 
+      <template #hdrTpl let-column="column" >
+        <strong>Fancy</strong>: {{column.name}} !!
+      </template>
+
       <template #editTmpl let-row="row" let-value="value" let-i="index">
         <img
           *ngIf="value === 'male'"
@@ -40,6 +44,7 @@ import '../themes/material.scss';
 export class App {
 
   @ViewChild('editTmpl') editTmpl: TemplateRef<any>;
+  @ViewChild('hdrTpl') hdrTpl: TemplateRef<any>;
 
   rows = [];
   options: TableOptions;
@@ -59,6 +64,7 @@ export class App {
       columns: [
         new TableColumn({
           template: this.editTmpl,
+          headerTemplate: this.hdrTpl,
           name: 'Gender'
         })
       ]
