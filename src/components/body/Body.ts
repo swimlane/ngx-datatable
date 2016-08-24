@@ -38,7 +38,9 @@ import { SelectionType } from '../../enums/SelectionType';
           [attr.tabindex]="i"
           (click)="rowClicked($event, i, row)"
           (keydown)="rowKeydown($event, i, row)"
-          [row]="row">
+          [row]="row"
+          [class.datatable-row-even]="row.$$index % 2 === 0"
+          [class.datatable-row-odd]="row.$$index % 2 !== 0">
         </datatable-body-row>
       </div>
       <div
