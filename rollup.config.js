@@ -13,7 +13,7 @@ var banner =
  */`;
 
 module.exports = {
-  entry: './src/angular2-data-table.ts',
+  entry: './release/angular2-data-table.js',
   sourceMap: true,
   moduleId: 'angular2-data-table',
   moduleName: 'angular2DataTable',

@@ -1,5 +1,10 @@
 "use strict";
 var column_1 = require('./column');
+/**
+ * Calculates the total width of all columns and their groups
+ * @param {array} columns
+ * @param {string} property width to get
+ */
 function columnTotalWidth(columns, prop) {
     var totalWidth = 0;
     for (var _i = 0, columns_1 = columns; _i < columns_1.length; _i++) {
@@ -10,6 +15,10 @@ function columnTotalWidth(columns, prop) {
     return totalWidth;
 }
 exports.columnTotalWidth = columnTotalWidth;
+/**
+ * Calculates the Total Flex Grow
+ * @param {array}
+ */
 function getTotalFlexGrow(columns) {
     var totalFlexGrow = 0;
     for (var _i = 0, columns_2 = columns; _i < columns_2.length; _i++) {
@@ -19,6 +28,12 @@ function getTotalFlexGrow(columns) {
     return totalFlexGrow;
 }
 exports.getTotalFlexGrow = getTotalFlexGrow;
+/**
+ * Adjusts the column widths.
+ * Inspired by: https://github.com/facebook/fixed-data-table/blob/master/src/FixedDataTableWidthHelper.js
+ * @param {array} all columns
+ * @param {int} width
+ */
 function adjustColumnWidths(allColumns, expectedWidth) {
     var columnsWidth = columnTotalWidth(allColumns);
     var totalFlexGrow = getTotalFlexGrow(allColumns);
@@ -28,7 +43,14 @@ function adjustColumnWidths(allColumns, expectedWidth) {
     }
 }
 exports.adjustColumnWidths = adjustColumnWidths;
+/**
+ * Resizes columns based on the flexGrow property, while respecting manually set widths
+ * @param {array} colsByGroup
+ * @param {int} maxWidth
+ * @param {int} totalFlexGrow
+ */
 function scaleColumns(colsByGroup, maxWidth, totalFlexGrow) {
+    // calculate total width and flexgrow points for coulumns that can be resized
     for (var attr in colsByGroup) {
         for (var _i = 0, _a = colsByGroup[attr]; _i < _a.length; _i++) {
             var column = _a[_i];
@@ -43,12 +65,14 @@ function scaleColumns(colsByGroup, maxWidth, totalFlexGrow) {
     }
     var hasMinWidth = {};
     var remainingWidth = maxWidth;
+    // resize columns until no width is left to be distributed
     do {
         var widthPerFlexPoint = remainingWidth / totalFlexGrow;
         remainingWidth = 0;
         for (var attr in colsByGroup) {
             for (var _b = 0, _c = colsByGroup[attr]; _b < _c.length; _b++) {
                 var column = _c[_b];
+                // if the column can be resize and it hasn't reached its minimum width yet
                 if (column.canAutoResize && !hasMinWidth[column.prop]) {
                     var newWidth = column.width + column.flexGrow * widthPerFlexPoint;
                     if (column.minWidth !== undefined && newWidth < column.minWidth) {
@@ -64,6 +88,28 @@ function scaleColumns(colsByGroup, maxWidth, totalFlexGrow) {
         }
     } while (remainingWidth !== 0);
 }
+/**
+ * Forces the width of the columns to
+ * distribute equally but overflowing when nesc.
+ *
+ * Rules:
+ *
+ *  - If combined withs are less than the total width of the grid,
+ *    proporation the widths given the min / max / noraml widths to fill the width.
+ *
+ *  - If the combined widths, exceed the total width of the grid,
+ *    use the standard widths.
+ *
+ *  - If a column is resized, it should always use that width
+ *
+ *  - The proporational widths should never fall below min size if specified.
+ *
+ *  - If the grid starts off small but then becomes greater than the size ( + / - )
+ *    the width should use the orginial width; not the newly proporatied widths.
+ *
+ * @param {array} allColumns
+ * @param {int} expectedWidth
+ */
 function forceFillColumnWidths(allColumns, expectedWidth, startIdx) {
     var contentWidth = 0;
     var columnsToResize = startIdx > -1 ?

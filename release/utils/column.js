@@ -1,4 +1,8 @@
 "use strict";
+/**
+ * Returns the columns by pin.
+ * @param {array} cols
+ */
 function columnsByPin(cols) {
     var ret = {
         left: [],
@@ -22,6 +26,11 @@ function columnsByPin(cols) {
     return ret;
 }
 exports.columnsByPin = columnsByPin;
+/**
+ * Returns the widths of all group sets of a column
+ * @param {object} groups
+ * @param {array} all
+ */
 function columnGroupWidths(groups, all) {
     return {
         left: columnTotalWidth(groups.left),
@@ -31,6 +40,11 @@ function columnGroupWidths(groups, all) {
     };
 }
 exports.columnGroupWidths = columnGroupWidths;
+/**
+ * Calculates the total width of all columns and their groups
+ * @param {array} columns
+ * @param {string} prop width to get
+ */
 function columnTotalWidth(columns, prop) {
     var totalWidth = 0;
     if (columns) {

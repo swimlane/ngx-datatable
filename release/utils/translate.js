@@ -1,6 +1,7 @@
 "use strict";
 var prefixes_1 = require('./prefixes');
 var camelCase_1 = require('./camelCase');
+// browser detection and prefixing tools
 var transform = prefixes_1.getVendorPrefixedName('transform');
 var backfaceVisibility = prefixes_1.getVendorPrefixedName('backfaceVisibility');
 var hasCSSTransforms = !!prefixes_1.getVendorPrefixedName('transform');

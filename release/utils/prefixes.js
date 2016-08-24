@@ -2,6 +2,8 @@
 var camelCase_1 = require('./camelCase');
 var cache = {};
 var testStyle = document.createElement('div').style;
+// Get Prefix
+// http://davidwalsh.name/vendor-prefix
 var prefix = (function () {
     var styles = window.getComputedStyle(document.documentElement, '');
     var pre = (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/))[1];

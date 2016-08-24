@@ -3,7 +3,7 @@
     "target": "es5",
     "module": "commonjs",
     "moduleResolution": "node",
-    "declaration": false,
+    "declaration": true,
     "noEmitHelpers": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -19,11 +19,7 @@
     "suppressExcessPropertyErrors": true,
     "suppressImplicitAnyIndexErrors": true,
     "outDir": "dist",
-    "baseUrl": "src",
-    "types": [
-      "core-js",
-      "node"
-    ]
+    "baseUrl": "src"
   },
   "files": [
     "src/types.d.ts",

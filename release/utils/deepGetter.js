@@ -1,4 +1,9 @@
 "use strict";
+/**
+ * Returns a deep object given a string. zoo['animal.type']
+ * @param {object} obj
+ * @param {string} path
+ */
 function deepValueGetter(obj, path) {
     if (!obj || !path)
         return obj;

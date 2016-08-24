@@ -1,3 +1,15 @@
+/**
+ * Observes changes to an elements visibility.
+ * https://medium.com/@amcdnl/javascript-s-new-intersectionobserver-cdce8a73bef8#.evn5twug3
+ *
+ * Example:
+ *
+ * 		var elm = document.getElementById("panda");
+ * 	 	new VisibilityObserver(elm, function() {
+ * 			alert('PAndas rock!');
+ * 	  });
+ *
+ */
 export declare class VisibilityObserver {
     observer: IntersectionObserver;
     callback: any;
