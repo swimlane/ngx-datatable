@@ -18,7 +18,7 @@ import '../themes/material.scss';
     <div>
       <h3>basic</h3>
       <datatable
-        class='material'
+        class='material striped'
         [rows]='rows'
         [options]='options'>
       </datatable>
