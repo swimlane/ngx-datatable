@@ -33,8 +33,11 @@ export class Visibility {
   }
 
   visbilityChange() {
-    this.visible = true;
-    this.onVisibilityChange.emit(true);
+    // trigger zone recalc for columns
+    setTimeout(() => {
+      this.visible = true;
+      this.onVisibilityChange.emit(true);
+    });
   }
 
 }
