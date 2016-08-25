@@ -19,6 +19,9 @@ export class TableOptions {
   // to calculate the height for the lazy rendering.
   rowHeight: number = 30;
 
+	// The height of the body
+	bodyHeight: number = 300;
+
   // flex
   // force
   // standard
