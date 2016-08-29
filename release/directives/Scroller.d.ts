@@ -15,6 +15,7 @@ export declare class Scroller implements OnInit, OnDestroy {
     constructor(element: ElementRef);
     ngOnInit(): void;
     ngOnDestroy(): void;
+    setOffset(offsetY: number): void;
     onScrolled(event: any): void;
     updateOffset(): void;
 }

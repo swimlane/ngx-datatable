@@ -30,6 +30,9 @@ var Scroller = (function () {
             this.parentElement.removeEventListener('scroll');
         }
     };
+    Scroller.prototype.setOffset = function (offsetY) {
+        this.parentElement.scrollTop = offsetY;
+    };
     Scroller.prototype.onScrolled = function (event) {
         var dom = event.currentTarget;
         this.scrollYPos = dom.scrollTop;

@@ -1,9 +1,11 @@
 import { EventEmitter, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { StateService } from '../../services/State';
+import { Scroller } from '../../directives/Scroller';
 export declare class DataTableBody implements OnInit, OnDestroy {
     state: StateService;
     onRowClick: EventEmitter<any>;
     onRowSelect: EventEmitter<any>;
+    scroller: Scroller;
     rows: any;
     private prevIndex;
     private sub;

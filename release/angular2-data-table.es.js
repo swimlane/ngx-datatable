@@ -1,9 +1,9 @@
 /**
- * angular2-data-table v0.3.3 (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v0.3.4 (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
-import { NgModule, KeyValueDiffers, ElementRef, Component, HostBinding, HostListener, QueryList, ContentChildren, EventEmitter, Output, Input, Directive, TemplateRef, ContentChild, Injectable, ChangeDetectionStrategy, ViewContainerRef } from '@angular/core';
+import { NgModule, KeyValueDiffers, ElementRef, Component, HostBinding, HostListener, QueryList, ContentChildren, EventEmitter, Output, Input, Directive, TemplateRef, ContentChild, Injectable, ViewChild, ChangeDetectionStrategy, ViewContainerRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs/Rx';
 
@@ -589,9 +589,11 @@ var StateService = (function () {
         this.options = options;
         return this;
     };
-    StateService.prototype.setPage = function (page) {
-        this.options.offset = page - 1;
+    StateService.prototype.setPage = function (_a) {
+        var type = _a.type, value = _a.value;
+        this.options.offset = value - 1;
         this.onPageChange.emit({
+            type: type,
             offset: this.options.offset,
             limit: this.pageSize,
             count: this.rowCount
@@ -717,9 +719,9 @@ var DataTable = (function () {
             adjustColumnWidths(this.options.columns, width);
         }
     };
-    DataTable.prototype.onPageChanged = function (event) {
-        this.state.setPage(event);
-        this.onPageChange.emit(event);
+    DataTable.prototype.onPageChanged = function (action) {
+        this.state.setPage(action);
+        this.onPageChange.emit(action.page);
     };
     DataTable.prototype.onRowSelect = function (event) {
         this.state.setSelected(event);
@@ -1035,6 +1037,95 @@ var SelectionType;
     SelectionType[SelectionType["multiShift"] = 'multiShift'] = "multiShift";
 })(SelectionType || (SelectionType = {}));
 
+var Scroller = (function () {
+    function Scroller(element) {
+        this.scrollbarV = false;
+        this.onScroll = new EventEmitter();
+        this.scrollYPos = 0;
+        this.scrollXPos = 0;
+        this.prevScrollYPos = 0;
+        this.prevScrollXPos = 0;
+        this.element = element.nativeElement;
+        this.element.classList.add('datatable-scroll');
+    }
+    Object.defineProperty(Scroller.prototype, "scrollHeight", {
+        get: function () {
+            return (this.count * this.rowHeight) + 'px';
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Scroller.prototype.ngOnInit = function () {
+        // manual bind so we don't always listen
+        if (this.scrollbarV) {
+            this.parentElement = this.element.parentElement.parentElement;
+            this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
+        }
+    };
+    Scroller.prototype.ngOnDestroy = function () {
+        if (this.scrollbarV) {
+            this.parentElement.removeEventListener('scroll');
+        }
+    };
+    Scroller.prototype.setOffset = function (offsetY) {
+        this.parentElement.scrollTop = offsetY;
+    };
+    Scroller.prototype.onScrolled = function (event) {
+        var dom = event.currentTarget;
+        this.scrollYPos = dom.scrollTop;
+        this.scrollXPos = dom.scrollLeft;
+        requestAnimationFrame(this.updateOffset.bind(this));
+    };
+    Scroller.prototype.updateOffset = function () {
+        var direction;
+        if (this.scrollYPos < this.prevScrollYPos) {
+            direction = 'down';
+        }
+        else if (this.scrollYPos > this.prevScrollYPos) {
+            direction = 'up';
+        }
+        this.onScroll.emit({
+            direction: direction,
+            scrollYPos: this.scrollYPos,
+            scrollXPos: this.scrollXPos
+        });
+        this.prevScrollYPos = this.scrollYPos;
+        this.prevScrollXPos = this.scrollXPos;
+    };
+    __decorate([
+        Input(), 
+        __metadata('design:type', Number)
+    ], Scroller.prototype, "rowHeight", void 0);
+    __decorate([
+        Input(), 
+        __metadata('design:type', Number)
+    ], Scroller.prototype, "count", void 0);
+    __decorate([
+        Input(), 
+        __metadata('design:type', Number)
+    ], Scroller.prototype, "scrollWidth", void 0);
+    __decorate([
+        Input(), 
+        __metadata('design:type', Boolean)
+    ], Scroller.prototype, "scrollbarV", void 0);
+    __decorate([
+        Output(), 
+        __metadata('design:type', (typeof (_a = typeof EventEmitter !== 'undefined' && EventEmitter) === 'function' && _a) || Object)
+    ], Scroller.prototype, "onScroll", void 0);
+    Scroller = __decorate([
+        Directive({
+            selector: '[scroller]',
+            host: {
+                '[style.height]': 'scrollHeight',
+                '[style.width]': 'scrollWidth + "px"'
+            }
+        }), 
+        __metadata('design:paramtypes', [(typeof (_b = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _b) || Object])
+    ], Scroller);
+    return Scroller;
+    var _a, _b;
+}());
+
 var DataTableBody = (function () {
     function DataTableBody(state, element) {
         this.state = state;
@@ -1076,9 +1167,13 @@ var DataTableBody = (function () {
     DataTableBody.prototype.ngOnInit = function () {
         var _this = this;
         this.rows = this.state.rows.slice();
-        this.sub = this.state.onPageChange.subscribe(function () {
+        this.sub = this.state.onPageChange.subscribe(function (action) {
             _this.updateRows();
             _this.hideIndicator();
+            if (action.type === 'pager-event') {
+                var offset = (_this.state.options.rowHeight * action.limit) * action.offset;
+                _this.scroller.setOffset(offset);
+            }
         });
         this.sub.add(this.state.onRowsUpdate.subscribe(function (rows) {
             _this.updateRows();
@@ -1102,7 +1197,10 @@ var DataTableBody = (function () {
         }
         if (direction !== undefined && !isNaN(page)) {
             // pages are offset + 1 ;)
-            this.state.setPage(page + 1);
+            this.state.setPage({
+                type: 'body-event',
+                value: page + 1
+            });
         }
     };
     DataTableBody.prototype.updateRows = function (refresh) {
@@ -1192,6 +1290,10 @@ var DataTableBody = (function () {
         __metadata('design:type', (typeof (_b = typeof EventEmitter !== 'undefined' && EventEmitter) === 'function' && _b) || Object)
     ], DataTableBody.prototype, "onRowSelect", void 0);
     __decorate([
+        ViewChild(Scroller), 
+        __metadata('design:type', (typeof (_c = typeof Scroller !== 'undefined' && Scroller) === 'function' && _c) || Object)
+    ], DataTableBody.prototype, "scroller", void 0);
+    __decorate([
         HostBinding('style.height'), 
         __metadata('design:type', Object)
     ], DataTableBody.prototype, "bodyHeight", null);
@@ -1204,10 +1306,10 @@ var DataTableBody = (function () {
             selector: 'datatable-body',
             template: "\n    <div>\n      <datatable-progress\n        *ngIf=\"state.options.loadingIndicator\">\n      </datatable-progress>\n      <div\n        scroller\n        (onScroll)=\"onBodyScroll($event)\"\n        *ngIf=\"state.rows.length\"\n        [rowHeight]=\"state.options.rowHeight\"\n        [scrollbarV]=\"state.options.scrollbarV\"\n        [count]=\"state.rowCount\"\n        [scrollWidth]=\"state.columnGroupWidths.total\">\n        <datatable-body-row\n          [ngStyle]=\"getRowsStyles(row)\"\n          [style.height]=\"state.options.rowHeight + 'px'\"\n          *ngFor=\"let row of rows; let i = index;\"\n          [attr.tabindex]=\"i\"\n          (click)=\"rowClicked($event, i, row)\"\n          (keydown)=\"rowKeydown($event, i, row)\"\n          [row]=\"row\"\n          [class.datatable-row-even]=\"row.$$index % 2 === 0\"\n          [class.datatable-row-odd]=\"row.$$index % 2 !== 0\">\n        </datatable-body-row>\n      </div>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"state.options.emptyMessage\">\n      </div>\n    </div>\n  "
         }), 
-        __metadata('design:paramtypes', [(typeof (_c = typeof StateService !== 'undefined' && StateService) === 'function' && _c) || Object, (typeof (_d = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _d) || Object])
+        __metadata('design:paramtypes', [(typeof (_d = typeof StateService !== 'undefined' && StateService) === 'function' && _d) || Object, (typeof (_e = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _e) || Object])
     ], DataTableBody);
     return DataTableBody;
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e;
 }());
 
 var DataTableFooter = (function () {
@@ -1369,7 +1471,10 @@ var DataTablePager = (function () {
     DataTablePager.prototype.selectPage = function (page) {
         if (page > 0 && page <= this.totalPages) {
             this.page = page;
-            this.onPaged.emit(page);
+            this.onPaged.emit({
+                type: 'pager-event',
+                value: page
+            });
         }
     };
     DataTablePager.prototype.calcPages = function (page) {
@@ -2019,92 +2124,6 @@ var Orderable = (function () {
         __metadata('design:paramtypes', [])
     ], Orderable);
     return Orderable;
-    var _a, _b;
-}());
-
-var Scroller = (function () {
-    function Scroller(element) {
-        this.scrollbarV = false;
-        this.onScroll = new EventEmitter();
-        this.scrollYPos = 0;
-        this.scrollXPos = 0;
-        this.prevScrollYPos = 0;
-        this.prevScrollXPos = 0;
-        this.element = element.nativeElement;
-        this.element.classList.add('datatable-scroll');
-    }
-    Object.defineProperty(Scroller.prototype, "scrollHeight", {
-        get: function () {
-            return (this.count * this.rowHeight) + 'px';
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Scroller.prototype.ngOnInit = function () {
-        // manual bind so we don't always listen
-        if (this.scrollbarV) {
-            this.parentElement = this.element.parentElement.parentElement;
-            this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
-        }
-    };
-    Scroller.prototype.ngOnDestroy = function () {
-        if (this.scrollbarV) {
-            this.parentElement.removeEventListener('scroll');
-        }
-    };
-    Scroller.prototype.onScrolled = function (event) {
-        var dom = event.currentTarget;
-        this.scrollYPos = dom.scrollTop;
-        this.scrollXPos = dom.scrollLeft;
-        requestAnimationFrame(this.updateOffset.bind(this));
-    };
-    Scroller.prototype.updateOffset = function () {
-        var direction;
-        if (this.scrollYPos < this.prevScrollYPos) {
-            direction = 'down';
-        }
-        else if (this.scrollYPos > this.prevScrollYPos) {
-            direction = 'up';
-        }
-        this.onScroll.emit({
-            direction: direction,
-            scrollYPos: this.scrollYPos,
-            scrollXPos: this.scrollXPos
-        });
-        this.prevScrollYPos = this.scrollYPos;
-        this.prevScrollXPos = this.scrollXPos;
-    };
-    __decorate([
-        Input(), 
-        __metadata('design:type', Number)
-    ], Scroller.prototype, "rowHeight", void 0);
-    __decorate([
-        Input(), 
-        __metadata('design:type', Number)
-    ], Scroller.prototype, "count", void 0);
-    __decorate([
-        Input(), 
-        __metadata('design:type', Number)
-    ], Scroller.prototype, "scrollWidth", void 0);
-    __decorate([
-        Input(), 
-        __metadata('design:type', Boolean)
-    ], Scroller.prototype, "scrollbarV", void 0);
-    __decorate([
-        Output(), 
-        __metadata('design:type', (typeof (_a = typeof EventEmitter !== 'undefined' && EventEmitter) === 'function' && _a) || Object)
-    ], Scroller.prototype, "onScroll", void 0);
-    Scroller = __decorate([
-        Directive({
-            selector: '[scroller]',
-            host: {
-                '[style.height]': 'scrollHeight',
-                '[style.width]': 'scrollWidth + "px"'
-            }
-        }), 
-        __metadata('design:paramtypes', [(typeof (_b = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _b) || Object])
-    ], Scroller);
-    return Scroller;
     var _a, _b;
 }());
 

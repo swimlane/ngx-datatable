@@ -5,6 +5,7 @@ var selection_1 = require('../../utils/selection');
 var translate_1 = require('../../utils/translate');
 var State_1 = require('../../services/State');
 var SelectionType_1 = require('../../enums/SelectionType');
+var Scroller_1 = require('../../directives/Scroller');
 var DataTableBody = (function () {
     function DataTableBody(state, element) {
         this.state = state;
@@ -46,9 +47,13 @@ var DataTableBody = (function () {
     DataTableBody.prototype.ngOnInit = function () {
         var _this = this;
         this.rows = this.state.rows.slice();
-        this.sub = this.state.onPageChange.subscribe(function () {
+        this.sub = this.state.onPageChange.subscribe(function (action) {
             _this.updateRows();
             _this.hideIndicator();
+            if (action.type === 'pager-event') {
+                var offset = (_this.state.options.rowHeight * action.limit) * action.offset;
+                _this.scroller.setOffset(offset);
+            }
         });
         this.sub.add(this.state.onRowsUpdate.subscribe(function (rows) {
             _this.updateRows();
@@ -72,7 +77,10 @@ var DataTableBody = (function () {
         }
         if (direction !== undefined && !isNaN(page)) {
             // pages are offset + 1 ;)
-            this.state.setPage(page + 1);
+            this.state.setPage({
+                type: 'body-event',
+                value: page + 1
+            });
         }
     };
     DataTableBody.prototype.updateRows = function (refresh) {
@@ -161,6 +169,10 @@ var DataTableBody = (function () {
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)
     ], DataTableBody.prototype, "onRowSelect", void 0);
+    __decorate([
+        core_1.ViewChild(Scroller_1.Scroller), 
+        __metadata('design:type', Scroller_1.Scroller)
+    ], DataTableBody.prototype, "scroller", void 0);
     __decorate([
         core_1.HostBinding('style.height'), 
         __metadata('design:type', Object)

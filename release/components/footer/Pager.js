@@ -53,7 +53,10 @@ var DataTablePager = (function () {
     DataTablePager.prototype.selectPage = function (page) {
         if (page > 0 && page <= this.totalPages) {
             this.page = page;
-            this.onPaged.emit(page);
+            this.onPaged.emit({
+                type: 'pager-event',
+                value: page
+            });
         }
     };
     DataTablePager.prototype.calcPages = function (page) {

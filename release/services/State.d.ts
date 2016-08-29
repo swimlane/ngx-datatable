@@ -34,6 +34,9 @@ export declare class StateService {
     setSelected(selected: any[]): this;
     setRows(rows: Array<any>): this;
     setOptions(options: TableOptions): this;
-    setPage(page: number): void;
+    setPage({type, value}: {
+        type: any;
+        value: any;
+    }): void;
     nextSort(column: TableColumn): void;
 }

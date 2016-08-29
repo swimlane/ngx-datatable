@@ -91,9 +91,9 @@ var DataTable = (function () {
             math_1.adjustColumnWidths(this.options.columns, width);
         }
     };
-    DataTable.prototype.onPageChanged = function (event) {
-        this.state.setPage(event);
-        this.onPageChange.emit(event);
+    DataTable.prototype.onPageChanged = function (action) {
+        this.state.setPage(action);
+        this.onPageChange.emit(action.page);
     };
     DataTable.prototype.onRowSelect = function (event) {
         this.state.setSelected(event);

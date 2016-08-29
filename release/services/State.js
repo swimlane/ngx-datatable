@@ -98,9 +98,11 @@ var StateService = (function () {
         this.options = options;
         return this;
     };
-    StateService.prototype.setPage = function (page) {
-        this.options.offset = page - 1;
+    StateService.prototype.setPage = function (_a) {
+        var type = _a.type, value = _a.value;
+        this.options.offset = value - 1;
         this.onPageChange.emit({
+            type: type,
             offset: this.options.offset,
             limit: this.pageSize,
             count: this.rowCount

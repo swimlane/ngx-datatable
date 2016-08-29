@@ -23,7 +23,7 @@ export declare class DataTable implements OnInit, DoCheck, AfterViewInit {
     checkColumnChanges(): void;
     adjustSizes(): void;
     adjustColumns(forceIdx?: number): void;
-    onPageChanged(event: any): void;
+    onPageChanged(action: any): void;
     onRowSelect(event: any): void;
     resize(): void;
     readonly isFixedHeader: boolean;
