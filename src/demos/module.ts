@@ -13,7 +13,8 @@ import '../components/datatable.scss';
 // import { App } from './expressive';
 // import { App } from './template';
 // import { App } from './details';
-import { App } from './virtual';
+// import { App } from './virtual';
+import { App } from './inline';
 // import { App } from './scrolling';
 
 @NgModule({

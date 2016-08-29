@@ -1,36 +1,42 @@
 import { Component } from '@angular/core';
 
-import {
-  TableOptions,
-  ColumnMode
-} from 'angular2-data-table';
+import { TableOptions } from '../angular2-data-table';
 import '../themes/material.scss';
 
 @Component({
   selector: 'app',
   template: `
     <div>
-      <h3>expressive</h3>
+      <h3>inline editing</h3>
       <datatable
-        class="material"
-        [rows]="rows"
-        [options]="options">
+        class='material'
+        [rows]='rows'
+        [options]='options'>
         <datatable-column name="Name">
-          <template let-value="value">
-            Hi: <strong>{{value}}</strong>
+          <template let-value="value" let-row="row">
+            <span
+              title="Double click to edit"
+              (dblclick)="editing[row.$$index] = true"
+              *ngIf="!editing[row.$$index]">
+              {{value}}
+            </span>
+            <input
+              autofocus
+              (blur)="updateValue($event, 'name', value, row)"
+              *ngIf="editing[row.$$index]"
+              type="text"
+              [value]="value"
+            />
           </template>
         </datatable-column>
         <datatable-column name="Gender">
           <template let-row="row" let-value="value">
-            My name is: <i [innerHTML]="row['name']"></i> and <i>{{value}}</i>
-            <div>{{joke}}</div>
+            {{value}}
           </template>
         </datatable-column>
         <datatable-column name="Age">
           <template let-value="value">
-            <div style="border:solid 1px #ddd;margin:5px;padding:3px">
-              <div style="background:#999;height:10px" [style.width]="value + '%'"></div>
-            </div>
+            {{value}}
           </template>
         </datatable-column>
       </datatable>
@@ -39,19 +45,20 @@ import '../themes/material.scss';
 })
 export class App {
 
+  editing = {};
+
   rows = [];
-  joke = 'knock knock';
 
   options = new TableOptions({
-    columnMode: ColumnMode.force,
     headerHeight: 50,
+    columnMode: 'force',
     footerHeight: 50,
     rowHeight: 'auto'
   });
 
   constructor() {
     this.fetch((data) => {
-      this.rows.push(...data.splice(0, 5));
+      this.rows.push(...data);
     });
   }
 
@@ -64,6 +71,12 @@ export class App {
     };
 
     req.send();
+  }
+
+  updateValue(event, cell, cellValue, row) {
+    this.editing[row.$$index] = false
+    console.log('ev', event)
+    this.rows[row.$$index][cell] = event.target.value;
   }
 
 }

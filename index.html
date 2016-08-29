@@ -1,9 +1,10 @@
 <html>
+
 <head>
   <title>Angular2 Datatable</title>
 
   <style>
-    body{
+    body {
       font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
       text-align: center;
       font-style: normal;
@@ -16,17 +17,17 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering: optimizeLegibility;
-      margin:20px
+      margin: 20px
     }
 
     .datatable {
-    	text-align: left;
-    	width:75%;
-    	margin:0 auto;
+      text-align: left;
+      width: 75%;
+      margin: 0 auto;
     }
 
     .datatable.vertical-scroll {
-      height:70vh;
+      height: 70vh;
     }
 
     .selected-column {
@@ -34,6 +35,25 @@
       -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
       -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
+    }
+
+    .group {
+      position: relative;
+      margin-bottom: 45px;
+    }
+
+    input {
+      font-size: 18px;
+      padding: 10px 10px 10px 5px;
+      display: block;
+      background: transparent;
+      width: 100%;
+      border: none;
+      border-bottom: 1px solid #5264AE;
+    }
+
+    input:focus {
+      outline: none;
     }
   </style>
 
