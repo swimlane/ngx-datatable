@@ -93,10 +93,11 @@ export class StateService {
     return this;
   }
 
-  setPage(page: number) {
-    this.options.offset = page - 1;
+  setPage({ type, value }) {
+    this.options.offset = value - 1;
 
     this.onPageChange.emit({
+      type,
       offset: this.options.offset,
       limit: this.pageSize,
       count: this.rowCount

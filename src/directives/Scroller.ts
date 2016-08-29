@@ -54,6 +54,10 @@ export class Scroller implements OnInit, OnDestroy {
     }
   }
 
+  setOffset(offsetY: number) {
+    this.parentElement.scrollTop = offsetY;
+  }
+
   onScrolled(event) {
     const dom = event.currentTarget;
     this.scrollYPos = dom.scrollTop;

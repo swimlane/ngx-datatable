@@ -109,7 +109,11 @@ export class DataTablePager {
   selectPage(page: number) {
     if (page > 0 && page <= this.totalPages) {
       this.page = page;
-      this.onPaged.emit(page);
+
+      this.onPaged.emit({
+        type: 'pager-event',
+        value: page
+      });
     }
   }
 

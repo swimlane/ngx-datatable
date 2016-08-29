@@ -5,6 +5,7 @@ import {
   OnInit,
   HostBinding,
   OnDestroy,
+  ViewChild,
   ElementRef
 } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
@@ -15,6 +16,7 @@ import { translateXY } from '../../utils/translate';
 
 import { StateService } from '../../services/State';
 import { SelectionType } from '../../enums/SelectionType';
+import { Scroller } from '../../directives/Scroller';
 
 @Component({
   selector: 'datatable-body',
@@ -56,6 +58,8 @@ export class DataTableBody implements OnInit, OnDestroy {
   @Output() onRowClick: EventEmitter<any> = new EventEmitter();
   @Output() onRowSelect: EventEmitter<any> = new EventEmitter();
 
+  @ViewChild(Scroller) scroller: Scroller;
+
   public rows: any;
   private prevIndex: number;
   private sub: Subscription;
@@ -89,9 +93,14 @@ export class DataTableBody implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.rows = [...this.state.rows];
 
-    this.sub = this.state.onPageChange.subscribe(() => {
+    this.sub = this.state.onPageChange.subscribe((action) => {
       this.updateRows();
       this.hideIndicator();
+
+      if(action.type === 'pager-event') {
+        const offset = (this.state.options.rowHeight * action.limit) * action.offset;
+        this.scroller.setOffset(offset);
+      }
     });
 
     this.sub.add(this.state.onRowsUpdate.subscribe(rows => {
@@ -120,7 +129,10 @@ export class DataTableBody implements OnInit, OnDestroy {
 
     if(direction !== undefined && !isNaN(page)) {
       // pages are offset + 1 ;)
-      this.state.setPage(page + 1);
+      this.state.setPage({
+        type: 'body-event',
+        value: page + 1
+      });
     }
   }
 
