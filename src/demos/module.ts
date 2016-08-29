@@ -5,7 +5,7 @@ import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 import { Angular2DataTableModule } from '../angular2-data-table';
 import '../components/datatable.scss';
 
-import { App } from './basic';
+// import { App } from './basic';
 // import { App } from './client-paging';
 // import { App } from './server-paging';
 // import { App } from './server-sorting';
@@ -13,7 +13,7 @@ import { App } from './basic';
 // import { App } from './expressive';
 // import { App } from './template';
 // import { App } from './details';
-// import { App } from './virtual';
+import { App } from './virtual';
 // import { App } from './scrolling';
 
 @NgModule({

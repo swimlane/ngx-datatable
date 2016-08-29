@@ -1,16 +1,11 @@
-import { Component, NgModule } from '@angular/core';
+import { Component } from '@angular/core';
 
 import {
   TableOptions,
   ColumnMode
 } from 'angular2-data-table';
-
-import { AppModule } from './module';
 import '../themes/material.scss';
 
-@NgModule({
-  imports: [ AppModule ]
-})
 @Component({
   selector: 'app',
   template: `
