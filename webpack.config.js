@@ -68,11 +68,18 @@ function webpackConfig(options = {}) {
       }],
       loaders: [{
         test: /\.ts$/,
-        loader: 'awesome-typescript-loader',
+        loaders: [
+          'awesome-typescript-loader',
+          '@angularclass/hmr-loader'
+        ],
         exclude: /(node_modules)/
       }, {
         test: /\.scss$/,
-        loaders: ['style', 'css?sourceMap', 'sass?sourceMap']
+        loaders: [
+          'style',
+          'css?sourceMap',
+          'sass?sourceMap'
+        ]
       }]
     },
 
@@ -86,6 +93,7 @@ function webpackConfig(options = {}) {
 
       new webpack.DefinePlugin({
         'ENV': JSON.stringify(ENV),
+        'HMR': options.HMR,
         'IS_PRODUCTION': IS_PRODUCTION,
         'APP_VERSION': VERSION
       }),
@@ -104,7 +112,7 @@ function webpackConfig(options = {}) {
       failOnHint: false,
       resourcePath: 'src'
     }
-  }
+  };
 
 };
 

@@ -17,6 +17,7 @@
       "check-separator",
       "check-type"
     ],
+    "only-arrow-functions": false,
     "no-string-literal": false,
     "no-unused-new": false,
     "no-console": [true, "warn"],

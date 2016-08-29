@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 
 import { Angular2DataTableModule } from '../angular2-data-table';
 import '../components/datatable.scss';
@@ -16,8 +17,23 @@ import { App } from './basic';
 // import { App } from './scrolling';
 
 @NgModule({
-  declarations: [ App ],
-  imports: [ BrowserModule, Angular2DataTableModule ],
-  bootstrap: [ App ]
+  declarations: [App],
+  imports: [BrowserModule, Angular2DataTableModule],
+  bootstrap: [App]
 })
-export class AppModule { }
+export class AppModule {
+
+  constructor(private appRef: ApplicationRef) {
+  }
+
+  hmrOnDestroy(store) {
+    const cmpLocation = this.appRef.components.map(cmp => cmp.location.nativeElement);
+    store.disposeOldHosts = createNewHosts(cmpLocation);
+    removeNgStyles();
+  }
+
+  hmrAfterDestroy(store) {
+    store.disposeOldHosts();
+    delete store.disposeOldHosts;
+  }
+}

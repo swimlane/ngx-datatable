@@ -29,5 +29,8 @@
     "node_modules"
   ],
   "compileOnSave": false,
-  "buildOnSave": false
+  "buildOnSave": false,
+  "awesomeTypescriptLoaderOptions": {
+    "forkChecker": false
+  }
 }

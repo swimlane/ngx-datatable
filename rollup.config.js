@@ -2,7 +2,6 @@
 
 var typescript = require('rollup-plugin-typescript');
 var sourcemaps = require('rollup-plugin-sourcemaps');
-var sass = require('rollup-plugin-sass');
 var pkg = require('./package.json');
 
 var banner =
@@ -49,7 +48,6 @@ module.exports = {
     typescript({
       typescript: require('typescript')
     }),
-    sourcemaps(),
-    sass()
+    sourcemaps()
   ]
 }

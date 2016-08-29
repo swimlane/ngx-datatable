@@ -3,6 +3,7 @@
 declare var ENV: string;
 declare var APP_VERSION: string;
 declare var IS_PRODUCTION: boolean;
+declare var HMR: boolean;
 
 interface ErrorStackTraceLimit {
   stackTraceLimit: number;
