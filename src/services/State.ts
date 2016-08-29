@@ -24,7 +24,6 @@ export class StateService {
   offsetX: number = 0;
   offsetY: number = 0;
   innerWidth: number = 0;
-  bodyHeight: number = 300;
 
   get columnsByPin() {
     return columnsByPin(this.options.columns);
@@ -44,7 +43,7 @@ export class StateService {
 
   get pageSize() {
     if (this.options.scrollbarV) {
-      return Math.ceil(this.bodyHeight / this.options.rowHeight) + 1;
+      return Math.ceil(this.options.bodyHeight / this.options.rowHeight) + 1;
     } else if (this.options.limit) {
       return this.options.limit;
     } else {
