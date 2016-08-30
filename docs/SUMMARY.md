@@ -17,10 +17,12 @@
    * [Templates](examples/templates.md)
    * [100k Rows](examples/virtual.md)
    * [H/V Scrolling](examples/scrolling.md)
+   * [Inline Editing](examples/inline.md)
 * API
    * [Table](api/table.md)
    * [Options](api/options.md)
    * [Column](api/column_options.md)
+   * [Internals](api/internals.md)
 * Contributing
    * [Building](contributing/building.md)
    * [Guidelines](contributing/guidelines.md)

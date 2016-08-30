@@ -1,5 +1,23 @@
 # Themes
 
-Out of the box, the data-table is not styled. This gives you maximum flexibility. 
+Out of the box, the data-table is not styled. This gives you maximum flexibility.
 
-There is a separate material theme distributed with data-table. In order to use it, you need to include that in your application `release/material.css` and add the css class `material` to your data-table.
+There is a separate material theme distributed with data-table. In order to use it, you need to include that in your application `release/material.css` and add the CSS class `material` to your data-table.
+
+## CSS Classes
+- `datatable`: Master Table class
+  - `fixed-header`: The header is fixed on the table
+
+- `datatable-header`: Header row class
+  - `datatable-header-cell`: Header cell class
+    - `resizeable`: Cell resizeable class
+    - `sortable`: Cell drag/drop sortable class
+    - `longpress`: Cell long-press activated
+    - `dragging`: Cell dragging activated
+
+  - `datatable-header-cell-label`: Header cell text label
+    - `draggable`: Header cell draggable class
+
+- `datatable-body-row`: Body row class
+  - `datatable-row-even`: Odd row class
+  - `datatable-row-odd`: Even row class
