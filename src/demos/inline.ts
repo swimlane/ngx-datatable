@@ -75,7 +75,6 @@ export class App {
 
   updateValue(event, cell, cellValue, row) {
     this.editing[row.$$index] = false
-    console.log('ev', event)
     this.rows[row.$$index][cell] = event.target.value;
   }
 
