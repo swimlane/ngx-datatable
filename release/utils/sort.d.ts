@@ -1,4 +1,4 @@
-/// <reference types="core-js" />
+
 import { Sort } from '../models/Sort';
 import { SortType } from '../enums/SortType';
 import { SortDirection } from '../enums/SortDirection';

@@ -1,4 +1,4 @@
-/// <reference types="core-js" />
+
 import { ElementRef, EventEmitter } from '@angular/core';
 import { StateService } from '../../services/State';
 import { TableColumn } from '../../models/TableColumn';

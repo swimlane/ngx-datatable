@@ -1,4 +1,4 @@
-/// <reference types="core-js" />
+
 import { EventEmitter } from '@angular/core';
 import { TableOptions } from '../models/TableOptions';
 import { TableColumn } from '../models/TableColumn';

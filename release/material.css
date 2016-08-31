@@ -7,6 +7,9 @@
 	 * Shared Styles
 	 */
   /**
+	 * Global Row Styles
+	 */
+  /**
 	 * Header Styles
 	 */
   /**
@@ -28,6 +31,18 @@
     padding: .5rem 1.2rem;
     vertical-align: top;
     border-top: 0; }
+  .datatable.material .datatable-header .datatable-row-left,
+  .datatable.material .datatable-body .datatable-row-left {
+    background-color: #FFF;
+    background-position: 100% 0;
+    background-repeat: repeat-y;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQIHWPSkNeSBmJhTQVtbiDNCgASagIIuJX8OgAAAABJRU5ErkJggg==); }
+  .datatable.material .datatable-header .datatable-row-right,
+  .datatable.material .datatable-body .datatable-row-right {
+    background-position: 0 0;
+    background-color: #fff;
+    background-repeat: repeat-y;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQI12PQkNdi1VTQ5gbSwkAsDQARLAIGtOSFUAAAAABJRU5ErkJggg==); }
   .datatable.material .datatable-header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
     .datatable.material .datatable-header .datatable-header-cell {
@@ -50,12 +65,14 @@
     -webkit-transition: width 0.3s ease;
     -o-transition: width 0.3s ease;
     transition: width 0.3s ease; }
-  .datatable.material .datatable-body .datatable-body-row:hover {
+  .datatable.material .datatable-body .datatable-body-row:hover,
+  .datatable.material .datatable-body .datatable-body-row:hover .datatable-row-group {
     background-color: #eee;
     transition-property: background;
     transition-duration: .3s;
     transition-timing-function: linear; }
-  .datatable.material .datatable-body .datatable-body-row:focus {
+  .datatable.material .datatable-body .datatable-body-row:focus,
+  .datatable.material .datatable-body .datatable-body-row:focus .datatable-row-group {
     background-color: #ddd; }
   .datatable.material .datatable-body .datatable-body-row.active, .datatable.material .datatable-body .datatable-body-row.active:focus, .datatable.material .datatable-body .datatable-body-row.active:hover {
     background-color: #304FFE;

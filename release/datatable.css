@@ -67,7 +67,6 @@
     -moz-flex-flow: row;
     -ms-flex-flow: row;
     -o-flex-flow: row;
-    flex-flow: row;
     flex-flow: row; }
   .datatable .datatable-body-cell,
   .datatable .datatable-header-cell {
@@ -87,7 +86,8 @@
   .datatable .datatable-row-right {
     position: relative; }
   .datatable .datatable-header {
-    display: block; }
+    display: block;
+    overflow: hidden; }
     .datatable .datatable-header .datatable-header-inner {
       align-items: stretch;
       -webkit-align-items: stretch; }

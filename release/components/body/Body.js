@@ -50,7 +50,7 @@ var DataTableBody = (function () {
         this.sub = this.state.onPageChange.subscribe(function (action) {
             _this.updateRows();
             _this.hideIndicator();
-            if (action.type === 'pager-event') {
+            if (_this.state.options.scrollbarV && action.type === 'pager-event') {
                 var offset = (_this.state.options.rowHeight * action.limit) * action.offset;
                 _this.scroller.setOffset(offset);
             }
