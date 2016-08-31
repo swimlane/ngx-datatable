@@ -97,7 +97,7 @@ export class DataTableBody implements OnInit, OnDestroy {
       this.updateRows();
       this.hideIndicator();
 
-      if(action.type === 'pager-event') {
+      if(this.state.options.scrollbarV && action.type === 'pager-event') {
         const offset = (this.state.options.rowHeight * action.limit) * action.offset;
         this.scroller.setOffset(offset);
       }
