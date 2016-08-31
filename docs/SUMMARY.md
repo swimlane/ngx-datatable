@@ -18,6 +18,7 @@
    * [100k Rows](examples/virtual.md)
    * [H/V Scrolling](examples/scrolling.md)
    * [Inline Editing](examples/inline.md)
+   * [Column Pinning](examples/pinning.md)
 * API
    * [Table](api/table.md)
    * [Options](api/options.md)
