@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v0.3.6 (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v0.3.7 (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
