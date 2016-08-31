@@ -29,6 +29,26 @@
 	}
 
 	/**
+	 * Global Row Styles
+	 */
+	 .datatable-header,
+	 .datatable-body {
+		 .datatable-row-left {
+			background-color: #FFF;
+			background-position: 100% 0;
+			background-repeat: repeat-y;
+			background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQIHWPSkNeSBmJhTQVtbiDNCgASagIIuJX8OgAAAABJRU5ErkJggg==);
+		}
+
+		.datatable-row-right {
+			background-position: 0 0;
+	    background-color: #fff;
+	    background-repeat: repeat-y;
+	    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQI12PQkNdi1VTQ5gbSwkAsDQARLAIGtOSFUAAAAABJRU5ErkJggg==);
+		}
+	}
+
+	/**
 	 * Header Styles
 	 */
 	.datatable-header {
@@ -73,22 +93,30 @@
 	      transition: width 0.3s ease;
 	    }
 
-	    &:hover {
+			.datatable-row-left,
+			.datatable-row-center,
+			.datatable-row-right {
+
+			}
+
+	    &:hover,
+			&:hover .datatable-row-group {
 	      background-color: #eee;
 	      transition-property: background;
 	      transition-duration: .3s;
 	      transition-timing-function: linear;
 	    }
 
-			&:focus {
+			&:focus,
+			&:focus .datatable-row-group {
 				background-color: #ddd;
 			}
 
 			&.active,
 			&.active:focus,
 			&.active:hover {
-				background-color:#304FFE;
-        color:#FFF;
+				background-color: #304FFE;
+        color: #FFF;
 			}
 	  }
 

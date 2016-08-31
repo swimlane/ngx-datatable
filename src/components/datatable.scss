@@ -86,7 +86,6 @@
     -ms-flex-flow: row;
     -o-flex-flow: row;
     flex-flow: row;
-    flex-flow: row;
   }
 
   .datatable-body-cell,
@@ -103,13 +102,13 @@
   }
 
   .datatable-row-left,
-  .datatable-row-right{
+  .datatable-row-right {
     z-index: 9;
   }
 
   .datatable-row-left,
   .datatable-row-center,
-  .datatable-row-right{
+  .datatable-row-right {
     position:relative;
   }
 
@@ -118,6 +117,7 @@
    */
   .datatable-header {
     display: block;
+    overflow: hidden;
 
     .datatable-header-inner{
       align-items: stretch;

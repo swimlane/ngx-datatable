@@ -7,7 +7,7 @@ import { StateService } from '../../services/State';
   template: `
     <div>
       <div
-        class="datatable-row-left"
+        class="datatable-row-left datatable-row-group"
         *ngIf="state.columnsByPin.left.length"
         [ngStyle]="stylesByGroup('left')"
         [style.width]="state.columnGroupWidths.left + 'px'">
@@ -18,7 +18,7 @@ import { StateService } from '../../services/State';
         </datatable-body-cell>
       </div>
       <div
-        class="datatable-row-center"
+        class="datatable-row-center datatable-row-group"
         [style.width]="state.columnGroupWidths.center + 'px'"
         [ngStyle]="stylesByGroup('center')"
         *ngIf="state.columnsByPin.center.length">
@@ -29,7 +29,7 @@ import { StateService } from '../../services/State';
         </datatable-body-cell>
       </div>
       <div
-        class="datatable-row-right"
+        class="datatable-row-right datatable-row-group"
         *ngIf="state.columnsByPin.right.length"
         [ngStyle]="stylesByGroup('right')"
         [style.width]="state.columnGroupWidths.right + 'px'">
