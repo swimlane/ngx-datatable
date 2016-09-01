@@ -72,7 +72,7 @@
     "progress-bar-webpack-plugin": "^1.9.0",
     "replace": "^0.3.0",
     "rimraf": "^2.5.2",
-    "rollup": "^0.34.1",
+    "rollup": "^0.34.12",
     "rollup-plugin-sourcemaps": "^0.3.5",
     "rollup-plugin-typescript": "^0.8.0",
     "sass-loader": "^4.0.0",
