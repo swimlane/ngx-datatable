@@ -1,6 +1,6 @@
 {
   "name": "angular2-data-table",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "angular2-data-table is a Angular2 component for presenting large and complex data.",
   "main": "release/angular2-data-table.umd.js",
   "jsnext:main": "release/angular2-data-table.es.js",
@@ -57,6 +57,14 @@
     "zone.js": "0.6.17"
   },
   "devDependencies": {
+    "@angular/common": "2.0.0-rc.5",
+    "@angular/compiler": "2.0.0-rc.5",
+    "@angular/core": "2.0.0-rc.5",
+    "@angular/platform-browser": "2.0.0-rc.5",
+    "@angular/platform-browser-dynamic": "2.0.0-rc.5",
+    "core-js": "^2.4.0",
+    "rxjs": "5.0.0-beta.6",
+    "zone.js": "0.6.17",
     "@angularclass/hmr": "^1.0.1",
     "@angularclass/hmr-loader": "^1.0.1",
     "@types/core-js": "^0.9.28",
