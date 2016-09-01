@@ -75,7 +75,7 @@
     "rollup": "^0.34.13",
     "rollup-plugin-sourcemaps": "^0.3.5",
     "rollup-plugin-typescript": "^0.8.0",
-    "sass-loader": "^4.0.0",
+    "sass-loader": "^4.0.1",
     "source-map-loader": "^0.1.5",
     "style-loader": "0.13.1",
     "ts-helpers": "1.1.1",
