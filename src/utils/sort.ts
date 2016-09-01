@@ -38,6 +38,9 @@ export function orderByComparator(a: any, b: any): number {
   if (b === null || typeof b === 'undefined') b = 0;
 
   if ((isNaN(parseFloat(a)) || !isFinite(a)) || (isNaN(parseFloat(b)) || !isFinite(b))) {
+    // Convert to string in case of a=0 or b=0
+    a = String(a);
+    b = String(b);
     // Isn't a number so lowercase the string to properly compare
     if (a.toLowerCase() < b.toLowerCase()) return -1;
     if (a.toLowerCase() > b.toLowerCase()) return 1;
