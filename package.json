@@ -46,7 +46,7 @@
     "url": "https://github.com/swimlane/angular2-data-table/issues"
   },
   "homepage": "https://github.com/swimlane/angular2-data-table#readme",
-  "dependencies": {
+  "peerDependencies": {
     "@angular/common": "2.0.0-rc.5",
     "@angular/compiler": "2.0.0-rc.5",
     "@angular/core": "2.0.0-rc.5",
