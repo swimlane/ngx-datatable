@@ -61,7 +61,8 @@ function webpackConfig(options = {}) {
     module: {
       preLoaders: [{
         test: /\.js$/,
-        loader: 'source-map'
+        loader: 'source-map',
+        exclude: /(node_modules)/
       }, {
         test: /\.ts$/,
         loader: 'tslint'

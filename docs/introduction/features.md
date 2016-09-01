@@ -9,6 +9,7 @@ The table was designed to be *extremely flexible and light*; it doesn't make any
 - Intelligent Column Width Algorithms ( Force-fill & Flex-grow )
 - Integrated Pager
 - Row Selection ( Single & Multi )
+- Left and Right Column Pinning
 - Fixed AND Fluid height
 - Decoupled theme'ing with included Google Material theme
 - Light codebase / No external dependencies
@@ -18,7 +19,6 @@ We are really excited about the table and wanted to get it out into the open as 
 
 - Better RxJS Support
 - Touch selection support
-- Rich Header Templates
 - Checkbox Selection
 - Tree Grids
 - Row Grouping
