@@ -22,18 +22,7 @@ import '../themes/material.scss';
 })
 export class App {
 
-  rows = [
-    {
-      'name': 'Claudine Neal',
-      'gender': 'female',
-      'company': 'Sealoud'
-    },
-    {
-      'name': 'Beryl Rice',
-      'gender': 'female',
-      'company': 'Velity'
-    }
-  ];
+  rows = [];
 
   options = new TableOptions({
     columnMode: ColumnMode.force,
@@ -53,6 +42,24 @@ export class App {
       this.rows.reverse();
       console.log('sorted!');
     }, 500);
+  }
+
+  constructor() {
+    this.fetch((data) => {
+      this.rows.push(...data);
+    });
+  }
+
+  fetch(cb) {
+    const req = new XMLHttpRequest();
+    req.open('GET', `assets/data/company.json`);
+
+    req.onload = () => {
+      let data = JSON.parse(req.response);
+      cb(data.splice(0, 20));
+    };
+
+    req.send();
   }
 
 }
