@@ -21,8 +21,9 @@
    * [Column Pinning](examples/pinning.md)
 * API
    * [Table](api/table.md)
-   * [Options](api/options.md)
+      * [Options](api/options.md)
    * [Column](api/column_options.md)
+      * [Column Modes](api/column_modes.md)
    * [Internals](api/internals.md)
 * Contributing
    * [Building](contributing/building.md)
