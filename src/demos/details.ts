@@ -13,8 +13,8 @@ import '../themes/material.scss';
         [options]='options'>
         <datatable-column [width]='50'>
           <template let-row='row'>
-            <span class='icon-right' [hidden]='expanded[row.name]'></span>
-            <span class='icon-down' [hidden]='!expanded[row.name]'></span>
+            <span class='icon-right' [hidden]='expanded[row.name]' (click)="toggle(row)"></span>
+            <span class='icon-down' [hidden]='!expanded[row.name]' (click)="toggle(row)"></span>
           </template>
         </datatable-column>
 

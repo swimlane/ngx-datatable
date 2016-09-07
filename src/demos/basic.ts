@@ -17,17 +17,37 @@ import '../themes/material.scss';
         [rows]='rows'
         [options]='options'>
       </datatable>
+      <br>
+      <datatable
+        class='material striped'
+        [rows]='rows'
+        [options]='optionsTwo'>
+      </datatable>
     </div>
   `
 })
 export class App {
 
   rows = [];
+  rows2 = [];
 
   options = new TableOptions({
     columnMode: ColumnMode.force,
     headerHeight: 50,
     footerHeight: 50,
+    rowHeight: 'auto',
+    columns: [
+      new TableColumn({ prop: 'name' }),
+      new TableColumn({ name: 'Gender' }),
+      new TableColumn({ name: 'Company' })
+    ]
+  });
+
+  optionsTwo = new TableOptions({
+    columnMode: ColumnMode.force,
+    headerHeight: 25,
+    footerHeight: 25,
+    limit: 10,
     rowHeight: 'auto',
     columns: [
       new TableColumn({ prop: 'name' }),

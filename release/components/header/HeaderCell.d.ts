@@ -2,14 +2,14 @@
 import { ElementRef, EventEmitter } from '@angular/core';
 import { StateService } from '../../services/State';
 import { TableColumn } from '../../models/TableColumn';
-import { SortDirection } from '../../enums/SortDirection';
 export declare class DataTableHeaderCell {
     element: ElementRef;
     private state;
     model: TableColumn;
+    key: string;
     onColumnChange: EventEmitter<any>;
     sort: Function;
-    readonly sortDir: SortDirection;
+    readonly sortDir: any;
     readonly name: string;
     constructor(element: ElementRef, state: StateService);
     sortClasses(sort: any): {

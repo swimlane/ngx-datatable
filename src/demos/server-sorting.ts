@@ -36,18 +36,18 @@ export class App {
     ]
   });
 
+  constructor() {
+    this.fetch((data) => {
+      this.rows.push(...data);
+    });
+  }
+
   sorter(rows, dirs) {
     console.log('sorting started!');
     setTimeout(() => {
       this.rows.reverse();
       console.log('sorted!');
     }, 500);
-  }
-
-  constructor() {
-    this.fetch((data) => {
-      this.rows.push(...data);
-    });
   }
 
   fetch(cb) {

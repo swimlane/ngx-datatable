@@ -6,7 +6,7 @@ import { Angular2DataTableModule } from '../angular2-data-table';
 import '../components/datatable.scss';
 
 // import { App } from './basic';
-// import { App } from './client-paging';
+import { App } from './client-paging';
 // import { App } from './server-paging';
 // import { App } from './server-sorting';
 // import { App } from './selection';
@@ -16,7 +16,7 @@ import '../components/datatable.scss';
 // import { App } from './virtual';
 // import { App } from './inline';
 // import { App } from './scrolling';
-import { App } from './pinning';
+// import { App } from './pinning';
 
 @NgModule({
   declarations: [App],

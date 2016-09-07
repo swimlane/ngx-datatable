@@ -1,5 +1,8 @@
 // Extra variables that live on Global that
 // will be replaced by webpack DefinePlugin
+
+/// <reference path="../typings/modules/lodash/index.d.ts" />
+
 declare var ENV: string;
 declare var APP_VERSION: string;
 declare var IS_PRODUCTION: boolean;

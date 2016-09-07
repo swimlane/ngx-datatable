@@ -9,127 +9,229 @@ import { TableColumn } from '../models/TableColumn';
 import { Sort } from '../models/Sort';
 import { SortType } from '../enums/SortType';
 
+import * as _ from 'lodash';
+
 @Injectable()
 export class StateService {
-
-  options: TableOptions;
-  rows: Array<any>;
-  selected: Array<any>;
 
   onSelectionChange: EventEmitter<any> = new EventEmitter();
   onRowsUpdate: EventEmitter<any> = new EventEmitter();
   onPageChange: EventEmitter<any> = new EventEmitter();
 
-  scrollbarWidth: number = scrollbarWidth();
-  offsetX: number = 0;
-  offsetY: number = 0;
-  innerWidth: number = 0;
-  bodyHeight: number = 300;
+  private options = new Map<string, TableOptions>();
+  private rows = new Map<string, Array<any>>();
+  private selected = new Map<string, Array<any>>();
 
-  get columnsByPin() {
-    return columnsByPin(this.options.columns);
+  private scrollbarWidth = new Map<string, number>();
+  private offsetX = new Map<string, number>();
+  private offsetY = new Map<string, number>();
+  private innerWidth = new Map<string, number>();
+  private bodyHeight = new Map<string, number>();
+
+  newInstance() {
+    let key = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      let r = Math.random() * 16 | 0;
+      let v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+    this.bodyHeight.set(key, 300);
+    this.offsetX.set(key, 0);
+    this.offsetY.set(key, 0);
+    this.innerWidth.set(key, 0);
+    this.scrollbarWidth.set(key, scrollbarWidth());
+    return key;
   }
 
-  get columnGroupWidths() {
-    return columnGroupWidths(this.columnsByPin, this.options.columns);
+  getScrollbarWidth(key: string) {
+    return this.scrollbarWidth.get(key);
   }
 
-  get rowCount() {
-    if (!this.options.externalPaging) {
-      return this.rows.length;
+  setScollbarWidth(key: string, value: any) {
+    this.scrollbarWidth.set(key, value);
+    return this;
+  }
+
+  getOffsetX(key: string) {
+    return this.offsetX.get(key);
+  }
+
+  setOffsetX(key: string, value: any) {
+    this.offsetX.set(key, value);
+    return this;
+  }
+
+  getOffsetY(key: string) {
+    return this.offsetY.get(key);
+  }
+
+  setOffsetY(key: string, value: any) {
+    this.offsetY.set(key, value);
+    return this;
+  }
+
+  getInnerWidth(key: string) {
+    return this.innerWidth.get(key);
+  }
+
+  setInnerWidth(key: string, value: any) {
+    this.innerWidth.set(key, value);
+    return this;
+  }
+
+  getBodyHeight(key: string) {
+    return this.bodyHeight.get(key);
+  }
+
+  setBodyHeight(key: string, value: any) {
+    this.bodyHeight.set(key, value);
+    return this;
+  }
+
+  columnsByPin(key: string) {
+    return columnsByPin(this.getOption(key, 'columns'));
+  }
+
+  columnGroupWidths(key: string) {
+    return columnGroupWidths(this.columnsByPin(key), this.getOption(key, 'columns'));
+  }
+
+  rowCount(key: string) {
+    if (!this.getOption(key, 'externalPaging')) {
+      return this.rows.get(key).length;
     } else {
-      return this.options.count;
+      return this.getOption(key, 'count');
     }
   }
 
-  get pageSize() {
-    if (this.options.scrollbarV) {
-      return Math.ceil(this.bodyHeight / this.options.rowHeight) + 1;
-    } else if (this.options.limit) {
-      return this.options.limit;
+  getRows(key) {
+    return this.rows.get(key);
+  }
+
+  pageSize(key: string) {
+    if (this.getOption(key, 'scrollbarV')) {
+      return Math.ceil(this.getBodyHeight(key) / this.getOption(key, 'rowHeight')) + 1;
+    } else if (this.getOption(key, 'limit')) {
+      return this.getOption(key, 'limit');
     } else {
-      return this.rows.length;
+      return this.rows.get(key).length;
     }
   }
 
-  get indexes() {
+  indexes(key: string) {
     let first = 0;
     let last = 0;
 
-    if (this.options.scrollbarV) {
-      const floor = Math.floor((this.offsetY || 0) / this.options.rowHeight);
+    if (this.getOption(key, 'scrollbarV')) {
+      const floor = Math.floor((this.getOffsetY(key) || 0) / this.getOption(key, 'rowHeight'));
       first = Math.max(floor, 0);
-      last = Math.min(first + this.pageSize, this.rowCount);
+      last = Math.min(first + this.pageSize(key), this.rowCount(key));
     } else {
-      first = Math.max(this.options.offset * this.pageSize, 0);
-      last = Math.min(first + this.pageSize, this.rowCount);
+      first = Math.max(this.getOption(key, 'offset') * this.pageSize(key), 0);
+      last = Math.min(first + this.pageSize(key), this.rowCount(key));
     }
 
     return { first, last };
   }
 
-  setSelected(selected: any[]) {
-    if (!this.selected) {
-      this.selected = selected || [];
+  setSelected(key: string, selected: any[]) {
+    if (!this.selected.get(key)) {
+      this.selected.set(key, selected || []);
     } else {
-      this.selected.splice(0, this.selected.length);
-      this.selected.push(...selected);
+      let selectedArray = this.selected.get(key);
+      selected.splice(0, selected.length);
+      selectedArray.push(...selected);
+      this.selected.set(key, selectedArray);
     }
 
     this.onSelectionChange.emit(this.selected);
     return this;
   }
 
-  setRows(rows: Array<any>) {
+  getSelected(key: string) {
+    return this.selected.get(key);
+  }
+
+  setRows(key: string, rows: Array<any>) {
     if (rows) {
-      this.rows = [...rows];
+      this.rows.set(key, [...rows]);
       this.onRowsUpdate.emit(rows);
     }
     return this;
   }
 
-  setOptions(options: TableOptions) {
-    this.options = options;
+  setOptions(key: string, options: TableOptions) {
+    this.options.set(key, options);
     return this;
   }
 
-  setPage({ type, value }) {
-    this.options.offset = value - 1;
+  addOption(key: string, option) {
+    let options = this.options.get(key);
+    _.extend(options, option);
+    this.options.set(key, options);
+    return this;
+  }
+
+  getOption(key: string, option) {
+    let options = this.options.get(key);
+    return options[option];
+  }
+
+  updateOption(key: string, option: string, value) {
+    let options = this.options.get(key);
+    let obj = {};
+    obj[option] = value;
+    _.merge(options, obj);
+    this.options.set(key, options);
+    return this;
+  }
+
+  getOptions(key: string) {
+    return this.options.get(key);
+  }
+
+  setPage(key: string, { type, value }) {
+    this.updateOption(key, 'offset', value - 1);
 
     this.onPageChange.emit({
       type,
-      offset: this.options.offset,
-      limit: this.pageSize,
-      count: this.rowCount
+      offset: this.getOption(key, 'offset'),
+      limit: this.pageSize(key),
+      count: this.rowCount(key)
     });
   }
 
-  nextSort(column: TableColumn) {
-    const idx = this.options.sorts.findIndex(s => {
+  nextSort(key: string, column: TableColumn) {
+    const idx = this.getOption(key, 'sorts').findIndex(s => {
       return s.prop === column.prop;
     });
 
-    let curSort = this.options.sorts[idx];
+    let currentSort = this.getOption(key, 'sorts');
+
+    let curSort = currentSort[idx];
     let curDir = undefined;
     if (curSort) curDir = curSort.dir;
 
-    const dir = nextSortDir(this.options.sortType, curDir);
+    const dir = nextSortDir(this.getOption(key, 'sortType'), curDir);
     if (dir === undefined) {
-      this.options.sorts.splice(idx, 1);
+      currentSort.splice(idx, 1);
     } else if (curSort) {
-      this.options.sorts[idx].dir = dir;
+      currentSort[idx].dir = dir;
     } else {
-      if (this.options.sortType === SortType.single) {
-        this.options.sorts.splice(0, this.options.sorts.length);
+      if (this.getOption(key, 'sortType') === SortType.single) {
+        currentSort.splice(0, currentSort.length);
       }
 
-      this.options.sorts.push(new Sort({dir, prop: column.prop}));
+      currentSort.push(new Sort({dir, prop: column.prop}));
     }
 
+    console.debug('Current Sort', currentSort);
+    this.updateOption(key, 'sorts', currentSort);
+
     if (!column.comparator) {
-      this.setRows(sortRows(this.rows, this.options.sorts));
+      let rows = this.rows.get(key);
+      this.setRows(key, sortRows(rows, currentSort));
     } else {
-      column.comparator(this.rows, this.options.sorts);
+      column.comparator(this.rows, currentSort);
     }
   }
 

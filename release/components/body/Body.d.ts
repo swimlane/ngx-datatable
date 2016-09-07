@@ -3,6 +3,7 @@ import { StateService } from '../../services/State';
 import { Scroller } from '../../directives/Scroller';
 export declare class DataTableBody implements OnInit, OnDestroy {
     state: StateService;
+    key: string;
     onRowClick: EventEmitter<any>;
     onRowSelect: EventEmitter<any>;
     scroller: Scroller;

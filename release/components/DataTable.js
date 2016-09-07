@@ -1,4 +1,13 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var core_1 = require('@angular/core');
 var math_1 = require('../utils/math');
 var ColumnMode_1 = require('../enums/ColumnMode');
@@ -14,6 +23,7 @@ var DataTable = (function () {
         this.onRowClick = new core_1.EventEmitter();
         this.onSelectionChange = new core_1.EventEmitter();
         this.onColumnChange = new core_1.EventEmitter();
+        this.key = state.newInstance();
         this.element = element.nativeElement;
         this.element.classList.add('datatable');
         this.rowDiffer = differs.find({}).create(null);
@@ -22,9 +32,10 @@ var DataTable = (function () {
     DataTable.prototype.ngOnInit = function () {
         var _a = this, options = _a.options, rows = _a.rows, selected = _a.selected;
         this.state
-            .setOptions(options)
-            .setRows(rows)
-            .setSelected(selected);
+            .setOptions(this.key, options)
+            .setRows(this.key, rows)
+            .setSelected(this.key, selected);
+        console.debug('State', this.state);
     };
     DataTable.prototype.ngAfterViewInit = function () {
         var _this = this;
@@ -40,7 +51,7 @@ var DataTable = (function () {
     };
     DataTable.prototype.ngDoCheck = function () {
         if (this.rowDiffer.diff(this.rows)) {
-            this.state.setRows(this.rows);
+            this.state.setRows(this.key, this.rows);
             this.onRowsUpdate.emit(this.rows);
         }
         this.checkColumnChanges();
@@ -67,22 +78,22 @@ var DataTable = (function () {
     };
     DataTable.prototype.adjustSizes = function () {
         var _a = this.element.getBoundingClientRect(), height = _a.height, width = _a.width;
-        this.state.innerWidth = Math.floor(width);
+        this.state.setInnerWidth(this.key, Math.floor(width));
         if (this.options.scrollbarV) {
             if (this.options.headerHeight)
                 height = height - this.options.headerHeight;
             if (this.options.footerHeight)
                 height = height - this.options.footerHeight;
-            this.state.bodyHeight = height;
+            this.state.setBodyHeight(this.key, height);
         }
         this.adjustColumns();
     };
     DataTable.prototype.adjustColumns = function (forceIdx) {
         if (!this.options.columns)
             return;
-        var width = this.state.innerWidth;
+        var width = this.state.getInnerWidth(this.key);
         if (this.options.scrollbarV) {
-            width = width - this.state.scrollbarWidth;
+            width = width - this.state.getScrollbarWidth(this.key);
         }
         if (this.options.columnMode === ColumnMode_1.ColumnMode.force) {
             math_1.forceFillColumnWidths(this.options.columns, width, forceIdx);
@@ -92,11 +103,11 @@ var DataTable = (function () {
         }
     };
     DataTable.prototype.onPageChanged = function (action) {
-        this.state.setPage(action);
+        this.state.setPage(this.key, action);
         this.onPageChange.emit(action.page);
     };
     DataTable.prototype.onRowSelect = function (event) {
-        this.state.setSelected(event);
+        this.state.setSelected(this.key, event);
         this.onSelectionChange.emit(event);
     };
     DataTable.prototype.resize = function () {
@@ -204,7 +215,7 @@ var DataTable = (function () {
     DataTable = __decorate([
         core_1.Component({
             selector: 'datatable',
-            template: "\n    <div\n      visibility-observer\n      (onVisibilityChange)=\"adjustSizes()\">\n      <datatable-header\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </datatable-header>\n      <datatable-body\n        (onRowClick)=\"onRowClick.emit($event)\"\n        (onRowSelect)=\"onRowSelect($event)\">\n      </datatable-body>\n      <datatable-footer\n        (onPageChange)=\"onPageChanged($event)\">\n      </datatable-footer>\n    </div>\n  "
+            template: "\n    <div\n      visibility-observer\n      (onVisibilityChange)=\"adjustSizes()\">\n      <datatable-header\n        [key]=\"key\"\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </datatable-header>\n      <datatable-body\n        [key]=\"key\"\n        (onRowClick)=\"onRowClick.emit($event)\"\n        (onRowSelect)=\"onRowSelect($event)\">\n      </datatable-body>\n      <datatable-footer\n        [key]=\"key\"\n        (onPageChange)=\"onPageChanged($event)\">\n      </datatable-footer>\n    </div>\n  "
         }), 
         __metadata('design:paramtypes', [State_1.StateService, core_1.ElementRef, core_1.KeyValueDiffers])
     ], DataTable);
