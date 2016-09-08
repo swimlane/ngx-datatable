@@ -19,7 +19,7 @@
             "theme": "dark"
         },
         "versions": {
-            "gitbookConfigURL": "https://npmcdn.com/angular2-data-table/book.json",
+            "gitbookConfigURL": "https://unpkg.com/angular2-data-table/book.json",
             "type": "tags"
         }
     }
