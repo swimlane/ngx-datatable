@@ -112,7 +112,7 @@ export class DataTablePager {
 
       this.onPaged.emit({
         type: 'pager-event',
-        value: page
+        page: page
       });
     }
   }
