@@ -20,5 +20,11 @@ Check out the [documentation & demos](https://swimlane.gitbooks.io/angular2-data
 - Decoupled theme'ing with included Google Material theme
 - Light codebase / No external dependencies
 
+## Installation
+To use angular2-data-table in your project install it via [npm](https://www.npmjs.com/package/angular2-data-table):
+```
+npm install --save angular2-data-table
+```
+
 ## Credits
 `angular2-data-table` is a [Swimlane](http://swimlane.com) open-source project; we believe in giving back to the open-source community by sharing some of the projects we build for our application. Swimlane is an automated cyber security operations and incident response platform that enables cyber security teams to leverage threat intelligence, speed up incident response and automate security operations.
