@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v0.3.8 (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v0.3.9 (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -451,6 +451,9 @@ function orderByComparator(a, b) {
     if (b === null || typeof b === 'undefined')
         b = 0;
     if ((isNaN(parseFloat(a)) || !isFinite(a)) || (isNaN(parseFloat(b)) || !isFinite(b))) {
+        // Convert to string in case of a=0 or b=0
+        a = String(a);
+        b = String(b);
         // Isn't a number so lowercase the string to properly compare
         if (a.toLowerCase() < b.toLowerCase())
             return -1;
@@ -722,7 +725,7 @@ var DataTable = (function () {
     };
     DataTable.prototype.onPageChanged = function (action) {
         this.state.setPage(action);
-        this.onPageChange.emit(action.page);
+        this.onPageChange.emit(action.value);
     };
     DataTable.prototype.onRowSelect = function (event) {
         this.state.setSelected(event);

@@ -93,7 +93,7 @@ var DataTable = (function () {
     };
     DataTable.prototype.onPageChanged = function (action) {
         this.state.setPage(action);
-        this.onPageChange.emit(action.page);
+        this.onPageChange.emit(action.value);
     };
     DataTable.prototype.onRowSelect = function (event) {
         this.state.setSelected(event);
