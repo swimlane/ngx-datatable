@@ -45,13 +45,15 @@ import { SortDirection } from '../../enums/SortDirection';
 export class DataTableHeaderCell {
 
   @Input() model: TableColumn;
+  @Input() key: string;
 
   @Output() onColumnChange: EventEmitter<any> = new EventEmitter();
 
   sort: Function = this.onSort.bind(this);
 
   get sortDir() {
-    let sort = this.state.options.sorts.find(s => {
+    let optionSorts = this.state.getOption(this.key, 'sorts');
+    let sort = optionSorts.find(s => {
       return s.prop === this.model.prop;
     });
 
@@ -76,7 +78,7 @@ export class DataTableHeaderCell {
 
   onSort() {
     if(this.model.sortable) {
-      this.state.nextSort(this.model);
+      this.state.nextSort(this.key, this.model);
 
       this.onColumnChange.emit({
         type: 'sort',

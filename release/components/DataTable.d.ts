@@ -16,6 +16,7 @@ export declare class DataTable implements OnInit, DoCheck, AfterViewInit {
     private element;
     private rowDiffer;
     private colDiffer;
+    private key;
     constructor(state: StateService, element: ElementRef, differs: KeyValueDiffers);
     ngOnInit(): void;
     ngAfterViewInit(): void;

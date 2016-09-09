@@ -60,7 +60,7 @@ import { Sort } from './models/Sort';
     DataTableBodyCell
   ],
   providers: [
-    StateService
+      StateService
   ],
   exports: [
     DataTable,

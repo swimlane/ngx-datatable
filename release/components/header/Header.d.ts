@@ -2,6 +2,7 @@ import { ElementRef, EventEmitter } from '@angular/core';
 import { StateService } from '../../services/State';
 export declare class DataTableHeader {
     private state;
+    key: string;
     onColumnChange: EventEmitter<any>;
     readonly headerWidth: string;
     readonly headerHeight: any;

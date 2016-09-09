@@ -1,12 +1,13 @@
 import {
-  Component,
-  Output,
-  EventEmitter,
-  OnInit,
-  HostBinding,
-  OnDestroy,
-  ViewChild,
-  ElementRef
+    Component,
+    Output,
+    EventEmitter,
+    OnInit,
+    HostBinding,
+    OnDestroy,
+    ViewChild,
+    ElementRef,
+    Input
 } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -23,19 +24,20 @@ import { Scroller } from '../../directives/Scroller';
   template: `
     <div>
       <datatable-progress
-        *ngIf="state.options.loadingIndicator">
+        *ngIf="state.getOption(key,'loadingIndicator')">
       </datatable-progress>
       <div
         scroller
         (onScroll)="onBodyScroll($event)"
-        *ngIf="state.rows.length"
-        [rowHeight]="state.options.rowHeight"
-        [scrollbarV]="state.options.scrollbarV"
-        [count]="state.rowCount"
-        [scrollWidth]="state.columnGroupWidths.total">
+        *ngIf="state.getRows(key).length"
+        [rowHeight]="state.getOption(key,'rowHeight')"
+        [scrollbarV]="state.getOption(key,'scrollbarV')"
+        [count]="state.rowCount(key)"
+        [scrollWidth]="state.columnGroupWidths(key).total">
         <datatable-body-row
+          [key]="key"
           [ngStyle]="getRowsStyles(row)"
-          [style.height]="state.options.rowHeight + 'px'"
+          [style.height]="state.getOption(key,'rowHeight') + 'px'"
           *ngFor="let row of rows; let i = index;"
           [attr.tabindex]="i"
           (click)="rowClicked($event, i, row)"
@@ -48,13 +50,14 @@ import { Scroller } from '../../directives/Scroller';
       <div
         class="empty-row"
         *ngIf="!rows.length"
-        [innerHTML]="state.options.emptyMessage">
+        [innerHTML]="state.getOption(key,'emptyMessage')">
       </div>
     </div>
   `
 })
 export class DataTableBody implements OnInit, OnDestroy {
 
+  @Input() key: string;
   @Output() onRowClick: EventEmitter<any> = new EventEmitter();
   @Output() onRowSelect: EventEmitter<any> = new EventEmitter();
 
@@ -65,7 +68,7 @@ export class DataTableBody implements OnInit, OnDestroy {
   private sub: Subscription;
 
   get selectEnabled() {
-    return !!this.state.options.selectionType;
+    return !!this.state.getOption(this.key, 'selectionType');
   }
 
   constructor(public state: StateService, element: ElementRef) {
@@ -74,8 +77,8 @@ export class DataTableBody implements OnInit, OnDestroy {
 
   @HostBinding('style.height')
   get bodyHeight() {
-    if (this.state.options.scrollbarV) {
-      return this.state.bodyHeight + 'px';
+    if (this.state.getOption(this.key, 'scrollbarV')) {
+      return this.state.getBodyHeight(this.key) + 'px';
     } else {
       return 'auto';
     }
@@ -83,22 +86,22 @@ export class DataTableBody implements OnInit, OnDestroy {
 
   @HostBinding('style.width')
   get bodyWidth() {
-    if (this.state.options.scrollbarH) {
-      return this.state.innerWidth + 'px';
+    if (this.state.getOption(this.key, 'scrollbarH')) {
+      return this.state.getInnerWidth(this.key) + 'px';
     } else {
       return '100%';
     }
   }
 
   ngOnInit(): void {
-    this.rows = [...this.state.rows];
+    this.rows = [...this.state.getRows(this.key)];
 
     this.sub = this.state.onPageChange.subscribe((action) => {
       this.updateRows();
       this.hideIndicator();
 
-      if(this.state.options.scrollbarV && action.type === 'pager-event') {
-        const offset = (this.state.options.rowHeight * action.limit) * action.offset;
+      if(this.state.getOption(this.key, 'scrollbarV') && action.type === 'pager-event') {
+        const offset = (this.state.getOption(this.key, 'rowHeight') * action.limit) * action.offset;
         this.scroller.setOffset(offset);
       }
     });
@@ -110,16 +113,16 @@ export class DataTableBody implements OnInit, OnDestroy {
   }
 
   onBodyScroll(props) {
-    this.state.offsetY = props.scrollYPos;
-    this.state.offsetX = props.scrollXPos;
+    this.state.setOffsetY(this.key, props.scrollYPos);
+    this.state.setOffsetX(this.key, props.scrollXPos);
 
     this.updatePage(props.direction);
     this.updateRows();
   }
 
   updatePage(direction) {
-    const idxs = this.state.indexes;
-    let page = idxs.first / this.state.pageSize;
+    const idxs = this.state.indexes(this.key);
+    let page = idxs.first / this.state.pageSize(this.key);
 
     if(direction === 'up') {
       page = Math.floor(page);
@@ -129,7 +132,7 @@ export class DataTableBody implements OnInit, OnDestroy {
 
     if(direction !== undefined && !isNaN(page)) {
       // pages are offset + 1 ;)
-      this.state.setPage({
+      this.state.setPage(this.key, {
         type: 'body-event',
         value: page + 1
       });
@@ -137,15 +140,15 @@ export class DataTableBody implements OnInit, OnDestroy {
   }
 
   updateRows(refresh?: boolean) {
-    const idxs = this.state.indexes;
+    const idxs = this.state.indexes(this.key);
     let idx = 0;
     let rowIndex = idxs.first;
 
-    let endSpliceIdx = refresh ? this.state.rowCount : idxs.last - idxs.first;
+    let endSpliceIdx = refresh ? this.state.rowCount(this.key) : idxs.last - idxs.first;
     this.rows.splice(0, endSpliceIdx);
 
-    while (rowIndex < idxs.last && rowIndex < this.state.rowCount) {
-      let row = this.state.rows[rowIndex];
+    while (rowIndex < idxs.last && rowIndex < this.state.rowCount(this.key)) {
+      let row = this.state.getRows(this.key)[rowIndex];
 
       if(row) {
         row.$$index = rowIndex;
@@ -158,13 +161,13 @@ export class DataTableBody implements OnInit, OnDestroy {
   }
 
   getRowsStyles(row) {
-    const rowHeight = this.state.options.rowHeight;
+    const rowHeight = this.state.getOption(this.key, 'rowHeight');
 
     let styles = {
       height: rowHeight + 'px'
     };
 
-    if(this.state.options.scrollbarV) {
+    if(this.state.getOption(this.key, 'scrollbarV')) {
       const idx = row ? row.$$index : 0;
       const pos = idx * rowHeight;
       translateXY(styles, 0, pos);
@@ -174,7 +177,7 @@ export class DataTableBody implements OnInit, OnDestroy {
   }
 
   hideIndicator(): void {
-    setTimeout(() => this.state.options.loadingIndicator = false, 500);
+    setTimeout(() => this.state.updateOption(this.key, 'loadingIndicator', false), 500);
   }
 
   rowClicked(event, index, row): void {
@@ -196,18 +199,18 @@ export class DataTableBody implements OnInit, OnDestroy {
   selectRow(event, index, row) {
     if (!this.selectEnabled) return;
 
-    const multiShift = this.state.options.selectionType === SelectionType.multiShift;
-    const multiClick = this.state.options.selectionType === SelectionType.multi;
+    const multiShift = this.state.getOption(this.key, 'selectionType') === SelectionType.multiShift;
+    const multiClick = this.state.getOption(this.key, 'selectionType') === SelectionType.multi;
 
     let selections = [];
     if (multiShift || multiClick) {
       if (multiShift && event.shiftKey) {
-        const selected = [...this.state.selected];
+        const selected = [...this.state.getSelected(this.key)];
         selections = selectRowsBetween(selected, this.rows, index, this.prevIndex);
       } else if (multiShift && !event.shiftKey) {
         selections.push(row);
       } else {
-        const selected = [...this.state.selected];
+        const selected = [...this.state.getSelected(this.key)];
         selections = selectRows(selected, row);
       }
     } else {

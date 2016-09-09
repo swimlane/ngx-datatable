@@ -29,13 +29,16 @@ import { StateService } from '../services/State';
       visibility-observer
       (onVisibilityChange)="adjustSizes()">
       <datatable-header
+        [key]="key"
         (onColumnChange)="onColumnChange.emit($event)">
       </datatable-header>
       <datatable-body
+        [key]="key"
         (onRowClick)="onRowClick.emit($event)"
         (onRowSelect)="onRowSelect($event)">
       </datatable-body>
       <datatable-footer
+        [key]="key"
         (onPageChange)="onPageChanged($event)">
       </datatable-footer>
     </div>
@@ -58,12 +61,14 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
   private element: HTMLElement;
   private rowDiffer: IterableDiffer;
   private colDiffer: IterableDiffer;
+  private key: string;
 
   constructor(
     public state: StateService,
     element: ElementRef,
     differs: KeyValueDiffers) {
 
+    this.key = state.newInstance();
     this.element = element.nativeElement;
     this.element.classList.add('datatable');
 
@@ -75,9 +80,9 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
     const {options, rows, selected} = this;
 
     this.state
-      .setOptions(options)
-      .setRows(rows)
-      .setSelected(selected);
+      .setOptions(this.key, options)
+      .setRows(this.key, rows)
+      .setSelected(this.key, selected);
   }
 
   ngAfterViewInit() {
@@ -94,7 +99,7 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
 
   ngDoCheck() {
     if (this.rowDiffer.diff(this.rows)) {
-      this.state.setRows(this.rows);
+      this.state.setRows(this.key, this.rows);
       this.onRowsUpdate.emit(this.rows);
     }
 
@@ -126,12 +131,12 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
 
   adjustSizes() {
     let { height, width } = this.element.getBoundingClientRect();
-    this.state.innerWidth = Math.floor(width);
+    this.state.setInnerWidth(this.key, Math.floor(width));
 
     if (this.options.scrollbarV) {
       if (this.options.headerHeight) height = height - this.options.headerHeight;
       if (this.options.footerHeight) height = height - this.options.footerHeight;
-      this.state.bodyHeight = height;
+      this.state.setBodyHeight(this.key, height);
     }
 
     this.adjustColumns();
@@ -140,9 +145,9 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
   adjustColumns(forceIdx?: number) {
     if (!this.options.columns) return;
 
-    let width: number = this.state.innerWidth;
+    let width: number = this.state.getInnerWidth(this.key);
     if (this.options.scrollbarV) {
-      width = width - this.state.scrollbarWidth;
+      width = width - this.state.getScrollbarWidth(this.key);
     }
 
     if (this.options.columnMode === ColumnMode.force) {
@@ -153,12 +158,12 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
   }
 
   onPageChanged(action) {
-    this.state.setPage(action);
+    this.state.setPage(this.key, action);
     this.onPageChange.emit(action.page);
   }
 
   onRowSelect(event) {
-    this.state.setSelected(event);
+    this.state.setSelected(this.key, event);
     this.onSelectionChange.emit(event);
   }
 
