@@ -154,7 +154,7 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
 
   onPageChanged(action) {
     this.state.setPage(action);
-    this.onPageChange.emit(action.page);
+    this.onPageChange.emit(action.value);
   }
 
   onRowSelect(event) {
