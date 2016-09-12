@@ -52,9 +52,7 @@
     "@angular/core": "2.0.0-rc.6",
     "@angular/platform-browser": "2.0.0-rc.6",
     "@angular/platform-browser-dynamic": "2.0.0-rc.6",
-    "core-js": "^2.4.0",
-    "rxjs": "5.0.0-beta.6",
-    "zone.js": "0.6.17"
+    "core-js": "^2.4.0"
   },
   "devDependencies": {
     "@angular/common": "2.0.0-rc.6",
@@ -63,7 +61,7 @@
     "@angular/platform-browser": "2.0.0-rc.6",
     "@angular/platform-browser-dynamic": "2.0.0-rc.6",
     "core-js": "^2.4.0",
-    "rxjs": "5.0.0-beta.6",
+    "rxjs": "5.0.0-beta.11",
     "zone.js": "0.6.17",
     "@angularclass/hmr": "^1.0.1",
     "@angularclass/hmr-loader": "^1.0.1",
