@@ -30,4 +30,5 @@
    * [Guidelines](contributing/guidelines.md)
    * [Community](community.md)
    * [Credits](credits.md)
+* [Changelog](changelog.md)
 * [License](license.md)
