@@ -31,9 +31,9 @@ export declare class StateService {
         first: number;
         last: number;
     };
-    setSelected(selected: any[]): this;
-    setRows(rows: Array<any>): this;
-    setOptions(options: TableOptions): this;
+    setSelected(selected: any[]): StateService;
+    setRows(rows: Array<any>): StateService;
+    setOptions(options: TableOptions): StateService;
     setPage({type, value}: {
         type: any;
         value: any;

@@ -1,4 +1,5 @@
 "use strict";
+require('ts-helpers');
 var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
 // Components
@@ -12,8 +13,6 @@ var Pager_1 = require('./components/footer/Pager');
 var BodyRow_1 = require('./components/body/BodyRow');
 var ProgressBar_1 = require('./components/body/ProgressBar');
 var BodyCell_1 = require('./components/body/BodyCell');
-// Services
-var State_1 = require('./services/State');
 // Directives
 var Visibility_1 = require('./directives/Visibility');
 var LongPress_1 = require('./directives/LongPress');
@@ -64,9 +63,6 @@ var Angular2DataTableModule = (function () {
                 ProgressBar_1.ProgressBar,
                 BodyRow_1.DataTableBodyRow,
                 BodyCell_1.DataTableBodyCell
-            ],
-            providers: [
-                State_1.StateService
             ],
             exports: [
                 DataTable_1.DataTable,

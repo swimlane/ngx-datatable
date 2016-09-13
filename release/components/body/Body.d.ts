@@ -10,9 +10,9 @@ export declare class DataTableBody implements OnInit, OnDestroy {
     private prevIndex;
     private sub;
     readonly selectEnabled: boolean;
-    constructor(state: StateService, element: ElementRef);
     readonly bodyHeight: string;
     readonly bodyWidth: string;
+    constructor(state: StateService, element: ElementRef);
     ngOnInit(): void;
     onBodyScroll(props: any): void;
     updatePage(direction: any): void;
