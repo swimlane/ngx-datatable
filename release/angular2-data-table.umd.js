@@ -1,13 +1,13 @@
 /**
- * angular2-data-table v0.5.1 (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v0.5.2 (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('ts-helpers'), require('@angular/core'), require('@angular/common'), require('rxjs/Rx')) :
-    typeof define === 'function' && define.amd ? define('angular2-data-table', ['exports', 'ts-helpers', '@angular/core', '@angular/common', 'rxjs/Rx'], factory) :
-    (factory((global.angular2DataTable = global.angular2DataTable || {}),global.tsHelpers,global.ng.core,global.ng.common,global.Rx));
-}(this, (function (exports,tsHelpers,_angular_core,_angular_common,rxjs_Rx) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('rxjs/Rx')) :
+    typeof define === 'function' && define.amd ? define('angular2-data-table', ['exports', '@angular/core', '@angular/common', 'rxjs/Rx'], factory) :
+    (factory((global.angular2DataTable = global.angular2DataTable || {}),global.ng.core,global.ng.common,global.Rx));
+}(this, (function (exports,_angular_core,_angular_common,rxjs_Rx) { 'use strict';
 
 function __decorate(decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;

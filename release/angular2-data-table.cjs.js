@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v0.5.1 (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v0.5.2 (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -7,7 +7,6 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var tsHelpers = require('ts-helpers');
 var _angular_core = require('@angular/core');
 var _angular_common = require('@angular/common');
 var rxjs_Rx = require('rxjs/Rx');

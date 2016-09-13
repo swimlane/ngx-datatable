@@ -1,9 +1,8 @@
 /**
- * angular2-data-table v0.5.1 (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v0.5.2 (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
-import 'ts-helpers';
 import { NgModule, KeyValueDiffers, ElementRef, Host, Component, HostBinding, HostListener, QueryList, ContentChildren, EventEmitter, Output, Input, Directive, TemplateRef, ContentChild, Injectable, ViewChild, ChangeDetectionStrategy, ViewContainerRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs/Rx';

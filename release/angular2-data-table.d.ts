@@ -1,4 +1,3 @@
-import 'ts-helpers';
 import { ColumnMode } from './enums/ColumnMode';
 import { SortType } from './enums/SortType';
 import { SortDirection } from './enums/SortDirection';
