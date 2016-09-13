@@ -14,9 +14,6 @@ import { DataTableBodyRow } from './components/body/BodyRow';
 import { ProgressBar } from './components/body/ProgressBar';
 import { DataTableBodyCell } from './components/body/BodyCell';
 
-// Services
-import { StateService } from './services/State';
-
 // Directives
 import { Visibility } from './directives/Visibility';
 import { LongPress } from './directives/LongPress';
@@ -59,9 +56,6 @@ import { Sort } from './models/Sort';
     ProgressBar,
     DataTableBodyRow,
     DataTableBodyCell
-  ],
-  providers: [
-    StateService
   ],
   exports: [
     DataTable,

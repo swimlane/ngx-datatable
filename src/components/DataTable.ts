@@ -12,7 +12,8 @@ import {
   DoCheck,
   AfterViewInit,
   IterableDiffer,
-  HostBinding
+  HostBinding,
+  Host
 } from '@angular/core';
 
 import { forceFillColumnWidths, adjustColumnWidths } from '../utils/math';
@@ -24,6 +25,7 @@ import { StateService } from '../services/State';
 
 @Component({
   selector: 'datatable',
+  providers: [StateService],
   template: `
     <div
       visibility-observer
@@ -60,7 +62,7 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
   private colDiffer: IterableDiffer;
 
   constructor(
-    public state: StateService,
+    @Host() public state: StateService,
     element: ElementRef,
     differs: KeyValueDiffers) {
 
