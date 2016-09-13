@@ -34,7 +34,7 @@ export class StateService {
     return columnGroupWidths(this.columnsByPin, this.options.columns);
   }
 
-  get rowCount() {
+  get rowCount(): number {
     if (!this.options.externalPaging) {
       return this.rows.length;
     } else {
@@ -42,7 +42,7 @@ export class StateService {
     }
   }
 
-  get pageSize() {
+  get pageSize(): number {
     if (this.options.scrollbarV) {
       return Math.ceil(this.bodyHeight / this.options.rowHeight) + 1;
     } else if (this.options.limit) {
@@ -68,7 +68,7 @@ export class StateService {
     return { first, last };
   }
 
-  setSelected(selected: any[]) {
+  setSelected(selected: any[]): StateService {
     if (!this.selected) {
       this.selected = selected || [];
     } else {
@@ -77,10 +77,11 @@ export class StateService {
     }
 
     this.onSelectionChange.emit(this.selected);
+
     return this;
   }
 
-  setRows(rows: Array<any>) {
+  setRows(rows: Array<any>): StateService {
     if (rows) {
       this.rows = [...rows];
       this.onRowsUpdate.emit(rows);
@@ -88,12 +89,12 @@ export class StateService {
     return this;
   }
 
-  setOptions(options: TableOptions) {
+  setOptions(options: TableOptions): StateService {
     this.options = options;
     return this;
   }
 
-  setPage({ type, value }) {
+  setPage({ type, value }): void {
     this.options.offset = value - 1;
 
     this.onPageChange.emit({
@@ -104,7 +105,7 @@ export class StateService {
     });
   }
 
-  nextSort(column: TableColumn) {
+  nextSort(column: TableColumn): void {
     const idx = this.options.sorts.findIndex(s => {
       return s.prop === column.prop;
     });
