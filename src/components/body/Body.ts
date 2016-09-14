@@ -141,8 +141,12 @@ export class DataTableBody implements OnInit, OnDestroy {
     let idx = 0;
     let rowIndex = idxs.first;
 
-    let endSpliceIdx = refresh ? this.state.rowCount : idxs.last - idxs.first;
-    this.rows.splice(0, endSpliceIdx);
+    if (this.state.options.externalPaging) {
+      this.rows.splice(0, this.rows.length);
+    } else {
+      let endSpliceIdx = refresh ? this.state.rowCount : idxs.last - idxs.first;
+      this.rows.splice(0, endSpliceIdx);
+    }
 
     while (rowIndex < idxs.last && rowIndex < this.state.rowCount) {
       let row = this.state.rows[rowIndex];
