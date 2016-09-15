@@ -21,6 +21,7 @@ export class Scroller implements OnInit, OnDestroy {
   @Input() count: number;
   @Input() scrollWidth: number;
   @Input() scrollbarV: boolean = false;
+  @Input() scrollbarH: boolean = false;
 
   @Output() onScroll: EventEmitter<any> = new EventEmitter();
 
@@ -42,14 +43,14 @@ export class Scroller implements OnInit, OnDestroy {
 
   ngOnInit() {
     // manual bind so we don't always listen
-    if(this.scrollbarV) {
+    if(this.scrollbarV || this.scrollbarH) {
       this.parentElement = this.element.parentElement.parentElement;
       this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
     }
   }
 
   ngOnDestroy() {
-    if(this.scrollbarV) {
+    if(this.scrollbarV || this.scrollbarH) {
       this.parentElement.removeEventListener('scroll');
     }
   }
