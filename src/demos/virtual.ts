@@ -11,6 +11,7 @@ import '../themes/material.scss';
       <datatable
         class='material'
         [rows]='rows'
+        (onPageChange)="paged($event)"
         [options]='options'>
 
         <datatable-column name="Name">
@@ -36,6 +37,7 @@ export class App {
 
   rows = [];
   expanded = {};
+  timeout: any;
 
   options = new TableOptions({
     columnMode: ColumnMode.force,
@@ -49,6 +51,13 @@ export class App {
     this.fetch((data) => {
       this.rows.push(...data);
     });
+  }
+
+  paged(event) {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      console.log('paged!', event);
+    }, 100);
   }
 
   fetch(cb) {
