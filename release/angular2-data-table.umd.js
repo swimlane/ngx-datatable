@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v0.6.0 (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v0.6.1 (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -654,11 +654,20 @@ var DataTable = (function () {
         this.colDiffer = differs.find({}).create(null);
     }
     DataTable.prototype.ngOnInit = function () {
+        var _this = this;
         var _a = this, options = _a.options, rows = _a.rows, selected = _a.selected;
         this.state
             .setOptions(options)
             .setRows(rows)
             .setSelected(selected);
+        this.pageSubscriber = this.state.onPageChange.subscribe(function (action) {
+            _this.onPageChange.emit({
+                page: action.value,
+                offset: _this.state.options.offset,
+                limit: _this.state.pageSize,
+                count: _this.state.rowCount
+            });
+        });
     };
     DataTable.prototype.ngAfterViewInit = function () {
         var _this = this;
@@ -678,6 +687,9 @@ var DataTable = (function () {
             this.onRowsUpdate.emit(this.rows);
         }
         this.checkColumnChanges();
+    };
+    DataTable.prototype.ngOnDestroy = function () {
+        this.pageSubscriber.unsubscribe();
     };
     DataTable.prototype.checkColumnChanges = function () {
         var colDiff = this.colDiffer.diff(this.options.columns);
@@ -724,15 +736,6 @@ var DataTable = (function () {
         else if (this.options.columnMode === exports.ColumnMode.flex) {
             adjustColumnWidths(this.options.columns, width);
         }
-    };
-    DataTable.prototype.onPageChanged = function (action) {
-        this.state.setPage(action);
-        this.onPageChange.emit({
-            page: action.value,
-            offset: this.state.options.offset,
-            limit: this.state.pageSize,
-            count: this.state.rowCount
-        });
     };
     DataTable.prototype.onRowSelect = function (event) {
         this.state.setSelected(event);
@@ -844,7 +847,7 @@ var DataTable = (function () {
         _angular_core.Component({
             selector: 'datatable',
             providers: [StateService],
-            template: "\n    <div\n      visibility-observer\n      (onVisibilityChange)=\"adjustSizes()\">\n      <datatable-header\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </datatable-header>\n      <datatable-body\n        (onRowClick)=\"onRowClick.emit($event)\"\n        (onRowSelect)=\"onRowSelect($event)\">\n      </datatable-body>\n      <datatable-footer\n        (onPageChange)=\"onPageChanged($event)\">\n      </datatable-footer>\n    </div>\n  "
+            template: "\n    <div\n      visibility-observer\n      (onVisibilityChange)=\"adjustSizes()\">\n      <datatable-header\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </datatable-header>\n      <datatable-body\n        (onRowClick)=\"onRowClick.emit($event)\"\n        (onRowSelect)=\"onRowSelect($event)\">\n      </datatable-body>\n      <datatable-footer\n        (onPageChange)=\"state.setPage($event)\">\n      </datatable-footer>\n    </div>\n  "
         }),
         __param(0, _angular_core.Host()), 
         __metadata('design:paramtypes', [(typeof (_h = typeof StateService !== 'undefined' && StateService) === 'function' && _h) || Object, (typeof (_j = typeof _angular_core.ElementRef !== 'undefined' && _angular_core.ElementRef) === 'function' && _j) || Object, (typeof (_k = typeof _angular_core.KeyValueDiffers !== 'undefined' && _angular_core.KeyValueDiffers) === 'function' && _k) || Object])
@@ -1321,7 +1324,7 @@ var DataTableBody = (function () {
     DataTableBody = __decorate([
         _angular_core.Component({
             selector: 'datatable-body',
-            template: "\n    <div>\n      <datatable-progress\n        *ngIf=\"state.options.loadingIndicator\">\n      </datatable-progress>\n      <div\n        scroller\n        (onScroll)=\"onBodyScroll($event)\"\n        *ngIf=\"state.rows.length\"\n        [rowHeight]=\"state.options.rowHeight\"\n        [scrollbarV]=\"state.options.scrollbarV\"\n\t\t\t\t[scrollbarH]=\"state.options.scrollbarH\"\n        [count]=\"state.rowCount\"\n        [scrollWidth]=\"state.columnGroupWidths.total\">\n        <datatable-body-row\n          [ngStyle]=\"getRowsStyles(row)\"\n          [style.height]=\"state.options.rowHeight + 'px'\"\n          *ngFor=\"let row of rows; let i = index;\"\n          [attr.tabindex]=\"i\"\n          (click)=\"rowClicked($event, i, row)\"\n          (keydown)=\"rowKeydown($event, i, row)\"\n          [row]=\"row\"\n          [class.datatable-row-even]=\"row.$$index % 2 === 0\"\n          [class.datatable-row-odd]=\"row.$$index % 2 !== 0\">\n        </datatable-body-row>\n      </div>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"state.options.emptyMessage\">\n      </div>\n    </div>\n  "
+            template: "\n    <div>\n      <datatable-progress\n        *ngIf=\"state.options.loadingIndicator\">\n      </datatable-progress>\n      <div\n        scroller\n        (onScroll)=\"onBodyScroll($event)\"\n        *ngIf=\"state.rows.length\"\n        [rowHeight]=\"state.options.rowHeight\"\n        [scrollbarV]=\"state.options.scrollbarV\"\n        [scrollbarH]=\"state.options.scrollbarH\"\n        [count]=\"state.rowCount\"\n        [scrollWidth]=\"state.columnGroupWidths.total\">\n        <datatable-body-row\n          [ngStyle]=\"getRowsStyles(row)\"\n          [style.height]=\"state.options.rowHeight + 'px'\"\n          *ngFor=\"let row of rows; let i = index;\"\n          [attr.tabindex]=\"i\"\n          (click)=\"rowClicked($event, i, row)\"\n          (keydown)=\"rowKeydown($event, i, row)\"\n          [row]=\"row\"\n          [class.datatable-row-even]=\"row.$$index % 2 === 0\"\n          [class.datatable-row-odd]=\"row.$$index % 2 !== 0\">\n        </datatable-body-row>\n      </div>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"state.options.emptyMessage\">\n      </div>\n    </div>\n  "
         }), 
         __metadata('design:paramtypes', [(typeof (_d = typeof StateService !== 'undefined' && StateService) === 'function' && _d) || Object, (typeof (_e = typeof _angular_core.ElementRef !== 'undefined' && _angular_core.ElementRef) === 'function' && _e) || Object])
     ], DataTableBody);

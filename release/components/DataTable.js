@@ -32,11 +32,20 @@ var DataTable = (function () {
         this.colDiffer = differs.find({}).create(null);
     }
     DataTable.prototype.ngOnInit = function () {
+        var _this = this;
         var _a = this, options = _a.options, rows = _a.rows, selected = _a.selected;
         this.state
             .setOptions(options)
             .setRows(rows)
             .setSelected(selected);
+        this.pageSubscriber = this.state.onPageChange.subscribe(function (action) {
+            _this.onPageChange.emit({
+                page: action.value,
+                offset: _this.state.options.offset,
+                limit: _this.state.pageSize,
+                count: _this.state.rowCount
+            });
+        });
     };
     DataTable.prototype.ngAfterViewInit = function () {
         var _this = this;
@@ -56,6 +65,9 @@ var DataTable = (function () {
             this.onRowsUpdate.emit(this.rows);
         }
         this.checkColumnChanges();
+    };
+    DataTable.prototype.ngOnDestroy = function () {
+        this.pageSubscriber.unsubscribe();
     };
     DataTable.prototype.checkColumnChanges = function () {
         var colDiff = this.colDiffer.diff(this.options.columns);
@@ -102,15 +114,6 @@ var DataTable = (function () {
         else if (this.options.columnMode === ColumnMode_1.ColumnMode.flex) {
             math_1.adjustColumnWidths(this.options.columns, width);
         }
-    };
-    DataTable.prototype.onPageChanged = function (action) {
-        this.state.setPage(action);
-        this.onPageChange.emit({
-            page: action.value,
-            offset: this.state.options.offset,
-            limit: this.state.pageSize,
-            count: this.state.rowCount
-        });
     };
     DataTable.prototype.onRowSelect = function (event) {
         this.state.setSelected(event);
@@ -222,7 +225,7 @@ var DataTable = (function () {
         core_1.Component({
             selector: 'datatable',
             providers: [State_1.StateService],
-            template: "\n    <div\n      visibility-observer\n      (onVisibilityChange)=\"adjustSizes()\">\n      <datatable-header\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </datatable-header>\n      <datatable-body\n        (onRowClick)=\"onRowClick.emit($event)\"\n        (onRowSelect)=\"onRowSelect($event)\">\n      </datatable-body>\n      <datatable-footer\n        (onPageChange)=\"onPageChanged($event)\">\n      </datatable-footer>\n    </div>\n  "
+            template: "\n    <div\n      visibility-observer\n      (onVisibilityChange)=\"adjustSizes()\">\n      <datatable-header\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </datatable-header>\n      <datatable-body\n        (onRowClick)=\"onRowClick.emit($event)\"\n        (onRowSelect)=\"onRowSelect($event)\">\n      </datatable-body>\n      <datatable-footer\n        (onPageChange)=\"state.setPage($event)\">\n      </datatable-footer>\n    </div>\n  "
         }),
         __param(0, core_1.Host()), 
         __metadata('design:paramtypes', [State_1.StateService, core_1.ElementRef, core_1.KeyValueDiffers])

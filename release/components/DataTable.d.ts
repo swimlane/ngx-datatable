@@ -16,14 +16,15 @@ export declare class DataTable implements OnInit, DoCheck, AfterViewInit {
     private element;
     private rowDiffer;
     private colDiffer;
+    private pageSubscriber;
     constructor(state: StateService, element: ElementRef, differs: KeyValueDiffers);
     ngOnInit(): void;
     ngAfterViewInit(): void;
     ngDoCheck(): void;
+    ngOnDestroy(): void;
     checkColumnChanges(): void;
     adjustSizes(): void;
     adjustColumns(forceIdx?: number): void;
-    onPageChanged(action: any): void;
     onRowSelect(event: any): void;
     resize(): void;
     readonly isFixedHeader: boolean;
