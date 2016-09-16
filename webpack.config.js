@@ -92,6 +92,13 @@ function webpackConfig(options = {}) {
         minChunks: Infinity
       }),
 
+      // https://github.com/angular/angular/issues/11580#issuecomment-246880731
+      new webpack.ContextReplacementPlugin(
+        // The (\\|\/) piece accounts for path separators in *nix and Windows
+        /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+        root('src') // location of your src
+      ),
+
       new webpack.DefinePlugin({
         'ENV': JSON.stringify(ENV),
         'HMR': options.HMR,
