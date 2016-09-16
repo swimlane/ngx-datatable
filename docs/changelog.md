@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.6.1
+- Virtual Scrolling Emits Paging (#130)
+
 ## 0.6.0
 - Update to Angular 2.0.0!
 - Fix horizontal header issue (#129)
