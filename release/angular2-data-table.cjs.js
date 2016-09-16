@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v0.5.2 (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v0.6.0 (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -1054,6 +1054,7 @@ function selectRowsBetween(selected, rows, index, prevIndex) {
 var Scroller = (function () {
     function Scroller(element) {
         this.scrollbarV = false;
+        this.scrollbarH = false;
         this.onScroll = new _angular_core.EventEmitter();
         this.scrollYPos = 0;
         this.scrollXPos = 0;
@@ -1071,13 +1072,13 @@ var Scroller = (function () {
     });
     Scroller.prototype.ngOnInit = function () {
         // manual bind so we don't always listen
-        if (this.scrollbarV) {
+        if (this.scrollbarV || this.scrollbarH) {
             this.parentElement = this.element.parentElement.parentElement;
             this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
         }
     };
     Scroller.prototype.ngOnDestroy = function () {
-        if (this.scrollbarV) {
+        if (this.scrollbarV || this.scrollbarH) {
             this.parentElement.removeEventListener('scroll');
         }
     };
@@ -1122,6 +1123,10 @@ var Scroller = (function () {
         _angular_core.Input(), 
         __metadata('design:type', Boolean)
     ], Scroller.prototype, "scrollbarV", void 0);
+    __decorate([
+        _angular_core.Input(), 
+        __metadata('design:type', Boolean)
+    ], Scroller.prototype, "scrollbarH", void 0);
     __decorate([
         _angular_core.Output(), 
         __metadata('design:type', (typeof (_a = typeof _angular_core.EventEmitter !== 'undefined' && _angular_core.EventEmitter) === 'function' && _a) || Object)
@@ -1222,7 +1227,7 @@ var DataTableBody = (function () {
         var idx = 0;
         var rowIndex = idxs.first;
         var endSpliceIdx = refresh ? this.state.rowCount : idxs.last - idxs.first;
-        this.rows.splice(0, endSpliceIdx);
+        this.rows = this.rows.slice(0, endSpliceIdx);
         while (rowIndex < idxs.last && rowIndex < this.state.rowCount) {
             var row = this.state.rows[rowIndex];
             if (row) {
@@ -1318,7 +1323,7 @@ var DataTableBody = (function () {
     DataTableBody = __decorate([
         _angular_core.Component({
             selector: 'datatable-body',
-            template: "\n    <div>\n      <datatable-progress\n        *ngIf=\"state.options.loadingIndicator\">\n      </datatable-progress>\n      <div\n        scroller\n        (onScroll)=\"onBodyScroll($event)\"\n        *ngIf=\"state.rows.length\"\n        [rowHeight]=\"state.options.rowHeight\"\n        [scrollbarV]=\"state.options.scrollbarV\"\n        [count]=\"state.rowCount\"\n        [scrollWidth]=\"state.columnGroupWidths.total\">\n        <datatable-body-row\n          [ngStyle]=\"getRowsStyles(row)\"\n          [style.height]=\"state.options.rowHeight + 'px'\"\n          *ngFor=\"let row of rows; let i = index;\"\n          [attr.tabindex]=\"i\"\n          (click)=\"rowClicked($event, i, row)\"\n          (keydown)=\"rowKeydown($event, i, row)\"\n          [row]=\"row\"\n          [class.datatable-row-even]=\"row.$$index % 2 === 0\"\n          [class.datatable-row-odd]=\"row.$$index % 2 !== 0\">\n        </datatable-body-row>\n      </div>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"state.options.emptyMessage\">\n      </div>\n    </div>\n  "
+            template: "\n    <div>\n      <datatable-progress\n        *ngIf=\"state.options.loadingIndicator\">\n      </datatable-progress>\n      <div\n        scroller\n        (onScroll)=\"onBodyScroll($event)\"\n        *ngIf=\"state.rows.length\"\n        [rowHeight]=\"state.options.rowHeight\"\n        [scrollbarV]=\"state.options.scrollbarV\"\n\t\t\t\t[scrollbarH]=\"state.options.scrollbarH\"\n        [count]=\"state.rowCount\"\n        [scrollWidth]=\"state.columnGroupWidths.total\">\n        <datatable-body-row\n          [ngStyle]=\"getRowsStyles(row)\"\n          [style.height]=\"state.options.rowHeight + 'px'\"\n          *ngFor=\"let row of rows; let i = index;\"\n          [attr.tabindex]=\"i\"\n          (click)=\"rowClicked($event, i, row)\"\n          (keydown)=\"rowKeydown($event, i, row)\"\n          [row]=\"row\"\n          [class.datatable-row-even]=\"row.$$index % 2 === 0\"\n          [class.datatable-row-odd]=\"row.$$index % 2 !== 0\">\n        </datatable-body-row>\n      </div>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"state.options.emptyMessage\">\n      </div>\n    </div>\n  "
         }), 
         __metadata('design:paramtypes', [(typeof (_d = typeof StateService !== 'undefined' && StateService) === 'function' && _d) || Object, (typeof (_e = typeof _angular_core.ElementRef !== 'undefined' && _angular_core.ElementRef) === 'function' && _e) || Object])
     ], DataTableBody);

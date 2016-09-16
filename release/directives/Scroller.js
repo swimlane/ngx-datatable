@@ -12,6 +12,7 @@ var core_1 = require('@angular/core');
 var Scroller = (function () {
     function Scroller(element) {
         this.scrollbarV = false;
+        this.scrollbarH = false;
         this.onScroll = new core_1.EventEmitter();
         this.scrollYPos = 0;
         this.scrollXPos = 0;
@@ -29,13 +30,13 @@ var Scroller = (function () {
     });
     Scroller.prototype.ngOnInit = function () {
         // manual bind so we don't always listen
-        if (this.scrollbarV) {
+        if (this.scrollbarV || this.scrollbarH) {
             this.parentElement = this.element.parentElement.parentElement;
             this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
         }
     };
     Scroller.prototype.ngOnDestroy = function () {
-        if (this.scrollbarV) {
+        if (this.scrollbarV || this.scrollbarH) {
             this.parentElement.removeEventListener('scroll');
         }
     };
@@ -80,6 +81,10 @@ var Scroller = (function () {
         core_1.Input(), 
         __metadata('design:type', Boolean)
     ], Scroller.prototype, "scrollbarV", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Boolean)
+    ], Scroller.prototype, "scrollbarH", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)
