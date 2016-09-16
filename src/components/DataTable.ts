@@ -38,7 +38,7 @@ import { StateService } from '../services/State';
         (onRowSelect)="onRowSelect($event)">
       </datatable-body>
       <datatable-footer
-        (onPageChange)="onPageChanged($event)">
+        (onPageChange)="state.setPage($event)">
       </datatable-footer>
     </div>
   `
@@ -60,6 +60,7 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
   private element: HTMLElement;
   private rowDiffer: IterableDiffer;
   private colDiffer: IterableDiffer;
+  private pageSubscriber: any;
 
   constructor(
     @Host() public state: StateService,
@@ -80,6 +81,15 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
       .setOptions(options)
       .setRows(rows)
       .setSelected(selected);
+
+    this.pageSubscriber = this.state.onPageChange.subscribe((action) => {
+      this.onPageChange.emit({
+        page: action.value,
+        offset: this.state.options.offset,
+        limit: this.state.pageSize,
+        count: this.state.rowCount
+      });
+    });
   }
 
   ngAfterViewInit() {
@@ -101,6 +111,10 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
     }
 
     this.checkColumnChanges();
+  }
+
+  ngOnDestroy() {
+    this.pageSubscriber.unsubscribe();
   }
 
   checkColumnChanges() {
@@ -152,17 +166,6 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
     } else if (this.options.columnMode === ColumnMode.flex) {
       adjustColumnWidths(this.options.columns, width);
     }
-  }
-
-  onPageChanged(action) {
-    this.state.setPage(action);
-
-    this.onPageChange.emit({
-      page: action.value,
-      offset: this.state.options.offset,
-      limit: this.state.pageSize,
-      count: this.state.rowCount
-    });
   }
 
   onRowSelect(event) {
