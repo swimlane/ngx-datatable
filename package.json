@@ -31,6 +31,10 @@
     "release:css": "node-sass -o release/ src/themes && node-sass -o release/ src/components",
     "release:minify": "uglifyjs release/angular2-data-table.js --source-map release/angular2-data-table.min.js.map --source-map-url release/angular2-data-table.js.map --compress --mangle --screw-ie8 --output release/angular2-data-table.min.js"
   },
+  "engines": {
+    "node": "~6.0.0"
+  },
+  "engineStrict": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/swimlane/angular2-data-table.git"
