@@ -44,7 +44,8 @@ export class App {
     headerHeight: 50,
     footerHeight: 50,
     rowHeight: 50,
-    scrollbarV: true
+    scrollbarV: true,
+    tableHeight: 500
   });
 
   constructor() {
