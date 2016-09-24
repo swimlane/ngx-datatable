@@ -40,6 +40,7 @@ import { Scroller } from '../../directives/Scroller';
           *ngFor="let row of rows; let i = index;"
           [attr.tabindex]="i"
           (click)="rowClicked($event, i, row)"
+          (dblclick)="rowClicked($event, i, row)"
           (keydown)="rowKeydown($event, i, row)"
           [row]="row"
           [class.datatable-row-even]="row.$$index % 2 === 0"
