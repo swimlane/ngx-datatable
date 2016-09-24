@@ -14,19 +14,19 @@ import '../themes/material.scss';
         (onPageChange)="paged($event)"
         [options]='options'>
 
-        <datatable-column name="Name">
+        <datatable-column name="Name" width="220">
           <template let-value="value">
             <strong>{{value}}</strong>
           </template>
         </datatable-column>
 
-        <datatable-column name="Gender">
+        <datatable-column name="Gender" width="320">
           <template let-row="row" let-value="value">
             <i [innerHTML]="row['name']"></i> and <i>{{value}}</i>
           </template>
         </datatable-column>
 
-        <datatable-column name="Age">
+        <datatable-column name="Age" width="75">
         </datatable-column>
 
       </datatable>

@@ -49,7 +49,7 @@ export function columnTotalWidth(columns, prop?) {
   if(columns) {
     for(let c of columns) {
       let has = prop && c[prop];
-      totalWidth = totalWidth + (has ? c[prop] : c.width);
+      totalWidth = totalWidth + (has ? +c[prop] : +c.width);
     }
   }
 
