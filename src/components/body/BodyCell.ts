@@ -1,4 +1,4 @@
-import { Component, Input, PipeTransform, HostBinding, ElementRef } from '@angular/core';
+import { Component, Input, PipeTransform, HostBinding, Renderer, ElementRef } from '@angular/core';
 import { TableColumn } from '../../models/TableColumn';
 import { deepValueGetter } from '../../utils/deepGetter';
 
@@ -25,8 +25,8 @@ export class DataTableBodyCell {
   @Input() column: TableColumn;
   @Input() row: any;
 
-  constructor(element: ElementRef) {
-    element.nativeElement.classList.add('datatable-body-cell');
+  constructor(element: ElementRef, renderer: Renderer) {
+    renderer.setElementClass(element.nativeElement, 'datatable-body-cell', true);
   }
 
   get value() {

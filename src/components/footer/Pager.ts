@@ -3,6 +3,7 @@ import {
   Input,
   Output,
   EventEmitter,
+  Renderer,
   ElementRef
 } from '@angular/core';
 
@@ -84,8 +85,8 @@ export class DataTablePager {
     return this._page;
   }
 
-  constructor(elm: ElementRef) {
-    elm.nativeElement.classList.add('datatable-pager');
+  constructor(element: ElementRef, renderer: Renderer) {
+    renderer.setElementClass(element.nativeElement, 'datatable-pager', true);
   }
 
   canPrevious() {

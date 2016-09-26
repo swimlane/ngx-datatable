@@ -2,7 +2,8 @@ import {
   Component,
   Output,
   EventEmitter,
-  ElementRef
+  ElementRef,
+  Renderer
 } from '@angular/core';
 
 import { StateService } from '../../services/State';
@@ -36,8 +37,8 @@ export class DataTableFooter {
     return this.state.options.offset + 1;
   }
 
-  constructor(elm: ElementRef, private state: StateService) {
-    elm.nativeElement.classList.add('datatable-footer');
+  constructor(element: ElementRef, private state: StateService, renderer: Renderer) {
+    renderer.setElementClass(element.nativeElement, 'datatable-footer', true);
   }
 
 }
