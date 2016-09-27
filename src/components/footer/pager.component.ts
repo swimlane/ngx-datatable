@@ -4,7 +4,8 @@ import {
   Output,
   EventEmitter,
   Renderer,
-  ElementRef
+  ElementRef,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 @Component({
@@ -49,7 +50,8 @@ import {
         </a>
       </li>
     </ul>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTablePager {
 
