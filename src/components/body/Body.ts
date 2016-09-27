@@ -180,8 +180,12 @@ export class DataTableBody implements OnInit, OnDestroy {
   }
 
   rowClicked(event, index, row): void {
-    this.onRowClick.emit({event, row});
-    this.selectRow(event, index, row);
+    let options = { cancel: false };
+    this.onRowClick.emit({event, row, options});
+ 
+    if (!options.cancel) {
+      this.selectRow(event, index, row);
+    }
   }
 
   rowKeydown(event, index, row) {
