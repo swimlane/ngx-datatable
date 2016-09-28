@@ -17,8 +17,8 @@ import '../themes/material.scss';
         <datatable
           class='material'
           [rows]='rows'
-          [selected]='selections'
           [options]='options'
+          [selected]='selections'
           (onSelectionChange)='onSelectionChange($event)'>
         </datatable>
       </div>
@@ -37,7 +37,7 @@ import '../themes/material.scss';
 export class App {
 
   rows = [];
-  selections = [];
+  selections = [{name: 'Ethel Price'}, {name: 'Beryl Rice'}];
 
   options = new TableOptions({
     columnMode: ColumnMode.force,
@@ -46,11 +46,13 @@ export class App {
     limit: 5,
     rowHeight: 'auto',
     selectionType: SelectionType.multi,
+    mutateSelectionState: false,
     columns: [
       new TableColumn({ name: 'Name' }),
       new TableColumn({ name: 'Gender' }),
       new TableColumn({ name: 'Company' })
-    ]
+    ],
+    rowIdentityFunction: ((x) => x.name)
   });
 
   constructor() {
@@ -72,6 +74,7 @@ export class App {
 
   onSelectionChange(selected) {
     console.log('Selection!', selected);
+    this.selections = selected;
   }
 
 }

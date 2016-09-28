@@ -48,8 +48,7 @@ export class DataTableBodyRow {
 
   @HostBinding('class.active')
   get isSelected() {
-    return this.state.selected &&
-      this.state.selected.indexOf(this.row) > -1;
+    return this.state.isRowSelected(this.row);
   }
 
   constructor(public state: StateService, element: ElementRef, renderer: Renderer) {
