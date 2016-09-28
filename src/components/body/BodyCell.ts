@@ -1,4 +1,4 @@
-import { Component, Input, PipeTransform, HostBinding, Renderer, ElementRef } from '@angular/core';
+import { Component, Input, PipeTransform, HostBinding, Renderer, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { TableColumn } from '../../models/TableColumn';
 import { deepValueGetter } from '../../utils/deepGetter';
 
@@ -18,10 +18,10 @@ import { deepValueGetter } from '../../utils/deepGetter';
         [templateWrapper]="column.template">
       </template>
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableBodyCell {
-
   @Input() column: TableColumn;
   @Input() row: any;
 
