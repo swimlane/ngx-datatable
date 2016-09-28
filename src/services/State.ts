@@ -13,8 +13,8 @@ import { SortType } from '../enums/SortType';
 export class StateService {
 
   options: TableOptions;
-  rows: Array<any>;
-  selected: Array<any>;
+  rows: Array<any> = [];
+  selected: Array<any> = [];
 
   onSelectionChange: EventEmitter<any> = new EventEmitter();
   onRowsUpdate: EventEmitter<any> = new EventEmitter();

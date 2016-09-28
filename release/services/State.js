@@ -16,6 +16,8 @@ var Sort_1 = require('../models/Sort');
 var SortType_1 = require('../enums/SortType');
 var StateService = (function () {
     function StateService() {
+        this.rows = [];
+        this.selected = [];
         this.onSelectionChange = new core_1.EventEmitter();
         this.onRowsUpdate = new core_1.EventEmitter();
         this.onPageChange = new core_1.EventEmitter();

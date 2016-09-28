@@ -506,6 +506,8 @@ var Sort = (function () {
 
 var StateService = (function () {
     function StateService() {
+        this.rows = [];
+        this.selected = [];
         this.onSelectionChange = new _angular_core.EventEmitter();
         this.onRowsUpdate = new _angular_core.EventEmitter();
         this.onPageChange = new _angular_core.EventEmitter();
