@@ -17,6 +17,7 @@ import { translateXY } from '../../utils/translate';
 
 import { StateService } from '../../services/State';
 import { SelectionType } from '../../enums/SelectionType';
+import { ClickType } from '../../enums/ClickType';
 import { Scroller } from '../../directives/Scroller';
 
 @Component({
@@ -41,6 +42,7 @@ import { Scroller } from '../../directives/Scroller';
           *ngFor="let row of rows; let i = index;"
           [attr.tabindex]="i"
           (click)="rowClicked($event, i, row)"
+          (dblclick)="rowClicked($event, i, row)"
           (keydown)="rowKeydown($event, i, row)"
           [row]="row"
           [class.datatable-row-even]="row.$$index % 2 === 0"
@@ -184,9 +186,21 @@ export class DataTableBody implements OnInit, OnDestroy {
     setTimeout(() => this.state.options.loadingIndicator = false, 500);
   }
 
-  rowClicked(event, index, row): void {
-    this.onRowClick.emit({event, row});
-    this.selectRow(event, index, row);
+  rowClicked(theevent, index, row): void {
+    let clickType = event.type === 'dblclick' ? ClickType.double : ClickType.single;
+    
+    let eventArgs = { 
+      type: clickType, 
+      event, 
+      row, 
+      cancel: false 
+    };
+
+    this.onRowClick.emit(eventArgs);
+ 
+    if (!eventArgs.cancel) {
+      this.selectRow(event, index, row);
+    }
   }
 
   rowKeydown(event, index, row) {
