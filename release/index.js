@@ -31,7 +31,6 @@ var Angular2DataTableModule = (function () {
                 directives_1.Resizeable,
                 directives_1.Orderable,
                 directives_1.LongPress,
-                directives_1.TemplateWrapper,
                 directives_1.Scroller,
                 components_1.DataTable,
                 components_1.DataTableColumn,

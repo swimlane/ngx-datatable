@@ -1,9 +1,9 @@
 /**
- * angular2-data-table v0.7.0 (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v0.7.1 (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
-import { NgModule, KeyValueDiffers, ElementRef, Renderer, Host, Component, HostBinding, HostListener, QueryList, ContentChildren, EventEmitter, Output, Input, Directive, TemplateRef, ContentChild, Injectable, ViewChild, ViewContainerRef, ChangeDetectionStrategy } from '@angular/core';
+import { NgModule, KeyValueDiffers, ElementRef, Renderer, Host, Component, HostBinding, HostListener, QueryList, ContentChildren, EventEmitter, Output, Input, Directive, TemplateRef, ContentChild, Injectable, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs/Rx';
 
@@ -1221,7 +1221,7 @@ var DataTableHeaderCell = (function () {
     DataTableHeaderCell = __decorate([
         Component({
             selector: 'datatable-header-cell',
-            template: "\n    <div>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        *ngIf=\"!model.headerTemplate\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <template\n        *ngIf=\"model.headerTemplate\"\n        [column]=\"model\"\n        [sort]=\"sort\"\n        [templateWrapper]=\"model.headerTemplate\">\n      </template>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses()\">\n      </span>\n    </div>\n  ",
+            template: "\n    <div>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        *ngIf=\"!model.headerTemplate\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <template\n        *ngIf=\"model.headerTemplate\"\n        [ngTemplateOutlet]=\"model.headerTemplate\"\n        [ngOutletContext]=\"{ model: model, sort: sort }\">\n      </template>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses()\">\n      </span>\n    </div>\n  ",
             host: {
                 '[class.sortable]': 'model.sortable',
                 '[class.resizable]': 'model.resizable',
@@ -1731,57 +1731,6 @@ var Visibility = (function () {
     var _a, _b;
 }());
 
-var TemplateWrapper = (function () {
-    function TemplateWrapper(viewContainer) {
-        this.viewContainer = viewContainer;
-    }
-    TemplateWrapper.prototype.ngOnChanges = function (changes) {
-        if (changes['templateWrapper']) {
-            if (this.embeddedViewRef) {
-                this.embeddedViewRef.destroy();
-            }
-            this.embeddedViewRef = this.viewContainer.createEmbeddedView(this.templateWrapper, {
-                value: this.value,
-                row: this.row,
-                column: this.column,
-                sort: this.sort
-            });
-        }
-        if (this.embeddedViewRef) {
-            this.embeddedViewRef.context.value = this.value;
-            this.embeddedViewRef.context.row = this.row;
-            this.embeddedViewRef.context.column = this.column;
-            this.embeddedViewRef.context.sort = this.sort;
-        }
-    };
-    __decorate([
-        Input(), 
-        __metadata('design:type', (typeof (_a = typeof TemplateRef !== 'undefined' && TemplateRef) === 'function' && _a) || Object)
-    ], TemplateWrapper.prototype, "templateWrapper", void 0);
-    __decorate([
-        Input(), 
-        __metadata('design:type', Object)
-    ], TemplateWrapper.prototype, "value", void 0);
-    __decorate([
-        Input(), 
-        __metadata('design:type', Object)
-    ], TemplateWrapper.prototype, "row", void 0);
-    __decorate([
-        Input(), 
-        __metadata('design:type', Object)
-    ], TemplateWrapper.prototype, "column", void 0);
-    __decorate([
-        Input(), 
-        __metadata('design:type', Object)
-    ], TemplateWrapper.prototype, "sort", void 0);
-    TemplateWrapper = __decorate([
-        Directive({ selector: '[templateWrapper]' }), 
-        __metadata('design:paramtypes', [(typeof (_b = typeof ViewContainerRef !== 'undefined' && ViewContainerRef) === 'function' && _b) || Object])
-    ], TemplateWrapper);
-    return TemplateWrapper;
-    var _a, _b;
-}());
-
 var DataTableBody = (function () {
     function DataTableBody(state, element, renderer) {
         this.state = state;
@@ -2021,7 +1970,7 @@ var DataTableBodyCell = (function () {
     DataTableBodyCell = __decorate([
         Component({
             selector: 'datatable-body-cell',
-            template: "\n    <div class=\"datatable-body-cell-label\">\n      <span\n        *ngIf=\"!column.template\"\n        [innerHTML]=\"value\">\n      </span>\n      <template\n        *ngIf=\"column.template\"\n        [value]=\"value\"\n        [row]=\"row\"\n        [column]=\"column\"\n        [templateWrapper]=\"column.template\">\n      </template>\n    </div>\n  "
+            template: "\n    <div class=\"datatable-body-cell-label\">\n      <span\n        *ngIf=\"!column.template\"\n        [innerHTML]=\"value\">\n      </span>\n      <template\n        *ngIf=\"column.template\"\n        [ngTemplateOutlet]=\"column.template\"\n        [ngOutletContext]=\"{ value: value, row: row, column: column }\">\n      </template>\n    </div>\n  "
         }), 
         __metadata('design:paramtypes', [(typeof (_b = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _b) || Object, (typeof (_c = typeof Renderer !== 'undefined' && Renderer) === 'function' && _c) || Object, (typeof (_d = typeof StateService !== 'undefined' && StateService) === 'function' && _d) || Object])
     ], DataTableBodyCell);
@@ -2248,7 +2197,6 @@ var Angular2DataTableModule = (function () {
                 Resizeable,
                 Orderable,
                 LongPress,
-                TemplateWrapper,
                 Scroller,
                 DataTable,
                 DataTableColumn,

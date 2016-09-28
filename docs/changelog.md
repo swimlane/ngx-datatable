@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.7.1
+- Removed template wrapper in favor of native template outlet
+
 ## 0.7.0
 - Upgrade Angular 2.0.1 & ZoneJS
 - Angular Code Style Compliance (#147)

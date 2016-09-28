@@ -8,5 +8,4 @@ __export(require('./orderable.directive'));
 __export(require('./resizeable.directive'));
 __export(require('./scroller.directive'));
 __export(require('./visibility.directive'));
-__export(require('./template-wrapper.directive'));
 //# sourceMappingURL=index.js.map
