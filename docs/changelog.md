@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.0
+- Upgrade Angular 2.0.1 & ZoneJS
+- Angular Code Style Compliance (#147)
+- Fix initial load of rows jumbled (#156)
+- Update row/options setting to ngOnChanges (#151)
+- Fix column height not set correctly (#144)
+
 ## 0.6.1
 - Virtual Scrolling Emits Paging (#130)
 

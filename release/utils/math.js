@@ -1,28 +1,13 @@
 "use strict";
 var column_1 = require('./column');
 /**
- * Calculates the total width of all columns and their groups
- * @param {array} columns
- * @param {string} property width to get
- */
-function columnTotalWidth(columns, prop) {
-    var totalWidth = 0;
-    for (var _i = 0, columns_1 = columns; _i < columns_1.length; _i++) {
-        var column = columns_1[_i];
-        var has = prop && column[prop];
-        totalWidth = totalWidth + (has ? column[prop] : column.width);
-    }
-    return totalWidth;
-}
-exports.columnTotalWidth = columnTotalWidth;
-/**
  * Calculates the Total Flex Grow
  * @param {array}
  */
 function getTotalFlexGrow(columns) {
     var totalFlexGrow = 0;
-    for (var _i = 0, columns_2 = columns; _i < columns_2.length; _i++) {
-        var c = columns_2[_i];
+    for (var _i = 0, columns_1 = columns; _i < columns_1.length; _i++) {
+        var c = columns_1[_i];
         totalFlexGrow += c.flexGrow || 0;
     }
     return totalFlexGrow;
@@ -35,7 +20,7 @@ exports.getTotalFlexGrow = getTotalFlexGrow;
  * @param {int} width
  */
 function adjustColumnWidths(allColumns, expectedWidth) {
-    var columnsWidth = columnTotalWidth(allColumns);
+    var columnsWidth = column_1.columnsTotalWidth(allColumns);
     var totalFlexGrow = getTotalFlexGrow(allColumns);
     var colsByGroup = column_1.columnsByPin(allColumns);
     if (columnsWidth !== expectedWidth) {

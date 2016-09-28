@@ -1,6 +1,5 @@
 "use strict";
-var SortType_1 = require('../enums/SortType');
-var SortDirection_1 = require('../enums/SortDirection');
+var types_1 = require('types');
 /**
  * Gets the next sort direction
  * @param  {SortType}      sortType
@@ -8,22 +7,22 @@ var SortDirection_1 = require('../enums/SortDirection');
  * @return {SortDirection}
  */
 function nextSortDir(sortType, current) {
-    if (sortType === SortType_1.SortType.single) {
-        if (current === SortDirection_1.SortDirection.asc) {
-            return SortDirection_1.SortDirection.desc;
+    if (sortType === types_1.SortType.single) {
+        if (current === types_1.SortDirection.asc) {
+            return types_1.SortDirection.desc;
         }
         else {
-            return SortDirection_1.SortDirection.asc;
+            return types_1.SortDirection.asc;
         }
     }
     else {
         if (!current) {
-            return SortDirection_1.SortDirection.asc;
+            return types_1.SortDirection.asc;
         }
-        else if (current === SortDirection_1.SortDirection.asc) {
-            return SortDirection_1.SortDirection.desc;
+        else if (current === types_1.SortDirection.asc) {
+            return types_1.SortDirection.desc;
         }
-        else if (current === SortDirection_1.SortDirection.desc) {
+        else if (current === types_1.SortDirection.desc) {
             return undefined;
         }
     }
@@ -74,7 +73,7 @@ function sortRows(rows, dirs) {
     return temp.sort(function (a, b) {
         for (var _i = 0, dirs_1 = dirs; _i < dirs_1.length; _i++) {
             var _a = dirs_1[_i], prop = _a.prop, dir = _a.dir;
-            var comparison = dir !== SortDirection_1.SortDirection.desc ?
+            var comparison = dir !== types_1.SortDirection.desc ?
                 orderByComparator(a[prop], b[prop]) :
                 -orderByComparator(a[prop], b[prop]);
             // Don't return 0 yet in case of needing to sort by next property

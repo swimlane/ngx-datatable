@@ -57,4 +57,19 @@ function columnTotalWidth(columns, prop) {
     return totalWidth;
 }
 exports.columnTotalWidth = columnTotalWidth;
+/**
+ * Calculates the total width of all columns and their groups
+ * @param {array} columns
+ * @param {string} property width to get
+ */
+function columnsTotalWidth(columns, prop) {
+    var totalWidth = 0;
+    for (var _i = 0, columns_2 = columns; _i < columns_2.length; _i++) {
+        var column = columns_2[_i];
+        var has = prop && column[prop];
+        totalWidth = totalWidth + (has ? column[prop] : column.width);
+    }
+    return totalWidth;
+}
+exports.columnsTotalWidth = columnsTotalWidth;
 //# sourceMappingURL=column.js.map

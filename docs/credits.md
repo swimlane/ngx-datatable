@@ -8,3 +8,5 @@
 * [DzmitryShylovich](https://github.com/DzmitryShylovich)
 * [Tempus35](https://github.com/Tempus35)
 * [wor-k](https://github.com/wor-k)
+* [jtomaszewski](https://github.com/jtomaszewski)
+* [amiller29au](https://github.com/amiller29au)
