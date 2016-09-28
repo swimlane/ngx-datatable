@@ -26,7 +26,7 @@ export class DataTableBodyCell {
   @Input() column: TableColumn;
   @Input() row: any;
 
-  constructor(element: ElementRef, renderer: Renderer) {
+  constructor(public state: StateService, element: ElementRef, renderer: Renderer) {
     renderer.setElementClass(element.nativeElement, 'datatable-body-cell', true);
   }
 
