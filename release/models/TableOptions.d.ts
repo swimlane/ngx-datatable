@@ -14,6 +14,7 @@ export declare class TableOptions {
     emptyMessage: string;
     headerHeight: any;
     footerHeight: number;
+    tableHeight: number;
     externalPaging: boolean;
     limit: number;
     count: number;

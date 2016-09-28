@@ -13,12 +13,12 @@ var State_1 = require('../../services/State');
 var TableColumn_1 = require('../../models/TableColumn');
 var SortDirection_1 = require('../../enums/SortDirection');
 var DataTableHeaderCell = (function () {
-    function DataTableHeaderCell(element, state) {
+    function DataTableHeaderCell(element, state, renderer) {
         this.element = element;
         this.state = state;
         this.onColumnChange = new core_1.EventEmitter();
         this.sort = this.onSort.bind(this);
-        element.nativeElement.classList.add('datatable-header-cell');
+        renderer.setElementClass(this.element.nativeElement, 'datatable-header-cell', true);
     }
     Object.defineProperty(DataTableHeaderCell.prototype, "sortDir", {
         get: function () {
@@ -77,7 +77,7 @@ var DataTableHeaderCell = (function () {
                 '[attr.title]': 'name'
             }
         }), 
-        __metadata('design:paramtypes', [core_1.ElementRef, State_1.StateService])
+        __metadata('design:paramtypes', [core_1.ElementRef, State_1.StateService, core_1.Renderer])
     ], DataTableHeaderCell);
     return DataTableHeaderCell;
 }());

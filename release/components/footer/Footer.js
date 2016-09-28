@@ -11,10 +11,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var State_1 = require('../../services/State');
 var DataTableFooter = (function () {
-    function DataTableFooter(elm, state) {
+    function DataTableFooter(element, state, renderer) {
         this.state = state;
         this.onPageChange = new core_1.EventEmitter();
-        elm.nativeElement.classList.add('datatable-footer');
+        renderer.setElementClass(element.nativeElement, 'datatable-footer', true);
     }
     Object.defineProperty(DataTableFooter.prototype, "visible", {
         get: function () {
@@ -39,7 +39,7 @@ var DataTableFooter = (function () {
             selector: 'datatable-footer',
             template: "\n    <div\n      *ngIf=\"state.options.footerHeight\"\n      [style.height]=\"state.options.footerHeight\">\n      <div class=\"page-count\">{{state.rowCount}} total</div>\n      <datatable-pager\n        [page]=\"curPage\"\n        [size]=\"state.pageSize\"\n        (onPaged)=\"onPageChange.emit($event)\"\n        [count]=\"state.rowCount\"\n        [hidden]=\"!visible\">\n       </datatable-pager>\n     </div>\n  "
         }), 
-        __metadata('design:paramtypes', [core_1.ElementRef, State_1.StateService])
+        __metadata('design:paramtypes', [core_1.ElementRef, State_1.StateService, core_1.Renderer])
     ], DataTableFooter);
     return DataTableFooter;
 }());

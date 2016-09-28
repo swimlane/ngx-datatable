@@ -13,8 +13,8 @@ import { SortType } from '../enums/SortType';
 export class StateService {
 
   options: TableOptions;
-  rows: Array<any>;
-  selected: Array<any>;
+  rows: Array<any> = [];
+  selected: Array<any> = [];
 
   onSelectionChange: EventEmitter<any> = new EventEmitter();
   onRowsUpdate: EventEmitter<any> = new EventEmitter();
@@ -24,7 +24,15 @@ export class StateService {
   offsetX: number = 0;
   offsetY: number = 0;
   innerWidth: number = 0;
-  bodyHeight: number = 300;
+
+  private bodyheight: number;
+  set bodyHeight(value: number)
+  {
+    this.bodyheight = value;
+  }
+  get bodyHeight(): number {
+    return this.bodyheight || (this.options.tableHeight - this.options.headerHeight - this.options.footerHeight);
+  }
 
   get columnsByPin() {
     return columnsByPin(this.options.columns);

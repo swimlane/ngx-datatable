@@ -40,6 +40,9 @@ export class TableOptions {
   // pass falsey for no footer
   footerHeight: number = 0;
 
+  // The minimum table height in pixels.
+  tableHeight: number = 300;
+
   // if external paging is turned on
   externalPaging: boolean = false;
 

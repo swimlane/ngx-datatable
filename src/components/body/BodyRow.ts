@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding, ElementRef } from '@angular/core';
+import { Component, Input, HostBinding, ElementRef, Renderer } from '@angular/core';
 import { translateXY } from '../../utils/translate';
 import { StateService } from '../../services/State';
 
@@ -52,8 +52,8 @@ export class DataTableBodyRow {
       this.state.selected.indexOf(this.row) > -1;
   }
 
-  constructor(public state: StateService, element: ElementRef) {
-    element.nativeElement.classList.add('datatable-body-row');
+  constructor(public state: StateService, element: ElementRef, renderer: Renderer) {
+    renderer.setElementClass(element.nativeElement, 'datatable-body-row', true);
   }
 
   stylesByGroup(group) {

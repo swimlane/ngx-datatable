@@ -8,12 +8,14 @@ import {
   KeyValueDiffers,
   ContentChildren,
   OnInit,
+  OnChanges,
   QueryList,
   DoCheck,
   AfterViewInit,
   IterableDiffer,
   HostBinding,
-  Host
+  Host,
+  Renderer
 } from '@angular/core';
 
 import { forceFillColumnWidths, adjustColumnWidths } from '../utils/math';
@@ -43,7 +45,7 @@ import { StateService } from '../services/State';
     </div>
   `
 })
-export class DataTable implements OnInit, DoCheck, AfterViewInit {
+export class DataTable implements OnInit, OnChanges, DoCheck, AfterViewInit {
 
   @Input() options: TableOptions;
   @Input() rows: any[];
@@ -64,24 +66,18 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
 
   constructor(
     @Host() public state: StateService,
+    renderer: Renderer,
     element: ElementRef,
     differs: KeyValueDiffers) {
 
     this.element = element.nativeElement;
-    this.element.classList.add('datatable');
+    renderer.setElementClass(this.element, 'datatable', true);
 
     this.rowDiffer = differs.find({}).create(null);
     this.colDiffer = differs.find({}).create(null);
   }
 
   ngOnInit(): void {
-    const {options, rows, selected} = this;
-
-    this.state
-      .setOptions(options)
-      .setRows(rows)
-      .setSelected(selected);
-
     this.pageSubscriber = this.state.onPageChange.subscribe((action) => {
       this.onPageChange.emit({
         page: action.value,
@@ -101,6 +97,20 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
           this.options.columns.push(new TableColumn(col));
         }
       });
+    }
+  }
+
+  ngOnChanges(changes) {
+    if (changes.hasOwnProperty('rows')) {
+      this.state.setRows(changes.rows.currentValue);
+    }
+
+    if (changes.hasOwnProperty('options')) {
+      this.state.setOptions(changes.options.currentValue);
+    }
+
+    if (changes.hasOwnProperty('selected')) {
+      this.state.setSelected(changes.selected.currentValue);
     }
   }
 

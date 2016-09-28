@@ -12,10 +12,10 @@ var core_1 = require('@angular/core');
 var State_1 = require('../../services/State');
 var translate_1 = require('../../utils/translate');
 var DataTableHeader = (function () {
-    function DataTableHeader(state, elm) {
+    function DataTableHeader(state, element, renderer) {
         this.state = state;
         this.onColumnChange = new core_1.EventEmitter();
-        elm.nativeElement.classList.add('datatable-header');
+        renderer.setElementClass(element.nativeElement, 'datatable-header', true);
     }
     Object.defineProperty(DataTableHeader.prototype, "headerWidth", {
         get: function () {
@@ -87,7 +87,7 @@ var DataTableHeader = (function () {
                 '[style.height]': 'headerHeight'
             }
         }), 
-        __metadata('design:paramtypes', [State_1.StateService, core_1.ElementRef])
+        __metadata('design:paramtypes', [State_1.StateService, core_1.ElementRef, core_1.Renderer])
     ], DataTableHeader);
     return DataTableHeader;
 }());

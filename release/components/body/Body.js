@@ -16,11 +16,11 @@ var State_1 = require('../../services/State');
 var SelectionType_1 = require('../../enums/SelectionType');
 var Scroller_1 = require('../../directives/Scroller');
 var DataTableBody = (function () {
-    function DataTableBody(state, element) {
+    function DataTableBody(state, element, renderer) {
         this.state = state;
         this.onRowClick = new core_1.EventEmitter();
         this.onRowSelect = new core_1.EventEmitter();
-        element.nativeElement.classList.add('datatable-body');
+        renderer.setElementClass(element.nativeElement, 'datatable-body', true);
     }
     Object.defineProperty(DataTableBody.prototype, "selectEnabled", {
         get: function () {
@@ -195,7 +195,7 @@ var DataTableBody = (function () {
             selector: 'datatable-body',
             template: "\n    <div>\n      <datatable-progress\n        *ngIf=\"state.options.loadingIndicator\">\n      </datatable-progress>\n      <div\n        scroller\n        (onScroll)=\"onBodyScroll($event)\"\n        *ngIf=\"state.rows.length\"\n        [rowHeight]=\"state.options.rowHeight\"\n        [scrollbarV]=\"state.options.scrollbarV\"\n        [scrollbarH]=\"state.options.scrollbarH\"\n        [count]=\"state.rowCount\"\n        [scrollWidth]=\"state.columnGroupWidths.total\">\n        <datatable-body-row\n          [ngStyle]=\"getRowsStyles(row)\"\n          [style.height]=\"state.options.rowHeight + 'px'\"\n          *ngFor=\"let row of rows; let i = index;\"\n          [attr.tabindex]=\"i\"\n          (click)=\"rowClicked($event, i, row)\"\n          (keydown)=\"rowKeydown($event, i, row)\"\n          [row]=\"row\"\n          [class.datatable-row-even]=\"row.$$index % 2 === 0\"\n          [class.datatable-row-odd]=\"row.$$index % 2 !== 0\">\n        </datatable-body-row>\n      </div>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"state.options.emptyMessage\">\n      </div>\n    </div>\n  "
         }), 
-        __metadata('design:paramtypes', [State_1.StateService, core_1.ElementRef])
+        __metadata('design:paramtypes', [State_1.StateService, core_1.ElementRef, core_1.Renderer])
     ], DataTableBody);
     return DataTableBody;
 }());
