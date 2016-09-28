@@ -10,7 +10,7 @@ export function columnTotalWidth(columns: any, prop?: any) {
 
   for(let column of columns) {
     const has = prop && column[prop];
-    totalWidth = totalWidth + (has ? +column[prop] : +column.width);
+    totalWidth = totalWidth + (has ? column[prop] : column.width);
   }
 
   return totalWidth;
@@ -57,8 +57,8 @@ function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
   for(let attr in colsByGroup) {
     for(let column of colsByGroup[attr]) {
       if (!column.canAutoResize) {
-        maxWidth -= +column.width;
-        totalFlexGrow -= +column.flexGrow;
+        maxWidth -= column.width;
+        totalFlexGrow -= column.flexGrow;
       } else {
         column.width = 0;
       }
@@ -77,10 +77,10 @@ function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
       for(let column of colsByGroup[attr]) {
         // if the column can be resize and it hasn't reached its minimum width yet
         if (column.canAutoResize && !hasMinWidth[column.prop]) {
-          let newWidth = +column.width + +column.flexGrow * widthPerFlexPoint;
+          let newWidth = column.width + column.flexGrow * widthPerFlexPoint;
           if (column.minWidth !== undefined && newWidth < column.minWidth) {
-            remainingWidth += newWidth - +column.minWidth;
-            column.width = +column.minWidth;
+            remainingWidth += newWidth - column.minWidth;
+            column.width = column.minWidth;
             hasMinWidth[column.prop] = true;
           } else {
             column.width = newWidth;
@@ -122,31 +122,31 @@ export function forceFillColumnWidths(allColumns: any, expectedWidth: any, start
 
   for(let column of allColumns) {
     if(!column.canAutoResize) {
-      contentWidth += +column.width;
+      contentWidth += column.width;
     } else {
-      contentWidth += (+column.$$oldWidth || +column.width);
+      contentWidth += (column.$$oldWidth || column.width);
     }
   }
 
-  let remainingWidth = +expectedWidth - contentWidth;
+  let remainingWidth = expectedWidth - contentWidth;
   let additionWidthPerColumn = remainingWidth / columnsToResize.length;
   let exceedsWindow = contentWidth > expectedWidth;
 
   for(let column of columnsToResize) {
     if(exceedsWindow) {
-      column.width = +column.$$oldWidth || +column.width;
+      column.width = column.$$oldWidth || column.width;
     } else {
       if(!column.$$oldWidth) {
-        column.$$oldWidth = +column.width;
+        column.$$oldWidth = column.width;
       }
 
       const newSize = column.$$oldWidth + additionWidthPerColumn;
-      if(column.minWith && newSize < +column.minWidth) {
-        column.width = +column.minWidth;
-      } else if(column.maxWidth && newSize > +column.maxWidth) {
-        column.width = +column.maxWidth;
+      if(column.minWith && newSize < column.minWidth) {
+        column.width = column.minWidth;
+      } else if(column.maxWidth && newSize > column.maxWidth) {
+        column.width = column.maxWidth;
       } else {
-        column.width = +newSize;
+        column.width = newSize;
       }
     }
   }
