@@ -1,4 +1,4 @@
-import { EventEmitter, OnInit, OnDestroy, ElementRef } from '@angular/core';
+import { EventEmitter, OnInit, OnDestroy, ElementRef, Renderer } from '@angular/core';
 import { StateService } from '../../services/State';
 import { Scroller } from '../../directives/Scroller';
 export declare class DataTableBody implements OnInit, OnDestroy {
@@ -12,7 +12,7 @@ export declare class DataTableBody implements OnInit, OnDestroy {
     readonly selectEnabled: boolean;
     readonly bodyHeight: string;
     readonly bodyWidth: string;
-    constructor(state: StateService, element: ElementRef);
+    constructor(state: StateService, element: ElementRef, renderer: Renderer);
     ngOnInit(): void;
     onBodyScroll(props: any): void;
     updatePage(direction: any): void;

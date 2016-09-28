@@ -19,7 +19,7 @@ var TableColumn_1 = require('../models/TableColumn');
 var DataTableColumn_1 = require('./DataTableColumn');
 var State_1 = require('../services/State');
 var DataTable = (function () {
-    function DataTable(state, element, differs) {
+    function DataTable(state, renderer, element, differs) {
         this.state = state;
         this.onPageChange = new core_1.EventEmitter();
         this.onRowsUpdate = new core_1.EventEmitter();
@@ -27,7 +27,7 @@ var DataTable = (function () {
         this.onSelectionChange = new core_1.EventEmitter();
         this.onColumnChange = new core_1.EventEmitter();
         this.element = element.nativeElement;
-        this.element.classList.add('datatable');
+        renderer.setElementClass(this.element, 'datatable', true);
         this.rowDiffer = differs.find({}).create(null);
         this.colDiffer = differs.find({}).create(null);
     }
@@ -228,7 +228,7 @@ var DataTable = (function () {
             template: "\n    <div\n      visibility-observer\n      (onVisibilityChange)=\"adjustSizes()\">\n      <datatable-header\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </datatable-header>\n      <datatable-body\n        (onRowClick)=\"onRowClick.emit($event)\"\n        (onRowSelect)=\"onRowSelect($event)\">\n      </datatable-body>\n      <datatable-footer\n        (onPageChange)=\"state.setPage($event)\">\n      </datatable-footer>\n    </div>\n  "
         }),
         __param(0, core_1.Host()), 
-        __metadata('design:paramtypes', [State_1.StateService, core_1.ElementRef, core_1.KeyValueDiffers])
+        __metadata('design:paramtypes', [State_1.StateService, core_1.Renderer, core_1.ElementRef, core_1.KeyValueDiffers])
     ], DataTable);
     return DataTable;
 }());

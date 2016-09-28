@@ -1,4 +1,4 @@
-import { ElementRef, EventEmitter, KeyValueDiffers, OnInit, QueryList, DoCheck, AfterViewInit } from '@angular/core';
+import { ElementRef, EventEmitter, KeyValueDiffers, OnInit, QueryList, DoCheck, AfterViewInit, Renderer } from '@angular/core';
 import { TableOptions } from '../models/TableOptions';
 import { DataTableColumn } from './DataTableColumn';
 import { StateService } from '../services/State';
@@ -17,7 +17,7 @@ export declare class DataTable implements OnInit, DoCheck, AfterViewInit {
     private rowDiffer;
     private colDiffer;
     private pageSubscriber;
-    constructor(state: StateService, element: ElementRef, differs: KeyValueDiffers);
+    constructor(state: StateService, renderer: Renderer, element: ElementRef, differs: KeyValueDiffers);
     ngOnInit(): void;
     ngAfterViewInit(): void;
     ngDoCheck(): void;

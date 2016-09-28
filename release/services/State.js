@@ -23,8 +23,17 @@ var StateService = (function () {
         this.offsetX = 0;
         this.offsetY = 0;
         this.innerWidth = 0;
-        this.bodyHeight = 300;
     }
+    Object.defineProperty(StateService.prototype, "bodyHeight", {
+        get: function () {
+            return this.bodyheight || (this.options.tableHeight - this.options.headerHeight - this.options.footerHeight);
+        },
+        set: function (value) {
+            this.bodyheight = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(StateService.prototype, "columnsByPin", {
         get: function () {
             return column_1.columnsByPin(this.options.columns);

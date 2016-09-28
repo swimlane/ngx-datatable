@@ -3,7 +3,7 @@
  * Copyright 2016
  * Licensed under MIT
  */
-import { NgModule, KeyValueDiffers, ElementRef, Host, Component, HostBinding, HostListener, QueryList, ContentChildren, EventEmitter, Output, Input, Directive, TemplateRef, ContentChild, Injectable, ViewChild, ChangeDetectionStrategy, ViewContainerRef } from '@angular/core';
+import { NgModule, KeyValueDiffers, ElementRef, Renderer, Host, Component, HostBinding, HostListener, QueryList, ContentChildren, EventEmitter, Output, Input, Directive, TemplateRef, ContentChild, Injectable, ViewChild, ChangeDetectionStrategy, ViewContainerRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs/Rx';
 
@@ -265,6 +265,8 @@ var TableOptions = (function () {
         // The minimum footer height in pixels.
         // pass falsey for no footer
         this.footerHeight = 0;
+        // The minimum table height in pixels.
+        this.tableHeight = 300;
         // if external paging is turned on
         this.externalPaging = false;
         // Page size
@@ -512,8 +514,17 @@ var StateService = (function () {
         this.offsetX = 0;
         this.offsetY = 0;
         this.innerWidth = 0;
-        this.bodyHeight = 300;
     }
+    Object.defineProperty(StateService.prototype, "bodyHeight", {
+        get: function () {
+            return this.bodyheight || (this.options.tableHeight - this.options.headerHeight - this.options.footerHeight);
+        },
+        set: function (value) {
+            this.bodyheight = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(StateService.prototype, "columnsByPin", {
         get: function () {
             return columnsByPin(this.options.columns);
@@ -642,7 +653,7 @@ var StateService = (function () {
 }());
 
 var DataTable = (function () {
-    function DataTable(state, element, differs) {
+    function DataTable(state, renderer, element, differs) {
         this.state = state;
         this.onPageChange = new EventEmitter();
         this.onRowsUpdate = new EventEmitter();
@@ -650,7 +661,7 @@ var DataTable = (function () {
         this.onSelectionChange = new EventEmitter();
         this.onColumnChange = new EventEmitter();
         this.element = element.nativeElement;
-        this.element.classList.add('datatable');
+        renderer.setElementClass(this.element, 'datatable', true);
         this.rowDiffer = differs.find({}).create(null);
         this.colDiffer = differs.find({}).create(null);
     }
@@ -851,10 +862,10 @@ var DataTable = (function () {
             template: "\n    <div\n      visibility-observer\n      (onVisibilityChange)=\"adjustSizes()\">\n      <datatable-header\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </datatable-header>\n      <datatable-body\n        (onRowClick)=\"onRowClick.emit($event)\"\n        (onRowSelect)=\"onRowSelect($event)\">\n      </datatable-body>\n      <datatable-footer\n        (onPageChange)=\"state.setPage($event)\">\n      </datatable-footer>\n    </div>\n  "
         }),
         __param(0, Host()), 
-        __metadata('design:paramtypes', [(typeof (_h = typeof StateService !== 'undefined' && StateService) === 'function' && _h) || Object, (typeof (_j = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _j) || Object, (typeof (_k = typeof KeyValueDiffers !== 'undefined' && KeyValueDiffers) === 'function' && _k) || Object])
+        __metadata('design:paramtypes', [(typeof (_h = typeof StateService !== 'undefined' && StateService) === 'function' && _h) || Object, (typeof (_j = typeof Renderer !== 'undefined' && Renderer) === 'function' && _j) || Object, (typeof (_k = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _k) || Object, (typeof (_l = typeof KeyValueDiffers !== 'undefined' && KeyValueDiffers) === 'function' && _l) || Object])
     ], DataTable);
     return DataTable;
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
 }());
 
 var cache = {};
@@ -909,10 +920,10 @@ function translateXY(styles, x, y) {
 }
 
 var DataTableHeader = (function () {
-    function DataTableHeader(state, elm) {
+    function DataTableHeader(state, element, renderer) {
         this.state = state;
         this.onColumnChange = new EventEmitter();
-        elm.nativeElement.classList.add('datatable-header');
+        renderer.setElementClass(element.nativeElement, 'datatable-header', true);
     }
     Object.defineProperty(DataTableHeader.prototype, "headerWidth", {
         get: function () {
@@ -984,10 +995,10 @@ var DataTableHeader = (function () {
                 '[style.height]': 'headerHeight'
             }
         }), 
-        __metadata('design:paramtypes', [(typeof (_b = typeof StateService !== 'undefined' && StateService) === 'function' && _b) || Object, (typeof (_c = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _c) || Object])
+        __metadata('design:paramtypes', [(typeof (_b = typeof StateService !== 'undefined' && StateService) === 'function' && _b) || Object, (typeof (_c = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _c) || Object, (typeof (_d = typeof Renderer !== 'undefined' && Renderer) === 'function' && _d) || Object])
     ], DataTableHeader);
     return DataTableHeader;
-    var _a, _b, _c;
+    var _a, _b, _c, _d;
 }());
 
 var Keys;
@@ -1149,11 +1160,11 @@ var Scroller = (function () {
 }());
 
 var DataTableBody = (function () {
-    function DataTableBody(state, element) {
+    function DataTableBody(state, element, renderer) {
         this.state = state;
         this.onRowClick = new EventEmitter();
         this.onRowSelect = new EventEmitter();
-        element.nativeElement.classList.add('datatable-body');
+        renderer.setElementClass(element.nativeElement, 'datatable-body', true);
     }
     Object.defineProperty(DataTableBody.prototype, "selectEnabled", {
         get: function () {
@@ -1328,17 +1339,17 @@ var DataTableBody = (function () {
             selector: 'datatable-body',
             template: "\n    <div>\n      <datatable-progress\n        *ngIf=\"state.options.loadingIndicator\">\n      </datatable-progress>\n      <div\n        scroller\n        (onScroll)=\"onBodyScroll($event)\"\n        *ngIf=\"state.rows.length\"\n        [rowHeight]=\"state.options.rowHeight\"\n        [scrollbarV]=\"state.options.scrollbarV\"\n        [scrollbarH]=\"state.options.scrollbarH\"\n        [count]=\"state.rowCount\"\n        [scrollWidth]=\"state.columnGroupWidths.total\">\n        <datatable-body-row\n          [ngStyle]=\"getRowsStyles(row)\"\n          [style.height]=\"state.options.rowHeight + 'px'\"\n          *ngFor=\"let row of rows; let i = index;\"\n          [attr.tabindex]=\"i\"\n          (click)=\"rowClicked($event, i, row)\"\n          (keydown)=\"rowKeydown($event, i, row)\"\n          [row]=\"row\"\n          [class.datatable-row-even]=\"row.$$index % 2 === 0\"\n          [class.datatable-row-odd]=\"row.$$index % 2 !== 0\">\n        </datatable-body-row>\n      </div>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"state.options.emptyMessage\">\n      </div>\n    </div>\n  "
         }), 
-        __metadata('design:paramtypes', [(typeof (_d = typeof StateService !== 'undefined' && StateService) === 'function' && _d) || Object, (typeof (_e = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _e) || Object])
+        __metadata('design:paramtypes', [(typeof (_d = typeof StateService !== 'undefined' && StateService) === 'function' && _d) || Object, (typeof (_e = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _e) || Object, (typeof (_f = typeof Renderer !== 'undefined' && Renderer) === 'function' && _f) || Object])
     ], DataTableBody);
     return DataTableBody;
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c, _d, _e, _f;
 }());
 
 var DataTableFooter = (function () {
-    function DataTableFooter(elm, state) {
+    function DataTableFooter(element, state, renderer) {
         this.state = state;
         this.onPageChange = new EventEmitter();
-        elm.nativeElement.classList.add('datatable-footer');
+        renderer.setElementClass(element.nativeElement, 'datatable-footer', true);
     }
     Object.defineProperty(DataTableFooter.prototype, "visible", {
         get: function () {
@@ -1363,19 +1374,19 @@ var DataTableFooter = (function () {
             selector: 'datatable-footer',
             template: "\n    <div\n      *ngIf=\"state.options.footerHeight\"\n      [style.height]=\"state.options.footerHeight\">\n      <div class=\"page-count\">{{state.rowCount}} total</div>\n      <datatable-pager\n        [page]=\"curPage\"\n        [size]=\"state.pageSize\"\n        (onPaged)=\"onPageChange.emit($event)\"\n        [count]=\"state.rowCount\"\n        [hidden]=\"!visible\">\n       </datatable-pager>\n     </div>\n  "
         }), 
-        __metadata('design:paramtypes', [(typeof (_b = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _b) || Object, (typeof (_c = typeof StateService !== 'undefined' && StateService) === 'function' && _c) || Object])
+        __metadata('design:paramtypes', [(typeof (_b = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _b) || Object, (typeof (_c = typeof StateService !== 'undefined' && StateService) === 'function' && _c) || Object, (typeof (_d = typeof Renderer !== 'undefined' && Renderer) === 'function' && _d) || Object])
     ], DataTableFooter);
     return DataTableFooter;
-    var _a, _b, _c;
+    var _a, _b, _c, _d;
 }());
 
 var DataTableHeaderCell = (function () {
-    function DataTableHeaderCell(element, state) {
+    function DataTableHeaderCell(element, state, renderer) {
         this.element = element;
         this.state = state;
         this.onColumnChange = new EventEmitter();
         this.sort = this.onSort.bind(this);
-        element.nativeElement.classList.add('datatable-header-cell');
+        renderer.setElementClass(this.element.nativeElement, 'datatable-header-cell', true);
     }
     Object.defineProperty(DataTableHeaderCell.prototype, "sortDir", {
         get: function () {
@@ -1434,17 +1445,17 @@ var DataTableHeaderCell = (function () {
                 '[attr.title]': 'name'
             }
         }), 
-        __metadata('design:paramtypes', [(typeof (_c = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _c) || Object, (typeof (_d = typeof StateService !== 'undefined' && StateService) === 'function' && _d) || Object])
+        __metadata('design:paramtypes', [(typeof (_c = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _c) || Object, (typeof (_d = typeof StateService !== 'undefined' && StateService) === 'function' && _d) || Object, (typeof (_e = typeof Renderer !== 'undefined' && Renderer) === 'function' && _e) || Object])
     ], DataTableHeaderCell);
     return DataTableHeaderCell;
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e;
 }());
 
 var DataTablePager = (function () {
-    function DataTablePager(elm) {
+    function DataTablePager(element, renderer) {
         this.size = 0;
         this.onPaged = new EventEmitter();
-        elm.nativeElement.classList.add('datatable-pager');
+        renderer.setElementClass(element.nativeElement, 'datatable-pager', true);
     }
     Object.defineProperty(DataTablePager.prototype, "totalPages", {
         get: function () {
@@ -1541,16 +1552,16 @@ var DataTablePager = (function () {
             selector: 'datatable-pager',
             template: "\n    <ul class=\"pager\">\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(1)\"\n          class=\"icon-prev\">\n        </a>\n      </li>\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"prevPage()\"\n          class=\"icon-left\">\n        </a>\n      </li>\n      <li\n        *ngFor=\"let pg of pages\"\n        [class.active]=\"pg.number === page\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(pg.number)\">\n          {{pg.text}}\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"nextPage()\"\n          class=\"icon-right\">\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(totalPages)\"\n          class=\"icon-skip\">\n        </a>\n      </li>\n    </ul>\n  "
         }), 
-        __metadata('design:paramtypes', [(typeof (_b = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _b) || Object])
+        __metadata('design:paramtypes', [(typeof (_b = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _b) || Object, (typeof (_c = typeof Renderer !== 'undefined' && Renderer) === 'function' && _c) || Object])
     ], DataTablePager);
     return DataTablePager;
-    var _a, _b;
+    var _a, _b, _c;
 }());
 
 var DataTableBodyRow = (function () {
-    function DataTableBodyRow(state, element) {
+    function DataTableBodyRow(state, element, renderer) {
         this.state = state;
-        element.nativeElement.classList.add('datatable-body-row');
+        renderer.setElementClass(element.nativeElement, 'datatable-body-row', true);
     }
     Object.defineProperty(DataTableBodyRow.prototype, "isSelected", {
         get: function () {
@@ -1590,10 +1601,10 @@ var DataTableBodyRow = (function () {
             selector: 'datatable-body-row',
             template: "\n    <div>\n      <div\n        class=\"datatable-row-left datatable-row-group\"\n        *ngIf=\"state.columnsByPin.left.length\"\n        [ngStyle]=\"stylesByGroup('left')\"\n        [style.width]=\"state.columnGroupWidths.left + 'px'\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.left\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n      <div\n        class=\"datatable-row-center datatable-row-group\"\n        [style.width]=\"state.columnGroupWidths.center + 'px'\"\n        [ngStyle]=\"stylesByGroup('center')\"\n        *ngIf=\"state.columnsByPin.center.length\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.center\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n      <div\n        class=\"datatable-row-right datatable-row-group\"\n        *ngIf=\"state.columnsByPin.right.length\"\n        [ngStyle]=\"stylesByGroup('right')\"\n        [style.width]=\"state.columnGroupWidths.right + 'px'\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.right\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n    </div>\n  "
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof StateService !== 'undefined' && StateService) === 'function' && _a) || Object, (typeof (_b = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _b) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof StateService !== 'undefined' && StateService) === 'function' && _a) || Object, (typeof (_b = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _b) || Object, (typeof (_c = typeof Renderer !== 'undefined' && Renderer) === 'function' && _c) || Object])
     ], DataTableBodyRow);
     return DataTableBodyRow;
-    var _a, _b;
+    var _a, _b, _c;
 }());
 
 var ProgressBar = (function () {
@@ -1629,8 +1640,8 @@ function deepValueGetter(obj, path) {
 }
 
 var DataTableBodyCell = (function () {
-    function DataTableBodyCell(element) {
-        element.nativeElement.classList.add('datatable-body-cell');
+    function DataTableBodyCell(element, renderer) {
+        renderer.setElementClass(element.nativeElement, 'datatable-body-cell', true);
     }
     Object.defineProperty(DataTableBodyCell.prototype, "value", {
         get: function () {
@@ -1665,12 +1676,13 @@ var DataTableBodyCell = (function () {
     DataTableBodyCell = __decorate([
         Component({
             selector: 'datatable-body-cell',
-            template: "\n    <div class=\"datatable-body-cell-label\">\n      <span\n        *ngIf=\"!column.template\"\n        [innerHTML]=\"value\">\n      </span>\n      <template\n        *ngIf=\"column.template\"\n        [value]=\"value\"\n        [row]=\"row\"\n        [column]=\"column\"\n        [templateWrapper]=\"column.template\">\n      </template>\n    </div>\n  "
+            template: "\n    <div class=\"datatable-body-cell-label\">\n      <span\n        *ngIf=\"!column.template\"\n        [innerHTML]=\"value\">\n      </span>\n      <template\n        *ngIf=\"column.template\"\n        [value]=\"value\"\n        [row]=\"row\"\n        [column]=\"column\"\n        [templateWrapper]=\"column.template\">\n      </template>\n    </div>\n  ",
+            changeDetection: ChangeDetectionStrategy.OnPush
         }), 
-        __metadata('design:paramtypes', [(typeof (_b = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _b) || Object])
+        __metadata('design:paramtypes', [(typeof (_b = typeof ElementRef !== 'undefined' && ElementRef) === 'function' && _b) || Object, (typeof (_c = typeof Renderer !== 'undefined' && Renderer) === 'function' && _c) || Object])
     ], DataTableBodyCell);
     return DataTableBodyCell;
-    var _a, _b;
+    var _a, _b, _c;
 }());
 
 /**

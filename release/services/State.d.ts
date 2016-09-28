@@ -13,6 +13,7 @@ export declare class StateService {
     offsetX: number;
     offsetY: number;
     innerWidth: number;
+    private bodyheight;
     bodyHeight: number;
     readonly columnsByPin: {
         left: any[];
