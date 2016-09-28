@@ -37,11 +37,11 @@ export class DataTableBodyCell {
     return userPipe ? userPipe.transform(prop) : prop;
   }
 
-  @HostBinding('style.width') get width() {
-    return this.column.width + 'px';
+  @HostBinding('style.width.px') get width() {
+    return this.column.width;
   }
 
-  @HostBinding('style.height') get height() {
+  @HostBinding('style.height.px') get height() {
     return this.state.options.rowHeight;
   }
 
