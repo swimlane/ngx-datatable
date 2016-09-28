@@ -18,11 +18,11 @@ import {
   Renderer
 } from '@angular/core';
 
-import { forceFillColumnWidths, adjustColumnWidths } from 'utils';
-import { ColumnMode } from 'types';
-import { TableOptions, TableColumn } from 'models';
+import { forceFillColumnWidths, adjustColumnWidths } from '../utils';
+import { ColumnMode } from '../types';
+import { TableOptions, TableColumn } from '../models';
 import { DataTableColumn } from './datatable-column.directive';
-import { StateService } from 'services';
+import { StateService } from '../services';
 
 @Component({
   selector: 'datatable',

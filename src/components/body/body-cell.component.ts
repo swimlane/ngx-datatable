@@ -1,8 +1,8 @@
 import { Component, Input, PipeTransform, HostBinding, Renderer, ElementRef } from '@angular/core';
 
-import { TableColumn } from 'models';
-import { deepValueGetter } from 'utils';
-import { StateService } from 'services';
+import { TableColumn } from '../../models';
+import { deepValueGetter } from '../../utils';
+import { StateService } from '../../services';
 
 @Component({
   selector: 'datatable-body-cell',

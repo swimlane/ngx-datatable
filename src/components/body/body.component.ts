@@ -11,10 +11,10 @@ import {
 } from '@angular/core';
 
 import { Subscription } from 'rxjs/Subscription';
-import { Keys, selectRows, selectRowsBetween, translateXY } from 'utils';
-import { StateService } from 'services';
-import { SelectionType } from 'types';
-import { Scroller } from 'directives';
+import { Keys, selectRows, selectRowsBetween, translateXY } from '../../utils';
+import { StateService } from '../../services';
+import { SelectionType } from '../../types';
+import { Scroller } from '../../directives';
 
 @Component({
   selector: 'datatable-body',

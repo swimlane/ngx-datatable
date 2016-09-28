@@ -1,5 +1,5 @@
 import { Directive, TemplateRef, ContentChild, QueryList } from '@angular/core';
-import { TableColumn } from 'models';
+import { TableColumn } from '../models';
 
 @Directive({
   selector: 'datatable-column',
