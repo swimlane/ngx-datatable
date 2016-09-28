@@ -22,8 +22,8 @@
     "baseUrl": "src"
   },
   "files": [
-    "src/types.d.ts",
-    "src/angular2-data-table.ts"
+    "src/custom-types.d.ts",
+    "src/index.ts"
   ],
   "exclude": [
     "node_modules"

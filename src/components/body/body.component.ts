@@ -9,15 +9,12 @@ import {
   ElementRef,
   Renderer
 } from '@angular/core';
+
 import { Subscription } from 'rxjs/Subscription';
-
-import { Keys } from '../../utils/keys';
-import { selectRows, selectRowsBetween } from '../../utils/selection';
-import { translateXY } from '../../utils/translate';
-
-import { StateService } from '../../services/State';
-import { SelectionType } from '../../enums/SelectionType';
-import { Scroller } from '../../directives/Scroller';
+import { Keys, selectRows, selectRowsBetween, translateXY } from 'utils';
+import { StateService } from 'services';
+import { SelectionType } from 'types';
+import { Scroller } from 'directives';
 
 @Component({
   selector: 'datatable-body',

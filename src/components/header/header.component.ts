@@ -6,8 +6,8 @@ import {
   EventEmitter
 } from '@angular/core';
 
-import { StateService } from '../../services/State';
-import { translateXY } from '../../utils/translate';
+import { StateService } from 'services';
+import { translateXY } from 'utils';
 
 @Component({
   selector: 'datatable-header',

@@ -1,7 +1,8 @@
 import { Component, Input, PipeTransform, HostBinding, Renderer, ElementRef } from '@angular/core';
-import { TableColumn } from '../../models/TableColumn';
-import { deepValueGetter } from '../../utils/deepGetter';
-import { StateService } from '../../services/State';
+
+import { TableColumn } from 'models';
+import { deepValueGetter } from 'utils';
+import { StateService } from 'services';
 
 @Component({
   selector: 'datatable-body-cell',
@@ -26,7 +27,7 @@ export class DataTableBodyCell {
   @Input() column: TableColumn;
   @Input() row: any;
 
-  constructor(element: ElementRef, renderer: Renderer) {
+  constructor(element: ElementRef, renderer: Renderer, private state: StateService) {
     renderer.setElementClass(element.nativeElement, 'datatable-body-cell', true);
   }
 
@@ -37,12 +38,14 @@ export class DataTableBodyCell {
     return userPipe ? userPipe.transform(prop) : prop;
   }
 
-  @HostBinding('style.width.px') get width() {
+  @HostBinding('style.width.px') get width(): any {
     return this.column.width;
   }
 
-  @HostBinding('style.height.px') get height() {
-    return this.state.options.rowHeight;
+  @HostBinding('style.height') get height(): any {
+    const height = this.state.options.rowHeight;
+    if(isNaN(height)) return height;
+    return height + 'px';
   }
 
 }

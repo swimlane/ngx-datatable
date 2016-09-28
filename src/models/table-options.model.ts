@@ -1,8 +1,6 @@
-import { TableColumn } from './TableColumn';
-import { Sort } from './Sort';
-import { ColumnMode } from '../enums/ColumnMode';
-import { SortType } from '../enums/SortType';
-import { SelectionType } from '../enums/SelectionType';
+import { TableColumn } from './table-column.model';
+import { Sort } from './sort.model';
+import { ColumnMode, SortType, SelectionType } from 'types';
 
 export class TableOptions {
 

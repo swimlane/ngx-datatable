@@ -1,6 +1,5 @@
 import { PipeTransform } from '@angular/core';
-import { id } from '../utils/id';
-import { camelCase } from '../utils/camelCase';
+import { id, camelCase} from 'utils';
 
 /**
  * Default Column Options

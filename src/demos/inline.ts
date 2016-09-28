@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { TableOptions } from '../angular2-data-table';
+import { TableOptions } from '../index';
 import '../themes/material.scss';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ColumnMode, TableOptions } from '../angular2-data-table';
+import { ColumnMode, TableOptions } from '../index';
 import '../themes/material.scss';
 
 @Component({

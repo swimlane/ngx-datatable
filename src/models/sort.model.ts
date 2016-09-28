@@ -1,4 +1,4 @@
-import { SortDirection } from '../enums/SortDirection';
+import { SortDirection } from 'types/sort-direction.type';
 
 export class Sort {
 

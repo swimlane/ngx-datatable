@@ -1,6 +1,5 @@
-import { Sort } from '../models/Sort';
-import { SortType } from '../enums/SortType';
-import { SortDirection } from '../enums/SortDirection';
+import { Sort } from 'models';
+import { SortType, SortDirection } from 'types';
 
 /**
  * Gets the next sort direction

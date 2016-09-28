@@ -7,9 +7,9 @@ import {
   Renderer
 } from '@angular/core';
 
-import { StateService } from '../../services/State';
-import { TableColumn } from '../../models/TableColumn';
-import { SortDirection } from '../../enums/SortDirection';
+import { StateService } from 'services';
+import { TableColumn } from 'models';
+import { SortDirection } from 'types';
 
 @Component({
   selector: 'datatable-header-cell',

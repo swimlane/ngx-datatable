@@ -2,7 +2,7 @@ import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 
-import { Angular2DataTableModule } from '../angular2-data-table';
+import { Angular2DataTableModule } from '../index';
 import '../components/datatable.scss';
 
 // import { App } from './basic';

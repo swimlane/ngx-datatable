@@ -6,7 +6,7 @@ import {
   Renderer
 } from '@angular/core';
 
-import { StateService } from '../../services/State';
+import { StateService } from 'services';
 
 @Component({
   selector: 'datatable-footer',

@@ -1,20 +1,4 @@
-import { columnsByPin } from './column';
-
-/**
- * Calculates the total width of all columns and their groups
- * @param {array} columns
- * @param {string} property width to get
- */
-export function columnTotalWidth(columns: any, prop?: any) {
-  let totalWidth = 0;
-
-  for(let column of columns) {
-    const has = prop && column[prop];
-    totalWidth = totalWidth + (has ? column[prop] : column.width);
-  }
-
-  return totalWidth;
-}
+import { columnsByPin, columnsTotalWidth } from './column';
 
 /**
  * Calculates the Total Flex Grow
@@ -37,7 +21,7 @@ export function getTotalFlexGrow(columns) {
  * @param {int} width
  */
 export function adjustColumnWidths(allColumns: any, expectedWidth: any) {
-  let columnsWidth = columnTotalWidth(allColumns);
+  let columnsWidth = columnsTotalWidth(allColumns);
   let totalFlexGrow = getTotalFlexGrow(allColumns);
   let colsByGroup = columnsByPin(allColumns);
 

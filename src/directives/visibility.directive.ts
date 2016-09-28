@@ -6,7 +6,7 @@ import {
   HostBinding
 } from '@angular/core';
 
-import { VisibilityObserver } from '../utils/VisibilityObserver';
+import { VisibilityObserver } from 'utils';
 
 /**
  * Visibility Observer Directive

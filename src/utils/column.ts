@@ -55,3 +55,19 @@ export function columnTotalWidth(columns, prop?) {
 
   return totalWidth;
 }
+
+/**
+ * Calculates the total width of all columns and their groups
+ * @param {array} columns
+ * @param {string} property width to get
+ */
+export function columnsTotalWidth(columns: any, prop?: any) {
+  let totalWidth = 0;
+
+  for(let column of columns) {
+    const has = prop && column[prop];
+    totalWidth = totalWidth + (has ? column[prop] : column.width);
+  }
+
+  return totalWidth;
+}

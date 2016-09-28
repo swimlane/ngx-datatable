@@ -1,6 +1,6 @@
 import { Component, Input, HostBinding, ElementRef, Renderer } from '@angular/core';
-import { translateXY } from '../../utils/translate';
-import { StateService } from '../../services/State';
+import { translateXY } from 'utils';
+import { StateService } from 'services';
 
 @Component({
   selector: 'datatable-body-row',

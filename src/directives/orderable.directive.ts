@@ -6,7 +6,7 @@ import {
   QueryList
 } from '@angular/core';
 
-import { Draggable } from './Draggable';
+import { Draggable } from './draggable.directive';
 
 @Directive({ selector: '[orderable]' })
 export class Orderable {
