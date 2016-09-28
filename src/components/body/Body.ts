@@ -93,6 +93,7 @@ export class DataTableBody implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.rows = [...this.state.rows];
+    this.updateRows();
 
     this.sub = this.state.onPageChange.subscribe((action) => {
       this.updateRows();
