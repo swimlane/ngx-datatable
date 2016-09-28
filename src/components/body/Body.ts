@@ -6,7 +6,8 @@ import {
   HostBinding,
   OnDestroy,
   ViewChild,
-  ElementRef
+  ElementRef,
+  Renderer
 } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -87,8 +88,12 @@ export class DataTableBody implements OnInit, OnDestroy {
     }
   }
 
-  constructor(public state: StateService, element: ElementRef) {
-    element.nativeElement.classList.add('datatable-body');
+  constructor(
+    public state: StateService,
+    element: ElementRef,
+    renderer: Renderer) {
+
+    renderer.setElementClass(element.nativeElement, 'datatable-body', true);
   }
 
   ngOnInit(): void {

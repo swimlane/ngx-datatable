@@ -2,6 +2,7 @@ import {
   Component,
   Output,
   ElementRef,
+  Renderer,
   EventEmitter
 } from '@angular/core';
 
@@ -97,8 +98,8 @@ export class DataTableHeader {
     return height;
   }
 
-  constructor(private state: StateService, elm: ElementRef) {
-    elm.nativeElement.classList.add('datatable-header');
+  constructor(private state: StateService, element: ElementRef, renderer: Renderer) {
+    renderer.setElementClass(element.nativeElement, 'datatable-header', true);
   }
 
   columnResized(width, column) {

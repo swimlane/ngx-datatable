@@ -3,7 +3,8 @@ import {
   Input,
   ElementRef,
   EventEmitter,
-  Output
+  Output,
+  Renderer
 } from '@angular/core';
 
 import { StateService } from '../../services/State';
@@ -62,8 +63,8 @@ export class DataTableHeaderCell {
     return this.model.name || this.model.prop;
   }
 
-  constructor(public element: ElementRef, private state: StateService) {
-    element.nativeElement.classList.add('datatable-header-cell');
+  constructor(public element: ElementRef, private state: StateService, renderer: Renderer) {
+    renderer.setElementClass(this.element.nativeElement, 'datatable-header-cell', true);
   }
 
   sortClasses(sort) {

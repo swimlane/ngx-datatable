@@ -13,7 +13,8 @@ import {
   AfterViewInit,
   IterableDiffer,
   HostBinding,
-  Host
+  Host,
+  Renderer
 } from '@angular/core';
 
 import { forceFillColumnWidths, adjustColumnWidths } from '../utils/math';
@@ -64,11 +65,12 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
 
   constructor(
     @Host() public state: StateService,
+    renderer: Renderer,
     element: ElementRef,
     differs: KeyValueDiffers) {
 
     this.element = element.nativeElement;
-    this.element.classList.add('datatable');
+    renderer.setElementClass(this.element, 'datatable', true);
 
     this.rowDiffer = differs.find({}).create(null);
     this.colDiffer = differs.find({}).create(null);
