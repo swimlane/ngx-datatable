@@ -90,10 +90,8 @@ export class StateService {
   }
 
   setRows(rows: Array<any>): StateService {
-    if (rows) {
-      this.rows = [...rows];
-      this.onRowsUpdate.emit(rows);
-    }
+    this.rows = rows === undefined || rows === null ? [] : [...rows];
+    this.onRowsUpdate.emit(rows);
     return this;
   }
 
