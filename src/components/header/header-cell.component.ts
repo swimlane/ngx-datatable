@@ -23,9 +23,8 @@ import { SortDirection } from 'types';
       </span>
       <template
         *ngIf="model.headerTemplate"
-        [column]="model"
-        [sort]="sort"
-        [templateWrapper]="model.headerTemplate">
+        [ngTemplateOutlet]="model.headerTemplate"
+        [ngOutletContext]="{ model: model, sort: sort }">
       </template>
       <span
         class="sort-btn"

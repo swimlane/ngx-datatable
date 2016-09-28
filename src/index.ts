@@ -20,8 +20,7 @@ import {
   Resizeable,
   Orderable,
   Draggable,
-  Scroller,
-  TemplateWrapper
+  Scroller
 } from './directives';
 
 export * from './types';
@@ -37,7 +36,6 @@ export * from './models';
     Resizeable,
     Orderable,
     LongPress,
-    TemplateWrapper,
     Scroller,
     DataTable,
     DataTableColumn,

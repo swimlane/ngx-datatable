@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import {
   TableOptions,
   ColumnMode
-} from 'angular2-data-table';
+} from '../index';
 import '../themes/material.scss';
 
 @Component({

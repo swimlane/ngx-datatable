@@ -14,10 +14,8 @@ import { StateService } from 'services';
       </span>
       <template
         *ngIf="column.template"
-        [value]="value"
-        [row]="row"
-        [column]="column"
-        [templateWrapper]="column.template">
+        [ngTemplateOutlet]="column.template"
+        [ngOutletContext]="{ value: value, row: row, column: column }">
       </template>
     </div>
   `
