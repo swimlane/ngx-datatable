@@ -38,13 +38,25 @@ export class TableColumn {
   flexGrow: number = 0;
 
   // Minimum width of the column.
-  minWidth: number = 0;
+  get minWidth(): number {
+    return this._minWidth;
+  }
+  set minWidth(value: number) {
+    this._minWidth = +value;
+  }
+  _minWidth: number = 0;
 
   // Maximum width of the column.
   maxWidth: number = undefined;
 
   // The width of the column; by default (in pixels).
-  width: number = 150;
+  get width(): number {
+    return this._width;
+  }
+  set width(value: number) {
+    this._width = +value;
+  }
+  private _width: number = 150;
 
   // If yes then the column can be resized; otherwise it cannot.
   resizeable: boolean = true;

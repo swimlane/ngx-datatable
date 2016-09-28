@@ -77,7 +77,7 @@ function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
       for(let column of colsByGroup[attr]) {
         // if the column can be resize and it hasn't reached its minimum width yet
         if (column.canAutoResize && !hasMinWidth[column.prop]) {
-          let newWidth = column.width  + column.flexGrow * widthPerFlexPoint;
+          let newWidth = column.width + column.flexGrow * widthPerFlexPoint;
           if (column.minWidth !== undefined && newWidth < column.minWidth) {
             remainingWidth += newWidth - column.minWidth;
             column.width = column.minWidth;
