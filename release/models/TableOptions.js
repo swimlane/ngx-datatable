@@ -28,6 +28,8 @@ var TableOptions = (function () {
         // The minimum footer height in pixels.
         // pass falsey for no footer
         this.footerHeight = 0;
+        // The minimum table height in pixels.
+        this.tableHeight = 300;
         // if external paging is turned on
         this.externalPaging = false;
         // Page size

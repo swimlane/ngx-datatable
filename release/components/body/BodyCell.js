@@ -12,8 +12,8 @@ var core_1 = require('@angular/core');
 var TableColumn_1 = require('../../models/TableColumn');
 var deepGetter_1 = require('../../utils/deepGetter');
 var DataTableBodyCell = (function () {
-    function DataTableBodyCell(element) {
-        element.nativeElement.classList.add('datatable-body-cell');
+    function DataTableBodyCell(element, renderer) {
+        renderer.setElementClass(element.nativeElement, 'datatable-body-cell', true);
     }
     Object.defineProperty(DataTableBodyCell.prototype, "value", {
         get: function () {
@@ -50,7 +50,7 @@ var DataTableBodyCell = (function () {
             selector: 'datatable-body-cell',
             template: "\n    <div class=\"datatable-body-cell-label\">\n      <span\n        *ngIf=\"!column.template\"\n        [innerHTML]=\"value\">\n      </span>\n      <template\n        *ngIf=\"column.template\"\n        [value]=\"value\"\n        [row]=\"row\"\n        [column]=\"column\"\n        [templateWrapper]=\"column.template\">\n      </template>\n    </div>\n  "
         }), 
-        __metadata('design:paramtypes', [core_1.ElementRef])
+        __metadata('design:paramtypes', [core_1.ElementRef, core_1.Renderer])
     ], DataTableBodyCell);
     return DataTableBodyCell;
 }());
