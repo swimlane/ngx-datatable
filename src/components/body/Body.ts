@@ -17,6 +17,7 @@ import { translateXY } from '../../utils/translate';
 
 import { StateService } from '../../services/State';
 import { SelectionType } from '../../enums/SelectionType';
+import { ClickType } from '../../enums/ClickType';
 import { Scroller } from '../../directives/Scroller';
 
 @Component({
@@ -185,11 +186,19 @@ export class DataTableBody implements OnInit, OnDestroy {
     setTimeout(() => this.state.options.loadingIndicator = false, 500);
   }
 
-  rowClicked(event, index, row): void {
-    let options = { cancel: false };
-    this.onRowClick.emit({event, row, options});
+  rowClicked(theevent, index, row): void {
+    let clickType = event.type === 'dblclick' ? ClickType.double : ClickType.single;
+    
+    let eventArgs = { 
+      type: clickType, 
+      event, 
+      row, 
+      cancel: false 
+    };
+
+    this.onRowClick.emit(eventArgs);
  
-    if (!options.cancel) {
+    if (!eventArgs.cancel) {
       this.selectRow(event, index, row);
     }
   }

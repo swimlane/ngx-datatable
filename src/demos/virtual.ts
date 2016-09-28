@@ -12,6 +12,7 @@ import '../themes/material.scss';
         class='material'
         [rows]='rows'
         (onPageChange)="paged($event)"
+        (onRowClick)="rowClick($event)"
         [options]='options'>
 
         <datatable-column name="Name">
@@ -72,4 +73,7 @@ export class App {
     req.send();
   }
 
+  rowClick(args: any): void {
+    console.log('rowClick', args);
+  }
 }
