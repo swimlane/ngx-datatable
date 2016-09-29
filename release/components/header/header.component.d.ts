@@ -6,6 +6,7 @@ export declare class DataTableHeader {
     readonly headerWidth: string;
     readonly headerHeight: any;
     constructor(state: StateService, element: ElementRef, renderer: Renderer);
+    trackColBy(index: number, obj: any): any;
     columnResized(width: any, column: any): void;
     columnReordered({prevIndex, newIndex, model}: {
         prevIndex: any;

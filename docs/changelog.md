@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.7.3
+- Huge perf bumps (#149)
+
 ## 0.7.2
 - Build fixes
 
