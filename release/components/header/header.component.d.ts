@@ -1,5 +1,5 @@
 import { ElementRef, Renderer, EventEmitter } from '@angular/core';
-import { StateService } from 'services';
+import { StateService } from '../../services';
 export declare class DataTableHeader {
     private state;
     onColumnChange: EventEmitter<any>;

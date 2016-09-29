@@ -1,6 +1,6 @@
 
 import { EventEmitter } from '@angular/core';
-import { TableOptions, TableColumn } from 'models';
+import { TableOptions, TableColumn } from '../models';
 export declare class StateService {
     options: TableOptions;
     rows: Array<any>;

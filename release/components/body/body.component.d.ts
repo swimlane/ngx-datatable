@@ -1,6 +1,6 @@
 import { EventEmitter, OnInit, OnDestroy, ElementRef, Renderer } from '@angular/core';
-import { StateService } from 'services';
-import { Scroller } from 'directives';
+import { StateService } from '../../services';
+import { Scroller } from '../../directives';
 export declare class DataTableBody implements OnInit, OnDestroy {
     state: StateService;
     onRowClick: EventEmitter<any>;

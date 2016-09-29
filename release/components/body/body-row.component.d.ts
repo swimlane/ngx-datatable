@@ -1,5 +1,5 @@
 import { ElementRef, Renderer } from '@angular/core';
-import { StateService } from 'services';
+import { StateService } from '../../services';
 export declare class DataTableBodyRow {
     state: StateService;
     row: any;

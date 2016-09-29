@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.7.2
+- Build fixes
+
 ## 0.7.1
 - Removed template wrapper in favor of native template outlet
 

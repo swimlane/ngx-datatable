@@ -1,5 +1,5 @@
 "use strict";
-var types_1 = require('types');
+var types_1 = require('../types');
 /**
  * Gets the next sort direction
  * @param  {SortType}      sortType

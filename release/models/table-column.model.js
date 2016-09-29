@@ -1,5 +1,5 @@
 "use strict";
-var utils_1 = require('utils');
+var utils_1 = require('../utils');
 /**
  * Default Column Options
  * @type {object}

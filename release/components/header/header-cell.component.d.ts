@@ -1,8 +1,8 @@
 
 import { ElementRef, EventEmitter, Renderer } from '@angular/core';
-import { StateService } from 'services';
-import { TableColumn } from 'models';
-import { SortDirection } from 'types';
+import { StateService } from '../../services';
+import { TableColumn } from '../../models';
+import { SortDirection } from '../../types';
 export declare class DataTableHeaderCell {
     element: ElementRef;
     private state;

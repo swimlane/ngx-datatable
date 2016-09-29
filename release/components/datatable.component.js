@@ -12,11 +12,11 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var core_1 = require('@angular/core');
-var utils_1 = require('utils');
-var types_1 = require('types');
-var models_1 = require('models');
+var utils_1 = require('../utils');
+var types_1 = require('../types');
+var models_1 = require('../models');
 var datatable_column_directive_1 = require('./datatable-column.directive');
-var services_1 = require('services');
+var services_1 = require('../services');
 var DataTable = (function () {
     function DataTable(state, renderer, element, differs) {
         this.state = state;

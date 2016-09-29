@@ -4,6 +4,10 @@ var webpack = require('webpack');
 var WebpackNotifierPlugin = require('webpack-notifier');
 var ProgressBarPlugin = require('progress-bar-webpack-plugin');
 var chalk = require('chalk');
+var CleanWebpackPlugin = require('clean-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var autoprefixer = require('autoprefixer');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var ENV = process.env.NODE_ENV;
 var IS_PRODUCTION = ENV === 'production';
@@ -14,12 +18,20 @@ function root(args) {
   return path.join.apply(path, [__dirname].concat(args));
 }
 
+var banner =
+`/**
+ * angular2-data-table v${VERSION} (https://github.com/swimlane/angular2-data-table)
+ * Copyright 2016
+ * Licensed under MIT
+ */`;
+
 function webpackConfig(options = {}) {
 
-  return {
+  var IS_HMR = options.HMR;
+
+  var config = {
     context: root(),
-    debug: true,
-    devtool: 'cheap-module-eval-source-map',
+    devtool: 'source-map',
 
     resolve: {
       extensions: ['', '.ts', '.js', '.json', '.css', '.scss', '.html'],
@@ -32,6 +44,7 @@ function webpackConfig(options = {}) {
     },
 
     entry: {
+      'default': './src/components/datatable.scss',
       'app': './src/demos/bootstrap.ts',
       'polyfills': './src/polyfills.ts',
       'vendor': './src/vendor.ts'
@@ -43,7 +56,7 @@ function webpackConfig(options = {}) {
         poll: true
       },
       port: 9999,
-      hot: options.HMR,
+      hot: IS_HMR,
       stats: {
         modules: false,
         cached: false,
@@ -59,33 +72,56 @@ function webpackConfig(options = {}) {
     },
 
     module: {
-      preLoaders: [{
-        test: /\.js$/,
-        loader: 'source-map',
-        exclude: /(node_modules)/
-      }, {
-        test: /\.ts$/,
-        loader: 'tslint'
-      }],
-      loaders: [{
-        test: /\.ts$/,
-        loaders: [
-          'awesome-typescript-loader',
-          '@angularclass/hmr-loader'
-        ],
-        exclude: /(node_modules)/
-      }, {
-        test: /\.scss$/,
-        loaders: [
-          'style',
-          'css?sourceMap',
-          'sass?sourceMap'
-        ]
-      }]
+      preLoaders: [
+        {
+          test: /\.js$/,
+          loader: 'source-map',
+          exclude: /(node_modules)/
+        }, {
+          test: /\.ts$/,
+          loader: 'tslint'
+        }
+      ],
+      loaders: [
+        {
+          test: /\.ts$/,
+          loaders: [
+            'awesome-typescript-loader',
+            '@angularclass/hmr-loader'
+          ],
+          exclude: /(node_modules)/
+        },
+        {
+          test: /\.css/,
+          loader:
+            IS_HMR ?
+              'style!css?sourceMap' :
+              ExtractTextPlugin.extract({
+                fallbackLoader: 'style',
+                loader: !IS_PRODUCTION ?
+                  'css?sourceMap' :
+                  // 'css?sourceMap&minimize'
+                  'css?sourceMap'
+              })
+        },
+        {
+          test: /\.scss$/,
+          loader:
+            IS_HMR ?
+              'style!css!postcss?sourceMap!sass?sourceMap' :
+              ExtractTextPlugin.extract({
+                fallbackLoader: 'style',
+                loader: !IS_PRODUCTION ?
+                  'css?sourceMap!postcss?sourceMap!sass?sourceMap' :
+                  // 'css?sourceMap&minimize!postcss?sourceMap!sass?sourceMap'
+                  'css?sourceMap!postcss?sourceMap!sass?sourceMap'
+              })
+        }
+      ]
     },
 
     plugins: [
-      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NamedModulesPlugin(),
 
       new webpack.optimize.CommonsChunkPlugin({
         name: ['vendor', 'polyfills'],
@@ -106,6 +142,12 @@ function webpackConfig(options = {}) {
         'APP_VERSION': VERSION
       }),
 
+      new HtmlWebpackPlugin({
+        template: 'src/index.html',
+        chunksSortMode: 'dependency',
+        title: 'swui'
+  		}),
+
       new WebpackNotifierPlugin({
         excludeWarnings: true
       }),
@@ -119,8 +161,63 @@ function webpackConfig(options = {}) {
       emitErrors: false,
       failOnHint: false,
       resourcePath: 'src'
+    },
+
+    postcss: function() {
+      return [ autoprefixer ];
     }
   };
+
+  if(IS_HMR) {
+    config.plugins.push(new webpack.HotModuleReplacementPlugin());
+  }
+
+  if(!IS_HMR) {
+    config.plugins.push(new CleanWebpackPlugin(['dist'], {
+      root: root(),
+      verbose: false,
+      dry: false
+    }));
+
+    config.plugins.push(new ExtractTextPlugin({
+      filename: '[name].css',
+      allChunks: true
+    }));
+  }
+
+  if(IS_PRODUCTION) {
+    config.output.path = root('release');
+    config.output.libraryTarget = 'commonjs2';
+
+    config.entry = {
+      'index': './src/index.ts',
+      'default': './src/components/datatable.scss',
+      'material': './src/themes/material.scss'
+    };
+
+    config.externals = {
+      '@angular/platform-browser-dynamic': '@angular/platform-browser-dynamic',
+      '@angular/platform-browser': '@angular/platform-browser',
+      '@angular/core': '@angular/core',
+      '@angular/common': '@angular/common',
+      '@angular/forms': '@angular/forms',
+      'core-js': 'core-js',
+      'core-js/es6': 'core-js/es6',
+      'core-js/es7/reflect': 'core-js/es7/reflect',
+      'rxjs': 'rxjs',
+      'rxjs/Rx': 'rxjs/Rx',
+      'rxjs/Subscription': 'rxjs/Subscription',
+      'zone.js/dist/zone': 'zone.js/dist/zone'
+    };
+
+    config.plugins.push(new webpack.BannerPlugin({
+      banner: banner,
+      raw: true,
+      entryOnly: true
+    }))
+  }
+
+  return config;
 
 };
 

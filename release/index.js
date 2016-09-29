@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
+// import 'ts-helpers';
 var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
 var components_1 = require('./components');

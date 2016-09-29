@@ -1,5 +1,5 @@
 import { EventEmitter, ElementRef, Renderer } from '@angular/core';
-import { StateService } from 'services';
+import { StateService } from '../../services';
 export declare class DataTableFooter {
     private state;
     onPageChange: EventEmitter<any>;

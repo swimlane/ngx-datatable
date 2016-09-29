@@ -1,7 +1,7 @@
 import { ElementRef, EventEmitter, KeyValueDiffers, OnInit, OnChanges, QueryList, DoCheck, AfterViewInit, Renderer } from '@angular/core';
-import { TableOptions } from 'models';
+import { TableOptions } from '../models';
 import { DataTableColumn } from './datatable-column.directive';
-import { StateService } from 'services';
+import { StateService } from '../services';
 export declare class DataTable implements OnInit, OnChanges, DoCheck, AfterViewInit {
     state: StateService;
     options: TableOptions;

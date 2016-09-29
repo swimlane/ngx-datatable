@@ -1,6 +1,6 @@
 import { Renderer, ElementRef } from '@angular/core';
-import { TableColumn } from 'models';
-import { StateService } from 'services';
+import { TableColumn } from '../../models';
+import { StateService } from '../../services';
 export declare class DataTableBodyCell {
     private state;
     column: TableColumn;

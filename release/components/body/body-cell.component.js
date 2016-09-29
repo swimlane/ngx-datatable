@@ -9,9 +9,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var models_1 = require('models');
-var utils_1 = require('utils');
-var services_1 = require('services');
+var models_1 = require('../../models');
+var utils_1 = require('../../utils');
+var services_1 = require('../../services');
 var DataTableBodyCell = (function () {
     function DataTableBodyCell(element, renderer, state) {
         this.state = state;
