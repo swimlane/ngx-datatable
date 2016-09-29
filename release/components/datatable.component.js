@@ -40,12 +40,21 @@ var DataTable = (function () {
                 count: _this.state.rowCount
             });
         });
+        // need to call this immediatly to size
+        // if the table is hidden the visibility
+        // listener will invoke this itself upon show
+        this.adjustSizes();
     };
     DataTable.prototype.ngAfterViewInit = function () {
         var _this = this;
         this.adjustColumns();
         if (this.columns.length) {
+            // changing the columns without a timeout
+            // causes a interesting timing bug
             setTimeout(function () {
+                // this translates the expressive columns
+                // that are defined into the markup to
+                // column objects
                 for (var _i = 0, _a = _this.columns.toArray(); _i < _a.length; _i++) {
                     var col = _a[_i];
                     _this.options.columns.push(new models_1.TableColumn(col));
@@ -130,7 +139,8 @@ var DataTable = (function () {
     Object.defineProperty(DataTable.prototype, "isFixedHeader", {
         get: function () {
             var headerHeight = this.options.headerHeight;
-            return (typeof headerHeight === 'string') ? headerHeight !== 'auto' : true;
+            return (typeof headerHeight === 'string') ?
+                headerHeight !== 'auto' : true;
         },
         enumerable: true,
         configurable: true
@@ -138,7 +148,8 @@ var DataTable = (function () {
     Object.defineProperty(DataTable.prototype, "isFixedRow", {
         get: function () {
             var rowHeight = this.options.rowHeight;
-            return (typeof rowHeight === 'string') ? rowHeight !== 'auto' : true;
+            return (typeof rowHeight === 'string') ?
+                rowHeight !== 'auto' : true;
         },
         enumerable: true,
         configurable: true

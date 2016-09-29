@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v0.7.3 (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v0.7.4 (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -630,7 +630,13 @@ var TableOptions = (function () {
         // sorts
         this.sorts = [];
         Object.assign(this, props);
+        this.validate();
     }
+    TableOptions.prototype.validate = function () {
+        if (this.scrollbarV === true && isNaN(this.rowHeight)) {
+            throw new Error('Vertical scrolling and auto row height is not support!');
+        }
+    };
     return TableOptions;
 }());
 
@@ -716,6 +722,7 @@ var StateService = (function () {
     function StateService() {
         this.rows = [];
         this.selected = [];
+        this.onSortChange = new _angular_core.EventEmitter();
         this.onSelectionChange = new _angular_core.EventEmitter();
         this.onRowsUpdate = new _angular_core.EventEmitter();
         this.onPageChange = new _angular_core.EventEmitter();
@@ -723,17 +730,11 @@ var StateService = (function () {
         this.offsetX = 0;
         this.offsetY = 0;
         this.innerWidth = 0;
+        // this body height is a placeholder
+        // its only used internally, if you
+        // need to set the tables element style height
+        this.bodyHeight = 300;
     }
-    Object.defineProperty(StateService.prototype, "bodyHeight", {
-        get: function () {
-            return this.bodyheight || (this.options.tableHeight - this.options.headerHeight - this.options.footerHeight);
-        },
-        set: function (value) {
-            this.bodyheight = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
     Object.defineProperty(StateService.prototype, "columnsByPin", {
         get: function () {
             return columnsByPin(this.options.columns);
@@ -853,6 +854,7 @@ var StateService = (function () {
         else {
             column.comparator(this.rows, this.options.sorts);
         }
+        this.onSortChange.emit({ column: column });
     };
     StateService = __decorate([
         _angular_core.Injectable(), 
@@ -884,12 +886,21 @@ var DataTable = (function () {
                 count: _this.state.rowCount
             });
         });
+        // need to call this immediatly to size
+        // if the table is hidden the visibility
+        // listener will invoke this itself upon show
+        this.adjustSizes();
     };
     DataTable.prototype.ngAfterViewInit = function () {
         var _this = this;
         this.adjustColumns();
         if (this.columns.length) {
+            // changing the columns without a timeout
+            // causes a interesting timing bug
             setTimeout(function () {
+                // this translates the expressive columns
+                // that are defined into the markup to
+                // column objects
                 for (var _i = 0, _a = _this.columns.toArray(); _i < _a.length; _i++) {
                     var col = _a[_i];
                     _this.options.columns.push(new TableColumn(col));
@@ -974,7 +985,8 @@ var DataTable = (function () {
     Object.defineProperty(DataTable.prototype, "isFixedHeader", {
         get: function () {
             var headerHeight = this.options.headerHeight;
-            return (typeof headerHeight === 'string') ? headerHeight !== 'auto' : true;
+            return (typeof headerHeight === 'string') ?
+                headerHeight !== 'auto' : true;
         },
         enumerable: true,
         configurable: true
@@ -982,7 +994,8 @@ var DataTable = (function () {
     Object.defineProperty(DataTable.prototype, "isFixedRow", {
         get: function () {
             var rowHeight = this.options.rowHeight;
-            return (typeof rowHeight === 'string') ? rowHeight !== 'auto' : true;
+            return (typeof rowHeight === 'string') ?
+                rowHeight !== 'auto' : true;
         },
         enumerable: true,
         configurable: true
@@ -1785,6 +1798,9 @@ var DataTableBody = (function () {
         this.sub.add(this.state.onRowsUpdate.subscribe(function (rows) {
             _this.updateRows();
             _this.hideIndicator();
+        }));
+        this.sub.add(this.state.onSortChange.subscribe(function () {
+            _this.scroller.setOffset(0);
         }));
     };
     DataTableBody.prototype.trackRowBy = function (index, obj) {

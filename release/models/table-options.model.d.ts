@@ -23,4 +23,5 @@ export declare class TableOptions {
     sortType: SortType;
     sorts: Array<Sort>;
     constructor(props: any);
+    validate(): void;
 }

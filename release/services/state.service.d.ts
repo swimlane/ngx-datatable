@@ -5,6 +5,7 @@ export declare class StateService {
     options: TableOptions;
     rows: Array<any>;
     selected: Array<any>;
+    onSortChange: EventEmitter<any>;
     onSelectionChange: EventEmitter<any>;
     onRowsUpdate: EventEmitter<any>;
     onPageChange: EventEmitter<any>;
@@ -12,7 +13,6 @@ export declare class StateService {
     offsetX: number;
     offsetY: number;
     innerWidth: number;
-    private bodyheight;
     bodyHeight: number;
     readonly columnsByPin: {
         left: any[];

@@ -67,6 +67,9 @@ var DataTableBody = (function () {
             _this.updateRows();
             _this.hideIndicator();
         }));
+        this.sub.add(this.state.onSortChange.subscribe(function () {
+            _this.scroller.setOffset(0);
+        }));
     };
     DataTableBody.prototype.trackRowBy = function (index, obj) {
         return obj.$$index;

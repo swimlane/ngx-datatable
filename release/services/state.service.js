@@ -16,6 +16,7 @@ var StateService = (function () {
     function StateService() {
         this.rows = [];
         this.selected = [];
+        this.onSortChange = new core_1.EventEmitter();
         this.onSelectionChange = new core_1.EventEmitter();
         this.onRowsUpdate = new core_1.EventEmitter();
         this.onPageChange = new core_1.EventEmitter();
@@ -23,17 +24,11 @@ var StateService = (function () {
         this.offsetX = 0;
         this.offsetY = 0;
         this.innerWidth = 0;
+        // this body height is a placeholder
+        // its only used internally, if you
+        // need to set the tables element style height
+        this.bodyHeight = 300;
     }
-    Object.defineProperty(StateService.prototype, "bodyHeight", {
-        get: function () {
-            return this.bodyheight || (this.options.tableHeight - this.options.headerHeight - this.options.footerHeight);
-        },
-        set: function (value) {
-            this.bodyheight = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
     Object.defineProperty(StateService.prototype, "columnsByPin", {
         get: function () {
             return utils_1.columnsByPin(this.options.columns);
@@ -153,6 +148,7 @@ var StateService = (function () {
         else {
             column.comparator(this.rows, this.options.sorts);
         }
+        this.onSortChange.emit({ column: column });
     };
     StateService = __decorate([
         core_1.Injectable(), 

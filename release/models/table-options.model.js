@@ -46,7 +46,13 @@ var TableOptions = (function () {
         // sorts
         this.sorts = [];
         Object.assign(this, props);
+        this.validate();
     }
+    TableOptions.prototype.validate = function () {
+        if (this.scrollbarV === true && isNaN(this.rowHeight)) {
+            throw new Error('Vertical scrolling and auto row height is not support!');
+        }
+    };
     return TableOptions;
 }());
 exports.TableOptions = TableOptions;
