@@ -5,6 +5,7 @@
 - Fixed issue with height + scrollbarV not sizing right
 - Fix limit not applied (#133)
 - Fix sort not resetting to top of page (#136)
+- Added option validation
 
 ## 0.7.3
 - Huge perf bumps (#149)
