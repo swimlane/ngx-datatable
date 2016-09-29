@@ -114,7 +114,9 @@
 
 			&.active,
 			&.active:focus,
-			&.active:hover {
+			&.active:focus .datatable-row-group,
+			&.active:hover,
+			&.active:hover .datatable-row-group {
 				background-color: #304FFE;
         color: #FFF;
 			}

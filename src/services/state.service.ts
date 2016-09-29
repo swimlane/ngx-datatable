@@ -20,6 +20,8 @@ export class StateService {
   offsetY: number = 0;
   innerWidth: number = 0;
 
+  private selectedIdentities: Array<any> = [];
+
   private bodyheight: number;
   set bodyHeight(value: number)
   {
@@ -71,24 +73,23 @@ export class StateService {
     return { first, last };
   }
 
-  setSelected(selected: any[]): StateService {
-    if (!this.selected) {
-      this.selected = selected || [];
-    } else {
-      this.selected.splice(0, this.selected.length);
-      this.selected.push(...selected);
-    }
+  private cacheSelected(): void {
+    this.selected = this.rows.filter(row => this.isRowSelected(row));
+  }
 
+  setSelected(selected: any[]): StateService {
+    this.selectedIdentities = (selected || []).map(this.options.rowIdentityFunction);
+    this.cacheSelected();
     this.onSelectionChange.emit(this.selected);
 
     return this;
   }
 
-  setRows(rows: Array<any>): StateService {
-    if (rows) {
-      this.rows = [...rows];
-      this.onRowsUpdate.emit(rows);
-    }
+  setRows(rows: any[]): StateService {
+    this.rows = rows ? [...rows] : [];
+    this.cacheSelected();
+    this.onRowsUpdate.emit(rows);
+
     return this;
   }
 
@@ -106,6 +107,11 @@ export class StateService {
       limit: this.pageSize,
       count: this.rowCount
     });
+  }
+
+  isRowSelected(row: any): boolean {
+    const rowIdentity = this.options.rowIdentityFunction(row);
+    return this.selectedIdentities.indexOf(rowIdentity) !== -1;
   }
 
   nextSort(column: TableColumn): void {
