@@ -1,6 +1,6 @@
 import { TableColumn } from './table-column.model';
 import { Sort } from './sort.model';
-import { ColumnMode, SortType, SelectionType } from 'types';
+import { ColumnMode, SortType, SelectionType } from '../types';
 
 export class TableOptions {
 

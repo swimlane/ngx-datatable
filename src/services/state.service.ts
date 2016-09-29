@@ -1,8 +1,8 @@
 import { Injectable, EventEmitter } from '@angular/core';
 
-import { columnsByPin, columnGroupWidths, scrollbarWidth, nextSortDir, sortRows } from 'utils';
-import { TableOptions, TableColumn, Sort } from 'models';
-import { SortType } from 'types';
+import { columnsByPin, columnGroupWidths, scrollbarWidth, nextSortDir, sortRows } from '../utils';
+import { TableOptions, TableColumn, Sort } from '../models';
+import { SortType } from '../types';
 
 @Injectable()
 export class StateService {
