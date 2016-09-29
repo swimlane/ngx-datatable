@@ -22,7 +22,7 @@ import { translateXY } from '../../utils';
         [ngStyle]="stylesByGroup('left')"
         *ngIf="state.columnsByPin.left.length">
         <datatable-header-cell
-          *ngFor="let column of state.columnsByPin.left"
+          *ngFor="let column of state.columnsByPin.left; trackBy: trackColBy"
           resizeable
           [resizeEnabled]="column.resizeable"
           (onResize)="columnResized($event, column)"
@@ -41,7 +41,7 @@ import { translateXY } from '../../utils';
         [ngStyle]="stylesByGroup('center')"
         *ngIf="state.columnsByPin.center.length">
         <datatable-header-cell
-          *ngFor="let column of state.columnsByPin.center"
+          *ngFor="let column of state.columnsByPin.center; trackBy: trackColBy"
           resizeable
           [resizeEnabled]="column.resizeable"
           (onResize)="columnResized($event, column)"
@@ -60,7 +60,7 @@ import { translateXY } from '../../utils';
         [ngStyle]="stylesByGroup('right')"
         *ngIf="state.columnsByPin.right.length">
         <datatable-header-cell
-          *ngFor="let column of state.columnsByPin.right"
+          *ngFor="let column of state.columnsByPin.right; trackBy: trackColBy"
           resizeable
           [resizeEnabled]="column.resizeable"
           (onResize)="columnResized($event, column)"
@@ -100,6 +100,10 @@ export class DataTableHeader {
 
   constructor(private state: StateService, element: ElementRef, renderer: Renderer) {
     renderer.setElementClass(element.nativeElement, 'datatable-header', true);
+  }
+
+  trackColBy(index: number, obj: any) {
+    return obj.$$id;
   }
 
   columnResized(width, column) {

@@ -32,6 +32,7 @@ import { StateService } from '../services';
       visibility-observer
       (onVisibilityChange)="adjustSizes()">
       <datatable-header
+        *ngIf="state.options.headerHeight"
         (onColumnChange)="onColumnChange.emit($event)">
       </datatable-header>
       <datatable-body
@@ -39,6 +40,7 @@ import { StateService } from '../services';
         (onRowSelect)="onRowSelect($event)">
       </datatable-body>
       <datatable-footer
+         *ngIf="state.options.footerHeight"
         (onPageChange)="state.setPage($event)">
       </datatable-footer>
     </div>

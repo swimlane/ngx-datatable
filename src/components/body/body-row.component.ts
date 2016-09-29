@@ -12,7 +12,7 @@ import { StateService } from '../../services';
         [ngStyle]="stylesByGroup('left')"
         [style.width]="state.columnGroupWidths.left + 'px'">
         <datatable-body-cell
-          *ngFor="let column of state.columnsByPin.left"
+          *ngFor="let column of state.columnsByPin.left; trackBy: trackColBy"
           [row]="row"
           [column]="column">
         </datatable-body-cell>
@@ -23,7 +23,7 @@ import { StateService } from '../../services';
         [ngStyle]="stylesByGroup('center')"
         *ngIf="state.columnsByPin.center.length">
         <datatable-body-cell
-          *ngFor="let column of state.columnsByPin.center"
+          *ngFor="let column of state.columnsByPin.center; trackBy: trackColBy"
           [row]="row"
           [column]="column">
         </datatable-body-cell>
@@ -34,7 +34,7 @@ import { StateService } from '../../services';
         [ngStyle]="stylesByGroup('right')"
         [style.width]="state.columnGroupWidths.right + 'px'">
         <datatable-body-cell
-          *ngFor="let column of state.columnsByPin.right"
+          *ngFor="let column of state.columnsByPin.right; trackBy: trackColBy"
           [row]="row"
           [column]="column">
         </datatable-body-cell>
@@ -54,6 +54,10 @@ export class DataTableBodyRow {
 
   constructor(public state: StateService, element: ElementRef, renderer: Renderer) {
     renderer.setElementClass(element.nativeElement, 'datatable-body-row', true);
+  }
+
+  trackColBy(index: number, obj: any) {
+    return obj.$$id;
   }
 
   stylesByGroup(group) {

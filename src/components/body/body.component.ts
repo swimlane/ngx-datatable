@@ -35,7 +35,7 @@ import { Scroller } from '../../directives';
         <datatable-body-row
           [ngStyle]="getRowsStyles(row)"
           [style.height]="state.options.rowHeight + 'px'"
-          *ngFor="let row of rows; let i = index;"
+          *ngFor="let row of rows; let i = index; trackBy: trackRowBy"
           [attr.tabindex]="i"
           (click)="rowClicked($event, i, row)"
           (keydown)="rowKeydown($event, i, row)"
@@ -111,6 +111,10 @@ export class DataTableBody implements OnInit, OnDestroy {
       this.updateRows();
       this.hideIndicator();
     }));
+  }
+
+  trackRowBy(index: number, obj: any) {
+    return obj.$$index;
   }
 
   onBodyScroll(props) {

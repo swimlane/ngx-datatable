@@ -10,14 +10,15 @@ import '../components/datatable.scss';
 // import { App } from './server-paging';
 // import { App } from './server-sorting';
 // import { App } from './selection';
-import { App } from './expressive';
+// import { App } from './expressive';
 // import { App } from './template';
 // import { App } from './details';
-// import { App } from './virtual';
+import { App } from './virtual';
 // import { App } from './inline';
 // import { App } from './scrolling';
 // import { App } from './pinning';
 // import { App } from './multiple';
+// import { App } from './columns';
 
 @NgModule({
   declarations: [App],
@@ -26,8 +27,7 @@ import { App } from './expressive';
 })
 export class AppModule {
 
-  constructor(private appRef: ApplicationRef) {
-  }
+  constructor(private appRef: ApplicationRef) { }
 
   hmrOnDestroy(store) {
     const cmpLocation = this.appRef.components.map(cmp => cmp.location.nativeElement);

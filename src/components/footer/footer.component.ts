@@ -12,7 +12,6 @@ import { StateService } from '../../services';
   selector: 'datatable-footer',
   template: `
     <div
-      *ngIf="state.options.footerHeight"
       [style.height]="state.options.footerHeight">
       <div class="page-count">{{state.rowCount}} total</div>
       <datatable-pager
