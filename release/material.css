@@ -74,7 +74,9 @@
   .datatable.material .datatable-body .datatable-body-row:focus,
   .datatable.material .datatable-body .datatable-body-row:focus .datatable-row-group {
     background-color: #ddd; }
-  .datatable.material .datatable-body .datatable-body-row.active, .datatable.material .datatable-body .datatable-body-row.active:focus, .datatable.material .datatable-body .datatable-body-row.active:hover {
+  .datatable.material .datatable-body .datatable-body-row.active, .datatable.material .datatable-body .datatable-body-row.active:focus,
+  .datatable.material .datatable-body .datatable-body-row.active:focus .datatable-row-group, .datatable.material .datatable-body .datatable-body-row.active:hover,
+  .datatable.material .datatable-body .datatable-body-row.active:hover .datatable-row-group {
     background-color: #304FFE;
     color: #FFF; }
   .datatable.material .datatable-body .progress-linear {

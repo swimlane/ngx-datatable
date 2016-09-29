@@ -180,7 +180,9 @@ export class DataTable implements OnInit, OnChanges, DoCheck, AfterViewInit {
   }
 
   onRowSelect(event) {
-    this.state.setSelected(event);
+    if (this.options.mutateSelectionState) {
+      this.state.setSelected(event);
+    }
     this.onSelectionChange.emit(event);
   }
 
