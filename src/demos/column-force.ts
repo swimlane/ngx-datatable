@@ -1,35 +1,35 @@
 import { Component } from '@angular/core';
-import { ColumnMode, TableOptions } from '../index';
+
+import {
+  TableOptions,
+  ColumnMode
+} from '../index';
 import '../themes/material.scss';
 
 @Component({
   selector: 'app',
   template: `
     <div>
-      <h3>detail template</h3>
+      <h3>column mode: forced</h3>
       <datatable
-        class='material'
-        [rows]='rows'
-        [options]='options'>
-        <datatable-column [width]='50'>
-          <template let-row='row'>
-            <span class='icon-right' [hidden]='expanded[row.name]'></span>
-            <span class='icon-down' [hidden]='!expanded[row.name]'></span>
+        class="material"
+        [rows]="rows"
+        [options]="options">
+        <datatable-column name="Name" [width]="100">
+          <template let-value="value">
+            {{value}}
           </template>
         </datatable-column>
-
-        <datatable-column name='Gender'>
-          <template let-row='row' let-value='value'>
-            Panda
+        <datatable-column name="Gender" [width]="100">
+          <template let-row="row" let-value="value">
+            {{value}}
           </template>
         </datatable-column>
-
-        <datatable-column name='Age'>
-          <template let-value='value'>
-            Chicken
+        <datatable-column name="Age" [width]="300">
+          <template let-value="value">
+            {{value}}
           </template>
         </datatable-column>
-
       </datatable>
     </div>
   `
@@ -37,7 +37,6 @@ import '../themes/material.scss';
 export class App {
 
   rows = [];
-  expanded = {};
 
   options = new TableOptions({
     columnMode: ColumnMode.force,
@@ -53,7 +52,7 @@ export class App {
   }
 
   fetch(cb) {
-    let req = new XMLHttpRequest();
+    const req = new XMLHttpRequest();
     req.open('GET', `assets/data/company.json`);
 
     req.onload = () => {
@@ -61,10 +60,6 @@ export class App {
     };
 
     req.send();
-  }
-
-  toggle(row) {
-    this.expanded[row.name] = !this.expanded[row.name];
   }
 
 }

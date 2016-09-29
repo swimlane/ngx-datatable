@@ -11,9 +11,10 @@ import '../themes/material.scss';
   selector: 'app',
   template: `
     <div>
-      <h3>basic</h3>
+      <h3>sorting: client</h3>
       <datatable
-        class='material striped'
+        style="height: 500px"
+        class='material'
         [rows]='rows'
         [options]='options'>
       </datatable>
@@ -28,9 +29,10 @@ export class App {
     columnMode: ColumnMode.force,
     headerHeight: 50,
     footerHeight: 50,
-    rowHeight: 'auto',
+    rowHeight: 50,
+    scrollbarV: true,
     columns: [
-      new TableColumn({ prop: 'name' }),
+      new TableColumn({ name: 'Name' }),
       new TableColumn({ name: 'Gender' }),
       new TableColumn({ name: 'Company' })
     ]
@@ -47,7 +49,8 @@ export class App {
     req.open('GET', `assets/data/company.json`);
 
     req.onload = () => {
-      cb(JSON.parse(req.response));
+      let data = JSON.parse(req.response);
+      cb(data);
     };
 
     req.send();

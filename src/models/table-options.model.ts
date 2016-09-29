@@ -70,6 +70,13 @@ export class TableOptions {
 
   constructor(props: any) {
     Object.assign(this, props);
+    this.validate();
+  }
+
+  validate() {
+    if(this.scrollbarV === true && isNaN(this.rowHeight)) {
+      throw new Error('Vertical scrolling and auto row height is not support!');
+    }
   }
 
 }

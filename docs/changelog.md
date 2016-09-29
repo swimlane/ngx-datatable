@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.7.4
+- Removed #142 in favor of style height
+- Fixed issue with height + scrollbarV not sizing right
+- Fix limit not applied (#133)
+- Fix sort not resetting to top of page (#136)
+
 ## 0.7.3
 - Huge perf bumps (#149)
 

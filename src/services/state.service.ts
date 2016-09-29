@@ -11,6 +11,7 @@ export class StateService {
   rows: Array<any> = [];
   selected: Array<any> = [];
 
+  onSortChange: EventEmitter<any> = new EventEmitter();
   onSelectionChange: EventEmitter<any> = new EventEmitter();
   onRowsUpdate: EventEmitter<any> = new EventEmitter();
   onPageChange: EventEmitter<any> = new EventEmitter();
@@ -20,14 +21,10 @@ export class StateService {
   offsetY: number = 0;
   innerWidth: number = 0;
 
-  private bodyheight: number;
-  set bodyHeight(value: number)
-  {
-    this.bodyheight = value;
-  }
-  get bodyHeight(): number {
-    return this.bodyheight || (this.options.tableHeight - this.options.headerHeight - this.options.footerHeight);
-  }
+  // this body height is a placeholder
+  // its only used internally, if you
+  // need to set the tables element style height
+  bodyHeight: number = 300;
 
   get columnsByPin() {
     return columnsByPin(this.options.columns);
@@ -135,6 +132,8 @@ export class StateService {
     } else {
       column.comparator(this.rows, this.options.sorts);
     }
+
+    this.onSortChange.emit({ column });
   }
 
 }

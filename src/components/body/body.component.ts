@@ -111,6 +111,10 @@ export class DataTableBody implements OnInit, OnDestroy {
       this.updateRows();
       this.hideIndicator();
     }));
+
+    this.sub.add(this.state.onSortChange.subscribe(() => {
+      this.scroller.setOffset(0);
+    }));
   }
 
   trackRowBy(index: number, obj: any) {

@@ -87,13 +87,24 @@ export class DataTable implements OnInit, OnChanges, DoCheck, AfterViewInit {
         count: this.state.rowCount
       });
     });
+
+    // need to call this immediatly to size
+    // if the table is hidden the visibility
+    // listener will invoke this itself upon show
+    this.adjustSizes();
   }
 
   ngAfterViewInit() {
     this.adjustColumns();
 
     if (this.columns.length) {
+      // changing the columns without a timeout
+      // causes a interesting timing bug
       setTimeout(() => {
+
+        // this translates the expressive columns
+        // that are defined into the markup to
+        // column objects
         for (let col of this.columns.toArray()) {
           this.options.columns.push(new TableColumn(col));
         }
@@ -192,13 +203,17 @@ export class DataTable implements OnInit, OnChanges, DoCheck, AfterViewInit {
   @HostBinding('class.fixed-header')
   get isFixedHeader() {
     const headerHeight: number|string = this.options.headerHeight;
-    return (typeof headerHeight === 'string') ? (<string>headerHeight) !== 'auto' : true;
+    
+    return (typeof headerHeight === 'string') ?
+      (<string>headerHeight) !== 'auto' : true;
   }
 
   @HostBinding('class.fixed-row')
   get isFixedRow() {
     const rowHeight: number|string = this.options.rowHeight;
-    return (typeof rowHeight === 'string') ? (<string>rowHeight) !== 'auto' : true;
+
+    return (typeof rowHeight === 'string') ?
+      (<string>rowHeight) !== 'auto' : true;
   }
 
   @HostBinding('class.scroll-vertical')

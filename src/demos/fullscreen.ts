@@ -6,29 +6,17 @@ import '../themes/material.scss';
   selector: 'app',
   template: `
     <div>
-      <h3>virtual scroll</h3>
-
       <datatable
         class='material'
+        style="position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100vh;"
         [rows]='rows'
-        (onPageChange)="paged($event)"
         [options]='options'>
-
-        <datatable-column name="Name">
-          <template let-value="value">
-            <strong>{{value}}</strong>
-          </template>
-        </datatable-column>
-
-        <datatable-column name="Gender">
-          <template let-row="row" let-value="value">
-            <i [innerHTML]="row['name']"></i> and <i>{{value}}</i>
-          </template>
-        </datatable-column>
-
-        <datatable-column name="Age">
-        </datatable-column>
-
+        <datatable-column name="Id" [width]="80"></datatable-column>
+        <datatable-column name="Name" [width]="300"></datatable-column>
+        <datatable-column name="Gender"></datatable-column>
+        <datatable-column name="Age"></datatable-column>
+        <datatable-column name="City" [width]="300" prop="address.city"></datatable-column>
+        <datatable-column name="State" [width]="300" prop="address.state"></datatable-column>
       </datatable>
     </div>
   `
@@ -36,28 +24,20 @@ import '../themes/material.scss';
 export class App {
 
   rows = [];
-  expanded = {};
-  timeout: any;
 
   options = new TableOptions({
     columnMode: ColumnMode.force,
     headerHeight: 50,
-    footerHeight: 50,
+    footerHeight: 0,
     rowHeight: 50,
-    scrollbarV: true
+    scrollbarV: true,
+    scrollbarH: true
   });
 
   constructor() {
     this.fetch((data) => {
       this.rows.push(...data);
     });
-  }
-
-  paged(event) {
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => {
-      console.log('paged!', event);
-    }, 100);
   }
 
   fetch(cb) {

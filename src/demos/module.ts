@@ -5,20 +5,25 @@ import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 import { Angular2DataTableModule } from '../index';
 import '../components/datatable.scss';
 
-// import { App } from './basic';
-// import { App } from './client-paging';
-// import { App } from './server-paging';
-// import { App } from './server-sorting';
+// import { App } from './basic-fixed';
+// import { App } from './basic-auto';
+// import { App } from './paging-client';
+// import { App } from './paging-server';
+// import { App } from './sorting-server';
+// import { App } from './sorting-client';
 // import { App } from './selection';
 // import { App } from './expressive';
 // import { App } from './template';
-// import { App } from './details';
-import { App } from './virtual';
+// import { App } from './virtual';
 // import { App } from './inline';
 // import { App } from './scrolling';
 // import { App } from './pinning';
 // import { App } from './multiple';
-// import { App } from './columns';
+// import { App } from './column-toggle';
+// import { App } from './column-standard';
+// import { App } from './column-force';
+// import { App } from './column-flex';
+import { App } from './fullscreen';
 
 @NgModule({
   declarations: [App],
