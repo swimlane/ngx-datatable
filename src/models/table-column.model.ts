@@ -21,6 +21,9 @@ export class TableColumn {
   // unique id
   $$id: string = id();
 
+  // used internally for resize calcs
+  $$oldWidth: number;
+
   // defines if its expressive
   isExpressive: boolean = false;
 
@@ -70,7 +73,7 @@ export class TableColumn {
   prop: string;
 
   // ng2 template ref
-  template: any;
+  cellTemplate: any;
 
   // ng2 template ref
   headerTemplate: any;
@@ -80,6 +83,12 @@ export class TableColumn {
 
     if(!this.prop && this.name) {
       this.prop = camelCase(this.name);
+    }
+
+    // for some reason these are not getting set
+    if(props && props.templates) {
+      this.headerTemplate = props.headerTemplate;
+      this.cellTemplate = props.cellTemplate;
     }
   }
 

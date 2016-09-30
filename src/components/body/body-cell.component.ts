@@ -9,12 +9,12 @@ import { StateService } from '../../services';
   template: `
     <div class="datatable-body-cell-label">
       <span
-        *ngIf="!column.template"
+        *ngIf="!column.cellTemplate"
         [innerHTML]="value">
       </span>
       <template
-        *ngIf="column.template"
-        [ngTemplateOutlet]="column.template"
+        *ngIf="column.cellTemplate"
+        [ngTemplateOutlet]="column.cellTemplate"
         [ngOutletContext]="{ value: value, row: row, column: column }">
       </template>
     </div>

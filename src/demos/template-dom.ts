@@ -16,6 +16,9 @@ import '../themes/material.scss';
         [rows]="rows"
         [options]="options">
         <datatable-column name="Name">
+          <template let-model="model">
+            Holla! {{model.name}}
+          </template>
           <template let-value="value">
             Hi: <strong>{{value}}</strong>
           </template>
