@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.0
+- Added the ability to define header templates expressively
+*Breaking Change!* Renamed `template` to `cellTemplate` in column options
+
 ## 0.7.4
 - Removed #142 in favor of style height
 - Fixed issue with height + scrollbarV not sizing right

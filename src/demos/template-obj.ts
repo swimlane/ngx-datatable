@@ -60,7 +60,7 @@ export class App {
       rowHeight: 'auto',
       columns: [
         new TableColumn({
-          template: this.editTmpl,
+          cellTemplate: this.editTmpl,
           headerTemplate: this.hdrTpl,
           name: 'Gender'
         })
