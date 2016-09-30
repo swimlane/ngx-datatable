@@ -1,4 +1,4 @@
-import { camelCase } from './camelCase';
+import { camelCase } from './camel-case';
 
 let cache = {};
 let testStyle = document.createElement('div').style;
