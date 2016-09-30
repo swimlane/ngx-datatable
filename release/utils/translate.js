@@ -1,6 +1,6 @@
 "use strict";
 var prefixes_1 = require('./prefixes');
-var camelCase_1 = require('./camelCase');
+var camel_case_1 = require('./camel-case');
 // browser detection and prefixing tools
 var transform = prefixes_1.getVendorPrefixedName('transform');
 var backfaceVisibility = prefixes_1.getVendorPrefixedName('backfaceVisibility');
@@ -15,7 +15,7 @@ function translateXY(styles, x, y) {
             styles[backfaceVisibility] = 'hidden';
         }
         else {
-            styles[camelCase_1.camelCase(transform)] = "translate(" + x + "px, " + y + "px)";
+            styles[camel_case_1.camelCase(transform)] = "translate(" + x + "px, " + y + "px)";
         }
     }
     else {

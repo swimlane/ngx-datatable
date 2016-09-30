@@ -1,5 +1,5 @@
 "use strict";
-var camelCase_1 = require('./camelCase');
+var camel_case_1 = require('./camel-case');
 var cache = {};
 var testStyle = document.createElement('div').style;
 // Get Prefix
@@ -16,7 +16,7 @@ var prefix = (function () {
     };
 })();
 function getVendorPrefixedName(property) {
-    var name = camelCase_1.camelCase(property);
+    var name = camel_case_1.camelCase(property);
     if (!cache[name]) {
         if (testStyle[prefix.css + property] !== undefined) {
             cache[name] = prefix.css + property;

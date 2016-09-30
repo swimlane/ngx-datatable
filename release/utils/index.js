@@ -4,15 +4,15 @@ function __export(m) {
 }
 __export(require('./id'));
 __export(require('./column'));
-__export(require('./deepGetter'));
-__export(require('./camelCase'));
+__export(require('./deep-getter'));
+__export(require('./camel-case'));
 __export(require('./keys'));
 __export(require('./math'));
 __export(require('./prefixes'));
-__export(require('./scrollbarWidth'));
+__export(require('./scrollbar-width'));
 __export(require('./selection'));
 __export(require('./translate'));
-__export(require('./VisibilityObserver'));
+__export(require('./visibility-observer'));
 __export(require('./debounce'));
 __export(require('./sort'));
 //# sourceMappingURL=index.js.map

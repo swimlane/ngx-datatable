@@ -41,6 +41,11 @@ var TableColumn = (function () {
         if (!this.prop && this.name) {
             this.prop = utils_1.camelCase(this.name);
         }
+        // for some reason these are not getting set
+        if (props && props.templates) {
+            this.headerTemplate = props.headerTemplate;
+            this.cellTemplate = props.cellTemplate;
+        }
     }
     TableColumn.getProps = function () {
         var props = ['name', 'prop'];

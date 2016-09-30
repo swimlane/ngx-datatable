@@ -75,4 +75,4 @@ var VisibilityObserver = (function () {
     return VisibilityObserver;
 }());
 exports.VisibilityObserver = VisibilityObserver;
-//# sourceMappingURL=VisibilityObserver.js.map
+//# sourceMappingURL=visibility-observer.js.map

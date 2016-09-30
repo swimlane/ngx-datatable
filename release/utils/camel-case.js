@@ -19,4 +19,4 @@ function camelCase(str) {
     return str;
 }
 exports.camelCase = camelCase;
-//# sourceMappingURL=camelCase.js.map
+//# sourceMappingURL=camel-case.js.map

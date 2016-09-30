@@ -21,4 +21,4 @@ function scrollbarWidth() {
 }
 exports.scrollbarWidth = scrollbarWidth;
 ;
-//# sourceMappingURL=scrollbarWidth.js.map
+//# sourceMappingURL=scrollbar-width.js.map

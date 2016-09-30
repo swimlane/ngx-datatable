@@ -13,10 +13,37 @@ var models_1 = require('../models');
 var DataTableColumn = (function () {
     function DataTableColumn() {
     }
+    Object.defineProperty(DataTableColumn.prototype, "hasHeaderTemplate", {
+        get: function () {
+            // this is a tad nasty but can't think of a better way
+            // to differate if the prop is header vs cell
+            return this.templates.length === 2;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataTableColumn.prototype, "headerTemplate", {
+        get: function () {
+            if (!this.hasHeaderTemplate)
+                return undefined;
+            return this.templates.first;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataTableColumn.prototype, "cellTemplate", {
+        get: function () {
+            if (this.hasHeaderTemplate)
+                return this.templates.last;
+            return this.templates.first;
+        },
+        enumerable: true,
+        configurable: true
+    });
     __decorate([
-        core_1.ContentChild(core_1.TemplateRef), 
+        core_1.ContentChildren(core_1.TemplateRef), 
         __metadata('design:type', core_1.QueryList)
-    ], DataTableColumn.prototype, "template", void 0);
+    ], DataTableColumn.prototype, "templates", void 0);
     DataTableColumn = __decorate([
         core_1.Directive({
             selector: 'datatable-column',

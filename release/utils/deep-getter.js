@@ -17,4 +17,4 @@ function deepValueGetter(obj, path) {
     return current;
 }
 exports.deepValueGetter = deepValueGetter;
-//# sourceMappingURL=deepGetter.js.map
+//# sourceMappingURL=deep-getter.js.map

@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v0.7.4 (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v0.8.0 (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -681,6 +681,11 @@ var TableColumn = (function () {
         if (!this.prop && this.name) {
             this.prop = camelCase(this.name);
         }
+        // for some reason these are not getting set
+        if (props && props.templates) {
+            this.headerTemplate = props.headerTemplate;
+            this.cellTemplate = props.cellTemplate;
+        }
     }
     TableColumn.getProps = function () {
         var props = ['name', 'prop'];
@@ -703,10 +708,37 @@ var Sort = (function () {
 var DataTableColumn = (function () {
     function DataTableColumn() {
     }
+    Object.defineProperty(DataTableColumn.prototype, "hasHeaderTemplate", {
+        get: function () {
+            // this is a tad nasty but can't think of a better way
+            // to differate if the prop is header vs cell
+            return this.templates.length === 2;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataTableColumn.prototype, "headerTemplate", {
+        get: function () {
+            if (!this.hasHeaderTemplate)
+                return undefined;
+            return this.templates.first;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataTableColumn.prototype, "cellTemplate", {
+        get: function () {
+            if (this.hasHeaderTemplate)
+                return this.templates.last;
+            return this.templates.first;
+        },
+        enumerable: true,
+        configurable: true
+    });
     __decorate([
-        _angular_core.ContentChild(_angular_core.TemplateRef), 
+        _angular_core.ContentChildren(_angular_core.TemplateRef), 
         __metadata('design:type', (typeof (_a = typeof _angular_core.QueryList !== 'undefined' && _angular_core.QueryList) === 'function' && _a) || Object)
-    ], DataTableColumn.prototype, "template", void 0);
+    ], DataTableColumn.prototype, "templates", void 0);
     DataTableColumn = __decorate([
         _angular_core.Directive({
             selector: 'datatable-column',
@@ -1990,7 +2022,7 @@ var DataTableBodyCell = (function () {
     DataTableBodyCell = __decorate([
         _angular_core.Component({
             selector: 'datatable-body-cell',
-            template: "\n    <div class=\"datatable-body-cell-label\">\n      <span\n        *ngIf=\"!column.template\"\n        [innerHTML]=\"value\">\n      </span>\n      <template\n        *ngIf=\"column.template\"\n        [ngTemplateOutlet]=\"column.template\"\n        [ngOutletContext]=\"{ value: value, row: row, column: column }\">\n      </template>\n    </div>\n  "
+            template: "\n    <div class=\"datatable-body-cell-label\">\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [innerHTML]=\"value\">\n      </span>\n      <template\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngOutletContext]=\"{ value: value, row: row, column: column }\">\n      </template>\n    </div>\n  "
         }), 
         __metadata('design:paramtypes', [(typeof (_b = typeof _angular_core.ElementRef !== 'undefined' && _angular_core.ElementRef) === 'function' && _b) || Object, (typeof (_c = typeof _angular_core.Renderer !== 'undefined' && _angular_core.Renderer) === 'function' && _c) || Object, (typeof (_d = typeof StateService !== 'undefined' && StateService) === 'function' && _d) || Object])
     ], DataTableBodyCell);

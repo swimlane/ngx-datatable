@@ -6,6 +6,7 @@ import { PipeTransform } from '@angular/core';
 export declare class TableColumn {
     static getProps(): string[];
     $$id: string;
+    $$oldWidth: number;
     isExpressive: boolean;
     frozenLeft: boolean;
     frozenRight: boolean;
@@ -21,7 +22,7 @@ export declare class TableColumn {
     canAutoResize: boolean;
     name: string;
     prop: string;
-    template: any;
+    cellTemplate: any;
     headerTemplate: any;
     constructor(props?: any);
 }
