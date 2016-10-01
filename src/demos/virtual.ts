@@ -14,19 +14,19 @@ import '../themes/material.scss';
         (onPageChange)="paged($event)"
         [options]='options'>
 
-        <datatable-column name="Name">
+        <datatable-column name="Name" width="200">
           <template let-value="value">
             <strong>{{value}}</strong>
           </template>
         </datatable-column>
 
-        <datatable-column name="Gender">
+        <datatable-column name="Gender" width="300">
           <template let-row="row" let-value="value">
             <i [innerHTML]="row['name']"></i> and <i>{{value}}</i>
           </template>
         </datatable-column>
 
-        <datatable-column name="Age">
+        <datatable-column name="Age" width="80">
         </datatable-column>
 
       </datatable>
@@ -40,11 +40,11 @@ export class App {
   timeout: any;
 
   options = new TableOptions({
-    columnMode: ColumnMode.force,
+    columnMode: ColumnMode.standard,
     headerHeight: 50,
     footerHeight: 50,
     rowHeight: 50,
-    scrollbarV: true
+    scrollbarV: true,
   });
 
   constructor() {
