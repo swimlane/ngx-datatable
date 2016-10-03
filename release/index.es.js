@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v0.9.0 (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v0.9.1 (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -2304,5 +2304,5 @@ var Angular2DataTableModule = (function () {
     return Angular2DataTableModule;
 }());
 
-export { Angular2DataTableModule, ColumnMode, SortType, SortDirection, SelectionType, ClickType, TableOptions, TableColumn, Sort };
+export { Angular2DataTableModule, ColumnMode, SortType, SortDirection, SelectionType, ClickType, TableOptions, TableColumn, Sort, DataTable, DataTableColumn, DataTableHeader, DataTableHeaderCell, DataTableBody, DataTableBodyCell, DataTableBodyRow, ProgressBar, DataTableFooter, DataTablePager };
 //# sourceMappingURL=index.es.js.map

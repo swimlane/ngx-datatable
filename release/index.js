@@ -18,6 +18,7 @@ var components_1 = require('./components');
 var directives_1 = require('./directives');
 __export(require('./types'));
 __export(require('./models'));
+__export(require('./components'));
 var Angular2DataTableModule = (function () {
     function Angular2DataTableModule() {
     }

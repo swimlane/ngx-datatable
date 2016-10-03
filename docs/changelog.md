@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.9.1
+- Export component references for external consumption (#176)
+
 ## 0.9.0
 - Fix accidental breaking change of renaming `HeaderCell` column property to `model`. See [commit](https://github.com/swimlane/angular2-data-table/commit/6c56b51ab918e380edb0d511730b28e66cb80afe#diff-aee46548d5e0b9f72917dd179250d4fe).
 - Ensure minWidth and maxWidth values are specified saved as numbers (#167)

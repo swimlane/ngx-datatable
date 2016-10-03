@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v0.9.0 (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v0.9.1 (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -2305,6 +2305,16 @@ exports.Angular2DataTableModule = Angular2DataTableModule;
 exports.TableOptions = TableOptions;
 exports.TableColumn = TableColumn;
 exports.Sort = Sort;
+exports.DataTable = DataTable;
+exports.DataTableColumn = DataTableColumn;
+exports.DataTableHeader = DataTableHeader;
+exports.DataTableHeaderCell = DataTableHeaderCell;
+exports.DataTableBody = DataTableBody;
+exports.DataTableBodyCell = DataTableBodyCell;
+exports.DataTableBodyRow = DataTableBodyRow;
+exports.ProgressBar = ProgressBar;
+exports.DataTableFooter = DataTableFooter;
+exports.DataTablePager = DataTablePager;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
