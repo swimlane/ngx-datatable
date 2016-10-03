@@ -24,5 +24,7 @@ export declare class TableColumn {
     prop: string;
     cellTemplate: any;
     headerTemplate: any;
+    private _width;
+    private _minWidth;
     constructor(props?: any);
 }

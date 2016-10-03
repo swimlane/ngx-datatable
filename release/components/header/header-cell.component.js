@@ -24,7 +24,7 @@ var DataTableHeaderCell = (function () {
         get: function () {
             var _this = this;
             var sort = this.state.options.sorts.find(function (s) {
-                return s.prop === _this.model.prop;
+                return s.prop === _this.column.prop;
             });
             if (sort)
                 return sort.dir;
@@ -34,7 +34,7 @@ var DataTableHeaderCell = (function () {
     });
     Object.defineProperty(DataTableHeaderCell.prototype, "name", {
         get: function () {
-            return this.model.name || this.model.prop;
+            return this.column.name || this.column.prop;
         },
         enumerable: true,
         configurable: true
@@ -47,18 +47,18 @@ var DataTableHeaderCell = (function () {
         };
     };
     DataTableHeaderCell.prototype.onSort = function () {
-        if (this.model.sortable) {
-            this.state.nextSort(this.model);
+        if (this.column.sortable) {
+            this.state.nextSort(this.column);
             this.onColumnChange.emit({
                 type: 'sort',
-                value: this.model
+                value: this.column
             });
         }
     };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', models_1.TableColumn)
-    ], DataTableHeaderCell.prototype, "model", void 0);
+    ], DataTableHeaderCell.prototype, "column", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)
@@ -66,14 +66,14 @@ var DataTableHeaderCell = (function () {
     DataTableHeaderCell = __decorate([
         core_1.Component({
             selector: 'datatable-header-cell',
-            template: "\n    <div>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        *ngIf=\"!model.headerTemplate\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <template\n        *ngIf=\"model.headerTemplate\"\n        [ngTemplateOutlet]=\"model.headerTemplate\"\n        [ngOutletContext]=\"{ model: model, sort: sort }\">\n      </template>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses()\">\n      </span>\n    </div>\n  ",
+            template: "\n    <div>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        *ngIf=\"!column.headerTemplate\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <template\n        *ngIf=\"column.headerTemplate\"\n        [ngTemplateOutlet]=\"column.headerTemplate\"\n        [ngOutletContext]=\"{ column: column, sort: sort }\">\n      </template>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses()\">\n      </span>\n    </div>\n  ",
             host: {
-                '[class.sortable]': 'model.sortable',
-                '[class.resizable]': 'model.resizable',
-                '[style.width]': 'model.width + "px"',
-                '[style.minWidth]': 'model.minWidth + "px"',
-                '[style.maxWidth]': 'model.maxWidth + "px"',
-                '[style.height]': 'model.height + "px"',
+                '[class.sortable]': 'column.sortable',
+                '[class.resizable]': 'column.resizable',
+                '[style.width]': 'column.width + "px"',
+                '[style.minWidth]': 'column.minWidth + "px"',
+                '[style.maxWidth]': 'column.maxWidth + "px"',
+                '[style.height]': 'column.height + "px"',
                 '[attr.title]': 'name'
             }
         }), 

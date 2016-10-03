@@ -6,7 +6,7 @@ import { SortDirection } from '../../types';
 export declare class DataTableHeaderCell {
     element: ElementRef;
     private state;
-    model: TableColumn;
+    column: TableColumn;
     onColumnChange: EventEmitter<any>;
     sort: Function;
     readonly sortDir: SortDirection;

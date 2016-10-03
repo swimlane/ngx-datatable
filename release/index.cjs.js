@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v0.8.0 (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v0.9.0 (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -503,6 +503,11 @@ var VisibilityObserver = (function () {
     SelectionType[SelectionType["multiShift"] = 'multiShift'] = "multiShift";
 })(exports.SelectionType || (exports.SelectionType = {}));
 
+(function (ClickType) {
+    ClickType[ClickType["single"] = 'single'] = "single";
+    ClickType[ClickType["double"] = 'double'] = "double";
+})(exports.ClickType || (exports.ClickType = {}));
+
 /**
  * Gets the next sort direction
  * @param  {SortType}      sortType
@@ -661,12 +666,8 @@ var TableColumn = (function () {
         // take any available extra width and distribute it proportionally
         // according to all columns' flexGrow values.
         this.flexGrow = 0;
-        // Minimum width of the column.
-        this.minWidth = 0;
         // Maximum width of the column.
         this.maxWidth = undefined;
-        // The width of the column; by default (in pixels).
-        this.width = 150;
         // If yes then the column can be resized; otherwise it cannot.
         this.resizeable = true;
         // Custom sort comparator
@@ -679,6 +680,8 @@ var TableColumn = (function () {
         this.draggable = true;
         // Whether the column can automatically resize to fill space in the table.
         this.canAutoResize = true;
+        this._width = 150;
+        this._minWidth = 0;
         Object.assign(this, props);
         if (!this.prop && this.name) {
             this.prop = camelCase(this.name);
@@ -697,6 +700,28 @@ var TableColumn = (function () {
         }
         return props;
     };
+    Object.defineProperty(TableColumn.prototype, "minWidth", {
+        // Minimum width of the column.
+        get: function () {
+            return this._minWidth;
+        },
+        set: function (value) {
+            this._minWidth = +value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TableColumn.prototype, "width", {
+        // The width of the column; by default (in pixels).
+        get: function () {
+            return this._width;
+        },
+        set: function (value) {
+            this._width = +value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return TableColumn;
 }());
 
@@ -1227,7 +1252,7 @@ var DataTableHeaderCell = (function () {
         get: function () {
             var _this = this;
             var sort = this.state.options.sorts.find(function (s) {
-                return s.prop === _this.model.prop;
+                return s.prop === _this.column.prop;
             });
             if (sort)
                 return sort.dir;
@@ -1237,7 +1262,7 @@ var DataTableHeaderCell = (function () {
     });
     Object.defineProperty(DataTableHeaderCell.prototype, "name", {
         get: function () {
-            return this.model.name || this.model.prop;
+            return this.column.name || this.column.prop;
         },
         enumerable: true,
         configurable: true
@@ -1250,18 +1275,18 @@ var DataTableHeaderCell = (function () {
         };
     };
     DataTableHeaderCell.prototype.onSort = function () {
-        if (this.model.sortable) {
-            this.state.nextSort(this.model);
+        if (this.column.sortable) {
+            this.state.nextSort(this.column);
             this.onColumnChange.emit({
                 type: 'sort',
-                value: this.model
+                value: this.column
             });
         }
     };
     __decorate([
         _angular_core.Input(), 
         __metadata('design:type', (typeof (_a = typeof TableColumn !== 'undefined' && TableColumn) === 'function' && _a) || Object)
-    ], DataTableHeaderCell.prototype, "model", void 0);
+    ], DataTableHeaderCell.prototype, "column", void 0);
     __decorate([
         _angular_core.Output(), 
         __metadata('design:type', (typeof (_b = typeof _angular_core.EventEmitter !== 'undefined' && _angular_core.EventEmitter) === 'function' && _b) || Object)
@@ -1269,14 +1294,14 @@ var DataTableHeaderCell = (function () {
     DataTableHeaderCell = __decorate([
         _angular_core.Component({
             selector: 'datatable-header-cell',
-            template: "\n    <div>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        *ngIf=\"!model.headerTemplate\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <template\n        *ngIf=\"model.headerTemplate\"\n        [ngTemplateOutlet]=\"model.headerTemplate\"\n        [ngOutletContext]=\"{ model: model, sort: sort }\">\n      </template>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses()\">\n      </span>\n    </div>\n  ",
+            template: "\n    <div>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        *ngIf=\"!column.headerTemplate\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <template\n        *ngIf=\"column.headerTemplate\"\n        [ngTemplateOutlet]=\"column.headerTemplate\"\n        [ngOutletContext]=\"{ column: column, sort: sort }\">\n      </template>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses()\">\n      </span>\n    </div>\n  ",
             host: {
-                '[class.sortable]': 'model.sortable',
-                '[class.resizable]': 'model.resizable',
-                '[style.width]': 'model.width + "px"',
-                '[style.minWidth]': 'model.minWidth + "px"',
-                '[style.maxWidth]': 'model.maxWidth + "px"',
-                '[style.height]': 'model.height + "px"',
+                '[class.sortable]': 'column.sortable',
+                '[class.resizable]': 'column.resizable',
+                '[style.width]': 'column.width + "px"',
+                '[style.minWidth]': 'column.minWidth + "px"',
+                '[style.maxWidth]': 'column.maxWidth + "px"',
+                '[style.height]': 'column.height + "px"',
                 '[attr.title]': 'name'
             }
         }), 
@@ -1896,7 +1921,8 @@ var DataTableBody = (function () {
         setTimeout(function () { return _this.state.options.loadingIndicator = false; }, 500);
     };
     DataTableBody.prototype.rowClicked = function (event, index, row) {
-        this.onRowClick.emit({ event: event, row: row });
+        var clickType = event.type === 'dblclick' ? exports.ClickType.double : exports.ClickType.single;
+        this.onRowClick.emit({ type: clickType, event: event, row: row });
         this.selectRow(event, index, row);
     };
     DataTableBody.prototype.rowKeydown = function (event, index, row) {
@@ -1964,7 +1990,7 @@ var DataTableBody = (function () {
     DataTableBody = __decorate([
         _angular_core.Component({
             selector: 'datatable-body',
-            template: "\n    <div>\n      <datatable-progress\n        *ngIf=\"state.options.loadingIndicator\">\n      </datatable-progress>\n      <div\n        scroller\n        (onScroll)=\"onBodyScroll($event)\"\n        *ngIf=\"state.rows.length\"\n        [rowHeight]=\"state.options.rowHeight\"\n        [scrollbarV]=\"state.options.scrollbarV\"\n        [scrollbarH]=\"state.options.scrollbarH\"\n        [count]=\"state.rowCount\"\n        [scrollWidth]=\"state.columnGroupWidths.total\">\n        <datatable-body-row\n          [ngStyle]=\"getRowsStyles(row)\"\n          [style.height]=\"state.options.rowHeight + 'px'\"\n          *ngFor=\"let row of rows; let i = index; trackBy: trackRowBy\"\n          [attr.tabindex]=\"i\"\n          (click)=\"rowClicked($event, i, row)\"\n          (keydown)=\"rowKeydown($event, i, row)\"\n          [row]=\"row\"\n          [class.datatable-row-even]=\"row.$$index % 2 === 0\"\n          [class.datatable-row-odd]=\"row.$$index % 2 !== 0\">\n        </datatable-body-row>\n      </div>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"state.options.emptyMessage\">\n      </div>\n    </div>\n  "
+            template: "\n    <div>\n      <datatable-progress\n        *ngIf=\"state.options.loadingIndicator\">\n      </datatable-progress>\n      <div\n        scroller\n        (onScroll)=\"onBodyScroll($event)\"\n        *ngIf=\"state.rows.length\"\n        [rowHeight]=\"state.options.rowHeight\"\n        [scrollbarV]=\"state.options.scrollbarV\"\n        [scrollbarH]=\"state.options.scrollbarH\"\n        [count]=\"state.rowCount\"\n        [scrollWidth]=\"state.columnGroupWidths.total\">\n        <datatable-body-row\n          [ngStyle]=\"getRowsStyles(row)\"\n          [style.height]=\"state.options.rowHeight + 'px'\"\n          *ngFor=\"let row of rows; let i = index; trackBy: trackRowBy\"\n          [attr.tabindex]=\"i\"\n          (click)=\"rowClicked($event, i, row)\"\n          (dblclick)=\"rowClicked($event, i, row)\"\n          (keydown)=\"rowKeydown($event, i, row)\"\n          [row]=\"row\"\n          [class.datatable-row-even]=\"row.$$index % 2 === 0\"\n          [class.datatable-row-odd]=\"row.$$index % 2 !== 0\">\n        </datatable-body-row>\n      </div>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"state.options.emptyMessage\">\n      </div>\n    </div>\n  "
         }), 
         __metadata('design:paramtypes', [(typeof (_d = typeof StateService !== 'undefined' && StateService) === 'function' && _d) || Object, (typeof (_e = typeof _angular_core.ElementRef !== 'undefined' && _angular_core.ElementRef) === 'function' && _e) || Object, (typeof (_f = typeof _angular_core.Renderer !== 'undefined' && _angular_core.Renderer) === 'function' && _f) || Object])
     ], DataTableBody);
