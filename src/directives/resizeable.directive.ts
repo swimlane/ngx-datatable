@@ -16,7 +16,6 @@ export class Resizeable {
 
   private element: HTMLElement;
   private subscription: Subscription;
-  private prevScreenX: number;
   private resizing: boolean = false;
 
   constructor(element: ElementRef) {
@@ -48,27 +47,21 @@ export class Resizeable {
   @HostListener('mousedown', ['$event'])
   onMousedown(event) {
     const isHandle = event.target.classList.contains('resize-handle');
+    const initialWidth = this.element.clientWidth;
+    const mouseDownScreenX = event.screenX;
 
     if (isHandle) {
       event.stopPropagation();
       this.resizing = true;
 
       this.subscription = Observable.fromEvent(document, 'mousemove')
-        .subscribe((e) => this.move(e));
+        .subscribe((e) => this.move(e, initialWidth, mouseDownScreenX));
     }
   }
 
-  move(event): void {
-    if (this.prevScreenX == null && (event.movementX || event.mozMovementX) == null) {
-      this.prevScreenX = event.screenX;
-      return;
-    }
-
-    const movementX = event.movementX || event.mozMovementX || (event.screenX - this.prevScreenX);
-    const width = this.element.clientWidth;
-    const newWidth = width + (movementX || 0);
-
-    this.prevScreenX = event.screenX;
+  move(event, initialWidth, mouseDownScreenX): void {
+    const movementX = event.screenX - mouseDownScreenX;
+    const newWidth = initialWidth + movementX;
 
     const overMinWidth = !this.minWidth || newWidth >= this.minWidth;
     const underMaxWidth = !this.maxWidth || newWidth <= this.maxWidth;
