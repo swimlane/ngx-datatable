@@ -16,7 +16,7 @@ export class Resizeable {
 
   private element: HTMLElement;
   private subscription: Subscription;
-  private prevScreenX: number = 0;
+  private prevScreenX: number;
   private resizing: boolean = false;
 
   constructor(element: ElementRef) {
@@ -53,6 +53,11 @@ export class Resizeable {
   }
 
   move(event): void {
+    if (this.prevScreenX == null && (event.movementX || event.mozMovementX) == null) {
+      this.prevScreenX = event.screenX;
+      return;
+    }
+
     const movementX = event.movementX || event.mozMovementX || (event.screenX - this.prevScreenX);
     const width = this.element.clientWidth;
     const newWidth = width + (movementX || 0);
