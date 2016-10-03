@@ -32,7 +32,7 @@ import { translateXY } from '../../utils';
           draggable
           [dragX]="column.draggable && drag"
           [dragY]="false"
-          [model]="column"
+          [column]="column"
           (onColumnChange)="onColumnChange.emit($event)">
         </datatable-header-cell>
       </div>
@@ -51,7 +51,7 @@ import { translateXY } from '../../utils';
           draggable
           [dragX]="column.draggable && drag"
           [dragY]="false"
-          [model]="column"
+          [column]="column"
           (onColumnChange)="onColumnChange.emit($event)">
         </datatable-header-cell>
       </div>
@@ -70,7 +70,7 @@ import { translateXY } from '../../utils';
           draggable
           [dragX]="column.draggable && drag"
           [dragY]="false"
-          [model]="column"
+          [column]="column"
           (onColumnChange)="onColumnChange.emit($event)">
         </datatable-header-cell>
       </div>
