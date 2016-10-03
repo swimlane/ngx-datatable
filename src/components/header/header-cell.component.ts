@@ -17,14 +17,14 @@ import { SortDirection } from '../../types';
     <div>
       <span
         class="datatable-header-cell-label draggable"
-        *ngIf="!model.headerTemplate"
+        *ngIf="!column.headerTemplate"
         (click)="onSort()"
         [innerHTML]="name">
       </span>
       <template
-        *ngIf="model.headerTemplate"
-        [ngTemplateOutlet]="model.headerTemplate"
-        [ngOutletContext]="{ model: model, sort: sort }">
+        *ngIf="column.headerTemplate"
+        [ngTemplateOutlet]="column.headerTemplate"
+        [ngOutletContext]="{ column: column, sort: sort }">
       </template>
       <span
         class="sort-btn"
@@ -33,18 +33,18 @@ import { SortDirection } from '../../types';
     </div>
   `,
   host: {
-    '[class.sortable]': 'model.sortable',
-    '[class.resizable]': 'model.resizable',
-    '[style.width]': 'model.width + "px"',
-    '[style.minWidth]': 'model.minWidth + "px"',
-    '[style.maxWidth]': 'model.maxWidth + "px"',
-    '[style.height]': 'model.height + "px"',
+    '[class.sortable]': 'column.sortable',
+    '[class.resizable]': 'column.resizable',
+    '[style.width]': 'column.width + "px"',
+    '[style.minWidth]': 'column.minWidth + "px"',
+    '[style.maxWidth]': 'column.maxWidth + "px"',
+    '[style.height]': 'column.height + "px"',
     '[attr.title]': 'name'
   }
 })
 export class DataTableHeaderCell {
 
-  @Input() model: TableColumn;
+  @Input() column: TableColumn;
 
   @Output() onColumnChange: EventEmitter<any> = new EventEmitter();
 
@@ -52,14 +52,14 @@ export class DataTableHeaderCell {
 
   get sortDir() {
     let sort = this.state.options.sorts.find(s => {
-      return s.prop === this.model.prop;
+      return s.prop === this.column.prop;
     });
 
     if(sort) return sort.dir;
   }
 
   get name() {
-    return this.model.name || this.model.prop;
+    return this.column.name || this.column.prop;
   }
 
   constructor(public element: ElementRef, private state: StateService, renderer: Renderer) {
@@ -75,12 +75,12 @@ export class DataTableHeaderCell {
   }
 
   onSort() {
-    if(this.model.sortable) {
-      this.state.nextSort(this.model);
+    if(this.column.sortable) {
+      this.state.nextSort(this.column);
 
       this.onColumnChange.emit({
         type: 'sort',
-        value: this.model
+        value: this.column
       });
     }
   }
