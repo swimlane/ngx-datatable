@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.9.2
+- Fix `name` being `undefined` introduced in 0.9.0 release
+
 ## 0.9.1
 - Export component references for external consumption (#176)
 
