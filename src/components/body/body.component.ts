@@ -13,7 +13,7 @@ import {
 import { Subscription } from 'rxjs/Subscription';
 import { Keys, selectRows, selectRowsBetween, translateXY } from '../../utils';
 import { StateService } from '../../services';
-import { SelectionType } from '../../types';
+import { SelectionType, ClickType } from '../../types';
 import { Scroller } from '../../directives';
 
 @Component({
@@ -38,6 +38,7 @@ import { Scroller } from '../../directives';
           *ngFor="let row of rows; let i = index; trackBy: trackRowBy"
           [attr.tabindex]="i"
           (click)="rowClicked($event, i, row)"
+          (dblclick)="rowClicked($event, i, row)"
           (keydown)="rowKeydown($event, i, row)"
           [row]="row"
           [class.datatable-row-even]="row.$$index % 2 === 0"
@@ -190,7 +191,8 @@ export class DataTableBody implements OnInit, OnDestroy {
   }
 
   rowClicked(event, index, row): void {
-    this.onRowClick.emit({event, row});
+    let clickType = event.type === 'dblclick' ? ClickType.double : ClickType.single;
+    this.onRowClick.emit({ type: clickType, event, row });
     this.selectRow(event, index, row);
   }
 
