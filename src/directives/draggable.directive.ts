@@ -32,6 +32,12 @@ export class Draggable {
     this.element = element.nativeElement;
   }
 
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
   @HostListener('document:mouseup', ['$event'])
   onMouseup(event) {
     this.dragging = false;

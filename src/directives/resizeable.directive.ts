@@ -29,6 +29,12 @@ export class Resizeable {
     }
   }
 
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
   @HostListener('document:mouseup', ['$event'])
   onMouseup() {
     this.resizing = false;
