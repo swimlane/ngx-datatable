@@ -113,12 +113,12 @@ export class DataTable implements OnInit, OnChanges, DoCheck, AfterViewInit {
   }
 
   ngOnChanges(changes) {
-    if (changes.hasOwnProperty('rows')) {
-      this.state.setRows(changes.rows.currentValue);
-    }
-
     if (changes.hasOwnProperty('options')) {
       this.state.setOptions(changes.options.currentValue);
+    }
+
+    if (changes.hasOwnProperty('rows')) {
+      this.state.setRows(changes.rows.currentValue);
     }
 
     if (changes.hasOwnProperty('selected')) {
@@ -203,7 +203,7 @@ export class DataTable implements OnInit, OnChanges, DoCheck, AfterViewInit {
   @HostBinding('class.fixed-header')
   get isFixedHeader() {
     const headerHeight: number|string = this.options.headerHeight;
-    
+
     return (typeof headerHeight === 'string') ?
       (<string>headerHeight) !== 'auto' : true;
   }
