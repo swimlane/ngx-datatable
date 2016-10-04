@@ -1,4 +1,4 @@
-import { Directive, TemplateRef, ContentChild, QueryList, ContentChildren } from '@angular/core';
+import { Directive, TemplateRef, QueryList, ContentChildren } from '@angular/core';
 import { TableColumn } from '../models';
 
 @Directive({
