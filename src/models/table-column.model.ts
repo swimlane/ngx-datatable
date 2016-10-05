@@ -76,6 +76,9 @@ export class TableColumn {
   // Whether the column can automatically resize to fill space in the table.
   canAutoResize: boolean = true;
 
+  // Whether the column is visible.
+  visible: boolean = true;
+
   // column name / label
   name: string;
 
