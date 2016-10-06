@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v0.9.2 (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v0.9.3 (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -966,11 +966,11 @@ var DataTable = (function () {
         }
     };
     DataTable.prototype.ngOnChanges = function (changes) {
-        if (changes.hasOwnProperty('rows')) {
-            this.state.setRows(changes.rows.currentValue);
-        }
         if (changes.hasOwnProperty('options')) {
             this.state.setOptions(changes.options.currentValue);
+        }
+        if (changes.hasOwnProperty('rows')) {
+            this.state.setRows(changes.rows.currentValue);
         }
         if (changes.hasOwnProperty('selected')) {
             this.state.setSelected(changes.selected.currentValue);
@@ -1327,6 +1327,11 @@ var Draggable = (function () {
         this.dragging = false;
         this.element = element.nativeElement;
     }
+    Draggable.prototype.ngOnDestroy = function () {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+    };
     Draggable.prototype.onMouseup = function (event) {
         this.dragging = false;
         this.element.classList.remove('dragging');
@@ -1589,7 +1594,6 @@ var Resizeable = (function () {
     function Resizeable(element) {
         this.resizeEnabled = true;
         this.onResize = new _angular_core.EventEmitter();
-        this.prevScreenX = 0;
         this.resizing = false;
         this.element = element.nativeElement;
         if (this.resizeEnabled) {
@@ -1598,6 +1602,11 @@ var Resizeable = (function () {
             this.element.appendChild(node);
         }
     }
+    Resizeable.prototype.ngOnDestroy = function () {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+    };
     Resizeable.prototype.onMouseup = function () {
         this.resizing = false;
         if (this.subscription) {
@@ -1608,18 +1617,18 @@ var Resizeable = (function () {
     Resizeable.prototype.onMousedown = function (event) {
         var _this = this;
         var isHandle = event.target.classList.contains('resize-handle');
+        var initialWidth = this.element.clientWidth;
+        var mouseDownScreenX = event.screenX;
         if (isHandle) {
             event.stopPropagation();
             this.resizing = true;
             this.subscription = rxjs_Rx.Observable.fromEvent(document, 'mousemove')
-                .subscribe(function (e) { return _this.move(e); });
+                .subscribe(function (e) { return _this.move(e, initialWidth, mouseDownScreenX); });
         }
     };
-    Resizeable.prototype.move = function (event) {
-        var movementX = event.movementX || event.mozMovementX || (event.screenX - this.prevScreenX);
-        var width = this.element.clientWidth;
-        var newWidth = width + (movementX || 0);
-        this.prevScreenX = event.screenX;
+    Resizeable.prototype.move = function (event, initialWidth, mouseDownScreenX) {
+        var movementX = event.screenX - mouseDownScreenX;
+        var newWidth = initialWidth + movementX;
         var overMinWidth = !this.minWidth || newWidth >= this.minWidth;
         var underMaxWidth = !this.maxWidth || newWidth <= this.maxWidth;
         if (overMinWidth && underMaxWidth) {
@@ -1699,7 +1708,9 @@ var Scroller = (function () {
         }
     };
     Scroller.prototype.setOffset = function (offsetY) {
-        this.parentElement.scrollTop = offsetY;
+        if (this.parentElement) {
+            this.parentElement.scrollTop = offsetY;
+        }
     };
     Scroller.prototype.onScrolled = function (event) {
         var dom = event.currentTarget;

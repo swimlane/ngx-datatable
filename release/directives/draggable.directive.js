@@ -28,6 +28,11 @@ var Draggable = (function () {
         this.dragging = false;
         this.element = element.nativeElement;
     }
+    Draggable.prototype.ngOnDestroy = function () {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+    };
     Draggable.prototype.onMouseup = function (event) {
         this.dragging = false;
         this.element.classList.remove('dragging');

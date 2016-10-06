@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.3
+- Column resize sometimes gives weird behaviour on mouse resize/click (#155)
+- Fix order of setters in DataTable ngOnChanges (#179)
+- Remove document event listener subscription leak in draggable & resizeable
+- Fix `setScrollTop` undefined error (#182)
+
 ## 0.9.2
 - Fix `name` being `undefined` introduced in 0.9.0 release
 

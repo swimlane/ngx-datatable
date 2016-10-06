@@ -41,7 +41,9 @@ var Scroller = (function () {
         }
     };
     Scroller.prototype.setOffset = function (offsetY) {
-        this.parentElement.scrollTop = offsetY;
+        if (this.parentElement) {
+            this.parentElement.scrollTop = offsetY;
+        }
     };
     Scroller.prototype.onScrolled = function (event) {
         var dom = event.currentTarget;

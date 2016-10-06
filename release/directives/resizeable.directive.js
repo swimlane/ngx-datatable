@@ -14,7 +14,6 @@ var Resizeable = (function () {
     function Resizeable(element) {
         this.resizeEnabled = true;
         this.onResize = new core_1.EventEmitter();
-        this.prevScreenX = 0;
         this.resizing = false;
         this.element = element.nativeElement;
         if (this.resizeEnabled) {
@@ -23,6 +22,11 @@ var Resizeable = (function () {
             this.element.appendChild(node);
         }
     }
+    Resizeable.prototype.ngOnDestroy = function () {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+    };
     Resizeable.prototype.onMouseup = function () {
         this.resizing = false;
         if (this.subscription) {
@@ -33,18 +37,18 @@ var Resizeable = (function () {
     Resizeable.prototype.onMousedown = function (event) {
         var _this = this;
         var isHandle = event.target.classList.contains('resize-handle');
+        var initialWidth = this.element.clientWidth;
+        var mouseDownScreenX = event.screenX;
         if (isHandle) {
             event.stopPropagation();
             this.resizing = true;
             this.subscription = Rx_1.Observable.fromEvent(document, 'mousemove')
-                .subscribe(function (e) { return _this.move(e); });
+                .subscribe(function (e) { return _this.move(e, initialWidth, mouseDownScreenX); });
         }
     };
-    Resizeable.prototype.move = function (event) {
-        var movementX = event.movementX || event.mozMovementX || (event.screenX - this.prevScreenX);
-        var width = this.element.clientWidth;
-        var newWidth = width + (movementX || 0);
-        this.prevScreenX = event.screenX;
+    Resizeable.prototype.move = function (event, initialWidth, mouseDownScreenX) {
+        var movementX = event.screenX - mouseDownScreenX;
+        var newWidth = initialWidth + movementX;
         var overMinWidth = !this.minWidth || newWidth >= this.minWidth;
         var underMaxWidth = !this.maxWidth || newWidth <= this.maxWidth;
         if (overMinWidth && underMaxWidth) {

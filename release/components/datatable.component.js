@@ -63,11 +63,11 @@ var DataTable = (function () {
         }
     };
     DataTable.prototype.ngOnChanges = function (changes) {
-        if (changes.hasOwnProperty('rows')) {
-            this.state.setRows(changes.rows.currentValue);
-        }
         if (changes.hasOwnProperty('options')) {
             this.state.setOptions(changes.options.currentValue);
+        }
+        if (changes.hasOwnProperty('rows')) {
+            this.state.setRows(changes.rows.currentValue);
         }
         if (changes.hasOwnProperty('selected')) {
             this.state.setSelected(changes.selected.currentValue);
