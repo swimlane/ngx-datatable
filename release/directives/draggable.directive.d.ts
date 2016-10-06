@@ -18,6 +18,7 @@ export declare class Draggable {
     private dragging;
     private subscription;
     constructor(element: ElementRef);
+    ngOnDestroy(): void;
     onMouseup(event: any): void;
     onMousedown(event: any): void;
     move(event: any, mouseDownPos: any): void;
