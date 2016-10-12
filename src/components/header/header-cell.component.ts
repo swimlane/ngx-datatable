@@ -76,6 +76,7 @@ export class DataTableHeaderCell {
 
   onSort() {
     if(this.column.sortable) {
+      this.column.isSorted = true;
       this.state.nextSort(this.column);
 
       this.onColumnChange.emit({

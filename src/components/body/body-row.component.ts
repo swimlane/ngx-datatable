@@ -13,6 +13,7 @@ import { StateService } from '../../services';
         [style.width]="state.columnGroupWidths.left + 'px'">
         <datatable-body-cell
           *ngFor="let column of state.columnsByPin.left; trackBy: trackColBy"
+          [ngClass]="{'sorted-column':column.isSorted}"
           [row]="row"
           [column]="column">
         </datatable-body-cell>
@@ -24,6 +25,7 @@ import { StateService } from '../../services';
         *ngIf="state.columnsByPin.center.length">
         <datatable-body-cell
           *ngFor="let column of state.columnsByPin.center; trackBy: trackColBy"
+          [ngClass]="{'sorted-column':column.isSorted}"
           [row]="row"
           [column]="column">
         </datatable-body-cell>
@@ -35,6 +37,7 @@ import { StateService } from '../../services';
         [style.width]="state.columnGroupWidths.right + 'px'">
         <datatable-body-cell
           *ngFor="let column of state.columnsByPin.right; trackBy: trackColBy"
+          [ngClass]="{'sorted-column':column.isSorted}"
           [row]="row"
           [column]="column">
         </datatable-body-cell>
