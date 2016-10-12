@@ -1,11 +1,27 @@
-import { Directive, TemplateRef, QueryList, ContentChildren } from '@angular/core';
-import { TableColumn } from '../models';
+import {Directive, TemplateRef, QueryList, ContentChildren, Input} from '@angular/core';
 
 @Directive({
   selector: 'datatable-column',
-  inputs: TableColumn.getProps()
 })
 export class DataTableColumn {
+  @Input() name;
+  @Input() prop;
+  @Input() $$id;
+  @Input() isExpressive;
+  @Input() frozenLeft;
+  @Input() frozenRight;
+  @Input() flexGrow;
+  @Input() maxWidth;
+  @Input() resizeable;
+  @Input() comparator;
+  @Input() pipe;
+  @Input() sortable;
+  @Input() draggable;
+  @Input() canAutoResize;
+  @Input() _width;
+  @Input() _minWidth;
+  @Input() minWidth;
+  @Input() width;
 
   @ContentChildren(TemplateRef) templates: QueryList<TemplateRef<any>>;
 
