@@ -24,6 +24,10 @@ export class Scroller implements OnInit, OnDestroy {
   @Input() scrollbarH: boolean = false;
 
   @Output() onScroll: EventEmitter<any> = new EventEmitter();
+  /**
+   * The height of the scroll bar.
+   */
+  @Input() scrollHeight: number;
 
   private scrollYPos: number = 0;
   private scrollXPos: number = 0;
@@ -32,9 +36,9 @@ export class Scroller implements OnInit, OnDestroy {
   private element: any;
   private parentElement: any;
 
-  get scrollHeight() {
-    return (this.count * this.rowHeight) + 'px';
-  }
+  // get scrollHeight() {
+  //   return (this.count * this.rowHeight) + 'px';
+  // }
 
   constructor(element: ElementRef) {
     this.element = element.nativeElement;
@@ -56,6 +60,7 @@ export class Scroller implements OnInit, OnDestroy {
   }
 
   setOffset(offsetY: number) {
+    console.log('setOffset Called ==> ' + offsetY);
     if(this.parentElement) {
       this.parentElement.scrollTop = offsetY;
     }
