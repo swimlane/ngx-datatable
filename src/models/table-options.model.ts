@@ -22,9 +22,6 @@ export class TableOptions {
   // standard
   columnMode: ColumnMode = ColumnMode.standard;
 
-  // Loading message presented when the array is undefined
-  loadingMessage: string = 'Loading...';
-
   // Message to show when array is presented
   // but contains no values
   emptyMessage: string = 'No data to display';
