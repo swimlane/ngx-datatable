@@ -189,6 +189,15 @@ export class StateService {
     this.onSortChange.emit({ column });
   }
 
+  getAdjustedViewPortIndex(): number {
+    // Capture the row index of the first row that is visible on the viewport.
+    // If the scroll bar is just below the row which is highlighted then make that as the
+    // first index.
+    let viewPortFirstRowIndex =  this.indexes.first;
+    let offsetScroll = this.rowHeightsCache.query(viewPortFirstRowIndex - 1);
+    return offsetScroll <= this.offsetY ? viewPortFirstRowIndex - 1 : viewPortFirstRowIndex;
+  }
+
   /**
    * Toggle the Expansion of the row i.e. if the row is expanded then it will
    * collapse and vice versa.   Note that the expanded status is stored as
@@ -199,7 +208,7 @@ export class StateService {
    */
   toggleRowExpansion(row: any) {
     // Capture the row index of the first row that is visible on the viewport.
-    let viewPortFirstRowIndex =  this.indexes.first;
+    let viewPortFirstRowIndex =  this.getAdjustedViewPortIndex();
 
     let detailRowHeight = this.options.detailRowHeight * (
         row.$$expanded ? -1 : 1);
@@ -221,7 +230,7 @@ export class StateService {
   toggleAllRows(expanded: boolean) {
     let rowExpanded = expanded ? 1 : 0;
     // Capture the row index of the first row that is visible on the viewport.
-    let viewPortFirstRowIndex =  this.indexes.first;
+    let viewPortFirstRowIndex =  this.getAdjustedViewPortIndex();
 
     this.rows.forEach( (row: any) => {
       row.$$expanded = rowExpanded;

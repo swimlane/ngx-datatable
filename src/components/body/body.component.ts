@@ -117,13 +117,13 @@ export class DataTableBody implements OnInit, OnDestroy {
 
     this.sub.add(this.state.onExpandChange.subscribe( (expandedState) => {
       // If there was more than one row expanded then there was a mass change
-      // in the dataset hence adjust the scroll position.
+      // in the data set hence adjust the scroll position.
       if (expandedState.rows.length > 1) {
         console.log(expandedState.currentIndex);
         // -1 is added to the scrollOffset as we want to move the scroller to the offset position
         // where the entire row is visible. What about the small offset e.g. if the scroll
         // position is between rows?  Do we need to take care of it?
-        let scrollOffset = this.state.rowHeightsCache.query(expandedState.currentIndex - 1);
+        let scrollOffset = this.state.rowHeightsCache.query(expandedState.currentIndex);
         // Set the offset only after the scroll bar has been updated on the screen.
         setTimeout(() => this.scroller.setOffset(scrollOffset));
       }

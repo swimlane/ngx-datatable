@@ -14,7 +14,7 @@ export class RowHeightCache {
    * range queries and updates.  Currently the tree is initialized to the base row
    * height instead of the detail row height.
    */
-  _treeArray: Array<number> = [];
+  private _treeArray: Array<number> = [];
 
   /**
    * Clear the Tree array.
@@ -108,7 +108,7 @@ export class RowHeightCache {
    * @param atIndexB The row index to
    * @returns {number} total pixel height between 2 row indexes.
    */
-  _queryBetween(atIndexA: number, atIndexB: number): number {
+  queryBetween(atIndexA: number, atIndexB: number): number {
     return this.query(atIndexB) - this.query(atIndexA - 1);
   }
 
@@ -119,11 +119,11 @@ export class RowHeightCache {
    * @param sum - The scrollY position.
    * @returns {number} - Index representing the first row visible in the viewport
    */
-  _getRowIndex( sum: number) {
+  private _getRowIndex( sum: number) {
     if ( this._treeArray.length === 0 ) {
       return 0;
     }
-    --sum;
+
     let pos = -1;
     let dataLength = this._treeArray.length;
 
