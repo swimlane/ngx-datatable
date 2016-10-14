@@ -11,7 +11,7 @@ import {
 @Directive({
   selector: '[scroller]',
   host: {
-    '[style.height]': 'scrollHeight',
+    '[style.height]': 'scrollHeight+ "px"',
     '[style.width]': 'scrollWidth + "px"'
   }
 })
@@ -60,7 +60,6 @@ export class Scroller implements OnInit, OnDestroy {
   }
 
   setOffset(offsetY: number) {
-    console.log('setOffset Called ==> ' + offsetY);
     if(this.parentElement) {
       this.parentElement.scrollTop = offsetY;
     }
