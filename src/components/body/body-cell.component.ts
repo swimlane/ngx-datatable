@@ -1,8 +1,11 @@
-import { Component, Input, PipeTransform, HostBinding, Renderer, ElementRef } from '@angular/core';
+import {
+  Component, Input, PipeTransform, HostBinding
+} from '@angular/core';
 
 import { TableColumn } from '../../models';
 import { deepValueGetter } from '../../utils';
 import { StateService } from '../../services';
+import { SortDirection } from '../../types';
 
 @Component({
   selector: 'datatable-body-cell',
@@ -25,25 +28,45 @@ export class DataTableBodyCell {
   @Input() column: TableColumn;
   @Input() row: any;
 
-  constructor(element: ElementRef, renderer: Renderer, private state: StateService) {
-    renderer.setElementClass(element.nativeElement, 'datatable-body-cell', true);
+  @HostBinding('class')
+  get cssClasses(): string {
+    let cls = 'datatable-body-cell';
+    const sortDir = this.sortDir;
+
+    if(sortDir) {
+      cls += ` sort-active sort-${sortDir}`;
+    }
+
+    return cls;
   }
 
-  get value() {
+  @HostBinding('style.width.px')
+  get width(): any {
+    return this.column.width;
+  }
+
+  @HostBinding('style.height')
+  get height(): any {
+    const height = this.state.options.rowHeight;
+    if(isNaN(height)) return height;
+    return height + 'px';
+  }
+
+  get sortDir() {
+    let sort = this.state.options.sorts.find(s => {
+      return s.prop === this.column.prop;
+    });
+
+    if(sort) return sort.dir;
+  }
+
+  get value(): any {
     if (!this.row) return '';
     const prop: any = deepValueGetter(this.row, this.column.prop);
     const userPipe: PipeTransform = this.column.pipe;
     return userPipe ? userPipe.transform(prop) : prop;
   }
 
-  @HostBinding('style.width.px') get width(): any {
-    return this.column.width;
-  }
-
-  @HostBinding('style.height') get height(): any {
-    const height = this.state.options.rowHeight;
-    if(isNaN(height)) return height;
-    return height + 'px';
-  }
+  constructor(private state: StateService) { }
 
 }

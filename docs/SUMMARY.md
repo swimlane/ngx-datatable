@@ -22,9 +22,9 @@
 * API
    * [Table](api/table.md)
       * [Options](api/options.md)
+      * [Internals](api/internals.md)
    * [Column](api/column_options.md)
       * [Column Modes](api/column_modes.md)
-   * [Internals](api/internals.md)
 * Contributing
    * [Building](contributing/building.md)
    * [Guidelines](contributing/guidelines.md)

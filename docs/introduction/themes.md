@@ -14,6 +14,9 @@ There is a separate material theme distributed with data-table. In order to use 
     - `sortable`: Cell drag/drop sortable class
     - `longpress`: Cell long-press activated
     - `dragging`: Cell dragging activated
+    - `sort-active`: Sort active on column
+    - `sort-asc`: Sort active on column with ascending applied
+    - `sort-desc`: Sort active on column with descending applied
 
   - `datatable-header-cell-label`: Header cell text label
     - `draggable`: Header cell draggable class
@@ -21,3 +24,8 @@ There is a separate material theme distributed with data-table. In order to use 
 - `datatable-body-row`: Body row class
   - `datatable-row-even`: Odd row class
   - `datatable-row-odd`: Even row class
+
+    - `datatable-body-cell`: Body cell class
+      - `sort-active`: Sort active on column
+      - `sort-asc`: Sort active on column with ascending applied
+      - `sort-desc`: Sort active on column with descending applied

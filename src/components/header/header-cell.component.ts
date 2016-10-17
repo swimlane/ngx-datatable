@@ -1,10 +1,6 @@
 import {
-  Component,
-  Input,
-  ElementRef,
-  EventEmitter,
-  Output,
-  Renderer
+  Component, Input, ElementRef, EventEmitter,
+  Output, Renderer, HostBinding
 } from '@angular/core';
 
 import { StateService } from '../../services';
@@ -31,22 +27,42 @@ import { SortDirection } from '../../types';
         [ngClass]="sortClasses()">
       </span>
     </div>
-  `,
-  host: {
-    '[class.sortable]': 'column.sortable',
-    '[class.resizable]': 'column.resizable',
-    '[style.width]': 'column.width + "px"',
-    '[style.minWidth]': 'column.minWidth + "px"',
-    '[style.maxWidth]': 'column.maxWidth + "px"',
-    '[style.height]': 'column.height + "px"',
-    '[attr.title]': 'name'
-  }
+  `
 })
 export class DataTableHeaderCell {
 
   @Input() column: TableColumn;
-
   @Output() onColumnChange: EventEmitter<any> = new EventEmitter();
+
+  @HostBinding('style.width.px')
+  get width() { return this.column.width; }
+
+  @HostBinding('style.minWidth.px')
+  get minWidth() { return this.column.minWidth; }
+
+  @HostBinding('style.maxWidth.px')
+  get maxWidth() { return this.column.maxWidth; }
+
+  @HostBinding('style.height.px')
+  get height() { return this.state.options.headerHeight; }
+
+  @HostBinding('attr.title')
+  get colTitle() { return this.name; }
+
+  @HostBinding('class')
+  get cssClasses() {
+    let cls = 'datatable-header-cell';
+
+    if(this.column.sortable) cls += ' sortable';
+    if(this.column.resizeable) cls += ' resizeable';
+
+    const sortDir = this.sortDir;
+    if(sortDir) {
+      cls += ` sort-active sort-${sortDir}`;
+    }
+
+    return cls;
+  }
 
   sort: Function = this.onSort.bind(this);
 
@@ -62,8 +78,10 @@ export class DataTableHeaderCell {
     return this.column.name || this.column.prop;
   }
 
-  constructor(public element: ElementRef, private state: StateService, renderer: Renderer) {
-    renderer.setElementClass(this.element.nativeElement, 'datatable-header-cell', true);
+  constructor(
+    public element: ElementRef,
+    private state: StateService,
+    renderer: Renderer) {
   }
 
   sortClasses(sort) {
