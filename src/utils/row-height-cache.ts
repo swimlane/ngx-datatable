@@ -31,18 +31,23 @@ export class RowHeightCache {
    * @param detailRowHeight The detail row height.
    */
   initCache ( rows: Array<any>, rowHeight: number, detailRowHeight: number) {
-    let n = rows.length;
+    const n = rows.length;
     this._treeArray = new Array(n);
-    for( let i = 0; i < n; ++i ) {
+
+    for(let i = 0; i < n; ++i) {
       this._treeArray[i] = 0;
     }
+
     for(let i = 0; i < n; ++i) {
       let currentRowHeight = rowHeight;
+
       // Add the detail row height to the already expanded rows.
       // This is useful for the table that goes through a filter or sort.
-      if ( rows[i].$$expanded === 1 ) {
+      const row = rows[i];
+      if (row && row.$$expanded === 1) {
         currentRowHeight += detailRowHeight;
       }
+
       this.update(i, currentRowHeight);
     }
   }
@@ -55,7 +60,7 @@ export class RowHeightCache {
    * @returns {number} - Index representing the first row visible in the viewport
    */
   getRowIndex(scrollY: number): number {
-    if( scrollY === 0) {
+    if(scrollY === 0) {
       return 0;
     } else {
       return this._getRowIndex(scrollY);
@@ -71,12 +76,14 @@ export class RowHeightCache {
    * @param byRowHeight Update by the rowHeight provided.
    */
   update (atRowIndex: number, byRowHeight: number) {
-    if ( this._treeArray.length === 0  ) {
-      throw new Error(`update at index ${atRowIndex} with value ${byRowHeight} failed: 
-                       Row Height cache not initialized.`);
+    if (this._treeArray.length === 0) {
+      throw new Error(`Update at index ${atRowIndex} with value ${byRowHeight} failed:
+        Row Height cache not initialized.`);
     }
+
     let n = this._treeArray.length;
     atRowIndex |= 0;
+
     while(atRowIndex < n) {
       this._treeArray[atRowIndex] += byRowHeight;
       atRowIndex |= (atRowIndex + 1);
@@ -90,15 +97,18 @@ export class RowHeightCache {
    * @returns {number} The total height from row 1 to the rowIndex.
    */
   query(atIndex: number): number {
-    if ( this._treeArray.length === 0  ) {
+    if (this._treeArray.length === 0) {
       throw new Error(`query at index ${atIndex} failed: Fenwick tree array not initialized. `);
     }
-    let  sum = 0;
+
+    let sum = 0;
     atIndex |= 0;
+
     while(atIndex >= 0) {
       sum += this._treeArray[atIndex];
       atIndex = (atIndex & (atIndex + 1)) - 1;
     }
+
     return sum;
   }
 
@@ -120,7 +130,7 @@ export class RowHeightCache {
    * @returns {number} - Index representing the first row visible in the viewport
    */
   private _getRowIndex( sum: number) {
-    if ( this._treeArray.length === 0 ) {
+    if (this._treeArray.length === 0) {
       return 0;
     }
 
@@ -137,6 +147,7 @@ export class RowHeightCache {
         pos = nextPos;
       }
     }
+
     return pos + 1;
   }
 
