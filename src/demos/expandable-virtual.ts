@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { ColumnMode, TableOptions } from '../index';
 import '../themes/material.scss';
 
@@ -6,36 +6,53 @@ import '../themes/material.scss';
   selector: 'app',
   template: `
     <div>
-      <h3>Expandable Demo  (Click on E below to expand)</h3>
+      <h3>
+        Row Detail Demo
+        <br />
+        <small>
+          <button (click)="mydatatable.expandAllRows()">Expand All</button>
+          <button (click)="mydatatable.collapseAllRows()">Collapse All</button>
+        </small>
+      </h3>
 
-      <span (click)="mydatatable.expandAllRows()">Expand All Rows</span>| &nbsp;
-      <span (click)="mydatatable.collapseAllRows()">Collapse All Rows</span>| &nbsp;
-   
-      <datatable #mydatatable
-        class='material'
+      <datatable
+        #mydatatable
+        class='material expandable'
         [rows]='rows'
         (onPageChange)="paged($event)"
-        [options]='options'
-        style='height:calc(100vh - 100px);width: calc(100vw - 50px)'>
+        [options]='options'>
+
         <datatable-row-detail-template>
           <template let-row="row">
-            <div style="background-color: #00E676">
-              <strong>{{row.$$index}}</strong>
+            <div style="padding-left:35px;">
+              <h3 style="padding:0;margin:0">Address</h3>
+              <div>{{row.address.city}}, {{row.address.state}}</div>
             </div>
-            
           </template>
         </datatable-row-detail-template>
-        
+
+         <datatable-column
+          [width]="50"
+          [resizeable]="false"
+          [sortable]="false"
+          [draggable]="false"
+          [canAutoResize]="false">
+          <template let-row="row">
+            <a
+              href="#"
+              class="icon-right expander-btn"
+              title="Expand/Collapse Row"
+              (click)="toggleExpandRow(row)">
+            </a>
+          </template>
+        </datatable-column>
+
         <datatable-column name="Index" width="80">
           <template let-row="row">
             <strong>{{row.$$index}}</strong>
           </template>
         </datatable-column>
-         <datatable-column name="Click" width="80">
-          <template let-row="row">
-            <a (click)="mydatatable.toggleExpandRow(row)" >E</a>
-          </template>
-        </datatable-column>
+
         <datatable-column name="Exapanded" width="80">
           <template let-row="row">
             <strong>{{row.$$expanded === 1}}</strong>
@@ -54,23 +71,17 @@ import '../themes/material.scss';
           </template>
         </datatable-column>
 
-        <datatable-column name="Age" >
-        </datatable-column>
+        <datatable-column name="Age" ></datatable-column>
 
       </datatable>
     </div>
   `,
-  styles: [
-    `
-    .datatable-row-detail {
-      background-color: greenyellow;
-    }
-  `
-  ],
   encapsulation: ViewEncapsulation.None
 
 })
 export class App {
+
+  @ViewChild('mydatatable') table;
 
   rows = [];
   expanded = {};
@@ -109,7 +120,21 @@ export class App {
     req.send();
   }
 
-  // rowClick(args) {
-  //   console.log('rowClick', args);
-  // }
+  fetchUser(cb) {
+    let req = new XMLHttpRequest();
+    req.open('GET', `https://randomuser.me/api`);
+
+    req.onload = () => {
+      cb(JSON.parse(req.response));
+    };
+
+    req.send();
+  }
+
+  toggleExpandRow(row) {
+    console.log('Toggled Expand Row!', row);
+    // TODO: Hookup async update example using fetchUser
+    this.table.toggleExpandRow(row);
+  }
+
 }

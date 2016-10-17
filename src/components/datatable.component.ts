@@ -60,8 +60,6 @@ export class DataTable implements OnInit, OnChanges, DoCheck, AfterViewInit {
   @Output() onColumnChange: EventEmitter<any> = new EventEmitter();
 
   @ContentChildren(DataTableColumn) columns: QueryList<DataTableColumn>;
-
-  // handle to the row detail template.
   @ContentChild(DatatableRowDetailTemplate) rowDetailTemplateChild;
 
   private element: HTMLElement;
@@ -236,7 +234,7 @@ export class DataTable implements OnInit, OnChanges, DoCheck, AfterViewInit {
     const headerHeight: number|string = this.options.headerHeight;
 
     return (typeof headerHeight === 'string') ?
-    (<string>headerHeight) !== 'auto' : true;
+      (<string>headerHeight) !== 'auto' : true;
   }
 
   @HostBinding('class.fixed-row')
@@ -244,7 +242,7 @@ export class DataTable implements OnInit, OnChanges, DoCheck, AfterViewInit {
     const rowHeight: number|string = this.options.rowHeight;
 
     return (typeof rowHeight === 'string') ?
-    (<string>rowHeight) !== 'auto' : true;
+      (<string>rowHeight) !== 'auto' : true;
   }
 
   @HostBinding('class.scroll-vertical')

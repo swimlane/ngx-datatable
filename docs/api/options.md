@@ -17,3 +17,5 @@
 * `selectionType`: Type of row selection. Options are `single`, `multi` and `multiShift`. For no selection pass a `falsey`. Default value: `undefined`
 * `sorts`: Array of sorted columns by property and type. Default value: `[]`
 * `sortType`: Single vs Multi sorting. Default value: `single`
+* `detailRowHeight`: Row height of the detail row
+* `rowDetailTemplate`: Template for the row detail

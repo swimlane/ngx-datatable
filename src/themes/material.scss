@@ -81,6 +81,11 @@
 	 * Body Styles
 	 */
 	.datatable-body {
+		.datatable-row-detail {
+			background: #f5f5f5;
+			padding: 10px;
+		}
+
 	  .datatable-body-row {
 	    .datatable-body-cell {
 	      text-align: left;

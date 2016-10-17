@@ -10,3 +10,4 @@
 * [wor-k](https://github.com/wor-k)
 * [jtomaszewski](https://github.com/jtomaszewski)
 * [amiller29au](https://github.com/amiller29au)
+* [java2kus](https://github.com/java2kus)

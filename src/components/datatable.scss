@@ -22,9 +22,6 @@
       overflow-y:auto;
       .datatable-row-wrapper {
         position: absolute;
-        //.datatable-body-row {
-        //  position: absolute;
-        //}
       }
 
     }
@@ -178,7 +175,7 @@
     }
 
     .datatable-row-detail {
-
+      overflow-y: hidden;
     }
 
     .datatable-row-wrapper {
