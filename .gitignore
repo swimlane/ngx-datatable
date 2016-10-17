@@ -135,6 +135,7 @@ node_modules/
 jspm_packages/
 dist/
 !release/
+*.lock
 
 # Click-Once directory
 publish/
