@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.10.1
+- Bug: Fix `$$expanded` undefined with server paging (#210)
+
 ## 0.10.0
 - Chore: Upgrade to Angular 2.1.0 (#202)
 - Chore: Removed engine restrictions (#195)

@@ -69,7 +69,6 @@ var DataTableBody = (function () {
             // If there was more than one row expanded then there was a mass change
             // in the data set hence adjust the scroll position.
             if (expandedState.rows.length > 1) {
-                console.log(expandedState.currentIndex);
                 // -1 is added to the scrollOffset as we want to move the scroller to the offset position
                 // where the entire row is visible. What about the small offset e.g. if the scroll
                 // position is between rows?  Do we need to take care of it?

@@ -1,6 +1,6 @@
 {
   "name": "angular2-data-table",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "angular2-data-table is a Angular2 component for presenting large and complex data.",
   "main": "release/index.umd.js",
   "jsnext:main": "release/index.es.js",

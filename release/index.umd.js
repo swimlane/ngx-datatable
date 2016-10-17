@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v0.10.0 (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v0.10.1 (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -877,7 +877,8 @@ var RowHeightCache = (function () {
             var currentRowHeight = rowHeight;
             // Add the detail row height to the already expanded rows.
             // This is useful for the table that goes through a filter or sort.
-            if (rows[i].$$expanded === 1) {
+            var row = rows[i];
+            if (row && row.$$expanded === 1) {
                 currentRowHeight += detailRowHeight;
             }
             this.update(i, currentRowHeight);
@@ -908,7 +909,7 @@ var RowHeightCache = (function () {
      */
     RowHeightCache.prototype.update = function (atRowIndex, byRowHeight) {
         if (this._treeArray.length === 0) {
-            throw new Error("update at index " + atRowIndex + " with value " + byRowHeight + " failed: \n                       Row Height cache not initialized.");
+            throw new Error("Update at index " + atRowIndex + " with value " + byRowHeight + " failed:\n        Row Height cache not initialized.");
         }
         var n = this._treeArray.length;
         atRowIndex |= 0;
@@ -2267,7 +2268,6 @@ var DataTableBody = (function () {
             // If there was more than one row expanded then there was a mass change
             // in the data set hence adjust the scroll position.
             if (expandedState.rows.length > 1) {
-                console.log(expandedState.currentIndex);
                 // -1 is added to the scrollOffset as we want to move the scroller to the offset position
                 // where the entire row is visible. What about the small offset e.g. if the scroll
                 // position is between rows?  Do we need to take care of it?
