@@ -88,6 +88,8 @@ export class TableColumn {
   // ng2 template ref
   headerTemplate: any;
 
+  isSorted: boolean = false;
+
   private _width: number = 150;
   private _minWidth: number = 0;
 

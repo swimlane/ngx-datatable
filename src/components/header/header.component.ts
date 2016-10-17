@@ -6,8 +6,8 @@ import {
   EventEmitter
 } from '@angular/core';
 
-import { StateService } from '../../services';
-import { translateXY } from '../../utils';
+import {StateService} from '../../services';
+import {translateXY} from '../../utils';
 
 @Component({
   selector: 'datatable-header',
@@ -33,7 +33,7 @@ import { translateXY } from '../../utils';
           [dragX]="column.draggable && drag"
           [dragY]="false"
           [column]="column"
-          (onColumnChange)="onColumnChange.emit($event)">
+          (onColumnChange)="onHeaderChanges($event)">
         </datatable-header-cell>
       </div>
       <div
@@ -52,7 +52,7 @@ import { translateXY } from '../../utils';
           [dragX]="column.draggable && drag"
           [dragY]="false"
           [column]="column"
-          (onColumnChange)="onColumnChange.emit($event)">
+          (onColumnChange)="onHeaderChanges($event)">
         </datatable-header-cell>
       </div>
       <div
@@ -71,7 +71,7 @@ import { translateXY } from '../../utils';
           [dragX]="column.draggable && drag"
           [dragY]="false"
           [column]="column"
-          (onColumnChange)="onColumnChange.emit($event)">
+          (onColumnChange)="onHeaderChanges($event)">
         </datatable-header-cell>
       </div>
     </div>
@@ -86,7 +86,7 @@ export class DataTableHeader {
   @Output() onColumnChange: EventEmitter<any> = new EventEmitter();
 
   get headerWidth() {
-    if(this.state.options.scrollbarH)
+    if (this.state.options.scrollbarH)
       return this.state.innerWidth + 'px';
 
     return '100%';
@@ -94,7 +94,7 @@ export class DataTableHeader {
 
   get headerHeight() {
     let height = this.state.options.headerHeight;
-    if(height !== 'auto') return `${height}px`;
+    if (height !== 'auto') return `${height}px`;
     return height;
   }
 
@@ -106,10 +106,22 @@ export class DataTableHeader {
     return obj.$$id;
   }
 
+  // This function is currently only used to determine the current sorted column
+  onHeaderChanges($event) {
+    let previousSortedColumn = this.state.options.columns.find(column => {
+      return column.isSorted && column !== $event.value;
+    });
+
+    if (previousSortedColumn !== undefined)
+      previousSortedColumn.isSorted = false;
+
+    this.onColumnChange.emit($event);
+  }
+
   columnResized(width, column) {
     if (width <= column.minWidth) {
       width = column.minWidth;
-    } else if(width >= column.maxWidth) {
+    } else if (width >= column.maxWidth) {
       width = column.maxWidth;
     }
 
@@ -121,7 +133,7 @@ export class DataTableHeader {
     });
   }
 
-  columnReordered({ prevIndex, newIndex, model }) {
+  columnReordered({prevIndex, newIndex, model}) {
     this.state.options.columns.splice(prevIndex, 1);
     this.state.options.columns.splice(newIndex, 0, model);
 
@@ -139,9 +151,9 @@ export class DataTableHeader {
       width: `${widths[group]}px`
     };
 
-    if(group === 'center') {
+    if (group === 'center') {
       translateXY(styles, offsetX * -1, 0);
-    } else if(group === 'right') {
+    } else if (group === 'right') {
       const totalDiff = widths.total - this.state.innerWidth;
       const offset = totalDiff * -1;
       translateXY(styles, offset, 0);
