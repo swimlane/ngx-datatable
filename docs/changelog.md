@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.10.0
+- Upgrade to Angular 2.1.0 (#202)
+- Sort Classes are applied to body cells (#166)
+- AoT Compatibility (#199)
+- Fix height paging (#208)
+- Improve Active CSS (#204)
+- Add Empty Message (#194)
+- Removed engine restrictions (#195)
+- Add deep value getter to sortRows function (#181)
+- Fix windows builds with node-sass (#207)
+- Fix resizing not closing correctly (#196)
+
 ## 0.9.3
 - Column resize sometimes gives weird behaviour on mouse resize/click (#155)
 - Fix order of setters in DataTable ngOnChanges (#179)
