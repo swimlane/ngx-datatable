@@ -19,6 +19,7 @@
    * [H/V Scrolling](examples/scrolling.md)
    * [Inline Editing](examples/inline.md)
    * [Column Pinning](examples/pinning.md)
+   * [Row Detail](examples/row-detail.md)
 * API
    * [Table](api/table.md)
       * [Options](api/options.md)

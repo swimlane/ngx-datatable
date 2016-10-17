@@ -24,7 +24,7 @@ import '../components/datatable.scss';
 // import { App } from './fullscreen';
 // import { App } from './template-dom';
 // import { App } from './template-obj';
-import { App } from './expandable-virtual';
+import { App } from './row-detail';
 
 @NgModule({
   declarations: [App],

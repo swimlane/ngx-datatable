@@ -13,7 +13,8 @@ import {
   DataTableBodyRow,
   DataTableRowWrapper,
   ProgressBar,
-  DataTableBodyCell, DatatableRowDetailTemplate
+  DataTableBodyCell,
+  DatatableRowDetailTemplate
 } from './components';
 
 import {

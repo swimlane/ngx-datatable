@@ -40,7 +40,8 @@ import '../themes/material.scss';
           <template let-row="row">
             <a
               href="#"
-              class="icon-right expander-btn"
+              [class.icon-right]="!row.$$expanded"
+              [class.icon-down]="row.$$expanded"
               title="Expand/Collapse Row"
               (click)="toggleExpandRow(row)">
             </a>
