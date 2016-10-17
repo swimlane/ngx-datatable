@@ -31,6 +31,7 @@ import { Scroller } from '../../directives';
         [scrollbarV]="state.options.scrollbarV"
         [scrollbarH]="state.options.scrollbarH"
         [count]="state.rowCount"
+        [limit]="state.options.limit"
         [scrollWidth]="state.columnGroupWidths.total">
         <datatable-body-row
           [ngStyle]="getRowsStyles(row)"

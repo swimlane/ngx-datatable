@@ -19,6 +19,7 @@ export class Scroller implements OnInit, OnDestroy {
 
   @Input() rowHeight: number;
   @Input() count: number;
+  @Input() limit: number;
   @Input() scrollWidth: number;
   @Input() scrollbarV: boolean = false;
   @Input() scrollbarH: boolean = false;
@@ -33,7 +34,10 @@ export class Scroller implements OnInit, OnDestroy {
   private parentElement: any;
 
   get scrollHeight() {
-    return (this.count * this.rowHeight) + 'px';
+
+    const count = this.limit || this.count;
+
+    return (count * this.rowHeight) + 'px';
   }
 
   constructor(element: ElementRef) {
