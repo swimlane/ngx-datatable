@@ -21,13 +21,6 @@ var Scroller = (function () {
         this.element = element.nativeElement;
         this.element.classList.add('datatable-scroll');
     }
-    Object.defineProperty(Scroller.prototype, "scrollHeight", {
-        get: function () {
-            return (this.count * this.rowHeight) + 'px';
-        },
-        enumerable: true,
-        configurable: true
-    });
     Scroller.prototype.ngOnInit = function () {
         // manual bind so we don't always listen
         if (this.scrollbarV || this.scrollbarH) {
@@ -78,6 +71,10 @@ var Scroller = (function () {
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Number)
+    ], Scroller.prototype, "limit", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Number)
     ], Scroller.prototype, "scrollWidth", void 0);
     __decorate([
         core_1.Input(), 
@@ -91,11 +88,15 @@ var Scroller = (function () {
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)
     ], Scroller.prototype, "onScroll", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Number)
+    ], Scroller.prototype, "scrollHeight", void 0);
     Scroller = __decorate([
         core_1.Directive({
             selector: '[scroller]',
             host: {
-                '[style.height]': 'scrollHeight',
+                '[style.height]': 'scrollHeight + "px"',
                 '[style.width]': 'scrollWidth + "px"'
             }
         }), 

@@ -2,13 +2,14 @@
 import { TableColumn } from './table-column.model';
 import { Sort } from './sort.model';
 import { ColumnMode, SortType, SelectionType } from '../types';
+import { TemplateRef } from '@angular/core';
 export declare class TableOptions {
     columns: TableColumn[];
     scrollbarV: boolean;
     scrollbarH: boolean;
     rowHeight: number;
+    detailRowHeight: number;
     columnMode: ColumnMode;
-    loadingMessage: string;
     emptyMessage: string;
     headerHeight: any;
     footerHeight: number;
@@ -22,6 +23,7 @@ export declare class TableOptions {
     reorderable: boolean;
     sortType: SortType;
     sorts: Array<Sort>;
+    rowDetailTemplate: TemplateRef<any>;
     constructor(props: any);
     validate(): void;
 }

@@ -35,7 +35,7 @@
     box-sizing: border-box; }
   .datatable.scroll-vertical .datatable-body {
     overflow-y: auto; }
-    .datatable.scroll-vertical .datatable-body .datatable-body-row {
+    .datatable.scroll-vertical .datatable-body .datatable-row-wrapper {
       position: absolute; }
   .datatable.scroll-horz .datatable-body {
     overflow-x: auto; }
@@ -118,6 +118,21 @@
     display: block; }
     .datatable .datatable-body .datatable-scroll {
       display: inline-block; }
+    .datatable .datatable-body .datatable-row-detail {
+      overflow-y: hidden; }
+    .datatable .datatable-body .datatable-row-wrapper {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -webkit-flex-direction: column;
+      -moz-box-orient: vertical;
+      -moz-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column; }
     .datatable .datatable-body .datatable-body-row {
       outline: none; }
       .datatable .datatable-body .datatable-body-row > div {

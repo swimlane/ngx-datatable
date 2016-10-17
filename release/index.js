@@ -43,10 +43,13 @@ var Angular2DataTableModule = (function () {
                 components_1.DataTablePager,
                 components_1.ProgressBar,
                 components_1.DataTableBodyRow,
+                components_1.DataTableRowWrapper,
+                components_1.DatatableRowDetailTemplate,
                 components_1.DataTableBodyCell
             ],
             exports: [
                 components_1.DataTable,
+                components_1.DatatableRowDetailTemplate,
                 components_1.DataTableColumn
             ]
         }), 

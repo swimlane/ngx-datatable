@@ -59,10 +59,25 @@ var DataTableBody = (function () {
             _this.updateRows();
             _this.hideIndicator();
             if (_this.state.options.scrollbarV && action.type === 'pager-event') {
-                var offset = (_this.state.options.rowHeight * action.limit) * action.offset;
-                _this.scroller.setOffset(offset);
+                // First get the row Index that we need to move to.
+                var rowIndex = action.limit * action.offset;
+                // const offset = (this.state.options.rowHeight * action.limit) * action.offset;
+                _this.scroller.setOffset(_this.state.rowHeightsCache.query(rowIndex - 1));
             }
         });
+        this.sub.add(this.state.onExpandChange.subscribe(function (expandedState) {
+            // If there was more than one row expanded then there was a mass change
+            // in the data set hence adjust the scroll position.
+            if (expandedState.rows.length > 1) {
+                console.log(expandedState.currentIndex);
+                // -1 is added to the scrollOffset as we want to move the scroller to the offset position
+                // where the entire row is visible. What about the small offset e.g. if the scroll
+                // position is between rows?  Do we need to take care of it?
+                var scrollOffset_1 = _this.state.rowHeightsCache.query(expandedState.currentIndex);
+                // Set the offset only after the scroll bar has been updated on the screen.
+                setTimeout(function () { return _this.scroller.setOffset(scrollOffset_1); });
+            }
+        }));
         this.sub.add(this.state.onRowsUpdate.subscribe(function (rows) {
             _this.updateRows();
             _this.hideIndicator();
@@ -113,14 +128,46 @@ var DataTableBody = (function () {
             rowIndex++;
         }
     };
+    /**
+     * Calculate row height based on the expanded state of the row.
+     *
+     * @param row  the row for which the height need to be calculated.
+     * @returns {number}  height of the row.
+     */
+    DataTableBody.prototype.getRowHeight = function (row) {
+        // Adding detail row height if its expanded.
+        return this.state.options.rowHeight +
+            (row.$$expanded === 1 ? this.state.options.detailRowHeight : 0);
+    };
+    /**
+     * Calculates the styles for the row so that the rows can be moved in 2D space
+     * during virtual scroll inside the DOM.   In the below case the Y position is
+     * manipulated.   As an example, if the height of row 0 is 30 px and row 1 is
+     * 100 px then following styles are generated:
+     *
+     * transform: translate3d(0px, 0px, 0px);    ->  row0
+     * transform: translate3d(0px, 30px, 0px);   ->  row1
+     * transform: translate3d(0px, 130px, 0px);  ->  row2
+     *
+     * Row heights have to be calculated based on the row heights cache as we wont
+     * be able to determine which row is of what height before hand.  In the above
+     * case the positionY of the translate3d for row2 would be the sum of all the
+     * heights of the rows before it (i.e. row0 and row1).
+     *
+     * @param row The row that needs to be placed in the 2D space.
+     * @returns {{styles: string}}  Returns the CSS3 style to be applied
+     */
     DataTableBody.prototype.getRowsStyles = function (row) {
-        var rowHeight = this.state.options.rowHeight;
+        var rowHeight = this.getRowHeight(row);
         var styles = {
             height: rowHeight + 'px'
         };
         if (this.state.options.scrollbarV) {
             var idx = row ? row.$$index : 0;
-            var pos = idx * rowHeight;
+            // const pos = idx * rowHeight;
+            // The position of this row would be the sum of all row heights
+            // until the previous row position.
+            var pos = this.state.rowHeightsCache.query(idx - 1);
             utils_1.translateXY(styles, 0, pos);
         }
         return styles;
@@ -199,7 +246,7 @@ var DataTableBody = (function () {
     DataTableBody = __decorate([
         core_1.Component({
             selector: 'datatable-body',
-            template: "\n    <div>\n      <datatable-progress\n        *ngIf=\"state.options.loadingIndicator\">\n      </datatable-progress>\n      <div\n        scroller\n        (onScroll)=\"onBodyScroll($event)\"\n        *ngIf=\"state.rows.length\"\n        [rowHeight]=\"state.options.rowHeight\"\n        [scrollbarV]=\"state.options.scrollbarV\"\n        [scrollbarH]=\"state.options.scrollbarH\"\n        [count]=\"state.rowCount\"\n        [scrollWidth]=\"state.columnGroupWidths.total\">\n        <datatable-body-row\n          [ngStyle]=\"getRowsStyles(row)\"\n          [style.height]=\"state.options.rowHeight + 'px'\"\n          *ngFor=\"let row of rows; let i = index; trackBy: trackRowBy\"\n          [attr.tabindex]=\"i\"\n          (click)=\"rowClicked($event, i, row)\"\n          (dblclick)=\"rowClicked($event, i, row)\"\n          (keydown)=\"rowKeydown($event, i, row)\"\n          [row]=\"row\"\n          [class.datatable-row-even]=\"row.$$index % 2 === 0\"\n          [class.datatable-row-odd]=\"row.$$index % 2 !== 0\">\n        </datatable-body-row>\n      </div>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"state.options.emptyMessage\">\n      </div>\n    </div>\n  "
+            template: "\n    <div>\n      <datatable-progress\n        *ngIf=\"state.options.loadingIndicator\">\n      </datatable-progress>\n      <div\n        scroller\n        (onScroll)=\"onBodyScroll($event)\"\n        *ngIf=\"state.rows.length\"\n        [rowHeight]=\"state.options.rowHeight\"\n        [scrollbarV]=\"state.options.scrollbarV\"\n        [scrollbarH]=\"state.options.scrollbarH\"\n        [count]=\"state.rowCount\"\n        [scrollHeight]=\"state.scrollHeight\"\n        [limit]=\"state.options.limit\"\n        [scrollWidth]=\"state.columnGroupWidths.total\">\n        <datatable-row-wrapper \n          *ngFor=\"let row of rows; let i = index; trackBy: trackRowBy\"\n          [ngStyle]=\"getRowsStyles(row)\"\n          [style.height]=\"getRowHeight(row) + 'px'\"\n          [row]=\"row\">\n          <datatable-body-row\n            [attr.tabindex]=\"i\"\n            [style.height]=\"state.options.rowHeight +  'px'\"\n            (click)=\"rowClicked($event, i, row)\"\n            (dblclick)=\"rowClicked($event, i, row)\"\n            (keydown)=\"rowKeydown($event, i, row)\"\n            [row]=\"row\"\n            [class.datatable-row-even]=\"row.$$index % 2 === 0\"\n            [class.datatable-row-odd]=\"row.$$index % 2 !== 0\">\n          </datatable-body-row>\n        </datatable-row-wrapper>\n      </div>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"state.options.emptyMessage\">\n      </div>\n    </div>\n  "
         }), 
         __metadata('design:paramtypes', [services_1.StateService, core_1.ElementRef, core_1.Renderer])
     ], DataTableBody);

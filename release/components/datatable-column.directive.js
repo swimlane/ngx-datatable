@@ -9,7 +9,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var models_1 = require('../models');
 var DataTableColumn = (function () {
     function DataTableColumn() {
     }
@@ -41,13 +40,72 @@ var DataTableColumn = (function () {
         configurable: true
     });
     __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], DataTableColumn.prototype, "name", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], DataTableColumn.prototype, "prop", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], DataTableColumn.prototype, "isExpressive", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], DataTableColumn.prototype, "frozenLeft", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], DataTableColumn.prototype, "frozenRight", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], DataTableColumn.prototype, "flexGrow", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], DataTableColumn.prototype, "resizeable", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], DataTableColumn.prototype, "comparator", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], DataTableColumn.prototype, "pipe", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], DataTableColumn.prototype, "sortable", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], DataTableColumn.prototype, "draggable", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], DataTableColumn.prototype, "canAutoResize", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], DataTableColumn.prototype, "minWidth", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], DataTableColumn.prototype, "width", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], DataTableColumn.prototype, "maxWidth", void 0);
+    __decorate([
         core_1.ContentChildren(core_1.TemplateRef), 
         __metadata('design:type', core_1.QueryList)
     ], DataTableColumn.prototype, "templates", void 0);
     DataTableColumn = __decorate([
         core_1.Directive({
             selector: 'datatable-column',
-            inputs: models_1.TableColumn.getProps()
         }), 
         __metadata('design:paramtypes', [])
     ], DataTableColumn);

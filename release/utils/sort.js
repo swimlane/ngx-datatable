@@ -1,5 +1,6 @@
 "use strict";
 var types_1 = require('../types');
+var deep_getter_1 = require('./deep-getter');
 /**
  * Gets the next sort direction
  * @param  {SortType}      sortType
@@ -73,9 +74,11 @@ function sortRows(rows, dirs) {
     return temp.sort(function (a, b) {
         for (var _i = 0, dirs_1 = dirs; _i < dirs_1.length; _i++) {
             var _a = dirs_1[_i], prop = _a.prop, dir = _a.dir;
+            var propA = deep_getter_1.deepValueGetter(a, prop);
+            var propB = deep_getter_1.deepValueGetter(b, prop);
             var comparison = dir !== types_1.SortDirection.desc ?
-                orderByComparator(a[prop], b[prop]) :
-                -orderByComparator(a[prop], b[prop]);
+                orderByComparator(propA, propB) :
+                -orderByComparator(propA, propB);
             // Don't return 0 yet in case of needing to sort by next property
             if (comparison !== 0)
                 return comparison;

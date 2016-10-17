@@ -29,7 +29,7 @@ var Resizeable = (function () {
     };
     Resizeable.prototype.onMouseup = function () {
         this.resizing = false;
-        if (this.subscription) {
+        if (this.subscription && !this.subscription.closed) {
             this.subscription.unsubscribe();
             this.onResize.emit(this.element.clientWidth);
         }

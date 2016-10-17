@@ -18,8 +18,48 @@ var DataTableHeaderCell = (function () {
         this.state = state;
         this.onColumnChange = new core_1.EventEmitter();
         this.sort = this.onSort.bind(this);
-        renderer.setElementClass(this.element.nativeElement, 'datatable-header-cell', true);
     }
+    Object.defineProperty(DataTableHeaderCell.prototype, "width", {
+        get: function () { return this.column.width; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataTableHeaderCell.prototype, "minWidth", {
+        get: function () { return this.column.minWidth; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataTableHeaderCell.prototype, "maxWidth", {
+        get: function () { return this.column.maxWidth; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataTableHeaderCell.prototype, "height", {
+        get: function () { return this.state.options.headerHeight; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataTableHeaderCell.prototype, "colTitle", {
+        get: function () { return this.name; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataTableHeaderCell.prototype, "cssClasses", {
+        get: function () {
+            var cls = 'datatable-header-cell';
+            if (this.column.sortable)
+                cls += ' sortable';
+            if (this.column.resizeable)
+                cls += ' resizeable';
+            var sortDir = this.sortDir;
+            if (sortDir) {
+                cls += " sort-active sort-" + sortDir;
+            }
+            return cls;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(DataTableHeaderCell.prototype, "sortDir", {
         get: function () {
             var _this = this;
@@ -63,19 +103,34 @@ var DataTableHeaderCell = (function () {
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)
     ], DataTableHeaderCell.prototype, "onColumnChange", void 0);
+    __decorate([
+        core_1.HostBinding('style.width.px'), 
+        __metadata('design:type', Object)
+    ], DataTableHeaderCell.prototype, "width", null);
+    __decorate([
+        core_1.HostBinding('style.minWidth.px'), 
+        __metadata('design:type', Object)
+    ], DataTableHeaderCell.prototype, "minWidth", null);
+    __decorate([
+        core_1.HostBinding('style.maxWidth.px'), 
+        __metadata('design:type', Object)
+    ], DataTableHeaderCell.prototype, "maxWidth", null);
+    __decorate([
+        core_1.HostBinding('style.height.px'), 
+        __metadata('design:type', Object)
+    ], DataTableHeaderCell.prototype, "height", null);
+    __decorate([
+        core_1.HostBinding('attr.title'), 
+        __metadata('design:type', Object)
+    ], DataTableHeaderCell.prototype, "colTitle", null);
+    __decorate([
+        core_1.HostBinding('class'), 
+        __metadata('design:type', Object)
+    ], DataTableHeaderCell.prototype, "cssClasses", null);
     DataTableHeaderCell = __decorate([
         core_1.Component({
             selector: 'datatable-header-cell',
-            template: "\n    <div>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        *ngIf=\"!column.headerTemplate\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <template\n        *ngIf=\"column.headerTemplate\"\n        [ngTemplateOutlet]=\"column.headerTemplate\"\n        [ngOutletContext]=\"{ column: column, sort: sort }\">\n      </template>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses()\">\n      </span>\n    </div>\n  ",
-            host: {
-                '[class.sortable]': 'column.sortable',
-                '[class.resizable]': 'column.resizable',
-                '[style.width]': 'column.width + "px"',
-                '[style.minWidth]': 'column.minWidth + "px"',
-                '[style.maxWidth]': 'column.maxWidth + "px"',
-                '[style.height]': 'column.height + "px"',
-                '[attr.title]': 'name'
-            }
+            template: "\n    <div>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        *ngIf=\"!column.headerTemplate\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <template\n        *ngIf=\"column.headerTemplate\"\n        [ngTemplateOutlet]=\"column.headerTemplate\"\n        [ngOutletContext]=\"{ column: column, sort: sort }\">\n      </template>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses()\">\n      </span>\n    </div>\n  "
         }), 
         __metadata('design:paramtypes', [core_1.ElementRef, services_1.StateService, core_1.Renderer])
     ], DataTableHeaderCell);

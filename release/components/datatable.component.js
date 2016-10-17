@@ -17,6 +17,7 @@ var types_1 = require('../types');
 var models_1 = require('../models');
 var datatable_column_directive_1 = require('./datatable-column.directive');
 var services_1 = require('../services');
+var datatable_row_detail_template_directive_1 = require('./datatable-row-detail-template.directive');
 var DataTable = (function () {
     function DataTable(state, renderer, element, differs) {
         this.state = state;
@@ -47,6 +48,9 @@ var DataTable = (function () {
     };
     DataTable.prototype.ngAfterViewInit = function () {
         var _this = this;
+        if (this.rowDetailTemplateChild) {
+            this.state.options.rowDetailTemplate = this.rowDetailTemplateChild.rowDetailTemplate;
+        }
         this.adjustColumns();
         if (this.columns.length) {
             // changing the columns without a timeout
@@ -114,6 +118,27 @@ var DataTable = (function () {
             this.state.bodyHeight = height;
         }
         this.adjustColumns();
+    };
+    /**
+     * Toggle the expansion of the row
+     *
+     * @param rowIndex
+     */
+    DataTable.prototype.toggleExpandRow = function (row) {
+        // Should we write a guard here??
+        this.state.toggleRowExpansion(row);
+    };
+    /**
+     * API method to expand all the rows.
+     */
+    DataTable.prototype.expandAllRows = function () {
+        this.state.toggleAllRows(true);
+    };
+    /**
+     * API method to collapse all the rows.
+     */
+    DataTable.prototype.collapseAllRows = function () {
+        this.state.toggleAllRows(false);
     };
     DataTable.prototype.adjustColumns = function (forceIdx) {
         if (!this.options.columns)
@@ -211,6 +236,10 @@ var DataTable = (function () {
         core_1.ContentChildren(datatable_column_directive_1.DataTableColumn), 
         __metadata('design:type', core_1.QueryList)
     ], DataTable.prototype, "columns", void 0);
+    __decorate([
+        core_1.ContentChild(datatable_row_detail_template_directive_1.DatatableRowDetailTemplate), 
+        __metadata('design:type', Object)
+    ], DataTable.prototype, "rowDetailTemplateChild", void 0);
     __decorate([
         core_1.HostListener('window:resize'), 
         __metadata('design:type', Function), 

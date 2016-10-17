@@ -12,14 +12,25 @@ var core_1 = require('@angular/core');
 var utils_1 = require('../utils');
 var models_1 = require('../models');
 var types_1 = require('../types');
+var row_height_cache_1 = require('../utils/row-height-cache');
 var StateService = (function () {
     function StateService() {
         this.rows = [];
         this.selected = [];
+        /**
+         * Cache the row heights for calculation during virtual scroll.
+         * @type {RowHeightCache}
+         */
+        this.rowHeightsCache = new row_height_cache_1.RowHeightCache();
         this.onSortChange = new core_1.EventEmitter();
         this.onSelectionChange = new core_1.EventEmitter();
         this.onRowsUpdate = new core_1.EventEmitter();
         this.onPageChange = new core_1.EventEmitter();
+        /**
+         * Event emitted whenever there is a change in row expansion state.
+         * @type {EventEmitter}
+         */
+        this.onExpandChange = new core_1.EventEmitter();
         this.scrollbarWidth = utils_1.scrollbarWidth();
         this.offsetX = 0;
         this.offsetY = 0;
@@ -55,10 +66,24 @@ var StateService = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(StateService.prototype, "scrollHeight", {
+        /**
+         * Property that would calculate the height of scroll bar
+         * based on the row heights cache.
+         */
+        get: function () {
+            return this.rowHeightsCache.query(this.rowCount - 1);
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(StateService.prototype, "pageSize", {
         get: function () {
             if (this.options.scrollbarV) {
-                return Math.ceil(this.bodyHeight / this.options.rowHeight) + 1;
+                // Keep the page size constant even if the row has been expanded.
+                // This is because an expanded row is still considered to be a child of
+                // the original row.  Hence calculation would use rowHeight only.
+                return Math.ceil(this.bodyHeight / this.options.rowHeight);
             }
             else if (this.options.limit) {
                 return this.options.limit;
@@ -75,9 +100,16 @@ var StateService = (function () {
             var first = 0;
             var last = 0;
             if (this.options.scrollbarV) {
-                var floor = Math.floor((this.offsetY || 0) / this.options.rowHeight);
-                first = Math.max(floor, 0);
-                last = Math.min(first + this.pageSize, this.rowCount);
+                // const floor = Math.floor((this.offsetY || 0) / this.options.rowHeight);
+                // first = Math.max(floor, 0);
+                // last = Math.min(first + this.pageSize, this.rowCount);
+                //
+                // console.log('first ==> ' + first + ' last ==> ' + last);
+                // Calculation of the first and last indexes will be based on where the
+                // scrollY position would be at.  The last index would be the one
+                // that shows up inside the view port the last.
+                first = this.rowHeightsCache.getRowIndex(this.offsetY);
+                last = this.rowHeightsCache.getRowIndex(this.bodyHeight + this.offsetY) + 1;
             }
             else {
                 first = Math.max(this.options.offset * this.pageSize, 0);
@@ -100,9 +132,26 @@ var StateService = (function () {
         return this;
         var _a;
     };
+    /**
+     *  Refreshes the full Row Height cache.  Should be used
+     *  when the entire row array state has changed.
+     */
+    StateService.prototype.refreshRowHeightCache = function () {
+        // clear the previous row height cache if already present.
+        // this is useful during sorts, filters where the state of the
+        // rows array is changed.
+        this.rowHeightsCache.clearCache();
+        // Initialize the tree only if there are rows inside the tree.
+        if (this.rows.length > 0) {
+            this.rowHeightsCache.initCache(this.rows, this.options.rowHeight, this.options.detailRowHeight);
+        }
+    };
     StateService.prototype.setRows = function (rows) {
         if (rows) {
             this.rows = rows.slice();
+            if (this.options) {
+                this.refreshRowHeightCache();
+            }
             this.onRowsUpdate.emit(rows);
         }
         return this;
@@ -149,6 +198,52 @@ var StateService = (function () {
             column.comparator(this.rows, this.options.sorts);
         }
         this.onSortChange.emit({ column: column });
+    };
+    StateService.prototype.getAdjustedViewPortIndex = function () {
+        // Capture the row index of the first row that is visible on the viewport.
+        // If the scroll bar is just below the row which is highlighted then make that as the
+        // first index.
+        var viewPortFirstRowIndex = this.indexes.first;
+        var offsetScroll = this.rowHeightsCache.query(viewPortFirstRowIndex - 1);
+        return offsetScroll <= this.offsetY ? viewPortFirstRowIndex - 1 : viewPortFirstRowIndex;
+    };
+    /**
+     * Toggle the Expansion of the row i.e. if the row is expanded then it will
+     * collapse and vice versa.   Note that the expanded status is stored as
+     * a part of the row object itself as we have to preserve the expanded row
+     * status in case of sorting and filtering of the row set.
+     *
+     * @param row The row for which the expansion needs to be toggled.
+     */
+    StateService.prototype.toggleRowExpansion = function (row) {
+        // Capture the row index of the first row that is visible on the viewport.
+        var viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
+        var detailRowHeight = this.options.detailRowHeight * (row.$$expanded ? -1 : 1);
+        // Update the toggled row and update the heights in the cache.
+        row.$$expanded ^= 1;
+        this.rowHeightsCache.update(row.$$index, detailRowHeight);
+        this.onExpandChange.emit({ rows: [row], currentIndex: viewPortFirstRowIndex });
+        // Broadcast the event to let know that the rows array has been updated.
+        this.onRowsUpdate.emit(this.rows);
+    };
+    /**
+     * Expand/Collapse all the rows no matter what their state is.
+     *
+     * @param expanded When true, all rows are expanded and when false, all rows will be collapsed.
+     */
+    StateService.prototype.toggleAllRows = function (expanded) {
+        var rowExpanded = expanded ? 1 : 0;
+        // Capture the row index of the first row that is visible on the viewport.
+        var viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
+        this.rows.forEach(function (row) {
+            row.$$expanded = rowExpanded;
+        });
+        // Refresh the full row heights cache since every row was affected.
+        this.refreshRowHeightCache();
+        // Emit all rows that have been expanded.
+        this.onExpandChange.emit({ rows: this.rows, currentIndex: viewPortFirstRowIndex });
+        // Broadcast the event to let know that the rows array has been updated.
+        this.onRowsUpdate.emit(this.rows);
     };
     StateService = __decorate([
         core_1.Injectable(), 

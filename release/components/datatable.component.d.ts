@@ -13,6 +13,7 @@ export declare class DataTable implements OnInit, OnChanges, DoCheck, AfterViewI
     onSelectionChange: EventEmitter<any>;
     onColumnChange: EventEmitter<any>;
     columns: QueryList<DataTableColumn>;
+    rowDetailTemplateChild: any;
     private element;
     private rowDiffer;
     private colDiffer;
@@ -25,6 +26,20 @@ export declare class DataTable implements OnInit, OnChanges, DoCheck, AfterViewI
     ngOnDestroy(): void;
     checkColumnChanges(): void;
     adjustSizes(): void;
+    /**
+     * Toggle the expansion of the row
+     *
+     * @param rowIndex
+     */
+    toggleExpandRow(row: any): void;
+    /**
+     * API method to expand all the rows.
+     */
+    expandAllRows(): void;
+    /**
+     * API method to collapse all the rows.
+     */
+    collapseAllRows(): void;
     adjustColumns(forceIdx?: number): void;
     onRowSelect(event: any): void;
     resize(): void;

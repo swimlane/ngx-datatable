@@ -13,17 +13,17 @@ var models_1 = require('../../models');
 var utils_1 = require('../../utils');
 var services_1 = require('../../services');
 var DataTableBodyCell = (function () {
-    function DataTableBodyCell(element, renderer, state) {
+    function DataTableBodyCell(state) {
         this.state = state;
-        renderer.setElementClass(element.nativeElement, 'datatable-body-cell', true);
     }
-    Object.defineProperty(DataTableBodyCell.prototype, "value", {
+    Object.defineProperty(DataTableBodyCell.prototype, "cssClasses", {
         get: function () {
-            if (!this.row)
-                return '';
-            var prop = utils_1.deepValueGetter(this.row, this.column.prop);
-            var userPipe = this.column.pipe;
-            return userPipe ? userPipe.transform(prop) : prop;
+            var cls = 'datatable-body-cell';
+            var sortDir = this.sortDir;
+            if (sortDir) {
+                cls += " sort-active sort-" + sortDir;
+            }
+            return cls;
         },
         enumerable: true,
         configurable: true
@@ -45,6 +45,29 @@ var DataTableBodyCell = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(DataTableBodyCell.prototype, "sortDir", {
+        get: function () {
+            var _this = this;
+            var sort = this.state.options.sorts.find(function (s) {
+                return s.prop === _this.column.prop;
+            });
+            if (sort)
+                return sort.dir;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataTableBodyCell.prototype, "value", {
+        get: function () {
+            if (!this.row)
+                return '';
+            var prop = utils_1.deepValueGetter(this.row, this.column.prop);
+            var userPipe = this.column.pipe;
+            return userPipe ? userPipe.transform(prop) : prop;
+        },
+        enumerable: true,
+        configurable: true
+    });
     __decorate([
         core_1.Input(), 
         __metadata('design:type', models_1.TableColumn)
@@ -53,6 +76,10 @@ var DataTableBodyCell = (function () {
         core_1.Input(), 
         __metadata('design:type', Object)
     ], DataTableBodyCell.prototype, "row", void 0);
+    __decorate([
+        core_1.HostBinding('class'), 
+        __metadata('design:type', String)
+    ], DataTableBodyCell.prototype, "cssClasses", null);
     __decorate([
         core_1.HostBinding('style.width.px'), 
         __metadata('design:type', Object)
@@ -66,7 +93,7 @@ var DataTableBodyCell = (function () {
             selector: 'datatable-body-cell',
             template: "\n    <div class=\"datatable-body-cell-label\">\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [innerHTML]=\"value\">\n      </span>\n      <template\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngOutletContext]=\"{ value: value, row: row, column: column }\">\n      </template>\n    </div>\n  "
         }), 
-        __metadata('design:paramtypes', [core_1.ElementRef, core_1.Renderer, services_1.StateService])
+        __metadata('design:paramtypes', [services_1.StateService])
     ], DataTableBodyCell);
     return DataTableBodyCell;
 }());
