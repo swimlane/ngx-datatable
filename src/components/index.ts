@@ -11,3 +11,5 @@ export * from './body/progress-bar.component';
 
 export * from './footer/footer.component';
 export * from './footer/pager.component';
+export * from './body/body-row-wrapper.component';
+export * from './datatable-row-detail-template.directive';

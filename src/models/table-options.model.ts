@@ -1,6 +1,7 @@
 import { TableColumn } from './table-column.model';
 import { Sort } from './sort.model';
 import { ColumnMode, SortType, SelectionType } from '../types';
+import { TemplateRef } from '@angular/core';
 
 export class TableOptions {
 
@@ -16,6 +17,9 @@ export class TableOptions {
   // The row height; which is necessary
   // to calculate the height for the lazy rendering.
   rowHeight: number = 30;
+
+  // The detail row height is required especially when virtual scroll is enabled.
+  detailRowHeight: number = 0;
 
   // flex
   // force
@@ -64,6 +68,9 @@ export class TableOptions {
 
   // sorts
   sorts: Array<Sort> = [];
+
+  // row detail template
+  rowDetailTemplate: TemplateRef<any>;
 
   constructor(props: any) {
     Object.assign(this, props);

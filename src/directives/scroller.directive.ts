@@ -11,7 +11,7 @@ import {
 @Directive({
   selector: '[scroller]',
   host: {
-    '[style.height]': 'scrollHeight',
+    '[style.height]': 'scrollHeight + "px"',
     '[style.width]': 'scrollWidth + "px"'
   }
 })
@@ -25,6 +25,11 @@ export class Scroller implements OnInit, OnDestroy {
   @Input() scrollbarH: boolean = false;
 
   @Output() onScroll: EventEmitter<any> = new EventEmitter();
+  
+  /**
+   * The height of the scroll bar.
+   */
+  @Input() scrollHeight: number;
 
   private scrollYPos: number = 0;
   private scrollXPos: number = 0;
@@ -32,14 +37,6 @@ export class Scroller implements OnInit, OnDestroy {
   private prevScrollXPos: number = 0;
   private element: any;
   private parentElement: any;
-
-  get scrollHeight() {
-
-    const count = this.limit || this.count;
-
-    return (count * this.rowHeight) + 'px';
-  }
-
   constructor(element: ElementRef) {
     this.element = element.nativeElement;
     this.element.classList.add('datatable-scroll');

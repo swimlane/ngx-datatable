@@ -15,7 +15,7 @@ import {
   IterableDiffer,
   HostBinding,
   Host,
-  Renderer
+  Renderer, ContentChild
 } from '@angular/core';
 
 import { forceFillColumnWidths, adjustColumnWidths } from '../utils';
@@ -23,6 +23,7 @@ import { ColumnMode } from '../types';
 import { TableOptions, TableColumn } from '../models';
 import { DataTableColumn } from './datatable-column.directive';
 import { StateService } from '../services';
+import { DatatableRowDetailTemplate } from './datatable-row-detail-template.directive';
 
 @Component({
   selector: 'datatable',
@@ -60,6 +61,9 @@ export class DataTable implements OnInit, OnChanges, DoCheck, AfterViewInit {
 
   @ContentChildren(DataTableColumn) columns: QueryList<DataTableColumn>;
 
+  // handle to the row detail template.
+  @ContentChild(DatatableRowDetailTemplate) rowDetailTemplateChild;
+
   private element: HTMLElement;
   private rowDiffer: IterableDiffer;
   private colDiffer: IterableDiffer;
@@ -95,8 +99,11 @@ export class DataTable implements OnInit, OnChanges, DoCheck, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.adjustColumns();
+    if(this.rowDetailTemplateChild) {
+      this.state.options.rowDetailTemplate = this.rowDetailTemplateChild.rowDetailTemplate;
+    }
 
+    this.adjustColumns();
     if (this.columns.length) {
       // changing the columns without a timeout
       // causes a interesting timing bug
@@ -175,6 +182,30 @@ export class DataTable implements OnInit, OnChanges, DoCheck, AfterViewInit {
     this.adjustColumns();
   }
 
+  /**
+   * Toggle the expansion of the row
+   *
+   * @param rowIndex
+   */
+  toggleExpandRow(row: any) {
+    // Should we write a guard here??
+    this.state.toggleRowExpansion(row);
+  }
+
+  /**
+   * API method to expand all the rows.
+   */
+  expandAllRows() {
+    this.state.toggleAllRows(true);
+  }
+
+  /**
+   * API method to collapse all the rows.
+   */
+  collapseAllRows() {
+    this.state.toggleAllRows(false);
+  }
+
   adjustColumns(forceIdx?: number) {
     if (!this.options.columns) return;
 
@@ -205,7 +236,7 @@ export class DataTable implements OnInit, OnChanges, DoCheck, AfterViewInit {
     const headerHeight: number|string = this.options.headerHeight;
 
     return (typeof headerHeight === 'string') ?
-      (<string>headerHeight) !== 'auto' : true;
+    (<string>headerHeight) !== 'auto' : true;
   }
 
   @HostBinding('class.fixed-row')
@@ -213,7 +244,7 @@ export class DataTable implements OnInit, OnChanges, DoCheck, AfterViewInit {
     const rowHeight: number|string = this.options.rowHeight;
 
     return (typeof rowHeight === 'string') ?
-      (<string>rowHeight) !== 'auto' : true;
+    (<string>rowHeight) !== 'auto' : true;
   }
 
   @HostBinding('class.scroll-vertical')
