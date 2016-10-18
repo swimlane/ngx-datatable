@@ -72,15 +72,21 @@ export class TableOptions {
   // row detail template
   rowDetailTemplate: TemplateRef<any>;
 
-  constructor(props: any) {
-    Object.assign(this, props);
-    this.validate();
-  }
+  //filter columns
+  filters: Array<string> = [];
 
-  validate() {
-    if(this.scrollbarV === true && isNaN(this.rowHeight)) {
-      throw new Error('Vertical scrolling and auto row height is not support!');
-    }
+  //filter placeholder
+  filterPlaceholder: string = 'Type to filter';
+
+  constructor(props: any) {
+  Object.assign(this, props);
+  this.validate();
+}
+
+validate() {
+  if (this.scrollbarV === true && isNaN(this.rowHeight)) {
+    throw new Error('Vertical scrolling and auto row height is not support!');
   }
+}
 
 }

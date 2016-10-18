@@ -7,23 +7,18 @@ import {
 } from '../index';
 import '../themes/material.scss';
 
+import { FilterService } from '../services';
+
 @Component({
   selector: 'app',
   template: `
     <div>
       <h3>client filter / search</h3>
-      <input
-        type='text'
-        style='padding:8px;margin:15px;width:30%;'
-        placeholder='Type to filter the name column...'
-        [ngModel]='val'
-        (ngModelChange)='updateFilter($event)'
-      />
       <datatable
         class='material'
         [rows]='rows'
         [options]='options'>
-        </datatable>
+      </datatable>
     </div>
   `
 })
@@ -39,6 +34,8 @@ export class App {
     footerHeight: 50,
     rowHeight: 'auto',
     limit: 10,
+    filters: ['name'],
+    filterPlaceholder: 'type to filter by name column',
     columns: [
       new TableColumn({ name: 'Name' }),
       new TableColumn({ name: 'Gender' }),
@@ -46,11 +43,8 @@ export class App {
     ]
   });
 
-  constructor() {
+  constructor(private _filterService: FilterService) {
     this.fetch((data) => {
-      // cache our list
-      this.temp = [...data];
-
       // push our inital complete list
       this.rows.push(...data);
     });
@@ -65,19 +59,6 @@ export class App {
     };
 
     req.send();
-  }
-
-  updateFilter(val) {
-    // remove existing
-    this.rows.splice(0, this.rows.length);
-
-    // filter our data
-    let temp = this.temp.filter(function(d) {
-      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-
-    // update the rows
-    this.rows.push(...temp);
   }
 
 }
