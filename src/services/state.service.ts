@@ -123,8 +123,8 @@ export class StateService {
     // rows array is changed.
     this.rowHeightsCache.clearCache();
     // Initialize the tree only if there are rows inside the tree.
-    if ( this.rows.length > 0 ) {
-      this.rowHeightsCache.initCache( this.rows,
+    if (this.rows.length > 0) {
+      this.rowHeightsCache.initCache(this.rows,
         this.options.rowHeight,
         this.options.detailRowHeight);
     }
@@ -133,8 +133,9 @@ export class StateService {
 
   setRows(rows: Array<any>): StateService {
     if (rows) {
-      this.rows = [...rows];
-      if( this.options ) {
+      this.rows = this.temp = [...rows];
+
+      if (this.options) {
         this.refreshRowHeightCache();
       }
       this.onRowsUpdate.emit(rows);
@@ -177,7 +178,7 @@ export class StateService {
         this.options.sorts.splice(0, this.options.sorts.length);
       }
 
-      this.options.sorts.push(new Sort({dir, prop: column.prop}));
+      this.options.sorts.push(new Sort({ dir, prop: column.prop }));
     }
 
     if (!column.comparator) {
@@ -193,7 +194,7 @@ export class StateService {
     // Capture the row index of the first row that is visible on the viewport.
     // If the scroll bar is just below the row which is highlighted then make that as the
     // first index.
-    let viewPortFirstRowIndex =  this.indexes.first;
+    let viewPortFirstRowIndex = this.indexes.first;
     let offsetScroll = this.rowHeightsCache.query(viewPortFirstRowIndex - 1);
     return offsetScroll <= this.offsetY ? viewPortFirstRowIndex - 1 : viewPortFirstRowIndex;
   }
@@ -208,16 +209,16 @@ export class StateService {
    */
   toggleRowExpansion(row: any) {
     // Capture the row index of the first row that is visible on the viewport.
-    let viewPortFirstRowIndex =  this.getAdjustedViewPortIndex();
+    let viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
 
     let detailRowHeight = this.options.detailRowHeight * (
-        row.$$expanded ? -1 : 1);
+      row.$$expanded ? -1 : 1);
 
     // Update the toggled row and update the heights in the cache.
-    row.$$expanded ^= 1 ;
+    row.$$expanded ^= 1;
     this.rowHeightsCache.update(row.$$index, detailRowHeight);
 
-    this.onExpandChange.emit({rows: [row], currentIndex: viewPortFirstRowIndex } );
+    this.onExpandChange.emit({ rows: [row], currentIndex: viewPortFirstRowIndex });
     // Broadcast the event to let know that the rows array has been updated.
     this.onRowsUpdate.emit(this.rows);
   }
@@ -230,16 +231,16 @@ export class StateService {
   toggleAllRows(expanded: boolean) {
     let rowExpanded = expanded ? 1 : 0;
     // Capture the row index of the first row that is visible on the viewport.
-    let viewPortFirstRowIndex =  this.getAdjustedViewPortIndex();
+    let viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
 
-    this.rows.forEach( (row: any) => {
+    this.rows.forEach((row: any) => {
       row.$$expanded = rowExpanded;
     });
     // Refresh the full row heights cache since every row was affected.
     this.refreshRowHeightCache();
 
     // Emit all rows that have been expanded.
-    this.onExpandChange.emit({rows: this.rows, currentIndex: viewPortFirstRowIndex });
+    this.onExpandChange.emit({ rows: this.rows, currentIndex: viewPortFirstRowIndex });
     // Broadcast the event to let know that the rows array has been updated.
     this.onRowsUpdate.emit(this.rows);
   }

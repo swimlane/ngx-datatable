@@ -22,16 +22,24 @@ import { forceFillColumnWidths, adjustColumnWidths } from '../utils';
 import { ColumnMode } from '../types';
 import { TableOptions, TableColumn } from '../models';
 import { DataTableColumn } from './datatable-column.directive';
-import { StateService } from '../services';
+import { StateService, FilterService } from '../services';
 import { DatatableRowDetailTemplate } from './datatable-row-detail-template.directive';
 
 @Component({
   selector: 'datatable',
-  providers: [StateService],
+  providers: [StateService, FilterService],
   template: `
     <div
       visibility-observer
       (onVisibilityChange)="adjustSizes()">
+        <input
+        *ngIf="options.filters"
+        type='text'
+        style='padding:8px;margin:15px;width:30%;'
+        [placeholder]='options.filterPlaceholder'
+        [ngModel]='val'
+        (ngModelChange)='updateFilter($event)'
+      />
       <datatable-header
         *ngIf="state.options.headerHeight"
         (onColumnChange)="onColumnChange.emit($event)">
@@ -67,8 +75,12 @@ export class DataTable implements OnInit, OnChanges, DoCheck, AfterViewInit {
   private colDiffer: IterableDiffer;
   private pageSubscriber: any;
 
+  // used to cache our list
+  temp = [];
+
   constructor(
     @Host() public state: StateService,
+    @Host() public _filterService: FilterService,
     renderer: Renderer,
     element: ElementRef,
     differs: KeyValueDiffers) {
@@ -97,7 +109,7 @@ export class DataTable implements OnInit, OnChanges, DoCheck, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if(this.rowDetailTemplateChild) {
+    if (this.rowDetailTemplateChild) {
       this.state.options.rowDetailTemplate = this.rowDetailTemplateChild.rowDetailTemplate;
     }
 
@@ -224,6 +236,16 @@ export class DataTable implements OnInit, OnChanges, DoCheck, AfterViewInit {
     this.onSelectionChange.emit(event);
   }
 
+  updateFilter(val: string) {
+    // remove existing
+    this.rows.splice(0, this.rows.length);
+
+    // filter our data
+    let temp = this._filterService.filter(val, this.options.filters, this.temp);
+
+    // update the rows
+    this.rows.push(...temp);
+  }
   @HostListener('window:resize')
   resize() {
     this.adjustSizes();
@@ -231,7 +253,7 @@ export class DataTable implements OnInit, OnChanges, DoCheck, AfterViewInit {
 
   @HostBinding('class.fixed-header')
   get isFixedHeader() {
-    const headerHeight: number|string = this.options.headerHeight;
+    const headerHeight: number | string = this.options.headerHeight;
 
     return (typeof headerHeight === 'string') ?
       (<string>headerHeight) !== 'auto' : true;
@@ -239,7 +261,7 @@ export class DataTable implements OnInit, OnChanges, DoCheck, AfterViewInit {
 
   @HostBinding('class.fixed-row')
   get isFixedRow() {
-    const rowHeight: number|string = this.options.rowHeight;
+    const rowHeight: number | string = this.options.rowHeight;
 
     return (typeof rowHeight === 'string') ?
       (<string>rowHeight) !== 'auto' : true;
