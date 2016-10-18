@@ -123,11 +123,6 @@ function webpackConfig(options = {}) {
     plugins: [
       new webpack.NamedModulesPlugin(),
 
-      new webpack.optimize.CommonsChunkPlugin({
-        name: ['vendor', 'polyfills'],
-        minChunks: Infinity
-      }),
-
       // https://github.com/angular/angular/issues/11580#issuecomment-246880731
       new webpack.ContextReplacementPlugin(
         // The (\\|\/) piece accounts for path separators in *nix and Windows
@@ -140,16 +135,6 @@ function webpackConfig(options = {}) {
         'HMR': options.HMR,
         'IS_PRODUCTION': IS_PRODUCTION,
         'APP_VERSION': VERSION
-      }),
-
-      new HtmlWebpackPlugin({
-        template: 'src/index.html',
-        chunksSortMode: 'dependency',
-        title: 'swui'
-  		}),
-
-      new WebpackNotifierPlugin({
-        excludeWarnings: true
       }),
 
       new ProgressBarPlugin({
@@ -187,12 +172,13 @@ function webpackConfig(options = {}) {
 
   if(IS_PRODUCTION) {
     config.output.path = root('release');
-    config.output.libraryTarget = 'commonjs2';
+
+    config.output.libraryTarget = 'umd';
+    config.output.library = 'angular2-data-table';
+    config.output.umdNamedDefine = true;
 
     config.entry = {
-      'index': './src/index.ts',
-      'default': './src/components/datatable.scss',
-      'material': './src/themes/material.scss'
+      'index': './src/index.ts'
     };
 
     config.externals = {
@@ -215,6 +201,21 @@ function webpackConfig(options = {}) {
       raw: true,
       entryOnly: true
     }))
+  } else {
+    config.plugins.push(new webpack.optimize.CommonsChunkPlugin({
+      name: ['vendor', 'polyfills'],
+      minChunks: Infinity
+    }));
+
+    config.plugins.push(new HtmlWebpackPlugin({
+      template: 'src/index.html',
+      chunksSortMode: 'dependency',
+      title: 'swui'
+    }));
+
+    config.plugins.push(new WebpackNotifierPlugin({
+      excludeWarnings: true
+    }));
   }
 
   return config;

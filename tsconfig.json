@@ -18,7 +18,8 @@
     "allowSyntheticDefaultImports": true,
     "suppressExcessPropertyErrors": true,
     "suppressImplicitAnyIndexErrors": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "declarationDir": "release"
   },
   "files": [
     "src/custom-types.d.ts",
