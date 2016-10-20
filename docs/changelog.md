@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.11.0
+- Chore: New build process
+- Bug: Fix detail row bug (#212)
+
 ## 0.10.1
 - Bug: Fix `$$expanded` undefined with server paging (#210)
 
