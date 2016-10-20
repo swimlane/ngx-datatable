@@ -8,7 +8,7 @@ Check out the [documentation & demos](https://swimlane.gitbooks.io/angular2-data
 
 ## Features
 - Handle large data sets ( Virtual DOM )
-- Expressive Column Templates
+- Expressive Header and Cell Templates
 - Horizontal & Vertical Scrolling
 - Column Reordering & Resizing
 - Client & Server-side Pagination & Sorting
@@ -17,6 +17,7 @@ Check out the [documentation & demos](https://swimlane.gitbooks.io/angular2-data
 - Row Selection ( Single & Multi )
 - Fixed AND Fluid height
 - Left and Right Column Pinning
+- Row Detail View
 - Decoupled theme'ing with included Google Material theme
 - Light codebase / No external dependencies
 
