@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.11.1
+- Chore: Polish on new build
+
 ## 0.11.0
 - Chore: New build process
 - Bug: Fix detail row bug (#212)
