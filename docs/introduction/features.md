@@ -2,15 +2,16 @@
 The table was designed to be *extremely flexible and light*; it doesn't make any assumptions about your data or how you: filter, sort or page it. That said, we wanted to keep the features strictly related to dealing with the data rather than implementing complex filtering/etc that is often very use-case specific. The current features include:
 
 - Handle large data sets ( Virtual DOM )
-- Expressive Column Templates
+- Expressive Header and Cell Templates
 - Horizontal & Vertical Scrolling
 - Column Reordering & Resizing
 - Client & Server-side Pagination & Sorting
 - Intelligent Column Width Algorithms ( Force-fill & Flex-grow )
 - Integrated Pager
 - Row Selection ( Single & Multi )
-- Left and Right Column Pinning
 - Fixed AND Fluid height
+- Left and Right Column Pinning
+- Row Detail View
 - Decoupled theme'ing with included Google Material theme
 - Light codebase / No external dependencies
 
