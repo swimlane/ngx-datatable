@@ -34,9 +34,7 @@ function webpackConfig(options = {}) {
     devtool: 'source-map',
 
     resolve: {
-      extensions: ['', '.ts', '.js', '.json', '.css', '.scss', '.html'],
-      root: root('src'),
-      descriptionFiles: ['package.json'],
+      extensions: ['.ts', '.js', '.json', '.css', '.scss', '.html'],
       modules: [
         'node_modules',
         root('src')
@@ -72,17 +70,20 @@ function webpackConfig(options = {}) {
     },
 
     module: {
-      preLoaders: [
+      exprContextCritical: false,
+      rules: [
         {
+          enforce: 'pre',
           test: /\.js$/,
           loader: 'source-map',
           exclude: /(node_modules)/
-        }, {
+        },
+        {
+          enforce: 'pre',
           test: /\.ts$/,
-          loader: 'tslint'
-        }
-      ],
-      loaders: [
+          loader: 'tslint',
+          exclude: /(node_modules|release|dist)/
+        },
         {
           test: /\.ts$/,
           loaders: [
@@ -139,18 +140,22 @@ function webpackConfig(options = {}) {
 
       new ProgressBarPlugin({
         format: chalk.yellow.bold('Webpack Building...') + ' [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)'
+      }),
+
+      new webpack.LoaderOptionsPlugin({
+        options: {
+          context: root(),
+          tslint: {
+            emitErrors: false,
+            failOnHint: false,
+            resourcePath: 'src'
+          },
+          postcss: function() {
+            return [ autoprefixer ];
+          }
+        }
       })
-    ],
-
-    tslint: {
-      emitErrors: false,
-      failOnHint: false,
-      resourcePath: 'src'
-    },
-
-    postcss: function() {
-      return [ autoprefixer ];
-    }
+    ]
   };
 
   if(IS_HMR) {
@@ -200,7 +205,7 @@ function webpackConfig(options = {}) {
       banner: banner,
       raw: true,
       entryOnly: true
-    }))
+    }));
   } else {
     config.plugins.push(new webpack.optimize.CommonsChunkPlugin({
       name: ['vendor', 'polyfills'],
