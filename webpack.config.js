@@ -215,7 +215,7 @@ function webpackConfig(options = {}) {
     config.plugins.push(new HtmlWebpackPlugin({
       template: 'src/index.html',
       chunksSortMode: 'dependency',
-      title: 'swui'
+      title: 'angular2-data-table'
     }));
 
     config.plugins.push(new WebpackNotifierPlugin({
