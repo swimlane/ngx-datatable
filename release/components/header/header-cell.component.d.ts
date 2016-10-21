@@ -18,9 +18,6 @@ export declare class DataTableHeaderCell {
     readonly sortDir: SortDirection;
     readonly name: string;
     constructor(element: ElementRef, state: StateService, renderer: Renderer);
-    sortClasses(sort: any): {
-        'sort-asc icon-down': boolean;
-        'sort-desc icon-up': boolean;
-    };
+    sortClasses(sort: any): {};
     onSort(): void;
 }

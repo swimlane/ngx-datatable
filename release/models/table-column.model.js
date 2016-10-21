@@ -45,14 +45,6 @@ var TableColumn = (function () {
             this.cellTemplate = props.cellTemplate;
         }
     }
-    TableColumn.getProps = function () {
-        var props = ['name', 'prop'];
-        var col = new TableColumn();
-        for (var prop in col) {
-            props.push(prop);
-        }
-        return props;
-    };
     Object.defineProperty(TableColumn.prototype, "minWidth", {
         // Minimum width of the column.
         get: function () {

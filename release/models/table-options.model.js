@@ -45,6 +45,15 @@ var TableOptions = (function () {
         this.sortType = types_1.SortType.single;
         // sorts
         this.sorts = [];
+        // css class overrides
+        this.cssClasses = {
+            sortAscending: 'icon-down',
+            sortDescending: 'icon-up',
+            pagerLeftArrow: 'icon-left',
+            pagerRightArrow: 'icon-right',
+            pagerPrevious: 'icon-prev',
+            pagerNext: 'icon-skip'
+        };
         Object.assign(this, props);
         this.validate();
     }

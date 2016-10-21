@@ -80,11 +80,16 @@ var DataTableHeaderCell = (function () {
         configurable: true
     });
     DataTableHeaderCell.prototype.sortClasses = function (sort) {
+        var result = {};
         var dir = this.sortDir;
-        return {
-            'sort-asc icon-down': dir === types_1.SortDirection.asc,
-            'sort-desc icon-up': dir === types_1.SortDirection.desc
-        };
+        var icons = this.state.options.cssClasses;
+        if (dir === types_1.SortDirection.asc) {
+            result[("sort-asc " + icons.sortAscending)] = true;
+        }
+        else if (dir === types_1.SortDirection.desc) {
+            result[("sort-desc " + icons.sortDescending)] = true;
+        }
+        return result;
     };
     DataTableHeaderCell.prototype.onSort = function () {
         if (this.column.sortable) {

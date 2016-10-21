@@ -24,6 +24,7 @@ export declare class TableOptions {
     sortType: SortType;
     sorts: Array<Sort>;
     rowDetailTemplate: TemplateRef<any>;
+    cssClasses: any;
     constructor(props: any);
     validate(): void;
 }

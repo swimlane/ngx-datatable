@@ -15,14 +15,6 @@ var DataTablePager = (function () {
         this.onPaged = new core_1.EventEmitter();
         renderer.setElementClass(element.nativeElement, 'datatable-pager', true);
     }
-    Object.defineProperty(DataTablePager.prototype, "totalPages", {
-        get: function () {
-            var count = this.size < 1 ? 1 : Math.ceil(this.count / this.size);
-            return Math.max(count || 0, 1);
-        },
-        enumerable: true,
-        configurable: true
-    });
     Object.defineProperty(DataTablePager.prototype, "count", {
         get: function () {
             return this._count;
@@ -41,6 +33,14 @@ var DataTablePager = (function () {
         set: function (val) {
             this._page = val;
             this.pages = this.calcPages();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataTablePager.prototype, "totalPages", {
+        get: function () {
+            var count = this.size < 1 ? 1 : Math.ceil(this.count / this.size);
+            return Math.max(count || 0, 1);
         },
         enumerable: true,
         configurable: true
@@ -92,6 +92,10 @@ var DataTablePager = (function () {
         __metadata('design:type', Number)
     ], DataTablePager.prototype, "size", void 0);
     __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], DataTablePager.prototype, "cssClasses", void 0);
+    __decorate([
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)
     ], DataTablePager.prototype, "onPaged", void 0);
@@ -108,7 +112,7 @@ var DataTablePager = (function () {
     DataTablePager = __decorate([
         core_1.Component({
             selector: 'datatable-pager',
-            template: "\n    <ul class=\"pager\">\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(1)\"\n          class=\"icon-prev\">\n        </a>\n      </li>\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"prevPage()\"\n          class=\"icon-left\">\n        </a>\n      </li>\n      <li\n        *ngFor=\"let pg of pages\"\n        [class.active]=\"pg.number === page\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(pg.number)\">\n          {{pg.text}}\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"nextPage()\"\n          class=\"icon-right\">\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(totalPages)\"\n          class=\"icon-skip\">\n        </a>\n      </li>\n    </ul>\n  ",
+            template: "\n    <ul class=\"pager\">\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(1)\"\n          class=\"{{cssClasses.pagerPrevious}}\">\n        </a>\n      </li>\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"prevPage()\"\n          class=\"{{cssClasses.pagerLeftArrow}}\">\n        </a>\n      </li>\n      <li\n        *ngFor=\"let pg of pages\"\n        [class.active]=\"pg.number === page\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(pg.number)\">\n          {{pg.text}}\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"nextPage()\"\n          class=\"{{cssClasses.pagerRightArrow}}\">\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(totalPages)\"\n          class=\"{{cssClasses.pagerNext}}\">\n        </a>\n      </li>\n    </ul>\n  ",
             changeDetection: core_1.ChangeDetectionStrategy.OnPush
         }), 
         __metadata('design:paramtypes', [core_1.ElementRef, core_1.Renderer])

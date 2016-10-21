@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"0.11.0" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"0.11.2" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -1093,7 +1093,7 @@ var DataTableFooter = (function () {
     DataTableFooter = __decorate([
         core_1.Component({
             selector: 'datatable-footer',
-            template: "\n    <div\n      [style.height]=\"state.options.footerHeight\">\n      <div class=\"page-count\">{{state.rowCount}} total</div>\n      <datatable-pager\n        [page]=\"curPage\"\n        [size]=\"state.pageSize\"\n        (onPaged)=\"onPageChange.emit($event)\"\n        [count]=\"state.rowCount\"\n        [hidden]=\"!visible\">\n       </datatable-pager>\n     </div>\n  "
+            template: "\n    <div\n      [style.height]=\"state.options.footerHeight\">\n      <div class=\"page-count\">{{state.rowCount}} total</div>\n      <datatable-pager\n        [page]=\"curPage\"\n        [size]=\"state.pageSize\"\n        [cssClasses]=\"state.options.cssClasses\"\n        (onPaged)=\"onPageChange.emit($event)\"\n        [count]=\"state.rowCount\"\n        [hidden]=\"!visible\">\n       </datatable-pager>\n     </div>\n  "
         }), 
         __metadata('design:paramtypes', [core_1.ElementRef, services_1.StateService, core_1.Renderer])
     ], DataTableFooter);
@@ -1125,14 +1125,6 @@ var DataTablePager = (function () {
         this.onPaged = new core_1.EventEmitter();
         renderer.setElementClass(element.nativeElement, 'datatable-pager', true);
     }
-    Object.defineProperty(DataTablePager.prototype, "totalPages", {
-        get: function () {
-            var count = this.size < 1 ? 1 : Math.ceil(this.count / this.size);
-            return Math.max(count || 0, 1);
-        },
-        enumerable: true,
-        configurable: true
-    });
     Object.defineProperty(DataTablePager.prototype, "count", {
         get: function () {
             return this._count;
@@ -1151,6 +1143,14 @@ var DataTablePager = (function () {
         set: function (val) {
             this._page = val;
             this.pages = this.calcPages();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataTablePager.prototype, "totalPages", {
+        get: function () {
+            var count = this.size < 1 ? 1 : Math.ceil(this.count / this.size);
+            return Math.max(count || 0, 1);
         },
         enumerable: true,
         configurable: true
@@ -1202,6 +1202,10 @@ var DataTablePager = (function () {
         __metadata('design:type', Number)
     ], DataTablePager.prototype, "size", void 0);
     __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], DataTablePager.prototype, "cssClasses", void 0);
+    __decorate([
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)
     ], DataTablePager.prototype, "onPaged", void 0);
@@ -1218,7 +1222,7 @@ var DataTablePager = (function () {
     DataTablePager = __decorate([
         core_1.Component({
             selector: 'datatable-pager',
-            template: "\n    <ul class=\"pager\">\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(1)\"\n          class=\"icon-prev\">\n        </a>\n      </li>\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"prevPage()\"\n          class=\"icon-left\">\n        </a>\n      </li>\n      <li\n        *ngFor=\"let pg of pages\"\n        [class.active]=\"pg.number === page\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(pg.number)\">\n          {{pg.text}}\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"nextPage()\"\n          class=\"icon-right\">\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(totalPages)\"\n          class=\"icon-skip\">\n        </a>\n      </li>\n    </ul>\n  ",
+            template: "\n    <ul class=\"pager\">\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(1)\"\n          class=\"{{cssClasses.pagerPrevious}}\">\n        </a>\n      </li>\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"prevPage()\"\n          class=\"{{cssClasses.pagerLeftArrow}}\">\n        </a>\n      </li>\n      <li\n        *ngFor=\"let pg of pages\"\n        [class.active]=\"pg.number === page\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(pg.number)\">\n          {{pg.text}}\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"nextPage()\"\n          class=\"{{cssClasses.pagerRightArrow}}\">\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(totalPages)\"\n          class=\"{{cssClasses.pagerNext}}\">\n        </a>\n      </li>\n    </ul>\n  ",
             changeDetection: core_1.ChangeDetectionStrategy.OnPush
         }), 
         __metadata('design:paramtypes', [core_1.ElementRef, core_1.Renderer])
@@ -1316,11 +1320,16 @@ var DataTableHeaderCell = (function () {
         configurable: true
     });
     DataTableHeaderCell.prototype.sortClasses = function (sort) {
+        var result = {};
         var dir = this.sortDir;
-        return {
-            'sort-asc icon-down': dir === types_1.SortDirection.asc,
-            'sort-desc icon-up': dir === types_1.SortDirection.desc
-        };
+        var icons = this.state.options.cssClasses;
+        if (dir === types_1.SortDirection.asc) {
+            result[("sort-asc " + icons.sortAscending)] = true;
+        }
+        else if (dir === types_1.SortDirection.desc) {
+            result[("sort-desc " + icons.sortDescending)] = true;
+        }
+        return result;
     };
     DataTableHeaderCell.prototype.onSort = function () {
         if (this.column.sortable) {
@@ -2291,14 +2300,6 @@ var TableColumn = (function () {
             this.cellTemplate = props.cellTemplate;
         }
     }
-    TableColumn.getProps = function () {
-        var props = ['name', 'prop'];
-        var col = new TableColumn();
-        for (var prop in col) {
-            props.push(prop);
-        }
-        return props;
-    };
     Object.defineProperty(TableColumn.prototype, "minWidth", {
         // Minimum width of the column.
         get: function () {
@@ -2379,6 +2380,15 @@ var TableOptions = (function () {
         this.sortType = types_1.SortType.single;
         // sorts
         this.sorts = [];
+        // css class overrides
+        this.cssClasses = {
+            sortAscending: 'icon-down',
+            sortDescending: 'icon-up',
+            pagerLeftArrow: 'icon-left',
+            pagerRightArrow: 'icon-right',
+            pagerPrevious: 'icon-prev',
+            pagerNext: 'icon-skip'
+        };
         Object.assign(this, props);
         this.validate();
     }
@@ -2516,11 +2526,6 @@ var StateService = (function () {
             var first = 0;
             var last = 0;
             if (this.options.scrollbarV) {
-                // const floor = Math.floor((this.offsetY || 0) / this.options.rowHeight);
-                // first = Math.max(floor, 0);
-                // last = Math.min(first + this.pageSize, this.rowCount);
-                //
-                // console.log('first ==> ' + first + ' last ==> ' + last);
                 // Calculation of the first and last indexes will be based on where the
                 // scrollY position would be at.  The last index would be the one
                 // that shows up inside the view port the last.

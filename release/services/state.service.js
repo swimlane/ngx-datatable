@@ -103,11 +103,6 @@ var StateService = (function () {
             var first = 0;
             var last = 0;
             if (this.options.scrollbarV) {
-                // const floor = Math.floor((this.offsetY || 0) / this.options.rowHeight);
-                // first = Math.max(floor, 0);
-                // last = Math.min(first + this.pageSize, this.rowCount);
-                //
-                // console.log('first ==> ' + first + ' last ==> ' + last);
                 // Calculation of the first and last indexes will be based on where the
                 // scrollY position would be at.  The last index would be the one
                 // that shows up inside the view port the last.

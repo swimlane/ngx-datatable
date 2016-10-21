@@ -1,13 +1,14 @@
 import { EventEmitter, Renderer, ElementRef } from '@angular/core';
 export declare class DataTablePager {
     size: number;
+    cssClasses: any;
     onPaged: EventEmitter<any>;
+    count: number;
+    page: number;
+    readonly totalPages: number;
     private _count;
     private _page;
     private pages;
-    readonly totalPages: number;
-    count: number;
-    page: number;
     constructor(element: ElementRef, renderer: Renderer);
     canPrevious(): boolean;
     canNext(): boolean;

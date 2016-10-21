@@ -4,7 +4,6 @@ import { PipeTransform } from '@angular/core';
  * @type {object}
  */
 export declare class TableColumn {
-    static getProps(): string[];
     $$id: string;
     $$oldWidth: number;
     isExpressive: boolean;
