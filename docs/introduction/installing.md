@@ -6,14 +6,8 @@ You can grab the latest release from the [Releases Page](https://github.com/swim
 
 Also, the release code is checked in and resides [here](https://github.com/swimlane/angular2-data-table/tree/master/release).
 
-### Module Versions
-We don't discriminate against module loaders and package in `UMD`, `ES6` and `CJS`.
-
-- `release/angular2-data-table.js` - Multi-file ES5 Build
-- `release/angular2-data-table.umd.js` - UMD Version
-- `release/angular2-data-table.umd.min.js` - UMD Version Minified
-- `release/angular2-data-table.cjs.js` - CommonJS Version
-- `release/angular2-data-table.es.js` - ES6 Version
+### Module Version
+The module is packaged using UMD. The file is `release/index.js`.
 
 ### CSS
 Additionally you will need to include `./release/datatable.css`.
