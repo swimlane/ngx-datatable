@@ -11,6 +11,7 @@ export class StateService {
   options: TableOptions;
   rows: Array<any> = [];
   selected: Array<any> = [];
+  
   /**
    * Cache the row heights for calculation during virtual scroll.
    * @type {RowHeightCache}
@@ -83,18 +84,11 @@ export class StateService {
     let last = 0;
 
     if (this.options.scrollbarV) {
-      // const floor = Math.floor((this.offsetY || 0) / this.options.rowHeight);
-      // first = Math.max(floor, 0);
-      // last = Math.min(first + this.pageSize, this.rowCount);
-      //
-      // console.log('first ==> ' + first + ' last ==> ' + last);
-
       // Calculation of the first and last indexes will be based on where the
       // scrollY position would be at.  The last index would be the one
       // that shows up inside the view port the last.
       first = this.rowHeightsCache.getRowIndex(this.offsetY);
       last = this.rowHeightsCache.getRowIndex(this.bodyHeight + this.offsetY) + 1;
-      // console.log('first ==> ' + first + ' last ==> ' + last);
     } else {
       first = Math.max(this.options.offset * this.pageSize, 0);
       last = Math.min(first + this.pageSize, this.rowCount);
@@ -120,11 +114,11 @@ export class StateService {
    *  when the entire row array state has changed.
    */
   refreshRowHeightCache() {
-
     // clear the previous row height cache if already present.
     // this is useful during sorts, filters where the state of the
     // rows array is changed.
     this.rowHeightsCache.clearCache();
+
     // Initialize the tree only if there are rows inside the tree.
     if ( this.rows.length > 0 ) {
       this.rowHeightsCache.initCache( this.rows,
@@ -137,10 +131,12 @@ export class StateService {
   setRows(rows: Array<any>): StateService {
     if (rows) {
       this.rows = [...rows];
+
       // row heights cache is only applicable to virtual scrolling.
       if( this.options && this.options.scrollbarV ) {
         this.refreshRowHeightCache();
       }
+
       this.onRowsUpdate.emit(rows);
     }
     return this;
@@ -198,10 +194,12 @@ export class StateService {
     // If the scroll bar is just below the row which is highlighted then make that as the
     // first index.
     let viewPortFirstRowIndex =  this.indexes.first;
+
     if (this.options.scrollbarV) {
       let offsetScroll = this.rowHeightsCache.query(viewPortFirstRowIndex - 1);
       return offsetScroll <= this.offsetY ? viewPortFirstRowIndex - 1 : viewPortFirstRowIndex;
     }
+
     return viewPortFirstRowIndex;
   }
 
@@ -253,6 +251,7 @@ export class StateService {
 
     // Emit all rows that have been expanded.
     this.onExpandChange.emit({rows: this.rows, currentIndex: viewPortFirstRowIndex });
+
     // Broadcast the event to let know that the rows array has been updated.
     this.onRowsUpdate.emit(this.rows);
   }

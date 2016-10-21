@@ -85,11 +85,17 @@ export class DataTableHeaderCell {
   }
 
   sortClasses(sort) {
-    let dir = this.sortDir;
-    return {
-      'sort-asc icon-down': dir === SortDirection.asc,
-      'sort-desc icon-up': dir === SortDirection.desc
-    };
+    let result = {};
+    const dir = this.sortDir;
+    const icons = this.state.options.cssClasses;
+
+    if(dir === SortDirection.asc) {
+      result[`sort-asc ${icons.sortAscending}`] = true;
+    } else if(dir === SortDirection.desc) {
+      result[`sort-desc ${icons.sortDescending}`] = true;
+    }
+
+    return result;
   }
 
   onSort() {

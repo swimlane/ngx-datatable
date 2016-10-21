@@ -72,6 +72,16 @@ export class TableOptions {
   // row detail template
   rowDetailTemplate: TemplateRef<any>;
 
+  // css class overrides
+  cssClasses: any = {
+    sortAscending: 'icon-down',
+    sortDescending: 'icon-up',
+    pagerLeftArrow: 'icon-left',
+    pagerRightArrow: 'icon-right',
+    pagerPrevious: 'icon-prev',
+    pagerNext: 'icon-skip'
+  };
+
   constructor(props: any) {
     Object.assign(this, props);
     this.validate();

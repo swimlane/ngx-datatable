@@ -17,6 +17,7 @@ import { StateService } from '../../services';
       <datatable-pager
         [page]="curPage"
         [size]="state.pageSize"
+        [cssClasses]="state.options.cssClasses"
         (onPaged)="onPageChange.emit($event)"
         [count]="state.rowCount"
         [hidden]="!visible">

@@ -31,7 +31,7 @@ export class DataTableBodyCell {
   @HostBinding('class')
   get cssClasses(): string {
     let cls = 'datatable-body-cell';
-    const sortDir = this.sortDir;
+    const sortDir: SortDirection = this.sortDir;
 
     if(sortDir) {
       cls += ` sort-active sort-${sortDir}`;

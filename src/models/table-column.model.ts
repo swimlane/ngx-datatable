@@ -7,17 +7,6 @@ import { id, camelCase} from '../utils';
  */
 export class TableColumn {
 
-  static getProps() {
-    let props = ['name', 'prop'];
-    let col = new TableColumn();
-
-    for(const prop in col) {
-      props.push(prop);
-    }
-
-    return props;
-  }
-
   // unique id
   $$id: string = id();
 

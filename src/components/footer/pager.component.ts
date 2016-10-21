@@ -16,14 +16,14 @@ import {
         <a
           href="javascript:void(0)"
           (click)="selectPage(1)"
-          class="icon-prev">
+          class="{{cssClasses.pagerPrevious}}">
         </a>
       </li>
       <li [class.disabled]="!canPrevious()">
         <a
           href="javascript:void(0)"
           (click)="prevPage()"
-          class="icon-left">
+          class="{{cssClasses.pagerLeftArrow}}">
         </a>
       </li>
       <li
@@ -39,14 +39,14 @@ import {
         <a
           href="javascript:void(0)"
           (click)="nextPage()"
-          class="icon-right">
+          class="{{cssClasses.pagerRightArrow}}">
         </a>
       </li>
       <li [class.disabled]="!canNext()">
         <a
           href="javascript:void(0)"
           (click)="selectPage(totalPages)"
-          class="icon-skip">
+          class="{{cssClasses.pagerNext}}">
         </a>
       </li>
     </ul>
@@ -56,16 +56,8 @@ import {
 export class DataTablePager {
 
   @Input() size: number = 0;
+  @Input() cssClasses: any;
   @Output() onPaged: EventEmitter<any> = new EventEmitter();
-
-  private _count: number;
-  private _page: number;
-  private pages: any;
-
-  get totalPages() {
-    const count = this.size < 1 ? 1 : Math.ceil(this.count / this.size);
-    return Math.max(count || 0, 1);
-  }
 
   @Input()
   set count(val) {
@@ -86,6 +78,15 @@ export class DataTablePager {
   get page() {
     return this._page;
   }
+
+  get totalPages() {
+    const count = this.size < 1 ? 1 : Math.ceil(this.count / this.size);
+    return Math.max(count || 0, 1);
+  }
+
+  private _count: number;
+  private _page: number;
+  private pages: any;
 
   constructor(element: ElementRef, renderer: Renderer) {
     renderer.setElementClass(element.nativeElement, 'datatable-pager', true);
@@ -125,7 +126,7 @@ export class DataTablePager {
     let startPage = 1;
     let endPage = this.totalPages;
     let maxSize = 5;
-    let isMaxSized = maxSize < this.totalPages;
+    const isMaxSized = maxSize < this.totalPages;
 
     page = page || this.page;
 
