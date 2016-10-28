@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.12.0
+- Bug: Return empty string on undefined deep values (#232)
+- Bug: Fix force fill alog (#218)
+- Enhancement: Support for other icon types (#235)
+- Enhancement: Add ability to identify rows for proper selection (#154)
+
 ## 0.11.2
 - Enhancement: Add ability to define css icon classes for pager / header
 - Chore: Uprade to Angular 2.1.1

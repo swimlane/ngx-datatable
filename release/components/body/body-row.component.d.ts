@@ -5,7 +5,6 @@ export declare class DataTableBodyRow {
     row: any;
     readonly isSelected: boolean;
     constructor(state: StateService, element: ElementRef, renderer: Renderer);
-    trackColBy(index: number, obj: any): any;
     stylesByGroup(group: any): {
         width: string;
     };

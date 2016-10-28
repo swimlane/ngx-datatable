@@ -96,43 +96,71 @@ function scaleColumns(colsByGroup, maxWidth, totalFlexGrow) {
  * @param {int} expectedWidth
  */
 function forceFillColumnWidths(allColumns, expectedWidth, startIdx) {
-    var contentWidth = 0;
     var columnsToResize = startIdx > -1 ?
         allColumns.slice(startIdx, allColumns.length).filter(function (c) { return c.canAutoResize; }) :
         allColumns.filter(function (c) { return c.canAutoResize; });
-    for (var _i = 0, allColumns_1 = allColumns; _i < allColumns_1.length; _i++) {
-        var column = allColumns_1[_i];
-        if (!column.canAutoResize) {
-            contentWidth += column.width;
+    for (var _i = 0, columnsToResize_1 = columnsToResize; _i < columnsToResize_1.length; _i++) {
+        var column = columnsToResize_1[_i];
+        if (!column.$$oldWidth) {
+            column.$$oldWidth = column.width;
         }
-        else {
-            contentWidth += (column.$$oldWidth || column.width);
-        }
+        // Initialize the starting width to original width whenever there is a resize/initialize event.
+        column.width = column.$$oldWidth;
     }
+    var additionWidthPerColumn = 0;
+    var exceedsWindow = false;
+    var contentWidth = getContentWidth(allColumns);
     var remainingWidth = expectedWidth - contentWidth;
-    var additionWidthPerColumn = remainingWidth / columnsToResize.length;
-    var exceedsWindow = contentWidth > expectedWidth;
-    for (var _a = 0, columnsToResize_1 = columnsToResize; _a < columnsToResize_1.length; _a++) {
-        var column = columnsToResize_1[_a];
-        if (exceedsWindow) {
-            column.width = column.$$oldWidth || column.width;
-        }
-        else {
-            if (!column.$$oldWidth) {
-                column.$$oldWidth = column.width;
-            }
-            var newSize = column.$$oldWidth + additionWidthPerColumn;
-            if (column.minWith && newSize < column.minWidth) {
-                column.width = column.minWidth;
-            }
-            else if (column.maxWidth && newSize > column.maxWidth) {
-                column.width = column.maxWidth;
+    var columnsProcessed = [];
+    // This loop takes care of the
+    do {
+        additionWidthPerColumn = remainingWidth / columnsToResize.length;
+        exceedsWindow = contentWidth >= expectedWidth;
+        for (var _a = 0, columnsToResize_2 = columnsToResize; _a < columnsToResize_2.length; _a++) {
+            var column = columnsToResize_2[_a];
+            if (exceedsWindow) {
+                column.width = column.$$oldWidth || column.width;
             }
             else {
-                column.width = newSize;
+                var newSize = column.width + additionWidthPerColumn;
+                if (column.minWidth && newSize < column.minWidth) {
+                    column.width = column.minWidth;
+                    columnsProcessed.push(column);
+                }
+                else if (column.maxWidth && newSize > column.maxWidth) {
+                    column.width = column.maxWidth;
+                    columnsProcessed.push(column);
+                }
+                else {
+                    column.width = newSize;
+                }
             }
         }
-    }
+        contentWidth = getContentWidth(allColumns);
+        remainingWidth = expectedWidth - contentWidth;
+        removeProcessedColumns(columnsToResize, columnsProcessed);
+    } while (remainingWidth > 0 && columnsToResize.length !== 0);
 }
 exports.forceFillColumnWidths = forceFillColumnWidths;
+/**
+ * Remove the processed columns from the current active columns.
+ *
+ * @param columnsToResize  Array containing the columns that need to be resized.
+ * @param columnsProcessed Array containing the columns that have already been processed.
+ */
+function removeProcessedColumns(columnsToResize, columnsProcessed) {
+    for (var _i = 0, columnsProcessed_1 = columnsProcessed; _i < columnsProcessed_1.length; _i++) {
+        var column = columnsProcessed_1[_i];
+        var index = columnsToResize.indexOf(column);
+        columnsToResize.splice(index, 1);
+    }
+}
+function getContentWidth(allColumns) {
+    var contentWidth = 0;
+    for (var _i = 0, allColumns_1 = allColumns; _i < allColumns_1.length; _i++) {
+        var column = allColumns_1[_i];
+        contentWidth += column.width;
+    }
+    return contentWidth;
+}
 //# sourceMappingURL=math.js.map

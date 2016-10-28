@@ -54,6 +54,10 @@ var TableOptions = (function () {
             pagerPrevious: 'icon-prev',
             pagerNext: 'icon-skip'
         };
+        // This will be used when displaying or selecting rows:
+        // when tracking/comparing them, we'll use the value of this fn,
+        // (`fn(x) === fn(y)` instead of `x === y`)
+        this.rowIdentity = (function (x) { return x; });
         Object.assign(this, props);
         this.validate();
     }

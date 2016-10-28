@@ -14,7 +14,6 @@ export declare class DataTableBody implements OnInit, OnDestroy {
     readonly bodyWidth: string;
     constructor(state: StateService, element: ElementRef, renderer: Renderer);
     ngOnInit(): void;
-    trackRowBy(index: number, obj: any): any;
     onBodyScroll(props: any): void;
     updatePage(direction: any): void;
     updateRows(refresh?: boolean): void;

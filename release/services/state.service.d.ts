@@ -77,4 +77,5 @@ export declare class StateService {
      * @param expanded When true, all rows are expanded and when false, all rows will be collapsed.
      */
     toggleAllRows(expanded: boolean): void;
+    getRowSelectedIdx(row: any, selected: any[]): number;
 }

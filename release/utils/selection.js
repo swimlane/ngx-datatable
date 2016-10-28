@@ -1,6 +1,6 @@
 "use strict";
-function selectRows(selected, row) {
-    var selectedIndex = selected.indexOf(row);
+function selectRows(selected, row, comparefn) {
+    var selectedIndex = comparefn(row, selected);
     if (selectedIndex > -1) {
         selected.splice(selectedIndex, 1);
     }
@@ -10,7 +10,7 @@ function selectRows(selected, row) {
     return selected;
 }
 exports.selectRows = selectRows;
-function selectRowsBetween(selected, rows, index, prevIndex) {
+function selectRowsBetween(selected, rows, index, prevIndex, comparefn) {
     var reverse = index < prevIndex;
     for (var i = 0, len = rows.length; i < len; i++) {
         var row = rows[i];
@@ -30,7 +30,7 @@ function selectRowsBetween(selected, rows, index, prevIndex) {
             };
         }
         if ((reverse && lesser) || (!reverse && greater)) {
-            var idx = selected.indexOf(row);
+            var idx = comparefn(row, selected);
             // if reverse shift selection (unselect) and the
             // row is already selected, remove it from selected
             if (reverse && idx > -1) {

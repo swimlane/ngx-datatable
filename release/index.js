@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"0.11.2" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"0.12.0" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -253,15 +253,11 @@ var DataTableBodyRow = (function () {
     }
     Object.defineProperty(DataTableBodyRow.prototype, "isSelected", {
         get: function () {
-            return this.state.selected &&
-                this.state.selected.indexOf(this.row) > -1;
+            return this.state.getRowSelectedIdx(this.row, this.state.selected) > -1;
         },
         enumerable: true,
         configurable: true
     });
-    DataTableBodyRow.prototype.trackColBy = function (index, obj) {
-        return obj.$$id;
-    };
     DataTableBodyRow.prototype.stylesByGroup = function (group) {
         var widths = this.state.columnGroupWidths;
         var offsetX = this.state.offsetX;
@@ -290,7 +286,7 @@ var DataTableBodyRow = (function () {
     DataTableBodyRow = __decorate([
         core_1.Component({
             selector: 'datatable-body-row',
-            template: "\n    <div>\n      <div\n        class=\"datatable-row-left datatable-row-group\"\n        *ngIf=\"state.columnsByPin.left.length\"\n        [ngStyle]=\"stylesByGroup('left')\"\n        [style.width]=\"state.columnGroupWidths.left + 'px'\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.left; trackBy: trackColBy\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n      <div\n        class=\"datatable-row-center datatable-row-group\"\n        [style.width]=\"state.columnGroupWidths.center + 'px'\"\n        [ngStyle]=\"stylesByGroup('center')\"\n        *ngIf=\"state.columnsByPin.center.length\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.center; trackBy: trackColBy\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n      <div\n        class=\"datatable-row-right datatable-row-group\"\n        *ngIf=\"state.columnsByPin.right.length\"\n        [ngStyle]=\"stylesByGroup('right')\"\n        [style.width]=\"state.columnGroupWidths.right + 'px'\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.right; trackBy: trackColBy\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n    </div>\n  "
+            template: "\n    <div>\n      <div\n        class=\"datatable-row-left datatable-row-group\"\n        *ngIf=\"state.columnsByPin.left.length\"\n        [ngStyle]=\"stylesByGroup('left')\"\n        [style.width]=\"state.columnGroupWidths.left + 'px'\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.left; trackBy: column?.$$id\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n      <div\n        class=\"datatable-row-center datatable-row-group\"\n        [style.width]=\"state.columnGroupWidths.center + 'px'\"\n        [ngStyle]=\"stylesByGroup('center')\"\n        *ngIf=\"state.columnsByPin.center.length\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.center; trackBy: column?.$$id\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n      <div\n        class=\"datatable-row-right datatable-row-group\"\n        *ngIf=\"state.columnsByPin.right.length\"\n        [ngStyle]=\"stylesByGroup('right')\"\n        [style.width]=\"state.columnGroupWidths.right + 'px'\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.right; trackBy: column?.$$id\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n    </div>\n  "
         }), 
         __metadata('design:paramtypes', [services_1.StateService, core_1.ElementRef, core_1.Renderer])
     ], DataTableBodyRow);
@@ -325,6 +321,7 @@ var DataTableBody = (function () {
         this.state = state;
         this.onRowClick = new core_1.EventEmitter();
         this.onRowSelect = new core_1.EventEmitter();
+        // set this before onInit for fast renders
         renderer.setElementClass(element.nativeElement, 'datatable-body', true);
     }
     Object.defineProperty(DataTableBody.prototype, "selectEnabled", {
@@ -393,9 +390,6 @@ var DataTableBody = (function () {
         this.sub.add(this.state.onSortChange.subscribe(function () {
             _this.scroller.setOffset(0);
         }));
-    };
-    DataTableBody.prototype.trackRowBy = function (index, obj) {
-        return obj.$$index;
     };
     DataTableBody.prototype.onBodyScroll = function (props) {
         this.state.offsetY = props.scrollYPos;
@@ -485,7 +479,9 @@ var DataTableBody = (function () {
         setTimeout(function () { return _this.state.options.loadingIndicator = false; }, 500);
     };
     DataTableBody.prototype.rowClicked = function (event, index, row) {
-        var clickType = event.type === 'dblclick' ? types_1.ClickType.double : types_1.ClickType.single;
+        var clickType = event.type === 'dblclick' ?
+            types_1.ClickType.double :
+            types_1.ClickType.single;
         this.onRowClick.emit({ type: clickType, event: event, row: row });
         this.selectRow(event, index, row);
     };
@@ -502,6 +498,7 @@ var DataTableBody = (function () {
         }
     };
     DataTableBody.prototype.selectRow = function (event, index, row) {
+        var _this = this;
         if (!this.selectEnabled)
             return;
         var multiShift = this.state.options.selectionType === types_1.SelectionType.multiShift;
@@ -510,14 +507,14 @@ var DataTableBody = (function () {
         if (multiShift || multiClick) {
             if (multiShift && event.shiftKey) {
                 var selected = this.state.selected.slice();
-                selections = utils_1.selectRowsBetween(selected, this.rows, index, this.prevIndex);
+                selections = utils_1.selectRowsBetween(selected, this.rows, index, this.prevIndex, function (r, s) { return _this.state.getRowSelectedIdx(r, s); });
             }
             else if (multiShift && !event.shiftKey) {
                 selections.push(row);
             }
             else {
                 var selected = this.state.selected.slice();
-                selections = utils_1.selectRows(selected, row);
+                selections = utils_1.selectRows(selected, row, function (r, s) { return _this.state.getRowSelectedIdx(r, s); });
             }
         }
         else {
@@ -527,9 +524,8 @@ var DataTableBody = (function () {
         this.onRowSelect.emit(selections);
     };
     DataTableBody.prototype.ngOnDestroy = function () {
-        if (this.sub) {
+        if (this.sub)
             this.sub.unsubscribe();
-        }
     };
     __decorate([
         core_1.Output(), 
@@ -554,7 +550,7 @@ var DataTableBody = (function () {
     DataTableBody = __decorate([
         core_1.Component({
             selector: 'datatable-body',
-            template: "\n    <div>\n      <datatable-progress\n        *ngIf=\"state.options.loadingIndicator\">\n      </datatable-progress>\n      <div\n        scroller\n        (onScroll)=\"onBodyScroll($event)\"\n        *ngIf=\"state.rows.length\"\n        [rowHeight]=\"state.options.rowHeight\"\n        [scrollbarV]=\"state.options.scrollbarV\"\n        [scrollbarH]=\"state.options.scrollbarH\"\n        [count]=\"state.rowCount\"\n        [scrollHeight]=\"state.scrollHeight\"\n        [limit]=\"state.options.limit\"\n        [scrollWidth]=\"state.columnGroupWidths.total\">\n        <datatable-row-wrapper \n          *ngFor=\"let row of rows; let i = index; trackBy: trackRowBy\"\n          [ngStyle]=\"getRowsStyles(row)\"\n          [style.height]=\"getRowHeight(row) + 'px'\"\n          [row]=\"row\">\n          <datatable-body-row\n            [attr.tabindex]=\"i\"\n            [style.height]=\"state.options.rowHeight +  'px'\"\n            (click)=\"rowClicked($event, i, row)\"\n            (dblclick)=\"rowClicked($event, i, row)\"\n            (keydown)=\"rowKeydown($event, i, row)\"\n            [row]=\"row\"\n            [class.datatable-row-even]=\"row.$$index % 2 === 0\"\n            [class.datatable-row-odd]=\"row.$$index % 2 !== 0\">\n          </datatable-body-row>\n        </datatable-row-wrapper>\n      </div>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"state.options.emptyMessage\">\n      </div>\n    </div>\n  "
+            template: "\n    <div>\n      <datatable-progress\n        *ngIf=\"state.options.loadingIndicator\">\n      </datatable-progress>\n      <div\n        scroller\n        (onScroll)=\"onBodyScroll($event)\"\n        *ngIf=\"state.rows.length\"\n        [rowHeight]=\"state.options.rowHeight\"\n        [scrollbarV]=\"state.options.scrollbarV\"\n        [scrollbarH]=\"state.options.scrollbarH\"\n        [count]=\"state.rowCount\"\n        [scrollHeight]=\"state.scrollHeight\"\n        [limit]=\"state.options.limit\"\n        [scrollWidth]=\"state.columnGroupWidths.total\">\n        <datatable-row-wrapper \n          *ngFor=\"let row of rows; let i = index; trackBy: row?.$$index\"\n          [ngStyle]=\"getRowsStyles(row)\"\n          [style.height]=\"getRowHeight(row) + 'px'\"\n          [row]=\"row\">\n          <datatable-body-row\n            [attr.tabindex]=\"i\"\n            [style.height]=\"state.options.rowHeight +  'px'\"\n            (click)=\"rowClicked($event, i, row)\"\n            (dblclick)=\"rowClicked($event, i, row)\"\n            (keydown)=\"rowKeydown($event, i, row)\"\n            [row]=\"row\"\n            [class.datatable-row-even]=\"row.$$index % 2 === 0\"\n            [class.datatable-row-odd]=\"row.$$index % 2 !== 0\">\n          </datatable-body-row>\n        </datatable-row-wrapper>\n      </div>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"state.options.emptyMessage\">\n      </div>\n    </div>\n  "
         }), 
         __metadata('design:paramtypes', [services_1.StateService, core_1.ElementRef, core_1.Renderer])
     ], DataTableBody);
@@ -1222,7 +1218,7 @@ var DataTablePager = (function () {
     DataTablePager = __decorate([
         core_1.Component({
             selector: 'datatable-pager',
-            template: "\n    <ul class=\"pager\">\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(1)\"\n          class=\"{{cssClasses.pagerPrevious}}\">\n        </a>\n      </li>\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"prevPage()\"\n          class=\"{{cssClasses.pagerLeftArrow}}\">\n        </a>\n      </li>\n      <li\n        *ngFor=\"let pg of pages\"\n        [class.active]=\"pg.number === page\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(pg.number)\">\n          {{pg.text}}\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"nextPage()\"\n          class=\"{{cssClasses.pagerRightArrow}}\">\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(totalPages)\"\n          class=\"{{cssClasses.pagerNext}}\">\n        </a>\n      </li>\n    </ul>\n  ",
+            template: "\n    <ul class=\"pager\">\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(1)\">\n          <i class=\"{{cssClasses.pagerPrevious}}\"></i>\n        </a>\n      </li>\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"prevPage()\">\n          <i class=\"{{cssClasses.pagerLeftArrow}}\"></i>\n        </a>\n      </li>\n      <li\n        *ngFor=\"let pg of pages\"\n        [class.active]=\"pg.number === page\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(pg.number)\">\n          {{pg.text}}\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"nextPage()\">\n          <i class=\"{{cssClasses.pagerRightArrow}}\"></i>\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(totalPages)\">\n          <i class=\"{{cssClasses.pagerNext}}\"></i>\n        </a>\n      </li>\n    </ul>\n  ",
             changeDetection: core_1.ChangeDetectionStrategy.OnPush
         }), 
         __metadata('design:paramtypes', [core_1.ElementRef, core_1.Renderer])
@@ -2389,6 +2385,10 @@ var TableOptions = (function () {
             pagerPrevious: 'icon-prev',
             pagerNext: 'icon-skip'
         };
+        // This will be used when displaying or selecting rows:
+        // when tracking/comparing them, we'll use the value of this fn,
+        // (`fn(x) === fn(y)` instead of `x === y`)
+        this.rowIdentity = (function (x) { return x; });
         Object.assign(this, props);
         this.validate();
     }
@@ -2650,7 +2650,10 @@ var StateService = (function () {
         }
         // Update the toggled row and update the heights in the cache.
         row.$$expanded ^= 1;
-        this.onExpandChange.emit({ rows: [row], currentIndex: viewPortFirstRowIndex });
+        this.onExpandChange.emit({
+            rows: [row],
+            currentIndex: viewPortFirstRowIndex
+        });
         // Broadcast the event to let know that the rows array has been updated.
         this.onRowsUpdate.emit(this.rows);
     };
@@ -2671,9 +2674,22 @@ var StateService = (function () {
             this.refreshRowHeightCache();
         }
         // Emit all rows that have been expanded.
-        this.onExpandChange.emit({ rows: this.rows, currentIndex: viewPortFirstRowIndex });
+        this.onExpandChange.emit({
+            rows: this.rows,
+            currentIndex: viewPortFirstRowIndex
+        });
         // Broadcast the event to let know that the rows array has been updated.
         this.onRowsUpdate.emit(this.rows);
+    };
+    StateService.prototype.getRowSelectedIdx = function (row, selected) {
+        var _this = this;
+        if (!selected || !selected.length)
+            return -1;
+        var rowId = this.options.rowIdentity(row);
+        return selected.findIndex(function (r) {
+            var id = _this.options.rowIdentity(r);
+            return id === rowId;
+        });
     };
     StateService = __decorate([
         core_1.Injectable(), 
@@ -2977,6 +2993,9 @@ function deepValueGetter(obj, path) {
     if (split.length) {
         for (var i = 0, len = split.length; i < len; i++) {
             current = current[split[i]];
+            // if found undefined, return empty string
+            if (current === undefined)
+                return '';
         }
     }
     return current;
@@ -3146,45 +3165,73 @@ function scaleColumns(colsByGroup, maxWidth, totalFlexGrow) {
  * @param {int} expectedWidth
  */
 function forceFillColumnWidths(allColumns, expectedWidth, startIdx) {
-    var contentWidth = 0;
     var columnsToResize = startIdx > -1 ?
         allColumns.slice(startIdx, allColumns.length).filter(function (c) { return c.canAutoResize; }) :
         allColumns.filter(function (c) { return c.canAutoResize; });
-    for (var _i = 0, allColumns_1 = allColumns; _i < allColumns_1.length; _i++) {
-        var column = allColumns_1[_i];
-        if (!column.canAutoResize) {
-            contentWidth += column.width;
+    for (var _i = 0, columnsToResize_1 = columnsToResize; _i < columnsToResize_1.length; _i++) {
+        var column = columnsToResize_1[_i];
+        if (!column.$$oldWidth) {
+            column.$$oldWidth = column.width;
         }
-        else {
-            contentWidth += (column.$$oldWidth || column.width);
-        }
+        // Initialize the starting width to original width whenever there is a resize/initialize event.
+        column.width = column.$$oldWidth;
     }
+    var additionWidthPerColumn = 0;
+    var exceedsWindow = false;
+    var contentWidth = getContentWidth(allColumns);
     var remainingWidth = expectedWidth - contentWidth;
-    var additionWidthPerColumn = remainingWidth / columnsToResize.length;
-    var exceedsWindow = contentWidth > expectedWidth;
-    for (var _a = 0, columnsToResize_1 = columnsToResize; _a < columnsToResize_1.length; _a++) {
-        var column = columnsToResize_1[_a];
-        if (exceedsWindow) {
-            column.width = column.$$oldWidth || column.width;
-        }
-        else {
-            if (!column.$$oldWidth) {
-                column.$$oldWidth = column.width;
-            }
-            var newSize = column.$$oldWidth + additionWidthPerColumn;
-            if (column.minWith && newSize < column.minWidth) {
-                column.width = column.minWidth;
-            }
-            else if (column.maxWidth && newSize > column.maxWidth) {
-                column.width = column.maxWidth;
+    var columnsProcessed = [];
+    // This loop takes care of the
+    do {
+        additionWidthPerColumn = remainingWidth / columnsToResize.length;
+        exceedsWindow = contentWidth >= expectedWidth;
+        for (var _a = 0, columnsToResize_2 = columnsToResize; _a < columnsToResize_2.length; _a++) {
+            var column = columnsToResize_2[_a];
+            if (exceedsWindow) {
+                column.width = column.$$oldWidth || column.width;
             }
             else {
-                column.width = newSize;
+                var newSize = column.width + additionWidthPerColumn;
+                if (column.minWidth && newSize < column.minWidth) {
+                    column.width = column.minWidth;
+                    columnsProcessed.push(column);
+                }
+                else if (column.maxWidth && newSize > column.maxWidth) {
+                    column.width = column.maxWidth;
+                    columnsProcessed.push(column);
+                }
+                else {
+                    column.width = newSize;
+                }
             }
         }
-    }
+        contentWidth = getContentWidth(allColumns);
+        remainingWidth = expectedWidth - contentWidth;
+        removeProcessedColumns(columnsToResize, columnsProcessed);
+    } while (remainingWidth > 0 && columnsToResize.length !== 0);
 }
 exports.forceFillColumnWidths = forceFillColumnWidths;
+/**
+ * Remove the processed columns from the current active columns.
+ *
+ * @param columnsToResize  Array containing the columns that need to be resized.
+ * @param columnsProcessed Array containing the columns that have already been processed.
+ */
+function removeProcessedColumns(columnsToResize, columnsProcessed) {
+    for (var _i = 0, columnsProcessed_1 = columnsProcessed; _i < columnsProcessed_1.length; _i++) {
+        var column = columnsProcessed_1[_i];
+        var index = columnsToResize.indexOf(column);
+        columnsToResize.splice(index, 1);
+    }
+}
+function getContentWidth(allColumns) {
+    var contentWidth = 0;
+    for (var _i = 0, allColumns_1 = allColumns; _i < allColumns_1.length; _i++) {
+        var column = allColumns_1[_i];
+        contentWidth += column.width;
+    }
+    return contentWidth;
+}
 
 
 /***/ },
@@ -3414,8 +3461,8 @@ exports.scrollbarWidth = scrollbarWidth;
 
 "use strict";
 "use strict";
-function selectRows(selected, row) {
-    var selectedIndex = selected.indexOf(row);
+function selectRows(selected, row, comparefn) {
+    var selectedIndex = comparefn(row, selected);
     if (selectedIndex > -1) {
         selected.splice(selectedIndex, 1);
     }
@@ -3425,7 +3472,7 @@ function selectRows(selected, row) {
     return selected;
 }
 exports.selectRows = selectRows;
-function selectRowsBetween(selected, rows, index, prevIndex) {
+function selectRowsBetween(selected, rows, index, prevIndex, comparefn) {
     var reverse = index < prevIndex;
     for (var i = 0, len = rows.length; i < len; i++) {
         var row = rows[i];
@@ -3445,7 +3492,7 @@ function selectRowsBetween(selected, rows, index, prevIndex) {
             };
         }
         if ((reverse && lesser) || (!reverse && greater)) {
-            var idx = selected.indexOf(row);
+            var idx = comparefn(row, selected);
             // if reverse shift selection (unselect) and the
             // row is already selected, remove it from selected
             if (reverse && idx > -1) {

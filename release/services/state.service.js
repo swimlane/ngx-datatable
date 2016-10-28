@@ -227,7 +227,10 @@ var StateService = (function () {
         }
         // Update the toggled row and update the heights in the cache.
         row.$$expanded ^= 1;
-        this.onExpandChange.emit({ rows: [row], currentIndex: viewPortFirstRowIndex });
+        this.onExpandChange.emit({
+            rows: [row],
+            currentIndex: viewPortFirstRowIndex
+        });
         // Broadcast the event to let know that the rows array has been updated.
         this.onRowsUpdate.emit(this.rows);
     };
@@ -248,9 +251,22 @@ var StateService = (function () {
             this.refreshRowHeightCache();
         }
         // Emit all rows that have been expanded.
-        this.onExpandChange.emit({ rows: this.rows, currentIndex: viewPortFirstRowIndex });
+        this.onExpandChange.emit({
+            rows: this.rows,
+            currentIndex: viewPortFirstRowIndex
+        });
         // Broadcast the event to let know that the rows array has been updated.
         this.onRowsUpdate.emit(this.rows);
+    };
+    StateService.prototype.getRowSelectedIdx = function (row, selected) {
+        var _this = this;
+        if (!selected || !selected.length)
+            return -1;
+        var rowId = this.options.rowIdentity(row);
+        return selected.findIndex(function (r) {
+            var id = _this.options.rowIdentity(r);
+            return id === rowId;
+        });
     };
     StateService = __decorate([
         core_1.Injectable(), 

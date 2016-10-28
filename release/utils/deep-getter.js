@@ -12,6 +12,9 @@ function deepValueGetter(obj, path) {
     if (split.length) {
         for (var i = 0, len = split.length; i < len; i++) {
             current = current[split[i]];
+            // if found undefined, return empty string
+            if (current === undefined)
+                return '';
         }
     }
     return current;
