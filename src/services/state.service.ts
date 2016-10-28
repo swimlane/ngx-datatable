@@ -222,10 +222,15 @@ export class StateService {
 
       this.rowHeightsCache.update(row.$$index, detailRowHeight);
     }
+    
     // Update the toggled row and update the heights in the cache.
     row.$$expanded ^= 1;
 
-    this.onExpandChange.emit({rows: [row], currentIndex: viewPortFirstRowIndex } );
+    this.onExpandChange.emit({
+      rows: [row], 
+      currentIndex: viewPortFirstRowIndex 
+    });
+
     // Broadcast the event to let know that the rows array has been updated.
     this.onRowsUpdate.emit(this.rows);
   }
@@ -250,10 +255,23 @@ export class StateService {
     }
 
     // Emit all rows that have been expanded.
-    this.onExpandChange.emit({rows: this.rows, currentIndex: viewPortFirstRowIndex });
+    this.onExpandChange.emit({
+      rows: this.rows, 
+      currentIndex: viewPortFirstRowIndex 
+    });
 
     // Broadcast the event to let know that the rows array has been updated.
     this.onRowsUpdate.emit(this.rows);
+  }
+
+  getRowSelectedIdx(row: any, selected: any[]): number {
+    if(!selected || !selected.length) return -1;
+
+    const rowId = this.options.rowIdentity(row);
+    return selected.findIndex((r) => {
+      const id = this.options.rowIdentity(r);
+      return id === rowId;
+    });
   }
 
 }

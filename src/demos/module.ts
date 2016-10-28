@@ -11,7 +11,7 @@ import '../components/datatable.scss';
 // import { App } from './paging-server';
 // import { App } from './sorting-server';
 // import { App } from './sorting-client';
-// import { App } from './selection';
+import { App } from './selection';
 // import { App } from './virtual';
 // import { App } from './inline';
 // import { App } from './scrolling';
@@ -24,7 +24,7 @@ import '../components/datatable.scss';
 // import { App } from './fullscreen';
 // import { App } from './template-dom';
 // import { App } from './template-obj';
-import { App } from './row-detail';
+// import { App } from './row-detail';
 
 @NgModule({
   declarations: [App],

@@ -1,5 +1,5 @@
-export function selectRows(selected, row) {
-  const selectedIndex = selected.indexOf(row);
+export function selectRows(selected, row, comparefn) {
+  const selectedIndex = comparefn(row, selected);
 
   if(selectedIndex > -1) {
     selected.splice(selectedIndex, 1);
@@ -10,7 +10,7 @@ export function selectRows(selected, row) {
   return selected;
 }
 
-export function selectRowsBetween(selected, rows, index, prevIndex) {
+export function selectRowsBetween(selected, rows, index, prevIndex, comparefn) {
   const reverse = index < prevIndex;
 
   for(let i = 0, len = rows.length; i < len; i++) {
@@ -32,7 +32,7 @@ export function selectRowsBetween(selected, rows, index, prevIndex) {
     }
 
     if((reverse && lesser) || (!reverse && greater)) {
-      const idx = selected.indexOf(row);
+      const idx = comparefn(row, selected);
 
       // if reverse shift selection (unselect) and the
       // row is already selected, remove it from selected

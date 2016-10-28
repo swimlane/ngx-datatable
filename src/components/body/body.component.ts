@@ -35,7 +35,7 @@ import { Scroller } from '../../directives';
         [limit]="state.options.limit"
         [scrollWidth]="state.columnGroupWidths.total">
         <datatable-row-wrapper 
-          *ngFor="let row of rows; let i = index; trackBy: trackRowBy"
+          *ngFor="let row of rows; let i = index; trackBy: row?.$$index"
           [ngStyle]="getRowsStyles(row)"
           [style.height]="getRowHeight(row) + 'px'"
           [row]="row">
@@ -97,7 +97,9 @@ export class DataTableBody implements OnInit, OnDestroy {
     element: ElementRef,
     renderer: Renderer) {
 
-    renderer.setElementClass(element.nativeElement, 'datatable-body', true);
+    // set this before onInit for fast renders
+    renderer.setElementClass(
+      element.nativeElement, 'datatable-body', true);
   }
 
   ngOnInit(): void {
@@ -117,7 +119,6 @@ export class DataTableBody implements OnInit, OnDestroy {
     });
 
     this.sub.add(this.state.onExpandChange.subscribe( (expandedState) => {
-
       if(this.state.options.scrollbarV) {
         // If there was more than one row expanded then there was a mass change
         // in the data set hence adjust the scroll position.
@@ -130,7 +131,6 @@ export class DataTableBody implements OnInit, OnDestroy {
           setTimeout(() => this.scroller.setOffset(scrollOffset));
         }
       }
-
     }));
 
     this.sub.add(this.state.onRowsUpdate.subscribe(rows => {
@@ -141,10 +141,6 @@ export class DataTableBody implements OnInit, OnDestroy {
     this.sub.add(this.state.onSortChange.subscribe(() => {
       this.scroller.setOffset(0);
     }));
-  }
-
-  trackRowBy(index: number, obj: any) {
-    return obj.$$index;
   }
 
   onBodyScroll(props) {
@@ -179,7 +175,7 @@ export class DataTableBody implements OnInit, OnDestroy {
     let idx = 0;
     let rowIndex = idxs.first;
 
-    let endSpliceIdx = refresh ? this.state.rowCount : idxs.last - idxs.first;
+    const endSpliceIdx = refresh ? this.state.rowCount : idxs.last - idxs.first;
     this.rows = this.rows.slice(0, endSpliceIdx);
 
     while (rowIndex < idxs.last && rowIndex < this.state.rowCount) {
@@ -249,7 +245,10 @@ export class DataTableBody implements OnInit, OnDestroy {
   }
 
   rowClicked(event, index, row): void {
-    let clickType = event.type === 'dblclick' ? ClickType.double : ClickType.single;
+    let clickType = event.type === 'dblclick' ? 
+      ClickType.double : 
+      ClickType.single;
+
     this.onRowClick.emit({ type: clickType, event, row });
     this.selectRow(event, index, row);
   }
@@ -261,6 +260,7 @@ export class DataTableBody implements OnInit, OnDestroy {
       const dom = event.keyCode === Keys.up ?
         event.target.previousElementSibling :
         event.target.nextElementSibling;
+
       if (dom) dom.focus();
     }
   }
@@ -270,17 +270,20 @@ export class DataTableBody implements OnInit, OnDestroy {
 
     const multiShift = this.state.options.selectionType === SelectionType.multiShift;
     const multiClick = this.state.options.selectionType === SelectionType.multi;
-
     let selections = [];
+
     if (multiShift || multiClick) {
       if (multiShift && event.shiftKey) {
         const selected = [...this.state.selected];
-        selections = selectRowsBetween(selected, this.rows, index, this.prevIndex);
+        selections = selectRowsBetween(
+          selected, this.rows, index, this.prevIndex,
+          (r, s) => { return this.state.getRowSelectedIdx(r, s); });
       } else if (multiShift && !event.shiftKey) {
         selections.push(row);
       } else {
         const selected = [...this.state.selected];
-        selections = selectRows(selected, row);
+        selections = selectRows(selected, row,
+          (r, s) => { return this.state.getRowSelectedIdx(r, s); });
       }
     } else {
       selections.push(row);
@@ -291,9 +294,7 @@ export class DataTableBody implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.sub) {
-      this.sub.unsubscribe();
-    }
+    if (this.sub) this.sub.unsubscribe();
   }
 
 }

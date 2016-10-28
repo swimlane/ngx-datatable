@@ -50,7 +50,8 @@ export class App {
       new TableColumn({ name: 'Name' }),
       new TableColumn({ name: 'Gender' }),
       new TableColumn({ name: 'Company' })
-    ]
+    ],
+    rowIdentity: ((x) => x.name)
   });
 
   constructor() {
@@ -71,7 +72,9 @@ export class App {
   }
 
   onSelectionChange(selected) {
-    console.log('Selection!', selected);
+    console.log('Selection!', selected, this.selections);
+    this.selections.splice(0, this.selections.length);
+    this.selections.push(...selected);
   }
 
 }
