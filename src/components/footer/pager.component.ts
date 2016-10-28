@@ -15,15 +15,15 @@ import {
       <li [class.disabled]="!canPrevious()">
         <a
           href="javascript:void(0)"
-          (click)="selectPage(1)"
-          class="{{cssClasses.pagerPrevious}}">
+          (click)="selectPage(1)">
+          <i class="{{cssClasses.pagerPrevious}}"></i>
         </a>
       </li>
       <li [class.disabled]="!canPrevious()">
         <a
           href="javascript:void(0)"
-          (click)="prevPage()"
-          class="{{cssClasses.pagerLeftArrow}}">
+          (click)="prevPage()">
+          <i class="{{cssClasses.pagerLeftArrow}}"></i>
         </a>
       </li>
       <li
@@ -38,15 +38,15 @@ import {
       <li [class.disabled]="!canNext()">
         <a
           href="javascript:void(0)"
-          (click)="nextPage()"
-          class="{{cssClasses.pagerRightArrow}}">
+          (click)="nextPage()">
+          <i class="{{cssClasses.pagerRightArrow}}"></i>
         </a>
       </li>
       <li [class.disabled]="!canNext()">
         <a
           href="javascript:void(0)"
-          (click)="selectPage(totalPages)"
-          class="{{cssClasses.pagerNext}}">
+          (click)="selectPage(totalPages)">
+          <i class="{{cssClasses.pagerNext}}"></i>
         </a>
       </li>
     </ul>
