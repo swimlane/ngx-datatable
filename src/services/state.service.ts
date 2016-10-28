@@ -40,11 +40,15 @@ export class StateService {
   bodyHeight: number = 300;
 
   get columnsByPin() {
-    return columnsByPin(this.options.columns);
+    return columnsByPin(this.visibleColumns);
   }
 
   get columnGroupWidths() {
-    return columnGroupWidths(this.columnsByPin, this.options.columns);
+    return columnGroupWidths(this.columnsByPin, this.visibleColumns);
+  }
+
+  get visibleColumns() {
+    return this.options.columns.filter(column => column.visible);
   }
 
   get rowCount(): number {
