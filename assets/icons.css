@@ -1,0 +1,88 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: "data-table";
+  src:url("fonts/data-table.eot");
+  src:url("fonts/data-table.eot?#iefix") format("embedded-opentype"),
+    url("fonts/data-table.woff") format("woff"),
+    url("fonts/data-table.ttf") format("truetype"),
+    url("fonts/data-table.svg#data-table") format("svg");
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+[data-icon]:before {
+  font-family: "data-table" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "data-table" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-filter:before {
+  content: "\62";
+}
+.icon-collapse:before {
+  content: "\61";
+}
+.icon-expand:before {
+  content: "\63";
+}
+.icon-close:before {
+  content: "\64";
+}
+.icon-up:before {
+  content: "\65";
+}
+.icon-down:before {
+  content: "\66";
+}
+.icon-sort:before {
+  content: "\67";
+}
+.icon-done:before {
+  content: "\68";
+}
+.icon-done-all:before {
+  content: "\69";
+}
+.icon-search:before {
+  content: "\6a";
+}
+.icon-pin:before {
+  content: "\6b";
+}
+.icon-add:before {
+  content: "\6d";
+}
+.icon-left:before {
+  content: "\6f";
+}
+.icon-right:before {
+  content: "\70";
+}
+.icon-skip:before {
+  content: "\71";
+}
+.icon-prev:before {
+  content: "\72";
+}
