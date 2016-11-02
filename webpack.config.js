@@ -46,8 +46,7 @@ function webpackConfig(options = {}) {
 
     entry: {
       'app': './demo/bootstrap.ts',
-      'polyfills': './demo/polyfills.ts',
-      'vendor': './demo/vendor.ts'
+      'polyfills': './demo/polyfills.ts'
     },
 
     devServer: {
@@ -215,7 +214,7 @@ function webpackConfig(options = {}) {
   } else {
 
     config.plugins.push(new webpack.optimize.CommonsChunkPlugin({
-      name: ['vendor', 'polyfills'],
+      name: ['polyfills'],
       minChunks: Infinity
     }));
 
@@ -232,6 +231,8 @@ function webpackConfig(options = {}) {
         verbose: false,
         dry: false
       }));
+
+      config.plugins.push(new webpack.optimize.UglifyJsPlugin());
 
     } else {
       config.plugins.push(new WebpackNotifierPlugin({
