@@ -8,6 +8,7 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var ENV = process.env.NODE_ENV;
 var IS_PRODUCTION = ENV === 'production';
@@ -44,7 +45,6 @@ function webpackConfig(options = {}) {
     },
 
     entry: {
-      'default': './src/components/datatable.scss',
       'app': './demo/bootstrap.ts',
       'polyfills': './demo/polyfills.ts',
       'vendor': './demo/vendor.ts'
@@ -140,6 +140,13 @@ function webpackConfig(options = {}) {
         'APP_VERSION': VERSION
       }),
 
+      new CopyWebpackPlugin([
+        {
+          from: 'assets',
+          to: 'assets'
+        }
+      ]),
+
       new webpack.LoaderOptionsPlugin({
         options: {
           context: root(),
@@ -220,13 +227,11 @@ function webpackConfig(options = {}) {
 
     if(IS_PRODUCTION) {
 
-      /*
       config.plugins.push(new CleanWebpackPlugin(['dist'], {
         root: root(),
         verbose: false,
         dry: false
       }));
-      */
 
     } else {
       config.plugins.push(new WebpackNotifierPlugin({
