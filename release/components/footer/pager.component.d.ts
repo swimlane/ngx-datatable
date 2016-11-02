@@ -1,8 +1,11 @@
 import { EventEmitter, Renderer, ElementRef } from '@angular/core';
-export declare class DataTablePager {
+export declare class DataTablePagerComponent {
     size: number;
-    cssClasses: any;
-    onPaged: EventEmitter<any>;
+    pagerLeftArrowIcon: string;
+    pagerRightArrowIcon: string;
+    pagerPreviousIcon: string;
+    pagerNextIcon: string;
+    change: EventEmitter<any>;
     count: number;
     page: number;
     readonly totalPages: number;

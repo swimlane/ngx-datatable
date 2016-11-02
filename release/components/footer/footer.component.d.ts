@@ -1,9 +1,16 @@
 import { EventEmitter, ElementRef, Renderer } from '@angular/core';
-import { StateService } from '../../services';
-export declare class DataTableFooter {
-    private state;
-    onPageChange: EventEmitter<any>;
-    readonly visible: boolean;
+export declare class DataTableFooterComponent {
+    footerHeight: number;
+    rowCount: number;
+    pageSize: number;
+    offset: number;
+    pagerLeftArrowIcon: string;
+    pagerRightArrowIcon: string;
+    pagerPreviousIcon: string;
+    pagerNextIcon: string;
+    totalMessage: string;
+    page: EventEmitter<any>;
+    readonly isVisible: boolean;
     readonly curPage: number;
-    constructor(element: ElementRef, state: StateService, renderer: Renderer);
+    constructor(element: ElementRef, renderer: Renderer);
 }

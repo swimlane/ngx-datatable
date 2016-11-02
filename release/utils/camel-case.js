@@ -19,4 +19,18 @@ function camelCase(str) {
     return str;
 }
 exports.camelCase = camelCase;
+/**
+ * Converts strings from camel case to words
+ * http://stackoverflow.com/questions/7225407/convert-camelcasetext-to-camel-case-text
+ *
+ * @export
+ * @param {any} str
+ * @returns string
+ */
+function deCamelCase(str) {
+    return str
+        .replace(/([A-Z])/g, function (match) { return (" " + match); })
+        .replace(/^./, function (match) { return match.toUpperCase(); });
+}
+exports.deCamelCase = deCamelCase;
 //# sourceMappingURL=camel-case.js.map

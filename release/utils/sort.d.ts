@@ -1,5 +1,4 @@
 
-import { Sort } from '../models';
 import { SortType, SortDirection } from '../types';
 /**
  * Gets the next sort direction
@@ -22,4 +21,4 @@ export declare function orderByComparator(a: any, b: any): number;
  * @param  {Array<Sort>} dirs
  * @return {Array<any>} results
  */
-export declare function sortRows(rows: Array<any>, dirs: Array<Sort>): any[];
+export declare function sortRows(rows: Array<any>, dirs: any[]): any[];

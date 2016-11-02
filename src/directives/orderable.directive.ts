@@ -1,36 +1,65 @@
 import {
-  Directive,
-  Output,
-  EventEmitter,
-  ContentChildren,
-  QueryList
+  Directive, Output, EventEmitter, ContentChildren,
+  QueryList, KeyValueDiffers
 } from '@angular/core';
 
-import { Draggable } from './draggable.directive';
+import { DraggableDirective } from './draggable.directive';
 
 @Directive({ selector: '[orderable]' })
-export class Orderable {
+export class OrderableDirective {
 
-  @Output() onReorder: EventEmitter<any> = new EventEmitter();
+  @Output() reorder: EventEmitter<any> = new EventEmitter();
 
-  @ContentChildren(Draggable)
-  private drags: QueryList<Draggable>;
+  @ContentChildren(DraggableDirective, { descendants: true })
+  private draggables: QueryList<DraggableDirective>;
 
   private positions: any;
+  private differ: any;
+
+  constructor(differs: KeyValueDiffers) {
+    this.differ = differs.find({}).create(null);
+  }
 
   ngAfterContentInit() {
-    this.drags.forEach(d =>
-      d.onDragStart.subscribe(this.onDragStart.bind(this)) &&
-      d.onDragEnd.subscribe(this.onDragEnd.bind(this)));
+    // HACK: Investigate Better Way
+    this.updateSubscriptions();
+    this.draggables.changes.subscribe(
+        this.updateSubscriptions.bind(this));
+  }
+
+  ngOnDestroy() {
+    this.draggables.forEach(d => {
+      d.dragStart.unsubscribe();
+      d.dragEnd.unsubscribe();
+    });
+  }
+  
+  updateSubscriptions() {
+    const diffs = this.differ.diff(this.draggables.toArray());
+
+    if(diffs) {
+      let sub = ({ currentValue }) => {
+        currentValue.dragStart.subscribe(this.onDragStart.bind(this));
+        currentValue.dragEnd.subscribe(this.onDragEnd.bind(this));
+      };
+
+      diffs.forEachAddedItem(sub.bind(this));
+      diffs.forEachChangedItem(sub.bind(this));
+
+      diffs.forEachRemovedItem(({ previousValue }) => {
+        previousValue.dragStart.unsubscribe();
+        previousValue.dragEnd.unsubscribe();
+      });
+    }
   }
 
   onDragStart() {
     this.positions = {};
 
     let i = 0;
-    for(let dragger of this.drags.toArray()) {
+    for(let dragger of this.draggables.toArray()) {
       let elm = dragger.element;
-      this.positions[dragger.model.prop] =  {
+      this.positions[dragger.dragModel.prop] =  {
         left: parseInt(elm.offsetLeft.toString(), 0),
         index: i++
       };
@@ -49,7 +78,7 @@ export class Orderable {
       let movedRight = newPos > pos.left && prevPos.left < pos.left;
 
       if(movedLeft || movedRight) {
-        this.onReorder.emit({
+        this.reorder.emit({
           prevIndex: prevPos.index,
           newIndex: i,
           model

@@ -16,14 +16,14 @@ import {
         <a
           href="javascript:void(0)"
           (click)="selectPage(1)">
-          <i class="{{cssClasses.pagerPrevious}}"></i>
+          <i class="{{pagerPreviousIcon}}"></i>
         </a>
       </li>
       <li [class.disabled]="!canPrevious()">
         <a
           href="javascript:void(0)"
           (click)="prevPage()">
-          <i class="{{cssClasses.pagerLeftArrow}}"></i>
+          <i class="{{pagerLeftArrowIcon}}"></i>
         </a>
       </li>
       <li
@@ -39,47 +39,51 @@ import {
         <a
           href="javascript:void(0)"
           (click)="nextPage()">
-          <i class="{{cssClasses.pagerRightArrow}}"></i>
+          <i class="{{pagerRightArrowIcon}}"></i>
         </a>
       </li>
       <li [class.disabled]="!canNext()">
         <a
           href="javascript:void(0)"
           (click)="selectPage(totalPages)">
-          <i class="{{cssClasses.pagerNext}}"></i>
+          <i class="{{pagerNextIcon}}"></i>
         </a>
       </li>
     </ul>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DataTablePager {
+export class DataTablePagerComponent {
 
   @Input() size: number = 0;
-  @Input() cssClasses: any;
-  @Output() onPaged: EventEmitter<any> = new EventEmitter();
+  @Input() pagerLeftArrowIcon: string;
+  @Input() pagerRightArrowIcon: string;
+  @Input() pagerPreviousIcon: string;
+  @Input() pagerNextIcon: string;
+
+  @Output() change: EventEmitter<any> = new EventEmitter();
 
   @Input()
-  set count(val) {
+  set count(val: number) {
     this._count = val;
     this.pages = this.calcPages();
   }
 
-  get count() {
+  get count(): number {
     return this._count;
   }
 
   @Input()
-  set page(val) {
+  set page(val: number) {
     this._page = val;
     this.pages = this.calcPages();
   }
 
-  get page() {
+  get page(): number{
     return this._page;
   }
 
-  get totalPages() {
+  get totalPages(): number {
     const count = this.size < 1 ? 1 : Math.ceil(this.count / this.size);
     return Math.max(count || 0, 1);
   }
@@ -92,36 +96,35 @@ export class DataTablePager {
     renderer.setElementClass(element.nativeElement, 'datatable-pager', true);
   }
 
-  canPrevious() {
+  canPrevious(): boolean {
     return this.page > 1;
   }
 
-  canNext() {
+  canNext(): boolean {
     return this.page < this.totalPages;
   }
 
-  prevPage() {
+  prevPage(): void {
     if (this.page > 1) {
       this.selectPage(--this.page);
     }
   }
 
-  nextPage() {
+  nextPage(): void {
     this.selectPage(++this.page);
   }
 
-  selectPage(page: number) {
+  selectPage(page: number): void {
     if (page > 0 && page <= this.totalPages) {
       this.page = page;
 
-      this.onPaged.emit({
-        type: 'pager-event',
-        value: page
+      this.change.emit({
+        page
       });
     }
   }
 
-  calcPages(page?: number) {
+  calcPages(page?: number): any[] {
     let pages = [];
     let startPage = 1;
     let endPage = this.totalPages;

@@ -1,11 +1,22 @@
-import { ElementRef, Renderer } from '@angular/core';
-import { StateService } from '../../services';
-export declare class DataTableBodyRow {
-    state: StateService;
+import { ElementRef, Renderer, EventEmitter } from '@angular/core';
+export declare class DataTableBodyRowComponent {
+    columns: any[];
     row: any;
-    readonly isSelected: boolean;
-    constructor(state: StateService, element: ElementRef, renderer: Renderer);
+    bodyWidth: number;
+    offsetX: number;
+    rowHeight: number;
+    isSelected: boolean;
+    readonly isEvenRow: boolean;
+    readonly isOddRow: boolean;
+    activate: EventEmitter<any>;
+    private element;
+    private columnGroupWidths;
+    private columnsByPin;
+    private _columns;
+    constructor(element: ElementRef, renderer: Renderer);
     stylesByGroup(group: any): {
         width: string;
     };
+    onActivate(event: any, index: any): void;
+    onKeyDown(event: any): void;
 }

@@ -72,4 +72,13 @@ function columnsTotalWidth(columns, prop) {
     return totalWidth;
 }
 exports.columnsTotalWidth = columnsTotalWidth;
+function columnsByPinArr(val) {
+    var colsByPinArr = [];
+    var colsByPin = columnsByPin(val);
+    colsByPinArr.push({ type: 'left', columns: colsByPin['left'] });
+    colsByPinArr.push({ type: 'center', columns: colsByPin['center'] });
+    colsByPinArr.push({ type: 'right', columns: colsByPin['right'] });
+    return colsByPinArr;
+}
+exports.columnsByPinArr = columnsByPinArr;
 //# sourceMappingURL=column.js.map

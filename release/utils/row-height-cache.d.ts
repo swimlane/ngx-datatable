@@ -1,4 +1,3 @@
-
 /**
  * This object contains the cache of the various row heights that are present inside
  * the data table.   Its based on Fenwick tree data structure that helps with
@@ -14,7 +13,7 @@ export declare class RowHeightCache {
      * range queries and updates.  Currently the tree is initialized to the base row
      * height instead of the detail row height.
      */
-    private _treeArray;
+    private treeArray;
     /**
      * Clear the Tree array.
      */
@@ -26,7 +25,7 @@ export declare class RowHeightCache {
      * @param rowHeight The row height.
      * @param detailRowHeight The detail row height.
      */
-    initCache(rows: Array<any>, rowHeight: number, detailRowHeight: number): void;
+    initCache(rows: any[], rowHeight: number, detailRowHeight: number): void;
     /**
      * Given the ScrollY position i.e. sum, provide the rowIndex
      * that is present in the current view port.  Below handles edge cases.
@@ -65,5 +64,5 @@ export declare class RowHeightCache {
      * @param sum - The scrollY position.
      * @returns {number} - Index representing the first row visible in the viewport
      */
-    private _getRowIndex(sum);
+    private calcRowIndex(sum);
 }

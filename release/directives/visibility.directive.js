@@ -21,33 +21,33 @@ var utils_1 = require('../utils');
  * 		</div>
  *
  */
-var Visibility = (function () {
-    function Visibility(element) {
-        this.visible = false;
-        this.onVisibilityChange = new core_1.EventEmitter();
+var VisibilityDirective = (function () {
+    function VisibilityDirective(element) {
+        this.isVisible = false;
+        this.visible = new core_1.EventEmitter();
         new utils_1.VisibilityObserver(element.nativeElement, this.visbilityChange.bind(this));
     }
-    Visibility.prototype.visbilityChange = function () {
+    VisibilityDirective.prototype.visbilityChange = function () {
         var _this = this;
         // trigger zone recalc for columns
         setTimeout(function () {
-            _this.visible = true;
-            _this.onVisibilityChange.emit(true);
+            _this.isVisible = true;
+            _this.visible.emit(true);
         });
     };
     __decorate([
         core_1.HostBinding('class.visible'), 
         __metadata('design:type', Boolean)
-    ], Visibility.prototype, "visible", void 0);
+    ], VisibilityDirective.prototype, "isVisible", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)
-    ], Visibility.prototype, "onVisibilityChange", void 0);
-    Visibility = __decorate([
+    ], VisibilityDirective.prototype, "visible", void 0);
+    VisibilityDirective = __decorate([
         core_1.Directive({ selector: '[visibility-observer]' }), 
         __metadata('design:paramtypes', [core_1.ElementRef])
-    ], Visibility);
-    return Visibility;
+    ], VisibilityDirective);
+    return VisibilityDirective;
 }());
-exports.Visibility = Visibility;
+exports.VisibilityDirective = VisibilityDirective;
 //# sourceMappingURL=visibility.directive.js.map

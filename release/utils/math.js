@@ -95,21 +95,23 @@ function scaleColumns(colsByGroup, maxWidth, totalFlexGrow) {
  * @param {array} allColumns
  * @param {int} expectedWidth
  */
-function forceFillColumnWidths(allColumns, expectedWidth, startIdx) {
+function forceFillColumnWidths(allColumns, expectedWidth, startIdx, defaultColWidth) {
+    if (defaultColWidth === void 0) { defaultColWidth = 300; }
     var columnsToResize = startIdx > -1 ?
-        allColumns.slice(startIdx, allColumns.length).filter(function (c) { return c.canAutoResize; }) :
-        allColumns.filter(function (c) { return c.canAutoResize; });
+        allColumns.slice(startIdx, allColumns.length).filter(function (c) { return c.canAutoResize !== false; }) :
+        allColumns.filter(function (c) { return c.canAutoResize !== false; });
     for (var _i = 0, columnsToResize_1 = columnsToResize; _i < columnsToResize_1.length; _i++) {
         var column = columnsToResize_1[_i];
         if (!column.$$oldWidth) {
             column.$$oldWidth = column.width;
         }
-        // Initialize the starting width to original width whenever there is a resize/initialize event.
+        // Initialize the starting width to original 
+        // width whenever there is a resize/initialize event.
         column.width = column.$$oldWidth;
     }
     var additionWidthPerColumn = 0;
     var exceedsWindow = false;
-    var contentWidth = getContentWidth(allColumns);
+    var contentWidth = getContentWidth(allColumns, defaultColWidth);
     var remainingWidth = expectedWidth - contentWidth;
     var columnsProcessed = [];
     // This loop takes care of the
@@ -119,10 +121,10 @@ function forceFillColumnWidths(allColumns, expectedWidth, startIdx) {
         for (var _a = 0, columnsToResize_2 = columnsToResize; _a < columnsToResize_2.length; _a++) {
             var column = columnsToResize_2[_a];
             if (exceedsWindow) {
-                column.width = column.$$oldWidth || column.width;
+                column.width = column.$$oldWidth || column.width || defaultColWidth;
             }
             else {
-                var newSize = column.width + additionWidthPerColumn;
+                var newSize = (column.width || defaultColWidth) + additionWidthPerColumn;
                 if (column.minWidth && newSize < column.minWidth) {
                     column.width = column.minWidth;
                     columnsProcessed.push(column);
@@ -155,11 +157,19 @@ function removeProcessedColumns(columnsToResize, columnsProcessed) {
         columnsToResize.splice(index, 1);
     }
 }
-function getContentWidth(allColumns) {
+/**
+ * Gets the width of the columns
+ *
+ * @param {array} allColumns
+ * @param {number} [defaultColWidth=300]
+ * @returns {number}
+ */
+function getContentWidth(allColumns, defaultColWidth) {
+    if (defaultColWidth === void 0) { defaultColWidth = 300; }
     var contentWidth = 0;
     for (var _i = 0, allColumns_1 = allColumns; _i < allColumns_1.length; _i++) {
         var column = allColumns_1[_i];
-        contentWidth += column.width;
+        contentWidth += (column.width || defaultColWidth);
     }
     return contentWidth;
 }

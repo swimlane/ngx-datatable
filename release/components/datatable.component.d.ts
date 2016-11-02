@@ -1,31 +1,63 @@
-import { ElementRef, EventEmitter, KeyValueDiffers, OnInit, OnChanges, QueryList, DoCheck, AfterViewInit, Renderer } from '@angular/core';
-import { TableOptions } from '../models';
-import { DataTableColumn } from './datatable-column.directive';
-import { StateService } from '../services';
-export declare class DataTable implements OnInit, OnChanges, DoCheck, AfterViewInit {
-    state: StateService;
-    options: TableOptions;
+import { ElementRef, EventEmitter, OnInit, QueryList, AfterViewInit, Renderer, TemplateRef } from '@angular/core';
+import { ColumnMode, SortType, SelectionType } from '../types';
+import { DataTableColumnDirective } from './column.directive';
+import { DatatableRowDetailDirective } from './row-detail.directive';
+export declare class DatatableComponent implements OnInit, AfterViewInit {
     rows: any[];
+    columns: any[];
     selected: any[];
-    onPageChange: EventEmitter<any>;
-    onRowsUpdate: EventEmitter<any>;
-    onRowClick: EventEmitter<any>;
-    onSelectionChange: EventEmitter<any>;
-    onColumnChange: EventEmitter<any>;
-    columns: QueryList<DataTableColumn>;
-    rowDetailTemplateChild: any;
+    scrollbarV: boolean;
+    scrollbarH: boolean;
+    rowHeight: number;
+    detailRowHeight: number;
+    columnMode: ColumnMode;
+    emptyMessage: string;
+    totalMessage: string;
+    headerHeight: any;
+    footerHeight: number;
+    tableHeight: number;
+    externalPaging: boolean;
+    limit: number;
+    count: number;
+    offset: number;
+    loadingIndicator: boolean;
+    selectionType: SelectionType;
+    reorderable: boolean;
+    sortType: SortType;
+    sorts: any[];
+    rowDetailTemplate: TemplateRef<any>;
+    cssClasses: any;
+    rowIdentity: (x: any) => any;
+    scroll: EventEmitter<any>;
+    activate: EventEmitter<any>;
+    select: EventEmitter<any>;
+    sort: EventEmitter<any>;
+    page: EventEmitter<any>;
+    detailToggle: EventEmitter<any>;
+    reorder: EventEmitter<any>;
+    resize: EventEmitter<any>;
+    readonly isFixedHeader: boolean;
+    readonly isFixedRow: boolean;
+    readonly isVertScroll: boolean;
+    readonly isHorScroll: boolean;
+    readonly isSelectable: boolean;
+    columnTemplates: QueryList<DataTableColumnDirective>;
+    rowDetailTemplateChild: DatatableRowDetailDirective;
+    offsetX: number;
+    private bodyComponent;
     private element;
-    private rowDiffer;
-    private colDiffer;
-    private pageSubscriber;
-    constructor(state: StateService, renderer: Renderer, element: ElementRef, differs: KeyValueDiffers);
+    private innerWidth;
+    private pageSize;
+    private bodyHeight;
+    private rowCount;
+    private _rows;
+    private _columns;
+    private _columnTemplates;
+    private _rowDetailTemplateChild;
+    constructor(renderer: Renderer, element: ElementRef);
     ngOnInit(): void;
     ngAfterViewInit(): void;
-    ngOnChanges(changes: any): void;
-    ngDoCheck(): void;
-    ngOnDestroy(): void;
-    checkColumnChanges(): void;
-    adjustSizes(): void;
+    recalculate(): void;
     /**
      * Toggle the expansion of the row
      *
@@ -40,12 +72,22 @@ export declare class DataTable implements OnInit, OnChanges, DoCheck, AfterViewI
      * API method to collapse all the rows.
      */
     collapseAllRows(): void;
-    adjustColumns(forceIdx?: number): void;
-    onRowSelect(event: any): void;
-    resize(): void;
-    readonly isFixedHeader: boolean;
-    readonly isFixedRow: boolean;
-    readonly isVertScroll: boolean;
-    readonly isHorScroll: boolean;
-    readonly isSelectable: boolean;
+    adjustColumns(columns?: any[], forceIdx?: number): any[];
+    onBodyPage({offset}: {
+        offset: any;
+    }): void;
+    onBodyScroll(event: any): void;
+    onFooterPage(event: any): void;
+    calcPageSize(val?: any[]): number;
+    calcRowCount(val?: any[]): number;
+    onColumnResize({column, newValue}: {
+        column: any;
+        newValue: any;
+    }): void;
+    onColumnReorder({column, newValue, prevValue}: {
+        column: any;
+        newValue: any;
+        prevValue: any;
+    }): void;
+    onColumnSort(event: any): void;
 }

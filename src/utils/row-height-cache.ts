@@ -14,13 +14,13 @@ export class RowHeightCache {
    * range queries and updates.  Currently the tree is initialized to the base row
    * height instead of the detail row height.
    */
-  private _treeArray: Array<number> = [];
+  private treeArray: number[] = [];
 
   /**
    * Clear the Tree array.
    */
   clearCache() {
-    this._treeArray = [];
+    this.treeArray = [];
   }
 
   /**
@@ -30,25 +30,28 @@ export class RowHeightCache {
    * @param rowHeight The row height.
    * @param detailRowHeight The detail row height.
    */
-  initCache ( rows: Array<any>, rowHeight: number, detailRowHeight: number) {
+  initCache(rows: any[], rowHeight: number, detailRowHeight: number) {
     if (isNaN(rowHeight)) {
       throw new Error(`Row Height cache initialization failed. Please ensure that 'rowHeight' is a
         valid number value: (${rowHeight}) when 'scrollbarV' is enabled.`);
     }
+
     // Add this additional guard in case detailRowHeight is set to 'auto' as it wont work.
     if (isNaN(detailRowHeight)) {
       throw new Error(`Row Height cache initialization failed. Please ensure that 'detailRowHeight' is a
         valid number value: (${detailRowHeight}) when 'scrollbarV' is enabled.`);
     }
+
     const n = rows.length;
-    this._treeArray = new Array(n);
+    this.treeArray = new Array(n);
 
     for(let i = 0; i < n; ++i) {
-      this._treeArray[i] = 0;
+      this.treeArray[i] = 0;
     }
 
     for(let i = 0; i < n; ++i) {
       let currentRowHeight = rowHeight;
+
       // Add the detail row height to the already expanded rows.
       // This is useful for the table that goes through a filter or sort.
       if (rows[i].$$expanded === 1) {
@@ -67,11 +70,8 @@ export class RowHeightCache {
    * @returns {number} - Index representing the first row visible in the viewport
    */
   getRowIndex(scrollY: number): number {
-    if(scrollY === 0) {
-      return 0;
-    } else {
-      return this._getRowIndex(scrollY);
-    }
+    if(scrollY === 0) return 0;
+    return this.calcRowIndex(scrollY);
   }
 
   /**
@@ -83,16 +83,16 @@ export class RowHeightCache {
    * @param byRowHeight Update by the rowHeight provided.
    */
   update (atRowIndex: number, byRowHeight: number) {
-    if (this._treeArray.length === 0) {
+    if (!this.treeArray.length) {
       throw new Error(`Update at index ${atRowIndex} with value ${byRowHeight} failed:
         Row Height cache not initialized.`);
     }
 
-    let n = this._treeArray.length;
+    const n = this.treeArray.length;
     atRowIndex |= 0;
 
     while(atRowIndex < n) {
-      this._treeArray[atRowIndex] += byRowHeight;
+      this.treeArray[atRowIndex] += byRowHeight;
       atRowIndex |= (atRowIndex + 1);
     }
   }
@@ -104,15 +104,15 @@ export class RowHeightCache {
    * @returns {number} The total height from row 1 to the rowIndex.
    */
   query(atIndex: number): number {
-    if (this._treeArray.length === 0) {
-      throw new Error(`query at index ${atIndex} failed: Fenwick tree array not initialized. `);
+    if (!this.treeArray.length) {
+      throw new Error(`query at index ${atIndex} failed: Fenwick tree array not initialized.`);
     }
 
     let sum = 0;
     atIndex |= 0;
 
     while(atIndex >= 0) {
-      sum += this._treeArray[atIndex];
+      sum += this.treeArray[atIndex];
       atIndex = (atIndex & (atIndex + 1)) - 1;
     }
 
@@ -136,21 +136,19 @@ export class RowHeightCache {
    * @param sum - The scrollY position.
    * @returns {number} - Index representing the first row visible in the viewport
    */
-  private _getRowIndex( sum: number) {
-    if (this._treeArray.length === 0) {
-      return 0;
-    }
+  private calcRowIndex(sum: number): number {
+    if(!this.treeArray.length) return 0;
 
     let pos = -1;
-    let dataLength = this._treeArray.length;
+    const dataLength = this.treeArray.length;
 
     // Get the highest bit for the block size.
-    let highestBit = Math.pow(2, dataLength.toString(2).length - 1);
+    const highestBit = Math.pow(2, dataLength.toString(2).length - 1);
 
     for (let blockSize = highestBit; blockSize !== 0; blockSize >>= 1) {
       let nextPos = pos + blockSize;
-      if (nextPos < dataLength && sum >= this._treeArray[nextPos]) {
-        sum -= this._treeArray[nextPos];
+      if (nextPos < dataLength && sum >= this.treeArray[nextPos]) {
+        sum -= this.treeArray[nextPos];
         pos = nextPos;
       }
     }

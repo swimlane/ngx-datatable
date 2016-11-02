@@ -1,63 +1,82 @@
-import { Component, Input, HostBinding, ElementRef, Renderer } from '@angular/core';
-import { translateXY } from '../../utils';
-import { StateService } from '../../services';
+import { 
+  Component, Input, HostBinding, ElementRef, ChangeDetectionStrategy,
+  Renderer, Output, EventEmitter , HostListener
+} from '@angular/core';
+
+import { 
+  columnsByPin, columnGroupWidths, columnsByPinArr, 
+  translateXY, Keys, scrollbarWidth
+} from '../../utils';
 
 @Component({
   selector: 'datatable-body-row',
   template: `
-    <div>
-      <div
-        class="datatable-row-left datatable-row-group"
-        *ngIf="state.columnsByPin.left.length"
-        [ngStyle]="stylesByGroup('left')"
-        [style.width]="state.columnGroupWidths.left + 'px'">
-        <datatable-body-cell
-          *ngFor="let column of state.columnsByPin.left; trackBy: column?.$$id"
-          [row]="row"
-          [column]="column">
-        </datatable-body-cell>
-      </div>
-      <div
-        class="datatable-row-center datatable-row-group"
-        [style.width]="state.columnGroupWidths.center + 'px'"
-        [ngStyle]="stylesByGroup('center')"
-        *ngIf="state.columnsByPin.center.length">
-        <datatable-body-cell
-          *ngFor="let column of state.columnsByPin.center; trackBy: column?.$$id"
-          [row]="row"
-          [column]="column">
-        </datatable-body-cell>
-      </div>
-      <div
-        class="datatable-row-right datatable-row-group"
-        *ngIf="state.columnsByPin.right.length"
-        [ngStyle]="stylesByGroup('right')"
-        [style.width]="state.columnGroupWidths.right + 'px'">
-        <datatable-body-cell
-          *ngFor="let column of state.columnsByPin.right; trackBy: column?.$$id"
-          [row]="row"
-          [column]="column">
-        </datatable-body-cell>
-      </div>
+    <div
+      *ngFor="let colGroup of columnsByPin; let i = index; trackBy: $colGroup?.type"
+      class="datatable-row-{{colGroup.type}} datatable-row-group"
+      [ngStyle]="stylesByGroup(colGroup.type)"
+      [style.width.px]="columnGroupWidths[colGroup.type]">
+      <datatable-body-cell
+        *ngFor="let column of colGroup.columns; let ii = index; trackBy: column?.$$id"
+        tabindex="-1"
+        [row]="row"
+        [column]="column"
+        [rowHeight]="rowHeight"
+        (activate)="onActivate($event, ii)">
+      </datatable-body-cell>
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DataTableBodyRow {
+export class DataTableBodyRowComponent {
 
-  @Input() row: any;
-
-  @HostBinding('class.active')
-  get isSelected() {
-    return this.state.getRowSelectedIdx(this.row, this.state.selected) > -1;
+  @Input() set columns(val: any[]) {
+    this._columns = val;
+    
+    const colsByPin = columnsByPin(val);
+    this.columnsByPin = columnsByPinArr(val);
+    this.columnGroupWidths = columnGroupWidths(colsByPin, val);
   }
 
-  constructor(public state: StateService, element: ElementRef, renderer: Renderer) {
-    renderer.setElementClass(element.nativeElement, 'datatable-body-row', true);
+  get columns(): any[] { 
+    return this._columns; 
+  }
+
+  @Input() row: any;
+  @Input() bodyWidth: number;
+  @Input() offsetX: number;
+
+  @HostBinding('style.height.px')
+  @Input() rowHeight: number;
+
+  @HostBinding('class.active')
+  @Input() isSelected: boolean;
+
+  @HostBinding('class.datatable-row-even')
+  get isEvenRow(): boolean {
+    return this.row.$$index % 2 === 0;
+  }
+
+  @HostBinding('class.datatable-row-odd')
+  get isOddRow(): boolean {
+    return this.row.$$index % 2 !== 0;
+  }
+
+  @Output() activate: EventEmitter<any> = new EventEmitter();
+
+  private element: any;
+  private columnGroupWidths: any;
+  private columnsByPin: any;
+  private _columns: any[];
+
+  constructor(element: ElementRef, renderer: Renderer) {
+    this.element = element.nativeElement;
+    renderer.setElementClass(this.element, 'datatable-body-row', true);
   }
 
   stylesByGroup(group) {
-    const widths = this.state.columnGroupWidths;
-    const offsetX = this.state.offsetX;
+    const widths = this.columnGroupWidths;
+    const offsetX = this.offsetX;
 
     let styles = {
       width: `${widths[group]}px`
@@ -66,13 +85,45 @@ export class DataTableBodyRow {
     if(group === 'left') {
       translateXY(styles, offsetX, 0);
     } else if(group === 'right') {
-      const totalDiff = widths.total - this.state.innerWidth;
+      const bodyWidth = parseInt(this.bodyWidth + '', 0);
+      const totalDiff = widths.total - bodyWidth;
       const offsetDiff = totalDiff - offsetX;
-      const offset = (offsetDiff + this.state.scrollbarWidth) * -1;
+      const offset = (offsetDiff + scrollbarWidth) * -1;
       translateXY(styles, offset, 0);
     }
 
     return styles;
+  }
+
+  onActivate(event, index) {
+    event.cellIndex = index;
+    event.rowElement = this.element;
+    this.activate.emit(event);
+  }
+
+  @HostListener('keydown', ['$event'])
+  onKeyDown(event): void {
+    const keyCode = event.keyCode;
+    const isTargetRow = event.target === this.element;
+
+    const isAction = 
+      keyCode === Keys.return ||
+      keyCode === Keys.down ||
+      keyCode === Keys.up ||
+      keyCode === Keys.left ||
+      keyCode === Keys.right;
+
+    if(isAction && isTargetRow) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      this.activate.emit({
+        type: 'keydown',
+        event,
+        row: this.row,
+        rowElement: this.element
+      });
+    }
   }
 
 }

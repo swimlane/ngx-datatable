@@ -1,14 +1,25 @@
-import { TableColumn } from '../../models';
-import { StateService } from '../../services';
-import { SortDirection } from '../../types';
-export declare class DataTableBodyCell {
-    private state;
-    column: TableColumn;
+import { EventEmitter, ElementRef, Renderer } from '@angular/core';
+export declare class DataTableBodyCellComponent {
     row: any;
-    readonly cssClasses: string;
-    readonly width: any;
-    readonly height: any;
-    readonly sortDir: SortDirection;
+    column: any;
+    rowHeight: number;
+    sorts: any[];
+    activate: EventEmitter<any>;
+    isFocused: boolean;
+    readonly isSortActive: boolean;
+    readonly isSortAscending: boolean;
+    readonly isSortDescending: boolean;
+    readonly width: number;
+    readonly height: string | number;
     readonly value: any;
-    constructor(state: StateService);
+    private sortDir;
+    private element;
+    private _sorts;
+    constructor(element: ElementRef, renderer: Renderer);
+    onFocus(event: any): void;
+    onBlur(event: any): void;
+    onClick(event: any): void;
+    onDblClick(event: any): void;
+    onKeyDown(event: any): void;
+    calcSortDir(sorts: any): any;
 }

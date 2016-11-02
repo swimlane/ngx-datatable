@@ -15,13 +15,13 @@ var RowHeightCache = (function () {
          * range queries and updates.  Currently the tree is initialized to the base row
          * height instead of the detail row height.
          */
-        this._treeArray = [];
+        this.treeArray = [];
     }
     /**
      * Clear the Tree array.
      */
     RowHeightCache.prototype.clearCache = function () {
-        this._treeArray = [];
+        this.treeArray = [];
     };
     /**
      * Initialize the Fenwick tree with row Heights.
@@ -39,9 +39,9 @@ var RowHeightCache = (function () {
             throw new Error("Row Height cache initialization failed. Please ensure that 'detailRowHeight' is a\n        valid number value: (" + detailRowHeight + ") when 'scrollbarV' is enabled.");
         }
         var n = rows.length;
-        this._treeArray = new Array(n);
+        this.treeArray = new Array(n);
         for (var i = 0; i < n; ++i) {
-            this._treeArray[i] = 0;
+            this.treeArray[i] = 0;
         }
         for (var i = 0; i < n; ++i) {
             var currentRowHeight = rowHeight;
@@ -61,12 +61,9 @@ var RowHeightCache = (function () {
      * @returns {number} - Index representing the first row visible in the viewport
      */
     RowHeightCache.prototype.getRowIndex = function (scrollY) {
-        if (scrollY === 0) {
+        if (scrollY === 0)
             return 0;
-        }
-        else {
-            return this._getRowIndex(scrollY);
-        }
+        return this.calcRowIndex(scrollY);
     };
     /**
      * When a row is expanded or rowHeight is changed, update the height.  This can
@@ -77,13 +74,13 @@ var RowHeightCache = (function () {
      * @param byRowHeight Update by the rowHeight provided.
      */
     RowHeightCache.prototype.update = function (atRowIndex, byRowHeight) {
-        if (this._treeArray.length === 0) {
+        if (!this.treeArray.length) {
             throw new Error("Update at index " + atRowIndex + " with value " + byRowHeight + " failed:\n        Row Height cache not initialized.");
         }
-        var n = this._treeArray.length;
+        var n = this.treeArray.length;
         atRowIndex |= 0;
         while (atRowIndex < n) {
-            this._treeArray[atRowIndex] += byRowHeight;
+            this.treeArray[atRowIndex] += byRowHeight;
             atRowIndex |= (atRowIndex + 1);
         }
     };
@@ -94,13 +91,13 @@ var RowHeightCache = (function () {
      * @returns {number} The total height from row 1 to the rowIndex.
      */
     RowHeightCache.prototype.query = function (atIndex) {
-        if (this._treeArray.length === 0) {
-            throw new Error("query at index " + atIndex + " failed: Fenwick tree array not initialized. ");
+        if (!this.treeArray.length) {
+            throw new Error("query at index " + atIndex + " failed: Fenwick tree array not initialized.");
         }
         var sum = 0;
         atIndex |= 0;
         while (atIndex >= 0) {
-            sum += this._treeArray[atIndex];
+            sum += this.treeArray[atIndex];
             atIndex = (atIndex & (atIndex + 1)) - 1;
         }
         return sum;
@@ -121,18 +118,17 @@ var RowHeightCache = (function () {
      * @param sum - The scrollY position.
      * @returns {number} - Index representing the first row visible in the viewport
      */
-    RowHeightCache.prototype._getRowIndex = function (sum) {
-        if (this._treeArray.length === 0) {
+    RowHeightCache.prototype.calcRowIndex = function (sum) {
+        if (!this.treeArray.length)
             return 0;
-        }
         var pos = -1;
-        var dataLength = this._treeArray.length;
+        var dataLength = this.treeArray.length;
         // Get the highest bit for the block size.
         var highestBit = Math.pow(2, dataLength.toString(2).length - 1);
         for (var blockSize = highestBit; blockSize !== 0; blockSize >>= 1) {
             var nextPos = pos + blockSize;
-            if (nextPos < dataLength && sum >= this._treeArray[nextPos]) {
-                sum -= this._treeArray[nextPos];
+            if (nextPos < dataLength && sum >= this.treeArray[nextPos]) {
+                sum -= this.treeArray[nextPos];
                 pos = nextPos;
             }
         }

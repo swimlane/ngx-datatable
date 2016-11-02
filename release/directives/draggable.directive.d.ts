@@ -7,15 +7,15 @@ import { ElementRef, EventEmitter } from '@angular/core';
  *   http://stackoverflow.com/questions/35662530/how-to-implement-drag-and-drop-in-angular2
  *
  */
-export declare class Draggable {
-    element: HTMLElement;
-    model: any;
+export declare class DraggableDirective {
+    dragModel: any;
     dragX: boolean;
     dragY: boolean;
-    onDragStart: EventEmitter<any>;
-    onDragging: EventEmitter<any>;
-    onDragEnd: EventEmitter<any>;
-    private dragging;
+    dragStart: EventEmitter<any>;
+    dragging: EventEmitter<any>;
+    dragEnd: EventEmitter<any>;
+    element: HTMLElement;
+    private isDragging;
     private subscription;
     constructor(element: ElementRef);
     ngOnDestroy(): void;

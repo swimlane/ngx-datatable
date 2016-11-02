@@ -11,3 +11,5 @@ export * from './translate';
 export * from './visibility-observer';
 export * from './debounce';
 export * from './sort';
+export * from './row-height-cache';
+export * from './column-helper';

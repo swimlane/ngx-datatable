@@ -18,49 +18,49 @@ var Rx_1 = require('rxjs/Rx');
  *   http://stackoverflow.com/questions/35662530/how-to-implement-drag-and-drop-in-angular2
  *
  */
-var Draggable = (function () {
-    function Draggable(element) {
+var DraggableDirective = (function () {
+    function DraggableDirective(element) {
         this.dragX = true;
         this.dragY = true;
-        this.onDragStart = new core_1.EventEmitter();
-        this.onDragging = new core_1.EventEmitter();
-        this.onDragEnd = new core_1.EventEmitter();
-        this.dragging = false;
+        this.dragStart = new core_1.EventEmitter();
+        this.dragging = new core_1.EventEmitter();
+        this.dragEnd = new core_1.EventEmitter();
+        this.isDragging = false;
         this.element = element.nativeElement;
     }
-    Draggable.prototype.ngOnDestroy = function () {
+    DraggableDirective.prototype.ngOnDestroy = function () {
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
     };
-    Draggable.prototype.onMouseup = function (event) {
-        this.dragging = false;
+    DraggableDirective.prototype.onMouseup = function (event) {
+        this.isDragging = false;
         this.element.classList.remove('dragging');
         if (this.subscription) {
             this.subscription.unsubscribe();
-            this.onDragEnd.emit({
+            this.dragEnd.emit({
                 event: event,
                 element: this.element,
-                model: this.model
+                model: this.dragModel
             });
         }
     };
-    Draggable.prototype.onMousedown = function (event) {
+    DraggableDirective.prototype.onMousedown = function (event) {
         var _this = this;
         if (event.target.classList.contains('draggable')) {
             event.preventDefault();
-            this.dragging = true;
+            this.isDragging = true;
             var mouseDownPos_1 = { x: event.clientX, y: event.clientY };
             this.subscription = Rx_1.Observable.fromEvent(document, 'mousemove')
                 .subscribe(function (ev) { return _this.move(ev, mouseDownPos_1); });
-            this.onDragStart.emit({
+            this.dragStart.emit({
                 event: event,
                 element: this.element,
-                model: this.model
+                model: this.dragModel
             });
         }
     };
-    Draggable.prototype.move = function (event, mouseDownPos) {
+    DraggableDirective.prototype.move = function (event, mouseDownPos) {
         if (!this.dragging)
             return;
         var x = event.clientX - mouseDownPos.x;
@@ -71,54 +71,54 @@ var Draggable = (function () {
             this.element.style.top = y + "px";
         if (this.dragX || this.dragY) {
             this.element.classList.add('dragging');
-            this.onDragging.emit({
+            this.dragging.emit({
                 event: event,
                 element: this.element,
-                model: this.model
+                model: this.dragModel
             });
         }
     };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Object)
-    ], Draggable.prototype, "model", void 0);
+    ], DraggableDirective.prototype, "dragModel", void 0);
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Boolean)
-    ], Draggable.prototype, "dragX", void 0);
+    ], DraggableDirective.prototype, "dragX", void 0);
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Boolean)
-    ], Draggable.prototype, "dragY", void 0);
+    ], DraggableDirective.prototype, "dragY", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)
-    ], Draggable.prototype, "onDragStart", void 0);
+    ], DraggableDirective.prototype, "dragStart", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)
-    ], Draggable.prototype, "onDragging", void 0);
+    ], DraggableDirective.prototype, "dragging", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)
-    ], Draggable.prototype, "onDragEnd", void 0);
+    ], DraggableDirective.prototype, "dragEnd", void 0);
     __decorate([
         core_1.HostListener('document:mouseup', ['$event']), 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', [Object]), 
         __metadata('design:returntype', void 0)
-    ], Draggable.prototype, "onMouseup", null);
+    ], DraggableDirective.prototype, "onMouseup", null);
     __decorate([
         core_1.HostListener('mousedown', ['$event']), 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', [Object]), 
         __metadata('design:returntype', void 0)
-    ], Draggable.prototype, "onMousedown", null);
-    Draggable = __decorate([
+    ], DraggableDirective.prototype, "onMousedown", null);
+    DraggableDirective = __decorate([
         core_1.Directive({ selector: '[draggable]' }), 
         __metadata('design:paramtypes', [core_1.ElementRef])
-    ], Draggable);
-    return Draggable;
+    ], DraggableDirective);
+    return DraggableDirective;
 }());
-exports.Draggable = Draggable;
+exports.DraggableDirective = DraggableDirective;
 //# sourceMappingURL=draggable.directive.js.map

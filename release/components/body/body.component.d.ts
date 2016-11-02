@@ -1,22 +1,59 @@
-import { EventEmitter, OnInit, OnDestroy, ElementRef, Renderer } from '@angular/core';
-import { StateService } from '../../services';
-import { Scroller } from '../../directives';
-export declare class DataTableBody implements OnInit, OnDestroy {
-    state: StateService;
-    onRowClick: EventEmitter<any>;
-    onRowSelect: EventEmitter<any>;
-    scroller: Scroller;
-    rows: any;
-    private prevIndex;
-    private sub;
+import { EventEmitter, ElementRef, Renderer } from '@angular/core';
+import { SelectionType } from '../../types';
+import { ScrollerComponent } from './scroller.component';
+export declare class DataTableBodyComponent {
+    scrollbarV: boolean;
+    scrollbarH: boolean;
+    loadingIndicator: boolean;
+    rowHeight: number;
+    offsetX: number;
+    detailRowHeight: any;
+    emptyMessage: string;
+    selectionType: SelectionType;
+    selected: any[];
+    rowIdentity: any;
+    rowDetailTemplate: any;
+    pageSize: number;
+    rows: any[];
+    columns: any[];
+    offset: number;
+    rowCount: number;
+    bodyWidth: any;
+    bodyHeight: any;
+    scroll: EventEmitter<any>;
+    page: EventEmitter<any>;
+    activate: EventEmitter<any>;
+    select: EventEmitter<any>;
+    detailToggle: EventEmitter<any>;
+    scroller: ScrollerComponent;
     readonly selectEnabled: boolean;
-    readonly bodyHeight: string;
-    readonly bodyWidth: string;
-    constructor(state: StateService, element: ElementRef, renderer: Renderer);
-    ngOnInit(): void;
-    onBodyScroll(props: any): void;
+    private rowHeightsCache;
+    private temp;
+    private offsetY;
+    private indexes;
+    private columnGroupWidths;
+    private _rows;
+    private _bodyHeight;
+    private _bodyWidth;
+    private _columns;
+    private _rowCount;
+    private _offset;
+    private _pageSize;
+    /**
+     * Property that would calculate the height of scroll bar
+     * based on the row heights cache for virtual scroll. Other scenarios
+     * calculate scroll height automatically (as height will be undefined).
+     */
+    readonly scrollHeight: number;
+    constructor(element: ElementRef, renderer: Renderer);
+    updateOffsetY(offset?: number): void;
+    onBodyScroll({scrollYPos, scrollXPos, direction}: {
+        scrollYPos: any;
+        scrollXPos: any;
+        direction: any;
+    }): void;
     updatePage(direction: any): void;
-    updateRows(refresh?: boolean): void;
+    updateRows(): void;
     /**
      * Calculate row height based on the expanded state of the row.
      *
@@ -42,12 +79,28 @@ export declare class DataTableBody implements OnInit, OnDestroy {
      * @param row The row that needs to be placed in the 2D space.
      * @returns {{styles: string}}  Returns the CSS3 style to be applied
      */
-    getRowsStyles(row: any): {
-        height: string;
-    };
+    getRowsStyles(row: any): any;
     hideIndicator(): void;
-    rowClicked(event: any, index: any, row: any): void;
-    rowKeydown(event: any, index: any, row: any): void;
-    selectRow(event: any, index: any, row: any): void;
-    ngOnDestroy(): void;
+    updateIndexes(): void;
+    /**
+     *  Refreshes the full Row Height cache.  Should be used
+     *  when the entire row array state has changed.
+     */
+    refreshRowHeightCache(): void;
+    getAdjustedViewPortIndex(): number;
+    /**
+     * Toggle the Expansion of the row i.e. if the row is expanded then it will
+     * collapse and vice versa.   Note that the expanded status is stored as
+     * a part of the row object itself as we have to preserve the expanded row
+     * status in case of sorting and filtering of the row set.
+     *
+     * @param row The row for which the expansion needs to be toggled.
+     */
+    toggleRowExpansion(row: any): void;
+    /**
+     * Expand/Collapse all the rows no matter what their state is.
+     * @param expanded When true, all rows are expanded and when false, all rows will be collapsed.
+     */
+    toggleAllRows(expanded: boolean): void;
+    recalcLayout(): void;
 }

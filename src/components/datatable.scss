@@ -58,8 +58,10 @@
   &.fixed-row {
     .datatable-scroll{
       white-space: nowrap;
+      
       .datatable-body-row {
         white-space: nowrap;
+
         .datatable-body-cell {
           overflow: hidden;
           white-space: nowrap;
@@ -99,6 +101,10 @@
     -ms-user-select: none;
     -o-user-select: none;
     user-select: none;
+    
+    &:focus {
+      outline: none;
+    }
   }
 
   .datatable-row-left,
@@ -125,8 +131,8 @@
     }
 
     .datatable-header-cell {
-      position:relative;
-      display:inline-block;
+      position: relative;
+      display: inline-block;
 
       &.longpress {
         cursor: move;
@@ -137,19 +143,19 @@
       }
 
       .sort-btn {
-        line-height:100%;
+        line-height: 100%;
         vertical-align: middle;
-        display:inline-block;
+        display: inline-block;
       }
 
       .resize-handle{
         display: inline-block;
         position: absolute;
-        right:0;
-        top:0;
+        right: 0;
+        top: 0;
         bottom: 0;
-        width:5px;
-        padding:0 8px;
+        width: 5px;
+        padding: 0 8px;
         visibility: hidden;
         cursor: ew-resize;
       }
@@ -166,9 +172,9 @@
    * Body Styles
    */
   .datatable-body {
-    position:relative;
-    z-index:10;
-    display:block;
+    position: relative;
+    z-index: 10;
+    display: block;
 
     .datatable-scroll{
       display: inline-block;
@@ -212,16 +218,16 @@
    */
   .datatable-footer {
     display: block;
-    width:100%;
+    width: 100%;
 
     > div {
       display: flex;
       align-items: center;
-      width:100%;
+      width: 100%;
     }
 
     .page-count{
-      display:inline-block;
+      display: inline-block;
       flex: 1 1 20%;
     }
 
@@ -232,15 +238,15 @@
 
       .pager,
       .pager li {
-        padding:0;
-        margin:0;
+        padding: 0;
+        margin: 0;
         display: inline-block;
-        list-style:none;
+        list-style: none;
       }
 
       .pager {
         li, li a{
-          outline:none;
+          outline: none;
         }
 
         li {

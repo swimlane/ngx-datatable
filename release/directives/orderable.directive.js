@@ -10,30 +10,53 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var draggable_directive_1 = require('./draggable.directive');
-var Orderable = (function () {
-    function Orderable() {
-        this.onReorder = new core_1.EventEmitter();
+var OrderableDirective = (function () {
+    function OrderableDirective(differs) {
+        this.reorder = new core_1.EventEmitter();
+        this.differ = differs.find({}).create(null);
     }
-    Orderable.prototype.ngAfterContentInit = function () {
-        var _this = this;
-        this.drags.forEach(function (d) {
-            return d.onDragStart.subscribe(_this.onDragStart.bind(_this)) &&
-                d.onDragEnd.subscribe(_this.onDragEnd.bind(_this));
+    OrderableDirective.prototype.ngAfterContentInit = function () {
+        // HACK: Investigate Better Way
+        this.updateSubscriptions();
+        this.draggables.changes.subscribe(this.updateSubscriptions.bind(this));
+    };
+    OrderableDirective.prototype.ngOnDestroy = function () {
+        this.draggables.forEach(function (d) {
+            d.dragStart.unsubscribe();
+            d.dragEnd.unsubscribe();
         });
     };
-    Orderable.prototype.onDragStart = function () {
+    OrderableDirective.prototype.updateSubscriptions = function () {
+        var _this = this;
+        var diffs = this.differ.diff(this.draggables.toArray());
+        if (diffs) {
+            var sub = function (_a) {
+                var currentValue = _a.currentValue;
+                currentValue.dragStart.subscribe(_this.onDragStart.bind(_this));
+                currentValue.dragEnd.subscribe(_this.onDragEnd.bind(_this));
+            };
+            diffs.forEachAddedItem(sub.bind(this));
+            diffs.forEachChangedItem(sub.bind(this));
+            diffs.forEachRemovedItem(function (_a) {
+                var previousValue = _a.previousValue;
+                previousValue.dragStart.unsubscribe();
+                previousValue.dragEnd.unsubscribe();
+            });
+        }
+    };
+    OrderableDirective.prototype.onDragStart = function () {
         this.positions = {};
         var i = 0;
-        for (var _i = 0, _a = this.drags.toArray(); _i < _a.length; _i++) {
+        for (var _i = 0, _a = this.draggables.toArray(); _i < _a.length; _i++) {
             var dragger = _a[_i];
             var elm = dragger.element;
-            this.positions[dragger.model.prop] = {
+            this.positions[dragger.dragModel.prop] = {
                 left: parseInt(elm.offsetLeft.toString(), 0),
                 index: i++
             };
         }
     };
-    Orderable.prototype.onDragEnd = function (_a) {
+    OrderableDirective.prototype.onDragEnd = function (_a) {
         var element = _a.element, model = _a.model;
         var newPos = parseInt(element.offsetLeft.toString(), 0);
         var prevPos = this.positions[model.prop];
@@ -43,7 +66,7 @@ var Orderable = (function () {
             var movedLeft = newPos < pos.left && prevPos.left > pos.left;
             var movedRight = newPos > pos.left && prevPos.left < pos.left;
             if (movedLeft || movedRight) {
-                this.onReorder.emit({
+                this.reorder.emit({
                     prevIndex: prevPos.index,
                     newIndex: i,
                     model: model
@@ -56,16 +79,16 @@ var Orderable = (function () {
     __decorate([
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)
-    ], Orderable.prototype, "onReorder", void 0);
+    ], OrderableDirective.prototype, "reorder", void 0);
     __decorate([
-        core_1.ContentChildren(draggable_directive_1.Draggable), 
+        core_1.ContentChildren(draggable_directive_1.DraggableDirective, { descendants: true }), 
         __metadata('design:type', core_1.QueryList)
-    ], Orderable.prototype, "drags", void 0);
-    Orderable = __decorate([
+    ], OrderableDirective.prototype, "draggables", void 0);
+    OrderableDirective = __decorate([
         core_1.Directive({ selector: '[orderable]' }), 
-        __metadata('design:paramtypes', [])
-    ], Orderable);
-    return Orderable;
+        __metadata('design:paramtypes', [core_1.KeyValueDiffers])
+    ], OrderableDirective);
+    return OrderableDirective;
 }());
-exports.Orderable = Orderable;
+exports.OrderableDirective = OrderableDirective;
 //# sourceMappingURL=orderable.directive.js.map

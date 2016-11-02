@@ -4,4 +4,13 @@
  * @param  {string} str
  * @return {string} camel case string
  */
-export declare function camelCase(str: any): any;
+export declare function camelCase(str: any): string;
+/**
+ * Converts strings from camel case to words
+ * http://stackoverflow.com/questions/7225407/convert-camelcasetext-to-camel-case-text
+ *
+ * @export
+ * @param {any} str
+ * @returns string
+ */
+export declare function deCamelCase(str: any): string;

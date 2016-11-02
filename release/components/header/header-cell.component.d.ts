@@ -1,23 +1,21 @@
-
-import { ElementRef, EventEmitter, Renderer } from '@angular/core';
-import { StateService } from '../../services';
-import { TableColumn } from '../../models';
-import { SortDirection } from '../../types';
-export declare class DataTableHeaderCell {
-    element: ElementRef;
-    private state;
-    column: TableColumn;
-    onColumnChange: EventEmitter<any>;
-    readonly width: number;
-    readonly minWidth: number;
-    readonly maxWidth: number;
-    readonly height: any;
-    readonly colTitle: string;
-    readonly cssClasses: string;
-    sort: Function;
-    readonly sortDir: SortDirection;
-    readonly name: string;
-    constructor(element: ElementRef, state: StateService, renderer: Renderer);
-    sortClasses(sort: any): {};
+import { EventEmitter } from '@angular/core';
+import { SortType } from '../../types';
+export declare class DataTableHeaderCellComponent {
+    sortType: SortType;
+    column: any;
+    sortAscendingIcon: string;
+    sortDescendingIcon: string;
+    headerHeight: number;
+    sorts: any[];
+    sort: EventEmitter<any>;
+    readonly columnCssClasses: any;
+    private readonly name;
+    private readonly minWidth;
+    private readonly maxWidth;
+    private readonly width;
+    private sortDir;
+    private _sorts;
+    sortClasses(dir: any): any;
+    calcSortDir(sorts: any): any;
     onSort(): void;
 }

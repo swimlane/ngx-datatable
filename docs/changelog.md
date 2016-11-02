@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.0.0
+- Feature: Cell Selection and Keyboard Navigation
+- Feature: `activation` events
+- Enhancement: `OnPush` all the things!
+- Enhancement: Add `totalMessage` option for localization
+- Enhancement: Demo Page
+- Enhancement: Page Count Formatted
+- Enhancement: Automatically format column `prop` when no `name` passed
+- Enhancement: Add ability to pass false to `comparator` for sort handling via event
+- Bug: Window resize not updating rows in virtual scrolling
+- Chore: Switch to SemVer
+
+### Breaking Changes
+- `TableOptions` has been removed and options are `Input` on component now
+- `TableColumn` class has been removed, just pass normal objects
+- Event names has been renamed using Angular2 standards
+- Components have been renamed to Angular2 standards
+- Removed `StateService`
+
 ## 0.12.0
 - Bug: Return empty string on undefined deep values (#232)
 - Bug: Fix force fill alog (#218)

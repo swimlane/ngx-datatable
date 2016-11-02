@@ -9,18 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var ProgressBar = (function () {
-    function ProgressBar() {
+var ProgressBarComponent = (function () {
+    function ProgressBarComponent() {
     }
-    ProgressBar = __decorate([
+    ProgressBarComponent = __decorate([
         core_1.Component({
             selector: 'datatable-progress',
             template: "\n    <div class=\"progress-linear\" role=\"progressbar\">\n      <div class=\"container\">\n        <div class=\"bar\"></div>\n      </div>\n    </div>\n  ",
             changeDetection: core_1.ChangeDetectionStrategy.OnPush
         }), 
         __metadata('design:paramtypes', [])
-    ], ProgressBar);
-    return ProgressBar;
+    ], ProgressBarComponent);
+    return ProgressBarComponent;
 }());
-exports.ProgressBar = ProgressBar;
+exports.ProgressBarComponent = ProgressBarComponent;
 //# sourceMappingURL=progress-bar.component.js.map

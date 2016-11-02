@@ -1,16 +1,16 @@
 import { EventEmitter } from '@angular/core';
-export declare class LongPress {
+export declare class LongPressDirective {
     duration: number;
-    onLongPress: EventEmitter<any>;
-    onLongPressing: EventEmitter<any>;
-    onLongPressEnd: EventEmitter<any>;
+    longPress: EventEmitter<any>;
+    longPressing: EventEmitter<any>;
+    longPressEnd: EventEmitter<any>;
     private pressing;
-    private longPressing;
+    private isLongPressing;
     private timeout;
     private mouseX;
     private mouseY;
     readonly press: boolean;
-    readonly longPress: boolean;
+    readonly isLongPress: EventEmitter<any>;
     onMouseDown(event: any): void;
     onMouseMove(event: any): void;
     loop(event: any): void;

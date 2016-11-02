@@ -3,7 +3,7 @@
  * http://stackoverflow.com/a/13382873/888165
  * @return {int} width
  */
-export function scrollbarWidth() {
+export function getScrollBarWidth() {
   let outer = document.createElement('div');
   outer.style.visibility = 'hidden';
   outer.style.width = '100px';
@@ -22,3 +22,5 @@ export function scrollbarWidth() {
 
   return widthNoScroll - widthWithScroll;
 };
+
+export const scrollbarWidth = getScrollBarWidth();

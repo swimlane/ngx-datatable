@@ -6,6 +6,5 @@ __export(require('./draggable.directive'));
 __export(require('./long-press.directive'));
 __export(require('./orderable.directive'));
 __export(require('./resizeable.directive'));
-__export(require('./scroller.directive'));
 __export(require('./visibility.directive'));
 //# sourceMappingURL=index.js.map

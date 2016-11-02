@@ -1,43 +1,52 @@
 import {
-  Component,
-  Output,
-  EventEmitter,
-  ElementRef,
-  Renderer
+  Component, Output, EventEmitter, ElementRef,
+  Renderer, ChangeDetectionStrategy, Input
 } from '@angular/core';
-
-import { StateService } from '../../services';
 
 @Component({
   selector: 'datatable-footer',
   template: `
     <div
-      [style.height]="state.options.footerHeight">
-      <div class="page-count">{{state.rowCount}} total</div>
+      [style.height.px]="footerHeight">
+      <div class="page-count">{{rowCount.toLocaleString()}} {{totalMessage}}</div>
       <datatable-pager
+        [pagerLeftArrowIcon]="pagerLeftArrowIcon"
+        [pagerRightArrowIcon]="pagerRightArrowIcon"
+        [pagerPreviousIcon]="pagerPreviousIcon"
+        [pagerNextIcon]="pagerNextIcon"
         [page]="curPage"
-        [size]="state.pageSize"
-        [cssClasses]="state.options.cssClasses"
-        (onPaged)="onPageChange.emit($event)"
-        [count]="state.rowCount"
-        [hidden]="!visible">
+        [size]="pageSize"
+        [count]="rowCount"
+        [hidden]="!isVisible"
+        (change)="page.emit($event)">
        </datatable-pager>
      </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DataTableFooter {
+export class DataTableFooterComponent {
 
-  @Output() onPageChange: EventEmitter<any> = new EventEmitter();
+  @Input() footerHeight: number;
+  @Input() rowCount: number;
+  @Input() pageSize: number;
+  @Input() offset: number;
+  @Input() pagerLeftArrowIcon: string;
+  @Input() pagerRightArrowIcon: string;
+  @Input() pagerPreviousIcon: string;
+  @Input() pagerNextIcon: string;
+  @Input() totalMessage: string;
 
-  get visible() {
-    return (this.state.rowCount / this.state.pageSize) > 1;
+  @Output() page: EventEmitter<any> = new EventEmitter();
+
+  get isVisible() {
+    return (this.rowCount / this.pageSize) > 1;
   }
 
   get curPage() {
-    return this.state.options.offset + 1;
+    return this.offset + 1;
   }
 
-  constructor(element: ElementRef, private state: StateService, renderer: Renderer) {
+  constructor(element: ElementRef, renderer: Renderer) {
     renderer.setElementClass(element.nativeElement, 'datatable-footer', true);
   }
 

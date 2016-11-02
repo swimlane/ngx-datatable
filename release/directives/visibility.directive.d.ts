@@ -10,9 +10,9 @@ import { EventEmitter, ElementRef } from '@angular/core';
  * 		</div>
  *
  */
-export declare class Visibility {
-    visible: boolean;
-    onVisibilityChange: EventEmitter<any>;
+export declare class VisibilityDirective {
+    isVisible: boolean;
+    visible: EventEmitter<any>;
     constructor(element: ElementRef);
     visbilityChange(): void;
 }

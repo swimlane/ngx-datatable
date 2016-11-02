@@ -1,4 +1,3 @@
-import { Sort } from '../models';
 import { SortType, SortDirection } from '../types';
 import { deepValueGetter } from './deep-getter';
 /**
@@ -59,7 +58,7 @@ export function orderByComparator(a: any, b: any): number {
  * @param  {Array<Sort>} dirs
  * @return {Array<any>} results
  */
-export function sortRows(rows: Array<any>, dirs: Array<Sort>) {
+export function sortRows(rows: Array<any>, dirs: any[]) {
   let temp = [...rows];
 
   return temp.sort(function(a: any, b: any) {

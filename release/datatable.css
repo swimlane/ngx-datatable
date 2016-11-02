@@ -76,6 +76,9 @@
     -ms-user-select: none;
     -o-user-select: none;
     user-select: none; }
+    .datatable .datatable-body-cell:focus,
+    .datatable .datatable-header-cell:focus {
+      outline: none; }
   .datatable .datatable-row-left,
   .datatable .datatable-row-right {
     z-index: 9; }

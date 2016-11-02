@@ -20,11 +20,12 @@ import { VisibilityObserver } from '../utils';
  *
  */
 @Directive({ selector: '[visibility-observer]' })
-export class Visibility {
+export class VisibilityDirective {
 
-  @HostBinding('class.visible') visible: boolean = false;
+  @HostBinding('class.visible') 
+  isVisible: boolean = false;
 
-  @Output() onVisibilityChange: EventEmitter<any> = new EventEmitter();
+  @Output() visible: EventEmitter<any> = new EventEmitter();
 
   constructor(element: ElementRef) {
     new VisibilityObserver(
@@ -35,8 +36,8 @@ export class Visibility {
   visbilityChange() {
     // trigger zone recalc for columns
     setTimeout(() => {
-      this.visible = true;
-      this.onVisibilityChange.emit(true);
+      this.isVisible = true;
+      this.visible.emit(true);
     });
   }
 

@@ -1,181 +1,296 @@
 import {
-  Component,
-  Input,
-  Output,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  KeyValueDiffers,
-  ContentChildren,
-  OnInit,
-  OnChanges,
-  QueryList,
-  DoCheck,
-  AfterViewInit,
-  IterableDiffer,
-  HostBinding,
-  Host,
-  Renderer, ContentChild
+  Component, Input, Output, ElementRef, EventEmitter, ViewChild,
+  HostListener, ContentChildren, OnInit, QueryList, AfterViewInit,
+  HostBinding, Renderer, ContentChild, TemplateRef, ChangeDetectionStrategy
 } from '@angular/core';
 
-import { forceFillColumnWidths, adjustColumnWidths } from '../utils';
-import { ColumnMode } from '../types';
-import { TableOptions, TableColumn } from '../models';
-import { DataTableColumn } from './datatable-column.directive';
-import { StateService } from '../services';
-import { DatatableRowDetailTemplate } from './datatable-row-detail-template.directive';
+import { forceFillColumnWidths, adjustColumnWidths, sortRows } from '../utils';
+import { ColumnMode, SortType, SelectionType } from '../types';
+import { DataTableBodyComponent } from './body';
+import { DataTableColumnDirective } from './column.directive';
+import { DatatableRowDetailDirective } from './row-detail.directive';
+import { scrollbarWidth, setColumnDefaults } from '../utils';
 
 @Component({
   selector: 'datatable',
-  providers: [StateService],
   template: `
     <div
       visibility-observer
-      (onVisibilityChange)="adjustSizes()">
+      (visible)="recalculate()">
       <datatable-header
-        *ngIf="state.options.headerHeight"
-        (onColumnChange)="onColumnChange.emit($event)">
+        *ngIf="headerHeight"
+        [sorts]="sorts"
+        [sortType]="sortType"
+        [scrollbarH]="scrollbarH"
+        [innerWidth]="innerWidth"
+        [offsetX]="offsetX"
+        [columns]="columns"
+        [headerHeight]="headerHeight"
+        [sortAscendingIcon]="cssClasses.sortAscending"
+        [sortDescendingIcon]="cssClasses.sortDescending"
+        (sort)="onColumnSort($event)"
+        (resize)="onColumnResize($event)"
+        (reorder)="onColumnReorder($event)">
       </datatable-header>
       <datatable-body
-        (onRowClick)="onRowClick.emit($event)"
-        (onRowSelect)="onRowSelect($event)">
+        [rows]="rows"
+        [scrollbarV]="scrollbarV"
+        [scrollbarH]="scrollbarH"
+        [loadingIndicator]="loadingIndicator"
+        [rowHeight]="rowHeight"
+        [rowCount]="rowCount"
+        [offset]="offset"
+        [columns]="columns"
+        [pageSize]="pageSize"
+        [offsetX]="offsetX"
+        [rowDetailTemplate]="rowDetailTemplate"
+        [detailRowHeight]="detailRowHeight"
+        [selected]="selected"
+        [bodyWidth]="innerWidth"
+        [bodyHeight]="bodyHeight"
+        [selectionType]="selectionType"
+        [emptyMessage]="emptyMessage"
+        [rowIdentity]="rowIdentity"
+        (page)="onBodyPage($event)"
+        (activate)="activate.emit($event)"
+        (select)="select.emit($event)"
+        (detailToggle)="detailToggle.emit($event)"
+        (scroll)="onBodyScroll($event)">
       </datatable-body>
       <datatable-footer
-         *ngIf="state.options.footerHeight"
-        (onPageChange)="state.setPage($event)">
+        *ngIf="footerHeight"
+        [rowCount]="rowCount"
+        [pageSize]="pageSize"
+        [offset]="offset"
+        [footerHeight]="footerHeight"
+        [totalMessage]="totalMessage"
+        [pagerLeftArrowIcon]="cssClasses.pagerLeftArrow"
+        [pagerRightArrowIcon]="cssClasses.pagerRightArrow"
+        [pagerPreviousIcon]="cssClasses.pagerPrevious"
+        [pagerNextIcon]="cssClasses.pagerNext"
+        (page)="onFooterPage($event)">
       </datatable-footer>
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DataTable implements OnInit, OnChanges, DoCheck, AfterViewInit {
+export class DatatableComponent implements OnInit, AfterViewInit {
 
-  @Input() options: TableOptions;
-  @Input() rows: any[];
+  // Rows
+  @Input() set rows(val: any[]) {
+    this._rows = val;
+    this.recalculate();
+  }
+
+  get rows(): any[] {
+    return this._rows;
+  }
+
+  // Columns
+  @Input() set columns(val: any[]) {
+    val = val || [];
+    setColumnDefaults(val);
+
+    this._columns = val;
+    this.adjustColumns();
+  }
+
+  get columns(): any[] {
+    return this._columns;
+  }
+
+  // Selected rows
   @Input() selected: any[];
 
-  @Output() onPageChange: EventEmitter<any> = new EventEmitter();
-  @Output() onRowsUpdate: EventEmitter<any> = new EventEmitter();
-  @Output() onRowClick: EventEmitter<any> = new EventEmitter();
-  @Output() onSelectionChange: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnChange: EventEmitter<any> = new EventEmitter();
+  // Enable vertical scrollbars
+  @Input() scrollbarV: boolean = false;
 
-  @ContentChildren(DataTableColumn) columns: QueryList<DataTableColumn>;
-  @ContentChild(DatatableRowDetailTemplate) rowDetailTemplateChild;
+  // Enable horz scrollbars
+  @Input() scrollbarH: boolean = false;
+
+  // The row height; which is necessary
+  // to calculate the height for the lazy rendering.
+  @Input() rowHeight: number = 30;
+
+  // The detail row height is required especially when virtual scroll is enabled.
+  @Input() detailRowHeight: number = 0;
+
+  // Type of column width distribution.
+  // Example: flex, force, standard
+  @Input() columnMode: ColumnMode = ColumnMode.standard;
+
+  // Message to show when array is presented
+  // but contains no values
+  @Input() emptyMessage: string = 'No data to display';
+
+  // Footer total message
+  @Input() totalMessage: string = 'total';
+
+  // The minimum header height in pixels.
+  // pass falsey for no header
+  // note: number|string does not work right
+  @Input() headerHeight: any = 30;
+
+  // The minimum footer height in pixels.
+  // pass falsey for no footer
+  @Input() footerHeight: number = 0;
+
+  // The minimum table height in pixels.
+  @Input() tableHeight: number = 300;
+
+  // if external paging is turned on
+  @Input() externalPaging: boolean = false;
+
+  // Page size
+  @Input() limit: number = undefined;
+
+  // Total count
+  @Input() count: number = 0;
+
+  // Page offset
+  @Input() offset: number = 0;
+
+  // Loading indicator
+  @Input() loadingIndicator: boolean = false;
+
+  // Selections?
+  @Input() selectionType: SelectionType;
+
+  // if you can reorder columns
+  @Input() reorderable: boolean = true;
+
+  // type of sorting
+  @Input() sortType: SortType = SortType.single;
+
+  // sorts
+  @Input() sorts: any[] = [];
+
+  // row detail template
+  @Input() rowDetailTemplate: TemplateRef<any>;
+
+  // css class overrides
+  @Input() cssClasses: any = {
+    sortAscending: 'icon-down',
+    sortDescending: 'icon-up',
+    pagerLeftArrow: 'icon-left',
+    pagerRightArrow: 'icon-right',
+    pagerPrevious: 'icon-prev',
+    pagerNext: 'icon-skip'
+  };
+
+  // This will be used when displaying or selecting rows:
+  // when tracking/comparing them, we'll use the value of this fn,
+  // (`fn(x) === fn(y)` instead of `x === y`)
+  @Input() rowIdentity = ((x) => x);
+
+  @Output() scroll: EventEmitter<any> = new EventEmitter();
+  @Output() activate: EventEmitter<any> = new EventEmitter();
+  @Output() select: EventEmitter<any> = new EventEmitter();
+  @Output() sort: EventEmitter<any> = new EventEmitter();
+  @Output() page: EventEmitter<any> = new EventEmitter();
+  @Output() detailToggle: EventEmitter<any> = new EventEmitter();
+  @Output() reorder: EventEmitter<any> = new EventEmitter();
+  @Output() resize: EventEmitter<any> = new EventEmitter();
+
+  @HostBinding('class.fixed-header')
+  get isFixedHeader() {
+    const headerHeight: number|string = this.headerHeight;
+    return (typeof headerHeight === 'string') ?
+      (<string>headerHeight) !== 'auto' : true;
+  }
+
+  @HostBinding('class.fixed-row')
+  get isFixedRow() {
+    const rowHeight: number|string = this.rowHeight;
+    return (typeof rowHeight === 'string') ?
+      (<string>rowHeight) !== 'auto' : true;
+  }
+
+  @HostBinding('class.scroll-vertical')
+  get isVertScroll() {
+    return this.scrollbarV;
+  }
+
+  @HostBinding('class.scroll-horz')
+  get isHorScroll() {
+    return this.scrollbarH;
+  }
+
+  @HostBinding('class.selectable')
+  get isSelectable() {
+    return this.selectionType !== undefined;
+  }
+
+  @ContentChildren(DataTableColumnDirective) 
+  set columnTemplates(val: QueryList<DataTableColumnDirective>) {
+    this._columnTemplates = val;
+
+    if(val) { 
+      const arr = val.toArray();
+      // only set this if results were brought back
+      if(arr.length) this.columns = arr;
+    }
+  }
+
+  get columnTemplates(): QueryList<DataTableColumnDirective> {
+    return this._columnTemplates;
+  }
+
+  @ContentChild(DatatableRowDetailDirective) 
+  set rowDetailTemplateChild(val: DatatableRowDetailDirective) {
+    this._rowDetailTemplateChild = val;
+    if(val) this.rowDetailTemplate = val.rowDetailTemplate;
+  }
+
+  get rowDetailTemplateChild(): DatatableRowDetailDirective {
+    return this._rowDetailTemplateChild;
+  }
+  
+  offsetX: number = 0;
+
+  @ViewChild(DataTableBodyComponent)
+  private bodyComponent: DataTableBodyComponent;
 
   private element: HTMLElement;
-  private rowDiffer: IterableDiffer;
-  private colDiffer: IterableDiffer;
-  private pageSubscriber: any;
+  private innerWidth: number;
+  private pageSize: number;
+  private bodyHeight: number;
+  private rowCount: number;
 
-  constructor(
-    @Host() public state: StateService,
-    renderer: Renderer,
-    element: ElementRef,
-    differs: KeyValueDiffers) {
+  private _rows: any[];
+  private _columns: any[];
+  private _columnTemplates: QueryList<DataTableColumnDirective>;
+  private _rowDetailTemplateChild: DatatableRowDetailDirective;
 
+  constructor(renderer: Renderer, element: ElementRef) {
     this.element = element.nativeElement;
     renderer.setElementClass(this.element, 'datatable', true);
-
-    this.rowDiffer = differs.find({}).create(null);
-    this.colDiffer = differs.find({}).create(null);
   }
 
   ngOnInit(): void {
-    this.pageSubscriber = this.state.onPageChange.subscribe((action) => {
-      this.onPageChange.emit({
-        page: action.value,
-        offset: this.state.options.offset,
-        limit: this.state.pageSize,
-        count: this.state.rowCount
-      });
-    });
-
     // need to call this immediatly to size
     // if the table is hidden the visibility
     // listener will invoke this itself upon show
-    this.adjustSizes();
+    this.recalculate();
   }
 
-  ngAfterViewInit() {
-    if(this.rowDetailTemplateChild) {
-      this.state.options.rowDetailTemplate = this.rowDetailTemplateChild.rowDetailTemplate;
-    }
-
-    this.adjustColumns();
-    if (this.columns.length) {
-      // changing the columns without a timeout
-      // causes a interesting timing bug
-      setTimeout(() => {
-
-        // this translates the expressive columns
-        // that are defined into the markup to
-        // column objects
-        for (let col of this.columns.toArray()) {
-          this.options.columns.push(new TableColumn(col));
-        }
-      });
-    }
+  ngAfterViewInit(): void {
+    this.recalculate();
   }
 
-  ngOnChanges(changes) {
-    if (changes.hasOwnProperty('options')) {
-      this.state.setOptions(changes.options.currentValue);
-    }
-
-    if (changes.hasOwnProperty('rows')) {
-      this.state.setRows(changes.rows.currentValue);
-    }
-
-    if (changes.hasOwnProperty('selected')) {
-      this.state.setSelected(changes.selected.currentValue);
-    }
-  }
-
-  ngDoCheck() {
-    if (this.rowDiffer.diff(this.rows)) {
-      this.state.setRows(this.rows);
-      this.onRowsUpdate.emit(this.rows);
-    }
-
-    this.checkColumnChanges();
-  }
-
-  ngOnDestroy() {
-    this.pageSubscriber.unsubscribe();
-  }
-
-  checkColumnChanges() {
-    const colDiff = this.colDiffer.diff(this.options.columns);
-
-    if (colDiff) {
-      let chngd: boolean = false;
-      colDiff.forEachAddedItem(() => {
-        chngd = true;
-        return false;
-      });
-
-      if (!chngd) {
-        colDiff.forEachRemovedItem(() => {
-          chngd = true;
-          return false;
-        });
-      }
-
-      // if a column was added or removed
-      // we need to re-adjust columns
-      if (chngd) this.adjustColumns();
-    }
-  }
-
-  adjustSizes() {
+  @HostListener('window:resize')
+  recalculate(): void {
     let { height, width } = this.element.getBoundingClientRect();
-    this.state.innerWidth = Math.floor(width);
+    this.innerWidth = Math.floor(width);
 
-    if (this.options.scrollbarV) {
-      if (this.options.headerHeight) height = height - this.options.headerHeight;
-      if (this.options.footerHeight) height = height - this.options.footerHeight;
-      this.state.bodyHeight = height;
+    if (this.scrollbarV) {
+      if (this.headerHeight) height = height - this.headerHeight;
+      if (this.footerHeight) height = height - this.footerHeight;
+      this.bodyHeight = height;
     }
+    
+    this.pageSize = this.calcPageSize();
+    this.rowCount = this.calcRowCount();
 
     this.adjustColumns();
   }
@@ -185,79 +300,130 @@ export class DataTable implements OnInit, OnChanges, DoCheck, AfterViewInit {
    *
    * @param rowIndex
    */
-  toggleExpandRow(row: any) {
+  toggleExpandRow(row: any): void {
     // Should we write a guard here??
-    this.state.toggleRowExpansion(row);
+    this.bodyComponent.toggleRowExpansion(row);
   }
 
   /**
    * API method to expand all the rows.
    */
-  expandAllRows() {
-    this.state.toggleAllRows(true);
+  expandAllRows(): void {
+    this.bodyComponent.toggleAllRows(true);
   }
 
   /**
    * API method to collapse all the rows.
    */
-  collapseAllRows() {
-    this.state.toggleAllRows(false);
+  collapseAllRows(): void {
+    this.bodyComponent.toggleAllRows(false);
   }
 
-  adjustColumns(forceIdx?: number) {
-    if (!this.options.columns) return;
+  adjustColumns(columns: any[] = this.columns, forceIdx?: number): any[] {
+    if (!columns) return;
 
-    let width: number = this.state.innerWidth;
-    if (this.options.scrollbarV) {
-      width = width - this.state.scrollbarWidth;
+    let width = this.innerWidth;
+    if (this.scrollbarV) {
+      width = width - scrollbarWidth;
     }
 
-    if (this.options.columnMode === ColumnMode.force) {
-      forceFillColumnWidths(this.options.columns, width, forceIdx);
-    } else if (this.options.columnMode === ColumnMode.flex) {
-      adjustColumnWidths(this.options.columns, width);
+    if (this.columnMode === ColumnMode.force) {
+      forceFillColumnWidths(columns, width, forceIdx);
+    } else if (this.columnMode === ColumnMode.flex) {
+      adjustColumnWidths(columns, width);
     }
+
+    return columns;
   }
 
-  onRowSelect(event) {
-    this.state.setSelected(event);
-    this.onSelectionChange.emit(event);
+  onBodyPage({ offset }): void {
+    this.offset = offset;
+    
+    this.page.emit({
+      count: this.count,
+      pageSize: this.pageSize,
+      limit: this.limit,
+      offset: this.offset
+    });
   }
 
-  @HostListener('window:resize')
-  resize() {
-    this.adjustSizes();
+  onBodyScroll(event): void {
+    this.offsetX = event.offsetX;
+    this.scroll.emit(event);
   }
 
-  @HostBinding('class.fixed-header')
-  get isFixedHeader() {
-    const headerHeight: number|string = this.options.headerHeight;
+  onFooterPage(event) {
+    this.offset = event.page - 1;
+    this.bodyComponent.updateOffsetY(this.offset);
 
-    return (typeof headerHeight === 'string') ?
-      (<string>headerHeight) !== 'auto' : true;
+    this.page.emit({
+      count: this.count,
+      pageSize: this.pageSize,
+      limit: this.limit,
+      offset: this.offset
+    });
   }
 
-  @HostBinding('class.fixed-row')
-  get isFixedRow() {
-    const rowHeight: number|string = this.options.rowHeight;
+  calcPageSize(val: any[] = this.rows): number {
+    // Keep the page size constant even if the row has been expanded.
+    // This is because an expanded row is still considered to be a child of
+    // the original row.  Hence calculation would use rowHeight only.
+    if (this.scrollbarV) return Math.ceil(this.bodyHeight / this.rowHeight);
+    
+    // if limit is passed, we are paging
+    if (this.limit !== undefined) return this.limit;
 
-    return (typeof rowHeight === 'string') ?
-      (<string>rowHeight) !== 'auto' : true;
+    // otherwise use row length
+    if(val) return val.length;
+    
+    // other empty :(
+    return 0;
   }
 
-  @HostBinding('class.scroll-vertical')
-  get isVertScroll() {
-    return this.options.scrollbarV;
+  calcRowCount(val: any[] = this.rows): number {
+    if(!this.externalPaging) {
+      if(!val) return 0;
+      return val.length;
+    }
+
+    return this.count;
   }
 
-  @HostBinding('class.scroll-horz')
-  get isHorScroll() {
-    return this.options.scrollbarH;
+  onColumnResize({ column, newValue }): void {
+    let cols = this.columns.map(c => {
+      c = Object.assign({}, c);
+      if(c.$$id === column.$$id) c.width = newValue;
+      return c;
+    });
+
+    this.adjustColumns(cols, newValue);
+    this.columns = cols;
   }
 
-  @HostBinding('class.selectable')
-  get isSelectable() {
-    return this.options.selectionType !== undefined;
+  onColumnReorder({ column, newValue, prevValue }): void {
+    let cols = this.columns.map(c => {
+      return Object.assign({}, c);
+    });
+
+    cols.splice(prevValue, 1);
+    cols.splice(newValue, 0, column);
+    this.columns = cols;
+  }
+
+  onColumnSort(event): void {
+    const { column, sorts } = event;
+
+    if(column.comparator !== undefined) {
+      if(typeof column.comparator === 'function') {
+        column.comparator(this.rows, this.sorts);
+      }
+    } else {
+      this.rows = sortRows(this.rows, this.sorts);
+    }
+
+    this.sorts = sorts;
+    this.bodyComponent.updateOffsetY(0);
+    this.sort.emit(event);
   }
 
 }

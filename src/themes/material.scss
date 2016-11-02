@@ -96,13 +96,12 @@
 	      -webkit-transition: width 0.3s ease;
 	      -o-transition: width 0.3s ease;
 	      transition: width 0.3s ease;
+
+        // cell active class
+        // &.active {
+        //  background: #0829e0
+        // }
 	    }
-
-			.datatable-row-left,
-			.datatable-row-center,
-			.datatable-row-right {
-
-			}
 
 	    &:hover,
 			&:hover .datatable-row-group {
@@ -120,13 +119,15 @@
 			&.active,
 			&.active .datatable-row-group {
 				background-color: #304FFE;
-        		color: #FFF;
+        color: #FFF;
 			}
+
 			&.active:hover,
 			&.active:hover .datatable-row-group {
 				background-color: #193AE4;
-        		color: #FFF;
+        color: #FFF;
 			}
+
 			&.active:focus,
 			&.active:focus .datatable-row-group {
 				background-color: #2041EF;

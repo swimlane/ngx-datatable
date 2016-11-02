@@ -11,6 +11,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var ENV = process.env.NODE_ENV;
 var IS_PRODUCTION = ENV === 'production';
+var IS_PACKAGE = ENV === 'package';
 var VERSION = JSON.stringify(require('./package.json').version);
 
 function root(args) {
@@ -37,15 +38,16 @@ function webpackConfig(options = {}) {
       extensions: ['.ts', '.js', '.json', '.css', '.scss', '.html'],
       modules: [
         'node_modules',
-        root('src')
+        root('src'),
+        root('demo')
       ]
     },
 
     entry: {
       'default': './src/components/datatable.scss',
-      'app': './src/demos/bootstrap.ts',
-      'polyfills': './src/polyfills.ts',
-      'vendor': './src/vendor.ts'
+      'app': './demo/bootstrap.ts',
+      'polyfills': './demo/polyfills.ts',
+      'vendor': './demo/vendor.ts'
     },
 
     devServer: {
@@ -99,7 +101,7 @@ function webpackConfig(options = {}) {
               'style!css?sourceMap' :
               ExtractTextPlugin.extract({
                 fallbackLoader: 'style',
-                loader: !IS_PRODUCTION ?
+                loader: !IS_PACKAGE ?
                   'css?sourceMap' :
                   // 'css?sourceMap&minimize'
                   'css?sourceMap'
@@ -112,7 +114,7 @@ function webpackConfig(options = {}) {
               'style!css!postcss?sourceMap!sass?sourceMap' :
               ExtractTextPlugin.extract({
                 fallbackLoader: 'style',
-                loader: !IS_PRODUCTION ?
+                loader: !IS_PACKAGE ?
                   'css?sourceMap!postcss?sourceMap!sass?sourceMap' :
                   // 'css?sourceMap&minimize!postcss?sourceMap!sass?sourceMap'
                   'css?sourceMap!postcss?sourceMap!sass?sourceMap'
@@ -138,10 +140,6 @@ function webpackConfig(options = {}) {
         'APP_VERSION': VERSION
       }),
 
-      new ProgressBarPlugin({
-        format: chalk.yellow.bold('Webpack Building...') + ' [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)'
-      }),
-
       new webpack.LoaderOptionsPlugin({
         options: {
           context: root(),
@@ -160,22 +158,14 @@ function webpackConfig(options = {}) {
 
   if(IS_HMR) {
     config.plugins.push(new webpack.HotModuleReplacementPlugin());
-  }
-
-  if(!IS_HMR) {
-    config.plugins.push(new CleanWebpackPlugin(['dist'], {
-      root: root(),
-      verbose: false,
-      dry: false
-    }));
-
+  } else {
     config.plugins.push(new ExtractTextPlugin({
       filename: '[name].css',
       allChunks: true
     }));
   }
 
-  if(IS_PRODUCTION) {
+  if(IS_PACKAGE) {
     config.output.path = root('release');
 
     config.output.libraryTarget = 'umd';
@@ -206,21 +196,48 @@ function webpackConfig(options = {}) {
       raw: true,
       entryOnly: true
     }));
+
+    /*
+    config.plugins.push(new CleanWebpackPlugin(['release'], {
+      root: root(),
+      verbose: false,
+      dry: false
+    }));
+    */
+
   } else {
+
     config.plugins.push(new webpack.optimize.CommonsChunkPlugin({
       name: ['vendor', 'polyfills'],
       minChunks: Infinity
     }));
 
     config.plugins.push(new HtmlWebpackPlugin({
-      template: 'src/index.html',
+      template: 'demo/index.html',
       chunksSortMode: 'dependency',
       title: 'angular2-data-table'
     }));
 
-    config.plugins.push(new WebpackNotifierPlugin({
-      excludeWarnings: true
-    }));
+    if(IS_PRODUCTION) {
+
+      /*
+      config.plugins.push(new CleanWebpackPlugin(['dist'], {
+        root: root(),
+        verbose: false,
+        dry: false
+      }));
+      */
+
+    } else {
+      config.plugins.push(new WebpackNotifierPlugin({
+        excludeWarnings: true
+      }));
+
+      config.plugins.push(new ProgressBarPlugin({
+        format: chalk.yellow.bold('Webpack Building...') + 
+          ' [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)'
+      }));
+    }
   }
 
   return config;

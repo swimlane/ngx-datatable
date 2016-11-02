@@ -71,3 +71,14 @@ export function columnsTotalWidth(columns: any, prop?: any) {
 
   return totalWidth;
 }
+
+export function columnsByPinArr(val) {
+  let colsByPinArr = [];
+  const colsByPin = columnsByPin(val);
+
+  colsByPinArr.push({ type: 'left', columns: colsByPin['left'] });
+  colsByPinArr.push({ type: 'center', columns: colsByPin['center'] });
+  colsByPinArr.push({ type: 'right', columns: colsByPin['right'] });
+
+  return colsByPinArr;
+}

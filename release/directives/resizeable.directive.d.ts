@@ -1,9 +1,9 @@
 import { ElementRef, EventEmitter } from '@angular/core';
-export declare class Resizeable {
+export declare class ResizeableDirective {
     resizeEnabled: boolean;
     minWidth: number;
     maxWidth: number;
-    onResize: EventEmitter<any>;
+    resize: EventEmitter<any>;
     private element;
     private subscription;
     private resizing;
