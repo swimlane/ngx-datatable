@@ -1,4 +1,4 @@
-webpackJsonp([1,2],{
+webpackJsonp([1],{
 
 /***/ "./demo/app.component.ts":
 /***/ function(module, exports, __webpack_require__) {
