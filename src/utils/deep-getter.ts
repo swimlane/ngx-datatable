@@ -14,7 +14,7 @@ export function deepValueGetter(obj, path) {
       current = current[split[i]];
       
       // if found undefined, return empty string
-      if(current === undefined) return '';
+      if(current === undefined || current === null) return '';
     }
   }
 
