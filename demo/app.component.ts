@@ -12,6 +12,7 @@ import { Component } from '@angular/core';
             <ul>
               <li><a href="#" (click)="setState('')">Auto Height</a></li>
               <li><a href="#" (click)="setState('basic-fixed')">Fixed Height</a></li>
+              <li><a href="#" (click)="setState('virtual-scroll')">100k</a></li>
               <li><a href="#" (click)="setState('full-screen')">Full Screen</a></li>
               <li><a href="#" (click)="setState('inline-edit')">Inline Editing</a></li>
               <li><a href="#" (click)="setState('horz-vert-scrolling')">Horz/Vert Scrolling</a></li>
@@ -59,7 +60,11 @@ import { Component } from '@angular/core';
               <li><a href="#" (click)="setState('pinning')">Pinning</a></li>
             </ul>
           </li>
-          <li><a href="https://swimlane.gitbooks.io/angular2-data-table/content/" target="_black">Documentation</a>
+          <li>
+            <h4>
+              <a href="https://swimlane.gitbooks.io/angular2-data-table/content/" target="_black">Documentation</a>
+            </h4>
+          </li>
         </ul>
       </nav>
       <content>

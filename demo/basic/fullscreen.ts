@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
       <h3>Full Screen</h3>
       <datatable
         class="material fullscreen"
-        style="top: 50px"
+        style="top: 52px"
         [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="0"
