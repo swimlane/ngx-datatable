@@ -19,8 +19,7 @@
     "suppressExcessPropertyErrors": true,
     "suppressImplicitAnyIndexErrors": true,
     "outDir": "dist",
-    "declarationDir": "release",
-    "rootDir": "src"
+    "declarationDir": "release"
   },
   "files": [
     "src/custom-types.d.ts",
