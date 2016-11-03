@@ -9,7 +9,6 @@ import { Component } from '@angular/core';
         type='text'
         style='padding:8px;margin:15px auto;width:30%;'
         placeholder='Type to filter the name column...'
-        [value]='val'
         (keyup)='updateFilter($event)'
       />
       <datatable
@@ -36,9 +35,6 @@ export class FilterBarComponent {
     { name: 'Company' },
     { name: 'Gender' }
   ];
-  
-  val: string = '';
-
   
   constructor() {
     this.fetch((data) => {
