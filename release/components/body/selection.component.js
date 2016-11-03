@@ -21,26 +21,28 @@ var DataTableSelectionComponent = (function () {
             return;
         var multiShift = this.selectionType === types_1.SelectionType.multiShift;
         var multiClick = this.selectionType === types_1.SelectionType.multi;
-        var selections = [];
+        var selected = [];
         if (multiShift || multiClick) {
             if (multiShift && event.shiftKey) {
-                var selected = this.selected.slice();
-                selections = utils_1.selectRowsBetween(selected, this.rows, index, this.prevIndex, this.getRowSelectedIdx.bind(this));
+                var newSelected = this.selected.slice();
+                selected = utils_1.selectRowsBetween(newSelected, this.rows, index, this.prevIndex, this.getRowSelectedIdx.bind(this));
             }
             else if (multiShift && !event.shiftKey) {
-                selections.push(row);
+                selected.push(row);
             }
             else {
-                var selected = this.selected.slice();
-                selections = utils_1.selectRows(selected, row, this.getRowSelectedIdx.bind(this));
+                var newSelected = this.selected.slice();
+                selected = utils_1.selectRows(newSelected, row, this.getRowSelectedIdx.bind(this));
             }
         }
         else {
-            selections.push(row);
+            selected.push(row);
         }
-        this.selected = selections;
+        this.selected = selected;
         this.prevIndex = index;
-        this.select.emit(selections);
+        this.select.emit({
+            selected: selected
+        });
     };
     DataTableSelectionComponent.prototype.onActivate = function (model, index) {
         var type = model.type, event = model.event, row = model.row;

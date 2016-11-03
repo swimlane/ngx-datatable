@@ -41,8 +41,6 @@ var DatatableComponent = (function () {
         // The minimum footer height in pixels.
         // pass falsey for no footer
         this.footerHeight = 0;
-        // The minimum table height in pixels.
-        this.tableHeight = 300;
         // if external paging is turned on
         this.externalPaging = false;
         // Page size
@@ -296,6 +294,10 @@ var DatatableComponent = (function () {
         });
         this.adjustColumns(cols, newValue);
         this.columns = cols;
+        this.resize.emit({
+            column: column,
+            newValue: newValue
+        });
     };
     DatatableComponent.prototype.onColumnReorder = function (_a) {
         var column = _a.column, newValue = _a.newValue, prevValue = _a.prevValue;
@@ -305,6 +307,11 @@ var DatatableComponent = (function () {
         cols.splice(prevValue, 1);
         cols.splice(newValue, 0, column);
         this.columns = cols;
+        this.reorder.emit({
+            column: column,
+            newValue: newValue,
+            prevValue: prevValue
+        });
     };
     DatatableComponent.prototype.onColumnSort = function (event) {
         var column = event.column, sorts = event.sorts;
@@ -370,10 +377,6 @@ var DatatableComponent = (function () {
         core_1.Input(), 
         __metadata('design:type', Number)
     ], DatatableComponent.prototype, "footerHeight", void 0);
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', Number)
-    ], DatatableComponent.prototype, "tableHeight", void 0);
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Boolean)
