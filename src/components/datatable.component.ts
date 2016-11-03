@@ -134,10 +134,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   // The minimum footer height in pixels.
   // pass falsey for no footer
   @Input() footerHeight: number = 0;
-
-  // The minimum table height in pixels.
-  @Input() tableHeight: number = 300;
-
+  
   // if external paging is turned on
   @Input() externalPaging: boolean = false;
 
@@ -398,6 +395,11 @@ export class DatatableComponent implements OnInit, AfterViewInit {
 
     this.adjustColumns(cols, newValue);
     this.columns = cols;
+
+    this.resize.emit({ 
+      column,
+      newValue
+    });
   }
 
   onColumnReorder({ column, newValue, prevValue }): void {
@@ -408,6 +410,12 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     cols.splice(prevValue, 1);
     cols.splice(newValue, 0, column);
     this.columns = cols;
+
+    this.reorder.emit({
+      column,
+      newValue,
+      prevValue
+    });
   }
 
   onColumnSort(event): void {

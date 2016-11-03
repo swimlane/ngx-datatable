@@ -27,26 +27,29 @@ export class DataTableSelectionComponent {
 
     const multiShift = this.selectionType === SelectionType.multiShift;
     const multiClick = this.selectionType === SelectionType.multi;
-    let selections = [];
+    let selected = [];
 
     if (multiShift || multiClick) {
       if (multiShift && event.shiftKey) {
-        const selected = [...this.selected];
-        selections = selectRowsBetween(
-          selected, this.rows, index, this.prevIndex, this.getRowSelectedIdx.bind(this));
+        const newSelected = [...this.selected];
+        selected = selectRowsBetween(
+          newSelected, this.rows, index, this.prevIndex, this.getRowSelectedIdx.bind(this));
       } else if (multiShift && !event.shiftKey) {
-        selections.push(row);
+        selected.push(row);
       } else {
-        const selected = [...this.selected];
-        selections = selectRows(selected, row, this.getRowSelectedIdx.bind(this));
+        const newSelected = [...this.selected];
+        selected = selectRows(newSelected, row, this.getRowSelectedIdx.bind(this));
       }
     } else {
-      selections.push(row);
+      selected.push(row);
     }
 
-    this.selected = selections;
+    this.selected = selected;
     this.prevIndex = index;
-    this.select.emit(selections);
+    
+    this.select.emit({
+      selected
+    });
   }
 
   onActivate(model, index): void {
