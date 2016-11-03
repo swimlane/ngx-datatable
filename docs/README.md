@@ -4,9 +4,10 @@
 
 It was built for modern browsers using _TypeScript, CSS3 and HTML5_ and Angular `~2.0.0`. This is the sister project of the [angular-data-table](https://github.com/swimlane/angular-data-table) that is designed for Angular 1.x.
 
-## Videos
+## In The News
 
 ### AngularAir Esp 76
 {% youtube %}https://www.youtube.com/watch?v=Pj4orsvIp8c{% endyoutube %}
 
-Watch @amcdnl speak on [AngularAir](https://angularair.com/) about the project.
+The project was featured on [AngularAir](https://angularair.com/) where [@amcdnl](https://github.com/amcdnl)
+spoke about the project, challenges and whats to come.

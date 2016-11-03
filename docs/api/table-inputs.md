@@ -1,4 +1,4 @@
-# Table Options
+# Table Inputs
 
 ## `columnMode`
 The mode which the columns are distributed across the table. For example: `flex` will use flex-grow api, `force` will distribute proportionally and `standard` will just distrbute based on widths. Default value: `standard`
@@ -73,3 +73,11 @@ pagerRightArrow: 'icon-right',
 pagerPrevious: 'icon-prev',
 pagerNext: 'icon-skip'
 ```
+
+## `rowIdentity`
+This will be used when displaying or selecting rows.
+When tracking/comparing them, we'll use the value of this fn 
+`(fn(x) === fn(y)` instead of `(x === y)`.
+
+## `totalMessage`
+Messaged displayed in the footer next to count.

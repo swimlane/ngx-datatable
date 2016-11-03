@@ -5,9 +5,10 @@ The table was designed to be *extremely flexible and light*; it doesn't make any
 - Expressive Header and Cell Templates
 - Horizontal & Vertical Scrolling
 - Column Reordering & Resizing
-- Client & Server-side Pagination & Sorting
+- Client/Serve side Pagination & Sorting
 - Intelligent Column Width Algorithms ( Force-fill & Flex-grow )
 - Integrated Pager
+- Cell Selection
 - Row Selection ( Single & Multi )
 - Fixed AND Fluid height
 - Left and Right Column Pinning
