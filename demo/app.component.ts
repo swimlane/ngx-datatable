@@ -62,7 +62,7 @@ import { Component } from '@angular/core';
           </li>
           <li>
             <h4>
-              <a href="https://swimlane.gitbooks.io/angular2-data-table/content/" target="_black">Documentation</a>
+              <a href="https://swimlane.gitbooks.io/angular2-data-table/" target="_black">Documentation</a>
             </h4>
           </li>
         </ul>
