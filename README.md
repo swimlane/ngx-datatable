@@ -4,7 +4,7 @@
 
 It was built for modern browsers using _TypeScript, CSS3 and HTML5_ and Angular `~2.0.0`. This is the sister project of the [angular-data-table](https://github.com/swimlane/angular-data-table) that is designed for Angular 1.x.
 
-Check out the [documentation](https://swimlane.gitbooks.io/angular2-data-table/content/) & [demos](http://swimlane.github.io/angular2-data-table/) for more information!
+Check out the [documentation](https://swimlane.gitbooks.io/angular2-data-table/) & [demos](http://swimlane.github.io/angular2-data-table/) for more information!
 
 ## Features
 - Handle large data sets ( Virtual DOM )
