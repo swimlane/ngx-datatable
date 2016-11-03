@@ -1,45 +1,44 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app',
+  selector: 'filter-demo',
   template: `
     <div>
-      <h3>client filter / search</h3>
+      <h3>Client-side Search and Filtering</h3>
       <input
         type='text'
-        style='padding:8px;margin:15px;width:30%;'
+        style='padding:8px;margin:15px auto;width:30%;'
         placeholder='Type to filter the name column...'
-        [ngModel]='val'
-        (ngModelChange)='updateFilter($event)'
+        [value]='val'
+        (keyup)='updateFilter($event)'
       />
       <datatable
         class='material'
-        [rows]='rows'
-        [options]='options'>
+        [columns]="columns"
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [rowHeight]="'auto'"
+        [limit]="10"
+        [rows]='rows'>
         </datatable>
     </div>
   `
 })
-export class App {
+export class FilterBarComponent {
+
   rows = [];
+
   temp = [];
 
+  columns = [
+    { prop: 'name' },
+    { name: 'Company' },
+    { name: 'Gender' }
+  ];
+  
   val: string = '';
 
-  /*
-  options = new TableOptions({
-    columnMode: ColumnMode.force,
-    headerHeight: 50,
-    footerHeight: 50,
-    rowHeight: 'auto',
-    limit: 10,
-    columns: [
-      new TableColumn({ name: 'Name' }),
-      new TableColumn({ name: 'Gender' }),
-      new TableColumn({ name: 'Company' })
-    ]
-  });
-  */
   
   constructor() {
     this.fetch((data) => {
@@ -47,7 +46,7 @@ export class App {
       this.temp = [...data];
 
       // push our inital complete list
-      this.rows.push(...data);
+      this.rows = data;
     });
   }
 
@@ -62,9 +61,8 @@ export class App {
     req.send();
   }
 
-  updateFilter(val) {
-    // remove existing
-    this.rows.splice(0, this.rows.length);
+  updateFilter(event) {
+    let val = event.target.value;
 
     // filter our data
     let temp = this.temp.filter(function(d) {
@@ -72,7 +70,7 @@ export class App {
     });
 
     // update the rows
-    this.rows.push(...temp);
+    this.rows = temp;
   }
 
 }

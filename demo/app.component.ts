@@ -10,13 +10,14 @@ import { Component } from '@angular/core';
           <li>
             <h4>Basic</h4>
             <ul>
-              <li><a href="#" (click)="setState('basic-auto')">Auto Height</a></li>
+              <li><a href="#" (click)="setState('')">Auto Height</a></li>
               <li><a href="#" (click)="setState('basic-fixed')">Fixed Height</a></li>
               <li><a href="#" (click)="setState('full-screen')">Full Screen</a></li>
               <li><a href="#" (click)="setState('inline-edit')">Inline Editing</a></li>
               <li><a href="#" (click)="setState('horz-vert-scrolling')">Horz/Vert Scrolling</a></li>
               <li><a href="#" (click)="setState('multiple-tables')">Multiple Instances</a></li>
               <li><a href="#" (click)="setState('row-details')">Row Detail</a></li>
+              <li><a href="#" (click)="setState('filter')">Filter</a></li>
             </ul>
           </li>
           <li>
@@ -71,6 +72,7 @@ import { Component } from '@angular/core';
         <horz-vert-scrolling-demo *ngIf="state === 'horz-vert-scrolling'"></horz-vert-scrolling-demo>
         <multiple-tables-demo *ngIf="state === 'multiple-tables'"></multiple-tables-demo>
         <row-details-demo *ngIf="state === 'row-details'"></row-details-demo>
+        <filter-demo *ngIf="state === 'filter'"></filter-demo>
 
         <!-- Paging -->
         <client-paging-demo *ngIf="state === 'row-details'"></client-paging-demo>
