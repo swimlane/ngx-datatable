@@ -19,7 +19,8 @@
     "suppressExcessPropertyErrors": true,
     "suppressImplicitAnyIndexErrors": true,
     "outDir": "dist",
-    "declarationDir": "release"
+    "declarationDir": "release",
+    "rootDir": "src"
   },
   "files": [
     "src/custom-types.d.ts",
@@ -32,5 +33,9 @@
   "buildOnSave": false,
   "awesomeTypescriptLoaderOptions": {
     "forkChecker": false
+  },
+  "angularCompilerOptions": {
+    "genDir": "release/",
+    "skipMetadataEmit": false
   }
 }

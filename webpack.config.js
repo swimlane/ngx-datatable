@@ -9,6 +9,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+let ngtools = require('@ngtools/webpack');
 
 var ENV = process.env.NODE_ENV;
 var IS_PRODUCTION = ENV === 'production';
@@ -202,6 +203,16 @@ function webpackConfig(options = {}) {
       raw: true,
       entryOnly: true
     }));
+
+    console.log('here', root('datatable.module') )
+
+    /*
+    config.plugins.push(new ngtools.AotPlugin({
+      tsConfigPath: './tsconfig.json',
+      baseDir: root(),
+      entryModule: root('datatable.module.ts') + '#Angular2DataTableModule'
+    }))
+    */
 
     /*
     config.plugins.push(new CleanWebpackPlugin(['release'], {

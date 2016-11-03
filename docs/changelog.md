@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.0
+- Feature: NGC Complation
+- Bug: Null value in deepValueGetter (#243)
+- Chore: Update Depedencies
+
 ## 1.0.0
 - Feature: Cell Selection and Keyboard Navigation
 - Feature: `activation` events

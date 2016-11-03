@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"1.0.0" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"1.1.0" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -3607,7 +3607,7 @@ function deepValueGetter(obj, path) {
         for (var i = 0, len = split.length; i < len; i++) {
             current = current[split[i]];
             // if found undefined, return empty string
-            if (current === undefined)
+            if (current === undefined || current === null)
                 return '';
         }
     }
