@@ -32,18 +32,23 @@ export class DataTableBodyRowComponent {
 
   @Input() set columns(val: any[]) {
     this._columns = val;
-    
-    const colsByPin = columnsByPin(val);
-    this.columnsByPin = columnsByPinArr(val);
-    this.columnGroupWidths = columnGroupWidths(colsByPin, val);
+    this.recalculateColumns(val);
   }
 
   get columns(): any[] { 
     return this._columns; 
   }
 
+  @Input() set innerWidth(val: number) {
+    this._innerWidth = val;
+    this.recalculateColumns();
+  }
+
+  get innerWidth(): number {
+    return this._innerWidth;
+  }
+
   @Input() row: any;
-  @Input() bodyWidth: number;
   @Input() offsetX: number;
 
   @HostBinding('style.height.px')
@@ -68,6 +73,7 @@ export class DataTableBodyRowComponent {
   private columnGroupWidths: any;
   private columnsByPin: any;
   private _columns: any[];
+  private _innerWidth: number;
 
   constructor(element: ElementRef, renderer: Renderer) {
     this.element = element.nativeElement;
@@ -85,7 +91,7 @@ export class DataTableBodyRowComponent {
     if(group === 'left') {
       translateXY(styles, offsetX, 0);
     } else if(group === 'right') {
-      const bodyWidth = parseInt(this.bodyWidth + '', 0);
+      const bodyWidth = parseInt(this.innerWidth + '', 0);
       const totalDiff = widths.total - bodyWidth;
       const offsetDiff = totalDiff - offsetX;
       const offset = (offsetDiff + scrollbarWidth) * -1;
@@ -124,6 +130,12 @@ export class DataTableBodyRowComponent {
         rowElement: this.element
       });
     }
+  }
+
+  recalculateColumns(val: any[] = this.columns) {
+    const colsByPin = columnsByPin(val);
+    this.columnsByPin = columnsByPinArr(val);
+    this.columnGroupWidths = columnGroupWidths(colsByPin, val);
   }
 
 }

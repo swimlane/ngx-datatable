@@ -46,7 +46,7 @@ import { scrollbarWidth, setColumnDefaults, translateTemplates } from '../utils'
         [rowDetailTemplate]="rowDetailTemplate"
         [detailRowHeight]="detailRowHeight"
         [selected]="selected"
-        [bodyWidth]="innerWidth"
+        [innerWidth]="innerWidth"
         [bodyHeight]="bodyHeight"
         [selectionType]="selectionType"
         [emptyMessage]="messages.emptyMessage"

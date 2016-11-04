@@ -38,7 +38,7 @@ import { ScrollerComponent } from './scroller.component';
           <datatable-body-row
             tabindex="-1"
             [isSelected]="selector.getRowSelected(row)"
-            [bodyWidth]="bodyWidth"
+            [innerWidth]="innerWidth"
             [offsetX]="offsetX"
             [columns]="columns"
             [rowHeight]="rowHeight"
@@ -117,18 +117,15 @@ export class DataTableBodyComponent {
     return this._rowCount;
   }
 
-  @Input() 
-  @HostBinding('style.width')
-  set bodyWidth(val) {
-    if (this.scrollbarH) {
-      this._bodyWidth = val + 'px';
-    } else {
-      this._bodyWidth = '100%';
-    }
-  }
+  @Input() innerWidth: number;
 
-  get bodyWidth() {
-    return this._bodyWidth;
+  @HostBinding('style.width')
+  get bodyWidth(): string {
+    if (this.scrollbarH) {
+      return this.innerWidth + 'px';
+    } else {
+      return '100%';
+    }
   }
   
   @Input()
@@ -167,7 +164,6 @@ export class DataTableBodyComponent {
 
   private _rows: any[];
   private _bodyHeight: any;
-  private _bodyWidth: any;
   private _columns: any[];
   private _rowCount: number;
   private _offset: number;

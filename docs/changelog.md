@@ -4,6 +4,7 @@
 - Bug: Fix columns loosing templates on resize (#252)
 - Bug: Fix pager not having right pages when hidden by default
 - Bug: Fix expressive column width as attribute with standard column distribution
+- Bug: Fix body columns not readjusting after window resize (#251)
 - Enhancement: Refactor `emptyMessage` and `totalMessage` to `messages` object
 - Enhancement: Huge perf improvement for tables hidden by default
 
