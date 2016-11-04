@@ -4,7 +4,7 @@
  */
  /* tslint:disable */
 
-import * as import0 from '../../../../../src/components/body/body-cell.component';
+import * as import0 from '../../../../src/components/body/body-cell.component';
 import * as import1 from '@angular/core/src/change_detection/change_detection';
 import * as import2 from '@angular/core/src/linker/view_utils';
 import * as import3 from '@angular/core/src/linker/view';

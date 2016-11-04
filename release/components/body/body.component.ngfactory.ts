@@ -4,7 +4,7 @@
  */
  /* tslint:disable */
 
-import * as import0 from '../../../../../src/components/body/body.component';
+import * as import0 from '../../../../src/components/body/body.component';
 import * as import1 from '@angular/core/src/change_detection/change_detection';
 import * as import2 from '@angular/core/src/linker/view_utils';
 import * as import3 from '@angular/core/src/linker/view';
@@ -21,21 +21,21 @@ import * as import13 from './selection.component.ngfactory';
 import * as import14 from '../../../node_modules/@angular/common/src/directives/ng_if.ngfactory';
 import * as import15 from '@angular/core/src/linker/template_ref';
 import * as import16 from '@angular/common/src/directives/ng_if';
-import * as import17 from '../../../../../src/components/body/selection.component';
+import * as import17 from '../../../../src/components/body/selection.component';
 import * as import18 from './progress-bar.component.ngfactory';
-import * as import19 from '../../../../../src/components/body/progress-bar.component';
+import * as import19 from '../../../../src/components/body/progress-bar.component';
 import * as import20 from './scroller.component.ngfactory';
 import * as import21 from '../../../node_modules/@angular/common/src/directives/ng_for.ngfactory';
 import * as import22 from '@angular/core/src/change_detection/differs/iterable_differs';
 import * as import23 from '@angular/common/src/directives/ng_for';
-import * as import24 from '../../../../../src/components/body/scroller.component';
+import * as import24 from '../../../../src/components/body/scroller.component';
 import * as import25 from '../../../node_modules/@angular/common/src/directives/ng_style.ngfactory';
 import * as import26 from './body-row-wrapper.component.ngfactory';
 import * as import27 from './body-row.component.ngfactory';
 import * as import28 from '@angular/core/src/change_detection/differs/keyvalue_differs';
-import * as import29 from '../../../../../src/components/body/body-row.component';
+import * as import29 from '../../../../src/components/body/body-row.component';
 import * as import30 from '@angular/common/src/directives/ng_style';
-import * as import31 from '../../../../../src/components/body/body-row-wrapper.component';
+import * as import31 from '../../../../src/components/body/body-row-wrapper.component';
 export class Wrapper_DataTableBodyComponent {
   context:import0.DataTableBodyComponent;
   changed:boolean;
@@ -195,10 +195,10 @@ export class Wrapper_DataTableBodyComponent {
       this._expr_15 = currValue;
     }
   }
-  check_bodyWidth(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_innerWidth(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_16,currValue))) {
       this.changed = true;
-      this.context.bodyWidth = currValue;
+      this.context.innerWidth = currValue;
       this._expr_16 = currValue;
     }
   }
@@ -601,10 +601,10 @@ class _View_DataTableBodyComponent3 extends import3.AppView<any> {
     if (this._DataTableRowWrapperComponent_0_5.detectChangesInInputProps(this,this._el_0,throwOnChange)) { this._appEl_0.componentView.markAsCheckOnce(); }
     const currVal_2_0_0:any = this.parent.parent.context.columns;
     this._DataTableBodyRowComponent_2_4.check_columns(currVal_2_0_0,throwOnChange,false);
-    const currVal_2_0_1:any = this.context.$implicit;
-    this._DataTableBodyRowComponent_2_4.check_row(currVal_2_0_1,throwOnChange,false);
-    const currVal_2_0_2:any = this.parent.parent.context.bodyWidth;
-    this._DataTableBodyRowComponent_2_4.check_bodyWidth(currVal_2_0_2,throwOnChange,false);
+    const currVal_2_0_1:any = this.parent.parent.context.innerWidth;
+    this._DataTableBodyRowComponent_2_4.check_innerWidth(currVal_2_0_1,throwOnChange,false);
+    const currVal_2_0_2:any = this.context.$implicit;
+    this._DataTableBodyRowComponent_2_4.check_row(currVal_2_0_2,throwOnChange,false);
     const currVal_2_0_3:any = this.parent.parent.context.offsetX;
     this._DataTableBodyRowComponent_2_4.check_offsetX(currVal_2_0_3,throwOnChange,false);
     const currVal_2_0_4:any = this.parent.parent.context.rowHeight;

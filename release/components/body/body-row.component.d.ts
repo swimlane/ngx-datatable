@@ -1,8 +1,8 @@
 import { ElementRef, Renderer, EventEmitter } from '@angular/core';
 export declare class DataTableBodyRowComponent {
     columns: any[];
+    innerWidth: number;
     row: any;
-    bodyWidth: number;
     offsetX: number;
     rowHeight: number;
     isSelected: boolean;
@@ -13,10 +13,12 @@ export declare class DataTableBodyRowComponent {
     private columnGroupWidths;
     private columnsByPin;
     private _columns;
+    private _innerWidth;
     constructor(element: ElementRef, renderer: Renderer);
     stylesByGroup(group: any): {
         width: string;
     };
     onActivate(event: any, index: any): void;
     onKeyDown(event: any): void;
+    recalculateColumns(val?: any[]): void;
 }

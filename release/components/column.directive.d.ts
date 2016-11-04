@@ -2,7 +2,6 @@ import { TemplateRef, QueryList } from '@angular/core';
 export declare class DataTableColumnDirective {
     name: any;
     prop: any;
-    isExpressive: any;
     frozenLeft: any;
     frozenRight: any;
     flexGrow: any;

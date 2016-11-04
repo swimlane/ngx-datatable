@@ -4,7 +4,7 @@
  */
  /* tslint:disable */
 
-import * as import0 from '../../../../src/components/row-detail.directive';
+import * as import0 from '../../../src/components/row-detail.directive';
 import * as import1 from '@angular/core/src/linker/view';
 export class Wrapper_DatatableRowDetailDirective {
   context:import0.DatatableRowDetailDirective;

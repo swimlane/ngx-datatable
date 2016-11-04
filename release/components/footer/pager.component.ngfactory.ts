@@ -4,7 +4,7 @@
  */
  /* tslint:disable */
 
-import * as import0 from '../../../../../src/components/footer/pager.component';
+import * as import0 from '../../../../src/components/footer/pager.component';
 import * as import1 from '@angular/core/src/change_detection/change_detection';
 import * as import2 from '@angular/core/src/linker/view_utils';
 import * as import3 from '@angular/core/src/linker/view';
@@ -40,38 +40,38 @@ export class Wrapper_DataTablePagerComponent {
     this._expr_5 = import1.UNINITIALIZED;
     this._expr_6 = import1.UNINITIALIZED;
   }
-  check_size(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_pagerLeftArrowIcon(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_0,currValue))) {
       this.changed = true;
-      this.context.size = currValue;
+      this.context.pagerLeftArrowIcon = currValue;
       this._expr_0 = currValue;
     }
   }
-  check_pagerLeftArrowIcon(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_pagerRightArrowIcon(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_1,currValue))) {
       this.changed = true;
-      this.context.pagerLeftArrowIcon = currValue;
+      this.context.pagerRightArrowIcon = currValue;
       this._expr_1 = currValue;
     }
   }
-  check_pagerRightArrowIcon(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_pagerPreviousIcon(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_2,currValue))) {
       this.changed = true;
-      this.context.pagerRightArrowIcon = currValue;
+      this.context.pagerPreviousIcon = currValue;
       this._expr_2 = currValue;
     }
   }
-  check_pagerPreviousIcon(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_pagerNextIcon(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_3,currValue))) {
       this.changed = true;
-      this.context.pagerPreviousIcon = currValue;
+      this.context.pagerNextIcon = currValue;
       this._expr_3 = currValue;
     }
   }
-  check_pagerNextIcon(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_size(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_4,currValue))) {
       this.changed = true;
-      this.context.pagerNextIcon = currValue;
+      this.context.size = currValue;
       this._expr_4 = currValue;
     }
   }

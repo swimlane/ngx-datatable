@@ -1,4 +1,4 @@
-import { EventEmitter, ElementRef } from '@angular/core';
+import { EventEmitter, ElementRef, NgZone } from '@angular/core';
 /**
  * Visibility Observer Directive
  *
@@ -13,6 +13,6 @@ import { EventEmitter, ElementRef } from '@angular/core';
 export declare class VisibilityDirective {
     isVisible: boolean;
     visible: EventEmitter<any>;
-    constructor(element: ElementRef);
+    constructor(element: ElementRef, zone: NgZone);
     visbilityChange(): void;
 }

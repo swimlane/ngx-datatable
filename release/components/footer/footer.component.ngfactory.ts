@@ -4,7 +4,7 @@
  */
  /* tslint:disable */
 
-import * as import0 from '../../../../../src/components/footer/footer.component';
+import * as import0 from '../../../../src/components/footer/footer.component';
 import * as import1 from '@angular/core/src/change_detection/change_detection';
 import * as import2 from '@angular/core/src/linker/view_utils';
 import * as import3 from '@angular/core/src/linker/view';
@@ -16,7 +16,7 @@ import * as import8 from '@angular/core/src/linker/element_ref';
 import * as import9 from '@angular/core/src/metadata/view';
 import * as import10 from '@angular/core/src/linker/component_factory';
 import * as import11 from './pager.component.ngfactory';
-import * as import12 from '../../../../../src/components/footer/pager.component';
+import * as import12 from '../../../../src/components/footer/pager.component';
 import * as import13 from '@angular/core/src/security';
 export class Wrapper_DataTableFooterComponent {
   context:import0.DataTableFooterComponent;
@@ -211,16 +211,16 @@ class _View_DataTableFooterComponent0 extends import3.AppView<import0.DataTableF
     return notFoundResult;
   }
   detectChangesInternal(throwOnChange:boolean):void {
-    const currVal_6_0_0:any = this.context.pageSize;
-    this._DataTablePagerComponent_6_4.check_size(currVal_6_0_0,throwOnChange,false);
-    const currVal_6_0_1:any = this.context.pagerLeftArrowIcon;
-    this._DataTablePagerComponent_6_4.check_pagerLeftArrowIcon(currVal_6_0_1,throwOnChange,false);
-    const currVal_6_0_2:any = this.context.pagerRightArrowIcon;
-    this._DataTablePagerComponent_6_4.check_pagerRightArrowIcon(currVal_6_0_2,throwOnChange,false);
-    const currVal_6_0_3:any = this.context.pagerPreviousIcon;
-    this._DataTablePagerComponent_6_4.check_pagerPreviousIcon(currVal_6_0_3,throwOnChange,false);
-    const currVal_6_0_4:any = this.context.pagerNextIcon;
-    this._DataTablePagerComponent_6_4.check_pagerNextIcon(currVal_6_0_4,throwOnChange,false);
+    const currVal_6_0_0:any = this.context.pagerLeftArrowIcon;
+    this._DataTablePagerComponent_6_4.check_pagerLeftArrowIcon(currVal_6_0_0,throwOnChange,false);
+    const currVal_6_0_1:any = this.context.pagerRightArrowIcon;
+    this._DataTablePagerComponent_6_4.check_pagerRightArrowIcon(currVal_6_0_1,throwOnChange,false);
+    const currVal_6_0_2:any = this.context.pagerPreviousIcon;
+    this._DataTablePagerComponent_6_4.check_pagerPreviousIcon(currVal_6_0_2,throwOnChange,false);
+    const currVal_6_0_3:any = this.context.pagerNextIcon;
+    this._DataTablePagerComponent_6_4.check_pagerNextIcon(currVal_6_0_3,throwOnChange,false);
+    const currVal_6_0_4:any = this.context.pageSize;
+    this._DataTablePagerComponent_6_4.check_size(currVal_6_0_4,throwOnChange,false);
     const currVal_6_0_5:any = this.context.rowCount;
     this._DataTablePagerComponent_6_4.check_count(currVal_6_0_5,throwOnChange,false);
     const currVal_6_0_6:any = this.context.curPage;

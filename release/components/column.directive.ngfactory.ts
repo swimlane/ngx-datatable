@@ -4,7 +4,7 @@
  */
  /* tslint:disable */
 
-import * as import0 from '../../../../src/components/column.directive';
+import * as import0 from '../../../src/components/column.directive';
 import * as import1 from '@angular/core/src/change_detection/change_detection';
 import * as import2 from '@angular/core/src/linker/view_utils';
 import * as import3 from '@angular/core/src/linker/view';
@@ -25,7 +25,6 @@ export class Wrapper_DataTableColumnDirective {
   /*private*/ _expr_11:any;
   /*private*/ _expr_12:any;
   /*private*/ _expr_13:any;
-  /*private*/ _expr_14:any;
   constructor() {
     this.changed = false;
     this.context = new import0.DataTableColumnDirective();
@@ -43,7 +42,6 @@ export class Wrapper_DataTableColumnDirective {
     this._expr_11 = import1.UNINITIALIZED;
     this._expr_12 = import1.UNINITIALIZED;
     this._expr_13 = import1.UNINITIALIZED;
-    this._expr_14 = import1.UNINITIALIZED;
   }
   check_name(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_0,currValue))) {
@@ -59,95 +57,88 @@ export class Wrapper_DataTableColumnDirective {
       this._expr_1 = currValue;
     }
   }
-  check_isExpressive(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_frozenLeft(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_2,currValue))) {
       this.changed = true;
-      this.context.isExpressive = currValue;
+      this.context.frozenLeft = currValue;
       this._expr_2 = currValue;
     }
   }
-  check_frozenLeft(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_frozenRight(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_3,currValue))) {
       this.changed = true;
-      this.context.frozenLeft = currValue;
+      this.context.frozenRight = currValue;
       this._expr_3 = currValue;
     }
   }
-  check_frozenRight(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_flexGrow(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_4,currValue))) {
       this.changed = true;
-      this.context.frozenRight = currValue;
+      this.context.flexGrow = currValue;
       this._expr_4 = currValue;
     }
   }
-  check_flexGrow(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_resizeable(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_5,currValue))) {
       this.changed = true;
-      this.context.flexGrow = currValue;
+      this.context.resizeable = currValue;
       this._expr_5 = currValue;
     }
   }
-  check_resizeable(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_comparator(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_6,currValue))) {
       this.changed = true;
-      this.context.resizeable = currValue;
+      this.context.comparator = currValue;
       this._expr_6 = currValue;
     }
   }
-  check_comparator(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_pipe(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_7,currValue))) {
       this.changed = true;
-      this.context.comparator = currValue;
+      this.context.pipe = currValue;
       this._expr_7 = currValue;
     }
   }
-  check_pipe(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_sortable(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_8,currValue))) {
       this.changed = true;
-      this.context.pipe = currValue;
+      this.context.sortable = currValue;
       this._expr_8 = currValue;
     }
   }
-  check_sortable(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_draggable(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_9,currValue))) {
       this.changed = true;
-      this.context.sortable = currValue;
+      this.context.draggable = currValue;
       this._expr_9 = currValue;
     }
   }
-  check_draggable(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_canAutoResize(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_10,currValue))) {
       this.changed = true;
-      this.context.draggable = currValue;
+      this.context.canAutoResize = currValue;
       this._expr_10 = currValue;
     }
   }
-  check_canAutoResize(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_minWidth(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_11,currValue))) {
       this.changed = true;
-      this.context.canAutoResize = currValue;
+      this.context.minWidth = currValue;
       this._expr_11 = currValue;
     }
   }
-  check_minWidth(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_width(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_12,currValue))) {
       this.changed = true;
-      this.context.minWidth = currValue;
+      this.context.width = currValue;
       this._expr_12 = currValue;
     }
   }
-  check_width(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_maxWidth(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_13,currValue))) {
       this.changed = true;
-      this.context.width = currValue;
-      this._expr_13 = currValue;
-    }
-  }
-  check_maxWidth(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
-    if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_14,currValue))) {
-      this.changed = true;
       this.context.maxWidth = currValue;
-      this._expr_14 = currValue;
+      this._expr_13 = currValue;
     }
   }
   detectChangesInInputProps(view:import3.AppView<any>,el:any,throwOnChange:boolean):boolean {

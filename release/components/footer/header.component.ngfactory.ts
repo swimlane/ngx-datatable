@@ -4,7 +4,7 @@
  */
  /* tslint:disable */
 
-import * as import0 from '../../../../../src/components/header/header.component';
+import * as import0 from '../../../../src/components/header/header.component';
 import * as import1 from '@angular/core/src/change_detection/change_detection';
 import * as import2 from '@angular/core/src/linker/view_utils';
 import * as import3 from '@angular/core/src/linker/view';
@@ -23,17 +23,17 @@ import * as import15 from '@angular/core/src/change_detection/differs/keyvalue_d
 import * as import16 from '@angular/core/src/linker/template_ref';
 import * as import17 from '@angular/core/src/change_detection/differs/iterable_differs';
 import * as import18 from '@angular/common/src/directives/ng_for';
-import * as import19 from '../../../../../src/directives/orderable.directive';
+import * as import19 from '../../../../src/directives/orderable.directive';
 import * as import20 from '../../../node_modules/@angular/common/src/directives/ng_style.ngfactory';
 import * as import21 from '@angular/common/src/directives/ng_style';
 import * as import22 from '../../directives/draggable.directive.ngfactory';
 import * as import23 from '../../directives/resizeable.directive.ngfactory';
 import * as import24 from '../../directives/long-press.directive.ngfactory';
 import * as import25 from './header-cell.component.ngfactory';
-import * as import26 from '../../../../../src/directives/draggable.directive';
-import * as import27 from '../../../../../src/directives/resizeable.directive';
-import * as import28 from '../../../../../src/directives/long-press.directive';
-import * as import29 from '../../../../../src/components/header/header-cell.component';
+import * as import26 from '../../../../src/directives/draggable.directive';
+import * as import27 from '../../../../src/directives/resizeable.directive';
+import * as import28 from '../../../../src/directives/long-press.directive';
+import * as import29 from '../../../../src/components/header/header-cell.component';
 export class Wrapper_DataTableHeaderComponent {
   context:import0.DataTableHeaderComponent;
   changed:boolean;

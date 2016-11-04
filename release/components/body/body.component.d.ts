@@ -18,7 +18,8 @@ export declare class DataTableBodyComponent {
     columns: any[];
     offset: number;
     rowCount: number;
-    bodyWidth: any;
+    innerWidth: number;
+    readonly bodyWidth: string;
     bodyHeight: any;
     scroll: EventEmitter<any>;
     page: EventEmitter<any>;
@@ -34,7 +35,6 @@ export declare class DataTableBodyComponent {
     private columnGroupWidths;
     private _rows;
     private _bodyHeight;
-    private _bodyWidth;
     private _columns;
     private _rowCount;
     private _offset;

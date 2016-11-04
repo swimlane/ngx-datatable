@@ -4,7 +4,7 @@
  */
  /* tslint:disable */
 
-import * as import0 from '../../../../../src/components/body/body-row.component';
+import * as import0 from '../../../../src/components/body/body-row.component';
 import * as import1 from '@angular/core/src/change_detection/change_detection';
 import * as import2 from '@angular/core/src/linker/view_utils';
 import * as import3 from '@angular/core/src/linker/view';
@@ -24,7 +24,7 @@ import * as import16 from '../../../node_modules/@angular/common/src/directives/
 import * as import17 from '@angular/core/src/change_detection/differs/keyvalue_differs';
 import * as import18 from '@angular/common/src/directives/ng_style';
 import * as import19 from './body-cell.component.ngfactory';
-import * as import20 from '../../../../../src/components/body/body-cell.component';
+import * as import20 from '../../../../src/components/body/body-cell.component';
 export class Wrapper_DataTableBodyRowComponent {
   context:import0.DataTableBodyRowComponent;
   changed:boolean;
@@ -59,17 +59,17 @@ export class Wrapper_DataTableBodyRowComponent {
       this._expr_0 = currValue;
     }
   }
-  check_row(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_innerWidth(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_1,currValue))) {
       this.changed = true;
-      this.context.row = currValue;
+      this.context.innerWidth = currValue;
       this._expr_1 = currValue;
     }
   }
-  check_bodyWidth(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_row(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_2,currValue))) {
       this.changed = true;
-      this.context.bodyWidth = currValue;
+      this.context.row = currValue;
       this._expr_2 = currValue;
     }
   }

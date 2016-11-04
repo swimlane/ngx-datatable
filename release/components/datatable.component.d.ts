@@ -11,8 +11,6 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
     rowHeight: number;
     detailRowHeight: number;
     columnMode: ColumnMode;
-    emptyMessage: string;
-    totalMessage: string;
     headerHeight: any;
     footerHeight: number;
     externalPaging: boolean;
@@ -26,6 +24,7 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
     sorts: any[];
     rowDetailTemplate: TemplateRef<any>;
     cssClasses: any;
+    messages: any;
     rowIdentity: (x: any) => any;
     scroll: EventEmitter<any>;
     activate: EventEmitter<any>;
