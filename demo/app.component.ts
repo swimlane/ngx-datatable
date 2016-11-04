@@ -19,6 +19,7 @@ import { Component } from '@angular/core';
               <li><a href="#" (click)="state='multiple-tables'">Multiple Instances</a></li>
               <li><a href="#" (click)="state='row-details'">Row Detail</a></li>
               <li><a href="#" (click)="state='filter'">Filtering</a></li>
+              <li><a href="#" (click)="state='hidden'">Hidden On Load</a></li>
             </ul>
           </li>
           <li>
@@ -78,6 +79,7 @@ import { Component } from '@angular/core';
         <multiple-tables-demo *ngIf="state === 'multiple-tables'"></multiple-tables-demo>
         <row-details-demo *ngIf="state === 'row-details'"></row-details-demo>
         <filter-demo *ngIf="state === 'filter'"></filter-demo>
+        <tabs-demo *ngIf="state === 'hidden'"></tabs-demo>
 
         <!-- Paging -->
         <client-paging-demo *ngIf="state === 'client-paging'"></client-paging-demo>

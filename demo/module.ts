@@ -17,6 +17,7 @@ import { MultipleTablesComponent } from './basic/multiple';
 import { FullScreenComponent } from './basic/fullscreen';
 import { RowDetailsComponent } from './basic/row-detail';
 import { FilterBarComponent } from './basic/filter';
+import { TabsDemoComponent } from './basic/tabs';
 
 // -- Paging
 import { ClientPagingComponent } from './paging/paging-client';
@@ -67,7 +68,8 @@ import { ColumnPinningComponent } from './columns/pinning';
     ColumnStandardComponent,
     ColumnForceComponent,
     ColumnPinningComponent,
-    FilterBarComponent
+    FilterBarComponent,
+    TabsDemoComponent
   ],
   imports: [BrowserModule, Angular2DataTableModule],
   bootstrap: [AppComponent]
