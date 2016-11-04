@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0
+- Bug: Fix columns loosing templates on resize (#252)
+- Enhancement: Refactor `emptyMessage` and `totalMessage` to `messages` object
+
 ## 1.1.0
 - Feature: NGC Complation
 - Bug: Null value in deepValueGetter (#243)
