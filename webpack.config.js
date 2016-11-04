@@ -204,8 +204,6 @@ function webpackConfig(options = {}) {
       entryOnly: true
     }));
 
-    console.log('here', root('datatable.module') )
-
     /*
     config.plugins.push(new ngtools.AotPlugin({
       tsConfigPath: './tsconfig.json',
