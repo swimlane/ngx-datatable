@@ -2,7 +2,9 @@
 
 ## 1.2.0
 - Bug: Fix columns loosing templates on resize (#252)
+- Bug: Fix pager not having right pages when hidden by default
 - Enhancement: Refactor `emptyMessage` and `totalMessage` to `messages` object
+- Enhancement: Huge perf improvement for tables hidden by default
 
 ## 1.1.0
 - Feature: NGC Complation
