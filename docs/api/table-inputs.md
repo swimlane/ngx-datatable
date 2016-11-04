@@ -9,9 +9,6 @@ Array of columns to display.
 ## `count`
 The total count of all rows. Default value: `0`
 
-## `emptyMessage`
-The text to display when there is no data. Default value: 'No data to display'
-
 ## `externalPaging`
 Should the table use external paging vs client-side. Default value: `false`
 
@@ -79,5 +76,18 @@ This will be used when displaying or selecting rows.
 When tracking/comparing them, we'll use the value of this fn 
 `(fn(x) === fn(y)` instead of `(x === y)`.
 
-## `totalMessage`
-Messaged displayed in the footer next to count.
+## `messages`
+Static messages in the table you can override for localization.
+
+```
+{
+
+  // Message to show when array is presented
+  // but contains no values
+  emptyMessage: 'No data to display',
+
+  // Footer total message
+  totalMessage: 'total'
+
+}
+```

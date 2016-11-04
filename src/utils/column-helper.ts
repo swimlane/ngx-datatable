@@ -1,3 +1,4 @@
+import { DataTableColumnDirective } from '../components/column.directive';
 import { camelCase, deCamelCase, id } from '../utils';
 
 export function setColumnDefaults(columns: any[]) {
@@ -38,4 +39,29 @@ export function setColumnDefaults(columns: any[]) {
       column.width = 150;
     }
   }
+}
+
+export function translateTemplates(templates: DataTableColumnDirective[]): any[] {
+  let result = [];
+
+  for(const temp of templates) {
+    let col: any = {};
+
+    const props = Object.getOwnPropertyNames(temp);
+    for(const prop of props) {
+      col[prop] = temp[prop];
+    }
+
+    if(temp.headerTemplate) {
+      col.headerTemplate = temp.headerTemplate;
+    }
+
+    if(temp.cellTemplate) {
+      col.cellTemplate = temp.cellTemplate;
+    }
+
+    result.push(col);
+  }
+  
+  return result;
 }

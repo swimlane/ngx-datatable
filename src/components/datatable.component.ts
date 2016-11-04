@@ -9,7 +9,7 @@ import { ColumnMode, SortType, SelectionType } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './column.directive';
 import { DatatableRowDetailDirective } from './row-detail.directive';
-import { scrollbarWidth, setColumnDefaults } from '../utils';
+import { scrollbarWidth, setColumnDefaults, translateTemplates } from '../utils';
 
 @Component({
   selector: 'datatable',
@@ -49,7 +49,7 @@ import { scrollbarWidth, setColumnDefaults } from '../utils';
         [bodyWidth]="innerWidth"
         [bodyHeight]="bodyHeight"
         [selectionType]="selectionType"
-        [emptyMessage]="emptyMessage"
+        [emptyMessage]="messages.emptyMessage"
         [rowIdentity]="rowIdentity"
         (page)="onBodyPage($event)"
         (activate)="activate.emit($event)"
@@ -63,7 +63,7 @@ import { scrollbarWidth, setColumnDefaults } from '../utils';
         [pageSize]="pageSize"
         [offset]="offset"
         [footerHeight]="footerHeight"
-        [totalMessage]="totalMessage"
+        [totalMessage]="messages.totalMessage"
         [pagerLeftArrowIcon]="cssClasses.pagerLeftArrow"
         [pagerRightArrowIcon]="cssClasses.pagerRightArrow"
         [pagerPreviousIcon]="cssClasses.pagerPrevious"
@@ -119,13 +119,6 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   // Example: flex, force, standard
   @Input() columnMode: ColumnMode = ColumnMode.standard;
 
-  // Message to show when array is presented
-  // but contains no values
-  @Input() emptyMessage: string = 'No data to display';
-
-  // Footer total message
-  @Input() totalMessage: string = 'total';
-
   // The minimum header height in pixels.
   // pass falsey for no header
   // note: number|string does not work right
@@ -173,6 +166,18 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     pagerRightArrow: 'icon-right',
     pagerPrevious: 'icon-prev',
     pagerNext: 'icon-skip'
+  };
+
+  // message overrides for localization
+  @Input() messages: any = {
+
+    // Message to show when array is presented
+    // but contains no values
+    emptyMessage: 'No data to display',
+
+    // Footer total message
+    totalMessage: 'total'
+
   };
 
   // This will be used when displaying or selecting rows:
@@ -223,9 +228,13 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     this._columnTemplates = val;
 
     if(val) { 
-      const arr = val.toArray();
       // only set this if results were brought back
-      if(arr.length) this.columns = arr;
+      const arr = val.toArray();
+
+      if(arr.length) {
+        // translate them to normal objects
+        this.columns = translateTemplates(arr);
+      }
     }
   }
 
