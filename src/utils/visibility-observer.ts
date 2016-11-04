@@ -1,3 +1,5 @@
+import { NgZone } from '@angular/core';
+
 /**
  * Observes changes to an elements visibility.
  * https://medium.com/@amcdnl/javascript-s-new-intersectionobserver-cdce8a73bef8#.evn5twug3
@@ -14,8 +16,9 @@ export class VisibilityObserver {
 
   observer: IntersectionObserver;
   callback: any;
+  timeout: any;
 
-  constructor(element, callback) {
+  constructor(element: any, callback: any, zone: NgZone) {
     this.callback = callback;
 
     /*
@@ -28,17 +31,23 @@ export class VisibilityObserver {
     } else { this.runPolyfill(element); }
     */
 
-    this.runPolyfill(element);
+    this.runPolyfill(element, zone);
   }
 
-  runPolyfill(element) {
+  runPolyfill(element: any, zone: NgZone) {
     let checkVisibility = () => {
       const { width, height } = element.getBoundingClientRect();
 
       if (width && height) {
-        if(this.callback) this.callback();
+        clearTimeout(this.timeout);
+        if(this.callback)  {
+          zone.run(this.callback.bind(this));
+        }
       } else {
-        setTimeout(() => checkVisibility(), 10);
+        clearTimeout(this.timeout);
+        zone.runOutsideAngular(() => {
+          this.timeout = setTimeout(() => checkVisibility(), 50);
+        });
       }
     };
 

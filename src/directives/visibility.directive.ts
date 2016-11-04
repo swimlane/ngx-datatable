@@ -1,9 +1,6 @@
 import {
-  Directive,
-  Output,
-  EventEmitter,
-  ElementRef,
-  HostBinding
+  Directive, Output, EventEmitter, ElementRef,
+  HostBinding, NgZone
 } from '@angular/core';
 
 import { VisibilityObserver } from '../utils';
@@ -27,10 +24,11 @@ export class VisibilityDirective {
 
   @Output() visible: EventEmitter<any> = new EventEmitter();
 
-  constructor(element: ElementRef) {
+  constructor(element: ElementRef, zone: NgZone) {
     new VisibilityObserver(
       element.nativeElement,
-      this.visbilityChange.bind(this));
+      this.visbilityChange.bind(this),
+      zone);
   }
 
   visbilityChange() {
