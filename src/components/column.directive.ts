@@ -7,7 +7,6 @@ export class DataTableColumnDirective {
 
   @Input() name;
   @Input() prop;
-  @Input() isExpressive;
   @Input() frozenLeft;
   @Input() frozenRight;
   @Input() flexGrow;
