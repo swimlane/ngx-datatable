@@ -9,6 +9,13 @@ interface ErrorStackTraceLimit {
   stackTraceLimit: number;
 }
 
+// HACK: This is only for demo page hmr
+interface AppWindow {
+  state: any;
+}
+
+interface Window extends AppWindow {}
+
 interface ErrorConstructor extends ErrorStackTraceLimit {}
 
 interface IntersectionObserver {

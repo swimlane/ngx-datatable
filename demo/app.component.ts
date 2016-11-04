@@ -10,54 +10,54 @@ import { Component } from '@angular/core';
           <li>
             <h4>Basic</h4>
             <ul>
-              <li><a href="#" (click)="setState('')">Auto Height</a></li>
-              <li><a href="#" (click)="setState('basic-fixed')">Fixed Height</a></li>
-              <li><a href="#" (click)="setState('virtual-scroll')">100k</a></li>
-              <li><a href="#" (click)="setState('full-screen')">Full Screen</a></li>
-              <li><a href="#" (click)="setState('inline-edit')">Inline Editing</a></li>
-              <li><a href="#" (click)="setState('horz-vert-scrolling')">Horz/Vert Scrolling</a></li>
-              <li><a href="#" (click)="setState('multiple-tables')">Multiple Instances</a></li>
-              <li><a href="#" (click)="setState('row-details')">Row Detail</a></li>
-              <li><a href="#" (click)="setState('filter')">Filter</a></li>
+              <li><a href="#" (click)="state=''">Auto Row Height</a></li>
+              <li><a href="#" (click)="state='basic-fixed'">Fixed Row Height</a></li>
+              <li><a href="#" (click)="state='virtual-scroll'">100k Rows</a></li>
+              <li><a href="#" (click)="state='full-screen'">Full Screen</a></li>
+              <li><a href="#" (click)="state='inline-edit'">Inline Editing</a></li>
+              <li><a href="#" (click)="state='horz-vert-scrolling'">Horz/Vert Scrolling</a></li>
+              <li><a href="#" (click)="state='multiple-tables'">Multiple Instances</a></li>
+              <li><a href="#" (click)="state='row-details'">Row Detail</a></li>
+              <li><a href="#" (click)="state='filter'">Filtering</a></li>
             </ul>
           </li>
           <li>
             <h4>Paging</h4>
             <ul>
-              <li><a href="#" (click)="setState('client-paging')">Client-side</a></li>
-              <li><a href="#" (click)="setState('server-paging')">Server-side</a></li>
+              <li><a href="#" (click)="state='client-paging'">Client-side</a></li>
+              <li><a href="#" (click)="state='server-paging'">Server-side</a></li>
             </ul>
           </li>
           <li>
             <h4>Sorting</h4>
             <ul>
-              <li><a href="#" (click)="setState('client-sorting')">Client-side</a></li>
-              <li><a href="#" (click)="setState('server-sorting')">Server-side</a></li>
-              <li><a href="#" (click)="setState('comparator-sorting')">Comparator</a></li>
+              <li><a href="#" (click)="state='client-sorting'">Client-side</a></li>
+              <li><a href="#" (click)="state='server-sorting'">Server-side</a></li>
+              <li><a href="#" (click)="state='comparator-sorting'">Comparator</a></li>
             </ul>
           </li>
           <li>
             <h4>Selection</h4>
             <ul>
-              <li><a href="#" (click)="setState('cell-selection')">Cell</a></li>
-              <li><a href="#" (click)="setState('multiple-selection')">Multi</a></li>
+              <li><a href="#" (click)="state='cell-selection'">Cell</a></li>
+              <li><a href="#" (click)="state='multiple-selection'">Multi</a></li>
             </ul>
           </li>
           <li>
             <h4>Templates</h4>
             <ul>
-              <li><a href="#" (click)="setState('inline')">Inline</a></li>
-              <li><a href="#" (click)="setState('templateref')">TemplateRef</a></li>
+              <li><a href="#" (click)="state='inline'">Inline</a></li>
+              <li><a href="#" (click)="state='templateref'">TemplateRef</a></li>
             </ul>
           </li>
           <li>
             <h4>Column</h4>
             <ul>
-              <li><a href="#" (click)="setState('flex')">Flex</a></li>
-              <li><a href="#" (click)="setState('toggle')">Toggling</a></li>
-              <li><a href="#" (click)="setState('fixed')">Fixed</a></li>
-              <li><a href="#" (click)="setState('force')">Force</a></li>
-              <li><a href="#" (click)="setState('pinning')">Pinning</a></li>
+              <li><a href="#" (click)="state='flex'">Flex</a></li>
+              <li><a href="#" (click)="state='toggle'">Toggling</a></li>
+              <li><a href="#" (click)="state='fixed'">Fixed</a></li>
+              <li><a href="#" (click)="state='force'">Force</a></li>
+              <li><a href="#" (click)="state='pinning'">Pinning</a></li>
             </ul>
           </li>
           <li>
@@ -80,8 +80,8 @@ import { Component } from '@angular/core';
         <filter-demo *ngIf="state === 'filter'"></filter-demo>
 
         <!-- Paging -->
-        <client-paging-demo *ngIf="state === 'row-details'"></client-paging-demo>
-        <server-paging-demo *ngIf="state === 'server-details'"></server-paging-demo>
+        <client-paging-demo *ngIf="state === 'client-paging'"></client-paging-demo>
+        <server-paging-demo *ngIf="state === 'server-paging'"></server-paging-demo>
 
         <!-- Sorting -->
         <client-sorting-demo *ngIf="state === 'client-sorting'"></client-sorting-demo>
@@ -108,10 +108,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  state: string;
+  get state() {
+    return window.state;
+  }
 
-  setState(state) {
-    this.state = state;
+  set state(state) {
+    window.state = state;
   }
 
 }
