@@ -55,13 +55,20 @@ import {
 })
 export class DataTablePagerComponent {
 
-  @Input() size: number = 0;
   @Input() pagerLeftArrowIcon: string;
   @Input() pagerRightArrowIcon: string;
   @Input() pagerPreviousIcon: string;
   @Input() pagerNextIcon: string;
 
-  @Output() change: EventEmitter<any> = new EventEmitter();
+  @Input() 
+  set size(val: number) {
+    this._size = val;
+    this.pages = this.calcPages();
+  }
+
+  get size(): number {
+    return this._size;
+  }
 
   @Input()
   set count(val: number) {
@@ -88,8 +95,11 @@ export class DataTablePagerComponent {
     return Math.max(count || 0, 1);
   }
 
+  @Output() change: EventEmitter<any> = new EventEmitter();
+
   private _count: number;
   private _page: number;
+  private _size: number;
   private pages: any;
 
   constructor(element: ElementRef, renderer: Renderer) {
