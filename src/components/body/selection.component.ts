@@ -68,7 +68,7 @@ export class DataTableSelectionComponent {
     this.activate.emit(model);
   }
 
-  onKeyboardFocus(model) {
+  onKeyboardFocus(model): void {
     const { keyCode } = model.event;
     const shouldFocus = 
       keyCode === Keys.up || 

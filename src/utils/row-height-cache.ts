@@ -19,7 +19,7 @@ export class RowHeightCache {
   /**
    * Clear the Tree array.
    */
-  clearCache() {
+  clearCache(): void {
     this.treeArray = [];
   }
 
@@ -30,7 +30,7 @@ export class RowHeightCache {
    * @param rowHeight The row height.
    * @param detailRowHeight The detail row height.
    */
-  initCache(rows: any[], rowHeight: number, detailRowHeight: number) {
+  initCache(rows: any[], rowHeight: number, detailRowHeight: number): void {
     if (isNaN(rowHeight)) {
       throw new Error(`Row Height cache initialization failed. Please ensure that 'rowHeight' is a
         valid number value: (${rowHeight}) when 'scrollbarV' is enabled.`);
@@ -82,7 +82,7 @@ export class RowHeightCache {
    * @param atRowIndex Update the data at this index row in the grid.
    * @param byRowHeight Update by the rowHeight provided.
    */
-  update (atRowIndex: number, byRowHeight: number) {
+  update (atRowIndex: number, byRowHeight: number): void {
     if (!this.treeArray.length) {
       throw new Error(`Update at index ${atRowIndex} with value ${byRowHeight} failed:
         Row Height cache not initialized.`);
