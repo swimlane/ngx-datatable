@@ -117,6 +117,12 @@ describe('DataTablePagerComponent', () => {
       pager.nextPage();
       expect(pager.page).toEqual(3);
     });
+
+    it('should not change page if already on last page', () => {
+      pager.page = 10;
+      pager.nextPage();
+      expect(pager.page).toEqual(10);
+    });
   });
 
   describe('selectPage()', () => {

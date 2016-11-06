@@ -60,7 +60,7 @@ export class DataTablePagerComponent {
   @Input() pagerPreviousIcon: string;
   @Input() pagerNextIcon: string;
 
-  @Input() 
+  @Input()
   set size(val: number) {
     this._size = val;
     this.pages = this.calcPages();
@@ -86,7 +86,7 @@ export class DataTablePagerComponent {
     this.pages = this.calcPages();
   }
 
-  get page(): number{
+  get page(): number {
     return this._page;
   }
 
@@ -115,13 +115,11 @@ export class DataTablePagerComponent {
   }
 
   prevPage(): void {
-    if (this.page > 1) {
-      this.selectPage(--this.page);
-    }
+    this.selectPage(this.page - 1);
   }
 
   nextPage(): void {
-    this.selectPage(++this.page);
+    this.selectPage(this.page + 1);
   }
 
   selectPage(page: number): void {
