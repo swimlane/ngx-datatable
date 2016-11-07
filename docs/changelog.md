@@ -1,6 +1,7 @@
 # Changelog
 
 ## 1.3.0
+- Enhancement: `selectCheck` fn to prevent selection
 - Bug: Fix columns leaking event handlers
 - Bug: Fix column toggling errors (#245)
 

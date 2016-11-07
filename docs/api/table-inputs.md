@@ -91,3 +91,11 @@ Static messages in the table you can override for localization.
 
 }
 ```
+
+## `selectCheck`
+A boolean/function you can use to check whether you want
+to select a particular row based on a criteria. Example:
+
+```
+(row, column, value) => { return value !== 'Ethel Price'; }
+```

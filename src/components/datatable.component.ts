@@ -51,6 +51,7 @@ import { scrollbarWidth, setColumnDefaults, translateTemplates } from '../utils'
         [selectionType]="selectionType"
         [emptyMessage]="messages.emptyMessage"
         [rowIdentity]="rowIdentity"
+        [selectCheck]="selectCheck"
         (page)="onBodyPage($event)"
         (activate)="activate.emit($event)"
         (select)="select.emit($event)"
@@ -183,7 +184,12 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   // This will be used when displaying or selecting rows:
   // when tracking/comparing them, we'll use the value of this fn,
   // (`fn(x) === fn(y)` instead of `x === y`)
-  @Input() rowIdentity = ((x) => x);
+  @Input() rowIdentity: any = ((x) => x);
+
+  // A boolean/function you can use to check whether you want
+  // to select a particular row based on a criteria. Example:
+  // (selection) => { return selection !== 'Ethel Price'; }
+  @Input() selectCheck: any;
 
   @Output() scroll: EventEmitter<any> = new EventEmitter();
   @Output() activate: EventEmitter<any> = new EventEmitter();
