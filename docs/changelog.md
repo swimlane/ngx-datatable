@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.3.1
+- Bug: Fix force column width distribution overriding new resize (#245)
+
 ## 1.3.0
 - Enhancement: `selectCheck` fn to prevent selection
 - Bug: Fix columns leaking event handlers

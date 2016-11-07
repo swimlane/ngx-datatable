@@ -89,11 +89,12 @@ export class DatatableComponent implements OnInit, AfterViewInit {
 
   // Columns
   @Input() set columns(val: any[]) {
-    val = val || [];
-    setColumnDefaults(val);
+    if(val) { 
+      setColumnDefaults(val);
+      this.recalculateColumns(val);
+    }
 
     this._columns = val;
-    this.adjustColumns();
   }
 
   get columns(): any[] {
@@ -290,23 +291,6 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     this.recalculate();
   }
 
-  @HostListener('window:resize')
-  recalculate(): void {
-    let { height, width } = this.element.getBoundingClientRect();
-    this.innerWidth = Math.floor(width);
-
-    if (this.scrollbarV) {
-      if (this.headerHeight) height = height - this.headerHeight;
-      if (this.footerHeight) height = height - this.footerHeight;
-      this.bodyHeight = height;
-    }
-    
-    this.pageSize = this.calcPageSize();
-    this.rowCount = this.calcRowCount();
-
-    this.adjustColumns();
-  }
-
   /**
    * Toggle the expansion of the row
    *
@@ -331,7 +315,13 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     this.bodyComponent.toggleAllRows(false);
   }
 
-  adjustColumns(columns: any[] = this.columns, forceIdx?: number): any[] {
+  @HostListener('window:resize')
+  recalculate() {
+    this.recalculateDims();
+    this.recalculateColumns();
+  }
+
+  recalculateColumns(columns: any[] = this.columns, forceIdx?: number): any[] {
     if (!columns) return;
 
     let width = this.innerWidth;
@@ -346,6 +336,20 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     }
 
     return columns;
+  }
+
+  recalculateDims(): void {
+    let { height, width } = this.element.getBoundingClientRect();
+    this.innerWidth = Math.floor(width);
+
+    if (this.scrollbarV) {
+      if (this.headerHeight) height = height - this.headerHeight;
+      if (this.footerHeight) height = height - this.footerHeight;
+      this.bodyHeight = height;
+    }
+    
+    this.pageSize = this.calcPageSize();
+    this.rowCount = this.calcRowCount();
   }
 
   onBodyPage({ offset }): void {
@@ -402,13 +406,23 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   }
 
   onColumnResize({ column, newValue }): void {
-    let cols = this.columns.map(c => {
+    let idx;
+    let cols = this.columns.map((c, i) => {
       c = Object.assign({}, c);
-      if(c.$$id === column.$$id) c.width = newValue;
+      
+      if(c.$$id === column.$$id) { 
+        idx = i;
+        c.width = newValue;
+        
+        // set this so we can force the column
+        // width distribution to be to this value
+        c.$$oldWidth = newValue;
+      }
+
       return c;
     });
 
-    this.adjustColumns(cols, newValue);
+    this.recalculateColumns(cols, idx);
     this.columns = cols;
 
     this.resize.emit({ 
