@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'multi-selection-demo',
+  selector: 'multishift-selection-demo',
   template: `
     <div>
-      <h3>Multi Select via Click</h3>
+      <h3>Multi Select via Shift</h3>
       <div style='float:left;width:75%'>
         <datatable
           class="material"
@@ -16,7 +16,7 @@ import { Component } from '@angular/core';
           [rowHeight]="'auto'"
           [limit]="5"
           [selected]="selected"
-          [selectionType]="'multi'"
+          [selectionType]="'multiShift'"
           (activate)="onActivate($event)"
           (select)='onSelect($event)'>
         </datatable>
@@ -34,7 +34,7 @@ import { Component } from '@angular/core';
     </div>
   `
 })
-export class MultiSelectionComponent {
+export class MultiShiftSelectionComponent {
 
   rows = [];
 

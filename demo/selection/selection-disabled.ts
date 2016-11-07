@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'multi-selection-demo',
+  selector: 'multidisable-selection-demo',
   template: `
     <div>
-      <h3>Multi Select via Click</h3>
+      <h3>Selection Callback to Disable Selections</h3>
       <div style='float:left;width:75%'>
         <datatable
           class="material"
@@ -15,6 +15,7 @@ import { Component } from '@angular/core';
           [footerHeight]="50"
           [rowHeight]="'auto'"
           [limit]="5"
+          [selectCheck]="checkSelectable"
           [selected]="selected"
           [selectionType]="'multi'"
           (activate)="onActivate($event)"
@@ -34,7 +35,7 @@ import { Component } from '@angular/core';
     </div>
   `
 })
-export class MultiSelectionComponent {
+export class MultiDisableSelectionComponent {
 
   rows = [];
 
@@ -72,6 +73,11 @@ export class MultiSelectionComponent {
 
   onActivate(event) {
     console.log('Activate Event', event);
+  }
+
+  checkSelectable(event) {
+    console.log('Checking if selectable', event);
+    return event.name !== 'Ethel Price';
   }
 
 }
