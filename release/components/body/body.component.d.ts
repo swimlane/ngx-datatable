@@ -13,6 +13,7 @@ export declare class DataTableBodyComponent {
     selected: any[];
     rowIdentity: any;
     rowDetailTemplate: any;
+    selectCheck: any;
     pageSize: number;
     rows: any[];
     columns: any[];

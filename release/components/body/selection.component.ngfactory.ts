@@ -22,6 +22,7 @@ export class Wrapper_DataTableSelectionComponent {
   /*private*/ _expr_2:any;
   /*private*/ _expr_3:any;
   /*private*/ _expr_4:any;
+  /*private*/ _expr_5:any;
   constructor() {
     this.changed = false;
     this.context = new import0.DataTableSelectionComponent();
@@ -30,6 +31,7 @@ export class Wrapper_DataTableSelectionComponent {
     this._expr_2 = import1.UNINITIALIZED;
     this._expr_3 = import1.UNINITIALIZED;
     this._expr_4 = import1.UNINITIALIZED;
+    this._expr_5 = import1.UNINITIALIZED;
   }
   check_rows(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_0,currValue))) {
@@ -64,6 +66,13 @@ export class Wrapper_DataTableSelectionComponent {
       this.changed = true;
       this.context.rowIdentity = currValue;
       this._expr_4 = currValue;
+    }
+  }
+  check_selectCheck(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+    if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_5,currValue))) {
+      this.changed = true;
+      this.context.selectCheck = currValue;
+      this._expr_5 = currValue;
     }
   }
   detectChangesInInputProps(view:import3.AppView<any>,el:any,throwOnChange:boolean):boolean {

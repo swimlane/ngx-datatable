@@ -25,7 +25,8 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
     rowDetailTemplate: TemplateRef<any>;
     cssClasses: any;
     messages: any;
-    rowIdentity: (x: any) => any;
+    rowIdentity: any;
+    selectCheck: any;
     scroll: EventEmitter<any>;
     activate: EventEmitter<any>;
     select: EventEmitter<any>;

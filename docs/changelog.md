@@ -4,6 +4,7 @@
 - Enhancement: `selectCheck` fn to prevent selection
 - Bug: Fix columns leaking event handlers
 - Bug: Fix column toggling errors (#245)
+- Bug: Fix AoT Metadata not creating
 
 ## 1.2.0
 - Bug: Fix columns loosing templates on resize (#252)

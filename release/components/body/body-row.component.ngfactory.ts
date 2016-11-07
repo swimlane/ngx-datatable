@@ -219,11 +219,9 @@ class _View_DataTableBodyRowComponent1 extends import3.AppView<any> {
   _NgFor_2_6:import12.Wrapper_NgFor;
   _text_3:any;
   /*private*/ _expr_8:any;
-  /*private*/ _expr_9:any;
   constructor(viewUtils:import2.ViewUtils,parentInjector:import7.Injector,declarationEl:import6.AppElement) {
     super(_View_DataTableBodyRowComponent1,renderType_DataTableBodyRowComponent,import8.ViewType.EMBEDDED,viewUtils,parentInjector,declarationEl,import1.ChangeDetectorStatus.CheckAlways);
     this._expr_8 = import1.UNINITIALIZED;
-    this._expr_9 = import1.UNINITIALIZED;
   }
   createInternal(rootSelector:string):import6.AppElement {
     this._el_0 = import2.createRenderElement(this.renderer,(null as any),'div',import2.EMPTY_INLINE_ARRAY,(null as any));
@@ -263,11 +261,6 @@ class _View_DataTableBodyRowComponent1 extends import3.AppView<any> {
     if (import2.checkBinding(throwOnChange,this._expr_8,currVal_8)) {
       this.renderer.setElementProperty(this._el_0,'className',currVal_8);
       this._expr_8 = currVal_8;
-    }
-    const currVal_9:any = this.parent.context.columnGroupWidths[this.context.$implicit.type];
-    if (import2.checkBinding(throwOnChange,this._expr_9,currVal_9)) {
-      this.renderer.setElementStyle(this._el_0,'width',((this.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_9) == (null as any))? (null as any): (this.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_9).toString() + 'px')));
-      this._expr_9 = currVal_9;
     }
     this._NgStyle_0_3.detectChangesInHostProps(this,this._el_0,throwOnChange);
     this.detectViewChildrenChanges(throwOnChange);

@@ -1,6 +1,6 @@
 {
   "name": "angular2-data-table",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "angular2-data-table is a Angular2 component for presenting large and complex data.",
   "main": "release/index.js",
   "typings": "release/index.d.ts",
@@ -26,7 +26,7 @@
     "start:hmr": "webpack-dev-server --env.HMR",
     "release": "npm-run-all -s clean:* release:css release:aot build:package release:replace release:minify",
     "release:ts": "tsc --outDir release",
-    "release:aot": "ngc --outDir release",
+    "release:aot": "ngc -p tsconfig-aot.json",
     "release:replace": "node tasks/replace.js",
     "release:css": "node-sass -o release/ src/themes && node-sass -o release/ src/components",
     "release:minify": "uglifyjs release/index.js --source-map release/index.min.js.map --source-map-url release/index.js.map --compress --mangle --screw-ie8 --output release/index.min.js",
