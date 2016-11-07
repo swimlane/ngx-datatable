@@ -35,6 +35,7 @@ import { TemplateRefTemplatesComponent } from './templates/template-obj';
 // -- Selection
 import { CellSelectionComponent } from './selection/selection-cell';
 import { MultiSelectionComponent } from './selection/selection-multi';
+import { SingleSelectionComponent } from './selection/selection-single';
 
 // -- Columns
 import { ColumnToggleComponent } from './columns/column-toggle';
@@ -69,7 +70,8 @@ import { ColumnPinningComponent } from './columns/pinning';
     ColumnForceComponent,
     ColumnPinningComponent,
     FilterBarComponent,
-    TabsDemoComponent
+    TabsDemoComponent,
+    SingleSelectionComponent
   ],
   imports: [BrowserModule, Angular2DataTableModule],
   bootstrap: [AppComponent]
