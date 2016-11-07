@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0
+- Bug: Fix columns leaking event handlers
+- Bug: Fix column toggling errors (#245)
+
 ## 1.2.0
 - Bug: Fix columns loosing templates on resize (#252)
 - Bug: Fix pager not having right pages when hidden by default
