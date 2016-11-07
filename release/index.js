@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"1.3.0" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"1.3.1" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -1551,10 +1551,11 @@ var DatatableComponent = (function () {
         },
         // Columns
         set: function (val) {
-            val = val || [];
-            utils_2.setColumnDefaults(val);
+            if (val) {
+                utils_2.setColumnDefaults(val);
+                this.recalculateColumns(val);
+            }
             this._columns = val;
-            this.adjustColumns();
         },
         enumerable: true,
         configurable: true
@@ -1637,20 +1638,6 @@ var DatatableComponent = (function () {
     DatatableComponent.prototype.ngAfterViewInit = function () {
         this.recalculate();
     };
-    DatatableComponent.prototype.recalculate = function () {
-        var _a = this.element.getBoundingClientRect(), height = _a.height, width = _a.width;
-        this.innerWidth = Math.floor(width);
-        if (this.scrollbarV) {
-            if (this.headerHeight)
-                height = height - this.headerHeight;
-            if (this.footerHeight)
-                height = height - this.footerHeight;
-            this.bodyHeight = height;
-        }
-        this.pageSize = this.calcPageSize();
-        this.rowCount = this.calcRowCount();
-        this.adjustColumns();
-    };
     /**
      * Toggle the expansion of the row
      *
@@ -1672,7 +1659,11 @@ var DatatableComponent = (function () {
     DatatableComponent.prototype.collapseAllRows = function () {
         this.bodyComponent.toggleAllRows(false);
     };
-    DatatableComponent.prototype.adjustColumns = function (columns, forceIdx) {
+    DatatableComponent.prototype.recalculate = function () {
+        this.recalculateDims();
+        this.recalculateColumns();
+    };
+    DatatableComponent.prototype.recalculateColumns = function (columns, forceIdx) {
         if (columns === void 0) { columns = this.columns; }
         if (!columns)
             return;
@@ -1687,6 +1678,19 @@ var DatatableComponent = (function () {
             utils_1.adjustColumnWidths(columns, width);
         }
         return columns;
+    };
+    DatatableComponent.prototype.recalculateDims = function () {
+        var _a = this.element.getBoundingClientRect(), height = _a.height, width = _a.width;
+        this.innerWidth = Math.floor(width);
+        if (this.scrollbarV) {
+            if (this.headerHeight)
+                height = height - this.headerHeight;
+            if (this.footerHeight)
+                height = height - this.footerHeight;
+            this.bodyHeight = height;
+        }
+        this.pageSize = this.calcPageSize();
+        this.rowCount = this.calcRowCount();
     };
     DatatableComponent.prototype.onBodyPage = function (_a) {
         var offset = _a.offset;
@@ -1739,13 +1743,19 @@ var DatatableComponent = (function () {
     };
     DatatableComponent.prototype.onColumnResize = function (_a) {
         var column = _a.column, newValue = _a.newValue;
-        var cols = this.columns.map(function (c) {
+        var idx;
+        var cols = this.columns.map(function (c, i) {
             c = Object.assign({}, c);
-            if (c.$$id === column.$$id)
+            if (c.$$id === column.$$id) {
+                idx = i;
                 c.width = newValue;
+                // set this so we can force the column
+                // width distribution to be to this value
+                c.$$oldWidth = newValue;
+            }
             return c;
         });
-        this.adjustColumns(cols, newValue);
+        this.recalculateColumns(cols, idx);
         this.columns = cols;
         this.resize.emit({
             column: column,
