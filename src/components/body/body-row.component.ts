@@ -14,8 +14,7 @@ import {
     <div
       *ngFor="let colGroup of columnsByPin; let i = index; trackBy: $colGroup?.type"
       class="datatable-row-{{colGroup.type}} datatable-row-group"
-      [ngStyle]="stylesByGroup(colGroup.type)"
-      [style.width.px]="columnGroupWidths[colGroup.type]">
+      [ngStyle]="stylesByGroup(colGroup.type)">
       <datatable-body-cell
         *ngFor="let column of colGroup.columns; let ii = index; trackBy: column?.$$id"
         tabindex="-1"
