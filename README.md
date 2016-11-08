@@ -21,6 +21,7 @@ Check out the [documentation](https://swimlane.gitbooks.io/angular2-data-table/)
 - Row Detail View
 - Decoupled theme'ing with included Google Material theme
 - Light codebase / No external dependencies
+- AoT Compilation Support
 
 ## Installation
 To use angular2-data-table in your project install it via [npm](https://www.npmjs.com/package/angular2-data-table):
