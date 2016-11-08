@@ -97,9 +97,9 @@ export class DataTablePagerComponent {
 
   @Output() change: EventEmitter<any> = new EventEmitter();
 
-  private _count: number;
-  private _page: number;
-  private _size: number;
+  private _count: number = 0;
+  private _page: number = 1;
+  private _size: number = 0;
   private pages: any;
 
   constructor(element: ElementRef, renderer: Renderer) {
@@ -123,7 +123,7 @@ export class DataTablePagerComponent {
   }
 
   selectPage(page: number): void {
-    if (page > 0 && page <= this.totalPages) {
+    if (page > 0 && page <= this.totalPages && page !== this.page) {
       this.page = page;
 
       this.change.emit({

@@ -25,6 +25,36 @@ describe('DataTablePagerComponent', () => {
     element = fixture.nativeElement;
   }));
 
+  describe('size', () => {
+    it('should be defined', () => {
+      expect(pager.size).toBeDefined();
+    });
+
+    it('should default to 0', () => {
+      expect(pager.size).toEqual(0);
+    });
+  });
+
+  describe('count', () => {
+    it('should be defined', () => {
+      expect(pager.count).toBeDefined();
+    });
+
+    it('should default to 0', () => {
+      expect(pager.count).toEqual(0);
+    });
+  });
+
+  describe('page', () => {
+    it('should be defined', () => {
+      expect(pager.page).toBeDefined();
+    });
+
+    it('should default to 1', () => {
+      expect(pager.page).toEqual(1);
+    });
+  });
+
   describe('totalPages', () => {
     it('should be defined', () => {
       expect(pager.totalPages).toBeDefined();
@@ -99,6 +129,13 @@ describe('DataTablePagerComponent', () => {
       expect(pager.page).toEqual(1);
     });
 
+    it('should emit change event', () => {
+      spyOn(pager.change, 'emit');
+      pager.page = 2;
+      pager.prevPage();
+      expect(pager.change.emit).toHaveBeenCalledWith({ page: 1 });
+    });
+
     it('should not change page if already on first page', () => {
       pager.page = 1;
       pager.prevPage();
@@ -118,6 +155,13 @@ describe('DataTablePagerComponent', () => {
       expect(pager.page).toEqual(3);
     });
 
+    it('should emit change event', () => {
+      spyOn(pager.change, 'emit');
+      pager.page = 2;
+      pager.nextPage();
+      expect(pager.change.emit).toHaveBeenCalledWith({ page: 3 });
+    });
+
     it('should not change page if already on last page', () => {
       pager.page = 10;
       pager.nextPage();
@@ -132,17 +176,41 @@ describe('DataTablePagerComponent', () => {
       pager.page = 1;
     });
 
-    it('should set current page', () => {
-      pager.selectPage(3);
-      expect(pager.page).toEqual(3);
+    describe('with a new page', () => {
+      it('should set current page', () => {
+        pager.selectPage(3);
+        expect(pager.page).toEqual(3);
+      });
+
+      it('should emit change event', () => {
+        spyOn(pager.change, 'emit');
+        pager.selectPage(3);
+        expect(pager.change.emit).toHaveBeenCalledWith({ page: 3 });
+      });
     });
 
-    it('should not set current page if page does not exist', () => {
-      pager.selectPage(30);
-      expect(pager.page).toEqual(1);
+    describe('with the current page', () => {
+      it('should not emit change event', () => {
+        spyOn(pager.change, 'emit');
+        pager.selectPage(pager.page);
+        expect(pager.change.emit).not.toHaveBeenCalled();
+      });
+    });
 
-      pager.selectPage(0);
-      expect(pager.page).toEqual(1);
+    describe('with a non-existing page', () => {
+      it('should not set current page', () => {
+        pager.selectPage(30);
+        expect(pager.page).toEqual(1);
+
+        pager.selectPage(0);
+        expect(pager.page).toEqual(1);
+      });
+
+      it('should not emit change event', () => {
+        spyOn(pager.change, 'emit');
+        pager.selectPage(30);
+        expect(pager.change.emit).not.toHaveBeenCalled();
+      });
     });
   });
 
