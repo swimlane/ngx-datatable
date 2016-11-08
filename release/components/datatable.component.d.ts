@@ -25,7 +25,8 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
     rowDetailTemplate: TemplateRef<any>;
     cssClasses: any;
     messages: any;
-    rowIdentity: (x: any) => any;
+    rowIdentity: any;
+    selectCheck: any;
     scroll: EventEmitter<any>;
     activate: EventEmitter<any>;
     select: EventEmitter<any>;
@@ -55,7 +56,6 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
     constructor(renderer: Renderer, element: ElementRef);
     ngOnInit(): void;
     ngAfterViewInit(): void;
-    recalculate(): void;
     /**
      * Toggle the expansion of the row
      *
@@ -70,7 +70,9 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
      * API method to collapse all the rows.
      */
     collapseAllRows(): void;
-    adjustColumns(columns?: any[], forceIdx?: number): any[];
+    recalculate(): void;
+    recalculateColumns(columns?: any[], forceIdx?: number): any[];
+    recalculateDims(): void;
     onBodyPage({offset}: {
         offset: any;
     }): void;

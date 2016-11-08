@@ -16,6 +16,7 @@ export class DataTableSelectionComponent {
   @Input() selectEnabled: boolean;
   @Input() selectionType: SelectionType;
   @Input() rowIdentity: any;
+  @Input() selectCheck: any;
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
@@ -42,6 +43,10 @@ export class DataTableSelectionComponent {
       }
     } else {
       selected.push(row);
+    }
+
+    if(this.selectCheck) {
+      selected = selected.filter(this.selectCheck.bind(this));
     }
 
     this.selected = selected;

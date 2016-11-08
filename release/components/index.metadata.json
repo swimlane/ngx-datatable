@@ -1,0 +1,1 @@
+{"__symbolic":"module","version":1,"metadata":{},"exports":[{"from":"./datatable.component"},{"from":"./column.directive"},{"from":"./row-detail.directive"},{"from":"./header"},{"from":"./body"},{"from":"./footer"}]}

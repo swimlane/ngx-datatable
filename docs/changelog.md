@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.3.1
+- Bug: Fix force column width distribution overriding new resize (#245)
+
+## 1.3.0
+- Enhancement: `selectCheck` fn to prevent selection
+- Bug: Fix columns leaking event handlers
+- Bug: Fix column toggling errors (#245)
+- Bug: Fix AoT Metadata not creating
+
 ## 1.2.0
 - Bug: Fix columns loosing templates on resize (#252)
 - Bug: Fix pager not having right pages when hidden by default

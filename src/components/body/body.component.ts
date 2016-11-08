@@ -13,6 +13,7 @@ import { ScrollerComponent } from './scroller.component';
       #selector
       [selected]="selected"
       [rows]="rows"
+      [selectCheck]="selectCheck"
       [selectEnabled]="selectEnabled"
       [selectionType]="selectionType"
       [rowIdentity]="rowIdentity"
@@ -69,6 +70,7 @@ export class DataTableBodyComponent {
   @Input() selected: any[];
   @Input() rowIdentity: any;
   @Input() rowDetailTemplate: any;
+  @Input() selectCheck: any;
 
   @Input() set pageSize(val: number) {
     this._pageSize = val;

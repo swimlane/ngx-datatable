@@ -6,6 +6,7 @@ export declare class DataTableSelectionComponent {
     selectEnabled: boolean;
     selectionType: SelectionType;
     rowIdentity: any;
+    selectCheck: any;
     activate: EventEmitter<any>;
     select: EventEmitter<any>;
     private prevIndex;

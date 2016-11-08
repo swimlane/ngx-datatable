@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'multi-selection-demo',
   template: `
     <div>
-      <h3>Multi-Select</h3>
+      <h3>Multi Select via Click</h3>
       <div style='float:left;width:75%'>
         <datatable
           class="material"

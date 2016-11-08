@@ -59,6 +59,7 @@ export class Wrapper_DataTableBodyComponent {
   /*private*/ _expr_17:any;
   /*private*/ _expr_18:any;
   /*private*/ _expr_19:any;
+  /*private*/ _expr_20:any;
   constructor(p0:any,p1:any) {
     this.changed = false;
     this.context = new import0.DataTableBodyComponent(p0,p1);
@@ -82,6 +83,7 @@ export class Wrapper_DataTableBodyComponent {
     this._expr_17 = import1.UNINITIALIZED;
     this._expr_18 = import1.UNINITIALIZED;
     this._expr_19 = import1.UNINITIALIZED;
+    this._expr_20 = import1.UNINITIALIZED;
   }
   check_scrollbarV(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_0,currValue))) {
@@ -160,53 +162,60 @@ export class Wrapper_DataTableBodyComponent {
       this._expr_10 = currValue;
     }
   }
-  check_pageSize(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_selectCheck(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_11,currValue))) {
       this.changed = true;
-      this.context.pageSize = currValue;
+      this.context.selectCheck = currValue;
       this._expr_11 = currValue;
     }
   }
-  check_rows(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_pageSize(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_12,currValue))) {
       this.changed = true;
-      this.context.rows = currValue;
+      this.context.pageSize = currValue;
       this._expr_12 = currValue;
     }
   }
-  check_columns(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_rows(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_13,currValue))) {
       this.changed = true;
-      this.context.columns = currValue;
+      this.context.rows = currValue;
       this._expr_13 = currValue;
     }
   }
-  check_offset(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_columns(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_14,currValue))) {
       this.changed = true;
-      this.context.offset = currValue;
+      this.context.columns = currValue;
       this._expr_14 = currValue;
     }
   }
-  check_rowCount(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_offset(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_15,currValue))) {
       this.changed = true;
-      this.context.rowCount = currValue;
+      this.context.offset = currValue;
       this._expr_15 = currValue;
     }
   }
-  check_innerWidth(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_rowCount(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_16,currValue))) {
       this.changed = true;
-      this.context.innerWidth = currValue;
+      this.context.rowCount = currValue;
       this._expr_16 = currValue;
     }
   }
-  check_bodyHeight(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_innerWidth(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_17,currValue))) {
       this.changed = true;
-      this.context.bodyHeight = currValue;
+      this.context.innerWidth = currValue;
       this._expr_17 = currValue;
+    }
+  }
+  check_bodyHeight(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+    if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_18,currValue))) {
+      this.changed = true;
+      this.context.bodyHeight = currValue;
+      this._expr_18 = currValue;
     }
   }
   detectChangesInInputProps(view:import3.AppView<any>,el:any,throwOnChange:boolean):boolean {
@@ -215,15 +224,15 @@ export class Wrapper_DataTableBodyComponent {
     return changed;
   }
   detectChangesInHostProps(view:import3.AppView<any>,el:any,throwOnChange:boolean):void {
-    const currVal_18:any = this.context.bodyWidth;
-    if (import2.checkBinding(throwOnChange,this._expr_18,currVal_18)) {
-      view.renderer.setElementStyle(el,'width',((view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_18) == (null as any))? (null as any): view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_18).toString()));
-      this._expr_18 = currVal_18;
-    }
-    const currVal_19:any = this.context.bodyHeight;
+    const currVal_19:any = this.context.bodyWidth;
     if (import2.checkBinding(throwOnChange,this._expr_19,currVal_19)) {
-      view.renderer.setElementStyle(el,'height',((view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_19) == (null as any))? (null as any): view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_19).toString()));
+      view.renderer.setElementStyle(el,'width',((view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_19) == (null as any))? (null as any): view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_19).toString()));
       this._expr_19 = currVal_19;
+    }
+    const currVal_20:any = this.context.bodyHeight;
+    if (import2.checkBinding(throwOnChange,this._expr_20,currVal_20)) {
+      view.renderer.setElementStyle(el,'height',((view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_20) == (null as any))? (null as any): view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_20).toString()));
+      this._expr_20 = currVal_20;
     }
   }
 }
@@ -373,6 +382,8 @@ class _View_DataTableBodyComponent0 extends import3.AppView<import0.DataTableBod
     this._DataTableSelectionComponent_1_4.check_selectionType(currVal_1_0_3,throwOnChange,false);
     const currVal_1_0_4:any = this.context.rowIdentity;
     this._DataTableSelectionComponent_1_4.check_rowIdentity(currVal_1_0_4,throwOnChange,false);
+    const currVal_1_0_5:any = this.context.selectCheck;
+    this._DataTableSelectionComponent_1_4.check_selectCheck(currVal_1_0_5,throwOnChange,false);
     if (this._DataTableSelectionComponent_1_4.detectChangesInInputProps(this,this._el_1,throwOnChange)) { this._appEl_1.componentView.markAsCheckOnce(); }
     const currVal_3_0_0:any = this.context.loadingIndicator;
     this._NgIf_3_6.check_ngIf(currVal_3_0_0,throwOnChange,false);

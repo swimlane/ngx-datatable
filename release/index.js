@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"1.2.0" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"1.3.1" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -518,7 +518,7 @@ var DataTableBodyRowComponent = (function () {
     DataTableBodyRowComponent = __decorate([
         core_1.Component({
             selector: 'datatable-body-row',
-            template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: $colGroup?.type\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\"\n      [style.width.px]=\"columnGroupWidths[colGroup.type]\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: column?.$$id\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>\n  ",
+            template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: $colGroup?.type\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: column?.$$id\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>\n  ",
             changeDetection: core_1.ChangeDetectionStrategy.OnPush
         }), 
         __metadata('design:paramtypes', [core_1.ElementRef, core_1.Renderer])
@@ -906,6 +906,10 @@ var DataTableBodyComponent = (function () {
     ], DataTableBodyComponent.prototype, "rowDetailTemplate", void 0);
     __decorate([
         core_1.Input(), 
+        __metadata('design:type', Object)
+    ], DataTableBodyComponent.prototype, "selectCheck", void 0);
+    __decorate([
+        core_1.Input(), 
         __metadata('design:type', Number), 
         __metadata('design:paramtypes', [Number])
     ], DataTableBodyComponent.prototype, "pageSize", null);
@@ -970,7 +974,7 @@ var DataTableBodyComponent = (function () {
     DataTableBodyComponent = __decorate([
         core_1.Component({
             selector: 'datatable-body',
-            template: "\n    <datatable-selection \n      #selector\n      [selected]=\"selected\"\n      [rows]=\"rows\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-row-wrapper \n          *ngFor=\"let row of temp; let i = index; trackBy: row?.$$index\"\n          [ngStyle]=\"getRowsStyles(row)\"\n          [rowDetailTemplate]=\"rowDetailTemplate\"\n          [detailRowHeight]=\"detailRowHeight\"\n          [row]=\"row\"\n          [expanded]=\"row.$$expanded === 1\">\n          <datatable-body-row\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(row)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"rowHeight\"\n            [row]=\"row\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-row>\n        </datatable-row-wrapper>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
+            template: "\n    <datatable-selection \n      #selector\n      [selected]=\"selected\"\n      [rows]=\"rows\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-row-wrapper \n          *ngFor=\"let row of temp; let i = index; trackBy: row?.$$index\"\n          [ngStyle]=\"getRowsStyles(row)\"\n          [rowDetailTemplate]=\"rowDetailTemplate\"\n          [detailRowHeight]=\"detailRowHeight\"\n          [row]=\"row\"\n          [expanded]=\"row.$$expanded === 1\">\n          <datatable-body-row\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(row)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"rowHeight\"\n            [row]=\"row\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-row>\n        </datatable-row-wrapper>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
             changeDetection: core_1.ChangeDetectionStrategy.OnPush
         }), 
         __metadata('design:paramtypes', [core_1.ElementRef, core_1.Renderer])
@@ -1181,6 +1185,9 @@ var DataTableSelectionComponent = (function () {
         else {
             selected.push(row);
         }
+        if (this.selectCheck) {
+            selected = selected.filter(this.selectCheck.bind(this));
+        }
         this.selected = selected;
         this.prevIndex = index;
         this.select.emit({
@@ -1290,6 +1297,10 @@ var DataTableSelectionComponent = (function () {
         core_1.Input(), 
         __metadata('design:type', Object)
     ], DataTableSelectionComponent.prototype, "rowIdentity", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], DataTableSelectionComponent.prototype, "selectCheck", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)
@@ -1540,10 +1551,11 @@ var DatatableComponent = (function () {
         },
         // Columns
         set: function (val) {
-            val = val || [];
-            utils_2.setColumnDefaults(val);
+            if (val) {
+                utils_2.setColumnDefaults(val);
+                this.recalculateColumns(val);
+            }
             this._columns = val;
-            this.adjustColumns();
         },
         enumerable: true,
         configurable: true
@@ -1626,20 +1638,6 @@ var DatatableComponent = (function () {
     DatatableComponent.prototype.ngAfterViewInit = function () {
         this.recalculate();
     };
-    DatatableComponent.prototype.recalculate = function () {
-        var _a = this.element.getBoundingClientRect(), height = _a.height, width = _a.width;
-        this.innerWidth = Math.floor(width);
-        if (this.scrollbarV) {
-            if (this.headerHeight)
-                height = height - this.headerHeight;
-            if (this.footerHeight)
-                height = height - this.footerHeight;
-            this.bodyHeight = height;
-        }
-        this.pageSize = this.calcPageSize();
-        this.rowCount = this.calcRowCount();
-        this.adjustColumns();
-    };
     /**
      * Toggle the expansion of the row
      *
@@ -1661,7 +1659,11 @@ var DatatableComponent = (function () {
     DatatableComponent.prototype.collapseAllRows = function () {
         this.bodyComponent.toggleAllRows(false);
     };
-    DatatableComponent.prototype.adjustColumns = function (columns, forceIdx) {
+    DatatableComponent.prototype.recalculate = function () {
+        this.recalculateDims();
+        this.recalculateColumns();
+    };
+    DatatableComponent.prototype.recalculateColumns = function (columns, forceIdx) {
         if (columns === void 0) { columns = this.columns; }
         if (!columns)
             return;
@@ -1676,6 +1678,19 @@ var DatatableComponent = (function () {
             utils_1.adjustColumnWidths(columns, width);
         }
         return columns;
+    };
+    DatatableComponent.prototype.recalculateDims = function () {
+        var _a = this.element.getBoundingClientRect(), height = _a.height, width = _a.width;
+        this.innerWidth = Math.floor(width);
+        if (this.scrollbarV) {
+            if (this.headerHeight)
+                height = height - this.headerHeight;
+            if (this.footerHeight)
+                height = height - this.footerHeight;
+            this.bodyHeight = height;
+        }
+        this.pageSize = this.calcPageSize();
+        this.rowCount = this.calcRowCount();
     };
     DatatableComponent.prototype.onBodyPage = function (_a) {
         var offset = _a.offset;
@@ -1728,13 +1743,19 @@ var DatatableComponent = (function () {
     };
     DatatableComponent.prototype.onColumnResize = function (_a) {
         var column = _a.column, newValue = _a.newValue;
-        var cols = this.columns.map(function (c) {
+        var idx;
+        var cols = this.columns.map(function (c, i) {
             c = Object.assign({}, c);
-            if (c.$$id === column.$$id)
+            if (c.$$id === column.$$id) {
+                idx = i;
                 c.width = newValue;
+                // set this so we can force the column
+                // width distribution to be to this value
+                c.$$oldWidth = newValue;
+            }
             return c;
         });
-        this.adjustColumns(cols, newValue);
+        this.recalculateColumns(cols, idx);
         this.columns = cols;
         this.resize.emit({
             column: column,
@@ -1864,6 +1885,10 @@ var DatatableComponent = (function () {
         __metadata('design:type', Object)
     ], DatatableComponent.prototype, "rowIdentity", void 0);
     __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], DatatableComponent.prototype, "selectCheck", void 0);
+    __decorate([
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)
     ], DatatableComponent.prototype, "scroll", void 0);
@@ -1938,7 +1963,7 @@ var DatatableComponent = (function () {
     DatatableComponent = __decorate([
         core_1.Component({
             selector: 'datatable',
-            template: "\n    <div\n      visibility-observer\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"columns\"\n        [headerHeight]=\"headerHeight\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\">\n      </datatable-header>\n      <datatable-body\n        [rows]=\"rows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [columns]=\"columns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetailTemplate]=\"rowDetailTemplate\"\n        [detailRowHeight]=\"detailRowHeight\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (select)=\"select.emit($event)\"\n        (detailToggle)=\"detailToggle.emit($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
+            template: "\n    <div\n      visibility-observer\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"columns\"\n        [headerHeight]=\"headerHeight\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\">\n      </datatable-header>\n      <datatable-body\n        [rows]=\"rows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [columns]=\"columns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetailTemplate]=\"rowDetailTemplate\"\n        [detailRowHeight]=\"detailRowHeight\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (select)=\"select.emit($event)\"\n        (detailToggle)=\"detailToggle.emit($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
             changeDetection: core_1.ChangeDetectionStrategy.OnPush
         }), 
         __metadata('design:paramtypes', [core_1.Renderer, core_1.ElementRef])
@@ -3025,18 +3050,24 @@ var OrderableDirective = (function () {
         var _this = this;
         var diffs = this.differ.diff(this.draggables.toArray());
         if (diffs) {
-            var sub = function (_a) {
-                var currentValue = _a.currentValue;
-                currentValue.dragStart.subscribe(_this.onDragStart.bind(_this));
-                currentValue.dragEnd.subscribe(_this.onDragEnd.bind(_this));
+            var subscribe = function (_a) {
+                var currentValue = _a.currentValue, previousValue = _a.previousValue;
+                unsubscribe_1({ previousValue: previousValue });
+                if (currentValue) {
+                    currentValue.dragStart.subscribe(_this.onDragStart.bind(_this));
+                    currentValue.dragEnd.subscribe(_this.onDragEnd.bind(_this));
+                }
             };
-            diffs.forEachAddedItem(sub.bind(this));
-            diffs.forEachChangedItem(sub.bind(this));
-            diffs.forEachRemovedItem(function (_a) {
+            var unsubscribe_1 = function (_a) {
                 var previousValue = _a.previousValue;
-                previousValue.dragStart.unsubscribe();
-                previousValue.dragEnd.unsubscribe();
-            });
+                if (previousValue) {
+                    previousValue.dragStart.unsubscribe();
+                    previousValue.dragEnd.unsubscribe();
+                }
+            };
+            diffs.forEachAddedItem(subscribe.bind(this));
+            diffs.forEachChangedItem(subscribe.bind(this));
+            diffs.forEachRemovedItem(unsubscribe_1.bind(this));
         }
     };
     OrderableDirective.prototype.onDragStart = function () {

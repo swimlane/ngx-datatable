@@ -59,6 +59,7 @@ export class Wrapper_DatatableComponent {
   /*private*/ _expr_25:any;
   /*private*/ _expr_26:any;
   /*private*/ _expr_27:any;
+  /*private*/ _expr_28:any;
   constructor(p0:any,p1:any) {
     this.changed = false;
     this.context = new import0.DatatableComponent(p0,p1);
@@ -90,6 +91,7 @@ export class Wrapper_DatatableComponent {
     this._expr_25 = import1.UNINITIALIZED;
     this._expr_26 = import1.UNINITIALIZED;
     this._expr_27 = import1.UNINITIALIZED;
+    this._expr_28 = import1.UNINITIALIZED;
   }
   check_rows(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_0,currValue))) {
@@ -252,6 +254,13 @@ export class Wrapper_DatatableComponent {
       this._expr_22 = currValue;
     }
   }
+  check_selectCheck(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+    if ((forceUpdate || import2.checkBinding(throwOnChange,this._expr_23,currValue))) {
+      this.changed = true;
+      this.context.selectCheck = currValue;
+      this._expr_23 = currValue;
+    }
+  }
   detectChangesInInputProps(view:import3.AppView<any>,el:any,throwOnChange:boolean):boolean {
     var changed:any = this.changed;
     this.changed = false;
@@ -259,30 +268,30 @@ export class Wrapper_DatatableComponent {
     return changed;
   }
   detectChangesInHostProps(view:import3.AppView<any>,el:any,throwOnChange:boolean):void {
-    const currVal_23:any = this.context.isFixedHeader;
-    if (import2.checkBinding(throwOnChange,this._expr_23,currVal_23)) {
-      view.renderer.setElementClass(el,'fixed-header',currVal_23);
-      this._expr_23 = currVal_23;
-    }
-    const currVal_24:any = this.context.isFixedRow;
+    const currVal_24:any = this.context.isFixedHeader;
     if (import2.checkBinding(throwOnChange,this._expr_24,currVal_24)) {
-      view.renderer.setElementClass(el,'fixed-row',currVal_24);
+      view.renderer.setElementClass(el,'fixed-header',currVal_24);
       this._expr_24 = currVal_24;
     }
-    const currVal_25:any = this.context.isVertScroll;
+    const currVal_25:any = this.context.isFixedRow;
     if (import2.checkBinding(throwOnChange,this._expr_25,currVal_25)) {
-      view.renderer.setElementClass(el,'scroll-vertical',currVal_25);
+      view.renderer.setElementClass(el,'fixed-row',currVal_25);
       this._expr_25 = currVal_25;
     }
-    const currVal_26:any = this.context.isHorScroll;
+    const currVal_26:any = this.context.isVertScroll;
     if (import2.checkBinding(throwOnChange,this._expr_26,currVal_26)) {
-      view.renderer.setElementClass(el,'scroll-horz',currVal_26);
+      view.renderer.setElementClass(el,'scroll-vertical',currVal_26);
       this._expr_26 = currVal_26;
     }
-    const currVal_27:any = this.context.isSelectable;
+    const currVal_27:any = this.context.isHorScroll;
     if (import2.checkBinding(throwOnChange,this._expr_27,currVal_27)) {
-      view.renderer.setElementClass(el,'selectable',currVal_27);
+      view.renderer.setElementClass(el,'scroll-horz',currVal_27);
       this._expr_27 = currVal_27;
+    }
+    const currVal_28:any = this.context.isSelectable;
+    if (import2.checkBinding(throwOnChange,this._expr_28,currVal_28)) {
+      view.renderer.setElementClass(el,'selectable',currVal_28);
+      this._expr_28 = currVal_28;
     }
   }
 }
@@ -474,20 +483,22 @@ class _View_DatatableComponent0 extends import3.AppView<import0.DatatableCompone
     this._DataTableBodyComponent_5_4.check_rowIdentity(currVal_5_0_9,throwOnChange,false);
     const currVal_5_0_10:any = this.context.rowDetailTemplate;
     this._DataTableBodyComponent_5_4.check_rowDetailTemplate(currVal_5_0_10,throwOnChange,false);
-    const currVal_5_0_11:any = this.context.pageSize;
-    this._DataTableBodyComponent_5_4.check_pageSize(currVal_5_0_11,throwOnChange,false);
-    const currVal_5_0_12:any = this.context.rows;
-    this._DataTableBodyComponent_5_4.check_rows(currVal_5_0_12,throwOnChange,false);
-    const currVal_5_0_13:any = this.context.columns;
-    this._DataTableBodyComponent_5_4.check_columns(currVal_5_0_13,throwOnChange,false);
-    const currVal_5_0_14:any = this.context.offset;
-    this._DataTableBodyComponent_5_4.check_offset(currVal_5_0_14,throwOnChange,false);
-    const currVal_5_0_15:any = this.context.rowCount;
-    this._DataTableBodyComponent_5_4.check_rowCount(currVal_5_0_15,throwOnChange,false);
-    const currVal_5_0_16:any = this.context.innerWidth;
-    this._DataTableBodyComponent_5_4.check_innerWidth(currVal_5_0_16,throwOnChange,false);
-    const currVal_5_0_17:any = this.context.bodyHeight;
-    this._DataTableBodyComponent_5_4.check_bodyHeight(currVal_5_0_17,throwOnChange,false);
+    const currVal_5_0_11:any = this.context.selectCheck;
+    this._DataTableBodyComponent_5_4.check_selectCheck(currVal_5_0_11,throwOnChange,false);
+    const currVal_5_0_12:any = this.context.pageSize;
+    this._DataTableBodyComponent_5_4.check_pageSize(currVal_5_0_12,throwOnChange,false);
+    const currVal_5_0_13:any = this.context.rows;
+    this._DataTableBodyComponent_5_4.check_rows(currVal_5_0_13,throwOnChange,false);
+    const currVal_5_0_14:any = this.context.columns;
+    this._DataTableBodyComponent_5_4.check_columns(currVal_5_0_14,throwOnChange,false);
+    const currVal_5_0_15:any = this.context.offset;
+    this._DataTableBodyComponent_5_4.check_offset(currVal_5_0_15,throwOnChange,false);
+    const currVal_5_0_16:any = this.context.rowCount;
+    this._DataTableBodyComponent_5_4.check_rowCount(currVal_5_0_16,throwOnChange,false);
+    const currVal_5_0_17:any = this.context.innerWidth;
+    this._DataTableBodyComponent_5_4.check_innerWidth(currVal_5_0_17,throwOnChange,false);
+    const currVal_5_0_18:any = this.context.bodyHeight;
+    this._DataTableBodyComponent_5_4.check_bodyHeight(currVal_5_0_18,throwOnChange,false);
     if (this._DataTableBodyComponent_5_4.detectChangesInInputProps(this,this._el_5,throwOnChange)) { this._appEl_5.componentView.markAsCheckOnce(); }
     const currVal_8_0_0:any = this.context.footerHeight;
     this._NgIf_8_6.check_ngIf(currVal_8_0_0,throwOnChange,false);

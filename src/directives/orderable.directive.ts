@@ -38,18 +38,25 @@ export class OrderableDirective {
     const diffs = this.differ.diff(this.draggables.toArray());
 
     if(diffs) {
-      let sub = ({ currentValue }) => {
-        currentValue.dragStart.subscribe(this.onDragStart.bind(this));
-        currentValue.dragEnd.subscribe(this.onDragEnd.bind(this));
+      const subscribe = ({ currentValue, previousValue }) => {
+        unsubscribe({ previousValue });
+
+        if(currentValue) {
+          currentValue.dragStart.subscribe(this.onDragStart.bind(this));
+          currentValue.dragEnd.subscribe(this.onDragEnd.bind(this));
+        }
       };
 
-      diffs.forEachAddedItem(sub.bind(this));
-      diffs.forEachChangedItem(sub.bind(this));
+      const unsubscribe = ({ previousValue }) => {
+        if(previousValue) {
+          previousValue.dragStart.unsubscribe();
+          previousValue.dragEnd.unsubscribe();
+        }
+      };
 
-      diffs.forEachRemovedItem(({ previousValue }) => {
-        previousValue.dragStart.unsubscribe();
-        previousValue.dragEnd.unsubscribe();
-      });
+      diffs.forEachAddedItem(subscribe.bind(this));
+      diffs.forEachChangedItem(subscribe.bind(this));
+      diffs.forEachRemovedItem(unsubscribe.bind(this));
     }
   }
 
