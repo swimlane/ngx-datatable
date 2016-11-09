@@ -25,12 +25,13 @@
     "watch": "webpack --display-error-details --watch",
     "start": "webpack-dev-server",
     "start:hmr": "webpack-dev-server --env.HMR",
-    "release": "npm-run-all -s clean:* release:css release:aot build:package release:replace release:minify",
-    "release:ts": "tsc --outDir release",
-    "release:aot": "ngc -p tsconfig-aot.json",
-    "release:replace": "node tasks/replace.js",
-    "release:css": "node-sass -o release/ src/themes && node-sass -o release/ src/components",
-    "release:minify": "uglifyjs release/index.js --source-map release/index.min.js.map --source-map-url release/index.js.map --compress --mangle --screw-ie8 --output release/index.min.js",
+    "release": "npm-run-all build:release",
+    "package": "npm-run-all -s clean:* package:css package:aot build:package package:replace package:minify",
+    "package:ts": "tsc --outDir release",
+    "package:aot": "ngc -p tsconfig-aot.json",
+    "package:replace": "node tasks/replace.js",
+    "package:css": "node-sass -o release/ src/themes && node-sass -o release/ src/components",
+    "package:minify": "uglifyjs release/index.js --source-map release/index.min.js.map --source-map-url release/index.js.map --compress --mangle --screw-ie8 --output release/index.min.js",
     "deploy": "node ./tasks/deploy.js"
   },
   "repository": {
@@ -106,9 +107,10 @@
     "ts-helpers": "^1.1.2",
     "tslint": "3.15.1",
     "tslint-loader": "^2.1.5",
-    "typescript": "^2.0.6",
+    "typescript": "^2.0.8",
     "webpack": "2.1.0-beta.25",
     "webpack-dev-server": "2.1.0-beta.6",
+    "webpack-merge": "^0.15.0",
     "webpack-notifier": "^1.4.0",
     "zone.js": "^0.6.26"
   }
