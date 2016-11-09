@@ -91,7 +91,6 @@
     .datatable .datatable-header .datatable-header-inner {
       -webkit-box-align: stretch;
           -ms-flex-align: stretch;
-                  -ms-grid-row-align: stretch;
               align-items: stretch;
       -webkit-align-items: stretch; }
     .datatable .datatable-header .datatable-header-cell {
