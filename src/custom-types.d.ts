@@ -17,13 +17,3 @@ interface AppWindow {
 interface Window extends AppWindow {}
 
 interface ErrorConstructor extends ErrorStackTraceLimit {}
-
-interface IntersectionObserver {
-  root: HTMLElement;
-  rootMargin: string;
-  thresholds: Array<number>;
-  disconnect: Function;
-  observe: Function;
-  takeRecords: Function;
-  unobserve: Function;
-}
