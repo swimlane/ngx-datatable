@@ -1,4 +1,4 @@
-/// <reference types="core-js" />
+
 import { SortType, SortDirection } from '../types';
 /**
  * Gets the next sort direction
