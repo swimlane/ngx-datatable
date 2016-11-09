@@ -4,10 +4,17 @@ import { Component } from '@angular/core';
   selector: 'inline-edit-demo',
   template: `
     <div>
-      <h3>Inline Editing</h3>
+      <h3>
+        Inline Editing
+        <small>
+          <a href="#" (click)="mydatatable.refresh()">Refresh</a>
+        </small>
+      </h3>
       <datatable
+        #mydatatable
         class="material"
         [headerHeight]="50"
+        [limit]="5"
         [columnMode]="'force'"
         [footerHeight]="50"
         [rowHeight]="'auto'"

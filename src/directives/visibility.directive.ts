@@ -1,9 +1,8 @@
 import {
-  Directive, Output, EventEmitter, ElementRef,
-  HostBinding, NgZone
+  Directive, Output, EventEmitter, ElementRef, HostBinding, NgZone
 } from '@angular/core';
 
-import { VisibilityObserver } from '../utils';
+import { checkVisibility } from '../utils';
 
 /**
  * Visibility Observer Directive
@@ -12,7 +11,7 @@ import { VisibilityObserver } from '../utils';
  *
  * 		<div
  * 			visibility-observer
- * 			(onVisibilityChange)="doSomething($event)">
+ * 			(visible)="onVisible($event)">
  * 		</div>
  *
  */
@@ -25,7 +24,7 @@ export class VisibilityDirective {
   @Output() visible: EventEmitter<any> = new EventEmitter();
 
   constructor(element: ElementRef, zone: NgZone) {
-    new VisibilityObserver(
+    checkVisibility(
       element.nativeElement,
       this.visbilityChange.bind(this),
       zone);

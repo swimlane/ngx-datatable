@@ -6,10 +6,9 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
     <div>
       <h3>
         Row Detail Demo
-        <br />
-        <small style="position:absolute;right:20px;top:5px;">
-          <button (click)="mydatatable.expandAllRows()">Expand All</button>
-          <button (click)="mydatatable.collapseAllRows()">Collapse All</button>
+        <small>
+          <a href="#" (click)="mydatatable.expandAllRows()">Expand All</a> | 
+          <a href="#" (click)="mydatatable.collapseAllRows()">Collapse All</a>
         </small>
       </h3>
       <datatable

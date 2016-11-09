@@ -6,7 +6,7 @@ import { EventEmitter, ElementRef, NgZone } from '@angular/core';
  *
  * 		<div
  * 			visibility-observer
- * 			(onVisibilityChange)="doSomething($event)">
+ * 			(visible)="onVisible($event)">
  * 		</div>
  *
  */

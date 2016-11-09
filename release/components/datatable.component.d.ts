@@ -57,6 +57,10 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
     ngOnInit(): void;
     ngAfterViewInit(): void;
     /**
+     * Refresh the table rows manually.
+     */
+    refresh(): void;
+    /**
      * Toggle the expansion of the row
      *
      * @param rowIndex

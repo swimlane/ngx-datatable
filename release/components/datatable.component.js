@@ -182,6 +182,12 @@ var DatatableComponent = (function () {
         this.recalculate();
     };
     /**
+     * Refresh the table rows manually.
+     */
+    DatatableComponent.prototype.refresh = function () {
+        this.bodyComponent.recalcLayout();
+    };
+    /**
      * Toggle the expansion of the row
      *
      * @param rowIndex
