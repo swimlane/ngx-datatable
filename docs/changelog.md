@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.0
+- Enhancement: Added `refresh` API for updating table (#255)
+- Bug: Fix intersection observer type errors (#268)
+
 ## 1.3.1
 - Bug: Fix force column width distribution overriding new resize (#245)
 
