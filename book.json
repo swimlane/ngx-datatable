@@ -9,7 +9,8 @@
         "include-codeblock",
         "versions",
         "anchors",
-        "youtube"
+        "youtube",
+        "githubcontributors"
     ],
     "pluginsConfig": {
         "github": {
