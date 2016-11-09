@@ -8,7 +8,7 @@ var utils_1 = require('../utils');
  *
  * 		<div
  * 			visibility-observer
- * 			(onVisibilityChange)="doSomething($event)">
+ * 			(visible)="onVisible($event)">
  * 		</div>
  *
  */
@@ -16,7 +16,7 @@ var VisibilityDirective = (function () {
     function VisibilityDirective(element, zone) {
         this.isVisible = false;
         this.visible = new core_1.EventEmitter();
-        new utils_1.VisibilityObserver(element.nativeElement, this.visbilityChange.bind(this), zone);
+        utils_1.checkVisibility(element.nativeElement, this.visbilityChange.bind(this), zone);
     }
     VisibilityDirective.prototype.visbilityChange = function () {
         var _this = this;
