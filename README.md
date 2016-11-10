@@ -1,7 +1,8 @@
 # angular2-data-table  
 [![Join the chat at https://gitter.im/swimlane/angular2-data-table](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/swimlane/angular2-data-table?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) 
 [![Code Climate](https://codeclimate.com/github/swimlane/angular2-data-table/badges/gpa.svg)](https://codeclimate.com/github/swimlane/angular2-data-table)
-[![Test Coverage](https://codeclimate.com/github/swimlane/angular2-data-table/badges/coverage.svg)](https://codeclimate.com/github/swimlane/angular2-data-table/coverage) 
+[![Build Status](https://travis-ci.org/swimlane/angular2-data-table.svg?branch=master)](https://travis-ci.org/swimlane/angular2-data-table)
+[![Test Coverage](https://codeclimate.com/github/swimlane/angular2-data-table/badges/coverage.svg)](https://codeclimate.com/github/swimlane/angular2-data-table/coverage)
 [![Dependency Status](https://david-dm.org/swimlane/angular2-data-table.svg)](https://david-dm.org/swimlane/angular2-data-table) 
 [![devDependency Status](https://david-dm.org/swimlane/angular2-data-table/dev-status.svg)](https://david-dm.org/swimlane/angular2-data-table#info=devDependencies) 
 [![npm version](https://badge.fury.io/js/angular2-data-table.svg)](http://badge.fury.io/js/angular2-data-table) 

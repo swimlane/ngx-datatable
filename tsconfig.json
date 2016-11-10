@@ -31,7 +31,7 @@
   "compileOnSave": false,
   "buildOnSave": false,
   "awesomeTypescriptLoaderOptions": {
-    "forkChecker": false
+    "forkChecker": true
   },
   "angularCompilerOptions": {
     "genDir": "release/",
