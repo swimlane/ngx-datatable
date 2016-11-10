@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <nav>
-        <h3>angular2-data-table</h3>
+        <h3>angular2-data-table <small>({{version}})</small></h3>
         <ul class="main-ul">
           <li>
             <h4>Basic</h4>
@@ -123,5 +123,7 @@ export class AppComponent {
   set state(state) {
     window.state = state;
   }
+
+  version: string = APP_VERSION;
 
 }
