@@ -6,8 +6,10 @@ engines:
       languages:
         - javascript
 exclude_paths:
+  - ".github/"
   - "release/"
   - "assets/"
+  - "config/"
   - "docs/"
 ratings:
    paths:
