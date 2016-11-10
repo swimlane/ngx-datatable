@@ -4,7 +4,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const commonConfig = require('./webpack.common');
-const { ENV } = require('./helpers');
+const { ENV, dir } = require('./helpers');
 
 module.exports = function(env) {
   return webpackMerge(commonConfig({ env: ENV }), {
@@ -39,11 +39,15 @@ module.exports = function(env) {
             ExtractTextPlugin.extract({
               fallbackLoader: 'style',
               loader: 'css?sourceMap!postcss?sourceMap!sass?sourceMap'
-          })
+            })
         }
       ]
     },
     plugins: [
+      new ExtractTextPlugin({
+        filename: '[name].css',
+        allChunks: true
+      }),
       new webpack.optimize.CommonsChunkPlugin({
         name: ['polyfills'],
         minChunks: Infinity
