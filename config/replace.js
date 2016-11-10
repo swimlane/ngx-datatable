@@ -1,4 +1,5 @@
-var replace = require("replace");
+const replace = require("replace");
+const fs = require('fs-extra')
 
 /**
  * This replaces all the TypeScript references
@@ -12,3 +13,10 @@ replace({
   recursive: true,
   silent: false
 });
+
+/**
+ * ngc output pathing is totally wrong
+ */
+fs.copySync('./release/src', './release');
+fs.removeSync('./release/node_modules')
+fs.removeSync('./release/src')

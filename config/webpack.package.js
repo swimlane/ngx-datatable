@@ -3,6 +3,7 @@ const webpackMerge = require('webpack-merge');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ngtools = require('@ngtools/webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const commonConfig = require('./webpack.common');
 const { ENV, dir, APP_VERSION } = require('./helpers');
 
@@ -16,6 +17,34 @@ const banner =
 module.exports = function(env) {
   return webpackMerge(commonConfig({ env: ENV }), {
     devtool: 'source-map',
+    module: {
+      exprContextCritical: false,
+      rules: [
+        {
+          test: /\.ts$/,
+          loaders: [
+            'awesome-typescript-loader'
+          ],
+          exclude: [/\.(spec|e2e|d)\.ts$/]
+        },
+        {
+          test: /\.css/,
+          loader:
+            ExtractTextPlugin.extract({
+              fallbackLoader: 'style',
+              loader:'css?sourceMap'
+            })
+        },
+        {
+          test: /\.scss$/,
+          loader:
+            ExtractTextPlugin.extract({
+              fallbackLoader: 'style',
+              loader: 'css?sourceMap!postcss?sourceMap!sass?sourceMap'
+            })
+        }
+      ]
+    },
     entry: {
       'index': './src/index.ts'
     },
@@ -40,6 +69,10 @@ module.exports = function(env) {
       'zone.js/dist/zone': 'zone.js/dist/zone'
     },
     plugins: [
+      new ExtractTextPlugin({
+        filename: '[name].css',
+        allChunks: true
+      }),
       new webpack.BannerPlugin({
         banner: banner,
         raw: true,
@@ -47,8 +80,8 @@ module.exports = function(env) {
       }),
       /*
       new ngtools.AotPlugin({
-        tsConfigPath: '../tsconfig.json',
-        baseDir: dir(),
+        tsConfigPath: 'tsconfig-aot.json',
+        baseDir: dir()
         entryModule: dir('datatable.module.ts') + '#Angular2DataTableModule'
       }),
       new CleanWebpackPlugin(['release'], {
