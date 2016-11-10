@@ -3,6 +3,9 @@ var core_1 = require('@angular/core');
 var DataTablePagerComponent = (function () {
     function DataTablePagerComponent(element, renderer) {
         this.change = new core_1.EventEmitter();
+        this._count = 0;
+        this._page = 1;
+        this._size = 0;
         renderer.setElementClass(element.nativeElement, 'datatable-pager', true);
     }
     Object.defineProperty(DataTablePagerComponent.prototype, "size", {
@@ -53,15 +56,13 @@ var DataTablePagerComponent = (function () {
         return this.page < this.totalPages;
     };
     DataTablePagerComponent.prototype.prevPage = function () {
-        if (this.page > 1) {
-            this.selectPage(--this.page);
-        }
+        this.selectPage(this.page - 1);
     };
     DataTablePagerComponent.prototype.nextPage = function () {
-        this.selectPage(++this.page);
+        this.selectPage(this.page + 1);
     };
     DataTablePagerComponent.prototype.selectPage = function (page) {
-        if (page > 0 && page <= this.totalPages) {
+        if (page > 0 && page <= this.totalPages && page !== this.page) {
             this.page = page;
             this.change.emit({
                 page: page

@@ -5,14 +5,14 @@
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("@angular/common"), require("@angular/core"), require("rxjs/Rx"));
+		module.exports = factory(require("@angular/common"), require("@angular/core"), require("@angular/platform-browser"), require("@angular/platform-browser-dynamic"), require("rxjs/Rx"));
 	else if(typeof define === 'function' && define.amd)
-		define("angular2-data-table", ["@angular/common", "@angular/core", "rxjs/Rx"], factory);
+		define("angular2-data-table", ["@angular/common", "@angular/core", "@angular/platform-browser", "@angular/platform-browser-dynamic", "rxjs/Rx"], factory);
 	else if(typeof exports === 'object')
-		exports["angular2-data-table"] = factory(require("@angular/common"), require("@angular/core"), require("rxjs/Rx"));
+		exports["angular2-data-table"] = factory(require("@angular/common"), require("@angular/core"), require("@angular/platform-browser"), require("@angular/platform-browser-dynamic"), require("rxjs/Rx"));
 	else
-		root["angular2-data-table"] = factory(root["@angular/common"], root["@angular/core"], root["rxjs/Rx"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_1__) {
+		root["angular2-data-table"] = factory(root["@angular/common"], root["@angular/core"], root["@angular/platform-browser"], root["@angular/platform-browser-dynamic"], root["rxjs/Rx"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_4__, __WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_1__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -76,10 +76,1738 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.ts");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./demo/bootstrap.ts");
 /******/ })
 /************************************************************************/
 /******/ ({
+
+/***/ "./demo/app.component.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var AppComponent = (function () {
+    function AppComponent() {
+        this.version = "1.4.1";
+    }
+    Object.defineProperty(AppComponent.prototype, "state", {
+        get: function () {
+            return window.state;
+        },
+        set: function (state) {
+            window.state = state;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    AppComponent = __decorate([
+        core_1.Component({
+            selector: 'app',
+            template: "\n    <div>\n      <nav>\n        <h3>angular2-data-table <small>({{version}})</small></h3>\n        <ul class=\"main-ul\">\n          <li>\n            <h4>Basic</h4>\n            <ul>\n              <li><a href=\"#\" (click)=\"state=''\">Auto Row Height</a></li>\n              <li><a href=\"#\" (click)=\"state='basic-fixed'\">Fixed Row Height</a></li>\n              <li><a href=\"#\" (click)=\"state='virtual-scroll'\">100k Rows</a></li>\n              <li><a href=\"#\" (click)=\"state='full-screen'\">Full Screen</a></li>\n              <li><a href=\"#\" (click)=\"state='inline-edit'\">Inline Editing</a></li>\n              <li><a href=\"#\" (click)=\"state='horz-vert-scrolling'\">Horz/Vert Scrolling</a></li>\n              <li><a href=\"#\" (click)=\"state='multiple-tables'\">Multiple Instances</a></li>\n              <li><a href=\"#\" (click)=\"state='row-details'\">Row Detail</a></li>\n              <li><a href=\"#\" (click)=\"state='filter'\">Filtering</a></li>\n              <li><a href=\"#\" (click)=\"state='hidden'\">Hidden On Load</a></li>\n            </ul>\n          </li>\n          <li>\n            <h4>Paging</h4>\n            <ul>\n              <li><a href=\"#\" (click)=\"state='client-paging'\">Client-side</a></li>\n              <li><a href=\"#\" (click)=\"state='server-paging'\">Server-side</a></li>\n            </ul>\n          </li>\n          <li>\n            <h4>Sorting</h4>\n            <ul>\n              <li><a href=\"#\" (click)=\"state='client-sorting'\">Client-side</a></li>\n              <li><a href=\"#\" (click)=\"state='server-sorting'\">Server-side</a></li>\n              <li><a href=\"#\" (click)=\"state='comparator-sorting'\">Comparator</a></li>\n            </ul>\n          </li>\n          <li>\n            <h4>Selection</h4>\n            <ul>\n              <li><a href=\"#\" (click)=\"state='cell-selection'\">Cell</a></li>\n              <li><a href=\"#\" (click)=\"state='single-selection'\">Single Row</a></li>\n              <li><a href=\"#\" (click)=\"state='multi-selection'\">Click Mulit Row</a></li>\n              <li><a href=\"#\" (click)=\"state='multishift-selection'\">Shift Multi Row</a></li>\n              <li><a href=\"#\" (click)=\"state='multidisable-selection'\">Disable Callback</a></li>\n            </ul>\n          </li>\n          <li>\n            <h4>Templates</h4>\n            <ul>\n              <li><a href=\"#\" (click)=\"state='inline'\">Inline</a></li>\n              <li><a href=\"#\" (click)=\"state='templateref'\">TemplateRef</a></li>\n            </ul>\n          </li>\n          <li>\n            <h4>Column</h4>\n            <ul>\n              <li><a href=\"#\" (click)=\"state='flex'\">Flex</a></li>\n              <li><a href=\"#\" (click)=\"state='toggle'\">Toggling</a></li>\n              <li><a href=\"#\" (click)=\"state='fixed'\">Fixed</a></li>\n              <li><a href=\"#\" (click)=\"state='force'\">Force</a></li>\n              <li><a href=\"#\" (click)=\"state='pinning'\">Pinning</a></li>\n            </ul>\n          </li>\n          <li>\n            <h4>\n              <a href=\"https://swimlane.gitbooks.io/angular2-data-table/\" target=\"_black\">Documentation</a>\n            </h4>\n          </li>\n        </ul>\n      </nav>\n      <content>\n        <!-- Basic -->\n        <basic-auto-demo *ngIf=\"!state\"></basic-auto-demo>\n        <basic-fixed-demo *ngIf=\"state === 'basic-fixed'\"></basic-fixed-demo>\n        <full-screen-demo *ngIf=\"state === 'full-screen'\"></full-screen-demo>\n        <inline-edit-demo *ngIf=\"state === 'inline-edit'\"></inline-edit-demo>\n        <virtual-scroll-demo *ngIf=\"state === 'virtual-scroll'\"></virtual-scroll-demo>\n        <horz-vert-scrolling-demo *ngIf=\"state === 'horz-vert-scrolling'\"></horz-vert-scrolling-demo>\n        <multiple-tables-demo *ngIf=\"state === 'multiple-tables'\"></multiple-tables-demo>\n        <row-details-demo *ngIf=\"state === 'row-details'\"></row-details-demo>\n        <filter-demo *ngIf=\"state === 'filter'\"></filter-demo>\n        <tabs-demo *ngIf=\"state === 'hidden'\"></tabs-demo>\n\n        <!-- Paging -->\n        <client-paging-demo *ngIf=\"state === 'client-paging'\"></client-paging-demo>\n        <server-paging-demo *ngIf=\"state === 'server-paging'\"></server-paging-demo>\n\n        <!-- Sorting -->\n        <client-sorting-demo *ngIf=\"state === 'client-sorting'\"></client-sorting-demo>\n        <client-sorting-demo *ngIf=\"state === 'server-sorting'\"></client-sorting-demo>\n        <comparator-sorting-demo *ngIf=\"state === 'comparator-sorting'\"></comparator-sorting-demo>\n        \n        <!-- Selection -->\n        <cell-selection-demo *ngIf=\"state === 'cell-selection'\"></cell-selection-demo>\n        <single-selection-demo *ngIf=\"state === 'single-selection'\"></single-selection-demo>\n        <multi-selection-demo *ngIf=\"state === 'multi-selection'\"></multi-selection-demo>\n        <multishift-selection-demo *ngIf=\"state === 'multishift-selection'\"></multishift-selection-demo>\n        <multidisable-selection-demo *ngIf=\"state === 'multidisable-selection'\"></multidisable-selection-demo>\n\n        <!-- Templates -->\n        <template-ref-demo *ngIf=\"state === 'templateref'\"></template-ref-demo>\n        <inline-templates-demo *ngIf=\"state === 'inline'\"></inline-templates-demo>\n\n        <!-- Columns -->\n        <column-flex-demo *ngIf=\"state === 'flex'\"></column-flex-demo>\n        <column-toggle-demo *ngIf=\"state === 'toggle'\"></column-toggle-demo>\n        <column-standard-demo *ngIf=\"state === 'fixed'\"></column-standard-demo>\n        <column-force-demo *ngIf=\"state === 'force'\"></column-force-demo>\n        <column-pinning-demo *ngIf=\"state === 'pinning'\"></column-pinning-demo>\n      </content>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], AppComponent);
+    return AppComponent;
+}());
+exports.AppComponent = AppComponent;
+
+
+/***/ },
+
+/***/ "./demo/basic/basic-auto.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var BasicAutoComponent = (function () {
+    function BasicAutoComponent() {
+        var _this = this;
+        this.rows = [];
+        this.columns = [
+            { prop: 'name' },
+            { name: 'Gender' },
+            { name: 'Company' }
+        ];
+        this.fetch(function (data) {
+            _this.rows = data;
+        });
+    }
+    BasicAutoComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/company.json");
+        req.onload = function () {
+            cb(JSON.parse(req.response));
+        };
+        req.send();
+    };
+    BasicAutoComponent = __decorate([
+        core_1.Component({
+            selector: 'basic-auto-demo',
+            template: "\n    <div>\n      <h3>Fluid Row Heights</h3>\n      <datatable\n        class=\"material\"\n        [rows]=\"rows\"\n        [columns]=\"columns\"\n        [columnMode]=\"'force'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\">\n      </datatable>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], BasicAutoComponent);
+    return BasicAutoComponent;
+}());
+exports.BasicAutoComponent = BasicAutoComponent;
+
+
+/***/ },
+
+/***/ "./demo/basic/basic-fixed.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var BasicFixedComponent = (function () {
+    function BasicFixedComponent() {
+        var _this = this;
+        this.rows = [];
+        this.columns = [
+            { prop: 'name' },
+            { name: 'Company' },
+            { name: 'Gender' }
+        ];
+        this.fetch(function (data) {
+            _this.rows = data;
+        });
+    }
+    BasicFixedComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/company.json");
+        req.onload = function () {
+            cb(JSON.parse(req.response));
+        };
+        req.send();
+    };
+    BasicFixedComponent = __decorate([
+        core_1.Component({
+            selector: 'basic-fixed-demo',
+            template: "\n    <div>\n      <h3>Fix Row Height</h3>\n      <datatable\n        class=\"material striped\"\n        [rows]=\"rows\"\n        [columns]=\"columns\"\n        [columnMode]=\"'force'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"50\">\n      </datatable>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], BasicFixedComponent);
+    return BasicFixedComponent;
+}());
+exports.BasicFixedComponent = BasicFixedComponent;
+
+
+/***/ },
+
+/***/ "./demo/basic/filter.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var FilterBarComponent = (function () {
+    function FilterBarComponent() {
+        var _this = this;
+        this.rows = [];
+        this.temp = [];
+        this.columns = [
+            { prop: 'name' },
+            { name: 'Company' },
+            { name: 'Gender' }
+        ];
+        this.fetch(function (data) {
+            // cache our list
+            _this.temp = data.slice();
+            // push our inital complete list
+            _this.rows = data;
+        });
+    }
+    FilterBarComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/company.json");
+        req.onload = function () {
+            cb(JSON.parse(req.response));
+        };
+        req.send();
+    };
+    FilterBarComponent.prototype.updateFilter = function (event) {
+        var val = event.target.value;
+        // filter our data
+        var temp = this.temp.filter(function (d) {
+            return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+        });
+        // update the rows
+        this.rows = temp;
+    };
+    FilterBarComponent = __decorate([
+        core_1.Component({
+            selector: 'filter-demo',
+            template: "\n    <div>\n      <h3>Client-side Search and Filtering</h3>\n      <input\n        type='text'\n        style='padding:8px;margin:15px auto;width:30%;'\n        placeholder='Type to filter the name column...'\n        (keyup)='updateFilter($event)'\n      />\n      <datatable\n        class='material'\n        [columns]=\"columns\"\n        [columnMode]=\"'force'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\"\n        [limit]=\"10\"\n        [rows]='rows'>\n        </datatable>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], FilterBarComponent);
+    return FilterBarComponent;
+}());
+exports.FilterBarComponent = FilterBarComponent;
+
+
+/***/ },
+
+/***/ "./demo/basic/fullscreen.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var FullScreenComponent = (function () {
+    function FullScreenComponent() {
+        var _this = this;
+        this.rows = [];
+        this.fetch(function (data) {
+            _this.rows = data;
+        });
+    }
+    FullScreenComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/100k.json");
+        req.onload = function () {
+            cb(JSON.parse(req.response));
+        };
+        req.send();
+    };
+    FullScreenComponent = __decorate([
+        core_1.Component({
+            selector: 'full-screen-demo',
+            template: "\n    <div>\n      <h3>Full Screen</h3>\n      <datatable\n        class=\"material fullscreen\"\n        style=\"top: 52px\"\n        [columnMode]=\"'force'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"0\"\n        [rowHeight]=\"50\"\n        [scrollbarV]=\"true\"\n        [scrollbarH]=\"true\"\n        [rows]=\"rows\">\n        <datatable-column name=\"Id\" [width]=\"80\"></datatable-column>\n        <datatable-column name=\"Name\" [width]=\"300\"></datatable-column>\n        <datatable-column name=\"Gender\"></datatable-column>\n        <datatable-column name=\"Age\"></datatable-column>\n        <datatable-column name=\"City\" [width]=\"300\" prop=\"address.city\"></datatable-column>\n        <datatable-column name=\"State\" [width]=\"300\" prop=\"address.state\"></datatable-column>\n      </datatable>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], FullScreenComponent);
+    return FullScreenComponent;
+}());
+exports.FullScreenComponent = FullScreenComponent;
+
+
+/***/ },
+
+/***/ "./demo/basic/inline.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var InlineEditComponent = (function () {
+    function InlineEditComponent() {
+        var _this = this;
+        this.editing = {};
+        this.rows = [];
+        this.fetch(function (data) {
+            _this.rows = data;
+        });
+    }
+    InlineEditComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/company.json");
+        req.onload = function () {
+            cb(JSON.parse(req.response));
+        };
+        req.send();
+    };
+    InlineEditComponent.prototype.updateValue = function (event, cell, cellValue, row) {
+        this.editing[row.$$index] = false;
+        this.rows[row.$$index][cell] = event.target.value;
+    };
+    InlineEditComponent = __decorate([
+        core_1.Component({
+            selector: 'inline-edit-demo',
+            template: "\n    <div>\n      <h3>\n        Inline Editing\n        <small>\n          <a href=\"#\" (click)=\"mydatatable.refresh()\">Refresh</a>\n        </small>\n      </h3>\n      <datatable\n        #mydatatable\n        class=\"material\"\n        [headerHeight]=\"50\"\n        [limit]=\"5\"\n        [columnMode]=\"'force'\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\"\n        [rows]=\"rows\">\n        <datatable-column name=\"Name\">\n          <template let-value=\"value\" let-row=\"row\">\n            <span\n              title=\"Double click to edit\"\n              (dblclick)=\"editing[row.$$index] = true\"\n              *ngIf=\"!editing[row.$$index]\">\n              {{value}}\n            </span>\n            <input\n              autofocus\n              (blur)=\"updateValue($event, 'name', value, row)\"\n              *ngIf=\"editing[row.$$index]\"\n              type=\"text\"\n              [value]=\"value\"\n            />\n          </template>\n        </datatable-column>\n        <datatable-column name=\"Gender\">\n          <template let-row=\"row\" let-value=\"value\">\n            {{value}}\n          </template>\n        </datatable-column>\n        <datatable-column name=\"Age\">\n          <template let-value=\"value\">\n            {{value}}\n          </template>\n        </datatable-column>\n      </datatable>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], InlineEditComponent);
+    return InlineEditComponent;
+}());
+exports.InlineEditComponent = InlineEditComponent;
+
+
+/***/ },
+
+/***/ "./demo/basic/multiple.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var MultipleTablesComponent = (function () {
+    function MultipleTablesComponent() {
+        this.columns1 = [
+            { prop: 'name' },
+            { name: 'Gender' },
+            { name: 'Company' }
+        ];
+        this.columns2 = [
+            { prop: 'name', Name: '^^NAME^^' },
+            { name: 'Gender' }
+        ];
+        this.rows1 = [
+            { name: 'Larry', gender: 'Male', company: 'Cisco' },
+            { name: 'Lauren', gender: 'Female', company: 'HP' }
+        ];
+        this.rows2 = [
+            { name: 'Callie', gender: 'Female' },
+            { name: 'Maggie', gender: 'Female' }
+        ];
+    }
+    MultipleTablesComponent = __decorate([
+        core_1.Component({
+            selector: 'multiple-tables-demo',
+            template: "\n    <div>\n      <h3>Multiple Tables</h3>\n      <datatable\n        class=\"material\"\n        [rows]=\"rows1\"\n        [columns]=\"columns1\"\n        [columnMode]=\"'force'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"0\"\n        [rowHeight]=\"100\">\n      </datatable>\n      <br />\n      <datatable\n        class=\"material\"\n        [rows]=\"rows2\"\n        [columns]=\"columns2\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\">\n      </datatable>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], MultipleTablesComponent);
+    return MultipleTablesComponent;
+}());
+exports.MultipleTablesComponent = MultipleTablesComponent;
+
+
+/***/ },
+
+/***/ "./demo/basic/row-detail.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var RowDetailsComponent = (function () {
+    function RowDetailsComponent() {
+        var _this = this;
+        this.rows = [];
+        this.expanded = {};
+        this.fetch(function (data) {
+            _this.rows = data;
+        });
+    }
+    RowDetailsComponent.prototype.onPage = function (event) {
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(function () {
+            console.log('paged!', event);
+        }, 100);
+    };
+    RowDetailsComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/100k.json");
+        req.onload = function () {
+            cb(JSON.parse(req.response));
+        };
+        req.send();
+    };
+    RowDetailsComponent.prototype.toggleExpandRow = function (row) {
+        console.log('Toggled Expand Row!', row);
+        this.table.toggleExpandRow(row);
+    };
+    __decorate([
+        core_1.ViewChild('mydatatable'), 
+        __metadata('design:type', Object)
+    ], RowDetailsComponent.prototype, "table", void 0);
+    RowDetailsComponent = __decorate([
+        core_1.Component({
+            selector: 'row-details-demo',
+            template: "\n    <div>\n      <h3>\n        Row Detail Demo\n        <small>\n          <a href=\"#\" (click)=\"mydatatable.expandAllRows()\">Expand All</a> | \n          <a href=\"#\" (click)=\"mydatatable.collapseAllRows()\">Collapse All</a>\n        </small>\n      </h3>\n      <datatable\n        #mydatatable\n        class='material expandable'\n        [columnMode]=\"'force'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"50\"\n        [detailRowHeight]=\"100\"\n        [scrollbarV]=\"50\"\n        [rows]='rows'\n        (page)=\"onPage($event)\">\n        <datatable-row-detail-template>\n          <template let-row=\"row\">\n            <div style=\"padding-left:35px;\">\n              <div><strong>Address</strong></div>\n              <div>{{row.address.city}}, {{row.address.state}}</div>\n            </div>\n          </template>\n        </datatable-row-detail-template>\n         <datatable-column\n          [width]=\"50\"\n          [resizeable]=\"false\"\n          [sortable]=\"false\"\n          [draggable]=\"false\"\n          [canAutoResize]=\"false\">\n          <template let-row=\"row\">\n            <a\n              href=\"#\"\n              [class.icon-right]=\"!row.$$expanded\"\n              [class.icon-down]=\"row.$$expanded\"\n              title=\"Expand/Collapse Row\"\n              (click)=\"toggleExpandRow(row)\">\n            </a>\n          </template>\n        </datatable-column>\n        <datatable-column name=\"Index\" width=\"80\">\n          <template let-row=\"row\">\n            <strong>{{row.$$index}}</strong>\n          </template>\n        </datatable-column>\n        <datatable-column name=\"Exapanded\" width=\"80\">\n          <template let-row=\"row\">\n            <strong>{{row.$$expanded === 1}}</strong>\n          </template>\n        </datatable-column>\n        <datatable-column name=\"Name\" width=\"200\">\n          <template let-value=\"value\">\n            <strong>{{value}}</strong>\n          </template>\n        </datatable-column>\n        <datatable-column name=\"Gender\" width=\"300\">\n          <template let-row=\"row\" let-value=\"value\">\n            <i [innerHTML]=\"row['name']\"></i> and <i>{{value}}</i>\n          </template>\n        </datatable-column>\n        <datatable-column name=\"Age\" ></datatable-column>\n      </datatable>\n    </div>\n  ",
+            encapsulation: core_1.ViewEncapsulation.None
+        }), 
+        __metadata('design:paramtypes', [])
+    ], RowDetailsComponent);
+    return RowDetailsComponent;
+}());
+exports.RowDetailsComponent = RowDetailsComponent;
+
+
+/***/ },
+
+/***/ "./demo/basic/scrolling.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var HorzVertScrolling = (function () {
+    function HorzVertScrolling() {
+        var _this = this;
+        this.rows = [];
+        this.fetch(function (data) {
+            _this.rows = data;
+        });
+    }
+    HorzVertScrolling.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/100k.json");
+        req.onload = function () {
+            cb(JSON.parse(req.response));
+        };
+        req.send();
+    };
+    HorzVertScrolling = __decorate([
+        core_1.Component({
+            selector: 'horz-vert-scrolling-demo',
+            template: "\n    <div>\n      <h3>Horizontal and Vertical Scrolling</h3>\n      <datatable\n        class=\"material\"\n        [rows]=\"rows\"\n        [columnMode]=\"'force'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"0\"\n        [rowHeight]=\"50\"\n        [scrollbarV]=\"true\"\n        [scrollbarH]=\"true\">\n        <datatable-column name=\"Name\" [width]=\"300\"></datatable-column>\n        <datatable-column name=\"Gender\"></datatable-column>\n        <datatable-column name=\"Age\"></datatable-column>\n        <datatable-column name=\"City\" [width]=\"300\" prop=\"address.city\"></datatable-column>\n        <datatable-column name=\"State\" [width]=\"300\" prop=\"address.state\"></datatable-column>\n      </datatable>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], HorzVertScrolling);
+    return HorzVertScrolling;
+}());
+exports.HorzVertScrolling = HorzVertScrolling;
+
+
+/***/ },
+
+/***/ "./demo/basic/tabs.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var TabsDemoComponent = (function () {
+    function TabsDemoComponent() {
+        var _this = this;
+        this.rows = [];
+        this.tab1 = true;
+        this.tab2 = false;
+        this.tab3 = false;
+        this.fetch(function (data) {
+            _this.rows = data;
+        });
+    }
+    TabsDemoComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/100k.json");
+        req.onload = function () {
+            cb(JSON.parse(req.response));
+        };
+        req.send();
+    };
+    TabsDemoComponent = __decorate([
+        core_1.Component({
+            selector: 'tabs-demo',
+            template: "\n    <div>\n      <h3>Hidden By Default</h3>\n\n      <div style=\"width:75%;margin:0 auto\">\n        <div>\n          <button type=\"button\" (click)=\"tab1=true;tab2=false;tab3=false;\">Nothing</button>\n          <button type=\"button\" (click)=\"tab2=true;tab1=false;tab3=false;\">Hidden</button>\n          <button type=\"button\" (click)=\"tab3=true;tab1=false;tab2=false;\">NgIf</button>\n        </div>\n\n        <div [hidden]=\"!tab1\">\n          <p>Click a button to toggle table visibilities</p>\n        </div>\n\n        <div [hidden]=\"!tab2\">\n          <h4>hidden Table</h4>\n          <datatable\n            class='material'\n            [rows]='rows'\n            [columnMode]=\"'force'\"\n            [headerHeight]=\"50\"\n            [footerHeight]=\"50\"\n            [rowHeight]=\"50\"\n            [scrollbarV]=\"true\">\n            <datatable-column name=\"Name\" width=\"200\"></datatable-column>\n            <datatable-column name=\"Gender\" width=\"300\"></datatable-column>\n            <datatable-column name=\"Age\" width=\"80\"></datatable-column>\n          </datatable>\n        </div>\n\n        <div *ngIf=\"tab3\">\n          <h4>ngIf Table</h4>\n          <datatable\n            class='material'\n            [rows]='rows'\n            [columnMode]=\"'force'\"\n            [headerHeight]=\"50\"\n            [footerHeight]=\"50\"\n            [rowHeight]=\"50\"\n            [scrollbarV]=\"true\">\n            <datatable-column name=\"Name\" width=\"200\"></datatable-column>\n            <datatable-column name=\"Gender\" width=\"300\"></datatable-column>\n            <datatable-column name=\"Age\" width=\"80\"></datatable-column>\n          </datatable>\n        </div>\n      </div>\n\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], TabsDemoComponent);
+    return TabsDemoComponent;
+}());
+exports.TabsDemoComponent = TabsDemoComponent;
+
+
+/***/ },
+
+/***/ "./demo/basic/virtual.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var VirtualScrollComponent = (function () {
+    function VirtualScrollComponent() {
+        var _this = this;
+        this.rows = [];
+        this.expanded = {};
+        this.fetch(function (data) {
+            _this.rows = data;
+        });
+    }
+    VirtualScrollComponent.prototype.onPage = function (event) {
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(function () {
+            console.log('paged!', event);
+        }, 100);
+    };
+    VirtualScrollComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/100k.json");
+        req.onload = function () {
+            cb(JSON.parse(req.response));
+        };
+        req.send();
+    };
+    VirtualScrollComponent = __decorate([
+        core_1.Component({
+            selector: 'virtual-scroll-demo',
+            template: "\n    <div>\n      <h3>Virtual Scrolling with 100k Rows</h3>\n      <datatable\n        class='material'\n        [rows]='rows'\n        [columnMode]=\"'standard'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"50\"\n        [scrollbarV]=\"true\"\n        (page)=\"onPage($event)\">\n        <datatable-column name=\"Name\" width=\"200\">\n          <template let-value=\"value\">\n            <strong>{{value}}</strong>\n          </template>\n        </datatable-column>\n        <datatable-column name=\"Gender\" width=\"300\">\n          <template let-row=\"row\" let-value=\"value\">\n            <i [innerHTML]=\"row['name']\"></i> and <i>{{value}}</i>\n          </template>\n        </datatable-column>\n        <datatable-column name=\"Age\" width=\"80\">\n        </datatable-column>\n      </datatable>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], VirtualScrollComponent);
+    return VirtualScrollComponent;
+}());
+exports.VirtualScrollComponent = VirtualScrollComponent;
+
+
+/***/ },
+
+/***/ "./demo/bootstrap.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var platform_browser_dynamic_1 = __webpack_require__(3);
+var hmr_1 = __webpack_require__("./node_modules/@angularclass/hmr/dist/index.js");
+var module_1 = __webpack_require__("./demo/module.ts");
+function main() {
+    return platform_browser_dynamic_1.platformBrowserDynamic()
+        .bootstrapModule(module_1.AppModule)
+        .catch(function (err) { return console.error(err); });
+}
+exports.main = main;
+if (undefined)
+    hmr_1.bootloader(main);
+if (!undefined)
+    main();
+
+
+/***/ },
+
+/***/ "./demo/columns/column-flex.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var ColumnFlexComponent = (function () {
+    function ColumnFlexComponent() {
+        var _this = this;
+        this.rows = [];
+        this.fetch(function (data) {
+            _this.rows = data.splice(0, 5);
+        });
+    }
+    ColumnFlexComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/company.json");
+        req.onload = function () {
+            cb(JSON.parse(req.response));
+        };
+        req.send();
+    };
+    ColumnFlexComponent = __decorate([
+        core_1.Component({
+            selector: 'column-flex-demo',
+            template: "\n    <div>\n      <h3>Flex Column Width Distribution</h3>\n      <datatable\n        class=\"material\"\n        [columnMode]=\"'flex'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\"\n        [rows]=\"rows\">\n        <datatable-column name=\"Name\" [flexGrow]=\"3\">\n          <template let-value=\"value\">\n            {{value}}\n          </template>\n        </datatable-column>\n        <datatable-column name=\"Gender\" [flexGrow]=\"1\">\n          <template let-row=\"row\" let-value=\"value\">\n            {{value}}\n          </template>\n        </datatable-column>\n        <datatable-column name=\"Age\" [flexGrow]=\"1\">\n          <template let-value=\"value\">\n            {{value}}\n          </template>\n        </datatable-column>\n      </datatable>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], ColumnFlexComponent);
+    return ColumnFlexComponent;
+}());
+exports.ColumnFlexComponent = ColumnFlexComponent;
+
+
+/***/ },
+
+/***/ "./demo/columns/column-force.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var ColumnForceComponent = (function () {
+    function ColumnForceComponent() {
+        var _this = this;
+        this.rows = [];
+        this.fetch(function (data) {
+            _this.rows = data.splice(0, 5);
+        });
+    }
+    ColumnForceComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/company.json");
+        req.onload = function () {
+            cb(JSON.parse(req.response));
+        };
+        req.send();
+    };
+    ColumnForceComponent = __decorate([
+        core_1.Component({
+            selector: 'column-force-demo',
+            template: "\n    <div>\n      <h3>Force Fill Column Width Distribution</h3>\n      <datatable\n        class=\"material\"\n        [columnMode]=\"'force'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\"\n        [rows]=\"rows\">\n        <datatable-column name=\"Name\" [width]=\"100\">\n          <template let-value=\"value\">\n            {{value}}\n          </template>\n        </datatable-column>\n        <datatable-column name=\"Gender\" [width]=\"100\">\n          <template let-row=\"row\" let-value=\"value\">\n            {{value}}\n          </template>\n        </datatable-column>\n        <datatable-column name=\"Age\" [width]=\"300\">\n          <template let-value=\"value\">\n            {{value}}\n          </template>\n        </datatable-column>\n      </datatable>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], ColumnForceComponent);
+    return ColumnForceComponent;
+}());
+exports.ColumnForceComponent = ColumnForceComponent;
+
+
+/***/ },
+
+/***/ "./demo/columns/column-standard.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var ColumnStandardComponent = (function () {
+    function ColumnStandardComponent() {
+        var _this = this;
+        this.rows = [];
+        this.fetch(function (data) {
+            _this.rows = data.splice(0, 5);
+        });
+    }
+    ColumnStandardComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/company.json");
+        req.onload = function () {
+            cb(JSON.parse(req.response));
+        };
+        req.send();
+    };
+    ColumnStandardComponent = __decorate([
+        core_1.Component({
+            selector: 'column-standard-demo',
+            template: "\n    <div>\n      <h3>Fixed Column Widths</h3>\n      <datatable\n        class=\"material\"\n        [rows]=\"rows\"\n        [columnMode]=\"'standard'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\">\n        <datatable-column name=\"Name\" [width]=\"300\">\n          <template let-value=\"value\">\n            {{value}}\n          </template>\n        </datatable-column>\n        <datatable-column name=\"Gender\" [width]=\"300\">\n          <template let-row=\"row\" let-value=\"value\">\n            {{value}}\n          </template>\n        </datatable-column>\n        <datatable-column name=\"Age\" [width]=\"300\">\n          <template let-value=\"value\">\n            {{value}}\n          </template>\n        </datatable-column>\n      </datatable>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], ColumnStandardComponent);
+    return ColumnStandardComponent;
+}());
+exports.ColumnStandardComponent = ColumnStandardComponent;
+
+
+/***/ },
+
+/***/ "./demo/columns/column-toggle.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var ColumnToggleComponent = (function () {
+    function ColumnToggleComponent() {
+        this.rows = [
+            {
+                name: 'Claudine Neal',
+                gender: 'female',
+                company: 'Sealoud'
+            },
+            {
+                name: 'Beryl Rice',
+                gender: 'female',
+                company: 'Velity'
+            }
+        ];
+        this.columns = [
+            { name: 'Name' },
+            { name: 'Gender' },
+            { name: 'Company' }
+        ];
+        this.allColumns = [
+            { name: 'Name' },
+            { name: 'Gender' },
+            { name: 'Company' }
+        ];
+    }
+    ColumnToggleComponent.prototype.toggle = function (col) {
+        var isChecked = this.isChecked(col);
+        if (isChecked) {
+            this.columns = this.columns.filter(function (c) {
+                return c.name !== col.name;
+            });
+        }
+        else {
+            this.columns = this.columns.concat([col]);
+        }
+    };
+    ColumnToggleComponent.prototype.isChecked = function (col) {
+        return this.columns.find(function (c) {
+            return c.name === col.name;
+        });
+    };
+    ColumnToggleComponent = __decorate([
+        core_1.Component({
+            selector: 'column-toggle-demo',
+            template: "\n    <div>\n      <h3>Column Toggling</h3>\n      <div style='float:left;width:75%'>\n        <datatable\n          class='material'\n          [rows]='rows'\n          [columns]=\"columns\"\n          [columnMode]=\"'force'\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\">\n          </datatable>\n      </div>\n      <div class='selected-column'>\n        <h4>Available Columns</h4>\n        <ul>\n          <li *ngFor='let col of allColumns'>\n            <input\n              type='checkbox'\n              [id]=\"col.name\"\n              (click)='toggle(col)'\n              [checked]='isChecked(col)'\n            />\n            <label [attr.for]=\"col.name\">{{col.name}}</label>\n          </li>\n        </ul>\n      </div>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], ColumnToggleComponent);
+    return ColumnToggleComponent;
+}());
+exports.ColumnToggleComponent = ColumnToggleComponent;
+
+
+/***/ },
+
+/***/ "./demo/columns/pinning.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var ColumnPinningComponent = (function () {
+    function ColumnPinningComponent() {
+        var _this = this;
+        this.rows = [];
+        this.fetch(function (data) {
+            _this.rows = data;
+        });
+    }
+    ColumnPinningComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/100k.json");
+        req.onload = function () {
+            cb(JSON.parse(req.response));
+        };
+        req.send();
+    };
+    ColumnPinningComponent = __decorate([
+        core_1.Component({
+            selector: 'column-pinning-demo',
+            template: "\n    <div>\n      <h3>Column Pinning</h3>\n      <datatable\n        class=\"material\"\n        [columnMode]=\"'force'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"50\"\n        [scrollbarV]=\"true\"\n        [scrollbarH]=\"true\"\n        [rows]=\"rows\">\n        <datatable-column\n          name=\"Name\"\n          [width]=\"300\"\n          [frozenLeft]=\"true\">\n        </datatable-column>\n        <datatable-column\n          name=\"Gender\">\n        </datatable-column>\n        <datatable-column\n          name=\"Age\">\n        </datatable-column>\n        <datatable-column\n          name=\"City\"\n          [width]=\"150\"\n          prop=\"address.city\">\n        </datatable-column>\n        <datatable-column\n          name=\"State\"\n          [width]=\"300\"\n          prop=\"address.state\"\n          [frozenRight]=\"true\">\n        </datatable-column>\n      </datatable>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], ColumnPinningComponent);
+    return ColumnPinningComponent;
+}());
+exports.ColumnPinningComponent = ColumnPinningComponent;
+
+
+/***/ },
+
+/***/ "./demo/module.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var platform_browser_1 = __webpack_require__(4);
+var hmr_1 = __webpack_require__("./node_modules/@angularclass/hmr/dist/index.js");
+var src_1 = __webpack_require__("./src/index.ts");
+var app_component_1 = __webpack_require__("./demo/app.component.ts");
+__webpack_require__("./src/components/datatable.scss");
+__webpack_require__("./src/themes/material.scss");
+// -- Basic
+var basic_fixed_1 = __webpack_require__("./demo/basic/basic-fixed.ts");
+var basic_auto_1 = __webpack_require__("./demo/basic/basic-auto.ts");
+var virtual_1 = __webpack_require__("./demo/basic/virtual.ts");
+var inline_1 = __webpack_require__("./demo/basic/inline.ts");
+var scrolling_1 = __webpack_require__("./demo/basic/scrolling.ts");
+var multiple_1 = __webpack_require__("./demo/basic/multiple.ts");
+var fullscreen_1 = __webpack_require__("./demo/basic/fullscreen.ts");
+var row_detail_1 = __webpack_require__("./demo/basic/row-detail.ts");
+var filter_1 = __webpack_require__("./demo/basic/filter.ts");
+var tabs_1 = __webpack_require__("./demo/basic/tabs.ts");
+// -- Paging
+var paging_client_1 = __webpack_require__("./demo/paging/paging-client.ts");
+var paging_server_1 = __webpack_require__("./demo/paging/paging-server.ts");
+// -- Sorting
+var sorting_comparator_1 = __webpack_require__("./demo/sorting/sorting-comparator.ts");
+var sorting_server_1 = __webpack_require__("./demo/sorting/sorting-server.ts");
+var sorting_client_1 = __webpack_require__("./demo/sorting/sorting-client.ts");
+// -- Templates
+var template_dom_1 = __webpack_require__("./demo/templates/template-dom.ts");
+var template_obj_1 = __webpack_require__("./demo/templates/template-obj.ts");
+// -- Selection
+var selection_cell_1 = __webpack_require__("./demo/selection/selection-cell.ts");
+var selection_multi_1 = __webpack_require__("./demo/selection/selection-multi.ts");
+var selection_single_1 = __webpack_require__("./demo/selection/selection-single.ts");
+var selection_shift_1 = __webpack_require__("./demo/selection/selection-shift.ts");
+var selection_disabled_1 = __webpack_require__("./demo/selection/selection-disabled.ts");
+// -- Columns
+var column_toggle_1 = __webpack_require__("./demo/columns/column-toggle.ts");
+var column_standard_1 = __webpack_require__("./demo/columns/column-standard.ts");
+var column_force_1 = __webpack_require__("./demo/columns/column-force.ts");
+var column_flex_1 = __webpack_require__("./demo/columns/column-flex.ts");
+var pinning_1 = __webpack_require__("./demo/columns/pinning.ts");
+var AppModule = (function () {
+    function AppModule(appRef) {
+        this.appRef = appRef;
+    }
+    AppModule.prototype.hmrOnDestroy = function (store) {
+        var cmpLocation = this.appRef.components.map(function (cmp) { return cmp.location.nativeElement; });
+        store.disposeOldHosts = hmr_1.createNewHosts(cmpLocation);
+        hmr_1.removeNgStyles();
+    };
+    AppModule.prototype.hmrAfterDestroy = function (store) {
+        store.disposeOldHosts();
+        delete store.disposeOldHosts;
+    };
+    AppModule = __decorate([
+        core_1.NgModule({
+            declarations: [
+                app_component_1.AppComponent,
+                basic_auto_1.BasicAutoComponent,
+                basic_fixed_1.BasicFixedComponent,
+                fullscreen_1.FullScreenComponent,
+                inline_1.InlineEditComponent,
+                virtual_1.VirtualScrollComponent,
+                scrolling_1.HorzVertScrolling,
+                multiple_1.MultipleTablesComponent,
+                row_detail_1.RowDetailsComponent,
+                paging_client_1.ClientPagingComponent,
+                paging_server_1.ServerPagingComponent,
+                sorting_client_1.ClientSortingComponent,
+                sorting_server_1.ServerSortingComponent,
+                sorting_comparator_1.SortingComparatorComponent,
+                selection_cell_1.CellSelectionComponent,
+                selection_multi_1.MultiSelectionComponent,
+                template_dom_1.InlineTemplatesComponent,
+                template_obj_1.TemplateRefTemplatesComponent,
+                column_flex_1.ColumnFlexComponent,
+                column_toggle_1.ColumnToggleComponent,
+                column_standard_1.ColumnStandardComponent,
+                column_force_1.ColumnForceComponent,
+                pinning_1.ColumnPinningComponent,
+                filter_1.FilterBarComponent,
+                tabs_1.TabsDemoComponent,
+                selection_single_1.SingleSelectionComponent,
+                selection_shift_1.MultiShiftSelectionComponent,
+                selection_disabled_1.MultiDisableSelectionComponent
+            ],
+            imports: [platform_browser_1.BrowserModule, src_1.Angular2DataTableModule],
+            bootstrap: [app_component_1.AppComponent]
+        }), 
+        __metadata('design:paramtypes', [core_1.ApplicationRef])
+    ], AppModule);
+    return AppModule;
+}());
+exports.AppModule = AppModule;
+
+
+/***/ },
+
+/***/ "./demo/paging/paging-client.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var ClientPagingComponent = (function () {
+    function ClientPagingComponent() {
+        var _this = this;
+        this.rows = [];
+        this.fetch(function (data) {
+            _this.rows = data;
+        });
+    }
+    ClientPagingComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/company.json");
+        req.onload = function () {
+            cb(JSON.parse(req.response));
+        };
+        req.send();
+    };
+    ClientPagingComponent = __decorate([
+        core_1.Component({
+            selector: 'client-paging-demo',
+            template: "\n    <div>\n      <h3>Client-side Paging</h3>\n      <datatable\n        class=\"material\"\n        [rows]=\"rows\"\n        [columns]=\"[{name:'Name'},{name:'Gender'},{name:'Company'}]\"\n        [columnMode]=\"'force'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\"\n        [limit]=\"10\">\n      </datatable>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], ClientPagingComponent);
+    return ClientPagingComponent;
+}());
+exports.ClientPagingComponent = ClientPagingComponent;
+
+
+/***/ },
+
+/***/ "./demo/paging/paging-server.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var ServerPagingComponent = (function () {
+    function ServerPagingComponent() {
+        this.rows = [];
+        this.count = 0;
+        this.offset = 0;
+        this.limit = 10;
+    }
+    ServerPagingComponent.prototype.ngOnInit = function () {
+        this.page(this.offset, this.limit);
+    };
+    ServerPagingComponent.prototype.page = function (offset, limit) {
+        var _this = this;
+        this.fetch(function (results) {
+            _this.count = results.length;
+            var start = offset * limit;
+            var end = start + limit;
+            var rows = _this.rows.slice();
+            for (var i = start; i < end; i++) {
+                rows[i] = results[i];
+            }
+            _this.rows = rows;
+            console.log('Page Results', start, end, rows);
+        });
+    };
+    ServerPagingComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/company.json");
+        req.onload = function () {
+            cb(JSON.parse(req.response));
+        };
+        req.send();
+    };
+    ServerPagingComponent.prototype.onPage = function (event) {
+        console.log('Page Event', event);
+        this.page(event.offset, event.limit);
+    };
+    ServerPagingComponent = __decorate([
+        core_1.Component({
+            selector: 'server-paging-demo',
+            template: "\n    <div>\n      <h3>Server-side Paging</h3>\n      <datatable\n        class=\"material\"\n        [rows]=\"rows\"\n        [columns]=\"[{name:'Name'},{name:'Gender'},{name:'Company'}]\"\n        [columnMode]=\"'force'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\"\n        [externalPaging]=\"true\"\n        [count]=\"count\"\n        [offset]=\"offset\"\n        [limit]=\"limit\"\n        (page)='onPage($event)'>\n      </datatable>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], ServerPagingComponent);
+    return ServerPagingComponent;
+}());
+exports.ServerPagingComponent = ServerPagingComponent;
+
+
+/***/ },
+
+/***/ "./demo/selection/selection-cell.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var CellSelectionComponent = (function () {
+    function CellSelectionComponent() {
+        var _this = this;
+        this.rows = [];
+        this.selected = [];
+        this.columns = [
+            { prop: 'name' },
+            { name: 'Company' },
+            { name: 'Gender' }
+        ];
+        this.fetch(function (data) {
+            _this.rows = data;
+        });
+    }
+    CellSelectionComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/company.json");
+        req.onload = function () {
+            cb(JSON.parse(req.response));
+        };
+        req.send();
+    };
+    CellSelectionComponent.prototype.onSelect = function (event) {
+        console.log('Event: select', event, this.selected);
+    };
+    CellSelectionComponent.prototype.onActivate = function (event) {
+        console.log('Event: activate', event);
+    };
+    CellSelectionComponent = __decorate([
+        core_1.Component({
+            selector: 'cell-selection-demo',
+            template: "\n    <div>\n      <h3>Cell Selection</h3>\n      <datatable\n        class=\"material selection-cell\"\n        [rows]=\"rows\"\n        [columnMode]=\"'force'\"\n        [columns]=\"columns\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"50\"\n        [selected]=\"selected\"\n        [selectionType]=\"'cell'\"\n        (select)=\"onSelect($event)\"\n        (activate)=\"onActivate($event)\">\n      </datatable>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], CellSelectionComponent);
+    return CellSelectionComponent;
+}());
+exports.CellSelectionComponent = CellSelectionComponent;
+
+
+/***/ },
+
+/***/ "./demo/selection/selection-disabled.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var MultiDisableSelectionComponent = (function () {
+    function MultiDisableSelectionComponent() {
+        var _this = this;
+        this.rows = [];
+        this.selected = [];
+        this.columns = [
+            { prop: 'name' },
+            { name: 'Company' },
+            { name: 'Gender' }
+        ];
+        this.fetch(function (data) {
+            _this.rows = data;
+        });
+    }
+    MultiDisableSelectionComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/company.json");
+        req.onload = function () {
+            cb(JSON.parse(req.response));
+        };
+        req.send();
+    };
+    MultiDisableSelectionComponent.prototype.onSelect = function (_a) {
+        var selected = _a.selected;
+        console.log('Select Event', selected, this.selected);
+        this.selected.splice(0, this.selected.length);
+        (_b = this.selected).push.apply(_b, selected);
+        var _b;
+    };
+    MultiDisableSelectionComponent.prototype.onActivate = function (event) {
+        console.log('Activate Event', event);
+    };
+    MultiDisableSelectionComponent.prototype.checkSelectable = function (event) {
+        console.log('Checking if selectable', event);
+        return event.name !== 'Ethel Price';
+    };
+    MultiDisableSelectionComponent = __decorate([
+        core_1.Component({
+            selector: 'multidisable-selection-demo',
+            template: "\n    <div>\n      <h3>Selection Callback to Disable Selections</h3>\n      <div style='float:left;width:75%'>\n        <datatable\n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n          [columns]=\"columns\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selectCheck]=\"checkSelectable\"\n          [selected]=\"selected\"\n          [selectionType]=\"'multi'\"\n          (activate)=\"onActivate($event)\"\n          (select)='onSelect($event)'>\n        </datatable>\n      </div>\n\n      <div class='selected-column'>\n        <h4>Selections</h4>\n        <ul>\n          <li *ngFor='let sel of selected'>\n            {{sel.name}}\n          </li>\n          <li *ngIf=\"!selected.length\">No Selections</li>\n        </ul>\n      </div>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], MultiDisableSelectionComponent);
+    return MultiDisableSelectionComponent;
+}());
+exports.MultiDisableSelectionComponent = MultiDisableSelectionComponent;
+
+
+/***/ },
+
+/***/ "./demo/selection/selection-multi.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var MultiSelectionComponent = (function () {
+    function MultiSelectionComponent() {
+        var _this = this;
+        this.rows = [];
+        this.selected = [];
+        this.columns = [
+            { prop: 'name' },
+            { name: 'Company' },
+            { name: 'Gender' }
+        ];
+        this.fetch(function (data) {
+            _this.rows = data;
+        });
+    }
+    MultiSelectionComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/company.json");
+        req.onload = function () {
+            cb(JSON.parse(req.response));
+        };
+        req.send();
+    };
+    MultiSelectionComponent.prototype.onSelect = function (_a) {
+        var selected = _a.selected;
+        console.log('Select Event', selected, this.selected);
+        this.selected.splice(0, this.selected.length);
+        (_b = this.selected).push.apply(_b, selected);
+        var _b;
+    };
+    MultiSelectionComponent.prototype.onActivate = function (event) {
+        console.log('Activate Event', event);
+    };
+    MultiSelectionComponent = __decorate([
+        core_1.Component({
+            selector: 'multi-selection-demo',
+            template: "\n    <div>\n      <h3>Multi Select via Click</h3>\n      <div style='float:left;width:75%'>\n        <datatable\n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n          [columns]=\"columns\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'multi'\"\n          (activate)=\"onActivate($event)\"\n          (select)='onSelect($event)'>\n        </datatable>\n      </div>\n\n      <div class='selected-column'>\n        <h4>Selections</h4>\n        <ul>\n          <li *ngFor='let sel of selected'>\n            {{sel.name}}\n          </li>\n          <li *ngIf=\"!selected.length\">No Selections</li>\n        </ul>\n      </div>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], MultiSelectionComponent);
+    return MultiSelectionComponent;
+}());
+exports.MultiSelectionComponent = MultiSelectionComponent;
+
+
+/***/ },
+
+/***/ "./demo/selection/selection-shift.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var MultiShiftSelectionComponent = (function () {
+    function MultiShiftSelectionComponent() {
+        var _this = this;
+        this.rows = [];
+        this.selected = [];
+        this.columns = [
+            { prop: 'name' },
+            { name: 'Company' },
+            { name: 'Gender' }
+        ];
+        this.fetch(function (data) {
+            _this.rows = data;
+        });
+    }
+    MultiShiftSelectionComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/company.json");
+        req.onload = function () {
+            cb(JSON.parse(req.response));
+        };
+        req.send();
+    };
+    MultiShiftSelectionComponent.prototype.onSelect = function (_a) {
+        var selected = _a.selected;
+        console.log('Select Event', selected, this.selected);
+        this.selected.splice(0, this.selected.length);
+        (_b = this.selected).push.apply(_b, selected);
+        var _b;
+    };
+    MultiShiftSelectionComponent.prototype.onActivate = function (event) {
+        console.log('Activate Event', event);
+    };
+    MultiShiftSelectionComponent = __decorate([
+        core_1.Component({
+            selector: 'multishift-selection-demo',
+            template: "\n    <div>\n      <h3>Multi Select via Shift</h3>\n      <div style='float:left;width:75%'>\n        <datatable\n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n          [columns]=\"columns\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'multiShift'\"\n          (activate)=\"onActivate($event)\"\n          (select)='onSelect($event)'>\n        </datatable>\n      </div>\n\n      <div class='selected-column'>\n        <h4>Selections</h4>\n        <ul>\n          <li *ngFor='let sel of selected'>\n            {{sel.name}}\n          </li>\n          <li *ngIf=\"!selected.length\">No Selections</li>\n        </ul>\n      </div>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], MultiShiftSelectionComponent);
+    return MultiShiftSelectionComponent;
+}());
+exports.MultiShiftSelectionComponent = MultiShiftSelectionComponent;
+
+
+/***/ },
+
+/***/ "./demo/selection/selection-single.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var SingleSelectionComponent = (function () {
+    function SingleSelectionComponent() {
+        var _this = this;
+        this.rows = [];
+        this.selected = [];
+        this.columns = [
+            { prop: 'name' },
+            { name: 'Company' },
+            { name: 'Gender' }
+        ];
+        this.fetch(function (data) {
+            _this.rows = data;
+        });
+    }
+    SingleSelectionComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/company.json");
+        req.onload = function () {
+            cb(JSON.parse(req.response));
+        };
+        req.send();
+    };
+    SingleSelectionComponent.prototype.onSelect = function (_a) {
+        var selected = _a.selected;
+        console.log('Select Event', selected, this.selected);
+        this.selected.splice(0, this.selected.length);
+        (_b = this.selected).push.apply(_b, selected);
+        var _b;
+    };
+    SingleSelectionComponent.prototype.onActivate = function (event) {
+        console.log('Activate Event', event);
+    };
+    SingleSelectionComponent = __decorate([
+        core_1.Component({
+            selector: 'single-selection-demo',
+            template: "\n    <div>\n      <h3>Single Row Selection</h3>\n      <div style='float:left;width:75%'>\n        <datatable\n          class=\"material\"\n          [rows]=\"rows\"\n          [columnMode]=\"'force'\"\n          [columns]=\"columns\"\n          [headerHeight]=\"50\"\n          [footerHeight]=\"50\"\n          [rowHeight]=\"'auto'\"\n          [limit]=\"5\"\n          [selected]=\"selected\"\n          [selectionType]=\"'single'\"\n          (activate)=\"onActivate($event)\"\n          (select)='onSelect($event)'>\n        </datatable>\n      </div>\n\n      <div class='selected-column'>\n        <h4>Selections</h4>\n        <ul>\n          <li *ngFor='let sel of selected'>\n            {{sel.name}}\n          </li>\n          <li *ngIf=\"!selected.length\">No Selections</li>\n        </ul>\n      </div>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], SingleSelectionComponent);
+    return SingleSelectionComponent;
+}());
+exports.SingleSelectionComponent = SingleSelectionComponent;
+
+
+/***/ },
+
+/***/ "./demo/sorting/sorting-client.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var ClientSortingComponent = (function () {
+    function ClientSortingComponent() {
+        var _this = this;
+        this.rows = [];
+        this.columns = [
+            { name: 'Company' },
+            { name: 'Name' },
+            { name: 'Gender' }
+        ];
+        this.fetch(function (data) {
+            _this.rows = data;
+        });
+    }
+    ClientSortingComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/company.json");
+        req.onload = function () {
+            var data = JSON.parse(req.response);
+            cb(data);
+        };
+        req.send();
+    };
+    ClientSortingComponent = __decorate([
+        core_1.Component({
+            selector: 'client-sorting-demo',
+            template: "\n    <div>\n      <h3>Client-side Sorting</h3>\n      <datatable\n        class=\"material\"\n        [rows]=\"rows\"\n        [columns]=\"columns\"\n        [sortType]=\"'multi'\"\n        [columnMode]=\"'force'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"50\"\n        [scrollbarV]=\"true\">\n      </datatable>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], ClientSortingComponent);
+    return ClientSortingComponent;
+}());
+exports.ClientSortingComponent = ClientSortingComponent;
+
+
+/***/ },
+
+/***/ "./demo/sorting/sorting-comparator.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var SortingComparatorComponent = (function () {
+    function SortingComparatorComponent() {
+        var _this = this;
+        this.rows = [];
+        this.columns = [
+            { name: 'Company', comparator: this.companyComparator.bind(this) },
+            { name: 'Name', sortable: false },
+            { name: 'Gender', sortable: false }
+        ];
+        this.fetch(function (data) {
+            _this.rows = data;
+        });
+    }
+    SortingComparatorComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/company.json");
+        req.onload = function () {
+            var data = JSON.parse(req.response);
+            cb(data.splice(0, 20));
+        };
+        req.send();
+    };
+    SortingComparatorComponent.prototype.companyComparator = function (event) {
+        console.log('Sorting Comparator', event);
+        var reversed = this.rows.slice();
+        reversed.reverse();
+        this.rows = reversed;
+    };
+    SortingComparatorComponent = __decorate([
+        core_1.Component({
+            selector: 'comparator-sorting-demo',
+            template: "\n    <div>\n      <h3>Custom Sorting Comparator</h3>\n      <datatable\n        class=\"material\"\n        [rows]=\"rows\"\n        [columns]=\"columns\"\n        [columnMode]=\"'force'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\">\n      </datatable>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], SortingComparatorComponent);
+    return SortingComparatorComponent;
+}());
+exports.SortingComparatorComponent = SortingComparatorComponent;
+
+
+/***/ },
+
+/***/ "./demo/sorting/sorting-server.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var ServerSortingComponent = (function () {
+    function ServerSortingComponent() {
+        var _this = this;
+        this.rows = [];
+        this.columns = [
+            // we pass false to bypass the default
+            // comparator function and use the event to sort
+            { name: 'Company', comparator: false },
+            { name: 'Name', sortable: false },
+            { name: 'Gender', sortable: false }
+        ];
+        this.fetch(function (data) {
+            _this.rows = data;
+        });
+    }
+    ServerSortingComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/company.json");
+        req.onload = function () {
+            var data = JSON.parse(req.response);
+            cb(data.splice(0, 20));
+        };
+        req.send();
+    };
+    ServerSortingComponent.prototype.onSort = function (event) {
+        var _this = this;
+        // event was triggered, start sort sequence
+        console.log('Sort Event', event);
+        // emulate a server request with a timeout
+        setTimeout(function () {
+            var rows = _this.rows.slice();
+            // this is only for demo purposes, normally
+            // your server would return the result for
+            // you and you would just set the rows prop
+            rows.sort(function (a, b) {
+                if (a.name < b.name)
+                    return -1;
+                if (a.name > b.name)
+                    return 1;
+                return 0;
+            });
+            _this.rows = rows;
+        }, 300);
+    };
+    ServerSortingComponent = __decorate([
+        core_1.Component({
+            selector: 'server-sorting-demo',
+            template: "\n    <div>\n      <h3>Server-side Sorting</h3>\n      <datatable\n        class=\"material\"\n        [rows]=\"rows\"\n        [columns]=\"columns\"\n        [columnMode]=\"'force'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\"\n        (sort)=\"onSort($event)\">\n      </datatable>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], ServerSortingComponent);
+    return ServerSortingComponent;
+}());
+exports.ServerSortingComponent = ServerSortingComponent;
+
+
+/***/ },
+
+/***/ "./demo/templates/template-dom.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var InlineTemplatesComponent = (function () {
+    function InlineTemplatesComponent() {
+        var _this = this;
+        this.rows = [];
+        this.joke = 'knock knock';
+        this.fetch(function (data) {
+            _this.rows = data.splice(0, 5);
+        });
+    }
+    InlineTemplatesComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/company.json");
+        req.onload = function () {
+            cb(JSON.parse(req.response));
+        };
+        req.send();
+    };
+    InlineTemplatesComponent = __decorate([
+        core_1.Component({
+            selector: 'inline-templates-demo',
+            template: "\n    <div>\n      <h3>Expressive Templates</h3>\n      <datatable\n        class=\"material\"\n        [rows]=\"rows\"\n        [columnMode]=\"'force'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\">\n        <datatable-column name=\"Name\">\n          <template let-column=\"column\">\n            Holla! {{column.name}}\n          </template>\n          <template let-value=\"value\">\n            Hi: <strong>{{value}}</strong>\n          </template>\n        </datatable-column>\n        <datatable-column name=\"Gender\">\n          <template let-row=\"row\" let-value=\"value\">\n            My name is: <i [innerHTML]=\"row['name']\"></i> and <i>{{value}}</i>\n            <div>{{joke}}</div>\n          </template>\n        </datatable-column>\n        <datatable-column name=\"Age\">\n          <template let-value=\"value\">\n            <div style=\"border:solid 1px #ddd;margin:5px;padding:3px\">\n              <div style=\"background:#999;height:10px\" [style.width]=\"value + '%'\"></div>\n            </div>\n          </template>\n        </datatable-column>\n      </datatable>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], InlineTemplatesComponent);
+    return InlineTemplatesComponent;
+}());
+exports.InlineTemplatesComponent = InlineTemplatesComponent;
+
+
+/***/ },
+
+/***/ "./demo/templates/template-obj.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var TemplateRefTemplatesComponent = (function () {
+    function TemplateRefTemplatesComponent() {
+        var _this = this;
+        this.rows = [];
+        this.columns = [];
+        this.fetch(function (data) {
+            _this.rows = data.splice(0, 5);
+        });
+    }
+    TemplateRefTemplatesComponent.prototype.ngOnInit = function () {
+        this.columns = [{
+                cellTemplate: this.editTmpl,
+                headerTemplate: this.hdrTpl,
+                name: 'Gender'
+            }];
+    };
+    TemplateRefTemplatesComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/company.json");
+        req.onload = function () {
+            cb(JSON.parse(req.response));
+        };
+        req.send();
+    };
+    __decorate([
+        core_1.ViewChild('editTmpl'), 
+        __metadata('design:type', core_1.TemplateRef)
+    ], TemplateRefTemplatesComponent.prototype, "editTmpl", void 0);
+    __decorate([
+        core_1.ViewChild('hdrTpl'), 
+        __metadata('design:type', core_1.TemplateRef)
+    ], TemplateRefTemplatesComponent.prototype, "hdrTpl", void 0);
+    TemplateRefTemplatesComponent = __decorate([
+        core_1.Component({
+            selector: 'template-ref-demo',
+            template: "\n    <div>\n      <h3>TemplateRef via Column Property</h3>\n      <datatable\n        class=\"material\"\n        [rows]=\"rows\"\n        [columns]=\"columns\"\n        [columnMode]=\"'force'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\">\n      </datatable>\n\n      <template #hdrTpl let-column=\"column\" >\n        <strong>Fancy</strong>: {{column.name}} !!\n      </template>\n\n      <template #editTmpl let-row=\"row\" let-value=\"value\" let-i=\"index\">\n        <img\n          *ngIf=\"value === 'male'\"\n          width=\"150\"\n          src=\"https://media.giphy.com/media/I8nepxWwlEuqI/giphy.gif\"\n        />\n        <img\n          *ngIf=\"value === 'female'\"\n          width=\"150\"\n          src=\"https://media.giphy.com/media/sxSVG3XHf7yww/giphy.gif\"\n        />\n      </template>\n    </div>\n  "
+        }), 
+        __metadata('design:paramtypes', [])
+    ], TemplateRefTemplatesComponent);
+    return TemplateRefTemplatesComponent;
+}());
+exports.TemplateRefTemplatesComponent = TemplateRefTemplatesComponent;
+
+
+/***/ },
+
+/***/ "./node_modules/@angularclass/hmr/dist/helpers.js":
+/***/ function(module, exports) {
+
+"use strict";
+"use strict";
+// Hot Module Replacement
+function bootloader(main) {
+    if (document.readyState === 'complete') {
+        main();
+    }
+    else {
+        document.addEventListener('DOMContentLoaded', main);
+    }
+}
+exports.bootloader = bootloader;
+// create new elements
+function createNewHosts(cmps) {
+    var components = cmps.map(function (componentNode) {
+        var newNode = document.createElement(componentNode.tagName);
+        // display none
+        var currentDisplay = newNode.style.display;
+        newNode.style.display = 'none';
+        var parentNode = componentNode.parentNode;
+        parentNode.insertBefore(newNode, componentNode);
+        return { currentDisplay: currentDisplay, newNode: newNode };
+    });
+    return function () {
+        components.forEach(function (cmp) {
+            cmp.newNode.style.display = cmp.currentDisplay;
+            cmp.newNode = null;
+            cmp.currentDisplay = null;
+        });
+    };
+}
+exports.createNewHosts = createNewHosts;
+// remove old styles
+function removeNgStyles() {
+    Array.prototype.slice.call(document.head.querySelectorAll('style'), 0)
+        .filter(function (style) { return style.innerText.indexOf('_ng') !== -1; })
+        .map(function (el) { return el.remove(); });
+}
+exports.removeNgStyles = removeNgStyles;
+// get input values
+function getInputValues() {
+    var inputs = document.querySelectorAll('input');
+    return Array.prototype.slice.call(inputs).map(function (input) { return input.value; });
+}
+exports.getInputValues = getInputValues;
+// set input values
+function setInputValues($inputs) {
+    var inputs = document.querySelectorAll('input');
+    if ($inputs && inputs.length === $inputs.length) {
+        $inputs.forEach(function (value, i) {
+            var el = inputs[i];
+            el.value = value;
+            el.dispatchEvent(new CustomEvent('input', { detail: el.value }));
+        });
+    }
+}
+exports.setInputValues = setInputValues;
+// get/set input values
+function createInputTransfer() {
+    var $inputs = getInputValues();
+    return function restoreInputValues() {
+        setInputValues($inputs);
+    };
+}
+exports.createInputTransfer = createInputTransfer;
+//# sourceMappingURL=helpers.js.map
+
+/***/ },
+
+/***/ "./node_modules/@angularclass/hmr/dist/index.js":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
+// Hot Module Replacement
+__export(__webpack_require__("./node_modules/@angularclass/hmr/dist/helpers.js"));
+//# sourceMappingURL=index.js.map
+
+/***/ },
 
 /***/ "./src/components/body/body-cell.component.ts":
 /***/ function(module, exports, __webpack_require__) {
@@ -1981,6 +3709,13 @@ exports.DatatableComponent = DatatableComponent;
 
 /***/ },
 
+/***/ "./src/components/datatable.scss":
+/***/ function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ },
+
 /***/ "./src/components/footer/footer.component.ts":
 /***/ function(module, exports, __webpack_require__) {
 
@@ -3308,6 +5043,13 @@ __export(__webpack_require__("./src/components/index.ts"));
 
 /***/ },
 
+/***/ "./src/themes/material.scss":
+/***/ function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ },
+
 /***/ "./src/types/click.type.ts":
 /***/ function(module, exports) {
 
@@ -4402,9 +6144,23 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
 
 module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
 
+/***/ },
+
+/***/ 3:
+/***/ function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_3__;
+
+/***/ },
+
+/***/ 4:
+/***/ function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_4__;
+
 /***/ }
 
 /******/ })
 });
 ;
-//# sourceMappingURL=index.map
+//# sourceMappingURL=app.map
