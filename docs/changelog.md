@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.1
+- Bug: Ignore next page when already at last (#223)
+
 ## 1.4.0
 - Enhancement: Added `refresh` API for updating table (#255)
 - Bug: Fix intersection observer type errors (#268)
