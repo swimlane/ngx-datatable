@@ -4,11 +4,11 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ngtools = require('@ngtools/webpack');
 const commonConfig = require('./webpack.common');
-const { ENV, dir } = require('./helpers');
+const { ENV, dir, APP_VERSION } = require('./helpers');
 
 const banner =
 `/**
- * angular2-data-table v${VERSION} (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v${APP_VERSION} (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */`;
