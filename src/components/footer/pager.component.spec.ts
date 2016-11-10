@@ -3,7 +3,7 @@ import {
   TestBed
 } from '@angular/core/testing';
 
-import { DataTablePagerComponent } from '../../../src/components/footer';
+import { DataTablePagerComponent } from './pager.component';
 
 describe('DataTablePagerComponent', () => {
   let fixture;
