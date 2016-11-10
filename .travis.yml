@@ -18,5 +18,3 @@ install:
   
 after_script:
   - codeclimate-test-reporter < coverage/lcov.info
-  - npm run release
-  - npm run deploy
