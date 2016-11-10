@@ -5,7 +5,7 @@ module.exports =  function(config) {
     basePath: '',
     singleRun: true,
     frameworks: ['jasmine'],
-    exclude: [ ],
+    exclude: [],
     files: [ 
       { pattern: './test/spec-bundle.js', watched: false } 
     ],
@@ -14,7 +14,7 @@ module.exports =  function(config) {
     },
     webpack: testWebpackConfig({ env: 'test' }),
     webpackMiddleware: { stats: 'errors-only'},
-    reporters: [ 'dots', 'coverage', 'remap-coverage' ],
+    reporters: [ 'mocha', 'coverage', 'remap-coverage' ],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
@@ -31,9 +31,9 @@ module.exports =  function(config) {
     },
     remapCoverageReporter: {
       'text-summary': null,
-      lcov: './coverage/lcov.info',
       json: './coverage/coverage.json',
-      html: './coverage/html'
+      html: './coverage/html',
+      lcovonly: './coverage/lcov.info'
     }
   };
 

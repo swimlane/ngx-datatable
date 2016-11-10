@@ -6,3 +6,4 @@ dist/
 coverage/
 .idea
 yarn.lock
+/.vscode

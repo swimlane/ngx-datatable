@@ -2,6 +2,8 @@
 
 ## 1.4.1
 - Bug: Ignore next page when already at last (#223)
+- Chore: Redid Webpack Config to be clean
+- Chore: TESTS! TRAVIS BUILDS! COVERAGE REPORTING!
 
 ## 1.4.0
 - Enhancement: Added `refresh` API for updating table (#255)
