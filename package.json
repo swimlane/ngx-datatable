@@ -29,10 +29,10 @@
     "package": "npm-run-all -s clean:* package:css package:aot build:package package:replace package:minify",
     "package:ts": "tsc --outDir release",
     "package:aot": "ngc -p tsconfig-aot.json",
-    "package:replace": "node tasks/replace.js",
+    "package:replace": "node ./config/replace.js",
     "package:css": "node-sass -o release/ src/themes && node-sass -o release/ src/components",
     "package:minify": "uglifyjs release/index.js --source-map release/index.min.js.map --source-map-url release/index.js.map --compress --mangle --screw-ie8 --output release/index.min.js",
-    "deploy": "node ./tasks/deploy.js"
+    "deploy": "node ./config/deploy.js"
   },
   "repository": {
     "type": "git",
