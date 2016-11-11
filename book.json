@@ -23,6 +23,10 @@
         "versions": {
             "gitbookConfigURL": "https://unpkg.com/angular2-data-table/book.json",
             "type": "tags"
+        },
+        "githubcontributors": {
+          "githubOwner": "swimlane",
+          "githubRepository": "angular2-data-table"
         }
     }
 }
