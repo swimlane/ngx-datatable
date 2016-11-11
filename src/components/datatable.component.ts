@@ -459,7 +459,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
 
     if(column.comparator !== undefined) {
       if(typeof column.comparator === 'function') {
-        column.comparator(this.rows, sorts);
+        this.rows = column.comparator(this.rows, sorts);
       }
     } else {
       this.rows = sortRows(this.rows, sorts);
