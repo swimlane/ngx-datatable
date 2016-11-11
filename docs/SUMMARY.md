@@ -17,6 +17,6 @@
 * Contributing
    * [Building](contributing/building.md)
    * [Guidelines](contributing/guidelines.md)
-   * [Community](community.md)
-   * [Credits](credits.md)
+   * [Community](contributing/community.md)
+   * [Credits](contributing/credits.md)
 * [Changelog](changelog.md)
