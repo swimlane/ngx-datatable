@@ -33,6 +33,9 @@ Column re-ordering enabled/disabled. Default value: `true`
 ## `rowHeight`
 The height of the row. This is necessary for virtual scrolling in order to calculate height for the scrollbar.
 
+## `rows`
+Array of rows to display.
+
 ## `scrollbarH`
 Enabled horizontal scrollbars. Default value: `false`
 
