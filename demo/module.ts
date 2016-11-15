@@ -18,6 +18,7 @@ import { FullScreenComponent } from './basic/fullscreen';
 import { RowDetailsComponent } from './basic/row-detail';
 import { FilterBarComponent } from './basic/filter';
 import { TabsDemoComponent } from './basic/tabs';
+import { LiveDataComponent } from './basic/live';
 
 // -- Paging
 import { ClientPagingComponent } from './paging/paging-client';
@@ -74,6 +75,7 @@ import { ColumnPinningComponent } from './columns/pinning';
     FilterBarComponent,
     TabsDemoComponent,
     SingleSelectionComponent,
+    LiveDataComponent,
     MultiShiftSelectionComponent,
     MultiDisableSelectionComponent
   ],
