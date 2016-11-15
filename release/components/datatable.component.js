@@ -29,6 +29,8 @@ var DatatableComponent = (function () {
         this.footerHeight = 0;
         // if external paging is turned on
         this.externalPaging = false;
+        // if external sorting is turned on
+        this.externalSorting = false;
         // Page size
         this.limit = undefined;
         // Total count
@@ -182,12 +184,6 @@ var DatatableComponent = (function () {
         this.recalculate();
     };
     /**
-     * Refresh the table rows manually.
-     */
-    DatatableComponent.prototype.refresh = function () {
-        this.bodyComponent.recalcLayout();
-    };
-    /**
      * Toggle the expansion of the row
      *
      * @param rowIndex
@@ -327,13 +323,15 @@ var DatatableComponent = (function () {
     };
     DatatableComponent.prototype.onColumnSort = function (event) {
         var column = event.column, sorts = event.sorts;
-        if (column.comparator !== undefined) {
-            if (typeof column.comparator === 'function') {
-                column.comparator(this.rows, this.sorts);
+        if (this.externalSorting === false) {
+            if (column.comparator !== undefined) {
+                if (typeof column.comparator === 'function') {
+                    column.comparator(this.rows, sorts);
+                }
             }
-        }
-        else {
-            this.rows = utils_1.sortRows(this.rows, this.sorts);
+            else {
+                this.rows = utils_1.sortRows(this.rows, sorts);
+            }
         }
         this.sorts = sorts;
         this.bodyComponent.updateOffsetY(0);
@@ -342,7 +340,7 @@ var DatatableComponent = (function () {
     DatatableComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'datatable',
-                    template: "\n    <div\n      visibility-observer\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"columns\"\n        [headerHeight]=\"headerHeight\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\">\n      </datatable-header>\n      <datatable-body\n        [rows]=\"rows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [columns]=\"columns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetailTemplate]=\"rowDetailTemplate\"\n        [detailRowHeight]=\"detailRowHeight\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (select)=\"select.emit($event)\"\n        (detailToggle)=\"detailToggle.emit($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
+                    template: "\n    <div\n      visibility-observer\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"columns\"\n        [headerHeight]=\"headerHeight\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\">\n      </datatable-header>\n      <datatable-body\n        [rows]=\"rows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"columns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetailTemplate]=\"rowDetailTemplate\"\n        [detailRowHeight]=\"detailRowHeight\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (select)=\"select.emit($event)\"\n        (detailToggle)=\"detailToggle.emit($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
                     changeDetection: core_1.ChangeDetectionStrategy.OnPush
                 },] },
     ];
@@ -363,6 +361,7 @@ var DatatableComponent = (function () {
         'headerHeight': [{ type: core_1.Input },],
         'footerHeight': [{ type: core_1.Input },],
         'externalPaging': [{ type: core_1.Input },],
+        'externalSorting': [{ type: core_1.Input },],
         'limit': [{ type: core_1.Input },],
         'count': [{ type: core_1.Input },],
         'offset': [{ type: core_1.Input },],
@@ -376,6 +375,7 @@ var DatatableComponent = (function () {
         'messages': [{ type: core_1.Input },],
         'rowIdentity': [{ type: core_1.Input },],
         'selectCheck': [{ type: core_1.Input },],
+        'trackByProp': [{ type: core_1.Input },],
         'scroll': [{ type: core_1.Output },],
         'activate': [{ type: core_1.Output },],
         'select': [{ type: core_1.Output },],

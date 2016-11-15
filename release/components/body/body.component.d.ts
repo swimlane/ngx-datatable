@@ -14,6 +14,7 @@ export declare class DataTableBodyComponent {
     rowIdentity: any;
     rowDetailTemplate: any;
     selectCheck: any;
+    trackByProp: string;
     pageSize: number;
     rows: any[];
     columns: any[];
@@ -34,6 +35,7 @@ export declare class DataTableBodyComponent {
     private offsetY;
     private indexes;
     private columnGroupWidths;
+    private rowTrackingFn;
     private _rows;
     private _bodyHeight;
     private _columns;

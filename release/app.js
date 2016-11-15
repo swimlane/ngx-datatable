@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"1.4.1" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"1.5.0" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -98,7 +98,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = __webpack_require__(0);
 var AppComponent = (function () {
     function AppComponent() {
-        this.version = "1.4.1";
+        this.version = "1.5.0";
     }
     Object.defineProperty(AppComponent.prototype, "state", {
         get: function () {
@@ -113,7 +113,7 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'app',
-            template: "\n    <div>\n      <nav>\n        <h3>angular2-data-table <small>({{version}})</small></h3>\n        <ul class=\"main-ul\">\n          <li>\n            <h4>Basic</h4>\n            <ul>\n              <li><a href=\"#\" (click)=\"state=''\">Auto Row Height</a></li>\n              <li><a href=\"#\" (click)=\"state='basic-fixed'\">Fixed Row Height</a></li>\n              <li><a href=\"#\" (click)=\"state='virtual-scroll'\">100k Rows</a></li>\n              <li><a href=\"#\" (click)=\"state='full-screen'\">Full Screen</a></li>\n              <li><a href=\"#\" (click)=\"state='inline-edit'\">Inline Editing</a></li>\n              <li><a href=\"#\" (click)=\"state='horz-vert-scrolling'\">Horz/Vert Scrolling</a></li>\n              <li><a href=\"#\" (click)=\"state='multiple-tables'\">Multiple Instances</a></li>\n              <li><a href=\"#\" (click)=\"state='row-details'\">Row Detail</a></li>\n              <li><a href=\"#\" (click)=\"state='filter'\">Filtering</a></li>\n              <li><a href=\"#\" (click)=\"state='hidden'\">Hidden On Load</a></li>\n            </ul>\n          </li>\n          <li>\n            <h4>Paging</h4>\n            <ul>\n              <li><a href=\"#\" (click)=\"state='client-paging'\">Client-side</a></li>\n              <li><a href=\"#\" (click)=\"state='server-paging'\">Server-side</a></li>\n            </ul>\n          </li>\n          <li>\n            <h4>Sorting</h4>\n            <ul>\n              <li><a href=\"#\" (click)=\"state='client-sorting'\">Client-side</a></li>\n              <li><a href=\"#\" (click)=\"state='server-sorting'\">Server-side</a></li>\n              <li><a href=\"#\" (click)=\"state='comparator-sorting'\">Comparator</a></li>\n            </ul>\n          </li>\n          <li>\n            <h4>Selection</h4>\n            <ul>\n              <li><a href=\"#\" (click)=\"state='cell-selection'\">Cell</a></li>\n              <li><a href=\"#\" (click)=\"state='single-selection'\">Single Row</a></li>\n              <li><a href=\"#\" (click)=\"state='multi-selection'\">Click Mulit Row</a></li>\n              <li><a href=\"#\" (click)=\"state='multishift-selection'\">Shift Multi Row</a></li>\n              <li><a href=\"#\" (click)=\"state='multidisable-selection'\">Disable Callback</a></li>\n            </ul>\n          </li>\n          <li>\n            <h4>Templates</h4>\n            <ul>\n              <li><a href=\"#\" (click)=\"state='inline'\">Inline</a></li>\n              <li><a href=\"#\" (click)=\"state='templateref'\">TemplateRef</a></li>\n            </ul>\n          </li>\n          <li>\n            <h4>Column</h4>\n            <ul>\n              <li><a href=\"#\" (click)=\"state='flex'\">Flex</a></li>\n              <li><a href=\"#\" (click)=\"state='toggle'\">Toggling</a></li>\n              <li><a href=\"#\" (click)=\"state='fixed'\">Fixed</a></li>\n              <li><a href=\"#\" (click)=\"state='force'\">Force</a></li>\n              <li><a href=\"#\" (click)=\"state='pinning'\">Pinning</a></li>\n            </ul>\n          </li>\n          <li>\n            <h4>\n              <a href=\"https://swimlane.gitbooks.io/angular2-data-table/\" target=\"_black\">Documentation</a>\n            </h4>\n          </li>\n        </ul>\n      </nav>\n      <content>\n        <!-- Basic -->\n        <basic-auto-demo *ngIf=\"!state\"></basic-auto-demo>\n        <basic-fixed-demo *ngIf=\"state === 'basic-fixed'\"></basic-fixed-demo>\n        <full-screen-demo *ngIf=\"state === 'full-screen'\"></full-screen-demo>\n        <inline-edit-demo *ngIf=\"state === 'inline-edit'\"></inline-edit-demo>\n        <virtual-scroll-demo *ngIf=\"state === 'virtual-scroll'\"></virtual-scroll-demo>\n        <horz-vert-scrolling-demo *ngIf=\"state === 'horz-vert-scrolling'\"></horz-vert-scrolling-demo>\n        <multiple-tables-demo *ngIf=\"state === 'multiple-tables'\"></multiple-tables-demo>\n        <row-details-demo *ngIf=\"state === 'row-details'\"></row-details-demo>\n        <filter-demo *ngIf=\"state === 'filter'\"></filter-demo>\n        <tabs-demo *ngIf=\"state === 'hidden'\"></tabs-demo>\n\n        <!-- Paging -->\n        <client-paging-demo *ngIf=\"state === 'client-paging'\"></client-paging-demo>\n        <server-paging-demo *ngIf=\"state === 'server-paging'\"></server-paging-demo>\n\n        <!-- Sorting -->\n        <client-sorting-demo *ngIf=\"state === 'client-sorting'\"></client-sorting-demo>\n        <client-sorting-demo *ngIf=\"state === 'server-sorting'\"></client-sorting-demo>\n        <comparator-sorting-demo *ngIf=\"state === 'comparator-sorting'\"></comparator-sorting-demo>\n        \n        <!-- Selection -->\n        <cell-selection-demo *ngIf=\"state === 'cell-selection'\"></cell-selection-demo>\n        <single-selection-demo *ngIf=\"state === 'single-selection'\"></single-selection-demo>\n        <multi-selection-demo *ngIf=\"state === 'multi-selection'\"></multi-selection-demo>\n        <multishift-selection-demo *ngIf=\"state === 'multishift-selection'\"></multishift-selection-demo>\n        <multidisable-selection-demo *ngIf=\"state === 'multidisable-selection'\"></multidisable-selection-demo>\n\n        <!-- Templates -->\n        <template-ref-demo *ngIf=\"state === 'templateref'\"></template-ref-demo>\n        <inline-templates-demo *ngIf=\"state === 'inline'\"></inline-templates-demo>\n\n        <!-- Columns -->\n        <column-flex-demo *ngIf=\"state === 'flex'\"></column-flex-demo>\n        <column-toggle-demo *ngIf=\"state === 'toggle'\"></column-toggle-demo>\n        <column-standard-demo *ngIf=\"state === 'fixed'\"></column-standard-demo>\n        <column-force-demo *ngIf=\"state === 'force'\"></column-force-demo>\n        <column-pinning-demo *ngIf=\"state === 'pinning'\"></column-pinning-demo>\n      </content>\n    </div>\n  "
+            template: "\n    <div>\n      <nav>\n        <h3>angular2-data-table <small>({{version}})</small></h3>\n        <ul class=\"main-ul\">\n          <li>\n            <h4>Basic</h4>\n            <ul>\n              <li><a href=\"#\" (click)=\"state=''\">Auto Row Height</a></li>\n              <li><a href=\"#\" (click)=\"state='basic-fixed'\">Fixed Row Height</a></li>\n              <li><a href=\"#\" (click)=\"state='virtual-scroll'\">100k Rows</a></li>\n              <li><a href=\"#\" (click)=\"state='full-screen'\">Full Screen</a></li>\n              <li><a href=\"#\" (click)=\"state='inline-edit'\">Inline Editing</a></li>\n              <li><a href=\"#\" (click)=\"state='horz-vert-scrolling'\">Horz/Vert Scrolling</a></li>\n              <li><a href=\"#\" (click)=\"state='multiple-tables'\">Multiple Instances</a></li>\n              <li><a href=\"#\" (click)=\"state='row-details'\">Row Detail</a></li>\n              <li><a href=\"#\" (click)=\"state='filter'\">Filtering</a></li>\n              <li><a href=\"#\" (click)=\"state='hidden'\">Hidden On Load</a></li>\n              <li><a href=\"#\" (click)=\"state='live'\">Live Data</a></li>\n            </ul>\n          </li>\n          <li>\n            <h4>Paging</h4>\n            <ul>\n              <li><a href=\"#\" (click)=\"state='client-paging'\">Client-side</a></li>\n              <li><a href=\"#\" (click)=\"state='server-paging'\">Server-side</a></li>\n            </ul>\n          </li>\n          <li>\n            <h4>Sorting</h4>\n            <ul>\n              <li><a href=\"#\" (click)=\"state='client-sorting'\">Client-side</a></li>\n              <li><a href=\"#\" (click)=\"state='server-sorting'\">Server-side</a></li>\n              <li><a href=\"#\" (click)=\"state='comparator-sorting'\">Comparator</a></li>\n            </ul>\n          </li>\n          <li>\n            <h4>Selection</h4>\n            <ul>\n              <li><a href=\"#\" (click)=\"state='cell-selection'\">Cell</a></li>\n              <li><a href=\"#\" (click)=\"state='single-selection'\">Single Row</a></li>\n              <li><a href=\"#\" (click)=\"state='multi-selection'\">Click Mulit Row</a></li>\n              <li><a href=\"#\" (click)=\"state='multishift-selection'\">Shift Multi Row</a></li>\n              <li><a href=\"#\" (click)=\"state='multidisable-selection'\">Disable Callback</a></li>\n            </ul>\n          </li>\n          <li>\n            <h4>Templates</h4>\n            <ul>\n              <li><a href=\"#\" (click)=\"state='inline'\">Inline</a></li>\n              <li><a href=\"#\" (click)=\"state='templateref'\">TemplateRef</a></li>\n            </ul>\n          </li>\n          <li>\n            <h4>Column</h4>\n            <ul>\n              <li><a href=\"#\" (click)=\"state='flex'\">Flex</a></li>\n              <li><a href=\"#\" (click)=\"state='toggle'\">Toggling</a></li>\n              <li><a href=\"#\" (click)=\"state='fixed'\">Fixed</a></li>\n              <li><a href=\"#\" (click)=\"state='force'\">Force</a></li>\n              <li><a href=\"#\" (click)=\"state='pinning'\">Pinning</a></li>\n            </ul>\n          </li>\n          <li>\n            <h4>\n              <a href=\"https://swimlane.gitbooks.io/angular2-data-table/\" target=\"_black\">Documentation</a>\n            </h4>\n          </li>\n        </ul>\n      </nav>\n      <content>\n        <!-- Basic -->\n        <basic-auto-demo *ngIf=\"!state\"></basic-auto-demo>\n        <basic-fixed-demo *ngIf=\"state === 'basic-fixed'\"></basic-fixed-demo>\n        <full-screen-demo *ngIf=\"state === 'full-screen'\"></full-screen-demo>\n        <inline-edit-demo *ngIf=\"state === 'inline-edit'\"></inline-edit-demo>\n        <virtual-scroll-demo *ngIf=\"state === 'virtual-scroll'\"></virtual-scroll-demo>\n        <horz-vert-scrolling-demo *ngIf=\"state === 'horz-vert-scrolling'\"></horz-vert-scrolling-demo>\n        <multiple-tables-demo *ngIf=\"state === 'multiple-tables'\"></multiple-tables-demo>\n        <row-details-demo *ngIf=\"state === 'row-details'\"></row-details-demo>\n        <filter-demo *ngIf=\"state === 'filter'\"></filter-demo>\n        <tabs-demo *ngIf=\"state === 'hidden'\"></tabs-demo>\n        <live-data-demo *ngIf=\"state === 'live'\"></live-data-demo>\n\n        <!-- Paging -->\n        <client-paging-demo *ngIf=\"state === 'client-paging'\"></client-paging-demo>\n        <server-paging-demo *ngIf=\"state === 'server-paging'\"></server-paging-demo>\n\n        <!-- Sorting -->\n        <client-sorting-demo *ngIf=\"state === 'client-sorting'\"></client-sorting-demo>\n        <server-sorting-demo *ngIf=\"state === 'server-sorting'\"></server-sorting-demo>\n        <comparator-sorting-demo *ngIf=\"state === 'comparator-sorting'\"></comparator-sorting-demo>\n        \n        <!-- Selection -->\n        <cell-selection-demo *ngIf=\"state === 'cell-selection'\"></cell-selection-demo>\n        <single-selection-demo *ngIf=\"state === 'single-selection'\"></single-selection-demo>\n        <multi-selection-demo *ngIf=\"state === 'multi-selection'\"></multi-selection-demo>\n        <multishift-selection-demo *ngIf=\"state === 'multishift-selection'\"></multishift-selection-demo>\n        <multidisable-selection-demo *ngIf=\"state === 'multidisable-selection'\"></multidisable-selection-demo>\n\n        <!-- Templates -->\n        <template-ref-demo *ngIf=\"state === 'templateref'\"></template-ref-demo>\n        <inline-templates-demo *ngIf=\"state === 'inline'\"></inline-templates-demo>\n\n        <!-- Columns -->\n        <column-flex-demo *ngIf=\"state === 'flex'\"></column-flex-demo>\n        <column-toggle-demo *ngIf=\"state === 'toggle'\"></column-toggle-demo>\n        <column-standard-demo *ngIf=\"state === 'fixed'\"></column-standard-demo>\n        <column-force-demo *ngIf=\"state === 'force'\"></column-force-demo>\n        <column-pinning-demo *ngIf=\"state === 'pinning'\"></column-pinning-demo>\n      </content>\n    </div>\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);
@@ -365,19 +365,97 @@ var InlineEditComponent = (function () {
         req.send();
     };
     InlineEditComponent.prototype.updateValue = function (event, cell, cellValue, row) {
-        this.editing[row.$$index] = false;
+        this.editing[row.$$index + '-' + cell] = false;
         this.rows[row.$$index][cell] = event.target.value;
     };
     InlineEditComponent = __decorate([
         core_1.Component({
             selector: 'inline-edit-demo',
-            template: "\n    <div>\n      <h3>\n        Inline Editing\n        <small>\n          <a href=\"#\" (click)=\"mydatatable.refresh()\">Refresh</a>\n        </small>\n      </h3>\n      <datatable\n        #mydatatable\n        class=\"material\"\n        [headerHeight]=\"50\"\n        [limit]=\"5\"\n        [columnMode]=\"'force'\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\"\n        [rows]=\"rows\">\n        <datatable-column name=\"Name\">\n          <template let-value=\"value\" let-row=\"row\">\n            <span\n              title=\"Double click to edit\"\n              (dblclick)=\"editing[row.$$index] = true\"\n              *ngIf=\"!editing[row.$$index]\">\n              {{value}}\n            </span>\n            <input\n              autofocus\n              (blur)=\"updateValue($event, 'name', value, row)\"\n              *ngIf=\"editing[row.$$index]\"\n              type=\"text\"\n              [value]=\"value\"\n            />\n          </template>\n        </datatable-column>\n        <datatable-column name=\"Gender\">\n          <template let-row=\"row\" let-value=\"value\">\n            {{value}}\n          </template>\n        </datatable-column>\n        <datatable-column name=\"Age\">\n          <template let-value=\"value\">\n            {{value}}\n          </template>\n        </datatable-column>\n      </datatable>\n    </div>\n  "
+            template: "\n    <div>\n      <h3>Inline Editing</h3>\n      <datatable\n        #mydatatable\n        class=\"material\"\n        [headerHeight]=\"50\"\n        [limit]=\"5\"\n        [columnMode]=\"'force'\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\"\n        [rows]=\"rows\">\n        <datatable-column name=\"Name\">\n          <template let-value=\"value\" let-row=\"row\">\n            <span\n              title=\"Double click to edit\"\n              (dblclick)=\"editing[row.$$index + '-name'] = true\"\n              *ngIf=\"!editing[row.$$index + '-name']\">\n              {{value}}\n            </span>\n            <input\n              autofocus\n              (blur)=\"updateValue($event, 'name', value, row)\"\n              *ngIf=\"editing[row.$$index + '-name']\"\n              type=\"text\"\n              [value]=\"value\"\n            />\n          </template>\n        </datatable-column>\n        <datatable-column name=\"Gender\">\n          <template let-row=\"row\" let-value=\"value\">\n             <span\n              title=\"Double click to edit\"\n              (dblclick)=\"editing[row.$$index + '-gender'] = true\"\n              *ngIf=\"!editing[row.$$index + '-gender']\">\n              {{value}}\n            </span>\n            <select\n              *ngIf=\"editing[row.$$index + '-gender']\"\n              (change)=\"updateValue($event, 'gender', value, row)\"\n              [value]=\"value\">\n              <option value=\"male\">Male</option>\n              <option value=\"female\">Female</option>\n            </select>\n          </template>\n        </datatable-column>\n        <datatable-column name=\"Age\">\n          <template let-value=\"value\">\n            {{value}}\n          </template>\n        </datatable-column>\n      </datatable>\n    </div>\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], InlineEditComponent);
     return InlineEditComponent;
 }());
 exports.InlineEditComponent = InlineEditComponent;
+
+
+/***/ },
+
+/***/ "./demo/basic/live.ts":
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = __webpack_require__(0);
+var LiveDataComponent = (function () {
+    function LiveDataComponent() {
+        var _this = this;
+        this.rows = [];
+        this.active = true;
+        this.cols = [
+            'Type', 'Organization', 'DateAdded', 'Tags'
+        ];
+        this.fetch(function (data) {
+            _this.rows = data.map(function (d) {
+                d.updated = Date.now().toString();
+                return d;
+            });
+        });
+        this.start();
+    }
+    LiveDataComponent.prototype.randomNum = function (start, end) {
+        return Math.floor(Math.random() * end) + start;
+    };
+    LiveDataComponent.prototype.start = function () {
+        if (!this.active)
+            return;
+        setTimeout(this.updateRandom.bind(this), 50);
+    };
+    LiveDataComponent.prototype.stop = function () {
+        this.active = false;
+    };
+    LiveDataComponent.prototype.updateRandom = function () {
+        var rowNum = this.randomNum(0, 5);
+        var cellNum = this.randomNum(0, 4);
+        var newRow = this.randomNum(0, 100);
+        var prop = this.cols[cellNum];
+        if (this.rows.length) {
+            // let rows = [...this.rows];
+            var row = this.rows[rowNum];
+            row[prop] = Date.now().toString(); // this.rows[newRow][prop];
+            row.updated = Date.now().toString();
+        }
+        this.start();
+    };
+    LiveDataComponent.prototype.fetch = function (cb) {
+        var req = new XMLHttpRequest();
+        req.open('GET', "assets/data/security.json");
+        req.onload = function () {
+            cb(JSON.parse(req.response));
+        };
+        req.send();
+    };
+    LiveDataComponent = __decorate([
+        core_1.Component({
+            selector: 'live-data-demo',
+            template: "\n    <div>\n      <h3>\n        Live Data Demo ( not working ATM )\n        <small>\n          <a href=\"#\" (click)=\"start()\">Start</a>\n          <a href=\"#\" (click)=\"stop()\">Stop</a>\n        </small>\n      </h3>\n      <datatable\n        #mydatatable\n        class=\"material\"\n        [headerHeight]=\"50\"\n        [limit]=\"5\"\n        [columnMode]=\"'force'\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\"\n        [trackByProp]=\"'updated'\"\n        [rows]=\"rows\">\n        <datatable-column name=\"Type\" prop=\"Type\"></datatable-column>\n        <datatable-column name=\"Organization\" prop=\"Organization\"></datatable-column>\n        <datatable-column name=\"Date Added\" prop=\"DateAdded\"></datatable-column>\n        <datatable-column name=\"Tags\" prop=\"Tags\">\n          <template let-value=\"value\">\n            {{value}}\n          </template>\n        </datatable-column>\n      </datatable>\n    </div>\n  ",
+            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+        }), 
+        __metadata('design:paramtypes', [])
+    ], LiveDataComponent);
+    return LiveDataComponent;
+}());
+exports.LiveDataComponent = LiveDataComponent;
 
 
 /***/ },
@@ -941,6 +1019,7 @@ var fullscreen_1 = __webpack_require__("./demo/basic/fullscreen.ts");
 var row_detail_1 = __webpack_require__("./demo/basic/row-detail.ts");
 var filter_1 = __webpack_require__("./demo/basic/filter.ts");
 var tabs_1 = __webpack_require__("./demo/basic/tabs.ts");
+var live_1 = __webpack_require__("./demo/basic/live.ts");
 // -- Paging
 var paging_client_1 = __webpack_require__("./demo/paging/paging-client.ts");
 var paging_server_1 = __webpack_require__("./demo/paging/paging-server.ts");
@@ -1005,6 +1084,7 @@ var AppModule = (function () {
                 filter_1.FilterBarComponent,
                 tabs_1.TabsDemoComponent,
                 selection_single_1.SingleSelectionComponent,
+                live_1.LiveDataComponent,
                 selection_shift_1.MultiShiftSelectionComponent,
                 selection_disabled_1.MultiDisableSelectionComponent
             ],
@@ -1561,13 +1641,14 @@ var core_1 = __webpack_require__(0);
 var ServerSortingComponent = (function () {
     function ServerSortingComponent() {
         var _this = this;
+        this.loading = false;
         this.rows = [];
         this.columns = [
             // we pass false to bypass the default
             // comparator function and use the event to sort
-            { name: 'Company', comparator: false },
-            { name: 'Name', sortable: false },
-            { name: 'Gender', sortable: false }
+            { name: 'Company', sortable: true },
+            { name: 'Name', sortable: true },
+            { name: 'Gender', sortable: true }
         ];
         this.fetch(function (data) {
             _this.rows = data;
@@ -1586,26 +1667,25 @@ var ServerSortingComponent = (function () {
         var _this = this;
         // event was triggered, start sort sequence
         console.log('Sort Event', event);
+        this.loading = true;
         // emulate a server request with a timeout
         setTimeout(function () {
             var rows = _this.rows.slice();
             // this is only for demo purposes, normally
             // your server would return the result for
             // you and you would just set the rows prop
+            var sort = event.sorts[0];
             rows.sort(function (a, b) {
-                if (a.name < b.name)
-                    return -1;
-                if (a.name > b.name)
-                    return 1;
-                return 0;
+                return a[sort.prop].localeCompare(b[sort.prop]) * (sort.dir === 'desc' ? -1 : 1);
             });
             _this.rows = rows;
-        }, 300);
+            _this.loading = false;
+        }, 1000);
     };
     ServerSortingComponent = __decorate([
         core_1.Component({
             selector: 'server-sorting-demo',
-            template: "\n    <div>\n      <h3>Server-side Sorting</h3>\n      <datatable\n        class=\"material\"\n        [rows]=\"rows\"\n        [columns]=\"columns\"\n        [columnMode]=\"'force'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\"\n        (sort)=\"onSort($event)\">\n      </datatable>\n    </div>\n  "
+            template: "\n    <div>\n      <h3>Server-side Sorting</h3>\n      <datatable\n        class=\"material\"\n        [rows]=\"rows\"\n        [columns]=\"columns\"\n        [columnMode]=\"'force'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\"\n        [externalSorting]=\"true\"\n        [loadingIndicator]=\"loading\"\n        (sort)=\"onSort($event)\">\n      </datatable>\n    </div>\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], ServerSortingComponent);
@@ -2288,6 +2368,15 @@ var DataTableBodyComponent = (function () {
         this.offsetY = 0;
         this.indexes = {};
         renderer.setElementClass(element.nativeElement, 'datatable-body', true);
+        // declare fn here so we can get access to the `this` property
+        this.rowTrackingFn = function (index, row) {
+            if (this.trackByProp) {
+                return row.$$index + "-" + this.trackByProp;
+            }
+            else {
+                return row.$$index;
+            }
+        }.bind(this);
     }
     Object.defineProperty(DataTableBodyComponent.prototype, "pageSize", {
         get: function () {
@@ -2638,6 +2727,10 @@ var DataTableBodyComponent = (function () {
     ], DataTableBodyComponent.prototype, "selectCheck", void 0);
     __decorate([
         core_1.Input(), 
+        __metadata('design:type', String)
+    ], DataTableBodyComponent.prototype, "trackByProp", void 0);
+    __decorate([
+        core_1.Input(), 
         __metadata('design:type', Number), 
         __metadata('design:paramtypes', [Number])
     ], DataTableBodyComponent.prototype, "pageSize", null);
@@ -2702,7 +2795,7 @@ var DataTableBodyComponent = (function () {
     DataTableBodyComponent = __decorate([
         core_1.Component({
             selector: 'datatable-body',
-            template: "\n    <datatable-selection \n      #selector\n      [selected]=\"selected\"\n      [rows]=\"rows\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-row-wrapper \n          *ngFor=\"let row of temp; let i = index; trackBy: row?.$$index\"\n          [ngStyle]=\"getRowsStyles(row)\"\n          [rowDetailTemplate]=\"rowDetailTemplate\"\n          [detailRowHeight]=\"detailRowHeight\"\n          [row]=\"row\"\n          [expanded]=\"row.$$expanded === 1\">\n          <datatable-body-row\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(row)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"rowHeight\"\n            [row]=\"row\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-row>\n        </datatable-row-wrapper>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
+            template: "\n    <datatable-selection \n      #selector\n      [selected]=\"selected\"\n      [rows]=\"rows\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-row-wrapper \n          *ngFor=\"let row of temp; let i = index; trackBy: rowTrackingFn\"\n          [ngStyle]=\"getRowsStyles(row)\"\n          [rowDetailTemplate]=\"rowDetailTemplate\"\n          [detailRowHeight]=\"detailRowHeight\"\n          [row]=\"row\"\n          [expanded]=\"row.$$expanded === 1\">\n          <datatable-body-row\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(row)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"rowHeight\"\n            [row]=\"row\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-row>\n        </datatable-row-wrapper>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
             changeDetection: core_1.ChangeDetectionStrategy.OnPush
         }), 
         __metadata('design:paramtypes', [core_1.ElementRef, core_1.Renderer])
@@ -3214,6 +3307,8 @@ var DatatableComponent = (function () {
         this.footerHeight = 0;
         // if external paging is turned on
         this.externalPaging = false;
+        // if external sorting is turned on
+        this.externalSorting = false;
         // Page size
         this.limit = undefined;
         // Total count
@@ -3367,12 +3462,6 @@ var DatatableComponent = (function () {
         this.recalculate();
     };
     /**
-     * Refresh the table rows manually.
-     */
-    DatatableComponent.prototype.refresh = function () {
-        this.bodyComponent.recalcLayout();
-    };
-    /**
      * Toggle the expansion of the row
      *
      * @param rowIndex
@@ -3512,13 +3601,15 @@ var DatatableComponent = (function () {
     };
     DatatableComponent.prototype.onColumnSort = function (event) {
         var column = event.column, sorts = event.sorts;
-        if (column.comparator !== undefined) {
-            if (typeof column.comparator === 'function') {
-                column.comparator(this.rows, this.sorts);
+        if (this.externalSorting === false) {
+            if (column.comparator !== undefined) {
+                if (typeof column.comparator === 'function') {
+                    column.comparator(this.rows, sorts);
+                }
             }
-        }
-        else {
-            this.rows = utils_1.sortRows(this.rows, this.sorts);
+            else {
+                this.rows = utils_1.sortRows(this.rows, sorts);
+            }
         }
         this.sorts = sorts;
         this.bodyComponent.updateOffsetY(0);
@@ -3572,6 +3663,10 @@ var DatatableComponent = (function () {
     ], DatatableComponent.prototype, "externalPaging", void 0);
     __decorate([
         core_1.Input(), 
+        __metadata('design:type', Boolean)
+    ], DatatableComponent.prototype, "externalSorting", void 0);
+    __decorate([
+        core_1.Input(), 
         __metadata('design:type', Number)
     ], DatatableComponent.prototype, "limit", void 0);
     __decorate([
@@ -3622,6 +3717,10 @@ var DatatableComponent = (function () {
         core_1.Input(), 
         __metadata('design:type', Object)
     ], DatatableComponent.prototype, "selectCheck", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', String)
+    ], DatatableComponent.prototype, "trackByProp", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)
@@ -3697,7 +3796,7 @@ var DatatableComponent = (function () {
     DatatableComponent = __decorate([
         core_1.Component({
             selector: 'datatable',
-            template: "\n    <div\n      visibility-observer\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"columns\"\n        [headerHeight]=\"headerHeight\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\">\n      </datatable-header>\n      <datatable-body\n        [rows]=\"rows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [columns]=\"columns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetailTemplate]=\"rowDetailTemplate\"\n        [detailRowHeight]=\"detailRowHeight\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (select)=\"select.emit($event)\"\n        (detailToggle)=\"detailToggle.emit($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
+            template: "\n    <div\n      visibility-observer\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"columns\"\n        [headerHeight]=\"headerHeight\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\">\n      </datatable-header>\n      <datatable-body\n        [rows]=\"rows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"columns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetailTemplate]=\"rowDetailTemplate\"\n        [detailRowHeight]=\"detailRowHeight\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (select)=\"select.emit($event)\"\n        (detailToggle)=\"detailToggle.emit($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
             changeDetection: core_1.ChangeDetectionStrategy.OnPush
         }), 
         __metadata('design:paramtypes', [core_1.Renderer, core_1.ElementRef])
@@ -5779,7 +5878,7 @@ var RowHeightCache = (function () {
             var currentRowHeight = rowHeight;
             // Add the detail row height to the already expanded rows.
             // This is useful for the table that goes through a filter or sort.
-            if (rows[i].$$expanded === 1) {
+            if (rows[i] && rows[i].$$expanded === 1) {
                 currentRowHeight += detailRowHeight;
             }
             this.update(i, currentRowHeight);

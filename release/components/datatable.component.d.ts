@@ -14,6 +14,7 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
     headerHeight: any;
     footerHeight: number;
     externalPaging: boolean;
+    externalSorting: boolean;
     limit: number;
     count: number;
     offset: number;
@@ -27,6 +28,7 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
     messages: any;
     rowIdentity: any;
     selectCheck: any;
+    trackByProp: string;
     scroll: EventEmitter<any>;
     activate: EventEmitter<any>;
     select: EventEmitter<any>;
@@ -56,10 +58,6 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
     constructor(renderer: Renderer, element: ElementRef);
     ngOnInit(): void;
     ngAfterViewInit(): void;
-    /**
-     * Refresh the table rows manually.
-     */
-    refresh(): void;
     /**
      * Toggle the expansion of the row
      *
