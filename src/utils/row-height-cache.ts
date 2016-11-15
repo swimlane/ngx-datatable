@@ -54,7 +54,7 @@ export class RowHeightCache {
 
       // Add the detail row height to the already expanded rows.
       // This is useful for the table that goes through a filter or sort.
-      if (rows[i].$$expanded === 1) {
+      if (rows[i] && rows[i].$$expanded === 1) {
         currentRowHeight += detailRowHeight;
       }
 
