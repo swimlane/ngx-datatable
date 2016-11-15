@@ -92,7 +92,7 @@ import { Component } from '@angular/core';
 
         <!-- Sorting -->
         <client-sorting-demo *ngIf="state === 'client-sorting'"></client-sorting-demo>
-        <client-sorting-demo *ngIf="state === 'server-sorting'"></client-sorting-demo>
+        <server-sorting-demo *ngIf="state === 'server-sorting'"></server-sorting-demo>
         <comparator-sorting-demo *ngIf="state === 'comparator-sorting'"></comparator-sorting-demo>
         
         <!-- Selection -->
