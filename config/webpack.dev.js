@@ -59,7 +59,7 @@ module.exports = function(env) {
       ]
     },
     plugins: [
-      new ForkCheckerPlugin(),
+      // new ForkCheckerPlugin(),
       new webpack.optimize.CommonsChunkPlugin({
         name: ['polyfills'],
         minChunks: Infinity
