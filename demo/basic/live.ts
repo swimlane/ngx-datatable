@@ -19,6 +19,7 @@ import { Component } from '@angular/core';
         [columnMode]="'force'"
         [footerHeight]="50"
         [rowHeight]="'auto'"
+        [trackByProp]="'updated'"
         [rows]="rows">
         <datatable-column name="Type" prop="Type"></datatable-column>
         <datatable-column name="Organization" prop="Organization"></datatable-column>
@@ -42,7 +43,10 @@ export class LiveDataComponent {
 
   constructor() {
     this.fetch((data) => {
-      this.rows = data;
+      this.rows = data.map(d => {
+        d.updated = Date.now().toString();
+        return d;
+      });
     });
 
     this.start();
@@ -69,7 +73,9 @@ export class LiveDataComponent {
     const prop = this.cols[cellNum];
 
     if(this.rows.length) {
-      this.rows[rowNum][prop] = this.rows[newRow][prop];
+      let row = this.rows[rowNum];
+      row[prop] = this.rows[newRow][prop];
+      row.updated = Date.now().toString();
     }
     
     this.start();

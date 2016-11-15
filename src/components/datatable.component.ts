@@ -40,6 +40,7 @@ import { scrollbarWidth, setColumnDefaults, translateTemplates } from '../utils'
         [rowHeight]="rowHeight"
         [rowCount]="rowCount"
         [offset]="offset"
+        [trackByProp]="trackByProp"
         [columns]="columns"
         [pageSize]="pageSize"
         [offsetX]="offsetX"
@@ -194,6 +195,10 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   // to select a particular row based on a criteria. Example:
   // (selection) => { return selection !== 'Ethel Price'; }
   @Input() selectCheck: any;
+
+  // Property to which you can use for custom tracking of rows
+  // Example: 'name'
+  @Input() trackByProp: string;
 
   @Output() scroll: EventEmitter<any> = new EventEmitter();
   @Output() activate: EventEmitter<any> = new EventEmitter();

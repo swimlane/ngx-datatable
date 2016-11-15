@@ -30,7 +30,7 @@ import { ScrollerComponent } from './scroller.component';
         [scrollWidth]="columnGroupWidths.total"
         (scroll)="onBodyScroll($event)">
         <datatable-row-wrapper 
-          *ngFor="let row of temp; let i = index; trackBy: row?.$$index"
+          *ngFor="let row of temp; let i = index; trackBy: rowTracking"
           [ngStyle]="getRowsStyles(row)"
           [rowDetailTemplate]="rowDetailTemplate"
           [detailRowHeight]="detailRowHeight"
@@ -71,6 +71,7 @@ export class DataTableBodyComponent {
   @Input() rowIdentity: any;
   @Input() rowDetailTemplate: any;
   @Input() selectCheck: any;
+  @Input() trackByProp: string;
 
   @Input() set pageSize(val: number) {
     this._pageSize = val;
@@ -184,6 +185,14 @@ export class DataTableBodyComponent {
   
   constructor(element: ElementRef, renderer: Renderer) {
     renderer.setElementClass(element.nativeElement, 'datatable-body', true);
+  }
+
+  rowTracking(index: number, row: any): any {
+    if(this.trackByProp) {
+      return `${row.$$index}-${this.trackByProp}`;
+    } else {
+      return row.$$index;
+    }
   }
 
   updateOffsetY(offset?: number): void {
