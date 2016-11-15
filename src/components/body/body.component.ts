@@ -30,7 +30,7 @@ import { ScrollerComponent } from './scroller.component';
         [scrollWidth]="columnGroupWidths.total"
         (scroll)="onBodyScroll($event)">
         <datatable-row-wrapper 
-          *ngFor="let row of temp; let i = index; trackBy: rowTracking"
+          *ngFor="let row of temp; let i = index; trackBy: rowTrackingFn"
           [ngStyle]="getRowsStyles(row)"
           [rowDetailTemplate]="rowDetailTemplate"
           [detailRowHeight]="detailRowHeight"
@@ -164,6 +164,7 @@ export class DataTableBodyComponent {
   private offsetY: number = 0;
   private indexes: any = {};
   private columnGroupWidths: any;
+  private rowTrackingFn: any;
 
   private _rows: any[];
   private _bodyHeight: any;
@@ -185,14 +186,15 @@ export class DataTableBodyComponent {
   
   constructor(element: ElementRef, renderer: Renderer) {
     renderer.setElementClass(element.nativeElement, 'datatable-body', true);
-  }
 
-  rowTracking(index: number, row: any): any {
-    if(this.trackByProp) {
-      return `${row.$$index}-${this.trackByProp}`;
-    } else {
-      return row.$$index;
-    }
+    // declare fn here so we can get access to the `this` property
+    this.rowTrackingFn = function(index: number, row: any): any {
+      if(this.trackByProp) {
+        return `${row.$$index}-${this.trackByProp}`;
+      } else {
+        return row.$$index;
+      }
+    }.bind(this);
   }
 
   updateOffsetY(offset?: number): void {

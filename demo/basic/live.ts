@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'live-data-demo',
@@ -31,7 +31,8 @@ import { Component } from '@angular/core';
         </datatable-column>
       </datatable>
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LiveDataComponent {
 
@@ -59,7 +60,7 @@ export class LiveDataComponent {
   start(): void {
     if(!this.active) return;
 
-    setTimeout(this.updateRandom.bind(this), 20);
+    setTimeout(this.updateRandom.bind(this), 100);
   }
 
   stop(): void {
@@ -67,17 +68,21 @@ export class LiveDataComponent {
   }
 
   updateRandom() {
-    const rowNum = this.randomNum(0, 4);
-    const cellNum = this.randomNum(0, 3);
+    const rowNum = this.randomNum(0, 5);
+    const cellNum = this.randomNum(0, 4);
     const newRow = this.randomNum(0, 100);
     const prop = this.cols[cellNum];
 
     if(this.rows.length) {
-      let row = this.rows[rowNum];
-      row[prop] = this.rows[newRow][prop];
+      let rows = [...this.rows];
+      
+      let row = rows[rowNum];
+      row[prop] = Date.now().toString(); // this.rows[newRow][prop];
       row.updated = Date.now().toString();
+
+      this.rows = rows;
     }
-    
+
     this.start();
   }
 

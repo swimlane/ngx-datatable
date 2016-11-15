@@ -300,13 +300,6 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Refresh the table rows manually.
-   */
-  refresh(): void {
-    this.bodyComponent.recalcLayout();
-  }
-
-  /**
    * Toggle the expansion of the row
    *
    * @param rowIndex
