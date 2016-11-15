@@ -9,7 +9,7 @@ const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin
 const commonConfig = require('./webpack.common');
 const { ENV, dir } = require('./helpers');
 
-module.exports = function(env) {
+module.exports = function(options) {
   return webpackMerge(commonConfig({ env: ENV }), {
     devtool: 'cheap-module-source-map',
     devServer: {
@@ -18,7 +18,7 @@ module.exports = function(env) {
         poll: true
       },
       port: 9999,
-      hot: false,
+      hot: options.HMR,
       stats: {
         modules: false,
         cached: false,
@@ -43,8 +43,8 @@ module.exports = function(env) {
         {
           test: /\.ts$/,
           loaders: [
-            'awesome-typescript-loader'
-            // '@angularclass/hmr-loader'
+            'awesome-typescript-loader',
+            '@angularclass/hmr-loader'
           ],
           exclude: [/\.(spec|e2e|d)\.ts$/]
         },
@@ -75,8 +75,8 @@ module.exports = function(env) {
       new ProgressBarPlugin({
         format: chalk.yellow.bold('Webpack Building...') + 
           ' [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)'
-      })
-      // new webpack.HotModuleReplacementPlugin()
+      }),
+      new webpack.HotModuleReplacementPlugin()
     ]
   });
 
