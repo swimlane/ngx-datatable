@@ -67,7 +67,7 @@ export class DataTableBodyComponent {
   @Input() detailRowHeight: any;
   @Input() emptyMessage: string;
   @Input() selectionType: SelectionType;
-  @Input() selected: any[];
+  @Input() selected: any[] = [];
   @Input() rowIdentity: any;
   @Input() rowDetailTemplate: any;
   @Input() selectCheck: any;
