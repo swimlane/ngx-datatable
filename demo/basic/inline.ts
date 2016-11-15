@@ -4,12 +4,7 @@ import { Component } from '@angular/core';
   selector: 'inline-edit-demo',
   template: `
     <div>
-      <h3>
-        Inline Editing
-        <small>
-          <a href="#" (click)="mydatatable.refresh()">Refresh</a>
-        </small>
-      </h3>
+      <h3>Inline Editing</h3>
       <datatable
         #mydatatable
         class="material"
@@ -23,14 +18,14 @@ import { Component } from '@angular/core';
           <template let-value="value" let-row="row">
             <span
               title="Double click to edit"
-              (dblclick)="editing[row.$$index] = true"
-              *ngIf="!editing[row.$$index]">
+              (dblclick)="editing[row.$$index + '-name'] = true"
+              *ngIf="!editing[row.$$index + '-name']">
               {{value}}
             </span>
             <input
               autofocus
               (blur)="updateValue($event, 'name', value, row)"
-              *ngIf="editing[row.$$index]"
+              *ngIf="editing[row.$$index + '-name']"
               type="text"
               [value]="value"
             />
@@ -38,7 +33,19 @@ import { Component } from '@angular/core';
         </datatable-column>
         <datatable-column name="Gender">
           <template let-row="row" let-value="value">
-            {{value}}
+             <span
+              title="Double click to edit"
+              (dblclick)="editing[row.$$index + '-gender'] = true"
+              *ngIf="!editing[row.$$index + '-gender']">
+              {{value}}
+            </span>
+            <select
+              *ngIf="editing[row.$$index + '-gender']"
+              (change)="updateValue($event, 'gender', value, row)"
+              [value]="value">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
           </template>
         </datatable-column>
         <datatable-column name="Age">
@@ -73,7 +80,7 @@ export class InlineEditComponent {
   }
 
   updateValue(event, cell, cellValue, row) {
-    this.editing[row.$$index] = false;
+    this.editing[row.$$index + '-' + cell] = false;
     this.rows[row.$$index][cell] = event.target.value;
   }
 
