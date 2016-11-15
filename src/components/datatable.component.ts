@@ -89,7 +89,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
 
   // Columns
   @Input() set columns(val: any[]) {
-    if(val) { 
+    if(val) {
       setColumnDefaults(val);
       this.recalculateColumns(val);
     }
@@ -129,9 +129,12 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   // The minimum footer height in pixels.
   // pass falsey for no footer
   @Input() footerHeight: number = 0;
-  
+
   // if external paging is turned on
   @Input() externalPaging: boolean = false;
+
+  // if external sorting is turned on
+  @Input() externalSorting: boolean = false;
 
   // Page size
   @Input() limit: number = undefined;
@@ -230,11 +233,11 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     return this.selectionType !== undefined;
   }
 
-  @ContentChildren(DataTableColumnDirective) 
+  @ContentChildren(DataTableColumnDirective)
   set columnTemplates(val: QueryList<DataTableColumnDirective>) {
     this._columnTemplates = val;
 
-    if(val) { 
+    if(val) {
       // only set this if results were brought back
       const arr = val.toArray();
 
@@ -249,7 +252,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     return this._columnTemplates;
   }
 
-  @ContentChild(DatatableRowDetailDirective) 
+  @ContentChild(DatatableRowDetailDirective)
   set rowDetailTemplateChild(val: DatatableRowDetailDirective) {
     this._rowDetailTemplateChild = val;
     if(val) this.rowDetailTemplate = val.rowDetailTemplate;
@@ -258,7 +261,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   get rowDetailTemplateChild(): DatatableRowDetailDirective {
     return this._rowDetailTemplateChild;
   }
-  
+
   offsetX: number = 0;
 
   @ViewChild(DataTableBodyComponent)
@@ -354,14 +357,14 @@ export class DatatableComponent implements OnInit, AfterViewInit {
       if (this.footerHeight) height = height - this.footerHeight;
       this.bodyHeight = height;
     }
-    
+
     this.pageSize = this.calcPageSize();
     this.rowCount = this.calcRowCount();
   }
 
   onBodyPage({ offset }): void {
     this.offset = offset;
-    
+
     this.page.emit({
       count: this.count,
       pageSize: this.pageSize,
@@ -392,13 +395,13 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     // This is because an expanded row is still considered to be a child of
     // the original row.  Hence calculation would use rowHeight only.
     if (this.scrollbarV) return Math.ceil(this.bodyHeight / this.rowHeight);
-    
+
     // if limit is passed, we are paging
     if (this.limit !== undefined) return this.limit;
 
     // otherwise use row length
     if(val) return val.length;
-    
+
     // other empty :(
     return 0;
   }
@@ -416,11 +419,11 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     let idx;
     let cols = this.columns.map((c, i) => {
       c = Object.assign({}, c);
-      
-      if(c.$$id === column.$$id) { 
+
+      if(c.$$id === column.$$id) {
         idx = i;
         c.width = newValue;
-        
+
         // set this so we can force the column
         // width distribution to be to this value
         c.$$oldWidth = newValue;
@@ -432,7 +435,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     this.recalculateColumns(cols, idx);
     this.columns = cols;
 
-    this.resize.emit({ 
+    this.resize.emit({
       column,
       newValue
     });
@@ -456,13 +459,14 @@ export class DatatableComponent implements OnInit, AfterViewInit {
 
   onColumnSort(event): void {
     const { column, sorts } = event;
-
-    if(column.comparator !== undefined) {
-      if(typeof column.comparator === 'function') {
-        column.comparator(this.rows, sorts);
+    if (this.externalSorting === false) {
+      if(column.comparator !== undefined) {
+        if(typeof column.comparator === 'function') {
+          column.comparator(this.rows, sorts);
+        }
+      } else {
+        this.rows = sortRows(this.rows, sorts);
       }
-    } else {
-      this.rows = sortRows(this.rows, sorts);
     }
 
     this.sorts = sorts;

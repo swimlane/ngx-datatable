@@ -13,6 +13,8 @@ import { Component } from '@angular/core';
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="'auto'"
+        [externalSorting]="true"
+        [loadingIndicator]="loading"
         (sort)="onSort($event)">
       </datatable>
     </div>
@@ -20,14 +22,16 @@ import { Component } from '@angular/core';
 })
 export class ServerSortingComponent {
 
+  loading: boolean = false;
+
   rows = [];
 
   columns = [
     // we pass false to bypass the default
     // comparator function and use the event to sort
-    { name: 'Company', comparator: false },
-    { name: 'Name', sortable: false },
-    { name: 'Gender', sortable: false }
+    { name: 'Company', sortable: true },
+    { name: 'Name', sortable: true },
+    { name: 'Gender', sortable: true }
   ];
 
   constructor() {
@@ -51,22 +55,21 @@ export class ServerSortingComponent {
   onSort(event) {
     // event was triggered, start sort sequence
     console.log('Sort Event', event);
-
+    this.loading = true;
     // emulate a server request with a timeout
     setTimeout(() => {
       let rows = [...this.rows];
-
       // this is only for demo purposes, normally
       // your server would return the result for
       // you and you would just set the rows prop
+      let sort = event.sorts[0];
       rows.sort((a, b) => {
-        if(a.name < b.name) return -1;
-        if(a.name > b.name) return 1;
-        return 0;
+        return a[sort.prop].localeCompare(b[sort.prop]) * (sort.dir === 'desc' ? -1 : 1);
       });
 
       this.rows = rows;
-    }, 300);
+      this.loading = false;
+    }, 1000);
   }
 
 }
