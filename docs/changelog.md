@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.5.0
+- Enhancement: `externalSorting` input for simpler server-sorting usage (#281)
+- Enhancement: Add `trackByProp` for change detection with mutation of row data
+- Bug: Row height variable access protection (#280)
+- Chore: Upgrade to Angular 2.2.0
+- Demo: Inline editing updates
+- Demo: Live data refresh demo
+- Breaking: Remove `refresh` method per recommendation by @robwormald
+
 ## 1.4.1
 - Bug: Ignore next page when already at last (#223)
 - Chore: Redid Webpack Config to be clean

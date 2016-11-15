@@ -5,7 +5,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   template: `
     <div>
       <h3>
-        Live Data Demo
+        Live Data Demo ( not working ATM )
         <small>
           <a href="#" (click)="start()">Start</a>
           <a href="#" (click)="stop()">Stop</a>
@@ -60,7 +60,7 @@ export class LiveDataComponent {
   start(): void {
     if(!this.active) return;
 
-    setTimeout(this.updateRandom.bind(this), 100);
+    setTimeout(this.updateRandom.bind(this), 50);
   }
 
   stop(): void {
@@ -74,13 +74,13 @@ export class LiveDataComponent {
     const prop = this.cols[cellNum];
 
     if(this.rows.length) {
-      let rows = [...this.rows];
+      // let rows = [...this.rows];
       
-      let row = rows[rowNum];
+      let row = this.rows[rowNum];
       row[prop] = Date.now().toString(); // this.rows[newRow][prop];
       row.updated = Date.now().toString();
 
-      this.rows = rows;
+      // this.rows = rows;
     }
 
     this.start();

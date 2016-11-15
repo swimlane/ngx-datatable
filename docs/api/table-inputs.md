@@ -105,3 +105,6 @@ to select a particular row based on a criteria. Example:
 ```
 (row, column, value) => { return value !== 'Ethel Price'; }
 ```
+
+## `trackByProp`
+A property on the row object that uniquely identifies the row. Example: `name`
