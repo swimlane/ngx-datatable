@@ -12,6 +12,9 @@ The total count of all rows. Default value: `0`
 ## `externalPaging`
 Should the table use external paging vs client-side. Default value: `false`
 
+## `externalSorting`
+Should the table use external sorting vs client-side. Default value: `false`
+
 ## `footerHeight`
 The height of the footer in pixels. Pass a `falsey` for no footer. Default value: `0`
 
