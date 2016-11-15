@@ -54,11 +54,11 @@
   },
   "homepage": "https://github.com/swimlane/angular2-data-table#readme",
   "peerDependencies": {
-    "@angular/common": "^2.1.1",
-    "@angular/compiler": "^2.1.1",
-    "@angular/core": "^2.1.1",
-    "@angular/platform-browser": "^2.1.1",
-    "@angular/platform-browser-dynamic": "^2.1.1",
+    "@angular/common": "^2.2.0",
+    "@angular/compiler": "^2.2.0",
+    "@angular/core": "^2.2.0",
+    "@angular/platform-browser": "^2.2.0",
+    "@angular/platform-browser-dynamic": "^2.2.0",
     "core-js": "^2.4.0"
   },
   "devDependencies": {
