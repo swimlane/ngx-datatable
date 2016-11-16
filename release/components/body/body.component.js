@@ -4,6 +4,7 @@ var utils_1 = require('../../utils');
 var scroller_component_1 = require('./scroller.component');
 var DataTableBodyComponent = (function () {
     function DataTableBodyComponent(element, renderer) {
+        this.selected = [];
         this.scroll = new core_1.EventEmitter();
         this.page = new core_1.EventEmitter();
         this.activate = new core_1.EventEmitter();

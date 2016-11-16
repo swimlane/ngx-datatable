@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"1.5.0" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"1.5.1" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -550,6 +550,7 @@ var types_1 = __webpack_require__("./src/types/index.ts");
 var scroller_component_1 = __webpack_require__("./src/components/body/scroller.component.ts");
 var DataTableBodyComponent = (function () {
     function DataTableBodyComponent(element, renderer) {
+        this.selected = [];
         this.scroll = new core_1.EventEmitter();
         this.page = new core_1.EventEmitter();
         this.activate = new core_1.EventEmitter();
@@ -1796,7 +1797,7 @@ var DatatableComponent = (function () {
         if (this.externalSorting === false) {
             if (column.comparator !== undefined) {
                 if (typeof column.comparator === 'function') {
-                    column.comparator(this.rows, sorts);
+                    this.rows = column.comparator(this.rows, sorts);
                 }
             }
             else {

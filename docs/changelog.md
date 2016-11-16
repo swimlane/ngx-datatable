@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.1
+- Bug: Custom comparator should return new array (#286)
+- Bug: Init selection to empty array (#285)
+
 ## 1.5.0
 - Enhancement: `externalSorting` input for simpler server-sorting usage (#281)
 - Enhancement: Add `trackByProp` for change detection with mutation of row data

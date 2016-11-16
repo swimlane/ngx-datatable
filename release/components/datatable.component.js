@@ -326,7 +326,7 @@ var DatatableComponent = (function () {
         if (this.externalSorting === false) {
             if (column.comparator !== undefined) {
                 if (typeof column.comparator === 'function') {
-                    column.comparator(this.rows, sorts);
+                    this.rows = column.comparator(this.rows, sorts);
                 }
             }
             else {
