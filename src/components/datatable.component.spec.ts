@@ -1,6 +1,6 @@
-import {TestBed, async} from "@angular/core/testing";
-import {DatatableComponent} from "./datatable.component";
-import {Angular2DataTableModule} from "../datatable.module";
+import {TestBed, async} from '@angular/core/testing';
+import {DatatableComponent} from './datatable.component';
+import {Angular2DataTableModule} from '../datatable.module';
 describe('Datatable component', () => {
 
   beforeEach(() => {
@@ -15,7 +15,7 @@ describe('Datatable component', () => {
 
   describe('When the column is sorted with a custom comparator', () => {
 
-    it('should return a new array', ()=> {
+    it('should return a new array', () => {
       let fixture = TestBed.createComponent(DatatableComponent);
       let initialRows = [
         { id: 1 },
@@ -31,7 +31,7 @@ describe('Datatable component', () => {
 
       fixture.componentInstance.onColumnSort({
         column: {
-          comparator: function (rows, sorts) {
+          comparator: (rows, sorts) => {
             let temp = [ ...rows ];
             return temp;
           }
