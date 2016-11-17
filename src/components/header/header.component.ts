@@ -113,9 +113,9 @@ export class DataTableHeaderComponent {
     });
   }
 
-  onColumnReordered({ prevIndex, newIndex, column }) {
+  onColumnReordered({ prevIndex, newIndex, model }) {
     this.reorder.emit({
-      column,
+      column: model,
       prevValue: prevIndex,
       newValue: newIndex
     });
