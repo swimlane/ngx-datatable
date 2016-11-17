@@ -80,6 +80,10 @@ export class DatatableComponent implements OnInit, AfterViewInit {
 
   // Rows
   @Input() set rows(val: any[]) {
+    if (!this.externalSorting) {
+      val = sortRows(val, this.columns, this.sorts);
+    }
+
     this._rows = val;
     this.recalculate();
   }
@@ -456,15 +460,12 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   }
 
   onColumnSort(event): void {
-    const { column, sorts } = event;
+    const { sorts } = event;
+    
+    // this could be optimized better since it will resort
+    // the rows again on the 'push' detection...
     if (this.externalSorting === false) {
-      if(column.comparator !== undefined) {
-        if(typeof column.comparator === 'function') {
-          this.rows = column.comparator(this.rows, sorts);
-        }
-      } else {
-        this.rows = sortRows(this.rows, sorts);
-      }
+      this.rows = sortRows(this.rows, this.columns, sorts);
     }
 
     this.sorts = sorts;

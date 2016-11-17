@@ -45,12 +45,12 @@ export class SortingComparatorComponent {
     req.send();
   }
 
-  companyComparator(event) {
-    console.log('Sorting Comparator', event);
-    
-    let reversed = [...this.rows];
-    reversed.reverse();
-    this.rows = reversed;
+  companyComparator(propA, propB) {
+    console.log('Sorting Comparator', propA, propB);
+
+    // Just a simple sort function comparisoins
+    if (propA.toLowerCase() < propB.toLowerCase()) return -1;
+    if (propA.toLowerCase() > propB.toLowerCase()) return 1;
   }
 
 }

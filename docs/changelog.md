@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.6.0
+- Bug: Column headers not re-ordering (#238)
+- Bug: Datatable doesn't sort data correctly when data changed (#284)
+- BREAKING: `comparator` now is a normal sort function arguments of `propA, propB`.
+
 ## 1.5.1
 - Bug: Custom comparator should return new array (#286)
 - Bug: Init selection to empty array (#285)
