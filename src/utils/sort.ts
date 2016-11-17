@@ -61,9 +61,10 @@ export function orderByComparator(a: any, b: any): number {
  * @param {any[]} dirs
  * @returns
  */
-export function sortRows(rows: any[], columns: any[], dirs: any[]) {
+export function sortRows(rows: any[], columns: any[], dirs: any[]): any[] {
   if(!rows || !dirs || !columns) return rows;
 
+  let temp = [...rows];
   let cols = columns.reduce((obj, col) => {
     if(col.comparator && typeof col.comparator === 'function') {
       obj[col.prop] = col.comparator;
@@ -71,7 +72,7 @@ export function sortRows(rows: any[], columns: any[], dirs: any[]) {
     return obj;
   }, {});
 
-  return [...rows].sort(function(a: any, b: any) {
+  return temp.sort(function(a: any, b: any) {
     for(const { prop, dir } of dirs) {
       const propA = deepValueGetter(a, prop);
       const propB = deepValueGetter(b, prop);
