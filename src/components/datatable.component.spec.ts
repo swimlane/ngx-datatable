@@ -31,9 +31,9 @@ describe('Datatable component', () => {
 
       fixture.componentInstance.onColumnSort({
         column: {
-          comparator: (rows, sorts) => {
-            let temp = [ ...rows ];
-            return temp;
+          comparator: (propA, propB) => {
+            if (propA.toLowerCase() < propB.toLowerCase()) return -1;
+            if (propA.toLowerCase() > propB.toLowerCase()) return 1;
           }
         }
       });
