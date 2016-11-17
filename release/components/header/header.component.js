@@ -61,9 +61,9 @@ var DataTableHeaderComponent = (function () {
         });
     };
     DataTableHeaderComponent.prototype.onColumnReordered = function (_a) {
-        var prevIndex = _a.prevIndex, newIndex = _a.newIndex, column = _a.column;
+        var prevIndex = _a.prevIndex, newIndex = _a.newIndex, model = _a.model;
         this.reorder.emit({
-            column: column,
+            column: model,
             prevValue: prevIndex,
             newValue: newIndex
         });

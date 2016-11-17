@@ -84,6 +84,9 @@ var DatatableComponent = (function () {
         },
         // Rows
         set: function (val) {
+            if (!this.externalSorting) {
+                val = utils_1.sortRows(val, this.columns, this.sorts);
+            }
             this._rows = val;
             this.recalculate();
         },
@@ -322,16 +325,11 @@ var DatatableComponent = (function () {
         });
     };
     DatatableComponent.prototype.onColumnSort = function (event) {
-        var column = event.column, sorts = event.sorts;
+        var sorts = event.sorts;
+        // this could be optimized better since it will resort
+        // the rows again on the 'push' detection...
         if (this.externalSorting === false) {
-            if (column.comparator !== undefined) {
-                if (typeof column.comparator === 'function') {
-                    this.rows = column.comparator(this.rows, sorts);
-                }
-            }
-            else {
-                this.rows = utils_1.sortRows(this.rows, sorts);
-            }
+            this.rows = utils_1.sortRows(this.rows, this.columns, sorts);
         }
         this.sorts = sorts;
         this.bodyComponent.updateOffsetY(0);

@@ -20,10 +20,10 @@ export declare class DataTableHeaderComponent {
     private readonly headerWidth;
     constructor(element: ElementRef, renderer: Renderer);
     onColumnResized(width: any, column: any): void;
-    onColumnReordered({prevIndex, newIndex, column}: {
+    onColumnReordered({prevIndex, newIndex, model}: {
         prevIndex: any;
         newIndex: any;
-        column: any;
+        model: any;
     }): void;
     onSort({column, prevValue, newValue}: {
         column: any;

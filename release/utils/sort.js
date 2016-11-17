@@ -65,20 +65,31 @@ function orderByComparator(a, b) {
 exports.orderByComparator = orderByComparator;
 /**
  * Sorts the rows
- * @param  {Array<any>}  rows
- * @param  {Array<Sort>} dirs
- * @return {Array<any>} results
+ *
+ * @export
+ * @param {any[]} rows
+ * @param {any[]} columns
+ * @param {any[]} dirs
+ * @returns
  */
-function sortRows(rows, dirs) {
-    var temp = rows.slice();
-    return temp.sort(function (a, b) {
+function sortRows(rows, columns, dirs) {
+    if (!rows || !dirs || !columns)
+        return rows;
+    var cols = columns.reduce(function (obj, col) {
+        if (col.comparator && typeof col.comparator === 'function') {
+            obj[col.prop] = col.comparator;
+        }
+        return obj;
+    }, {});
+    return rows.slice().sort(function (a, b) {
         for (var _i = 0, dirs_1 = dirs; _i < dirs_1.length; _i++) {
             var _a = dirs_1[_i], prop = _a.prop, dir = _a.dir;
             var propA = deep_getter_1.deepValueGetter(a, prop);
             var propB = deep_getter_1.deepValueGetter(b, prop);
+            var compareFn = cols[prop] || orderByComparator;
             var comparison = dir !== types_1.SortDirection.desc ?
-                orderByComparator(propA, propB) :
-                -orderByComparator(propA, propB);
+                compareFn(propA, propB) :
+                -compareFn(propA, propB);
             // Don't return 0 yet in case of needing to sort by next property
             if (comparison !== 0)
                 return comparison;
