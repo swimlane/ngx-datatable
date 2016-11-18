@@ -13,7 +13,6 @@ module.exports = function(options) {
   return webpackMerge(commonConfig({ env: ENV }), {
     devtool: 'cheap-module-source-map',
     devServer: {
-      outputPath: dir('dist'),
       watchOptions: {
         poll: true
       },
@@ -25,19 +24,23 @@ module.exports = function(options) {
         chunk: false
       }
     },
+    entry: {
+      'app': './demo/bootstrap.ts',
+      'polyfills': './demo/polyfills.ts'
+    },
     module: {
       exprContextCritical: false,
       rules: [
         {
           enforce: 'pre',
           test: /\.js$/,
-          loader: 'source-map',
+          loader: 'source-map-loader',
           exclude: /(node_modules)/
         },
         {
           enforce: 'pre',
           test: /\.ts$/,
-          loader: 'tslint',
+          loader: 'tslint-loader',
           exclude: /(node_modules|release|dist)/
         },
         {
@@ -50,11 +53,11 @@ module.exports = function(options) {
         },
         {
           test: /\.css/,
-          loader: 'style!css?sourceMap'
+          loader: 'style-loader!css-loader?sourceMap'
         },
         {
           test: /\.scss$/,
-          loader: 'style!css!postcss?sourceMap!sass?sourceMap'
+          loader: 'style-loader!css-loader!postcss-loader?sourceMap!sass-loader?sourceMap'
         }
       ]
     },

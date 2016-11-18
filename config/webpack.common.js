@@ -14,10 +14,6 @@ module.exports = function(options = {}) {
         dir('demo')
       ]
     },
-    entry: {
-      'app': './demo/bootstrap.ts',
-      'polyfills': './demo/polyfills.ts'
-    },
     output: {
       path: dir('dist'),
       filename: '[name].js',

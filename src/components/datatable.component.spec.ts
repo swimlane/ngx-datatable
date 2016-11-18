@@ -23,19 +23,25 @@ describe('Datatable component', () => {
         { id: 3 }
       ];
 
+      let columns = [
+        {
+          prop: 'foo',
+          comparator: (propA, propB) => {
+            if (propA.toLowerCase() > propB.toLowerCase()) return -1;
+            if (propA.toLowerCase() < propB.toLowerCase()) return 1;
+          }
+        }
+      ];
+
       fixture.componentInstance.rows = initialRows;
+      fixture.componentInstance.columns = columns;
 
       fixture.detectChanges();
 
       expect(fixture.componentInstance.rows).toBe(initialRows);
 
       fixture.componentInstance.onColumnSort({
-        column: {
-          comparator: (propA, propB) => {
-            if (propA.toLowerCase() < propB.toLowerCase()) return -1;
-            if (propA.toLowerCase() > propB.toLowerCase()) return 1;
-          }
-        }
+        sorts: [{ prop: 'foo', dir: 'desc' }]
       });
 
       fixture.componentInstance.sort

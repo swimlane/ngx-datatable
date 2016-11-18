@@ -70,7 +70,7 @@ export class LiveDataComponent {
   updateRandom() {
     const rowNum = this.randomNum(0, 5);
     const cellNum = this.randomNum(0, 4);
-    const newRow = this.randomNum(0, 100);
+    // const newRow = this.randomNum(0, 100);
     const prop = this.cols[cellNum];
 
     if(this.rows.length) {

@@ -9,13 +9,17 @@ const { ENV, dir } = require('./helpers');
 module.exports = function(env) {
   return webpackMerge(commonConfig({ env: ENV }), {
     devtool: 'source-map',
+    entry: {
+      'app': './demo/bootstrap.ts',
+      'polyfills': './demo/polyfills.ts'
+    },
     module: {
       exprContextCritical: false,
       rules: [
         {
           enforce: 'pre',
           test: /\.js$/,
-          loader: 'source-map',
+          loader: 'source-map-loader',
           exclude: /(node_modules)/
         },
         {
@@ -29,16 +33,16 @@ module.exports = function(env) {
           test: /\.css/,
           loader:
             ExtractTextPlugin.extract({
-              fallbackLoader: 'style',
-              loader:'css?sourceMap'
+              fallbackLoader: 'style-loader',
+              loader:'css-loader?sourceMap'
             })
         },
         {
           test: /\.scss$/,
           loader:
             ExtractTextPlugin.extract({
-              fallbackLoader: 'style',
-              loader: 'css?sourceMap!postcss?sourceMap!sass?sourceMap'
+              fallbackLoader: 'style-loader',
+              loader: 'css-loader?sourceMap!postcss-loader?sourceMap!sass-loader?sourceMap'
             })
         }
       ]
