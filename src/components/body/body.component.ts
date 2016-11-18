@@ -23,7 +23,7 @@ import { ScrollerComponent } from './scroller.component';
         *ngIf="loadingIndicator">
       </datatable-progress>
       <datatable-scroller
-        *ngIf="rows.length"
+        *ngIf="rows?.length"
         [scrollbarV]="scrollbarV"
         [scrollbarH]="scrollbarH"
         [scrollHeight]="scrollHeight"
@@ -50,7 +50,7 @@ import { ScrollerComponent } from './scroller.component';
       </datatable-scroller>
       <div
         class="empty-row"
-        *ngIf="!rows.length"
+        *ngIf="!rows?.length"
         [innerHTML]="emptyMessage">
       </div>
     </datatable-selection>

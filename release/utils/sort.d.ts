@@ -1,3 +1,4 @@
+
 import { SortType, SortDirection } from '../types';
 /**
  * Gets the next sort direction
@@ -16,11 +17,8 @@ export declare function nextSortDir(sortType: SortType, current: SortDirection):
 export declare function orderByComparator(a: any, b: any): number;
 /**
  * Sorts the rows
- *
- * @export
- * @param {any[]} rows
- * @param {any[]} columns
- * @param {any[]} dirs
- * @returns
+ * @param  {Array<any>}  rows
+ * @param  {Array<Sort>} dirs
+ * @return {Array<any>} results
  */
-export declare function sortRows(rows: any[], columns: any[], dirs: any[]): any[];
+export declare function sortRows(rows: Array<any>, dirs: any[]): any[];
