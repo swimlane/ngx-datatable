@@ -25,7 +25,7 @@ export class RxDemoComponent {
   columns = [
     { prop: 'Organization' },
     { prop: 'DateAdded' },
-    { name: 'Tags' }
+    { prop: 'Tags' }
   ];
 
   constructor() {
