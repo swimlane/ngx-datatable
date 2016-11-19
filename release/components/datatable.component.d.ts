@@ -1,9 +1,10 @@
-import { ElementRef, EventEmitter, OnInit, QueryList, AfterViewInit, Renderer, TemplateRef } from '@angular/core';
+import { ElementRef, EventEmitter, OnInit, QueryList, AfterViewInit, Renderer, TemplateRef, ChangeDetectorRef } from '@angular/core';
 import { ColumnMode, SortType, SelectionType } from '../types';
 import { DataTableColumnDirective } from './column.directive';
 import { DatatableRowDetailDirective } from './row-detail.directive';
 export declare class DatatableComponent implements OnInit, AfterViewInit {
-    rows: any[];
+    private cdr;
+    rows: any;
     columns: any[];
     selected: any[];
     scrollbarV: boolean;
@@ -55,7 +56,7 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
     private _columns;
     private _columnTemplates;
     private _rowDetailTemplateChild;
-    constructor(renderer: Renderer, element: ElementRef);
+    constructor(renderer: Renderer, element: ElementRef, cdr: ChangeDetectorRef);
     ngOnInit(): void;
     ngAfterViewInit(): void;
     /**

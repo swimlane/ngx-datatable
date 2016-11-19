@@ -75,13 +75,14 @@ exports.orderByComparator = orderByComparator;
 function sortRows(rows, columns, dirs) {
     if (!rows || !dirs || !columns)
         return rows;
+    var temp = rows.slice();
     var cols = columns.reduce(function (obj, col) {
         if (col.comparator && typeof col.comparator === 'function') {
             obj[col.prop] = col.comparator;
         }
         return obj;
     }, {});
-    return rows.slice().sort(function (a, b) {
+    return temp.sort(function (a, b) {
         for (var _i = 0, dirs_1 = dirs; _i < dirs_1.length; _i++) {
             var _a = dirs_1[_i], prop = _a.prop, dir = _a.dir;
             var propA = deep_getter_1.deepValueGetter(a, prop);
