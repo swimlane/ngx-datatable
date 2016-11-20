@@ -11,7 +11,7 @@ import {
 @Component({
   selector: 'datatable-pager',
   template: `
-    <ul class="pager">
+    <ul class="{{pagerClass}}">
       <li [class.disabled]="!canPrevious()">
         <a
           href="javascript:void(0)"
@@ -55,6 +55,7 @@ import {
 })
 export class DataTablePagerComponent {
 
+  @Input() pagerClass: string;
   @Input() pagerLeftArrowIcon: string;
   @Input() pagerRightArrowIcon: string;
   @Input() pagerPreviousIcon: string;

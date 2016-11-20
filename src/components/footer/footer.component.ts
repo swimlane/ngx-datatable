@@ -10,6 +10,7 @@ import {
       [style.height.px]="footerHeight">
       <div class="page-count">{{rowCount.toLocaleString()}} {{totalMessage}}</div>
       <datatable-pager
+        [pagerClass]="pagerClass"
         [pagerLeftArrowIcon]="pagerLeftArrowIcon"
         [pagerRightArrowIcon]="pagerRightArrowIcon"
         [pagerPreviousIcon]="pagerPreviousIcon"

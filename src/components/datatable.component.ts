@@ -68,6 +68,7 @@ import { scrollbarWidth, setColumnDefaults, translateTemplates } from '../utils'
         [offset]="offset"
         [footerHeight]="footerHeight"
         [totalMessage]="messages.totalMessage"
+        [pagerClass]="cssClasses.pagerClass"
         [pagerLeftArrowIcon]="cssClasses.pagerLeftArrow"
         [pagerRightArrowIcon]="cssClasses.pagerRightArrow"
         [pagerPreviousIcon]="cssClasses.pagerPrevious"
@@ -185,6 +186,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
 
   // css class overrides
   @Input() cssClasses: any = {
+    pagerClass: 'pager',
     sortAscending: 'icon-down',
     sortDescending: 'icon-up',
     pagerLeftArrow: 'icon-left',
