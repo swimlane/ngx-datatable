@@ -122,7 +122,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   }
 
   // Selected rows
-  @Input() selected: any[];
+  @Input() selected: any[] = [];
 
   // Enable vertical scrollbars
   @Input() scrollbarV: boolean = false;
