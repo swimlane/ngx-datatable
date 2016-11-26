@@ -1,5 +1,5 @@
 import {
-  Component, Input, ElementRef, Output, EventEmitter,
+  Component, Input, ElementRef, Output, EventEmitter, Renderer,
   OnInit, OnDestroy, ChangeDetectionStrategy, HostBinding
 } from '@angular/core';
 
@@ -29,8 +29,9 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   private prevScrollXPos: number = 0;
   private element: any;
   private parentElement: any;
+  private onScrollListener: Function;
   
-  constructor(element: ElementRef) {
+  constructor(element: ElementRef, private renderer: Renderer) {
     this.element = element.nativeElement;
     this.element.classList.add('datatable-scroll');
   }
@@ -39,13 +40,14 @@ export class ScrollerComponent implements OnInit, OnDestroy {
     // manual bind so we don't always listen
     if(this.scrollbarV || this.scrollbarH) {
       this.parentElement = this.element.parentElement.parentElement;
-      this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
+      this.onScrollListener = this.renderer.listen(
+        this.parentElement, 'scroll', this.onScrolled.bind(this));
     }
   }
 
   ngOnDestroy() {
     if(this.scrollbarV || this.scrollbarH) {
-      this.parentElement.removeEventListener('scroll');
+      this.onScrollListener();
     }
   }
 
