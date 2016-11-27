@@ -45,7 +45,7 @@ export class ScrollerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if(this.scrollbarV || this.scrollbarH) {
-      this.parentElement.removeEventListener('scroll');
+      this.parentElement.removeEventListener('scroll', this.onScrolled.bind(this));
     }
   }
 
