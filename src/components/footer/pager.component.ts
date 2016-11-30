@@ -27,6 +27,7 @@ import {
         </a>
       </li>
       <li
+        class="pages"
         *ngFor="let pg of pages"
         [class.active]="pg.number === page">
         <a
