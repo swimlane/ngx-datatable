@@ -4,12 +4,12 @@
  * @param  {number}  wait      wait duration
  * @param  {boolean} immediate wait or immediate executue
  */
-export function debounce(func: any, wait: number, immediate?: boolean) {
-  let timeout;
-  let args;
-  let context;
-  let timestamp;
-  let result;
+export function debounce(func: Function, wait: number, immediate?: boolean) {
+  let timeout: any;
+  let args: IArguments;
+  let context: any;
+  let timestamp: Date;
+  let result: any;
 
   return function() {
     context = this;
@@ -17,7 +17,7 @@ export function debounce(func: any, wait: number, immediate?: boolean) {
     timestamp = new Date();
 
     function later() {
-      const last = +new Date() - timestamp;
+      const last = +new Date() - +timestamp;
 
       if (last < wait) {
         timeout = setTimeout(later, wait - last);
@@ -51,7 +51,7 @@ export function debounce(func: any, wait: number, immediate?: boolean) {
  *  }
  */
 export function debounceable (duration: number, immediate?: boolean) {
-  return function innerDecorator (target, key, descriptor) {
+  return function innerDecorator (target: Function, key: string, descriptor: any) {
     return {
       configurable: true,
       enumerable: descriptor.enumerable,

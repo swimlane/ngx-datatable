@@ -9,7 +9,7 @@ const hasCSS3DTransforms = !!getVendorPrefixedName('perspective');
 const ua = window.navigator.userAgent;
 const isSafari = (/Safari\//).test(ua) && !(/Chrome\//).test(ua);
 
-export function translateXY(styles, x, y) {
+export function translateXY(styles: any, x: number, y: number) {
   if (hasCSSTransforms) {
     if (!isSafari && hasCSS3DTransforms) {
       styles[transform] = `translate3d(${x}px, ${y}px, 0)`;

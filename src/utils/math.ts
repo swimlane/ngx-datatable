@@ -4,7 +4,7 @@ import { columnsByPin, columnsTotalWidth } from './column';
  * Calculates the Total Flex Grow
  * @param {array}
  */
-export function getTotalFlexGrow(columns) {
+export function getTotalFlexGrow(columns: any[]) {
   let totalFlexGrow = 0;
 
   for (let c of columns) {
@@ -98,9 +98,9 @@ function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
  * @param {int} expectedWidth
  */
 export function forceFillColumnWidths(
-  allColumns: any[], 
-  expectedWidth: number, 
-  startIdx: number, 
+  allColumns: any[],
+  expectedWidth: number,
+  startIdx: number,
   defaultColWidth: number = 300) {
 
   let columnsToResize = startIdx > -1 ?
@@ -112,7 +112,7 @@ export function forceFillColumnWidths(
       column.$$oldWidth = column.width;
     }
 
-    // Initialize the starting width to original 
+    // Initialize the starting width to original
     // width whenever there is a resize/initialize event.
     column.width = column.$$oldWidth;
   }
@@ -121,7 +121,7 @@ export function forceFillColumnWidths(
   let exceedsWindow = false;
   let contentWidth = getContentWidth(allColumns, defaultColWidth);
   let remainingWidth = expectedWidth - contentWidth;
-  let columnsProcessed = [];
+  let columnsProcessed: any[] = [];
 
   // This loop takes care of the
   do {
@@ -157,7 +157,7 @@ export function forceFillColumnWidths(
  * @param columnsToResize  Array containing the columns that need to be resized.
  * @param columnsProcessed Array containing the columns that have already been processed.
  */
-function removeProcessedColumns ( columnsToResize, columnsProcessed) {
+function removeProcessedColumns ( columnsToResize: any[], columnsProcessed: any[]) {
   for(let column of columnsProcessed) {
     const index = columnsToResize.indexOf(column);
     columnsToResize.splice(index, 1);
@@ -166,7 +166,7 @@ function removeProcessedColumns ( columnsToResize, columnsProcessed) {
 
 /**
  * Gets the width of the columns
- * 
+ *
  * @param {array} allColumns
  * @param {number} [defaultColWidth=300]
  * @returns {number}
