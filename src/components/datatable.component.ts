@@ -57,6 +57,7 @@ import { scrollbarWidth, setColumnDefaults, translateTemplates } from '../utils'
         [selectCheck]="selectCheck"
         (page)="onBodyPage($event)"
         (activate)="activate.emit($event)"
+        (rowContextmenu)="rowContextmenu.emit($event)"
         (select)="select.emit($event)"
         (detailToggle)="detailToggle.emit($event)"
         (scroll)="onBodyScroll($event)">
@@ -227,6 +228,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   @Output() detailToggle: EventEmitter<any> = new EventEmitter();
   @Output() reorder: EventEmitter<any> = new EventEmitter();
   @Output() resize: EventEmitter<any> = new EventEmitter();
+  @Output() rowContextmenu = new EventEmitter<{event: MouseEvent, row: any}>(false);
 
   @HostBinding('class.fixed-header')
   get isFixedHeader() {

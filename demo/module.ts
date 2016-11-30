@@ -20,6 +20,7 @@ import { FilterBarComponent } from './basic/filter';
 import { TabsDemoComponent } from './basic/tabs';
 import { LiveDataComponent } from './basic/live';
 import { RxDemoComponent } from './basic/rx';
+import { ContextMenuDemoComponent } from './basic/contextmenu';
 
 // -- Paging
 import { ClientPagingComponent } from './paging/paging-client';
@@ -79,7 +80,8 @@ import { ColumnPinningComponent } from './columns/pinning';
     LiveDataComponent,
     MultiShiftSelectionComponent,
     MultiDisableSelectionComponent,
-    RxDemoComponent
+    RxDemoComponent,
+    ContextMenuDemoComponent
   ],
   imports: [BrowserModule, Angular2DataTableModule],
   bootstrap: [AppComponent]
