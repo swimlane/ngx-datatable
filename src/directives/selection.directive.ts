@@ -161,7 +161,7 @@ export class SelectionDirective {
     this.selectionChange.emit( this.selection );
   }
 
-  private getSelectedIdx(row): number {
+  private getSelectedIdx(row: Row): number {
     const rowId = this.rowIdentity(row);
     return this.selected.findIndex( s => this.rowIdentity(s) === rowId);
   }

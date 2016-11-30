@@ -1,10 +1,9 @@
-import { EventEmitter, ElementRef, Renderer, OnDestroy } from '@angular/core';
+import { ElementRef, Renderer, OnDestroy } from '@angular/core';
 export declare class DataTableBodyCellComponent implements OnDestroy {
     row: any;
     column: any;
     rowHeight: number;
     sorts: any[];
-    activate: EventEmitter<any>;
     isFocused: boolean;
     readonly isSortActive: boolean;
     readonly isSortAscending: boolean;

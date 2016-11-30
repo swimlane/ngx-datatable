@@ -1,10 +1,10 @@
 import {
   Component, Input, PipeTransform, HostBinding,
-  Output, EventEmitter, HostListener, ElementRef,
+   HostListener, ElementRef,
   Renderer, ChangeDetectionStrategy, OnDestroy
 } from '@angular/core';
 
-import { deepValueGetter, Keys } from '../../utils';
+import { deepValueGetter } from '../../utils';
 import { SortDirection } from '../../types';
 
 @Component({
@@ -80,8 +80,6 @@ export class DataTableBodyCellComponent implements OnDestroy {
   private element: any;
   private _sorts: any[];
 
-  private unsub: Function = () => {};
-
   constructor(elementRef: ElementRef, renderer: Renderer) {
     let el = this.element = elementRef.nativeElement;
     renderer.setElementClass(el, 'datatable-body-cell', true);
@@ -107,12 +105,12 @@ export class DataTableBodyCellComponent implements OnDestroy {
   }
 
   @HostListener('focus', ['$event'])
-  onFocus(event): void {
+  onFocus(event: Event): void {
     this.isFocused = true;
   }
 
   @HostListener('blur', ['$event'])
-  onBlur(event): void {
+  onBlur(event: Event): void {
     this.isFocused = false;
   }
 
@@ -127,7 +125,9 @@ export class DataTableBodyCellComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.unsub();
+    // this.unsub();
   }
 
+  // linter take this as a function instead of a property
+  // private unsub: Function = () => {};
 }
