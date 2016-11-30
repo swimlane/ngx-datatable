@@ -98,13 +98,13 @@ function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
  * @param {int} expectedWidth
  */
 export function forceFillColumnWidths(
-  allColumns: any[], 
-  expectedWidth: number, 
-  startIdx: number, 
+  allColumns: any[],
+  expectedWidth: number,
+  startIdx: number,
   defaultColWidth: number = 300) {
 
-  let columnsToResize = startIdx > -1 ?
-    allColumns.slice(startIdx, allColumns.length).filter((c) => { return c.canAutoResize !== false; }) :
+  let columnsToResize = startIdx > -1 && startIdx + 1 < allColumns.length ?
+    allColumns.slice(startIdx + 1, allColumns.length).filter((c) => { return c.canAutoResize !== false; }) :
     allColumns.filter((c) => { return c.canAutoResize !== false; });
 
   for (let column of columnsToResize) {
@@ -112,7 +112,7 @@ export function forceFillColumnWidths(
       column.$$oldWidth = column.width;
     }
 
-    // Initialize the starting width to original 
+    // Initialize the starting width to original
     // width whenever there is a resize/initialize event.
     column.width = column.$$oldWidth;
   }
@@ -166,7 +166,7 @@ function removeProcessedColumns ( columnsToResize, columnsProcessed) {
 
 /**
  * Gets the width of the columns
- * 
+ *
  * @param {array} allColumns
  * @param {number} [defaultColWidth=300]
  * @returns {number}

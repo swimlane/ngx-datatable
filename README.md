@@ -34,7 +34,7 @@ Check out the [documentation](https://swimlane.gitbooks.io/angular2-data-table/)
 ## Installation
 To use angular2-data-table in your project install it via [npm](https://www.npmjs.com/package/angular2-data-table):
 ```
-npm install --save angular2-data-table
+npm i angular2-data-table -S
 ```
 
 ## Credits

@@ -423,7 +423,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     });
 
     this.recalculateColumns(cols, idx);
-    this.columns = cols;
+    this._columns = cols;
 
     this.resize.emit({
       column,
@@ -449,7 +449,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
 
   onColumnSort(event): void {
     const { sorts } = event;
-    
+
     // this could be optimized better since it will resort
     // the rows again on the 'push' detection...
     if (this.externalSorting === false) {
