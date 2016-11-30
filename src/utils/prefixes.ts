@@ -18,7 +18,7 @@ const prefix = (function () {
   };
 })();
 
-export function getVendorPrefixedName(property) {
+export function getVendorPrefixedName(property: string) {
   const name = camelCase(property);
 
   if(!cache[name]) {

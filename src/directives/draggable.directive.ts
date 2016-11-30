@@ -35,7 +35,7 @@ export class DraggableDirective {
   }
 
   @HostListener('document:mouseup', ['$event'])
-  onMouseup(event) {
+  onMouseup(event: MouseEvent) {
     this.isDragging = false;
     this.element.classList.remove('dragging');
 
@@ -50,14 +50,14 @@ export class DraggableDirective {
   }
 
   @HostListener('mousedown', ['$event'])
-  onMousedown(event) {
-    if (event.target.classList.contains('draggable')) {
+  onMousedown(event: MouseEvent) {
+    if ( (<HTMLElement>event.target).classList.contains('draggable')) {
       event.preventDefault();
       this.isDragging = true;
 
       const mouseDownPos = { x: event.clientX, y: event.clientY };
       this.subscription = Observable.fromEvent(document, 'mousemove')
-        .subscribe((ev) => this.move(ev, mouseDownPos));
+        .subscribe((ev: MouseEvent) => this.move(ev, mouseDownPos));
 
       this.dragStart.emit({
         event,
@@ -67,7 +67,7 @@ export class DraggableDirective {
     }
   }
 
-  move(event, mouseDownPos): void {
+  move(event: MouseEvent, mouseDownPos: {x: number, y:number}): void {
     if (!this.dragging) return;
 
     const x = event.clientX - mouseDownPos.x;

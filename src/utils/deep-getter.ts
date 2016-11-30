@@ -3,7 +3,7 @@
  * @param {object} obj
  * @param {string} path
  */
-export function deepValueGetter(obj, path) {
+export function deepValueGetter(obj: Object, path: string) {
   if(!obj || !path) return obj;
 
   let current = obj;
@@ -12,7 +12,7 @@ export function deepValueGetter(obj, path) {
   if(split.length) {
     for(let i = 0, len = split.length; i < len; i++) {
       current = current[split[i]];
-      
+
       // if found undefined, return empty string
       if(current === undefined || current === null) return '';
     }

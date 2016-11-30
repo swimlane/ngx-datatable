@@ -33,12 +33,12 @@ export class OrderableDirective {
       d.dragEnd.unsubscribe();
     });
   }
-  
+
   updateSubscriptions() {
     const diffs = this.differ.diff(this.draggables.toArray());
 
     if(diffs) {
-      const subscribe = ({ currentValue, previousValue }) => {
+      const subscribe = ({ currentValue, previousValue }: any) => {
         unsubscribe({ previousValue });
 
         if(currentValue) {
@@ -47,7 +47,7 @@ export class OrderableDirective {
         }
       };
 
-      const unsubscribe = ({ previousValue }) => {
+      const unsubscribe = ({ previousValue }: any) => {
         if(previousValue) {
           previousValue.dragStart.unsubscribe();
           previousValue.dragEnd.unsubscribe();
@@ -73,7 +73,7 @@ export class OrderableDirective {
     }
   }
 
-  onDragEnd({ element, model }) {
+  onDragEnd({ element, model }: any) {
     const newPos = parseInt(element.offsetLeft.toString(), 0);
     const prevPos = this.positions[model.prop];
 

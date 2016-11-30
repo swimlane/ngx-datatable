@@ -2,6 +2,15 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
 import { Keys, selectRows, selectRowsBetween } from '../../utils';
 import { SelectionType } from '../../types';
 
+export interface Model {
+  type: string;
+  event: MouseEvent | KeyboardEvent;
+  row: any;
+  rowElement: any;
+  cellElement: any;
+  cellIndex: number;
+}
+
 @Component({
   selector: 'datatable-selection',
   template: `
@@ -23,12 +32,12 @@ export class DataTableSelectionComponent {
 
   private prevIndex: number;
 
-  selectRow(event, index, row): void {
+  selectRow(event: KeyboardEvent | MouseEvent, index: number, row: any): void {
     if (!this.selectEnabled) return;
 
     const multiShift = this.selectionType === SelectionType.multiShift;
     const multiClick = this.selectionType === SelectionType.multi;
-    let selected = [];
+    let selected: any[] = [];
 
     if (multiShift || multiClick) {
       if (multiShift && event.shiftKey) {
@@ -51,38 +60,37 @@ export class DataTableSelectionComponent {
 
     this.selected = selected;
     this.prevIndex = index;
-    
+
     this.select.emit({
       selected
     });
   }
 
-  onActivate(model, index): void {
+  onActivate(model: Model, index: number): void {
     const { type, event, row } = model;
 
     if(type === 'click' || type === 'dblclick') {
       this.selectRow(event, index, row);
     } else if(type === 'keydown') {
-      if (event.keyCode === Keys.return) {
+      if ((<KeyboardEvent>event).keyCode === Keys.return) {
         this.selectRow(event, index, row);
       } else {
         this.onKeyboardFocus(model);
       }
     }
-    
     this.activate.emit(model);
   }
 
-  onKeyboardFocus(model): void {
-    const { keyCode } = model.event;
-    const shouldFocus = 
-      keyCode === Keys.up || 
+  onKeyboardFocus(model: Model): void {
+    const { keyCode } = <KeyboardEvent>model.event;
+    const shouldFocus =
+      keyCode === Keys.up ||
       keyCode === Keys.down ||
       keyCode === Keys.right ||
       keyCode === Keys.left;
 
     if(shouldFocus) {
-      const isCellSelection = 
+      const isCellSelection =
         this.selectionType === SelectionType.cell;
 
       if(!model.cellElement || !isCellSelection) {
@@ -102,7 +110,7 @@ export class DataTableSelectionComponent {
     const parentElement = rowElement.parentElement;
 
     if(parentElement) {
-      let focusElement;
+      let focusElement: HTMLElement;
       if(keyCode === Keys.up) {
         focusElement = parentElement.previousElementSibling;
       } else if(keyCode === Keys.down) {
@@ -116,7 +124,7 @@ export class DataTableSelectionComponent {
   }
 
   focusCell(cellElement: any, rowElement: any, keyCode: number, cellIndex: number): void {
-    let nextCellElement;
+    let nextCellElement: HTMLElement;
 
     if(keyCode === Keys.left) {
       nextCellElement = cellElement.previousElementSibling;
@@ -133,7 +141,7 @@ export class DataTableSelectionComponent {
     if(nextCellElement) nextCellElement.focus();
   }
 
-  getRowSelected(row): boolean {
+  getRowSelected(row: any): boolean {
     return this.getRowSelectedIdx(row, this.selected) > -1;
   }
 
