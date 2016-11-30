@@ -87,18 +87,18 @@ export class DataTableBodyCellComponent {
     renderer.setElementClass(this.element, 'datatable-body-cell', true);
   }
 
-  @HostListener('focus', ['$event'])
-  onFocus(event): void {
+  @HostListener('focus')
+  onFocus(): void {
     this.isFocused = true;
   }
 
-  @HostListener('blur', ['$event'])
-  onBlur(event): void {
+  @HostListener('blur')
+  onBlur(): void {
     this.isFocused = false;
   }
 
   @HostListener('click', ['$event'])
-  onClick(event): void {
+  onClick(event: MouseEvent): void {
     this.activate.emit({
       type: 'click',
       event,
@@ -110,7 +110,7 @@ export class DataTableBodyCellComponent {
   }
 
   @HostListener('dblclick', ['$event'])
-  onDblClick(event): void {
+  onDblClick(event: MouseEvent): void {
     this.activate.emit({
       type: 'dblclick',
       event,
@@ -122,11 +122,11 @@ export class DataTableBodyCellComponent {
   }
 
   @HostListener('keydown', ['$event'])
-  onKeyDown(event): void {
+  onKeyDown(event: KeyboardEvent): void {
     const keyCode = event.keyCode;
     const isTargetCell = event.target === this.element;
-    
-    const isAction = 
+
+    const isAction =
       keyCode === Keys.return ||
       keyCode === Keys.down ||
       keyCode === Keys.up ||
@@ -148,14 +148,13 @@ export class DataTableBodyCellComponent {
     }
   }
 
-  calcSortDir(sorts): any {
+  calcSortDir(sorts: any[]): any {
     if(!sorts) return;
 
-    const sort = sorts.find(s => {
+    const sort = sorts.find((s: any) => {
       return s.prop === this.column.prop;
     });
 
     if(sort) return sort.dir;
   }
-  
 }

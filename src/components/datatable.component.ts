@@ -209,7 +209,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   // This will be used when displaying or selecting rows:
   // when tracking/comparing them, we'll use the value of this fn,
   // (`fn(x) === fn(y)` instead of `x === y`)
-  @Input() rowIdentity: any = ((x) => x);
+  @Input() rowIdentity: (x: any) => any = ((x: any) => x);
 
   // A boolean/function you can use to check whether you want
   // to select a particular row based on a criteria. Example:
@@ -381,7 +381,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     this.rowCount = this.calcRowCount();
   }
 
-  onBodyPage({ offset }): void {
+  onBodyPage({ offset }: any): void {
     this.offset = offset;
 
     this.page.emit({
@@ -392,12 +392,12 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     });
   }
 
-  onBodyScroll(event): void {
+  onBodyScroll(event: MouseEvent): void {
     this.offsetX = event.offsetX;
     this.scroll.emit(event);
   }
 
-  onFooterPage(event) {
+  onFooterPage(event: any) {
     this.offset = event.page - 1;
     this.bodyComponent.updateOffsetY(this.offset);
 
@@ -434,8 +434,8 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     return this.count;
   }
 
-  onColumnResize({ column, newValue }): void {
-    let idx;
+  onColumnResize({ column, newValue }: any): void {
+    let idx: number;
     let cols = this.columns.map((c, i) => {
       c = Object.assign({}, c);
 
@@ -460,7 +460,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     });
   }
 
-  onColumnReorder({ column, newValue, prevValue }): void {
+  onColumnReorder({ column, newValue, prevValue }: any): void {
     let cols = this.columns.map(c => {
       return Object.assign({}, c);
     });
@@ -476,7 +476,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     });
   }
 
-  onColumnSort(event): void {
+  onColumnSort(event: any): void {
     const { sorts } = event;
 
     // this could be optimized better since it will resort

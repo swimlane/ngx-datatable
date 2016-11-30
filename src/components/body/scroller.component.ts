@@ -30,7 +30,7 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   private element: any;
   private parentElement: any;
   private onScrollListener: Function;
-  
+
   constructor(element: ElementRef, private renderer: Renderer) {
     this.element = element.nativeElement;
     this.element.classList.add('datatable-scroll');
@@ -57,8 +57,8 @@ export class ScrollerComponent implements OnInit, OnDestroy {
     }
   }
 
-  onScrolled(event) {
-    const dom = event.currentTarget;
+  onScrolled(event: MouseEvent) {
+    const dom: Element = <Element>event.currentTarget;
     this.scrollYPos = dom.scrollTop;
     this.scrollXPos = dom.scrollLeft;
 
@@ -66,7 +66,7 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   }
 
   updateOffset() {
-    let direction;
+    let direction: string;
     if(this.scrollYPos < this.prevScrollYPos) {
       direction = 'down';
     } else if(this.scrollYPos > this.prevScrollYPos) {

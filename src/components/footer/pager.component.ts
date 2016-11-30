@@ -134,7 +134,7 @@ export class DataTablePagerComponent {
   }
 
   calcPages(page?: number): any[] {
-    let pages = [];
+    let pages: {number: number, text: string}[] = [];
     let startPage = 1;
     let endPage = this.totalPages;
     let maxSize = 5;
@@ -150,7 +150,7 @@ export class DataTablePagerComponent {
     for (let num = startPage; num <= endPage; num++) {
       pages.push({
         number: num,
-        text: num
+        text: <string><any>num
       });
     }
 

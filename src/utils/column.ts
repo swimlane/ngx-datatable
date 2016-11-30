@@ -2,8 +2,8 @@
  * Returns the columns by pin.
  * @param {array} cols
  */
-export function columnsByPin(cols) {
-  let ret = {
+export function columnsByPin(cols: any[]) {
+  let ret: {left: any, center: any, right: any} = {
     left: [],
     center: [],
     right: []
@@ -29,7 +29,7 @@ export function columnsByPin(cols) {
  * @param {object} groups
  * @param {array} all
  */
-export function columnGroupWidths(groups, all) {
+export function columnGroupWidths(groups: any, all: any) {
   return {
     left: columnTotalWidth(groups.left),
     center: columnTotalWidth(groups.center),
@@ -43,7 +43,7 @@ export function columnGroupWidths(groups, all) {
  * @param {array} columns
  * @param {string} prop width to get
  */
-export function columnTotalWidth(columns, prop?) {
+export function columnTotalWidth(columns: any[], prop?: string) {
   let totalWidth = 0;
 
   if(columns) {
@@ -73,8 +73,8 @@ export function columnsTotalWidth(columns: any, prop?: any) {
   return totalWidth;
 }
 
-export function columnsByPinArr(val) {
-  let colsByPinArr = [];
+export function columnsByPinArr(val: any) {
+  let colsByPinArr: {type: string, columns: any}[] = [];
   const colsByPin = columnsByPin(val);
 
   colsByPinArr.push({ type: 'left', columns: colsByPin['left'] });

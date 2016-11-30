@@ -4,7 +4,7 @@ import { columnsByPin, columnsTotalWidth } from './column';
  * Calculates the Total Flex Grow
  * @param {array}
  */
-export function getTotalFlexGrow(columns) {
+export function getTotalFlexGrow(columns: any[]) {
   let totalFlexGrow = 0;
 
   for (let c of columns) {
@@ -121,7 +121,7 @@ export function forceFillColumnWidths(
   let exceedsWindow = false;
   let contentWidth = getContentWidth(allColumns, defaultColWidth);
   let remainingWidth = expectedWidth - contentWidth;
-  let columnsProcessed = [];
+  let columnsProcessed: any[] = [];
 
   // This loop takes care of the
   do {
@@ -157,7 +157,7 @@ export function forceFillColumnWidths(
  * @param columnsToResize  Array containing the columns that need to be resized.
  * @param columnsProcessed Array containing the columns that have already been processed.
  */
-function removeProcessedColumns ( columnsToResize, columnsProcessed) {
+function removeProcessedColumns ( columnsToResize: any[], columnsProcessed: any[]) {
   for(let column of columnsProcessed) {
     const index = columnsToResize.indexOf(column);
     columnsToResize.splice(index, 1);
