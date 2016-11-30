@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'virtual-scroll-demo',
   template: `
     <div>
-      <h3>Virtual Scrolling with 100k Rows</h3>
+      <h3>Virtual Scrolling with 10k Rows</h3>
       <datatable
         class='material'
         [rows]='rows'

@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
             <ul>
               <li><a href="#" (click)="state=''">Auto Row Height</a></li>
               <li><a href="#" (click)="state='basic-fixed'">Fixed Row Height</a></li>
-              <li><a href="#" (click)="state='virtual-scroll'">100k Rows</a></li>
+              <li><a href="#" (click)="state='virtual-scroll'">10k Rows</a></li>
               <li><a href="#" (click)="state='full-screen'">Full Screen</a></li>
               <li><a href="#" (click)="state='inline-edit'">Inline Editing</a></li>
               <li><a href="#" (click)="state='horz-vert-scrolling'">Horz/Vert Scrolling</a></li>
