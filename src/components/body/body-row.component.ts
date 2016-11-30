@@ -1,6 +1,6 @@
 import {
   Component, Input, HostBinding, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef,
-  Renderer, Output, EventEmitter , HostListener, Optional, OnDestroy
+  Renderer, Optional, OnDestroy
 } from '@angular/core';
 
 import { Subscription } from 'rxjs';
@@ -29,7 +29,7 @@ import { SelectionDirective } from '../../directives/selection.directive';
     </div>
   `,
   host: {
-    'class': 'datatable-body-row'
+    class: 'datatable-body-row'
   },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -81,7 +81,10 @@ export class DataTableBodyRowComponent implements OnDestroy {
   private unlistens: Function[] = [];
   private unsub = Subscription.EMPTY;
 
-  constructor(element: ElementRef, renderer: Renderer, private cdr: ChangeDetectorRef, /*@Host()*/ @Optional() private selection: SelectionDirective) {
+  constructor(element: ElementRef,
+              renderer: Renderer,
+              private cdr: ChangeDetectorRef, /*@Host()*/ @Optional()
+              private selection: SelectionDirective) {
     this.element = element.nativeElement;
 
     if(selection) {
@@ -146,7 +149,7 @@ export class DataTableBodyRowComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.unlistens.forEach( f => { f() } );
+    this.unlistens.forEach( f => { f(); } );
     this.unsub.unsubscribe();
   }
 
