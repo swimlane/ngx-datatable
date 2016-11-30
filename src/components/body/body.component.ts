@@ -35,7 +35,8 @@ import { ScrollerComponent } from './scroller.component';
           [rowDetailTemplate]="rowDetailTemplate"
           [detailRowHeight]="detailRowHeight"
           [row]="row"
-          [expanded]="row.$$expanded === 1">
+          [expanded]="row.$$expanded === 1"
+          (rowContextmenu)="rowContextmenu.emit($event)">
           <datatable-body-row
             tabindex="-1"
             [isSelected]="selector.getRowSelected(row)"
@@ -152,6 +153,7 @@ export class DataTableBodyComponent {
   @Output() activate: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
   @Output() detailToggle: EventEmitter<any> = new EventEmitter();
+  @Output() rowContextmenu = new EventEmitter<{event: MouseEvent, row: any}>(false);
 
   @ViewChild(ScrollerComponent) scroller: ScrollerComponent;
 
