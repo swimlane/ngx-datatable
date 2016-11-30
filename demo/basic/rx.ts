@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Rx';
   selector: 'rx-demo',
   template: `
     <div>
-      <h3>Fix Row Height</h3>
+      <h3>RXjs Data</h3>
       <datatable
         class="material striped"
         [rows]="rows"
