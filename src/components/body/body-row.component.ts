@@ -1,12 +1,16 @@
-import { 
-  Component, Input, HostBinding, ElementRef, ChangeDetectionStrategy,
-  Renderer, Output, EventEmitter , HostListener
+import {
+  Component, Input, HostBinding, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef,
+  Renderer, Optional, OnDestroy
 } from '@angular/core';
 
-import { 
-  columnsByPin, columnGroupWidths, columnsByPinArr, 
+import { Subscription } from 'rxjs';
+
+import {
+  columnsByPin, columnGroupWidths, columnsByPinArr,
   translateXY, Keys, scrollbarWidth
 } from '../../utils';
+
+import { SelectionDirective } from '../../directives/selection.directive';
 
 @Component({
   selector: 'datatable-body-row',
@@ -20,22 +24,24 @@ import {
         tabindex="-1"
         [row]="row"
         [column]="column"
-        [rowHeight]="rowHeight"
-        (activate)="onActivate($event, ii)">
+        [rowHeight]="rowHeight">
       </datatable-body-cell>
     </div>
   `,
+  host: {
+    class: 'datatable-body-row'
+  },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DataTableBodyRowComponent {
+export class DataTableBodyRowComponent implements OnDestroy {
 
   @Input() set columns(val: any[]) {
     this._columns = val;
     this.recalculateColumns(val);
   }
 
-  get columns(): any[] { 
-    return this._columns; 
+  get columns(): any[] {
+    return this._columns;
   }
 
   @Input() set innerWidth(val: number) {
@@ -54,7 +60,7 @@ export class DataTableBodyRowComponent {
   @Input() rowHeight: number;
 
   @HostBinding('class.active')
-  @Input() isSelected: boolean;
+  isSelected = false;
 
   @HostBinding('class.datatable-row-even')
   get isEvenRow(): boolean {
@@ -66,17 +72,53 @@ export class DataTableBodyRowComponent {
     return this.row.$$index % 2 !== 0;
   }
 
-  @Output() activate: EventEmitter<any> = new EventEmitter();
-
   private element: any;
   private columnGroupWidths: any;
   private columnsByPin: any;
   private _columns: any[];
   private _innerWidth: number;
 
-  constructor(element: ElementRef, renderer: Renderer) {
+  private unlistens: Function[] = [];
+  private unsub = Subscription.EMPTY;
+
+  constructor(element: ElementRef,
+              renderer: Renderer,
+              private cdr: ChangeDetectorRef, /*@Host()*/ @Optional()
+              private selection: SelectionDirective) {
     this.element = element.nativeElement;
-    renderer.setElementClass(this.element, 'datatable-body-row', true);
+
+    if(selection) {
+      this.unlistens = [
+        renderer.listen(this.element, 'click', () => {
+          this.selection.toggleSelect(this.row);
+        }),
+        renderer.listen(this.element, 'keydown', (event: KeyboardEvent) => {
+          const keyCode = event.keyCode;
+
+          if(keyCode === Keys.return) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            this.selection.toggleSelect(this.row, event.shiftKey);
+          }
+
+          /* TODO focus
+          else
+            if ( keyCode === Keys.down ||
+                 keyCode === Keys.up   ||
+                 keyCode === Keys.left ||
+                 keyCode === Keys.right)
+
+          */
+        })
+      ];
+
+      // TODO do diffently once we change how rows works
+      this.unsub = this.selection.selectionChange.subscribe( s => {
+        this.isSelected = this.selection.isSelected(this.row);
+        this.cdr.markForCheck();
+      });
+    }
   }
 
   stylesByGroup(group) {
@@ -100,41 +142,15 @@ export class DataTableBodyRowComponent {
     return styles;
   }
 
-  onActivate(event, index) {
-    event.cellIndex = index;
-    event.rowElement = this.element;
-    this.activate.emit(event);
-  }
-
-  @HostListener('keydown', ['$event'])
-  onKeyDown(event): void {
-    const keyCode = event.keyCode;
-    const isTargetRow = event.target === this.element;
-
-    const isAction = 
-      keyCode === Keys.return ||
-      keyCode === Keys.down ||
-      keyCode === Keys.up ||
-      keyCode === Keys.left ||
-      keyCode === Keys.right;
-
-    if(isAction && isTargetRow) {
-      event.preventDefault();
-      event.stopPropagation();
-
-      this.activate.emit({
-        type: 'keydown',
-        event,
-        row: this.row,
-        rowElement: this.element
-      });
-    }
-  }
-
   recalculateColumns(val: any[] = this.columns) {
     const colsByPin = columnsByPin(val);
     this.columnsByPin = columnsByPinArr(val);
     this.columnGroupWidths = columnGroupWidths(colsByPin, val);
+  }
+
+  ngOnDestroy() {
+    this.unlistens.forEach( f => { f(); } );
+    this.unsub.unsubscribe();
   }
 
 }

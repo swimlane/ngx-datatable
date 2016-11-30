@@ -6,7 +6,6 @@ export * from './keys';
 export * from './math';
 export * from './prefixes';
 export * from './scrollbar-width';
-export * from './selection';
 export * from './translate';
 export * from './visibility-observer';
 export * from './debounce';

@@ -5,7 +5,6 @@ import {
   DataTableBodyRowComponent,
   DataTableRowWrapperComponent,
   DataTableBodyCellComponent,
-  DataTableSelectionComponent,
   ProgressBarComponent,
   ScrollerComponent
 } from '.';
@@ -23,7 +22,6 @@ describe('DataTableBodyComponent', () => {
         DataTableBodyRowComponent,
         DataTableRowWrapperComponent,
         DataTableBodyCellComponent,
-        DataTableSelectionComponent,
         ProgressBarComponent,
         ScrollerComponent
       ]

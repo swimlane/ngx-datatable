@@ -1,7 +1,7 @@
 import { EventEmitter, ElementRef, Renderer } from '@angular/core';
-import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
 export declare class DataTableBodyComponent {
+    private element;
     scrollbarV: boolean;
     scrollbarH: boolean;
     loadingIndicator: boolean;
@@ -9,11 +9,7 @@ export declare class DataTableBodyComponent {
     offsetX: number;
     detailRowHeight: any;
     emptyMessage: string;
-    selectionType: SelectionType;
-    selected: any[];
-    rowIdentity: any;
     rowDetailTemplate: any;
-    selectCheck: any;
     trackByProp: string;
     pageSize: number;
     rows: any[];
@@ -25,11 +21,8 @@ export declare class DataTableBodyComponent {
     bodyHeight: any;
     scroll: EventEmitter<any>;
     page: EventEmitter<any>;
-    activate: EventEmitter<any>;
-    select: EventEmitter<any>;
     detailToggle: EventEmitter<any>;
     scroller: ScrollerComponent;
-    readonly selectEnabled: boolean;
     private rowHeightsCache;
     private temp;
     private offsetY;
