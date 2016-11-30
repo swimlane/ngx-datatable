@@ -1,5 +1,7 @@
-import { ElementRef, Renderer, EventEmitter } from '@angular/core';
+import { ElementRef, EventEmitter } from '@angular/core';
+import { SelectionDirective } from '../../directives/selection.directive';
 export declare class DataTableBodyRowComponent {
+    private selection;
     columns: any[];
     innerWidth: number;
     row: any;
@@ -14,11 +16,11 @@ export declare class DataTableBodyRowComponent {
     private columnsByPin;
     private _columns;
     private _innerWidth;
-    constructor(element: ElementRef, renderer: Renderer);
+    constructor(element: ElementRef, selection: SelectionDirective);
     stylesByGroup(group: any): {
         width: string;
     };
     onActivate(event: any, index: any): void;
-    onKeyDown(event: any): void;
+    onKeyDown(event: KeyboardEvent): void;
     recalculateColumns(val?: any[]): void;
 }

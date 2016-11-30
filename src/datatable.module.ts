@@ -14,8 +14,7 @@ import {
   ProgressBarComponent,
   DataTableBodyCellComponent,
   DatatableRowDetailDirective,
-  ScrollerComponent,
-  DataTableSelectionComponent
+  ScrollerComponent
 } from './components';
 
 import {
@@ -23,7 +22,8 @@ import {
   LongPressDirective,
   ResizeableDirective,
   OrderableDirective,
-  DraggableDirective
+  DraggableDirective,
+  SelectionDirective
 } from './directives';
 
 @NgModule({
@@ -49,12 +49,15 @@ import {
     DataTableRowWrapperComponent,
     DatatableRowDetailDirective,
     DataTableBodyCellComponent,
-    DataTableSelectionComponent
+
+    SelectionDirective
   ],
   exports: [
     DatatableComponent,
     DatatableRowDetailDirective,
-    DataTableColumnDirective
+    DataTableColumnDirective,
+
+    SelectionDirective
   ]
 })
 export class Angular2DataTableModule { }

@@ -3,57 +3,43 @@ import {
   ViewChild, ElementRef, Renderer, ChangeDetectionStrategy
 } from '@angular/core';
 import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '../../utils';
-import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
 
 @Component({
   selector: 'datatable-body',
   template: `
-    <datatable-selection 
-      #selector
-      [selected]="selected"
-      [rows]="rows"
-      [selectCheck]="selectCheck"
-      [selectEnabled]="selectEnabled"
-      [selectionType]="selectionType"
-      [rowIdentity]="rowIdentity"
-      (select)="select.emit($event)"
-      (activate)="activate.emit($event)">
-      <datatable-progress
-        *ngIf="loadingIndicator">
-      </datatable-progress>
-      <datatable-scroller
-        *ngIf="rows?.length"
-        [scrollbarV]="scrollbarV"
-        [scrollbarH]="scrollbarH"
-        [scrollHeight]="scrollHeight"
-        [scrollWidth]="columnGroupWidths.total"
-        (scroll)="onBodyScroll($event)">
-        <datatable-row-wrapper 
-          *ngFor="let row of temp; let i = index; trackBy: rowTrackingFn"
-          [ngStyle]="getRowsStyles(row)"
-          [rowDetailTemplate]="rowDetailTemplate"
-          [detailRowHeight]="detailRowHeight"
-          [row]="row"
-          [expanded]="row.$$expanded === 1">
-          <datatable-body-row
-            tabindex="-1"
-            [isSelected]="selector.getRowSelected(row)"
-            [innerWidth]="innerWidth"
-            [offsetX]="offsetX"
-            [columns]="columns"
-            [rowHeight]="rowHeight"
-            [row]="row"
-            (activate)="selector.onActivate($event, i)">
-          </datatable-body-row>
-        </datatable-row-wrapper>
-      </datatable-scroller>
-      <div
-        class="empty-row"
-        *ngIf="!rows?.length"
-        [innerHTML]="emptyMessage">
-      </div>
-    </datatable-selection>
+    <datatable-progress
+      *ngIf="loadingIndicator">
+    </datatable-progress>
+    <datatable-scroller
+      *ngIf="rows?.length"
+      [scrollbarV]="scrollbarV"
+      [scrollbarH]="scrollbarH"
+      [scrollHeight]="scrollHeight"
+      [scrollWidth]="columnGroupWidths.total"
+      (scroll)="onBodyScroll($event)">
+      <datatable-row-wrapper
+        *ngFor="let row of temp; let i = index; trackBy: rowTrackingFn"
+        [ngStyle]="getRowsStyles(row)"
+        [rowDetailTemplate]="rowDetailTemplate"
+        [detailRowHeight]="detailRowHeight"
+        [row]="row"
+        [expanded]="row.$$expanded === 1">
+        <datatable-body-row
+          tabindex="-1"
+          [innerWidth]="innerWidth"
+          [offsetX]="offsetX"
+          [columns]="columns"
+          [rowHeight]="rowHeight"
+          [row]="row">
+        </datatable-body-row>
+      </datatable-row-wrapper>
+    </datatable-scroller>
+    <div
+      class="empty-row"
+      *ngIf="!rows?.length"
+      [innerHTML]="emptyMessage">
+    </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -66,11 +52,7 @@ export class DataTableBodyComponent {
   @Input() offsetX: number;
   @Input() detailRowHeight: any;
   @Input() emptyMessage: string;
-  @Input() selectionType: SelectionType;
-  @Input() selected: any[] = [];
-  @Input() rowIdentity: any;
   @Input() rowDetailTemplate: any;
-  @Input() selectCheck: any;
   @Input() trackByProp: string;
 
   @Input() set pageSize(val: number) {
@@ -93,24 +75,24 @@ export class DataTableBodyComponent {
 
   @Input() set columns(val: any[]) {
     this._columns = val;
-    
+
     const colsByPin = columnsByPin(val);
     this.columnGroupWidths = columnGroupWidths(colsByPin, val);
   }
 
-  get columns(): any[] { 
-    return this._columns; 
+  get columns(): any[] {
+    return this._columns;
   }
 
   @Input() set offset(val: number) {
     this._offset = val;
     this.recalcLayout();
   }
-  
+
   get offset(): number {
     return this._offset;
   }
-  
+
   @Input() set rowCount(val: number) {
     this._rowCount = val;
     this.recalcLayout();
@@ -130,7 +112,7 @@ export class DataTableBodyComponent {
       return '100%';
     }
   }
-  
+
   @Input()
   @HostBinding('style.height')
   set bodyHeight(val) {
@@ -143,21 +125,16 @@ export class DataTableBodyComponent {
     this.recalcLayout();
   }
 
-  get bodyHeight() { 
-    return this._bodyHeight; 
+  get bodyHeight() {
+    return this._bodyHeight;
   }
 
   @Output() scroll: EventEmitter<any> = new EventEmitter();
   @Output() page: EventEmitter<any> = new EventEmitter();
-  @Output() activate: EventEmitter<any> = new EventEmitter();
-  @Output() select: EventEmitter<any> = new EventEmitter();
+
   @Output() detailToggle: EventEmitter<any> = new EventEmitter();
 
   @ViewChild(ScrollerComponent) scroller: ScrollerComponent;
-
-  get selectEnabled(): boolean {
-    return !!this.selectionType;
-  }
 
   private rowHeightsCache: RowHeightCache = new RowHeightCache();
   private temp: any[] = [];
@@ -183,8 +160,8 @@ export class DataTableBodyComponent {
       return this.rowHeightsCache.query(this.rowCount - 1);
     }
   }
-  
-  constructor(element: ElementRef, renderer: Renderer) {
+
+  constructor(private element: ElementRef, renderer: Renderer) {
     renderer.setElementClass(element.nativeElement, 'datatable-body', true);
 
     // declare fn here so we can get access to the `this` property
@@ -211,12 +188,12 @@ export class DataTableBodyComponent {
     // if scroll change, trigger update
     // this is mainly used for header cell positions
     if(this.offsetY !== scrollYPos || this.offsetX !== scrollXPos) {
-      this.scroll.emit({ 
+      this.scroll.emit({
         offsetY: scrollYPos,
         offsetX: scrollXPos
       });
     }
-    
+
     this.offsetY = scrollYPos;
     this.offsetX = scrollXPos;
 
@@ -299,7 +276,7 @@ export class DataTableBodyComponent {
 
     if(this.scrollbarV) {
       const idx = row ? row.$$index : 0;
-      
+
       // const pos = idx * rowHeight;
       // The position of this row would be the sum of all row heights
       // until the previous row position.
@@ -384,13 +361,13 @@ export class DataTableBodyComponent {
       const detailRowHeight = this.detailRowHeight * (row.$$expanded ? -1 : 1);
       this.rowHeightsCache.update(row.$$index, detailRowHeight);
     }
-    
+
     // Update the toggled row and update the heights in the cache.
     row.$$expanded ^= 1;
 
     this.detailToggle.emit({
-      rows: [row], 
-      currentIndex: viewPortFirstRowIndex 
+      rows: [row],
+      currentIndex: viewPortFirstRowIndex
     });
   }
 
@@ -400,7 +377,7 @@ export class DataTableBodyComponent {
    */
   toggleAllRows(expanded: boolean): void {
     let rowExpanded = expanded ? 1 : 0;
-    
+
     // Capture the row index of the first row that is visible on the viewport.
     let viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
 
@@ -415,8 +392,8 @@ export class DataTableBodyComponent {
 
     // Emit all rows that have been expanded.
     this.detailToggle.emit({
-      rows: this.rows, 
-      currentIndex: viewPortFirstRowIndex 
+      rows: this.rows,
+      currentIndex: viewPortFirstRowIndex
     });
   }
 

@@ -1,7 +1,9 @@
 import { EventEmitter, ElementRef, Renderer } from '@angular/core';
-import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
+import { SelectionDirective } from '../../directives/selection.directive';
 export declare class DataTableBodyComponent {
+    private element;
+    selection: SelectionDirective;
     scrollbarV: boolean;
     scrollbarH: boolean;
     loadingIndicator: boolean;
@@ -9,11 +11,8 @@ export declare class DataTableBodyComponent {
     offsetX: number;
     detailRowHeight: any;
     emptyMessage: string;
-    selectionType: SelectionType;
-    selected: any[];
     rowIdentity: any;
     rowDetailTemplate: any;
-    selectCheck: any;
     trackByProp: string;
     pageSize: number;
     rows: any[];
@@ -26,10 +25,8 @@ export declare class DataTableBodyComponent {
     scroll: EventEmitter<any>;
     page: EventEmitter<any>;
     activate: EventEmitter<any>;
-    select: EventEmitter<any>;
     detailToggle: EventEmitter<any>;
     scroller: ScrollerComponent;
-    readonly selectEnabled: boolean;
     private rowHeightsCache;
     private temp;
     private offsetY;
@@ -48,7 +45,7 @@ export declare class DataTableBodyComponent {
      * calculate scroll height automatically (as height will be undefined).
      */
     readonly scrollHeight: number;
-    constructor(element: ElementRef, renderer: Renderer);
+    constructor(element: ElementRef, renderer: Renderer, selection: SelectionDirective);
     updateOffsetY(offset?: number): void;
     onBodyScroll({scrollYPos, scrollXPos, direction}: {
         scrollYPos: any;

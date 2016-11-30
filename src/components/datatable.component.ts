@@ -7,7 +7,7 @@ import {
 import { Observable } from 'rxjs/Rx';
 
 import { forceFillColumnWidths, adjustColumnWidths, sortRows } from '../utils';
-import { ColumnMode, SortType, SelectionType } from '../types';
+import { ColumnMode, SortType } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './column.directive';
 import { DatatableRowDetailDirective } from './row-detail.directive';
@@ -48,16 +48,11 @@ import { scrollbarWidth, setColumnDefaults, translateTemplates } from '../utils'
         [offsetX]="offsetX"
         [rowDetailTemplate]="rowDetailTemplate"
         [detailRowHeight]="detailRowHeight"
-        [selected]="selected"
         [innerWidth]="innerWidth"
         [bodyHeight]="bodyHeight"
-        [selectionType]="selectionType"
         [emptyMessage]="messages.emptyMessage"
-        [rowIdentity]="rowIdentity"
-        [selectCheck]="selectCheck"
         (page)="onBodyPage($event)"
         (activate)="activate.emit($event)"
-        (select)="select.emit($event)"
         (detailToggle)="detailToggle.emit($event)"
         (scroll)="onBodyScroll($event)">
       </datatable-body>
@@ -121,9 +116,6 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     return this._columns;
   }
 
-  // Selected rows
-  @Input() selected: any[];
-
   // Enable vertical scrollbars
   @Input() scrollbarV: boolean = false;
 
@@ -168,9 +160,6 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   // Loading indicator
   @Input() loadingIndicator: boolean = false;
 
-  // Selections?
-  @Input() selectionType: SelectionType;
-
   // if you can reorder columns
   @Input() reorderable: boolean = true;
 
@@ -205,23 +194,12 @@ export class DatatableComponent implements OnInit, AfterViewInit {
 
   };
 
-  // This will be used when displaying or selecting rows:
-  // when tracking/comparing them, we'll use the value of this fn,
-  // (`fn(x) === fn(y)` instead of `x === y`)
-  @Input() rowIdentity: any = ((x) => x);
-
-  // A boolean/function you can use to check whether you want
-  // to select a particular row based on a criteria. Example:
-  // (selection) => { return selection !== 'Ethel Price'; }
-  @Input() selectCheck: any;
-
   // Property to which you can use for custom tracking of rows
   // Example: 'name'
   @Input() trackByProp: string;
 
   @Output() scroll: EventEmitter<any> = new EventEmitter();
   @Output() activate: EventEmitter<any> = new EventEmitter();
-  @Output() select: EventEmitter<any> = new EventEmitter();
   @Output() sort: EventEmitter<any> = new EventEmitter();
   @Output() page: EventEmitter<any> = new EventEmitter();
   @Output() detailToggle: EventEmitter<any> = new EventEmitter();
@@ -250,11 +228,6 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   @HostBinding('class.scroll-horz')
   get isHorScroll() {
     return this.scrollbarH;
-  }
-
-  @HostBinding('class.selectable')
-  get isSelectable() {
-    return this.selectionType !== undefined;
   }
 
   @ContentChildren(DataTableColumnDirective)

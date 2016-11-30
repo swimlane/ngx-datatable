@@ -1,12 +1,11 @@
 import { ElementRef, EventEmitter, OnInit, QueryList, AfterViewInit, Renderer, TemplateRef, ChangeDetectorRef } from '@angular/core';
-import { ColumnMode, SortType, SelectionType } from '../types';
+import { ColumnMode, SortType } from '../types';
 import { DataTableColumnDirective } from './column.directive';
 import { DatatableRowDetailDirective } from './row-detail.directive';
 export declare class DatatableComponent implements OnInit, AfterViewInit {
     private cdr;
     rows: any;
     columns: any[];
-    selected: any[];
     scrollbarV: boolean;
     scrollbarH: boolean;
     rowHeight: number;
@@ -20,19 +19,15 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
     count: number;
     offset: number;
     loadingIndicator: boolean;
-    selectionType: SelectionType;
     reorderable: boolean;
     sortType: SortType;
     sorts: any[];
     rowDetailTemplate: TemplateRef<any>;
     cssClasses: any;
     messages: any;
-    rowIdentity: any;
-    selectCheck: any;
     trackByProp: string;
     scroll: EventEmitter<any>;
     activate: EventEmitter<any>;
-    select: EventEmitter<any>;
     sort: EventEmitter<any>;
     page: EventEmitter<any>;
     detailToggle: EventEmitter<any>;
@@ -42,7 +37,6 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
     readonly isFixedRow: boolean;
     readonly isVertScroll: boolean;
     readonly isHorScroll: boolean;
-    readonly isSelectable: boolean;
     columnTemplates: QueryList<DataTableColumnDirective>;
     rowDetailTemplateChild: DatatableRowDetailDirective;
     offsetX: number;
