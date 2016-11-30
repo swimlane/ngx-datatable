@@ -1,5 +1,14 @@
 # Changelog
 
+## Master
+- Bug: Set default value for selected (#314)
+- Bug: Fix widths being int vs float (#309)
+- Bug: Fix column resize not setting widths to the right (#308)
+
+## 1.7.0
+- Enhancement: Add RxJS Support
+- Chore: Fix builds on windows
+
 ## 1.6.0
 - Bug: Column headers not re-ordering (#238)
 - Bug: Datatable doesn't sort data correctly when data changed (#284)

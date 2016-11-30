@@ -1,8 +1,10 @@
 import {
   Component, Input, Output, ElementRef, EventEmitter, ViewChild,
   HostListener, ContentChildren, OnInit, QueryList, AfterViewInit,
-  HostBinding, Renderer, ContentChild, TemplateRef, ChangeDetectionStrategy
+  HostBinding, Renderer, ContentChild, TemplateRef, ChangeDetectionStrategy,
+  ChangeDetectorRef
 } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 
 import { forceFillColumnWidths, adjustColumnWidths, sortRows } from '../utils';
 import { ColumnMode, SortType, SelectionType } from '../types';
@@ -79,16 +81,29 @@ import { scrollbarWidth, setColumnDefaults, translateTemplates } from '../utils'
 export class DatatableComponent implements OnInit, AfterViewInit {
 
   // Rows
-  @Input() set rows(val: any[]) {
-    if (!this.externalSorting) {
-      val = sortRows(val, this.columns, this.sorts);
-    }
+  @Input() set rows(val: any) {
+    // if a observable was passed, lets convert to array
+    if(val instanceof Observable) {
+      val.concatMap((v) => v)
+         .toArray()
+         .subscribe((r) => {
+           this.rows = r;
+           this.cdr.markForCheck();
+         });
+    } else {
+       // auto sort on new updates
+      if (!this.externalSorting) {
+        val = sortRows(val, this.columns, this.sorts);
+      }
 
-    this._rows = val;
-    this.recalculate();
+      this._rows = val;
+
+      // recalculate sizes/etc
+      this.recalculate();
+    }
   }
 
-  get rows(): any[] {
+  get rows(): any {
     return this._rows;
   }
 
@@ -107,7 +122,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   }
 
   // Selected rows
-  @Input() selected: any[];
+  @Input() selected: any[] = [];
 
   // Enable vertical scrollbars
   @Input() scrollbarV: boolean = false;
@@ -287,7 +302,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   private _columnTemplates: QueryList<DataTableColumnDirective>;
   private _rowDetailTemplateChild: DatatableRowDetailDirective;
 
-  constructor(renderer: Renderer, element: ElementRef) {
+  constructor(renderer: Renderer, element: ElementRef, private cdr: ChangeDetectorRef) {
     this.element = element.nativeElement;
     renderer.setElementClass(this.element, 'datatable', true);
   }
@@ -435,7 +450,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     });
 
     this.recalculateColumns(cols, idx);
-    this.columns = cols;
+    this._columns = cols;
 
     this.resize.emit({
       column,
@@ -461,7 +476,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
 
   onColumnSort(event): void {
     const { sorts } = event;
-    
+
     // this could be optimized better since it will resort
     // the rows again on the 'push' detection...
     if (this.externalSorting === false) {

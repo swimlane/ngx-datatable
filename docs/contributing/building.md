@@ -2,6 +2,11 @@
 
 This project uses [npm tasks](http://blog.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/) for builds.
 
+### Pre-reqs
+- Node >= 6.0.0
+- Angular CLI
+- TypeScript >= 2.0.0
+
 ### Commands
 - `npm start`: Starts Webpack dev server
 - `npm run release`: Builds code to `dist` folder

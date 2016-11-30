@@ -1,5 +1,6 @@
 "use strict";
 var core_1 = require('@angular/core');
+var Rx_1 = require('rxjs/Rx');
 var utils_1 = require('../utils');
 var types_1 = require('../types');
 var body_1 = require('./body');
@@ -7,7 +8,8 @@ var column_directive_1 = require('./column.directive');
 var row_detail_directive_1 = require('./row-detail.directive');
 var utils_2 = require('../utils');
 var DatatableComponent = (function () {
-    function DatatableComponent(renderer, element) {
+    function DatatableComponent(renderer, element, cdr) {
+        this.cdr = cdr;
         // Enable vertical scrollbars
         this.scrollbarV = false;
         // Enable horz scrollbars
@@ -84,11 +86,25 @@ var DatatableComponent = (function () {
         },
         // Rows
         set: function (val) {
-            if (!this.externalSorting) {
-                val = utils_1.sortRows(val, this.columns, this.sorts);
+            var _this = this;
+            // if a observable was passed, lets convert to array
+            if (val instanceof Rx_1.Observable) {
+                val.concatMap(function (v) { return v; })
+                    .toArray()
+                    .subscribe(function (r) {
+                    _this.rows = r;
+                    _this.cdr.markForCheck();
+                });
             }
-            this._rows = val;
-            this.recalculate();
+            else {
+                // auto sort on new updates
+                if (!this.externalSorting) {
+                    val = utils_1.sortRows(val, this.columns, this.sorts);
+                }
+                this._rows = val;
+                // recalculate sizes/etc
+                this.recalculate();
+            }
         },
         enumerable: true,
         configurable: true
@@ -346,6 +362,7 @@ var DatatableComponent = (function () {
     DatatableComponent.ctorParameters = [
         { type: core_1.Renderer, },
         { type: core_1.ElementRef, },
+        { type: core_1.ChangeDetectorRef, },
     ];
     DatatableComponent.propDecorators = {
         'rows': [{ type: core_1.Input },],

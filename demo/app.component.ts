@@ -21,6 +21,7 @@ import { Component } from '@angular/core';
               <li><a href="#" (click)="state='filter'">Filtering</a></li>
               <li><a href="#" (click)="state='hidden'">Hidden On Load</a></li>
               <li><a href="#" (click)="state='live'">Live Data</a></li>
+              <li><a href="#" (click)="state='rx'">RxJS</a></li>
             </ul>
           </li>
           <li>
@@ -85,6 +86,7 @@ import { Component } from '@angular/core';
         <filter-demo *ngIf="state === 'filter'"></filter-demo>
         <tabs-demo *ngIf="state === 'hidden'"></tabs-demo>
         <live-data-demo *ngIf="state === 'live'"></live-data-demo>
+        <rx-demo *ngIf="state === 'rx'"></rx-demo>
 
         <!-- Paging -->
         <client-paging-demo *ngIf="state === 'client-paging'"></client-paging-demo>
