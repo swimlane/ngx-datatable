@@ -1,9 +1,13 @@
 # Changelog
 
 ## Master
+- BREAKING: Rename from `datatable` to `swui-datatable` (#320)
+- BREAKING: Redo how cell/header templates are described in markup (#304)
+- Enhancement: Row Context Menu Event `rowContextmenu` (#331)
 - Bug: Set default value for selected (#314)
 - Bug: Fix widths being int vs float (#309)
 - Bug: Fix column resize not setting widths to the right (#308)
+- Chore: Resolve all implicit `any`s (#330)
 
 ## 1.7.0
 - Enhancement: Add RxJS Support

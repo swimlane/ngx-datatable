@@ -89,3 +89,12 @@ Body was scrolled typically in a `scrollbarV:true` scenario.
   offsetY
 }
 ```
+
+### `rowContextmenu`
+The context menu was invoked on a row.
+
+```
+{
+  event,
+  row
+}
