@@ -48,6 +48,9 @@ Enable vertical scrollbar for fixed height vs fluid. This is necessary for virtu
 ## `selectionType`
 Type of row selection. Options are `single`, `multi` and `multiShift`. For no selection pass a `falsey`. Default value: `undefined`
 
+## `selected`
+List of row objects that should be represented as selected in the grid. Default value: `[]`
+
 ## `sorts`
 Array of sorted columns by property and type. Default value: `[]`
 
