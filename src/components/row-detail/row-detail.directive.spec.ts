@@ -8,7 +8,7 @@ import { DatatableRowDetailDirective, DatatableRowDetailTemplateDirective } from
   selector: 'test-fixture-component',
   template: `
     <swui-datatable-row-detail id="t1"></swui-datatable-row-detail>
-    <swui-datatable-row-detail-template id="t2">
+    <swui-datatable-row-detail id="t2">
       <template swui-datatable-row-detail-template></template>
     </swui-datatable-row-detail>
   `
