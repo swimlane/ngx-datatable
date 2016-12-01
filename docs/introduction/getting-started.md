@@ -29,22 +29,24 @@ import { Component } from '@angular/core';
     <div>
       <swui-datatable
         [rows]="rows"
-        [columns]="columns"
-        [columnMode]="'force'"
-        [headerHeight]="50"
-        [footerHeight]="50"
-        [rowHeight]="'auto'">
+        [columns]="columns">
       </swui-datatable>
     </div>
   `
 })
 export class AppComponent {
-  rows = [];
+  rows = [
+    { name: 'Austin', gender: 'Male', company: 'Swimlane' },
+    { name: 'Dany', gender: 'Male', company: 'KFC' },
+    { name: 'Molly', gender: 'Female', company: 'Burger King' },
+  ];
   columns = [
     { prop: 'name' },
     { name: 'Gender' },
     { name: 'Company' }
   ];
 }
-
 ```
+
+and your off to the races! For more examples, visit the `demos` directory
+in the source code!

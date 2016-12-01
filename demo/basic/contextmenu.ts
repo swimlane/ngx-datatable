@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
         <p *ngIf="rawEvent"><strong>Mouse position:</strong> <code>(x: {{rawEvent?.x}}, y: {{rawEvent?.y}})</code></p>
         <p *ngIf="contextmenuRow"><strong>Row:</strong> {{contextmenuRow?.name}}</p>
       </div>
-      <datatable
+      <swui-datatable
         class="material"
         [rows]="rows"
         [columns]="columns"
@@ -21,7 +21,7 @@ import { Component } from '@angular/core';
         [footerHeight]="50"
         [rowHeight]="'auto'"
         (rowContextmenu)="onContextMenu($event)">
-      </datatable>
+      </swui-datatable>
     </div>
   `
 })
@@ -46,8 +46,10 @@ export class ContextMenuDemoComponent {
 
   onContextMenu(contextMenuEvent) {
     console.log(contextMenuEvent);
+
     this.rawEvent = contextMenuEvent.event;
     this.contextmenuRow = contextMenuEvent.row;
+    
     contextMenuEvent.event.preventDefault();
     contextMenuEvent.event.stopPropagation();
   }

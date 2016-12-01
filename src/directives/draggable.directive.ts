@@ -67,7 +67,7 @@ export class DraggableDirective {
     }
   }
 
-  move(event: MouseEvent, mouseDownPos: {x: number, y:number}): void {
+  move(event: MouseEvent, mouseDownPos: {x: number, y: number }): void {
     if (!this.dragging) return;
 
     const x = event.clientX - mouseDownPos.x;

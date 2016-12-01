@@ -4,7 +4,8 @@
    * [Features](introduction/features.md)
    * [Architecture](introduction/architecture.md)
    * [Installing](introduction/installing.md)
-   * [Themes](introduction/themes.md)
+   * [Themeing](introduction/themes.md)
+   * [Getting Started](introduction/getting-started.md)
 * API
    * Table
       * [Inputs](api/table-inputs.md)

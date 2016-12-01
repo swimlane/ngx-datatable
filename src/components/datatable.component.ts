@@ -10,7 +10,7 @@ import { forceFillColumnWidths, adjustColumnWidths, sortRows } from '../utils';
 import { ColumnMode, SortType, SelectionType } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './columns';
-import { DatatableRowDetailDirective } from './row-detail.directive';
+import { DatatableRowDetailDirective } from './row-detail';
 import { scrollbarWidth, setColumnDefaults, translateTemplates } from '../utils';
 
 @Component({
@@ -262,7 +262,6 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   @ContentChildren(DataTableColumnDirective)
   set columnTemplates(val: QueryList<DataTableColumnDirective>) {
     this._columnTemplates = val;
-    console.log('hereee', val)
 
     if(val) {
       // only set this if results were brought back

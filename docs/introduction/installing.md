@@ -1,6 +1,7 @@
 # Installing
 
-You can grab the latest release from the [Releases Page](https://github.com/swimlane/angular2-data-table/releases) in Github or via [NPM](https://www.npmjs.com/package/angular2-data-table).
+You can grab the latest release from the [Releases Page](https://github.com/swimlane/angular2-data-table/releases) 
+in Github or via [NPM](https://www.npmjs.com/package/angular2-data-table).
 
 * `npm install angular2-data-table`
 

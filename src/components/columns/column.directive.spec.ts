@@ -7,11 +7,11 @@ import { DataTableColumnDirective } from '.';
 @Component({
   selector: 'test-fixture-component',
   template: `
-    <datatable-column id="t1"></datatable-column>
-    <datatable-column id="t2">
+    <swui-datatable-column id="t1"></swui-datatable-column>
+    <swui-datatable-column id="t2">
       <template></template>
       <template></template>
-    </datatable-column>
+    </swui-datatable-column>
   `
 })
 class TestFixtureComponent {
@@ -63,7 +63,7 @@ describe('DataTableColumnDirective', () => {
     
     beforeEach(() => {
       directive = fixture.debugElement
-        .query(By.css("#t1"))
+        .query(By.css('#t1'))
         .injector.get(DataTableColumnDirective);
     });
 
@@ -88,11 +88,6 @@ describe('DataTableColumnDirective', () => {
       expect(directive.width).toBeUndefined();
       expect(directive.maxWidth).toBeUndefined();
     });
-
-    it('should not have header template', () => {
-      fixture.detectChanges();
-      expect(directive.hasHeaderTemplate).toBe(false);
-    });
   });
 
   describe('directive #2', () => {
@@ -100,7 +95,7 @@ describe('DataTableColumnDirective', () => {
     
     beforeEach(() => {
       directive = fixture.debugElement
-        .query(By.css("#t2"))
+        .query(By.css('#t2'))
         .injector.get(DataTableColumnDirective);
     });
 
@@ -108,9 +103,5 @@ describe('DataTableColumnDirective', () => {
       expect(directive).toBeTruthy();
     });
 
-    it('should have header template', () => {
-      fixture.detectChanges();
-      expect(directive.hasHeaderTemplate).toBe(true);
-    });
   });
 });

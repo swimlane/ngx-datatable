@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import { SortType } from '../../types';
 import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY } from '../../utils';
-import { DataTableColumnDirective } from '../column.directive';
+import { DataTableColumnDirective } from '../columns';
 
 @Component({
   selector: 'datatable-header',
