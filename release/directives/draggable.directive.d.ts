@@ -19,7 +19,10 @@ export declare class DraggableDirective {
     private subscription;
     constructor(element: ElementRef);
     ngOnDestroy(): void;
-    onMouseup(event: any): void;
-    onMousedown(event: any): void;
-    move(event: any, mouseDownPos: any): void;
+    onMouseup(event: MouseEvent): void;
+    onMousedown(event: MouseEvent): void;
+    move(event: MouseEvent, mouseDownPos: {
+        x: number;
+        y: number;
+    }): void;
 }

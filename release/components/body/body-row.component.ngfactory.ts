@@ -163,7 +163,7 @@ class View_DataTableBodyRowComponent_Host0 extends import2.AppView<any> {
     return notFoundResult;
   }
   detectChangesInternal(throwOnChange:boolean):void {
-    if (this._DataTableBodyRowComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange)) { this.compView_0.markAsCheckOnce(); }
+    this._DataTableBodyRowComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange);
     this._DataTableBodyRowComponent_0_3.checkHost(this,this.compView_0,this._el_0,throwOnChange);
     this.compView_0.detectChanges(throwOnChange);
   }
@@ -192,7 +192,7 @@ export class View_DataTableBodyRowComponent0 extends import2.AppView<import0.Dat
   _NgFor_1_6:import11.Wrapper_NgFor;
   _text_2:any;
   constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any) {
-    super(View_DataTableBodyRowComponent0,renderType_DataTableBodyRowComponent,import7.ViewType.COMPONENT,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckOnce);
+    super(View_DataTableBodyRowComponent0,renderType_DataTableBodyRowComponent,import7.ViewType.COMPONENT,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
     const parentRenderNode:any = this.renderer.createViewRoot(this.parentElement);
@@ -330,7 +330,7 @@ class View_DataTableBodyRowComponent2 extends import2.AppView<any> {
     this._DataTableBodyCellComponent_0_3.check_column(currVal_0_0_1,throwOnChange,false);
     const currVal_0_0_2:any = this.parentView.parentView.context.rowHeight;
     this._DataTableBodyCellComponent_0_3.check_rowHeight(currVal_0_0_2,throwOnChange,false);
-    if (this._DataTableBodyCellComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange)) { this.compView_0.markAsCheckOnce(); }
+    this._DataTableBodyCellComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange);
     this._DataTableBodyCellComponent_0_3.checkHost(this,this.compView_0,this._el_0,throwOnChange);
     this.compView_0.detectChanges(throwOnChange);
   }

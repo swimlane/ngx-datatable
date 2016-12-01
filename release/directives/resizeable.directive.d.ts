@@ -10,6 +10,6 @@ export declare class ResizeableDirective {
     constructor(element: ElementRef);
     ngOnDestroy(): void;
     onMouseup(): void;
-    onMousedown(event: any): void;
-    move(event: any, initialWidth: any, mouseDownScreenX: any): void;
+    onMousedown(event: MouseEvent): void;
+    move(event: MouseEvent, initialWidth: number, mouseDownScreenX: number): void;
 }

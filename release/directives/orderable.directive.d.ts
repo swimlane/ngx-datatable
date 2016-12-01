@@ -9,8 +9,5 @@ export declare class OrderableDirective {
     ngOnDestroy(): void;
     updateSubscriptions(): void;
     onDragStart(): void;
-    onDragEnd({element, model}: {
-        element: any;
-        model: any;
-    }): void;
+    onDragEnd({element, model}: any): void;
 }

@@ -27,7 +27,7 @@ var ResizeableDirective = (function () {
     };
     ResizeableDirective.prototype.onMousedown = function (event) {
         var _this = this;
-        var isHandle = event.target.classList.contains('resize-handle');
+        var isHandle = (event.target).classList.contains('resize-handle');
         var initialWidth = this.element.clientWidth;
         var mouseDownScreenX = event.screenX;
         if (isHandle) {

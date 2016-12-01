@@ -121,7 +121,7 @@ class View_DataTableSelectionComponent_Host0 extends import2.AppView<any> {
     return notFoundResult;
   }
   detectChangesInternal(throwOnChange:boolean):void {
-    if (this._DataTableSelectionComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange)) { this.compView_0.markAsCheckOnce(); }
+    this._DataTableSelectionComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange);
     this.compView_0.detectChanges(throwOnChange);
   }
   destroyInternal():void {
@@ -142,7 +142,7 @@ export class View_DataTableSelectionComponent0 extends import2.AppView<import0.D
   _text_0:any;
   _text_1:any;
   constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any) {
-    super(View_DataTableSelectionComponent0,renderType_DataTableSelectionComponent,import6.ViewType.COMPONENT,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckOnce);
+    super(View_DataTableSelectionComponent0,renderType_DataTableSelectionComponent,import6.ViewType.COMPONENT,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import7.ComponentRef<any> {
     const parentRenderNode:any = this.renderer.createViewRoot(this.parentElement);

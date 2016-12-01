@@ -16,7 +16,7 @@ function debounce(func, wait, immediate) {
         args = arguments;
         timestamp = new Date();
         function later() {
-            var last = +new Date() - timestamp;
+            var last = +new Date() - +timestamp;
             if (last < wait) {
                 timeout = setTimeout(later, wait - last);
             }

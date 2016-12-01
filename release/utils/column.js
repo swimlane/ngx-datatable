@@ -52,7 +52,7 @@ function columnTotalWidth(columns, prop) {
             var c = columns_1[_i];
             var has = prop && c[prop];
             var width = has ? c[prop] : c.width;
-            totalWidth = totalWidth + parseInt(width, 0);
+            totalWidth = totalWidth + parseFloat(width);
         }
     }
     return totalWidth;

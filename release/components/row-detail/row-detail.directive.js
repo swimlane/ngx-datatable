@@ -1,5 +1,6 @@
 "use strict";
 var core_1 = require('@angular/core');
+var row_detail_template_directive_1 = require('./row-detail-template.directive');
 var DatatableRowDetailDirective = (function () {
     function DatatableRowDetailDirective() {
     }
@@ -11,14 +12,12 @@ var DatatableRowDetailDirective = (function () {
         configurable: true
     });
     DatatableRowDetailDirective.decorators = [
-        { type: core_1.Directive, args: [{
-                    selector: 'datatable-row-detail-template'
-                },] },
+        { type: core_1.Directive, args: [{ selector: 'swui-datatable-row-detail' },] },
     ];
     /** @nocollapse */
     DatatableRowDetailDirective.ctorParameters = [];
     DatatableRowDetailDirective.propDecorators = {
-        'template': [{ type: core_1.ContentChild, args: [core_1.TemplateRef,] },],
+        'template': [{ type: core_1.ContentChild, args: [row_detail_template_directive_1.DatatableRowDetailTemplateDirective, { read: core_1.TemplateRef },] },],
     };
     return DatatableRowDetailDirective;
 }());

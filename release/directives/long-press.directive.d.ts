@@ -11,9 +11,9 @@ export declare class LongPressDirective {
     private mouseY;
     readonly press: boolean;
     readonly isLongPress: EventEmitter<any>;
-    onMouseDown(event: any): void;
-    onMouseMove(event: any): void;
-    loop(event: any): void;
+    onMouseDown(event: MouseEvent): void;
+    onMouseMove(event: MouseEvent): void;
+    loop(event: Event): void;
     endPress(): void;
     onMouseUp(): void;
 }

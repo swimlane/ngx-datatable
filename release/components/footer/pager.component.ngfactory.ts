@@ -413,7 +413,7 @@ class View_DataTablePagerComponent1 extends import2.AppView<any> {
     this._expr_6 = import1.UNINITIALIZED;
   }
   createInternal(rootSelector:string):import7.ComponentRef<any> {
-    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'li',import3.EMPTY_INLINE_ARRAY,(null as any));
+    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'li',new import3.InlineArray2(2,'class','pages'),(null as any));
     this._text_1 = this.renderer.createText(this._el_0,'\n        ',(null as any));
     this._el_2 = import3.createRenderElement(this.renderer,this._el_0,'a',new import3.InlineArray2(2,'href','javascript:void(0)'),(null as any));
     this._text_3 = this.renderer.createText(this._el_2,'',(null as any));

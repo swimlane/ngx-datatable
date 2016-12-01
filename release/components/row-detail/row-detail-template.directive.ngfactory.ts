@@ -5,15 +5,15 @@
  */
  /* tslint:disable */
 
-import * as import0 from '../../../src/components/row-detail.directive';
+import * as import0 from '../../../../src/components/row-detail/row-detail-template.directive';
 import * as import1 from '@angular/core/src/linker/view';
-export class Wrapper_DatatableRowDetailDirective {
+export class Wrapper_DatatableRowDetailTemplateDirective {
   /*private*/ _eventHandler:Function;
-  context:import0.DatatableRowDetailDirective;
+  context:import0.DatatableRowDetailTemplateDirective;
   /*private*/ _changed:boolean;
-  constructor() {
+  constructor(p0:any) {
     this._changed = false;
-    this.context = new import0.DatatableRowDetailDirective();
+    this.context = new import0.DatatableRowDetailTemplateDirective(p0);
   }
   ngOnDetach(view:import1.AppView<any>,componentView:import1.AppView<any>,el:any):void {
   }

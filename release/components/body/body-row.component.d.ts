@@ -15,10 +15,10 @@ export declare class DataTableBodyRowComponent {
     private _columns;
     private _innerWidth;
     constructor(element: ElementRef, renderer: Renderer);
-    stylesByGroup(group: any): {
+    stylesByGroup(group: string): {
         width: string;
     };
-    onActivate(event: any, index: any): void;
-    onKeyDown(event: any): void;
+    onActivate(event: any, index: number): void;
+    onKeyDown(event: KeyboardEvent): void;
     recalculateColumns(val?: any[]): void;
 }

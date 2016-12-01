@@ -1,7 +1,8 @@
 "use strict";
 var core_1 = require('@angular/core');
 var ScrollerComponent = (function () {
-    function ScrollerComponent(element) {
+    function ScrollerComponent(element, renderer) {
+        this.renderer = renderer;
         this.scrollbarV = false;
         this.scrollbarH = false;
         this.scroll = new core_1.EventEmitter();
@@ -16,12 +17,12 @@ var ScrollerComponent = (function () {
         // manual bind so we don't always listen
         if (this.scrollbarV || this.scrollbarH) {
             this.parentElement = this.element.parentElement.parentElement;
-            this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
+            this.onScrollListener = this.renderer.listen(this.parentElement, 'scroll', this.onScrolled.bind(this));
         }
     };
     ScrollerComponent.prototype.ngOnDestroy = function () {
         if (this.scrollbarV || this.scrollbarH) {
-            this.parentElement.removeEventListener('scroll');
+            this.onScrollListener();
         }
     };
     ScrollerComponent.prototype.setOffset = function (offsetY) {
@@ -54,13 +55,13 @@ var ScrollerComponent = (function () {
     ScrollerComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'datatable-scroller',
-                    template: "\n    <ng-content></ng-content>\n  ",
-                    changeDetection: core_1.ChangeDetectionStrategy.OnPush
+                    template: "\n    <ng-content></ng-content>\n  "
                 },] },
     ];
     /** @nocollapse */
     ScrollerComponent.ctorParameters = [
         { type: core_1.ElementRef, },
+        { type: core_1.Renderer, },
     ];
     ScrollerComponent.propDecorators = {
         'scrollbarV': [{ type: core_1.Input },],

@@ -28,8 +28,29 @@ export declare class DataTableBodyComponent {
     activate: EventEmitter<any>;
     select: EventEmitter<any>;
     detailToggle: EventEmitter<any>;
+    rowContextmenu: EventEmitter<{
+        event: MouseEvent;
+        row: any;
+    }>;
     scroller: ScrollerComponent;
+    /**
+     * Returns if selection is enabled.
+     *
+     * @readonly
+     * @type {boolean}
+     * @memberOf DataTableBodyComponent
+     */
     readonly selectEnabled: boolean;
+    /**
+     * Property that would calculate the height of scroll bar
+     * based on the row heights cache for virtual scroll. Other scenarios
+     * calculate scroll height automatically (as height will be undefined).
+     *
+     * @readonly
+     * @type {number}
+     * @memberOf DataTableBodyComponent
+     */
+    readonly scrollHeight: number;
     private rowHeightsCache;
     private temp;
     private offsetY;
@@ -42,26 +63,45 @@ export declare class DataTableBodyComponent {
     private _rowCount;
     private _offset;
     private _pageSize;
-    /**
-     * Property that would calculate the height of scroll bar
-     * based on the row heights cache for virtual scroll. Other scenarios
-     * calculate scroll height automatically (as height will be undefined).
-     */
-    readonly scrollHeight: number;
     constructor(element: ElementRef, renderer: Renderer);
+    /**
+     * Updates the Y offset given a new offset.
+     *
+     * @param {number} [offset]
+     *
+     * @memberOf DataTableBodyComponent
+     */
     updateOffsetY(offset?: number): void;
-    onBodyScroll({scrollYPos, scrollXPos, direction}: {
-        scrollYPos: any;
-        scrollXPos: any;
-        direction: any;
-    }): void;
-    updatePage(direction: any): void;
+    /**
+     * Body was scrolled, this is mainly useful for
+     * when a user is server-side pagination via virtual scroll.
+     *
+     * @param {*} event
+     *
+     * @memberOf DataTableBodyComponent
+     */
+    onBodyScroll(event: any): void;
+    /**
+     * Updates the page given a direction.
+     *
+     * @param {string} direction
+     *
+     * @memberOf DataTableBodyComponent
+     */
+    updatePage(direction: string): void;
+    /**
+     * Updates the rows in the view port
+     *
+     * @memberOf DataTableBodyComponent
+     */
     updateRows(): void;
     /**
      * Calculate row height based on the expanded state of the row.
      *
-     * @param row  the row for which the height need to be calculated.
-     * @returns {number}  height of the row.
+     * @param {*} row the row for which the height need to be calculated.
+     * @returns {number} height of the row.
+     *
+     * @memberOf DataTableBodyComponent
      */
     getRowHeight(row: any): number;
     /**
@@ -79,17 +119,41 @@ export declare class DataTableBodyComponent {
      * case the positionY of the translate3d for row2 would be the sum of all the
      * heights of the rows before it (i.e. row0 and row1).
      *
-     * @param row The row that needs to be placed in the 2D space.
-     * @returns {{styles: string}}  Returns the CSS3 style to be applied
+     * @param {*} row The row that needs to be placed in the 2D space.
+     * @returns {*} Returns the CSS3 style to be applied
+     *
+     * @memberOf DataTableBodyComponent
      */
     getRowsStyles(row: any): any;
+    /**
+     * Hides the loading indicator
+     *
+     *
+     * @memberOf DataTableBodyComponent
+     */
     hideIndicator(): void;
+    /**
+     * Updates the index of the rows in the viewport
+     *
+     * @memberOf DataTableBodyComponent
+     */
     updateIndexes(): void;
     /**
-     *  Refreshes the full Row Height cache.  Should be used
-     *  when the entire row array state has changed.
+     * Refreshes the full Row Height cache.  Should be used
+     * when the entire row array state has changed.
+     *
+     * @returns {void}
+     *
+     * @memberOf DataTableBodyComponent
      */
     refreshRowHeightCache(): void;
+    /**
+     * Gets the index for the view port
+     *
+     * @returns {number}
+     *
+     * @memberOf DataTableBodyComponent
+     */
     getAdjustedViewPortIndex(): number;
     /**
      * Toggle the Expansion of the row i.e. if the row is expanded then it will
@@ -97,13 +161,23 @@ export declare class DataTableBodyComponent {
      * a part of the row object itself as we have to preserve the expanded row
      * status in case of sorting and filtering of the row set.
      *
-     * @param row The row for which the expansion needs to be toggled.
+     * @param {*} row The row for which the expansion needs to be toggled.
+     *
+     * @memberOf DataTableBodyComponent
      */
     toggleRowExpansion(row: any): void;
     /**
      * Expand/Collapse all the rows no matter what their state is.
-     * @param expanded When true, all rows are expanded and when false, all rows will be collapsed.
+     *
+     * @param {boolean} expanded When true, all rows are expanded and when false, all rows will be collapsed.
+     *
+     * @memberOf DataTableBodyComponent
      */
     toggleAllRows(expanded: boolean): void;
+    /**
+     * Recalculates the table
+     *
+     * @memberOf DataTableBodyComponent
+     */
     recalcLayout(): void;
 }

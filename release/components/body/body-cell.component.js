@@ -69,10 +69,10 @@ var DataTableBodyCellComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    DataTableBodyCellComponent.prototype.onFocus = function (event) {
+    DataTableBodyCellComponent.prototype.onFocus = function () {
         this.isFocused = true;
     };
-    DataTableBodyCellComponent.prototype.onBlur = function (event) {
+    DataTableBodyCellComponent.prototype.onBlur = function () {
         this.isFocused = false;
     };
     DataTableBodyCellComponent.prototype.onClick = function (event) {
@@ -129,8 +129,7 @@ var DataTableBodyCellComponent = (function () {
     DataTableBodyCellComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'datatable-body-cell',
-                    template: "\n    <div class=\"datatable-body-cell-label\">\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [innerHTML]=\"value\">\n      </span>\n      <template\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngOutletContext]=\"{ value: value, row: row, column: column }\">\n      </template>\n    </div>\n  ",
-                    changeDetection: core_1.ChangeDetectionStrategy.OnPush
+                    template: "\n    <div class=\"datatable-body-cell-label\">\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [innerHTML]=\"value\">\n      </span>\n      <template\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngOutletContext]=\"{ value: value, row: row, column: column }\">\n      </template>\n    </div>\n  "
                 },] },
     ];
     /** @nocollapse */
@@ -150,8 +149,8 @@ var DataTableBodyCellComponent = (function () {
         'isSortDescending': [{ type: core_1.HostBinding, args: ['class.sort-desc',] },],
         'width': [{ type: core_1.HostBinding, args: ['style.width.px',] },],
         'height': [{ type: core_1.HostBinding, args: ['style.height',] },],
-        'onFocus': [{ type: core_1.HostListener, args: ['focus', ['$event'],] },],
-        'onBlur': [{ type: core_1.HostListener, args: ['blur', ['$event'],] },],
+        'onFocus': [{ type: core_1.HostListener, args: ['focus',] },],
+        'onBlur': [{ type: core_1.HostListener, args: ['blur',] },],
         'onClick': [{ type: core_1.HostListener, args: ['click', ['$event'],] },],
         'onDblClick': [{ type: core_1.HostListener, args: ['dblclick', ['$event'],] },],
         'onKeyDown': [{ type: core_1.HostListener, args: ['keydown', ['$event'],] },],

@@ -2,7 +2,7 @@
  * Calculates the Total Flex Grow
  * @param {array}
  */
-export declare function getTotalFlexGrow(columns: any): number;
+export declare function getTotalFlexGrow(columns: any[]): number;
 /**
  * Adjusts the column widths.
  * Inspired by: https://github.com/facebook/fixed-data-table/blob/master/src/FixedDataTableWidthHelper.js

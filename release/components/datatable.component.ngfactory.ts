@@ -71,9 +71,10 @@ export class Wrapper_DatatableComponent {
   subscription5:any;
   subscription6:any;
   subscription7:any;
-  constructor(p0:any,p1:any,p2:any) {
+  subscription8:any;
+  constructor(p0:any,p1:any) {
     this._changed = false;
-    this.context = new import0.DatatableComponent(p0,p1,p2);
+    this.context = new import0.DatatableComponent(p0,p1);
     this._expr_0 = import1.UNINITIALIZED;
     this._expr_1 = import1.UNINITIALIZED;
     this._expr_2 = import1.UNINITIALIZED;
@@ -117,6 +118,7 @@ export class Wrapper_DatatableComponent {
     (this.subscription5 && this.subscription5.unsubscribe());
     (this.subscription6 && this.subscription6.unsubscribe());
     (this.subscription7 && this.subscription7.unsubscribe());
+    (this.subscription8 && this.subscription8.unsubscribe());
   }
   check_rows(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_0,currValue))) {
@@ -341,7 +343,7 @@ export class Wrapper_DatatableComponent {
     }
     return result;
   }
-  subscribe(view:import2.AppView<any>,_eventHandler:any,emit0:boolean,emit1:boolean,emit2:boolean,emit3:boolean,emit4:boolean,emit5:boolean,emit6:boolean,emit7:boolean):void {
+  subscribe(view:import2.AppView<any>,_eventHandler:any,emit0:boolean,emit1:boolean,emit2:boolean,emit3:boolean,emit4:boolean,emit5:boolean,emit6:boolean,emit7:boolean,emit8:boolean):void {
     this._eventHandler = _eventHandler;
     if (emit0) { (this.subscription0 = this.context.scroll.subscribe(_eventHandler.bind(view,'scroll'))); }
     if (emit1) { (this.subscription1 = this.context.activate.subscribe(_eventHandler.bind(view,'activate'))); }
@@ -351,6 +353,7 @@ export class Wrapper_DatatableComponent {
     if (emit5) { (this.subscription5 = this.context.detailToggle.subscribe(_eventHandler.bind(view,'detailToggle'))); }
     if (emit6) { (this.subscription6 = this.context.reorder.subscribe(_eventHandler.bind(view,'reorder'))); }
     if (emit7) { (this.subscription7 = this.context.resize.subscribe(_eventHandler.bind(view,'resize'))); }
+    if (emit8) { (this.subscription8 = this.context.rowContextmenu.subscribe(_eventHandler.bind(view,'rowContextmenu'))); }
   }
 }
 var renderType_DatatableComponent_Host:import4.RenderComponentType = import3.createRenderComponentType('',0,import5.ViewEncapsulation.None,([] as any[]),{});
@@ -364,9 +367,9 @@ class View_DatatableComponent_Host0 extends import2.AppView<any> {
     super(View_DatatableComponent_Host0,renderType_DatatableComponent_Host,import7.ViewType.HOST,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
-    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'datatable',import3.EMPTY_INLINE_ARRAY,rootSelector,(null as any));
+    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'swui-datatable',import3.EMPTY_INLINE_ARRAY,rootSelector,(null as any));
     this.compView_0 = new View_DatatableComponent0(this.viewUtils,this,0,this._el_0);
-    this._DatatableComponent_0_3 = new Wrapper_DatatableComponent(this.renderer,new import9.ElementRef(this._el_0),this.compView_0.ref);
+    this._DatatableComponent_0_3 = new Wrapper_DatatableComponent(this.renderer,new import9.ElementRef(this._el_0));
     this._query_DataTableColumnDirective_0_0 = new import6.QueryList<any>();
     this._query_DatatableRowDetailDirective_0_1 = new import6.QueryList<any>();
     this._query_DatatableRowDetailDirective_0_1.reset(([] as any[]));
@@ -381,7 +384,7 @@ class View_DatatableComponent_Host0 extends import2.AppView<any> {
     return notFoundResult;
   }
   detectChangesInternal(throwOnChange:boolean):void {
-    if (this._DatatableComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange)) { this.compView_0.markAsCheckOnce(); }
+    this._DatatableComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange);
     if (!throwOnChange) { if (this._query_DataTableColumnDirective_0_0.dirty) {
       this._query_DataTableColumnDirective_0_0.reset(([] as any[]));
       this._DatatableComponent_0_3.context.columnTemplates = this._query_DataTableColumnDirective_0_0;
@@ -405,7 +408,7 @@ class View_DatatableComponent_Host0 extends import2.AppView<any> {
     return result;
   }
 }
-export const DatatableComponentNgFactory:import8.ComponentFactory<import0.DatatableComponent> = new import8.ComponentFactory<import0.DatatableComponent>('datatable',View_DatatableComponent_Host0,import0.DatatableComponent);
+export const DatatableComponentNgFactory:import8.ComponentFactory<import0.DatatableComponent> = new import8.ComponentFactory<import0.DatatableComponent>('swui-datatable',View_DatatableComponent_Host0,import0.DatatableComponent);
 const styles_DatatableComponent:any[] = ([] as any[]);
 var renderType_DatatableComponent:import4.RenderComponentType = import3.createRenderComponentType('',0,import5.ViewEncapsulation.None,styles_DatatableComponent,{});
 export class View_DatatableComponent0 extends import2.AppView<import0.DatatableComponent> {
@@ -431,7 +434,7 @@ export class View_DatatableComponent0 extends import2.AppView<import0.DatatableC
   _text_9:any;
   _text_10:any;
   constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any) {
-    super(View_DatatableComponent0,renderType_DatatableComponent,import7.ViewType.COMPONENT,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckOnce);
+    super(View_DatatableComponent0,renderType_DatatableComponent,import7.ViewType.COMPONENT,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
     const parentRenderNode:any = this.renderer.createViewRoot(this.parentElement);
@@ -459,8 +462,8 @@ export class View_DatatableComponent0 extends import2.AppView<import0.DatatableC
     this._text_10 = this.renderer.createText(parentRenderNode,'\n  ',(null as any));
     var disposable_0:Function = import3.subscribeToRenderElement(this,this._el_1,new import3.InlineArray2(2,'visible',(null as any)),this.eventHandler(this.handleEvent_1));
     this._VisibilityDirective_1_3.subscribe(this,this.eventHandler(this.handleEvent_1),true);
-    var disposable_1:Function = import3.subscribeToRenderElement(this,this._el_5,new import3.InlineArray16(10,'page',(null as any),'activate',(null as any),'select',(null as any),'detailToggle',(null as any),'scroll',(null as any)),this.eventHandler(this.handleEvent_5));
-    this._DataTableBodyComponent_5_3.subscribe(this,this.eventHandler(this.handleEvent_5),true,true,true,true,true);
+    var disposable_1:Function = import3.subscribeToRenderElement(this,this._el_5,new import3.InlineArray16(12,'page',(null as any),'activate',(null as any),'rowContextmenu',(null as any),'select',(null as any),'detailToggle',(null as any),'scroll',(null as any)),this.eventHandler(this.handleEvent_5));
+    this._DataTableBodyComponent_5_3.subscribe(this,this.eventHandler(this.handleEvent_5),true,true,true,true,true,true);
     this._viewQuery_DataTableBodyComponent_0.reset([this._DataTableBodyComponent_5_3.context]);
     this.context.bodyComponent = this._viewQuery_DataTableBodyComponent_0.first;
     this.init((null as any),((<any>this.renderer).directRenderer? (null as any): [
@@ -537,7 +540,7 @@ export class View_DatatableComponent0 extends import2.AppView<import0.DatatableC
     this._DataTableBodyComponent_5_3.check_innerWidth(currVal_5_0_18,throwOnChange,false);
     const currVal_5_0_19:any = this.context.bodyHeight;
     this._DataTableBodyComponent_5_3.check_bodyHeight(currVal_5_0_19,throwOnChange,false);
-    if (this._DataTableBodyComponent_5_3.ngDoCheck(this,this._el_5,throwOnChange)) { this.compView_5.markAsCheckOnce(); }
+    this._DataTableBodyComponent_5_3.ngDoCheck(this,this._el_5,throwOnChange);
     const currVal_8_0_0:any = this.context.footerHeight;
     this._NgIf_8_6.check_ngIf(currVal_8_0_0,throwOnChange,false);
     this._NgIf_8_6.ngDoCheck(this,this._anchor_8,throwOnChange);
@@ -579,17 +582,21 @@ export class View_DatatableComponent0 extends import2.AppView<import0.DatatableC
       const pd_sub_1:any = ((<any>this.context.activate.emit($event)) !== false);
       result = (pd_sub_1 && result);
     }
-    if ((eventName == 'select')) {
-      const pd_sub_2:any = ((<any>this.context.select.emit($event)) !== false);
+    if ((eventName == 'rowContextmenu')) {
+      const pd_sub_2:any = ((<any>this.context.rowContextmenu.emit($event)) !== false);
       result = (pd_sub_2 && result);
     }
-    if ((eventName == 'detailToggle')) {
-      const pd_sub_3:any = ((<any>this.context.detailToggle.emit($event)) !== false);
+    if ((eventName == 'select')) {
+      const pd_sub_3:any = ((<any>this.context.select.emit($event)) !== false);
       result = (pd_sub_3 && result);
     }
-    if ((eventName == 'scroll')) {
-      const pd_sub_4:any = ((<any>this.context.onBodyScroll($event)) !== false);
+    if ((eventName == 'detailToggle')) {
+      const pd_sub_4:any = ((<any>this.context.detailToggle.emit($event)) !== false);
       result = (pd_sub_4 && result);
+    }
+    if ((eventName == 'scroll')) {
+      const pd_sub_5:any = ((<any>this.context.onBodyScroll($event)) !== false);
+      result = (pd_sub_5 && result);
     }
     return result;
   }

@@ -123,11 +123,11 @@ export class Wrapper_DataTableBodyCellComponent {
   handleEvent(eventName:string,$event:any):boolean {
     var result:boolean = true;
     if ((eventName == 'focus')) {
-      const pd_sub_0:any = ((<any>this.context.onFocus($event)) !== false);
+      const pd_sub_0:any = ((<any>this.context.onFocus()) !== false);
       result = (pd_sub_0 && result);
     }
     if ((eventName == 'blur')) {
-      const pd_sub_1:any = ((<any>this.context.onBlur($event)) !== false);
+      const pd_sub_1:any = ((<any>this.context.onBlur()) !== false);
       result = (pd_sub_1 && result);
     }
     if ((eventName == 'click')) {
@@ -171,7 +171,7 @@ class View_DataTableBodyCellComponent_Host0 extends import2.AppView<any> {
     return notFoundResult;
   }
   detectChangesInternal(throwOnChange:boolean):void {
-    if (this._DataTableBodyCellComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange)) { this.compView_0.markAsCheckOnce(); }
+    this._DataTableBodyCellComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange);
     this._DataTableBodyCellComponent_0_3.checkHost(this,this.compView_0,this._el_0,throwOnChange);
     this.compView_0.detectChanges(throwOnChange);
   }
@@ -208,7 +208,7 @@ export class View_DataTableBodyCellComponent0 extends import2.AppView<import0.Da
   _text_6:any;
   _text_7:any;
   constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any) {
-    super(View_DataTableBodyCellComponent0,renderType_DataTableBodyCellComponent,import7.ViewType.COMPONENT,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckOnce);
+    super(View_DataTableBodyCellComponent0,renderType_DataTableBodyCellComponent,import7.ViewType.COMPONENT,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
     const parentRenderNode:any = this.renderer.createViewRoot(this.parentElement);

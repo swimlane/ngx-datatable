@@ -4,7 +4,7 @@
  * @param  {string} str
  * @return {string} camel case string
  */
-export declare function camelCase(str: any): string;
+export declare function camelCase(str: string): string;
 /**
  * Converts strings from camel case to words
  * http://stackoverflow.com/questions/7225407/convert-camelcasetext-to-camel-case-text
@@ -13,4 +13,4 @@ export declare function camelCase(str: any): string;
  * @param {any} str
  * @returns string
  */
-export declare function deCamelCase(str: any): string;
+export declare function deCamelCase(str: string): string;

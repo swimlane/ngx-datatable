@@ -1,1 +1,1 @@
-export declare function translateXY(styles: any, x: any, y: any): void;
+export declare function translateXY(styles: any, x: number, y: number): void;

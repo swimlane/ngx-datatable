@@ -16,10 +16,10 @@ export declare class DataTableBodyCellComponent {
     private element;
     private _sorts;
     constructor(element: ElementRef, renderer: Renderer);
-    onFocus(event: any): void;
-    onBlur(event: any): void;
-    onClick(event: any): void;
-    onDblClick(event: any): void;
-    onKeyDown(event: any): void;
-    calcSortDir(sorts: any): any;
+    onFocus(): void;
+    onBlur(): void;
+    onClick(event: MouseEvent): void;
+    onDblClick(event: MouseEvent): void;
+    onKeyDown(event: KeyboardEvent): void;
+    calcSortDir(sorts: any[]): any;
 }

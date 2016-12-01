@@ -26,9 +26,9 @@ export class Wrapper_ScrollerComponent {
   /*private*/ _expr_4:any;
   /*private*/ _expr_5:any;
   subscription0:any;
-  constructor(p0:any) {
+  constructor(p0:any,p1:any) {
     this._changed = false;
-    this.context = new import0.ScrollerComponent(p0);
+    this.context = new import0.ScrollerComponent(p0,p1);
     this._expr_0 = import1.UNINITIALIZED;
     this._expr_1 = import1.UNINITIALIZED;
     this._expr_2 = import1.UNINITIALIZED;
@@ -108,7 +108,7 @@ class View_ScrollerComponent_Host0 extends import2.AppView<any> {
   createInternal(rootSelector:string):import8.ComponentRef<any> {
     this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'datatable-scroller',import3.EMPTY_INLINE_ARRAY,rootSelector,(null as any));
     this.compView_0 = new View_ScrollerComponent0(this.viewUtils,this,0,this._el_0);
-    this._ScrollerComponent_0_3 = new Wrapper_ScrollerComponent(new import9.ElementRef(this._el_0));
+    this._ScrollerComponent_0_3 = new Wrapper_ScrollerComponent(new import9.ElementRef(this._el_0),this.renderer);
     this.compView_0.create(this._ScrollerComponent_0_3.context);
     this.init(this._el_0,((<any>this.renderer).directRenderer? (null as any): [this._el_0]),(null as any));
     return new import8.ComponentRef_<any>(0,this,this._el_0,this._ScrollerComponent_0_3.context);
@@ -118,7 +118,7 @@ class View_ScrollerComponent_Host0 extends import2.AppView<any> {
     return notFoundResult;
   }
   detectChangesInternal(throwOnChange:boolean):void {
-    if (this._ScrollerComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange)) { this.compView_0.markAsCheckOnce(); }
+    this._ScrollerComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange);
     this._ScrollerComponent_0_3.checkHost(this,this.compView_0,this._el_0,throwOnChange);
     this.compView_0.detectChanges(throwOnChange);
   }
@@ -140,7 +140,7 @@ export class View_ScrollerComponent0 extends import2.AppView<import0.ScrollerCom
   _text_0:any;
   _text_1:any;
   constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any) {
-    super(View_ScrollerComponent0,renderType_ScrollerComponent,import7.ViewType.COMPONENT,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckOnce);
+    super(View_ScrollerComponent0,renderType_ScrollerComponent,import7.ViewType.COMPONENT,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
     const parentRenderNode:any = this.renderer.createViewRoot(this.parentElement);

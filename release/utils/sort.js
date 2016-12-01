@@ -73,7 +73,7 @@ exports.orderByComparator = orderByComparator;
  * @returns
  */
 function sortRows(rows, columns, dirs) {
-    if (!rows || !dirs || !columns)
+    if (!rows || !dirs || !dirs.length || !columns)
         return rows;
     var temp = rows.slice();
     var cols = columns.reduce(function (obj, col) {

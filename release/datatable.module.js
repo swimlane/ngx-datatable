@@ -29,13 +29,19 @@ var Angular2DataTableModule = (function () {
                         components_1.DataTableBodyRowComponent,
                         components_1.DataTableRowWrapperComponent,
                         components_1.DatatableRowDetailDirective,
+                        components_1.DatatableRowDetailTemplateDirective,
                         components_1.DataTableBodyCellComponent,
-                        components_1.DataTableSelectionComponent
+                        components_1.DataTableSelectionComponent,
+                        components_1.DataTableColumnHeaderDirective,
+                        components_1.DataTableColumnCellDirective
                     ],
                     exports: [
                         components_1.DatatableComponent,
                         components_1.DatatableRowDetailDirective,
-                        components_1.DataTableColumnDirective
+                        components_1.DatatableRowDetailTemplateDirective,
+                        components_1.DataTableColumnDirective,
+                        components_1.DataTableColumnHeaderDirective,
+                        components_1.DataTableColumnCellDirective
                     ]
                 },] },
     ];

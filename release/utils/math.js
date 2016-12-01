@@ -97,15 +97,15 @@ function scaleColumns(colsByGroup, maxWidth, totalFlexGrow) {
  */
 function forceFillColumnWidths(allColumns, expectedWidth, startIdx, defaultColWidth) {
     if (defaultColWidth === void 0) { defaultColWidth = 300; }
-    var columnsToResize = startIdx > -1 ?
-        allColumns.slice(startIdx, allColumns.length).filter(function (c) { return c.canAutoResize !== false; }) :
+    var columnsToResize = startIdx > -1 && startIdx + 1 < allColumns.length ?
+        allColumns.slice(startIdx + 1, allColumns.length).filter(function (c) { return c.canAutoResize !== false; }) :
         allColumns.filter(function (c) { return c.canAutoResize !== false; });
     for (var _i = 0, columnsToResize_1 = columnsToResize; _i < columnsToResize_1.length; _i++) {
         var column = columnsToResize_1[_i];
         if (!column.$$oldWidth) {
             column.$$oldWidth = column.width;
         }
-        // Initialize the starting width to original 
+        // Initialize the starting width to original
         // width whenever there is a resize/initialize event.
         column.width = column.$$oldWidth;
     }

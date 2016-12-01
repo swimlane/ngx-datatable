@@ -29,6 +29,7 @@ export class Wrapper_DataTableRowWrapperComponent {
   /*private*/ _expr_1:any;
   /*private*/ _expr_2:any;
   /*private*/ _expr_3:any;
+  subscription0:any;
   constructor(p0:any,p1:any) {
     this._changed = false;
     this.context = new import0.DataTableRowWrapperComponent(p0,p1);
@@ -40,6 +41,7 @@ export class Wrapper_DataTableRowWrapperComponent {
   ngOnDetach(view:import2.AppView<any>,componentView:import2.AppView<any>,el:any):void {
   }
   ngOnDestroy():void {
+    (this.subscription0 && this.subscription0.unsubscribe());
   }
   check_rowDetailTemplate(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_0,currValue))) {
@@ -78,10 +80,15 @@ export class Wrapper_DataTableRowWrapperComponent {
   }
   handleEvent(eventName:string,$event:any):boolean {
     var result:boolean = true;
+    if ((eventName == 'contextmenu')) {
+      const pd_sub_0:any = ((<any>this.context.onContextmenu($event)) !== false);
+      result = (pd_sub_0 && result);
+    }
     return result;
   }
-  subscribe(view:import2.AppView<any>,_eventHandler:any):void {
+  subscribe(view:import2.AppView<any>,_eventHandler:any,emit0:boolean):void {
     this._eventHandler = _eventHandler;
+    if (emit0) { (this.subscription0 = this.context.rowContextmenu.subscribe(_eventHandler.bind(view,'rowContextmenu'))); }
   }
 }
 var renderType_DataTableRowWrapperComponent_Host:import4.RenderComponentType = import3.createRenderComponentType('',0,import5.ViewEncapsulation.None,([] as any[]),{});
@@ -97,7 +104,8 @@ class View_DataTableRowWrapperComponent_Host0 extends import2.AppView<any> {
     this.compView_0 = new View_DataTableRowWrapperComponent0(this.viewUtils,this,0,this._el_0);
     this._DataTableRowWrapperComponent_0_3 = new Wrapper_DataTableRowWrapperComponent(new import8.ElementRef(this._el_0),this.renderer);
     this.compView_0.create(this._DataTableRowWrapperComponent_0_3.context);
-    this.init(this._el_0,((<any>this.renderer).directRenderer? (null as any): [this._el_0]),(null as any));
+    var disposable_0:Function = import3.subscribeToRenderElement(this,this._el_0,new import3.InlineArray2(2,'contextmenu',(null as any)),this.eventHandler(this.handleEvent_0));
+    this.init(this._el_0,((<any>this.renderer).directRenderer? (null as any): [this._el_0]),[disposable_0]);
     return new import7.ComponentRef_<any>(0,this,this._el_0,this._DataTableRowWrapperComponent_0_3.context);
   }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
@@ -105,17 +113,24 @@ class View_DataTableRowWrapperComponent_Host0 extends import2.AppView<any> {
     return notFoundResult;
   }
   detectChangesInternal(throwOnChange:boolean):void {
-    if (this._DataTableRowWrapperComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange)) { this.compView_0.markAsCheckOnce(); }
+    this._DataTableRowWrapperComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange);
     this.compView_0.detectChanges(throwOnChange);
   }
   destroyInternal():void {
     this.compView_0.destroy();
+    this._DataTableRowWrapperComponent_0_3.ngOnDestroy();
   }
   visitRootNodesInternal(cb:any,ctx:any):void {
     cb(this._el_0,ctx);
   }
   visitProjectableNodesInternal(nodeIndex:number,ngContentIndex:number,cb:any,ctx:any):void {
     if (((nodeIndex == 0) && (ngContentIndex == 0))) {  }
+  }
+  handleEvent_0(eventName:string,$event:any):boolean {
+    this.compView_0.markPathToRootAsCheckOnce();
+    var result:boolean = true;
+    result = (this._DataTableRowWrapperComponent_0_3.handleEvent(eventName,$event) && result);
+    return result;
   }
 }
 export const DataTableRowWrapperComponentNgFactory:import7.ComponentFactory<import0.DataTableRowWrapperComponent> = new import7.ComponentFactory<import0.DataTableRowWrapperComponent>('datatable-row-wrapper',View_DataTableRowWrapperComponent_Host0,import0.DataTableRowWrapperComponent);
@@ -130,7 +145,7 @@ export class View_DataTableRowWrapperComponent0 extends import2.AppView<import0.
   _NgIf_2_6:import10.Wrapper_NgIf;
   _text_3:any;
   constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any) {
-    super(View_DataTableRowWrapperComponent0,renderType_DataTableRowWrapperComponent,import6.ViewType.COMPONENT,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckOnce);
+    super(View_DataTableRowWrapperComponent0,renderType_DataTableRowWrapperComponent,import6.ViewType.COMPONENT,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import7.ComponentRef<any> {
     const parentRenderNode:any = this.renderer.createViewRoot(this.parentElement);
