@@ -15,7 +15,7 @@ import { Component } from '@angular/core';
         [rowHeight]="'auto'"
         [rows]="rows">
         <swui-datatable-column name="Name">
-          <template let-value="value" let-row="row">
+          <template swui-datatable-cell-template let-value="value" let-row="row">
             <span
               title="Double click to edit"
               (dblclick)="editing[row.$$index + '-name'] = true"
@@ -32,7 +32,7 @@ import { Component } from '@angular/core';
           </template>
         </swui-datatable-column>
         <swui-datatable-column name="Gender">
-          <template let-row="row" let-value="value">
+          <template swui-datatable-cell-template let-row="row" let-value="value">
              <span
               title="Double click to edit"
               (dblclick)="editing[row.$$index + '-gender'] = true"
@@ -49,7 +49,7 @@ import { Component } from '@angular/core';
           </template>
         </swui-datatable-column>
         <swui-datatable-column name="Age">
-          <template let-value="value">
+          <template swui-datatable-cell-template let-value="value">
             {{value}}
           </template>
         </swui-datatable-column>

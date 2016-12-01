@@ -14,7 +14,7 @@ import { Component } from '@angular/core';
           [headerHeight]="50"
           [footerHeight]="50"
           [rowHeight]="'auto'">
-          </swui-datatable>
+        </swui-datatable>
       </div>
       <div class='selected-column'>
         <h4>Available Columns</h4>

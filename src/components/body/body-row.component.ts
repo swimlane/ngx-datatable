@@ -1,5 +1,5 @@
 import {
-  Component, Input, HostBinding, ElementRef, ChangeDetectionStrategy,
+  Component, Input, HostBinding, ElementRef,
   Renderer, Output, EventEmitter , HostListener
 } from '@angular/core';
 
@@ -24,8 +24,7 @@ import {
         (activate)="onActivate($event, ii)">
       </datatable-body-cell>
     </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class DataTableBodyRowComponent {
 

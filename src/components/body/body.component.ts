@@ -1,6 +1,6 @@
 import {
   Component, Output, EventEmitter, Input, HostBinding,
-  ViewChild, ElementRef, Renderer, ChangeDetectionStrategy
+  ViewChild, ElementRef, Renderer
 } from '@angular/core';
 import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '../../utils';
 import { SelectionType } from '../../types';
@@ -30,7 +30,7 @@ import { ScrollerComponent } from './scroller.component';
         [scrollWidth]="columnGroupWidths.total"
         (scroll)="onBodyScroll($event)">
         <datatable-row-wrapper
-          *ngFor="let row of temp; let i = index; trackBy: rowTrackingFn"
+          *ngFor="let row of temp; let i = index; trackBy: rowTrackingFn;"
           [ngStyle]="getRowsStyles(row)"
           [rowDetailTemplate]="rowDetailTemplate"
           [detailRowHeight]="detailRowHeight"
@@ -55,8 +55,7 @@ import { ScrollerComponent } from './scroller.component';
         [innerHTML]="emptyMessage">
       </div>
     </datatable-selection>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class DataTableBodyComponent {
 
@@ -157,8 +156,30 @@ export class DataTableBodyComponent {
 
   @ViewChild(ScrollerComponent) scroller: ScrollerComponent;
 
+  /**
+   * Returns if selection is enabled.
+   * 
+   * @readonly
+   * @type {boolean}
+   * @memberOf DataTableBodyComponent
+   */
   get selectEnabled(): boolean {
     return !!this.selectionType;
+  }
+
+  /**
+   * Property that would calculate the height of scroll bar
+   * based on the row heights cache for virtual scroll. Other scenarios
+   * calculate scroll height automatically (as height will be undefined).
+   * 
+   * @readonly
+   * @type {number}
+   * @memberOf DataTableBodyComponent
+   */
+  get scrollHeight(): number {
+    if(this.scrollbarV) {
+      return this.rowHeightsCache.query(this.rowCount - 1);
+    }
   }
 
   private rowHeightsCache: RowHeightCache = new RowHeightCache();
@@ -175,17 +196,6 @@ export class DataTableBodyComponent {
   private _offset: number;
   private _pageSize: number;
 
-  /**
-   * Property that would calculate the height of scroll bar
-   * based on the row heights cache for virtual scroll. Other scenarios
-   * calculate scroll height automatically (as height will be undefined).
-   */
-  get scrollHeight(): number {
-    if(this.scrollbarV) {
-      return this.rowHeightsCache.query(this.rowCount - 1);
-    }
-  }
-
   constructor(element: ElementRef, renderer: Renderer) {
     renderer.setElementClass(element.nativeElement, 'datatable-body', true);
 
@@ -199,6 +209,13 @@ export class DataTableBodyComponent {
     }.bind(this);
   }
 
+  /**
+   * Updates the Y offset given a new offset.
+   * 
+   * @param {number} [offset]
+   * 
+   * @memberOf DataTableBodyComponent
+   */
   updateOffsetY(offset?: number): void {
     if(this.scrollbarV && offset) {
       // First get the row Index that we need to move to.
@@ -209,7 +226,14 @@ export class DataTableBodyComponent {
     this.scroller.setOffset(offset || 0);
   }
 
-  // was unable to find the fitting type of event
+  /**
+   * Body was scrolled, this is mainly useful for
+   * when a user is server-side pagination via virtual scroll.
+   * 
+   * @param {*} event
+   * 
+   * @memberOf DataTableBodyComponent
+   */
   onBodyScroll(event: any): void {
     const scrollYPos: number = event.scrollYPos;
     const scrollXPos: number = event.scrollXPos;
@@ -231,6 +255,13 @@ export class DataTableBodyComponent {
     this.updateRows();
   }
 
+  /**
+   * Updates the page given a direction.
+   * 
+   * @param {string} direction
+   * 
+   * @memberOf DataTableBodyComponent
+   */
   updatePage(direction: string): void {
     let offset = this.indexes.first / this.pageSize;
 
@@ -245,6 +276,11 @@ export class DataTableBodyComponent {
     }
   }
 
+  /**
+   * Updates the rows in the view port
+   * 
+   * @memberOf DataTableBodyComponent
+   */
   updateRows(): void {
     const { first, last } = this.indexes;
     let rowIndex = first;
@@ -268,9 +304,11 @@ export class DataTableBodyComponent {
 
   /**
    * Calculate row height based on the expanded state of the row.
-   *
-   * @param row  the row for which the height need to be calculated.
-   * @returns {number}  height of the row.
+   * 
+   * @param {*} row the row for which the height need to be calculated.
+   * @returns {number} height of the row.
+   * 
+   * @memberOf DataTableBodyComponent
    */
   getRowHeight(row: any): number {
     // Adding detail row height if its expanded.
@@ -292,9 +330,11 @@ export class DataTableBodyComponent {
    * be able to determine which row is of what height before hand.  In the above
    * case the positionY of the translate3d for row2 would be the sum of all the
    * heights of the rows before it (i.e. row0 and row1).
-   *
-   * @param row The row that needs to be placed in the 2D space.
-   * @returns {{styles: string}}  Returns the CSS3 style to be applied
+   * 
+   * @param {*} row The row that needs to be placed in the 2D space.
+   * @returns {*} Returns the CSS3 style to be applied
+   * 
+   * @memberOf DataTableBodyComponent
    */
   getRowsStyles(row: any): any {
     const rowHeight = this.getRowHeight(row);
@@ -317,10 +357,21 @@ export class DataTableBodyComponent {
     return styles;
   }
 
+  /**
+   * Hides the loading indicator
+   * 
+   * 
+   * @memberOf DataTableBodyComponent
+   */
   hideIndicator(): void {
     setTimeout(() => this.loadingIndicator = false, 500);
   }
 
+  /**
+   * Updates the index of the rows in the viewport
+   * 
+   * @memberOf DataTableBodyComponent
+   */
   updateIndexes(): void {
     let first = 0;
     let last = 0;
@@ -341,8 +392,12 @@ export class DataTableBodyComponent {
   }
 
   /**
-   *  Refreshes the full Row Height cache.  Should be used
-   *  when the entire row array state has changed.
+   * Refreshes the full Row Height cache.  Should be used
+   * when the entire row array state has changed.
+   * 
+   * @returns {void}
+   * 
+   * @memberOf DataTableBodyComponent
    */
   refreshRowHeightCache(): void {
     if(!this.scrollbarV) return;
@@ -359,6 +414,13 @@ export class DataTableBodyComponent {
     }
   }
 
+  /**
+   * Gets the index for the view port
+   * 
+   * @returns {number}
+   * 
+   * @memberOf DataTableBodyComponent
+   */
   getAdjustedViewPortIndex(): number {
     // Capture the row index of the first row that is visible on the viewport.
     // If the scroll bar is just below the row which is highlighted then make that as the
@@ -378,8 +440,10 @@ export class DataTableBodyComponent {
    * collapse and vice versa.   Note that the expanded status is stored as
    * a part of the row object itself as we have to preserve the expanded row
    * status in case of sorting and filtering of the row set.
-   *
-   * @param row The row for which the expansion needs to be toggled.
+   * 
+   * @param {*} row The row for which the expansion needs to be toggled.
+   * 
+   * @memberOf DataTableBodyComponent
    */
   toggleRowExpansion(row: any): void {
     // Capture the row index of the first row that is visible on the viewport.
@@ -402,7 +466,10 @@ export class DataTableBodyComponent {
 
   /**
    * Expand/Collapse all the rows no matter what their state is.
-   * @param expanded When true, all rows are expanded and when false, all rows will be collapsed.
+   * 
+   * @param {boolean} expanded When true, all rows are expanded and when false, all rows will be collapsed.
+   * 
+   * @memberOf DataTableBodyComponent
    */
   toggleAllRows(expanded: boolean): void {
     let rowExpanded = expanded ? 1 : 0;
@@ -426,6 +493,11 @@ export class DataTableBodyComponent {
     });
   }
 
+  /**
+   * Recalculates the table
+   * 
+   * @memberOf DataTableBodyComponent
+   */
   recalcLayout(): void {
     this.refreshRowHeightCache();
     this.updateIndexes();

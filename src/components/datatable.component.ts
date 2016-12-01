@@ -1,10 +1,8 @@
 import {
   Component, Input, Output, ElementRef, EventEmitter, ViewChild,
   HostListener, ContentChildren, OnInit, QueryList, AfterViewInit,
-  HostBinding, Renderer, ContentChild, TemplateRef, IterableDiffer,
-  ChangeDetectorRef, KeyValueDiffers, SimpleChanges, DoCheck, OnChanges
+  HostBinding, Renderer, ContentChild, TemplateRef
 } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
 
 import { forceFillColumnWidths, adjustColumnWidths, sortRows } from '../utils';
 import { ColumnMode, SortType, SelectionType } from '../types';
@@ -78,35 +76,19 @@ import { scrollbarWidth, setColumnDefaults, translateTemplates } from '../utils'
     </div>
   `
 })
-export class DatatableComponent implements OnInit, DoCheck, OnChanges, AfterViewInit {
+export class DatatableComponent implements OnInit, AfterViewInit {
 
   // Rows
   @Input() set rows(val: any) {
-    /*
-    // if a observable was passed, lets convert to array
-    if(val instanceof Observable) {
-      val.concatMap((v) => v)
-         .toArray()
-         .subscribe((r) => {
-           this.rows = r;
-           this.cdr.markForCheck();
-         });
-    } else {
-       // auto sort on new updates
-      if (!this.externalSorting) {
-        val = sortRows(val, this.columns, this.sorts);
-      }
-
-      this._rows = val;
-
-      // recalculate sizes/etc
-      this.recalculate();
+    // auto sort on new updates
+    if (!this.externalSorting) {
+      val = sortRows(val, this.columns, this.sorts);
     }
-    */
 
-    this.setupObservable(val);
-    // this._rows = val;
-    // this.recalculate();
+    this._rows = val;
+
+    // recalculate sizes/etc
+    this.recalculate();
   }
 
   get rows(): any {
@@ -303,29 +285,18 @@ export class DatatableComponent implements OnInit, DoCheck, OnChanges, AfterView
   private pageSize: number;
   private bodyHeight: number;
   private rowCount: number;
-  private rowDiffer: IterableDiffer;
-  private colDiffer: IterableDiffer;
 
   private _rows: any[];
   private _columns: any[];
   private _columnTemplates: QueryList<DataTableColumnDirective>;
   private _rowDetailTemplateChild: DatatableRowDetailDirective;
 
-  constructor(
-    renderer: Renderer, 
-    element: ElementRef,
-    differs: KeyValueDiffers,
-    private cdr: ChangeDetectorRef) {
-
+  constructor(renderer: Renderer, element: ElementRef) {
     // get ref to elm for measuring
     this.element = element.nativeElement;
 
     // manually set table class for speed
     renderer.setElementClass(this.element, 'datatable', true);
-
-    // setup some differs
-    this.rowDiffer = differs.find({}).create(null);
-    this.colDiffer = differs.find({}).create(null);
   }
 
   /**
@@ -338,6 +309,7 @@ export class DatatableComponent implements OnInit, DoCheck, OnChanges, AfterView
     // need to call this immediatly to size
     // if the table is hidden the visibility
     // listener will invoke this itself upon show
+    // this.recalculate();
     this.recalculate();
   }
 
@@ -348,70 +320,7 @@ export class DatatableComponent implements OnInit, DoCheck, OnChanges, AfterView
    * @memberOf DatatableComponent
    */
   ngAfterViewInit(): void {
-    this.recalculate();
-  }
-
-  setupObservable(val: any[]) {
-    if(!val) return;
-
-    let rowObservable = Observable.merge(
-      Observable.of(val),
-      Observable.from(val)
-        .flatMap(function(item) {
-          return Observable.of(item);
-        })
-    );
-
-    rowObservable.subscribe((x) => {
-      console.log('next', x);
-    }, (y) => {
-      console.log('err', y);
-    }, () => {
-      console.log('done', rowObservable);
-
-      // this._rows = rowObservable['source']['array'];
-
-      rowObservable.toArray().subscribe((r) => {
-        if(!r.length) return;
-
-        this._rows = r[0];
-        this.recalculate();
-        console.log('DONE RESULTS!', this._rows, r);
-        // console.trace();
-        // this.cdr.markForCheck();
-      });
-    });
-  }
-
-  /**
-   * Lifecycle hook that is called when 
-   * Angular dirty checks a directive.
-   * 
-   * @memberOf DatatableComponent
-   */
-  ngDoCheck(): void {
-    // console.log('checking...');
-
-    const rowDiff = this.rowDiffer.diff(this.rows);
-    if (rowDiff) {
-      // console.log('diff', rowDiff);
-    }
-  }
-
-  /**
-   * Lifecycle hook that is called when any 
-   * data-bound property of a directive changes.
-   * 
-   * @param {SimpleChanges} changes
-   * 
-   * @memberOf DatatableComponent
-   */
-  ngOnChanges(changes: SimpleChanges): void {
-    // console.log('changes', changes);
-
-    if (changes.hasOwnProperty('rows')) {
-      // console.log('row update', changes);
-    }
+    setTimeout(() => this.recalculate());
   }
 
   /**
@@ -569,7 +478,10 @@ export class DatatableComponent implements OnInit, DoCheck, OnChanges, AfterView
     // Keep the page size constant even if the row has been expanded.
     // This is because an expanded row is still considered to be a child of
     // the original row.  Hence calculation would use rowHeight only.
-    if (this.scrollbarV) return Math.ceil(this.bodyHeight / this.rowHeight);
+    if (this.scrollbarV) {
+      const size = Math.ceil(this.bodyHeight / this.rowHeight);
+      return Math.max(size, 0);
+    }
 
     // if limit is passed, we are paging
     if (this.limit !== undefined) return this.limit;
@@ -667,7 +579,8 @@ export class DatatableComponent implements OnInit, DoCheck, OnChanges, AfterView
     // this could be optimized better since it will resort
     // the rows again on the 'push' detection...
     if (this.externalSorting === false) {
-      this.rows = sortRows(this.rows, this.columns, sorts);
+      // don't use normal setter so we don't resort
+      this._rows = sortRows(this.rows, this.columns, sorts);
     }
 
     this.sorts = sorts;

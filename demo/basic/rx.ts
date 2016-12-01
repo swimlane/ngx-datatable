@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Rx';
       <h3>RXjs Data</h3>
       <swui-datatable
         class="material striped"
-        [rows]="rows"
+        [rows]="rows | async"
         [columns]="columns"
         [columnMode]="'force'"
         [headerHeight]="50"

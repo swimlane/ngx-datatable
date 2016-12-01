@@ -13,10 +13,10 @@ import { Component } from '@angular/core';
         [footerHeight]="50"
         [rowHeight]="'auto'">
         <swui-datatable-column name="Name">
-          <template let-column="column" swui-datatable-cell-template>
+          <template let-column="column" swui-datatable-header-template>
             Holla! {{column.name}}
           </template>
-          <template let-value="value" column-cell-template>
+          <template let-value="value" swui-datatable-cell-template>
             Hi: <strong>{{value}}</strong>
           </template>
         </swui-datatable-column>

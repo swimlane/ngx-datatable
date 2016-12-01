@@ -1,10 +1,5 @@
 # Architecture 
 
-## OnPush
-The table uses Angular2's `OnPush` change detection strategy for super-fast performance. It should be mentioned
-that as a side effect the table now mutates its inputs. To learn more about ChangeDetection in Angular2
-check out this [blog](http://blog.thoughtram.io/angular/2016/02/22/angular-2-change-detection-explained.html).
-
 ### Manifesto
 There is some things that it doesn't do nor do we plan to do. Lets say you have a requirement to have the 
 ability to edit cell values in the row. Thats a awesome feature but somewhat catered to your use case. 

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Keys, selectRows, selectRowsBetween } from '../../utils';
 import { SelectionType } from '../../types';
 
@@ -15,8 +15,7 @@ export interface Model {
   selector: 'datatable-selection',
   template: `
     <ng-content></ng-content>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class DataTableSelectionComponent {
 

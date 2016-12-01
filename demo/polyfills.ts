@@ -13,10 +13,9 @@ import 'rxjs/Rx';
 
 // optimization for production
 // https://github.com/AngularClass/angular2-webpack-starter/blob/master/src/platform/environment.ts#L17
-if(IS_PRODUCTION) {
-  Error.stackTraceLimit = Infinity;
-  require('zone.js/dist/long-stack-trace-zone');
-
+// if(IS_PRODUCTION) {
+//   Error.stackTraceLimit = Infinity;
+// require('zone.js/dist/long-stack-trace-zone');
   disableDebugTools();
   enableProdMode();
-}
+// }
