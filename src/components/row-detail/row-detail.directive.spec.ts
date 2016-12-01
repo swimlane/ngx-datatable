@@ -2,7 +2,7 @@ import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { DatatableRowDetailDirective } from '.';
+import { DatatableRowDetailDirective, DatatableRowDetailTemplateDirective } from '.';
 
 @Component({
   selector: 'test-fixture-component',
@@ -26,6 +26,7 @@ describe('DatatableRowDetailDirective', () => {
     TestBed.configureTestingModule({
       declarations: [ 
         DatatableRowDetailDirective,
+        DatatableRowDetailTemplateDirective,
         TestFixtureComponent
       ]
     });
