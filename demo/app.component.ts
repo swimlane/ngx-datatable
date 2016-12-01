@@ -133,7 +133,7 @@ export class AppComponent {
   version: string = APP_VERSION;
 
   constructor() {
-    this.state = 'basic-fixed';
+    // this.state = 'basic-fixed';
   }
 
 }

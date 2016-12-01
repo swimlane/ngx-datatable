@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <h3>Context Menu EventEmitter</h3>
-      <div style="margin: 1em; padding: 0 1em; border: solid 1px #ccc; background: white;">
+      <div class="info">
         <p><strong>Note:</strong> angular2-data-table does not provide a context menu feature.
         This demonstrates how you would access the <code>contextmenu</code> event
         to display your own custom context menu.</p>

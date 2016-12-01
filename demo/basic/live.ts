@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <h3>
-        Live Data Demo ( not working ATM )
+        Live Data Demo
         <small>
           <a href="#" (click)="start()">Start</a>
           <a href="#" (click)="stop()">Stop</a>
@@ -21,14 +21,9 @@ import { Component } from '@angular/core';
         [rowHeight]="'auto'"
         [trackByProp]="'updated'"
         [rows]="rows">
-        <swui-datatable-column name="Type" prop="Type"></swui-datatable-column>
-        <swui-datatable-column name="Organization" prop="Organization"></swui-datatable-column>
-        <swui-datatable-column name="Date Added" prop="DateAdded"></swui-datatable-column>
-        <swui-datatable-column name="Tags" prop="Tags">
-          <template let-value="value" swui-datatable-cell-template>
-            {{value}}
-          </template>
-        </swui-datatable-column>
+        <swui-datatable-column name="Name"></swui-datatable-column>
+        <swui-datatable-column name="Gender"></swui-datatable-column>
+        <swui-datatable-column name="Company"></swui-datatable-column>
       </swui-datatable>
     </div>
   `
@@ -38,7 +33,7 @@ export class LiveDataComponent {
   rows: any[] = [];
   active: boolean = true;
   cols: any = [
-    'Type', 'Organization', 'DateAdded', 'Tags'
+    'name', 'gender', 'company'
   ];
 
   constructor() {
@@ -68,19 +63,15 @@ export class LiveDataComponent {
 
   updateRandom() {
     const rowNum = this.randomNum(0, 5);
-    const cellNum = this.randomNum(0, 4);
-    // const newRow = this.randomNum(0, 100);
+    const cellNum = this.randomNum(0, 3);
+    const newRow = this.randomNum(0, 100);
     const prop = this.cols[cellNum];
     let rows = this.rows;
 
     if(rows.length) {
-      // let rows = [...this.rows];
-      
       let row = rows[rowNum];
-      row[prop] = Date.now().toString(); // this.rows[newRow][prop];
+      row[prop] = this.rows[newRow][prop];
       row.updated = Date.now().toString();
-
-      // this.rows = rows;
     }
 
     this.start();
@@ -88,7 +79,7 @@ export class LiveDataComponent {
 
   fetch(cb: any): void {
     const req = new XMLHttpRequest();
-    req.open('GET', `assets/data/security.json`);
+    req.open('GET', `assets/data/company.json`);
 
     req.onload = () => {
       cb(JSON.parse(req.response));
