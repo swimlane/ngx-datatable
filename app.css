@@ -5,6 +5,7 @@
       -ms-flex-pack: center;
           justify-content: center;
   position: relative;
+  -webkit-transform: translate3d(0, 0, 0);
   /**
    * Vertical Scrolling Adjustments
    */
@@ -38,7 +39,8 @@
     .datatable.scroll-vertical .datatable-body .datatable-row-wrapper {
       position: absolute; }
   .datatable.scroll-horz .datatable-body {
-    overflow-x: auto; }
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; }
   .datatable.fixed-header .datatable-header .datatable-header-inner {
     white-space: nowrap; }
     .datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell {
