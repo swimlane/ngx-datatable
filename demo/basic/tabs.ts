@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
 
         <div [hidden]="!tab2">
           <h4>hidden Table</h4>
-          <datatable
+          <swui-datatable
             class='material'
             [rows]='rows'
             [columnMode]="'force'"
@@ -27,15 +27,15 @@ import { Component } from '@angular/core';
             [footerHeight]="50"
             [rowHeight]="50"
             [scrollbarV]="true">
-            <datatable-column name="Name" width="200"></datatable-column>
-            <datatable-column name="Gender" width="300"></datatable-column>
-            <datatable-column name="Age" width="80"></datatable-column>
-          </datatable>
+            <swui-datatable-column name="Name" width="200"></swui-datatable-column>
+            <swui-datatable-column name="Gender" width="300"></swui-datatable-column>
+            <swui-datatable-column name="Age" width="80"></swui-datatable-column>
+          </swui-datatable>
         </div>
 
         <div *ngIf="tab3">
           <h4>ngIf Table</h4>
-          <datatable
+          <swui-datatable
             class='material'
             [rows]='rows'
             [columnMode]="'force'"
@@ -43,10 +43,10 @@ import { Component } from '@angular/core';
             [footerHeight]="50"
             [rowHeight]="50"
             [scrollbarV]="true">
-            <datatable-column name="Name" width="200"></datatable-column>
-            <datatable-column name="Gender" width="300"></datatable-column>
-            <datatable-column name="Age" width="80"></datatable-column>
-          </datatable>
+            <swui-datatable-column name="Name" width="200"></swui-datatable-column>
+            <swui-datatable-column name="Gender" width="300"></swui-datatable-column>
+            <swui-datatable-column name="Age" width="80"></swui-datatable-column>
+          </swui-datatable>
         </div>
       </div>
 

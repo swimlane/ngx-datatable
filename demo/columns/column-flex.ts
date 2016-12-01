@@ -5,29 +5,29 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <h3>Flex Column Width Distribution</h3>
-      <datatable
+      <swui-datatable
         class="material"
         [columnMode]="'flex'"
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="'auto'"
         [rows]="rows">
-        <datatable-column name="Name" [flexGrow]="3">
+        <swui-datatable-column name="Name" [flexGrow]="3">
           <template let-value="value">
             {{value}}
           </template>
-        </datatable-column>
-        <datatable-column name="Gender" [flexGrow]="1">
+        </swui-datatable-column>
+        <swui-datatable-column name="Gender" [flexGrow]="1">
           <template let-row="row" let-value="value">
             {{value}}
           </template>
-        </datatable-column>
-        <datatable-column name="Age" [flexGrow]="1">
+        </swui-datatable-column>
+        <swui-datatable-column name="Age" [flexGrow]="1">
           <template let-value="value">
             {{value}}
           </template>
-        </datatable-column>
-      </datatable>
+        </swui-datatable-column>
+      </swui-datatable>
     </div>
   `
 })

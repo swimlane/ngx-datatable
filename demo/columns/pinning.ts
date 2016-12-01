@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <h3>Column Pinning</h3>
-      <datatable
+      <swui-datatable
         class="material"
         [columnMode]="'force'"
         [headerHeight]="50"
@@ -14,29 +14,29 @@ import { Component } from '@angular/core';
         [scrollbarV]="true"
         [scrollbarH]="true"
         [rows]="rows">
-        <datatable-column
+        <swui-datatable-column
           name="Name"
           [width]="300"
           [frozenLeft]="true">
-        </datatable-column>
-        <datatable-column
+        </swui-datatable-column>
+        <swui-datatable-column
           name="Gender">
-        </datatable-column>
-        <datatable-column
+        </swui-datatable-column>
+        <swui-datatable-column
           name="Age">
-        </datatable-column>
-        <datatable-column
+        </swui-datatable-column>
+        <swui-datatable-column
           name="City"
           [width]="150"
           prop="address.city">
-        </datatable-column>
-        <datatable-column
+        </swui-datatable-column>
+        <swui-datatable-column
           name="State"
           [width]="300"
           prop="address.state"
           [frozenRight]="true">
-        </datatable-column>
-      </datatable>
+        </swui-datatable-column>
+      </swui-datatable>
     </div>
   `
 })

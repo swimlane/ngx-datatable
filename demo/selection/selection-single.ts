@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
     <div>
       <h3>Single Row Selection</h3>
       <div style='float:left;width:75%'>
-        <datatable
+        <swui-datatable
           class="material"
           [rows]="rows"
           [columnMode]="'force'"
@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
           [selectionType]="'single'"
           (activate)="onActivate($event)"
           (select)='onSelect($event)'>
-        </datatable>
+        </swui-datatable>
       </div>
 
       <div class='selected-column'>

@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <h3>Virtual Scrolling with 10k Rows</h3>
-      <datatable
+      <swui-datatable
         class='material'
         [rows]='rows'
         [columnMode]="'standard'"
@@ -14,19 +14,19 @@ import { Component } from '@angular/core';
         [rowHeight]="50"
         [scrollbarV]="true"
         (page)="onPage($event)">
-        <datatable-column name="Name" width="200">
+        <swui-datatable-column name="Name" width="200">
           <template let-value="value">
             <strong>{{value}}</strong>
           </template>
-        </datatable-column>
-        <datatable-column name="Gender" width="300">
+        </swui-datatable-column>
+        <swui-datatable-column name="Gender" width="300">
           <template let-row="row" let-value="value">
             <i [innerHTML]="row['name']"></i> and <i>{{value}}</i>
           </template>
-        </datatable-column>
-        <datatable-column name="Age" width="80">
-        </datatable-column>
-      </datatable>
+        </swui-datatable-column>
+        <swui-datatable-column name="Age" width="80">
+        </swui-datatable-column>
+      </swui-datatable>
     </div>
   `
 })

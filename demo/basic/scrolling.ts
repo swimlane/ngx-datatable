@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <h3>Horizontal and Vertical Scrolling</h3>
-      <datatable
+      <swui-datatable
         class="material"
         [rows]="rows"
         [columnMode]="'force'"
@@ -14,12 +14,12 @@ import { Component } from '@angular/core';
         [rowHeight]="50"
         [scrollbarV]="true"
         [scrollbarH]="true">
-        <datatable-column name="Name" [width]="300"></datatable-column>
-        <datatable-column name="Gender"></datatable-column>
-        <datatable-column name="Age"></datatable-column>
-        <datatable-column name="City" [width]="300" prop="address.city"></datatable-column>
-        <datatable-column name="State" [width]="300" prop="address.state"></datatable-column>
-      </datatable>
+        <swui-datatable-column name="Name" [width]="300"></swui-datatable-column>
+        <swui-datatable-column name="Gender"></swui-datatable-column>
+        <swui-datatable-column name="Age"></swui-datatable-column>
+        <swui-datatable-column name="City" [width]="300" prop="address.city"></swui-datatable-column>
+        <swui-datatable-column name="State" [width]="300" prop="address.state"></swui-datatable-column>
+      </swui-datatable>
     </div>
   `
 })

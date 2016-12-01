@@ -15,7 +15,9 @@ import {
   DataTableBodyCellComponent,
   DatatableRowDetailDirective,
   ScrollerComponent,
-  DataTableSelectionComponent
+  DataTableSelectionComponent,
+  DataTableColumnHeaderDirective,
+  DataTableColumnCellDirective
 } from './components';
 
 import {
@@ -49,12 +51,16 @@ import {
     DataTableRowWrapperComponent,
     DatatableRowDetailDirective,
     DataTableBodyCellComponent,
-    DataTableSelectionComponent
+    DataTableSelectionComponent,
+    DataTableColumnHeaderDirective,
+    DataTableColumnCellDirective
   ],
   exports: [
     DatatableComponent,
     DatatableRowDetailDirective,
-    DataTableColumnDirective
+    DataTableColumnDirective,
+    DataTableColumnHeaderDirective,
+    DataTableColumnCellDirective
   ]
 })
 export class Angular2DataTableModule { }

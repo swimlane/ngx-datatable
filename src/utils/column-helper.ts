@@ -1,4 +1,4 @@
-import { DataTableColumnDirective } from '../components/column.directive';
+import { DataTableColumnDirective } from '../components/columns';
 import { camelCase, deCamelCase, id } from '../utils';
 
 export function setColumnDefaults(columns: any[]) {

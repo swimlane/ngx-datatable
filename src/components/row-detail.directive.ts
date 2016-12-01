@@ -1,7 +1,7 @@
 import { Directive, TemplateRef, ContentChild } from '@angular/core';
 
 @Directive({
-  selector: 'datatable-row-detail-template'
+  selector: 'swui-datatable-row-detail-template'
 })
 export class DatatableRowDetailDirective {
 

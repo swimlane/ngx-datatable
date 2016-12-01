@@ -11,7 +11,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
           <a href="#" (click)="stop()">Stop</a>
         </small>
       </h3>
-      <datatable
+      <swui-datatable
         #mydatatable
         class="material"
         [headerHeight]="50"
@@ -21,15 +21,15 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
         [rowHeight]="'auto'"
         [trackByProp]="'updated'"
         [rows]="rows">
-        <datatable-column name="Type" prop="Type"></datatable-column>
-        <datatable-column name="Organization" prop="Organization"></datatable-column>
-        <datatable-column name="Date Added" prop="DateAdded"></datatable-column>
-        <datatable-column name="Tags" prop="Tags">
+        <swui-datatable-column name="Type" prop="Type"></swui-datatable-column>
+        <swui-datatable-column name="Organization" prop="Organization"></swui-datatable-column>
+        <swui-datatable-column name="Date Added" prop="DateAdded"></swui-datatable-column>
+        <swui-datatable-column name="Tags" prop="Tags">
           <template let-value="value">
             {{value}}
           </template>
-        </datatable-column>
-      </datatable>
+        </swui-datatable-column>
+      </swui-datatable>
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush

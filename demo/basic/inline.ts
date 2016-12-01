@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <h3>Inline Editing</h3>
-      <datatable
+      <swui-datatable
         #mydatatable
         class="material"
         [headerHeight]="50"
@@ -14,7 +14,7 @@ import { Component } from '@angular/core';
         [footerHeight]="50"
         [rowHeight]="'auto'"
         [rows]="rows">
-        <datatable-column name="Name">
+        <swui-datatable-column name="Name">
           <template let-value="value" let-row="row">
             <span
               title="Double click to edit"
@@ -30,8 +30,8 @@ import { Component } from '@angular/core';
               [value]="value"
             />
           </template>
-        </datatable-column>
-        <datatable-column name="Gender">
+        </swui-datatable-column>
+        <swui-datatable-column name="Gender">
           <template let-row="row" let-value="value">
              <span
               title="Double click to edit"
@@ -47,13 +47,13 @@ import { Component } from '@angular/core';
               <option value="female">Female</option>
             </select>
           </template>
-        </datatable-column>
-        <datatable-column name="Age">
+        </swui-datatable-column>
+        <swui-datatable-column name="Age">
           <template let-value="value">
             {{value}}
           </template>
-        </datatable-column>
-      </datatable>
+        </swui-datatable-column>
+      </swui-datatable>
     </div>
   `
 })

@@ -11,7 +11,7 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
           <a href="#" (click)="mydatatable.collapseAllRows()">Collapse All</a>
         </small>
       </h3>
-      <datatable
+      <swui-datatable
         #mydatatable
         class='material expandable'
         [columnMode]="'force'"
@@ -22,15 +22,15 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
         [scrollbarV]="50"
         [rows]='rows'
         (page)="onPage($event)">
-        <datatable-row-detail-template>
+        <swui-datatable-row-detail-template>
           <template let-row="row">
             <div style="padding-left:35px;">
               <div><strong>Address</strong></div>
               <div>{{row.address.city}}, {{row.address.state}}</div>
             </div>
           </template>
-        </datatable-row-detail-template>
-         <datatable-column
+        </swui-datatable-row-detail-template>
+         <swui-datatable-column
           [width]="50"
           [resizeable]="false"
           [sortable]="false"
@@ -45,29 +45,29 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
               (click)="toggleExpandRow(row)">
             </a>
           </template>
-        </datatable-column>
-        <datatable-column name="Index" width="80">
+        </swui-datatable-column>
+        <swui-datatable-column name="Index" width="80">
           <template let-row="row">
             <strong>{{row.$$index}}</strong>
           </template>
-        </datatable-column>
-        <datatable-column name="Exapanded" width="80">
+        </swui-datatable-column>
+        <swui-datatable-column name="Exapanded" width="80">
           <template let-row="row">
             <strong>{{row.$$expanded === 1}}</strong>
           </template>
-        </datatable-column>
-        <datatable-column name="Name" width="200">
+        </swui-datatable-column>
+        <swui-datatable-column name="Name" width="200">
           <template let-value="value">
             <strong>{{value}}</strong>
           </template>
-        </datatable-column>
-        <datatable-column name="Gender" width="300">
+        </swui-datatable-column>
+        <swui-datatable-column name="Gender" width="300">
           <template let-row="row" let-value="value">
             <i [innerHTML]="row['name']"></i> and <i>{{value}}</i>
           </template>
-        </datatable-column>
-        <datatable-column name="Age" ></datatable-column>
-      </datatable>
+        </swui-datatable-column>
+        <swui-datatable-column name="Age" ></swui-datatable-column>
+      </swui-datatable>
     </div>
   `,
   encapsulation: ViewEncapsulation.None
