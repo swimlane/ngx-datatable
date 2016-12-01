@@ -13,17 +13,17 @@ import { Component } from '@angular/core';
         [rowHeight]="'auto'"
         [rows]="rows">
         <swui-datatable-column name="Name" [flexGrow]="3">
-          <template let-value="value">
+          <template let-value="value" swui-datatable-cell-template>
             {{value}}
           </template>
         </swui-datatable-column>
         <swui-datatable-column name="Gender" [flexGrow]="1">
-          <template let-row="row" let-value="value">
+          <template let-row="row" let-value="value" swui-datatable-cell-template>
             {{value}}
           </template>
         </swui-datatable-column>
         <swui-datatable-column name="Age" [flexGrow]="1">
-          <template let-value="value">
+          <template let-value="value" swui-datatable-cell-template>
             {{value}}
           </template>
         </swui-datatable-column>

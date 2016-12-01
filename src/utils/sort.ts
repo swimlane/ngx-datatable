@@ -62,7 +62,7 @@ export function orderByComparator(a: any, b: any): number {
  * @returns
  */
 export function sortRows(rows: any[], columns: any[], dirs: any[]): any[] {
-  if(!rows || !dirs || !columns) return rows;
+  if(!rows || !dirs || !dirs.length || !columns) return rows;
 
   let temp = [...rows];
   let cols = columns.reduce((obj, col) => {

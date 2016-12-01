@@ -20,7 +20,7 @@ import { Component } from '@angular/core';
         [rowHeight]="'auto'"
         [limit]="10"
         [rows]='rows'>
-        </swui-datatable>
+      </swui-datatable>
     </div>
   `
 })

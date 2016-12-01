@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'live-data-demo',
@@ -25,14 +25,13 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
         <swui-datatable-column name="Organization" prop="Organization"></swui-datatable-column>
         <swui-datatable-column name="Date Added" prop="DateAdded"></swui-datatable-column>
         <swui-datatable-column name="Tags" prop="Tags">
-          <template let-value="value">
+          <template let-value="value" swui-datatable-cell-template>
             {{value}}
           </template>
         </swui-datatable-column>
       </swui-datatable>
     </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class LiveDataComponent {
 
@@ -72,11 +71,12 @@ export class LiveDataComponent {
     const cellNum = this.randomNum(0, 4);
     // const newRow = this.randomNum(0, 100);
     const prop = this.cols[cellNum];
+    let rows = this.rows;
 
-    if(this.rows.length) {
+    if(rows.length) {
       // let rows = [...this.rows];
       
-      let row = this.rows[rowNum];
+      let row = rows[rowNum];
       row[prop] = Date.now().toString(); // this.rows[newRow][prop];
       row.updated = Date.now().toString();
 

@@ -1,12 +1,18 @@
 # Changelog
 
-## Master
+## 2.0.0
 - BREAKING: Rename from `datatable` to `swui-datatable` (#320)
-- BREAKING: Redo how cell/header templates are described in markup (#304)
+- BREAKING: Redo how row-detail/cell/header templates are described in markup (#304)
+- BREAKING: Change Detection switched back to normal
 - Enhancement: Row Context Menu Event `rowContextmenu` (#331)
 - Bug: Set default value for selected (#314)
 - Bug: Fix widths being int vs float (#309)
 - Bug: Fix column resize not setting widths to the right (#308)
+- Bug: Fix row object mutations (#255)
+- Bug: Async Problem when using @Input (#253)
+- Bug: Sort doesn't work on the first click (#254)
+- Bug: Pagination "skip to last page" is not selected after click (#324)
+- Bug: ngFor Not working in the datatable-row-detail-template (#274)
 - Chore: Resolve all implicit `any`s (#330)
 
 ## 1.7.0
@@ -73,13 +79,11 @@
 - Enhancement: Add ability to pass false to `comparator` for sort handling via event
 - Bug: Window resize not updating rows in virtual scrolling
 - Chore: Switch to SemVer
-
-### Breaking Changes
-- `TableOptions` has been removed and options are `Input` on component now
-- `TableColumn` class has been removed, just pass normal objects
-- Event names has been renamed using Angular2 standards
-- Components have been renamed to Angular2 standards
-- Removed `StateService`
+- BREAKING: `TableOptions` has been removed and options are `Input` on component now
+- BREAKING: `TableColumn` class has been removed, just pass normal objects
+- BREAKING: Event names has been renamed using Angular2 standards
+- BREAKING: Components have been renamed to Angular2 standards
+- BREAKING: Removed `StateService`
 
 ## 0.12.0
 - Bug: Return empty string on undefined deep values (#232)

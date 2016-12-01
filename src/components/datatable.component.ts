@@ -1,10 +1,8 @@
 import {
   Component, Input, Output, ElementRef, EventEmitter, ViewChild,
   HostListener, ContentChildren, OnInit, QueryList, AfterViewInit,
-  HostBinding, Renderer, ContentChild, TemplateRef, ChangeDetectionStrategy,
-  ChangeDetectorRef
+  HostBinding, Renderer, ContentChild, TemplateRef
 } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
 
 import { forceFillColumnWidths, adjustColumnWidths, sortRows } from '../utils';
 import { ColumnMode, SortType, SelectionType } from '../types';
@@ -76,32 +74,21 @@ import { scrollbarWidth, setColumnDefaults, translateTemplates } from '../utils'
         (page)="onFooterPage($event)">
       </datatable-footer>
     </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class DatatableComponent implements OnInit, AfterViewInit {
 
   // Rows
   @Input() set rows(val: any) {
-    // if a observable was passed, lets convert to array
-    if(val instanceof Observable) {
-      val.concatMap((v) => v)
-         .toArray()
-         .subscribe((r) => {
-           this.rows = r;
-           this.cdr.markForCheck();
-         });
-    } else {
-       // auto sort on new updates
-      if (!this.externalSorting) {
-        val = sortRows(val, this.columns, this.sorts);
-      }
-
-      this._rows = val;
-
-      // recalculate sizes/etc
-      this.recalculate();
+    // auto sort on new updates
+    if (!this.externalSorting) {
+      val = sortRows(val, this.columns, this.sorts);
     }
+
+    this._rows = val;
+
+    // recalculate sizes/etc
+    this.recalculate();
   }
 
   get rows(): any {
@@ -304,24 +291,36 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   private _columnTemplates: QueryList<DataTableColumnDirective>;
   private _rowDetailTemplateChild: DatatableRowDetailDirective;
 
-  constructor(renderer: Renderer, element: ElementRef, private cdr: ChangeDetectorRef) {
+  constructor(renderer: Renderer, element: ElementRef) {
+    // get ref to elm for measuring
     this.element = element.nativeElement;
+
+    // manually set table class for speed
     renderer.setElementClass(this.element, 'datatable', true);
   }
 
+  /**
+   * Lifecycle hook that is called after data-bound 
+   * properties of a directive are initialized.
+   * 
+   * @memberOf DatatableComponent
+   */
   ngOnInit(): void {
     // need to call this immediatly to size
     // if the table is hidden the visibility
     // listener will invoke this itself upon show
+    // this.recalculate();
     this.recalculate();
   }
 
+  /**
+   * Lifecycle hook that is called after a component's 
+   * view has been fully initialized.
+   * 
+   * @memberOf DatatableComponent
+   */
   ngAfterViewInit(): void {
-    this.recalculate();
-  }
-
-  ngAfterContentInit(): void {
-    console.log('here', this.columnTemplates);
+    setTimeout(() => this.recalculate());
   }
 
   /**
@@ -336,6 +335,8 @@ export class DatatableComponent implements OnInit, AfterViewInit {
 
   /**
    * API method to expand all the rows.
+   * 
+   * @memberOf DatatableComponent
    */
   expandAllRows(): void {
     this.bodyComponent.toggleAllRows(true);
@@ -343,17 +344,42 @@ export class DatatableComponent implements OnInit, AfterViewInit {
 
   /**
    * API method to collapse all the rows.
+   * 
+   * @memberOf DatatableComponent
    */
   collapseAllRows(): void {
     this.bodyComponent.toggleAllRows(false);
   }
 
+  /**
+   * Recalc's the sizes of the grid.
+   * 
+   * Updated automatically on changes to:
+   * 
+   *  - Columns
+   *  - Rows
+   *  - Paging related
+   * 
+   * Also can be manually invoked or upon window resize.
+   * 
+   * @memberOf DatatableComponent
+   */
   @HostListener('window:resize')
-  recalculate() {
+  recalculate(): void {
     this.recalculateDims();
     this.recalculateColumns();
   }
 
+  /**
+   * Recalulcates the column widths based on column width
+   * distribution mode and scrollbar offsets.
+   * 
+   * @param {any[]} [columns=this.columns]
+   * @param {number} [forceIdx]
+   * @returns {any[]}
+   * 
+   * @memberOf DatatableComponent
+   */
   recalculateColumns(columns: any[] = this.columns, forceIdx?: number): any[] {
     if (!columns) return;
 
@@ -371,6 +397,12 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     return columns;
   }
 
+  /**
+   * Recalculates the dimensions of the table size.
+   * Internally calls the page size and row count calcs too.
+   * 
+   * @memberOf DatatableComponent
+   */
   recalculateDims(): void {
     let { height, width } = this.element.getBoundingClientRect();
     this.innerWidth = Math.floor(width);
@@ -385,6 +417,13 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     this.rowCount = this.calcRowCount();
   }
 
+  /**
+   * Body triggered a page event.
+   * 
+   * @param {*} { offset }
+   * 
+   * @memberOf DatatableComponent
+   */
   onBodyPage({ offset }: any): void {
     this.offset = offset;
 
@@ -396,11 +435,25 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * The body triggered a scroll event.
+   * 
+   * @param {MouseEvent} event
+   * 
+   * @memberOf DatatableComponent
+   */
   onBodyScroll(event: MouseEvent): void {
     this.offsetX = event.offsetX;
     this.scroll.emit(event);
   }
 
+  /**
+   * The footer triggered a page event.
+   * 
+   * @param {*} event
+   * 
+   * @memberOf DatatableComponent
+   */
   onFooterPage(event: any) {
     this.offset = event.page - 1;
     this.bodyComponent.updateOffsetY(this.offset);
@@ -413,11 +466,22 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Recalculates the sizes of the page
+   * 
+   * @param {any[]} [val=this.rows]
+   * @returns {number}
+   * 
+   * @memberOf DatatableComponent
+   */
   calcPageSize(val: any[] = this.rows): number {
     // Keep the page size constant even if the row has been expanded.
     // This is because an expanded row is still considered to be a child of
     // the original row.  Hence calculation would use rowHeight only.
-    if (this.scrollbarV) return Math.ceil(this.bodyHeight / this.rowHeight);
+    if (this.scrollbarV) {
+      const size = Math.ceil(this.bodyHeight / this.rowHeight);
+      return Math.max(size, 0);
+    }
 
     // if limit is passed, we are paging
     if (this.limit !== undefined) return this.limit;
@@ -429,6 +493,14 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     return 0;
   }
 
+  /**
+   * Calculates the row count.
+   * 
+   * @param {any[]} [val=this.rows]
+   * @returns {number}
+   * 
+   * @memberOf DatatableComponent
+   */
   calcRowCount(val: any[] = this.rows): number {
     if(!this.externalPaging) {
       if(!val) return 0;
@@ -438,6 +510,13 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     return this.count;
   }
 
+  /**
+   * The header triggered a column resize event.
+   * 
+   * @param {*} { column, newValue }
+   * 
+   * @memberOf DatatableComponent
+   */
   onColumnResize({ column, newValue }: any): void {
     let idx: number;
     let cols = this.columns.map((c, i) => {
@@ -464,6 +543,13 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * The header triggered a column re-order event.
+   * 
+   * @param {*} { column, newValue, prevValue }
+   * 
+   * @memberOf DatatableComponent
+   */
   onColumnReorder({ column, newValue, prevValue }: any): void {
     let cols = this.columns.map(c => {
       return Object.assign({}, c);
@@ -480,13 +566,21 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * The header triggered a column sort event.
+   * 
+   * @param {*} event
+   * 
+   * @memberOf DatatableComponent
+   */
   onColumnSort(event: any): void {
     const { sorts } = event;
 
     // this could be optimized better since it will resort
     // the rows again on the 'push' detection...
     if (this.externalSorting === false) {
-      this.rows = sortRows(this.rows, this.columns, sorts);
+      // don't use normal setter so we don't resort
+      this._rows = sortRows(this.rows, this.columns, sorts);
     }
 
     this.sorts = sorts;

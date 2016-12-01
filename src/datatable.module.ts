@@ -17,7 +17,8 @@ import {
   ScrollerComponent,
   DataTableSelectionComponent,
   DataTableColumnHeaderDirective,
-  DataTableColumnCellDirective
+  DataTableColumnCellDirective,
+  DatatableRowDetailTemplateDirective
 } from './components';
 
 import {
@@ -50,6 +51,7 @@ import {
     DataTableBodyRowComponent,
     DataTableRowWrapperComponent,
     DatatableRowDetailDirective,
+    DatatableRowDetailTemplateDirective,
     DataTableBodyCellComponent,
     DataTableSelectionComponent,
     DataTableColumnHeaderDirective,
@@ -58,6 +60,7 @@ import {
   exports: [
     DatatableComponent,
     DatatableRowDetailDirective,
+    DatatableRowDetailTemplateDirective,
     DataTableColumnDirective,
     DataTableColumnHeaderDirective,
     DataTableColumnCellDirective

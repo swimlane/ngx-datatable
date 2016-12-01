@@ -15,12 +15,12 @@ import { Component } from '@angular/core';
         [scrollbarV]="true"
         (page)="onPage($event)">
         <swui-datatable-column name="Name" width="200">
-          <template let-value="value">
+          <template let-value="value" swui-datatable-cell-template>
             <strong>{{value}}</strong>
           </template>
         </swui-datatable-column>
         <swui-datatable-column name="Gender" width="300">
-          <template let-row="row" let-value="value">
+          <template let-row="row" let-value="value" swui-datatable-cell-template>
             <i [innerHTML]="row['name']"></i> and <i>{{value}}</i>
           </template>
         </swui-datatable-column>

@@ -1,7 +1,7 @@
 import {
   Component, Input, PipeTransform, HostBinding, 
   Output, EventEmitter, HostListener, ElementRef,
-  Renderer, ChangeDetectionStrategy
+  Renderer
 } from '@angular/core';
 
 import { deepValueGetter, Keys } from '../../utils';
@@ -21,8 +21,7 @@ import { SortDirection } from '../../types';
         [ngOutletContext]="{ value: value, row: row, column: column }">
       </template>
     </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class DataTableBodyCellComponent {
 

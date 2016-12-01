@@ -1,5 +1,7 @@
-import { Component, Input, Renderer, ElementRef, ChangeDetectionStrategy,
-  Output, EventEmitter, HostListener } from '@angular/core';
+import { 
+  Component, Input, Renderer, ElementRef,
+  Output, EventEmitter, HostListener 
+} from '@angular/core';
 
 @Component({
   selector: 'datatable-row-wrapper',
@@ -15,8 +17,7 @@ import { Component, Input, Renderer, ElementRef, ChangeDetectionStrategy,
         [ngOutletContext]="{ row: row }">
       </template>
     </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class DataTableRowWrapperComponent {
 

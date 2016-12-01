@@ -21,9 +21,9 @@ export class DataTableColumnDirective {
   @Input() maxWidth: number;
 
   @ContentChild(DataTableColumnCellDirective, { read: TemplateRef }) 
-  cellTemplate: DataTableColumnCellDirective;
+  cellTemplate: TemplateRef<any>;
 
   @ContentChild(DataTableColumnHeaderDirective, { read: TemplateRef }) 
-  headerTemplate: DataTableColumnHeaderDirective;
+  headerTemplate: TemplateRef<any>;
 
 }
