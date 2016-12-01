@@ -12,4 +12,5 @@ exports.dir = function(args) {
 exports.ENV = JSON.stringify(ENV);
 exports.IS_PRODUCTION = ENV === 'production';
 exports.IS_PACKAGE = ENV === 'package';
+exports.IS_DEV = ENV === 'dev' || ENV === 'development';
 exports.APP_VERSION = JSON.stringify(pkg.version);

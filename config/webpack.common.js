@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { ENV, IS_PRODUCTION, APP_VERSION, dir } = require('./helpers');
+const { ENV, IS_PRODUCTION, APP_VERSION, IS_DEV, dir } = require('./helpers');
 
 module.exports = function(options = {}) {
   return {
@@ -26,6 +26,7 @@ module.exports = function(options = {}) {
         ENV,
         IS_PRODUCTION,
         APP_VERSION,
+        IS_DEV,
         HMR: options.HMR
       }),
       new CopyWebpackPlugin([
