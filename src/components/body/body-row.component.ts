@@ -1,10 +1,10 @@
-import { 
+import {
   Component, Input, HostBinding, ElementRef, ChangeDetectionStrategy,
   Renderer, Output, EventEmitter , HostListener
 } from '@angular/core';
 
-import { 
-  columnsByPin, columnGroupWidths, columnsByPinArr, 
+import {
+  columnsByPin, columnGroupWidths, columnsByPinArr,
   translateXY, Keys, scrollbarWidth
 } from '../../utils';
 
@@ -34,8 +34,8 @@ export class DataTableBodyRowComponent {
     this.recalculateColumns(val);
   }
 
-  get columns(): any[] { 
-    return this._columns; 
+  get columns(): any[] {
+    return this._columns;
   }
 
   @Input() set innerWidth(val: number) {
@@ -79,7 +79,7 @@ export class DataTableBodyRowComponent {
     renderer.setElementClass(this.element, 'datatable-body-row', true);
   }
 
-  stylesByGroup(group) {
+  stylesByGroup(group: string) {
     const widths = this.columnGroupWidths;
     const offsetX = this.offsetX;
 
@@ -100,18 +100,18 @@ export class DataTableBodyRowComponent {
     return styles;
   }
 
-  onActivate(event, index) {
+  onActivate(event: any, index: number) {
     event.cellIndex = index;
     event.rowElement = this.element;
     this.activate.emit(event);
   }
 
   @HostListener('keydown', ['$event'])
-  onKeyDown(event): void {
+  onKeyDown(event: KeyboardEvent): void {
     const keyCode = event.keyCode;
     const isTargetRow = event.target === this.element;
 
-    const isAction = 
+    const isAction =
       keyCode === Keys.return ||
       keyCode === Keys.down ||
       keyCode === Keys.up ||

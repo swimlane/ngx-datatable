@@ -1,4 +1,4 @@
-export function selectRows(selected, row, comparefn) {
+export function selectRows(selected: any[], row: any, comparefn: Function) {
   const selectedIndex = comparefn(row, selected);
 
   if(selectedIndex > -1) {
@@ -10,7 +10,7 @@ export function selectRows(selected, row, comparefn) {
   return selected;
 }
 
-export function selectRowsBetween(selected, rows, index, prevIndex, comparefn) {
+export function selectRowsBetween(selected: any[], rows: any[], index: number, prevIndex: number, comparefn: Function) {
   const reverse = index < prevIndex;
 
   for(let i = 0, len = rows.length; i < len; i++) {

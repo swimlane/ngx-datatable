@@ -46,8 +46,8 @@ export class ResizeableDirective {
   }
 
   @HostListener('mousedown', ['$event'])
-  onMousedown(event) {
-    const isHandle = event.target.classList.contains('resize-handle');
+  onMousedown(event: MouseEvent) {
+    const isHandle = (<HTMLElement>(event.target)).classList.contains('resize-handle');
     const initialWidth = this.element.clientWidth;
     const mouseDownScreenX = event.screenX;
 
@@ -56,11 +56,11 @@ export class ResizeableDirective {
       this.resizing = true;
 
       this.subscription = Observable.fromEvent(document, 'mousemove')
-        .subscribe((e) => this.move(e, initialWidth, mouseDownScreenX));
+        .subscribe((e: MouseEvent) => this.move(e, initialWidth, mouseDownScreenX));
     }
   }
 
-  move(event, initialWidth, mouseDownScreenX): void {
+  move(event: MouseEvent, initialWidth: number, mouseDownScreenX: number): void {
     const movementX = event.screenX - mouseDownScreenX;
     const newWidth = initialWidth + movementX;
 

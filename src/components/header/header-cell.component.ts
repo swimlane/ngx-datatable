@@ -91,7 +91,7 @@ export class DataTableHeaderCellComponent {
   private sortDir: SortDirection;
   private _sorts: any[];
 
-  sortClasses(dir): any {
+  sortClasses(dir: SortDirection): any {
     let result = {};
 
     if(dir === SortDirection.asc) {
@@ -103,9 +103,9 @@ export class DataTableHeaderCellComponent {
     return result;
   }
 
-  calcSortDir(sorts) {
+  calcSortDir(sorts: any[]) {
     if(sorts && this.column) {
-      const sort = sorts.find(s => {
+      const sort = sorts.find((s: any) => {
         return s.prop === this.column.prop;
       });
 

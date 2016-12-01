@@ -4,7 +4,7 @@
  * @param  {string} str
  * @return {string} camel case string
  */
-export function camelCase(str): string {
+export function camelCase(str: string): string {
   // Replace special characters with a space
   str = str.replace(/[^a-zA-Z0-9 ]/g, ' ');
   // put a space before an uppercase letter
@@ -24,12 +24,12 @@ export function camelCase(str): string {
 /**
  * Converts strings from camel case to words
  * http://stackoverflow.com/questions/7225407/convert-camelcasetext-to-camel-case-text
- * 
+ *
  * @export
  * @param {any} str
  * @returns string
  */
-export function deCamelCase(str): string {
+export function deCamelCase(str: string): string {
   return str
     .replace(/([A-Z])/g, (match) => ` ${match}`)
     .replace(/^./, (match) => match.toUpperCase());

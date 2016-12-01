@@ -29,7 +29,7 @@ export class LongPressDirective {
   get isLongPress() { return this.longPressing; }
 
   @HostListener('mousedown', ['$event'])
-  onMouseDown(event) {
+  onMouseDown(event: MouseEvent) {
     // don't do right/middle clicks
     if(event.which !== 1) return;
 
@@ -49,7 +49,7 @@ export class LongPressDirective {
   }
 
   @HostListener('mousemove', ['$event'])
-  onMouseMove(event) {
+  onMouseMove(event: MouseEvent) {
     if(this.pressing && !this.longPressing) {
       const xThres = (event.clientX - this.mouseX) > 10;
       const yThres = (event.clientY - this.mouseY) > 10;
@@ -59,7 +59,7 @@ export class LongPressDirective {
     }
   }
 
-  loop(event) {
+  loop(event: Event) {
     if(this.longPressing) {
       this.timeout = setTimeout(() => {
         this.longPressing.emit(event);

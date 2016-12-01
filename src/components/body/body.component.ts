@@ -9,7 +9,7 @@ import { ScrollerComponent } from './scroller.component';
 @Component({
   selector: 'datatable-body',
   template: `
-    <datatable-selection 
+    <datatable-selection
       #selector
       [selected]="selected"
       [rows]="rows"
@@ -29,13 +29,14 @@ import { ScrollerComponent } from './scroller.component';
         [scrollHeight]="scrollHeight"
         [scrollWidth]="columnGroupWidths.total"
         (scroll)="onBodyScroll($event)">
-        <datatable-row-wrapper 
+        <datatable-row-wrapper
           *ngFor="let row of temp; let i = index; trackBy: rowTrackingFn"
           [ngStyle]="getRowsStyles(row)"
           [rowDetailTemplate]="rowDetailTemplate"
           [detailRowHeight]="detailRowHeight"
           [row]="row"
-          [expanded]="row.$$expanded === 1">
+          [expanded]="row.$$expanded === 1"
+          (rowContextmenu)="rowContextmenu.emit($event)">
           <datatable-body-row
             tabindex="-1"
             [isSelected]="selector.getRowSelected(row)"
@@ -93,24 +94,24 @@ export class DataTableBodyComponent {
 
   @Input() set columns(val: any[]) {
     this._columns = val;
-    
+
     const colsByPin = columnsByPin(val);
     this.columnGroupWidths = columnGroupWidths(colsByPin, val);
   }
 
-  get columns(): any[] { 
-    return this._columns; 
+  get columns(): any[] {
+    return this._columns;
   }
 
   @Input() set offset(val: number) {
     this._offset = val;
     this.recalcLayout();
   }
-  
+
   get offset(): number {
     return this._offset;
   }
-  
+
   @Input() set rowCount(val: number) {
     this._rowCount = val;
     this.recalcLayout();
@@ -130,7 +131,7 @@ export class DataTableBodyComponent {
       return '100%';
     }
   }
-  
+
   @Input()
   @HostBinding('style.height')
   set bodyHeight(val) {
@@ -143,8 +144,8 @@ export class DataTableBodyComponent {
     this.recalcLayout();
   }
 
-  get bodyHeight() { 
-    return this._bodyHeight; 
+  get bodyHeight() {
+    return this._bodyHeight;
   }
 
   @Output() scroll: EventEmitter<any> = new EventEmitter();
@@ -152,6 +153,7 @@ export class DataTableBodyComponent {
   @Output() activate: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
   @Output() detailToggle: EventEmitter<any> = new EventEmitter();
+  @Output() rowContextmenu = new EventEmitter<{event: MouseEvent, row: any}>(false);
 
   @ViewChild(ScrollerComponent) scroller: ScrollerComponent;
 
@@ -183,7 +185,7 @@ export class DataTableBodyComponent {
       return this.rowHeightsCache.query(this.rowCount - 1);
     }
   }
-  
+
   constructor(element: ElementRef, renderer: Renderer) {
     renderer.setElementClass(element.nativeElement, 'datatable-body', true);
 
@@ -207,25 +209,29 @@ export class DataTableBodyComponent {
     this.scroller.setOffset(offset || 0);
   }
 
-  onBodyScroll({ scrollYPos, scrollXPos, direction }): void {
+  // was unable to find the fitting type of event
+  onBodyScroll(event: any): void {
+    const scrollYPos: number = event.scrollYPos;
+    const scrollXPos: number = event.scrollXPos;
+
     // if scroll change, trigger update
     // this is mainly used for header cell positions
     if(this.offsetY !== scrollYPos || this.offsetX !== scrollXPos) {
-      this.scroll.emit({ 
+      this.scroll.emit({
         offsetY: scrollYPos,
         offsetX: scrollXPos
       });
     }
-    
+
     this.offsetY = scrollYPos;
     this.offsetX = scrollXPos;
 
     this.updateIndexes();
-    this.updatePage(direction);
+    this.updatePage(event.direction);
     this.updateRows();
   }
 
-  updatePage(direction): void {
+  updatePage(direction: string): void {
     let offset = this.indexes.first / this.pageSize;
 
     if(direction === 'up') {
@@ -243,7 +249,7 @@ export class DataTableBodyComponent {
     const { first, last } = this.indexes;
     let rowIndex = first;
     let idx = 0;
-    let temp = [];
+    let temp: any[] = [];
 
     while (rowIndex < last && rowIndex < this.rowCount) {
       let row = this.rows[rowIndex];
@@ -290,7 +296,7 @@ export class DataTableBodyComponent {
    * @param row The row that needs to be placed in the 2D space.
    * @returns {{styles: string}}  Returns the CSS3 style to be applied
    */
-  getRowsStyles(row): any {
+  getRowsStyles(row: any): any {
     const rowHeight = this.getRowHeight(row);
 
     let styles = {
@@ -299,7 +305,7 @@ export class DataTableBodyComponent {
 
     if(this.scrollbarV) {
       const idx = row ? row.$$index : 0;
-      
+
       // const pos = idx * rowHeight;
       // The position of this row would be the sum of all row heights
       // until the previous row position.
@@ -384,13 +390,13 @@ export class DataTableBodyComponent {
       const detailRowHeight = this.detailRowHeight * (row.$$expanded ? -1 : 1);
       this.rowHeightsCache.update(row.$$index, detailRowHeight);
     }
-    
+
     // Update the toggled row and update the heights in the cache.
     row.$$expanded ^= 1;
 
     this.detailToggle.emit({
-      rows: [row], 
-      currentIndex: viewPortFirstRowIndex 
+      rows: [row],
+      currentIndex: viewPortFirstRowIndex
     });
   }
 
@@ -400,7 +406,7 @@ export class DataTableBodyComponent {
    */
   toggleAllRows(expanded: boolean): void {
     let rowExpanded = expanded ? 1 : 0;
-    
+
     // Capture the row index of the first row that is visible on the viewport.
     let viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
 
@@ -415,8 +421,8 @@ export class DataTableBodyComponent {
 
     // Emit all rows that have been expanded.
     this.detailToggle.emit({
-      rows: this.rows, 
-      currentIndex: viewPortFirstRowIndex 
+      rows: this.rows,
+      currentIndex: viewPortFirstRowIndex
     });
   }
 

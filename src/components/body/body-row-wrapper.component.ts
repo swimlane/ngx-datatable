@@ -1,4 +1,5 @@
-import { Component, Input, Renderer, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Renderer, ElementRef, ChangeDetectionStrategy,
+  Output, EventEmitter, HostListener } from '@angular/core';
 
 @Component({
   selector: 'datatable-row-wrapper',
@@ -23,9 +24,14 @@ export class DataTableRowWrapperComponent {
   @Input() detailRowHeight: any;
   @Input() expanded: boolean = false;
   @Input() row: any;
+  @Output() rowContextmenu = new EventEmitter<{event: MouseEvent, row: any}>(false);
 
   constructor(element: ElementRef, renderer: Renderer) {
     renderer.setElementClass(element.nativeElement, 'datatable-row-wrapper', true);
   }
 
+  @HostListener('contextmenu', ['$event'])
+  public onContextmenu($event: MouseEvent): void {
+    this.rowContextmenu.emit({ event: $event, row: this.row });
+  }
 }

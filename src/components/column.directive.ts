@@ -5,22 +5,22 @@ import {Directive, TemplateRef, QueryList, ContentChildren, Input} from '@angula
 })
 export class DataTableColumnDirective {
 
-  @Input() name;
-  @Input() prop;
-  @Input() frozenLeft;
-  @Input() frozenRight;
-  @Input() flexGrow;
-  @Input() resizeable;
-  @Input() comparator;
-  @Input() pipe;
-  @Input() sortable;
-  @Input() draggable;
-  @Input() canAutoResize;
-  @Input() minWidth;
-  @Input() width;
-  @Input() maxWidth;
+  @Input() name: string;
+  @Input() prop: string;
+  @Input() frozenLeft: any;
+  @Input() frozenRight: any;
+  @Input() flexGrow: number;
+  @Input() resizeable: boolean;
+  @Input() comparator: Function;
+  @Input() pipe: any;
+  @Input() sortable: boolean;
+  @Input() draggable: boolean;
+  @Input() canAutoResize: boolean;
+  @Input() minWidth: number;
+  @Input() width: number;
+  @Input() maxWidth: number;
 
-  @ContentChildren(TemplateRef) 
+  @ContentChildren(TemplateRef)
   templates: QueryList<TemplateRef<any>>;
 
   get hasHeaderTemplate() {

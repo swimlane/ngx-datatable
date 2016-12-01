@@ -1,9 +1,10 @@
 import {
-  Component, Output, ElementRef, Renderer, EventEmitter, 
+  Component, Output, ElementRef, Renderer, EventEmitter,
   Input, HostBinding, ChangeDetectionStrategy
 } from '@angular/core';
 import { SortType } from '../../types';
 import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY } from '../../utils';
+import { DataTableColumnDirective } from '../column.directive';
 
 @Component({
   selector: 'datatable-header',
@@ -99,13 +100,13 @@ export class DataTableHeaderComponent {
     renderer.setElementClass(element.nativeElement, 'datatable-header', true);
   }
 
-  onColumnResized(width, column) {
+  onColumnResized(width: number, column: DataTableColumnDirective) {
     if (width <= column.minWidth) {
       width = column.minWidth;
     } else if(width >= column.maxWidth) {
       width = column.maxWidth;
     }
-    
+
     this.resize.emit({
       column,
       prevValue: column.width,
@@ -113,7 +114,7 @@ export class DataTableHeaderComponent {
     });
   }
 
-  onColumnReordered({ prevIndex, newIndex, model }) {
+  onColumnReordered({ prevIndex, newIndex, model }: any) {
     this.reorder.emit({
       column: model,
       prevValue: prevIndex,
@@ -121,7 +122,7 @@ export class DataTableHeaderComponent {
     });
   }
 
-  onSort({ column, prevValue, newValue }) {
+  onSort({ column, prevValue, newValue }: any) {
     const sorts = this.calcNewSorts(column, prevValue, newValue);
     this.sort.emit({
       sorts,
@@ -133,9 +134,9 @@ export class DataTableHeaderComponent {
 
   calcNewSorts(column: any, prevValue: number, newValue: number) {
     let idx = 0;
-    
-    let sorts = this.sorts.map((s, i) => { 
-      s = Object.assign({}, s); 
+
+    let sorts = this.sorts.map((s, i) => {
+      s = Object.assign({}, s);
       if(s.prop === column.prop) idx = i;
       return s;
     });
@@ -155,7 +156,7 @@ export class DataTableHeaderComponent {
     return sorts;
   }
 
-  stylesByGroup(group) {
+  stylesByGroup(group: string) {
     const widths = this.columnGroupWidths;
     const offsetX = this.offsetX;
 
