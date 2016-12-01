@@ -14,7 +14,9 @@
       * [Internals](api/internals.md)
    * [Column](api/column-options.md)
       * [Column Modes](api/column-modes.md)
-* [Demos](http://swimlane.github.io/angular2-data-table/)
+* Demos
+    * [Online](http://swimlane.github.io/angular2-data-table/)
+    * [Source Code](https://github.com/swimlane/angular2-data-table/tree/master/demo)
 * Contributing
    * [Building](contributing/building.md)
    * [Guidelines](contributing/guidelines.md)
