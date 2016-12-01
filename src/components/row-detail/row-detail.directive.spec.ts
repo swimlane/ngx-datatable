@@ -7,10 +7,10 @@ import { DatatableRowDetailDirective } from '.';
 @Component({
   selector: 'test-fixture-component',
   template: `
-    <datatable-row-detail-template id="t1"></datatable-row-detail-template>
-    <datatable-row-detail-template id="t2">
-      <template></template>
-    </datatable-row-detail-template>
+    <swui-datatable-row-detail id="t1"></swui-datatable-row-detail>
+    <swui-datatable-row-detail-template id="t2">
+      <template swui-datatable-row-detail-template></template>
+    </swui-datatable-row-detail>
   `
 })
 class TestFixtureComponent {
