@@ -9,7 +9,7 @@ import { ColumnMode, SortType, SelectionType } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
-import { scrollbarWidth, setColumnDefaults, translateTemplates } from '../utils';
+import { scrollbarWidth, setColumnDefaults, throttleable, translateTemplates } from '../utils';
 
 @Component({
   selector: 'swui-datatable',
@@ -722,6 +722,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * @memberOf DatatableComponent
    */
   @HostListener('window:resize')
+  @throttleable(5)
   recalculate(): void {
     this.recalculateDims();
     this.recalculateColumns();
@@ -740,7 +741,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    */
   recalculateColumns(
     columns: any[] = this.columns, 
-    forceIdx: number = null, 
+    forceIdx: number = -1, 
     allowBleed: boolean = this.scrollbarH): any[] {
 
     if (!columns) return;

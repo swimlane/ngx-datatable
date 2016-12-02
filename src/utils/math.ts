@@ -103,19 +103,17 @@ export function forceFillColumnWidths(
   startIdx: number,
   allowBleed: boolean,
   defaultColWidth: number = 300) {
-
-  let columnsToResize = startIdx > -1 && startIdx + 1 < allColumns.length ?
-    allColumns.slice(startIdx + 1, allColumns.length).filter((c) => { return c.canAutoResize !== false; }) :
-    allColumns.filter((c) => { return c.canAutoResize !== false; });
+  
+  let columnsToResize = allColumns
+    .slice(startIdx + 1, allColumns.length)
+    .filter((c) => { 
+      return c.canAutoResize !== false; 
+    });
 
   for (let column of columnsToResize) {
     if(!column.$$oldWidth) {
       column.$$oldWidth = column.width;
     }
-
-    // Initialize the starting width to original
-    // width whenever there is a resize/initialize event.
-    column.width = column.$$oldWidth;
   }
 
   let additionWidthPerColumn = 0;
@@ -134,6 +132,7 @@ export function forceFillColumnWidths(
         column.width = column.$$oldWidth || column.width || defaultColWidth;
       } else {
         const newSize = (column.width || defaultColWidth) + additionWidthPerColumn;
+
         if (column.minWidth && newSize < column.minWidth) {
           column.width = column.minWidth;
           columnsProcessed.push(column);
@@ -144,6 +143,8 @@ export function forceFillColumnWidths(
           column.width = newSize;
         }
       }
+
+      column.width = Math.max(0, column.width);
     }
 
     contentWidth = getContentWidth(allColumns);
