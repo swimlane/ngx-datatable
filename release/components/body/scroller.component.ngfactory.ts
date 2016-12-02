@@ -106,7 +106,7 @@ class View_ScrollerComponent_Host0 extends import2.AppView<any> {
     super(View_ScrollerComponent_Host0,renderType_ScrollerComponent_Host,import7.ViewType.HOST,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
-    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'datatable-scroller',import3.EMPTY_INLINE_ARRAY,rootSelector,(null as any));
+    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'datatable-scroller',new import3.InlineArray2(2,'class','datatable-scroll'),rootSelector,(null as any));
     this.compView_0 = new View_ScrollerComponent0(this.viewUtils,this,0,this._el_0);
     this._ScrollerComponent_0_3 = new Wrapper_ScrollerComponent(new import9.ElementRef(this._el_0),this.renderer);
     this.compView_0.create(this._ScrollerComponent_0_3.context);

@@ -95,19 +95,18 @@ function scaleColumns(colsByGroup, maxWidth, totalFlexGrow) {
  * @param {array} allColumns
  * @param {int} expectedWidth
  */
-function forceFillColumnWidths(allColumns, expectedWidth, startIdx, defaultColWidth) {
+function forceFillColumnWidths(allColumns, expectedWidth, startIdx, allowBleed, defaultColWidth) {
     if (defaultColWidth === void 0) { defaultColWidth = 300; }
-    var columnsToResize = startIdx > -1 && startIdx + 1 < allColumns.length ?
-        allColumns.slice(startIdx + 1, allColumns.length).filter(function (c) { return c.canAutoResize !== false; }) :
-        allColumns.filter(function (c) { return c.canAutoResize !== false; });
+    var columnsToResize = allColumns
+        .slice(startIdx + 1, allColumns.length)
+        .filter(function (c) {
+        return c.canAutoResize !== false;
+    });
     for (var _i = 0, columnsToResize_1 = columnsToResize; _i < columnsToResize_1.length; _i++) {
         var column = columnsToResize_1[_i];
         if (!column.$$oldWidth) {
             column.$$oldWidth = column.width;
         }
-        // Initialize the starting width to original
-        // width whenever there is a resize/initialize event.
-        column.width = column.$$oldWidth;
     }
     var additionWidthPerColumn = 0;
     var exceedsWindow = false;
@@ -120,7 +119,7 @@ function forceFillColumnWidths(allColumns, expectedWidth, startIdx, defaultColWi
         exceedsWindow = contentWidth >= expectedWidth;
         for (var _a = 0, columnsToResize_2 = columnsToResize; _a < columnsToResize_2.length; _a++) {
             var column = columnsToResize_2[_a];
-            if (exceedsWindow) {
+            if (exceedsWindow && allowBleed) {
                 column.width = column.$$oldWidth || column.width || defaultColWidth;
             }
             else {
@@ -137,6 +136,7 @@ function forceFillColumnWidths(allColumns, expectedWidth, startIdx, defaultColWi
                     column.width = newSize;
                 }
             }
+            column.width = Math.max(0, column.width);
         }
         contentWidth = getContentWidth(allColumns);
         remainingWidth = expectedWidth - contentWidth;

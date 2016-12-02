@@ -63,6 +63,10 @@ export class Wrapper_DatatableComponent {
   /*private*/ _expr_28:any;
   /*private*/ _expr_29:any;
   /*private*/ _expr_30:any;
+  /*private*/ _expr_31:any;
+  /*private*/ _expr_32:any;
+  /*private*/ _expr_33:any;
+  /*private*/ _expr_34:any;
   subscription0:any;
   subscription1:any;
   subscription2:any;
@@ -72,9 +76,9 @@ export class Wrapper_DatatableComponent {
   subscription6:any;
   subscription7:any;
   subscription8:any;
-  constructor(p0:any,p1:any) {
+  constructor(p0:any) {
     this._changed = false;
-    this.context = new import0.DatatableComponent(p0,p1);
+    this.context = new import0.DatatableComponent(p0);
     this._expr_0 = import1.UNINITIALIZED;
     this._expr_1 = import1.UNINITIALIZED;
     this._expr_2 = import1.UNINITIALIZED;
@@ -106,6 +110,10 @@ export class Wrapper_DatatableComponent {
     this._expr_28 = import1.UNINITIALIZED;
     this._expr_29 = import1.UNINITIALIZED;
     this._expr_30 = import1.UNINITIALIZED;
+    this._expr_31 = import1.UNINITIALIZED;
+    this._expr_32 = import1.UNINITIALIZED;
+    this._expr_33 = import1.UNINITIALIZED;
+    this._expr_34 = import1.UNINITIALIZED;
   }
   ngOnDetach(view:import2.AppView<any>,componentView:import2.AppView<any>,el:any):void {
   }
@@ -334,6 +342,26 @@ export class Wrapper_DatatableComponent {
       view.renderer.setElementClass(el,'selectable',currVal_30);
       this._expr_30 = currVal_30;
     }
+    const currVal_31:any = this.context.isCheckboxSelection;
+    if (import3.checkBinding(throwOnChange,this._expr_31,currVal_31)) {
+      view.renderer.setElementClass(el,'checkbox-selection',currVal_31);
+      this._expr_31 = currVal_31;
+    }
+    const currVal_32:any = this.context.isCellSelection;
+    if (import3.checkBinding(throwOnChange,this._expr_32,currVal_32)) {
+      view.renderer.setElementClass(el,'cell-selection',currVal_32);
+      this._expr_32 = currVal_32;
+    }
+    const currVal_33:any = this.context.isSingleSelection;
+    if (import3.checkBinding(throwOnChange,this._expr_33,currVal_33)) {
+      view.renderer.setElementClass(el,'single-selection',currVal_33);
+      this._expr_33 = currVal_33;
+    }
+    const currVal_34:any = this.context.isMultiSelection;
+    if (import3.checkBinding(throwOnChange,this._expr_34,currVal_34)) {
+      view.renderer.setElementClass(el,'multi-selection',currVal_34);
+      this._expr_34 = currVal_34;
+    }
   }
   handleEvent(eventName:string,$event:any):boolean {
     var result:boolean = true;
@@ -367,9 +395,9 @@ class View_DatatableComponent_Host0 extends import2.AppView<any> {
     super(View_DatatableComponent_Host0,renderType_DatatableComponent_Host,import7.ViewType.HOST,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
-    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'swui-datatable',import3.EMPTY_INLINE_ARRAY,rootSelector,(null as any));
+    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'swui-datatable',new import3.InlineArray2(2,'class','datatable'),rootSelector,(null as any));
     this.compView_0 = new View_DatatableComponent0(this.viewUtils,this,0,this._el_0);
-    this._DatatableComponent_0_3 = new Wrapper_DatatableComponent(this.renderer,new import9.ElementRef(this._el_0));
+    this._DatatableComponent_0_3 = new Wrapper_DatatableComponent(new import9.ElementRef(this._el_0));
     this._query_DataTableColumnDirective_0_0 = new import6.QueryList<any>();
     this._query_DatatableRowDetailDirective_0_1 = new import6.QueryList<any>();
     this._query_DatatableRowDetailDirective_0_1.reset(([] as any[]));
@@ -448,9 +476,9 @@ export class View_DatatableComponent0 extends import2.AppView<import0.DatatableC
     this._TemplateRef_3_5 = new import16.TemplateRef_(this,3,this._anchor_3);
     this._NgIf_3_6 = new import12.Wrapper_NgIf(this._vc_3.vcRef,this._TemplateRef_3_5);
     this._text_4 = this.renderer.createText(this._el_1,'\n      ',(null as any));
-    this._el_5 = import3.createRenderElement(this.renderer,this._el_1,'datatable-body',import3.EMPTY_INLINE_ARRAY,(null as any));
+    this._el_5 = import3.createRenderElement(this.renderer,this._el_1,'datatable-body',new import3.InlineArray2(2,'class','datatable-body'),(null as any));
     this.compView_5 = new import14.View_DataTableBodyComponent0(this.viewUtils,this,5,this._el_5);
-    this._DataTableBodyComponent_5_3 = new import14.Wrapper_DataTableBodyComponent(new import9.ElementRef(this._el_5),this.renderer);
+    this._DataTableBodyComponent_5_3 = new import14.Wrapper_DataTableBodyComponent();
     this._text_6 = this.renderer.createText((null as any),'\n      ',(null as any));
     this.compView_5.create(this._DataTableBodyComponent_5_3.context);
     this._text_7 = this.renderer.createText(this._el_1,'\n      ',(null as any));
@@ -587,7 +615,7 @@ export class View_DatatableComponent0 extends import2.AppView<import0.DatatableC
       result = (pd_sub_2 && result);
     }
     if ((eventName == 'select')) {
-      const pd_sub_3:any = ((<any>this.context.select.emit($event)) !== false);
+      const pd_sub_3:any = ((<any>this.context.onBodySelect($event)) !== false);
       result = (pd_sub_3 && result);
     }
     if ((eventName == 'detailToggle')) {
@@ -610,13 +638,13 @@ class View_DatatableComponent1 extends import2.AppView<any> {
     super(View_DatatableComponent1,renderType_DatatableComponent,import7.ViewType.EMBEDDED,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways,declaredViewContainer);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
-    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'datatable-header',import3.EMPTY_INLINE_ARRAY,(null as any));
+    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'datatable-header',new import3.InlineArray2(2,'class','datatable-header'),(null as any));
     this.compView_0 = new import20.View_DataTableHeaderComponent0(this.viewUtils,this,0,this._el_0);
-    this._DataTableHeaderComponent_0_3 = new import20.Wrapper_DataTableHeaderComponent(new import9.ElementRef(this._el_0),this.renderer);
+    this._DataTableHeaderComponent_0_3 = new import20.Wrapper_DataTableHeaderComponent();
     this._text_1 = this.renderer.createText((null as any),'\n      ',(null as any));
     this.compView_0.create(this._DataTableHeaderComponent_0_3.context);
-    var disposable_0:Function = import3.subscribeToRenderElement(this,this._el_0,new import3.InlineArray8(6,'sort',(null as any),'resize',(null as any),'reorder',(null as any)),this.eventHandler(this.handleEvent_0));
-    this._DataTableHeaderComponent_0_3.subscribe(this,this.eventHandler(this.handleEvent_0),true,true,true);
+    var disposable_0:Function = import3.subscribeToRenderElement(this,this._el_0,new import3.InlineArray8(8,'sort',(null as any),'resize',(null as any),'reorder',(null as any),'select',(null as any)),this.eventHandler(this.handleEvent_0));
+    this._DataTableHeaderComponent_0_3.subscribe(this,this.eventHandler(this.handleEvent_0),true,true,true,true);
     this.init(this._el_0,((<any>this.renderer).directRenderer? (null as any): [
       this._el_0,
       this._text_1
@@ -643,11 +671,13 @@ class View_DatatableComponent1 extends import2.AppView<any> {
     this._DataTableHeaderComponent_0_3.check_sorts(currVal_0_0_5,throwOnChange,false);
     const currVal_0_0_6:any = this.parentView.context.sortType;
     this._DataTableHeaderComponent_0_3.check_sortType(currVal_0_0_6,throwOnChange,false);
-    const currVal_0_0_7:any = this.parentView.context.headerHeight;
-    this._DataTableHeaderComponent_0_3.check_headerHeight(currVal_0_0_7,throwOnChange,false);
-    const currVal_0_0_8:any = this.parentView.context.columns;
-    this._DataTableHeaderComponent_0_3.check_columns(currVal_0_0_8,throwOnChange,false);
-    if (this._DataTableHeaderComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange)) { this.compView_0.markAsCheckOnce(); }
+    const currVal_0_0_7:any = this.parentView.context.allRowsSelected;
+    this._DataTableHeaderComponent_0_3.check_allRowsSelected(currVal_0_0_7,throwOnChange,false);
+    const currVal_0_0_8:any = this.parentView.context.headerHeight;
+    this._DataTableHeaderComponent_0_3.check_headerHeight(currVal_0_0_8,throwOnChange,false);
+    const currVal_0_0_9:any = this.parentView.context.columns;
+    this._DataTableHeaderComponent_0_3.check_columns(currVal_0_0_9,throwOnChange,false);
+    this._DataTableHeaderComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange);
     this._DataTableHeaderComponent_0_3.checkHost(this,this.compView_0,this._el_0,throwOnChange);
     this.compView_0.detectChanges(throwOnChange);
   }
@@ -673,6 +703,10 @@ class View_DatatableComponent1 extends import2.AppView<any> {
       const pd_sub_2:any = ((<any>this.parentView.context.onColumnReorder($event)) !== false);
       result = (pd_sub_2 && result);
     }
+    if ((eventName == 'select')) {
+      const pd_sub_3:any = ((<any>this.parentView.context.onHeaderSelect($event)) !== false);
+      result = (pd_sub_3 && result);
+    }
     return result;
   }
 }
@@ -685,9 +719,9 @@ class View_DatatableComponent2 extends import2.AppView<any> {
     super(View_DatatableComponent2,renderType_DatatableComponent,import7.ViewType.EMBEDDED,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways,declaredViewContainer);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
-    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'datatable-footer',import3.EMPTY_INLINE_ARRAY,(null as any));
+    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'datatable-footer',new import3.InlineArray2(2,'class','datatable-footer'),(null as any));
     this.compView_0 = new import22.View_DataTableFooterComponent0(this.viewUtils,this,0,this._el_0);
-    this._DataTableFooterComponent_0_3 = new import22.Wrapper_DataTableFooterComponent(new import9.ElementRef(this._el_0),this.renderer);
+    this._DataTableFooterComponent_0_3 = new import22.Wrapper_DataTableFooterComponent();
     this._text_1 = this.renderer.createText((null as any),'\n      ',(null as any));
     this.compView_0.create(this._DataTableFooterComponent_0_3.context);
     var disposable_0:Function = import3.subscribeToRenderElement(this,this._el_0,new import3.InlineArray2(2,'page',(null as any)),this.eventHandler(this.handleEvent_0));

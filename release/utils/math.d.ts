@@ -32,4 +32,4 @@ export declare function adjustColumnWidths(allColumns: any, expectedWidth: any):
  * @param {array} allColumns
  * @param {int} expectedWidth
  */
-export declare function forceFillColumnWidths(allColumns: any[], expectedWidth: number, startIdx: number, defaultColWidth?: number): void;
+export declare function forceFillColumnWidths(allColumns: any[], expectedWidth: number, startIdx: number, allowBleed: boolean, defaultColWidth?: number): void;

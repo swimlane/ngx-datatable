@@ -1,5 +1,12 @@
 "use strict";
 var utils_1 = require('../utils');
+/**
+ * Sets the column defaults
+ *
+ * @export
+ * @param {any[]} columns
+ * @returns
+ */
 function setColumnDefaults(columns) {
     if (!columns)
         return;
@@ -34,6 +41,13 @@ function setColumnDefaults(columns) {
     }
 }
 exports.setColumnDefaults = setColumnDefaults;
+/**
+ * Translates templates definitions to objects
+ *
+ * @export
+ * @param {DataTableColumnDirective[]} templates
+ * @returns {any[]}
+ */
 function translateTemplates(templates) {
     var result = [];
     for (var _i = 0, templates_1 = templates; _i < templates_1.length; _i++) {

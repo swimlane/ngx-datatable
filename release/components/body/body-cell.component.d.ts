@@ -1,8 +1,9 @@
-import { EventEmitter, ElementRef, Renderer } from '@angular/core';
+import { EventEmitter, ElementRef } from '@angular/core';
 export declare class DataTableBodyCellComponent {
     row: any;
     column: any;
     rowHeight: number;
+    isSelected: boolean;
     sorts: any[];
     activate: EventEmitter<any>;
     isFocused: boolean;
@@ -15,11 +16,12 @@ export declare class DataTableBodyCellComponent {
     private sortDir;
     private element;
     private _sorts;
-    constructor(element: ElementRef, renderer: Renderer);
+    constructor(element: ElementRef);
     onFocus(): void;
     onBlur(): void;
     onClick(event: MouseEvent): void;
     onDblClick(event: MouseEvent): void;
     onKeyDown(event: KeyboardEvent): void;
+    onCheckboxChange(event: any): void;
     calcSortDir(sorts: any[]): any;
 }

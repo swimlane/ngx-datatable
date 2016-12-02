@@ -1,4 +1,4 @@
-import { EventEmitter, ElementRef, Renderer } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 export declare class DataTableFooterComponent {
     footerHeight: number;
     rowCount: number;
@@ -12,5 +12,4 @@ export declare class DataTableFooterComponent {
     page: EventEmitter<any>;
     readonly isVisible: boolean;
     readonly curPage: number;
-    constructor(element: ElementRef, renderer: Renderer);
 }

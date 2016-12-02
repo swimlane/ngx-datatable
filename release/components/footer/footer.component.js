@@ -1,9 +1,8 @@
 "use strict";
 var core_1 = require('@angular/core');
 var DataTableFooterComponent = (function () {
-    function DataTableFooterComponent(element, renderer) {
+    function DataTableFooterComponent() {
         this.page = new core_1.EventEmitter();
-        renderer.setElementClass(element.nativeElement, 'datatable-footer', true);
     }
     Object.defineProperty(DataTableFooterComponent.prototype, "isVisible", {
         get: function () {
@@ -23,14 +22,14 @@ var DataTableFooterComponent = (function () {
         { type: core_1.Component, args: [{
                     selector: 'datatable-footer',
                     template: "\n    <div\n      [style.height.px]=\"footerHeight\">\n      <div class=\"page-count\">{{rowCount.toLocaleString()}} {{totalMessage}}</div>\n      <datatable-pager\n        [pagerLeftArrowIcon]=\"pagerLeftArrowIcon\"\n        [pagerRightArrowIcon]=\"pagerRightArrowIcon\"\n        [pagerPreviousIcon]=\"pagerPreviousIcon\"\n        [pagerNextIcon]=\"pagerNextIcon\"\n        [page]=\"curPage\"\n        [size]=\"pageSize\"\n        [count]=\"rowCount\"\n        [hidden]=\"!isVisible\"\n        (change)=\"page.emit($event)\">\n       </datatable-pager>\n     </div>\n  ",
+                    host: {
+                        class: 'datatable-footer'
+                    },
                     changeDetection: core_1.ChangeDetectionStrategy.OnPush
                 },] },
     ];
     /** @nocollapse */
-    DataTableFooterComponent.ctorParameters = [
-        { type: core_1.ElementRef, },
-        { type: core_1.Renderer, },
-    ];
+    DataTableFooterComponent.ctorParameters = [];
     DataTableFooterComponent.propDecorators = {
         'footerHeight': [{ type: core_1.Input },],
         'rowCount': [{ type: core_1.Input },],

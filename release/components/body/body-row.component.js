@@ -2,10 +2,9 @@
 var core_1 = require('@angular/core');
 var utils_1 = require('../../utils');
 var DataTableBodyRowComponent = (function () {
-    function DataTableBodyRowComponent(element, renderer) {
+    function DataTableBodyRowComponent(element) {
         this.activate = new core_1.EventEmitter();
         this.element = element.nativeElement;
-        renderer.setElementClass(this.element, 'datatable-body-row', true);
     }
     Object.defineProperty(DataTableBodyRowComponent.prototype, "columns", {
         get: function () {
@@ -94,13 +93,15 @@ var DataTableBodyRowComponent = (function () {
     DataTableBodyRowComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'datatable-body-row',
-                    template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: $colGroup?.type\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: column?.$$id\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>\n  "
+                    template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: $colGroup?.type\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: column?.$$id\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [isSelected]=\"isSelected\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>\n  ",
+                    host: {
+                        class: 'datatable-body-row'
+                    }
                 },] },
     ];
     /** @nocollapse */
     DataTableBodyRowComponent.ctorParameters = [
         { type: core_1.ElementRef, },
-        { type: core_1.Renderer, },
     ];
     DataTableBodyRowComponent.propDecorators = {
         'columns': [{ type: core_1.Input },],

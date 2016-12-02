@@ -1,4 +1,4 @@
-import { ElementRef, Renderer, EventEmitter } from '@angular/core';
+import { ElementRef, EventEmitter } from '@angular/core';
 export declare class DataTableBodyRowComponent {
     columns: any[];
     innerWidth: number;
@@ -14,7 +14,7 @@ export declare class DataTableBodyRowComponent {
     private columnsByPin;
     private _columns;
     private _innerWidth;
-    constructor(element: ElementRef, renderer: Renderer);
+    constructor(element: ElementRef);
     stylesByGroup(group: string): {
         width: string;
     };

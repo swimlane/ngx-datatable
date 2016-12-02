@@ -1,10 +1,9 @@
 "use strict";
 var core_1 = require('@angular/core');
 var DataTableRowWrapperComponent = (function () {
-    function DataTableRowWrapperComponent(element, renderer) {
+    function DataTableRowWrapperComponent() {
         this.expanded = false;
         this.rowContextmenu = new core_1.EventEmitter(false);
-        renderer.setElementClass(element.nativeElement, 'datatable-row-wrapper', true);
     }
     DataTableRowWrapperComponent.prototype.onContextmenu = function ($event) {
         this.rowContextmenu.emit({ event: $event, row: this.row });
@@ -12,14 +11,14 @@ var DataTableRowWrapperComponent = (function () {
     DataTableRowWrapperComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'datatable-row-wrapper',
-                    template: "\n    <ng-content></ng-content>\n    <div \n      *ngIf=\"expanded\"\n      [style.height.px]=\"detailRowHeight\" \n      class=\"datatable-row-detail\">\n      <template\n        *ngIf=\"rowDetailTemplate\"\n        [ngTemplateOutlet]=\"rowDetailTemplate\"\n        [ngOutletContext]=\"{ row: row }\">\n      </template>\n    </div>\n  "
+                    template: "\n    <ng-content></ng-content>\n    <div \n      *ngIf=\"expanded\"\n      [style.height.px]=\"detailRowHeight\" \n      class=\"datatable-row-detail\">\n      <template\n        *ngIf=\"rowDetailTemplate\"\n        [ngTemplateOutlet]=\"rowDetailTemplate\"\n        [ngOutletContext]=\"{ row: row }\">\n      </template>\n    </div>\n  ",
+                    host: {
+                        class: 'datatable-row-wrapper'
+                    }
                 },] },
     ];
     /** @nocollapse */
-    DataTableRowWrapperComponent.ctorParameters = [
-        { type: core_1.ElementRef, },
-        { type: core_1.Renderer, },
-    ];
+    DataTableRowWrapperComponent.ctorParameters = [];
     DataTableRowWrapperComponent.propDecorators = {
         'rowDetailTemplate': [{ type: core_1.Input },],
         'detailRowHeight': [{ type: core_1.Input },],

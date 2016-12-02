@@ -5,9 +5,11 @@ export declare class DataTableHeaderCellComponent {
     column: any;
     sortAscendingIcon: string;
     sortDescendingIcon: string;
+    allRowsSelected: boolean;
     headerHeight: number;
     sorts: any[];
     sort: EventEmitter<any>;
+    select: EventEmitter<any>;
     readonly columnCssClasses: any;
     private readonly name;
     private readonly minWidth;

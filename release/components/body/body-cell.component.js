@@ -3,11 +3,10 @@ var core_1 = require('@angular/core');
 var utils_1 = require('../../utils');
 var types_1 = require('../../types');
 var DataTableBodyCellComponent = (function () {
-    function DataTableBodyCellComponent(element, renderer) {
+    function DataTableBodyCellComponent(element) {
         this.activate = new core_1.EventEmitter();
         this.isFocused = false;
         this.element = element.nativeElement;
-        renderer.setElementClass(this.element, 'datatable-body-cell', true);
     }
     Object.defineProperty(DataTableBodyCellComponent.prototype, "sorts", {
         get: function () {
@@ -60,11 +59,15 @@ var DataTableBodyCellComponent = (function () {
     });
     Object.defineProperty(DataTableBodyCellComponent.prototype, "value", {
         get: function () {
-            if (!this.row || !this.column)
+            if (!this.row || !this.column || !this.column.prop)
                 return '';
-            var prop = utils_1.deepValueGetter(this.row, this.column.prop);
+            var val = utils_1.deepValueGetter(this.row, this.column.prop);
             var userPipe = this.column.pipe;
-            return userPipe ? userPipe.transform(prop) : prop;
+            if (userPipe)
+                return userPipe.transform(val);
+            if (val !== undefined)
+                return val;
+            return '';
         },
         enumerable: true,
         configurable: true
@@ -116,6 +119,16 @@ var DataTableBodyCellComponent = (function () {
             });
         }
     };
+    DataTableBodyCellComponent.prototype.onCheckboxChange = function (event) {
+        this.activate.emit({
+            type: 'checkbox',
+            event: event,
+            row: this.row,
+            column: this.column,
+            value: this.value,
+            cellElement: this.element
+        });
+    };
     DataTableBodyCellComponent.prototype.calcSortDir = function (sorts) {
         var _this = this;
         if (!sorts)
@@ -129,18 +142,21 @@ var DataTableBodyCellComponent = (function () {
     DataTableBodyCellComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'datatable-body-cell',
-                    template: "\n    <div class=\"datatable-body-cell-label\">\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [innerHTML]=\"value\">\n      </span>\n      <template\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngOutletContext]=\"{ value: value, row: row, column: column }\">\n      </template>\n    </div>\n  "
+                    template: "\n    <div class=\"datatable-body-cell-label\">\n      <label\n        *ngIf=\"column.checkboxable\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [checked]=\"isSelected\"\n          (change)=\"onCheckboxChange($event)\" \n        />\n      </label>\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [innerHTML]=\"value\">\n      </span>\n      <template\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngOutletContext]=\"{ value: value, row: row, column: column }\">\n      </template>\n    </div>\n  ",
+                    host: {
+                        class: 'datatable-body-cell'
+                    }
                 },] },
     ];
     /** @nocollapse */
     DataTableBodyCellComponent.ctorParameters = [
         { type: core_1.ElementRef, },
-        { type: core_1.Renderer, },
     ];
     DataTableBodyCellComponent.propDecorators = {
         'row': [{ type: core_1.Input },],
         'column': [{ type: core_1.Input },],
         'rowHeight': [{ type: core_1.Input },],
+        'isSelected': [{ type: core_1.Input },],
         'sorts': [{ type: core_1.Input },],
         'activate': [{ type: core_1.Output },],
         'isFocused': [{ type: core_1.HostBinding, args: ['class.active',] },],

@@ -3,4 +3,5 @@ export declare enum SelectionType {
     multi,
     multiShift,
     cell,
+    checkbox,
 }

@@ -1,4 +1,4 @@
-import { EventEmitter, ElementRef, Renderer } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
 export declare class DataTableBodyComponent {
@@ -63,7 +63,7 @@ export declare class DataTableBodyComponent {
     private _rowCount;
     private _offset;
     private _pageSize;
-    constructor(element: ElementRef, renderer: Renderer);
+    constructor();
     /**
      * Updates the Y offset given a new offset.
      *

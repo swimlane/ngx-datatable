@@ -15,6 +15,8 @@ export declare class DataTableColumnDirective {
     minWidth: number;
     width: number;
     maxWidth: number;
+    checkboxable: boolean;
+    headerCheckboxable: boolean;
     cellTemplate: TemplateRef<any>;
     headerTemplate: TemplateRef<any>;
 }

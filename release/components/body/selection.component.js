@@ -10,10 +10,11 @@ var DataTableSelectionComponent = (function () {
     DataTableSelectionComponent.prototype.selectRow = function (event, index, row) {
         if (!this.selectEnabled)
             return;
+        var chkbox = this.selectionType === types_1.SelectionType.checkbox;
         var multiShift = this.selectionType === types_1.SelectionType.multiShift;
         var multiClick = this.selectionType === types_1.SelectionType.multi;
         var selected = [];
-        if (multiShift || multiClick) {
+        if (multiShift || multiClick || chkbox) {
             if (multiShift && event.shiftKey) {
                 var newSelected = this.selected.slice();
                 selected = utils_1.selectRowsBetween(newSelected, this.rows, index, this.prevIndex, this.getRowSelectedIdx.bind(this));
@@ -40,7 +41,10 @@ var DataTableSelectionComponent = (function () {
     };
     DataTableSelectionComponent.prototype.onActivate = function (model, index) {
         var type = model.type, event = model.event, row = model.row;
-        if (type === 'click' || type === 'dblclick') {
+        var chkbox = this.selectionType === types_1.SelectionType.checkbox;
+        var select = (!chkbox && (type === 'click' || type === 'dblclick')) ||
+            (chkbox && type === 'checkbox');
+        if (select) {
             this.selectRow(event, index, row);
         }
         else if (type === 'keydown') {

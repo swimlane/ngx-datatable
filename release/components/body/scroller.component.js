@@ -11,7 +11,6 @@ var ScrollerComponent = (function () {
         this.prevScrollYPos = 0;
         this.prevScrollXPos = 0;
         this.element = element.nativeElement;
-        this.element.classList.add('datatable-scroll');
     }
     ScrollerComponent.prototype.ngOnInit = function () {
         // manual bind so we don't always listen
@@ -55,7 +54,10 @@ var ScrollerComponent = (function () {
     ScrollerComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'datatable-scroller',
-                    template: "\n    <ng-content></ng-content>\n  "
+                    template: "\n    <ng-content></ng-content>\n  ",
+                    host: {
+                        class: 'datatable-scroll'
+                    }
                 },] },
     ];
     /** @nocollapse */

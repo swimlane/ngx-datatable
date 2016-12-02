@@ -5,6 +5,7 @@ var utils_1 = require('../../utils');
 var DataTableHeaderCellComponent = (function () {
     function DataTableHeaderCellComponent() {
         this.sort = new core_1.EventEmitter();
+        this.select = new core_1.EventEmitter();
     }
     Object.defineProperty(DataTableHeaderCellComponent.prototype, "sorts", {
         get: function () {
@@ -94,8 +95,7 @@ var DataTableHeaderCellComponent = (function () {
     DataTableHeaderCellComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'datatable-header-cell',
-                    template: "\n    <div>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        *ngIf=\"!column.headerTemplate\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <template\n        *ngIf=\"column.headerTemplate\"\n        [ngTemplateOutlet]=\"column.headerTemplate\"\n        [ngOutletContext]=\"{ \n          column: column, \n          sortDir: sortDir\n        }\">\n      </template>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses(sortDir)\">\n      </span>\n    </div>\n  ",
-                    changeDetection: core_1.ChangeDetectionStrategy.OnPush
+                    template: "\n    <div>\n      <label\n        *ngIf=\"column.checkboxable && column.headerCheckboxable\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [attr.checked]=\"allRowsSelected\"\n          (change)=\"select.emit(!allRowsSelected)\" \n        />\n      </label>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        *ngIf=\"!column.headerTemplate\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <template\n        *ngIf=\"column.headerTemplate\"\n        [ngTemplateOutlet]=\"column.headerTemplate\"\n        [ngOutletContext]=\"{ \n          column: column, \n          sortDir: sortDir\n        }\">\n      </template>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses(sortDir)\">\n      </span>\n    </div>\n  "
                 },] },
     ];
     /** @nocollapse */
@@ -105,9 +105,11 @@ var DataTableHeaderCellComponent = (function () {
         'column': [{ type: core_1.Input },],
         'sortAscendingIcon': [{ type: core_1.Input },],
         'sortDescendingIcon': [{ type: core_1.Input },],
+        'allRowsSelected': [{ type: core_1.Input },],
         'headerHeight': [{ type: core_1.HostBinding, args: ['style.height.px',] }, { type: core_1.Input },],
         'sorts': [{ type: core_1.Input },],
         'sort': [{ type: core_1.Output },],
+        'select': [{ type: core_1.Output },],
         'columnCssClasses': [{ type: core_1.HostBinding, args: ['class',] },],
         'name': [{ type: core_1.HostBinding, args: ['attr.title',] },],
         'minWidth': [{ type: core_1.HostBinding, args: ['style.minWidth.px',] },],

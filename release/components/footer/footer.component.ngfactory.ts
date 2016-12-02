@@ -13,10 +13,9 @@ import * as import4 from '@angular/core/src/render/api';
 import * as import5 from '@angular/core/src/metadata/view';
 import * as import6 from '@angular/core/src/linker/view_type';
 import * as import7 from '@angular/core/src/linker/component_factory';
-import * as import8 from '@angular/core/src/linker/element_ref';
-import * as import9 from '../../../../src/components/footer/pager.component';
-import * as import10 from './pager.component.ngfactory';
-import * as import11 from '@angular/core/src/security';
+import * as import8 from '../../../../src/components/footer/pager.component';
+import * as import9 from './pager.component.ngfactory';
+import * as import10 from '@angular/core/src/security';
 export class Wrapper_DataTableFooterComponent {
   /*private*/ _eventHandler:Function;
   context:import0.DataTableFooterComponent;
@@ -31,9 +30,9 @@ export class Wrapper_DataTableFooterComponent {
   /*private*/ _expr_7:any;
   /*private*/ _expr_8:any;
   subscription0:any;
-  constructor(p0:any,p1:any) {
+  constructor() {
     this._changed = false;
-    this.context = new import0.DataTableFooterComponent(p0,p1);
+    this.context = new import0.DataTableFooterComponent();
     this._expr_0 = import1.UNINITIALIZED;
     this._expr_1 = import1.UNINITIALIZED;
     this._expr_2 = import1.UNINITIALIZED;
@@ -137,9 +136,9 @@ class View_DataTableFooterComponent_Host0 extends import2.AppView<any> {
     super(View_DataTableFooterComponent_Host0,renderType_DataTableFooterComponent_Host,import6.ViewType.HOST,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import7.ComponentRef<any> {
-    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'datatable-footer',import3.EMPTY_INLINE_ARRAY,rootSelector,(null as any));
+    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'datatable-footer',new import3.InlineArray2(2,'class','datatable-footer'),rootSelector,(null as any));
     this.compView_0 = new View_DataTableFooterComponent0(this.viewUtils,this,0,this._el_0);
-    this._DataTableFooterComponent_0_3 = new Wrapper_DataTableFooterComponent(new import8.ElementRef(this._el_0),this.renderer);
+    this._DataTableFooterComponent_0_3 = new Wrapper_DataTableFooterComponent();
     this.compView_0.create(this._DataTableFooterComponent_0_3.context);
     this.init(this._el_0,((<any>this.renderer).directRenderer? (null as any): [this._el_0]),(null as any));
     return new import7.ComponentRef_<any>(0,this,this._el_0,this._DataTableFooterComponent_0_3.context);
@@ -171,8 +170,8 @@ export class View_DataTableFooterComponent0 extends import2.AppView<import0.Data
   _text_4:any;
   _text_5:any;
   _el_6:any;
-  compView_6:import2.AppView<import9.DataTablePagerComponent>;
-  _DataTablePagerComponent_6_3:import10.Wrapper_DataTablePagerComponent;
+  compView_6:import2.AppView<import8.DataTablePagerComponent>;
+  _DataTablePagerComponent_6_3:import9.Wrapper_DataTablePagerComponent;
   _text_7:any;
   _text_8:any;
   _text_9:any;
@@ -193,9 +192,9 @@ export class View_DataTableFooterComponent0 extends import2.AppView<import0.Data
     this._el_3 = import3.createRenderElement(this.renderer,this._el_1,'div',new import3.InlineArray2(2,'class','page-count'),(null as any));
     this._text_4 = this.renderer.createText(this._el_3,'',(null as any));
     this._text_5 = this.renderer.createText(this._el_1,'\n      ',(null as any));
-    this._el_6 = import3.createRenderElement(this.renderer,this._el_1,'datatable-pager',import3.EMPTY_INLINE_ARRAY,(null as any));
-    this.compView_6 = new import10.View_DataTablePagerComponent0(this.viewUtils,this,6,this._el_6);
-    this._DataTablePagerComponent_6_3 = new import10.Wrapper_DataTablePagerComponent(new import8.ElementRef(this._el_6),this.renderer);
+    this._el_6 = import3.createRenderElement(this.renderer,this._el_1,'datatable-pager',new import3.InlineArray2(2,'class','datatable-pager'),(null as any));
+    this.compView_6 = new import9.View_DataTablePagerComponent0(this.viewUtils,this,6,this._el_6);
+    this._DataTablePagerComponent_6_3 = new import9.Wrapper_DataTablePagerComponent();
     this._text_7 = this.renderer.createText((null as any),'\n       ',(null as any));
     this.compView_6.create(this._DataTablePagerComponent_6_3.context);
     this._text_8 = this.renderer.createText(this._el_1,'\n     ',(null as any));
@@ -218,7 +217,7 @@ export class View_DataTableFooterComponent0 extends import2.AppView<import0.Data
     return (null as any);
   }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
-    if (((token === import9.DataTablePagerComponent) && ((6 <= requestNodeIndex) && (requestNodeIndex <= 7)))) { return this._DataTablePagerComponent_6_3.context; }
+    if (((token === import8.DataTablePagerComponent) && ((6 <= requestNodeIndex) && (requestNodeIndex <= 7)))) { return this._DataTablePagerComponent_6_3.context; }
     return notFoundResult;
   }
   detectChangesInternal(throwOnChange:boolean):void {
@@ -239,7 +238,7 @@ export class View_DataTableFooterComponent0 extends import2.AppView<import0.Data
     if (this._DataTablePagerComponent_6_3.ngDoCheck(this,this._el_6,throwOnChange)) { this.compView_6.markAsCheckOnce(); }
     const currVal_12:any = this.context.footerHeight;
     if (import3.checkBinding(throwOnChange,this._expr_12,currVal_12)) {
-      this.renderer.setElementStyle(this._el_1,'height',((this.viewUtils.sanitizer.sanitize(import11.SecurityContext.STYLE,currVal_12) == null)? (null as any): (this.viewUtils.sanitizer.sanitize(import11.SecurityContext.STYLE,currVal_12).toString() + 'px')));
+      this.renderer.setElementStyle(this._el_1,'height',((this.viewUtils.sanitizer.sanitize(import10.SecurityContext.STYLE,currVal_12) == null)? (null as any): (this.viewUtils.sanitizer.sanitize(import10.SecurityContext.STYLE,currVal_12).toString() + 'px')));
       this._expr_12 = currVal_12;
     }
     const currVal_13:any = import3.inlineInterpolate(2,'',this.context.rowCount.toLocaleString(),' ',this.context.totalMessage,'');

@@ -40,9 +40,9 @@ export class Wrapper_DataTableBodyRowComponent {
   /*private*/ _expr_8:any;
   /*private*/ _expr_9:any;
   subscription0:any;
-  constructor(p0:any,p1:any) {
+  constructor(p0:any) {
     this._changed = false;
-    this.context = new import0.DataTableBodyRowComponent(p0,p1);
+    this.context = new import0.DataTableBodyRowComponent(p0);
     this._expr_0 = import1.UNINITIALIZED;
     this._expr_1 = import1.UNINITIALIZED;
     this._expr_2 = import1.UNINITIALIZED;
@@ -150,9 +150,9 @@ class View_DataTableBodyRowComponent_Host0 extends import2.AppView<any> {
     super(View_DataTableBodyRowComponent_Host0,renderType_DataTableBodyRowComponent_Host,import7.ViewType.HOST,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
-    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'datatable-body-row',import3.EMPTY_INLINE_ARRAY,rootSelector,(null as any));
+    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'datatable-body-row',new import3.InlineArray2(2,'class','datatable-body-row'),rootSelector,(null as any));
     this.compView_0 = new View_DataTableBodyRowComponent0(this.viewUtils,this,0,this._el_0);
-    this._DataTableBodyRowComponent_0_3 = new Wrapper_DataTableBodyRowComponent(new import9.ElementRef(this._el_0),this.renderer);
+    this._DataTableBodyRowComponent_0_3 = new Wrapper_DataTableBodyRowComponent(new import9.ElementRef(this._el_0));
     this.compView_0.create(this._DataTableBodyRowComponent_0_3.context);
     var disposable_0:Function = import3.subscribeToRenderElement(this,this._el_0,new import3.InlineArray2(2,'keydown',(null as any)),this.eventHandler(this.handleEvent_0));
     this.init(this._el_0,((<any>this.renderer).directRenderer? (null as any): [this._el_0]),[disposable_0]);
@@ -305,9 +305,9 @@ class View_DataTableBodyRowComponent2 extends import2.AppView<any> {
     super(View_DataTableBodyRowComponent2,renderType_DataTableBodyRowComponent,import7.ViewType.EMBEDDED,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways,declaredViewContainer);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
-    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'datatable-body-cell',new import3.InlineArray2(2,'tabindex','-1'),(null as any));
+    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'datatable-body-cell',new import3.InlineArray4(4,'class','datatable-body-cell','tabindex','-1'),(null as any));
     this.compView_0 = new import19.View_DataTableBodyCellComponent0(this.viewUtils,this,0,this._el_0);
-    this._DataTableBodyCellComponent_0_3 = new import19.Wrapper_DataTableBodyCellComponent(new import9.ElementRef(this._el_0),this.renderer);
+    this._DataTableBodyCellComponent_0_3 = new import19.Wrapper_DataTableBodyCellComponent(new import9.ElementRef(this._el_0));
     this._text_1 = this.renderer.createText((null as any),'\n      ',(null as any));
     this.compView_0.create(this._DataTableBodyCellComponent_0_3.context);
     var disposable_0:Function = import3.subscribeToRenderElement(this,this._el_0,new import3.InlineArray16(12,'activate',(null as any),'focus',(null as any),'blur',(null as any),'click',(null as any),'dblclick',(null as any),'keydown',(null as any)),this.eventHandler(this.handleEvent_0));
@@ -330,6 +330,8 @@ class View_DataTableBodyRowComponent2 extends import2.AppView<any> {
     this._DataTableBodyCellComponent_0_3.check_column(currVal_0_0_1,throwOnChange,false);
     const currVal_0_0_2:any = this.parentView.parentView.context.rowHeight;
     this._DataTableBodyCellComponent_0_3.check_rowHeight(currVal_0_0_2,throwOnChange,false);
+    const currVal_0_0_3:any = this.parentView.parentView.context.isSelected;
+    this._DataTableBodyCellComponent_0_3.check_isSelected(currVal_0_0_3,throwOnChange,false);
     this._DataTableBodyCellComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange);
     this._DataTableBodyCellComponent_0_3.checkHost(this,this.compView_0,this._el_0,throwOnChange);
     this.compView_0.detectChanges(throwOnChange);

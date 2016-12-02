@@ -13,7 +13,7 @@ __export(require('./scrollbar-width'));
 __export(require('./selection'));
 __export(require('./translate'));
 __export(require('./visibility-observer'));
-__export(require('./debounce'));
+__export(require('./throttle'));
 __export(require('./sort'));
 __export(require('./row-height-cache'));
 __export(require('./column-helper'));

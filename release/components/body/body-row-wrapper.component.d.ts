@@ -1,4 +1,4 @@
-import { Renderer, ElementRef, EventEmitter } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 export declare class DataTableRowWrapperComponent {
     rowDetailTemplate: any;
     detailRowHeight: any;
@@ -8,6 +8,5 @@ export declare class DataTableRowWrapperComponent {
         event: MouseEvent;
         row: any;
     }>;
-    constructor(element: ElementRef, renderer: Renderer);
     onContextmenu($event: MouseEvent): void;
 }
