@@ -195,6 +195,57 @@
 	 */ }
   .datatable.material.striped .datatable-row-odd {
     background: #eee; }
+  .datatable.material.single-selection .datatable-body-row.active,
+  .datatable.material.single-selection .datatable-body-row.active .datatable-row-group, .datatable.material.multi-selection .datatable-body-row.active,
+  .datatable.material.multi-selection .datatable-body-row.active .datatable-row-group {
+    background-color: #304FFE;
+    color: #FFF; }
+  .datatable.material.single-selection .datatable-body-row.active:hover,
+  .datatable.material.single-selection .datatable-body-row.active:hover .datatable-row-group, .datatable.material.multi-selection .datatable-body-row.active:hover,
+  .datatable.material.multi-selection .datatable-body-row.active:hover .datatable-row-group {
+    background-color: #193AE4;
+    color: #FFF; }
+  .datatable.material.single-selection .datatable-body-row.active:focus,
+  .datatable.material.single-selection .datatable-body-row.active:focus .datatable-row-group, .datatable.material.multi-selection .datatable-body-row.active:focus,
+  .datatable.material.multi-selection .datatable-body-row.active:focus .datatable-row-group {
+    background-color: #2041EF;
+    color: #FFF; }
+  .datatable.material:not(.cell-selection) .datatable-body-row:hover,
+  .datatable.material:not(.cell-selection) .datatable-body-row:hover .datatable-row-group {
+    background-color: #eee;
+    -webkit-transition-property: background;
+    transition-property: background;
+    -webkit-transition-duration: .3s;
+            transition-duration: .3s;
+    -webkit-transition-timing-function: linear;
+            transition-timing-function: linear; }
+  .datatable.material:not(.cell-selection) .datatable-body-row:focus,
+  .datatable.material:not(.cell-selection) .datatable-body-row:focus .datatable-row-group {
+    background-color: #ddd; }
+  .datatable.material.cell-selection .datatable-body-cell:hover,
+  .datatable.material.cell-selection .datatable-body-cell:hover .datatable-row-group {
+    background-color: #eee;
+    -webkit-transition-property: background;
+    transition-property: background;
+    -webkit-transition-duration: .3s;
+            transition-duration: .3s;
+    -webkit-transition-timing-function: linear;
+            transition-timing-function: linear; }
+  .datatable.material.cell-selection .datatable-body-cell:focus,
+  .datatable.material.cell-selection .datatable-body-cell:focus .datatable-row-group {
+    background-color: #ddd; }
+  .datatable.material.cell-selection .datatable-body-cell.active,
+  .datatable.material.cell-selection .datatable-body-cell.active .datatable-row-group {
+    background-color: #304FFE;
+    color: #FFF; }
+  .datatable.material.cell-selection .datatable-body-cell.active:hover,
+  .datatable.material.cell-selection .datatable-body-cell.active:hover .datatable-row-group {
+    background-color: #193AE4;
+    color: #FFF; }
+  .datatable.material.cell-selection .datatable-body-cell.active:focus,
+  .datatable.material.cell-selection .datatable-body-cell.active:focus .datatable-row-group {
+    background-color: #2041EF;
+    color: #FFF; }
   .datatable.material .empty-row {
     height: 50px;
     text-align: left;
@@ -242,30 +293,6 @@
     border-top: 0;
     -webkit-transition: width 0.3s ease;
     transition: width 0.3s ease; }
-  .datatable.material .datatable-body .datatable-body-row:hover,
-  .datatable.material .datatable-body .datatable-body-row:hover .datatable-row-group {
-    background-color: #eee;
-    -webkit-transition-property: background;
-    transition-property: background;
-    -webkit-transition-duration: .3s;
-            transition-duration: .3s;
-    -webkit-transition-timing-function: linear;
-            transition-timing-function: linear; }
-  .datatable.material .datatable-body .datatable-body-row:focus,
-  .datatable.material .datatable-body .datatable-body-row:focus .datatable-row-group {
-    background-color: #ddd; }
-  .datatable.material .datatable-body .datatable-body-row.active,
-  .datatable.material .datatable-body .datatable-body-row.active .datatable-row-group {
-    background-color: #304FFE;
-    color: #FFF; }
-  .datatable.material .datatable-body .datatable-body-row.active:hover,
-  .datatable.material .datatable-body .datatable-body-row.active:hover .datatable-row-group {
-    background-color: #193AE4;
-    color: #FFF; }
-  .datatable.material .datatable-body .datatable-body-row.active:focus,
-  .datatable.material .datatable-body .datatable-body-row.active:focus .datatable-row-group {
-    background-color: #2041EF;
-    color: #FFF; }
   .datatable.material .datatable-body .progress-linear {
     display: block;
     position: relative;
@@ -338,6 +365,49 @@
         font-size: 20px;
         line-height: 20px;
         padding: 0 3px; }
+
+/**
+ * Checkboxes
+**/
+.datatable-checkbox {
+  position: relative;
+  margin: 0;
+  cursor: pointer;
+  vertical-align: middle;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 10px 0; }
+  .datatable-checkbox input[type='checkbox'] {
+    position: relative;
+    margin: 0 1rem 0 0;
+    cursor: pointer;
+    outline: none; }
+    .datatable-checkbox input[type='checkbox']:before {
+      -webkit-transition: all 0.3s ease-in-out;
+      transition: all 0.3s ease-in-out;
+      content: "";
+      position: absolute;
+      left: 0;
+      z-index: 1;
+      width: 1rem;
+      height: 1rem;
+      border: 2px solid #f2f2f2; }
+    .datatable-checkbox input[type='checkbox']:checked:before {
+      -webkit-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+      height: .5rem;
+      border-color: #009688;
+      border-top-style: none;
+      border-right-style: none; }
+    .datatable-checkbox input[type='checkbox']:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1rem;
+      height: 1rem;
+      background: #fff;
+      cursor: pointer; }
 
 /**
  * Progress bar animations
