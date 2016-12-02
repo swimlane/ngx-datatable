@@ -13,7 +13,7 @@ import { Component } from '@angular/core';
         </small>
       </h3>
       <div style='float:left;width:75%'>
-        <swui-datatable
+        <swui-data-table
           style="width: 90%"
           class="material"
           [rows]="rows"
@@ -26,7 +26,7 @@ import { Component } from '@angular/core';
           [selectionType]="'checkbox'"
           (activate)="onActivate($event)"
           (select)='onSelect($event)'>
-          <swui-datatable-column
+          <swui-data-table-column
             [width]="30"
             [sortable]="false"
             [canAutoResize]="false"
@@ -34,11 +34,11 @@ import { Component } from '@angular/core';
             [resizeable]="false"
             [headerCheckboxable]="true"
             [checkboxable]="true">
-          </swui-datatable-column>
-          <swui-datatable-column name="Name"></swui-datatable-column>
-          <swui-datatable-column name="Gender"></swui-datatable-column>
-          <swui-datatable-column name="Company"></swui-datatable-column>
-        </swui-datatable>
+          </swui-data-table-column>
+          <swui-data-table-column name="Name"></swui-data-table-column>
+          <swui-data-table-column name="Gender"></swui-data-table-column>
+          <swui-data-table-column name="Company"></swui-data-table-column>
+        </swui-data-table>
       </div>
 
       <div class='selected-column'>

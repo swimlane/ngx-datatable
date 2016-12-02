@@ -5,7 +5,7 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
   template: `
     <div>
       <h3>TemplateRef via Column Property</h3>
-      <swui-datatable
+      <swui-data-table
         class="material"
         [rows]="rows"
         [columns]="columns"
@@ -13,7 +13,7 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="'auto'">
-      </swui-datatable>
+      </swui-data-table>
 
       <template #hdrTpl let-column="column" >
         <strong>Fancy</strong>: {{column.name}} !!

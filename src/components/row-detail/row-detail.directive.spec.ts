@@ -2,21 +2,21 @@ import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { DatatableRowDetailDirective, DatatableRowDetailTemplateDirective } from '.';
+import { DataTableRowDetailDirective, DataTableRowDetailTemplateDirective } from '.';
 
 @Component({
   selector: 'test-fixture-component',
   template: `
-    <swui-datatable-row-detail id="t1"></swui-datatable-row-detail>
-    <swui-datatable-row-detail id="t2">
-      <template swui-datatable-row-detail-template></template>
-    </swui-datatable-row-detail>
+    <swui-data-table-row-detail id="t1"></swui-data-table-row-detail>
+    <swui-data-table-row-detail id="t2">
+      <template swui-data-table-row-detail-template></template>
+    </swui-data-table-row-detail>
   `
 })
 class TestFixtureComponent {
 }
 
-describe('DatatableRowDetailDirective', () => {
+describe('DataTableRowDetailDirective', () => {
   let fixture: ComponentFixture<TestFixtureComponent>;
   let component: TestFixtureComponent;
   let element;
@@ -25,8 +25,8 @@ describe('DatatableRowDetailDirective', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ 
-        DatatableRowDetailDirective,
-        DatatableRowDetailTemplateDirective,
+        DataTableRowDetailDirective,
+        DataTableRowDetailTemplateDirective,
         TestFixtureComponent
       ]
     });
@@ -41,30 +41,30 @@ describe('DatatableRowDetailDirective', () => {
   }));
 
   describe('fixture', () => {
-    let directive: DatatableRowDetailDirective;
+    let directive: DataTableRowDetailDirective;
     
     beforeEach(() => {
       directive = fixture.debugElement
-        .query(By.directive(DatatableRowDetailDirective))
-        .injector.get(DatatableRowDetailDirective);
+        .query(By.directive(DataTableRowDetailDirective))
+        .injector.get(DataTableRowDetailDirective);
     });
 
     it('should have a component instance', () => {
       expect(component).toBeTruthy();
     });
 
-    it('should have at least one DatatableRowDetailDirective directive', () => {
+    it('should have at least one DataTableRowDetailDirective directive', () => {
       expect(directive).toBeTruthy();
     });
   });
 
   describe('directive #1', () => {
-    let directive: DatatableRowDetailDirective;
+    let directive: DataTableRowDetailDirective;
     
     beforeEach(() => {
       directive = fixture.debugElement
         .query(By.css("#t1"))
-        .injector.get(DatatableRowDetailDirective);
+        .injector.get(DataTableRowDetailDirective);
     });
 
     it('should be found', () => {
@@ -78,12 +78,12 @@ describe('DatatableRowDetailDirective', () => {
   });
 
   describe('directive #2', () => {
-    let directive: DatatableRowDetailDirective;
+    let directive: DataTableRowDetailDirective;
     
     beforeEach(() => {
       directive = fixture.debugElement
         .query(By.css("#t2"))
-        .injector.get(DatatableRowDetailDirective);
+        .injector.get(DataTableRowDetailDirective);
     });
 
     it('should be found', () => {

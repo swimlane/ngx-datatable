@@ -8,13 +8,13 @@ import {
 } from '../../utils';
 
 @Component({
-  selector: 'datatable-body-row',
+  selector: 'data-table-body-row',
   template: `
     <div
       *ngFor="let colGroup of columnsByPin; let i = index; trackBy: $colGroup?.type"
-      class="datatable-row-{{colGroup.type}} datatable-row-group"
+      class="data-table-row-{{colGroup.type}} data-table-row-group"
       [ngStyle]="stylesByGroup(colGroup.type)">
-      <datatable-body-cell
+      <data-table-body-cell
         *ngFor="let column of colGroup.columns; let ii = index; trackBy: column?.$$id"
         tabindex="-1"
         [row]="row"
@@ -22,11 +22,11 @@ import {
         [column]="column"
         [rowHeight]="rowHeight"
         (activate)="onActivate($event, ii)">
-      </datatable-body-cell>
+      </data-table-body-cell>
     </div>
   `,
   host: {
-    class: 'datatable-body-row'
+    class: 'data-table-body-row'
   }
 })
 export class DataTableBodyRowComponent {
@@ -58,12 +58,12 @@ export class DataTableBodyRowComponent {
   @HostBinding('class.active')
   @Input() isSelected: boolean;
 
-  @HostBinding('class.datatable-row-even')
+  @HostBinding('class.data-table-row-even')
   get isEvenRow(): boolean {
     return this.row.$$index % 2 === 0;
   }
 
-  @HostBinding('class.datatable-row-odd')
+  @HostBinding('class.data-table-row-odd')
   get isOddRow(): boolean {
     return this.row.$$index % 2 !== 0;
   }

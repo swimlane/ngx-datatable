@@ -141,10 +141,10 @@ var DataTableBodyCellComponent = (function () {
     };
     DataTableBodyCellComponent.decorators = [
         { type: core_1.Component, args: [{
-                    selector: 'datatable-body-cell',
-                    template: "\n    <div class=\"datatable-body-cell-label\">\n      <label\n        *ngIf=\"column.checkboxable\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [checked]=\"isSelected\"\n          (change)=\"onCheckboxChange($event)\" \n        />\n      </label>\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [innerHTML]=\"value\">\n      </span>\n      <template\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngOutletContext]=\"{ value: value, row: row, column: column }\">\n      </template>\n    </div>\n  ",
+                    selector: 'data-table-body-cell',
+                    template: "\n    <div class=\"data-table-body-cell-label\">\n      <label\n        *ngIf=\"column.checkboxable\" \n        class=\"data-table-checkbox\">\n        <input \n          type=\"checkbox\"\n          [checked]=\"isSelected\"\n          (change)=\"onCheckboxChange($event)\" \n        />\n      </label>\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [innerHTML]=\"value\">\n      </span>\n      <template\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngOutletContext]=\"{ value: value, row: row, column: column }\">\n      </template>\n    </div>\n  ",
                     host: {
-                        class: 'datatable-body-cell'
+                        class: 'data-table-body-cell'
                     }
                 },] },
     ];

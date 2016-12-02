@@ -1,7 +1,7 @@
 import {TestBed, async} from '@angular/core/testing';
-import {DatatableComponent} from './datatable.component';
-import {Angular2DataTableModule} from '../datatable.module';
-describe('Datatable component', () => {
+import {DataTableComponent} from './data-table.component';
+import {Angular2DataTableModule} from '../data-table.module';
+describe('DataTable component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -16,7 +16,7 @@ describe('Datatable component', () => {
   describe('When the column is sorted with a custom comparator', () => {
 
     it('should return a new array', () => {
-      let fixture = TestBed.createComponent(DatatableComponent);
+      let fixture = TestBed.createComponent(DataTableComponent);
       let initialRows = [
         { id: 1 },
         { id: 2 },

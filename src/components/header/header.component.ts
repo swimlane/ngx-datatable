@@ -6,18 +6,18 @@ import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY } from '.
 import { DataTableColumnDirective } from '../columns';
 
 @Component({
-  selector: 'datatable-header',
+  selector: 'data-table-header',
   template: `
     <div
       orderable
       (reorder)="onColumnReordered($event)"
       [style.width.px]="columnGroupWidths.total"
-      class="datatable-header-inner">
+      class="data-table-header-inner">
       <div
         *ngFor="let colGroup of columnsByPin; trackBy: colGroup?.type"
-        [class]="'datatable-row-' + colGroup.type"
+        [class]="'data-table-row-' + colGroup.type"
         [ngStyle]="stylesByGroup(colGroup.type)">
-        <datatable-header-cell
+        <data-table-header-cell
           *ngFor="let column of colGroup.columns; trackBy: column?.$$id"
           resizeable
           [resizeEnabled]="column.resizeable"
@@ -37,12 +37,12 @@ import { DataTableColumnDirective } from '../columns';
           [sortDescendingIcon]="sortDescendingIcon"
           (sort)="onSort($event)"
           (select)="select.emit($event)">
-        </datatable-header-cell>
+        </data-table-header-cell>
       </div>
     </div>
   `,
   host: {
-    class: 'datatable-header'
+    class: 'data-table-header'
   }
 })
 export class DataTableHeaderComponent {

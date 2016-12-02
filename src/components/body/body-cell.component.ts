@@ -7,12 +7,12 @@ import { deepValueGetter, Keys } from '../../utils';
 import { SortDirection } from '../../types';
 
 @Component({
-  selector: 'datatable-body-cell',
+  selector: 'data-table-body-cell',
   template: `
-    <div class="datatable-body-cell-label">
+    <div class="data-table-body-cell-label">
       <label
         *ngIf="column.checkboxable" 
-        class="datatable-checkbox">
+        class="data-table-checkbox">
         <input 
           type="checkbox"
           [checked]="isSelected"
@@ -31,7 +31,7 @@ import { SortDirection } from '../../types';
     </div>
   `,
   host: {
-    class: 'datatable-body-cell'
+    class: 'data-table-body-cell'
   }
 })
 export class DataTableBodyCellComponent {

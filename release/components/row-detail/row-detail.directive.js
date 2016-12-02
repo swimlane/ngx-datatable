@@ -1,25 +1,25 @@
 "use strict";
 var core_1 = require('@angular/core');
 var row_detail_template_directive_1 = require('./row-detail-template.directive');
-var DatatableRowDetailDirective = (function () {
-    function DatatableRowDetailDirective() {
+var DataTableRowDetailDirective = (function () {
+    function DataTableRowDetailDirective() {
     }
-    Object.defineProperty(DatatableRowDetailDirective.prototype, "rowDetailTemplate", {
+    Object.defineProperty(DataTableRowDetailDirective.prototype, "rowDetailTemplate", {
         get: function () {
             return this.template;
         },
         enumerable: true,
         configurable: true
     });
-    DatatableRowDetailDirective.decorators = [
-        { type: core_1.Directive, args: [{ selector: 'swui-datatable-row-detail' },] },
+    DataTableRowDetailDirective.decorators = [
+        { type: core_1.Directive, args: [{ selector: 'swui-data-table-row-detail' },] },
     ];
     /** @nocollapse */
-    DatatableRowDetailDirective.ctorParameters = [];
-    DatatableRowDetailDirective.propDecorators = {
-        'template': [{ type: core_1.ContentChild, args: [row_detail_template_directive_1.DatatableRowDetailTemplateDirective, { read: core_1.TemplateRef },] },],
+    DataTableRowDetailDirective.ctorParameters = [];
+    DataTableRowDetailDirective.propDecorators = {
+        'template': [{ type: core_1.ContentChild, args: [row_detail_template_directive_1.DataTableRowDetailTemplateDirective, { read: core_1.TemplateRef },] },],
     };
-    return DatatableRowDetailDirective;
+    return DataTableRowDetailDirective;
 }());
-exports.DatatableRowDetailDirective = DatatableRowDetailDirective;
+exports.DataTableRowDetailDirective = DataTableRowDetailDirective;
 //# sourceMappingURL=row-detail.directive.js.map

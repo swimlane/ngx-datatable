@@ -1,8 +1,8 @@
 import { Directive, TemplateRef } from '@angular/core';
 
 @Directive({
-  selector: '[swui-datatable-row-detail-template]'
+  selector: '[swui-data-table-row-detail-template]'
 })
-export class DatatableRowDetailTemplateDirective {
+export class DataTableRowDetailTemplateDirective {
   constructor(public template: TemplateRef<any>) { };
 }

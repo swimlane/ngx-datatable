@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <h3>Virtual Scrolling with 10k Rows</h3>
-      <swui-datatable
+      <swui-data-table
         class='material'
         [rows]='rows'
         [columnMode]="'standard'"
@@ -14,19 +14,19 @@ import { Component } from '@angular/core';
         [rowHeight]="50"
         [scrollbarV]="true"
         (page)="onPage($event)">
-        <swui-datatable-column name="Name" width="200">
-          <template let-value="value" swui-datatable-cell-template>
+        <swui-data-table-column name="Name" width="200">
+          <template let-value="value" swui-data-table-cell-template>
             <strong>{{value}}</strong>
           </template>
-        </swui-datatable-column>
-        <swui-datatable-column name="Gender" width="300">
-          <template let-row="row" let-value="value" swui-datatable-cell-template>
+        </swui-data-table-column>
+        <swui-data-table-column name="Gender" width="300">
+          <template let-row="row" let-value="value" swui-data-table-cell-template>
             <i [innerHTML]="row['name']"></i> and <i>{{value}}</i>
           </template>
-        </swui-datatable-column>
-        <swui-datatable-column name="Age" width="80">
-        </swui-datatable-column>
-      </swui-datatable>
+        </swui-data-table-column>
+        <swui-data-table-column name="Age" width="80">
+        </swui-data-table-column>
+      </swui-data-table>
     </div>
   `
 })

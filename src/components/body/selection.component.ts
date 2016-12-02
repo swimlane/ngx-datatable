@@ -12,7 +12,7 @@ export interface Model {
 }
 
 @Component({
-  selector: 'datatable-selection',
+  selector: 'data-table-selection',
   template: `
     <ng-content></ng-content>
   `
@@ -140,7 +140,7 @@ export class DataTableSelectionComponent {
     } else if(keyCode === Keys.up || keyCode === Keys.down) {
       const nextRowElement = this.getPrevNextRow(rowElement, keyCode);
       if(nextRowElement) {
-        const children = nextRowElement.getElementsByClassName('datatable-body-cell');
+        const children = nextRowElement.getElementsByClassName('data-table-body-cell');
         if(children.length) nextCellElement = children[cellIndex];
       }
     }

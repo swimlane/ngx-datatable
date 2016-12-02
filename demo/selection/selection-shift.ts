@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
     <div>
       <h3>Multi Select via Shift</h3>
       <div style='float:left;width:75%'>
-        <swui-datatable
+        <swui-data-table
           class="material"
           [rows]="rows"
           [columnMode]="'force'"
@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
           [selectionType]="'multiShift'"
           (activate)="onActivate($event)"
           (select)='onSelect($event)'>
-        </swui-datatable>
+        </swui-data-table>
       </div>
 
       <div class='selected-column'>

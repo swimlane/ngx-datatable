@@ -5,7 +5,7 @@
  */
  /* tslint:disable */
 
-import * as import0 from '../../../src/components/datatable.component';
+import * as import0 from '../../../src/components/data-table.component';
 import * as import1 from '@angular/core/src/change_detection/change_detection';
 import * as import2 from '@angular/core/src/linker/view';
 import * as import3 from '@angular/core/src/linker/view_utils';
@@ -28,9 +28,9 @@ import * as import19 from '../../../src/components/header/header.component';
 import * as import20 from './header/header.component.ngfactory';
 import * as import21 from '../../../src/components/footer/footer.component';
 import * as import22 from './footer/footer.component.ngfactory';
-export class Wrapper_DatatableComponent {
+export class Wrapper_DataTableComponent {
   /*private*/ _eventHandler:Function;
-  context:import0.DatatableComponent;
+  context:import0.DataTableComponent;
   /*private*/ _changed:boolean;
   /*private*/ _expr_0:any;
   /*private*/ _expr_1:any;
@@ -78,7 +78,7 @@ export class Wrapper_DatatableComponent {
   subscription8:any;
   constructor(p0:any) {
     this._changed = false;
-    this.context = new import0.DatatableComponent(p0);
+    this.context = new import0.DataTableComponent(p0);
     this._expr_0 = import1.UNINITIALIZED;
     this._expr_1 = import1.UNINITIALIZED;
     this._expr_2 = import1.UNINITIALIZED;
@@ -384,47 +384,47 @@ export class Wrapper_DatatableComponent {
     if (emit8) { (this.subscription8 = this.context.rowContextmenu.subscribe(_eventHandler.bind(view,'rowContextmenu'))); }
   }
 }
-var renderType_DatatableComponent_Host:import4.RenderComponentType = import3.createRenderComponentType('',0,import5.ViewEncapsulation.None,([] as any[]),{});
-class View_DatatableComponent_Host0 extends import2.AppView<any> {
+var renderType_DataTableComponent_Host:import4.RenderComponentType = import3.createRenderComponentType('',0,import5.ViewEncapsulation.None,([] as any[]),{});
+class View_DataTableComponent_Host0 extends import2.AppView<any> {
   _el_0:any;
-  compView_0:import2.AppView<import0.DatatableComponent>;
-  _DatatableComponent_0_3:Wrapper_DatatableComponent;
+  compView_0:import2.AppView<import0.DataTableComponent>;
+  _DataTableComponent_0_3:Wrapper_DataTableComponent;
   _query_DataTableColumnDirective_0_0:import6.QueryList<any>;
-  _query_DatatableRowDetailDirective_0_1:import6.QueryList<any>;
+  _query_DataTableRowDetailDirective_0_1:import6.QueryList<any>;
   constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any) {
-    super(View_DatatableComponent_Host0,renderType_DatatableComponent_Host,import7.ViewType.HOST,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways);
+    super(View_DataTableComponent_Host0,renderType_DataTableComponent_Host,import7.ViewType.HOST,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
-    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'swui-datatable',new import3.InlineArray2(2,'class','datatable'),rootSelector,(null as any));
-    this.compView_0 = new View_DatatableComponent0(this.viewUtils,this,0,this._el_0);
-    this._DatatableComponent_0_3 = new Wrapper_DatatableComponent(new import9.ElementRef(this._el_0));
+    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'swui-data-table',new import3.InlineArray2(2,'class','data-table'),rootSelector,(null as any));
+    this.compView_0 = new View_DataTableComponent0(this.viewUtils,this,0,this._el_0);
+    this._DataTableComponent_0_3 = new Wrapper_DataTableComponent(new import9.ElementRef(this._el_0));
     this._query_DataTableColumnDirective_0_0 = new import6.QueryList<any>();
-    this._query_DatatableRowDetailDirective_0_1 = new import6.QueryList<any>();
-    this._query_DatatableRowDetailDirective_0_1.reset(([] as any[]));
-    this._DatatableComponent_0_3.context.rowDetailTemplateChild = this._query_DatatableRowDetailDirective_0_1.first;
-    this.compView_0.create(this._DatatableComponent_0_3.context);
+    this._query_DataTableRowDetailDirective_0_1 = new import6.QueryList<any>();
+    this._query_DataTableRowDetailDirective_0_1.reset(([] as any[]));
+    this._DataTableComponent_0_3.context.rowDetailTemplateChild = this._query_DataTableRowDetailDirective_0_1.first;
+    this.compView_0.create(this._DataTableComponent_0_3.context);
     var disposable_0:Function = import3.subscribeToRenderElement(this,this._el_0,new import3.InlineArray2(2,'resize','window'),this.eventHandler(this.handleEvent_0));
     this.init(this._el_0,((<any>this.renderer).directRenderer? (null as any): [this._el_0]),[disposable_0]);
-    return new import8.ComponentRef_<any>(0,this,this._el_0,this._DatatableComponent_0_3.context);
+    return new import8.ComponentRef_<any>(0,this,this._el_0,this._DataTableComponent_0_3.context);
   }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
-    if (((token === import0.DatatableComponent) && (0 === requestNodeIndex))) { return this._DatatableComponent_0_3.context; }
+    if (((token === import0.DataTableComponent) && (0 === requestNodeIndex))) { return this._DataTableComponent_0_3.context; }
     return notFoundResult;
   }
   detectChangesInternal(throwOnChange:boolean):void {
-    this._DatatableComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange);
+    this._DataTableComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange);
     if (!throwOnChange) { if (this._query_DataTableColumnDirective_0_0.dirty) {
       this._query_DataTableColumnDirective_0_0.reset(([] as any[]));
-      this._DatatableComponent_0_3.context.columnTemplates = this._query_DataTableColumnDirective_0_0;
+      this._DataTableComponent_0_3.context.columnTemplates = this._query_DataTableColumnDirective_0_0;
       this._query_DataTableColumnDirective_0_0.notifyOnChanges();
     } }
-    this._DatatableComponent_0_3.checkHost(this,this.compView_0,this._el_0,throwOnChange);
+    this._DataTableComponent_0_3.checkHost(this,this.compView_0,this._el_0,throwOnChange);
     this.compView_0.detectChanges(throwOnChange);
-    if (!throwOnChange) { if ((this.numberOfChecks === 0)) { this._DatatableComponent_0_3.context.ngAfterViewInit(); } }
+    if (!throwOnChange) { if ((this.numberOfChecks === 0)) { this._DataTableComponent_0_3.context.ngAfterViewInit(); } }
   }
   destroyInternal():void {
     this.compView_0.destroy();
-    this._DatatableComponent_0_3.ngOnDestroy();
+    this._DataTableComponent_0_3.ngOnDestroy();
   }
   visitRootNodesInternal(cb:any,ctx:any):void {
     cb(this._el_0,ctx);
@@ -432,14 +432,14 @@ class View_DatatableComponent_Host0 extends import2.AppView<any> {
   handleEvent_0(eventName:string,$event:any):boolean {
     this.compView_0.markPathToRootAsCheckOnce();
     var result:boolean = true;
-    result = (this._DatatableComponent_0_3.handleEvent(eventName,$event) && result);
+    result = (this._DataTableComponent_0_3.handleEvent(eventName,$event) && result);
     return result;
   }
 }
-export const DatatableComponentNgFactory:import8.ComponentFactory<import0.DatatableComponent> = new import8.ComponentFactory<import0.DatatableComponent>('swui-datatable',View_DatatableComponent_Host0,import0.DatatableComponent);
-const styles_DatatableComponent:any[] = ([] as any[]);
-var renderType_DatatableComponent:import4.RenderComponentType = import3.createRenderComponentType('',0,import5.ViewEncapsulation.None,styles_DatatableComponent,{});
-export class View_DatatableComponent0 extends import2.AppView<import0.DatatableComponent> {
+export const DataTableComponentNgFactory:import8.ComponentFactory<import0.DataTableComponent> = new import8.ComponentFactory<import0.DataTableComponent>('swui-data-table',View_DataTableComponent_Host0,import0.DataTableComponent);
+const styles_DataTableComponent:any[] = ([] as any[]);
+var renderType_DataTableComponent:import4.RenderComponentType = import3.createRenderComponentType('',0,import5.ViewEncapsulation.None,styles_DataTableComponent,{});
+export class View_DataTableComponent0 extends import2.AppView<import0.DataTableComponent> {
   _viewQuery_DataTableBodyComponent_0:import6.QueryList<any>;
   _text_0:any;
   _el_1:any;
@@ -462,7 +462,7 @@ export class View_DatatableComponent0 extends import2.AppView<import0.DatatableC
   _text_9:any;
   _text_10:any;
   constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any) {
-    super(View_DatatableComponent0,renderType_DatatableComponent,import7.ViewType.COMPONENT,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways);
+    super(View_DataTableComponent0,renderType_DataTableComponent,import7.ViewType.COMPONENT,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
     const parentRenderNode:any = this.renderer.createViewRoot(this.parentElement);
@@ -476,7 +476,7 @@ export class View_DatatableComponent0 extends import2.AppView<import0.DatatableC
     this._TemplateRef_3_5 = new import16.TemplateRef_(this,3,this._anchor_3);
     this._NgIf_3_6 = new import12.Wrapper_NgIf(this._vc_3.vcRef,this._TemplateRef_3_5);
     this._text_4 = this.renderer.createText(this._el_1,'\n      ',(null as any));
-    this._el_5 = import3.createRenderElement(this.renderer,this._el_1,'datatable-body',new import3.InlineArray2(2,'class','datatable-body'),(null as any));
+    this._el_5 = import3.createRenderElement(this.renderer,this._el_1,'data-table-body',new import3.InlineArray2(2,'class','data-table-body'),(null as any));
     this.compView_5 = new import14.View_DataTableBodyComponent0(this.viewUtils,this,5,this._el_5);
     this._DataTableBodyComponent_5_3 = new import14.Wrapper_DataTableBodyComponent();
     this._text_6 = this.renderer.createText((null as any),'\n      ',(null as any));
@@ -586,8 +586,8 @@ export class View_DatatableComponent0 extends import2.AppView<import0.DatatableC
     this._VisibilityDirective_1_3.ngOnDestroy();
   }
   createEmbeddedViewInternal(nodeIndex:number):import2.AppView<any> {
-    if ((nodeIndex == 3)) { return new View_DatatableComponent1(this.viewUtils,this,3,this._anchor_3,this._vc_3); }
-    if ((nodeIndex == 8)) { return new View_DatatableComponent2(this.viewUtils,this,8,this._anchor_8,this._vc_8); }
+    if ((nodeIndex == 3)) { return new View_DataTableComponent1(this.viewUtils,this,3,this._anchor_3,this._vc_3); }
+    if ((nodeIndex == 8)) { return new View_DataTableComponent2(this.viewUtils,this,8,this._anchor_8,this._vc_8); }
     return (null as any);
   }
   handleEvent_1(eventName:string,$event:any):boolean {
@@ -629,16 +629,16 @@ export class View_DatatableComponent0 extends import2.AppView<import0.DatatableC
     return result;
   }
 }
-class View_DatatableComponent1 extends import2.AppView<any> {
+class View_DataTableComponent1 extends import2.AppView<any> {
   _el_0:any;
   compView_0:import2.AppView<import19.DataTableHeaderComponent>;
   _DataTableHeaderComponent_0_3:import20.Wrapper_DataTableHeaderComponent;
   _text_1:any;
   constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any,declaredViewContainer:import11.ViewContainer) {
-    super(View_DatatableComponent1,renderType_DatatableComponent,import7.ViewType.EMBEDDED,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways,declaredViewContainer);
+    super(View_DataTableComponent1,renderType_DataTableComponent,import7.ViewType.EMBEDDED,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways,declaredViewContainer);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
-    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'datatable-header',new import3.InlineArray2(2,'class','datatable-header'),(null as any));
+    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'data-table-header',new import3.InlineArray2(2,'class','data-table-header'),(null as any));
     this.compView_0 = new import20.View_DataTableHeaderComponent0(this.viewUtils,this,0,this._el_0);
     this._DataTableHeaderComponent_0_3 = new import20.Wrapper_DataTableHeaderComponent();
     this._text_1 = this.renderer.createText((null as any),'\n      ',(null as any));
@@ -710,16 +710,16 @@ class View_DatatableComponent1 extends import2.AppView<any> {
     return result;
   }
 }
-class View_DatatableComponent2 extends import2.AppView<any> {
+class View_DataTableComponent2 extends import2.AppView<any> {
   _el_0:any;
   compView_0:import2.AppView<import21.DataTableFooterComponent>;
   _DataTableFooterComponent_0_3:import22.Wrapper_DataTableFooterComponent;
   _text_1:any;
   constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any,declaredViewContainer:import11.ViewContainer) {
-    super(View_DatatableComponent2,renderType_DatatableComponent,import7.ViewType.EMBEDDED,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways,declaredViewContainer);
+    super(View_DataTableComponent2,renderType_DataTableComponent,import7.ViewType.EMBEDDED,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways,declaredViewContainer);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
-    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'datatable-footer',new import3.InlineArray2(2,'class','datatable-footer'),(null as any));
+    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'data-table-footer',new import3.InlineArray2(2,'class','data-table-footer'),(null as any));
     this.compView_0 = new import22.View_DataTableFooterComponent0(this.viewUtils,this,0,this._el_0);
     this._DataTableFooterComponent_0_3 = new import22.Wrapper_DataTableFooterComponent();
     this._text_1 = this.renderer.createText((null as any),'\n      ',(null as any));

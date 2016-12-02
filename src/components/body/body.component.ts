@@ -6,9 +6,9 @@ import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
 
 @Component({
-  selector: 'datatable-body',
+  selector: 'data-table-body',
   template: `
-    <datatable-selection
+    <data-table-selection
       #selector
       [selected]="selected"
       [rows]="rows"
@@ -18,17 +18,17 @@ import { ScrollerComponent } from './scroller.component';
       [rowIdentity]="rowIdentity"
       (select)="select.emit($event)"
       (activate)="activate.emit($event)">
-      <datatable-progress
+      <data-table-progress
         *ngIf="loadingIndicator">
-      </datatable-progress>
-      <datatable-scroller
+      </data-table-progress>
+      <data-table-scroller
         *ngIf="rows?.length"
         [scrollbarV]="scrollbarV"
         [scrollbarH]="scrollbarH"
         [scrollHeight]="scrollHeight"
         [scrollWidth]="columnGroupWidths.total"
         (scroll)="onBodyScroll($event)">
-        <datatable-row-wrapper
+        <data-table-row-wrapper
           *ngFor="let row of temp; let i = index; trackBy: rowTrackingFn;"
           [ngStyle]="getRowsStyles(row)"
           [rowDetailTemplate]="rowDetailTemplate"
@@ -36,7 +36,7 @@ import { ScrollerComponent } from './scroller.component';
           [row]="row"
           [expanded]="row.$$expanded === 1"
           (rowContextmenu)="rowContextmenu.emit($event)">
-          <datatable-body-row
+          <data-table-body-row
             tabindex="-1"
             [isSelected]="selector.getRowSelected(row)"
             [innerWidth]="innerWidth"
@@ -45,18 +45,18 @@ import { ScrollerComponent } from './scroller.component';
             [rowHeight]="rowHeight"
             [row]="row"
             (activate)="selector.onActivate($event, i)">
-          </datatable-body-row>
-        </datatable-row-wrapper>
-      </datatable-scroller>
+          </data-table-body-row>
+        </data-table-row-wrapper>
+      </data-table-scroller>
       <div
         class="empty-row"
         *ngIf="!rows?.length"
         [innerHTML]="emptyMessage">
       </div>
-    </datatable-selection>
+    </data-table-selection>
   `,
   host: {
-    class: 'datatable-body'
+    class: 'data-table-body'
   }
 })
 export class DataTableBodyComponent {

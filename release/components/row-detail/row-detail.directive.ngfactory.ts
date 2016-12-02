@@ -7,13 +7,13 @@
 
 import * as import0 from '../../../../src/components/row-detail/row-detail.directive';
 import * as import1 from '@angular/core/src/linker/view';
-export class Wrapper_DatatableRowDetailDirective {
+export class Wrapper_DataTableRowDetailDirective {
   /*private*/ _eventHandler:Function;
-  context:import0.DatatableRowDetailDirective;
+  context:import0.DataTableRowDetailDirective;
   /*private*/ _changed:boolean;
   constructor() {
     this._changed = false;
-    this.context = new import0.DatatableRowDetailDirective();
+    this.context = new import0.DataTableRowDetailDirective();
   }
   ngOnDetach(view:import1.AppView<any>,componentView:import1.AppView<any>,el:any):void {
   }

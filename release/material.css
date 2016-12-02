@@ -1,4 +1,4 @@
-.datatable.material {
+.data-table.material {
   background: #FFF;
   -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
   -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
@@ -18,101 +18,101 @@
   /**
 	 * Footer Styles
 	 */ }
-  .datatable.material.striped .datatable-row-odd {
+  .data-table.material.striped .data-table-row-odd {
     background: #eee; }
-  .datatable.material.single-selection .datatable-body-row.active,
-  .datatable.material.single-selection .datatable-body-row.active .datatable-row-group, .datatable.material.multi-selection .datatable-body-row.active,
-  .datatable.material.multi-selection .datatable-body-row.active .datatable-row-group {
+  .data-table.material.single-selection .data-table-body-row.active,
+  .data-table.material.single-selection .data-table-body-row.active .data-table-row-group, .data-table.material.multi-selection .data-table-body-row.active,
+  .data-table.material.multi-selection .data-table-body-row.active .data-table-row-group {
     background-color: #304FFE;
     color: #FFF; }
-  .datatable.material.single-selection .datatable-body-row.active:hover,
-  .datatable.material.single-selection .datatable-body-row.active:hover .datatable-row-group, .datatable.material.multi-selection .datatable-body-row.active:hover,
-  .datatable.material.multi-selection .datatable-body-row.active:hover .datatable-row-group {
+  .data-table.material.single-selection .data-table-body-row.active:hover,
+  .data-table.material.single-selection .data-table-body-row.active:hover .data-table-row-group, .data-table.material.multi-selection .data-table-body-row.active:hover,
+  .data-table.material.multi-selection .data-table-body-row.active:hover .data-table-row-group {
     background-color: #193AE4;
     color: #FFF; }
-  .datatable.material.single-selection .datatable-body-row.active:focus,
-  .datatable.material.single-selection .datatable-body-row.active:focus .datatable-row-group, .datatable.material.multi-selection .datatable-body-row.active:focus,
-  .datatable.material.multi-selection .datatable-body-row.active:focus .datatable-row-group {
+  .data-table.material.single-selection .data-table-body-row.active:focus,
+  .data-table.material.single-selection .data-table-body-row.active:focus .data-table-row-group, .data-table.material.multi-selection .data-table-body-row.active:focus,
+  .data-table.material.multi-selection .data-table-body-row.active:focus .data-table-row-group {
     background-color: #2041EF;
     color: #FFF; }
-  .datatable.material:not(.cell-selection) .datatable-body-row:hover,
-  .datatable.material:not(.cell-selection) .datatable-body-row:hover .datatable-row-group {
+  .data-table.material:not(.cell-selection) .data-table-body-row:hover,
+  .data-table.material:not(.cell-selection) .data-table-body-row:hover .data-table-row-group {
     background-color: #eee;
     transition-property: background;
     transition-duration: .3s;
     transition-timing-function: linear; }
-  .datatable.material:not(.cell-selection) .datatable-body-row:focus,
-  .datatable.material:not(.cell-selection) .datatable-body-row:focus .datatable-row-group {
+  .data-table.material:not(.cell-selection) .data-table-body-row:focus,
+  .data-table.material:not(.cell-selection) .data-table-body-row:focus .data-table-row-group {
     background-color: #ddd; }
-  .datatable.material.cell-selection .datatable-body-cell:hover,
-  .datatable.material.cell-selection .datatable-body-cell:hover .datatable-row-group {
+  .data-table.material.cell-selection .data-table-body-cell:hover,
+  .data-table.material.cell-selection .data-table-body-cell:hover .data-table-row-group {
     background-color: #eee;
     transition-property: background;
     transition-duration: .3s;
     transition-timing-function: linear; }
-  .datatable.material.cell-selection .datatable-body-cell:focus,
-  .datatable.material.cell-selection .datatable-body-cell:focus .datatable-row-group {
+  .data-table.material.cell-selection .data-table-body-cell:focus,
+  .data-table.material.cell-selection .data-table-body-cell:focus .data-table-row-group {
     background-color: #ddd; }
-  .datatable.material.cell-selection .datatable-body-cell.active,
-  .datatable.material.cell-selection .datatable-body-cell.active .datatable-row-group {
+  .data-table.material.cell-selection .data-table-body-cell.active,
+  .data-table.material.cell-selection .data-table-body-cell.active .data-table-row-group {
     background-color: #304FFE;
     color: #FFF; }
-  .datatable.material.cell-selection .datatable-body-cell.active:hover,
-  .datatable.material.cell-selection .datatable-body-cell.active:hover .datatable-row-group {
+  .data-table.material.cell-selection .data-table-body-cell.active:hover,
+  .data-table.material.cell-selection .data-table-body-cell.active:hover .data-table-row-group {
     background-color: #193AE4;
     color: #FFF; }
-  .datatable.material.cell-selection .datatable-body-cell.active:focus,
-  .datatable.material.cell-selection .datatable-body-cell.active:focus .datatable-row-group {
+  .data-table.material.cell-selection .data-table-body-cell.active:focus,
+  .data-table.material.cell-selection .data-table-body-cell.active:focus .data-table-row-group {
     background-color: #2041EF;
     color: #FFF; }
-  .datatable.material .empty-row {
+  .data-table.material .empty-row {
     height: 50px;
     text-align: left;
     padding: .5rem 1.2rem;
     vertical-align: top;
     border-top: 0; }
-  .datatable.material .loading-row {
+  .data-table.material .loading-row {
     text-align: left;
     padding: .5rem 1.2rem;
     vertical-align: top;
     border-top: 0; }
-  .datatable.material .datatable-header .datatable-row-left,
-  .datatable.material .datatable-body .datatable-row-left {
+  .data-table.material .data-table-header .data-table-row-left,
+  .data-table.material .data-table-body .data-table-row-left {
     background-color: #FFF;
     background-position: 100% 0;
     background-repeat: repeat-y;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQIHWPSkNeSBmJhTQVtbiDNCgASagIIuJX8OgAAAABJRU5ErkJggg==); }
-  .datatable.material .datatable-header .datatable-row-right,
-  .datatable.material .datatable-body .datatable-row-right {
+  .data-table.material .data-table-header .data-table-row-right,
+  .data-table.material .data-table-body .data-table-row-right {
     background-position: 0 0;
     background-color: #fff;
     background-repeat: repeat-y;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQI12PQkNdi1VTQ5gbSwkAsDQARLAIGtOSFUAAAAABJRU5ErkJggg==); }
-  .datatable.material .datatable-header {
+  .data-table.material .data-table-header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
-    .datatable.material .datatable-header .datatable-header-cell {
+    .data-table.material .data-table-header .data-table-header-cell {
       text-align: left;
       padding: .5rem 1.2rem;
       font-weight: 400;
       color: #757575;
       vertical-align: bottom; }
-      .datatable.material .datatable-header .datatable-header-cell.longpress {
+      .data-table.material .data-table-header .data-table-header-cell.longpress {
         color: #00E676; }
-      .datatable.material .datatable-header .datatable-header-cell.dragging .resize-handle {
+      .data-table.material .data-table-header .data-table-header-cell.dragging .resize-handle {
         border-right: none; }
-    .datatable.material .datatable-header .resize-handle {
+    .data-table.material .data-table-header .resize-handle {
       border-right: solid 1px #eee; }
-  .datatable.material .datatable-body .datatable-row-detail {
+  .data-table.material .data-table-body .data-table-row-detail {
     background: #f5f5f5;
     padding: 10px; }
-  .datatable.material .datatable-body .datatable-body-row .datatable-body-cell {
+  .data-table.material .data-table-body .data-table-body-row .data-table-body-cell {
     text-align: left;
     padding: .5rem 1.2rem;
     vertical-align: top;
     border-top: 0;
     -webkit-transition: width 0.3s ease;
     transition: width 0.3s ease; }
-  .datatable.material .datatable-body .progress-linear {
+  .data-table.material .data-table-body .progress-linear {
     display: block;
     position: relative;
     width: 100%;
@@ -120,7 +120,7 @@
     padding: 0;
     margin: 0;
     position: absolute; }
-    .datatable.material .datatable-body .progress-linear .container {
+    .data-table.material .data-table-body .progress-linear .container {
       display: block;
       position: relative;
       overflow: hidden;
@@ -129,7 +129,7 @@
       -webkit-transform: translate(0, 0) scale(1, 1);
       transform: translate(0, 0) scale(1, 1);
       background-color: #aad1f9; }
-      .datatable.material .datatable-body .progress-linear .container .bar {
+      .data-table.material .data-table-body .progress-linear .container .bar {
         transition: all .2s linear;
         -webkit-animation: query 0.8s infinite cubic-bezier(0.39, 0.575, 0.565, 1);
         animation: query 0.8s infinite cubic-bezier(0.39, 0.575, 0.565, 1);
@@ -142,24 +142,24 @@
         bottom: 0;
         width: 100%;
         height: 5px; }
-  .datatable.material .datatable-footer {
+  .data-table.material .data-table-footer {
     border-top: 1px solid rgba(0, 0, 0, 0.12);
     font-size: 16px; }
-    .datatable.material .datatable-footer .page-count {
+    .data-table.material .data-table-footer .page-count {
       line-height: 50px;
       height: 50px;
       padding: 0 1.2rem; }
-    .datatable.material .datatable-footer .datatable-pager {
+    .data-table.material .data-table-footer .data-table-pager {
       margin: 0 10px; }
-      .datatable.material .datatable-footer .datatable-pager li {
+      .data-table.material .data-table-footer .data-table-pager li {
         vertical-align: middle; }
-        .datatable.material .datatable-footer .datatable-pager li.disabled a {
+        .data-table.material .data-table-footer .data-table-pager li.disabled a {
           color: rgba(0, 0, 0, 0.26) !important;
           background-color: transparent !important; }
-        .datatable.material .datatable-footer .datatable-pager li.active a {
+        .data-table.material .data-table-footer .data-table-pager li.active a {
           background-color: rgba(158, 158, 158, 0.2);
           font-weight: bold; }
-      .datatable.material .datatable-footer .datatable-pager a {
+      .data-table.material .data-table-footer .data-table-pager a {
         height: 22px;
         min-width: 24px;
         line-height: 22px;
@@ -171,13 +171,13 @@
         color: rgba(0, 0, 0, 0.54);
         text-decoration: none;
         vertical-align: bottom; }
-        .datatable.material .datatable-footer .datatable-pager a:hover {
+        .data-table.material .data-table-footer .data-table-pager a:hover {
           color: rgba(0, 0, 0, 0.75);
           background-color: rgba(158, 158, 158, 0.2); }
-      .datatable.material .datatable-footer .datatable-pager .icon-left,
-      .datatable.material .datatable-footer .datatable-pager .icon-skip,
-      .datatable.material .datatable-footer .datatable-pager .icon-right,
-      .datatable.material .datatable-footer .datatable-pager .icon-prev {
+      .data-table.material .data-table-footer .data-table-pager .icon-left,
+      .data-table.material .data-table-footer .data-table-pager .icon-skip,
+      .data-table.material .data-table-footer .data-table-pager .icon-right,
+      .data-table.material .data-table-footer .data-table-pager .icon-prev {
         font-size: 20px;
         line-height: 20px;
         padding: 0 3px; }
@@ -185,7 +185,7 @@
 /**
  * Checkboxes
 **/
-.datatable-checkbox {
+.data-table-checkbox {
   position: relative;
   margin: 0;
   cursor: pointer;
@@ -193,12 +193,12 @@
   display: inline-block;
   box-sizing: border-box;
   padding: 10px 0; }
-  .datatable-checkbox input[type='checkbox'] {
+  .data-table-checkbox input[type='checkbox'] {
     position: relative;
     margin: 0 1rem 0 0;
     cursor: pointer;
     outline: none; }
-    .datatable-checkbox input[type='checkbox']:before {
+    .data-table-checkbox input[type='checkbox']:before {
       -webkit-transition: all 0.3s ease-in-out;
       -moz-transition: all 0.3s ease-in-out;
       transition: all 0.3s ease-in-out;
@@ -209,7 +209,7 @@
       width: 1rem;
       height: 1rem;
       border: 2px solid #f2f2f2; }
-    .datatable-checkbox input[type='checkbox']:checked:before {
+    .data-table-checkbox input[type='checkbox']:checked:before {
       -webkit-transform: rotate(-45deg);
       -moz-transform: rotate(-45deg);
       -ms-transform: rotate(-45deg);
@@ -218,7 +218,7 @@
       border-color: #009688;
       border-top-style: none;
       border-right-style: none; }
-    .datatable-checkbox input[type='checkbox']:after {
+    .data-table-checkbox input[type='checkbox']:after {
       content: "";
       position: absolute;
       top: 0;

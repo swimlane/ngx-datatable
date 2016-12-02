@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
           <a href="#" (click)="stop()">Stop</a>
         </small>
       </h3>
-      <swui-datatable
+      <swui-data-table
         #mydatatable
         class="material"
         [headerHeight]="50"
@@ -21,10 +21,10 @@ import { Component } from '@angular/core';
         [rowHeight]="'auto'"
         [trackByProp]="'updated'"
         [rows]="rows">
-        <swui-datatable-column name="Name"></swui-datatable-column>
-        <swui-datatable-column name="Gender"></swui-datatable-column>
-        <swui-datatable-column name="Company"></swui-datatable-column>
-      </swui-datatable>
+        <swui-data-table-column name="Name"></swui-data-table-column>
+        <swui-data-table-column name="Gender"></swui-data-table-column>
+        <swui-data-table-column name="Company"></swui-data-table-column>
+      </swui-data-table>
     </div>
   `
 })

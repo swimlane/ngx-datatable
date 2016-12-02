@@ -172,7 +172,7 @@ class View_DataTableHeaderCellComponent_Host0 extends import2.AppView<any> {
     super(View_DataTableHeaderCellComponent_Host0,renderType_DataTableHeaderCellComponent_Host,import7.ViewType.HOST,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
-    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'datatable-header-cell',import3.EMPTY_INLINE_ARRAY,rootSelector,(null as any));
+    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'data-table-header-cell',import3.EMPTY_INLINE_ARRAY,rootSelector,(null as any));
     this.compView_0 = new View_DataTableHeaderCellComponent0(this.viewUtils,this,0,this._el_0);
     this._DataTableHeaderCellComponent_0_3 = new Wrapper_DataTableHeaderCellComponent();
     this.compView_0.create(this._DataTableHeaderCellComponent_0_3.context);
@@ -196,7 +196,7 @@ class View_DataTableHeaderCellComponent_Host0 extends import2.AppView<any> {
     cb(this._el_0,ctx);
   }
 }
-export const DataTableHeaderCellComponentNgFactory:import8.ComponentFactory<import0.DataTableHeaderCellComponent> = new import8.ComponentFactory<import0.DataTableHeaderCellComponent>('datatable-header-cell',View_DataTableHeaderCellComponent_Host0,import0.DataTableHeaderCellComponent);
+export const DataTableHeaderCellComponentNgFactory:import8.ComponentFactory<import0.DataTableHeaderCellComponent> = new import8.ComponentFactory<import0.DataTableHeaderCellComponent>('data-table-header-cell',View_DataTableHeaderCellComponent_Host0,import0.DataTableHeaderCellComponent);
 const styles_DataTableHeaderCellComponent:any[] = ([] as any[]);
 var renderType_DataTableHeaderCellComponent:import5.RenderComponentType = import3.createRenderComponentType('',0,import6.ViewEncapsulation.None,styles_DataTableHeaderCellComponent,{});
 export class View_DataTableHeaderCellComponent0 extends import2.AppView<import0.DataTableHeaderCellComponent> {
@@ -321,7 +321,7 @@ class View_DataTableHeaderCellComponent1 extends import2.AppView<any> {
     this._expr_4 = import1.UNINITIALIZED;
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
-    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'label',new import3.InlineArray2(2,'class','datatable-checkbox'),(null as any));
+    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'label',new import3.InlineArray2(2,'class','data-table-checkbox'),(null as any));
     this._text_1 = this.renderer.createText(this._el_0,'\n        ',(null as any));
     this._el_2 = import3.createRenderElement(this.renderer,this._el_0,'input',new import3.InlineArray2(2,'type','checkbox'),(null as any));
     this._text_3 = this.renderer.createText(this._el_0,'\n      ',(null as any));
@@ -364,7 +364,7 @@ class View_DataTableHeaderCellComponent2 extends import2.AppView<any> {
     this._expr_2 = import1.UNINITIALIZED;
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
-    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'span',new import3.InlineArray2(2,'class','datatable-header-cell-label draggable'),(null as any));
+    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'span',new import3.InlineArray2(2,'class','data-table-header-cell-label draggable'),(null as any));
     this._text_1 = this.renderer.createText(this._el_0,'\n      ',(null as any));
     var disposable_0:Function = import3.subscribeToRenderElement(this,this._el_0,new import3.InlineArray2(2,'click',(null as any)),this.eventHandler(this.handleEvent_0));
     this.init(this._el_0,((<any>this.renderer).directRenderer? (null as any): [

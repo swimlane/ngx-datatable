@@ -1,4 +1,3 @@
-/// <reference types="chai" />
 
 /**
  * Returns a deep object given a string. zoo['animal.type']

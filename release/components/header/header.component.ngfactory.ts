@@ -186,7 +186,7 @@ class View_DataTableHeaderComponent_Host0 extends import2.AppView<any> {
     super(View_DataTableHeaderComponent_Host0,renderType_DataTableHeaderComponent_Host,import7.ViewType.HOST,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
-    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'datatable-header',new import3.InlineArray2(2,'class','datatable-header'),rootSelector,(null as any));
+    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'data-table-header',new import3.InlineArray2(2,'class','data-table-header'),rootSelector,(null as any));
     this.compView_0 = new View_DataTableHeaderComponent0(this.viewUtils,this,0,this._el_0);
     this._DataTableHeaderComponent_0_3 = new Wrapper_DataTableHeaderComponent();
     this.compView_0.create(this._DataTableHeaderComponent_0_3.context);
@@ -210,7 +210,7 @@ class View_DataTableHeaderComponent_Host0 extends import2.AppView<any> {
     cb(this._el_0,ctx);
   }
 }
-export const DataTableHeaderComponentNgFactory:import8.ComponentFactory<import0.DataTableHeaderComponent> = new import8.ComponentFactory<import0.DataTableHeaderComponent>('datatable-header',View_DataTableHeaderComponent_Host0,import0.DataTableHeaderComponent);
+export const DataTableHeaderComponentNgFactory:import8.ComponentFactory<import0.DataTableHeaderComponent> = new import8.ComponentFactory<import0.DataTableHeaderComponent>('data-table-header',View_DataTableHeaderComponent_Host0,import0.DataTableHeaderComponent);
 const styles_DataTableHeaderComponent:any[] = ([] as any[]);
 var renderType_DataTableHeaderComponent:import5.RenderComponentType = import3.createRenderComponentType('',0,import6.ViewEncapsulation.None,styles_DataTableHeaderComponent,{});
 export class View_DataTableHeaderComponent0 extends import2.AppView<import0.DataTableHeaderComponent> {
@@ -233,7 +233,7 @@ export class View_DataTableHeaderComponent0 extends import2.AppView<import0.Data
   createInternal(rootSelector:string):import8.ComponentRef<any> {
     const parentRenderNode:any = this.renderer.createViewRoot(this.parentElement);
     this._text_0 = this.renderer.createText(parentRenderNode,'\n    ',(null as any));
-    this._el_1 = import3.createRenderElement(this.renderer,parentRenderNode,'div',new import3.InlineArray4(4,'class','datatable-header-inner','orderable',''),(null as any));
+    this._el_1 = import3.createRenderElement(this.renderer,parentRenderNode,'div',new import3.InlineArray4(4,'class','data-table-header-inner','orderable',''),(null as any));
     this._OrderableDirective_1_3 = new import9.Wrapper_OrderableDirective(this.parentView.injectorGet(import13.KeyValueDiffers,this.parentIndex));
     this._query_DraggableDirective_1_0 = new import10.QueryList<any>();
     this._text_2 = this.renderer.createText(this._el_1,'\n      ',(null as any));
@@ -354,7 +354,7 @@ class View_DataTableHeaderComponent1 extends import2.AppView<any> {
     this._NgFor_2_6.check_ngForTrackBy(currVal_2_0_1,throwOnChange,false);
     this._NgFor_2_6.ngDoCheck(this,this._anchor_2,throwOnChange);
     this._vc_2.detectChangesInNestedViews(throwOnChange);
-    const currVal_8:any = ('datatable-row-' + this.context.$implicit.type);
+    const currVal_8:any = ('data-table-row-' + this.context.$implicit.type);
     if (import3.checkBinding(throwOnChange,this._expr_8,currVal_8)) {
       this.renderer.setElementProperty(this._el_0,'className',currVal_8);
       this._expr_8 = currVal_8;
@@ -383,7 +383,7 @@ class View_DataTableHeaderComponent2 extends import2.AppView<any> {
     super(View_DataTableHeaderComponent2,renderType_DataTableHeaderComponent,import7.ViewType.EMBEDDED,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways,declaredViewContainer);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
-    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'datatable-header-cell',new import3.InlineArray8(6,'draggable','','long-press','','resizeable',''),(null as any));
+    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'data-table-header-cell',new import3.InlineArray8(6,'draggable','','long-press','','resizeable',''),(null as any));
     this.compView_0 = new import25.View_DataTableHeaderCellComponent0(this.viewUtils,this,0,this._el_0);
     this._DraggableDirective_0_3 = new import22.Wrapper_DraggableDirective(new import19.ElementRef(this._el_0));
     this._ResizeableDirective_0_4 = new import23.Wrapper_ResizeableDirective(new import19.ElementRef(this._el_0));

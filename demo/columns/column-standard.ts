@@ -5,29 +5,29 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <h3>Fixed Column Widths</h3>
-      <swui-datatable
+      <swui-data-table
         class="material"
         [rows]="rows"
         [columnMode]="'standard'"
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="'auto'">
-        <swui-datatable-column name="Name" [width]="300">
-          <template let-value="value" swui-datatable-cell-template>
+        <swui-data-table-column name="Name" [width]="300">
+          <template let-value="value" swui-data-table-cell-template>
             {{value}}
           </template>
-        </swui-datatable-column>
-        <swui-datatable-column name="Gender" [width]="300">
-          <template let-row="row" let-value="value" swui-datatable-cell-template>
+        </swui-data-table-column>
+        <swui-data-table-column name="Gender" [width]="300">
+          <template let-row="row" let-value="value" swui-data-table-cell-template>
             {{value}}
           </template>
-        </swui-datatable-column>
-        <swui-datatable-column name="Age" [width]="300">
-          <template let-value="value" swui-datatable-cell-template>
+        </swui-data-table-column>
+        <swui-data-table-column name="Age" [width]="300">
+          <template let-value="value" swui-data-table-cell-template>
             {{value}}
           </template>
-        </swui-datatable-column>
-      </swui-datatable>
+        </swui-data-table-column>
+      </swui-data-table>
     </div>
   `
 })

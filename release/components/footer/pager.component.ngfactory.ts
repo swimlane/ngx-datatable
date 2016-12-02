@@ -120,7 +120,7 @@ class View_DataTablePagerComponent_Host0 extends import2.AppView<any> {
     super(View_DataTablePagerComponent_Host0,renderType_DataTablePagerComponent_Host,import6.ViewType.HOST,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import7.ComponentRef<any> {
-    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'datatable-pager',new import3.InlineArray2(2,'class','datatable-pager'),rootSelector,(null as any));
+    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'data-table-pager',new import3.InlineArray2(2,'class','data-table-pager'),rootSelector,(null as any));
     this.compView_0 = new View_DataTablePagerComponent0(this.viewUtils,this,0,this._el_0);
     this._DataTablePagerComponent_0_3 = new Wrapper_DataTablePagerComponent();
     this.compView_0.create(this._DataTablePagerComponent_0_3.context);
@@ -143,7 +143,7 @@ class View_DataTablePagerComponent_Host0 extends import2.AppView<any> {
     cb(this._el_0,ctx);
   }
 }
-export const DataTablePagerComponentNgFactory:import7.ComponentFactory<import0.DataTablePagerComponent> = new import7.ComponentFactory<import0.DataTablePagerComponent>('datatable-pager',View_DataTablePagerComponent_Host0,import0.DataTablePagerComponent);
+export const DataTablePagerComponentNgFactory:import7.ComponentFactory<import0.DataTablePagerComponent> = new import7.ComponentFactory<import0.DataTablePagerComponent>('data-table-pager',View_DataTablePagerComponent_Host0,import0.DataTablePagerComponent);
 const styles_DataTablePagerComponent:any[] = ([] as any[]);
 var renderType_DataTablePagerComponent:import4.RenderComponentType = import3.createRenderComponentType('',0,import5.ViewEncapsulation.None,styles_DataTablePagerComponent,{});
 export class View_DataTablePagerComponent0 extends import2.AppView<import0.DataTablePagerComponent> {

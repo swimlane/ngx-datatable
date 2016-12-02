@@ -10,10 +10,10 @@ var DataTableRowWrapperComponent = (function () {
     };
     DataTableRowWrapperComponent.decorators = [
         { type: core_1.Component, args: [{
-                    selector: 'datatable-row-wrapper',
-                    template: "\n    <ng-content></ng-content>\n    <div \n      *ngIf=\"expanded\"\n      [style.height.px]=\"detailRowHeight\" \n      class=\"datatable-row-detail\">\n      <template\n        *ngIf=\"rowDetailTemplate\"\n        [ngTemplateOutlet]=\"rowDetailTemplate\"\n        [ngOutletContext]=\"{ row: row }\">\n      </template>\n    </div>\n  ",
+                    selector: 'data-table-row-wrapper',
+                    template: "\n    <ng-content></ng-content>\n    <div \n      *ngIf=\"expanded\"\n      [style.height.px]=\"detailRowHeight\" \n      class=\"data-table-row-detail\">\n      <template\n        *ngIf=\"rowDetailTemplate\"\n        [ngTemplateOutlet]=\"rowDetailTemplate\"\n        [ngOutletContext]=\"{ row: row }\">\n      </template>\n    </div>\n  ",
                     host: {
-                        class: 'datatable-row-wrapper'
+                        class: 'data-table-row-wrapper'
                     }
                 },] },
     ];
