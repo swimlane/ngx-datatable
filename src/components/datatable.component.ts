@@ -78,7 +78,11 @@ import { scrollbarWidth, setColumnDefaults, translateTemplates } from '../utils'
 })
 export class DatatableComponent implements OnInit, AfterViewInit {
 
-  // Rows
+  /**
+   * Rows that are displayed in the table.
+   * 
+   * @memberOf DatatableComponent
+   */
   @Input() set rows(val: any) {
     // auto sort on new updates
     if (!this.externalSorting) {
@@ -91,11 +95,22 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     this.recalculate();
   }
 
+  /**
+   * Gets the rows.
+   * 
+   * @readonly
+   * @type {*}
+   * @memberOf DatatableComponent
+   */
   get rows(): any {
     return this._rows;
   }
 
-  // Columns
+  /**
+   * Columns to be displayed.
+   * 
+   * @memberOf DatatableComponent
+   */
   @Input() set columns(val: any[]) {
     if(val) {
       setColumnDefaults(val);
@@ -105,73 +120,197 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     this._columns = val;
   }
 
+  /**
+   * Get the columns.
+   * 
+   * @readonly
+   * @type {any[]}
+   * @memberOf DatatableComponent
+   */
   get columns(): any[] {
     return this._columns;
   }
 
-  // Selected rows
+  /**
+   * List of row objects that should be 
+   * represented as selected in the grid. 
+   * Default value: `[]`
+   * 
+   * @type {any[]}
+   * @memberOf DatatableComponent
+   */
   @Input() selected: any[] = [];
 
-  // Enable vertical scrollbars
+  /**
+   * Enable vertical scrollbars
+   * 
+   * @type {boolean}
+   * @memberOf DatatableComponent
+   */
   @Input() scrollbarV: boolean = false;
 
-  // Enable horz scrollbars
+  /**
+   * Enable horz scrollbars
+   * 
+   * @type {boolean}
+   * @memberOf DatatableComponent
+   */
   @Input() scrollbarH: boolean = false;
 
-  // The row height; which is necessary
-  // to calculate the height for the lazy rendering.
+  /**
+   * The row height; which is necessary
+   * to calculate the height for the lazy rendering.
+   * 
+   * @type {number}
+   * @memberOf DatatableComponent
+   */
   @Input() rowHeight: number = 30;
 
-  // The detail row height is required especially when virtual scroll is enabled.
+  /**
+   * The detail row height is required especially 
+   * when virtual scroll is enabled.
+   * 
+   * @type {number}
+   * @memberOf DatatableComponent
+   */
   @Input() detailRowHeight: number = 0;
 
-  // Type of column width distribution.
-  // Example: flex, force, standard
+  /**
+   * Type of column width distribution formula.
+   * Example: flex, force, standard
+   * 
+   * @type {ColumnMode}
+   * @memberOf DatatableComponent
+   */
   @Input() columnMode: ColumnMode = ColumnMode.standard;
 
-  // The minimum header height in pixels.
-  // pass falsey for no header
-  // note: number|string does not work right
+  /**
+   * The minimum header height in pixels.
+   * Pass a falsey for no header
+   * 
+   * @type {*}
+   * @memberOf DatatableComponent
+   */
   @Input() headerHeight: any = 30;
 
-  // The minimum footer height in pixels.
-  // pass falsey for no footer
+  /**
+   * The minimum footer height in pixels.
+   * Pass falsey for no footer
+   * 
+   * @type {number}
+   * @memberOf DatatableComponent
+   */
   @Input() footerHeight: number = 0;
 
-  // if external paging is turned on
+  /**
+   * If the table should use external paging
+   * otherwise its assumed that all data is preloaded.
+   * 
+   * @type {boolean}
+   * @memberOf DatatableComponent
+   */
   @Input() externalPaging: boolean = false;
 
-  // if external sorting is turned on
+  /**
+   * If the table should use external sorting or
+   * the built-in basic sorting.
+   * 
+   * @type {boolean}
+   * @memberOf DatatableComponent
+   */
   @Input() externalSorting: boolean = false;
 
-  // Page size
+  /**
+   * The page size to be shown. 
+   * Default value: `undefined`
+   * 
+   * @type {number}
+   * @memberOf DatatableComponent
+   */
   @Input() limit: number = undefined;
 
-  // Total count
+  /**
+   * The total count of all rows. 
+   * Default value: `0`
+   * 
+   * @type {number}
+   * @memberOf DatatableComponent
+   */
   @Input() count: number = 0;
 
-  // Page offset
+  /**
+   * The current offset ( page - 1 ) shown. 
+   * Default value: `0`
+   * 
+   * @type {number}
+   * @memberOf DatatableComponent
+   */
   @Input() offset: number = 0;
 
-  // Loading indicator
+  /**
+   * Show the linear loading bar. 
+   * Default value: `false`
+   * 
+   * @type {boolean}
+   * @memberOf DatatableComponent
+   */
   @Input() loadingIndicator: boolean = false;
 
-  // Selections?
+  /**
+   * Type of row selection. Options are: 
+   * 
+   *  - `single`
+   *  - `multi`
+   *  - `multiShift`. 
+   * 
+   * For no selection pass a `falsey`. 
+   * Default value: `undefined`
+   * 
+   * @type {SelectionType}
+   * @memberOf DatatableComponent
+   */
   @Input() selectionType: SelectionType;
 
-  // if you can reorder columns
+  /**
+   * Enable/Disable ability to re-order columns
+   * by dragging them.
+   * 
+   * @type {boolean}
+   * @memberOf DatatableComponent
+   */
   @Input() reorderable: boolean = true;
 
-  // type of sorting
+  /**
+   * The type of sorting
+   * 
+   * @type {SortType}
+   * @memberOf DatatableComponent
+   */
   @Input() sortType: SortType = SortType.single;
 
-  // sorts
+  /**
+   * Array of sorted columns by property and type. 
+   * Default value: `[]`
+   * 
+   * @type {any[]}
+   * @memberOf DatatableComponent
+   */
   @Input() sorts: any[] = [];
 
-  // row detail template
+  /**
+   * Row detail template
+   * 
+   * @type {TemplateRef<any>}
+   * @memberOf DatatableComponent
+   */
   @Input() rowDetailTemplate: TemplateRef<any>;
 
-  // css class overrides
+  /**
+   * Css class overrides
+   * 
+   * @type {*}
+   * @memberOf DatatableComponent
+   */
   @Input() cssClasses: any = {
     sortAscending: 'icon-down',
     sortDescending: 'icon-up',
@@ -181,7 +320,12 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     pagerNext: 'icon-skip'
   };
 
-  // message overrides for localization
+  /**
+   * Message overrides for localization
+   * 
+   * @type {*}
+   * @memberOf DatatableComponent
+   */
   @Input() messages: any = {
 
     // Message to show when array is presented
@@ -193,30 +337,116 @@ export class DatatableComponent implements OnInit, AfterViewInit {
 
   };
 
-  // This will be used when displaying or selecting rows:
-  // when tracking/comparing them, we'll use the value of this fn,
-  // (`fn(x) === fn(y)` instead of `x === y`)
+  /**
+   * This will be used when displaying or selecting rows.
+   * when tracking/comparing them, we'll use the value of this fn,
+   * 
+   * (`fn(x) === fn(y)` instead of `x === y`)
+   * 
+   * @memberOf DatatableComponent
+   */
   @Input() rowIdentity: (x: any) => any = ((x: any) => x);
 
-  // A boolean/function you can use to check whether you want
-  // to select a particular row based on a criteria. Example:
-  // (selection) => { return selection !== 'Ethel Price'; }
+  /**
+   * A boolean/function you can use to check whether you want
+   * to select a particular row based on a criteria. Example:
+   * 
+   *    (selection) => { 
+   *      return selection !== 'Ethel Price'; 
+   *    }
+   * 
+   * @type {*}
+   * @memberOf DatatableComponent
+   */
   @Input() selectCheck: any;
 
-  // Property to which you can use for custom tracking of rows
-  // Example: 'name'
+  /**
+   * Property to which you can use for custom tracking of rows.
+   * Example: 'name'
+   * 
+   * @type {string}
+   * @memberOf DatatableComponent
+   */
   @Input() trackByProp: string;
 
+  /**
+   * Body was scrolled typically in a `scrollbarV:true` scenario.
+   * 
+   * @type {EventEmitter<any>}
+   * @memberOf DatatableComponent
+   */
   @Output() scroll: EventEmitter<any> = new EventEmitter();
-  @Output() activate: EventEmitter<any> = new EventEmitter();
-  @Output() select: EventEmitter<any> = new EventEmitter();
-  @Output() sort: EventEmitter<any> = new EventEmitter();
-  @Output() page: EventEmitter<any> = new EventEmitter();
-  @Output() detailToggle: EventEmitter<any> = new EventEmitter();
-  @Output() reorder: EventEmitter<any> = new EventEmitter();
-  @Output() resize: EventEmitter<any> = new EventEmitter();
-  @Output() rowContextmenu = new EventEmitter<{event: MouseEvent, row: any}>(false);
 
+  /**
+   * A cell or row was focused via keyboard or mouse click.
+   * 
+   * @type {EventEmitter<any>}
+   * @memberOf DatatableComponent
+   */
+  @Output() activate: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * A cell or row was selected.
+   * 
+   * @type {EventEmitter<any>}
+   * @memberOf DatatableComponent
+   */
+  @Output() select: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * Column sort was invoked.
+   * 
+   * @type {EventEmitter<any>}
+   * @memberOf DatatableComponent
+   */
+  @Output() sort: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * The table was paged either triggered by the pager or the body scroll.
+   * 
+   * @type {EventEmitter<any>}
+   * @memberOf DatatableComponent
+   */
+  @Output() page: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * Row detail row visbility was toggled.
+   * 
+   * @type {EventEmitter<any>}
+   * @memberOf DatatableComponent
+   */
+  @Output() detailToggle: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * Columns were re-ordered.
+   * 
+   * @type {EventEmitter<any>}
+   * @memberOf DatatableComponent
+   */
+  @Output() reorder: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * Column was resized.
+   * 
+   * @type {EventEmitter<any>}
+   * @memberOf DatatableComponent
+   */
+  @Output() resize: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * The context menu was invoked on a row.
+   * 
+   * @memberOf DatatableComponent
+   */
+  @Output() rowContextmenu = new EventEmitter<{ event: MouseEvent, row: any }>(false);
+
+  /**
+   * CSS class applied if the header height if fixed height.
+   * 
+   * @readonly
+   * 
+   * @memberOf DatatableComponent
+   */
   @HostBinding('class.fixed-header')
   get isFixedHeader() {
     const headerHeight: number|string = this.headerHeight;
@@ -224,6 +454,14 @@ export class DatatableComponent implements OnInit, AfterViewInit {
       (<string>headerHeight) !== 'auto' : true;
   }
 
+  /**
+   * CSS class applied to the root element if
+   * the row heights are fixed heights.
+   * 
+   * @readonly
+   * 
+   * @memberOf DatatableComponent
+   */
   @HostBinding('class.fixed-row')
   get isFixedRow() {
     const rowHeight: number|string = this.rowHeight;
@@ -231,21 +469,51 @@ export class DatatableComponent implements OnInit, AfterViewInit {
       (<string>rowHeight) !== 'auto' : true;
   }
 
+  /**
+   * CSS class applied to root element if
+   * vertical scrolling is enabled.
+   * 
+   * @readonly
+   * 
+   * @memberOf DatatableComponent
+   */
   @HostBinding('class.scroll-vertical')
   get isVertScroll() {
     return this.scrollbarV;
   }
 
+  /**
+   * CSS class applied to the root element
+   * if the horziontal scrolling is enabled.
+   * 
+   * @readonly
+   * 
+   * @memberOf DatatableComponent
+   */
   @HostBinding('class.scroll-horz')
   get isHorScroll() {
     return this.scrollbarH;
   }
 
+  /**
+   * CSS applied to the root element
+   * if the table is selectable.
+   * 
+   * @readonly
+   * 
+   * @memberOf DatatableComponent
+   */
   @HostBinding('class.selectable')
   get isSelectable() {
     return this.selectionType !== undefined;
   }
 
+  /**
+   * Column templates gathered from `ContentChildren`
+   * if described in your markup.
+   * 
+   * @memberOf DatatableComponent
+   */
   @ContentChildren(DataTableColumnDirective)
   set columnTemplates(val: QueryList<DataTableColumnDirective>) {
     this._columnTemplates = val;
@@ -261,22 +529,47 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * Returns the column templates.
+   * 
+   * @readonly
+   * @type {QueryList<DataTableColumnDirective>}
+   * @memberOf DatatableComponent
+   */
   get columnTemplates(): QueryList<DataTableColumnDirective> {
     return this._columnTemplates;
   }
 
+  /**
+   * Row Detail templates gathered from the ContentChild
+   * 
+   * @memberOf DatatableComponent
+   */
   @ContentChild(DatatableRowDetailDirective)
   set rowDetailTemplateChild(val: DatatableRowDetailDirective) {
     this._rowDetailTemplateChild = val;
     if(val) this.rowDetailTemplate = val.rowDetailTemplate;
   }
 
+  /**
+   * Returns the row templates.
+   * 
+   * @readonly
+   * @type {DatatableRowDetailDirective}
+   * @memberOf DatatableComponent
+   */
   get rowDetailTemplateChild(): DatatableRowDetailDirective {
     return this._rowDetailTemplateChild;
   }
 
-  offsetX: number = 0;
-
+  /**
+   * Reference to the body component for manually
+   * invoking functions on the body.
+   * 
+   * @private
+   * @type {DataTableBodyComponent}
+   * @memberOf DatatableComponent
+   */
   @ViewChild(DataTableBodyComponent)
   private bodyComponent: DataTableBodyComponent;
 
@@ -285,6 +578,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   private pageSize: number;
   private bodyHeight: number;
   private rowCount: number;
+  private offsetX: number = 0;
 
   private _rows: any[];
   private _columns: any[];
@@ -309,7 +603,6 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     // need to call this immediatly to size
     // if the table is hidden the visibility
     // listener will invoke this itself upon show
-    // this.recalculate();
     this.recalculate();
   }
 
@@ -320,6 +613,8 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * @memberOf DatatableComponent
    */
   ngAfterViewInit(): void {
+    // this has to be done to prevent the change detection
+    // tree from freaking out because we are readjusting
     setTimeout(() => this.recalculate());
   }
 

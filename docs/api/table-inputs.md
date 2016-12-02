@@ -22,7 +22,7 @@ The height of the footer in pixels. Pass a `falsey` for no footer. Default value
 The height of the header in pixels. Pass a `falsey` for no header. Default value: `30`
 
 ## `limit`
-The page size to be shown. Default value: `undefined`
+The page size to be shown. Default value: `undefined`.
 
 ## `loadingIndicator`
 Show the linear loading bar. Default value: `false`
@@ -46,10 +46,14 @@ Enabled horizontal scrollbars. Default value: `false`
 Enable vertical scrollbar for fixed height vs fluid. This is necessary for virtual scrolling. Default value: `false`
 
 ## `selectionType`
-Type of row selection. Options are `single`, `multi` and `multiShift`. For no selection pass a `falsey`. Default value: `undefined`
+Type of row selection. Options are `single`, `multi` and `multiShift`. 
+For no selection pass a `falsey`. Default value: `undefined`
 
 ## `selected`
-List of row objects that should be represented as selected in the grid. Default value: `[]`
+List of row objects that should be represented as selected in the grid. It does object
+equality, for prop checking use the `selectCheck` function.
+
+Default value: `[]`
 
 ## `sorts`
 Array of sorted columns by property and type. Default value: `[]`
