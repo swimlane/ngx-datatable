@@ -11,9 +11,10 @@
       * [Inputs](api/table-inputs.md)
       * [Outputs](api/table-outputs.md)
       * [Methods](api/table-fns.md)
-      * [Internals](api/internals.md)
+      * [Internals](api/table-internals.md)
    * [Column](api/column-options.md)
       * [Column Modes](api/column-modes.md)
+      * [Internals](api/column-internals.md)
 * Demos
     * [Online](http://swimlane.github.io/angular2-data-table/)
     * [Source Code](https://github.com/swimlane/angular2-data-table/tree/master/demo)

@@ -14,6 +14,7 @@
 - Bug: Pagination "skip to last page" is not selected after click (#324)
 - Bug: ngFor Not working in the datatable-row-detail-template (#274)
 - Chore: Resolve all implicit `any`s (#330)
+- Chore: Bump Angular to latest `2.2.4`
 
 ## 1.7.0
 - Enhancement: Add RxJS Support

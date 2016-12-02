@@ -90,14 +90,12 @@ Static messages in the table you can override for localization.
 
 ```
 {
-
   // Message to show when array is presented
   // but contains no values
   emptyMessage: 'No data to display',
 
   // Footer total message
   totalMessage: 'total'
-
 }
 ```
 

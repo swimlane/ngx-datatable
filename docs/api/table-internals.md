@@ -1,4 +1,4 @@
-# Internal
+# Table Internals
 
 ## Row Indexes
 Each row is decorated with a `$$index` attribute. This allows us to track the actual

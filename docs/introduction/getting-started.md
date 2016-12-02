@@ -18,7 +18,7 @@ import { AppComponent } from './app.component';
 export class AppModule { }
 ```
 
-then in your `app.component.ts` define the table like:
+then in your `app.component.ts` you define a table like:
 
 ```javascript
 import { Component } from '@angular/core';
@@ -48,5 +48,8 @@ export class AppComponent {
 }
 ```
 
-and your off to the races! For more examples, visit the [demos](https://github.com/swimlane/angular2-data-table/tree/master/demo) directory
+and your off to the races! 
+
+For more examples, visit the 
+[demos](https://github.com/swimlane/angular2-data-table/tree/master/demo) directory
 in the source code!
