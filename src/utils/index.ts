@@ -8,7 +8,6 @@ export * from './prefixes';
 export * from './scrollbar-width';
 export * from './selection';
 export * from './translate';
-export * from './visibility-observer';
 export * from './throttle';
 export * from './sort';
 export * from './row-height-cache';
