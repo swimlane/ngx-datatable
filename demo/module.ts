@@ -41,6 +41,7 @@ import { MultiSelectionComponent } from './selection/selection-multi';
 import { SingleSelectionComponent } from './selection/selection-single';
 import { MultiShiftSelectionComponent } from './selection/selection-shift';
 import { MultiDisableSelectionComponent } from './selection/selection-disabled';
+import { CheckboxSelectionComponent } from './selection/selection-chkbox';
 
 // -- Columns
 import { ColumnToggleComponent } from './columns/column-toggle';
@@ -81,7 +82,8 @@ import { ColumnPinningComponent } from './columns/pinning';
     MultiShiftSelectionComponent,
     MultiDisableSelectionComponent,
     RxDemoComponent,
-    ContextMenuDemoComponent
+    ContextMenuDemoComponent,
+    CheckboxSelectionComponent
   ],
   imports: [BrowserModule, Angular2DataTableModule],
   bootstrap: [AppComponent]

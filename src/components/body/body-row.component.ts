@@ -18,6 +18,7 @@ import {
         *ngFor="let column of colGroup.columns; let ii = index; trackBy: column?.$$id"
         tabindex="-1"
         [row]="row"
+        [isSelected]="isSelected"
         [column]="column"
         [rowHeight]="rowHeight"
         (activate)="onActivate($event, ii)">

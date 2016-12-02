@@ -34,15 +34,20 @@ export class DataTableSelectionComponent {
   selectRow(event: KeyboardEvent | MouseEvent, index: number, row: any): void {
     if (!this.selectEnabled) return;
 
+    const chkbox = this.selectionType === SelectionType.checkbox;
     const multiShift = this.selectionType === SelectionType.multiShift;
     const multiClick = this.selectionType === SelectionType.multi;
     let selected: any[] = [];
 
-    if (multiShift || multiClick) {
+    if (multiShift || multiClick || chkbox) {
       if (multiShift && event.shiftKey) {
         const newSelected = [...this.selected];
         selected = selectRowsBetween(
-          newSelected, this.rows, index, this.prevIndex, this.getRowSelectedIdx.bind(this));
+          newSelected, 
+          this.rows, 
+          index, 
+          this.prevIndex, 
+          this.getRowSelectedIdx.bind(this));
       } else if (multiShift && !event.shiftKey) {
         selected.push(row);
       } else {
@@ -67,8 +72,11 @@ export class DataTableSelectionComponent {
 
   onActivate(model: Model, index: number): void {
     const { type, event, row } = model;
+    const chkbox = this.selectionType === SelectionType.checkbox;
+    const select = (!chkbox && (type === 'click' || type === 'dblclick')) || 
+      (chkbox && type === 'checkbox');
 
-    if(type === 'click' || type === 'dblclick') {
+    if(select) {
       this.selectRow(event, index, row);
     } else if(type === 'keydown') {
       if ((<KeyboardEvent>event).keyCode === Keys.return) {

@@ -28,9 +28,11 @@ import { scrollbarWidth, setColumnDefaults, translateTemplates } from '../utils'
         [headerHeight]="headerHeight"
         [sortAscendingIcon]="cssClasses.sortAscending"
         [sortDescendingIcon]="cssClasses.sortDescending"
+        [allRowsSelected]="allRowsSelected"
         (sort)="onColumnSort($event)"
         (resize)="onColumnResize($event)"
-        (reorder)="onColumnReorder($event)">
+        (reorder)="onColumnReorder($event)"
+        (select)="onHeaderSelect($event)">
       </datatable-header>
       <datatable-body
         [rows]="rows"
@@ -56,7 +58,7 @@ import { scrollbarWidth, setColumnDefaults, translateTemplates } from '../utils'
         (page)="onBodyPage($event)"
         (activate)="activate.emit($event)"
         (rowContextmenu)="rowContextmenu.emit($event)"
-        (select)="select.emit($event)"
+        (select)="onBodySelect($event)"
         (detailToggle)="detailToggle.emit($event)"
         (scroll)="onBodyScroll($event)">
       </datatable-body>
@@ -447,11 +449,11 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * CSS class applied if the header height if fixed height.
    * 
    * @readonly
-   * 
+   * @type {boolean}
    * @memberOf DatatableComponent
    */
   @HostBinding('class.fixed-header')
-  get isFixedHeader() {
+  get isFixedHeader(): boolean {
     const headerHeight: number|string = this.headerHeight;
     return (typeof headerHeight === 'string') ?
       (<string>headerHeight) !== 'auto' : true;
@@ -462,11 +464,11 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * the row heights are fixed heights.
    * 
    * @readonly
-   * 
+   * @type {boolean}
    * @memberOf DatatableComponent
    */
   @HostBinding('class.fixed-row')
-  get isFixedRow() {
+  get isFixedRow(): boolean {
     const rowHeight: number|string = this.rowHeight;
     return (typeof rowHeight === 'string') ?
       (<string>rowHeight) !== 'auto' : true;
@@ -477,11 +479,11 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * vertical scrolling is enabled.
    * 
    * @readonly
-   * 
+   * @type {boolean}
    * @memberOf DatatableComponent
    */
   @HostBinding('class.scroll-vertical')
-  get isVertScroll() {
+  get isVertScroll(): boolean {
     return this.scrollbarV;
   }
 
@@ -499,16 +501,64 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * CSS applied to the root element
-   * if the table is selectable.
+   * CSS class applied to root element is selectable.
    * 
    * @readonly
-   * 
+   * @type {boolean}
    * @memberOf DatatableComponent
    */
   @HostBinding('class.selectable')
-  get isSelectable() {
+  get isSelectable(): boolean {
     return this.selectionType !== undefined;
+  }
+
+  /**
+   * CSS class applied to root is checkbox selection.
+   * 
+   * @readonly
+   * @type {boolean}
+   * @memberOf DatatableComponent
+   */
+  @HostBinding('class.checkbox-selection')
+  get isCheckboxSelection(): boolean {
+    return this.selectionType === SelectionType.checkbox;
+  }
+
+  /**
+   * CSS class applied to root if cell selection.
+   * 
+   * @readonly
+   * @type {boolean}
+   * @memberOf DatatableComponent
+   */
+  @HostBinding('class.cell-selection')
+  get isCellSelection(): boolean {
+    return this.selectionType === SelectionType.cell;
+  }
+
+  /**
+   * CSS class applied to root if single select.
+   * 
+   * @readonly
+   * @type {boolean}
+   * @memberOf DatatableComponent
+   */
+  @HostBinding('class.single-selection')
+  get isSingleSelection(): boolean {
+    return this.selectionType === SelectionType.single;
+  }
+  
+  /**
+   * CSS class added to root element if mulit select
+   * 
+   * @readonly
+   * @type {boolean}
+   * @memberOf DatatableComponent
+   */
+  @HostBinding('class.multi-selection')
+  get isMultiSelection(): boolean {
+    return this.selectionType === SelectionType.multi || 
+      this.selectionType === SelectionType.multiShift;
   }
 
   /**
@@ -575,6 +625,18 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    */
   @ViewChild(DataTableBodyComponent)
   private bodyComponent: DataTableBodyComponent;
+
+  /**
+   * Returns if all rows are selected.
+   * 
+   * @readonly
+   * @private
+   * @type {boolean}
+   * @memberOf DatatableComponent
+   */
+  private get allRowsSelected(): boolean {
+    return this.selected.length === this.rows.length;
+  }
 
   private element: HTMLElement;
   private innerWidth: number;
@@ -881,6 +943,36 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     this.sorts = sorts;
     this.bodyComponent.updateOffsetY(0);
     this.sort.emit(event);
+  }
+
+  /**
+   * Toggle all row selection
+   * 
+   * @param {*} event
+   * 
+   * @memberOf DatatableComponent
+   */
+  onHeaderSelect(event: any): void {
+    if(this.selected.length === this.rows.length) {
+      this.selected = [];
+    } else {
+      this.selected = [...this.rows];
+    }
+
+    this.select.emit({
+      selected: this.selected
+    });
+  }
+
+  /**
+   * A row was selected from body
+   * 
+   * @param {*} event
+   * 
+   * @memberOf DatatableComponent
+   */
+  onBodySelect(event: any): void {
+    this.select.emit(event);
   }
 
 }

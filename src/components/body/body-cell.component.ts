@@ -10,6 +10,15 @@ import { SortDirection } from '../../types';
   selector: 'datatable-body-cell',
   template: `
     <div class="datatable-body-cell-label">
+      <label
+        *ngIf="column.checkboxable" 
+        class="datatable-checkbox">
+        <input 
+          type="checkbox"
+          [checked]="isSelected"
+          (change)="onCheckboxChange($event)" 
+        />
+      </label>
       <span
         *ngIf="!column.cellTemplate"
         [innerHTML]="value">
@@ -30,6 +39,7 @@ export class DataTableBodyCellComponent {
   @Input() row: any;
   @Input() column: any;
   @Input() rowHeight: number;
+  @Input() isSelected: boolean;
 
   @Input() set sorts(val: any[]) {
     this._sorts = val;
@@ -73,10 +83,13 @@ export class DataTableBodyCellComponent {
   }
 
   get value(): any {
-    if (!this.row || !this.column) return '';
-    const prop = deepValueGetter(this.row, this.column.prop);
+    if (!this.row || !this.column || !this.column.prop) return '';
+    const val = deepValueGetter(this.row, this.column.prop);
     const userPipe: PipeTransform = this.column.pipe;
-    return userPipe ? userPipe.transform(prop) : prop;
+
+    if(userPipe) return userPipe.transform(val);
+    if(val !== undefined) return val;
+    return '';
   }
 
   private sortDir: SortDirection;
@@ -146,6 +159,17 @@ export class DataTableBodyCellComponent {
         cellElement: this.element
       });
     }
+  }
+
+  onCheckboxChange(event): void {
+    this.activate.emit({
+      type: 'checkbox',
+      event,
+      row: this.row,
+      column: this.column,
+      value: this.value,
+      cellElement: this.element
+    });
   }
 
   calcSortDir(sorts: any[]): any {

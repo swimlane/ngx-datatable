@@ -10,6 +10,77 @@
 		}
 	}
 
+  &.single-selection,
+  &.multi-selection {
+    .datatable-body-row {
+      &:hover,
+			&:hover .datatable-row-group {
+	      background-color: #eee;
+	      transition-property: background;
+	      transition-duration: .3s;
+	      transition-timing-function: linear;
+	    }
+
+			&:focus,
+			&:focus .datatable-row-group {
+				background-color: #ddd;
+			}
+
+			&.active,
+			&.active .datatable-row-group {
+				background-color: #304FFE;
+        color: #FFF;
+			}
+
+			&.active:hover,
+			&.active:hover .datatable-row-group {
+				background-color: #193AE4;
+        color: #FFF;
+			}
+
+			&.active:focus,
+			&.active:focus .datatable-row-group {
+				background-color: #2041EF;
+        color: #FFF;
+			}
+    }
+  }
+
+  &.cell-selection {
+    .datatable-body-cell {
+      &:hover,
+			&:hover .datatable-row-group {
+	      background-color: #eee;
+	      transition-property: background;
+	      transition-duration: .3s;
+	      transition-timing-function: linear;
+	    }
+
+			&:focus,
+			&:focus .datatable-row-group {
+				background-color: #ddd;
+			}
+
+			&.active,
+			&.active .datatable-row-group {
+				background-color: #304FFE;
+        color: #FFF;
+			}
+
+			&.active:hover,
+			&.active:hover .datatable-row-group {
+				background-color: #193AE4;
+        color: #FFF;
+			}
+
+			&.active:focus,
+			&.active:focus .datatable-row-group {
+				background-color: #2041EF;
+        color: #FFF;
+			}
+    }
+  }
+
 	/**
 	 * Shared Styles
 	 */
@@ -94,7 +165,6 @@
 	      border-top: 0;
 
 	      -webkit-transition: width 0.3s ease;
-	      -o-transition: width 0.3s ease;
 	      transition: width 0.3s ease;
 
         // cell active class
@@ -102,37 +172,6 @@
         //  background: #0829e0
         // }
 	    }
-
-	    &:hover,
-			&:hover .datatable-row-group {
-	      background-color: #eee;
-	      transition-property: background;
-	      transition-duration: .3s;
-	      transition-timing-function: linear;
-	    }
-
-			&:focus,
-			&:focus .datatable-row-group {
-				background-color: #ddd;
-			}
-
-			&.active,
-			&.active .datatable-row-group {
-				background-color: #304FFE;
-        color: #FFF;
-			}
-
-			&.active:hover,
-			&.active:hover .datatable-row-group {
-				background-color: #193AE4;
-        color: #FFF;
-			}
-
-			&.active:focus,
-			&.active:focus .datatable-row-group {
-				background-color: #2041EF;
-        		color: #FFF;
-			}
 	  }
 
 		.progress-linear {
@@ -234,6 +273,61 @@
 			}
 		}
 	}
+}
+
+/**
+ * Checkboxes
+**/
+.datatable-checkbox {
+  position: relative;
+  margin: 0;
+  cursor: pointer;
+  vertical-align: middle;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 10px 0;
+
+  input[type='checkbox'] {
+    position: relative;
+    margin: 0 1rem 0 0;
+    cursor: pointer;
+    outline:none;
+
+    &:before {
+      -webkit-transition: all 0.3s ease-in-out;
+      -moz-transition: all 0.3s ease-in-out;
+      transition: all 0.3s ease-in-out;
+      content: "";
+      position: absolute;
+      left: 0;
+      z-index: 1;
+      width: 1rem;
+      height: 1rem;
+      border: 2px solid #f2f2f2;
+    }
+
+    &:checked:before {
+      -webkit-transform: rotate(-45deg);
+      -moz-transform: rotate(-45deg);
+      -ms-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+      height: .5rem;
+      border-color: #009688;
+      border-top-style: none;
+      border-right-style: none;
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1rem;
+      height: 1rem;
+      background: #fff;
+      cursor: pointer;
+    }
+  }
 }
 
 /**

@@ -35,7 +35,8 @@ import { DataTableColumnDirective } from '../columns';
           [sorts]="sorts"
           [sortAscendingIcon]="sortAscendingIcon"
           [sortDescendingIcon]="sortDescendingIcon"
-          (sort)="onSort($event)">
+          (sort)="onSort($event)"
+          (select)="select.emit($event)">
         </datatable-header-cell>
       </div>
     </div>
@@ -54,6 +55,7 @@ export class DataTableHeaderComponent {
   @Input() offsetX: number;
   @Input() sorts: any[];
   @Input() sortType: SortType;
+  @Input() allRowsSelected: boolean;
 
   @HostBinding('style.height')
   @Input() set headerHeight(val: any) {
@@ -83,6 +85,7 @@ export class DataTableHeaderComponent {
   @Output() sort: EventEmitter<any> = new EventEmitter();
   @Output() reorder: EventEmitter<any> = new EventEmitter();
   @Output() resize: EventEmitter<any> = new EventEmitter();
+  @Output() select: EventEmitter<any> = new EventEmitter();
 
   private columnsByPin: any;
   private columnGroupWidths: any;

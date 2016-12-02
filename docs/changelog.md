@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.0
+- Feature: Checkbox selection mode 
+- Perf: Faster render time by adding css class via host
+- Enhancement: Selection mode auto added to host class for easier styling
+
 ## 2.0.0
 - BREAKING: Rename from `datatable` to `swui-datatable` (#320)
 - BREAKING: Redo how row-detail/cell/header templates are described in markup (#304)

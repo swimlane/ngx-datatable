@@ -59,6 +59,7 @@ import { Component } from '@angular/core';
               <li><a href="#" (click)="state='multi-selection'">Click Mulit Row</a></li>
               <li><a href="#" (click)="state='multishift-selection'">Shift Multi Row</a></li>
               <li><a href="#" (click)="state='multidisable-selection'">Disable Callback</a></li>
+              <li><a href="#" (click)="state='chkbox-selection'">Checkbox</a></li>
             </ul>
           </li>
           <li>
@@ -111,6 +112,7 @@ import { Component } from '@angular/core';
         <multi-selection-demo *ngIf="state === 'multi-selection'"></multi-selection-demo>
         <multishift-selection-demo *ngIf="state === 'multishift-selection'"></multishift-selection-demo>
         <multidisable-selection-demo *ngIf="state === 'multidisable-selection'"></multidisable-selection-demo>
+        <chkbox-selection-demo *ngIf="state === 'chkbox-selection'"></chkbox-selection-demo>
 
         <!-- Templates -->
         <template-ref-demo *ngIf="state === 'templateref'"></template-ref-demo>
@@ -139,7 +141,7 @@ export class AppComponent {
   version: string = APP_VERSION;
 
   constructor() {
-    // this.state = 'basic-fixed';
+    // this.state = 'chkbox-selection';
   }
 
 }

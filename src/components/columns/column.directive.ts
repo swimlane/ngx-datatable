@@ -19,6 +19,8 @@ export class DataTableColumnDirective {
   @Input() minWidth: number;
   @Input() width: number;
   @Input() maxWidth: number;
+  @Input() checkboxable: boolean;
+  @Input() headerCheckboxable: boolean;
 
   @ContentChild(DataTableColumnCellDirective, { read: TemplateRef }) 
   cellTemplate: TemplateRef<any>;

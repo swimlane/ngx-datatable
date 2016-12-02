@@ -1,6 +1,13 @@
 import { DataTableColumnDirective } from '../components/columns';
 import { camelCase, deCamelCase, id } from '../utils';
 
+/**
+ * Sets the column defaults
+ * 
+ * @export
+ * @param {any[]} columns
+ * @returns
+ */
 export function setColumnDefaults(columns: any[]) {
   if(!columns) return;
 
@@ -41,6 +48,13 @@ export function setColumnDefaults(columns: any[]) {
   }
 }
 
+/**
+ * Translates templates definitions to objects
+ * 
+ * @export
+ * @param {DataTableColumnDirective[]} templates
+ * @returns {any[]}
+ */
 export function translateTemplates(templates: DataTableColumnDirective[]): any[] {
   let result: any[] = [];
 

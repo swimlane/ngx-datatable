@@ -10,6 +10,15 @@ import { nextSortDir } from '../../utils';
   selector: 'datatable-header-cell',
   template: `
     <div>
+      <label
+        *ngIf="column.checkboxable && column.headerCheckboxable" 
+        class="datatable-checkbox">
+        <input 
+          type="checkbox"
+          [attr.checked]="allRowsSelected"
+          (change)="select.emit(!allRowsSelected)" 
+        />
+      </label>
       <span
         class="datatable-header-cell-label draggable"
         *ngIf="!column.headerTemplate"
@@ -38,6 +47,7 @@ export class DataTableHeaderCellComponent {
   @Input() column: any;
   @Input() sortAscendingIcon: string;
   @Input() sortDescendingIcon: string;
+  @Input() allRowsSelected: boolean;
 
   @HostBinding('style.height.px')
   @Input() headerHeight: number;
@@ -52,6 +62,7 @@ export class DataTableHeaderCellComponent {
   }
 
   @Output() sort: EventEmitter<any> = new EventEmitter();
+  @Output() select: EventEmitter<any> = new EventEmitter();
 
   @HostBinding('class')
   get columnCssClasses(): any {
