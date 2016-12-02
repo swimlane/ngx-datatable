@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.1.1
+- Bug: Fix memory leak with visibility observer
+
 ## 2.1.0
 - Feature: Checkbox selection mode 
 - Enhancement: Selection mode auto added to host class for easier styling

@@ -1,6 +1,5 @@
 "use strict";
 var core_1 = require('@angular/core');
-var utils_1 = require('../utils');
 /**
  * Visibility Observer Directive
  *
@@ -14,17 +13,42 @@ var utils_1 = require('../utils');
  */
 var VisibilityDirective = (function () {
     function VisibilityDirective(element, zone) {
+        this.element = element;
+        this.zone = zone;
         this.isVisible = false;
         this.visible = new core_1.EventEmitter();
-        utils_1.checkVisibility(element.nativeElement, this.visbilityChange.bind(this), zone);
     }
-    VisibilityDirective.prototype.visbilityChange = function () {
+    VisibilityDirective.prototype.ngOnInit = function () {
+        this.runCheck();
+    };
+    VisibilityDirective.prototype.ngOnDestroy = function () {
+        clearTimeout(this.timeout);
+    };
+    VisibilityDirective.prototype.onVisibilityChange = function () {
         var _this = this;
         // trigger zone recalc for columns
-        setTimeout(function () {
+        this.zone.run(function () {
             _this.isVisible = true;
             _this.visible.emit(true);
         });
+    };
+    VisibilityDirective.prototype.runCheck = function () {
+        var _this = this;
+        var check = function () {
+            // https://davidwalsh.name/offsetheight-visibility
+            var _a = _this.element.nativeElement, offsetHeight = _a.offsetHeight, offsetWidth = _a.offsetWidth;
+            if (offsetHeight && offsetWidth) {
+                clearTimeout(_this.timeout);
+                _this.onVisibilityChange();
+            }
+            else {
+                clearTimeout(_this.timeout);
+                _this.zone.runOutsideAngular(function () {
+                    _this.timeout = setTimeout(function () { return check(); }, 50);
+                });
+            }
+        };
+        setTimeout(function () { return check(); });
     };
     VisibilityDirective.decorators = [
         { type: core_1.Directive, args: [{ selector: '[visibility-observer]' },] },

@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"2.1.0" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"2.1.1" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -4011,7 +4011,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = __webpack_require__(0);
-var utils_1 = __webpack_require__("./src/utils/index.ts");
 /**
  * Visibility Observer Directive
  *
@@ -4025,17 +4024,42 @@ var utils_1 = __webpack_require__("./src/utils/index.ts");
  */
 var VisibilityDirective = (function () {
     function VisibilityDirective(element, zone) {
+        this.element = element;
+        this.zone = zone;
         this.isVisible = false;
         this.visible = new core_1.EventEmitter();
-        utils_1.checkVisibility(element.nativeElement, this.visbilityChange.bind(this), zone);
     }
-    VisibilityDirective.prototype.visbilityChange = function () {
+    VisibilityDirective.prototype.ngOnInit = function () {
+        this.runCheck();
+    };
+    VisibilityDirective.prototype.ngOnDestroy = function () {
+        clearTimeout(this.timeout);
+    };
+    VisibilityDirective.prototype.onVisibilityChange = function () {
         var _this = this;
         // trigger zone recalc for columns
-        setTimeout(function () {
+        this.zone.run(function () {
             _this.isVisible = true;
             _this.visible.emit(true);
         });
+    };
+    VisibilityDirective.prototype.runCheck = function () {
+        var _this = this;
+        var check = function () {
+            // https://davidwalsh.name/offsetheight-visibility
+            var _a = _this.element.nativeElement, offsetHeight = _a.offsetHeight, offsetWidth = _a.offsetWidth;
+            if (offsetHeight && offsetWidth) {
+                clearTimeout(_this.timeout);
+                _this.onVisibilityChange();
+            }
+            else {
+                clearTimeout(_this.timeout);
+                _this.zone.runOutsideAngular(function () {
+                    _this.timeout = setTimeout(function () { return check(); }, 50);
+                });
+            }
+        };
+        setTimeout(function () { return check(); });
     };
     __decorate([
         core_1.HostBinding('class.visible'), 
@@ -4441,7 +4465,6 @@ __export(__webpack_require__("./src/utils/prefixes.ts"));
 __export(__webpack_require__("./src/utils/scrollbar-width.ts"));
 __export(__webpack_require__("./src/utils/selection.ts"));
 __export(__webpack_require__("./src/utils/translate.ts"));
-__export(__webpack_require__("./src/utils/visibility-observer.ts"));
 __export(__webpack_require__("./src/utils/throttle.ts"));
 __export(__webpack_require__("./src/utils/sort.ts"));
 __export(__webpack_require__("./src/utils/row-height-cache.ts"));
@@ -5148,35 +5171,6 @@ function translateXY(styles, x, y) {
     }
 }
 exports.translateXY = translateXY;
-
-
-/***/ },
-
-/***/ "./src/utils/visibility-observer.ts":
-/***/ function(module, exports) {
-
-"use strict";
-"use strict";
-function checkVisibility(element, callback, zone) {
-    var timeout;
-    function check() {
-        // https://davidwalsh.name/offsetheight-visibility
-        var offsetHeight = element.offsetHeight, offsetWidth = element.offsetWidth;
-        if (offsetHeight && offsetWidth) {
-            clearTimeout(timeout);
-            if (callback)
-                zone.run(function () { return callback(); });
-        }
-        else {
-            clearTimeout(timeout);
-            zone.runOutsideAngular(function () {
-                timeout = setTimeout(function () { return check(); }, 50);
-            });
-        }
-    }
-    check();
-}
-exports.checkVisibility = checkVisibility;
 
 
 /***/ },
