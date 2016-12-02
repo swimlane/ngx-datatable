@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <h3>Server-side Sorting</h3>
-      <swui-datatable
+      <swui-data-table
         class="material"
         [rows]="rows"
         [columns]="columns"
@@ -16,7 +16,7 @@ import { Component } from '@angular/core';
         [externalSorting]="true"
         [loadingIndicator]="loading"
         (sort)="onSort($event)">
-      </swui-datatable>
+      </swui-data-table>
     </div>
   `
 })

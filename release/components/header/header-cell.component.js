@@ -20,7 +20,7 @@ var DataTableHeaderCellComponent = (function () {
     });
     Object.defineProperty(DataTableHeaderCellComponent.prototype, "columnCssClasses", {
         get: function () {
-            var cls = 'datatable-header-cell';
+            var cls = 'data-table-header-cell';
             if (this.column.sortable)
                 cls += ' sortable';
             if (this.column.resizeable)
@@ -94,8 +94,8 @@ var DataTableHeaderCellComponent = (function () {
     };
     DataTableHeaderCellComponent.decorators = [
         { type: core_1.Component, args: [{
-                    selector: 'datatable-header-cell',
-                    template: "\n    <div>\n      <label\n        *ngIf=\"column.checkboxable && column.headerCheckboxable\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [attr.checked]=\"allRowsSelected\"\n          (change)=\"select.emit(!allRowsSelected)\" \n        />\n      </label>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        *ngIf=\"!column.headerTemplate\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <template\n        *ngIf=\"column.headerTemplate\"\n        [ngTemplateOutlet]=\"column.headerTemplate\"\n        [ngOutletContext]=\"{ \n          column: column, \n          sortDir: sortDir\n        }\">\n      </template>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses(sortDir)\">\n      </span>\n    </div>\n  "
+                    selector: 'data-table-header-cell',
+                    template: "\n    <div>\n      <label\n        *ngIf=\"column.checkboxable && column.headerCheckboxable\" \n        class=\"data-table-checkbox\">\n        <input \n          type=\"checkbox\"\n          [attr.checked]=\"allRowsSelected\"\n          (change)=\"select.emit(!allRowsSelected)\" \n        />\n      </label>\n      <span\n        class=\"data-table-header-cell-label draggable\"\n        *ngIf=\"!column.headerTemplate\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <template\n        *ngIf=\"column.headerTemplate\"\n        [ngTemplateOutlet]=\"column.headerTemplate\"\n        [ngOutletContext]=\"{ \n          column: column, \n          sortDir: sortDir\n        }\">\n      </template>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses(sortDir)\">\n      </span>\n    </div>\n  "
                 },] },
     ];
     /** @nocollapse */

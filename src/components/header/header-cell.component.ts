@@ -6,12 +6,12 @@ import { SortDirection, SortType } from '../../types';
 import { nextSortDir } from '../../utils';
 
 @Component({
-  selector: 'datatable-header-cell',
+  selector: 'data-table-header-cell',
   template: `
     <div>
       <label
         *ngIf="column.checkboxable && column.headerCheckboxable" 
-        class="datatable-checkbox">
+        class="data-table-checkbox">
         <input 
           type="checkbox"
           [attr.checked]="allRowsSelected"
@@ -19,7 +19,7 @@ import { nextSortDir } from '../../utils';
         />
       </label>
       <span
-        class="datatable-header-cell-label draggable"
+        class="data-table-header-cell-label draggable"
         *ngIf="!column.headerTemplate"
         (click)="onSort()"
         [innerHTML]="name">
@@ -64,7 +64,7 @@ export class DataTableHeaderCellComponent {
 
   @HostBinding('class')
   get columnCssClasses(): any {
-    let cls = 'datatable-header-cell';
+    let cls = 'data-table-header-cell';
 
     if(this.column.sortable) cls += ' sortable';
     if(this.column.resizeable) cls += ' resizeable';

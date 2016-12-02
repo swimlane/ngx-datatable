@@ -4,12 +4,12 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'datatable-scroller',
+  selector: 'data-table-scroller',
   template: `
     <ng-content></ng-content>
   `,
   host: {
-    class: 'datatable-scroll'
+    class: 'data-table-scroll'
   }
 })
 export class ScrollerComponent implements OnInit, OnDestroy {

@@ -1,32 +1,32 @@
-.datatable.material {
+.data-table.material {
 	background:#FFF;
   -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
   -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
 
 	&.striped {
-		.datatable-row-odd {
+		.data-table-row-odd {
 			background: #eee;
 		}
 	}
 
   &.single-selection,
   &.multi-selection {
-    .datatable-body-row {
+    .data-table-body-row {
 			&.active,
-			&.active .datatable-row-group {
+			&.active .data-table-row-group {
 				background-color: #304FFE;
         color: #FFF;
 			}
 
 			&.active:hover,
-			&.active:hover .datatable-row-group {
+			&.active:hover .data-table-row-group {
 				background-color: #193AE4;
         color: #FFF;
 			}
 
 			&.active:focus,
-			&.active:focus .datatable-row-group {
+			&.active:focus .data-table-row-group {
 				background-color: #2041EF;
         color: #FFF;
 			}
@@ -34,9 +34,9 @@
   }
 
   &:not(.cell-selection) {
-    .datatable-body-row {
+    .data-table-body-row {
       &:hover,
-			&:hover .datatable-row-group {
+			&:hover .data-table-row-group {
 	      background-color: #eee;
 	      transition-property: background;
 	      transition-duration: .3s;
@@ -44,16 +44,16 @@
 	    }
 
 			&:focus,
-			&:focus .datatable-row-group {
+			&:focus .data-table-row-group {
 				background-color: #ddd;
 			}
     }
   }
 
   &.cell-selection {
-    .datatable-body-cell {
+    .data-table-body-cell {
       &:hover,
-			&:hover .datatable-row-group {
+			&:hover .data-table-row-group {
 	      background-color: #eee;
 	      transition-property: background;
 	      transition-duration: .3s;
@@ -61,24 +61,24 @@
 	    }
 
 			&:focus,
-			&:focus .datatable-row-group {
+			&:focus .data-table-row-group {
 				background-color: #ddd;
 			}
 
 			&.active,
-			&.active .datatable-row-group {
+			&.active .data-table-row-group {
 				background-color: #304FFE;
         color: #FFF;
 			}
 
 			&.active:hover,
-			&.active:hover .datatable-row-group {
+			&.active:hover .data-table-row-group {
 				background-color: #193AE4;
         color: #FFF;
 			}
 
 			&.active:focus,
-			&.active:focus .datatable-row-group {
+			&.active:focus .data-table-row-group {
 				background-color: #2041EF;
         color: #FFF;
 			}
@@ -106,16 +106,16 @@
 	/**
 	 * Global Row Styles
 	 */
-	 .datatable-header,
-	 .datatable-body {
-		 .datatable-row-left {
+	 .data-table-header,
+	 .data-table-body {
+		 .data-table-row-left {
 			background-color: #FFF;
 			background-position: 100% 0;
 			background-repeat: repeat-y;
 			background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQIHWPSkNeSBmJhTQVtbiDNCgASagIIuJX8OgAAAABJRU5ErkJggg==);
 		}
 
-		.datatable-row-right {
+		.data-table-row-right {
 			background-position: 0 0;
 	    background-color: #fff;
 	    background-repeat: repeat-y;
@@ -126,10 +126,10 @@
 	/**
 	 * Header Styles
 	 */
-	.datatable-header {
+	.data-table-header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 
-    .datatable-header-cell {
+    .data-table-header-cell {
       text-align: left;
       padding: .5rem 1.2rem;
       font-weight: 400;
@@ -155,14 +155,14 @@
 	/**
 	 * Body Styles
 	 */
-	.datatable-body {
-		.datatable-row-detail {
+	.data-table-body {
+		.data-table-row-detail {
 			background: #f5f5f5;
 			padding: 10px;
 		}
 
-	  .datatable-body-row {
-	    .datatable-body-cell {
+	  .data-table-body-row {
+	    .data-table-body-cell {
 	      text-align: left;
 	      padding: .5rem 1.2rem;
 	      vertical-align: top;
@@ -220,7 +220,7 @@
 	/**
 	 * Footer Styles
 	 */
-	.datatable-footer {
+	.data-table-footer {
 		border-top: 1px solid rgba(0, 0, 0, 0.12);
 		font-size:16px;
 
@@ -230,7 +230,7 @@
 			padding: 0 1.2rem;
 		}
 
-		.datatable-pager {
+		.data-table-pager {
 			margin: 0 10px;
 	    //line-height: 50px;
 
@@ -282,7 +282,7 @@
 /**
  * Checkboxes
 **/
-.datatable-checkbox {
+.data-table-checkbox {
   position: relative;
   margin: 0;
   cursor: pointer;

@@ -6,11 +6,11 @@ There is a separate material theme distributed with data-table. In order to use 
 include that in your application `release/material.css` and add the CSS class `material` to your data-table.
 
 ## CSS Classes
-- `datatable`: Master Table class
+- `data-table`: Master Table class
   - `fixed-header`: The header is fixed on the table
 
-- `datatable-header`: Header row class
-  - `datatable-header-cell`: Header cell class
+- `data-table-header`: Header row class
+  - `data-table-header-cell`: Header cell class
     - `resizeable`: Cell resizeable class
     - `sortable`: Cell drag/drop sortable class
     - `longpress`: Cell long-press activated
@@ -19,14 +19,14 @@ include that in your application `release/material.css` and add the CSS class `m
     - `sort-asc`: Sort active on column with ascending applied
     - `sort-desc`: Sort active on column with descending applied
 
-  - `datatable-header-cell-label`: Header cell text label
+  - `data-table-header-cell-label`: Header cell text label
     - `draggable`: Header cell draggable class
 
-- `datatable-body-row`: Body row class
-  - `datatable-row-even`: Odd row class
-  - `datatable-row-odd`: Even row class
+- `data-table-body-row`: Body row class
+  - `data-table-row-even`: Odd row class
+  - `data-table-row-odd`: Even row class
 
-    - `datatable-body-cell`: Body cell class
+    - `data-table-body-cell`: Body cell class
       - `sort-active`: Sort active on column
       - `sort-asc`: Sort active on column with ascending applied
       - `sort-desc`: Sort active on column with descending applied

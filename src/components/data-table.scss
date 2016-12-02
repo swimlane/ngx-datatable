@@ -1,4 +1,4 @@
-.datatable {
+.data-table {
   display: block;
   overflow:hidden;
   justify-content: center;
@@ -19,9 +19,9 @@
    * Vertical Scrolling Adjustments
    */
   &.scroll-vertical {
-    .datatable-body {
+    .data-table-body {
       overflow-y:auto;
-      .datatable-row-wrapper {
+      .data-table-row-wrapper {
         position: absolute;
       }
 
@@ -32,7 +32,7 @@
    * Horizontal Scrolling Adjustments
    */
   &.scroll-horz {
-    .datatable-body {
+    .data-table-body {
       overflow-x:auto;
       -webkit-overflow-scrolling: touch;
     }
@@ -42,10 +42,10 @@
    * Fixed Header Height Adjustments
    */
   &.fixed-header {
-    .datatable-header {
-      .datatable-header-inner{
+    .data-table-header {
+      .data-table-header-inner{
         white-space: nowrap;
-        .datatable-header-cell{
+        .data-table-header-cell{
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -58,13 +58,13 @@
    * Fixed row height adjustments
    */
   &.fixed-row {
-    .datatable-scroll{
+    .data-table-scroll{
       white-space: nowrap;
       
-      .datatable-body-row {
+      .data-table-body-row {
         white-space: nowrap;
 
-        .datatable-body-cell {
+        .data-table-body-cell {
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
@@ -76,8 +76,8 @@
   /**
    * Shared Styles
    */
-  .datatable-body-row,
-  .datatable-header-inner {
+  .data-table-body-row,
+  .data-table-header-inner {
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -92,8 +92,8 @@
     flex-flow: row;
   }
 
-  .datatable-body-cell,
-  .datatable-header-cell {
+  .data-table-body-cell,
+  .data-table-header-cell {
     vertical-align: top;
     display: inline-block;
     line-height: 1.625;
@@ -109,30 +109,30 @@
     }
   }
 
-  .datatable-row-left,
-  .datatable-row-right {
+  .data-table-row-left,
+  .data-table-row-right {
     z-index: 9;
   }
 
-  .datatable-row-left,
-  .datatable-row-center,
-  .datatable-row-right {
+  .data-table-row-left,
+  .data-table-row-center,
+  .data-table-row-right {
     position:relative;
   }
 
   /**
    * Header Styles
    */
-  .datatable-header {
+  .data-table-header {
     display: block;
     overflow: hidden;
 
-    .datatable-header-inner{
+    .data-table-header-inner{
       align-items: stretch;
       -webkit-align-items: stretch;
     }
 
-    .datatable-header-cell {
+    .data-table-header-cell {
       position: relative;
       display: inline-block;
 
@@ -173,20 +173,20 @@
   /**
    * Body Styles
    */
-  .datatable-body {
+  .data-table-body {
     position: relative;
     z-index: 10;
     display: block;
 
-    .datatable-scroll{
+    .data-table-scroll{
       display: inline-block;
     }
 
-    .datatable-row-detail {
+    .data-table-row-detail {
       overflow-y: hidden;
     }
 
-    .datatable-row-wrapper {
+    .data-table-row-wrapper {
       display: -webkit-box;
       display: -moz-box;
       display: -ms-flexbox;
@@ -202,7 +202,7 @@
       flex-direction: column;
     }
 
-    .datatable-body-row {
+    .data-table-body-row {
       outline:none;
 
       > div {
@@ -218,7 +218,7 @@
   /**
    * Footer Styles
    */
-  .datatable-footer {
+  .data-table-footer {
     display: block;
     width: 100%;
 
@@ -233,7 +233,7 @@
       flex: 1 1 20%;
     }
 
-    .datatable-pager{
+    .data-table-pager{
       display: inline-block;
       flex: 1 1 80%;
       text-align: right;

@@ -18,7 +18,7 @@ var Angular2DataTableModule = (function () {
                         directives_1.OrderableDirective,
                         directives_1.LongPressDirective,
                         components_1.ScrollerComponent,
-                        components_1.DatatableComponent,
+                        components_1.DataTableComponent,
                         components_1.DataTableColumnDirective,
                         components_1.DataTableHeaderComponent,
                         components_1.DataTableHeaderCellComponent,
@@ -28,17 +28,17 @@ var Angular2DataTableModule = (function () {
                         components_1.ProgressBarComponent,
                         components_1.DataTableBodyRowComponent,
                         components_1.DataTableRowWrapperComponent,
-                        components_1.DatatableRowDetailDirective,
-                        components_1.DatatableRowDetailTemplateDirective,
+                        components_1.DataTableRowDetailDirective,
+                        components_1.DataTableRowDetailTemplateDirective,
                         components_1.DataTableBodyCellComponent,
                         components_1.DataTableSelectionComponent,
                         components_1.DataTableColumnHeaderDirective,
                         components_1.DataTableColumnCellDirective
                     ],
                     exports: [
-                        components_1.DatatableComponent,
-                        components_1.DatatableRowDetailDirective,
-                        components_1.DatatableRowDetailTemplateDirective,
+                        components_1.DataTableComponent,
+                        components_1.DataTableRowDetailDirective,
+                        components_1.DataTableRowDetailTemplateDirective,
                         components_1.DataTableColumnDirective,
                         components_1.DataTableColumnHeaderDirective,
                         components_1.DataTableColumnCellDirective
@@ -50,4 +50,4 @@ var Angular2DataTableModule = (function () {
     return Angular2DataTableModule;
 }());
 exports.Angular2DataTableModule = Angular2DataTableModule;
-//# sourceMappingURL=datatable.module.js.map
+//# sourceMappingURL=data-table.module.js.map

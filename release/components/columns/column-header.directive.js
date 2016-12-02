@@ -6,7 +6,7 @@ var DataTableColumnHeaderDirective = (function () {
     }
     ;
     DataTableColumnHeaderDirective.decorators = [
-        { type: core_1.Directive, args: [{ selector: '[swui-datatable-header-template]' },] },
+        { type: core_1.Directive, args: [{ selector: '[swui-data-table-header-template]' },] },
     ];
     /** @nocollapse */
     DataTableColumnHeaderDirective.ctorParameters = [

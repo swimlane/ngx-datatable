@@ -99,7 +99,7 @@ class View_DataTableRowWrapperComponent_Host0 extends import2.AppView<any> {
     super(View_DataTableRowWrapperComponent_Host0,renderType_DataTableRowWrapperComponent_Host,import6.ViewType.HOST,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import7.ComponentRef<any> {
-    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'datatable-row-wrapper',new import3.InlineArray2(2,'class','datatable-row-wrapper'),rootSelector,(null as any));
+    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'data-table-row-wrapper',new import3.InlineArray2(2,'class','data-table-row-wrapper'),rootSelector,(null as any));
     this.compView_0 = new View_DataTableRowWrapperComponent0(this.viewUtils,this,0,this._el_0);
     this._DataTableRowWrapperComponent_0_3 = new Wrapper_DataTableRowWrapperComponent();
     this.compView_0.create(this._DataTableRowWrapperComponent_0_3.context);
@@ -132,7 +132,7 @@ class View_DataTableRowWrapperComponent_Host0 extends import2.AppView<any> {
     return result;
   }
 }
-export const DataTableRowWrapperComponentNgFactory:import7.ComponentFactory<import0.DataTableRowWrapperComponent> = new import7.ComponentFactory<import0.DataTableRowWrapperComponent>('datatable-row-wrapper',View_DataTableRowWrapperComponent_Host0,import0.DataTableRowWrapperComponent);
+export const DataTableRowWrapperComponentNgFactory:import7.ComponentFactory<import0.DataTableRowWrapperComponent> = new import7.ComponentFactory<import0.DataTableRowWrapperComponent>('data-table-row-wrapper',View_DataTableRowWrapperComponent_Host0,import0.DataTableRowWrapperComponent);
 const styles_DataTableRowWrapperComponent:any[] = ([] as any[]);
 var renderType_DataTableRowWrapperComponent:import4.RenderComponentType = import3.createRenderComponentType('',1,import5.ViewEncapsulation.None,styles_DataTableRowWrapperComponent,{});
 export class View_DataTableRowWrapperComponent0 extends import2.AppView<import0.DataTableRowWrapperComponent> {
@@ -198,7 +198,7 @@ class View_DataTableRowWrapperComponent1 extends import2.AppView<any> {
     this._expr_7 = import1.UNINITIALIZED;
   }
   createInternal(rootSelector:string):import7.ComponentRef<any> {
-    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'div',new import3.InlineArray2(2,'class','datatable-row-detail'),(null as any));
+    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'div',new import3.InlineArray2(2,'class','data-table-row-detail'),(null as any));
     this._text_1 = this.renderer.createText(this._el_0,'\n      ',(null as any));
     this._anchor_2 = this.renderer.createTemplateAnchor(this._el_0,(null as any));
     this._vc_2 = new import8.ViewContainer(2,0,this,this._anchor_2);

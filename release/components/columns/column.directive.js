@@ -6,7 +6,7 @@ var DataTableColumnDirective = (function () {
     function DataTableColumnDirective() {
     }
     DataTableColumnDirective.decorators = [
-        { type: core_1.Directive, args: [{ selector: 'swui-datatable-column' },] },
+        { type: core_1.Directive, args: [{ selector: 'swui-data-table-column' },] },
     ];
     /** @nocollapse */
     DataTableColumnDirective.ctorParameters = [];

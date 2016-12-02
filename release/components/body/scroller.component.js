@@ -53,10 +53,10 @@ var ScrollerComponent = (function () {
     };
     ScrollerComponent.decorators = [
         { type: core_1.Component, args: [{
-                    selector: 'datatable-scroller',
+                    selector: 'data-table-scroller',
                     template: "\n    <ng-content></ng-content>\n  ",
                     host: {
-                        class: 'datatable-scroll'
+                        class: 'data-table-scroll'
                     }
                 },] },
     ];

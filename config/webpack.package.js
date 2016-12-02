@@ -82,7 +82,7 @@ module.exports = function(env) {
       new ngtools.AotPlugin({
         tsConfigPath: 'tsconfig-aot.json',
         baseDir: dir()
-        entryModule: dir('datatable.module.ts') + '#Angular2DataTableModule'
+        entryModule: dir('data-table.module.ts') + '#Angular2DataTableModule'
       }),
       new CleanWebpackPlugin(['release'], {
         root: dir(),

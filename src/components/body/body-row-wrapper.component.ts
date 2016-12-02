@@ -3,13 +3,13 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'datatable-row-wrapper',
+  selector: 'data-table-row-wrapper',
   template: `
     <ng-content></ng-content>
     <div 
       *ngIf="expanded"
       [style.height.px]="detailRowHeight" 
-      class="datatable-row-detail">
+      class="data-table-row-detail">
       <template
         *ngIf="rowDetailTemplate"
         [ngTemplateOutlet]="rowDetailTemplate"
@@ -18,7 +18,7 @@ import {
     </div>
   `,
   host: {
-    class: 'datatable-row-wrapper'
+    class: 'data-table-row-wrapper'
   }
 })
 export class DataTableRowWrapperComponent {

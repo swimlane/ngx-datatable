@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <h3>Inline Editing</h3>
-      <swui-datatable
+      <swui-data-table
         #mydatatable
         class="material"
         [headerHeight]="50"
@@ -14,8 +14,8 @@ import { Component } from '@angular/core';
         [footerHeight]="50"
         [rowHeight]="'auto'"
         [rows]="rows">
-        <swui-datatable-column name="Name">
-          <template swui-datatable-cell-template let-value="value" let-row="row">
+        <swui-data-table-column name="Name">
+          <template swui-data-table-cell-template let-value="value" let-row="row">
             <span
               title="Double click to edit"
               (dblclick)="editing[row.$$index + '-name'] = true"
@@ -30,9 +30,9 @@ import { Component } from '@angular/core';
               [value]="value"
             />
           </template>
-        </swui-datatable-column>
-        <swui-datatable-column name="Gender">
-          <template swui-datatable-cell-template let-row="row" let-value="value">
+        </swui-data-table-column>
+        <swui-data-table-column name="Gender">
+          <template swui-data-table-cell-template let-row="row" let-value="value">
              <span
               title="Double click to edit"
               (dblclick)="editing[row.$$index + '-gender'] = true"
@@ -47,13 +47,13 @@ import { Component } from '@angular/core';
               <option value="female">Female</option>
             </select>
           </template>
-        </swui-datatable-column>
-        <swui-datatable-column name="Age">
-          <template swui-datatable-cell-template let-value="value">
+        </swui-data-table-column>
+        <swui-data-table-column name="Age">
+          <template swui-data-table-cell-template let-value="value">
             {{value}}
           </template>
-        </swui-datatable-column>
-      </swui-datatable>
+        </swui-data-table-column>
+      </swui-data-table>
     </div>
   `
 })

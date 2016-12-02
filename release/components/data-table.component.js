@@ -15,29 +15,29 @@ var body_1 = require('./body');
 var columns_1 = require('./columns');
 var row_detail_1 = require('./row-detail');
 var utils_2 = require('../utils');
-var DatatableComponent = (function () {
-    function DatatableComponent(element) {
+var DataTableComponent = (function () {
+    function DataTableComponent(element) {
         /**
          * List of row objects that should be
          * represented as selected in the grid.
          * Default value: `[]`
          *
          * @type {any[]}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.selected = [];
         /**
          * Enable vertical scrollbars
          *
          * @type {boolean}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.scrollbarV = false;
         /**
          * Enable horz scrollbars
          *
          * @type {boolean}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.scrollbarH = false;
         /**
@@ -45,7 +45,7 @@ var DatatableComponent = (function () {
          * to calculate the height for the lazy rendering.
          *
          * @type {number}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.rowHeight = 30;
         /**
@@ -53,7 +53,7 @@ var DatatableComponent = (function () {
          * when virtual scroll is enabled.
          *
          * @type {number}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.detailRowHeight = 0;
         /**
@@ -61,7 +61,7 @@ var DatatableComponent = (function () {
          * Example: flex, force, standard
          *
          * @type {ColumnMode}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.columnMode = types_1.ColumnMode.standard;
         /**
@@ -69,7 +69,7 @@ var DatatableComponent = (function () {
          * Pass a falsey for no header
          *
          * @type {*}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.headerHeight = 30;
         /**
@@ -77,7 +77,7 @@ var DatatableComponent = (function () {
          * Pass falsey for no footer
          *
          * @type {number}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.footerHeight = 0;
         /**
@@ -85,7 +85,7 @@ var DatatableComponent = (function () {
          * otherwise its assumed that all data is preloaded.
          *
          * @type {boolean}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.externalPaging = false;
         /**
@@ -93,7 +93,7 @@ var DatatableComponent = (function () {
          * the built-in basic sorting.
          *
          * @type {boolean}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.externalSorting = false;
         /**
@@ -101,7 +101,7 @@ var DatatableComponent = (function () {
          * Default value: `undefined`
          *
          * @type {number}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.limit = undefined;
         /**
@@ -109,7 +109,7 @@ var DatatableComponent = (function () {
          * Default value: `0`
          *
          * @type {number}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.count = 0;
         /**
@@ -117,7 +117,7 @@ var DatatableComponent = (function () {
          * Default value: `0`
          *
          * @type {number}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.offset = 0;
         /**
@@ -125,7 +125,7 @@ var DatatableComponent = (function () {
          * Default value: `false`
          *
          * @type {boolean}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.loadingIndicator = false;
         /**
@@ -133,14 +133,14 @@ var DatatableComponent = (function () {
          * by dragging them.
          *
          * @type {boolean}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.reorderable = true;
         /**
          * The type of sorting
          *
          * @type {SortType}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.sortType = types_1.SortType.single;
         /**
@@ -148,14 +148,14 @@ var DatatableComponent = (function () {
          * Default value: `[]`
          *
          * @type {any[]}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.sorts = [];
         /**
          * Css class overrides
          *
          * @type {*}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.cssClasses = {
             sortAscending: 'icon-down',
@@ -169,7 +169,7 @@ var DatatableComponent = (function () {
          * Message overrides for localization
          *
          * @type {*}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.messages = {
             // Message to show when array is presented
@@ -184,82 +184,82 @@ var DatatableComponent = (function () {
          *
          * (`fn(x) === fn(y)` instead of `x === y`)
          *
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.rowIdentity = (function (x) { return x; });
         /**
          * Body was scrolled typically in a `scrollbarV:true` scenario.
          *
          * @type {EventEmitter<any>}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.scroll = new core_1.EventEmitter();
         /**
          * A cell or row was focused via keyboard or mouse click.
          *
          * @type {EventEmitter<any>}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.activate = new core_1.EventEmitter();
         /**
          * A cell or row was selected.
          *
          * @type {EventEmitter<any>}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.select = new core_1.EventEmitter();
         /**
          * Column sort was invoked.
          *
          * @type {EventEmitter<any>}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.sort = new core_1.EventEmitter();
         /**
          * The table was paged either triggered by the pager or the body scroll.
          *
          * @type {EventEmitter<any>}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.page = new core_1.EventEmitter();
         /**
          * Row detail row visbility was toggled.
          *
          * @type {EventEmitter<any>}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.detailToggle = new core_1.EventEmitter();
         /**
          * Columns were re-ordered.
          *
          * @type {EventEmitter<any>}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.reorder = new core_1.EventEmitter();
         /**
          * Column was resized.
          *
          * @type {EventEmitter<any>}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.resize = new core_1.EventEmitter();
         /**
          * The context menu was invoked on a row.
          *
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         this.rowContextmenu = new core_1.EventEmitter(false);
         this.offsetX = 0;
         // get ref to elm for measuring
         this.element = element.nativeElement;
     }
-    Object.defineProperty(DatatableComponent.prototype, "rows", {
+    Object.defineProperty(DataTableComponent.prototype, "rows", {
         /**
          * Gets the rows.
          *
          * @readonly
          * @type {*}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         get: function () {
             return this._rows;
@@ -267,7 +267,7 @@ var DatatableComponent = (function () {
         /**
          * Rows that are displayed in the table.
          *
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         set: function (val) {
             // auto sort on new updates
@@ -281,13 +281,13 @@ var DatatableComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(DatatableComponent.prototype, "columns", {
+    Object.defineProperty(DataTableComponent.prototype, "columns", {
         /**
          * Get the columns.
          *
          * @readonly
          * @type {any[]}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         get: function () {
             return this._columns;
@@ -295,7 +295,7 @@ var DatatableComponent = (function () {
         /**
          * Columns to be displayed.
          *
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         set: function (val) {
             if (val) {
@@ -307,13 +307,13 @@ var DatatableComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(DatatableComponent.prototype, "isFixedHeader", {
+    Object.defineProperty(DataTableComponent.prototype, "isFixedHeader", {
         /**
          * CSS class applied if the header height if fixed height.
          *
          * @readonly
          * @type {boolean}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         get: function () {
             var headerHeight = this.headerHeight;
@@ -323,14 +323,14 @@ var DatatableComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(DatatableComponent.prototype, "isFixedRow", {
+    Object.defineProperty(DataTableComponent.prototype, "isFixedRow", {
         /**
          * CSS class applied to the root element if
          * the row heights are fixed heights.
          *
          * @readonly
          * @type {boolean}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         get: function () {
             var rowHeight = this.rowHeight;
@@ -340,14 +340,14 @@ var DatatableComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(DatatableComponent.prototype, "isVertScroll", {
+    Object.defineProperty(DataTableComponent.prototype, "isVertScroll", {
         /**
          * CSS class applied to root element if
          * vertical scrolling is enabled.
          *
          * @readonly
          * @type {boolean}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         get: function () {
             return this.scrollbarV;
@@ -355,14 +355,14 @@ var DatatableComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(DatatableComponent.prototype, "isHorScroll", {
+    Object.defineProperty(DataTableComponent.prototype, "isHorScroll", {
         /**
          * CSS class applied to the root element
          * if the horziontal scrolling is enabled.
          *
          * @readonly
          *
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         get: function () {
             return this.scrollbarH;
@@ -370,13 +370,13 @@ var DatatableComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(DatatableComponent.prototype, "isSelectable", {
+    Object.defineProperty(DataTableComponent.prototype, "isSelectable", {
         /**
          * CSS class applied to root element is selectable.
          *
          * @readonly
          * @type {boolean}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         get: function () {
             return this.selectionType !== undefined;
@@ -384,13 +384,13 @@ var DatatableComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(DatatableComponent.prototype, "isCheckboxSelection", {
+    Object.defineProperty(DataTableComponent.prototype, "isCheckboxSelection", {
         /**
          * CSS class applied to root is checkbox selection.
          *
          * @readonly
          * @type {boolean}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         get: function () {
             return this.selectionType === types_1.SelectionType.checkbox;
@@ -398,13 +398,13 @@ var DatatableComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(DatatableComponent.prototype, "isCellSelection", {
+    Object.defineProperty(DataTableComponent.prototype, "isCellSelection", {
         /**
          * CSS class applied to root if cell selection.
          *
          * @readonly
          * @type {boolean}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         get: function () {
             return this.selectionType === types_1.SelectionType.cell;
@@ -412,13 +412,13 @@ var DatatableComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(DatatableComponent.prototype, "isSingleSelection", {
+    Object.defineProperty(DataTableComponent.prototype, "isSingleSelection", {
         /**
          * CSS class applied to root if single select.
          *
          * @readonly
          * @type {boolean}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         get: function () {
             return this.selectionType === types_1.SelectionType.single;
@@ -426,13 +426,13 @@ var DatatableComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(DatatableComponent.prototype, "isMultiSelection", {
+    Object.defineProperty(DataTableComponent.prototype, "isMultiSelection", {
         /**
          * CSS class added to root element if mulit select
          *
          * @readonly
          * @type {boolean}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         get: function () {
             return this.selectionType === types_1.SelectionType.multi ||
@@ -441,13 +441,13 @@ var DatatableComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(DatatableComponent.prototype, "columnTemplates", {
+    Object.defineProperty(DataTableComponent.prototype, "columnTemplates", {
         /**
          * Returns the column templates.
          *
          * @readonly
          * @type {QueryList<DataTableColumnDirective>}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         get: function () {
             return this._columnTemplates;
@@ -456,7 +456,7 @@ var DatatableComponent = (function () {
          * Column templates gathered from `ContentChildren`
          * if described in your markup.
          *
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         set: function (val) {
             this._columnTemplates = val;
@@ -472,13 +472,13 @@ var DatatableComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(DatatableComponent.prototype, "rowDetailTemplateChild", {
+    Object.defineProperty(DataTableComponent.prototype, "rowDetailTemplateChild", {
         /**
          * Returns the row templates.
          *
          * @readonly
-         * @type {DatatableRowDetailDirective}
-         * @memberOf DatatableComponent
+         * @type {DataTableRowDetailDirective}
+         * @memberOf DataTableComponent
          */
         get: function () {
             return this._rowDetailTemplateChild;
@@ -486,7 +486,7 @@ var DatatableComponent = (function () {
         /**
          * Row Detail templates gathered from the ContentChild
          *
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         set: function (val) {
             this._rowDetailTemplateChild = val;
@@ -496,14 +496,14 @@ var DatatableComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(DatatableComponent.prototype, "allRowsSelected", {
+    Object.defineProperty(DataTableComponent.prototype, "allRowsSelected", {
         /**
          * Returns if all rows are selected.
          *
          * @readonly
          * @private
          * @type {boolean}
-         * @memberOf DatatableComponent
+         * @memberOf DataTableComponent
          */
         get: function () {
             return this.selected.length === this.rows.length;
@@ -515,9 +515,9 @@ var DatatableComponent = (function () {
      * Lifecycle hook that is called after data-bound
      * properties of a directive are initialized.
      *
-     * @memberOf DatatableComponent
+     * @memberOf DataTableComponent
      */
-    DatatableComponent.prototype.ngOnInit = function () {
+    DataTableComponent.prototype.ngOnInit = function () {
         // need to call this immediatly to size
         // if the table is hidden the visibility
         // listener will invoke this itself upon show
@@ -527,9 +527,9 @@ var DatatableComponent = (function () {
      * Lifecycle hook that is called after a component's
      * view has been fully initialized.
      *
-     * @memberOf DatatableComponent
+     * @memberOf DataTableComponent
      */
-    DatatableComponent.prototype.ngAfterViewInit = function () {
+    DataTableComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
         // this has to be done to prevent the change detection
         // tree from freaking out because we are readjusting
@@ -540,24 +540,24 @@ var DatatableComponent = (function () {
      *
      * @param rowIndex
      */
-    DatatableComponent.prototype.toggleExpandRow = function (row) {
+    DataTableComponent.prototype.toggleExpandRow = function (row) {
         // Should we write a guard here??
         this.bodyComponent.toggleRowExpansion(row);
     };
     /**
      * API method to expand all the rows.
      *
-     * @memberOf DatatableComponent
+     * @memberOf DataTableComponent
      */
-    DatatableComponent.prototype.expandAllRows = function () {
+    DataTableComponent.prototype.expandAllRows = function () {
         this.bodyComponent.toggleAllRows(true);
     };
     /**
      * API method to collapse all the rows.
      *
-     * @memberOf DatatableComponent
+     * @memberOf DataTableComponent
      */
-    DatatableComponent.prototype.collapseAllRows = function () {
+    DataTableComponent.prototype.collapseAllRows = function () {
         this.bodyComponent.toggleAllRows(false);
     };
     /**
@@ -571,9 +571,9 @@ var DatatableComponent = (function () {
      *
      * Also can be manually invoked or upon window resize.
      *
-     * @memberOf DatatableComponent
+     * @memberOf DataTableComponent
      */
-    DatatableComponent.prototype.recalculate = function () {
+    DataTableComponent.prototype.recalculate = function () {
         this.recalculateDims();
         this.recalculateColumns();
     };
@@ -586,9 +586,9 @@ var DatatableComponent = (function () {
      * @param {boolean} [allowBleed=this.scrollH]
      * @returns {any[]}
      *
-     * @memberOf DatatableComponent
+     * @memberOf DataTableComponent
      */
-    DatatableComponent.prototype.recalculateColumns = function (columns, forceIdx, allowBleed) {
+    DataTableComponent.prototype.recalculateColumns = function (columns, forceIdx, allowBleed) {
         if (columns === void 0) { columns = this.columns; }
         if (forceIdx === void 0) { forceIdx = -1; }
         if (allowBleed === void 0) { allowBleed = this.scrollbarH; }
@@ -610,9 +610,9 @@ var DatatableComponent = (function () {
      * Recalculates the dimensions of the table size.
      * Internally calls the page size and row count calcs too.
      *
-     * @memberOf DatatableComponent
+     * @memberOf DataTableComponent
      */
-    DatatableComponent.prototype.recalculateDims = function () {
+    DataTableComponent.prototype.recalculateDims = function () {
         var _a = this.element.getBoundingClientRect(), height = _a.height, width = _a.width;
         this.innerWidth = Math.floor(width);
         if (this.scrollbarV) {
@@ -630,9 +630,9 @@ var DatatableComponent = (function () {
      *
      * @param {*} { offset }
      *
-     * @memberOf DatatableComponent
+     * @memberOf DataTableComponent
      */
-    DatatableComponent.prototype.onBodyPage = function (_a) {
+    DataTableComponent.prototype.onBodyPage = function (_a) {
         var offset = _a.offset;
         this.offset = offset;
         this.page.emit({
@@ -647,9 +647,9 @@ var DatatableComponent = (function () {
      *
      * @param {MouseEvent} event
      *
-     * @memberOf DatatableComponent
+     * @memberOf DataTableComponent
      */
-    DatatableComponent.prototype.onBodyScroll = function (event) {
+    DataTableComponent.prototype.onBodyScroll = function (event) {
         this.offsetX = event.offsetX;
         this.scroll.emit(event);
     };
@@ -658,9 +658,9 @@ var DatatableComponent = (function () {
      *
      * @param {*} event
      *
-     * @memberOf DatatableComponent
+     * @memberOf DataTableComponent
      */
-    DatatableComponent.prototype.onFooterPage = function (event) {
+    DataTableComponent.prototype.onFooterPage = function (event) {
         this.offset = event.page - 1;
         this.bodyComponent.updateOffsetY(this.offset);
         this.page.emit({
@@ -676,9 +676,9 @@ var DatatableComponent = (function () {
      * @param {any[]} [val=this.rows]
      * @returns {number}
      *
-     * @memberOf DatatableComponent
+     * @memberOf DataTableComponent
      */
-    DatatableComponent.prototype.calcPageSize = function (val) {
+    DataTableComponent.prototype.calcPageSize = function (val) {
         if (val === void 0) { val = this.rows; }
         // Keep the page size constant even if the row has been expanded.
         // This is because an expanded row is still considered to be a child of
@@ -702,9 +702,9 @@ var DatatableComponent = (function () {
      * @param {any[]} [val=this.rows]
      * @returns {number}
      *
-     * @memberOf DatatableComponent
+     * @memberOf DataTableComponent
      */
-    DatatableComponent.prototype.calcRowCount = function (val) {
+    DataTableComponent.prototype.calcRowCount = function (val) {
         if (val === void 0) { val = this.rows; }
         if (!this.externalPaging) {
             if (!val)
@@ -718,9 +718,9 @@ var DatatableComponent = (function () {
      *
      * @param {*} { column, newValue }
      *
-     * @memberOf DatatableComponent
+     * @memberOf DataTableComponent
      */
-    DatatableComponent.prototype.onColumnResize = function (_a) {
+    DataTableComponent.prototype.onColumnResize = function (_a) {
         var column = _a.column, newValue = _a.newValue;
         var idx;
         var cols = this.columns.map(function (c, i) {
@@ -746,9 +746,9 @@ var DatatableComponent = (function () {
      *
      * @param {*} { column, newValue, prevValue }
      *
-     * @memberOf DatatableComponent
+     * @memberOf DataTableComponent
      */
-    DatatableComponent.prototype.onColumnReorder = function (_a) {
+    DataTableComponent.prototype.onColumnReorder = function (_a) {
         var column = _a.column, newValue = _a.newValue, prevValue = _a.prevValue;
         var cols = this.columns.map(function (c) {
             return Object.assign({}, c);
@@ -767,9 +767,9 @@ var DatatableComponent = (function () {
      *
      * @param {*} event
      *
-     * @memberOf DatatableComponent
+     * @memberOf DataTableComponent
      */
-    DatatableComponent.prototype.onColumnSort = function (event) {
+    DataTableComponent.prototype.onColumnSort = function (event) {
         var sorts = event.sorts;
         // this could be optimized better since it will resort
         // the rows again on the 'push' detection...
@@ -786,9 +786,9 @@ var DatatableComponent = (function () {
      *
      * @param {*} event
      *
-     * @memberOf DatatableComponent
+     * @memberOf DataTableComponent
      */
-    DatatableComponent.prototype.onHeaderSelect = function (event) {
+    DataTableComponent.prototype.onHeaderSelect = function (event) {
         if (this.selected.length === this.rows.length) {
             this.selected = [];
         }
@@ -804,25 +804,25 @@ var DatatableComponent = (function () {
      *
      * @param {*} event
      *
-     * @memberOf DatatableComponent
+     * @memberOf DataTableComponent
      */
-    DatatableComponent.prototype.onBodySelect = function (event) {
+    DataTableComponent.prototype.onBodySelect = function (event) {
         this.select.emit(event);
     };
-    DatatableComponent.decorators = [
+    DataTableComponent.decorators = [
         { type: core_1.Component, args: [{
-                    selector: 'swui-datatable',
-                    template: "\n    <div\n      visibility-observer\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"columns\"\n        [headerHeight]=\"headerHeight\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\">\n      </datatable-header>\n      <datatable-body\n        [rows]=\"rows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"columns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetailTemplate]=\"rowDetailTemplate\"\n        [detailRowHeight]=\"detailRowHeight\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"rowContextmenu.emit($event)\"\n        (select)=\"onBodySelect($event)\"\n        (detailToggle)=\"detailToggle.emit($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
+                    selector: 'swui-data-table',
+                    template: "\n    <div\n      visibility-observer\n      (visible)=\"recalculate()\">\n      <data-table-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"columns\"\n        [headerHeight]=\"headerHeight\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\">\n      </data-table-header>\n      <data-table-body\n        [rows]=\"rows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"columns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetailTemplate]=\"rowDetailTemplate\"\n        [detailRowHeight]=\"detailRowHeight\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"rowContextmenu.emit($event)\"\n        (select)=\"onBodySelect($event)\"\n        (detailToggle)=\"detailToggle.emit($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </data-table-body>\n      <data-table-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </data-table-footer>\n    </div>\n  ",
                     host: {
-                        class: 'datatable'
+                        class: 'data-table'
                     }
                 },] },
     ];
     /** @nocollapse */
-    DatatableComponent.ctorParameters = [
+    DataTableComponent.ctorParameters = [
         { type: core_1.ElementRef, },
     ];
-    DatatableComponent.propDecorators = {
+    DataTableComponent.propDecorators = {
         'rows': [{ type: core_1.Input },],
         'columns': [{ type: core_1.Input },],
         'selected': [{ type: core_1.Input },],
@@ -868,7 +868,7 @@ var DatatableComponent = (function () {
         'isSingleSelection': [{ type: core_1.HostBinding, args: ['class.single-selection',] },],
         'isMultiSelection': [{ type: core_1.HostBinding, args: ['class.multi-selection',] },],
         'columnTemplates': [{ type: core_1.ContentChildren, args: [columns_1.DataTableColumnDirective,] },],
-        'rowDetailTemplateChild': [{ type: core_1.ContentChild, args: [row_detail_1.DatatableRowDetailDirective,] },],
+        'rowDetailTemplateChild': [{ type: core_1.ContentChild, args: [row_detail_1.DataTableRowDetailDirective,] },],
         'bodyComponent': [{ type: core_1.ViewChild, args: [body_1.DataTableBodyComponent,] },],
         'recalculate': [{ type: core_1.HostListener, args: ['window:resize',] },],
     };
@@ -877,8 +877,8 @@ var DatatableComponent = (function () {
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', []), 
         __metadata('design:returntype', void 0)
-    ], DatatableComponent.prototype, "recalculate", null);
-    return DatatableComponent;
+    ], DataTableComponent.prototype, "recalculate", null);
+    return DataTableComponent;
 }());
-exports.DatatableComponent = DatatableComponent;
-//# sourceMappingURL=datatable.component.js.map
+exports.DataTableComponent = DataTableComponent;
+//# sourceMappingURL=data-table.component.js.map

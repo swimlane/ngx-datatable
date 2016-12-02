@@ -27,10 +27,10 @@ import { Component } from '@angular/core';
   selector: 'app',
   template: `
     <div>
-      <swui-datatable
+      <swui-data-table
         [rows]="rows"
         [columns]="columns">
-      </swui-datatable>
+      </swui-data-table>
     </div>
   `
 })

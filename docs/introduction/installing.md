@@ -11,7 +11,7 @@ Also, the release code is checked in and resides [here](https://github.com/swiml
 The module is packaged using UMD. The file is `release/index.js`.
 
 ### CSS
-Additionally you will need to include `./release/datatable.css`.
+Additionally you will need to include `./release/data-table.css`.
 
 If you want to use material theme, include `./release/material.css`. For more information, visit the 'Themes' section.
 

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import {
-  DatatableComponent,
+  DataTableComponent,
   DataTableColumnDirective,
   DataTableHeaderComponent,
   DataTableBodyComponent,
@@ -13,12 +13,12 @@ import {
   DataTableRowWrapperComponent,
   ProgressBarComponent,
   DataTableBodyCellComponent,
-  DatatableRowDetailDirective,
+  DataTableRowDetailDirective,
   ScrollerComponent,
   DataTableSelectionComponent,
   DataTableColumnHeaderDirective,
   DataTableColumnCellDirective,
-  DatatableRowDetailTemplateDirective
+  DataTableRowDetailTemplateDirective
 } from './components';
 
 import {
@@ -40,7 +40,7 @@ import {
     OrderableDirective,
     LongPressDirective,
     ScrollerComponent,
-    DatatableComponent,
+    DataTableComponent,
     DataTableColumnDirective,
     DataTableHeaderComponent,
     DataTableHeaderCellComponent,
@@ -50,17 +50,17 @@ import {
     ProgressBarComponent,
     DataTableBodyRowComponent,
     DataTableRowWrapperComponent,
-    DatatableRowDetailDirective,
-    DatatableRowDetailTemplateDirective,
+    DataTableRowDetailDirective,
+    DataTableRowDetailTemplateDirective,
     DataTableBodyCellComponent,
     DataTableSelectionComponent,
     DataTableColumnHeaderDirective,
     DataTableColumnCellDirective
   ],
   exports: [
-    DatatableComponent,
-    DatatableRowDetailDirective,
-    DatatableRowDetailTemplateDirective,
+    DataTableComponent,
+    DataTableRowDetailDirective,
+    DataTableRowDetailTemplateDirective,
     DataTableColumnDirective,
     DataTableColumnHeaderDirective,
     DataTableColumnCellDirective

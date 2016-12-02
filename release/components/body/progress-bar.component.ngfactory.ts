@@ -49,7 +49,7 @@ class View_ProgressBarComponent_Host0 extends import1.AppView<any> {
     super(View_ProgressBarComponent_Host0,renderType_ProgressBarComponent_Host,import5.ViewType.HOST,viewUtils,parentView,parentIndex,parentElement,import6.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import7.ComponentRef<any> {
-    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'datatable-progress',import3.EMPTY_INLINE_ARRAY,rootSelector,(null as any));
+    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'data-table-progress',import3.EMPTY_INLINE_ARRAY,rootSelector,(null as any));
     this.compView_0 = new View_ProgressBarComponent0(this.viewUtils,this,0,this._el_0);
     this._ProgressBarComponent_0_3 = new Wrapper_ProgressBarComponent();
     this.compView_0.create(this._ProgressBarComponent_0_3.context);
@@ -71,7 +71,7 @@ class View_ProgressBarComponent_Host0 extends import1.AppView<any> {
     cb(this._el_0,ctx);
   }
 }
-export const ProgressBarComponentNgFactory:import7.ComponentFactory<import0.ProgressBarComponent> = new import7.ComponentFactory<import0.ProgressBarComponent>('datatable-progress',View_ProgressBarComponent_Host0,import0.ProgressBarComponent);
+export const ProgressBarComponentNgFactory:import7.ComponentFactory<import0.ProgressBarComponent> = new import7.ComponentFactory<import0.ProgressBarComponent>('data-table-progress',View_ProgressBarComponent_Host0,import0.ProgressBarComponent);
 const styles_ProgressBarComponent:any[] = ([] as any[]);
 var renderType_ProgressBarComponent:import2.RenderComponentType = import3.createRenderComponentType('',0,import4.ViewEncapsulation.None,styles_ProgressBarComponent,{});
 export class View_ProgressBarComponent0 extends import1.AppView<import0.ProgressBarComponent> {

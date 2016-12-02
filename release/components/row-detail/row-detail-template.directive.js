@@ -1,20 +1,20 @@
 "use strict";
 var core_1 = require('@angular/core');
-var DatatableRowDetailTemplateDirective = (function () {
-    function DatatableRowDetailTemplateDirective(template) {
+var DataTableRowDetailTemplateDirective = (function () {
+    function DataTableRowDetailTemplateDirective(template) {
         this.template = template;
     }
     ;
-    DatatableRowDetailTemplateDirective.decorators = [
+    DataTableRowDetailTemplateDirective.decorators = [
         { type: core_1.Directive, args: [{
-                    selector: '[swui-datatable-row-detail-template]'
+                    selector: '[swui-data-table-row-detail-template]'
                 },] },
     ];
     /** @nocollapse */
-    DatatableRowDetailTemplateDirective.ctorParameters = [
+    DataTableRowDetailTemplateDirective.ctorParameters = [
         { type: core_1.TemplateRef, },
     ];
-    return DatatableRowDetailTemplateDirective;
+    return DataTableRowDetailTemplateDirective;
 }());
-exports.DatatableRowDetailTemplateDirective = DatatableRowDetailTemplateDirective;
+exports.DataTableRowDetailTemplateDirective = DataTableRowDetailTemplateDirective;
 //# sourceMappingURL=row-detail-template.directive.js.map

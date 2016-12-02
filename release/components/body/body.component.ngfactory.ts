@@ -284,7 +284,7 @@ class View_DataTableBodyComponent_Host0 extends import2.AppView<any> {
     super(View_DataTableBodyComponent_Host0,renderType_DataTableBodyComponent_Host,import7.ViewType.HOST,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
-    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'datatable-body',new import3.InlineArray2(2,'class','datatable-body'),rootSelector,(null as any));
+    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'data-table-body',new import3.InlineArray2(2,'class','data-table-body'),rootSelector,(null as any));
     this.compView_0 = new View_DataTableBodyComponent0(this.viewUtils,this,0,this._el_0);
     this._DataTableBodyComponent_0_3 = new Wrapper_DataTableBodyComponent();
     this.compView_0.create(this._DataTableBodyComponent_0_3.context);
@@ -308,7 +308,7 @@ class View_DataTableBodyComponent_Host0 extends import2.AppView<any> {
     cb(this._el_0,ctx);
   }
 }
-export const DataTableBodyComponentNgFactory:import8.ComponentFactory<import0.DataTableBodyComponent> = new import8.ComponentFactory<import0.DataTableBodyComponent>('datatable-body',View_DataTableBodyComponent_Host0,import0.DataTableBodyComponent);
+export const DataTableBodyComponentNgFactory:import8.ComponentFactory<import0.DataTableBodyComponent> = new import8.ComponentFactory<import0.DataTableBodyComponent>('data-table-body',View_DataTableBodyComponent_Host0,import0.DataTableBodyComponent);
 const styles_DataTableBodyComponent:any[] = ([] as any[]);
 var renderType_DataTableBodyComponent:import5.RenderComponentType = import3.createRenderComponentType('',0,import6.ViewEncapsulation.None,styles_DataTableBodyComponent,{});
 export class View_DataTableBodyComponent0 extends import2.AppView<import0.DataTableBodyComponent> {
@@ -341,7 +341,7 @@ export class View_DataTableBodyComponent0 extends import2.AppView<import0.DataTa
     const parentRenderNode:any = this.renderer.createViewRoot(this.parentElement);
     this._viewQuery_ScrollerComponent_0 = new import9.QueryList<any>();
     this._text_0 = this.renderer.createText(parentRenderNode,'\n    ',(null as any));
-    this._el_1 = import3.createRenderElement(this.renderer,parentRenderNode,'datatable-selection',import3.EMPTY_INLINE_ARRAY,(null as any));
+    this._el_1 = import3.createRenderElement(this.renderer,parentRenderNode,'data-table-selection',import3.EMPTY_INLINE_ARRAY,(null as any));
     this.compView_1 = new import11.View_DataTableSelectionComponent0(this.viewUtils,this,1,this._el_1);
     this._DataTableSelectionComponent_1_3 = new import11.Wrapper_DataTableSelectionComponent();
     this._text_2 = this.renderer.createText((null as any),'\n      ',(null as any));
@@ -473,7 +473,7 @@ class View_DataTableBodyComponent1 extends import2.AppView<any> {
     super(View_DataTableBodyComponent1,renderType_DataTableBodyComponent,import7.ViewType.EMBEDDED,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways,declaredViewContainer);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
-    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'datatable-progress',import3.EMPTY_INLINE_ARRAY,(null as any));
+    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'data-table-progress',import3.EMPTY_INLINE_ARRAY,(null as any));
     this.compView_0 = new import17.View_ProgressBarComponent0(this.viewUtils,this,0,this._el_0);
     this._ProgressBarComponent_0_3 = new import17.Wrapper_ProgressBarComponent();
     this._text_1 = this.renderer.createText((null as any),'\n      ',(null as any));
@@ -514,7 +514,7 @@ class View_DataTableBodyComponent2 extends import2.AppView<any> {
     super(View_DataTableBodyComponent2,renderType_DataTableBodyComponent,import7.ViewType.EMBEDDED,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways,declaredViewContainer);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
-    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'datatable-scroller',new import3.InlineArray2(2,'class','datatable-scroll'),(null as any));
+    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'data-table-scroller',new import3.InlineArray2(2,'class','data-table-scroll'),(null as any));
     this.compView_0 = new import19.View_ScrollerComponent0(this.viewUtils,this,0,this._el_0);
     this._ScrollerComponent_0_3 = new import19.Wrapper_ScrollerComponent(new import21.ElementRef(this._el_0),this.renderer);
     this._text_1 = this.renderer.createText((null as any),'\n        ',(null as any));
@@ -608,12 +608,12 @@ class View_DataTableBodyComponent3 extends import2.AppView<any> {
     super(View_DataTableBodyComponent3,renderType_DataTableBodyComponent,import7.ViewType.EMBEDDED,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways,declaredViewContainer);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
-    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'datatable-row-wrapper',new import3.InlineArray2(2,'class','datatable-row-wrapper'),(null as any));
+    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'data-table-row-wrapper',new import3.InlineArray2(2,'class','data-table-row-wrapper'),(null as any));
     this.compView_0 = new import26.View_DataTableRowWrapperComponent0(this.viewUtils,this,0,this._el_0);
     this._NgStyle_0_3 = new import25.Wrapper_NgStyle(this.parentView.parentView.parentView.injectorGet(import29.KeyValueDiffers,this.parentView.parentView.parentIndex),new import21.ElementRef(this._el_0),this.renderer);
     this._DataTableRowWrapperComponent_0_4 = new import26.Wrapper_DataTableRowWrapperComponent();
     this._text_1 = this.renderer.createText((null as any),'\n          ',(null as any));
-    this._el_2 = import3.createRenderElement(this.renderer,(null as any),'datatable-body-row',new import3.InlineArray4(4,'class','datatable-body-row','tabindex','-1'),(null as any));
+    this._el_2 = import3.createRenderElement(this.renderer,(null as any),'data-table-body-row',new import3.InlineArray4(4,'class','data-table-body-row','tabindex','-1'),(null as any));
     this.compView_2 = new import28.View_DataTableBodyRowComponent0(this.viewUtils,this,2,this._el_2);
     this._DataTableBodyRowComponent_2_3 = new import28.Wrapper_DataTableBodyRowComponent(new import21.ElementRef(this._el_2));
     this._text_3 = this.renderer.createText((null as any),'\n          ',(null as any));

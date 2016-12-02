@@ -4,7 +4,7 @@ import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 
 import { Angular2DataTableModule } from '../src';
 import { AppComponent } from './app.component';
-import '../src/components/datatable.scss';
+import '../src/components/data-table.scss';
 import '../src/themes/material.scss';
 
 // -- Basic

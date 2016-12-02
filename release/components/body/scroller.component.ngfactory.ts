@@ -106,7 +106,7 @@ class View_ScrollerComponent_Host0 extends import2.AppView<any> {
     super(View_ScrollerComponent_Host0,renderType_ScrollerComponent_Host,import7.ViewType.HOST,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
-    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'datatable-scroller',new import3.InlineArray2(2,'class','datatable-scroll'),rootSelector,(null as any));
+    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'data-table-scroller',new import3.InlineArray2(2,'class','data-table-scroll'),rootSelector,(null as any));
     this.compView_0 = new View_ScrollerComponent0(this.viewUtils,this,0,this._el_0);
     this._ScrollerComponent_0_3 = new Wrapper_ScrollerComponent(new import9.ElementRef(this._el_0),this.renderer);
     this.compView_0.create(this._ScrollerComponent_0_3.context);
@@ -133,7 +133,7 @@ class View_ScrollerComponent_Host0 extends import2.AppView<any> {
     if (((nodeIndex == 0) && (ngContentIndex == 0))) {  }
   }
 }
-export const ScrollerComponentNgFactory:import8.ComponentFactory<import0.ScrollerComponent> = new import8.ComponentFactory<import0.ScrollerComponent>('datatable-scroller',View_ScrollerComponent_Host0,import0.ScrollerComponent);
+export const ScrollerComponentNgFactory:import8.ComponentFactory<import0.ScrollerComponent> = new import8.ComponentFactory<import0.ScrollerComponent>('data-table-scroller',View_ScrollerComponent_Host0,import0.ScrollerComponent);
 const styles_ScrollerComponent:any[] = ([] as any[]);
 var renderType_ScrollerComponent:import5.RenderComponentType = import3.createRenderComponentType('',1,import6.ViewEncapsulation.None,styles_ScrollerComponent,{});
 export class View_ScrollerComponent0 extends import2.AppView<import0.ScrollerComponent> {

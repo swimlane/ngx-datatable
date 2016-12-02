@@ -5,7 +5,7 @@ var ProgressBarComponent = (function () {
     }
     ProgressBarComponent.decorators = [
         { type: core_1.Component, args: [{
-                    selector: 'datatable-progress',
+                    selector: 'data-table-progress',
                     template: "\n    <div class=\"progress-linear\" role=\"progressbar\">\n      <div class=\"container\">\n        <div class=\"bar\"></div>\n      </div>\n    </div>\n  ",
                     changeDetection: core_1.ChangeDetectionStrategy.OnPush
                 },] },

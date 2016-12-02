@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'datatable-pager',
+  selector: 'data-table-pager',
   template: `
     <ul class="pager">
       <li [class.disabled]="!canPrevious()">
@@ -47,7 +47,7 @@ import {
     </ul>
   `,
   host: {
-    class: 'datatable-pager'
+    class: 'data-table-pager'
   },
   changeDetection: ChangeDetectionStrategy.OnPush
 })

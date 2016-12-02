@@ -7,11 +7,11 @@ import { DataTableColumnDirective } from '.';
 @Component({
   selector: 'test-fixture-component',
   template: `
-    <swui-datatable-column id="t1"></swui-datatable-column>
-    <swui-datatable-column id="t2">
+    <swui-data-table-column id="t1"></swui-data-table-column>
+    <swui-data-table-column id="t2">
       <template></template>
       <template></template>
-    </swui-datatable-column>
+    </swui-data-table-column>
   `
 })
 class TestFixtureComponent {

@@ -119,12 +119,12 @@ export class Wrapper_DataTableBodyRowComponent {
     }
     const currVal_8:any = this.context.isEvenRow;
     if (import3.checkBinding(throwOnChange,this._expr_8,currVal_8)) {
-      view.renderer.setElementClass(el,'datatable-row-even',currVal_8);
+      view.renderer.setElementClass(el,'data-table-row-even',currVal_8);
       this._expr_8 = currVal_8;
     }
     const currVal_9:any = this.context.isOddRow;
     if (import3.checkBinding(throwOnChange,this._expr_9,currVal_9)) {
-      view.renderer.setElementClass(el,'datatable-row-odd',currVal_9);
+      view.renderer.setElementClass(el,'data-table-row-odd',currVal_9);
       this._expr_9 = currVal_9;
     }
   }
@@ -150,7 +150,7 @@ class View_DataTableBodyRowComponent_Host0 extends import2.AppView<any> {
     super(View_DataTableBodyRowComponent_Host0,renderType_DataTableBodyRowComponent_Host,import7.ViewType.HOST,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
-    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'datatable-body-row',new import3.InlineArray2(2,'class','datatable-body-row'),rootSelector,(null as any));
+    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'data-table-body-row',new import3.InlineArray2(2,'class','data-table-body-row'),rootSelector,(null as any));
     this.compView_0 = new View_DataTableBodyRowComponent0(this.viewUtils,this,0,this._el_0);
     this._DataTableBodyRowComponent_0_3 = new Wrapper_DataTableBodyRowComponent(new import9.ElementRef(this._el_0));
     this.compView_0.create(this._DataTableBodyRowComponent_0_3.context);
@@ -181,7 +181,7 @@ class View_DataTableBodyRowComponent_Host0 extends import2.AppView<any> {
     return result;
   }
 }
-export const DataTableBodyRowComponentNgFactory:import8.ComponentFactory<import0.DataTableBodyRowComponent> = new import8.ComponentFactory<import0.DataTableBodyRowComponent>('datatable-body-row',View_DataTableBodyRowComponent_Host0,import0.DataTableBodyRowComponent);
+export const DataTableBodyRowComponentNgFactory:import8.ComponentFactory<import0.DataTableBodyRowComponent> = new import8.ComponentFactory<import0.DataTableBodyRowComponent>('data-table-body-row',View_DataTableBodyRowComponent_Host0,import0.DataTableBodyRowComponent);
 const styles_DataTableBodyRowComponent:any[] = ([] as any[]);
 var renderType_DataTableBodyRowComponent:import5.RenderComponentType = import3.createRenderComponentType('',0,import6.ViewEncapsulation.None,styles_DataTableBodyRowComponent,{});
 export class View_DataTableBodyRowComponent0 extends import2.AppView<import0.DataTableBodyRowComponent> {
@@ -279,7 +279,7 @@ class View_DataTableBodyRowComponent1 extends import2.AppView<any> {
     this._NgFor_2_6.check_ngForTrackBy(currVal_2_0_1,throwOnChange,false);
     this._NgFor_2_6.ngDoCheck(this,this._anchor_2,throwOnChange);
     this._vc_2.detectChangesInNestedViews(throwOnChange);
-    const currVal_8:any = import3.inlineInterpolate(1,'datatable-row-',this.context.$implicit.type,' datatable-row-group');
+    const currVal_8:any = import3.inlineInterpolate(1,'data-table-row-',this.context.$implicit.type,' data-table-row-group');
     if (import3.checkBinding(throwOnChange,this._expr_8,currVal_8)) {
       this.renderer.setElementProperty(this._el_0,'className',currVal_8);
       this._expr_8 = currVal_8;
@@ -305,7 +305,7 @@ class View_DataTableBodyRowComponent2 extends import2.AppView<any> {
     super(View_DataTableBodyRowComponent2,renderType_DataTableBodyRowComponent,import7.ViewType.EMBEDDED,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways,declaredViewContainer);
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
-    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'datatable-body-cell',new import3.InlineArray4(4,'class','datatable-body-cell','tabindex','-1'),(null as any));
+    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'data-table-body-cell',new import3.InlineArray4(4,'class','data-table-body-cell','tabindex','-1'),(null as any));
     this.compView_0 = new import19.View_DataTableBodyCellComponent0(this.viewUtils,this,0,this._el_0);
     this._DataTableBodyCellComponent_0_3 = new import19.Wrapper_DataTableBodyCellComponent(new import9.ElementRef(this._el_0));
     this._text_1 = this.renderer.createText((null as any),'\n      ',(null as any));

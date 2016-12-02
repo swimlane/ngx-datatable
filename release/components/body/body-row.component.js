@@ -92,10 +92,10 @@ var DataTableBodyRowComponent = (function () {
     };
     DataTableBodyRowComponent.decorators = [
         { type: core_1.Component, args: [{
-                    selector: 'datatable-body-row',
-                    template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: $colGroup?.type\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: column?.$$id\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [isSelected]=\"isSelected\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>\n  ",
+                    selector: 'data-table-body-row',
+                    template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: $colGroup?.type\"\n      class=\"data-table-row-{{colGroup.type}} data-table-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\">\n      <data-table-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: column?.$$id\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [isSelected]=\"isSelected\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        (activate)=\"onActivate($event, ii)\">\n      </data-table-body-cell>\n    </div>\n  ",
                     host: {
-                        class: 'datatable-body-row'
+                        class: 'data-table-body-row'
                     }
                 },] },
     ];
@@ -110,8 +110,8 @@ var DataTableBodyRowComponent = (function () {
         'offsetX': [{ type: core_1.Input },],
         'rowHeight': [{ type: core_1.HostBinding, args: ['style.height.px',] }, { type: core_1.Input },],
         'isSelected': [{ type: core_1.HostBinding, args: ['class.active',] }, { type: core_1.Input },],
-        'isEvenRow': [{ type: core_1.HostBinding, args: ['class.datatable-row-even',] },],
-        'isOddRow': [{ type: core_1.HostBinding, args: ['class.datatable-row-odd',] },],
+        'isEvenRow': [{ type: core_1.HostBinding, args: ['class.data-table-row-even',] },],
+        'isOddRow': [{ type: core_1.HostBinding, args: ['class.data-table-row-odd',] },],
         'activate': [{ type: core_1.Output },],
         'onKeyDown': [{ type: core_1.HostListener, args: ['keydown', ['$event'],] },],
     };

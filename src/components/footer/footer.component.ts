@@ -3,12 +3,12 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'datatable-footer',
+  selector: 'data-table-footer',
   template: `
     <div
       [style.height.px]="footerHeight">
       <div class="page-count">{{rowCount.toLocaleString()}} {{totalMessage}}</div>
-      <datatable-pager
+      <data-table-pager
         [pagerLeftArrowIcon]="pagerLeftArrowIcon"
         [pagerRightArrowIcon]="pagerRightArrowIcon"
         [pagerPreviousIcon]="pagerPreviousIcon"
@@ -18,11 +18,11 @@ import {
         [count]="rowCount"
         [hidden]="!isVisible"
         (change)="page.emit($event)">
-       </datatable-pager>
+       </data-table-pager>
      </div>
   `,
   host: {
-    class: 'datatable-footer'
+    class: 'data-table-footer'
   },
   changeDetection: ChangeDetectionStrategy.OnPush
 })

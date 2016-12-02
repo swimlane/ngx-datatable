@@ -104,7 +104,7 @@ var DataTableSelectionComponent = (function () {
         else if (keyCode === utils_1.Keys.up || keyCode === utils_1.Keys.down) {
             var nextRowElement = this.getPrevNextRow(rowElement, keyCode);
             if (nextRowElement) {
-                var children = nextRowElement.getElementsByClassName('datatable-body-cell');
+                var children = nextRowElement.getElementsByClassName('data-table-body-cell');
                 if (children.length)
                     nextCellElement = children[cellIndex];
             }
@@ -127,7 +127,7 @@ var DataTableSelectionComponent = (function () {
     };
     DataTableSelectionComponent.decorators = [
         { type: core_1.Component, args: [{
-                    selector: 'datatable-selection',
+                    selector: 'data-table-selection',
                     template: "\n    <ng-content></ng-content>\n  "
                 },] },
     ];

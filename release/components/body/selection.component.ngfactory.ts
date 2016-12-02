@@ -109,7 +109,7 @@ class View_DataTableSelectionComponent_Host0 extends import2.AppView<any> {
     super(View_DataTableSelectionComponent_Host0,renderType_DataTableSelectionComponent_Host,import6.ViewType.HOST,viewUtils,parentView,parentIndex,parentElement,import1.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import7.ComponentRef<any> {
-    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'datatable-selection',import3.EMPTY_INLINE_ARRAY,rootSelector,(null as any));
+    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'data-table-selection',import3.EMPTY_INLINE_ARRAY,rootSelector,(null as any));
     this.compView_0 = new View_DataTableSelectionComponent0(this.viewUtils,this,0,this._el_0);
     this._DataTableSelectionComponent_0_3 = new Wrapper_DataTableSelectionComponent();
     this.compView_0.create(this._DataTableSelectionComponent_0_3.context);
@@ -135,7 +135,7 @@ class View_DataTableSelectionComponent_Host0 extends import2.AppView<any> {
     if (((nodeIndex == 0) && (ngContentIndex == 0))) {  }
   }
 }
-export const DataTableSelectionComponentNgFactory:import7.ComponentFactory<import0.DataTableSelectionComponent> = new import7.ComponentFactory<import0.DataTableSelectionComponent>('datatable-selection',View_DataTableSelectionComponent_Host0,import0.DataTableSelectionComponent);
+export const DataTableSelectionComponentNgFactory:import7.ComponentFactory<import0.DataTableSelectionComponent> = new import7.ComponentFactory<import0.DataTableSelectionComponent>('data-table-selection',View_DataTableSelectionComponent_Host0,import0.DataTableSelectionComponent);
 const styles_DataTableSelectionComponent:any[] = ([] as any[]);
 var renderType_DataTableSelectionComponent:import4.RenderComponentType = import3.createRenderComponentType('',1,import5.ViewEncapsulation.None,styles_DataTableSelectionComponent,{});
 export class View_DataTableSelectionComponent0 extends import2.AppView<import0.DataTableSelectionComponent> {
