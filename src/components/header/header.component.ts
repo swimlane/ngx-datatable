@@ -1,6 +1,5 @@
 import {
-  Component, Output, ElementRef, Renderer, EventEmitter,
-  Input, HostBinding, ChangeDetectionStrategy
+  Component, Output, EventEmitter, Input, HostBinding, ChangeDetectionStrategy
 } from '@angular/core';
 import { SortType } from '../../types';
 import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY } from '../../utils';
@@ -41,6 +40,9 @@ import { DataTableColumnDirective } from '../columns';
       </div>
     </div>
   `,
+  host: {
+    class: 'datatable-header'
+  },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableHeaderComponent {
@@ -94,10 +96,6 @@ export class DataTableHeaderComponent {
     }
 
     return '100%';
-  }
-
-  constructor(element: ElementRef, renderer: Renderer) {
-    renderer.setElementClass(element.nativeElement, 'datatable-header', true);
   }
 
   onColumnResized(width: number, column: DataTableColumnDirective) {

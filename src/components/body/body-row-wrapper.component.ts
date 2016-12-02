@@ -1,6 +1,5 @@
 import { 
-  Component, Input, Renderer, ElementRef,
-  Output, EventEmitter, HostListener 
+  Component, Input, Output, EventEmitter, HostListener 
 } from '@angular/core';
 
 @Component({
@@ -17,7 +16,10 @@ import {
         [ngOutletContext]="{ row: row }">
       </template>
     </div>
-  `
+  `,
+  host: {
+    class: 'datatable-row-wrapper'
+  }
 })
 export class DataTableRowWrapperComponent {
 
@@ -26,10 +28,6 @@ export class DataTableRowWrapperComponent {
   @Input() expanded: boolean = false;
   @Input() row: any;
   @Output() rowContextmenu = new EventEmitter<{event: MouseEvent, row: any}>(false);
-
-  constructor(element: ElementRef, renderer: Renderer) {
-    renderer.setElementClass(element.nativeElement, 'datatable-row-wrapper', true);
-  }
 
   @HostListener('contextmenu', ['$event'])
   public onContextmenu($event: MouseEvent): void {

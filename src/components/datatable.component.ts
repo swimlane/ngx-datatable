@@ -1,7 +1,7 @@
 import {
   Component, Input, Output, ElementRef, EventEmitter, ViewChild,
   HostListener, ContentChildren, OnInit, QueryList, AfterViewInit,
-  HostBinding, Renderer, ContentChild, TemplateRef
+  HostBinding, ContentChild, TemplateRef
 } from '@angular/core';
 
 import { forceFillColumnWidths, adjustColumnWidths, sortRows } from '../utils';
@@ -74,7 +74,10 @@ import { scrollbarWidth, setColumnDefaults, translateTemplates } from '../utils'
         (page)="onFooterPage($event)">
       </datatable-footer>
     </div>
-  `
+  `,
+  host: {
+    class: 'datatable'
+  }
 })
 export class DatatableComponent implements OnInit, AfterViewInit {
 
@@ -585,12 +588,9 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   private _columnTemplates: QueryList<DataTableColumnDirective>;
   private _rowDetailTemplateChild: DatatableRowDetailDirective;
 
-  constructor(renderer: Renderer, element: ElementRef) {
+  constructor(element: ElementRef) {
     // get ref to elm for measuring
     this.element = element.nativeElement;
-
-    // manually set table class for speed
-    renderer.setElementClass(this.element, 'datatable', true);
   }
 
   /**

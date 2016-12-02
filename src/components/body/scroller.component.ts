@@ -7,7 +7,10 @@ import {
   selector: 'datatable-scroller',
   template: `
     <ng-content></ng-content>
-  `
+  `,
+  host: {
+    class: 'datatable-scroll'
+  }
 })
 export class ScrollerComponent implements OnInit, OnDestroy {
 
@@ -32,7 +35,6 @@ export class ScrollerComponent implements OnInit, OnDestroy {
 
   constructor(element: ElementRef, private renderer: Renderer) {
     this.element = element.nativeElement;
-    this.element.classList.add('datatable-scroll');
   }
 
   ngOnInit() {

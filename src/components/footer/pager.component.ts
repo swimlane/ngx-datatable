@@ -1,11 +1,5 @@
 import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  Renderer,
-  ElementRef,
-  ChangeDetectionStrategy
+  Component, Input, Output, EventEmitter, ChangeDetectionStrategy
 } from '@angular/core';
 
 @Component({
@@ -52,6 +46,9 @@ import {
       </li>
     </ul>
   `,
+  host: {
+    class: 'datatable-pager'
+  },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTablePagerComponent {
@@ -102,10 +99,6 @@ export class DataTablePagerComponent {
   private _page: number = 1;
   private _size: number = 0;
   private pages: any;
-
-  constructor(element: ElementRef, renderer: Renderer) {
-    renderer.setElementClass(element.nativeElement, 'datatable-pager', true);
-  }
 
   canPrevious(): boolean {
     return this.page > 1;

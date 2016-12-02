@@ -1,6 +1,5 @@
 import {
-  Component, Output, EventEmitter, ElementRef,
-  Renderer, ChangeDetectionStrategy, Input
+  Component, Output, EventEmitter, ChangeDetectionStrategy, Input
 } from '@angular/core';
 
 @Component({
@@ -22,6 +21,9 @@ import {
        </datatable-pager>
      </div>
   `,
+  host: {
+    class: 'datatable-footer'
+  },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableFooterComponent {
@@ -44,10 +46,6 @@ export class DataTableFooterComponent {
 
   get curPage() {
     return this.offset + 1;
-  }
-
-  constructor(element: ElementRef, renderer: Renderer) {
-    renderer.setElementClass(element.nativeElement, 'datatable-footer', true);
   }
 
 }

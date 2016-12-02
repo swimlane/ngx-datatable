@@ -1,6 +1,5 @@
 import {
-  Component, Input, HostBinding, ElementRef,
-  Renderer, Output, EventEmitter , HostListener
+  Component, Input, HostBinding, ElementRef, Output, EventEmitter, HostListener
 } from '@angular/core';
 
 import {
@@ -24,7 +23,10 @@ import {
         (activate)="onActivate($event, ii)">
       </datatable-body-cell>
     </div>
-  `
+  `,
+  host: {
+    class: 'datatable-body-row'
+  }
 })
 export class DataTableBodyRowComponent {
 
@@ -73,9 +75,8 @@ export class DataTableBodyRowComponent {
   private _columns: any[];
   private _innerWidth: number;
 
-  constructor(element: ElementRef, renderer: Renderer) {
+  constructor(element: ElementRef) {
     this.element = element.nativeElement;
-    renderer.setElementClass(this.element, 'datatable-body-row', true);
   }
 
   stylesByGroup(group: string) {

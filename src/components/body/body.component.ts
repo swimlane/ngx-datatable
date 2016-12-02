@@ -1,6 +1,5 @@
 import {
-  Component, Output, EventEmitter, Input, HostBinding,
-  ViewChild, ElementRef, Renderer
+  Component, Output, EventEmitter, Input, HostBinding, ViewChild
 } from '@angular/core';
 import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '../../utils';
 import { SelectionType } from '../../types';
@@ -55,7 +54,10 @@ import { ScrollerComponent } from './scroller.component';
         [innerHTML]="emptyMessage">
       </div>
     </datatable-selection>
-  `
+  `,
+  host: {
+    class: 'datatable-body'
+  }
 })
 export class DataTableBodyComponent {
 
@@ -196,9 +198,7 @@ export class DataTableBodyComponent {
   private _offset: number;
   private _pageSize: number;
 
-  constructor(element: ElementRef, renderer: Renderer) {
-    renderer.setElementClass(element.nativeElement, 'datatable-body', true);
-
+  constructor() {
     // declare fn here so we can get access to the `this` property
     this.rowTrackingFn = function(index: number, row: any): any {
       if(this.trackByProp) {

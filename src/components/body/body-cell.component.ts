@@ -1,7 +1,6 @@
 import {
   Component, Input, PipeTransform, HostBinding, 
-  Output, EventEmitter, HostListener, ElementRef,
-  Renderer
+  Output, EventEmitter, HostListener, ElementRef
 } from '@angular/core';
 
 import { deepValueGetter, Keys } from '../../utils';
@@ -21,7 +20,10 @@ import { SortDirection } from '../../types';
         [ngOutletContext]="{ value: value, row: row, column: column }">
       </template>
     </div>
-  `
+  `,
+  host: {
+    class: 'datatable-body-cell'
+  }
 })
 export class DataTableBodyCellComponent {
 
@@ -81,9 +83,8 @@ export class DataTableBodyCellComponent {
   private element: any;
   private _sorts: any[];
 
-  constructor(element: ElementRef, renderer: Renderer) {
+  constructor(element: ElementRef) {
     this.element = element.nativeElement;
-    renderer.setElementClass(this.element, 'datatable-body-cell', true);
   }
 
   @HostListener('focus')
