@@ -13,19 +13,6 @@
   &.single-selection,
   &.multi-selection {
     .datatable-body-row {
-      &:hover,
-			&:hover .datatable-row-group {
-	      background-color: #eee;
-	      transition-property: background;
-	      transition-duration: .3s;
-	      transition-timing-function: linear;
-	    }
-
-			&:focus,
-			&:focus .datatable-row-group {
-				background-color: #ddd;
-			}
-
 			&.active,
 			&.active .datatable-row-group {
 				background-color: #304FFE;
@@ -42,6 +29,23 @@
 			&.active:focus .datatable-row-group {
 				background-color: #2041EF;
         color: #FFF;
+			}
+    }
+  }
+
+  &:not(.cell-selection) {
+    .datatable-body-row {
+      &:hover,
+			&:hover .datatable-row-group {
+	      background-color: #eee;
+	      transition-property: background;
+	      transition-duration: .3s;
+	      transition-timing-function: linear;
+	    }
+
+			&:focus,
+			&:focus .datatable-row-group {
+				background-color: #ddd;
 			}
     }
   }

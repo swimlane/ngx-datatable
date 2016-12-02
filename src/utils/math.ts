@@ -101,6 +101,7 @@ export function forceFillColumnWidths(
   allColumns: any[],
   expectedWidth: number,
   startIdx: number,
+  allowBleed: boolean,
   defaultColWidth: number = 300) {
 
   let columnsToResize = startIdx > -1 && startIdx + 1 < allColumns.length ?
@@ -129,7 +130,7 @@ export function forceFillColumnWidths(
     exceedsWindow = contentWidth >= expectedWidth;
 
     for (let column of columnsToResize) {
-      if (exceedsWindow) {
+      if (exceedsWindow && allowBleed) {
         column.width = column.$$oldWidth || column.width || defaultColWidth;
       } else {
         const newSize = (column.width || defaultColWidth) + additionWidthPerColumn;

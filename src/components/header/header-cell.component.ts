@@ -1,6 +1,5 @@
 import {
-  Component, Input, EventEmitter,
-  Output, HostBinding, ChangeDetectionStrategy
+  Component, Input, EventEmitter, Output, HostBinding
 } from '@angular/core';
 
 import { SortDirection, SortType } from '../../types';
@@ -38,8 +37,7 @@ import { nextSortDir } from '../../utils';
         [ngClass]="sortClasses(sortDir)">
       </span>
     </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class DataTableHeaderCellComponent {
 

@@ -1,5 +1,5 @@
 import {
-  Component, Output, EventEmitter, Input, HostBinding, ChangeDetectionStrategy
+  Component, Output, EventEmitter, Input, HostBinding
 } from '@angular/core';
 import { SortType } from '../../types';
 import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY } from '../../utils';
@@ -43,8 +43,7 @@ import { DataTableColumnDirective } from '../columns';
   `,
   host: {
     class: 'datatable-header'
-  },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  }
 })
 export class DataTableHeaderComponent {
 

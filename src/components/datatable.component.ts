@@ -732,12 +732,17 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * distribution mode and scrollbar offsets.
    * 
    * @param {any[]} [columns=this.columns]
-   * @param {number} [forceIdx]
+   * @param {number} [forceIdx=false]
+   * @param {boolean} [allowBleed=this.scrollH]
    * @returns {any[]}
    * 
    * @memberOf DatatableComponent
    */
-  recalculateColumns(columns: any[] = this.columns, forceIdx?: number): any[] {
+  recalculateColumns(
+    columns: any[] = this.columns, 
+    forceIdx: number = null, 
+    allowBleed: boolean = this.scrollbarH): any[] {
+
     if (!columns) return;
 
     let width = this.innerWidth;
@@ -746,7 +751,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     }
 
     if (this.columnMode === ColumnMode.force) {
-      forceFillColumnWidths(columns, width, forceIdx);
+      forceFillColumnWidths(columns, width, forceIdx, allowBleed);
     } else if (this.columnMode === ColumnMode.flex) {
       adjustColumnWidths(columns, width);
     }

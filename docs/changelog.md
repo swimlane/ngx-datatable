@@ -2,8 +2,10 @@
 
 ## 2.1.0
 - Feature: Checkbox selection mode 
-- Perf: Faster render time by adding css class via host
 - Enhancement: Selection mode auto added to host class for easier styling
+- Style: Remove row active/select state when in cell mode of material theme
+- Bug: Force fill column mode w/ scrollbarH false allowing bleed when resized
+- Perf: Faster render time by adding css class via host
 
 ## 2.0.0
 - BREAKING: Rename from `datatable` to `swui-datatable` (#320)
