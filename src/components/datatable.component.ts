@@ -241,7 +241,23 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * @type {number}
    * @memberOf DatatableComponent
    */
-  @Input() count: number = 0;
+  @Input() set count(val: number) {
+    this._count = val;
+
+    // recalculate sizes/etc
+    this.recalculate();
+  }
+
+  /**
+   * Gets the count.
+   * 
+   * @readonly
+   * @type {number}
+   * @memberOf DatatableComponent
+   */
+  get count(): number {
+    return this._count;
+  }
 
   /**
    * The current offset ( page - 1 ) shown. 
@@ -647,6 +663,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
 
   private _rows: any[];
   private _columns: any[];
+  private _count: number = 0;
   private _columnTemplates: QueryList<DataTableColumnDirective>;
   private _rowDetailTemplateChild: DatatableRowDetailDirective;
 
