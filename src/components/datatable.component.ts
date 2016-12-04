@@ -738,11 +738,20 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * 
    * @memberOf DatatableComponent
    */
-  @HostListener('window:resize')
-  @throttleable(5)
   recalculate(): void {
     this.recalculateDims();
     this.recalculateColumns();
+  }
+
+  /**
+   * Window resize handler to update sizes.
+   * 
+   * @memberOf DatatableComponent
+   */
+  @HostListener('window:resize')
+  @throttleable(5)
+  onWindowResize(): void {
+    this.recalculate();
   }
 
   /**
