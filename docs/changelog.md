@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.3
+- Bug: Fix footer not updating when all removes removed
+- Bug: Fix Add/Remove items in array not updating (#255)
+
 ## 2.1.2
 - Bug: Fix sizing method being debounced on view inits rather than just window resize.
 

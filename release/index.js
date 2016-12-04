@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"2.1.2" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"2.1.3" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -1661,7 +1661,7 @@ var columns_1 = __webpack_require__("./src/components/columns/index.ts");
 var row_detail_1 = __webpack_require__("./src/components/row-detail/index.ts");
 var utils_2 = __webpack_require__("./src/utils/index.ts");
 var DatatableComponent = (function () {
-    function DatatableComponent(element) {
+    function DatatableComponent(element, differs) {
         /**
          * List of row objects that should be
          * represented as selected in the grid.
@@ -1890,6 +1890,7 @@ var DatatableComponent = (function () {
         this._count = 0;
         // get ref to elm for measuring
         this.element = element.nativeElement;
+        this.rowDiffer = differs.find({}).create(null);
     }
     Object.defineProperty(DatatableComponent.prototype, "rows", {
         /**
@@ -2025,7 +2026,7 @@ var DatatableComponent = (function () {
          * if the horziontal scrolling is enabled.
          *
          * @readonly
-         *
+         * @type {boolean}
          * @memberOf DatatableComponent
          */
         get: function () {
@@ -2200,6 +2201,16 @@ var DatatableComponent = (function () {
         setTimeout(function () { return _this.recalculate(); });
     };
     /**
+     * Lifecycle hook that is called when Angular dirty checks a directive.
+     *
+     * @memberOf DatatableComponent
+     */
+    DatatableComponent.prototype.ngDoCheck = function () {
+        if (this.rowDiffer.diff(this.rows)) {
+            this.recalculatePages();
+        }
+    };
+    /**
      * Toggle the expansion of the row
      *
      * @param rowIndex
@@ -2294,6 +2305,15 @@ var DatatableComponent = (function () {
                 height = height - this.footerHeight;
             this.bodyHeight = height;
         }
+        this.recalculatePages();
+    };
+    /**
+     * Recalculates the pages after a update.
+     *
+     *
+     * @memberOf DatatableComponent
+     */
+    DatatableComponent.prototype.recalculatePages = function () {
         this.pageSize = this.calcPageSize();
         this.rowCount = this.calcRowCount();
     };
@@ -2638,7 +2658,7 @@ var DatatableComponent = (function () {
     ], DatatableComponent.prototype, "isVertScroll", null);
     __decorate([
         core_1.HostBinding('class.scroll-horz'), 
-        __metadata('design:type', Object)
+        __metadata('design:type', Boolean)
     ], DatatableComponent.prototype, "isHorScroll", null);
     __decorate([
         core_1.HostBinding('class.selectable'), 
@@ -2689,7 +2709,7 @@ var DatatableComponent = (function () {
                 class: 'datatable'
             }
         }), 
-        __metadata('design:paramtypes', [core_1.ElementRef])
+        __metadata('design:paramtypes', [core_1.ElementRef, core_1.KeyValueDiffers])
     ], DatatableComponent);
     return DatatableComponent;
 }());
