@@ -117,6 +117,13 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
      */
     limit: number;
     /**
+     * Gets the count.
+     *
+     * @readonly
+     * @type {number}
+     * @memberOf DatatableComponent
+     */
+    /**
      * The total count of all rows.
      * Default value: `0`
      *
@@ -420,6 +427,7 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
     private offsetX;
     private _rows;
     private _columns;
+    private _count;
     private _columnTemplates;
     private _rowDetailTemplateChild;
     constructor(element: ElementRef);
@@ -469,6 +477,12 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
      * @memberOf DatatableComponent
      */
     recalculate(): void;
+    /**
+     * Window resize handler to update sizes.
+     *
+     * @memberOf DatatableComponent
+     */
+    onWindowResize(): void;
     /**
      * Recalulcates the column widths based on column width
      * distribution mode and scrollbar offsets.

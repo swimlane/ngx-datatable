@@ -105,14 +105,6 @@ var DatatableComponent = (function () {
          */
         this.limit = undefined;
         /**
-         * The total count of all rows.
-         * Default value: `0`
-         *
-         * @type {number}
-         * @memberOf DatatableComponent
-         */
-        this.count = 0;
-        /**
          * The current offset ( page - 1 ) shown.
          * Default value: `0`
          *
@@ -250,6 +242,7 @@ var DatatableComponent = (function () {
          */
         this.rowContextmenu = new core_1.EventEmitter(false);
         this.offsetX = 0;
+        this._count = 0;
         // get ref to elm for measuring
         this.element = element.nativeElement;
     }
@@ -303,6 +296,32 @@ var DatatableComponent = (function () {
                 this.recalculateColumns(val);
             }
             this._columns = val;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DatatableComponent.prototype, "count", {
+        /**
+         * Gets the count.
+         *
+         * @readonly
+         * @type {number}
+         * @memberOf DatatableComponent
+         */
+        get: function () {
+            return this._count;
+        },
+        /**
+         * The total count of all rows.
+         * Default value: `0`
+         *
+         * @type {number}
+         * @memberOf DatatableComponent
+         */
+        set: function (val) {
+            this._count = val;
+            // recalculate sizes/etc
+            this.recalculate();
         },
         enumerable: true,
         configurable: true
@@ -576,6 +595,14 @@ var DatatableComponent = (function () {
     DatatableComponent.prototype.recalculate = function () {
         this.recalculateDims();
         this.recalculateColumns();
+    };
+    /**
+     * Window resize handler to update sizes.
+     *
+     * @memberOf DatatableComponent
+     */
+    DatatableComponent.prototype.onWindowResize = function () {
+        this.recalculate();
     };
     /**
      * Recalulcates the column widths based on column width
@@ -870,14 +897,14 @@ var DatatableComponent = (function () {
         'columnTemplates': [{ type: core_1.ContentChildren, args: [columns_1.DataTableColumnDirective,] },],
         'rowDetailTemplateChild': [{ type: core_1.ContentChild, args: [row_detail_1.DatatableRowDetailDirective,] },],
         'bodyComponent': [{ type: core_1.ViewChild, args: [body_1.DataTableBodyComponent,] },],
-        'recalculate': [{ type: core_1.HostListener, args: ['window:resize',] },],
+        'onWindowResize': [{ type: core_1.HostListener, args: ['window:resize',] },],
     };
     __decorate([
         utils_2.throttleable(5), 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', []), 
         __metadata('design:returntype', void 0)
-    ], DatatableComponent.prototype, "recalculate", null);
+    ], DatatableComponent.prototype, "onWindowResize", null);
     return DatatableComponent;
 }());
 exports.DatatableComponent = DatatableComponent;

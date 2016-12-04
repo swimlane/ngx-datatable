@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.1.2
+- Bug: Fix sizing method being debounced on view inits rather than just window resize.
+
 ## 2.1.1
 - Bug: Fix memory leak with visibility observer
 

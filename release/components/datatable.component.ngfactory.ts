@@ -366,7 +366,7 @@ export class Wrapper_DatatableComponent {
   handleEvent(eventName:string,$event:any):boolean {
     var result:boolean = true;
     if ((eventName == 'window:resize')) {
-      const pd_sub_0:any = ((<any>this.context.recalculate()) !== false);
+      const pd_sub_0:any = ((<any>this.context.onWindowResize()) !== false);
       result = (pd_sub_0 && result);
     }
     return result;
