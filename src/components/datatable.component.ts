@@ -1,7 +1,8 @@
 import {
   Component, Input, Output, ElementRef, EventEmitter, ViewChild,
   HostListener, ContentChildren, OnInit, QueryList, AfterViewInit,
-  HostBinding, ContentChild, TemplateRef
+  HostBinding, ContentChild, TemplateRef, IterableDiffer,
+  DoCheck, KeyValueDiffers
 } from '@angular/core';
 
 import { forceFillColumnWidths, adjustColumnWidths, sortRows } from '../utils';
@@ -81,7 +82,7 @@ import { scrollbarWidth, setColumnDefaults, throttleable, translateTemplates } f
     class: 'datatable'
   }
 })
-export class DatatableComponent implements OnInit, AfterViewInit {
+export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Rows that are displayed in the table.
@@ -348,14 +349,12 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * @memberOf DatatableComponent
    */
   @Input() messages: any = {
-
     // Message to show when array is presented
     // but contains no values
     emptyMessage: 'No data to display',
 
     // Footer total message
     totalMessage: 'total'
-
   };
 
   /**
@@ -508,11 +507,11 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * if the horziontal scrolling is enabled.
    * 
    * @readonly
-   * 
+   * @type {boolean}
    * @memberOf DatatableComponent
    */
   @HostBinding('class.scroll-horz')
-  get isHorScroll() {
+  get isHorScroll(): boolean {
     return this.scrollbarH;
   }
 
@@ -660,6 +659,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   private bodyHeight: number;
   private rowCount: number;
   private offsetX: number = 0;
+  private rowDiffer: IterableDiffer;
 
   private _rows: any[];
   private _columns: any[];
@@ -667,9 +667,10 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   private _columnTemplates: QueryList<DataTableColumnDirective>;
   private _rowDetailTemplateChild: DatatableRowDetailDirective;
 
-  constructor(element: ElementRef) {
+  constructor(element: ElementRef, differs: KeyValueDiffers) {
     // get ref to elm for measuring
     this.element = element.nativeElement;
+    this.rowDiffer = differs.find({}).create(null);
   }
 
   /**
@@ -695,6 +696,17 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     // this has to be done to prevent the change detection
     // tree from freaking out because we are readjusting
     setTimeout(() => this.recalculate());
+  }
+
+  /**
+   * Lifecycle hook that is called when Angular dirty checks a directive.
+   * 
+   * @memberOf DatatableComponent
+   */
+  ngDoCheck(): void {
+    if (this.rowDiffer.diff(this.rows)) {
+      this.recalculatePages();
+    }
   }
 
   /**
@@ -802,6 +814,16 @@ export class DatatableComponent implements OnInit, AfterViewInit {
       this.bodyHeight = height;
     }
 
+    this.recalculatePages();
+  }
+
+  /**
+   * Recalculates the pages after a update.
+   * 
+   * 
+   * @memberOf DatatableComponent
+   */
+  recalculatePages(): void {
     this.pageSize = this.calcPageSize();
     this.rowCount = this.calcRowCount();
   }

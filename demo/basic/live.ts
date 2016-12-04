@@ -7,8 +7,10 @@ import { Component } from '@angular/core';
       <h3>
         Live Data Demo
         <small>
-          <a href="#" (click)="start()">Start</a>
-          <a href="#" (click)="stop()">Stop</a>
+          <a href="#" (click)="start()">Start</a> |
+          <a href="#" (click)="stop()">Stop</a> | 
+          <a href="#" (click)="add()">Add</a> |
+          <a href="#" (click)="remove()">Remove</a>
         </small>
       </h3>
       <swui-datatable
@@ -30,8 +32,10 @@ import { Component } from '@angular/core';
 })
 export class LiveDataComponent {
 
+  count: number = 50;
   rows: any[] = [];
   active: boolean = true;
+  temp: any[] = [];
   cols: any = [
     'name', 'gender', 'company'
   ];
@@ -42,6 +46,8 @@ export class LiveDataComponent {
         d.updated = Date.now().toString();
         return d;
       });
+
+      this.temp = [...this.rows];
     });
 
     this.start();
@@ -61,6 +67,14 @@ export class LiveDataComponent {
     this.active = false;
   }
 
+  add() {
+    this.rows.splice(0, 0, this.temp[this.count++]);
+  }
+
+  remove() {
+    this.rows.splice(0, this.rows.length);
+  }
+
   updateRandom() {
     const rowNum = this.randomNum(0, 5);
     const cellNum = this.randomNum(0, 3);
@@ -70,7 +84,7 @@ export class LiveDataComponent {
 
     if(rows.length) {
       let row = rows[rowNum];
-      row[prop] = this.rows[newRow][prop];
+      row[prop] = rows[newRow][prop];
       row.updated = Date.now().toString();
     }
 
