@@ -19,7 +19,9 @@
     "suppressExcessPropertyErrors": true,
     "suppressImplicitAnyIndexErrors": true,
     "outDir": "release",
-    "declarationDir": "release"
+    "declarationDir": "release",
+    "lib": ["es6", "dom"],
+    "skipLibCheck": true
   },
   "files": [
     "src/declarations.d.ts",
