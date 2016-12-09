@@ -33,7 +33,7 @@ export class VisibilityDirective implements OnInit, OnDestroy {
     clearTimeout(this.timeout);
   }
 
-  onVisibilityChange() : void{
+  onVisibilityChange(): void {
     // trigger zone recalc for columns
     this.zone.run(() => {
       this.isVisible = true;
