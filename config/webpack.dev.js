@@ -68,7 +68,7 @@ module.exports = function(options) {
         minChunks: Infinity
       }),
       new HtmlWebpackPlugin({
-        template: 'demo/index.html',
+        template: 'demo/index.ejs',
         chunksSortMode: 'dependency',
         title: 'angular2-data-table'
       }),

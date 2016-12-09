@@ -57,9 +57,13 @@ module.exports = function(env) {
         minChunks: Infinity
       }),
       new HtmlWebpackPlugin({
-        template: 'demo/index.html',
+        template: 'demo/index.ejs',
         chunksSortMode: 'dependency',
-        title: 'angular2-data-table'
+        title: 'angular2-data-table',
+        googleAnalytics: {
+          trackingId: 'UA-57474611-3',
+          pageViewOnLoad: true
+        }
       }),
       new CleanWebpackPlugin(['dist'], {
         root: dir(),
