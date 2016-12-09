@@ -635,7 +635,9 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * @memberOf DatatableComponent
    */
   get allRowsSelected(): boolean {
-    return this.selected.length === this.rows.length;
+    return this.selected &&
+      this.rows &&
+      this.selected.length === this.rows.length;
   }
 
   element: HTMLElement;
