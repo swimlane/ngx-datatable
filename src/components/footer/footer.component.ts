@@ -40,11 +40,11 @@ export class DataTableFooterComponent {
 
   @Output() page: EventEmitter<any> = new EventEmitter();
 
-  get isVisible() {
+  get isVisible(): boolean {
     return (this.rowCount / this.pageSize) > 1;
   }
 
-  get curPage() {
+  get curPage(): number {
     return this.offset + 1;
   }
 

@@ -86,13 +86,13 @@ export class DataTableHeaderComponent {
   @Output() resize: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
 
-  private columnsByPin: any;
-  private columnGroupWidths: any;
-  private _columns: any[];
-  private _headerHeight: string;
+  columnsByPin: any;
+  columnGroupWidths: any;
+  _columns: any[];
+  _headerHeight: string;
 
   @HostBinding('style.width')
-  private get headerWidth(): string {
+  get headerWidth(): string {
     if(this.scrollbarH) {
       return this.innerWidth + 'px';
     }
@@ -100,7 +100,7 @@ export class DataTableHeaderComponent {
     return '100%';
   }
 
-  onColumnResized(width: number, column: DataTableColumnDirective) {
+  onColumnResized(width: number, column: DataTableColumnDirective): void {
     if (width <= column.minWidth) {
       width = column.minWidth;
     } else if(width >= column.maxWidth) {
@@ -114,7 +114,7 @@ export class DataTableHeaderComponent {
     });
   }
 
-  onColumnReordered({ prevIndex, newIndex, model }: any) {
+  onColumnReordered({ prevIndex, newIndex, model }: any): void {
     this.reorder.emit({
       column: model,
       prevValue: prevIndex,
@@ -122,7 +122,7 @@ export class DataTableHeaderComponent {
     });
   }
 
-  onSort({ column, prevValue, newValue }: any) {
+  onSort({ column, prevValue, newValue }: any): void {
     const sorts = this.calcNewSorts(column, prevValue, newValue);
     this.sort.emit({
       sorts,
@@ -132,7 +132,7 @@ export class DataTableHeaderComponent {
     });
   }
 
-  calcNewSorts(column: any, prevValue: number, newValue: number) {
+  calcNewSorts(column: any, prevValue: number, newValue: number): any[] {
     let idx = 0;
 
     let sorts = this.sorts.map((s, i) => {
@@ -156,7 +156,7 @@ export class DataTableHeaderComponent {
     return sorts;
   }
 
-  stylesByGroup(group: string) {
+  stylesByGroup(group: string): any {
     const widths = this.columnGroupWidths;
     const offsetX = this.offsetX;
 

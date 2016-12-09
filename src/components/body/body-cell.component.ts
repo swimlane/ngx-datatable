@@ -92,9 +92,9 @@ export class DataTableBodyCellComponent {
     return '';
   }
 
-  private sortDir: SortDirection;
-  private element: any;
-  private _sorts: any[];
+  sortDir: SortDirection;
+  element: any;
+  _sorts: any[];
 
   constructor(element: ElementRef) {
     this.element = element.nativeElement;
@@ -181,4 +181,5 @@ export class DataTableBodyCellComponent {
 
     if(sort) return sort.dir;
   }
+
 }

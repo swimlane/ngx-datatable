@@ -624,7 +624,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * @memberOf DatatableComponent
    */
   @ViewChild(DataTableBodyComponent)
-  private bodyComponent: DataTableBodyComponent;
+  bodyComponent: DataTableBodyComponent;
 
   /**
    * Returns if all rows are selected.
@@ -634,21 +634,21 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * @type {boolean}
    * @memberOf DatatableComponent
    */
-  private get allRowsSelected(): boolean {
+  get allRowsSelected(): boolean {
     return this.selected.length === this.rows.length;
   }
 
-  private element: HTMLElement;
-  private innerWidth: number;
-  private pageSize: number;
-  private bodyHeight: number;
-  private rowCount: number;
-  private offsetX: number = 0;
+  element: HTMLElement;
+  innerWidth: number;
+  pageSize: number;
+  bodyHeight: number;
+  rowCount: number;
+  offsetX: number = 0;
 
-  private _rows: any[];
-  private _columns: any[];
-  private _columnTemplates: QueryList<DataTableColumnDirective>;
-  private _rowDetailTemplateChild: DatatableRowDetailDirective;
+  _rows: any[];
+  _columns: any[];
+  _columnTemplates: QueryList<DataTableColumnDirective>;
+  _rowDetailTemplateChild: DatatableRowDetailDirective;
 
   constructor(element: ElementRef) {
     // get ref to elm for measuring

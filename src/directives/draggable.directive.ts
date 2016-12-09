@@ -1,4 +1,6 @@
-import { Directive, ElementRef, HostListener, Input, Output, EventEmitter } from '@angular/core';
+import { 
+  Directive, ElementRef, HostListener, Input, Output, EventEmitter, OnDestroy
+} from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
 
 /**
@@ -10,7 +12,7 @@ import { Observable, Subscription } from 'rxjs/Rx';
  *
  */
 @Directive({ selector: '[draggable]' })
-export class DraggableDirective {
+export class DraggableDirective implements OnDestroy {
 
   @Input() dragModel: any;
   @Input() dragX: boolean = true;
@@ -21,8 +23,8 @@ export class DraggableDirective {
   @Output() dragEnd: EventEmitter<any> = new EventEmitter();
 
   element: HTMLElement;
-  private isDragging: boolean = false;
-  private subscription: Subscription;
+  isDragging: boolean = false;
+  subscription: Subscription;
 
   constructor(element: ElementRef) {
     this.element = element.nativeElement;
@@ -35,7 +37,7 @@ export class DraggableDirective {
   }
 
   @HostListener('document:mouseup', ['$event'])
-  onMouseup(event: MouseEvent) {
+  onMouseup(event: MouseEvent): void {
     this.isDragging = false;
     this.element.classList.remove('dragging');
 
@@ -50,7 +52,7 @@ export class DraggableDirective {
   }
 
   @HostListener('mousedown', ['$event'])
-  onMousedown(event: MouseEvent) {
+  onMousedown(event: MouseEvent): void {
     if ( (<HTMLElement>event.target).classList.contains('draggable')) {
       event.preventDefault();
       this.isDragging = true;

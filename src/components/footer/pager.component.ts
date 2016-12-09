@@ -95,10 +95,10 @@ export class DataTablePagerComponent {
 
   @Output() change: EventEmitter<any> = new EventEmitter();
 
-  private _count: number = 0;
-  private _page: number = 1;
-  private _size: number = 0;
-  private pages: any;
+  _count: number = 0;
+  _page: number = 1;
+  _size: number = 0;
+  pages: any;
 
   canPrevious(): boolean {
     return this.page > 1;

@@ -29,7 +29,7 @@ export class DataTableSelectionComponent {
   @Output() activate: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
 
-  private prevIndex: number;
+  prevIndex: number;
 
   selectRow(event: KeyboardEvent | MouseEvent, index: number, row: any): void {
     if (!this.selectEnabled) return;

@@ -30,7 +30,7 @@ export class DataTableRowWrapperComponent {
   @Output() rowContextmenu = new EventEmitter<{event: MouseEvent, row: any}>(false);
 
   @HostListener('contextmenu', ['$event'])
-  public onContextmenu($event: MouseEvent): void {
+  onContextmenu($event: MouseEvent): void {
     this.rowContextmenu.emit({ event: $event, row: this.row });
   }
 }

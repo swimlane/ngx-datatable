@@ -25,19 +25,19 @@ export class ScrollerComponent implements OnInit, OnDestroy {
 
   @Output() scroll: EventEmitter<any> = new EventEmitter();
 
-  private scrollYPos: number = 0;
-  private scrollXPos: number = 0;
-  private prevScrollYPos: number = 0;
-  private prevScrollXPos: number = 0;
-  private element: any;
-  private parentElement: any;
-  private onScrollListener: Function;
+  scrollYPos: number = 0;
+  scrollXPos: number = 0;
+  prevScrollYPos: number = 0;
+  prevScrollXPos: number = 0;
+  element: any;
+  parentElement: any;
+  onScrollListener: Function;
 
   constructor(element: ElementRef, private renderer: Renderer) {
     this.element = element.nativeElement;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     // manual bind so we don't always listen
     if(this.scrollbarV || this.scrollbarH) {
       this.parentElement = this.element.parentElement.parentElement;
@@ -46,19 +46,19 @@ export class ScrollerComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if(this.scrollbarV || this.scrollbarH) {
       this.onScrollListener();
     }
   }
 
-  setOffset(offsetY: number) {
+  setOffset(offsetY: number): void {
     if(this.parentElement) {
       this.parentElement.scrollTop = offsetY;
     }
   }
 
-  onScrolled(event: MouseEvent) {
+  onScrolled(event: MouseEvent): void {
     const dom: Element = <Element>event.currentTarget;
     this.scrollYPos = dom.scrollTop;
     this.scrollXPos = dom.scrollLeft;
@@ -66,7 +66,7 @@ export class ScrollerComponent implements OnInit, OnDestroy {
     requestAnimationFrame(this.updateOffset.bind(this));
   }
 
-  updateOffset() {
+  updateOffset(): void {
     let direction: string;
     if(this.scrollYPos < this.prevScrollYPos) {
       direction = 'down';

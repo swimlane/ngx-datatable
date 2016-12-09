@@ -21,19 +21,19 @@ export class VisibilityDirective implements OnInit, OnDestroy {
 
   @Output() visible: EventEmitter<any> = new EventEmitter();
 
-  private timeout: any;
+  timeout: any;
 
   constructor(private element: ElementRef, private zone: NgZone) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.runCheck();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     clearTimeout(this.timeout);
   }
 
-  onVisibilityChange() {
+  onVisibilityChange() : void{
     // trigger zone recalc for columns
     this.zone.run(() => {
       this.isVisible = true;
@@ -41,7 +41,7 @@ export class VisibilityDirective implements OnInit, OnDestroy {
     });
   }
 
-  runCheck() {
+  runCheck(): void {
     const check = () => {
       // https://davidwalsh.name/offsetheight-visibility
       const { offsetHeight, offsetWidth } = this.element.nativeElement;

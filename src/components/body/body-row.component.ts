@@ -70,11 +70,11 @@ export class DataTableBodyRowComponent {
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
 
-  private element: any;
-  private columnGroupWidths: any;
-  private columnsByPin: any;
-  private _columns: any[];
-  private _innerWidth: number;
+  element: any;
+  columnGroupWidths: any;
+  columnsByPin: any;
+  _columns: any[];
+  _innerWidth: number;
 
   constructor(element: ElementRef) {
     this.element = element.nativeElement;
@@ -132,7 +132,7 @@ export class DataTableBodyRowComponent {
     }
   }
 
-  recalculateColumns(val: any[] = this.columns) {
+  recalculateColumns(val: any[] = this.columns): void {
     const colsByPin = columnsByPin(val);
     this.columnsByPin = columnsByPinArr(val);
     this.columnGroupWidths = columnGroupWidths(colsByPin, val);

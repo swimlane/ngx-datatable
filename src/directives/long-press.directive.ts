@@ -16,20 +16,20 @@ export class LongPressDirective {
   @Output() longPressing: EventEmitter<any> = new EventEmitter();
   @Output() longPressEnd: EventEmitter<any> = new EventEmitter();
 
-  private pressing: boolean;
-  private isLongPressing: boolean;
-  private timeout: any;
-  private mouseX: number = 0;
-  private mouseY: number = 0;
+  pressing: boolean;
+  isLongPressing: boolean;
+  timeout: any;
+  mouseX: number = 0;
+  mouseY: number = 0;
 
   @HostBinding('class.press')
-  get press() { return this.pressing; }
+  get press(): boolean { return this.pressing; }
 
   @HostBinding('class.longpress')
-  get isLongPress() { return this.longPressing; }
+  get isLongPress(): boolean { return this.longPressing !== undefined; }
 
   @HostListener('mousedown', ['$event'])
-  onMouseDown(event: MouseEvent) {
+  onMouseDown(event: MouseEvent): void {
     // don't do right/middle clicks
     if(event.which !== 1) return;
 
@@ -49,17 +49,18 @@ export class LongPressDirective {
   }
 
   @HostListener('mousemove', ['$event'])
-  onMouseMove(event: MouseEvent) {
+  onMouseMove(event: MouseEvent): void {
     if(this.pressing && !this.longPressing) {
       const xThres = (event.clientX - this.mouseX) > 10;
       const yThres = (event.clientY - this.mouseY) > 10;
+
       if(xThres || yThres) {
         this.endPress();
       }
     }
   }
 
-  loop(event: Event) {
+  loop(event: Event): void {
     if(this.longPressing) {
       this.timeout = setTimeout(() => {
         this.longPressing.emit(event);
@@ -68,7 +69,7 @@ export class LongPressDirective {
     }
   }
 
-  endPress() {
+  endPress(): void {
     clearTimeout(this.timeout);
     this.isLongPressing = false;
     this.pressing = false;
@@ -76,6 +77,6 @@ export class LongPressDirective {
   }
 
   @HostListener('mouseup')
-  onMouseUp() { this.endPress(); }
+  onMouseUp(): void { this.endPress(); }
 
 }

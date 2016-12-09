@@ -1,4 +1,6 @@
-import { Directive, ElementRef, HostListener, Input, Output, EventEmitter } from '@angular/core';
+import { 
+  Directive, ElementRef, HostListener, Input, Output, EventEmitter, OnDestroy
+} from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
 
 @Directive({
@@ -7,7 +9,7 @@ import { Observable, Subscription } from 'rxjs/Rx';
     '[class.resizeable]': 'resizeEnabled'
   }
 })
-export class ResizeableDirective {
+export class ResizeableDirective implements OnDestroy {
 
   @Input() resizeEnabled: boolean = true;
   @Input() minWidth: number;
@@ -15,9 +17,9 @@ export class ResizeableDirective {
 
   @Output() resize: EventEmitter<any> = new EventEmitter();
 
-  private element: HTMLElement;
-  private subscription: Subscription;
-  private resizing: boolean = false;
+  element: HTMLElement;
+  subscription: Subscription;
+  resizing: boolean = false;
 
   constructor(element: ElementRef) {
     this.element = element.nativeElement;
@@ -36,7 +38,7 @@ export class ResizeableDirective {
   }
 
   @HostListener('document:mouseup', ['$event'])
-  onMouseup() {
+  onMouseup(): void {
     this.resizing = false;
 
     if (this.subscription && !this.subscription.closed) {
@@ -46,7 +48,7 @@ export class ResizeableDirective {
   }
 
   @HostListener('mousedown', ['$event'])
-  onMousedown(event: MouseEvent) {
+  onMousedown(event: MouseEvent): void {
     const isHandle = (<HTMLElement>(event.target)).classList.contains('resize-handle');
     const initialWidth = this.element.clientWidth;
     const mouseDownScreenX = event.screenX;

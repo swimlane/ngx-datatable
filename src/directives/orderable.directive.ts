@@ -1,40 +1,40 @@
 import {
   Directive, Output, EventEmitter, ContentChildren,
-  QueryList, KeyValueDiffers
+  QueryList, KeyValueDiffers, AfterContentInit, OnDestroy
 } from '@angular/core';
 
 import { DraggableDirective } from './draggable.directive';
 
 @Directive({ selector: '[orderable]' })
-export class OrderableDirective {
+export class OrderableDirective implements AfterContentInit, OnDestroy {
 
   @Output() reorder: EventEmitter<any> = new EventEmitter();
 
   @ContentChildren(DraggableDirective, { descendants: true })
-  private draggables: QueryList<DraggableDirective>;
+  draggables: QueryList<DraggableDirective>;
 
-  private positions: any;
-  private differ: any;
+  positions: any;
+  differ: any;
 
   constructor(differs: KeyValueDiffers) {
     this.differ = differs.find({}).create(null);
   }
 
-  ngAfterContentInit() {
+  ngAfterContentInit(): void {
     // HACK: Investigate Better Way
     this.updateSubscriptions();
     this.draggables.changes.subscribe(
         this.updateSubscriptions.bind(this));
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.draggables.forEach(d => {
       d.dragStart.unsubscribe();
       d.dragEnd.unsubscribe();
     });
   }
 
-  updateSubscriptions() {
+  updateSubscriptions(): void {
     const diffs = this.differ.diff(this.draggables.toArray());
 
     if(diffs) {
@@ -60,7 +60,7 @@ export class OrderableDirective {
     }
   }
 
-  onDragStart() {
+  onDragStart(): void {
     this.positions = {};
 
     let i = 0;
