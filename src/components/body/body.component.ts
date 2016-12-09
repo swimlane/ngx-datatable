@@ -11,7 +11,7 @@ import { ScrollerComponent } from './scroller.component';
     <datatable-selection
       #selector
       [selected]="selected"
-      [rows]="rows"
+      [rows]="temp"
       [selectCheck]="selectCheck"
       [selectEnabled]="selectEnabled"
       [selectionType]="selectionType"
