@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.2.0
+- Bug: Fix AoT private props (#352)
+- Bug: Added null chk to selection getter (#340)
+- Bug: multiShift not working after first page (#294)
+- Chore: Update Angular to 2.3.0
+- Chore: Update TypeScript to 2.1.x
+- Chore: Update RxJS to 5.0.0-rc.4
+- Chore: Update ZoneJS to 0.7.2
+- Demo: Add templates for Webpack plugin for Google Analytics
+
 ## 2.1.1
 - Bug: Fix memory leak with visibility observer
 
