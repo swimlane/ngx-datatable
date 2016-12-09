@@ -1,4 +1,5 @@
 import { EventEmitter } from '@angular/core';
+import { RowHeightCache } from '../../utils';
 import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
 export declare class DataTableBodyComponent {
@@ -51,18 +52,18 @@ export declare class DataTableBodyComponent {
      * @memberOf DataTableBodyComponent
      */
     readonly scrollHeight: number;
-    private rowHeightsCache;
-    private temp;
-    private offsetY;
-    private indexes;
-    private columnGroupWidths;
-    private rowTrackingFn;
-    private _rows;
-    private _bodyHeight;
-    private _columns;
-    private _rowCount;
-    private _offset;
-    private _pageSize;
+    rowHeightsCache: RowHeightCache;
+    temp: any[];
+    offsetY: number;
+    indexes: any;
+    columnGroupWidths: any;
+    rowTrackingFn: any;
+    _rows: any[];
+    _bodyHeight: any;
+    _columns: any[];
+    _rowCount: number;
+    _offset: number;
+    _pageSize: number;
     constructor();
     /**
      * Updates the Y offset given a new offset.

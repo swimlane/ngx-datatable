@@ -11,12 +11,12 @@ export declare class DataTableHeaderCellComponent {
     sort: EventEmitter<any>;
     select: EventEmitter<any>;
     readonly columnCssClasses: any;
-    private readonly name;
-    private readonly minWidth;
-    private readonly maxWidth;
-    private readonly width;
-    private sortDir;
-    private _sorts;
+    readonly name: string;
+    readonly minWidth: number;
+    readonly maxWidth: number;
+    readonly width: number;
+    sortDir: SortDirection;
+    _sorts: any[];
     sortClasses(dir: SortDirection): any;
     calcSortDir(sorts: any[]): any;
     onSort(): void;

@@ -1,7 +1,16 @@
 "use strict";
-var core_1 = require('@angular/core');
-var utils_1 = require('../../utils');
-var types_1 = require('../../types');
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = require("@angular/core");
+var utils_1 = require("../../utils");
+var types_1 = require("../../types");
 var DataTableBodyCellComponent = (function () {
     function DataTableBodyCellComponent(element) {
         this.activate = new core_1.EventEmitter();
@@ -139,39 +148,101 @@ var DataTableBodyCellComponent = (function () {
         if (sort)
             return sort.dir;
     };
-    DataTableBodyCellComponent.decorators = [
-        { type: core_1.Component, args: [{
-                    selector: 'datatable-body-cell',
-                    template: "\n    <div class=\"datatable-body-cell-label\">\n      <label\n        *ngIf=\"column.checkboxable\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [checked]=\"isSelected\"\n          (change)=\"onCheckboxChange($event)\" \n        />\n      </label>\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [innerHTML]=\"value\">\n      </span>\n      <template\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngOutletContext]=\"{ value: value, row: row, column: column }\">\n      </template>\n    </div>\n  ",
-                    host: {
-                        class: 'datatable-body-cell'
-                    }
-                },] },
-    ];
-    /** @nocollapse */
-    DataTableBodyCellComponent.ctorParameters = [
-        { type: core_1.ElementRef, },
-    ];
-    DataTableBodyCellComponent.propDecorators = {
-        'row': [{ type: core_1.Input },],
-        'column': [{ type: core_1.Input },],
-        'rowHeight': [{ type: core_1.Input },],
-        'isSelected': [{ type: core_1.Input },],
-        'sorts': [{ type: core_1.Input },],
-        'activate': [{ type: core_1.Output },],
-        'isFocused': [{ type: core_1.HostBinding, args: ['class.active',] },],
-        'isSortActive': [{ type: core_1.HostBinding, args: ['class.sort-active',] },],
-        'isSortAscending': [{ type: core_1.HostBinding, args: ['class.sort-asc',] },],
-        'isSortDescending': [{ type: core_1.HostBinding, args: ['class.sort-desc',] },],
-        'width': [{ type: core_1.HostBinding, args: ['style.width.px',] },],
-        'height': [{ type: core_1.HostBinding, args: ['style.height',] },],
-        'onFocus': [{ type: core_1.HostListener, args: ['focus',] },],
-        'onBlur': [{ type: core_1.HostListener, args: ['blur',] },],
-        'onClick': [{ type: core_1.HostListener, args: ['click', ['$event'],] },],
-        'onDblClick': [{ type: core_1.HostListener, args: ['dblclick', ['$event'],] },],
-        'onKeyDown': [{ type: core_1.HostListener, args: ['keydown', ['$event'],] },],
-    };
     return DataTableBodyCellComponent;
 }());
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], DataTableBodyCellComponent.prototype, "row", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], DataTableBodyCellComponent.prototype, "column", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Number)
+], DataTableBodyCellComponent.prototype, "rowHeight", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Boolean)
+], DataTableBodyCellComponent.prototype, "isSelected", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Array),
+    __metadata("design:paramtypes", [Array])
+], DataTableBodyCellComponent.prototype, "sorts", null);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", core_1.EventEmitter)
+], DataTableBodyCellComponent.prototype, "activate", void 0);
+__decorate([
+    core_1.HostBinding('class.active'),
+    __metadata("design:type", Boolean)
+], DataTableBodyCellComponent.prototype, "isFocused", void 0);
+__decorate([
+    core_1.HostBinding('class.sort-active'),
+    __metadata("design:type", Boolean),
+    __metadata("design:paramtypes", [])
+], DataTableBodyCellComponent.prototype, "isSortActive", null);
+__decorate([
+    core_1.HostBinding('class.sort-asc'),
+    __metadata("design:type", Boolean),
+    __metadata("design:paramtypes", [])
+], DataTableBodyCellComponent.prototype, "isSortAscending", null);
+__decorate([
+    core_1.HostBinding('class.sort-desc'),
+    __metadata("design:type", Boolean),
+    __metadata("design:paramtypes", [])
+], DataTableBodyCellComponent.prototype, "isSortDescending", null);
+__decorate([
+    core_1.HostBinding('style.width.px'),
+    __metadata("design:type", Number),
+    __metadata("design:paramtypes", [])
+], DataTableBodyCellComponent.prototype, "width", null);
+__decorate([
+    core_1.HostBinding('style.height'),
+    __metadata("design:type", Object),
+    __metadata("design:paramtypes", [])
+], DataTableBodyCellComponent.prototype, "height", null);
+__decorate([
+    core_1.HostListener('focus'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], DataTableBodyCellComponent.prototype, "onFocus", null);
+__decorate([
+    core_1.HostListener('blur'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], DataTableBodyCellComponent.prototype, "onBlur", null);
+__decorate([
+    core_1.HostListener('click', ['$event']),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [MouseEvent]),
+    __metadata("design:returntype", void 0)
+], DataTableBodyCellComponent.prototype, "onClick", null);
+__decorate([
+    core_1.HostListener('dblclick', ['$event']),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [MouseEvent]),
+    __metadata("design:returntype", void 0)
+], DataTableBodyCellComponent.prototype, "onDblClick", null);
+__decorate([
+    core_1.HostListener('keydown', ['$event']),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [KeyboardEvent]),
+    __metadata("design:returntype", void 0)
+], DataTableBodyCellComponent.prototype, "onKeyDown", null);
+DataTableBodyCellComponent = __decorate([
+    core_1.Component({
+        selector: 'datatable-body-cell',
+        template: "\n    <div class=\"datatable-body-cell-label\">\n      <label\n        *ngIf=\"column.checkboxable\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [checked]=\"isSelected\"\n          (change)=\"onCheckboxChange($event)\" \n        />\n      </label>\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [innerHTML]=\"value\">\n      </span>\n      <template\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngOutletContext]=\"{ value: value, row: row, column: column }\">\n      </template>\n    </div>\n  ",
+        host: {
+            class: 'datatable-body-cell'
+        }
+    }),
+    __metadata("design:paramtypes", [core_1.ElementRef])
+], DataTableBodyCellComponent);
 exports.DataTableBodyCellComponent = DataTableBodyCellComponent;
 //# sourceMappingURL=body-cell.component.js.map

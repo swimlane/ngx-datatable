@@ -17,7 +17,7 @@ export declare class DataTableSelectionComponent {
     selectCheck: any;
     activate: EventEmitter<any>;
     select: EventEmitter<any>;
-    private prevIndex;
+    prevIndex: number;
     selectRow(event: KeyboardEvent | MouseEvent, index: number, row: any): void;
     onActivate(model: Model, index: number): void;
     onKeyboardFocus(model: Model): void;

@@ -662,10 +662,13 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   rowCount: number;
   offsetX: number = 0;
   rowDiffer: IterableDiffer;
+  _count: number = 0;
+
   _rows: any[];
   _columns: any[];
   _columnTemplates: QueryList<DataTableColumnDirective>;
   _rowDetailTemplateChild: DatatableRowDetailDirective;
+
   constructor(element: ElementRef, differs: KeyValueDiffers) {
     // get ref to elm for measuring
     this.element = element.nativeElement;

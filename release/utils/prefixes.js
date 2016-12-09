@@ -1,5 +1,5 @@
 "use strict";
-var camel_case_1 = require('./camel-case');
+var camel_case_1 = require("./camel-case");
 var cache = {};
 var testStyle = document.createElement('div').style;
 // Get Prefix

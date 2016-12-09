@@ -1,4 +1,5 @@
 import { EventEmitter, ElementRef } from '@angular/core';
+import { SortDirection } from '../../types';
 export declare class DataTableBodyCellComponent {
     row: any;
     column: any;
@@ -13,9 +14,9 @@ export declare class DataTableBodyCellComponent {
     readonly width: number;
     readonly height: string | number;
     readonly value: any;
-    private sortDir;
-    private element;
-    private _sorts;
+    sortDir: SortDirection;
+    element: any;
+    _sorts: any[];
     constructor(element: ElementRef);
     onFocus(): void;
     onBlur(): void;

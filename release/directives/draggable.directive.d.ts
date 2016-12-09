@@ -1,4 +1,5 @@
-import { ElementRef, EventEmitter } from '@angular/core';
+import { ElementRef, EventEmitter, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/Rx';
 /**
  * Draggable Directive for Angular2
  *
@@ -7,7 +8,7 @@ import { ElementRef, EventEmitter } from '@angular/core';
  *   http://stackoverflow.com/questions/35662530/how-to-implement-drag-and-drop-in-angular2
  *
  */
-export declare class DraggableDirective {
+export declare class DraggableDirective implements OnDestroy {
     dragModel: any;
     dragX: boolean;
     dragY: boolean;
@@ -15,8 +16,8 @@ export declare class DraggableDirective {
     dragging: EventEmitter<any>;
     dragEnd: EventEmitter<any>;
     element: HTMLElement;
-    private isDragging;
-    private subscription;
+    isDragging: boolean;
+    subscription: Subscription;
     constructor(element: ElementRef);
     ngOnDestroy(): void;
     onMouseup(event: MouseEvent): void;

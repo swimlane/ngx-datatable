@@ -1,12 +1,13 @@
-import { ElementRef, EventEmitter } from '@angular/core';
-export declare class ResizeableDirective {
+import { ElementRef, EventEmitter, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/Rx';
+export declare class ResizeableDirective implements OnDestroy {
     resizeEnabled: boolean;
     minWidth: number;
     maxWidth: number;
     resize: EventEmitter<any>;
-    private element;
-    private subscription;
-    private resizing;
+    element: HTMLElement;
+    subscription: Subscription;
+    resizing: boolean;
     constructor(element: ElementRef);
     ngOnDestroy(): void;
     onMouseup(): void;

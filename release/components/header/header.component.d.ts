@@ -16,16 +16,14 @@ export declare class DataTableHeaderComponent {
     reorder: EventEmitter<any>;
     resize: EventEmitter<any>;
     select: EventEmitter<any>;
-    private columnsByPin;
-    private columnGroupWidths;
-    private _columns;
-    private _headerHeight;
-    private readonly headerWidth;
+    columnsByPin: any;
+    columnGroupWidths: any;
+    _columns: any[];
+    _headerHeight: string;
+    readonly headerWidth: string;
     onColumnResized(width: number, column: DataTableColumnDirective): void;
     onColumnReordered({prevIndex, newIndex, model}: any): void;
     onSort({column, prevValue, newValue}: any): void;
     calcNewSorts(column: any, prevValue: number, newValue: number): any[];
-    stylesByGroup(group: string): {
-        width: string;
-    };
+    stylesByGroup(group: string): any;
 }

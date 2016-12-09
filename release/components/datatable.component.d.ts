@@ -1,5 +1,6 @@
-import { ElementRef, EventEmitter, OnInit, QueryList, AfterViewInit, TemplateRef, DoCheck, KeyValueDiffers } from '@angular/core';
+import { ElementRef, EventEmitter, OnInit, QueryList, AfterViewInit, TemplateRef, IterableDiffer, DoCheck, KeyValueDiffers } from '@angular/core';
 import { ColumnMode, SortType, SelectionType } from '../types';
+import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 export declare class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
@@ -409,7 +410,7 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      * @type {DataTableBodyComponent}
      * @memberOf DatatableComponent
      */
-    private bodyComponent;
+    bodyComponent: DataTableBodyComponent;
     /**
      * Returns if all rows are selected.
      *
@@ -418,19 +419,19 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      * @type {boolean}
      * @memberOf DatatableComponent
      */
-    private readonly allRowsSelected;
-    private element;
-    private innerWidth;
-    private pageSize;
-    private bodyHeight;
-    private rowCount;
-    private offsetX;
-    private rowDiffer;
-    private _rows;
-    private _columns;
-    private _count;
-    private _columnTemplates;
-    private _rowDetailTemplateChild;
+    readonly allRowsSelected: boolean;
+    element: HTMLElement;
+    innerWidth: number;
+    pageSize: number;
+    bodyHeight: number;
+    rowCount: number;
+    offsetX: number;
+    rowDiffer: IterableDiffer;
+    _count: number;
+    _rows: any[];
+    _columns: any[];
+    _columnTemplates: QueryList<DataTableColumnDirective>;
+    _rowDetailTemplateChild: DatatableRowDetailDirective;
     constructor(element: ElementRef, differs: KeyValueDiffers);
     /**
      * Lifecycle hook that is called after data-bound

@@ -9,10 +9,10 @@ export declare class DataTablePagerComponent {
     page: number;
     readonly totalPages: number;
     change: EventEmitter<any>;
-    private _count;
-    private _page;
-    private _size;
-    private pages;
+    _count: number;
+    _page: number;
+    _size: number;
+    pages: any;
     canPrevious(): boolean;
     canNext(): boolean;
     prevPage(): void;

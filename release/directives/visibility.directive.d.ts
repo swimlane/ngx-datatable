@@ -15,7 +15,7 @@ export declare class VisibilityDirective implements OnInit, OnDestroy {
     private zone;
     isVisible: boolean;
     visible: EventEmitter<any>;
-    private timeout;
+    timeout: any;
     constructor(element: ElementRef, zone: NgZone);
     ngOnInit(): void;
     ngOnDestroy(): void;
