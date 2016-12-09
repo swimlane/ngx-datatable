@@ -112,7 +112,7 @@ export class DataTableHeaderCellComponent {
     return result;
   }
 
-  calcSortDir(sorts: any[]): string {
+  calcSortDir(sorts: any[]): any {
     if(sorts && this.column) {
       const sort = sorts.find((s: any) => {
         return s.prop === this.column.prop;
