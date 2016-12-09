@@ -11,8 +11,7 @@ The current features include:
 - Client/Serve side Pagination & Sorting
 - Intelligent Column Width Algorithms ( Force-fill & Flex-grow )
 - Integrated Pager
-- Cell Selection
-- Row Selection ( Single & Multi )
+- Cell & Row Selection ( Single, Multi, Keyboard, Checkbox )
 - Fixed AND Fluid height
 - Left and Right Column Pinning
 - Row Detail View
@@ -23,9 +22,7 @@ The current features include:
 We are really excited about the table and wanted to get it out into the open as quickly as 
 possible so we had to delay some of the features but we plan to add the following:
 
-- Better RxJS Support
-- Touch selection support
-- Checkbox Selection
+- Touch selection
 - Tree Grids
 - Row Grouping
 

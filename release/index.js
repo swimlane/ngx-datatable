@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"2.1.1" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"2.1.3" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -1661,7 +1661,7 @@ var columns_1 = __webpack_require__("./src/components/columns/index.ts");
 var row_detail_1 = __webpack_require__("./src/components/row-detail/index.ts");
 var utils_2 = __webpack_require__("./src/utils/index.ts");
 var DatatableComponent = (function () {
-    function DatatableComponent(element) {
+    function DatatableComponent(element, differs) {
         /**
          * List of row objects that should be
          * represented as selected in the grid.
@@ -1749,14 +1749,6 @@ var DatatableComponent = (function () {
          * @memberOf DatatableComponent
          */
         this.limit = undefined;
-        /**
-         * The total count of all rows.
-         * Default value: `0`
-         *
-         * @type {number}
-         * @memberOf DatatableComponent
-         */
-        this.count = 0;
         /**
          * The current offset ( page - 1 ) shown.
          * Default value: `0`
@@ -1895,8 +1887,10 @@ var DatatableComponent = (function () {
          */
         this.rowContextmenu = new core_1.EventEmitter(false);
         this.offsetX = 0;
+        this._count = 0;
         // get ref to elm for measuring
         this.element = element.nativeElement;
+        this.rowDiffer = differs.find({}).create(null);
     }
     Object.defineProperty(DatatableComponent.prototype, "rows", {
         /**
@@ -1948,6 +1942,32 @@ var DatatableComponent = (function () {
                 this.recalculateColumns(val);
             }
             this._columns = val;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DatatableComponent.prototype, "count", {
+        /**
+         * Gets the count.
+         *
+         * @readonly
+         * @type {number}
+         * @memberOf DatatableComponent
+         */
+        get: function () {
+            return this._count;
+        },
+        /**
+         * The total count of all rows.
+         * Default value: `0`
+         *
+         * @type {number}
+         * @memberOf DatatableComponent
+         */
+        set: function (val) {
+            this._count = val;
+            // recalculate sizes/etc
+            this.recalculate();
         },
         enumerable: true,
         configurable: true
@@ -2006,7 +2026,7 @@ var DatatableComponent = (function () {
          * if the horziontal scrolling is enabled.
          *
          * @readonly
-         *
+         * @type {boolean}
          * @memberOf DatatableComponent
          */
         get: function () {
@@ -2181,6 +2201,16 @@ var DatatableComponent = (function () {
         setTimeout(function () { return _this.recalculate(); });
     };
     /**
+     * Lifecycle hook that is called when Angular dirty checks a directive.
+     *
+     * @memberOf DatatableComponent
+     */
+    DatatableComponent.prototype.ngDoCheck = function () {
+        if (this.rowDiffer.diff(this.rows)) {
+            this.recalculatePages();
+        }
+    };
+    /**
      * Toggle the expansion of the row
      *
      * @param rowIndex
@@ -2221,6 +2251,14 @@ var DatatableComponent = (function () {
     DatatableComponent.prototype.recalculate = function () {
         this.recalculateDims();
         this.recalculateColumns();
+    };
+    /**
+     * Window resize handler to update sizes.
+     *
+     * @memberOf DatatableComponent
+     */
+    DatatableComponent.prototype.onWindowResize = function () {
+        this.recalculate();
     };
     /**
      * Recalulcates the column widths based on column width
@@ -2267,6 +2305,15 @@ var DatatableComponent = (function () {
                 height = height - this.footerHeight;
             this.bodyHeight = height;
         }
+        this.recalculatePages();
+    };
+    /**
+     * Recalculates the pages after a update.
+     *
+     *
+     * @memberOf DatatableComponent
+     */
+    DatatableComponent.prototype.recalculatePages = function () {
         this.pageSize = this.calcPageSize();
         this.rowCount = this.calcRowCount();
     };
@@ -2510,8 +2557,9 @@ var DatatableComponent = (function () {
     ], DatatableComponent.prototype, "limit", void 0);
     __decorate([
         core_1.Input(), 
-        __metadata('design:type', Number)
-    ], DatatableComponent.prototype, "count", void 0);
+        __metadata('design:type', Number), 
+        __metadata('design:paramtypes', [Number])
+    ], DatatableComponent.prototype, "count", null);
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Number)
@@ -2610,7 +2658,7 @@ var DatatableComponent = (function () {
     ], DatatableComponent.prototype, "isVertScroll", null);
     __decorate([
         core_1.HostBinding('class.scroll-horz'), 
-        __metadata('design:type', Object)
+        __metadata('design:type', Boolean)
     ], DatatableComponent.prototype, "isHorScroll", null);
     __decorate([
         core_1.HostBinding('class.selectable'), 
@@ -2652,7 +2700,7 @@ var DatatableComponent = (function () {
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', []), 
         __metadata('design:returntype', void 0)
-    ], DatatableComponent.prototype, "recalculate", null);
+    ], DatatableComponent.prototype, "onWindowResize", null);
     DatatableComponent = __decorate([
         core_1.Component({
             selector: 'swui-datatable',
@@ -2661,7 +2709,7 @@ var DatatableComponent = (function () {
                 class: 'datatable'
             }
         }), 
-        __metadata('design:paramtypes', [core_1.ElementRef])
+        __metadata('design:paramtypes', [core_1.ElementRef, core_1.KeyValueDiffers])
     ], DatatableComponent);
     return DatatableComponent;
 }());

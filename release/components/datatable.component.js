@@ -16,7 +16,7 @@ var columns_1 = require('./columns');
 var row_detail_1 = require('./row-detail');
 var utils_2 = require('../utils');
 var DatatableComponent = (function () {
-    function DatatableComponent(element) {
+    function DatatableComponent(element, differs) {
         /**
          * List of row objects that should be
          * represented as selected in the grid.
@@ -104,14 +104,6 @@ var DatatableComponent = (function () {
          * @memberOf DatatableComponent
          */
         this.limit = undefined;
-        /**
-         * The total count of all rows.
-         * Default value: `0`
-         *
-         * @type {number}
-         * @memberOf DatatableComponent
-         */
-        this.count = 0;
         /**
          * The current offset ( page - 1 ) shown.
          * Default value: `0`
@@ -250,8 +242,10 @@ var DatatableComponent = (function () {
          */
         this.rowContextmenu = new core_1.EventEmitter(false);
         this.offsetX = 0;
+        this._count = 0;
         // get ref to elm for measuring
         this.element = element.nativeElement;
+        this.rowDiffer = differs.find({}).create(null);
     }
     Object.defineProperty(DatatableComponent.prototype, "rows", {
         /**
@@ -303,6 +297,32 @@ var DatatableComponent = (function () {
                 this.recalculateColumns(val);
             }
             this._columns = val;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DatatableComponent.prototype, "count", {
+        /**
+         * Gets the count.
+         *
+         * @readonly
+         * @type {number}
+         * @memberOf DatatableComponent
+         */
+        get: function () {
+            return this._count;
+        },
+        /**
+         * The total count of all rows.
+         * Default value: `0`
+         *
+         * @type {number}
+         * @memberOf DatatableComponent
+         */
+        set: function (val) {
+            this._count = val;
+            // recalculate sizes/etc
+            this.recalculate();
         },
         enumerable: true,
         configurable: true
@@ -361,7 +381,7 @@ var DatatableComponent = (function () {
          * if the horziontal scrolling is enabled.
          *
          * @readonly
-         *
+         * @type {boolean}
          * @memberOf DatatableComponent
          */
         get: function () {
@@ -536,6 +556,16 @@ var DatatableComponent = (function () {
         setTimeout(function () { return _this.recalculate(); });
     };
     /**
+     * Lifecycle hook that is called when Angular dirty checks a directive.
+     *
+     * @memberOf DatatableComponent
+     */
+    DatatableComponent.prototype.ngDoCheck = function () {
+        if (this.rowDiffer.diff(this.rows)) {
+            this.recalculatePages();
+        }
+    };
+    /**
      * Toggle the expansion of the row
      *
      * @param rowIndex
@@ -576,6 +606,14 @@ var DatatableComponent = (function () {
     DatatableComponent.prototype.recalculate = function () {
         this.recalculateDims();
         this.recalculateColumns();
+    };
+    /**
+     * Window resize handler to update sizes.
+     *
+     * @memberOf DatatableComponent
+     */
+    DatatableComponent.prototype.onWindowResize = function () {
+        this.recalculate();
     };
     /**
      * Recalulcates the column widths based on column width
@@ -622,6 +660,15 @@ var DatatableComponent = (function () {
                 height = height - this.footerHeight;
             this.bodyHeight = height;
         }
+        this.recalculatePages();
+    };
+    /**
+     * Recalculates the pages after a update.
+     *
+     *
+     * @memberOf DatatableComponent
+     */
+    DatatableComponent.prototype.recalculatePages = function () {
         this.pageSize = this.calcPageSize();
         this.rowCount = this.calcRowCount();
     };
@@ -821,6 +868,7 @@ var DatatableComponent = (function () {
     /** @nocollapse */
     DatatableComponent.ctorParameters = [
         { type: core_1.ElementRef, },
+        { type: core_1.KeyValueDiffers, },
     ];
     DatatableComponent.propDecorators = {
         'rows': [{ type: core_1.Input },],
@@ -870,14 +918,14 @@ var DatatableComponent = (function () {
         'columnTemplates': [{ type: core_1.ContentChildren, args: [columns_1.DataTableColumnDirective,] },],
         'rowDetailTemplateChild': [{ type: core_1.ContentChild, args: [row_detail_1.DatatableRowDetailDirective,] },],
         'bodyComponent': [{ type: core_1.ViewChild, args: [body_1.DataTableBodyComponent,] },],
-        'recalculate': [{ type: core_1.HostListener, args: ['window:resize',] },],
+        'onWindowResize': [{ type: core_1.HostListener, args: ['window:resize',] },],
     };
     __decorate([
         utils_2.throttleable(5), 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', []), 
         __metadata('design:returntype', void 0)
-    ], DatatableComponent.prototype, "recalculate", null);
+    ], DatatableComponent.prototype, "onWindowResize", null);
     return DatatableComponent;
 }());
 exports.DatatableComponent = DatatableComponent;

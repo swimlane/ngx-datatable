@@ -22,9 +22,11 @@ export class DataTableColumnDirective {
   @Input() checkboxable: boolean;
   @Input() headerCheckboxable: boolean;
 
+  @Input()
   @ContentChild(DataTableColumnCellDirective, { read: TemplateRef }) 
   cellTemplate: TemplateRef<any>;
 
+  @Input()
   @ContentChild(DataTableColumnHeaderDirective, { read: TemplateRef }) 
   headerTemplate: TemplateRef<any>;
 

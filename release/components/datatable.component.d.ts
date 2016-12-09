@@ -1,8 +1,8 @@
-import { ElementRef, EventEmitter, OnInit, QueryList, AfterViewInit, TemplateRef } from '@angular/core';
+import { ElementRef, EventEmitter, OnInit, QueryList, AfterViewInit, TemplateRef, DoCheck, KeyValueDiffers } from '@angular/core';
 import { ColumnMode, SortType, SelectionType } from '../types';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
-export declare class DatatableComponent implements OnInit, AfterViewInit {
+export declare class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
     /**
      * Gets the rows.
      *
@@ -116,6 +116,13 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
      * @memberOf DatatableComponent
      */
     limit: number;
+    /**
+     * Gets the count.
+     *
+     * @readonly
+     * @type {number}
+     * @memberOf DatatableComponent
+     */
     /**
      * The total count of all rows.
      * Default value: `0`
@@ -323,7 +330,7 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
      * if the horziontal scrolling is enabled.
      *
      * @readonly
-     *
+     * @type {boolean}
      * @memberOf DatatableComponent
      */
     readonly isHorScroll: boolean;
@@ -418,11 +425,13 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
     private bodyHeight;
     private rowCount;
     private offsetX;
+    private rowDiffer;
     private _rows;
     private _columns;
+    private _count;
     private _columnTemplates;
     private _rowDetailTemplateChild;
-    constructor(element: ElementRef);
+    constructor(element: ElementRef, differs: KeyValueDiffers);
     /**
      * Lifecycle hook that is called after data-bound
      * properties of a directive are initialized.
@@ -437,6 +446,12 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
      * @memberOf DatatableComponent
      */
     ngAfterViewInit(): void;
+    /**
+     * Lifecycle hook that is called when Angular dirty checks a directive.
+     *
+     * @memberOf DatatableComponent
+     */
+    ngDoCheck(): void;
     /**
      * Toggle the expansion of the row
      *
@@ -470,6 +485,12 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
      */
     recalculate(): void;
     /**
+     * Window resize handler to update sizes.
+     *
+     * @memberOf DatatableComponent
+     */
+    onWindowResize(): void;
+    /**
      * Recalulcates the column widths based on column width
      * distribution mode and scrollbar offsets.
      *
@@ -488,6 +509,13 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
      * @memberOf DatatableComponent
      */
     recalculateDims(): void;
+    /**
+     * Recalculates the pages after a update.
+     *
+     *
+     * @memberOf DatatableComponent
+     */
+    recalculatePages(): void;
     /**
      * Body triggered a page event.
      *

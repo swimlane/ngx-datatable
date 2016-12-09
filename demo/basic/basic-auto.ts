@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
       <swui-datatable
         class="material"
         [rows]="rows"
+        [loadingIndicator]="loadingIndicator"
         [columns]="columns"
         [columnMode]="'force'"
         [headerHeight]="50"
@@ -20,6 +21,7 @@ import { Component } from '@angular/core';
 export class BasicAutoComponent {
 
   rows = [];
+  loadingIndicator: boolean = true;
 
   columns = [
     { prop: 'name' },
@@ -30,6 +32,7 @@ export class BasicAutoComponent {
   constructor() {
     this.fetch((data) => {
       this.rows = data;
+      setTimeout(() => { this.loadingIndicator = false; }, 1500);
     });
   }
 
