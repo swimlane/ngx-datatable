@@ -109,7 +109,7 @@
     "ts-helpers": "^1.1.2",
     "tslint": "^4.0.2",
     "tslint-loader": "^3.3.0",
-    "typescript": "^2.1.4",
+    "typescript": "~2.0.3",
     "webpack": "2.1.0-beta.27",
     "webpack-dev-server": "2.1.0-beta.11",
     "webpack-merge": "^1.1.1",
