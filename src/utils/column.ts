@@ -74,7 +74,7 @@ export function columnsTotalWidth(columns: any, prop?: any) {
 }
 
 export function columnsByPinArr(val: any) {
-  let colsByPinArr: {type: string, columns: any}[] = [];
+  let colsByPinArr = [];
   const colsByPin = columnsByPin(val);
 
   colsByPinArr.push({ type: 'left', columns: colsByPin['left'] });

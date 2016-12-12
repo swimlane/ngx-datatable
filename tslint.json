@@ -29,7 +29,10 @@
     "no-trailing-whitespace": false,
     "interface-name": false,
     "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
-    "no-bitwise": false
+    "no-bitwise": false,
+    "object-literal-key-quotes": [true, "as-needed"],
+    "arrow-parens": false,
+    "prefer-for-of": false
   },
   "rulesDirectory": []
 }
