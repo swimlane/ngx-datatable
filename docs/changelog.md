@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.2.1
+- Fix AoT by reverting TypeScript upgrade until CLI is updated
+
 ## 2.2.0
 - Bug: Fix AoT private props (#352)
 - Bug: Added null chk to selection getter (#340)

@@ -1,5 +1,5 @@
 "use strict";
-var column_1 = require("./column");
+var column_1 = require('./column');
 /**
  * Calculates the Total Flex Grow
  * @param {array}

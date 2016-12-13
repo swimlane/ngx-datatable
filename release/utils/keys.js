@@ -1,5 +1,4 @@
 "use strict";
-var Keys;
 (function (Keys) {
     Keys[Keys["up"] = 38] = "up";
     Keys[Keys["down"] = 40] = "down";
@@ -7,5 +6,6 @@ var Keys;
     Keys[Keys["escape"] = 27] = "escape";
     Keys[Keys["left"] = 37] = "left";
     Keys[Keys["right"] = 39] = "right";
-})(Keys = exports.Keys || (exports.Keys = {}));
+})(exports.Keys || (exports.Keys = {}));
+var Keys = exports.Keys;
 //# sourceMappingURL=keys.js.map

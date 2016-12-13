@@ -1,6 +1,6 @@
 "use strict";
-var types_1 = require("../types");
-var deep_getter_1 = require("./deep-getter");
+var types_1 = require('../types');
+var deep_getter_1 = require('./deep-getter');
 /**
  * Gets the next sort direction
  * @param  {SortType}      sortType

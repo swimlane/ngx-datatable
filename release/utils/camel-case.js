@@ -29,7 +29,7 @@ exports.camelCase = camelCase;
  */
 function deCamelCase(str) {
     return str
-        .replace(/([A-Z])/g, function (match) { return " " + match; })
+        .replace(/([A-Z])/g, function (match) { return (" " + match); })
         .replace(/^./, function (match) { return match.toUpperCase(); });
 }
 exports.deCamelCase = deCamelCase;
