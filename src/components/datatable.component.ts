@@ -1009,10 +1009,15 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   onHeaderSelect(event: any): void {
-    if(this.selected.length === this.rows.length) {
-      this.selected = [];
-    } else {
-      this.selected = [...this.rows];
+    // before we splice, chk if we currently have all selected
+    const allSelected = this.selected.length === this.rows.length;
+
+    // remove all existing either way
+    this.selected.splice(0, this.selected.length);
+
+    // do the opposite here
+    if(!allSelected) {
+      this.selected.push(...this.rows);
     }
 
     this.select.emit({
