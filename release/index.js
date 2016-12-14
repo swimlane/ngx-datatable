@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"2.2.2" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"2.2.3" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -2487,15 +2487,18 @@ var DatatableComponent = (function () {
      * @memberOf DatatableComponent
      */
     DatatableComponent.prototype.onHeaderSelect = function (event) {
-        if (this.selected.length === this.rows.length) {
-            this.selected = [];
-        }
-        else {
-            this.selected = this.rows.slice();
+        // before we splice, chk if we currently have all selected
+        var allSelected = this.selected.length === this.rows.length;
+        // remove all existing either way
+        this.selected.splice(0, this.selected.length);
+        // do the opposite here
+        if (!allSelected) {
+            (_a = this.selected).push.apply(_a, this.rows);
         }
         this.select.emit({
             selected: this.selected
         });
+        var _a;
     };
     /**
      * A row was selected from body

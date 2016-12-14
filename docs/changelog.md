@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.2.3
+- Bug: Fix header checkbox mutating selection array
+
 ## 2.2.2
 - Bug: Fix default selections and don't mutate selection arrow now
 
