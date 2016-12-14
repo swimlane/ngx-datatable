@@ -1,7 +1,10 @@
 # Changelog
 
+## 2.2.2
+- Bug: Fix default selections and don't mutate selection arrow now
+
 ## 2.2.1
-- Fix AoT by reverting TypeScript upgrade until CLI is updated
+- Bug: Fix AoT by reverting TypeScript upgrade until CLI is updated
 
 ## 2.2.0
 - Bug: Fix AoT private props (#352)

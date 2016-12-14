@@ -6,6 +6,10 @@ import { Component } from '@angular/core';
     <div>
       <h3>Single Row Selection</h3>
       <div style='float:left;width:75%'>
+        <div class="info">
+          <p>This demonstrates a simple single selection table with the 3rd row selected by default.</p>
+        </div>
+
         <swui-datatable
           class="material"
           [rows]="rows"
@@ -48,6 +52,7 @@ export class SingleSelectionComponent {
 
   constructor() {
     this.fetch((data) => {
+      this.selected = [data[2]];
       this.rows = data;
     });
   }
@@ -65,9 +70,6 @@ export class SingleSelectionComponent {
 
   onSelect({ selected }) {
     console.log('Select Event', selected, this.selected);
-
-    this.selected.splice(0, this.selected.length);
-    this.selected.push(...selected);
   }
 
   onActivate(event) {
