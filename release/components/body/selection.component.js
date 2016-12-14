@@ -33,11 +33,13 @@ var DataTableSelectionComponent = (function () {
         if (this.selectCheck) {
             selected = selected.filter(this.selectCheck.bind(this));
         }
-        this.selected = selected;
+        this.selected.splice(0, this.selected.length);
+        (_a = this.selected).push.apply(_a, selected);
         this.prevIndex = index;
         this.select.emit({
             selected: selected
         });
+        var _a;
     };
     DataTableSelectionComponent.prototype.onActivate = function (model, index) {
         var type = model.type, event = model.event, row = model.row;
