@@ -29,8 +29,9 @@ export class RowHeightCache {
    * @param rows The array of rows which contain the expanded status.
    * @param rowHeight The row height.
    * @param detailRowHeight The detail row height.
+   * @param totalCount The total count of items in the table.
    */
-  initCache(rows: any[], rowHeight: number, detailRowHeight: number): void {
+  initCache(rows: any[], rowHeight: number, detailRowHeight: number, totalCount: number): void {
     if (isNaN(rowHeight)) {
       throw new Error(`Row Height cache initialization failed. Please ensure that 'rowHeight' is a
         valid number value: (${rowHeight}) when 'scrollbarV' is enabled.`);
@@ -42,7 +43,7 @@ export class RowHeightCache {
         valid number value: (${detailRowHeight}) when 'scrollbarV' is enabled.`);
     }
 
-    const n = rows.length;
+    const n = totalCount;
     this.treeArray = new Array(n);
 
     for(let i = 0; i < n; ++i) {

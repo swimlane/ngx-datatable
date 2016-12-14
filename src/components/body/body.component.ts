@@ -410,7 +410,7 @@ export class DataTableBodyComponent {
     // Initialize the tree only if there are rows inside the tree.
     if (this.rows && this.rows.length) {
       this.rowHeightsCache.initCache(
-        this.rows, this.rowHeight, this.detailRowHeight);
+        this.rows, this.rowHeight, this.detailRowHeight, this.rowCount);
     }
   }
 
