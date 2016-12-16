@@ -7,6 +7,7 @@
 - Bug: Fix AoT errors (#370)
 - Bug: Fix build not outputing AoT files in correct directory
 - Bug: Fix checkbox selection not working w/ shift key
+- Chore: Upgrade Angular/Webpack
 
 ## 2.2.3
 - Bug: Fix header checkbox mutating selection array
@@ -26,7 +27,6 @@
 - Chore: Update RxJS to 5.0.0-rc.4
 - Chore: Update ZoneJS to 0.7.2
 - Demo: Add templates for Webpack plugin for Google Analytics
-
 
 ## 2.1.3
 - Bug: Fix footer not updating when all removes removed
