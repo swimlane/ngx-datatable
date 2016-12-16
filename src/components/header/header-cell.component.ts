@@ -2,7 +2,7 @@ import {
   Component, Input, EventEmitter, Output, HostBinding
 } from '@angular/core';
 
-import { SortDirection, SortType } from '../../types';
+import { SortDirection, SortType, SelectionType } from '../../types';
 import { nextSortDir } from '../../utils';
 
 @Component({
@@ -10,7 +10,7 @@ import { nextSortDir } from '../../utils';
   template: `
     <div>
       <label
-        *ngIf="column.checkboxable && column.headerCheckboxable" 
+        *ngIf="column.checkboxable && column.headerCheckboxable && selectionType === 'checkbox'" 
         class="datatable-checkbox">
         <input 
           type="checkbox"
@@ -34,7 +34,7 @@ import { nextSortDir } from '../../utils';
       </template>
       <span
         class="sort-btn"
-        [ngClass]="sortClasses(sortDir)">
+        [class]="sortClass">
       </span>
     </div>
   `
@@ -46,6 +46,7 @@ export class DataTableHeaderCellComponent {
   @Input() sortAscendingIcon: string;
   @Input() sortDescendingIcon: string;
   @Input() allRowsSelected: boolean;
+  @Input() selectionType: SelectionType;
 
   @HostBinding('style.height.px')
   @Input() headerHeight: number;
@@ -53,6 +54,7 @@ export class DataTableHeaderCellComponent {
   @Input() set sorts(val: any[]) {
     this._sorts = val;
     this.sortDir = this.calcSortDir(val);
+    this.sortClass = this.calcSortClass(this.sortDir);
   }
 
   get sorts(): any[] {
@@ -97,20 +99,9 @@ export class DataTableHeaderCellComponent {
     return this.column.width;
   }
 
+  sortClass: string;
   sortDir: SortDirection;
   _sorts: any[];
-
-  sortClasses(dir: SortDirection): any {
-    let result = {};
-
-    if(dir === SortDirection.asc) {
-      result[`sort-asc ${this.sortAscendingIcon}`] = true;
-    } else if(dir === SortDirection.desc) {
-      result[`sort-desc ${this.sortDescendingIcon}`] = true;
-    }
-
-    return result;
-  }
 
   calcSortDir(sorts: any[]): any {
     if(sorts && this.column) {
@@ -131,6 +122,14 @@ export class DataTableHeaderCellComponent {
       prevValue: this.sortDir,
       newValue
     });
+  }
+
+  calcSortClass(sortDir): string {
+    if(sortDir === SortDirection.asc) {
+      return `sort-asc ${this.sortAscendingIcon}`;
+    } else if(sortDir === SortDirection.desc) {
+      return `sort-desc ${this.sortDescendingIcon}`;
+    }
   }
 
 }

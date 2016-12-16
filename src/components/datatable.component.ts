@@ -30,6 +30,7 @@ import { scrollbarWidth, setColumnDefaults, throttleable, translateTemplates } f
         [sortAscendingIcon]="cssClasses.sortAscending"
         [sortDescendingIcon]="cssClasses.sortDescending"
         [allRowsSelected]="allRowsSelected"
+        [selectionType]="selectionType"
         (sort)="onColumnSort($event)"
         (resize)="onColumnResize($event)"
         (reorder)="onColumnReorder($event)"

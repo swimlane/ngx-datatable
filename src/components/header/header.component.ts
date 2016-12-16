@@ -1,7 +1,7 @@
 import {
   Component, Output, EventEmitter, Input, HostBinding
 } from '@angular/core';
-import { SortType } from '../../types';
+import { SortType, SelectionType } from '../../types';
 import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY } from '../../utils';
 import { DataTableColumnDirective } from '../columns';
 
@@ -33,6 +33,7 @@ import { DataTableColumnDirective } from '../columns';
           [column]="column"
           [sortType]="sortType"
           [sorts]="sorts"
+          [selectionType]="selectionType"
           [sortAscendingIcon]="sortAscendingIcon"
           [sortDescendingIcon]="sortDescendingIcon"
           (sort)="onSort($event)"
@@ -55,6 +56,7 @@ export class DataTableHeaderComponent {
   @Input() sorts: any[];
   @Input() sortType: SortType;
   @Input() allRowsSelected: boolean;
+  @Input() selectionType: SelectionType;
 
   @HostBinding('style.height')
   @Input() set headerHeight(val: any) {
