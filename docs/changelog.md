@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.0
+- BREAKING!!!! - Renamed project from `angular2-datatable` to `ngx-datatable` 
+and updated components from `<swui-datatable>` to `<ngx-datatable>`
+
 ## 3.0.0
 - BREAKING: Removed `shiftMulti` option, its not useful and creates odd scenarios
 - Bug: Permanently high CPU utilization after sorting (#359)

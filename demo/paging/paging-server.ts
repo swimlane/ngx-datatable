@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <h3>Server-side Paging</h3>
-      <swui-datatable
+      <ngx-datatable
         class="material"
         [rows]="rows"
         [columns]="[{name:'Name'},{name:'Gender'},{name:'Company'}]"
@@ -18,7 +18,7 @@ import { Component } from '@angular/core';
         [offset]="offset"
         [limit]="limit"
         (page)='onPage($event)'>
-      </swui-datatable>
+      </ngx-datatable>
     </div>
   `
 })

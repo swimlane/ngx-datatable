@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <h3>Fluid Row Heights</h3>
-      <swui-datatable
+      <ngx-datatable
         class="material"
         [rows]="rows"
         [loadingIndicator]="loadingIndicator"
@@ -14,7 +14,7 @@ import { Component } from '@angular/core';
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="'auto'">
-      </swui-datatable>
+      </ngx-datatable>
     </div>
   `
 })

@@ -13,7 +13,7 @@ import { DatatableRowDetailDirective } from './row-detail';
 import { scrollbarWidth, setColumnDefaults, throttleable, translateTemplates } from '../utils';
 
 @Component({
-  selector: 'swui-datatable',
+  selector: 'ngx-datatable',
   template: `
     <div
       visibility-observer

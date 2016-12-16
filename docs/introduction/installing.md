@@ -1,11 +1,11 @@
 # Installing
 
-You can grab the latest release from the [Releases Page](https://github.com/swimlane/angular2-data-table/releases) 
-in Github or via [NPM](https://www.npmjs.com/package/angular2-data-table).
+You can grab the latest release from the [Releases Page](https://github.com/swimlane/ngx-datatable/releases) 
+in Github or via [NPM](https://www.npmjs.com/package/@swimlane/ngx-datatable).
 
-* `npm install angular2-data-table`
+* `npm install @swimlane/ngx-datatable`
 
-Also, the release code is checked in and resides [here](https://github.com/swimlane/angular2-data-table/tree/master/release).
+Also, the release code is checked in and resides [here](https://github.com/swimlane/ngx-datatable/tree/master/release).
 
 ### Module Version
 The module is packaged using UMD. The file is `release/index.js`.

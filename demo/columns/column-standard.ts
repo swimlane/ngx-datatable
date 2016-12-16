@@ -5,29 +5,29 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <h3>Fixed Column Widths</h3>
-      <swui-datatable
+      <ngx-datatable
         class="material"
         [rows]="rows"
         [columnMode]="'standard'"
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="'auto'">
-        <swui-datatable-column name="Name" [width]="300">
-          <template let-value="value" swui-datatable-cell-template>
+        <ngx-datatable-column name="Name" [width]="300">
+          <template let-value="value" ngx-datatable-cell-template>
             {{value}}
           </template>
-        </swui-datatable-column>
-        <swui-datatable-column name="Gender" [width]="300">
-          <template let-row="row" let-value="value" swui-datatable-cell-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Gender" [width]="300">
+          <template let-row="row" let-value="value" ngx-datatable-cell-template>
             {{value}}
           </template>
-        </swui-datatable-column>
-        <swui-datatable-column name="Age" [width]="300">
-          <template let-value="value" swui-datatable-cell-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Age" [width]="300">
+          <template let-value="value" ngx-datatable-cell-template>
             {{value}}
           </template>
-        </swui-datatable-column>
-      </swui-datatable>
+        </ngx-datatable-column>
+      </ngx-datatable>
     </div>
   `
 })

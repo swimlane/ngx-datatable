@@ -66,4 +66,4 @@ import {
     DataTableColumnCellDirective
   ]
 })
-export class Angular2DataTableModule { }
+export class NgxDatatableModule { }

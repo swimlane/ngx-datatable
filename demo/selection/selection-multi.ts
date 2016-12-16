@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
     <div>
       <h3>Multi Select via Click</h3>
       <div style='float:left;width:75%'>
-        <swui-datatable
+        <ngx-datatable
           class="material"
           [rows]="rows"
           [columnMode]="'force'"
@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
           [selectionType]="'multi'"
           (activate)="onActivate($event)"
           (select)='onSelect($event)'>
-        </swui-datatable>
+        </ngx-datatable>
       </div>
 
       <div class='selected-column'>

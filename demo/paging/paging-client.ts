@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <h3>Client-side Paging</h3>
-      <swui-datatable
+      <ngx-datatable
         class="material"
         [rows]="rows"
         [columns]="[{name:'Name'},{name:'Gender'},{name:'Company'}]"
@@ -14,7 +14,7 @@ import { Component } from '@angular/core';
         [footerHeight]="50"
         [rowHeight]="'auto'"
         [limit]="10">
-      </swui-datatable>
+      </ngx-datatable>
     </div>
   `
 })

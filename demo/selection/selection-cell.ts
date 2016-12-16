@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <h3>Cell Selection</h3>
-      <swui-datatable
+      <ngx-datatable
         class="material selection-cell"
         [rows]="rows"
         [columnMode]="'force'"
@@ -17,7 +17,7 @@ import { Component } from '@angular/core';
         [selectionType]="'cell'"
         (select)="onSelect($event)"
         (activate)="onActivate($event)">
-      </swui-datatable>
+      </ngx-datatable>
     </div>
   `
 })

@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <h3>Inline Editing</h3>
-      <swui-datatable
+      <ngx-datatable
         #mydatatable
         class="material"
         [headerHeight]="50"
@@ -14,8 +14,8 @@ import { Component } from '@angular/core';
         [footerHeight]="50"
         [rowHeight]="'auto'"
         [rows]="rows">
-        <swui-datatable-column name="Name">
-          <template swui-datatable-cell-template let-value="value" let-row="row">
+        <ngx-datatable-column name="Name">
+          <template ngx-datatable-cell-template let-value="value" let-row="row">
             <span
               title="Double click to edit"
               (dblclick)="editing[row.$$index + '-name'] = true"
@@ -30,9 +30,9 @@ import { Component } from '@angular/core';
               [value]="value"
             />
           </template>
-        </swui-datatable-column>
-        <swui-datatable-column name="Gender">
-          <template swui-datatable-cell-template let-row="row" let-value="value">
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Gender">
+          <template ngx-datatable-cell-template let-row="row" let-value="value">
              <span
               title="Double click to edit"
               (dblclick)="editing[row.$$index + '-gender'] = true"
@@ -47,13 +47,13 @@ import { Component } from '@angular/core';
               <option value="female">Female</option>
             </select>
           </template>
-        </swui-datatable-column>
-        <swui-datatable-column name="Age">
-          <template swui-datatable-cell-template let-value="value">
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Age">
+          <template ngx-datatable-cell-template let-value="value">
             {{value}}
           </template>
-        </swui-datatable-column>
-      </swui-datatable>
+        </ngx-datatable-column>
+      </ngx-datatable>
     </div>
   `
 })

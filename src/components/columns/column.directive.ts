@@ -2,7 +2,7 @@ import { Directive, TemplateRef, ContentChild, Input } from '@angular/core';
 import { DataTableColumnHeaderDirective } from './column-header.directive';
 import { DataTableColumnCellDirective } from './column-cell.directive';
 
-@Directive({ selector: 'swui-datatable-column' })
+@Directive({ selector: 'ngx-datatable-column' })
 export class DataTableColumnDirective {
 
   @Input() name: string;

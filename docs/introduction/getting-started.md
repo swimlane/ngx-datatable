@@ -6,13 +6,13 @@ in your application module like:
 ```javascript
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { Angular2DataTableModule } from 'angular2-data-table';
+import { NgxDatatableModule } from 'angular2-data-table';
 
 import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [Angular2DataTableModule, BrowserModule],
+  imports: [NgxDatatableModule, BrowserModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
@@ -27,10 +27,10 @@ import { Component } from '@angular/core';
   selector: 'app',
   template: `
     <div>
-      <swui-datatable
+      <ngx-datatable
         [rows]="rows"
         [columns]="columns">
-      </swui-datatable>
+      </ngx-datatable>
     </div>
   `
 })

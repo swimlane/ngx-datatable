@@ -13,7 +13,7 @@ import { Component } from '@angular/core';
           <a href="#" (click)="remove()">Remove</a>
         </small>
       </h3>
-      <swui-datatable
+      <ngx-datatable
         #mydatatable
         class="material"
         [headerHeight]="50"
@@ -23,10 +23,10 @@ import { Component } from '@angular/core';
         [rowHeight]="'auto'"
         [trackByProp]="'updated'"
         [rows]="rows">
-        <swui-datatable-column name="Name"></swui-datatable-column>
-        <swui-datatable-column name="Gender"></swui-datatable-column>
-        <swui-datatable-column name="Company"></swui-datatable-column>
-      </swui-datatable>
+        <ngx-datatable-column name="Name"></ngx-datatable-column>
+        <ngx-datatable-column name="Gender"></ngx-datatable-column>
+        <ngx-datatable-column name="Company"></ngx-datatable-column>
+      </ngx-datatable>
     </div>
   `
 })

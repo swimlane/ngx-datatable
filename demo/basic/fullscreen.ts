@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <h3>Full Screen</h3>
-      <swui-datatable
+      <ngx-datatable
         class="material fullscreen"
         style="top: 52px"
         [columnMode]="'force'"
@@ -15,13 +15,13 @@ import { Component } from '@angular/core';
         [scrollbarV]="true"
         [scrollbarH]="true"
         [rows]="rows">
-        <swui-datatable-column name="Id" [width]="80"></swui-datatable-column>
-        <swui-datatable-column name="Name" [width]="300"></swui-datatable-column>
-        <swui-datatable-column name="Gender"></swui-datatable-column>
-        <swui-datatable-column name="Age"></swui-datatable-column>
-        <swui-datatable-column name="City" [width]="300" prop="address.city"></swui-datatable-column>
-        <swui-datatable-column name="State" [width]="300" prop="address.state"></swui-datatable-column>
-      </swui-datatable>
+        <ngx-datatable-column name="Id" [width]="80"></ngx-datatable-column>
+        <ngx-datatable-column name="Name" [width]="300"></ngx-datatable-column>
+        <ngx-datatable-column name="Gender"></ngx-datatable-column>
+        <ngx-datatable-column name="Age"></ngx-datatable-column>
+        <ngx-datatable-column name="City" [width]="300" prop="address.city"></ngx-datatable-column>
+        <ngx-datatable-column name="State" [width]="300" prop="address.state"></ngx-datatable-column>
+      </ngx-datatable>
     </div>
   `
 })

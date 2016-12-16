@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <h3>Client-side Sorting</h3>
-      <swui-datatable
+      <ngx-datatable
         class="material"
         [rows]="rows"
         [columns]="columns"
@@ -15,7 +15,7 @@ import { Component } from '@angular/core';
         [footerHeight]="50"
         [rowHeight]="50"
         [scrollbarV]="true">
-      </swui-datatable>
+      </ngx-datatable>
     </div>
   `
 })

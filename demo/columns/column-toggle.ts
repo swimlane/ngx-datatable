@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
     <div>
       <h3>Column Toggling</h3>
       <div style='float:left;width:75%'>
-        <swui-datatable
+        <ngx-datatable
           class='material'
           [rows]='rows'
           [columns]="columns"
@@ -14,7 +14,7 @@ import { Component } from '@angular/core';
           [headerHeight]="50"
           [footerHeight]="50"
           [rowHeight]="'auto'">
-        </swui-datatable>
+        </ngx-datatable>
       </div>
       <div class='selected-column'>
         <h4>Available Columns</h4>

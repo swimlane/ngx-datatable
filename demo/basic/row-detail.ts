@@ -11,7 +11,7 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
           <a href="#" (click)="mydatatable.collapseAllRows()">Collapse All</a>
         </small>
       </h3>
-      <swui-datatable
+      <ngx-datatable
         #mydatatable
         class='material expandable'
         [columnMode]="'force'"
@@ -22,21 +22,21 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
         [scrollbarV]="50"
         [rows]='rows'
         (page)="onPage($event)">
-        <swui-datatable-row-detail>
-          <template let-row="row" swui-datatable-row-detail-template>
+        <ngx-datatable-row-detail>
+          <template let-row="row" ngx-datatable-row-detail-template>
             <div style="padding-left:35px;">
               <div><strong>Address</strong></div>
               <div>{{row.address.city}}, {{row.address.state}}</div>
             </div>
           </template>
-        </swui-datatable-row-detail>
-         <swui-datatable-column
+        </ngx-datatable-row-detail>
+         <ngx-datatable-column
           [width]="50"
           [resizeable]="false"
           [sortable]="false"
           [draggable]="false"
           [canAutoResize]="false">
-          <template let-row="row" swui-datatable-cell-template>
+          <template let-row="row" ngx-datatable-cell-template>
             <a
               href="#"
               [class.icon-right]="!row.$$expanded"
@@ -45,29 +45,29 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
               (click)="toggleExpandRow(row)">
             </a>
           </template>
-        </swui-datatable-column>
-        <swui-datatable-column name="Index" width="80">
-          <template let-row="row" swui-datatable-cell-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Index" width="80">
+          <template let-row="row" ngx-datatable-cell-template>
             <strong>{{row.$$index}}</strong>
           </template>
-        </swui-datatable-column>
-        <swui-datatable-column name="Exapanded" width="80">
-          <template let-row="row" swui-datatable-cell-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Exapanded" width="80">
+          <template let-row="row" ngx-datatable-cell-template>
             <strong>{{row.$$expanded === 1}}</strong>
           </template>
-        </swui-datatable-column>
-        <swui-datatable-column name="Name" width="200">
-          <template let-value="value" swui-datatable-cell-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Name" width="200">
+          <template let-value="value" ngx-datatable-cell-template>
             <strong>{{value}}</strong>
           </template>
-        </swui-datatable-column>
-        <swui-datatable-column name="Gender" width="300">
-          <template let-row="row" let-value="value" swui-datatable-cell-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Gender" width="300">
+          <template let-row="row" let-value="value" ngx-datatable-cell-template>
             <i [innerHTML]="row['name']"></i> and <i>{{value}}</i>
           </template>
-        </swui-datatable-column>
-        <swui-datatable-column name="Age" ></swui-datatable-column>
-      </swui-datatable>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Age" ></ngx-datatable-column>
+      </ngx-datatable>
     </div>
   `,
   encapsulation: ViewEncapsulation.None

@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <h3>Multiple Tables</h3>
-      <swui-datatable
+      <ngx-datatable
         class="material"
         [rows]="rows1"
         [columns]="columns1"
@@ -13,16 +13,16 @@ import { Component } from '@angular/core';
         [headerHeight]="50"
         [footerHeight]="0"
         [rowHeight]="100">
-      </swui-datatable>
+      </ngx-datatable>
       <br />
-      <swui-datatable
+      <ngx-datatable
         class="material"
         [rows]="rows2"
         [columns]="columns2"
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="'auto'">
-      </swui-datatable>
+      </ngx-datatable>
     </div>
   `
 })

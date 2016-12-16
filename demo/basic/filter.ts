@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
         placeholder='Type to filter the name column...'
         (keyup)='updateFilter($event)'
       />
-      <swui-datatable
+      <ngx-datatable
         class='material'
         [columns]="columns"
         [columnMode]="'force'"
@@ -20,7 +20,7 @@ import { Component } from '@angular/core';
         [rowHeight]="'auto'"
         [limit]="10"
         [rows]='rows'>
-      </swui-datatable>
+      </ngx-datatable>
     </div>
   `
 })

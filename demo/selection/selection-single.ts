@@ -10,7 +10,7 @@ import { Component } from '@angular/core';
           <p>This demonstrates a simple single selection table with the 3rd row selected by default.</p>
         </div>
 
-        <swui-datatable
+        <ngx-datatable
           class="material"
           [rows]="rows"
           [columnMode]="'force'"
@@ -23,7 +23,7 @@ import { Component } from '@angular/core';
           [selectionType]="'single'"
           (activate)="onActivate($event)"
           (select)='onSelect($event)'>
-        </swui-datatable>
+        </ngx-datatable>
       </div>
 
       <div class='selected-column'>

@@ -2,7 +2,7 @@ import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 
-import { Angular2DataTableModule } from '../src';
+import { NgxDatatableModule } from '../src';
 import { AppComponent } from './app.component';
 import '../src/components/datatable.scss';
 import '../src/themes/material.scss';
@@ -83,7 +83,7 @@ import { ColumnPinningComponent } from './columns/pinning';
     ContextMenuDemoComponent,
     CheckboxSelectionComponent
   ],
-  imports: [BrowserModule, Angular2DataTableModule],
+  imports: [BrowserModule, NgxDatatableModule],
   bootstrap: [AppComponent]
 })
 export class AppModule {

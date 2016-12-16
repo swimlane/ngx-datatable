@@ -1,7 +1,7 @@
 import { Directive, TemplateRef, ContentChild } from '@angular/core';
 import { DatatableRowDetailTemplateDirective } from './row-detail-template.directive';
 
-@Directive({ selector: 'swui-datatable-row-detail' })
+@Directive({ selector: 'ngx-datatable-row-detail' })
 export class DatatableRowDetailDirective {
 
   @ContentChild(DatatableRowDetailTemplateDirective, { read: TemplateRef }) 

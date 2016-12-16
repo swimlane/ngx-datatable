@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Rx';
   template: `
     <div>
       <h3>RXjs Data</h3>
-      <swui-datatable
+      <ngx-datatable
         class="material striped"
         [rows]="rows | async"
         [columns]="columns"
@@ -14,7 +14,7 @@ import { Observable } from 'rxjs/Rx';
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="50">
-      </swui-datatable>
+      </ngx-datatable>
     </div>
   `
 })

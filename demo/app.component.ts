@@ -5,16 +5,16 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <nav>
-        <h3>angular2-data-table <small>({{version}})</small></h3>
+        <h3>ngx-datatable <small>({{version}})</small></h3>
         <ul class="main-ul">
           <li>
             <h4>Documentation</h4>
             <ul>
               <li>
-                <a href="https://swimlane.gitbooks.io/angular2-data-table/content/" target="_black">Online</a>
+                <a href="https://swimlane.gitbooks.io/ngx-datatable/content/" target="_black">Online</a>
               </li>
               <li>
-                <a href="https://www.gitbook.com/download/pdf/book/swimlane/angular2-data-table" target="_black">PDF</a>
+                <a href="https://www.gitbook.com/download/pdf/book/swimlane/ngx-datatable" target="_black">PDF</a>
               </li>
             </ul>
           </li>

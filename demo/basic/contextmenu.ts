@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
         <p *ngIf="rawEvent"><strong>Mouse position:</strong> <code>(x: {{rawEvent?.x}}, y: {{rawEvent?.y}})</code></p>
         <p *ngIf="contextmenuRow"><strong>Row:</strong> {{contextmenuRow?.name}}</p>
       </div>
-      <swui-datatable
+      <ngx-datatable
         class="material"
         [rows]="rows"
         [columns]="columns"
@@ -21,7 +21,7 @@ import { Component } from '@angular/core';
         [footerHeight]="50"
         [rowHeight]="'auto'"
         (rowContextmenu)="onContextMenu($event)">
-      </swui-datatable>
+      </ngx-datatable>
     </div>
   `
 })
