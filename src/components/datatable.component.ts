@@ -284,7 +284,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * 
    *  - `single`
    *  - `multi`
-   *  - `multiShift`. 
+   *  - `chkbox`. 
    * 
    * For no selection pass a `falsey`. 
    * Default value: `undefined`
@@ -573,8 +573,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    */
   @HostBinding('class.multi-selection')
   get isMultiSelection(): boolean {
-    return this.selectionType === SelectionType.multi || 
-      this.selectionType === SelectionType.multiShift;
+    return this.selectionType === SelectionType.multi;
   }
 
   /**
