@@ -5,7 +5,7 @@ node_js:
 
 addons:
   code_climate:
-    repo_token: b20ca080ed80dafc784a94a23f78ba454c365f8a12a2d935351a2fb00251301b
+    repo_token: b04bcf6ebc70567672c834d14acc6eab1ddb5b2fe1cfa62d9d1d421010a0ce31
 
 before_install:
   - export CHROME_BIN=chromium-browser
