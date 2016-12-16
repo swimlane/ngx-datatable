@@ -400,7 +400,7 @@ class View_DatatableComponent_Host0 extends import2.AppView<any> {
     super(View_DatatableComponent_Host0,renderType_DatatableComponent_Host,import7.ViewType.HOST,viewUtils,parentView,parentIndex,parentElement,import8.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import9.ComponentRef<any> {
-    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'swui-datatable',new import3.InlineArray2(2,'class','datatable'),rootSelector,(null as any));
+    this._el_0 = import3.selectOrCreateRenderHostElement(this.renderer,'ngx-datatable',new import3.InlineArray2(2,'class','datatable'),rootSelector,(null as any));
     this.compView_0 = new View_DatatableComponent0(this.viewUtils,this,0,this._el_0);
     this._DatatableComponent_0_3 = new Wrapper_DatatableComponent(new import10.ElementRef(this._el_0),this.injectorGet(import11.KeyValueDiffers,this.parentIndex));
     this._query_DataTableColumnDirective_0_0 = new import6.QueryList<any>();
@@ -441,7 +441,7 @@ class View_DatatableComponent_Host0 extends import2.AppView<any> {
     return result;
   }
 }
-export const DatatableComponentNgFactory:import9.ComponentFactory<import0.DatatableComponent> = new import9.ComponentFactory<import0.DatatableComponent>('swui-datatable',View_DatatableComponent_Host0,import0.DatatableComponent);
+export const DatatableComponentNgFactory:import9.ComponentFactory<import0.DatatableComponent> = new import9.ComponentFactory<import0.DatatableComponent>('ngx-datatable',View_DatatableComponent_Host0,import0.DatatableComponent);
 const styles_DatatableComponent:any[] = ([] as any[]);
 var renderType_DatatableComponent:import4.RenderComponentType = import3.createRenderComponentType('',0,import5.ViewEncapsulation.None,styles_DatatableComponent,{});
 export class View_DatatableComponent0 extends import2.AppView<import0.DatatableComponent> {

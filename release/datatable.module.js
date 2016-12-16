@@ -3,10 +3,10 @@ var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
 var components_1 = require('./components');
 var directives_1 = require('./directives');
-var Angular2DataTableModule = (function () {
-    function Angular2DataTableModule() {
+var NgxDatatableModule = (function () {
+    function NgxDatatableModule() {
     }
-    Angular2DataTableModule.decorators = [
+    NgxDatatableModule.decorators = [
         { type: core_1.NgModule, args: [{
                     imports: [
                         common_1.CommonModule
@@ -46,8 +46,8 @@ var Angular2DataTableModule = (function () {
                 },] },
     ];
     /** @nocollapse */
-    Angular2DataTableModule.ctorParameters = function () { return []; };
-    return Angular2DataTableModule;
+    NgxDatatableModule.ctorParameters = function () { return []; };
+    return NgxDatatableModule;
 }());
-exports.Angular2DataTableModule = Angular2DataTableModule;
+exports.NgxDatatableModule = NgxDatatableModule;
 //# sourceMappingURL=datatable.module.js.map

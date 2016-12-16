@@ -11,9 +11,9 @@ import * as import2 from '@angular/common/src/common_module';
 import * as import3 from '@angular/common/src/localization';
 import * as import4 from '@angular/core/src/di/injector';
 import * as import5 from '@angular/core/src/i18n/tokens';
-class Angular2DataTableModuleInjector extends import0.NgModuleInjector<import1.Angular2DataTableModule> {
+class NgxDatatableModuleInjector extends import0.NgModuleInjector<import1.NgxDatatableModule> {
   _CommonModule_0:import2.CommonModule;
-  _Angular2DataTableModule_1:import1.Angular2DataTableModule;
+  _NgxDatatableModule_1:import1.NgxDatatableModule;
   __NgLocalization_2:import3.NgLocaleLocalization;
   constructor(parent:import4.Injector) {
     super(parent,([] as any[]),([] as any[]));
@@ -22,18 +22,18 @@ class Angular2DataTableModuleInjector extends import0.NgModuleInjector<import1.A
     if ((this.__NgLocalization_2 == null)) { (this.__NgLocalization_2 = new import3.NgLocaleLocalization(this.parent.get(import5.LOCALE_ID))); }
     return this.__NgLocalization_2;
   }
-  createInternal():import1.Angular2DataTableModule {
+  createInternal():import1.NgxDatatableModule {
     this._CommonModule_0 = new import2.CommonModule();
-    this._Angular2DataTableModule_1 = new import1.Angular2DataTableModule();
-    return this._Angular2DataTableModule_1;
+    this._NgxDatatableModule_1 = new import1.NgxDatatableModule();
+    return this._NgxDatatableModule_1;
   }
   getInternal(token:any,notFoundResult:any):any {
     if ((token === import2.CommonModule)) { return this._CommonModule_0; }
-    if ((token === import1.Angular2DataTableModule)) { return this._Angular2DataTableModule_1; }
+    if ((token === import1.NgxDatatableModule)) { return this._NgxDatatableModule_1; }
     if ((token === import3.NgLocalization)) { return this._NgLocalization_2; }
     return notFoundResult;
   }
   destroyInternal():void {
   }
 }
-export const Angular2DataTableModuleNgFactory:import0.NgModuleFactory<import1.Angular2DataTableModule> = new import0.NgModuleFactory(Angular2DataTableModuleInjector,import1.Angular2DataTableModule);
+export const NgxDatatableModuleNgFactory:import0.NgModuleFactory<import1.NgxDatatableModule> = new import0.NgModuleFactory(NgxDatatableModuleInjector,import1.NgxDatatableModule);

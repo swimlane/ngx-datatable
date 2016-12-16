@@ -6,7 +6,7 @@ var DataTableColumnCellDirective = (function () {
     }
     ;
     DataTableColumnCellDirective.decorators = [
-        { type: core_1.Directive, args: [{ selector: '[swui-datatable-cell-template]' },] },
+        { type: core_1.Directive, args: [{ selector: '[ngx-datatable-cell-template]' },] },
     ];
     /** @nocollapse */
     DataTableColumnCellDirective.ctorParameters = function () { return [

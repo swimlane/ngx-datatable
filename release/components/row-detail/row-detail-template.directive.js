@@ -7,7 +7,7 @@ var DatatableRowDetailTemplateDirective = (function () {
     ;
     DatatableRowDetailTemplateDirective.decorators = [
         { type: core_1.Directive, args: [{
-                    selector: '[swui-datatable-row-detail-template]'
+                    selector: '[ngx-datatable-row-detail-template]'
                 },] },
     ];
     /** @nocollapse */

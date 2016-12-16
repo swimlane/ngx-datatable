@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"3.0.0" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"4.0.0" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -1486,7 +1486,7 @@ var DataTableColumnCellDirective = (function () {
     }
     ;
     DataTableColumnCellDirective = __decorate([
-        core_1.Directive({ selector: '[swui-datatable-cell-template]' }), 
+        core_1.Directive({ selector: '[ngx-datatable-cell-template]' }), 
         __metadata('design:paramtypes', [core_1.TemplateRef])
     ], DataTableColumnCellDirective);
     return DataTableColumnCellDirective;
@@ -1517,7 +1517,7 @@ var DataTableColumnHeaderDirective = (function () {
     }
     ;
     DataTableColumnHeaderDirective = __decorate([
-        core_1.Directive({ selector: '[swui-datatable-header-template]' }), 
+        core_1.Directive({ selector: '[ngx-datatable-header-template]' }), 
         __metadata('design:paramtypes', [core_1.TemplateRef])
     ], DataTableColumnHeaderDirective);
     return DataTableColumnHeaderDirective;
@@ -1622,7 +1622,7 @@ var DataTableColumnDirective = (function () {
         __metadata('design:type', core_1.TemplateRef)
     ], DataTableColumnDirective.prototype, "headerTemplate", void 0);
     DataTableColumnDirective = __decorate([
-        core_1.Directive({ selector: 'swui-datatable-column' }), 
+        core_1.Directive({ selector: 'ngx-datatable-column' }), 
         __metadata('design:paramtypes', [])
     ], DataTableColumnDirective);
     return DataTableColumnDirective;
@@ -2715,7 +2715,7 @@ var DatatableComponent = (function () {
     ], DatatableComponent.prototype, "onWindowResize", null);
     DatatableComponent = __decorate([
         core_1.Component({
-            selector: 'swui-datatable',
+            selector: 'ngx-datatable',
             template: "\n    <div\n      visibility-observer\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"columns\"\n        [headerHeight]=\"headerHeight\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        [selectionType]=\"selectionType\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\">\n      </datatable-header>\n      <datatable-body\n        [rows]=\"rows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"columns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetailTemplate]=\"rowDetailTemplate\"\n        [detailRowHeight]=\"detailRowHeight\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"rowContextmenu.emit($event)\"\n        (select)=\"onBodySelect($event)\"\n        (detailToggle)=\"detailToggle.emit($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
             host: {
                 class: 'datatable'
@@ -3458,7 +3458,7 @@ var DatatableRowDetailTemplateDirective = (function () {
     ;
     DatatableRowDetailTemplateDirective = __decorate([
         core_1.Directive({
-            selector: '[swui-datatable-row-detail-template]'
+            selector: '[ngx-datatable-row-detail-template]'
         }), 
         __metadata('design:paramtypes', [core_1.TemplateRef])
     ], DatatableRowDetailTemplateDirective);
@@ -3500,7 +3500,7 @@ var DatatableRowDetailDirective = (function () {
         __metadata('design:type', core_1.TemplateRef)
     ], DatatableRowDetailDirective.prototype, "template", void 0);
     DatatableRowDetailDirective = __decorate([
-        core_1.Directive({ selector: 'swui-datatable-row-detail' }), 
+        core_1.Directive({ selector: 'ngx-datatable-row-detail' }), 
         __metadata('design:paramtypes', [])
     ], DatatableRowDetailDirective);
     return DatatableRowDetailDirective;
@@ -3528,10 +3528,10 @@ var core_1 = __webpack_require__(0);
 var common_1 = __webpack_require__(2);
 var components_1 = __webpack_require__("./src/components/index.ts");
 var directives_1 = __webpack_require__("./src/directives/index.ts");
-var Angular2DataTableModule = (function () {
-    function Angular2DataTableModule() {
+var NgxDatatableModule = (function () {
+    function NgxDatatableModule() {
     }
-    Angular2DataTableModule = __decorate([
+    NgxDatatableModule = __decorate([
         core_1.NgModule({
             imports: [
                 common_1.CommonModule
@@ -3570,10 +3570,10 @@ var Angular2DataTableModule = (function () {
             ]
         }), 
         __metadata('design:paramtypes', [])
-    ], Angular2DataTableModule);
-    return Angular2DataTableModule;
+    ], NgxDatatableModule);
+    return NgxDatatableModule;
 }());
-exports.Angular2DataTableModule = Angular2DataTableModule;
+exports.NgxDatatableModule = NgxDatatableModule;
 
 
 /***/ },

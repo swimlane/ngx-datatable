@@ -12,7 +12,7 @@ var DatatableRowDetailDirective = (function () {
         configurable: true
     });
     DatatableRowDetailDirective.decorators = [
-        { type: core_1.Directive, args: [{ selector: 'swui-datatable-row-detail' },] },
+        { type: core_1.Directive, args: [{ selector: 'ngx-datatable-row-detail' },] },
     ];
     /** @nocollapse */
     DatatableRowDetailDirective.ctorParameters = function () { return []; };
