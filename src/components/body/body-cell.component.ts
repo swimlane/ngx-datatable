@@ -16,7 +16,7 @@ import { SortDirection } from '../../types';
         <input 
           type="checkbox"
           [checked]="isSelected"
-          (change)="onCheckboxChange($event)" 
+          (click)="onCheckboxChange($event)" 
         />
       </label>
       <span

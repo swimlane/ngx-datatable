@@ -35,12 +35,11 @@ export class DataTableSelectionComponent {
     if (!this.selectEnabled) return;
 
     const chkbox = this.selectionType === SelectionType.checkbox;
-    const multiShift = this.selectionType === SelectionType.multiShift;
-    const multiClick = this.selectionType === SelectionType.multi;
+    const multi = this.selectionType === SelectionType.multi;
     let selected: any[] = [];
 
-    if (multiShift || multiClick || chkbox) {
-      if (multiShift && event.shiftKey) {
+    if (multi || chkbox) {
+      if (event.shiftKey) {
         const newSelected = [...this.selected];
         selected = selectRowsBetween(
           newSelected, 
@@ -48,7 +47,7 @@ export class DataTableSelectionComponent {
           index, 
           this.prevIndex, 
           this.getRowSelectedIdx.bind(this));
-      } else if (multiShift && !event.shiftKey) {
+      } else if (!event.shiftKey) {
         selected.push(row);
       } else {
         const newSelected = [...this.selected];
