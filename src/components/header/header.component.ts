@@ -14,7 +14,7 @@ import { DataTableColumnDirective } from '../columns';
       [style.width.px]="columnGroupWidths.total"
       class="datatable-header-inner">
       <div
-        *ngFor="let colGroup of columnsByPin; trackBy: colGroup?.type"
+        *ngFor="let colGroup of columnsByPin; trackBy: trackByGroups"
         [class]="'datatable-row-' + colGroup.type"
         [ngStyle]="stylesByGroup(colGroup.type)">
         <datatable-header-cell
@@ -100,6 +100,10 @@ export class DataTableHeaderComponent {
     }
 
     return '100%';
+  }
+
+  trackByGroups(index: number, colGroup: any): any {
+    return colGroup.type;
   }
 
   onColumnResized(width: number, column: DataTableColumnDirective): void {

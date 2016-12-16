@@ -37,7 +37,7 @@ export class ResizeableDirective implements OnDestroy {
     }
   }
 
-  @HostListener('document:mouseup', ['$event'])
+  @HostListener('document:mouseup')
   onMouseup(): void {
     this.resizing = false;
 

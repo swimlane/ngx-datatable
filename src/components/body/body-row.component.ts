@@ -11,7 +11,7 @@ import {
   selector: 'datatable-body-row',
   template: `
     <div
-      *ngFor="let colGroup of columnsByPin; let i = index; trackBy: $colGroup?.type"
+      *ngFor="let colGroup of columnsByPin; let i = index; trackBy: trackByGroups"
       class="datatable-row-{{colGroup.type}} datatable-row-group"
       [ngStyle]="stylesByGroup(colGroup.type)">
       <datatable-body-cell
@@ -78,6 +78,10 @@ export class DataTableBodyRowComponent {
 
   constructor(element: ElementRef) {
     this.element = element.nativeElement;
+  }
+
+  trackByGroups(index: number, colGroup: any): any {
+    return colGroup.type;
   }
 
   stylesByGroup(group: string) {
