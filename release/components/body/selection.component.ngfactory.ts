@@ -123,7 +123,7 @@ class View_DataTableSelectionComponent_Host0 extends import2.AppView<any> {
   }
   detectChangesInternal(throwOnChange:boolean):void {
     this._DataTableSelectionComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange);
-    this.compView_0.detectChanges(throwOnChange);
+    this.compView_0.internalDetectChanges(throwOnChange);
   }
   destroyInternal():void {
     this.compView_0.destroy();

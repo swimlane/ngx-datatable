@@ -153,7 +153,7 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      *
      *  - `single`
      *  - `multi`
-     *  - `multiShift`.
+     *  - `chkbox`.
      *
      * For no selection pass a `falsey`.
      * Default value: `undefined`

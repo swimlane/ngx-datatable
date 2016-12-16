@@ -150,7 +150,7 @@ class View_DataTableFooterComponent_Host0 extends import2.AppView<any> {
   }
   detectChangesInternal(throwOnChange:boolean):void {
     if (this._DataTableFooterComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange)) { this.compView_0.markAsCheckOnce(); }
-    this.compView_0.detectChanges(throwOnChange);
+    this.compView_0.internalDetectChanges(throwOnChange);
   }
   destroyInternal():void {
     this.compView_0.destroy();
@@ -252,7 +252,7 @@ export class View_DataTableFooterComponent0 extends import2.AppView<import0.Data
       this.renderer.setElementProperty(this._el_6,'hidden',currVal_14);
       this._expr_14 = currVal_14;
     }
-    this.compView_6.detectChanges(throwOnChange);
+    this.compView_6.internalDetectChanges(throwOnChange);
   }
   destroyInternal():void {
     this.compView_6.destroy();

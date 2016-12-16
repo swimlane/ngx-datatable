@@ -424,7 +424,7 @@ class View_DatatableComponent_Host0 extends import2.AppView<any> {
       this._query_DataTableColumnDirective_0_0.notifyOnChanges();
     } }
     this._DatatableComponent_0_3.checkHost(this,this.compView_0,this._el_0,throwOnChange);
-    this.compView_0.detectChanges(throwOnChange);
+    this.compView_0.internalDetectChanges(throwOnChange);
     if (!throwOnChange) { if ((this.numberOfChecks === 0)) { this._DatatableComponent_0_3.context.ngAfterViewInit(); } }
   }
   destroyInternal():void {
@@ -581,7 +581,7 @@ export class View_DatatableComponent0 extends import2.AppView<import0.DatatableC
     this._vc_8.detectChangesInNestedViews(throwOnChange);
     this._VisibilityDirective_1_3.checkHost(this,this,this._el_1,throwOnChange);
     this._DataTableBodyComponent_5_3.checkHost(this,this.compView_5,this._el_5,throwOnChange);
-    this.compView_5.detectChanges(throwOnChange);
+    this.compView_5.internalDetectChanges(throwOnChange);
   }
   destroyInternal():void {
     this._vc_3.destroyNestedViews();
@@ -678,13 +678,15 @@ class View_DatatableComponent1 extends import2.AppView<any> {
     this._DataTableHeaderComponent_0_3.check_sortType(currVal_0_0_6,throwOnChange,false);
     const currVal_0_0_7:any = this.parentView.context.allRowsSelected;
     this._DataTableHeaderComponent_0_3.check_allRowsSelected(currVal_0_0_7,throwOnChange,false);
-    const currVal_0_0_8:any = this.parentView.context.headerHeight;
-    this._DataTableHeaderComponent_0_3.check_headerHeight(currVal_0_0_8,throwOnChange,false);
-    const currVal_0_0_9:any = this.parentView.context.columns;
-    this._DataTableHeaderComponent_0_3.check_columns(currVal_0_0_9,throwOnChange,false);
+    const currVal_0_0_8:any = this.parentView.context.selectionType;
+    this._DataTableHeaderComponent_0_3.check_selectionType(currVal_0_0_8,throwOnChange,false);
+    const currVal_0_0_9:any = this.parentView.context.headerHeight;
+    this._DataTableHeaderComponent_0_3.check_headerHeight(currVal_0_0_9,throwOnChange,false);
+    const currVal_0_0_10:any = this.parentView.context.columns;
+    this._DataTableHeaderComponent_0_3.check_columns(currVal_0_0_10,throwOnChange,false);
     this._DataTableHeaderComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange);
     this._DataTableHeaderComponent_0_3.checkHost(this,this.compView_0,this._el_0,throwOnChange);
-    this.compView_0.detectChanges(throwOnChange);
+    this.compView_0.internalDetectChanges(throwOnChange);
   }
   destroyInternal():void {
     this.compView_0.destroy();
@@ -762,7 +764,7 @@ class View_DatatableComponent2 extends import2.AppView<any> {
     const currVal_0_0_8:any = this.parentView.context.messages.totalMessage;
     this._DataTableFooterComponent_0_3.check_totalMessage(currVal_0_0_8,throwOnChange,false);
     if (this._DataTableFooterComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange)) { this.compView_0.markAsCheckOnce(); }
-    this.compView_0.detectChanges(throwOnChange);
+    this.compView_0.internalDetectChanges(throwOnChange);
   }
   destroyInternal():void {
     this.compView_0.destroy();

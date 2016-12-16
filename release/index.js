@@ -1,18 +1,18 @@
 /**
- * angular2-data-table v"2.2.3" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"3.0.0" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("@angular/common"), require("@angular/core"), require("rxjs/Rx"));
+		module.exports = factory(require("@angular/core"), require("rxjs/Rx"), require("@angular/common"));
 	else if(typeof define === 'function' && define.amd)
-		define("angular2-data-table", ["@angular/common", "@angular/core", "rxjs/Rx"], factory);
+		define("angular2-data-table", ["@angular/core", "rxjs/Rx", "@angular/common"], factory);
 	else if(typeof exports === 'object')
-		exports["angular2-data-table"] = factory(require("@angular/common"), require("@angular/core"), require("rxjs/Rx"));
+		exports["angular2-data-table"] = factory(require("@angular/core"), require("rxjs/Rx"), require("@angular/common"));
 	else
-		root["angular2-data-table"] = factory(root["@angular/common"], root["@angular/core"], root["rxjs/Rx"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_1__) {
+		root["angular2-data-table"] = factory(root["@angular/core"], root["rxjs/Rx"], root["@angular/common"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -48,16 +48,18 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 /******/
-/******/ 	// identity function for calling harmory imports with the correct context
+/******/ 	// identity function for calling harmony imports with the correct context
 /******/ 	__webpack_require__.i = function(value) { return value; };
 /******/
-/******/ 	// define getter function for harmory exports
+/******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		Object.defineProperty(exports, name, {
-/******/ 			configurable: false,
-/******/ 			enumerable: true,
-/******/ 			get: getter
-/******/ 		});
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -85,7 +87,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -317,7 +319,7 @@ var DataTableBodyCellComponent = (function () {
     DataTableBodyCellComponent = __decorate([
         core_1.Component({
             selector: 'datatable-body-cell',
-            template: "\n    <div class=\"datatable-body-cell-label\">\n      <label\n        *ngIf=\"column.checkboxable\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [checked]=\"isSelected\"\n          (change)=\"onCheckboxChange($event)\" \n        />\n      </label>\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [innerHTML]=\"value\">\n      </span>\n      <template\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngOutletContext]=\"{ value: value, row: row, column: column }\">\n      </template>\n    </div>\n  ",
+            template: "\n    <div class=\"datatable-body-cell-label\">\n      <label\n        *ngIf=\"column.checkboxable\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [checked]=\"isSelected\"\n          (click)=\"onCheckboxChange($event)\" \n        />\n      </label>\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [innerHTML]=\"value\">\n      </span>\n      <template\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngOutletContext]=\"{ value: value, row: row, column: column }\">\n      </template>\n    </div>\n  ",
             host: {
                 class: 'datatable-body-cell'
             }
@@ -335,7 +337,7 @@ exports.DataTableBodyCellComponent = DataTableBodyCellComponent;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -401,7 +403,7 @@ exports.DataTableRowWrapperComponent = DataTableRowWrapperComponent;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -454,6 +456,9 @@ var DataTableBodyRowComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    DataTableBodyRowComponent.prototype.trackByGroups = function (index, colGroup) {
+        return colGroup.type;
+    };
     DataTableBodyRowComponent.prototype.stylesByGroup = function (group) {
         var widths = this.columnGroupWidths;
         var offsetX = this.offsetX;
@@ -551,7 +556,7 @@ var DataTableBodyRowComponent = (function () {
     DataTableBodyRowComponent = __decorate([
         core_1.Component({
             selector: 'datatable-body-row',
-            template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: $colGroup?.type\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: column?.$$id\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [isSelected]=\"isSelected\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>\n  ",
+            template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: trackByGroups\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: column?.$$id\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [isSelected]=\"isSelected\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>\n  ",
             host: {
                 class: 'datatable-body-row'
             }
@@ -569,7 +574,7 @@ exports.DataTableBodyRowComponent = DataTableBodyRowComponent;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1120,7 +1125,7 @@ exports.DataTableBodyComponent = DataTableBodyComponent;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
@@ -1139,7 +1144,7 @@ __export(__webpack_require__("./src/components/body/selection.component.ts"));
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1172,7 +1177,7 @@ exports.ProgressBarComponent = ProgressBarComponent;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1277,7 +1282,7 @@ exports.ScrollerComponent = ScrollerComponent;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1299,15 +1304,14 @@ var DataTableSelectionComponent = (function () {
         if (!this.selectEnabled)
             return;
         var chkbox = this.selectionType === types_1.SelectionType.checkbox;
-        var multiShift = this.selectionType === types_1.SelectionType.multiShift;
-        var multiClick = this.selectionType === types_1.SelectionType.multi;
+        var multi = this.selectionType === types_1.SelectionType.multi;
         var selected = [];
-        if (multiShift || multiClick || chkbox) {
-            if (multiShift && event.shiftKey) {
+        if (multi || chkbox) {
+            if (event.shiftKey) {
                 var newSelected = this.selected.slice();
                 selected = utils_1.selectRowsBetween(newSelected, this.rows, index, this.prevIndex, this.getRowSelectedIdx.bind(this));
             }
-            else if (multiShift && !event.shiftKey) {
+            else if (!event.shiftKey) {
                 selected.push(row);
             }
             else {
@@ -1465,7 +1469,7 @@ exports.DataTableSelectionComponent = DataTableSelectionComponent;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1496,7 +1500,7 @@ exports.DataTableColumnCellDirective = DataTableColumnCellDirective;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1527,7 +1531,7 @@ exports.DataTableColumnHeaderDirective = DataTableColumnHeaderDirective;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1632,7 +1636,7 @@ exports.DataTableColumnDirective = DataTableColumnDirective;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
@@ -1647,7 +1651,7 @@ __export(__webpack_require__("./src/components/columns/column-cell.directive.ts"
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2104,8 +2108,7 @@ var DatatableComponent = (function () {
          * @memberOf DatatableComponent
          */
         get: function () {
-            return this.selectionType === types_1.SelectionType.multi ||
-                this.selectionType === types_1.SelectionType.multiShift;
+            return this.selectionType === types_1.SelectionType.multi;
         },
         enumerable: true,
         configurable: true
@@ -2713,7 +2716,7 @@ var DatatableComponent = (function () {
     DatatableComponent = __decorate([
         core_1.Component({
             selector: 'swui-datatable',
-            template: "\n    <div\n      visibility-observer\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"columns\"\n        [headerHeight]=\"headerHeight\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\">\n      </datatable-header>\n      <datatable-body\n        [rows]=\"rows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"columns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetailTemplate]=\"rowDetailTemplate\"\n        [detailRowHeight]=\"detailRowHeight\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"rowContextmenu.emit($event)\"\n        (select)=\"onBodySelect($event)\"\n        (detailToggle)=\"detailToggle.emit($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
+            template: "\n    <div\n      visibility-observer\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"columns\"\n        [headerHeight]=\"headerHeight\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        [selectionType]=\"selectionType\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\">\n      </datatable-header>\n      <datatable-body\n        [rows]=\"rows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"columns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetailTemplate]=\"rowDetailTemplate\"\n        [detailRowHeight]=\"detailRowHeight\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"rowContextmenu.emit($event)\"\n        (select)=\"onBodySelect($event)\"\n        (detailToggle)=\"detailToggle.emit($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
             host: {
                 class: 'datatable'
             }
@@ -2731,7 +2734,7 @@ exports.DatatableComponent = DatatableComponent;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2822,7 +2825,7 @@ exports.DataTableFooterComponent = DataTableFooterComponent;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
@@ -2836,7 +2839,7 @@ __export(__webpack_require__("./src/components/footer/pager.component.ts"));
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2991,7 +2994,7 @@ exports.DataTablePagerComponent = DataTablePagerComponent;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3016,6 +3019,7 @@ var DataTableHeaderCellComponent = (function () {
         set: function (val) {
             this._sorts = val;
             this.sortDir = this.calcSortDir(val);
+            this.sortClass = this.calcSortClass(this.sortDir);
         },
         enumerable: true,
         configurable: true
@@ -3064,16 +3068,6 @@ var DataTableHeaderCellComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    DataTableHeaderCellComponent.prototype.sortClasses = function (dir) {
-        var result = {};
-        if (dir === types_1.SortDirection.asc) {
-            result[("sort-asc " + this.sortAscendingIcon)] = true;
-        }
-        else if (dir === types_1.SortDirection.desc) {
-            result[("sort-desc " + this.sortDescendingIcon)] = true;
-        }
-        return result;
-    };
     DataTableHeaderCellComponent.prototype.calcSortDir = function (sorts) {
         var _this = this;
         if (sorts && this.column) {
@@ -3093,6 +3087,14 @@ var DataTableHeaderCellComponent = (function () {
             prevValue: this.sortDir,
             newValue: newValue
         });
+    };
+    DataTableHeaderCellComponent.prototype.calcSortClass = function (sortDir) {
+        if (sortDir === types_1.SortDirection.asc) {
+            return "sort-asc " + this.sortAscendingIcon;
+        }
+        else if (sortDir === types_1.SortDirection.desc) {
+            return "sort-desc " + this.sortDescendingIcon;
+        }
     };
     __decorate([
         core_1.Input(), 
@@ -3114,6 +3116,10 @@ var DataTableHeaderCellComponent = (function () {
         core_1.Input(), 
         __metadata('design:type', Boolean)
     ], DataTableHeaderCellComponent.prototype, "allRowsSelected", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Number)
+    ], DataTableHeaderCellComponent.prototype, "selectionType", void 0);
     __decorate([
         core_1.HostBinding('style.height.px'),
         core_1.Input(), 
@@ -3155,7 +3161,7 @@ var DataTableHeaderCellComponent = (function () {
     DataTableHeaderCellComponent = __decorate([
         core_1.Component({
             selector: 'datatable-header-cell',
-            template: "\n    <div>\n      <label\n        *ngIf=\"column.checkboxable && column.headerCheckboxable\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [attr.checked]=\"allRowsSelected\"\n          (change)=\"select.emit(!allRowsSelected)\" \n        />\n      </label>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        *ngIf=\"!column.headerTemplate\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <template\n        *ngIf=\"column.headerTemplate\"\n        [ngTemplateOutlet]=\"column.headerTemplate\"\n        [ngOutletContext]=\"{ \n          column: column, \n          sortDir: sortDir\n        }\">\n      </template>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses(sortDir)\">\n      </span>\n    </div>\n  "
+            template: "\n    <div>\n      <label\n        *ngIf=\"column.checkboxable && column.headerCheckboxable && selectionType === 'checkbox'\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [attr.checked]=\"allRowsSelected\"\n          (change)=\"select.emit(!allRowsSelected)\" \n        />\n      </label>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        *ngIf=\"!column.headerTemplate\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <template\n        *ngIf=\"column.headerTemplate\"\n        [ngTemplateOutlet]=\"column.headerTemplate\"\n        [ngOutletContext]=\"{ \n          column: column, \n          sortDir: sortDir\n        }\">\n      </template>\n      <span\n        class=\"sort-btn\"\n        [class]=\"sortClass\">\n      </span>\n    </div>\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], DataTableHeaderCellComponent);
@@ -3170,7 +3176,7 @@ exports.DataTableHeaderCellComponent = DataTableHeaderCellComponent;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3228,6 +3234,9 @@ var DataTableHeaderComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    DataTableHeaderComponent.prototype.trackByGroups = function (index, colGroup) {
+        return colGroup.type;
+    };
     DataTableHeaderComponent.prototype.onColumnResized = function (width, column) {
         if (width <= column.minWidth) {
             width = column.minWidth;
@@ -3330,6 +3339,10 @@ var DataTableHeaderComponent = (function () {
         __metadata('design:type', Boolean)
     ], DataTableHeaderComponent.prototype, "allRowsSelected", void 0);
     __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Number)
+    ], DataTableHeaderComponent.prototype, "selectionType", void 0);
+    __decorate([
         core_1.HostBinding('style.height'),
         core_1.Input(), 
         __metadata('design:type', Object), 
@@ -3363,7 +3376,7 @@ var DataTableHeaderComponent = (function () {
     DataTableHeaderComponent = __decorate([
         core_1.Component({
             selector: 'datatable-header',
-            template: "\n    <div\n      orderable\n      (reorder)=\"onColumnReordered($event)\"\n      [style.width.px]=\"columnGroupWidths.total\"\n      class=\"datatable-header-inner\">\n      <div\n        *ngFor=\"let colGroup of columnsByPin; trackBy: colGroup?.type\"\n        [class]=\"'datatable-row-' + colGroup.type\"\n        [ngStyle]=\"stylesByGroup(colGroup.type)\">\n        <datatable-header-cell\n          *ngFor=\"let column of colGroup.columns; trackBy: column?.$$id\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (resize)=\"onColumnResized($event, column)\"\n          long-press\n          (longPress)=\"drag = true\"\n          (longPressEnd)=\"drag = false\"\n          draggable\n          [dragX]=\"column.draggable && drag\"\n          [dragY]=\"false\"\n          [dragModel]=\"column\"\n          [headerHeight]=\"headerHeight\"\n          [column]=\"column\"\n          [sortType]=\"sortType\"\n          [sorts]=\"sorts\"\n          [sortAscendingIcon]=\"sortAscendingIcon\"\n          [sortDescendingIcon]=\"sortDescendingIcon\"\n          (sort)=\"onSort($event)\"\n          (select)=\"select.emit($event)\">\n        </datatable-header-cell>\n      </div>\n    </div>\n  ",
+            template: "\n    <div\n      orderable\n      (reorder)=\"onColumnReordered($event)\"\n      [style.width.px]=\"columnGroupWidths.total\"\n      class=\"datatable-header-inner\">\n      <div\n        *ngFor=\"let colGroup of columnsByPin; trackBy: trackByGroups\"\n        [class]=\"'datatable-row-' + colGroup.type\"\n        [ngStyle]=\"stylesByGroup(colGroup.type)\">\n        <datatable-header-cell\n          *ngFor=\"let column of colGroup.columns; trackBy: column?.$$id\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (resize)=\"onColumnResized($event, column)\"\n          long-press\n          (longPress)=\"drag = true\"\n          (longPressEnd)=\"drag = false\"\n          draggable\n          [dragX]=\"column.draggable && drag\"\n          [dragY]=\"false\"\n          [dragModel]=\"column\"\n          [headerHeight]=\"headerHeight\"\n          [column]=\"column\"\n          [sortType]=\"sortType\"\n          [sorts]=\"sorts\"\n          [selectionType]=\"selectionType\"\n          [sortAscendingIcon]=\"sortAscendingIcon\"\n          [sortDescendingIcon]=\"sortDescendingIcon\"\n          (sort)=\"onSort($event)\"\n          (select)=\"select.emit($event)\">\n        </datatable-header-cell>\n      </div>\n    </div>\n  ",
             host: {
                 class: 'datatable-header'
             }
@@ -3381,7 +3394,7 @@ exports.DataTableHeaderComponent = DataTableHeaderComponent;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
@@ -3395,7 +3408,7 @@ __export(__webpack_require__("./src/components/header/header-cell.component.ts")
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
@@ -3413,7 +3426,7 @@ __export(__webpack_require__("./src/components/row-detail/index.ts"));
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
@@ -3427,7 +3440,7 @@ __export(__webpack_require__("./src/components/row-detail/row-detail-template.di
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3460,7 +3473,7 @@ exports.DatatableRowDetailTemplateDirective = DatatableRowDetailTemplateDirectiv
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3501,7 +3514,7 @@ exports.DatatableRowDetailDirective = DatatableRowDetailDirective;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3569,7 +3582,7 @@ exports.Angular2DataTableModule = Angular2DataTableModule;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3700,7 +3713,7 @@ exports.DraggableDirective = DraggableDirective;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
@@ -3717,7 +3730,7 @@ __export(__webpack_require__("./src/directives/visibility.directive.ts"));
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3845,7 +3858,7 @@ exports.LongPressDirective = LongPressDirective;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3952,7 +3965,7 @@ exports.OrderableDirective = OrderableDirective;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4026,7 +4039,7 @@ var ResizeableDirective = (function () {
         __metadata('design:type', core_1.EventEmitter)
     ], ResizeableDirective.prototype, "resize", void 0);
     __decorate([
-        core_1.HostListener('document:mouseup', ['$event']), 
+        core_1.HostListener('document:mouseup'), 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', []), 
         __metadata('design:returntype', void 0)
@@ -4057,7 +4070,7 @@ exports.ResizeableDirective = ResizeableDirective;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4141,7 +4154,7 @@ exports.VisibilityDirective = VisibilityDirective;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
@@ -4153,10 +4166,10 @@ __export(__webpack_require__("./src/components/index.ts"));
 /***/ },
 
 /***/ "./src/types/click.type.ts":
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 (function (ClickType) {
     ClickType[ClickType["single"] = 'single'] = "single";
     ClickType[ClickType["double"] = 'double'] = "double";
@@ -4167,10 +4180,10 @@ var ClickType = exports.ClickType;
 /***/ },
 
 /***/ "./src/types/column-mode.type.ts":
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 (function (ColumnMode) {
     ColumnMode[ColumnMode["standard"] = 'standard'] = "standard";
     ColumnMode[ColumnMode["flex"] = 'flex'] = "flex";
@@ -4185,7 +4198,7 @@ var ColumnMode = exports.ColumnMode;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
@@ -4199,14 +4212,13 @@ __export(__webpack_require__("./src/types/click.type.ts"));
 /***/ },
 
 /***/ "./src/types/selection.type.ts":
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 (function (SelectionType) {
     SelectionType[SelectionType["single"] = 'single'] = "single";
     SelectionType[SelectionType["multi"] = 'multi'] = "multi";
-    SelectionType[SelectionType["multiShift"] = 'multiShift'] = "multiShift";
     SelectionType[SelectionType["cell"] = 'cell'] = "cell";
     SelectionType[SelectionType["checkbox"] = 'checkbox'] = "checkbox";
 })(exports.SelectionType || (exports.SelectionType = {}));
@@ -4216,10 +4228,10 @@ var SelectionType = exports.SelectionType;
 /***/ },
 
 /***/ "./src/types/sort-direction.type.ts":
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 (function (SortDirection) {
     SortDirection[SortDirection["asc"] = 'asc'] = "asc";
     SortDirection[SortDirection["desc"] = 'desc'] = "desc";
@@ -4230,10 +4242,10 @@ var SortDirection = exports.SortDirection;
 /***/ },
 
 /***/ "./src/types/sort.type.ts":
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 (function (SortType) {
     SortType[SortType["single"] = 'single'] = "single";
     SortType[SortType["multi"] = 'multi'] = "multi";
@@ -4244,10 +4256,10 @@ var SortType = exports.SortType;
 /***/ },
 
 /***/ "./src/utils/camel-case.ts":
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 /**
  * Converts strings from something to camel case
  * http://stackoverflow.com/questions/10425287/convert-dash-separated-string-to-camelcase
@@ -4290,7 +4302,7 @@ exports.deCamelCase = deCamelCase;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var utils_1 = __webpack_require__("./src/utils/index.ts");
 /**
  * Sets the column defaults
@@ -4366,10 +4378,10 @@ exports.translateTemplates = translateTemplates;
 /***/ },
 
 /***/ "./src/utils/column.ts":
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 /**
  * Returns the columns by pin.
  * @param {array} cols
@@ -4458,10 +4470,10 @@ exports.columnsByPinArr = columnsByPinArr;
 /***/ },
 
 /***/ "./src/utils/deep-getter.ts":
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 /**
  * Returns a deep object given a string. zoo['animal.type']
  * @param {object} obj
@@ -4488,10 +4500,10 @@ exports.deepValueGetter = deepValueGetter;
 /***/ },
 
 /***/ "./src/utils/id.ts":
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 /**
  * Creates a unique object id.
  * http://stackoverflow.com/questions/6248666/how-to-generate-short-uid-like-ax4j9z-in-js
@@ -4508,7 +4520,7 @@ exports.id = id;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
@@ -4531,10 +4543,10 @@ __export(__webpack_require__("./src/utils/column-helper.ts"));
 /***/ },
 
 /***/ "./src/utils/keys.ts":
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 (function (Keys) {
     Keys[Keys["up"] = 38] = "up";
     Keys[Keys["down"] = 40] = "down";
@@ -4552,7 +4564,7 @@ var Keys = exports.Keys;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var column_1 = __webpack_require__("./src/utils/column.ts");
 /**
  * Calculates the Total Flex Grow
@@ -4735,7 +4747,7 @@ function getContentWidth(allColumns, defaultColWidth) {
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var camel_case_1 = __webpack_require__("./src/utils/camel-case.ts");
 var cache = {};
 var testStyle = document.createElement('div').style;
@@ -4770,10 +4782,10 @@ exports.getVendorPrefixedName = getVendorPrefixedName;
 /***/ },
 
 /***/ "./src/utils/row-height-cache.ts":
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 /**
  * This object contains the cache of the various row heights that are present inside
  * the data table.   Its based on Fenwick tree data structure that helps with
@@ -4917,10 +4929,10 @@ exports.RowHeightCache = RowHeightCache;
 /***/ },
 
 /***/ "./src/utils/scrollbar-width.ts":
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 /**
  * Gets the width of the scrollbar.  Nesc for windows
  * http://stackoverflow.com/a/13382873/888165
@@ -4949,10 +4961,10 @@ exports.scrollbarWidth = getScrollBarWidth();
 /***/ },
 
 /***/ "./src/utils/selection.ts":
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 function selectRows(selected, row, comparefn) {
     var selectedIndex = comparefn(row, selected);
     if (selectedIndex > -1) {
@@ -5011,7 +5023,7 @@ exports.selectRowsBetween = selectRowsBetween;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var types_1 = __webpack_require__("./src/types/index.ts");
 var deep_getter_1 = __webpack_require__("./src/utils/deep-getter.ts");
 /**
@@ -5118,10 +5130,10 @@ exports.sortRows = sortRows;
 /***/ },
 
 /***/ "./src/utils/throttle.ts":
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 /**
  * Throttle a function
  *
@@ -5202,7 +5214,7 @@ exports.throttleable = throttleable;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+
 var prefixes_1 = __webpack_require__("./src/utils/prefixes.ts");
 var camel_case_1 = __webpack_require__("./src/utils/camel-case.ts");
 // browser detection and prefixing tools

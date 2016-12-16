@@ -121,7 +121,7 @@ class View_ScrollerComponent_Host0 extends import2.AppView<any> {
   detectChangesInternal(throwOnChange:boolean):void {
     this._ScrollerComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange);
     this._ScrollerComponent_0_3.checkHost(this,this.compView_0,this._el_0,throwOnChange);
-    this.compView_0.detectChanges(throwOnChange);
+    this.compView_0.internalDetectChanges(throwOnChange);
   }
   destroyInternal():void {
     this.compView_0.destroy();

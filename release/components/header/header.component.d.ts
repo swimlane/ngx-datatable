@@ -1,5 +1,5 @@
 import { EventEmitter } from '@angular/core';
-import { SortType } from '../../types';
+import { SortType, SelectionType } from '../../types';
 import { DataTableColumnDirective } from '../columns';
 export declare class DataTableHeaderComponent {
     sortAscendingIcon: any;
@@ -10,6 +10,7 @@ export declare class DataTableHeaderComponent {
     sorts: any[];
     sortType: SortType;
     allRowsSelected: boolean;
+    selectionType: SelectionType;
     headerHeight: any;
     columns: any[];
     sort: EventEmitter<any>;
@@ -21,6 +22,7 @@ export declare class DataTableHeaderComponent {
     _columns: any[];
     _headerHeight: string;
     readonly headerWidth: string;
+    trackByGroups(index: number, colGroup: any): any;
     onColumnResized(width: number, column: DataTableColumnDirective): void;
     onColumnReordered({prevIndex, newIndex, model}: any): void;
     onSort({column, prevValue, newValue}: any): void;

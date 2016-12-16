@@ -299,7 +299,7 @@ class View_DataTableBodyComponent_Host0 extends import2.AppView<any> {
   detectChangesInternal(throwOnChange:boolean):void {
     this._DataTableBodyComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange);
     this._DataTableBodyComponent_0_3.checkHost(this,this.compView_0,this._el_0,throwOnChange);
-    this.compView_0.detectChanges(throwOnChange);
+    this.compView_0.internalDetectChanges(throwOnChange);
   }
   destroyInternal():void {
     this.compView_0.destroy();
@@ -416,7 +416,7 @@ export class View_DataTableBodyComponent0 extends import2.AppView<import0.DataTa
     this._vc_3.detectChangesInNestedViews(throwOnChange);
     this._vc_5.detectChangesInNestedViews(throwOnChange);
     this._vc_7.detectChangesInNestedViews(throwOnChange);
-    this.compView_1.detectChanges(throwOnChange);
+    this.compView_1.internalDetectChanges(throwOnChange);
     if (!throwOnChange) { if (this._viewQuery_ScrollerComponent_0.dirty) {
         this._viewQuery_ScrollerComponent_0.reset([this._vc_5.mapNestedViews(View_DataTableBodyComponent2,(nestedView:View_DataTableBodyComponent2):any => {
           return [nestedView._ScrollerComponent_0_3.context];
@@ -492,7 +492,7 @@ class View_DataTableBodyComponent1 extends import2.AppView<any> {
   }
   detectChangesInternal(throwOnChange:boolean):void {
     if (this._ProgressBarComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange)) { this.compView_0.markAsCheckOnce(); }
-    this.compView_0.detectChanges(throwOnChange);
+    this.compView_0.internalDetectChanges(throwOnChange);
   }
   destroyInternal():void {
     this.compView_0.destroy();
@@ -559,7 +559,7 @@ class View_DataTableBodyComponent2 extends import2.AppView<any> {
     this._NgFor_2_6.ngDoCheck(this,this._anchor_2,throwOnChange);
     this._vc_2.detectChangesInNestedViews(throwOnChange);
     this._ScrollerComponent_0_3.checkHost(this,this.compView_0,this._el_0,throwOnChange);
-    this.compView_0.detectChanges(throwOnChange);
+    this.compView_0.internalDetectChanges(throwOnChange);
   }
   dirtyParentQueriesInternal():void {
     (<View_DataTableBodyComponent0>this.parentView)._viewQuery_ScrollerComponent_0.setDirty();
@@ -672,8 +672,8 @@ class View_DataTableBodyComponent3 extends import2.AppView<any> {
     this._DataTableBodyRowComponent_2_3.check_isSelected(currVal_2_0_5,throwOnChange,false);
     this._DataTableBodyRowComponent_2_3.ngDoCheck(this,this._el_2,throwOnChange);
     this._DataTableBodyRowComponent_2_3.checkHost(this,this.compView_2,this._el_2,throwOnChange);
-    this.compView_0.detectChanges(throwOnChange);
-    this.compView_2.detectChanges(throwOnChange);
+    this.compView_0.internalDetectChanges(throwOnChange);
+    this.compView_2.internalDetectChanges(throwOnChange);
   }
   destroyInternal():void {
     this.compView_0.destroy();

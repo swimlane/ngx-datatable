@@ -166,7 +166,7 @@ class View_DataTableBodyRowComponent_Host0 extends import2.AppView<any> {
   detectChangesInternal(throwOnChange:boolean):void {
     this._DataTableBodyRowComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange);
     this._DataTableBodyRowComponent_0_3.checkHost(this,this.compView_0,this._el_0,throwOnChange);
-    this.compView_0.detectChanges(throwOnChange);
+    this.compView_0.internalDetectChanges(throwOnChange);
   }
   destroyInternal():void {
     this.compView_0.destroy();
@@ -219,7 +219,7 @@ export class View_DataTableBodyRowComponent0 extends import2.AppView<import0.Dat
   detectChangesInternal(throwOnChange:boolean):void {
     const currVal_1_0_0:any = this.context.columnsByPin;
     this._NgFor_1_6.check_ngForOf(currVal_1_0_0,throwOnChange,false);
-    const currVal_1_0_1:any = ((this.context.$colGroup == null)? (null as any): this.context.$colGroup.type);
+    const currVal_1_0_1:any = this.context.trackByGroups;
     this._NgFor_1_6.check_ngForTrackBy(currVal_1_0_1,throwOnChange,false);
     this._NgFor_1_6.ngDoCheck(this,this._anchor_1,throwOnChange);
     this._vc_1.detectChangesInNestedViews(throwOnChange);
@@ -335,7 +335,7 @@ class View_DataTableBodyRowComponent2 extends import2.AppView<any> {
     this._DataTableBodyCellComponent_0_3.check_isSelected(currVal_0_0_3,throwOnChange,false);
     this._DataTableBodyCellComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange);
     this._DataTableBodyCellComponent_0_3.checkHost(this,this.compView_0,this._el_0,throwOnChange);
-    this.compView_0.detectChanges(throwOnChange);
+    this.compView_0.internalDetectChanges(throwOnChange);
   }
   destroyInternal():void {
     this.compView_0.destroy();

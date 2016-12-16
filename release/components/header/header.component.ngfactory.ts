@@ -51,6 +51,7 @@ export class Wrapper_DataTableHeaderComponent {
   /*private*/ _expr_9:any;
   /*private*/ _expr_10:any;
   /*private*/ _expr_11:any;
+  /*private*/ _expr_12:any;
   subscription0:any;
   subscription1:any;
   subscription2:any;
@@ -70,6 +71,7 @@ export class Wrapper_DataTableHeaderComponent {
     this._expr_9 = import1.UNINITIALIZED;
     this._expr_10 = import1.UNINITIALIZED;
     this._expr_11 = import1.UNINITIALIZED;
+    this._expr_12 = import1.UNINITIALIZED;
   }
   ngOnDetach(view:import2.AppView<any>,componentView:import2.AppView<any>,el:any):void {
   }
@@ -135,18 +137,25 @@ export class Wrapper_DataTableHeaderComponent {
       this._expr_7 = currValue;
     }
   }
-  check_headerHeight(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_selectionType(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_8,currValue))) {
       this._changed = true;
-      this.context.headerHeight = currValue;
+      this.context.selectionType = currValue;
       this._expr_8 = currValue;
     }
   }
-  check_columns(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_headerHeight(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_9,currValue))) {
       this._changed = true;
-      this.context.columns = currValue;
+      this.context.headerHeight = currValue;
       this._expr_9 = currValue;
+    }
+  }
+  check_columns(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+    if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_10,currValue))) {
+      this._changed = true;
+      this.context.columns = currValue;
+      this._expr_10 = currValue;
     }
   }
   ngDoCheck(view:import2.AppView<any>,el:any,throwOnChange:boolean):boolean {
@@ -155,15 +164,15 @@ export class Wrapper_DataTableHeaderComponent {
     return changed;
   }
   checkHost(view:import2.AppView<any>,componentView:import2.AppView<any>,el:any,throwOnChange:boolean):void {
-    const currVal_10:any = this.context.headerHeight;
-    if (import3.checkBinding(throwOnChange,this._expr_10,currVal_10)) {
-      view.renderer.setElementStyle(el,'height',((view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_10) == null)? (null as any): view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_10).toString()));
-      this._expr_10 = currVal_10;
-    }
-    const currVal_11:any = this.context.headerWidth;
+    const currVal_11:any = this.context.headerHeight;
     if (import3.checkBinding(throwOnChange,this._expr_11,currVal_11)) {
-      view.renderer.setElementStyle(el,'width',((view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_11) == null)? (null as any): view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_11).toString()));
+      view.renderer.setElementStyle(el,'height',((view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_11) == null)? (null as any): view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_11).toString()));
       this._expr_11 = currVal_11;
+    }
+    const currVal_12:any = this.context.headerWidth;
+    if (import3.checkBinding(throwOnChange,this._expr_12,currVal_12)) {
+      view.renderer.setElementStyle(el,'width',((view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_12) == null)? (null as any): view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_12).toString()));
+      this._expr_12 = currVal_12;
     }
   }
   handleEvent(eventName:string,$event:any):boolean {
@@ -201,7 +210,7 @@ class View_DataTableHeaderComponent_Host0 extends import2.AppView<any> {
   detectChangesInternal(throwOnChange:boolean):void {
     this._DataTableHeaderComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange);
     this._DataTableHeaderComponent_0_3.checkHost(this,this.compView_0,this._el_0,throwOnChange);
-    this.compView_0.detectChanges(throwOnChange);
+    this.compView_0.internalDetectChanges(throwOnChange);
   }
   destroyInternal():void {
     this.compView_0.destroy();
@@ -267,7 +276,7 @@ export class View_DataTableHeaderComponent0 extends import2.AppView<import0.Data
     this._OrderableDirective_1_3.ngDoCheck(this,this._el_1,throwOnChange);
     const currVal_3_0_0:any = this.context.columnsByPin;
     this._NgFor_3_6.check_ngForOf(currVal_3_0_0,throwOnChange,false);
-    const currVal_3_0_1:any = ((this.context.colGroup == null)? (null as any): this.context.colGroup.type);
+    const currVal_3_0_1:any = this.context.trackByGroups;
     this._NgFor_3_6.check_ngForTrackBy(currVal_3_0_1,throwOnChange,false);
     this._NgFor_3_6.ngDoCheck(this,this._anchor_3,throwOnChange);
     this._vc_3.detectChangesInNestedViews(throwOnChange);
@@ -430,15 +439,17 @@ class View_DataTableHeaderComponent2 extends import2.AppView<any> {
     this._DataTableHeaderCellComponent_0_6.check_sortAscendingIcon(currVal_0_3_2,throwOnChange,false);
     const currVal_0_3_3:any = this.parentView.parentView.context.sortDescendingIcon;
     this._DataTableHeaderCellComponent_0_6.check_sortDescendingIcon(currVal_0_3_3,throwOnChange,false);
-    const currVal_0_3_4:any = this.parentView.parentView.context.headerHeight;
-    this._DataTableHeaderCellComponent_0_6.check_headerHeight(currVal_0_3_4,throwOnChange,false);
-    const currVal_0_3_5:any = this.parentView.parentView.context.sorts;
-    this._DataTableHeaderCellComponent_0_6.check_sorts(currVal_0_3_5,throwOnChange,false);
+    const currVal_0_3_4:any = this.parentView.parentView.context.selectionType;
+    this._DataTableHeaderCellComponent_0_6.check_selectionType(currVal_0_3_4,throwOnChange,false);
+    const currVal_0_3_5:any = this.parentView.parentView.context.headerHeight;
+    this._DataTableHeaderCellComponent_0_6.check_headerHeight(currVal_0_3_5,throwOnChange,false);
+    const currVal_0_3_6:any = this.parentView.parentView.context.sorts;
+    this._DataTableHeaderCellComponent_0_6.check_sorts(currVal_0_3_6,throwOnChange,false);
     this._DataTableHeaderCellComponent_0_6.ngDoCheck(this,this._el_0,throwOnChange);
     this._ResizeableDirective_0_4.checkHost(this,this.compView_0,this._el_0,throwOnChange);
     this._LongPressDirective_0_5.checkHost(this,this.compView_0,this._el_0,throwOnChange);
     this._DataTableHeaderCellComponent_0_6.checkHost(this,this.compView_0,this._el_0,throwOnChange);
-    this.compView_0.detectChanges(throwOnChange);
+    this.compView_0.internalDetectChanges(throwOnChange);
   }
   dirtyParentQueriesInternal():void {
     (<View_DataTableHeaderComponent0>this.parentView.parentView)._query_DraggableDirective_1_0.setDirty();

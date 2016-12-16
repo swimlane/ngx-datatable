@@ -11,15 +11,14 @@ var DataTableSelectionComponent = (function () {
         if (!this.selectEnabled)
             return;
         var chkbox = this.selectionType === types_1.SelectionType.checkbox;
-        var multiShift = this.selectionType === types_1.SelectionType.multiShift;
-        var multiClick = this.selectionType === types_1.SelectionType.multi;
+        var multi = this.selectionType === types_1.SelectionType.multi;
         var selected = [];
-        if (multiShift || multiClick || chkbox) {
-            if (multiShift && event.shiftKey) {
+        if (multi || chkbox) {
+            if (event.shiftKey) {
                 var newSelected = this.selected.slice();
                 selected = utils_1.selectRowsBetween(newSelected, this.rows, index, this.prevIndex, this.getRowSelectedIdx.bind(this));
             }
-            else if (multiShift && !event.shiftKey) {
+            else if (!event.shiftKey) {
                 selected.push(row);
             }
             else {

@@ -15,6 +15,7 @@ export declare class DataTableBodyRowComponent {
     _columns: any[];
     _innerWidth: number;
     constructor(element: ElementRef);
+    trackByGroups(index: number, colGroup: any): any;
     stylesByGroup(group: string): {
         width: string;
     };
