@@ -1,11 +1,11 @@
 import {TestBed, async} from '@angular/core/testing';
 import {DatatableComponent} from './datatable.component';
-import {Angular2DataTableModule} from '../datatable.module';
+import {NgxDatatableModule} from '../datatable.module';
 describe('Datatable component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ Angular2DataTableModule ]
+      imports: [ NgxDatatableModule ]
     });
   });
 
