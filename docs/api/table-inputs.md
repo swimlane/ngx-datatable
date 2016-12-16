@@ -46,7 +46,7 @@ Enabled horizontal scrollbars. Default value: `false`
 Enable vertical scrollbar for fixed height vs fluid. This is necessary for virtual scrolling. Default value: `false`
 
 ## `selectionType`
-Type of row selection. Options are `single`, `multi` and `multiShift`. 
+Type of row selection. Options are `single`, `multi` and `chkbox`. 
 For no selection pass a `falsey`. Default value: `undefined`
 
 ## `selected`

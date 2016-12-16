@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.0
+- BREAKING: Removed `shiftMulti` option, its not useful and creates odd scenarios
+- Bug: Permanently high CPU utilization after sorting (#359)
+- Bug: Fix checkbox showing in header if defined but not using checkbox select
+- Bug: Fix AoT errors (#370)
+- Bug: Fix build not outputing AoT files in correct directory
+- Bug: Fix checkbox selection not working w/ shift key
+
 ## 2.2.3
 - Bug: Fix header checkbox mutating selection array
 

@@ -39,7 +39,6 @@ import { TemplateRefTemplatesComponent } from './templates/template-obj';
 import { CellSelectionComponent } from './selection/selection-cell';
 import { MultiSelectionComponent } from './selection/selection-multi';
 import { SingleSelectionComponent } from './selection/selection-single';
-import { MultiShiftSelectionComponent } from './selection/selection-shift';
 import { MultiDisableSelectionComponent } from './selection/selection-disabled';
 import { CheckboxSelectionComponent } from './selection/selection-chkbox';
 
@@ -79,7 +78,6 @@ import { ColumnPinningComponent } from './columns/pinning';
     TabsDemoComponent,
     SingleSelectionComponent,
     LiveDataComponent,
-    MultiShiftSelectionComponent,
     MultiDisableSelectionComponent,
     RxDemoComponent,
     ContextMenuDemoComponent,
