@@ -33,7 +33,7 @@ Check out the [documentation](https://swimlane.gitbooks.io/ngx-datatable/) & [de
 ## Installation
 To use ngx-datatable in your project install it via [npm](https://www.npmjs.com/package/@swimlane/ngx-datatable):
 ```
-npm i ngx-datatable -S
+npm i @swimlane/ngx-datatable --save
 ```
 
 ## Credits
