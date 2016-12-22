@@ -110,6 +110,7 @@
     "style-loader": "0.13.1",
     "ts-helpers": "^1.1.2",
     "tslint": "^4.0.2",
+    "tslint-config-swimlane": "^2.0.0",
     "tslint-loader": "^3.3.0",
     "typescript": "~2.0.3",
     "webpack": "2.2.0-rc.0",
