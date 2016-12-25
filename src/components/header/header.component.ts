@@ -26,7 +26,7 @@ import { DataTableColumnDirective } from '../columns';
           (longPress)="drag = true"
           (longPressEnd)="drag = false"
           draggable
-          [dragX]="column.draggable && drag"
+          [dragX]="reorderable && column.draggable && drag"
           [dragY]="false"
           [dragModel]="column"
           [headerHeight]="headerHeight"
@@ -57,6 +57,7 @@ export class DataTableHeaderComponent {
   @Input() sortType: SortType;
   @Input() allRowsSelected: boolean;
   @Input() selectionType: SelectionType;
+  @Input() reorderable: boolean;
 
   @HostBinding('style.height')
   @Input() set headerHeight(val: any) {
