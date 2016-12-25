@@ -4,7 +4,12 @@ import { Component } from '@angular/core';
   selector: 'single-selection-demo',
   template: `
     <div>
-      <h3>Single Row Selection</h3>
+      <h3>
+        Single Row Selection
+        <small>
+          <a href="#" (click)="updateRowPosition()">Update Rows</a>
+        </small>
+      </h3>
       <div style='float:left;width:75%'>
         <div class="info">
           <p>This demonstrates a simple single selection table with the 3rd row selected by default.</p>
@@ -74,6 +79,18 @@ export class SingleSelectionComponent {
 
   onActivate(event) {
     console.log('Activate Event', event);
+  }
+
+  updateRowPosition() {
+    let ix = this.getSelectedIx()
+    let arr = [ ...this.rows ];
+    arr[ix - 1] = this.rows[ix];
+    arr[ix] = this.rows[ix - 1];
+    this.rows = arr;
+  }
+
+  getSelectedIx() {
+    return this.selected[0]['$$index']
   }
 
 }
