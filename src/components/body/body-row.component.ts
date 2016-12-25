@@ -15,7 +15,7 @@ import {
       class="datatable-row-{{colGroup.type}} datatable-row-group"
       [ngStyle]="stylesByGroup(colGroup.type)">
       <datatable-body-cell
-        *ngFor="let column of colGroup.columns; let ii = index; trackBy: column?.$$id"
+        *ngFor="let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn"
         tabindex="-1"
         [row]="row"
         [isSelected]="isSelected"
@@ -82,6 +82,10 @@ export class DataTableBodyRowComponent {
 
   trackByGroups(index: number, colGroup: any): any {
     return colGroup.type;
+  }
+
+  columnTrackingFn(index: number, column: any): any {
+    return column.$$id;
   }
 
   stylesByGroup(group: string) {

@@ -18,7 +18,7 @@ import { DataTableColumnDirective } from '../columns';
         [class]="'datatable-row-' + colGroup.type"
         [ngStyle]="stylesByGroup(colGroup.type)">
         <datatable-header-cell
-          *ngFor="let column of colGroup.columns; trackBy: column?.$$id"
+          *ngFor="let column of colGroup.columns; trackBy: columnTrackingFn"
           resizeable
           [resizeEnabled]="column.resizeable"
           (resize)="onColumnResized($event, column)"
@@ -104,6 +104,10 @@ export class DataTableHeaderComponent {
 
   trackByGroups(index: number, colGroup: any): any {
     return colGroup.type;
+  }
+
+  columnTrackingFn(index: number, column: any): any {
+    return column.$$id;
   }
 
   onColumnResized(width: number, column: DataTableColumnDirective): void {
