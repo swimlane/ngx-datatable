@@ -11,6 +11,7 @@ export declare class DataTableHeaderComponent {
     sortType: SortType;
     allRowsSelected: boolean;
     selectionType: SelectionType;
+    reorderable: boolean;
     headerHeight: any;
     columns: any[];
     sort: EventEmitter<any>;
@@ -23,6 +24,7 @@ export declare class DataTableHeaderComponent {
     _headerHeight: string;
     readonly headerWidth: string;
     trackByGroups(index: number, colGroup: any): any;
+    columnTrackingFn(index: number, column: any): any;
     onColumnResized(width: number, column: DataTableColumnDirective): void;
     onColumnReordered({prevIndex, newIndex, model}: any): void;
     onSort({column, prevValue, newValue}: any): void;

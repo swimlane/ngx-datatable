@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"4.0.0" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"4.1.0" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -459,6 +459,9 @@ var DataTableBodyRowComponent = (function () {
     DataTableBodyRowComponent.prototype.trackByGroups = function (index, colGroup) {
         return colGroup.type;
     };
+    DataTableBodyRowComponent.prototype.columnTrackingFn = function (index, column) {
+        return column.$$id;
+    };
     DataTableBodyRowComponent.prototype.stylesByGroup = function (group) {
         var widths = this.columnGroupWidths;
         var offsetX = this.offsetX;
@@ -556,7 +559,7 @@ var DataTableBodyRowComponent = (function () {
     DataTableBodyRowComponent = __decorate([
         core_1.Component({
             selector: 'datatable-body-row',
-            template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: trackByGroups\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: column?.$$id\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [isSelected]=\"isSelected\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>\n  ",
+            template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: trackByGroups\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [isSelected]=\"isSelected\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>\n  ",
             host: {
                 class: 'datatable-body-row'
             }
@@ -1305,24 +1308,23 @@ var DataTableSelectionComponent = (function () {
             return;
         var chkbox = this.selectionType === types_1.SelectionType.checkbox;
         var multi = this.selectionType === types_1.SelectionType.multi;
+        var multiClick = this.selectionType == types_1.SelectionType.multiClick;
         var selected = [];
-        if (multi || chkbox) {
+        if (multi || chkbox || multiClick) {
             if (event.shiftKey) {
-                var newSelected = this.selected.slice();
-                selected = utils_1.selectRowsBetween(newSelected, this.rows, index, this.prevIndex, this.getRowSelectedIdx.bind(this));
+                selected = utils_1.selectRowsBetween(this.selected.slice(), this.rows, index, this.prevIndex, this.getRowSelectedIdx.bind(this));
             }
-            else if (!event.shiftKey) {
-                selected.push(row);
+            else if (event.ctrlKey || multiClick || chkbox) {
+                selected = utils_1.selectRows(this.selected.slice(), row, this.getRowSelectedIdx.bind(this));
             }
             else {
-                var newSelected = this.selected.slice();
-                selected = utils_1.selectRows(newSelected, row, this.getRowSelectedIdx.bind(this));
+                selected = utils_1.selectRows([], row, this.getRowSelectedIdx.bind(this));
             }
         }
         else {
-            selected.push(row);
+            selected = utils_1.selectRows([], row, this.getRowSelectedIdx.bind(this));
         }
-        if (this.selectCheck) {
+        if (typeof this.selectCheck === 'function') {
             selected = selected.filter(this.selectCheck.bind(this));
         }
         this.selected.splice(0, this.selected.length);
@@ -2113,6 +2115,20 @@ var DatatableComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(DatatableComponent.prototype, "isMultiClickSelection", {
+        /**
+         * CSS class added to root element if mulit click select
+         *
+         * @readonly
+         * @type {boolean}
+         * @memberOf DatatableComponent
+         */
+        get: function () {
+            return this.selectionType === types_1.SelectionType.multiClick;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(DatatableComponent.prototype, "columnTemplates", {
         /**
          * Returns the column templates.
@@ -2693,6 +2709,10 @@ var DatatableComponent = (function () {
         __metadata('design:type', Boolean)
     ], DatatableComponent.prototype, "isMultiSelection", null);
     __decorate([
+        core_1.HostBinding('class.multi-click-selection'), 
+        __metadata('design:type', Boolean)
+    ], DatatableComponent.prototype, "isMultiClickSelection", null);
+    __decorate([
         core_1.ContentChildren(columns_1.DataTableColumnDirective), 
         __metadata('design:type', core_1.QueryList), 
         __metadata('design:paramtypes', [core_1.QueryList])
@@ -2716,7 +2736,7 @@ var DatatableComponent = (function () {
     DatatableComponent = __decorate([
         core_1.Component({
             selector: 'ngx-datatable',
-            template: "\n    <div\n      visibility-observer\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"columns\"\n        [headerHeight]=\"headerHeight\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        [selectionType]=\"selectionType\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\">\n      </datatable-header>\n      <datatable-body\n        [rows]=\"rows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"columns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetailTemplate]=\"rowDetailTemplate\"\n        [detailRowHeight]=\"detailRowHeight\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"rowContextmenu.emit($event)\"\n        (select)=\"onBodySelect($event)\"\n        (detailToggle)=\"detailToggle.emit($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
+            template: "\n    <div\n      visibility-observer\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"columns\"\n        [headerHeight]=\"headerHeight\"\n        [reorderable]=\"reorderable\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        [selectionType]=\"selectionType\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\">\n      </datatable-header>\n      <datatable-body\n        [rows]=\"rows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"columns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetailTemplate]=\"rowDetailTemplate\"\n        [detailRowHeight]=\"detailRowHeight\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"rowContextmenu.emit($event)\"\n        (select)=\"onBodySelect($event)\"\n        (detailToggle)=\"detailToggle.emit($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
             host: {
                 class: 'datatable'
             }
@@ -3068,6 +3088,16 @@ var DataTableHeaderCellComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(DataTableHeaderCellComponent.prototype, "isCheckboxable", {
+        get: function () {
+            return;
+            this.column.checkboxable &&
+                this.column.headerCheckboxable &&
+                this.selectionType === types_1.SelectionType.checkbox;
+        },
+        enumerable: true,
+        configurable: true
+    });
     DataTableHeaderCellComponent.prototype.calcSortDir = function (sorts) {
         var _this = this;
         if (sorts && this.column) {
@@ -3161,7 +3191,7 @@ var DataTableHeaderCellComponent = (function () {
     DataTableHeaderCellComponent = __decorate([
         core_1.Component({
             selector: 'datatable-header-cell',
-            template: "\n    <div>\n      <label\n        *ngIf=\"column.checkboxable && column.headerCheckboxable && selectionType === 'checkbox'\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [attr.checked]=\"allRowsSelected\"\n          (change)=\"select.emit(!allRowsSelected)\" \n        />\n      </label>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        *ngIf=\"!column.headerTemplate\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <template\n        *ngIf=\"column.headerTemplate\"\n        [ngTemplateOutlet]=\"column.headerTemplate\"\n        [ngOutletContext]=\"{ \n          column: column, \n          sortDir: sortDir\n        }\">\n      </template>\n      <span\n        class=\"sort-btn\"\n        [class]=\"sortClass\">\n      </span>\n    </div>\n  "
+            template: "\n    <div>\n      <label\n        *ngIf=\"isCheckboxable\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [attr.checked]=\"allRowsSelected\"\n          (change)=\"select.emit(!allRowsSelected)\" \n        />\n      </label>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        *ngIf=\"!column.headerTemplate\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <template\n        *ngIf=\"column.headerTemplate\"\n        [ngTemplateOutlet]=\"column.headerTemplate\"\n        [ngOutletContext]=\"{ \n          column: column, \n          sortDir: sortDir\n        }\">\n      </template>\n      <span\n        class=\"sort-btn\"\n        [class]=\"sortClass\">\n      </span>\n    </div>\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], DataTableHeaderCellComponent);
@@ -3236,6 +3266,9 @@ var DataTableHeaderComponent = (function () {
     });
     DataTableHeaderComponent.prototype.trackByGroups = function (index, colGroup) {
         return colGroup.type;
+    };
+    DataTableHeaderComponent.prototype.columnTrackingFn = function (index, column) {
+        return column.$$id;
     };
     DataTableHeaderComponent.prototype.onColumnResized = function (width, column) {
         if (width <= column.minWidth) {
@@ -3343,6 +3376,10 @@ var DataTableHeaderComponent = (function () {
         __metadata('design:type', Number)
     ], DataTableHeaderComponent.prototype, "selectionType", void 0);
     __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Boolean)
+    ], DataTableHeaderComponent.prototype, "reorderable", void 0);
+    __decorate([
         core_1.HostBinding('style.height'),
         core_1.Input(), 
         __metadata('design:type', Object), 
@@ -3376,7 +3413,7 @@ var DataTableHeaderComponent = (function () {
     DataTableHeaderComponent = __decorate([
         core_1.Component({
             selector: 'datatable-header',
-            template: "\n    <div\n      orderable\n      (reorder)=\"onColumnReordered($event)\"\n      [style.width.px]=\"columnGroupWidths.total\"\n      class=\"datatable-header-inner\">\n      <div\n        *ngFor=\"let colGroup of columnsByPin; trackBy: trackByGroups\"\n        [class]=\"'datatable-row-' + colGroup.type\"\n        [ngStyle]=\"stylesByGroup(colGroup.type)\">\n        <datatable-header-cell\n          *ngFor=\"let column of colGroup.columns; trackBy: column?.$$id\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (resize)=\"onColumnResized($event, column)\"\n          long-press\n          (longPress)=\"drag = true\"\n          (longPressEnd)=\"drag = false\"\n          draggable\n          [dragX]=\"column.draggable && drag\"\n          [dragY]=\"false\"\n          [dragModel]=\"column\"\n          [headerHeight]=\"headerHeight\"\n          [column]=\"column\"\n          [sortType]=\"sortType\"\n          [sorts]=\"sorts\"\n          [selectionType]=\"selectionType\"\n          [sortAscendingIcon]=\"sortAscendingIcon\"\n          [sortDescendingIcon]=\"sortDescendingIcon\"\n          (sort)=\"onSort($event)\"\n          (select)=\"select.emit($event)\">\n        </datatable-header-cell>\n      </div>\n    </div>\n  ",
+            template: "\n    <div\n      orderable\n      (reorder)=\"onColumnReordered($event)\"\n      [style.width.px]=\"columnGroupWidths.total\"\n      class=\"datatable-header-inner\">\n      <div\n        *ngFor=\"let colGroup of columnsByPin; trackBy: trackByGroups\"\n        [class]=\"'datatable-row-' + colGroup.type\"\n        [ngStyle]=\"stylesByGroup(colGroup.type)\">\n        <datatable-header-cell\n          *ngFor=\"let column of colGroup.columns; trackBy: columnTrackingFn\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (resize)=\"onColumnResized($event, column)\"\n          long-press\n          (longPress)=\"drag = true\"\n          (longPressEnd)=\"drag = false\"\n          draggable\n          [dragX]=\"reorderable && column.draggable && drag\"\n          [dragY]=\"false\"\n          [dragModel]=\"column\"\n          [headerHeight]=\"headerHeight\"\n          [column]=\"column\"\n          [sortType]=\"sortType\"\n          [sorts]=\"sorts\"\n          [selectionType]=\"selectionType\"\n          [sortAscendingIcon]=\"sortAscendingIcon\"\n          [sortDescendingIcon]=\"sortDescendingIcon\"\n          (sort)=\"onSort($event)\"\n          (select)=\"select.emit($event)\">\n        </datatable-header-cell>\n      </div>\n    </div>\n  ",
             host: {
                 class: 'datatable-header'
             }
@@ -4219,6 +4256,7 @@ __export(__webpack_require__("./src/types/click.type.ts"));
 (function (SelectionType) {
     SelectionType[SelectionType["single"] = 'single'] = "single";
     SelectionType[SelectionType["multi"] = 'multi'] = "multi";
+    SelectionType[SelectionType["multiClick"] = 'multiClick'] = "multiClick";
     SelectionType[SelectionType["cell"] = 'cell'] = "cell";
     SelectionType[SelectionType["checkbox"] = 'checkbox'] = "checkbox";
 })(exports.SelectionType || (exports.SelectionType = {}));

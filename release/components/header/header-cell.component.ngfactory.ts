@@ -284,7 +284,7 @@ export class View_DataTableHeaderCellComponent0 extends import2.AppView<import0.
     return notFoundResult;
   }
   detectChangesInternal(throwOnChange:boolean):void {
-    const currVal_3_0_0:any = ((this.context.column.checkboxable && this.context.column.headerCheckboxable) && (this.context.selectionType === 'checkbox'));
+    const currVal_3_0_0:any = this.context.isCheckboxable;
     this._NgIf_3_6.check_ngIf(currVal_3_0_0,throwOnChange,false);
     this._NgIf_3_6.ngDoCheck(this,this._anchor_3,throwOnChange);
     const currVal_5_0_0:boolean = !this.context.column.headerTemplate;

@@ -69,6 +69,7 @@ export class Wrapper_DatatableComponent {
   /*private*/ _expr_32:any;
   /*private*/ _expr_33:any;
   /*private*/ _expr_34:any;
+  /*private*/ _expr_35:any;
   subscription0:any;
   subscription1:any;
   subscription2:any;
@@ -116,6 +117,7 @@ export class Wrapper_DatatableComponent {
     this._expr_32 = import1.UNINITIALIZED;
     this._expr_33 = import1.UNINITIALIZED;
     this._expr_34 = import1.UNINITIALIZED;
+    this._expr_35 = import1.UNINITIALIZED;
   }
   ngOnDetach(view:import2.AppView<any>,componentView:import2.AppView<any>,el:any):void {
   }
@@ -366,6 +368,11 @@ export class Wrapper_DatatableComponent {
     if (import3.checkBinding(throwOnChange,this._expr_34,currVal_34)) {
       view.renderer.setElementClass(el,'multi-selection',currVal_34);
       this._expr_34 = currVal_34;
+    }
+    const currVal_35:any = this.context.isMultiClickSelection;
+    if (import3.checkBinding(throwOnChange,this._expr_35,currVal_35)) {
+      view.renderer.setElementClass(el,'multi-click-selection',currVal_35);
+      this._expr_35 = currVal_35;
     }
   }
   handleEvent(eventName:string,$event:any):boolean {
@@ -680,10 +687,12 @@ class View_DatatableComponent1 extends import2.AppView<any> {
     this._DataTableHeaderComponent_0_3.check_allRowsSelected(currVal_0_0_7,throwOnChange,false);
     const currVal_0_0_8:any = this.parentView.context.selectionType;
     this._DataTableHeaderComponent_0_3.check_selectionType(currVal_0_0_8,throwOnChange,false);
-    const currVal_0_0_9:any = this.parentView.context.headerHeight;
-    this._DataTableHeaderComponent_0_3.check_headerHeight(currVal_0_0_9,throwOnChange,false);
-    const currVal_0_0_10:any = this.parentView.context.columns;
-    this._DataTableHeaderComponent_0_3.check_columns(currVal_0_0_10,throwOnChange,false);
+    const currVal_0_0_9:any = this.parentView.context.reorderable;
+    this._DataTableHeaderComponent_0_3.check_reorderable(currVal_0_0_9,throwOnChange,false);
+    const currVal_0_0_10:any = this.parentView.context.headerHeight;
+    this._DataTableHeaderComponent_0_3.check_headerHeight(currVal_0_0_10,throwOnChange,false);
+    const currVal_0_0_11:any = this.parentView.context.columns;
+    this._DataTableHeaderComponent_0_3.check_columns(currVal_0_0_11,throwOnChange,false);
     this._DataTableHeaderComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange);
     this._DataTableHeaderComponent_0_3.checkHost(this,this.compView_0,this._el_0,throwOnChange);
     this.compView_0.internalDetectChanges(throwOnChange);

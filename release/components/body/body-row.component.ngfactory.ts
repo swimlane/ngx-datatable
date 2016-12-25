@@ -276,7 +276,7 @@ class View_DataTableBodyRowComponent1 extends import2.AppView<any> {
     this._NgStyle_0_3.ngDoCheck(this,this._el_0,throwOnChange);
     const currVal_2_0_0:any = this.context.$implicit.columns;
     this._NgFor_2_6.check_ngForOf(currVal_2_0_0,throwOnChange,false);
-    const currVal_2_0_1:any = ((this.parentView.context.column == null)? (null as any): this.parentView.context.column.$$id);
+    const currVal_2_0_1:any = this.parentView.context.columnTrackingFn;
     this._NgFor_2_6.check_ngForTrackBy(currVal_2_0_1,throwOnChange,false);
     this._NgFor_2_6.ngDoCheck(this,this._anchor_2,throwOnChange);
     this._vc_2.detectChangesInNestedViews(throwOnChange);

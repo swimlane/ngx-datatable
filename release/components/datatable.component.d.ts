@@ -153,7 +153,8 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      *
      *  - `single`
      *  - `multi`
-     *  - `chkbox`.
+     *  - `chkbox`
+     *  - `multiClick`
      *
      * For no selection pass a `falsey`.
      * Default value: `undefined`
@@ -375,6 +376,14 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      * @memberOf DatatableComponent
      */
     readonly isMultiSelection: boolean;
+    /**
+     * CSS class added to root element if mulit click select
+     *
+     * @readonly
+     * @type {boolean}
+     * @memberOf DatatableComponent
+     */
+    readonly isMultiClickSelection: boolean;
     /**
      * Returns the column templates.
      *

@@ -12,24 +12,23 @@ var DataTableSelectionComponent = (function () {
             return;
         var chkbox = this.selectionType === types_1.SelectionType.checkbox;
         var multi = this.selectionType === types_1.SelectionType.multi;
+        var multiClick = this.selectionType == types_1.SelectionType.multiClick;
         var selected = [];
-        if (multi || chkbox) {
+        if (multi || chkbox || multiClick) {
             if (event.shiftKey) {
-                var newSelected = this.selected.slice();
-                selected = utils_1.selectRowsBetween(newSelected, this.rows, index, this.prevIndex, this.getRowSelectedIdx.bind(this));
+                selected = utils_1.selectRowsBetween(this.selected.slice(), this.rows, index, this.prevIndex, this.getRowSelectedIdx.bind(this));
             }
-            else if (!event.shiftKey) {
-                selected.push(row);
+            else if (event.ctrlKey || multiClick || chkbox) {
+                selected = utils_1.selectRows(this.selected.slice(), row, this.getRowSelectedIdx.bind(this));
             }
             else {
-                var newSelected = this.selected.slice();
-                selected = utils_1.selectRows(newSelected, row, this.getRowSelectedIdx.bind(this));
+                selected = utils_1.selectRows([], row, this.getRowSelectedIdx.bind(this));
             }
         }
         else {
-            selected.push(row);
+            selected = utils_1.selectRows([], row, this.getRowSelectedIdx.bind(this));
         }
-        if (this.selectCheck) {
+        if (typeof this.selectCheck === 'function') {
             selected = selected.filter(this.selectCheck.bind(this));
         }
         this.selected.splice(0, this.selected.length);

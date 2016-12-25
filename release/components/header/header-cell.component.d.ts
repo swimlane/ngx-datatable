@@ -16,6 +16,7 @@ export declare class DataTableHeaderCellComponent {
     readonly minWidth: number;
     readonly maxWidth: number;
     readonly width: number;
+    readonly isCheckboxable: boolean;
     sortClass: string;
     sortDir: SortDirection;
     _sorts: any[];
