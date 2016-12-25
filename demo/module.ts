@@ -41,6 +41,7 @@ import { MultiSelectionComponent } from './selection/selection-multi';
 import { SingleSelectionComponent } from './selection/selection-single';
 import { MultiDisableSelectionComponent } from './selection/selection-disabled';
 import { CheckboxSelectionComponent } from './selection/selection-chkbox';
+import { MultiClickSelectionComponent } from './selection/selection-multi-click';
 
 // -- Columns
 import { ColumnToggleComponent } from './columns/column-toggle';
@@ -81,7 +82,8 @@ import { ColumnPinningComponent } from './columns/pinning';
     MultiDisableSelectionComponent,
     RxDemoComponent,
     ContextMenuDemoComponent,
-    CheckboxSelectionComponent
+    CheckboxSelectionComponent,
+    MultiClickSelectionComponent
   ],
   imports: [BrowserModule, NgxDatatableModule],
   bootstrap: [AppComponent]

@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'multi-selection-demo',
+  selector: 'multi-click-selection-demo',
   template: `
     <div>
-      <h3>Multi Select</h3>
+      <h3>Multi Click Selection</h3>
       <div style='float:left;width:75%'>
         <div class="info">
-          <p>This demonstrates multi selection table, use CTRL or SHIFT click to select multiple items.</p>
+          <p>This demonstrates multi selection table, where any click event causes a selection.</p>
         </div>
 
         <ngx-datatable
@@ -20,7 +20,7 @@ import { Component } from '@angular/core';
           [rowHeight]="'auto'"
           [limit]="5"
           [selected]="selected"
-          [selectionType]="'multi'"
+          [selectionType]="'multiClick'"
           (activate)="onActivate($event)"
           (select)='onSelect($event)'>
         </ngx-datatable>
@@ -38,7 +38,7 @@ import { Component } from '@angular/core';
     </div>
   `
 })
-export class MultiSelectionComponent {
+export class MultiClickSelectionComponent {
 
   rows = [];
 

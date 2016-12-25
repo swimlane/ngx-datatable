@@ -27,6 +27,7 @@ import { scrollbarWidth, setColumnDefaults, throttleable, translateTemplates } f
         [offsetX]="offsetX"
         [columns]="columns"
         [headerHeight]="headerHeight"
+        [reorderable]="reorderable"
         [sortAscendingIcon]="cssClasses.sortAscending"
         [sortDescendingIcon]="cssClasses.sortDescending"
         [allRowsSelected]="allRowsSelected"
@@ -284,7 +285,8 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * 
    *  - `single`
    *  - `multi`
-   *  - `chkbox`. 
+   *  - `chkbox`
+   *  - `multiClick`
    * 
    * For no selection pass a `falsey`. 
    * Default value: `undefined`
@@ -574,6 +576,18 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   @HostBinding('class.multi-selection')
   get isMultiSelection(): boolean {
     return this.selectionType === SelectionType.multi;
+  }
+
+  /**
+   * CSS class added to root element if mulit click select
+   * 
+   * @readonly
+   * @type {boolean}
+   * @memberOf DatatableComponent
+   */
+  @HostBinding('class.multi-click-selection')
+  get isMultiClickSelection(): boolean {
+    return this.selectionType === SelectionType.multiClick;
   }
 
   /**

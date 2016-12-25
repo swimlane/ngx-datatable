@@ -36,28 +36,27 @@ export class DataTableSelectionComponent {
 
     const chkbox = this.selectionType === SelectionType.checkbox;
     const multi = this.selectionType === SelectionType.multi;
+    const multiClick = this.selectionType == SelectionType.multiClick;
     let selected: any[] = [];
 
-    if (multi || chkbox) {
+    if (multi || chkbox || multiClick) {
       if (event.shiftKey) {
-        const newSelected = [...this.selected];
         selected = selectRowsBetween(
-          newSelected, 
+          [...this.selected], 
           this.rows, 
           index, 
           this.prevIndex, 
           this.getRowSelectedIdx.bind(this));
-      } else if (!event.shiftKey) {
-        selected.push(row);
+      } else if (event.ctrlKey || multiClick || chkbox) {
+          selected = selectRows([...this.selected], row, this.getRowSelectedIdx.bind(this));
       } else {
-        const newSelected = [...this.selected];
-        selected = selectRows(newSelected, row, this.getRowSelectedIdx.bind(this));
+        selected = selectRows([], row, this.getRowSelectedIdx.bind(this));
       }
     } else {
-      selected.push(row);
+      selected = selectRows([], row, this.getRowSelectedIdx.bind(this));
     }
 
-    if(this.selectCheck) {
+    if(typeof this.selectCheck === 'function') {
       selected = selected.filter(this.selectCheck.bind(this));
     }
 

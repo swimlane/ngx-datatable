@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.1.0
+- Feature: Adding multi-click selection
+- Bug: Use tracking fn vs inline (#388)
+- Bug: Fix AoT header issue (#389)
+- Bug: Fix `reorderable` not being honored (#387)
+- Bug: Fix multi-select CTRL not working (#381)
+- Chore: Upgrade Angular to ^2.4.1
+- Docs: Multi-select
+
 ## 4.0.0
 - BREAKING!!!! - Renamed project from `angular2-datatable` to `ngx-datatable` 
 and updated components from `<swui-datatable>` to `<ngx-datatable>`

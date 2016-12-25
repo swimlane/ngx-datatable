@@ -10,7 +10,13 @@ export function selectRows(selected: any[], row: any, comparefn: Function) {
   return selected;
 }
 
-export function selectRowsBetween(selected: any[], rows: any[], index: number, prevIndex: number, comparefn: Function) {
+export function selectRowsBetween(
+  selected: any[], 
+  rows: any[], 
+  index: number, 
+  prevIndex: number, 
+  comparefn: Function): any[] {
+
   const reverse = index < prevIndex;
 
   for(let i = 0, len = rows.length; i < len; i++) {
@@ -43,7 +49,7 @@ export function selectRowsBetween(selected: any[], rows: any[], index: number, p
 
       // if in the positive range to be added to `selected`, and
       // not already in the selected array, add it
-      if( i >= range.start && i < range.end) {
+      if(i >= range.start && i < range.end) {
         if (idx === -1) {
           selected.push(row);
         }

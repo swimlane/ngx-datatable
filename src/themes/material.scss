@@ -11,7 +11,8 @@
 	}
 
   &.single-selection,
-  &.multi-selection {
+  &.multi-selection,
+  &.multi-click-selection {
     .datatable-body-row {
 			&.active,
 			&.active .datatable-row-group {
