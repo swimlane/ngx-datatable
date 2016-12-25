@@ -10,7 +10,7 @@ import { nextSortDir } from '../../utils';
   template: `
     <div>
       <label
-        *ngIf="column.checkboxable && column.headerCheckboxable && selectionType === 'checkbox'" 
+        *ngIf="isCheckboxable" 
         class="datatable-checkbox">
         <input 
           type="checkbox"
@@ -97,6 +97,13 @@ export class DataTableHeaderCellComponent {
   @HostBinding('style.width.px')
   get width(): number {
     return this.column.width;
+  }
+
+  get isCheckboxable(): boolean {
+    return 
+      this.column.checkboxable && 
+      this.column.headerCheckboxable && 
+      this.selectionType === SelectionType.checkbox;
   }
 
   sortClass: string;
