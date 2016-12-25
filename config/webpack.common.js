@@ -14,6 +14,9 @@ module.exports = function(options = {}) {
         dir('demo')
       ]
     },
+    performance: {
+      hints: false
+    },
     output: {
       path: dir('dist'),
       filename: '[name].js',
