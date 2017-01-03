@@ -26,7 +26,7 @@ export class LongPressDirective {
   get press(): boolean { return this.pressing; }
 
   @HostBinding('class.longpress')
-  get isLongPress(): boolean { return this.longPressing !== undefined; }
+  get isLongPress(): boolean { return this.isLongPressing }
 
   @HostListener('mousedown', ['$event'])
   onMouseDown(event: MouseEvent): void {
@@ -50,9 +50,9 @@ export class LongPressDirective {
 
   @HostListener('mousemove', ['$event'])
   onMouseMove(event: MouseEvent): void {
-    if(this.pressing && !this.longPressing) {
-      const xThres = (event.clientX - this.mouseX) > 10;
-      const yThres = (event.clientY - this.mouseY) > 10;
+    if(this.pressing && !this.isLongPressing) {
+      const xThres = Math.abs(event.clientX - this.mouseX) > 10;
+      const yThres = Math.abs(event.clientY - this.mouseY) > 10;
 
       if(xThres || yThres) {
         this.endPress();
@@ -61,7 +61,7 @@ export class LongPressDirective {
   }
 
   loop(event: Event): void {
-    if(this.longPressing) {
+    if(this.isLongPressing) {
       this.timeout = setTimeout(() => {
         this.longPressing.emit(event);
         this.loop(event);
