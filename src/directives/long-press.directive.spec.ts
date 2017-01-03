@@ -35,7 +35,7 @@ describe('LongPressDirective', () => {
     });
   }));
 
-  fdescribe('fixture', () => {
+  describe('fixture', () => {
     let directive: LongPressDirective;
 
     beforeEach(() => {
