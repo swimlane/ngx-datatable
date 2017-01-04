@@ -1,8 +1,7 @@
-import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-import { Component, DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
-
-import { LongPressDirective } from '.';
+import {async, TestBed, ComponentFixture, fakeAsync, tick} from "@angular/core/testing";
+import {Component} from "@angular/core";
+import {By} from "@angular/platform-browser";
+import {LongPressDirective} from ".";
 
 @Component({
   selector: 'test-fixture-component',
@@ -21,7 +20,7 @@ describe('LongPressDirective', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ 
+      declarations: [
         LongPressDirective,
         TestFixtureComponent
       ]
@@ -38,7 +37,7 @@ describe('LongPressDirective', () => {
 
   describe('fixture', () => {
     let directive: LongPressDirective;
-    
+
     beforeEach(() => {
       directive = fixture.debugElement
         .query(By.directive(LongPressDirective))
@@ -52,5 +51,25 @@ describe('LongPressDirective', () => {
     it('should have LongPressDirective directive', () => {
       expect(directive).toBeTruthy();
     });
+
+    it('should have isLongPress set to false', () => {
+      expect(directive.isLongPress).toBeFalsy()
+    });
+
+    describe('When the mouse is clicked for 500 ms', () => {
+
+      it('isLongPress should returns true', fakeAsync(() => {
+
+        directive.onMouseDown(new MouseEvent('mousedown'));
+        expect(directive.isLongPress).toBe(false);
+
+        tick(500);
+        expect(directive.isLongPress).toBe(true);
+
+        directive.isLongPressing = false;
+        tick(50); //clear last timer
+      }));
+    });
   });
+
 });
