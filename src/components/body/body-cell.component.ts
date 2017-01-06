@@ -51,6 +51,13 @@ export class DataTableBodyCellComponent {
   }
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
+   
+   @HostBinding('class')
+  get columnCssClasses(): any {
+    let cls = 'datatable-body-cell';
+    if(this.column.cssClasses) cls += ' ' + this.column.cssClasses;
+    return cls;
+  }
 
   @HostBinding('class.active')
   isFocused: boolean = false;
