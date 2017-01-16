@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.2.0
+- Enhancement: Ability to add CSS Classes on Header/Column
+- Bug: Fix CPU Perf on Resort (#409)
+- Chore: Upgrade to Angular ^2.4.3
+- Chore: Correct RxJS Imports
+
 ## 4.1.0
 - Feature: Adding multi-click selection
 - Bug: Use tracking fn vs inline (#388)
