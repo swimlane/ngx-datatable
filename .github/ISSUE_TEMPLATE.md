@@ -1,3 +1,5 @@
+<!-- IF YOU DO NOT FILL THIS OUT, WE WILL CLOSE YOUR ISSUE! -->
+
 **I'm submitting a ...**  (check one with "x")
 ```
 [ ] bug report => search github for a similar issue or PR before submitting
