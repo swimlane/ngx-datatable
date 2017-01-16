@@ -1,6 +1,6 @@
 "use strict";
 var core_1 = require('@angular/core');
-var Rx_1 = require('rxjs/Rx');
+var Observable_1 = require('rxjs/Observable');
 var ResizeableDirective = (function () {
     function ResizeableDirective(element) {
         this.resizeEnabled = true;
@@ -33,7 +33,7 @@ var ResizeableDirective = (function () {
         if (isHandle) {
             event.stopPropagation();
             this.resizing = true;
-            this.subscription = Rx_1.Observable.fromEvent(document, 'mousemove')
+            this.subscription = Observable_1.Observable.fromEvent(document, 'mousemove')
                 .subscribe(function (e) { return _this.move(e, initialWidth, mouseDownScreenX); });
         }
     };

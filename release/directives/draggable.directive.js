@@ -1,6 +1,6 @@
 "use strict";
 var core_1 = require('@angular/core');
-var Rx_1 = require('rxjs/Rx');
+var Observable_1 = require('rxjs/Observable');
 /**
  * Draggable Directive for Angular2
  *
@@ -42,7 +42,7 @@ var DraggableDirective = (function () {
             event.preventDefault();
             this.isDragging = true;
             var mouseDownPos_1 = { x: event.clientX, y: event.clientY };
-            this.subscription = Rx_1.Observable.fromEvent(document, 'mousemove')
+            this.subscription = Observable_1.Observable.fromEvent(document, 'mousemove')
                 .subscribe(function (ev) { return _this.move(ev, mouseDownPos_1); });
             this.dragStart.emit({
                 event: event,

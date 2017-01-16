@@ -15,26 +15,26 @@ import * as import6 from '@angular/core/src/metadata/view';
 import * as import7 from '@angular/core/src/linker/view_type';
 import * as import8 from '@angular/core/src/change_detection/constants';
 import * as import9 from '@angular/core/src/linker/component_factory';
-import * as import10 from '../../directives/orderable.directive.ngfactory';
-import * as import11 from '@angular/core/src/linker/query_list';
-import * as import12 from '@angular/core/src/linker/view_container';
-import * as import13 from '../../../node_modules/@angular/common/src/directives/ng_for.ngfactory';
-import * as import14 from '@angular/core/src/change_detection/differs/keyvalue_differs';
-import * as import15 from '@angular/core/src/linker/template_ref';
-import * as import16 from '@angular/core/src/change_detection/differs/iterable_differs';
-import * as import17 from '@angular/common/src/directives/ng_for';
-import * as import18 from '../../../../src/directives/orderable.directive';
-import * as import19 from '../../../node_modules/@angular/common/src/directives/ng_style.ngfactory';
-import * as import20 from '@angular/core/src/linker/element_ref';
-import * as import21 from '@angular/common/src/directives/ng_style';
-import * as import22 from '../../../../src/components/header/header-cell.component';
-import * as import23 from '../../directives/draggable.directive.ngfactory';
-import * as import24 from '../../directives/resizeable.directive.ngfactory';
-import * as import25 from '../../directives/long-press.directive.ngfactory';
-import * as import26 from './header-cell.component.ngfactory';
-import * as import27 from '../../../../src/directives/draggable.directive';
-import * as import28 from '../../../../src/directives/resizeable.directive';
-import * as import29 from '../../../../src/directives/long-press.directive';
+import * as import10 from '../../../../src/components/header/header-cell.component';
+import * as import11 from '../../directives/draggable.directive.ngfactory';
+import * as import12 from '../../directives/resizeable.directive.ngfactory';
+import * as import13 from '../../directives/long-press.directive.ngfactory';
+import * as import14 from './header-cell.component.ngfactory';
+import * as import15 from '@angular/core/src/linker/view_container';
+import * as import16 from '@angular/core/src/linker/element_ref';
+import * as import17 from '../../../../src/directives/draggable.directive';
+import * as import18 from '../../../../src/directives/resizeable.directive';
+import * as import19 from '../../../../src/directives/long-press.directive';
+import * as import20 from '../../../node_modules/@angular/common/src/directives/ng_style.ngfactory';
+import * as import21 from '../../../node_modules/@angular/common/src/directives/ng_for.ngfactory';
+import * as import22 from '@angular/core/src/change_detection/differs/keyvalue_differs';
+import * as import23 from '@angular/core/src/linker/template_ref';
+import * as import24 from '@angular/core/src/change_detection/differs/iterable_differs';
+import * as import25 from '@angular/common/src/directives/ng_for';
+import * as import26 from '@angular/common/src/directives/ng_style';
+import * as import27 from '../../directives/orderable.directive.ngfactory';
+import * as import28 from '@angular/core/src/linker/query_list';
+import * as import29 from '../../../../src/directives/orderable.directive';
 export class Wrapper_DataTableHeaderComponent {
   /*private*/ _eventHandler:Function;
   context:import0.DataTableHeaderComponent;
@@ -231,183 +231,24 @@ class View_DataTableHeaderComponent_Host0 extends import2.AppView<any> {
 }
 export const DataTableHeaderComponentNgFactory:import9.ComponentFactory<import0.DataTableHeaderComponent> = new import9.ComponentFactory<import0.DataTableHeaderComponent>('datatable-header',View_DataTableHeaderComponent_Host0,import0.DataTableHeaderComponent);
 const styles_DataTableHeaderComponent:any[] = ([] as any[]);
-var renderType_DataTableHeaderComponent:import5.RenderComponentType = import3.createRenderComponentType('',0,import6.ViewEncapsulation.None,styles_DataTableHeaderComponent,{});
-export class View_DataTableHeaderComponent0 extends import2.AppView<import0.DataTableHeaderComponent> {
-  _text_0:any;
-  _el_1:any;
-  _OrderableDirective_1_3:import10.Wrapper_OrderableDirective;
-  _query_DraggableDirective_1_0:import11.QueryList<any>;
-  _text_2:any;
-  _anchor_3:any;
-  /*private*/ _vc_3:import12.ViewContainer;
-  _TemplateRef_3_5:any;
-  _NgFor_3_6:import13.Wrapper_NgFor;
-  _text_4:any;
-  _text_5:any;
-  /*private*/ _expr_11:any;
-  constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any) {
-    super(View_DataTableHeaderComponent0,renderType_DataTableHeaderComponent,import7.ViewType.COMPONENT,viewUtils,parentView,parentIndex,parentElement,import8.ChangeDetectorStatus.CheckAlways);
-    this._expr_11 = import1.UNINITIALIZED;
-  }
-  createInternal(rootSelector:string):import9.ComponentRef<any> {
-    const parentRenderNode:any = this.renderer.createViewRoot(this.parentElement);
-    this._text_0 = this.renderer.createText(parentRenderNode,'\n    ',(null as any));
-    this._el_1 = import3.createRenderElement(this.renderer,parentRenderNode,'div',new import3.InlineArray4(4,'class','datatable-header-inner','orderable',''),(null as any));
-    this._OrderableDirective_1_3 = new import10.Wrapper_OrderableDirective(this.parentView.injectorGet(import14.KeyValueDiffers,this.parentIndex));
-    this._query_DraggableDirective_1_0 = new import11.QueryList<any>();
-    this._text_2 = this.renderer.createText(this._el_1,'\n      ',(null as any));
-    this._anchor_3 = this.renderer.createTemplateAnchor(this._el_1,(null as any));
-    this._vc_3 = new import12.ViewContainer(3,1,this,this._anchor_3);
-    this._TemplateRef_3_5 = new import15.TemplateRef_(this,3,this._anchor_3);
-    this._NgFor_3_6 = new import13.Wrapper_NgFor(this._vc_3.vcRef,this._TemplateRef_3_5,this.parentView.injectorGet(import16.IterableDiffers,this.parentIndex),this.ref);
-    this._text_4 = this.renderer.createText(this._el_1,'\n    ',(null as any));
-    this._text_5 = this.renderer.createText(parentRenderNode,'\n  ',(null as any));
-    var disposable_0:Function = import3.subscribeToRenderElement(this,this._el_1,new import3.InlineArray2(2,'reorder',(null as any)),this.eventHandler(this.handleEvent_1));
-    this._OrderableDirective_1_3.subscribe(this,this.eventHandler(this.handleEvent_1),true);
-    this.init((null as any),((<any>this.renderer).directRenderer? (null as any): [
-      this._text_0,
-      this._el_1,
-      this._text_2,
-      this._anchor_3,
-      this._text_4,
-      this._text_5
-    ]
-    ),[disposable_0]);
-    return (null as any);
-  }
-  injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
-    if (((token === import15.TemplateRef) && (3 === requestNodeIndex))) { return this._TemplateRef_3_5; }
-    if (((token === import17.NgFor) && (3 === requestNodeIndex))) { return this._NgFor_3_6.context; }
-    if (((token === import18.OrderableDirective) && ((1 <= requestNodeIndex) && (requestNodeIndex <= 4)))) { return this._OrderableDirective_1_3.context; }
-    return notFoundResult;
-  }
-  detectChangesInternal(throwOnChange:boolean):void {
-    this._OrderableDirective_1_3.ngDoCheck(this,this._el_1,throwOnChange);
-    const currVal_3_0_0:any = this.context.columnsByPin;
-    this._NgFor_3_6.check_ngForOf(currVal_3_0_0,throwOnChange,false);
-    const currVal_3_0_1:any = this.context.trackByGroups;
-    this._NgFor_3_6.check_ngForTrackBy(currVal_3_0_1,throwOnChange,false);
-    this._NgFor_3_6.ngDoCheck(this,this._anchor_3,throwOnChange);
-    this._vc_3.detectChangesInNestedViews(throwOnChange);
-    if (!throwOnChange) {
-      if (this._query_DraggableDirective_1_0.dirty) {
-          this._query_DraggableDirective_1_0.reset([this._vc_3.mapNestedViews(View_DataTableHeaderComponent1,(nestedView:View_DataTableHeaderComponent1):any => {
-              return [nestedView._vc_2.mapNestedViews(View_DataTableHeaderComponent2,(nestedView:View_DataTableHeaderComponent2):any => {
-                return [nestedView._DraggableDirective_0_3.context];
-            })];
-        })]);
-        this._OrderableDirective_1_3.context.draggables = this._query_DraggableDirective_1_0;
-        this._query_DraggableDirective_1_0.notifyOnChanges();
-      }
-      if ((this.numberOfChecks === 0)) { this._OrderableDirective_1_3.context.ngAfterContentInit(); }
-    }
-    const currVal_11:any = this.context.columnGroupWidths.total;
-    if (import3.checkBinding(throwOnChange,this._expr_11,currVal_11)) {
-      this.renderer.setElementStyle(this._el_1,'width',((this.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_11) == null)? (null as any): (this.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_11).toString() + 'px')));
-      this._expr_11 = currVal_11;
-    }
-  }
-  destroyInternal():void {
-    this._vc_3.destroyNestedViews();
-    this._OrderableDirective_1_3.ngOnDestroy();
-  }
-  createEmbeddedViewInternal(nodeIndex:number):import2.AppView<any> {
-    if ((nodeIndex == 3)) { return new View_DataTableHeaderComponent1(this.viewUtils,this,3,this._anchor_3,this._vc_3); }
-    return (null as any);
-  }
-  handleEvent_1(eventName:string,$event:any):boolean {
-    this.markPathToRootAsCheckOnce();
-    var result:boolean = true;
-    if ((eventName == 'reorder')) {
-      const pd_sub_0:any = ((<any>this.context.onColumnReordered($event)) !== false);
-      result = (pd_sub_0 && result);
-    }
-    return result;
-  }
-}
-class View_DataTableHeaderComponent1 extends import2.AppView<any> {
-  _el_0:any;
-  _NgStyle_0_3:import19.Wrapper_NgStyle;
-  _text_1:any;
-  _anchor_2:any;
-  /*private*/ _vc_2:import12.ViewContainer;
-  _TemplateRef_2_5:any;
-  _NgFor_2_6:import13.Wrapper_NgFor;
-  _text_3:any;
-  /*private*/ _expr_8:any;
-  constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any,declaredViewContainer:import12.ViewContainer) {
-    super(View_DataTableHeaderComponent1,renderType_DataTableHeaderComponent,import7.ViewType.EMBEDDED,viewUtils,parentView,parentIndex,parentElement,import8.ChangeDetectorStatus.CheckAlways,declaredViewContainer);
-    this._expr_8 = import1.UNINITIALIZED;
-  }
-  createInternal(rootSelector:string):import9.ComponentRef<any> {
-    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'div',import3.EMPTY_INLINE_ARRAY,(null as any));
-    this._NgStyle_0_3 = new import19.Wrapper_NgStyle(this.parentView.parentView.injectorGet(import14.KeyValueDiffers,this.parentView.parentIndex),new import20.ElementRef(this._el_0),this.renderer);
-    this._text_1 = this.renderer.createText(this._el_0,'\n        ',(null as any));
-    this._anchor_2 = this.renderer.createTemplateAnchor(this._el_0,(null as any));
-    this._vc_2 = new import12.ViewContainer(2,0,this,this._anchor_2);
-    this._TemplateRef_2_5 = new import15.TemplateRef_(this,2,this._anchor_2);
-    this._NgFor_2_6 = new import13.Wrapper_NgFor(this._vc_2.vcRef,this._TemplateRef_2_5,this.parentView.parentView.injectorGet(import16.IterableDiffers,this.parentView.parentIndex),this.parentView.ref);
-    this._text_3 = this.renderer.createText(this._el_0,'\n      ',(null as any));
-    this.init(this._el_0,((<any>this.renderer).directRenderer? (null as any): [
-      this._el_0,
-      this._text_1,
-      this._anchor_2,
-      this._text_3
-    ]
-    ),(null as any));
-    return (null as any);
-  }
-  injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
-    if (((token === import15.TemplateRef) && (2 === requestNodeIndex))) { return this._TemplateRef_2_5; }
-    if (((token === import17.NgFor) && (2 === requestNodeIndex))) { return this._NgFor_2_6.context; }
-    if (((token === import21.NgStyle) && ((0 <= requestNodeIndex) && (requestNodeIndex <= 3)))) { return this._NgStyle_0_3.context; }
-    return notFoundResult;
-  }
-  detectChangesInternal(throwOnChange:boolean):void {
-    const currVal_0_0_0:any = this.parentView.context.stylesByGroup(this.context.$implicit.type);
-    this._NgStyle_0_3.check_ngStyle(currVal_0_0_0,throwOnChange,false);
-    this._NgStyle_0_3.ngDoCheck(this,this._el_0,throwOnChange);
-    const currVal_2_0_0:any = this.context.$implicit.columns;
-    this._NgFor_2_6.check_ngForOf(currVal_2_0_0,throwOnChange,false);
-    const currVal_2_0_1:any = this.parentView.context.columnTrackingFn;
-    this._NgFor_2_6.check_ngForTrackBy(currVal_2_0_1,throwOnChange,false);
-    this._NgFor_2_6.ngDoCheck(this,this._anchor_2,throwOnChange);
-    this._vc_2.detectChangesInNestedViews(throwOnChange);
-    const currVal_8:any = ('datatable-row-' + this.context.$implicit.type);
-    if (import3.checkBinding(throwOnChange,this._expr_8,currVal_8)) {
-      this.renderer.setElementProperty(this._el_0,'className',currVal_8);
-      this._expr_8 = currVal_8;
-    }
-  }
-  destroyInternal():void {
-    this._vc_2.destroyNestedViews();
-  }
-  visitRootNodesInternal(cb:any,ctx:any):void {
-    cb(this._el_0,ctx);
-  }
-  createEmbeddedViewInternal(nodeIndex:number):import2.AppView<any> {
-    if ((nodeIndex == 2)) { return new View_DataTableHeaderComponent2(this.viewUtils,this,2,this._anchor_2,this._vc_2); }
-    return (null as any);
-  }
-}
 class View_DataTableHeaderComponent2 extends import2.AppView<any> {
   _el_0:any;
-  compView_0:import2.AppView<import22.DataTableHeaderCellComponent>;
-  _DraggableDirective_0_3:import23.Wrapper_DraggableDirective;
-  _ResizeableDirective_0_4:import24.Wrapper_ResizeableDirective;
-  _LongPressDirective_0_5:import25.Wrapper_LongPressDirective;
-  _DataTableHeaderCellComponent_0_6:import26.Wrapper_DataTableHeaderCellComponent;
+  compView_0:import2.AppView<import10.DataTableHeaderCellComponent>;
+  _DraggableDirective_0_3:import11.Wrapper_DraggableDirective;
+  _ResizeableDirective_0_4:import12.Wrapper_ResizeableDirective;
+  _LongPressDirective_0_5:import13.Wrapper_LongPressDirective;
+  _DataTableHeaderCellComponent_0_6:import14.Wrapper_DataTableHeaderCellComponent;
   _text_1:any;
-  constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any,declaredViewContainer:import12.ViewContainer) {
+  constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any,declaredViewContainer:import15.ViewContainer) {
     super(View_DataTableHeaderComponent2,renderType_DataTableHeaderComponent,import7.ViewType.EMBEDDED,viewUtils,parentView,parentIndex,parentElement,import8.ChangeDetectorStatus.CheckAlways,declaredViewContainer);
   }
   createInternal(rootSelector:string):import9.ComponentRef<any> {
     this._el_0 = import3.createRenderElement(this.renderer,(null as any),'datatable-header-cell',new import3.InlineArray8(6,'draggable','','long-press','','resizeable',''),(null as any));
-    this.compView_0 = new import26.View_DataTableHeaderCellComponent0(this.viewUtils,this,0,this._el_0);
-    this._DraggableDirective_0_3 = new import23.Wrapper_DraggableDirective(new import20.ElementRef(this._el_0));
-    this._ResizeableDirective_0_4 = new import24.Wrapper_ResizeableDirective(new import20.ElementRef(this._el_0));
-    this._LongPressDirective_0_5 = new import25.Wrapper_LongPressDirective();
-    this._DataTableHeaderCellComponent_0_6 = new import26.Wrapper_DataTableHeaderCellComponent();
+    this.compView_0 = new import14.View_DataTableHeaderCellComponent0(this.viewUtils,this,0,this._el_0);
+    this._DraggableDirective_0_3 = new import11.Wrapper_DraggableDirective(new import16.ElementRef(this._el_0));
+    this._ResizeableDirective_0_4 = new import12.Wrapper_ResizeableDirective(new import16.ElementRef(this._el_0));
+    this._LongPressDirective_0_5 = new import13.Wrapper_LongPressDirective();
+    this._DataTableHeaderCellComponent_0_6 = new import14.Wrapper_DataTableHeaderCellComponent();
     this._text_1 = this.renderer.createText((null as any),'\n        ',(null as any));
     this.compView_0.create(this._DataTableHeaderCellComponent_0_6.context);
     var disposable_0:Function = import3.subscribeToRenderElement(this,this._el_0,new import3.InlineArrayDynamic(18,'resize',(null as any),'longPress',(null as any),'longPressEnd',(null as any),'sort',(null as any),'select',(null as any),'mouseup','document','mousedown',(null as any),'mousemove',(null as any),'mouseup',(null as any)),this.eventHandler(this.handleEvent_0));
@@ -422,10 +263,10 @@ class View_DataTableHeaderComponent2 extends import2.AppView<any> {
     return (null as any);
   }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
-    if (((token === import27.DraggableDirective) && ((0 <= requestNodeIndex) && (requestNodeIndex <= 1)))) { return this._DraggableDirective_0_3.context; }
-    if (((token === import28.ResizeableDirective) && ((0 <= requestNodeIndex) && (requestNodeIndex <= 1)))) { return this._ResizeableDirective_0_4.context; }
-    if (((token === import29.LongPressDirective) && ((0 <= requestNodeIndex) && (requestNodeIndex <= 1)))) { return this._LongPressDirective_0_5.context; }
-    if (((token === import22.DataTableHeaderCellComponent) && ((0 <= requestNodeIndex) && (requestNodeIndex <= 1)))) { return this._DataTableHeaderCellComponent_0_6.context; }
+    if (((token === import17.DraggableDirective) && ((0 <= requestNodeIndex) && (requestNodeIndex <= 1)))) { return this._DraggableDirective_0_3.context; }
+    if (((token === import18.ResizeableDirective) && ((0 <= requestNodeIndex) && (requestNodeIndex <= 1)))) { return this._ResizeableDirective_0_4.context; }
+    if (((token === import19.LongPressDirective) && ((0 <= requestNodeIndex) && (requestNodeIndex <= 1)))) { return this._LongPressDirective_0_5.context; }
+    if (((token === import10.DataTableHeaderCellComponent) && ((0 <= requestNodeIndex) && (requestNodeIndex <= 1)))) { return this._DataTableHeaderCellComponent_0_6.context; }
     return notFoundResult;
   }
   detectChangesInternal(throwOnChange:boolean):void {
@@ -498,6 +339,165 @@ class View_DataTableHeaderComponent2 extends import2.AppView<any> {
     if ((eventName == 'select')) {
       const pd_sub_4:any = ((<any>this.parentView.parentView.context.select.emit($event)) !== false);
       result = (pd_sub_4 && result);
+    }
+    return result;
+  }
+}
+class View_DataTableHeaderComponent1 extends import2.AppView<any> {
+  _el_0:any;
+  _NgStyle_0_3:import20.Wrapper_NgStyle;
+  _text_1:any;
+  _anchor_2:any;
+  /*private*/ _vc_2:import15.ViewContainer;
+  _TemplateRef_2_5:any;
+  _NgFor_2_6:import21.Wrapper_NgFor;
+  _text_3:any;
+  /*private*/ _expr_8:any;
+  constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any,declaredViewContainer:import15.ViewContainer) {
+    super(View_DataTableHeaderComponent1,renderType_DataTableHeaderComponent,import7.ViewType.EMBEDDED,viewUtils,parentView,parentIndex,parentElement,import8.ChangeDetectorStatus.CheckAlways,declaredViewContainer);
+    this._expr_8 = import1.UNINITIALIZED;
+  }
+  createInternal(rootSelector:string):import9.ComponentRef<any> {
+    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'div',import3.EMPTY_INLINE_ARRAY,(null as any));
+    this._NgStyle_0_3 = new import20.Wrapper_NgStyle(this.parentView.parentView.injectorGet(import22.KeyValueDiffers,this.parentView.parentIndex),new import16.ElementRef(this._el_0),this.renderer);
+    this._text_1 = this.renderer.createText(this._el_0,'\n        ',(null as any));
+    this._anchor_2 = this.renderer.createTemplateAnchor(this._el_0,(null as any));
+    this._vc_2 = new import15.ViewContainer(2,0,this,this._anchor_2);
+    this._TemplateRef_2_5 = new import23.TemplateRef_(this,2,this._anchor_2);
+    this._NgFor_2_6 = new import21.Wrapper_NgFor(this._vc_2.vcRef,this._TemplateRef_2_5,this.parentView.parentView.injectorGet(import24.IterableDiffers,this.parentView.parentIndex),this.parentView.ref);
+    this._text_3 = this.renderer.createText(this._el_0,'\n      ',(null as any));
+    this.init(this._el_0,((<any>this.renderer).directRenderer? (null as any): [
+      this._el_0,
+      this._text_1,
+      this._anchor_2,
+      this._text_3
+    ]
+    ),(null as any));
+    return (null as any);
+  }
+  injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
+    if (((token === import23.TemplateRef) && (2 === requestNodeIndex))) { return this._TemplateRef_2_5; }
+    if (((token === import25.NgFor) && (2 === requestNodeIndex))) { return this._NgFor_2_6.context; }
+    if (((token === import26.NgStyle) && ((0 <= requestNodeIndex) && (requestNodeIndex <= 3)))) { return this._NgStyle_0_3.context; }
+    return notFoundResult;
+  }
+  detectChangesInternal(throwOnChange:boolean):void {
+    const currVal_0_0_0:any = this.parentView.context.stylesByGroup(this.context.$implicit.type);
+    this._NgStyle_0_3.check_ngStyle(currVal_0_0_0,throwOnChange,false);
+    this._NgStyle_0_3.ngDoCheck(this,this._el_0,throwOnChange);
+    const currVal_2_0_0:any = this.context.$implicit.columns;
+    this._NgFor_2_6.check_ngForOf(currVal_2_0_0,throwOnChange,false);
+    const currVal_2_0_1:any = this.parentView.context.columnTrackingFn;
+    this._NgFor_2_6.check_ngForTrackBy(currVal_2_0_1,throwOnChange,false);
+    this._NgFor_2_6.ngDoCheck(this,this._anchor_2,throwOnChange);
+    this._vc_2.detectChangesInNestedViews(throwOnChange);
+    const currVal_8:any = ('datatable-row-' + this.context.$implicit.type);
+    if (import3.checkBinding(throwOnChange,this._expr_8,currVal_8)) {
+      this.renderer.setElementProperty(this._el_0,'className',currVal_8);
+      this._expr_8 = currVal_8;
+    }
+  }
+  destroyInternal():void {
+    this._vc_2.destroyNestedViews();
+  }
+  visitRootNodesInternal(cb:any,ctx:any):void {
+    cb(this._el_0,ctx);
+  }
+  createEmbeddedViewInternal(nodeIndex:number):import2.AppView<any> {
+    if ((nodeIndex == 2)) { return new View_DataTableHeaderComponent2(this.viewUtils,this,2,this._anchor_2,this._vc_2); }
+    return (null as any);
+  }
+}
+var renderType_DataTableHeaderComponent:import5.RenderComponentType = import3.createRenderComponentType('',0,import6.ViewEncapsulation.None,styles_DataTableHeaderComponent,{});
+export class View_DataTableHeaderComponent0 extends import2.AppView<import0.DataTableHeaderComponent> {
+  _text_0:any;
+  _el_1:any;
+  _OrderableDirective_1_3:import27.Wrapper_OrderableDirective;
+  _query_DraggableDirective_1_0:import28.QueryList<any>;
+  _text_2:any;
+  _anchor_3:any;
+  /*private*/ _vc_3:import15.ViewContainer;
+  _TemplateRef_3_5:any;
+  _NgFor_3_6:import21.Wrapper_NgFor;
+  _text_4:any;
+  _text_5:any;
+  /*private*/ _expr_11:any;
+  constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any) {
+    super(View_DataTableHeaderComponent0,renderType_DataTableHeaderComponent,import7.ViewType.COMPONENT,viewUtils,parentView,parentIndex,parentElement,import8.ChangeDetectorStatus.CheckAlways);
+    this._expr_11 = import1.UNINITIALIZED;
+  }
+  createInternal(rootSelector:string):import9.ComponentRef<any> {
+    const parentRenderNode:any = this.renderer.createViewRoot(this.parentElement);
+    this._text_0 = this.renderer.createText(parentRenderNode,'\n    ',(null as any));
+    this._el_1 = import3.createRenderElement(this.renderer,parentRenderNode,'div',new import3.InlineArray4(4,'class','datatable-header-inner','orderable',''),(null as any));
+    this._OrderableDirective_1_3 = new import27.Wrapper_OrderableDirective(this.parentView.injectorGet(import22.KeyValueDiffers,this.parentIndex));
+    this._query_DraggableDirective_1_0 = new import28.QueryList<any>();
+    this._text_2 = this.renderer.createText(this._el_1,'\n      ',(null as any));
+    this._anchor_3 = this.renderer.createTemplateAnchor(this._el_1,(null as any));
+    this._vc_3 = new import15.ViewContainer(3,1,this,this._anchor_3);
+    this._TemplateRef_3_5 = new import23.TemplateRef_(this,3,this._anchor_3);
+    this._NgFor_3_6 = new import21.Wrapper_NgFor(this._vc_3.vcRef,this._TemplateRef_3_5,this.parentView.injectorGet(import24.IterableDiffers,this.parentIndex),this.ref);
+    this._text_4 = this.renderer.createText(this._el_1,'\n    ',(null as any));
+    this._text_5 = this.renderer.createText(parentRenderNode,'\n  ',(null as any));
+    var disposable_0:Function = import3.subscribeToRenderElement(this,this._el_1,new import3.InlineArray2(2,'reorder',(null as any)),this.eventHandler(this.handleEvent_1));
+    this._OrderableDirective_1_3.subscribe(this,this.eventHandler(this.handleEvent_1),true);
+    this.init((null as any),((<any>this.renderer).directRenderer? (null as any): [
+      this._text_0,
+      this._el_1,
+      this._text_2,
+      this._anchor_3,
+      this._text_4,
+      this._text_5
+    ]
+    ),[disposable_0]);
+    return (null as any);
+  }
+  injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
+    if (((token === import23.TemplateRef) && (3 === requestNodeIndex))) { return this._TemplateRef_3_5; }
+    if (((token === import25.NgFor) && (3 === requestNodeIndex))) { return this._NgFor_3_6.context; }
+    if (((token === import29.OrderableDirective) && ((1 <= requestNodeIndex) && (requestNodeIndex <= 4)))) { return this._OrderableDirective_1_3.context; }
+    return notFoundResult;
+  }
+  detectChangesInternal(throwOnChange:boolean):void {
+    this._OrderableDirective_1_3.ngDoCheck(this,this._el_1,throwOnChange);
+    const currVal_3_0_0:any = this.context.columnsByPin;
+    this._NgFor_3_6.check_ngForOf(currVal_3_0_0,throwOnChange,false);
+    const currVal_3_0_1:any = this.context.trackByGroups;
+    this._NgFor_3_6.check_ngForTrackBy(currVal_3_0_1,throwOnChange,false);
+    this._NgFor_3_6.ngDoCheck(this,this._anchor_3,throwOnChange);
+    this._vc_3.detectChangesInNestedViews(throwOnChange);
+    if (!throwOnChange) {
+      if (this._query_DraggableDirective_1_0.dirty) {
+          this._query_DraggableDirective_1_0.reset([this._vc_3.mapNestedViews(View_DataTableHeaderComponent1,(nestedView:View_DataTableHeaderComponent1):any => {
+              return [nestedView._vc_2.mapNestedViews(View_DataTableHeaderComponent2,(nestedView:View_DataTableHeaderComponent2):any => {
+                return [nestedView._DraggableDirective_0_3.context];
+            })];
+        })]);
+        this._OrderableDirective_1_3.context.draggables = this._query_DraggableDirective_1_0;
+        this._query_DraggableDirective_1_0.notifyOnChanges();
+      }
+      if ((this.numberOfChecks === 0)) { this._OrderableDirective_1_3.context.ngAfterContentInit(); }
+    }
+    const currVal_11:any = this.context.columnGroupWidths.total;
+    if (import3.checkBinding(throwOnChange,this._expr_11,currVal_11)) {
+      this.renderer.setElementStyle(this._el_1,'width',((this.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_11) == null)? (null as any): (this.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_11).toString() + 'px')));
+      this._expr_11 = currVal_11;
+    }
+  }
+  destroyInternal():void {
+    this._vc_3.destroyNestedViews();
+    this._OrderableDirective_1_3.ngOnDestroy();
+  }
+  createEmbeddedViewInternal(nodeIndex:number):import2.AppView<any> {
+    if ((nodeIndex == 3)) { return new View_DataTableHeaderComponent1(this.viewUtils,this,3,this._anchor_3,this._vc_3); }
+    return (null as any);
+  }
+  handleEvent_1(eventName:string,$event:any):boolean {
+    this.markPathToRootAsCheckOnce();
+    var result:boolean = true;
+    if ((eventName == 'reorder')) {
+      const pd_sub_0:any = ((<any>this.context.onColumnReordered($event)) !== false);
+      result = (pd_sub_0 && result);
     }
     return result;
   }

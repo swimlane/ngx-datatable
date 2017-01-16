@@ -17,11 +17,11 @@ import * as import8 from '@angular/core/src/change_detection/constants';
 import * as import9 from '@angular/core/src/linker/component_factory';
 import * as import10 from '@angular/core/src/linker/element_ref';
 import * as import11 from '@angular/core/src/linker/view_container';
-import * as import12 from '../../../node_modules/@angular/common/src/directives/ng_if.ngfactory';
+import * as import12 from '../../../node_modules/@angular/common/src/directives/ng_template_outlet.ngfactory';
 import * as import13 from '@angular/core/src/linker/template_ref';
-import * as import14 from '@angular/common/src/directives/ng_if';
-import * as import15 from '../../../node_modules/@angular/common/src/directives/ng_template_outlet.ngfactory';
-import * as import16 from '@angular/common/src/directives/ng_template_outlet';
+import * as import14 from '@angular/common/src/directives/ng_template_outlet';
+import * as import15 from '../../../node_modules/@angular/common/src/directives/ng_if.ngfactory';
+import * as import16 from '@angular/common/src/directives/ng_if';
 export class Wrapper_DataTableBodyCellComponent {
   /*private*/ _eventHandler:Function;
   context:import0.DataTableBodyCellComponent;
@@ -37,6 +37,7 @@ export class Wrapper_DataTableBodyCellComponent {
   /*private*/ _expr_8:any;
   /*private*/ _expr_9:any;
   /*private*/ _expr_10:any;
+  /*private*/ _expr_11:any;
   subscription0:any;
   constructor(p0:any) {
     this._changed = false;
@@ -52,6 +53,7 @@ export class Wrapper_DataTableBodyCellComponent {
     this._expr_8 = import1.UNINITIALIZED;
     this._expr_9 = import1.UNINITIALIZED;
     this._expr_10 = import1.UNINITIALIZED;
+    this._expr_11 = import1.UNINITIALIZED;
   }
   ngOnDetach(view:import2.AppView<any>,componentView:import2.AppView<any>,el:any):void {
   }
@@ -99,35 +101,40 @@ export class Wrapper_DataTableBodyCellComponent {
     return changed;
   }
   checkHost(view:import2.AppView<any>,componentView:import2.AppView<any>,el:any,throwOnChange:boolean):void {
-    const currVal_5:any = this.context.isFocused;
+    const currVal_5:any = this.context.columnCssClasses;
     if (import3.checkBinding(throwOnChange,this._expr_5,currVal_5)) {
-      view.renderer.setElementClass(el,'active',currVal_5);
+      view.renderer.setElementProperty(el,'className',currVal_5);
       this._expr_5 = currVal_5;
     }
-    const currVal_6:any = this.context.isSortActive;
+    const currVal_6:any = this.context.isFocused;
     if (import3.checkBinding(throwOnChange,this._expr_6,currVal_6)) {
-      view.renderer.setElementClass(el,'sort-active',currVal_6);
+      view.renderer.setElementClass(el,'active',currVal_6);
       this._expr_6 = currVal_6;
     }
-    const currVal_7:any = this.context.isSortAscending;
+    const currVal_7:any = this.context.isSortActive;
     if (import3.checkBinding(throwOnChange,this._expr_7,currVal_7)) {
-      view.renderer.setElementClass(el,'sort-asc',currVal_7);
+      view.renderer.setElementClass(el,'sort-active',currVal_7);
       this._expr_7 = currVal_7;
     }
-    const currVal_8:any = this.context.isSortDescending;
+    const currVal_8:any = this.context.isSortAscending;
     if (import3.checkBinding(throwOnChange,this._expr_8,currVal_8)) {
-      view.renderer.setElementClass(el,'sort-desc',currVal_8);
+      view.renderer.setElementClass(el,'sort-asc',currVal_8);
       this._expr_8 = currVal_8;
     }
-    const currVal_9:any = this.context.width;
+    const currVal_9:any = this.context.isSortDescending;
     if (import3.checkBinding(throwOnChange,this._expr_9,currVal_9)) {
-      view.renderer.setElementStyle(el,'width',((view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_9) == null)? (null as any): (view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_9).toString() + 'px')));
+      view.renderer.setElementClass(el,'sort-desc',currVal_9);
       this._expr_9 = currVal_9;
     }
-    const currVal_10:any = this.context.height;
+    const currVal_10:any = this.context.width;
     if (import3.checkBinding(throwOnChange,this._expr_10,currVal_10)) {
-      view.renderer.setElementStyle(el,'height',((view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_10) == null)? (null as any): view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_10).toString()));
+      view.renderer.setElementStyle(el,'width',((view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_10) == null)? (null as any): (view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_10).toString() + 'px')));
       this._expr_10 = currVal_10;
+    }
+    const currVal_11:any = this.context.height;
+    if (import3.checkBinding(throwOnChange,this._expr_11,currVal_11)) {
+      view.renderer.setElementStyle(el,'height',((view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_11) == null)? (null as any): view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_11).toString()));
+      this._expr_11 = currVal_11;
     }
   }
   handleEvent(eventName:string,$event:any):boolean {
@@ -201,101 +208,6 @@ class View_DataTableBodyCellComponent_Host0 extends import2.AppView<any> {
 }
 export const DataTableBodyCellComponentNgFactory:import9.ComponentFactory<import0.DataTableBodyCellComponent> = new import9.ComponentFactory<import0.DataTableBodyCellComponent>('datatable-body-cell',View_DataTableBodyCellComponent_Host0,import0.DataTableBodyCellComponent);
 const styles_DataTableBodyCellComponent:any[] = ([] as any[]);
-var renderType_DataTableBodyCellComponent:import5.RenderComponentType = import3.createRenderComponentType('',0,import6.ViewEncapsulation.None,styles_DataTableBodyCellComponent,{});
-export class View_DataTableBodyCellComponent0 extends import2.AppView<import0.DataTableBodyCellComponent> {
-  _text_0:any;
-  _el_1:any;
-  _text_2:any;
-  _anchor_3:any;
-  /*private*/ _vc_3:import11.ViewContainer;
-  _TemplateRef_3_5:any;
-  _NgIf_3_6:import12.Wrapper_NgIf;
-  _text_4:any;
-  _anchor_5:any;
-  /*private*/ _vc_5:import11.ViewContainer;
-  _TemplateRef_5_5:any;
-  _NgIf_5_6:import12.Wrapper_NgIf;
-  _text_6:any;
-  _anchor_7:any;
-  /*private*/ _vc_7:import11.ViewContainer;
-  _TemplateRef_7_5:any;
-  _NgIf_7_6:import12.Wrapper_NgIf;
-  _text_8:any;
-  _text_9:any;
-  constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any) {
-    super(View_DataTableBodyCellComponent0,renderType_DataTableBodyCellComponent,import7.ViewType.COMPONENT,viewUtils,parentView,parentIndex,parentElement,import8.ChangeDetectorStatus.CheckAlways);
-  }
-  createInternal(rootSelector:string):import9.ComponentRef<any> {
-    const parentRenderNode:any = this.renderer.createViewRoot(this.parentElement);
-    this._text_0 = this.renderer.createText(parentRenderNode,'\n    ',(null as any));
-    this._el_1 = import3.createRenderElement(this.renderer,parentRenderNode,'div',new import3.InlineArray2(2,'class','datatable-body-cell-label'),(null as any));
-    this._text_2 = this.renderer.createText(this._el_1,'\n      ',(null as any));
-    this._anchor_3 = this.renderer.createTemplateAnchor(this._el_1,(null as any));
-    this._vc_3 = new import11.ViewContainer(3,1,this,this._anchor_3);
-    this._TemplateRef_3_5 = new import13.TemplateRef_(this,3,this._anchor_3);
-    this._NgIf_3_6 = new import12.Wrapper_NgIf(this._vc_3.vcRef,this._TemplateRef_3_5);
-    this._text_4 = this.renderer.createText(this._el_1,'\n      ',(null as any));
-    this._anchor_5 = this.renderer.createTemplateAnchor(this._el_1,(null as any));
-    this._vc_5 = new import11.ViewContainer(5,1,this,this._anchor_5);
-    this._TemplateRef_5_5 = new import13.TemplateRef_(this,5,this._anchor_5);
-    this._NgIf_5_6 = new import12.Wrapper_NgIf(this._vc_5.vcRef,this._TemplateRef_5_5);
-    this._text_6 = this.renderer.createText(this._el_1,'\n      ',(null as any));
-    this._anchor_7 = this.renderer.createTemplateAnchor(this._el_1,(null as any));
-    this._vc_7 = new import11.ViewContainer(7,1,this,this._anchor_7);
-    this._TemplateRef_7_5 = new import13.TemplateRef_(this,7,this._anchor_7);
-    this._NgIf_7_6 = new import12.Wrapper_NgIf(this._vc_7.vcRef,this._TemplateRef_7_5);
-    this._text_8 = this.renderer.createText(this._el_1,'\n    ',(null as any));
-    this._text_9 = this.renderer.createText(parentRenderNode,'\n  ',(null as any));
-    this.init((null as any),((<any>this.renderer).directRenderer? (null as any): [
-      this._text_0,
-      this._el_1,
-      this._text_2,
-      this._anchor_3,
-      this._text_4,
-      this._anchor_5,
-      this._text_6,
-      this._anchor_7,
-      this._text_8,
-      this._text_9
-    ]
-    ),(null as any));
-    return (null as any);
-  }
-  injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
-    if (((token === import13.TemplateRef) && (3 === requestNodeIndex))) { return this._TemplateRef_3_5; }
-    if (((token === import14.NgIf) && (3 === requestNodeIndex))) { return this._NgIf_3_6.context; }
-    if (((token === import13.TemplateRef) && (5 === requestNodeIndex))) { return this._TemplateRef_5_5; }
-    if (((token === import14.NgIf) && (5 === requestNodeIndex))) { return this._NgIf_5_6.context; }
-    if (((token === import13.TemplateRef) && (7 === requestNodeIndex))) { return this._TemplateRef_7_5; }
-    if (((token === import14.NgIf) && (7 === requestNodeIndex))) { return this._NgIf_7_6.context; }
-    return notFoundResult;
-  }
-  detectChangesInternal(throwOnChange:boolean):void {
-    const currVal_3_0_0:any = this.context.column.checkboxable;
-    this._NgIf_3_6.check_ngIf(currVal_3_0_0,throwOnChange,false);
-    this._NgIf_3_6.ngDoCheck(this,this._anchor_3,throwOnChange);
-    const currVal_5_0_0:boolean = !this.context.column.cellTemplate;
-    this._NgIf_5_6.check_ngIf(currVal_5_0_0,throwOnChange,false);
-    this._NgIf_5_6.ngDoCheck(this,this._anchor_5,throwOnChange);
-    const currVal_7_0_0:any = this.context.column.cellTemplate;
-    this._NgIf_7_6.check_ngIf(currVal_7_0_0,throwOnChange,false);
-    this._NgIf_7_6.ngDoCheck(this,this._anchor_7,throwOnChange);
-    this._vc_3.detectChangesInNestedViews(throwOnChange);
-    this._vc_5.detectChangesInNestedViews(throwOnChange);
-    this._vc_7.detectChangesInNestedViews(throwOnChange);
-  }
-  destroyInternal():void {
-    this._vc_3.destroyNestedViews();
-    this._vc_5.destroyNestedViews();
-    this._vc_7.destroyNestedViews();
-  }
-  createEmbeddedViewInternal(nodeIndex:number):import2.AppView<any> {
-    if ((nodeIndex == 3)) { return new View_DataTableBodyCellComponent1(this.viewUtils,this,3,this._anchor_3,this._vc_3); }
-    if ((nodeIndex == 5)) { return new View_DataTableBodyCellComponent2(this.viewUtils,this,5,this._anchor_5,this._vc_5); }
-    if ((nodeIndex == 7)) { return new View_DataTableBodyCellComponent3(this.viewUtils,this,7,this._anchor_7,this._vc_7); }
-    return (null as any);
-  }
-}
 class View_DataTableBodyCellComponent1 extends import2.AppView<any> {
   _el_0:any;
   _text_1:any;
@@ -370,11 +282,25 @@ class View_DataTableBodyCellComponent2 extends import2.AppView<any> {
     cb(this._el_0,ctx);
   }
 }
+class View_DataTableBodyCellComponent4 extends import2.AppView<any> {
+  _text_0:any;
+  constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any,declaredViewContainer:import11.ViewContainer) {
+    super(View_DataTableBodyCellComponent4,renderType_DataTableBodyCellComponent,import7.ViewType.EMBEDDED,viewUtils,parentView,parentIndex,parentElement,import8.ChangeDetectorStatus.CheckAlways,declaredViewContainer);
+  }
+  createInternal(rootSelector:string):import9.ComponentRef<any> {
+    this._text_0 = this.renderer.createText((null as any),'\n      ',(null as any));
+    this.init(this._text_0,((<any>this.renderer).directRenderer? (null as any): [this._text_0]),(null as any));
+    return (null as any);
+  }
+  visitRootNodesInternal(cb:any,ctx:any):void {
+    cb(this._text_0,ctx);
+  }
+}
 class View_DataTableBodyCellComponent3 extends import2.AppView<any> {
   _anchor_0:any;
   /*private*/ _vc_0:import11.ViewContainer;
   _TemplateRef_0_5:any;
-  _NgTemplateOutlet_0_6:import15.Wrapper_NgTemplateOutlet;
+  _NgTemplateOutlet_0_6:import12.Wrapper_NgTemplateOutlet;
   _el_1:any;
   _map_5:any;
   constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any,declaredViewContainer:import11.ViewContainer) {
@@ -392,14 +318,14 @@ class View_DataTableBodyCellComponent3 extends import2.AppView<any> {
     this._anchor_0 = this.renderer.createTemplateAnchor((null as any),(null as any));
     this._vc_0 = new import11.ViewContainer(0,(null as any),this,this._anchor_0);
     this._TemplateRef_0_5 = new import13.TemplateRef_(this,0,this._anchor_0);
-    this._NgTemplateOutlet_0_6 = new import15.Wrapper_NgTemplateOutlet(this._vc_0.vcRef);
+    this._NgTemplateOutlet_0_6 = new import12.Wrapper_NgTemplateOutlet(this._vc_0.vcRef);
     this._el_1 = this.renderer.createTemplateAnchor((null as any),(null as any));
     this.init(this._el_1,((<any>this.renderer).directRenderer? (null as any): [this._anchor_0]),(null as any));
     return (null as any);
   }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
     if (((token === import13.TemplateRef) && (0 === requestNodeIndex))) { return this._TemplateRef_0_5; }
-    if (((token === import16.NgTemplateOutlet) && (0 === requestNodeIndex))) { return this._NgTemplateOutlet_0_6.context; }
+    if (((token === import14.NgTemplateOutlet) && (0 === requestNodeIndex))) { return this._NgTemplateOutlet_0_6.context; }
     return notFoundResult;
   }
   detectChangesInternal(throwOnChange:boolean):void {
@@ -423,17 +349,98 @@ class View_DataTableBodyCellComponent3 extends import2.AppView<any> {
     return (null as any);
   }
 }
-class View_DataTableBodyCellComponent4 extends import2.AppView<any> {
+var renderType_DataTableBodyCellComponent:import5.RenderComponentType = import3.createRenderComponentType('',0,import6.ViewEncapsulation.None,styles_DataTableBodyCellComponent,{});
+export class View_DataTableBodyCellComponent0 extends import2.AppView<import0.DataTableBodyCellComponent> {
   _text_0:any;
-  constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any,declaredViewContainer:import11.ViewContainer) {
-    super(View_DataTableBodyCellComponent4,renderType_DataTableBodyCellComponent,import7.ViewType.EMBEDDED,viewUtils,parentView,parentIndex,parentElement,import8.ChangeDetectorStatus.CheckAlways,declaredViewContainer);
+  _el_1:any;
+  _text_2:any;
+  _anchor_3:any;
+  /*private*/ _vc_3:import11.ViewContainer;
+  _TemplateRef_3_5:any;
+  _NgIf_3_6:import15.Wrapper_NgIf;
+  _text_4:any;
+  _anchor_5:any;
+  /*private*/ _vc_5:import11.ViewContainer;
+  _TemplateRef_5_5:any;
+  _NgIf_5_6:import15.Wrapper_NgIf;
+  _text_6:any;
+  _anchor_7:any;
+  /*private*/ _vc_7:import11.ViewContainer;
+  _TemplateRef_7_5:any;
+  _NgIf_7_6:import15.Wrapper_NgIf;
+  _text_8:any;
+  _text_9:any;
+  constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any) {
+    super(View_DataTableBodyCellComponent0,renderType_DataTableBodyCellComponent,import7.ViewType.COMPONENT,viewUtils,parentView,parentIndex,parentElement,import8.ChangeDetectorStatus.CheckAlways);
   }
   createInternal(rootSelector:string):import9.ComponentRef<any> {
-    this._text_0 = this.renderer.createText((null as any),'\n      ',(null as any));
-    this.init(this._text_0,((<any>this.renderer).directRenderer? (null as any): [this._text_0]),(null as any));
+    const parentRenderNode:any = this.renderer.createViewRoot(this.parentElement);
+    this._text_0 = this.renderer.createText(parentRenderNode,'\n    ',(null as any));
+    this._el_1 = import3.createRenderElement(this.renderer,parentRenderNode,'div',new import3.InlineArray2(2,'class','datatable-body-cell-label'),(null as any));
+    this._text_2 = this.renderer.createText(this._el_1,'\n      ',(null as any));
+    this._anchor_3 = this.renderer.createTemplateAnchor(this._el_1,(null as any));
+    this._vc_3 = new import11.ViewContainer(3,1,this,this._anchor_3);
+    this._TemplateRef_3_5 = new import13.TemplateRef_(this,3,this._anchor_3);
+    this._NgIf_3_6 = new import15.Wrapper_NgIf(this._vc_3.vcRef,this._TemplateRef_3_5);
+    this._text_4 = this.renderer.createText(this._el_1,'\n      ',(null as any));
+    this._anchor_5 = this.renderer.createTemplateAnchor(this._el_1,(null as any));
+    this._vc_5 = new import11.ViewContainer(5,1,this,this._anchor_5);
+    this._TemplateRef_5_5 = new import13.TemplateRef_(this,5,this._anchor_5);
+    this._NgIf_5_6 = new import15.Wrapper_NgIf(this._vc_5.vcRef,this._TemplateRef_5_5);
+    this._text_6 = this.renderer.createText(this._el_1,'\n      ',(null as any));
+    this._anchor_7 = this.renderer.createTemplateAnchor(this._el_1,(null as any));
+    this._vc_7 = new import11.ViewContainer(7,1,this,this._anchor_7);
+    this._TemplateRef_7_5 = new import13.TemplateRef_(this,7,this._anchor_7);
+    this._NgIf_7_6 = new import15.Wrapper_NgIf(this._vc_7.vcRef,this._TemplateRef_7_5);
+    this._text_8 = this.renderer.createText(this._el_1,'\n    ',(null as any));
+    this._text_9 = this.renderer.createText(parentRenderNode,'\n  ',(null as any));
+    this.init((null as any),((<any>this.renderer).directRenderer? (null as any): [
+      this._text_0,
+      this._el_1,
+      this._text_2,
+      this._anchor_3,
+      this._text_4,
+      this._anchor_5,
+      this._text_6,
+      this._anchor_7,
+      this._text_8,
+      this._text_9
+    ]
+    ),(null as any));
     return (null as any);
   }
-  visitRootNodesInternal(cb:any,ctx:any):void {
-    cb(this._text_0,ctx);
+  injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
+    if (((token === import13.TemplateRef) && (3 === requestNodeIndex))) { return this._TemplateRef_3_5; }
+    if (((token === import16.NgIf) && (3 === requestNodeIndex))) { return this._NgIf_3_6.context; }
+    if (((token === import13.TemplateRef) && (5 === requestNodeIndex))) { return this._TemplateRef_5_5; }
+    if (((token === import16.NgIf) && (5 === requestNodeIndex))) { return this._NgIf_5_6.context; }
+    if (((token === import13.TemplateRef) && (7 === requestNodeIndex))) { return this._TemplateRef_7_5; }
+    if (((token === import16.NgIf) && (7 === requestNodeIndex))) { return this._NgIf_7_6.context; }
+    return notFoundResult;
+  }
+  detectChangesInternal(throwOnChange:boolean):void {
+    const currVal_3_0_0:any = this.context.column.checkboxable;
+    this._NgIf_3_6.check_ngIf(currVal_3_0_0,throwOnChange,false);
+    this._NgIf_3_6.ngDoCheck(this,this._anchor_3,throwOnChange);
+    const currVal_5_0_0:boolean = !this.context.column.cellTemplate;
+    this._NgIf_5_6.check_ngIf(currVal_5_0_0,throwOnChange,false);
+    this._NgIf_5_6.ngDoCheck(this,this._anchor_5,throwOnChange);
+    const currVal_7_0_0:any = this.context.column.cellTemplate;
+    this._NgIf_7_6.check_ngIf(currVal_7_0_0,throwOnChange,false);
+    this._NgIf_7_6.ngDoCheck(this,this._anchor_7,throwOnChange);
+    this._vc_3.detectChangesInNestedViews(throwOnChange);
+    this._vc_5.detectChangesInNestedViews(throwOnChange);
+    this._vc_7.detectChangesInNestedViews(throwOnChange);
+  }
+  destroyInternal():void {
+    this._vc_3.destroyNestedViews();
+    this._vc_5.destroyNestedViews();
+    this._vc_7.destroyNestedViews();
+  }
+  createEmbeddedViewInternal(nodeIndex:number):import2.AppView<any> {
+    if ((nodeIndex == 3)) { return new View_DataTableBodyCellComponent1(this.viewUtils,this,3,this._anchor_3,this._vc_3); }
+    if ((nodeIndex == 5)) { return new View_DataTableBodyCellComponent2(this.viewUtils,this,5,this._anchor_5,this._vc_5); }
+    if ((nodeIndex == 7)) { return new View_DataTableBodyCellComponent3(this.viewUtils,this,7,this._anchor_7,this._vc_7); }
+    return (null as any);
   }
 }

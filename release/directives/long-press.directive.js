@@ -15,7 +15,7 @@ var LongPressDirective = (function () {
         configurable: true
     });
     Object.defineProperty(LongPressDirective.prototype, "isLongPress", {
-        get: function () { return this.longPressing !== undefined; },
+        get: function () { return this.isLongPressing; },
         enumerable: true,
         configurable: true
     });
@@ -36,9 +36,9 @@ var LongPressDirective = (function () {
         this.loop(event);
     };
     LongPressDirective.prototype.onMouseMove = function (event) {
-        if (this.pressing && !this.longPressing) {
-            var xThres = (event.clientX - this.mouseX) > 10;
-            var yThres = (event.clientY - this.mouseY) > 10;
+        if (this.pressing && !this.isLongPressing) {
+            var xThres = Math.abs(event.clientX - this.mouseX) > 10;
+            var yThres = Math.abs(event.clientY - this.mouseY) > 10;
             if (xThres || yThres) {
                 this.endPress();
             }
@@ -46,7 +46,7 @@ var LongPressDirective = (function () {
     };
     LongPressDirective.prototype.loop = function (event) {
         var _this = this;
-        if (this.longPressing) {
+        if (this.isLongPressing) {
             this.timeout = setTimeout(function () {
                 _this.longPressing.emit(event);
                 _this.loop(event);

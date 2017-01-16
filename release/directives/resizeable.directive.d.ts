@@ -1,5 +1,5 @@
 import { ElementRef, EventEmitter, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs/Subscription';
 export declare class ResizeableDirective implements OnDestroy {
     resizeEnabled: boolean;
     minWidth: number;

@@ -7,6 +7,7 @@ export declare class DataTableBodyCellComponent {
     isSelected: boolean;
     sorts: any[];
     activate: EventEmitter<any>;
+    readonly columnCssClasses: any;
     isFocused: boolean;
     readonly isSortActive: boolean;
     readonly isSortAscending: boolean;

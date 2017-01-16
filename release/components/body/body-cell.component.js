@@ -19,6 +19,16 @@ var DataTableBodyCellComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(DataTableBodyCellComponent.prototype, "columnCssClasses", {
+        get: function () {
+            var cls = 'datatable-body-cell';
+            if (this.column.cssClasses)
+                cls += ' ' + this.column.cssClasses;
+            return cls;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(DataTableBodyCellComponent.prototype, "isSortActive", {
         get: function () {
             return !this.sortDir;
@@ -159,6 +169,7 @@ var DataTableBodyCellComponent = (function () {
         'isSelected': [{ type: core_1.Input },],
         'sorts': [{ type: core_1.Input },],
         'activate': [{ type: core_1.Output },],
+        'columnCssClasses': [{ type: core_1.HostBinding, args: ['class',] },],
         'isFocused': [{ type: core_1.HostBinding, args: ['class.active',] },],
         'isSortActive': [{ type: core_1.HostBinding, args: ['class.sort-active',] },],
         'isSortAscending': [{ type: core_1.HostBinding, args: ['class.sort-asc',] },],

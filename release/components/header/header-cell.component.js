@@ -26,6 +26,8 @@ var DataTableHeaderCellComponent = (function () {
                 cls += ' sortable';
             if (this.column.resizeable)
                 cls += ' resizeable';
+            if (this.column.cssClasses)
+                cls += ' ' + this.column.cssClasses;
             var sortDir = this.sortDir;
             if (sortDir) {
                 cls += " sort-active sort-" + sortDir;

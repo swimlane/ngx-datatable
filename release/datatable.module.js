@@ -1,6 +1,7 @@
 "use strict";
 var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
+require('rxjs/add/observable/fromEvent');
 var components_1 = require('./components');
 var directives_1 = require('./directives');
 var NgxDatatableModule = (function () {

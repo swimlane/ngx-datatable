@@ -146,6 +146,61 @@ class View_DataTablePagerComponent_Host0 extends import2.AppView<any> {
 }
 export const DataTablePagerComponentNgFactory:import8.ComponentFactory<import0.DataTablePagerComponent> = new import8.ComponentFactory<import0.DataTablePagerComponent>('datatable-pager',View_DataTablePagerComponent_Host0,import0.DataTablePagerComponent);
 const styles_DataTablePagerComponent:any[] = ([] as any[]);
+class View_DataTablePagerComponent1 extends import2.AppView<any> {
+  _el_0:any;
+  _text_1:any;
+  _el_2:any;
+  _text_3:any;
+  _text_4:any;
+  /*private*/ _expr_5:any;
+  /*private*/ _expr_6:any;
+  constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any,declaredViewContainer:import9.ViewContainer) {
+    super(View_DataTablePagerComponent1,renderType_DataTablePagerComponent,import6.ViewType.EMBEDDED,viewUtils,parentView,parentIndex,parentElement,import7.ChangeDetectorStatus.CheckAlways,declaredViewContainer);
+    this._expr_5 = import1.UNINITIALIZED;
+    this._expr_6 = import1.UNINITIALIZED;
+  }
+  createInternal(rootSelector:string):import8.ComponentRef<any> {
+    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'li',new import3.InlineArray2(2,'class','pages'),(null as any));
+    this._text_1 = this.renderer.createText(this._el_0,'\n        ',(null as any));
+    this._el_2 = import3.createRenderElement(this.renderer,this._el_0,'a',new import3.InlineArray2(2,'href','javascript:void(0)'),(null as any));
+    this._text_3 = this.renderer.createText(this._el_2,'',(null as any));
+    this._text_4 = this.renderer.createText(this._el_0,'\n      ',(null as any));
+    var disposable_0:Function = import3.subscribeToRenderElement(this,this._el_2,new import3.InlineArray2(2,'click',(null as any)),this.eventHandler(this.handleEvent_2));
+    this.init(this._el_0,((<any>this.renderer).directRenderer? (null as any): [
+      this._el_0,
+      this._text_1,
+      this._el_2,
+      this._text_3,
+      this._text_4
+    ]
+    ),[disposable_0]);
+    return (null as any);
+  }
+  detectChangesInternal(throwOnChange:boolean):void {
+    const currVal_5:any = (this.context.$implicit.number === this.parentView.context.page);
+    if (import3.checkBinding(throwOnChange,this._expr_5,currVal_5)) {
+      this.renderer.setElementClass(this._el_0,'active',currVal_5);
+      this._expr_5 = currVal_5;
+    }
+    const currVal_6:any = import3.inlineInterpolate(1,'\n          ',this.context.$implicit.text,'\n        ');
+    if (import3.checkBinding(throwOnChange,this._expr_6,currVal_6)) {
+      this.renderer.setText(this._text_3,currVal_6);
+      this._expr_6 = currVal_6;
+    }
+  }
+  visitRootNodesInternal(cb:any,ctx:any):void {
+    cb(this._el_0,ctx);
+  }
+  handleEvent_2(eventName:string,$event:any):boolean {
+    this.markPathToRootAsCheckOnce();
+    var result:boolean = true;
+    if ((eventName == 'click')) {
+      const pd_sub_0:any = ((<any>this.parentView.context.selectPage(this.context.$implicit.number)) !== false);
+      result = (pd_sub_0 && result);
+    }
+    return result;
+  }
+}
 var renderType_DataTablePagerComponent:import4.RenderComponentType = import3.createRenderComponentType('',0,import5.ViewEncapsulation.None,styles_DataTablePagerComponent,{});
 export class View_DataTablePagerComponent0 extends import2.AppView<import0.DataTablePagerComponent> {
   _text_0:any;
@@ -394,61 +449,6 @@ export class View_DataTablePagerComponent0 extends import2.AppView<import0.DataT
     var result:boolean = true;
     if ((eventName == 'click')) {
       const pd_sub_0:any = ((<any>this.context.selectPage(this.context.totalPages)) !== false);
-      result = (pd_sub_0 && result);
-    }
-    return result;
-  }
-}
-class View_DataTablePagerComponent1 extends import2.AppView<any> {
-  _el_0:any;
-  _text_1:any;
-  _el_2:any;
-  _text_3:any;
-  _text_4:any;
-  /*private*/ _expr_5:any;
-  /*private*/ _expr_6:any;
-  constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any,declaredViewContainer:import9.ViewContainer) {
-    super(View_DataTablePagerComponent1,renderType_DataTablePagerComponent,import6.ViewType.EMBEDDED,viewUtils,parentView,parentIndex,parentElement,import7.ChangeDetectorStatus.CheckAlways,declaredViewContainer);
-    this._expr_5 = import1.UNINITIALIZED;
-    this._expr_6 = import1.UNINITIALIZED;
-  }
-  createInternal(rootSelector:string):import8.ComponentRef<any> {
-    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'li',new import3.InlineArray2(2,'class','pages'),(null as any));
-    this._text_1 = this.renderer.createText(this._el_0,'\n        ',(null as any));
-    this._el_2 = import3.createRenderElement(this.renderer,this._el_0,'a',new import3.InlineArray2(2,'href','javascript:void(0)'),(null as any));
-    this._text_3 = this.renderer.createText(this._el_2,'',(null as any));
-    this._text_4 = this.renderer.createText(this._el_0,'\n      ',(null as any));
-    var disposable_0:Function = import3.subscribeToRenderElement(this,this._el_2,new import3.InlineArray2(2,'click',(null as any)),this.eventHandler(this.handleEvent_2));
-    this.init(this._el_0,((<any>this.renderer).directRenderer? (null as any): [
-      this._el_0,
-      this._text_1,
-      this._el_2,
-      this._text_3,
-      this._text_4
-    ]
-    ),[disposable_0]);
-    return (null as any);
-  }
-  detectChangesInternal(throwOnChange:boolean):void {
-    const currVal_5:any = (this.context.$implicit.number === this.parentView.context.page);
-    if (import3.checkBinding(throwOnChange,this._expr_5,currVal_5)) {
-      this.renderer.setElementClass(this._el_0,'active',currVal_5);
-      this._expr_5 = currVal_5;
-    }
-    const currVal_6:any = import3.inlineInterpolate(1,'\n          ',this.context.$implicit.text,'\n        ');
-    if (import3.checkBinding(throwOnChange,this._expr_6,currVal_6)) {
-      this.renderer.setText(this._text_3,currVal_6);
-      this._expr_6 = currVal_6;
-    }
-  }
-  visitRootNodesInternal(cb:any,ctx:any):void {
-    cb(this._el_0,ctx);
-  }
-  handleEvent_2(eventName:string,$event:any):boolean {
-    this.markPathToRootAsCheckOnce();
-    var result:boolean = true;
-    if ((eventName == 'click')) {
-      const pd_sub_0:any = ((<any>this.parentView.context.selectPage(this.context.$implicit.number)) !== false);
       result = (pd_sub_0 && result);
     }
     return result;

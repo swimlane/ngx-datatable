@@ -1,5 +1,5 @@
 import { ElementRef, EventEmitter, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs/Subscription';
 /**
  * Draggable Directive for Angular2
  *
