@@ -70,6 +70,7 @@ export class DataTableHeaderCellComponent {
 
     if(this.column.sortable) cls += ' sortable';
     if(this.column.resizeable) cls += ' resizeable';
+    if(this.column.cssClasses) cls += ' ' + this.column.cssClasses;
 
     const sortDir = this.sortDir;
     if(sortDir) {
