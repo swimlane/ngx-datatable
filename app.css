@@ -197,17 +197,20 @@
     background: #eee; }
   .datatable.material.single-selection .datatable-body-row.active,
   .datatable.material.single-selection .datatable-body-row.active .datatable-row-group, .datatable.material.multi-selection .datatable-body-row.active,
-  .datatable.material.multi-selection .datatable-body-row.active .datatable-row-group {
+  .datatable.material.multi-selection .datatable-body-row.active .datatable-row-group, .datatable.material.multi-click-selection .datatable-body-row.active,
+  .datatable.material.multi-click-selection .datatable-body-row.active .datatable-row-group {
     background-color: #304FFE;
     color: #FFF; }
   .datatable.material.single-selection .datatable-body-row.active:hover,
   .datatable.material.single-selection .datatable-body-row.active:hover .datatable-row-group, .datatable.material.multi-selection .datatable-body-row.active:hover,
-  .datatable.material.multi-selection .datatable-body-row.active:hover .datatable-row-group {
+  .datatable.material.multi-selection .datatable-body-row.active:hover .datatable-row-group, .datatable.material.multi-click-selection .datatable-body-row.active:hover,
+  .datatable.material.multi-click-selection .datatable-body-row.active:hover .datatable-row-group {
     background-color: #193AE4;
     color: #FFF; }
   .datatable.material.single-selection .datatable-body-row.active:focus,
   .datatable.material.single-selection .datatable-body-row.active:focus .datatable-row-group, .datatable.material.multi-selection .datatable-body-row.active:focus,
-  .datatable.material.multi-selection .datatable-body-row.active:focus .datatable-row-group {
+  .datatable.material.multi-selection .datatable-body-row.active:focus .datatable-row-group, .datatable.material.multi-click-selection .datatable-body-row.active:focus,
+  .datatable.material.multi-click-selection .datatable-body-row.active:focus .datatable-row-group {
     background-color: #2041EF;
     color: #FFF; }
   .datatable.material:not(.cell-selection) .datatable-body-row:hover,
