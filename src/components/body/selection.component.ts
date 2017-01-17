@@ -42,7 +42,7 @@ export class DataTableSelectionComponent {
     if (multi || chkbox || multiClick) {
       if (event.shiftKey) {
         selected = selectRowsBetween(
-          [...this.selected], 
+          [], 
           this.rows, 
           index, 
           this.prevIndex, 
