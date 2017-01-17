@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.3.0
+- Enhancement: Implement Finder/Explorer shift selection behavior
+- Bug: Fix reverse selection de-selecting first index in reverse
+
 ## 4.2.0
 - Enhancement: Ability to add CSS Classes on Header/Column
 - Bug: Fix CPU Perf on Resort (#409)
