@@ -36,7 +36,7 @@ export class DataTableSelectionComponent {
 
     const chkbox = this.selectionType === SelectionType.checkbox;
     const multi = this.selectionType === SelectionType.multi;
-    const multiClick = this.selectionType == SelectionType.multiClick;
+    const multiClick = this.selectionType === SelectionType.multiClick;
     let selected: any[] = [];
 
     if (multi || chkbox || multiClick) {
