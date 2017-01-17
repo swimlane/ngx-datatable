@@ -1,5 +1,5 @@
 import {
-  Component, Output, EventEmitter, Input, HostBinding, ViewChild
+  Component, Output, EventEmitter, Input, HostBinding, ViewChild, OnInit, OnDestroy
 } from '@angular/core';
 import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '../../utils';
 import { SelectionType } from '../../types';
@@ -59,7 +59,7 @@ import { ScrollerComponent } from './scroller.component';
     class: 'datatable-body'
   }
 })
-export class DataTableBodyComponent {
+export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   @Input() scrollbarV: boolean;
   @Input() scrollbarH: boolean;
@@ -194,6 +194,7 @@ export class DataTableBodyComponent {
   indexes: any = {};
   columnGroupWidths: any;
   rowTrackingFn: any;
+  listener: any;
 
   _rows: any[];
   _bodyHeight: any;
@@ -211,6 +212,29 @@ export class DataTableBodyComponent {
         return row.$$index;
       }
     }.bind(this);
+  }
+
+  /**
+   * Called after the constructor, initializing input properties
+   * 
+   * @memberOf DataTableBodyComponent
+   */
+  ngOnInit(): void {
+    if(this.rowDetail) {
+      this.listener = this.rowDetail.toggle.subscribe(({ type, value }) => {
+        if(type === 'row') this.toggleRowExpansion(value);
+        if(type === 'all') this.toggleAllRows(value);
+      });
+    }
+  }
+
+  /**
+   * Called once, before the instance is destroyed.
+   * 
+   * @memberOf DataTableBodyComponent
+   */
+  ngOnDestroy(): void {
+    if(this.rowDetail) this.listener.unsubscribe();
   }
 
   /**

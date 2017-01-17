@@ -61,7 +61,6 @@ import { scrollbarWidth, setColumnDefaults, throttleable, translateTemplates } f
         (activate)="activate.emit($event)"
         (rowContextmenu)="rowContextmenu.emit($event)"
         (select)="onBodySelect($event)"
-        (detailToggle)="detailToggle.emit($event)"
         (scroll)="onBodyScroll($event)">
       </datatable-body>
       <datatable-footer
@@ -415,14 +414,6 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   @Output() page: EventEmitter<any> = new EventEmitter();
 
   /**
-   * Row detail row visbility was toggled.
-   * 
-   * @type {EventEmitter<any>}
-   * @memberOf DatatableComponent
-   */
-  @Output() detailToggle: EventEmitter<any> = new EventEmitter();
-
-  /**
    * Columns were re-ordered.
    * 
    * @type {EventEmitter<any>}
@@ -690,34 +681,6 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
     if (this.rowDiffer.diff(this.rows)) {
       this.recalculatePages();
     }
-  }
-
-  /**
-   * Toggle the expansion of the row
-   *
-   * @param rowIndex
-   */
-  toggleExpandRow(row: any): void {
-    // Should we write a guard here??
-    this.bodyComponent.toggleRowExpansion(row);
-  }
-
-  /**
-   * API method to expand all the rows.
-   * 
-   * @memberOf DatatableComponent
-   */
-  expandAllRows(): void {
-    this.bodyComponent.toggleAllRows(true);
-  }
-
-  /**
-   * API method to collapse all the rows.
-   * 
-   * @memberOf DatatableComponent
-   */
-  collapseAllRows(): void {
-    this.bodyComponent.toggleAllRows(false);
   }
 
   /**
