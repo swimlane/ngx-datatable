@@ -1,8 +1,11 @@
 # Changelog
 
-## 4.3.0
+## 5.0.0
+- BREAKING: Remove `rowDetailTemplate` from `ngx-datatable` and add to `ngx-datatable-row-detail` instead
+- BREAKING: Remove `detailRowHeight` from `ngx-datatable` and add to `ngx-datatable-row-detail` instead
 - Enhancement: Implement Finder/Explorer shift selection behavior
 - Bug: Fix reverse selection de-selecting first index in reverse
+- Bug: Fix row detail not rendering
 
 ## 4.2.0
 - Enhancement: Ability to add CSS Classes on Header/Column

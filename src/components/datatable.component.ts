@@ -49,8 +49,7 @@ import { scrollbarWidth, setColumnDefaults, throttleable, translateTemplates } f
         [columns]="columns"
         [pageSize]="pageSize"
         [offsetX]="offsetX"
-        [rowDetailTemplate]="rowDetailTemplate"
-        [detailRowHeight]="detailRowHeight"
+        [rowDetail]="rowDetail"
         [selected]="selected"
         [innerWidth]="innerWidth"
         [bodyHeight]="bodyHeight"
@@ -173,15 +172,6 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   @Input() rowHeight: number = 30;
-
-  /**
-   * The detail row height is required especially 
-   * when virtual scroll is enabled.
-   * 
-   * @type {number}
-   * @memberOf DatatableComponent
-   */
-  @Input() detailRowHeight: number = 0;
 
   /**
    * Type of column width distribution formula.
@@ -321,14 +311,6 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   @Input() sorts: any[] = [];
-
-  /**
-   * Row detail template
-   * 
-   * @type {TemplateRef<any>}
-   * @memberOf DatatableComponent
-   */
-  @Input() rowDetailTemplate: TemplateRef<any>;
 
   /**
    * Css class overrides
@@ -628,21 +610,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   @ContentChild(DatatableRowDetailDirective)
-  set rowDetailTemplateChild(val: DatatableRowDetailDirective) {
-    this._rowDetailTemplateChild = val;
-    if(val) this.rowDetailTemplate = val.rowDetailTemplate;
-  }
-
-  /**
-   * Returns the row templates.
-   * 
-   * @readonly
-   * @type {DatatableRowDetailDirective}
-   * @memberOf DatatableComponent
-   */
-  get rowDetailTemplateChild(): DatatableRowDetailDirective {
-    return this._rowDetailTemplateChild;
-  }
+  rowDetail: DatatableRowDetailDirective;
 
   /**
    * Reference to the body component for manually
@@ -681,7 +649,6 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   _rows: any[];
   _columns: any[];
   _columnTemplates: QueryList<DataTableColumnDirective>;
-  _rowDetailTemplateChild: DatatableRowDetailDirective;
 
   constructor(element: ElementRef, differs: KeyValueDiffers) {
     // get ref to elm for measuring

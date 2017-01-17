@@ -11,8 +11,8 @@ import {
       [style.height.px]="detailRowHeight" 
       class="datatable-row-detail">
       <template
-        *ngIf="rowDetailTemplate"
-        [ngTemplateOutlet]="rowDetailTemplate"
+        *ngIf="rowDetail && rowDetail.template"
+        [ngTemplateOutlet]="rowDetail.template"
         [ngOutletContext]="{ row: row }">
       </template>
     </div>
@@ -23,10 +23,11 @@ import {
 })
 export class DataTableRowWrapperComponent {
 
-  @Input() rowDetailTemplate: any;
+  @Input() rowDetail: any;
   @Input() detailRowHeight: any;
   @Input() expanded: boolean = false;
   @Input() row: any;
+  
   @Output() rowContextmenu = new EventEmitter<{event: MouseEvent, row: any}>(false);
 
   @HostListener('contextmenu', ['$event'])

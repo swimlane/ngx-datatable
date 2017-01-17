@@ -18,11 +18,10 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="50"
-        [detailRowHeight]="100"
         [scrollbarV]="50"
         [rows]='rows'
         (page)="onPage($event)">
-        <ngx-datatable-row-detail>
+        <ngx-datatable-row-detail [rowHeight]="100">
           <template let-row="row" ngx-datatable-row-detail-template>
             <div style="padding-left:35px;">
               <div><strong>Address</strong></div>

@@ -65,12 +65,6 @@ any incremental click will add to the current selection array.
 
 Default value: `single`
 
-## `detailRowHeight`
-Row height of the detail row
-
-## `rowDetailTemplate`
-TemplateRef for the row detail.
-
 ## `cssClasses`
 Custom CSS classes that can be defined to override the icons classes for up/down in sorts and
 previous/next in the pager. Defaults:

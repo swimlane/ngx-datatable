@@ -31,7 +31,7 @@ import { ScrollerComponent } from './scroller.component';
         <datatable-row-wrapper
           *ngFor="let row of temp; let i = index; trackBy: rowTrackingFn;"
           [ngStyle]="getRowsStyles(row)"
-          [rowDetailTemplate]="rowDetailTemplate"
+          [rowDetail]="rowDetail"
           [detailRowHeight]="detailRowHeight"
           [row]="row"
           [expanded]="row.$$expanded === 1"
@@ -66,12 +66,11 @@ export class DataTableBodyComponent {
   @Input() loadingIndicator: boolean;
   @Input() rowHeight: number;
   @Input() offsetX: number;
-  @Input() detailRowHeight: any;
   @Input() emptyMessage: string;
   @Input() selectionType: SelectionType;
   @Input() selected: any[] = [];
   @Input() rowIdentity: any;
-  @Input() rowDetailTemplate: any;
+  @Input() rowDetail: any;
   @Input() selectCheck: any;
   @Input() trackByProp: string;
 
@@ -182,6 +181,11 @@ export class DataTableBodyComponent {
     if(this.scrollbarV) {
       return this.rowHeightsCache.query(this.rowCount - 1);
     }
+  }
+
+  get detailRowHeight(): number {
+    if(!this.rowDetail) return 0;
+    return this.rowDetail.rowHeight;
   }
 
   rowHeightsCache: RowHeightCache = new RowHeightCache();
