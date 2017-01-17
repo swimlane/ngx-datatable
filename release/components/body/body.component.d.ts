@@ -1,19 +1,18 @@
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { RowHeightCache } from '../../utils';
 import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
-export declare class DataTableBodyComponent {
+export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     scrollbarV: boolean;
     scrollbarH: boolean;
     loadingIndicator: boolean;
     rowHeight: number;
     offsetX: number;
-    detailRowHeight: any;
     emptyMessage: string;
     selectionType: SelectionType;
     selected: any[];
     rowIdentity: any;
-    rowDetailTemplate: any;
+    rowDetail: any;
     selectCheck: any;
     trackByProp: string;
     pageSize: number;
@@ -52,12 +51,14 @@ export declare class DataTableBodyComponent {
      * @memberOf DataTableBodyComponent
      */
     readonly scrollHeight: number;
+    readonly detailRowHeight: number;
     rowHeightsCache: RowHeightCache;
     temp: any[];
     offsetY: number;
     indexes: any;
     columnGroupWidths: any;
     rowTrackingFn: any;
+    listener: any;
     _rows: any[];
     _bodyHeight: any;
     _columns: any[];
@@ -65,6 +66,18 @@ export declare class DataTableBodyComponent {
     _offset: number;
     _pageSize: number;
     constructor();
+    /**
+     * Called after the constructor, initializing input properties
+     *
+     * @memberOf DataTableBodyComponent
+     */
+    ngOnInit(): void;
+    /**
+     * Called once, before the instance is destroyed.
+     *
+     * @memberOf DataTableBodyComponent
+     */
+    ngOnDestroy(): void;
     /**
      * Updates the Y offset given a new offset.
      *

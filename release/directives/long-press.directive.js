@@ -15,7 +15,9 @@ var LongPressDirective = (function () {
         configurable: true
     });
     Object.defineProperty(LongPressDirective.prototype, "isLongPress", {
-        get: function () { return this.isLongPressing; },
+        get: function () {
+            return this.isLongPressing;
+        },
         enumerable: true,
         configurable: true
     });

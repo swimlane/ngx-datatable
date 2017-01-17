@@ -30,19 +30,10 @@ function selectRowsBetween(selected, rows, index, prevIndex, comparefn) {
             };
         }
         if ((reverse && lesser) || (!reverse && greater)) {
-            var idx = comparefn(row, selected);
-            // if reverse shift selection (unselect) and the
-            // row is already selected, remove it from selected
-            if (reverse && idx > -1) {
-                selected.splice(idx, 1);
-                continue;
-            }
             // if in the positive range to be added to `selected`, and
             // not already in the selected array, add it
-            if (i >= range.start && i < range.end) {
-                if (idx === -1) {
-                    selected.push(row);
-                }
+            if (i >= range.start && i <= range.end) {
+                selected.push(row);
             }
         }
     }

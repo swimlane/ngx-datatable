@@ -1,6 +1,6 @@
 import { EventEmitter } from '@angular/core';
 export declare class DataTableRowWrapperComponent {
-    rowDetailTemplate: any;
+    rowDetail: any;
     detailRowHeight: any;
     expanded: boolean;
     row: any;

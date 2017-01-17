@@ -43,10 +43,10 @@ export class Wrapper_DataTableRowWrapperComponent {
   ngOnDestroy():void {
     (this.subscription0 && this.subscription0.unsubscribe());
   }
-  check_rowDetailTemplate(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+  check_rowDetail(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_0,currValue))) {
       this._changed = true;
-      this.context.rowDetailTemplate = currValue;
+      this.context.rowDetail = currValue;
       this._expr_0 = currValue;
     }
   }
@@ -179,7 +179,7 @@ class View_DataTableRowWrapperComponent2 extends import2.AppView<any> {
   detectChangesInternal(throwOnChange:boolean):void {
     const currVal_0_0_0:any = this._map_5(this.parentView.parentView.context.row);
     this._NgTemplateOutlet_0_6.check_ngOutletContext(currVal_0_0_0,throwOnChange,false);
-    const currVal_0_0_1:any = this.parentView.parentView.context.rowDetailTemplate;
+    const currVal_0_0_1:any = this.parentView.parentView.context.rowDetail.template;
     this._NgTemplateOutlet_0_6.check_ngTemplateOutlet(currVal_0_0_1,throwOnChange,false);
     this._NgTemplateOutlet_0_6.ngDoCheck(this,this._anchor_0,throwOnChange);
     this._vc_0.detectChangesInNestedViews(throwOnChange);
@@ -233,7 +233,7 @@ class View_DataTableRowWrapperComponent1 extends import2.AppView<any> {
     return notFoundResult;
   }
   detectChangesInternal(throwOnChange:boolean):void {
-    const currVal_2_0_0:any = this.parentView.context.rowDetailTemplate;
+    const currVal_2_0_0:any = (this.parentView.context.rowDetail && this.parentView.context.rowDetail.template);
     this._NgIf_2_6.check_ngIf(currVal_2_0_0,throwOnChange,false);
     this._NgIf_2_6.ngDoCheck(this,this._anchor_2,throwOnChange);
     this._vc_2.detectChangesInNestedViews(throwOnChange);

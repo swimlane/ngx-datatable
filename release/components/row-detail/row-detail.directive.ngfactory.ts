@@ -6,31 +6,54 @@
  /* tslint:disable */
 
 import * as import0 from '../../../../src/components/row-detail/row-detail.directive';
-import * as import1 from '@angular/core/src/linker/view';
+import * as import1 from '@angular/core/src/change_detection/change_detection_util';
+import * as import2 from '@angular/core/src/linker/view';
+import * as import3 from '@angular/core/src/linker/view_utils';
 export class Wrapper_DatatableRowDetailDirective {
   /*private*/ _eventHandler:Function;
   context:import0.DatatableRowDetailDirective;
   /*private*/ _changed:boolean;
+  /*private*/ _expr_0:any;
+  /*private*/ _expr_1:any;
+  subscription0:any;
   constructor() {
     this._changed = false;
     this.context = new import0.DatatableRowDetailDirective();
+    this._expr_0 = import1.UNINITIALIZED;
+    this._expr_1 = import1.UNINITIALIZED;
   }
-  ngOnDetach(view:import1.AppView<any>,componentView:import1.AppView<any>,el:any):void {
+  ngOnDetach(view:import2.AppView<any>,componentView:import2.AppView<any>,el:any):void {
   }
   ngOnDestroy():void {
+    (this.subscription0 && this.subscription0.unsubscribe());
   }
-  ngDoCheck(view:import1.AppView<any>,el:any,throwOnChange:boolean):boolean {
+  check_rowHeight(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+    if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_0,currValue))) {
+      this._changed = true;
+      this.context.rowHeight = currValue;
+      this._expr_0 = currValue;
+    }
+  }
+  check_template(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+    if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_1,currValue))) {
+      this._changed = true;
+      this.context.template = currValue;
+      this._expr_1 = currValue;
+    }
+  }
+  ngDoCheck(view:import2.AppView<any>,el:any,throwOnChange:boolean):boolean {
     var changed:any = this._changed;
     this._changed = false;
     return changed;
   }
-  checkHost(view:import1.AppView<any>,componentView:import1.AppView<any>,el:any,throwOnChange:boolean):void {
+  checkHost(view:import2.AppView<any>,componentView:import2.AppView<any>,el:any,throwOnChange:boolean):void {
   }
   handleEvent(eventName:string,$event:any):boolean {
     var result:boolean = true;
     return result;
   }
-  subscribe(view:import1.AppView<any>,_eventHandler:any):void {
+  subscribe(view:import2.AppView<any>,_eventHandler:any,emit0:boolean):void {
     this._eventHandler = _eventHandler;
+    if (emit0) { (this.subscription0 = this.context.toggle.subscribe(_eventHandler.bind(view,'toggle'))); }
   }
 }

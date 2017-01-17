@@ -1,4 +1,4 @@
-import { ElementRef, EventEmitter, OnInit, QueryList, AfterViewInit, TemplateRef, IterableDiffer, DoCheck, KeyValueDiffers } from '@angular/core';
+import { ElementRef, EventEmitter, OnInit, QueryList, AfterViewInit, IterableDiffer, DoCheck, KeyValueDiffers } from '@angular/core';
 import { ColumnMode, SortType, SelectionType } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './columns';
@@ -61,14 +61,6 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      * @memberOf DatatableComponent
      */
     rowHeight: number;
-    /**
-     * The detail row height is required especially
-     * when virtual scroll is enabled.
-     *
-     * @type {number}
-     * @memberOf DatatableComponent
-     */
-    detailRowHeight: number;
     /**
      * Type of column width distribution formula.
      * Example: flex, force, standard
@@ -187,13 +179,6 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      */
     sorts: any[];
     /**
-     * Row detail template
-     *
-     * @type {TemplateRef<any>}
-     * @memberOf DatatableComponent
-     */
-    rowDetailTemplate: TemplateRef<any>;
-    /**
      * Css class overrides
      *
      * @type {*}
@@ -271,13 +256,6 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      * @memberOf DatatableComponent
      */
     page: EventEmitter<any>;
-    /**
-     * Row detail row visbility was toggled.
-     *
-     * @type {EventEmitter<any>}
-     * @memberOf DatatableComponent
-     */
-    detailToggle: EventEmitter<any>;
     /**
      * Columns were re-ordered.
      *
@@ -399,18 +377,11 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      */
     columnTemplates: QueryList<DataTableColumnDirective>;
     /**
-     * Returns the row templates.
-     *
-     * @readonly
-     * @type {DatatableRowDetailDirective}
-     * @memberOf DatatableComponent
-     */
-    /**
      * Row Detail templates gathered from the ContentChild
      *
      * @memberOf DatatableComponent
      */
-    rowDetailTemplateChild: DatatableRowDetailDirective;
+    rowDetail: DatatableRowDetailDirective;
     /**
      * Reference to the body component for manually
      * invoking functions on the body.
@@ -440,7 +411,6 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
     _rows: any[];
     _columns: any[];
     _columnTemplates: QueryList<DataTableColumnDirective>;
-    _rowDetailTemplateChild: DatatableRowDetailDirective;
     constructor(element: ElementRef, differs: KeyValueDiffers);
     /**
      * Lifecycle hook that is called after data-bound
@@ -462,24 +432,6 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      * @memberOf DatatableComponent
      */
     ngDoCheck(): void;
-    /**
-     * Toggle the expansion of the row
-     *
-     * @param rowIndex
-     */
-    toggleExpandRow(row: any): void;
-    /**
-     * API method to expand all the rows.
-     *
-     * @memberOf DatatableComponent
-     */
-    expandAllRows(): void;
-    /**
-     * API method to collapse all the rows.
-     *
-     * @memberOf DatatableComponent
-     */
-    collapseAllRows(): void;
     /**
      * Recalc's the sizes of the grid.
      *

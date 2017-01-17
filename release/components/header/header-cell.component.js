@@ -67,8 +67,7 @@ var DataTableHeaderCellComponent = (function () {
     });
     Object.defineProperty(DataTableHeaderCellComponent.prototype, "isCheckboxable", {
         get: function () {
-            return;
-            this.column.checkboxable &&
+            return this.column.checkboxable &&
                 this.column.headerCheckboxable &&
                 this.selectionType === types_1.SelectionType.checkbox;
         },
