@@ -1,4 +1,4 @@
-## Table Methods
+## Row Detail Methods
 
 ### `toggleExpandRow(row)`
 Toggle expand/collapse a row detail when using row detail templates.
@@ -8,6 +8,3 @@ Expand all row details when using row detail templates.
 
 ### `collapseAllRows()`
 Collapse all row details when using row detail templates.
-
-### `recalculate()`
-Recalculate the grid sizes.
