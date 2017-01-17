@@ -26,7 +26,9 @@ export class LongPressDirective {
   get press(): boolean { return this.pressing; }
 
   @HostBinding('class.longpress')
-  get isLongPress(): boolean { return this.isLongPressing }
+  get isLongPress(): boolean { 
+    return this.isLongPressing;
+  }
 
   @HostListener('mousedown', ['$event'])
   onMouseDown(event: MouseEvent): void {

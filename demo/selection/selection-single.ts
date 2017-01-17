@@ -82,7 +82,7 @@ export class SingleSelectionComponent {
   }
 
   updateRowPosition() {
-    let ix = this.getSelectedIx()
+    let ix = this.getSelectedIx();
     let arr = [ ...this.rows ];
     arr[ix - 1] = this.rows[ix];
     arr[ix] = this.rows[ix - 1];
@@ -90,7 +90,7 @@ export class SingleSelectionComponent {
   }
 
   getSelectedIx() {
-    return this.selected[0]['$$index']
+    return this.selected[0]['$$index'];
   }
 
 }
