@@ -245,6 +245,10 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * @memberOf DataTableBodyComponent
    */
   updateOffsetY(offset?: number): void {
+    // scroller is missing on empty table
+    if(!this.scroller) {
+        return;
+    }
     if(this.scrollbarV && offset) {
       // First get the row Index that we need to move to.
       const rowIndex = this.pageSize * offset;
