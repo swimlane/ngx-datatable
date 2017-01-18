@@ -1,6 +1,6 @@
 # Getting Started
 
-After [Installing](installing.md), include `Angular2DataTableModule` 
+After [Installing](installing.md), include `NgxDatatableModule` 
 in your application module like:
 
 ```javascript
