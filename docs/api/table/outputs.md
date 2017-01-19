@@ -1,70 +1,6 @@
 # Table Outputs
 All outputs are Angular2 `EventEmitter`ers.
 
-### `page`
-The table was paged either triggered by the pager or the body scroll.
-
-```
-{
-  count
-  pageSize
-  limit
-  offset
-}
-```
-
-### `resize`
-Column was resized.
-
-```
-{
-  column
-  newValue
-}
-```
-
-### `reorder` 
-Columns were re-ordered.
-
-```
-{
-  column
-  newValue
-  prevValue
-}
-```
-
-### `sort`
-Column sort was invoked.
-
-```
-{
-  sorts
-  column
-  prevValue
-  newValue
-}
-```
-
-### `detailToggle`
-Row detail row was toggled.
-
-```
-{
-  rows
-  currentIndex
-}
-```
-
-### `select`
-A cell or row was selected.
-
-```
-{
-  selected
-}
-```
-
 ### `activate`
 A cell or row was focused via keyboard or mouse click.
 
@@ -80,13 +16,46 @@ A cell or row was focused via keyboard or mouse click.
 }
 ```
 
-### `scroll`
-Body was scrolled typically in a `scrollbarV:true` scenario.
+### `detailToggle`
+Row detail row was toggled.
 
 ```
 {
-  offsetX
-  offsetY
+  rows
+  currentIndex
+}
+```
+
+### `page`
+The table was paged either triggered by the pager or the body scroll.
+
+```
+{
+  count
+  pageSize
+  limit
+  offset
+}
+```
+
+### `reorder` 
+Columns were re-ordered.
+
+```
+{
+  column
+  newValue
+  prevValue
+}
+```
+
+### `resize`
+Column was resized.
+
+```
+{
+  column
+  newValue
 }
 ```
 
@@ -98,3 +67,35 @@ The context menu was invoked on a row.
   event,
   row
 }
+```
+
+### `scroll`
+Body was scrolled typically in a `scrollbarV:true` scenario.
+
+```
+{
+  offsetX
+  offsetY
+}
+```
+
+### `select`
+A cell or row was selected.
+
+```
+{
+  selected
+}
+```
+
+### `sort`
+Column sort was invoked.
+
+```
+{
+  sorts
+  column
+  prevValue
+  newValue
+}
+```
