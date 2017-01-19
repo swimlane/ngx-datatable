@@ -9,6 +9,19 @@ Array of columns to display.
 ## `count`
 The total count of all rows. Default value: `0`
 
+## `cssClasses`
+Custom CSS classes that can be defined to override the icons classes for up/down in sorts and
+previous/next in the pager. Defaults:
+
+```
+sortAscending: 'icon-down',
+sortDescending: 'icon-up',
+pagerLeftArrow: 'icon-left',
+pagerRightArrow: 'icon-right',
+pagerPrevious: 'icon-prev',
+pagerNext: 'icon-skip'
+```
+
 ## `externalPaging`
 Should the table use external paging vs client-side. Default value: `false`
 
@@ -20,6 +33,20 @@ The height of the footer in pixels. Pass a `falsey` for no footer. Default value
 
 ## `headerHeight`
 The height of the header in pixels. Pass a `falsey` for no header. Default value: `30`
+
+## `messages`
+Static messages in the table you can override for localization.
+
+```
+{
+  // Message to show when array is presented
+  // but contains no values
+  emptyMessage: 'No data to display',
+
+  // Footer total message
+  totalMessage: 'total'
+}
+```
 
 ## `limit`
 The page size to be shown. Default value: `undefined`.
@@ -36,6 +63,11 @@ Column re-ordering enabled/disabled. Default value: `true`
 ## `rowHeight`
 The height of the row. This is necessary for virtual scrolling in order to calculate height for the scrollbar.
 
+## `rowIdentity`
+This will be used when displaying or selecting rows.
+When tracking/comparing them, we'll use the value of this fn 
+`(fn(x) === fn(y)` instead of `(x === y)`.
+
 ## `rows`
 Array of rows to display.
 
@@ -45,15 +77,23 @@ Enabled horizontal scrollbars. Default value: `false`
 ## `scrollbarV`
 Enable vertical scrollbar for fixed height vs fluid. This is necessary for virtual scrolling. Default value: `false`
 
-## `selectionType`
-Type of row selection. Options are `single`, `multi` and `chkbox`. 
-For no selection pass a `falsey`. Default value: `undefined`
+## `selectCheck`
+A boolean/function you can use to check whether you want
+to select a particular row based on a criteria. Example:
+
+```
+(row, column, value) => { return value !== 'Ethel Price'; }
+```
 
 ## `selected`
 List of row objects that should be represented as selected in the grid. It does object
 equality, for prop checking use the `selectCheck` function.
 
 Default value: `[]`
+
+## `selectionType`
+Type of row selection. Options are `single`, `multi` and `chkbox`. 
+For no selection pass a `falsey`. Default value: `undefined`
 
 ## `sorts`
 Array of sorted columns by property and type. Default value: `[]`
@@ -64,46 +104,6 @@ will replace the current selection with the next selection. In multi selection m
 any incremental click will add to the current selection array.
 
 Default value: `single`
-
-## `cssClasses`
-Custom CSS classes that can be defined to override the icons classes for up/down in sorts and
-previous/next in the pager. Defaults:
-
-```
-sortAscending: 'icon-down',
-sortDescending: 'icon-up',
-pagerLeftArrow: 'icon-left',
-pagerRightArrow: 'icon-right',
-pagerPrevious: 'icon-prev',
-pagerNext: 'icon-skip'
-```
-
-## `rowIdentity`
-This will be used when displaying or selecting rows.
-When tracking/comparing them, we'll use the value of this fn 
-`(fn(x) === fn(y)` instead of `(x === y)`.
-
-## `messages`
-Static messages in the table you can override for localization.
-
-```
-{
-  // Message to show when array is presented
-  // but contains no values
-  emptyMessage: 'No data to display',
-
-  // Footer total message
-  totalMessage: 'total'
-}
-```
-
-## `selectCheck`
-A boolean/function you can use to check whether you want
-to select a particular row based on a criteria. Example:
-
-```
-(row, column, value) => { return value !== 'Ethel Price'; }
-```
 
 ## `trackByProp`
 A property on the row object that uniquely identifies the row. Example: `name`
