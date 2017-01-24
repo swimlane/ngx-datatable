@@ -20,7 +20,10 @@ import { Component } from '@angular/core';
             Hi: <strong>{{value}}</strong>
           </template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Gender">
+        <ngx-datatable-column name="Gender" sortable="true">
+        <template let-column="column" let-sort="sortBind" ngx-datatable-header-template>
+            <span (click)="sort()">{{column.name}}</span>
+          </template>
           <template let-row="row" let-value="value" ngx-datatable-cell-template>
             My name is: <i [innerHTML]="row['name']"></i> and <i>{{value}}</i>
             <div>{{joke}}</div>

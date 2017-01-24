@@ -29,7 +29,8 @@ import { nextSortDir } from '../../utils';
         [ngTemplateOutlet]="column.headerTemplate"
         [ngOutletContext]="{ 
           column: column, 
-          sortDir: sortDir
+          sortDir: sortDir,
+          sortBind: sortBind
         }">
       </template>
       <span
@@ -106,6 +107,7 @@ export class DataTableHeaderCellComponent {
       this.selectionType === SelectionType.checkbox;
   }
 
+  sortBind = this.onSort.bind(this);
   sortClass: string;
   sortDir: SortDirection;
   _sorts: any[];
