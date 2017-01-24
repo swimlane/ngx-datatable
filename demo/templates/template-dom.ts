@@ -21,7 +21,7 @@ import { Component } from '@angular/core';
           </template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Gender" sortable="true">
-        <template let-column="column" let-sort="sortBind" ngx-datatable-header-template>
+        <template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
             <span (click)="sort()">{{column.name}}</span>
           </template>
           <template let-row="row" let-value="value" ngx-datatable-cell-template>
