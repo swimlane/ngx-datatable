@@ -20,7 +20,7 @@ import { Component } from '@angular/core';
             Hi: <strong>{{value}}</strong>
           </template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Gender" sortable="true">
+        <ngx-datatable-column name="Gender">
         <template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
             <span (click)="sort()">{{column.name}}</span>
           </template>
