@@ -7,7 +7,7 @@ include that in your application `release/material.css` and add the CSS class `m
 
 This is a simple way to apply the style of the demo.
 ```scss
-@import '/node_modules/@swimlane/ngx-datatable/release/datatable.css';
+@import '/node_modules/@swimlane/ngx-datatable/release/datatable.component.css';
 @import '/node_modules/@swimlane/ngx-datatable/release/material.css';
 @import '/node_modules/@swimlane/ngx-datatable/release/assets/icons.css';
 ```
