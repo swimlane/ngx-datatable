@@ -55,7 +55,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
       };
 
       diffs.forEachAddedItem(subscribe.bind(this));
-      diffs.forEachChangedItem(subscribe.bind(this));
+      // diffs.forEachChangedItem(subscribe.bind(this));
       diffs.forEachRemovedItem(unsubscribe.bind(this));
     }
   }
