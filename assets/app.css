@@ -15,7 +15,7 @@ body {
   position: relative;
 }
 
-.datatable,
+.ngx-datatable,
 .info {
   text-align: left;
   width: 75%;
@@ -31,7 +31,7 @@ body {
   margin-bottom: 1em;
 }
 
-.datatable.scroll-vertical {
+.ngx-datatable.scroll-vertical {
   height: 70vh;
 }
 
