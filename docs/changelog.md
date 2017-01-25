@@ -1,9 +1,11 @@
 # Changelog
 
-## Master
+## 6.0.0
 - BREAKING: Renamed `datatable` css class to `ngx-datatable`
 - BREAKING: Embedded core css file with Angular `styleUrls`
 - Enhancement: Allow sorting from inline templates (#431)
+- Enhancement: Fix re-ordering columns throwing errors (#438)
+- Enhancement: Add nice drag indicator to material theme
 
 ## 5.0.0
 - BREAKING: Re-worked all inputs, methods and outputs of row detail to its own container

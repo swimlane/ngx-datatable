@@ -18,11 +18,13 @@ import { nextSortDir } from '../../utils';
           (change)="select.emit(!allRowsSelected)" 
         />
       </label>
-      <span
-        class="datatable-header-cell-label draggable"
-        *ngIf="!column.headerTemplate"
-        (click)="onSort()"
-        [innerHTML]="name">
+      <span class="datatable-header-cell-wrapper">
+        <span
+          class="datatable-header-cell-label draggable"
+          *ngIf="!column.headerTemplate"
+          (click)="onSort()"
+          [innerHTML]="name">
+        </span>
       </span>
       <template
         *ngIf="column.headerTemplate"
@@ -34,7 +36,6 @@ import { nextSortDir } from '../../utils';
         }">
       </template>
       <span
-        class="sort-btn"
         [class]="sortClass">
       </span>
     </div>
@@ -135,9 +136,11 @@ export class DataTableHeaderCellComponent {
 
   calcSortClass(sortDir): string {
     if(sortDir === SortDirection.asc) {
-      return `sort-asc ${this.sortAscendingIcon}`;
+      return `sort-btn sort-asc ${this.sortAscendingIcon}`;
     } else if(sortDir === SortDirection.desc) {
-      return `sort-desc ${this.sortDescendingIcon}`;
+      return `sort-btn sort-desc ${this.sortDescendingIcon}`;
+    } else {
+      return `sort-btn`;
     }
   }
 

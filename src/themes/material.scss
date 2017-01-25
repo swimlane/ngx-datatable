@@ -137,9 +137,34 @@
       color: #757575;
       vertical-align: bottom;
 
+      .datatable-header-cell-wrapper {
+        position: relative;
+      }
+
 			&.longpress {
-				color:#00E676;
+        .draggable::after {
+          transition: transform 400ms ease, opacity 400ms ease;
+          opacity: .5;
+          transform: scale(1);
+        }
 			}
+
+      .draggable::after {
+        content: " ";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: -30px 0 0 -30px;
+        height: 60px;
+        width: 60px;
+        background: #eee;
+        border-radius: 100%;
+        opacity: 1;
+        filter: none;
+        transform: scale(0);
+        z-index: 9999;
+        pointer-events: none;
+      }
 
 			&.dragging {
 				.resize-handle {
@@ -338,24 +363,14 @@
 /**
  * Progress bar animations
  */
-@-webkit-keyframes query {
-  0% {
-    opacity: 1;
-    -webkit-transform: translateX(35%) scale(.3, 1);
-            transform: translateX(35%) scale(.3, 1); }
-
-  100% {
-    opacity: 0;
-    -webkit-transform: translateX(-50%) scale(0, 1);
-            transform: translateX(-50%) scale(0, 1); } }
-
 @keyframes query {
   0% {
     opacity: 1;
-    -webkit-transform: translateX(35%) scale(.3, 1);
-            transform: translateX(35%) scale(.3, 1); }
+    transform: translateX(35%) scale(.3, 1); 
+  }
 
   100% {
     opacity: 0;
-    -webkit-transform: translateX(-50%) scale(0, 1);
-            transform: translateX(-50%) scale(0, 1); } }
+    transform: translateX(-50%) scale(0, 1); 
+  } 
+}
