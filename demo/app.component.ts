@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app',
+  styleUrls: ['../src/themes/material.scss'],
+  encapsulation: ViewEncapsulation.None,
   template: `
     <div>
       <nav>

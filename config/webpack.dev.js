@@ -1,10 +1,8 @@
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const WebpackNotifierPlugin = require('webpack-notifier');
-const ProgressBarPlugin = require('progress-bar-webpack-plugin');
-const chalk = require('chalk');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
+const { CheckerPlugin } = require('awesome-typescript-loader');
 
 const commonConfig = require('./webpack.common');
 const { ENV, dir } = require('./helpers');
@@ -13,15 +11,20 @@ module.exports = function(options) {
   return webpackMerge(commonConfig({ env: ENV }), {
     devtool: 'cheap-module-source-map',
     devServer: {
-      watchOptions: {
-        poll: true
-      },
       port: 9999,
       hot: options.HMR,
       stats: {
+        colors: true,
+        hash: true,
+        timings: true,
+        chunks: true,
+        chunkModules: false,
+        children: false,
         modules: false,
-        cached: false,
-        chunk: false
+        reasons: false,
+        warnings: true,
+        assets: false,
+        version: false
       }
     },
     entry: {
@@ -47,22 +50,14 @@ module.exports = function(options) {
           test: /\.ts$/,
           loaders: [
             'awesome-typescript-loader',
-            '@angularclass/hmr-loader'
+            'angular2-template-loader'
           ],
           exclude: [/\.(spec|e2e|d)\.ts$/]
-        },
-        {
-          test: /\.css/,
-          loader: 'style-loader!css-loader?sourceMap'
-        },
-        {
-          test: /\.scss$/,
-          loader: 'style-loader!css-loader!postcss-loader?sourceMap!sass-loader?sourceMap'
         }
       ]
     },
     plugins: [
-      // new ForkCheckerPlugin(),
+      new CheckerPlugin(),
       new webpack.optimize.CommonsChunkPlugin({
         name: ['polyfills'],
         minChunks: Infinity
@@ -74,10 +69,6 @@ module.exports = function(options) {
       }),
       new WebpackNotifierPlugin({
         excludeWarnings: true
-      }),
-      new ProgressBarPlugin({
-        format: chalk.yellow.bold('Webpack Building...') + 
-          ' [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)'
       }),
       new webpack.HotModuleReplacementPlugin()
     ]

@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { ENV, IS_PRODUCTION, APP_VERSION, IS_DEV, dir } = require('./helpers');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = function(options = {}) {
   return {
@@ -23,7 +24,52 @@ module.exports = function(options = {}) {
       sourceMapFilename: '[name].map',
       chunkFilename: '[id].chunk.js'
     },
+    module: {
+      exprContextCritical: false,
+      rules: [
+        {
+          test: /\.(png|woff|woff2|eot|ttf|svg|jpeg|jpg|gif)$/,
+          loader: 'url-loader',
+          query: {
+            limit: '100000'
+          }
+        },
+        {
+          test: /\.html$/,
+          loader: 'raw-loader'
+        },
+        {
+          test: /\.css/,
+          loaders: [
+            ExtractTextPlugin.extract({
+              fallbackLoader: "style-loader",
+              loader: 'css-loader'
+            }),
+            'to-string-loader',
+            'css-loader',
+            'postcss-loader?sourceMap',
+          ]
+        },
+        {
+          test: /\.scss$/,
+          loaders: [
+            ExtractTextPlugin.extract({
+              fallbackLoader: 'style-loader',
+              loader: 'css-loader'
+            }),
+            'to-string-loader',
+            'css-loader',
+            'postcss-loader?sourceMap',
+            'sass-loader?sourceMap'
+          ]
+        }
+      ]
+    },
     plugins: [
+      new ExtractTextPlugin({
+        filename: '[name].css',
+        allChunks: true
+      }),
       new webpack.NamedModulesPlugin(),
       new webpack.DefinePlugin({
         ENV,

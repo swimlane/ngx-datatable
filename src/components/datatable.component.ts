@@ -2,15 +2,17 @@ import {
   Component, Input, Output, ElementRef, EventEmitter, ViewChild,
   HostListener, ContentChildren, OnInit, QueryList, AfterViewInit,
   HostBinding, ContentChild, TemplateRef, IterableDiffer,
-  DoCheck, KeyValueDiffers
+  DoCheck, KeyValueDiffers, ViewEncapsulation
 } from '@angular/core';
 
-import { forceFillColumnWidths, adjustColumnWidths, sortRows } from '../utils';
+import { 
+  forceFillColumnWidths, adjustColumnWidths, sortRows, scrollbarWidth, 
+  setColumnDefaults, throttleable, translateTemplates
+} from '../utils';
 import { ColumnMode, SortType, SelectionType } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
-import { scrollbarWidth, setColumnDefaults, throttleable, translateTemplates } from '../utils';
 
 @Component({
   selector: 'ngx-datatable',
@@ -78,8 +80,10 @@ import { scrollbarWidth, setColumnDefaults, throttleable, translateTemplates } f
       </datatable-footer>
     </div>
   `,
+  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['./datatable.component.scss'],
   host: {
-    class: 'datatable'
+    class: 'ngx-datatable'
   }
 })
 export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
