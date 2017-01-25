@@ -14,7 +14,6 @@ var types_1 = require('../types');
 var body_1 = require('./body');
 var columns_1 = require('./columns');
 var row_detail_1 = require('./row-detail');
-var utils_2 = require('../utils');
 var DatatableComponent = (function () {
     function DatatableComponent(element, differs) {
         /**
@@ -278,7 +277,7 @@ var DatatableComponent = (function () {
          */
         set: function (val) {
             if (val) {
-                utils_2.setColumnDefaults(val);
+                utils_1.setColumnDefaults(val);
                 this.recalculateColumns(val);
             }
             this._columns = val;
@@ -483,7 +482,7 @@ var DatatableComponent = (function () {
                 var arr = val.toArray();
                 if (arr.length) {
                     // translate them to normal objects
-                    this.columns = utils_2.translateTemplates(arr);
+                    this.columns = utils_1.translateTemplates(arr);
                 }
             }
         },
@@ -585,7 +584,7 @@ var DatatableComponent = (function () {
             return;
         var width = this.innerWidth;
         if (this.scrollbarV) {
-            width = width - utils_2.scrollbarWidth;
+            width = width - utils_1.scrollbarWidth;
         }
         if (this.columnMode === types_1.ColumnMode.force) {
             utils_1.forceFillColumnWidths(columns, width, forceIdx, allowBleed);
@@ -814,8 +813,10 @@ var DatatableComponent = (function () {
         { type: core_1.Component, args: [{
                     selector: 'ngx-datatable',
                     template: "\n    <div\n      visibility-observer\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"columns\"\n        [headerHeight]=\"headerHeight\"\n        [reorderable]=\"reorderable\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        [selectionType]=\"selectionType\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\">\n      </datatable-header>\n      <datatable-body\n        [rows]=\"rows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"columns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetail]=\"rowDetail\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"rowContextmenu.emit($event)\"\n        (select)=\"onBodySelect($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
+                    encapsulation: core_1.ViewEncapsulation.None,
+                    styleUrls: ['./datatable.component.scss'],
                     host: {
-                        class: 'datatable'
+                        class: 'ngx-datatable'
                     }
                 },] },
     ];
@@ -873,7 +874,7 @@ var DatatableComponent = (function () {
         'onWindowResize': [{ type: core_1.HostListener, args: ['window:resize',] },],
     };
     __decorate([
-        utils_2.throttleable(5), 
+        utils_1.throttleable(5), 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', []), 
         __metadata('design:returntype', void 0)

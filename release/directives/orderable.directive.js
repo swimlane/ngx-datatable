@@ -37,7 +37,7 @@ var OrderableDirective = (function () {
                 }
             };
             diffs.forEachAddedItem(subscribe.bind(this));
-            diffs.forEachChangedItem(subscribe.bind(this));
+            // diffs.forEachChangedItem(subscribe.bind(this));
             diffs.forEachRemovedItem(unsubscribe_1.bind(this));
         }
     };

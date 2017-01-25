@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"5.0.0" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"6.0.0" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -83,8 +83,80 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/css-loader/index.js!./node_modules/postcss-loader/index.js?sourceMap!./node_modules/sass-loader/index.js?sourceMap!./src/components/datatable.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")();
+// imports
+
+
+// module
+exports.push([module.i, ".ngx-datatable {\n  display: block;\n  overflow: hidden;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  position: relative;\n  -webkit-transform: translate3d(0, 0, 0);\n  /**\n   * Vertical Scrolling Adjustments\n   */\n  /**\n   * Horizontal Scrolling Adjustments\n   */\n  /**\n   * Fixed Header Height Adjustments\n   */\n  /**\n   * Fixed row height adjustments\n   */\n  /**\n   * Shared Styles\n   */\n  /**\n   * Header Styles\n   */\n  /**\n   * Body Styles\n   */\n  /**\n   * Footer Styles\n   */ }\n  .ngx-datatable [hidden] {\n    display: none !important; }\n  .ngx-datatable *, .ngx-datatable *:before, .ngx-datatable *:after {\n    box-sizing: border-box; }\n  .ngx-datatable.scroll-vertical .datatable-body {\n    overflow-y: auto; }\n    .ngx-datatable.scroll-vertical .datatable-body .datatable-row-wrapper {\n      position: absolute; }\n  .ngx-datatable.scroll-horz .datatable-body {\n    overflow-x: auto;\n    -webkit-overflow-scrolling: touch; }\n  .ngx-datatable.fixed-header .datatable-header .datatable-header-inner {\n    white-space: nowrap; }\n    .ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell {\n      white-space: nowrap;\n      overflow: hidden;\n      text-overflow: ellipsis; }\n  .ngx-datatable.fixed-row .datatable-scroll {\n    white-space: nowrap; }\n    .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row {\n      white-space: nowrap; }\n      .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-cell {\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis; }\n  .ngx-datatable .datatable-body-row,\n  .ngx-datatable .datatable-header-inner {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -ms-flex-flow: row;\n    -o-flex-flow: row;\n    flex-flow: row; }\n  .ngx-datatable .datatable-body-cell,\n  .ngx-datatable .datatable-header-cell {\n    vertical-align: top;\n    display: inline-block;\n    line-height: 1.625;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    -o-user-select: none;\n    user-select: none; }\n    .ngx-datatable .datatable-body-cell:focus,\n    .ngx-datatable .datatable-header-cell:focus {\n      outline: none; }\n  .ngx-datatable .datatable-row-left,\n  .ngx-datatable .datatable-row-right {\n    z-index: 9; }\n  .ngx-datatable .datatable-row-left,\n  .ngx-datatable .datatable-row-center,\n  .ngx-datatable .datatable-row-right {\n    position: relative; }\n  .ngx-datatable .datatable-header {\n    display: block;\n    overflow: hidden; }\n    .ngx-datatable .datatable-header .datatable-header-inner {\n      -webkit-box-align: stretch;\n          -ms-flex-align: stretch;\n              align-items: stretch;\n      -webkit-align-items: stretch; }\n    .ngx-datatable .datatable-header .datatable-header-cell {\n      position: relative;\n      display: inline-block; }\n      .ngx-datatable .datatable-header .datatable-header-cell.longpress {\n        cursor: move; }\n      .ngx-datatable .datatable-header .datatable-header-cell.sortable {\n        cursor: pointer; }\n      .ngx-datatable .datatable-header .datatable-header-cell .sort-btn {\n        line-height: 100%;\n        vertical-align: middle;\n        display: inline-block; }\n      .ngx-datatable .datatable-header .datatable-header-cell .resize-handle {\n        display: inline-block;\n        position: absolute;\n        right: 0;\n        top: 0;\n        bottom: 0;\n        width: 5px;\n        padding: 0 8px;\n        visibility: hidden;\n        cursor: ew-resize; }\n      .ngx-datatable .datatable-header .datatable-header-cell.resizeable:hover .resize-handle {\n        visibility: visible; }\n  .ngx-datatable .datatable-body {\n    position: relative;\n    z-index: 10;\n    display: block; }\n    .ngx-datatable .datatable-body .datatable-scroll {\n      display: inline-block; }\n    .ngx-datatable .datatable-body .datatable-row-detail {\n      overflow-y: hidden; }\n    .ngx-datatable .datatable-body .datatable-row-wrapper {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n      flex-direction: column; }\n    .ngx-datatable .datatable-body .datatable-body-row {\n      outline: none; }\n      .ngx-datatable .datatable-body .datatable-body-row > div {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex; }\n  .ngx-datatable .datatable-footer {\n    display: block;\n    width: 100%; }\n    .ngx-datatable .datatable-footer > div {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-align: center;\n          -ms-flex-align: center;\n              align-items: center;\n      width: 100%; }\n    .ngx-datatable .datatable-footer .page-count {\n      display: inline-block;\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 20%;\n              flex: 1 1 20%; }\n    .ngx-datatable .datatable-footer .datatable-pager {\n      display: inline-block;\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 80%;\n              flex: 1 1 80%;\n      text-align: right; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager,\n      .ngx-datatable .datatable-footer .datatable-pager .pager li {\n        padding: 0;\n        margin: 0;\n        display: inline-block;\n        list-style: none; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager li, .ngx-datatable .datatable-footer .datatable-pager .pager li a {\n        outline: none; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager li a {\n        cursor: pointer;\n        display: inline-block; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager li.disabled a {\n        cursor: not-allowed; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/lib/css-base.js":
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function() {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		var result = [];
+		for(var i = 0; i < this.length; i++) {
+			var item = this[i];
+			if(item[2]) {
+				result.push("@media " + item[2] + "{" + item[1] + "}");
+			} else {
+				result.push(item[1]);
+			}
+		}
+		return result.join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/rxjs/Observable.js":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -217,10 +289,10 @@ var Observable = (function () {
 exports.Observable = Observable;
 //# sourceMappingURL=Observable.js.map
 
-/***/ },
+/***/ }),
 
 /***/ "./node_modules/rxjs/Observer.js":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -232,10 +304,10 @@ exports.empty = {
 };
 //# sourceMappingURL=Observer.js.map
 
-/***/ },
+/***/ }),
 
 /***/ "./node_modules/rxjs/Subscriber.js":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -488,10 +560,10 @@ var SafeSubscriber = (function (_super) {
 }(Subscriber));
 //# sourceMappingURL=Subscriber.js.map
 
-/***/ },
+/***/ }),
 
 /***/ "./node_modules/rxjs/Subscription.js":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -673,10 +745,10 @@ function flattenUnsubscriptionErrors(errors) {
 }
 //# sourceMappingURL=Subscription.js.map
 
-/***/ },
+/***/ }),
 
 /***/ "./node_modules/rxjs/add/observable/fromEvent.js":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -685,10 +757,10 @@ var fromEvent_1 = __webpack_require__("./node_modules/rxjs/observable/fromEvent.
 Observable_1.Observable.fromEvent = fromEvent_1.fromEvent;
 //# sourceMappingURL=fromEvent.js.map
 
-/***/ },
+/***/ }),
 
 /***/ "./node_modules/rxjs/observable/FromEventObservable.js":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -832,10 +904,10 @@ var FromEventObservable = (function (_super) {
 exports.FromEventObservable = FromEventObservable;
 //# sourceMappingURL=FromEventObservable.js.map
 
-/***/ },
+/***/ }),
 
 /***/ "./node_modules/rxjs/observable/fromEvent.js":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -843,10 +915,10 @@ var FromEventObservable_1 = __webpack_require__("./node_modules/rxjs/observable/
 exports.fromEvent = FromEventObservable_1.FromEventObservable.create;
 //# sourceMappingURL=fromEvent.js.map
 
-/***/ },
+/***/ }),
 
 /***/ "./node_modules/rxjs/symbol/observable.js":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -872,10 +944,10 @@ exports.getSymbolObservable = getSymbolObservable;
 exports.$$observable = getSymbolObservable(root_1.root);
 //# sourceMappingURL=observable.js.map
 
-/***/ },
+/***/ }),
 
 /***/ "./node_modules/rxjs/symbol/rxSubscriber.js":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -885,10 +957,10 @@ exports.$$rxSubscriber = (typeof Symbol === 'function' && typeof Symbol.for === 
     Symbol.for('rxSubscriber') : '@@rxSubscriber';
 //# sourceMappingURL=rxSubscriber.js.map
 
-/***/ },
+/***/ }),
 
 /***/ "./node_modules/rxjs/util/UnsubscriptionError.js":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -917,10 +989,10 @@ var UnsubscriptionError = (function (_super) {
 exports.UnsubscriptionError = UnsubscriptionError;
 //# sourceMappingURL=UnsubscriptionError.js.map
 
-/***/ },
+/***/ }),
 
 /***/ "./node_modules/rxjs/util/errorObject.js":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -928,20 +1000,20 @@ exports.UnsubscriptionError = UnsubscriptionError;
 exports.errorObject = { e: {} };
 //# sourceMappingURL=errorObject.js.map
 
-/***/ },
+/***/ }),
 
 /***/ "./node_modules/rxjs/util/isArray.js":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 exports.isArray = Array.isArray || (function (x) { return x && typeof x.length === 'number'; });
 //# sourceMappingURL=isArray.js.map
 
-/***/ },
+/***/ }),
 
 /***/ "./node_modules/rxjs/util/isFunction.js":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -951,10 +1023,10 @@ function isFunction(x) {
 exports.isFunction = isFunction;
 //# sourceMappingURL=isFunction.js.map
 
-/***/ },
+/***/ }),
 
 /***/ "./node_modules/rxjs/util/isObject.js":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -964,10 +1036,10 @@ function isObject(x) {
 exports.isObject = isObject;
 //# sourceMappingURL=isObject.js.map
 
-/***/ },
+/***/ }),
 
 /***/ "./node_modules/rxjs/util/root.js":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -985,10 +1057,10 @@ if (!exports.root) {
 //# sourceMappingURL=root.js.map
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/global.js")))
 
-/***/ },
+/***/ }),
 
 /***/ "./node_modules/rxjs/util/toSubscriber.js":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -1012,10 +1084,10 @@ function toSubscriber(nextOrObserver, error, complete) {
 exports.toSubscriber = toSubscriber;
 //# sourceMappingURL=toSubscriber.js.map
 
-/***/ },
+/***/ }),
 
 /***/ "./node_modules/rxjs/util/tryCatch.js":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -1038,15 +1110,17 @@ exports.tryCatch = tryCatch;
 ;
 //# sourceMappingURL=tryCatch.js.map
 
-/***/ },
+/***/ }),
 
 /***/ "./node_modules/webpack/buildin/global.js":
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 var g;
 
 // This works in non-strict mode
-g = (function() { return this; })();
+g = (function() {
+	return this;
+})();
 
 try {
 	// This works if eval is allowed (see CSP)
@@ -1064,10 +1138,10 @@ try {
 module.exports = g;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/components/body/body-cell.component.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -1328,10 +1402,10 @@ var DataTableBodyCellComponent = (function () {
 exports.DataTableBodyCellComponent = DataTableBodyCellComponent;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/components/body/body-row-wrapper.component.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -1394,10 +1468,10 @@ var DataTableRowWrapperComponent = (function () {
 exports.DataTableRowWrapperComponent = DataTableRowWrapperComponent;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/components/body/body-row.component.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -1568,10 +1642,10 @@ var DataTableBodyRowComponent = (function () {
 exports.DataTableBodyRowComponent = DataTableBodyRowComponent;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/components/body/body.component.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -1770,6 +1844,10 @@ var DataTableBodyComponent = (function () {
      * @memberOf DataTableBodyComponent
      */
     DataTableBodyComponent.prototype.updateOffsetY = function (offset) {
+        // scroller is missing on empty table
+        if (!this.scroller) {
+            return;
+        }
         if (this.scrollbarV && offset) {
             // First get the row Index that we need to move to.
             var rowIndex = this.pageSize * offset;
@@ -2150,10 +2228,10 @@ var DataTableBodyComponent = (function () {
 exports.DataTableBodyComponent = DataTableBodyComponent;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/components/body/index.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -2169,10 +2247,10 @@ __export(__webpack_require__("./src/components/body/body-row-wrapper.component.t
 __export(__webpack_require__("./src/components/body/selection.component.ts"));
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/components/body/progress-bar.component.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -2202,10 +2280,10 @@ var ProgressBarComponent = (function () {
 exports.ProgressBarComponent = ProgressBarComponent;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/components/body/scroller.component.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -2307,10 +2385,10 @@ var ScrollerComponent = (function () {
 exports.ScrollerComponent = ScrollerComponent;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/components/body/selection.component.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -2493,10 +2571,10 @@ var DataTableSelectionComponent = (function () {
 exports.DataTableSelectionComponent = DataTableSelectionComponent;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/components/columns/column-cell.directive.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -2524,10 +2602,10 @@ var DataTableColumnCellDirective = (function () {
 exports.DataTableColumnCellDirective = DataTableColumnCellDirective;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/components/columns/column-header.directive.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -2555,10 +2633,10 @@ var DataTableColumnHeaderDirective = (function () {
 exports.DataTableColumnHeaderDirective = DataTableColumnHeaderDirective;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/components/columns/column.directive.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -2660,10 +2738,10 @@ var DataTableColumnDirective = (function () {
 exports.DataTableColumnDirective = DataTableColumnDirective;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/components/columns/index.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -2675,10 +2753,25 @@ __export(__webpack_require__("./src/components/columns/column-header.directive.t
 __export(__webpack_require__("./src/components/columns/column-cell.directive.ts"));
 
 
-/***/ },
+/***/ }),
+
+/***/ "./src/components/datatable.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+
+        var result = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/postcss-loader/index.js?sourceMap!./node_modules/sass-loader/index.js?sourceMap!./src/components/datatable.component.scss");
+
+        if (typeof result === "string") {
+            module.exports = result;
+        } else {
+            module.exports = result.toString();
+        }
+    
+
+/***/ }),
 
 /***/ "./src/components/datatable.component.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -2697,7 +2790,6 @@ var types_1 = __webpack_require__("./src/types/index.ts");
 var body_1 = __webpack_require__("./src/components/body/index.ts");
 var columns_1 = __webpack_require__("./src/components/columns/index.ts");
 var row_detail_1 = __webpack_require__("./src/components/row-detail/index.ts");
-var utils_2 = __webpack_require__("./src/utils/index.ts");
 var DatatableComponent = (function () {
     function DatatableComponent(element, differs) {
         /**
@@ -2961,7 +3053,7 @@ var DatatableComponent = (function () {
          */
         set: function (val) {
             if (val) {
-                utils_2.setColumnDefaults(val);
+                utils_1.setColumnDefaults(val);
                 this.recalculateColumns(val);
             }
             this._columns = val;
@@ -3166,7 +3258,7 @@ var DatatableComponent = (function () {
                 var arr = val.toArray();
                 if (arr.length) {
                     // translate them to normal objects
-                    this.columns = utils_2.translateTemplates(arr);
+                    this.columns = utils_1.translateTemplates(arr);
                 }
             }
         },
@@ -3268,7 +3360,7 @@ var DatatableComponent = (function () {
             return;
         var width = this.innerWidth;
         if (this.scrollbarV) {
-            width = width - utils_2.scrollbarWidth;
+            width = width - utils_1.scrollbarWidth;
         }
         if (this.columnMode === types_1.ColumnMode.force) {
             utils_1.forceFillColumnWidths(columns, width, forceIdx, allowBleed);
@@ -3679,7 +3771,7 @@ var DatatableComponent = (function () {
     ], DatatableComponent.prototype, "bodyComponent", void 0);
     __decorate([
         core_1.HostListener('window:resize'),
-        utils_2.throttleable(5), 
+        utils_1.throttleable(5), 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', []), 
         __metadata('design:returntype', void 0)
@@ -3688,8 +3780,10 @@ var DatatableComponent = (function () {
         core_1.Component({
             selector: 'ngx-datatable',
             template: "\n    <div\n      visibility-observer\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"columns\"\n        [headerHeight]=\"headerHeight\"\n        [reorderable]=\"reorderable\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        [selectionType]=\"selectionType\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\">\n      </datatable-header>\n      <datatable-body\n        [rows]=\"rows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"columns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetail]=\"rowDetail\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"rowContextmenu.emit($event)\"\n        (select)=\"onBodySelect($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
+            encapsulation: core_1.ViewEncapsulation.None,
+            styles: [__webpack_require__("./src/components/datatable.component.scss")],
             host: {
-                class: 'datatable'
+                class: 'ngx-datatable'
             }
         }), 
         __metadata('design:paramtypes', [core_1.ElementRef, core_1.KeyValueDiffers])
@@ -3699,10 +3793,10 @@ var DatatableComponent = (function () {
 exports.DatatableComponent = DatatableComponent;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/components/footer/footer.component.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -3790,10 +3884,10 @@ var DataTableFooterComponent = (function () {
 exports.DataTableFooterComponent = DataTableFooterComponent;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/components/footer/index.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -3804,10 +3898,10 @@ __export(__webpack_require__("./src/components/footer/footer.component.ts"));
 __export(__webpack_require__("./src/components/footer/pager.component.ts"));
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/components/footer/pager.component.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -3959,10 +4053,10 @@ var DataTablePagerComponent = (function () {
 exports.DataTablePagerComponent = DataTablePagerComponent;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/components/header/header-cell.component.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -3982,6 +4076,7 @@ var DataTableHeaderCellComponent = (function () {
     function DataTableHeaderCellComponent() {
         this.sort = new core_1.EventEmitter();
         this.select = new core_1.EventEmitter();
+        this.sortFn = this.onSort.bind(this);
     }
     Object.defineProperty(DataTableHeaderCellComponent.prototype, "sorts", {
         get: function () {
@@ -4072,10 +4167,13 @@ var DataTableHeaderCellComponent = (function () {
     };
     DataTableHeaderCellComponent.prototype.calcSortClass = function (sortDir) {
         if (sortDir === types_1.SortDirection.asc) {
-            return "sort-asc " + this.sortAscendingIcon;
+            return "sort-btn sort-asc " + this.sortAscendingIcon;
         }
         else if (sortDir === types_1.SortDirection.desc) {
-            return "sort-desc " + this.sortDescendingIcon;
+            return "sort-btn sort-desc " + this.sortDescendingIcon;
+        }
+        else {
+            return "sort-btn";
         }
     };
     __decorate([
@@ -4143,7 +4241,7 @@ var DataTableHeaderCellComponent = (function () {
     DataTableHeaderCellComponent = __decorate([
         core_1.Component({
             selector: 'datatable-header-cell',
-            template: "\n    <div>\n      <label\n        *ngIf=\"isCheckboxable\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [attr.checked]=\"allRowsSelected\"\n          (change)=\"select.emit(!allRowsSelected)\" \n        />\n      </label>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        *ngIf=\"!column.headerTemplate\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <template\n        *ngIf=\"column.headerTemplate\"\n        [ngTemplateOutlet]=\"column.headerTemplate\"\n        [ngOutletContext]=\"{ \n          column: column, \n          sortDir: sortDir\n        }\">\n      </template>\n      <span\n        class=\"sort-btn\"\n        [class]=\"sortClass\">\n      </span>\n    </div>\n  "
+            template: "\n    <div>\n      <label\n        *ngIf=\"isCheckboxable\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [attr.checked]=\"allRowsSelected\"\n          (change)=\"select.emit(!allRowsSelected)\" \n        />\n      </label>\n      <span class=\"datatable-header-cell-wrapper\">\n        <span\n          class=\"datatable-header-cell-label draggable\"\n          *ngIf=\"!column.headerTemplate\"\n          (click)=\"onSort()\"\n          [innerHTML]=\"name\">\n        </span>\n      </span>\n      <template\n        *ngIf=\"column.headerTemplate\"\n        [ngTemplateOutlet]=\"column.headerTemplate\"\n        [ngOutletContext]=\"{ \n          column: column, \n          sortDir: sortDir,\n          sortFn: sortFn\n        }\">\n      </template>\n      <span\n        [class]=\"sortClass\">\n      </span>\n    </div>\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], DataTableHeaderCellComponent);
@@ -4152,10 +4250,10 @@ var DataTableHeaderCellComponent = (function () {
 exports.DataTableHeaderCellComponent = DataTableHeaderCellComponent;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/components/header/header.component.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -4377,10 +4475,10 @@ var DataTableHeaderComponent = (function () {
 exports.DataTableHeaderComponent = DataTableHeaderComponent;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/components/header/index.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -4391,10 +4489,10 @@ __export(__webpack_require__("./src/components/header/header.component.ts"));
 __export(__webpack_require__("./src/components/header/header-cell.component.ts"));
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/components/index.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -4409,10 +4507,10 @@ __export(__webpack_require__("./src/components/columns/index.ts"));
 __export(__webpack_require__("./src/components/row-detail/index.ts"));
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/components/row-detail/index.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -4423,10 +4521,10 @@ __export(__webpack_require__("./src/components/row-detail/row-detail.directive.t
 __export(__webpack_require__("./src/components/row-detail/row-detail-template.directive.ts"));
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/components/row-detail/row-detail-template.directive.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -4456,10 +4554,10 @@ var DatatableRowDetailTemplateDirective = (function () {
 exports.DatatableRowDetailTemplateDirective = DatatableRowDetailTemplateDirective;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/components/row-detail/row-detail.directive.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -4547,10 +4645,10 @@ var DatatableRowDetailDirective = (function () {
 exports.DatatableRowDetailDirective = DatatableRowDetailDirective;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/datatable.module.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -4616,10 +4714,10 @@ var NgxDatatableModule = (function () {
 exports.NgxDatatableModule = NgxDatatableModule;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/directives/draggable.directive.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -4747,10 +4845,10 @@ var DraggableDirective = (function () {
 exports.DraggableDirective = DraggableDirective;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/directives/index.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -4764,10 +4862,10 @@ __export(__webpack_require__("./src/directives/resizeable.directive.ts"));
 __export(__webpack_require__("./src/directives/visibility.directive.ts"));
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/directives/long-press.directive.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -4894,10 +4992,10 @@ var LongPressDirective = (function () {
 exports.LongPressDirective = LongPressDirective;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/directives/orderable.directive.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -4948,7 +5046,7 @@ var OrderableDirective = (function () {
                 }
             };
             diffs.forEachAddedItem(subscribe.bind(this));
-            diffs.forEachChangedItem(subscribe.bind(this));
+            // diffs.forEachChangedItem(subscribe.bind(this));
             diffs.forEachRemovedItem(unsubscribe_1.bind(this));
         }
     };
@@ -5001,10 +5099,10 @@ var OrderableDirective = (function () {
 exports.OrderableDirective = OrderableDirective;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/directives/resizeable.directive.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -5106,10 +5204,10 @@ var ResizeableDirective = (function () {
 exports.ResizeableDirective = ResizeableDirective;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/directives/visibility.directive.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -5190,10 +5288,10 @@ var VisibilityDirective = (function () {
 exports.VisibilityDirective = VisibilityDirective;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/index.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -5205,10 +5303,10 @@ __export(__webpack_require__("./src/types/index.ts"));
 __export(__webpack_require__("./src/components/index.ts"));
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/types/click.type.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -5219,10 +5317,10 @@ __export(__webpack_require__("./src/components/index.ts"));
 var ClickType = exports.ClickType;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/types/column-mode.type.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -5234,10 +5332,10 @@ var ClickType = exports.ClickType;
 var ColumnMode = exports.ColumnMode;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/types/index.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -5251,10 +5349,10 @@ __export(__webpack_require__("./src/types/selection.type.ts"));
 __export(__webpack_require__("./src/types/click.type.ts"));
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/types/selection.type.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -5268,10 +5366,10 @@ __export(__webpack_require__("./src/types/click.type.ts"));
 var SelectionType = exports.SelectionType;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/types/sort-direction.type.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -5282,10 +5380,10 @@ var SelectionType = exports.SelectionType;
 var SortDirection = exports.SortDirection;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/types/sort.type.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -5296,10 +5394,10 @@ var SortDirection = exports.SortDirection;
 var SortType = exports.SortType;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/utils/camel-case.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -5339,10 +5437,10 @@ function deCamelCase(str) {
 exports.deCamelCase = deCamelCase;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/utils/column-helper.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -5418,10 +5516,10 @@ function translateTemplates(templates) {
 exports.translateTemplates = translateTemplates;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/utils/column.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -5510,10 +5608,10 @@ function columnsByPinArr(val) {
 exports.columnsByPinArr = columnsByPinArr;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/utils/deep-getter.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -5540,10 +5638,10 @@ function deepValueGetter(obj, path) {
 exports.deepValueGetter = deepValueGetter;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/utils/id.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -5557,10 +5655,10 @@ function id() {
 exports.id = id;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/utils/index.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -5583,10 +5681,10 @@ __export(__webpack_require__("./src/utils/row-height-cache.ts"));
 __export(__webpack_require__("./src/utils/column-helper.ts"));
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/utils/keys.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -5601,10 +5699,10 @@ __export(__webpack_require__("./src/utils/column-helper.ts"));
 var Keys = exports.Keys;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/utils/math.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -5784,10 +5882,10 @@ function getContentWidth(allColumns, defaultColWidth) {
 }
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/utils/prefixes.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -5822,10 +5920,10 @@ function getVendorPrefixedName(property) {
 exports.getVendorPrefixedName = getVendorPrefixedName;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/utils/row-height-cache.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -5969,10 +6067,10 @@ var RowHeightCache = (function () {
 exports.RowHeightCache = RowHeightCache;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/utils/scrollbar-width.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -6001,10 +6099,10 @@ exports.getScrollBarWidth = getScrollBarWidth;
 exports.scrollbarWidth = getScrollBarWidth();
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/utils/selection.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -6051,10 +6149,10 @@ function selectRowsBetween(selected, rows, index, prevIndex, comparefn) {
 exports.selectRowsBetween = selectRowsBetween;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/utils/sort.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -6161,10 +6259,10 @@ function sortRows(rows, columns, dirs) {
 exports.sortRows = sortRows;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/utils/throttle.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -6242,10 +6340,10 @@ function throttleable(duration, options) {
 exports.throttleable = throttleable;
 
 
-/***/ },
+/***/ }),
 
 /***/ "./src/utils/translate.ts":
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -6276,21 +6374,21 @@ function translateXY(styles, x, y) {
 exports.translateXY = translateXY;
 
 
-/***/ },
+/***/ }),
 
 /***/ 0:
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
 
-/***/ },
+/***/ }),
 
 /***/ 1:
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
 
-/***/ }
+/***/ })
 
 /******/ });
 });

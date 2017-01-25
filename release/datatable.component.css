@@ -1,4 +1,4 @@
-.datatable {
+.ngx-datatable {
   display: block;
   overflow: hidden;
   justify-content: center;
@@ -28,35 +28,35 @@
   /**
    * Footer Styles
    */ }
-  .datatable [hidden] {
+  .ngx-datatable [hidden] {
     display: none !important; }
-  .datatable *, .datatable *:before, .datatable *:after {
+  .ngx-datatable *, .ngx-datatable *:before, .ngx-datatable *:after {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box; }
-  .datatable.scroll-vertical .datatable-body {
+  .ngx-datatable.scroll-vertical .datatable-body {
     overflow-y: auto; }
-    .datatable.scroll-vertical .datatable-body .datatable-row-wrapper {
+    .ngx-datatable.scroll-vertical .datatable-body .datatable-row-wrapper {
       position: absolute; }
-  .datatable.scroll-horz .datatable-body {
+  .ngx-datatable.scroll-horz .datatable-body {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch; }
-  .datatable.fixed-header .datatable-header .datatable-header-inner {
+  .ngx-datatable.fixed-header .datatable-header .datatable-header-inner {
     white-space: nowrap; }
-    .datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell {
+    .ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis; }
-  .datatable.fixed-row .datatable-scroll {
+  .ngx-datatable.fixed-row .datatable-scroll {
     white-space: nowrap; }
-    .datatable.fixed-row .datatable-scroll .datatable-body-row {
+    .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row {
       white-space: nowrap; }
-      .datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-cell {
+      .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-cell {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis; }
-  .datatable .datatable-body-row,
-  .datatable .datatable-header-inner {
+  .ngx-datatable .datatable-body-row,
+  .ngx-datatable .datatable-header-inner {
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -68,8 +68,8 @@
     -ms-flex-flow: row;
     -o-flex-flow: row;
     flex-flow: row; }
-  .datatable .datatable-body-cell,
-  .datatable .datatable-header-cell {
+  .ngx-datatable .datatable-body-cell,
+  .ngx-datatable .datatable-header-cell {
     vertical-align: top;
     display: inline-block;
     line-height: 1.625;
@@ -78,34 +78,34 @@
     -ms-user-select: none;
     -o-user-select: none;
     user-select: none; }
-    .datatable .datatable-body-cell:focus,
-    .datatable .datatable-header-cell:focus {
+    .ngx-datatable .datatable-body-cell:focus,
+    .ngx-datatable .datatable-header-cell:focus {
       outline: none; }
-  .datatable .datatable-row-left,
-  .datatable .datatable-row-right {
+  .ngx-datatable .datatable-row-left,
+  .ngx-datatable .datatable-row-right {
     z-index: 9; }
-  .datatable .datatable-row-left,
-  .datatable .datatable-row-center,
-  .datatable .datatable-row-right {
+  .ngx-datatable .datatable-row-left,
+  .ngx-datatable .datatable-row-center,
+  .ngx-datatable .datatable-row-right {
     position: relative; }
-  .datatable .datatable-header {
+  .ngx-datatable .datatable-header {
     display: block;
     overflow: hidden; }
-    .datatable .datatable-header .datatable-header-inner {
+    .ngx-datatable .datatable-header .datatable-header-inner {
       align-items: stretch;
       -webkit-align-items: stretch; }
-    .datatable .datatable-header .datatable-header-cell {
+    .ngx-datatable .datatable-header .datatable-header-cell {
       position: relative;
       display: inline-block; }
-      .datatable .datatable-header .datatable-header-cell.longpress {
+      .ngx-datatable .datatable-header .datatable-header-cell.longpress {
         cursor: move; }
-      .datatable .datatable-header .datatable-header-cell.sortable {
+      .ngx-datatable .datatable-header .datatable-header-cell.sortable {
         cursor: pointer; }
-      .datatable .datatable-header .datatable-header-cell .sort-btn {
+      .ngx-datatable .datatable-header .datatable-header-cell .sort-btn {
         line-height: 100%;
         vertical-align: middle;
         display: inline-block; }
-      .datatable .datatable-header .datatable-header-cell .resize-handle {
+      .ngx-datatable .datatable-header .datatable-header-cell .resize-handle {
         display: inline-block;
         position: absolute;
         right: 0;
@@ -115,17 +115,17 @@
         padding: 0 8px;
         visibility: hidden;
         cursor: ew-resize; }
-      .datatable .datatable-header .datatable-header-cell.resizeable:hover .resize-handle {
+      .ngx-datatable .datatable-header .datatable-header-cell.resizeable:hover .resize-handle {
         visibility: visible; }
-  .datatable .datatable-body {
+  .ngx-datatable .datatable-body {
     position: relative;
     z-index: 10;
     display: block; }
-    .datatable .datatable-body .datatable-scroll {
+    .ngx-datatable .datatable-body .datatable-scroll {
       display: inline-block; }
-    .datatable .datatable-body .datatable-row-detail {
+    .ngx-datatable .datatable-body .datatable-row-detail {
       overflow-y: hidden; }
-    .datatable .datatable-body .datatable-row-wrapper {
+    .ngx-datatable .datatable-body .datatable-row-wrapper {
       display: -webkit-box;
       display: -moz-box;
       display: -ms-flexbox;
@@ -138,38 +138,38 @@
       -moz-box-direction: normal;
       -ms-flex-direction: column;
       flex-direction: column; }
-    .datatable .datatable-body .datatable-body-row {
+    .ngx-datatable .datatable-body .datatable-body-row {
       outline: none; }
-      .datatable .datatable-body .datatable-body-row > div {
+      .ngx-datatable .datatable-body .datatable-body-row > div {
         display: -webkit-box;
         display: -moz-box;
         display: -ms-flexbox;
         display: -webkit-flex;
         display: flex; }
-  .datatable .datatable-footer {
+  .ngx-datatable .datatable-footer {
     display: block;
     width: 100%; }
-    .datatable .datatable-footer > div {
+    .ngx-datatable .datatable-footer > div {
       display: flex;
       align-items: center;
       width: 100%; }
-    .datatable .datatable-footer .page-count {
+    .ngx-datatable .datatable-footer .page-count {
       display: inline-block;
       flex: 1 1 20%; }
-    .datatable .datatable-footer .datatable-pager {
+    .ngx-datatable .datatable-footer .datatable-pager {
       display: inline-block;
       flex: 1 1 80%;
       text-align: right; }
-      .datatable .datatable-footer .datatable-pager .pager,
-      .datatable .datatable-footer .datatable-pager .pager li {
+      .ngx-datatable .datatable-footer .datatable-pager .pager,
+      .ngx-datatable .datatable-footer .datatable-pager .pager li {
         padding: 0;
         margin: 0;
         display: inline-block;
         list-style: none; }
-      .datatable .datatable-footer .datatable-pager .pager li, .datatable .datatable-footer .datatable-pager .pager li a {
+      .ngx-datatable .datatable-footer .datatable-pager .pager li, .ngx-datatable .datatable-footer .datatable-pager .pager li a {
         outline: none; }
-      .datatable .datatable-footer .datatable-pager .pager li a {
+      .ngx-datatable .datatable-footer .datatable-pager .pager li a {
         cursor: pointer;
         display: inline-block; }
-      .datatable .datatable-footer .datatable-pager .pager li.disabled a {
+      .ngx-datatable .datatable-footer .datatable-pager .pager li.disabled a {
         cursor: not-allowed; }

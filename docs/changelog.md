@@ -6,6 +6,7 @@
 - Enhancement: Allow sorting from inline templates (#431)
 - Enhancement: Fix re-ordering columns throwing errors (#438)
 - Enhancement: Add nice drag indicator to material theme
+- Chore: Update Depedencies
 
 ## 5.0.0
 - BREAKING: Re-worked all inputs, methods and outputs of row detail to its own container

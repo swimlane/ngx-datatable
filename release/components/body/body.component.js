@@ -184,6 +184,10 @@ var DataTableBodyComponent = (function () {
      * @memberOf DataTableBodyComponent
      */
     DataTableBodyComponent.prototype.updateOffsetY = function (offset) {
+        // scroller is missing on empty table
+        if (!this.scroller) {
+            return;
+        }
         if (this.scrollbarV && offset) {
             // First get the row Index that we need to move to.
             var rowIndex = this.pageSize * offset;
