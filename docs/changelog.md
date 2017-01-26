@@ -1,6 +1,10 @@
 # Changelog
 
-## 6.0.0
+## Master
+- Chore: Fix ExtractText plugin causing build issue
+- Chore: Upgrade Angular 2.4.5
+
+## 6.0.0 (2017-01-25)
 - BREAKING: Renamed `datatable` css class to `ngx-datatable`
 - BREAKING: Embedded core css file with Angular `styleUrls`
 - Enhancement: Allow sorting from inline templates (#431)
