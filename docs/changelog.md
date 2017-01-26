@@ -1,6 +1,6 @@
 # Changelog
 
-## 6.0.0
+## 6.0.0 (2017-01-25)
 - BREAKING: Renamed `datatable` css class to `ngx-datatable`
 - BREAKING: Embedded core css file with Angular `styleUrls`
 - Enhancement: Allow sorting from inline templates (#431)
