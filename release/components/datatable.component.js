@@ -719,6 +719,10 @@ var DatatableComponent = (function () {
      */
     DatatableComponent.prototype.onColumnResize = function (_a) {
         var column = _a.column, newValue = _a.newValue;
+        /* Safari/iOS 10.2 workaround */
+        if (column === undefined) {
+            return;
+        }
         var idx;
         var cols = this.columns.map(function (c, i) {
             c = Object.assign({}, c);
