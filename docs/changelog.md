@@ -1,6 +1,7 @@
 # Changelog
 
-## Master
+## 6.0.1
+- Bug: Fix CSS not working with AoT (#459)
 - Chore: Fix ExtractText plugin causing build issue
 - Chore: Upgrade Angular 2.4.5
 
