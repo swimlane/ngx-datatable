@@ -1,6 +1,6 @@
 {
   "name": "@swimlane/ngx-datatable",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "description": "ngx-datatable is a Angular2+ table grid component for presenting large and complex data.",
   "main": "release/index.js",
   "typings": "release/index.d.ts",
@@ -30,7 +30,7 @@
     "package:ts": "tsc --outDir release",
     "package:aot": "ngc -p tsconfig-aot.json",
     "package:replace": "node ./config/replace.js",
-    "package:css": "node-sass -o release/ src/themes && node-sass -o release/ src/components",
+    "package:css": "node-sass -o release/ src/themes && node-sass -o release/components src/components",
     "package:minify": "uglifyjs release/index.js --source-map release/index.min.js.map --source-map-url release/index.js.map --compress --mangle --screw-ie8 --output release/index.min.js",
     "deploy": "node ./config/deploy.js"
   },
