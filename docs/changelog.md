@@ -1,5 +1,8 @@
 # Changelog
 
+## 6.0.2
+- Bug: Move scss to release dir (#459)
+
 ## 6.0.1
 - Bug: Fix CSS not working with AoT (#459)
 - Chore: Fix ExtractText plugin causing build issue
