@@ -2,7 +2,7 @@ import {
   Component, Input, Output, ElementRef, EventEmitter, ViewChild,
   HostListener, ContentChildren, OnInit, QueryList, AfterViewInit,
   HostBinding, ContentChild, TemplateRef, IterableDiffer,
-  DoCheck, KeyValueDiffers, ViewEncapsulation
+  DoCheck, KeyValueDiffers,KeyValueDiffer, ViewEncapsulation
 } from '@angular/core';
 
 import { 
@@ -638,7 +638,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   bodyHeight: number;
   rowCount: number;
   offsetX: number = 0;
-  rowDiffer: IterableDiffer;
+  rowDiffer: KeyValueDiffer<{}, {}>;
   _count: number = 0;
 
   _rows: any[];
