@@ -52,5 +52,53 @@ describe('DraggableDirective', () => {
     it('should have DraggableDirective directive', () => {
       expect(directive).toBeTruthy();
     });
+
+    describe('mouse event', () => {
+      let mouseDown: MouseEvent;
+
+      beforeEach(() => {
+        element.classList.add('draggable');
+        mouseDown = <MouseEvent>{
+          target: element,
+          preventDefault: () => {}
+        };
+      });
+
+      // or else the document:mouseup event can fire again when resizing.
+      describe('subscription should be destroyed', () => {
+
+        it('when ngOnDestroy is called', () => {
+          directive.onMousedown(mouseDown);
+          expect(directive.subscription).toBeTruthy();
+
+          directive.ngOnDestroy();
+
+          expect(directive.subscription).toBeUndefined();
+        });
+
+        it('when onMouseup called and dragging', () => {
+          directive.onMousedown(mouseDown);
+          expect(directive.subscription).toBeTruthy();
+
+          directive.onMouseup(<MouseEvent>{ });
+
+          expect(directive.subscription).toBeUndefined();
+        });
+      });
+
+      describe('subscription should not be destroyed', () => {
+
+        it('when onMouseup is called and not dragging', () => {
+          directive.onMousedown(mouseDown);
+          directive.isDragging = false;
+
+          expect(directive.subscription).toBeTruthy();
+
+          directive.onMouseup(<MouseEvent>{ });
+
+          expect(directive.subscription).toBeTruthy();
+        });
+      });
+    });
   });
 });
