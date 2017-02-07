@@ -26,7 +26,7 @@ export class LongPressDirective {
   get press(): boolean { return this.pressing; }
 
   @HostBinding('class.longpress')
-  get isLongPress(): boolean { 
+  get isLongPress(): boolean {
     return this.isLongPressing;
   }
 
@@ -78,7 +78,10 @@ export class LongPressDirective {
     this.longPressEnd.emit(true);
   }
 
-  @HostListener('mouseup')
-  onMouseUp(): void { this.endPress(); }
-
+  @HostListener('document:mouseup')
+  onMouseUp(): void {
+    if (this.isLongPressing) {
+      this.endPress()
+    }
+  }
 }
