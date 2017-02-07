@@ -3,7 +3,7 @@ import {
   Output, EventEmitter, HostListener, ElementRef, ViewContainerRef, OnDestroy
 } from '@angular/core';
 
-import { deepValueGetter, Keys } from '../../utils';
+import { getterForProp, Keys } from '../../utils';
 import { SortDirection } from '../../types';
 
 @Component({
@@ -94,7 +94,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
 
   get value(): any {
     if (!this.row || !this.column || !this.column.prop) return '';
-    const val = deepValueGetter(this.row, this.column.prop);
+    const val = getterForProp(this.column.prop)(this.row, this.column.prop);
     const userPipe: PipeTransform = this.column.pipe;
 
     if(userPipe) return userPipe.transform(val);

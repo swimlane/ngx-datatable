@@ -1,3 +1,57 @@
+// maybe rename this file to prop-getters.ts
+
+export type ValueGetter = (obj: any, prop: string|number) => any;
+
+/**
+ * Returns the appropriate getter function for this kind of prop.
+ */
+export function getterForProp(prop: string|number): ValueGetter {
+  if (prop == null) throw `Invalid prop ${prop}`;
+
+  if (typeof prop === 'number') {
+    return numericIndexGetter;
+  }
+  else {
+    // deep or simple
+    if (prop.indexOf('.') !== -1) {
+      return deepValueGetter;
+    }
+    else {
+      return shallowValueGetter;
+    }
+  }
+}
+
+/**
+ * Returns the value at this numeric index.
+ * @param row array of values
+ * @param index numeric index
+ * @returns {any} or '' if invalid index
+ */
+export function numericIndexGetter(row: any[], index: number) {
+  // mimic behavior of deepValueGetter
+  if (!row || index == null) return row;
+
+  const value = row[index];
+  if (value == null) return '';
+  return value;
+}
+
+/**
+ * Returns the value of a field.
+ * (more efficient than deepValueGetter)
+ * @param obj object containing the field
+ * @param fieldName field name string
+ * @returns {any}
+ */
+export function shallowValueGetter(obj: Object, fieldName: string) {
+  if(!obj || !fieldName) return obj;
+
+  let value = obj[fieldName];
+  if (value == null) return '';
+  return value;
+}
+
 /**
  * Returns a deep object given a string. zoo['animal.type']
  * @param {object} obj

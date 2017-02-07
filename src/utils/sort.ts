@@ -1,5 +1,5 @@
 import { SortType, SortDirection } from '../types';
-import { deepValueGetter } from './deep-getter';
+import { getterForProp } from './deep-getter';
 /**
  * Gets the next sort direction
  * @param  {SortType}      sortType
@@ -74,8 +74,8 @@ export function sortRows(rows: any[], columns: any[], dirs: any[]): any[] {
 
   return temp.sort(function(a: any, b: any) {
     for(const { prop, dir } of dirs) {
-      const propA = deepValueGetter(a, prop);
-      const propB = deepValueGetter(b, prop);
+      const propA = getterForProp(prop)(a, prop);
+      const propB = getterForProp(prop)(b, prop);
 
       const compareFn = cols[prop] || orderByComparator;
       const comparison = dir !== SortDirection.desc ?
