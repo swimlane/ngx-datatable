@@ -3,10 +3,19 @@
 export type ValueGetter = (obj: any, prop: string|number) => any;
 
 /**
+ * Always returns the empty string ''
+ * @returns {string}
+ */
+export function emptyStringGetter() {
+  return '';
+}
+
+/**
  * Returns the appropriate getter function for this kind of prop.
+ * If prop == null, returns the emptyStringGetter.
  */
 export function getterForProp(prop: string|number): ValueGetter {
-  if (prop == null) throw `Invalid prop ${prop}`;
+  if (prop == null) return emptyStringGetter;
 
   if (typeof prop === 'number') {
     return numericIndexGetter;
