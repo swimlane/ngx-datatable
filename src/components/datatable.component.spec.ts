@@ -79,4 +79,25 @@ describe('Datatable component', () => {
     expect(fixture.componentInstance.offset).toBe(0);
   });
 
+  describe("table with numeric prop", () => {
+    it('should support array data', () => {
+      let fixture = TestBed.createComponent(DatatableComponent);
+
+      const tableInstance = fixture.componentInstance;
+      tableInstance.rows = [
+        ["Hello", 123]
+      ];
+
+      tableInstance.columns = [
+        { prop: 0 },
+        { prop: 1 }
+      ];
+
+      // previously, an exception was thrown from column-helper.ts setColumnDefaults()
+      fixture.detectChanges();
+
+      expect(tableInstance.columns).toBeTruthy();
+    });
+  });
+
 });

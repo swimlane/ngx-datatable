@@ -29,4 +29,14 @@ describe('DataTableBodyCellComponent', () => {
       expect(component).toBeTruthy();
     });
   });
+
+  describe('prop tests', () => {
+    // verify there wasn't a mistake where the falsey 0 value
+    // resulted in a code path for missing column prop
+    it('should get value from zero-index prop', () => {
+      component.row = ['Hello'];
+      component.column = { name:"First Column", prop: 0 };
+      expect(component.value).toEqual('Hello');
+    });
+  });
 });

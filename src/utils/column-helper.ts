@@ -17,14 +17,15 @@ export function setColumnDefaults(columns: any[]) {
       column.$$id = id();
     }
 
+    // prop can be numeric; zero is valid not a missing prop
     // translate name => prop
-    if(!column.prop && column.name) {
+    if(column.prop == null && column.name) {
       column.prop = camelCase(column.name);
     }
 
     // format props if no name passed
-    if(column.prop && !column.name) {
-      column.name = deCamelCase(column.prop);
+    if(column.prop != null && !column.name) {
+      column.name = deCamelCase(String(column.prop));
     }
 
     if(!column.hasOwnProperty('resizeable')) {
