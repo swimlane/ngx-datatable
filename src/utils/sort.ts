@@ -1,5 +1,5 @@
 import { SortType, SortDirection } from '../types';
-import { getterForProp } from './deep-getter';
+import { getterForProp } from './column-prop-getters';
 /**
  * Gets the next sort direction
  * @param  {SortType}      sortType
