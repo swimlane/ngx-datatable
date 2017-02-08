@@ -1,6 +1,13 @@
 import { PipeTransform } from '@angular/core';
 
 /**
+ * Column property that indicates how to retrieve this column's
+ * value from a row.
+ * 'a.deep.value', 'normalprop', 0 (numeric)
+ */
+export type TableColumnProp = string|number;
+
+/**
  * Column Type
  * @type {object}
  */
@@ -58,7 +65,8 @@ export interface TableColumn {
   name?: string;
 
   // property to bind to on the row
-  prop?: string;
+  // 'somefield', 'a.deep.value', 0 (numeric)
+  prop?: TableColumnProp;
 
   // ng2 template ref
   cellTemplate?: any;

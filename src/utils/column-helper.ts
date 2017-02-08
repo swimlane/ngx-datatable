@@ -1,3 +1,4 @@
+import { TableColumn } from "../types";
 import { DataTableColumnDirective } from '../components/columns';
 import { camelCase, deCamelCase } from './camel-case';
 import { id } from './id';
@@ -9,7 +10,7 @@ import { id } from './id';
  * @param {any[]} columns
  * @returns
  */
-export function setColumnDefaults(columns: any[]) {
+export function setColumnDefaults(columns: TableColumn[]) {
   if(!columns) return;
 
   for(const column of columns) {

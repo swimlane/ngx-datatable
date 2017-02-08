@@ -1,6 +1,8 @@
 // maybe rename this file to prop-getters.ts
 
-export type ValueGetter = (obj: any, prop: string|number) => any;
+import { TableColumnProp } from "../types";
+
+export type ValueGetter = (obj: any, prop: TableColumnProp) => any;
 
 /**
  * Always returns the empty string ''
@@ -14,7 +16,7 @@ export function emptyStringGetter() {
  * Returns the appropriate getter function for this kind of prop.
  * If prop == null, returns the emptyStringGetter.
  */
-export function getterForProp(prop: string|number): ValueGetter {
+export function getterForProp(prop: TableColumnProp): ValueGetter {
   if (prop == null) return emptyStringGetter;
 
   if (typeof prop === 'number') {
