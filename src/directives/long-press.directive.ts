@@ -80,8 +80,6 @@ export class LongPressDirective {
 
   @HostListener('document:mouseup')
   onMouseUp(): void {
-    if (this.isLongPressing) {
-      this.endPress()
-    }
+    this.endPress();
   }
 }
