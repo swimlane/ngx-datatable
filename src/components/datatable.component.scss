@@ -228,14 +228,23 @@
       width: 100%;
     }
 
+    .selected-count {
+      .page-count {
+        flex: 1 1 40%;
+      }
+      .datatable-pager {
+        flex: 1 1 60%;
+      }
+    }
+
     .page-count{
       display: inline-block;
-      flex: 1 1 40%;
+      flex: 1 1 20%;
     }
 
     .datatable-pager{
       display: inline-block;
-      flex: 1 1 60%;
+      flex: 1 1 80%;
       text-align: right;
 
       .pager,
