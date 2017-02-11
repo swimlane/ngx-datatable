@@ -5,8 +5,8 @@ import {
   DoCheck, KeyValueDiffers, ViewEncapsulation
 } from '@angular/core';
 
-import { 
-  forceFillColumnWidths, adjustColumnWidths, sortRows, scrollbarWidth, 
+import {
+  forceFillColumnWidths, adjustColumnWidths, sortRows, scrollbarWidth,
   setColumnDefaults, throttleable, translateTemplates
 } from '../utils';
 import { ColumnMode, SortType, SelectionType } from '../types';
@@ -75,6 +75,8 @@ import { DatatableRowDetailDirective } from './row-detail';
         [pagerLeftArrowIcon]="cssClasses.pagerLeftArrow"
         [pagerRightArrowIcon]="cssClasses.pagerRightArrow"
         [pagerPreviousIcon]="cssClasses.pagerPrevious"
+        [selectedCount]="selected.length"
+        [selectedMessage]="!!selectionType && messages.selectedMessage"
         [pagerNextIcon]="cssClasses.pagerNext"
         (page)="onFooterPage($event)">
       </datatable-footer>
@@ -90,7 +92,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Rows that are displayed in the table.
-   * 
+   *
    * @memberOf DatatableComponent
    */
   @Input() set rows(val: any) {
@@ -107,7 +109,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Gets the rows.
-   * 
+   *
    * @readonly
    * @type {*}
    * @memberOf DatatableComponent
@@ -118,7 +120,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Columns to be displayed.
-   * 
+   *
    * @memberOf DatatableComponent
    */
   @Input() set columns(val: any[]) {
@@ -132,7 +134,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Get the columns.
-   * 
+   *
    * @readonly
    * @type {any[]}
    * @memberOf DatatableComponent
@@ -142,10 +144,10 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   }
 
   /**
-   * List of row objects that should be 
-   * represented as selected in the grid. 
+   * List of row objects that should be
+   * represented as selected in the grid.
    * Default value: `[]`
-   * 
+   *
    * @type {any[]}
    * @memberOf DatatableComponent
    */
@@ -153,7 +155,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Enable vertical scrollbars
-   * 
+   *
    * @type {boolean}
    * @memberOf DatatableComponent
    */
@@ -161,7 +163,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Enable horz scrollbars
-   * 
+   *
    * @type {boolean}
    * @memberOf DatatableComponent
    */
@@ -170,7 +172,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   /**
    * The row height; which is necessary
    * to calculate the height for the lazy rendering.
-   * 
+   *
    * @type {number}
    * @memberOf DatatableComponent
    */
@@ -179,7 +181,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   /**
    * Type of column width distribution formula.
    * Example: flex, force, standard
-   * 
+   *
    * @type {ColumnMode}
    * @memberOf DatatableComponent
    */
@@ -188,7 +190,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   /**
    * The minimum header height in pixels.
    * Pass a falsey for no header
-   * 
+   *
    * @type {*}
    * @memberOf DatatableComponent
    */
@@ -197,7 +199,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   /**
    * The minimum footer height in pixels.
    * Pass falsey for no footer
-   * 
+   *
    * @type {number}
    * @memberOf DatatableComponent
    */
@@ -206,7 +208,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   /**
    * If the table should use external paging
    * otherwise its assumed that all data is preloaded.
-   * 
+   *
    * @type {boolean}
    * @memberOf DatatableComponent
    */
@@ -215,25 +217,25 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   /**
    * If the table should use external sorting or
    * the built-in basic sorting.
-   * 
+   *
    * @type {boolean}
    * @memberOf DatatableComponent
    */
   @Input() externalSorting: boolean = false;
 
   /**
-   * The page size to be shown. 
+   * The page size to be shown.
    * Default value: `undefined`
-   * 
+   *
    * @type {number}
    * @memberOf DatatableComponent
    */
   @Input() limit: number = undefined;
 
   /**
-   * The total count of all rows. 
+   * The total count of all rows.
    * Default value: `0`
-   * 
+   *
    * @type {number}
    * @memberOf DatatableComponent
    */
@@ -246,7 +248,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Gets the count.
-   * 
+   *
    * @readonly
    * @type {number}
    * @memberOf DatatableComponent
@@ -256,34 +258,35 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   }
 
   /**
-   * The current offset ( page - 1 ) shown. 
+   * The current offset ( page - 1 ) shown.
    * Default value: `0`
-   * 
+   *
    * @type {number}
    * @memberOf DatatableComponent
    */
   @Input() offset: number = 0;
 
   /**
-   * Show the linear loading bar. 
+   * Show the linear loading bar.
    * Default value: `false`
-   * 
+   *
    * @type {boolean}
    * @memberOf DatatableComponent
    */
   @Input() loadingIndicator: boolean = false;
 
   /**
-   * Type of row selection. Options are: 
-   * 
+   * Type of row selection. Options are:
+   *
    *  - `single`
    *  - `multi`
    *  - `chkbox`
    *  - `multiClick`
-   * 
-   * For no selection pass a `falsey`. 
+   *  - `cell`
+   *
+   * For no selection pass a `falsey`.
    * Default value: `undefined`
-   * 
+   *
    * @type {SelectionType}
    * @memberOf DatatableComponent
    */
@@ -292,7 +295,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   /**
    * Enable/Disable ability to re-order columns
    * by dragging them.
-   * 
+   *
    * @type {boolean}
    * @memberOf DatatableComponent
    */
@@ -300,16 +303,16 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * The type of sorting
-   * 
+   *
    * @type {SortType}
    * @memberOf DatatableComponent
    */
   @Input() sortType: SortType = SortType.single;
 
   /**
-   * Array of sorted columns by property and type. 
+   * Array of sorted columns by property and type.
    * Default value: `[]`
-   * 
+   *
    * @type {any[]}
    * @memberOf DatatableComponent
    */
@@ -317,7 +320,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Css class overrides
-   * 
+   *
    * @type {*}
    * @memberOf DatatableComponent
    */
@@ -332,7 +335,11 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Message overrides for localization
-   * 
+   *
+   * emptyMessage     [default] = 'No data to display'
+   * totalMessage     [default] = 'total'
+   * selectedMessage  [default] = 'selected'
+   *
    * @type {*}
    * @memberOf DatatableComponent
    */
@@ -342,15 +349,18 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
     emptyMessage: 'No data to display',
 
     // Footer total message
-    totalMessage: 'total'
+    totalMessage: 'total',
+
+    // Footer selected message
+    selectedMessage: 'selected'
   };
 
   /**
    * This will be used when displaying or selecting rows.
    * when tracking/comparing them, we'll use the value of this fn,
-   * 
+   *
    * (`fn(x) === fn(y)` instead of `x === y`)
-   * 
+   *
    * @memberOf DatatableComponent
    */
   @Input() rowIdentity: (x: any) => any = ((x: any) => x);
@@ -358,11 +368,11 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   /**
    * A boolean/function you can use to check whether you want
    * to select a particular row based on a criteria. Example:
-   * 
+   *
    *    (selection) => { 
    *      return selection !== 'Ethel Price'; 
    *    }
-   * 
+   *
    * @type {*}
    * @memberOf DatatableComponent
    */
@@ -371,7 +381,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   /**
    * Property to which you can use for custom tracking of rows.
    * Example: 'name'
-   * 
+   *
    * @type {string}
    * @memberOf DatatableComponent
    */
@@ -379,7 +389,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Body was scrolled typically in a `scrollbarV:true` scenario.
-   * 
+   *
    * @type {EventEmitter<any>}
    * @memberOf DatatableComponent
    */
@@ -387,7 +397,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * A cell or row was focused via keyboard or mouse click.
-   * 
+   *
    * @type {EventEmitter<any>}
    * @memberOf DatatableComponent
    */
@@ -395,7 +405,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * A cell or row was selected.
-   * 
+   *
    * @type {EventEmitter<any>}
    * @memberOf DatatableComponent
    */
@@ -403,7 +413,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Column sort was invoked.
-   * 
+   *
    * @type {EventEmitter<any>}
    * @memberOf DatatableComponent
    */
@@ -411,7 +421,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * The table was paged either triggered by the pager or the body scroll.
-   * 
+   *
    * @type {EventEmitter<any>}
    * @memberOf DatatableComponent
    */
@@ -419,7 +429,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Columns were re-ordered.
-   * 
+   *
    * @type {EventEmitter<any>}
    * @memberOf DatatableComponent
    */
@@ -427,7 +437,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Column was resized.
-   * 
+   *
    * @type {EventEmitter<any>}
    * @memberOf DatatableComponent
    */
@@ -435,21 +445,21 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * The context menu was invoked on a row.
-   * 
+   *
    * @memberOf DatatableComponent
    */
   @Output() rowContextmenu = new EventEmitter<{ event: MouseEvent, row: any }>(false);
 
   /**
    * CSS class applied if the header height if fixed height.
-   * 
+   *
    * @readonly
    * @type {boolean}
    * @memberOf DatatableComponent
    */
   @HostBinding('class.fixed-header')
   get isFixedHeader(): boolean {
-    const headerHeight: number|string = this.headerHeight;
+    const headerHeight: number | string = this.headerHeight;
     return (typeof headerHeight === 'string') ?
       (<string>headerHeight) !== 'auto' : true;
   }
@@ -457,14 +467,14 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   /**
    * CSS class applied to the root element if
    * the row heights are fixed heights.
-   * 
+   *
    * @readonly
    * @type {boolean}
    * @memberOf DatatableComponent
    */
   @HostBinding('class.fixed-row')
   get isFixedRow(): boolean {
-    const rowHeight: number|string = this.rowHeight;
+    const rowHeight: number | string = this.rowHeight;
     return (typeof rowHeight === 'string') ?
       (<string>rowHeight) !== 'auto' : true;
   }
@@ -472,7 +482,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   /**
    * CSS class applied to root element if
    * vertical scrolling is enabled.
-   * 
+   *
    * @readonly
    * @type {boolean}
    * @memberOf DatatableComponent
@@ -485,7 +495,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   /**
    * CSS class applied to the root element
    * if the horziontal scrolling is enabled.
-   * 
+   *
    * @readonly
    * @type {boolean}
    * @memberOf DatatableComponent
@@ -497,7 +507,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * CSS class applied to root element is selectable.
-   * 
+   *
    * @readonly
    * @type {boolean}
    * @memberOf DatatableComponent
@@ -509,7 +519,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * CSS class applied to root is checkbox selection.
-   * 
+   *
    * @readonly
    * @type {boolean}
    * @memberOf DatatableComponent
@@ -521,7 +531,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * CSS class applied to root if cell selection.
-   * 
+   *
    * @readonly
    * @type {boolean}
    * @memberOf DatatableComponent
@@ -533,7 +543,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * CSS class applied to root if single select.
-   * 
+   *
    * @readonly
    * @type {boolean}
    * @memberOf DatatableComponent
@@ -542,10 +552,10 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   get isSingleSelection(): boolean {
     return this.selectionType === SelectionType.single;
   }
-  
+
   /**
    * CSS class added to root element if mulit select
-   * 
+   *
    * @readonly
    * @type {boolean}
    * @memberOf DatatableComponent
@@ -557,7 +567,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * CSS class added to root element if mulit click select
-   * 
+   *
    * @readonly
    * @type {boolean}
    * @memberOf DatatableComponent
@@ -570,18 +580,18 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   /**
    * Column templates gathered from `ContentChildren`
    * if described in your markup.
-   * 
+   *
    * @memberOf DatatableComponent
    */
   @ContentChildren(DataTableColumnDirective)
   set columnTemplates(val: QueryList<DataTableColumnDirective>) {
     this._columnTemplates = val;
 
-    if(val) {
+    if (val) {
       // only set this if results were brought back
       const arr = val.toArray();
 
-      if(arr.length) {
+      if (arr.length) {
         // translate them to normal objects
         this.columns = translateTemplates(arr);
       }
@@ -590,7 +600,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Returns the column templates.
-   * 
+   *
    * @readonly
    * @type {QueryList<DataTableColumnDirective>}
    * @memberOf DatatableComponent
@@ -601,7 +611,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Row Detail templates gathered from the ContentChild
-   * 
+   *
    * @memberOf DatatableComponent
    */
   @ContentChild(DatatableRowDetailDirective)
@@ -610,7 +620,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   /**
    * Reference to the body component for manually
    * invoking functions on the body.
-   * 
+   *
    * @private
    * @type {DataTableBodyComponent}
    * @memberOf DatatableComponent
@@ -620,7 +630,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Returns if all rows are selected.
-   * 
+   *
    * @readonly
    * @private
    * @type {boolean}
@@ -652,9 +662,9 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   }
 
   /**
-   * Lifecycle hook that is called after data-bound 
+   * Lifecycle hook that is called after data-bound
    * properties of a directive are initialized.
-   * 
+   *
    * @memberOf DatatableComponent
    */
   ngOnInit(): void {
@@ -665,9 +675,9 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   }
 
   /**
-   * Lifecycle hook that is called after a component's 
+   * Lifecycle hook that is called after a component's
    * view has been fully initialized.
-   * 
+   *
    * @memberOf DatatableComponent
    */
   ngAfterViewInit(): void {
@@ -678,7 +688,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Lifecycle hook that is called when Angular dirty checks a directive.
-   * 
+   *
    * @memberOf DatatableComponent
    */
   ngDoCheck(): void {
@@ -689,15 +699,15 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Recalc's the sizes of the grid.
-   * 
+   *
    * Updated automatically on changes to:
-   * 
+   *
    *  - Columns
    *  - Rows
    *  - Paging related
-   * 
+   *
    * Also can be manually invoked or upon window resize.
-   * 
+   *
    * @memberOf DatatableComponent
    */
   recalculate(): void {
@@ -707,7 +717,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Window resize handler to update sizes.
-   * 
+   *
    * @memberOf DatatableComponent
    */
   @HostListener('window:resize')
@@ -719,18 +729,17 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   /**
    * Recalulcates the column widths based on column width
    * distribution mode and scrollbar offsets.
-   * 
+   *
    * @param {any[]} [columns=this.columns]
    * @param {number} [forceIdx=false]
    * @param {boolean} [allowBleed=this.scrollH]
    * @returns {any[]}
-   * 
+   *
    * @memberOf DatatableComponent
    */
-  recalculateColumns(
-    columns: any[] = this.columns, 
-    forceIdx: number = -1, 
-    allowBleed: boolean = this.scrollbarH): any[] {
+  recalculateColumns(columns: any[] = this.columns,
+                     forceIdx: number = -1,
+                     allowBleed: boolean = this.scrollbarH): any[] {
 
     if (!columns) return;
 
@@ -751,11 +760,11 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   /**
    * Recalculates the dimensions of the table size.
    * Internally calls the page size and row count calcs too.
-   * 
+   *
    * @memberOf DatatableComponent
    */
   recalculateDims(): void {
-    let { height, width } = this.element.getBoundingClientRect();
+    let {height, width} = this.element.getBoundingClientRect();
     this.innerWidth = Math.floor(width);
 
     if (this.scrollbarV) {
@@ -769,8 +778,8 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Recalculates the pages after a update.
-   * 
-   * 
+   *
+   *
    * @memberOf DatatableComponent
    */
   recalculatePages(): void {
@@ -780,12 +789,12 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Body triggered a page event.
-   * 
+   *
    * @param {*} { offset }
-   * 
+   *
    * @memberOf DatatableComponent
    */
-  onBodyPage({ offset }: any): void {
+  onBodyPage({offset}: any): void {
     this.offset = offset;
 
     this.page.emit({
@@ -798,9 +807,9 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * The body triggered a scroll event.
-   * 
+   *
    * @param {MouseEvent} event
-   * 
+   *
    * @memberOf DatatableComponent
    */
   onBodyScroll(event: MouseEvent): void {
@@ -810,9 +819,9 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * The footer triggered a page event.
-   * 
+   *
    * @param {*} event
-   * 
+   *
    * @memberOf DatatableComponent
    */
   onFooterPage(event: any) {
@@ -829,10 +838,10 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Recalculates the sizes of the page
-   * 
+   *
    * @param {any[]} [val=this.rows]
    * @returns {number}
-   * 
+   *
    * @memberOf DatatableComponent
    */
   calcPageSize(val: any[] = this.rows): number {
@@ -848,7 +857,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
     if (this.limit !== undefined) return this.limit;
 
     // otherwise use row length
-    if(val) return val.length;
+    if (val) return val.length;
 
     // other empty :(
     return 0;
@@ -856,15 +865,15 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Calculates the row count.
-   * 
+   *
    * @param {any[]} [val=this.rows]
    * @returns {number}
-   * 
+   *
    * @memberOf DatatableComponent
    */
   calcRowCount(val: any[] = this.rows): number {
-    if(!this.externalPaging) {
-      if(!val) return 0;
+    if (!this.externalPaging) {
+      if (!val) return 0;
       return val.length;
     }
 
@@ -873,17 +882,17 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * The header triggered a column resize event.
-   * 
+   *
    * @param {*} { column, newValue }
-   * 
+   *
    * @memberOf DatatableComponent
    */
-  onColumnResize({ column, newValue }: any): void {
+  onColumnResize({column, newValue}: any): void {
     let idx: number;
     let cols = this.columns.map((c, i) => {
       c = Object.assign({}, c);
 
-      if(c.$$id === column.$$id) {
+      if (c.$$id === column.$$id) {
         idx = i;
         c.width = newValue;
 
@@ -906,12 +915,12 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * The header triggered a column re-order event.
-   * 
+   *
    * @param {*} { column, newValue, prevValue }
-   * 
+   *
    * @memberOf DatatableComponent
    */
-  onColumnReorder({ column, newValue, prevValue }: any): void {
+  onColumnReorder({column, newValue, prevValue}: any): void {
     let cols = this.columns.map(c => {
       return Object.assign({}, c);
     });
@@ -929,13 +938,13 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * The header triggered a column sort event.
-   * 
+   *
    * @param {*} event
-   * 
+   *
    * @memberOf DatatableComponent
    */
   onColumnSort(event: any): void {
-    const { sorts } = event;
+    const {sorts} = event;
 
     // this could be optimized better since it will resort
     // the rows again on the 'push' detection...
@@ -951,9 +960,9 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Toggle all row selection
-   * 
+   *
    * @param {*} event
-   * 
+   *
    * @memberOf DatatableComponent
    */
   onHeaderSelect(event: any): void {
@@ -964,7 +973,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
     this.selected.splice(0, this.selected.length);
 
     // do the opposite here
-    if(!allSelected) {
+    if (!allSelected) {
       this.selected.push(...this.rows);
     }
 
@@ -975,9 +984,9 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * A row was selected from body
-   * 
+   *
    * @param {*} event
-   * 
+   *
    * @memberOf DatatableComponent
    */
   onBodySelect(event: any): void {
