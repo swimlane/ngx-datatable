@@ -92,7 +92,7 @@ equality, for prop checking use the `selectCheck` function.
 Default value: `[]`
 
 ## `selectionType`
-Type of row selection. Options are `single`, `multi` and `chkbox`. 
+Type of row selection. Options are `single`, `multi`, `multiClick` and `chkbox`. 
 For no selection pass a `falsey`. Default value: `undefined`
 
 ## `sorts`
