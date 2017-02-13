@@ -1,5 +1,6 @@
 "use strict";
 var core_1 = require('@angular/core');
+var rxjs_1 = require("rxjs");
 var LongPressDirective = (function () {
     function LongPressDirective() {
         this.duration = 500;
@@ -30,9 +31,14 @@ var LongPressDirective = (function () {
         this.mouseY = event.clientY;
         this.pressing = true;
         this.isLongPressing = false;
+        var mouseup = rxjs_1.Observable.fromEvent(document, 'mouseup');
+        this.subscription = mouseup.subscribe(function (ev) { return _this.onMouseup(); });
         this.timeout = setTimeout(function () {
             _this.isLongPressing = true;
             _this.longPress.emit(event);
+            _this.subscription.add(rxjs_1.Observable.fromEvent(document, 'mousemove')
+                .takeUntil(mouseup)
+                .subscribe(function (mouseEvent) { return _this.onMouseMove(mouseEvent); }));
             _this.loop(event);
         }, this.duration);
         this.loop(event);
@@ -59,9 +65,12 @@ var LongPressDirective = (function () {
         clearTimeout(this.timeout);
         this.isLongPressing = false;
         this.pressing = false;
+        this.subscription.unsubscribe();
         this.longPressEnd.emit(true);
     };
-    LongPressDirective.prototype.onMouseUp = function () { this.endPress(); };
+    LongPressDirective.prototype.onMouseup = function () {
+        this.endPress();
+    };
     LongPressDirective.decorators = [
         { type: core_1.Directive, args: [{ selector: '[long-press]' },] },
     ];
@@ -75,8 +84,6 @@ var LongPressDirective = (function () {
         'press': [{ type: core_1.HostBinding, args: ['class.press',] },],
         'isLongPress': [{ type: core_1.HostBinding, args: ['class.longpress',] },],
         'onMouseDown': [{ type: core_1.HostListener, args: ['mousedown', ['$event'],] },],
-        'onMouseMove': [{ type: core_1.HostListener, args: ['mousemove', ['$event'],] },],
-        'onMouseUp': [{ type: core_1.HostListener, args: ['mouseup',] },],
     };
     return LongPressDirective;
 }());

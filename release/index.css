@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"6.0.2" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"6.1.0" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -156,6 +156,14 @@
           -ms-flex-align: center;
               align-items: center;
       width: 100%; }
+    .ngx-datatable .datatable-footer .selected-count .page-count {
+      -webkit-box-flex: 1;
+          -ms-flex: 1 1 40%;
+              flex: 1 1 40%; }
+    .ngx-datatable .datatable-footer .selected-count .datatable-pager {
+      -webkit-box-flex: 1;
+          -ms-flex: 1 1 60%;
+              flex: 1 1 60%; }
     .ngx-datatable .datatable-footer .page-count {
       display: inline-block;
       -webkit-box-flex: 1;

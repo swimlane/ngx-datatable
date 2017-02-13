@@ -14,9 +14,18 @@ import * as import5 from '@angular/core/src/metadata/view';
 import * as import6 from '@angular/core/src/linker/view_type';
 import * as import7 from '@angular/core/src/change_detection/constants';
 import * as import8 from '@angular/core/src/linker/component_factory';
-import * as import9 from '../../../../src/components/footer/pager.component';
-import * as import10 from './pager.component.ngfactory';
-import * as import11 from '@angular/core/src/security';
+import * as import9 from '@angular/core/src/linker/view_container';
+import * as import10 from '../../../node_modules/@angular/common/src/directives/ng_class.ngfactory';
+import * as import11 from '../../../node_modules/@angular/common/src/directives/ng_if.ngfactory';
+import * as import12 from '../../../../src/components/footer/pager.component';
+import * as import13 from './pager.component.ngfactory';
+import * as import14 from '@angular/core/src/change_detection/differs/iterable_differs';
+import * as import15 from '@angular/core/src/change_detection/differs/keyvalue_differs';
+import * as import16 from '@angular/core/src/linker/element_ref';
+import * as import17 from '@angular/core/src/linker/template_ref';
+import * as import18 from '@angular/common/src/directives/ng_if';
+import * as import19 from '@angular/common/src/directives/ng_class';
+import * as import20 from '@angular/core/src/security';
 export class Wrapper_DataTableFooterComponent {
   /*private*/ _eventHandler:Function;
   context:import0.DataTableFooterComponent;
@@ -30,6 +39,8 @@ export class Wrapper_DataTableFooterComponent {
   /*private*/ _expr_6:any;
   /*private*/ _expr_7:any;
   /*private*/ _expr_8:any;
+  /*private*/ _expr_9:any;
+  /*private*/ _expr_10:any;
   subscription0:any;
   constructor() {
     this._changed = false;
@@ -43,6 +54,8 @@ export class Wrapper_DataTableFooterComponent {
     this._expr_6 = import1.UNINITIALIZED;
     this._expr_7 = import1.UNINITIALIZED;
     this._expr_8 = import1.UNINITIALIZED;
+    this._expr_9 = import1.UNINITIALIZED;
+    this._expr_10 = import1.UNINITIALIZED;
   }
   ngOnDetach(view:import2.AppView<any>,componentView:import2.AppView<any>,el:any):void {
   }
@@ -112,6 +125,20 @@ export class Wrapper_DataTableFooterComponent {
       this._expr_8 = currValue;
     }
   }
+  check_selectedCount(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+    if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_9,currValue))) {
+      this._changed = true;
+      this.context.selectedCount = currValue;
+      this._expr_9 = currValue;
+    }
+  }
+  check_selectedMessage(currValue:any,throwOnChange:boolean,forceUpdate:boolean):void {
+    if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_10,currValue))) {
+      this._changed = true;
+      this.context.selectedMessage = currValue;
+      this._expr_10 = currValue;
+    }
+  }
   ngDoCheck(view:import2.AppView<any>,el:any,throwOnChange:boolean):boolean {
     var changed:any = this._changed;
     this._changed = false;
@@ -162,103 +189,165 @@ class View_DataTableFooterComponent_Host0 extends import2.AppView<any> {
 }
 export const DataTableFooterComponentNgFactory:import8.ComponentFactory<import0.DataTableFooterComponent> = new import8.ComponentFactory<import0.DataTableFooterComponent>('datatable-footer',View_DataTableFooterComponent_Host0,import0.DataTableFooterComponent);
 const styles_DataTableFooterComponent:any[] = ([] as any[]);
+class View_DataTableFooterComponent1 extends import2.AppView<any> {
+  _el_0:any;
+  _text_1:any;
+  /*private*/ _expr_2:any;
+  constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any,declaredViewContainer:import9.ViewContainer) {
+    super(View_DataTableFooterComponent1,renderType_DataTableFooterComponent,import6.ViewType.EMBEDDED,viewUtils,parentView,parentIndex,parentElement,import7.ChangeDetectorStatus.CheckAlways,declaredViewContainer);
+    this._expr_2 = import1.UNINITIALIZED;
+  }
+  createInternal(rootSelector:string):import8.ComponentRef<any> {
+    this._el_0 = import3.createRenderElement(this.renderer,(null as any),'span',import3.EMPTY_INLINE_ARRAY,(null as any));
+    this._text_1 = this.renderer.createText(this._el_0,'',(null as any));
+    this.init(this._el_0,((<any>this.renderer).directRenderer? (null as any): [
+      this._el_0,
+      this._text_1
+    ]
+    ),(null as any));
+    return (null as any);
+  }
+  detectChangesInternal(throwOnChange:boolean):void {
+    const currVal_2:any = import3.inlineInterpolate(2,'\n          ',this.parentView.context.selectedCount.toLocaleString(),' ',this.parentView.context.selectedMessage,' / \n        ');
+    if (import3.checkBinding(throwOnChange,this._expr_2,currVal_2)) {
+      this.renderer.setText(this._text_1,currVal_2);
+      this._expr_2 = currVal_2;
+    }
+  }
+  visitRootNodesInternal(cb:any,ctx:any):void {
+    cb(this._el_0,ctx);
+  }
+}
 var renderType_DataTableFooterComponent:import4.RenderComponentType = import3.createRenderComponentType('',0,import5.ViewEncapsulation.None,styles_DataTableFooterComponent,{});
 export class View_DataTableFooterComponent0 extends import2.AppView<import0.DataTableFooterComponent> {
   _text_0:any;
   _el_1:any;
+  _NgClass_1_3:import10.Wrapper_NgClass;
   _text_2:any;
   _el_3:any;
   _text_4:any;
-  _text_5:any;
-  _el_6:any;
-  compView_6:import2.AppView<import9.DataTablePagerComponent>;
-  _DataTablePagerComponent_6_3:import10.Wrapper_DataTablePagerComponent;
+  _anchor_5:any;
+  /*private*/ _vc_5:import9.ViewContainer;
+  _TemplateRef_5_5:any;
+  _NgIf_5_6:import11.Wrapper_NgIf;
+  _text_6:any;
   _text_7:any;
-  _text_8:any;
+  _el_8:any;
+  compView_8:import2.AppView<import12.DataTablePagerComponent>;
+  _DataTablePagerComponent_8_3:import13.Wrapper_DataTablePagerComponent;
   _text_9:any;
-  /*private*/ _expr_12:any;
-  /*private*/ _expr_13:any;
-  /*private*/ _expr_14:any;
+  _text_10:any;
+  _text_11:any;
+  /*private*/ _expr_18:any;
+  _map_19:any;
+  /*private*/ _expr_20:any;
+  /*private*/ _expr_21:any;
   constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any) {
     super(View_DataTableFooterComponent0,renderType_DataTableFooterComponent,import6.ViewType.COMPONENT,viewUtils,parentView,parentIndex,parentElement,import7.ChangeDetectorStatus.CheckOnce);
-    this._expr_12 = import1.UNINITIALIZED;
-    this._expr_13 = import1.UNINITIALIZED;
-    this._expr_14 = import1.UNINITIALIZED;
+    this._expr_18 = import1.UNINITIALIZED;
+    this._map_19 = import3.pureProxy1((p0:any):{[key: string]:any} => {
+      return {'selected-count': p0};
+    });
+    this._expr_20 = import1.UNINITIALIZED;
+    this._expr_21 = import1.UNINITIALIZED;
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
     const parentRenderNode:any = this.renderer.createViewRoot(this.parentElement);
     this._text_0 = this.renderer.createText(parentRenderNode,'\n    ',(null as any));
     this._el_1 = import3.createRenderElement(this.renderer,parentRenderNode,'div',import3.EMPTY_INLINE_ARRAY,(null as any));
+    this._NgClass_1_3 = new import10.Wrapper_NgClass(this.parentView.injectorGet(import14.IterableDiffers,this.parentIndex),this.parentView.injectorGet(import15.KeyValueDiffers,this.parentIndex),new import16.ElementRef(this._el_1),this.renderer);
     this._text_2 = this.renderer.createText(this._el_1,'\n      ',(null as any));
     this._el_3 = import3.createRenderElement(this.renderer,this._el_1,'div',new import3.InlineArray2(2,'class','page-count'),(null as any));
-    this._text_4 = this.renderer.createText(this._el_3,'',(null as any));
-    this._text_5 = this.renderer.createText(this._el_1,'\n      ',(null as any));
-    this._el_6 = import3.createRenderElement(this.renderer,this._el_1,'datatable-pager',new import3.InlineArray2(2,'class','datatable-pager'),(null as any));
-    this.compView_6 = new import10.View_DataTablePagerComponent0(this.viewUtils,this,6,this._el_6);
-    this._DataTablePagerComponent_6_3 = new import10.Wrapper_DataTablePagerComponent();
-    this._text_7 = this.renderer.createText((null as any),'\n       ',(null as any));
-    this.compView_6.create(this._DataTablePagerComponent_6_3.context);
-    this._text_8 = this.renderer.createText(this._el_1,'\n     ',(null as any));
-    this._text_9 = this.renderer.createText(parentRenderNode,'\n  ',(null as any));
-    var disposable_0:Function = import3.subscribeToRenderElement(this,this._el_6,new import3.InlineArray2(2,'change',(null as any)),this.eventHandler(this.handleEvent_6));
-    this._DataTablePagerComponent_6_3.subscribe(this,this.eventHandler(this.handleEvent_6),true);
+    this._text_4 = this.renderer.createText(this._el_3,'\n        ',(null as any));
+    this._anchor_5 = this.renderer.createTemplateAnchor(this._el_3,(null as any));
+    this._vc_5 = new import9.ViewContainer(5,3,this,this._anchor_5);
+    this._TemplateRef_5_5 = new import17.TemplateRef_(this,5,this._anchor_5);
+    this._NgIf_5_6 = new import11.Wrapper_NgIf(this._vc_5.vcRef,this._TemplateRef_5_5);
+    this._text_6 = this.renderer.createText(this._el_3,'',(null as any));
+    this._text_7 = this.renderer.createText(this._el_1,'\n      ',(null as any));
+    this._el_8 = import3.createRenderElement(this.renderer,this._el_1,'datatable-pager',new import3.InlineArray2(2,'class','datatable-pager'),(null as any));
+    this.compView_8 = new import13.View_DataTablePagerComponent0(this.viewUtils,this,8,this._el_8);
+    this._DataTablePagerComponent_8_3 = new import13.Wrapper_DataTablePagerComponent();
+    this._text_9 = this.renderer.createText((null as any),'\n      ',(null as any));
+    this.compView_8.create(this._DataTablePagerComponent_8_3.context);
+    this._text_10 = this.renderer.createText(this._el_1,'\n    ',(null as any));
+    this._text_11 = this.renderer.createText(parentRenderNode,'\n  ',(null as any));
+    var disposable_0:Function = import3.subscribeToRenderElement(this,this._el_8,new import3.InlineArray2(2,'change',(null as any)),this.eventHandler(this.handleEvent_8));
+    this._DataTablePagerComponent_8_3.subscribe(this,this.eventHandler(this.handleEvent_8),true);
     this.init((null as any),((<any>this.renderer).directRenderer? (null as any): [
       this._text_0,
       this._el_1,
       this._text_2,
       this._el_3,
       this._text_4,
-      this._text_5,
-      this._el_6,
+      this._anchor_5,
+      this._text_6,
       this._text_7,
-      this._text_8,
-      this._text_9
+      this._el_8,
+      this._text_9,
+      this._text_10,
+      this._text_11
     ]
     ),[disposable_0]);
     return (null as any);
   }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
-    if (((token === import9.DataTablePagerComponent) && ((6 <= requestNodeIndex) && (requestNodeIndex <= 7)))) { return this._DataTablePagerComponent_6_3.context; }
+    if (((token === import17.TemplateRef) && (5 === requestNodeIndex))) { return this._TemplateRef_5_5; }
+    if (((token === import18.NgIf) && (5 === requestNodeIndex))) { return this._NgIf_5_6.context; }
+    if (((token === import12.DataTablePagerComponent) && ((8 <= requestNodeIndex) && (requestNodeIndex <= 9)))) { return this._DataTablePagerComponent_8_3.context; }
+    if (((token === import19.NgClass) && ((1 <= requestNodeIndex) && (requestNodeIndex <= 10)))) { return this._NgClass_1_3.context; }
     return notFoundResult;
   }
   detectChangesInternal(throwOnChange:boolean):void {
-    const currVal_6_0_0:any = this.context.pagerLeftArrowIcon;
-    this._DataTablePagerComponent_6_3.check_pagerLeftArrowIcon(currVal_6_0_0,throwOnChange,false);
-    const currVal_6_0_1:any = this.context.pagerRightArrowIcon;
-    this._DataTablePagerComponent_6_3.check_pagerRightArrowIcon(currVal_6_0_1,throwOnChange,false);
-    const currVal_6_0_2:any = this.context.pagerPreviousIcon;
-    this._DataTablePagerComponent_6_3.check_pagerPreviousIcon(currVal_6_0_2,throwOnChange,false);
-    const currVal_6_0_3:any = this.context.pagerNextIcon;
-    this._DataTablePagerComponent_6_3.check_pagerNextIcon(currVal_6_0_3,throwOnChange,false);
-    const currVal_6_0_4:any = this.context.pageSize;
-    this._DataTablePagerComponent_6_3.check_size(currVal_6_0_4,throwOnChange,false);
-    const currVal_6_0_5:any = this.context.rowCount;
-    this._DataTablePagerComponent_6_3.check_count(currVal_6_0_5,throwOnChange,false);
-    const currVal_6_0_6:any = this.context.curPage;
-    this._DataTablePagerComponent_6_3.check_page(currVal_6_0_6,throwOnChange,false);
-    if (this._DataTablePagerComponent_6_3.ngDoCheck(this,this._el_6,throwOnChange)) { this.compView_6.markAsCheckOnce(); }
-    const currVal_12:any = this.context.footerHeight;
-    if (import3.checkBinding(throwOnChange,this._expr_12,currVal_12)) {
-      this.renderer.setElementStyle(this._el_1,'height',((this.viewUtils.sanitizer.sanitize(import11.SecurityContext.STYLE,currVal_12) == null)? (null as any): (this.viewUtils.sanitizer.sanitize(import11.SecurityContext.STYLE,currVal_12).toString() + 'px')));
-      this._expr_12 = currVal_12;
+    const currVal_1_0_0:any = this._map_19(this.context.selectedMessage);
+    this._NgClass_1_3.check_ngClass(currVal_1_0_0,throwOnChange,false);
+    this._NgClass_1_3.ngDoCheck(this,this._el_1,throwOnChange);
+    const currVal_5_0_0:any = this.context.selectedMessage;
+    this._NgIf_5_6.check_ngIf(currVal_5_0_0,throwOnChange,false);
+    this._NgIf_5_6.ngDoCheck(this,this._anchor_5,throwOnChange);
+    const currVal_8_0_0:any = this.context.pagerLeftArrowIcon;
+    this._DataTablePagerComponent_8_3.check_pagerLeftArrowIcon(currVal_8_0_0,throwOnChange,false);
+    const currVal_8_0_1:any = this.context.pagerRightArrowIcon;
+    this._DataTablePagerComponent_8_3.check_pagerRightArrowIcon(currVal_8_0_1,throwOnChange,false);
+    const currVal_8_0_2:any = this.context.pagerPreviousIcon;
+    this._DataTablePagerComponent_8_3.check_pagerPreviousIcon(currVal_8_0_2,throwOnChange,false);
+    const currVal_8_0_3:any = this.context.pagerNextIcon;
+    this._DataTablePagerComponent_8_3.check_pagerNextIcon(currVal_8_0_3,throwOnChange,false);
+    const currVal_8_0_4:any = this.context.pageSize;
+    this._DataTablePagerComponent_8_3.check_size(currVal_8_0_4,throwOnChange,false);
+    const currVal_8_0_5:any = this.context.rowCount;
+    this._DataTablePagerComponent_8_3.check_count(currVal_8_0_5,throwOnChange,false);
+    const currVal_8_0_6:any = this.context.curPage;
+    this._DataTablePagerComponent_8_3.check_page(currVal_8_0_6,throwOnChange,false);
+    if (this._DataTablePagerComponent_8_3.ngDoCheck(this,this._el_8,throwOnChange)) { this.compView_8.markAsCheckOnce(); }
+    this._vc_5.detectChangesInNestedViews(throwOnChange);
+    const currVal_18:any = this.context.footerHeight;
+    if (import3.checkBinding(throwOnChange,this._expr_18,currVal_18)) {
+      this.renderer.setElementStyle(this._el_1,'height',((this.viewUtils.sanitizer.sanitize(import20.SecurityContext.STYLE,currVal_18) == null)? (null as any): (this.viewUtils.sanitizer.sanitize(import20.SecurityContext.STYLE,currVal_18).toString() + 'px')));
+      this._expr_18 = currVal_18;
     }
-    const currVal_13:any = import3.inlineInterpolate(2,'',this.context.rowCount.toLocaleString(),' ',this.context.totalMessage,'');
-    if (import3.checkBinding(throwOnChange,this._expr_13,currVal_13)) {
-      this.renderer.setText(this._text_4,currVal_13);
-      this._expr_13 = currVal_13;
+    const currVal_20:any = import3.inlineInterpolate(2,'\n\n        ',this.context.rowCount.toLocaleString(),' ',this.context.totalMessage,'\n      ');
+    if (import3.checkBinding(throwOnChange,this._expr_20,currVal_20)) {
+      this.renderer.setText(this._text_6,currVal_20);
+      this._expr_20 = currVal_20;
     }
-    const currVal_14:boolean = !this.context.isVisible;
-    if (import3.checkBinding(throwOnChange,this._expr_14,currVal_14)) {
-      this.renderer.setElementProperty(this._el_6,'hidden',currVal_14);
-      this._expr_14 = currVal_14;
+    const currVal_21:boolean = !this.context.isVisible;
+    if (import3.checkBinding(throwOnChange,this._expr_21,currVal_21)) {
+      this.renderer.setElementProperty(this._el_8,'hidden',currVal_21);
+      this._expr_21 = currVal_21;
     }
-    this.compView_6.internalDetectChanges(throwOnChange);
+    this.compView_8.internalDetectChanges(throwOnChange);
   }
   destroyInternal():void {
-    this.compView_6.destroy();
-    this._DataTablePagerComponent_6_3.ngOnDestroy();
+    this._vc_5.destroyNestedViews();
+    this.compView_8.destroy();
+    this._DataTablePagerComponent_8_3.ngOnDestroy();
   }
-  handleEvent_6(eventName:string,$event:any):boolean {
+  createEmbeddedViewInternal(nodeIndex:number):import2.AppView<any> {
+    if ((nodeIndex == 5)) { return new View_DataTableFooterComponent1(this.viewUtils,this,5,this._anchor_5,this._vc_5); }
+    return (null as any);
+  }
+  handleEvent_8(eventName:string,$event:any):boolean {
     this.markPathToRootAsCheckOnce();
     var result:boolean = true;
     if ((eventName == 'change')) {

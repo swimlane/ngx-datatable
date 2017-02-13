@@ -1,5 +1,12 @@
 # Changelog
 
+## 6.1.0
+- Feature: Add selected count in footer (#508)
+- Bug: Fix drag/drop/long-press (#506)
+- Bug: Fix row widths not set correctly (#510)
+- Perf: Better mouseup handling (#507)
+- Chore: Bump Depedencies
+
 ## 6.0.2
 - Bug: Move scss to release dir (#459)
 

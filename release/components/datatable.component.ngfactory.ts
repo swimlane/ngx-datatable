@@ -561,6 +561,10 @@ class View_DatatableComponent2 extends import2.AppView<any> {
     this._DataTableFooterComponent_0_3.check_pagerNextIcon(currVal_0_0_7,throwOnChange,false);
     const currVal_0_0_8:any = this.parentView.context.messages.totalMessage;
     this._DataTableFooterComponent_0_3.check_totalMessage(currVal_0_0_8,throwOnChange,false);
+    const currVal_0_0_9:any = this.parentView.context.selected.length;
+    this._DataTableFooterComponent_0_3.check_selectedCount(currVal_0_0_9,throwOnChange,false);
+    const currVal_0_0_10:boolean = (!!this.parentView.context.selectionType && this.parentView.context.messages.selectedMessage);
+    this._DataTableFooterComponent_0_3.check_selectedMessage(currVal_0_0_10,throwOnChange,false);
     if (this._DataTableFooterComponent_0_3.ngDoCheck(this,this._el_0,throwOnChange)) { this.compView_0.markAsCheckOnce(); }
     this.compView_0.internalDetectChanges(throwOnChange);
   }

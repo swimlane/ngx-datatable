@@ -153,6 +153,10 @@
       display: flex;
       align-items: center;
       width: 100%; }
+    .ngx-datatable .datatable-footer .selected-count .page-count {
+      flex: 1 1 40%; }
+    .ngx-datatable .datatable-footer .selected-count .datatable-pager {
+      flex: 1 1 60%; }
     .ngx-datatable .datatable-footer .page-count {
       display: inline-block;
       flex: 1 1 20%; }

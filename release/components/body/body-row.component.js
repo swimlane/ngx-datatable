@@ -111,7 +111,7 @@ var DataTableBodyRowComponent = (function () {
     ]; };
     DataTableBodyRowComponent.propDecorators = {
         'columns': [{ type: core_1.Input },],
-        'innerWidth': [{ type: core_1.Input },],
+        'innerWidth': [{ type: core_1.HostBinding, args: ['style.width.px',] }, { type: core_1.Input },],
         'row': [{ type: core_1.Input },],
         'offsetX': [{ type: core_1.Input },],
         'rowHeight': [{ type: core_1.HostBinding, args: ['style.height.px',] }, { type: core_1.Input },],

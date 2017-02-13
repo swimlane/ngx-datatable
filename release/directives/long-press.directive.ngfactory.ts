@@ -63,14 +63,6 @@ export class Wrapper_LongPressDirective {
       const pd_sub_0:any = ((<any>this.context.onMouseDown($event)) !== false);
       result = (pd_sub_0 && result);
     }
-    if ((eventName == 'mousemove')) {
-      const pd_sub_1:any = ((<any>this.context.onMouseMove($event)) !== false);
-      result = (pd_sub_1 && result);
-    }
-    if ((eventName == 'mouseup')) {
-      const pd_sub_2:any = ((<any>this.context.onMouseUp()) !== false);
-      result = (pd_sub_2 && result);
-    }
     return result;
   }
   subscribe(view:import2.AppView<any>,_eventHandler:any,emit0:boolean,emit1:boolean,emit2:boolean):void {

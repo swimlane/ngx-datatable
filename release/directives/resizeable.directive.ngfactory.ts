@@ -67,13 +67,9 @@ export class Wrapper_ResizeableDirective {
   }
   handleEvent(eventName:string,$event:any):boolean {
     var result:boolean = true;
-    if ((eventName == 'document:mouseup')) {
-      const pd_sub_0:any = ((<any>this.context.onMouseup()) !== false);
-      result = (pd_sub_0 && result);
-    }
     if ((eventName == 'mousedown')) {
-      const pd_sub_1:any = ((<any>this.context.onMousedown($event)) !== false);
-      result = (pd_sub_1 && result);
+      const pd_sub_0:any = ((<any>this.context.onMousedown($event)) !== false);
+      result = (pd_sub_0 && result);
     }
     return result;
   }

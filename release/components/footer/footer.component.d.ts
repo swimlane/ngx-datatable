@@ -9,6 +9,8 @@ export declare class DataTableFooterComponent {
     pagerPreviousIcon: string;
     pagerNextIcon: string;
     totalMessage: string;
+    selectedCount: number;
+    selectedMessage: string | boolean;
     page: EventEmitter<any>;
     readonly isVisible: boolean;
     readonly curPage: number;

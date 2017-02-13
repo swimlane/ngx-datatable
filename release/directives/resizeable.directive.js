@@ -33,7 +33,10 @@ var ResizeableDirective = (function () {
         if (isHandle) {
             event.stopPropagation();
             this.resizing = true;
+            var mouseup = Observable_1.Observable.fromEvent(document, 'mouseup')
+                .do(function (ev) { return _this.onMouseup(); });
             this.subscription = Observable_1.Observable.fromEvent(document, 'mousemove')
+                .takeUntil(mouseup)
                 .subscribe(function (e) { return _this.move(e, initialWidth, mouseDownScreenX); });
         }
     };
@@ -63,7 +66,6 @@ var ResizeableDirective = (function () {
         'minWidth': [{ type: core_1.Input },],
         'maxWidth': [{ type: core_1.Input },],
         'resize': [{ type: core_1.Output },],
-        'onMouseup': [{ type: core_1.HostListener, args: ['document:mouseup',] },],
         'onMousedown': [{ type: core_1.HostListener, args: ['mousedown', ['$event'],] },],
     };
     return ResizeableDirective;

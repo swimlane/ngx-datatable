@@ -251,7 +251,7 @@ class View_DataTableHeaderComponent2 extends import2.AppView<any> {
     this._DataTableHeaderCellComponent_0_6 = new import14.Wrapper_DataTableHeaderCellComponent();
     this._text_1 = this.renderer.createText((null as any),'\n        ',(null as any));
     this.compView_0.create(this._DataTableHeaderCellComponent_0_6.context);
-    var disposable_0:Function = import3.subscribeToRenderElement(this,this._el_0,new import3.InlineArrayDynamic(18,'resize',(null as any),'longPress',(null as any),'longPressEnd',(null as any),'sort',(null as any),'select',(null as any),'mouseup','document','mousedown',(null as any),'mousemove',(null as any),'mouseup',(null as any)),this.eventHandler(this.handleEvent_0));
+    var disposable_0:Function = import3.subscribeToRenderElement(this,this._el_0,new import3.InlineArray16(12,'resize',(null as any),'longPress',(null as any),'longPressEnd',(null as any),'sort',(null as any),'select',(null as any),'mousedown',(null as any)),this.eventHandler(this.handleEvent_0));
     this._ResizeableDirective_0_4.subscribe(this,this.eventHandler(this.handleEvent_0),true);
     this._LongPressDirective_0_5.subscribe(this,this.eventHandler(this.handleEvent_0),true,false,true);
     this._DataTableHeaderCellComponent_0_6.subscribe(this,this.eventHandler(this.handleEvent_0),true,true);

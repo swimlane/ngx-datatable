@@ -26,4 +26,5 @@ export declare class DraggableDirective implements OnDestroy {
         x: number;
         y: number;
     }): void;
+    private _destroySubscription();
 }

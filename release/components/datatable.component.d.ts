@@ -147,6 +147,7 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      *  - `multi`
      *  - `chkbox`
      *  - `multiClick`
+     *  - `cell`
      *
      * For no selection pass a `falsey`.
      * Default value: `undefined`
@@ -187,6 +188,10 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
     cssClasses: any;
     /**
      * Message overrides for localization
+     *
+     * emptyMessage     [default] = 'No data to display'
+     * totalMessage     [default] = 'total'
+     * selectedMessage  [default] = 'selected'
      *
      * @type {*}
      * @memberOf DatatableComponent

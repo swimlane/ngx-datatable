@@ -21,7 +21,7 @@ var DataTableFooterComponent = (function () {
     DataTableFooterComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'datatable-footer',
-                    template: "\n    <div\n      [style.height.px]=\"footerHeight\">\n      <div class=\"page-count\">{{rowCount.toLocaleString()}} {{totalMessage}}</div>\n      <datatable-pager\n        [pagerLeftArrowIcon]=\"pagerLeftArrowIcon\"\n        [pagerRightArrowIcon]=\"pagerRightArrowIcon\"\n        [pagerPreviousIcon]=\"pagerPreviousIcon\"\n        [pagerNextIcon]=\"pagerNextIcon\"\n        [page]=\"curPage\"\n        [size]=\"pageSize\"\n        [count]=\"rowCount\"\n        [hidden]=\"!isVisible\"\n        (change)=\"page.emit($event)\">\n       </datatable-pager>\n     </div>\n  ",
+                    template: "\n    <div\n      [ngClass]=\"{'selected-count': selectedMessage}\"\n      [style.height.px]=\"footerHeight\">\n      <div class=\"page-count\">\n        <span *ngIf=\"selectedMessage\">\n          {{selectedCount.toLocaleString()}} {{selectedMessage}} / \n        </span>\n\n        {{rowCount.toLocaleString()}} {{totalMessage}}\n      </div>\n      <datatable-pager\n        [pagerLeftArrowIcon]=\"pagerLeftArrowIcon\"\n        [pagerRightArrowIcon]=\"pagerRightArrowIcon\"\n        [pagerPreviousIcon]=\"pagerPreviousIcon\"\n        [pagerNextIcon]=\"pagerNextIcon\"\n        [page]=\"curPage\"\n        [size]=\"pageSize\"\n        [count]=\"rowCount\"\n        [hidden]=\"!isVisible\"\n        (change)=\"page.emit($event)\">\n      </datatable-pager>\n    </div>\n  ",
                     host: {
                         class: 'datatable-footer'
                     },
@@ -40,6 +40,8 @@ var DataTableFooterComponent = (function () {
         'pagerPreviousIcon': [{ type: core_1.Input },],
         'pagerNextIcon': [{ type: core_1.Input },],
         'totalMessage': [{ type: core_1.Input },],
+        'selectedCount': [{ type: core_1.Input },],
+        'selectedMessage': [{ type: core_1.Input },],
         'page': [{ type: core_1.Output },],
     };
     return DataTableFooterComponent;
