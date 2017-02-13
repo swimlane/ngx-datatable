@@ -33,7 +33,7 @@ export class DraggableDirective implements OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this._destroySubscription();
     }
   }
 
@@ -44,7 +44,7 @@ export class DraggableDirective implements OnDestroy {
     this.element.classList.remove('dragging');
 
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this._destroySubscription();
       this.dragEnd.emit({
         event,
         element: this.element,
@@ -96,4 +96,8 @@ export class DraggableDirective implements OnDestroy {
     }
   }
 
+  private _destroySubscription() {
+    this.subscription.unsubscribe();
+    this.subscription = undefined;
+  }
 }

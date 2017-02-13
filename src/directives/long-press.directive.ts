@@ -92,6 +92,7 @@ export class LongPressDirective {
     this.longPressEnd.emit(true);
   }
 
+
   onMouseup(): void {
     this.endPress()
   }
