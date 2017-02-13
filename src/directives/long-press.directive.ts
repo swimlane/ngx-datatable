@@ -6,7 +6,10 @@ import {
   HostBinding,
   HostListener
 } from '@angular/core';
-import {Observable, Subscription} from "rxjs";
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+
+import "rxjs/add/operator/takeUntil"
 
 @Directive({ selector: '[long-press]' })
 export class LongPressDirective {
