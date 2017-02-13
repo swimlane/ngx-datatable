@@ -40,6 +40,7 @@ export class DataTableBodyRowComponent {
     return this._columns;
   }
 
+  @HostBinding('style.width.px')
   @Input() set innerWidth(val: number) {
     this._innerWidth = val;
     this.recalculateColumns();
