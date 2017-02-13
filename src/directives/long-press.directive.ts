@@ -6,6 +6,7 @@ import {
   HostBinding,
   HostListener
 } from '@angular/core';
+import {Observable, Subscription} from "rxjs";
 
 @Directive({ selector: '[long-press]' })
 export class LongPressDirective {
@@ -22,6 +23,8 @@ export class LongPressDirective {
   mouseX: number = 0;
   mouseY: number = 0;
 
+  subscription: Subscription;
+
   @HostBinding('class.press')
   get press(): boolean { return this.pressing; }
 
@@ -33,7 +36,7 @@ export class LongPressDirective {
   @HostListener('mousedown', ['$event'])
   onMouseDown(event: MouseEvent): void {
     // don't do right/middle clicks
-    if(event.which !== 1) return;
+    if (event.which !== 1) return;
 
     this.mouseX = event.clientX;
     this.mouseY = event.clientY;
@@ -41,29 +44,38 @@ export class LongPressDirective {
     this.pressing = true;
     this.isLongPressing = false;
 
+    let mouseup = Observable.fromEvent(document, 'mouseup');
+    this.subscription = mouseup.subscribe((ev: MouseEvent) => this.onMouseup());
+
     this.timeout = setTimeout(() => {
       this.isLongPressing = true;
       this.longPress.emit(event);
+
+      this.subscription.add(
+        Observable.fromEvent(document, 'mousemove')
+          .takeUntil(mouseup)
+          .subscribe((mouseEvent: MouseEvent) => this.onMouseMove(mouseEvent))
+      );
+
       this.loop(event);
     }, this.duration);
 
     this.loop(event);
   }
 
-  @HostListener('mousemove', ['$event'])
   onMouseMove(event: MouseEvent): void {
-    if(this.pressing && !this.isLongPressing) {
+    if (this.pressing && !this.isLongPressing) {
       const xThres = Math.abs(event.clientX - this.mouseX) > 10;
       const yThres = Math.abs(event.clientY - this.mouseY) > 10;
 
-      if(xThres || yThres) {
+      if (xThres || yThres) {
         this.endPress();
       }
     }
   }
 
   loop(event: Event): void {
-    if(this.isLongPressing) {
+    if (this.isLongPressing) {
       this.timeout = setTimeout(() => {
         this.longPressing.emit(event);
         this.loop(event);
@@ -75,11 +87,14 @@ export class LongPressDirective {
     clearTimeout(this.timeout);
     this.isLongPressing = false;
     this.pressing = false;
+    this.subscription.unsubscribe();
+
     this.longPressEnd.emit(true);
   }
 
-  @HostListener('document:mouseup')
-  onMouseUp(): void {
-    this.endPress();
+
+  onMouseup(): void {
+    this.endPress()
   }
+
 }

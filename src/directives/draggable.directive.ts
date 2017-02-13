@@ -37,7 +37,6 @@ export class DraggableDirective implements OnDestroy {
     }
   }
 
-  @HostListener('document:mouseup', ['$event'])
   onMouseup(event: MouseEvent): void {
     if (!this.isDragging) return;
 
@@ -61,7 +60,12 @@ export class DraggableDirective implements OnDestroy {
       this.isDragging = true;
 
       const mouseDownPos = { x: event.clientX, y: event.clientY };
+
+      let mouseup = Observable.fromEvent(document, 'mouseup')
+        .do((ev: MouseEvent) => this.onMouseup(ev));
+
       this.subscription = Observable.fromEvent(document, 'mousemove')
+        .takeUntil(mouseup)
         .subscribe((ev: MouseEvent) => this.move(ev, mouseDownPos));
 
       this.dragStart.emit({

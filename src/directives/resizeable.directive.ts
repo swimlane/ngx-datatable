@@ -38,7 +38,6 @@ export class ResizeableDirective implements OnDestroy {
     }
   }
 
-  @HostListener('document:mouseup')
   onMouseup(): void {
     this.resizing = false;
 
@@ -58,7 +57,11 @@ export class ResizeableDirective implements OnDestroy {
       event.stopPropagation();
       this.resizing = true;
 
+      let mouseup = Observable.fromEvent(document, 'mouseup')
+        .do((ev: MouseEvent) => this.onMouseup());
+
       this.subscription = Observable.fromEvent(document, 'mousemove')
+        .takeUntil(mouseup)
         .subscribe((e: MouseEvent) => this.move(e, initialWidth, mouseDownScreenX));
     }
   }
