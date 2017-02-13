@@ -1,6 +1,7 @@
 "use strict";
 var core_1 = require('@angular/core');
 var Observable_1 = require('rxjs/Observable');
+require("rxjs/add/operator/takeUntil");
 /**
  * Draggable Directive for Angular2
  *
@@ -44,11 +45,13 @@ var DraggableDirective = (function () {
             event.preventDefault();
             this.isDragging = true;
             var mouseDownPos_1 = { x: event.clientX, y: event.clientY };
-            var mouseup = Observable_1.Observable.fromEvent(document, 'mouseup')
-                .do(function (ev) { return _this.onMouseup(ev); });
-            this.subscription = Observable_1.Observable.fromEvent(document, 'mousemove')
+            var mouseup = Observable_1.Observable.fromEvent(document, 'mouseup');
+            this.subscription = mouseup
+                .subscribe(function (ev) { return _this.onMouseup(ev); });
+            var mouseMoveSub = Observable_1.Observable.fromEvent(document, 'mousemove')
                 .takeUntil(mouseup)
                 .subscribe(function (ev) { return _this.move(ev, mouseDownPos_1); });
+            this.subscription.add(mouseMoveSub);
             this.dragStart.emit({
                 event: event,
                 element: this.element,

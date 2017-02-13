@@ -1,5 +1,8 @@
 # Changelog
 
+## 6.1.1
+- Bug: Fix tree-shaking issue (#511)
+
 ## 6.1.0
 - Feature: Add selected count in footer (#508)
 - Bug: Fix drag/drop/long-press (#506)

@@ -1,6 +1,7 @@
 "use strict";
 var core_1 = require('@angular/core');
-var rxjs_1 = require("rxjs");
+var Observable_1 = require('rxjs/Observable');
+require("rxjs/add/operator/takeUntil");
 var LongPressDirective = (function () {
     function LongPressDirective() {
         this.duration = 500;
@@ -31,12 +32,12 @@ var LongPressDirective = (function () {
         this.mouseY = event.clientY;
         this.pressing = true;
         this.isLongPressing = false;
-        var mouseup = rxjs_1.Observable.fromEvent(document, 'mouseup');
+        var mouseup = Observable_1.Observable.fromEvent(document, 'mouseup');
         this.subscription = mouseup.subscribe(function (ev) { return _this.onMouseup(); });
         this.timeout = setTimeout(function () {
             _this.isLongPressing = true;
             _this.longPress.emit(event);
-            _this.subscription.add(rxjs_1.Observable.fromEvent(document, 'mousemove')
+            _this.subscription.add(Observable_1.Observable.fromEvent(document, 'mousemove')
                 .takeUntil(mouseup)
                 .subscribe(function (mouseEvent) { return _this.onMouseMove(mouseEvent); }));
             _this.loop(event);
