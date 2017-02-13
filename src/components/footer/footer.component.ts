@@ -6,8 +6,15 @@ import {
   selector: 'datatable-footer',
   template: `
     <div
+      [ngClass]="{'selected-count': selectedMessage}"
       [style.height.px]="footerHeight">
-      <div class="page-count">{{rowCount.toLocaleString()}} {{totalMessage}}</div>
+      <div class="page-count">
+        <span *ngIf="selectedMessage">
+          {{selectedCount.toLocaleString()}} {{selectedMessage}} / 
+        </span>
+
+        {{rowCount.toLocaleString()}} {{totalMessage}}
+      </div>
       <datatable-pager
         [pagerLeftArrowIcon]="pagerLeftArrowIcon"
         [pagerRightArrowIcon]="pagerRightArrowIcon"
@@ -18,8 +25,8 @@ import {
         [count]="rowCount"
         [hidden]="!isVisible"
         (change)="page.emit($event)">
-       </datatable-pager>
-     </div>
+      </datatable-pager>
+    </div>
   `,
   host: {
     class: 'datatable-footer'
@@ -37,6 +44,9 @@ export class DataTableFooterComponent {
   @Input() pagerPreviousIcon: string;
   @Input() pagerNextIcon: string;
   @Input() totalMessage: string;
+
+  @Input() selectedCount: number;
+  @Input() selectedMessage: string | boolean;
 
   @Output() page: EventEmitter<any> = new EventEmitter();
 
