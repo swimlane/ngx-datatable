@@ -681,6 +681,11 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   ngAfterViewInit(): void {
+    if (!this.externalSorting) {
+      let val = sortRows(this._rows, this.columns, this.sorts);
+      this._rows = val;
+    }
+
     // this has to be done to prevent the change detection
     // tree from freaking out because we are readjusting
     setTimeout(() => this.recalculate());

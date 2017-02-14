@@ -25,6 +25,7 @@ import { ServerPagingComponent } from './paging/paging-server';
 
 // -- Sorting
 import { SortingComparatorComponent } from './sorting/sorting-comparator';
+import { DefaultSortingComponent } from './sorting/sorting-default';
 import { ServerSortingComponent } from './sorting/sorting-server';
 import { ClientSortingComponent } from './sorting/sorting-client';
 
@@ -61,6 +62,7 @@ import { ColumnPinningComponent } from './columns/pinning';
     ClientPagingComponent,
     ServerPagingComponent,
     ClientSortingComponent,
+    DefaultSortingComponent,
     ServerSortingComponent,
     SortingComparatorComponent,
     CellSelectionComponent,

@@ -49,6 +49,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
             <h4>Sorting</h4>
             <ul>
               <li><a href="#" (click)="state='client-sorting'">Client-side</a></li>
+              <li><a href="#" (click)="state='default-sorting'">Default sort</a></li>
               <li><a href="#" (click)="state='server-sorting'">Server-side</a></li>
               <li><a href="#" (click)="state='comparator-sorting'">Comparator</a></li>
             </ul>
@@ -105,9 +106,10 @@ import { Component, ViewEncapsulation } from '@angular/core';
 
         <!-- Sorting -->
         <client-sorting-demo *ngIf="state === 'client-sorting'"></client-sorting-demo>
+        <default-sorting-demo *ngIf="state === 'default-sorting'"></default-sorting-demo>
         <server-sorting-demo *ngIf="state === 'server-sorting'"></server-sorting-demo>
         <comparator-sorting-demo *ngIf="state === 'comparator-sorting'"></comparator-sorting-demo>
-        
+
         <!-- Selection -->
         <cell-selection-demo *ngIf="state === 'cell-selection'"></cell-selection-demo>
         <single-selection-demo *ngIf="state === 'single-selection'"></single-selection-demo>
