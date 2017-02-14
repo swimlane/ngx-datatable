@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"6.1.1" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"6.1.2" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -3658,6 +3658,10 @@ var DatatableComponent = (function () {
      */
     DatatableComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
+        if (!this.externalSorting) {
+            var val = utils_1.sortRows(this._rows, this.columns, this.sorts);
+            this._rows = val;
+        }
         // this has to be done to prevent the change detection
         // tree from freaking out because we are readjusting
         setTimeout(function () { return _this.recalculate(); });

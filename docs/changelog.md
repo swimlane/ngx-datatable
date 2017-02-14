@@ -1,5 +1,8 @@
 # Changelog
 
+## 6.1.2
+- Bug: Fix default sort (#475)
+
 ## 6.1.1
 - Bug: Fix tree-shaking issue (#511)
 
@@ -48,7 +51,7 @@
 - Docs: Multi-select
 
 ## 4.0.0
-- BREAKING!!!! - Renamed project from `angular2-datatable` to `ngx-datatable` 
+- BREAKING!!!! - Renamed project from `angular2-datatable` to `ngx-datatable`
 and updated components from `<swui-datatable>` to `<ngx-datatable>`
 
 ## 3.0.0
@@ -90,7 +93,7 @@ and updated components from `<swui-datatable>` to `<ngx-datatable>`
 - Bug: Fix memory leak with visibility observer
 
 ## 2.1.0
-- Feature: Checkbox selection mode 
+- Feature: Checkbox selection mode
 - Enhancement: Selection mode auto added to host class for easier styling
 - Style: Remove row active/select state when in cell mode of material theme
 - Bug: Force fill column mode w/ scrollbarH false allowing bleed when resized
