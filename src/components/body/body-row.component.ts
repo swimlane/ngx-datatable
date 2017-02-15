@@ -40,7 +40,6 @@ export class DataTableBodyRowComponent {
     return this._columns;
   }
 
-  @HostBinding('style.width.px')
   @Input() set innerWidth(val: number) {
     this._innerWidth = val;
     this.recalculateColumns();
@@ -67,6 +66,11 @@ export class DataTableBodyRowComponent {
   @HostBinding('class.datatable-row-odd')
   get isOddRow(): boolean {
     return this.row.$$index % 2 !== 0;
+  }
+
+  @HostBinding('style.width.px')
+  get columnsTotalWidths(): string {
+    return this.columnGroupWidths.total;
   }
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
