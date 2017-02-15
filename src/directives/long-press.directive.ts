@@ -4,7 +4,8 @@ import {
   Output,
   EventEmitter,
   HostBinding,
-  HostListener
+  HostListener,
+  OnDestroy
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -12,7 +13,7 @@ import { Subscription } from 'rxjs/Subscription';
 import "rxjs/add/operator/takeUntil"
 
 @Directive({ selector: '[long-press]' })
-export class LongPressDirective {
+export class LongPressDirective implements OnDestroy {
 
   @Input() duration: number = 500;
 
@@ -90,14 +91,24 @@ export class LongPressDirective {
     clearTimeout(this.timeout);
     this.isLongPressing = false;
     this.pressing = false;
-    this.subscription.unsubscribe();
+    this._destroySubscription();
 
     this.longPressEnd.emit(true);
   }
 
-
   onMouseup(): void {
     this.endPress()
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this._destroySubscription();
+    }
+  }
+
+  private _destroySubscription() {
+    this.subscription.unsubscribe();
+    this.subscription = undefined;
   }
 
 }
