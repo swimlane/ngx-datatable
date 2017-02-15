@@ -893,6 +893,10 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   onColumnResize({column, newValue}: any): void {
+    /* Safari/iOS 10.2 workaround */
+    if (column === undefined) {
+      return;
+    }
     let idx: number;
     let cols = this.columns.map((c, i) => {
       c = Object.assign({}, c);
