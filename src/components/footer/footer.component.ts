@@ -45,7 +45,7 @@ export class DataTableFooterComponent {
   @Input() pagerNextIcon: string;
   @Input() totalMessage: string;
 
-  @Input() selectedCount: number;
+  @Input() selectedCount: number = 0;
   @Input() selectedMessage: string | boolean;
 
   @Output() page: EventEmitter<any> = new EventEmitter();
