@@ -8,8 +8,11 @@ import { camelCase, deCamelCase, id } from '../utils';
  * @param {any[]} columns
  * @returns
  */
-export function setColumnDefaults(columns: any[]) {
+export function setColumnDefaults(columns: any[], override = true) {
   if(!columns) return;
+  if(override) {
+    columns = columns.map(c => Object.assign({}, c));
+  }
 
   for(let column of columns) {
     if(!column.$$id) {
@@ -46,6 +49,8 @@ export function setColumnDefaults(columns: any[]) {
       column.width = 150;
     }
   }
+
+  return columns;
 }
 
 /**
@@ -60,6 +65,8 @@ export function translateTemplates(templates: DataTableColumnDirective[]): any[]
 
   for(const temp of templates) {
     let col: any = {};
+    // for future reference
+    col.name = temp.name;
 
     const props = Object.getOwnPropertyNames(temp);
     for(const prop of props) {
