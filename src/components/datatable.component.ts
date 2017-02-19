@@ -2,17 +2,17 @@ import {
   Component, Input, Output, ElementRef, EventEmitter, ViewChild,
   HostListener, ContentChildren, OnInit, QueryList, AfterViewInit,
   HostBinding, ContentChild, TemplateRef, IterableDiffer,
-  DoCheck, KeyValueDiffers, ViewEncapsulation
+  DoCheck, KeyValueDiffers, ViewEncapsulation, SimpleChange
 } from '@angular/core';
 
 import {
   forceFillColumnWidths, adjustColumnWidths, sortRows, scrollbarWidth,
   setColumnDefaults, throttleable, translateTemplates
 } from '../utils';
-import { ColumnMode, SortType, SelectionType } from '../types';
-import { DataTableBodyComponent } from './body';
-import { DataTableColumnDirective } from './columns';
-import { DatatableRowDetailDirective } from './row-detail';
+import {ColumnMode, SortType, SelectionType} from '../types';
+import {DataTableBodyComponent} from './body';
+import {DataTableColumnDirective} from './columns';
+import {DatatableRowDetailDirective} from './row-detail';
 
 @Component({
   selector: 'ngx-datatable',
@@ -123,12 +123,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   @Input() set columns(val: any[]) {
-    if(val) {
-      setColumnDefaults(val);
-      this.recalculateColumns(val);
-    }
-
-    this._columns = val;
+    this._columns = val
   }
 
   /**
@@ -586,15 +581,42 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   set columnTemplates(val: QueryList<DataTableColumnDirective>) {
     this._columnTemplates = val;
 
+    this._columnTemplates.changes.subscribe((val) => {
+      this.updateColumnTemplate(val)
+    });
+  }
+
+  updateColumnTemplate(val) {
+    // only set this if results were brought back
     if (val) {
-      // only set this if results were brought back
       const arr = val.toArray();
 
       if (arr.length) {
-        // translate them to normal objects
-        this.columns = translateTemplates(arr);
+        let templates = translateTemplates(arr);
+        let columns = [];
+
+        if (this.columns) {
+          columns = this._addTemplates(templates);
+        } else {
+          // columns were set through template only
+          columns = setColumnDefaults(templates);
+        }
+
+        this.columns = this.recalculateColumns(columns);
       }
     }
+  }
+
+  _addTemplates(templates) {
+    return this.columns.map((c) => {
+      let templateColumn = templates
+        .find(col => col.name === c.name);
+
+      if (templateColumn) {
+        return Object.assign({}, c, templateColumn)
+      }
+      return c;
+    })
   }
 
   /**
@@ -701,6 +723,21 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
     }
   }
 
+  ngOnChanges(changes) {
+    if (changes.hasOwnProperty('columns')) {
+      let change: SimpleChange = changes['columns'];
+
+      if (change.currentValue) {
+        let columns = setColumnDefaults(change.currentValue, false);
+
+        columns = this.recalculateColumns(columns);
+
+        this._columns = columns;
+        this._columnTemplates && this._columnTemplates.notifyOnChanges();
+      }
+    }
+  }
+
   /**
    * Recalc's the sizes of the grid.
    *
@@ -716,7 +753,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    */
   recalculate(): void {
     this.recalculateDims();
-    this.recalculateColumns();
+    this.columns = this.recalculateColumns(this.columns);
   }
 
   /**
@@ -746,6 +783,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
                      allowBleed: boolean = this.scrollbarH): any[] {
 
     if (!columns) return;
+    columns = columns.map(c => Object.assign({}, c));
 
     let width = this.innerWidth;
     if (this.scrollbarV) {
@@ -914,8 +952,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
       return c;
     });
 
-    this.recalculateColumns(cols, idx);
-    this._columns = cols;
+    this.columns = this.recalculateColumns(cols, idx);
 
     this.resize.emit({
       column,
