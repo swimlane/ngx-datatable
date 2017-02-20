@@ -18,10 +18,11 @@ import { nextSortDir } from '../../utils';
           (change)="select.emit(!allRowsSelected)" 
         />
       </label>
-      <span class="datatable-header-cell-wrapper">
+      <span 
+        *ngIf="!column.headerTemplate"
+        class="datatable-header-cell-wrapper">
         <span
           class="datatable-header-cell-label draggable"
-          *ngIf="!column.headerTemplate"
           (click)="onSort()"
           [innerHTML]="name">
         </span>
