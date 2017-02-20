@@ -647,7 +647,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   innerWidth: number;
   pageSize: number;
   bodyHeight: number;
-  rowCount: number;
+  rowCount: number = 0;
   offsetX: number = 0;
   rowDiffer: IterableDiffer;
   _count: number = 0;
