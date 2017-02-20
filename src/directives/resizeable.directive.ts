@@ -36,7 +36,7 @@ export class ResizeableDirective implements OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this._destroySubscription();
     }
   }
 
@@ -44,7 +44,7 @@ export class ResizeableDirective implements OnDestroy {
     this.resizing = false;
 
     if (this.subscription && !this.subscription.closed) {
-      this.subscription.unsubscribe();
+      this._destroySubscription();
       this.resize.emit(this.element.clientWidth);
     }
   }
@@ -81,6 +81,11 @@ export class ResizeableDirective implements OnDestroy {
     if (overMinWidth && underMaxWidth) {
       this.element.style.width = `${newWidth}px`;
     }
+  }
+
+  private _destroySubscription() {
+    this.subscription.unsubscribe();
+    this.subscription = undefined;
   }
 
 }
