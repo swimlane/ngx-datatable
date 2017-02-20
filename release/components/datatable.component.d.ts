@@ -381,6 +381,8 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      * @memberOf DatatableComponent
      */
     columnTemplates: QueryList<DataTableColumnDirective>;
+    updateColumnTemplate(val: any): void;
+    _addTemplates(templates: any): any[];
     /**
      * Row Detail templates gathered from the ContentChild
      *
@@ -437,6 +439,7 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      * @memberOf DatatableComponent
      */
     ngDoCheck(): void;
+    ngOnChanges(changes: any): void;
     /**
      * Recalc's the sizes of the grid.
      *

@@ -7,9 +7,13 @@ var utils_1 = require('../utils');
  * @param {any[]} columns
  * @returns
  */
-function setColumnDefaults(columns) {
+function setColumnDefaults(columns, override) {
+    if (override === void 0) { override = true; }
     if (!columns)
         return;
+    if (override) {
+        columns = columns.map(function (c) { return Object.assign({}, c); });
+    }
     for (var _i = 0, columns_1 = columns; _i < columns_1.length; _i++) {
         var column = columns_1[_i];
         if (!column.$$id) {
@@ -39,6 +43,7 @@ function setColumnDefaults(columns) {
             column.width = 150;
         }
     }
+    return columns;
 }
 exports.setColumnDefaults = setColumnDefaults;
 /**
@@ -53,6 +58,8 @@ function translateTemplates(templates) {
     for (var _i = 0, templates_1 = templates; _i < templates_1.length; _i++) {
         var temp = templates_1[_i];
         var col = {};
+        // for future reference
+        col.name = temp.name;
         var props = Object.getOwnPropertyNames(temp);
         for (var _a = 0, props_1 = props; _a < props_1.length; _a++) {
             var prop = props_1[_a];

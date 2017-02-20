@@ -6,7 +6,7 @@ import { DataTableColumnDirective } from '../components/columns';
  * @param {any[]} columns
  * @returns
  */
-export declare function setColumnDefaults(columns: any[]): void;
+export declare function setColumnDefaults(columns: any[], override?: boolean): any[];
 /**
  * Translates templates definitions to objects
  *

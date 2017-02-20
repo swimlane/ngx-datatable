@@ -35,6 +35,7 @@ export class Wrapper_DatatableComponent {
   /*private*/ _eventHandler:Function;
   context:import0.DatatableComponent;
   /*private*/ _changed:boolean;
+  /*private*/ _changes:{[key: string]:any};
   /*private*/ _expr_0:any;
   /*private*/ _expr_1:any;
   /*private*/ _expr_2:any;
@@ -79,6 +80,7 @@ export class Wrapper_DatatableComponent {
   subscription7:any;
   constructor(p0:any,p1:any) {
     this._changed = false;
+    this._changes = {};
     this.context = new import0.DatatableComponent(p0,p1);
     this._expr_0 = import1.UNINITIALIZED;
     this._expr_1 = import1.UNINITIALIZED;
@@ -131,6 +133,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_0,currValue))) {
       this._changed = true;
       this.context.rows = currValue;
+      this._changes['rows'] = new import1.SimpleChange(this._expr_0,currValue);
       this._expr_0 = currValue;
     }
   }
@@ -138,6 +141,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_1,currValue))) {
       this._changed = true;
       this.context.columns = currValue;
+      this._changes['columns'] = new import1.SimpleChange(this._expr_1,currValue);
       this._expr_1 = currValue;
     }
   }
@@ -145,6 +149,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_2,currValue))) {
       this._changed = true;
       this.context.selected = currValue;
+      this._changes['selected'] = new import1.SimpleChange(this._expr_2,currValue);
       this._expr_2 = currValue;
     }
   }
@@ -152,6 +157,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_3,currValue))) {
       this._changed = true;
       this.context.scrollbarV = currValue;
+      this._changes['scrollbarV'] = new import1.SimpleChange(this._expr_3,currValue);
       this._expr_3 = currValue;
     }
   }
@@ -159,6 +165,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_4,currValue))) {
       this._changed = true;
       this.context.scrollbarH = currValue;
+      this._changes['scrollbarH'] = new import1.SimpleChange(this._expr_4,currValue);
       this._expr_4 = currValue;
     }
   }
@@ -166,6 +173,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_5,currValue))) {
       this._changed = true;
       this.context.rowHeight = currValue;
+      this._changes['rowHeight'] = new import1.SimpleChange(this._expr_5,currValue);
       this._expr_5 = currValue;
     }
   }
@@ -173,6 +181,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_6,currValue))) {
       this._changed = true;
       this.context.columnMode = currValue;
+      this._changes['columnMode'] = new import1.SimpleChange(this._expr_6,currValue);
       this._expr_6 = currValue;
     }
   }
@@ -180,6 +189,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_7,currValue))) {
       this._changed = true;
       this.context.headerHeight = currValue;
+      this._changes['headerHeight'] = new import1.SimpleChange(this._expr_7,currValue);
       this._expr_7 = currValue;
     }
   }
@@ -187,6 +197,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_8,currValue))) {
       this._changed = true;
       this.context.footerHeight = currValue;
+      this._changes['footerHeight'] = new import1.SimpleChange(this._expr_8,currValue);
       this._expr_8 = currValue;
     }
   }
@@ -194,6 +205,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_9,currValue))) {
       this._changed = true;
       this.context.externalPaging = currValue;
+      this._changes['externalPaging'] = new import1.SimpleChange(this._expr_9,currValue);
       this._expr_9 = currValue;
     }
   }
@@ -201,6 +213,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_10,currValue))) {
       this._changed = true;
       this.context.externalSorting = currValue;
+      this._changes['externalSorting'] = new import1.SimpleChange(this._expr_10,currValue);
       this._expr_10 = currValue;
     }
   }
@@ -208,6 +221,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_11,currValue))) {
       this._changed = true;
       this.context.limit = currValue;
+      this._changes['limit'] = new import1.SimpleChange(this._expr_11,currValue);
       this._expr_11 = currValue;
     }
   }
@@ -215,6 +229,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_12,currValue))) {
       this._changed = true;
       this.context.count = currValue;
+      this._changes['count'] = new import1.SimpleChange(this._expr_12,currValue);
       this._expr_12 = currValue;
     }
   }
@@ -222,6 +237,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_13,currValue))) {
       this._changed = true;
       this.context.offset = currValue;
+      this._changes['offset'] = new import1.SimpleChange(this._expr_13,currValue);
       this._expr_13 = currValue;
     }
   }
@@ -229,6 +245,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_14,currValue))) {
       this._changed = true;
       this.context.loadingIndicator = currValue;
+      this._changes['loadingIndicator'] = new import1.SimpleChange(this._expr_14,currValue);
       this._expr_14 = currValue;
     }
   }
@@ -236,6 +253,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_15,currValue))) {
       this._changed = true;
       this.context.selectionType = currValue;
+      this._changes['selectionType'] = new import1.SimpleChange(this._expr_15,currValue);
       this._expr_15 = currValue;
     }
   }
@@ -243,6 +261,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_16,currValue))) {
       this._changed = true;
       this.context.reorderable = currValue;
+      this._changes['reorderable'] = new import1.SimpleChange(this._expr_16,currValue);
       this._expr_16 = currValue;
     }
   }
@@ -250,6 +269,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_17,currValue))) {
       this._changed = true;
       this.context.sortType = currValue;
+      this._changes['sortType'] = new import1.SimpleChange(this._expr_17,currValue);
       this._expr_17 = currValue;
     }
   }
@@ -257,6 +277,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_18,currValue))) {
       this._changed = true;
       this.context.sorts = currValue;
+      this._changes['sorts'] = new import1.SimpleChange(this._expr_18,currValue);
       this._expr_18 = currValue;
     }
   }
@@ -264,6 +285,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_19,currValue))) {
       this._changed = true;
       this.context.cssClasses = currValue;
+      this._changes['cssClasses'] = new import1.SimpleChange(this._expr_19,currValue);
       this._expr_19 = currValue;
     }
   }
@@ -271,6 +293,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_20,currValue))) {
       this._changed = true;
       this.context.messages = currValue;
+      this._changes['messages'] = new import1.SimpleChange(this._expr_20,currValue);
       this._expr_20 = currValue;
     }
   }
@@ -278,6 +301,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_21,currValue))) {
       this._changed = true;
       this.context.rowIdentity = currValue;
+      this._changes['rowIdentity'] = new import1.SimpleChange(this._expr_21,currValue);
       this._expr_21 = currValue;
     }
   }
@@ -285,6 +309,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_22,currValue))) {
       this._changed = true;
       this.context.selectCheck = currValue;
+      this._changes['selectCheck'] = new import1.SimpleChange(this._expr_22,currValue);
       this._expr_22 = currValue;
     }
   }
@@ -292,6 +317,7 @@ export class Wrapper_DatatableComponent {
     if ((forceUpdate || import3.checkBinding(throwOnChange,this._expr_23,currValue))) {
       this._changed = true;
       this.context.trackByProp = currValue;
+      this._changes['trackByProp'] = new import1.SimpleChange(this._expr_23,currValue);
       this._expr_23 = currValue;
     }
   }
@@ -299,6 +325,10 @@ export class Wrapper_DatatableComponent {
     var changed:any = this._changed;
     this._changed = false;
     if (!throwOnChange) {
+      if (changed) {
+        this.context.ngOnChanges(this._changes);
+        this._changes = {};
+      }
       if ((view.numberOfChecks === 0)) { this.context.ngOnInit(); }
       this.context.ngDoCheck();
     }
