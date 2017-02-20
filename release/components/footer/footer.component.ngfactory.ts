@@ -5,7 +5,7 @@
  */
  /* tslint:disable */
 
-import * as import0 from '../../../../src/components/footer/footer.component';
+import * as import0 from '../../../../build/components/footer/footer.component';
 import * as import1 from '@angular/core/src/change_detection/change_detection_util';
 import * as import2 from '@angular/core/src/linker/view';
 import * as import3 from '@angular/core/src/linker/view_utils';
@@ -17,7 +17,7 @@ import * as import8 from '@angular/core/src/linker/component_factory';
 import * as import9 from '@angular/core/src/linker/view_container';
 import * as import10 from '../../../node_modules/@angular/common/src/directives/ng_class.ngfactory';
 import * as import11 from '../../../node_modules/@angular/common/src/directives/ng_if.ngfactory';
-import * as import12 from '../../../../src/components/footer/pager.component';
+import * as import12 from '../../../../build/components/footer/pager.component';
 import * as import13 from './pager.component.ngfactory';
 import * as import14 from '@angular/core/src/change_detection/differs/iterable_differs';
 import * as import15 from '@angular/core/src/change_detection/differs/keyvalue_differs';

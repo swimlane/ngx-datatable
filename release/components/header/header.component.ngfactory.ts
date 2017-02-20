@@ -5,7 +5,7 @@
  */
  /* tslint:disable */
 
-import * as import0 from '../../../../src/components/header/header.component';
+import * as import0 from '../../../../build/components/header/header.component';
 import * as import1 from '@angular/core/src/change_detection/change_detection_util';
 import * as import2 from '@angular/core/src/linker/view';
 import * as import3 from '@angular/core/src/linker/view_utils';
@@ -15,16 +15,16 @@ import * as import6 from '@angular/core/src/metadata/view';
 import * as import7 from '@angular/core/src/linker/view_type';
 import * as import8 from '@angular/core/src/change_detection/constants';
 import * as import9 from '@angular/core/src/linker/component_factory';
-import * as import10 from '../../../../src/components/header/header-cell.component';
+import * as import10 from '../../../../build/components/header/header-cell.component';
 import * as import11 from '../../directives/draggable.directive.ngfactory';
 import * as import12 from '../../directives/resizeable.directive.ngfactory';
 import * as import13 from '../../directives/long-press.directive.ngfactory';
 import * as import14 from './header-cell.component.ngfactory';
 import * as import15 from '@angular/core/src/linker/view_container';
 import * as import16 from '@angular/core/src/linker/element_ref';
-import * as import17 from '../../../../src/directives/draggable.directive';
-import * as import18 from '../../../../src/directives/resizeable.directive';
-import * as import19 from '../../../../src/directives/long-press.directive';
+import * as import17 from '../../../../build/directives/draggable.directive';
+import * as import18 from '../../../../build/directives/resizeable.directive';
+import * as import19 from '../../../../build/directives/long-press.directive';
 import * as import20 from '../../../node_modules/@angular/common/src/directives/ng_style.ngfactory';
 import * as import21 from '../../../node_modules/@angular/common/src/directives/ng_for.ngfactory';
 import * as import22 from '@angular/core/src/change_detection/differs/keyvalue_differs';
@@ -34,7 +34,7 @@ import * as import25 from '@angular/common/src/directives/ng_for';
 import * as import26 from '@angular/common/src/directives/ng_style';
 import * as import27 from '../../directives/orderable.directive.ngfactory';
 import * as import28 from '@angular/core/src/linker/query_list';
-import * as import29 from '../../../../src/directives/orderable.directive';
+import * as import29 from '../../../../build/directives/orderable.directive';
 export class Wrapper_DataTableHeaderComponent {
   /*private*/ _eventHandler:Function;
   context:import0.DataTableHeaderComponent;

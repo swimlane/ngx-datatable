@@ -14,4 +14,5 @@ export declare class ResizeableDirective implements OnDestroy {
     onMouseup(): void;
     onMousedown(event: MouseEvent): void;
     move(event: MouseEvent, initialWidth: number, mouseDownScreenX: number): void;
+    private _destroySubscription();
 }

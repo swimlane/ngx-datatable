@@ -5,7 +5,7 @@
  */
  /* tslint:disable */
 
-import * as import0 from '../../../../src/components/columns/column-cell.directive';
+import * as import0 from '../../../../build/components/columns/column-cell.directive';
 import * as import1 from '@angular/core/src/linker/view';
 export class Wrapper_DataTableColumnCellDirective {
   /*private*/ _eventHandler:Function;

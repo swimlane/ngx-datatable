@@ -8,6 +8,7 @@ export declare class DataTableBodyRowComponent {
     isSelected: boolean;
     readonly isEvenRow: boolean;
     readonly isOddRow: boolean;
+    readonly columnsTotalWidths: string;
     activate: EventEmitter<any>;
     element: any;
     columnGroupWidths: any;

@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"6.1.2" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"6.2.0" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -1876,6 +1876,13 @@ var DataTableBodyRowComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(DataTableBodyRowComponent.prototype, "columnsTotalWidths", {
+        get: function () {
+            return this.columnGroupWidths.total;
+        },
+        enumerable: true,
+        configurable: true
+    });
     DataTableBodyRowComponent.prototype.trackByGroups = function (index, colGroup) {
         return colGroup.type;
     };
@@ -1936,7 +1943,6 @@ var DataTableBodyRowComponent = (function () {
         __metadata('design:paramtypes', [Array])
     ], DataTableBodyRowComponent.prototype, "columns", null);
     __decorate([
-        core_1.HostBinding('style.width.px'),
         core_1.Input(), 
         __metadata('design:type', Number), 
         __metadata('design:paramtypes', [Number])
@@ -1967,6 +1973,10 @@ var DataTableBodyRowComponent = (function () {
         core_1.HostBinding('class.datatable-row-odd'), 
         __metadata('design:type', Boolean)
     ], DataTableBodyRowComponent.prototype, "isOddRow", null);
+    __decorate([
+        core_1.HostBinding('style.width.px'), 
+        __metadata('design:type', String)
+    ], DataTableBodyRowComponent.prototype, "columnsTotalWidths", null);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)
@@ -3357,6 +3367,7 @@ var DatatableComponent = (function () {
          * @memberOf DatatableComponent
          */
         this.rowContextmenu = new core_1.EventEmitter(false);
+        this.rowCount = 0;
         this.offsetX = 0;
         this._count = 0;
         // get ref to elm for measuring
@@ -3385,6 +3396,8 @@ var DatatableComponent = (function () {
                 val = utils_1.sortRows(val, this.columns, this.sorts);
             }
             this._rows = val;
+            //reset page offset on input changes due to filtering or other reason
+            this.offset = 0;
             // recalculate sizes/etc
             this.recalculate();
         },
@@ -3855,6 +3868,10 @@ var DatatableComponent = (function () {
      */
     DatatableComponent.prototype.onColumnResize = function (_a) {
         var column = _a.column, newValue = _a.newValue;
+        /* Safari/iOS 10.2 workaround */
+        if (column === undefined) {
+            return;
+        }
         var idx;
         var cols = this.columns.map(function (c, i) {
             c = Object.assign({}, c);
@@ -4172,6 +4189,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = __webpack_require__(0);
 var DataTableFooterComponent = (function () {
     function DataTableFooterComponent() {
+        this.selectedCount = 0;
         this.page = new core_1.EventEmitter();
     }
     Object.defineProperty(DataTableFooterComponent.prototype, "isVisible", {
@@ -4609,7 +4627,7 @@ var DataTableHeaderCellComponent = (function () {
     DataTableHeaderCellComponent = __decorate([
         core_1.Component({
             selector: 'datatable-header-cell',
-            template: "\n    <div>\n      <label\n        *ngIf=\"isCheckboxable\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [attr.checked]=\"allRowsSelected\"\n          (change)=\"select.emit(!allRowsSelected)\" \n        />\n      </label>\n      <span class=\"datatable-header-cell-wrapper\">\n        <span\n          class=\"datatable-header-cell-label draggable\"\n          *ngIf=\"!column.headerTemplate\"\n          (click)=\"onSort()\"\n          [innerHTML]=\"name\">\n        </span>\n      </span>\n      <template\n        *ngIf=\"column.headerTemplate\"\n        [ngTemplateOutlet]=\"column.headerTemplate\"\n        [ngOutletContext]=\"{ \n          column: column, \n          sortDir: sortDir,\n          sortFn: sortFn\n        }\">\n      </template>\n      <span\n        [class]=\"sortClass\">\n      </span>\n    </div>\n  "
+            template: "\n    <div>\n      <label\n        *ngIf=\"isCheckboxable\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [attr.checked]=\"allRowsSelected\"\n          (change)=\"select.emit(!allRowsSelected)\" \n        />\n      </label>\n      <span \n        *ngIf=\"!column.headerTemplate\"\n        class=\"datatable-header-cell-wrapper\">\n        <span\n          class=\"datatable-header-cell-label draggable\"\n          (click)=\"onSort()\"\n          [innerHTML]=\"name\">\n        </span>\n      </span>\n      <template\n        *ngIf=\"column.headerTemplate\"\n        [ngTemplateOutlet]=\"column.headerTemplate\"\n        [ngOutletContext]=\"{ \n          column: column, \n          sortDir: sortDir,\n          sortFn: sortFn\n        }\">\n      </template>\n      <span\n        [class]=\"sortClass\">\n      </span>\n    </div>\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], DataTableHeaderCellComponent);
@@ -5319,11 +5337,20 @@ var LongPressDirective = (function () {
         clearTimeout(this.timeout);
         this.isLongPressing = false;
         this.pressing = false;
-        this.subscription.unsubscribe();
+        this._destroySubscription();
         this.longPressEnd.emit(true);
     };
     LongPressDirective.prototype.onMouseup = function () {
         this.endPress();
+    };
+    LongPressDirective.prototype.ngOnDestroy = function () {
+        if (this.subscription) {
+            this._destroySubscription();
+        }
+    };
+    LongPressDirective.prototype._destroySubscription = function () {
+        this.subscription.unsubscribe();
+        this.subscription = undefined;
     };
     __decorate([
         core_1.Input(), 
@@ -5400,7 +5427,7 @@ var OrderableDirective = (function () {
     };
     OrderableDirective.prototype.updateSubscriptions = function () {
         var _this = this;
-        var diffs = this.differ.diff(this.draggables.toArray());
+        var diffs = this.differ.diff(this.createMapDiffs());
         if (diffs) {
             var subscribe = function (_a) {
                 var currentValue = _a.currentValue, previousValue = _a.previousValue;
@@ -5421,6 +5448,13 @@ var OrderableDirective = (function () {
             // diffs.forEachChangedItem(subscribe.bind(this));
             diffs.forEachRemovedItem(unsubscribe_1.bind(this));
         }
+    };
+    OrderableDirective.prototype.createMapDiffs = function () {
+        return this.draggables.toArray()
+            .reduce(function (acc, curr) {
+            acc[curr.dragModel.$$id] = curr;
+            return acc;
+        }, {});
     };
     OrderableDirective.prototype.onDragStart = function () {
         this.positions = {};
@@ -5504,13 +5538,13 @@ var ResizeableDirective = (function () {
     }
     ResizeableDirective.prototype.ngOnDestroy = function () {
         if (this.subscription) {
-            this.subscription.unsubscribe();
+            this._destroySubscription();
         }
     };
     ResizeableDirective.prototype.onMouseup = function () {
         this.resizing = false;
         if (this.subscription && !this.subscription.closed) {
-            this.subscription.unsubscribe();
+            this._destroySubscription();
             this.resize.emit(this.element.clientWidth);
         }
     };
@@ -5539,6 +5573,10 @@ var ResizeableDirective = (function () {
         if (overMinWidth && underMaxWidth) {
             this.element.style.width = newWidth + "px";
         }
+    };
+    ResizeableDirective.prototype._destroySubscription = function () {
+        this.subscription.unsubscribe();
+        this.subscription = undefined;
     };
     __decorate([
         core_1.Input(), 

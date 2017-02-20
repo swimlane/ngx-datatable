@@ -5,7 +5,7 @@
  */
  /* tslint:disable */
 
-import * as import0 from '../../../../src/components/body/body-row.component';
+import * as import0 from '../../../../build/components/body/body-row.component';
 import * as import1 from '@angular/core/src/change_detection/change_detection_util';
 import * as import2 from '@angular/core/src/linker/view';
 import * as import3 from '@angular/core/src/linker/view_utils';
@@ -16,7 +16,7 @@ import * as import7 from '@angular/core/src/linker/view_type';
 import * as import8 from '@angular/core/src/change_detection/constants';
 import * as import9 from '@angular/core/src/linker/component_factory';
 import * as import10 from '@angular/core/src/linker/element_ref';
-import * as import11 from '../../../../src/components/body/body-cell.component';
+import * as import11 from '../../../../build/components/body/body-cell.component';
 import * as import12 from './body-cell.component.ngfactory';
 import * as import13 from '@angular/core/src/linker/view_container';
 import * as import14 from '../../../node_modules/@angular/common/src/directives/ng_style.ngfactory';
@@ -110,29 +110,29 @@ export class Wrapper_DataTableBodyRowComponent {
     return changed;
   }
   checkHost(view:import2.AppView<any>,componentView:import2.AppView<any>,el:any,throwOnChange:boolean):void {
-    const currVal_6:any = this.context.innerWidth;
+    const currVal_6:any = this.context.rowHeight;
     if (import3.checkBinding(throwOnChange,this._expr_6,currVal_6)) {
-      view.renderer.setElementStyle(el,'width',((view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_6) == null)? (null as any): (view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_6).toString() + 'px')));
+      view.renderer.setElementStyle(el,'height',((view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_6) == null)? (null as any): (view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_6).toString() + 'px')));
       this._expr_6 = currVal_6;
     }
-    const currVal_7:any = this.context.rowHeight;
+    const currVal_7:any = this.context.isSelected;
     if (import3.checkBinding(throwOnChange,this._expr_7,currVal_7)) {
-      view.renderer.setElementStyle(el,'height',((view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_7) == null)? (null as any): (view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_7).toString() + 'px')));
+      view.renderer.setElementClass(el,'active',currVal_7);
       this._expr_7 = currVal_7;
     }
-    const currVal_8:any = this.context.isSelected;
+    const currVal_8:any = this.context.isEvenRow;
     if (import3.checkBinding(throwOnChange,this._expr_8,currVal_8)) {
-      view.renderer.setElementClass(el,'active',currVal_8);
+      view.renderer.setElementClass(el,'datatable-row-even',currVal_8);
       this._expr_8 = currVal_8;
     }
-    const currVal_9:any = this.context.isEvenRow;
+    const currVal_9:any = this.context.isOddRow;
     if (import3.checkBinding(throwOnChange,this._expr_9,currVal_9)) {
-      view.renderer.setElementClass(el,'datatable-row-even',currVal_9);
+      view.renderer.setElementClass(el,'datatable-row-odd',currVal_9);
       this._expr_9 = currVal_9;
     }
-    const currVal_10:any = this.context.isOddRow;
+    const currVal_10:any = this.context.columnsTotalWidths;
     if (import3.checkBinding(throwOnChange,this._expr_10,currVal_10)) {
-      view.renderer.setElementClass(el,'datatable-row-odd',currVal_10);
+      view.renderer.setElementStyle(el,'width',((view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_10) == null)? (null as any): (view.viewUtils.sanitizer.sanitize(import4.SecurityContext.STYLE,currVal_10).toString() + 'px')));
       this._expr_10 = currVal_10;
     }
   }

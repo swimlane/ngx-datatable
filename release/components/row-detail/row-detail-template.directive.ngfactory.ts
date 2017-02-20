@@ -5,7 +5,7 @@
  */
  /* tslint:disable */
 
-import * as import0 from '../../../../src/components/row-detail/row-detail-template.directive';
+import * as import0 from '../../../../build/components/row-detail/row-detail-template.directive';
 import * as import1 from '@angular/core/src/linker/view';
 export class Wrapper_DatatableRowDetailTemplateDirective {
   /*private*/ _eventHandler:Function;

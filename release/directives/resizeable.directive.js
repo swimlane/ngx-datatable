@@ -16,13 +16,13 @@ var ResizeableDirective = (function () {
     }
     ResizeableDirective.prototype.ngOnDestroy = function () {
         if (this.subscription) {
-            this.subscription.unsubscribe();
+            this._destroySubscription();
         }
     };
     ResizeableDirective.prototype.onMouseup = function () {
         this.resizing = false;
         if (this.subscription && !this.subscription.closed) {
-            this.subscription.unsubscribe();
+            this._destroySubscription();
             this.resize.emit(this.element.clientWidth);
         }
     };
@@ -51,6 +51,10 @@ var ResizeableDirective = (function () {
         if (overMinWidth && underMaxWidth) {
             this.element.style.width = newWidth + "px";
         }
+    };
+    ResizeableDirective.prototype._destroySubscription = function () {
+        this.subscription.unsubscribe();
+        this.subscription = undefined;
     };
     ResizeableDirective.decorators = [
         { type: core_1.Directive, args: [{

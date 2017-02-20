@@ -5,7 +5,7 @@
  */
  /* tslint:disable */
 
-import * as import0 from '../../../../src/components/body/progress-bar.component';
+import * as import0 from '../../../../build/components/body/progress-bar.component';
 import * as import1 from '@angular/core/src/linker/view';
 import * as import2 from '@angular/core/src/render/api';
 import * as import3 from '@angular/core/src/linker/view_utils';

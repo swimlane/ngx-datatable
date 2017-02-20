@@ -66,11 +66,20 @@ var LongPressDirective = (function () {
         clearTimeout(this.timeout);
         this.isLongPressing = false;
         this.pressing = false;
-        this.subscription.unsubscribe();
+        this._destroySubscription();
         this.longPressEnd.emit(true);
     };
     LongPressDirective.prototype.onMouseup = function () {
         this.endPress();
+    };
+    LongPressDirective.prototype.ngOnDestroy = function () {
+        if (this.subscription) {
+            this._destroySubscription();
+        }
+    };
+    LongPressDirective.prototype._destroySubscription = function () {
+        this.subscription.unsubscribe();
+        this.subscription = undefined;
     };
     LongPressDirective.decorators = [
         { type: core_1.Directive, args: [{ selector: '[long-press]' },] },

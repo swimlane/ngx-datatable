@@ -2,6 +2,7 @@
 var core_1 = require('@angular/core');
 var DataTableFooterComponent = (function () {
     function DataTableFooterComponent() {
+        this.selectedCount = 0;
         this.page = new core_1.EventEmitter();
     }
     Object.defineProperty(DataTableFooterComponent.prototype, "isVisible", {

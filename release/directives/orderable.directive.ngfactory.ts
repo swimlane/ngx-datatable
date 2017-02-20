@@ -5,7 +5,7 @@
  */
  /* tslint:disable */
 
-import * as import0 from '../../../src/directives/orderable.directive';
+import * as import0 from '../../../build/directives/orderable.directive';
 import * as import1 from '@angular/core/src/linker/view';
 export class Wrapper_OrderableDirective {
   /*private*/ _eventHandler:Function;

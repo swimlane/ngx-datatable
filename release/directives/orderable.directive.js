@@ -19,7 +19,7 @@ var OrderableDirective = (function () {
     };
     OrderableDirective.prototype.updateSubscriptions = function () {
         var _this = this;
-        var diffs = this.differ.diff(this.draggables.toArray());
+        var diffs = this.differ.diff(this.createMapDiffs());
         if (diffs) {
             var subscribe = function (_a) {
                 var currentValue = _a.currentValue, previousValue = _a.previousValue;
@@ -40,6 +40,13 @@ var OrderableDirective = (function () {
             // diffs.forEachChangedItem(subscribe.bind(this));
             diffs.forEachRemovedItem(unsubscribe_1.bind(this));
         }
+    };
+    OrderableDirective.prototype.createMapDiffs = function () {
+        return this.draggables.toArray()
+            .reduce(function (acc, curr) {
+            acc[curr.dragModel.$$id] = curr;
+            return acc;
+        }, {});
     };
     OrderableDirective.prototype.onDragStart = function () {
         this.positions = {};

@@ -42,6 +42,13 @@ var DataTableBodyRowComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(DataTableBodyRowComponent.prototype, "columnsTotalWidths", {
+        get: function () {
+            return this.columnGroupWidths.total;
+        },
+        enumerable: true,
+        configurable: true
+    });
     DataTableBodyRowComponent.prototype.trackByGroups = function (index, colGroup) {
         return colGroup.type;
     };
@@ -111,13 +118,14 @@ var DataTableBodyRowComponent = (function () {
     ]; };
     DataTableBodyRowComponent.propDecorators = {
         'columns': [{ type: core_1.Input },],
-        'innerWidth': [{ type: core_1.HostBinding, args: ['style.width.px',] }, { type: core_1.Input },],
+        'innerWidth': [{ type: core_1.Input },],
         'row': [{ type: core_1.Input },],
         'offsetX': [{ type: core_1.Input },],
         'rowHeight': [{ type: core_1.HostBinding, args: ['style.height.px',] }, { type: core_1.Input },],
         'isSelected': [{ type: core_1.HostBinding, args: ['class.active',] }, { type: core_1.Input },],
         'isEvenRow': [{ type: core_1.HostBinding, args: ['class.datatable-row-even',] },],
         'isOddRow': [{ type: core_1.HostBinding, args: ['class.datatable-row-odd',] },],
+        'columnsTotalWidths': [{ type: core_1.HostBinding, args: ['style.width.px',] },],
         'activate': [{ type: core_1.Output },],
         'onKeyDown': [{ type: core_1.HostListener, args: ['keydown', ['$event'],] },],
     };

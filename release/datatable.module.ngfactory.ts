@@ -6,7 +6,7 @@
  /* tslint:disable */
 
 import * as import0 from '@angular/core/src/linker/ng_module_factory';
-import * as import1 from '../../src/datatable.module';
+import * as import1 from '../../build/datatable.module';
 import * as import2 from '@angular/common/src/common_module';
 import * as import3 from '@angular/common/src/localization';
 import * as import4 from '@angular/core/src/di/injector';

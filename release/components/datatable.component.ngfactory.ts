@@ -5,7 +5,7 @@
  */
  /* tslint:disable */
 
-import * as import0 from '../../../src/components/datatable.component';
+import * as import0 from '../../../build/components/datatable.component';
 import * as import1 from '@angular/core/src/change_detection/change_detection_util';
 import * as import2 from '@angular/core/src/linker/view';
 import * as import3 from '@angular/core/src/linker/view_utils';
@@ -17,20 +17,20 @@ import * as import8 from '@angular/core/src/change_detection/constants';
 import * as import9 from '@angular/core/src/linker/component_factory';
 import * as import10 from '@angular/core/src/linker/element_ref';
 import * as import11 from '@angular/core/src/change_detection/differs/keyvalue_differs';
-import * as import12 from './datatable.component.scss.ngstyle';
-import * as import13 from '../../../src/components/header/header.component';
+import * as import12 from './datatable.component.css.ngstyle';
+import * as import13 from '../../../build/components/header/header.component';
 import * as import14 from './header/header.component.ngfactory';
 import * as import15 from '@angular/core/src/linker/view_container';
-import * as import16 from '../../../src/components/footer/footer.component';
+import * as import16 from '../../../build/components/footer/footer.component';
 import * as import17 from './footer/footer.component.ngfactory';
 import * as import18 from '../directives/visibility.directive.ngfactory';
 import * as import19 from '../../node_modules/@angular/common/src/directives/ng_if.ngfactory';
-import * as import20 from '../../../src/components/body/body.component';
+import * as import20 from '../../../build/components/body/body.component';
 import * as import21 from './body/body.component.ngfactory';
 import * as import22 from '@angular/core/src/zone/ng_zone';
 import * as import23 from '@angular/core/src/linker/template_ref';
 import * as import24 from '@angular/common/src/directives/ng_if';
-import * as import25 from '../../../src/directives/visibility.directive';
+import * as import25 from '../../../build/directives/visibility.directive';
 export class Wrapper_DatatableComponent {
   /*private*/ _eventHandler:Function;
   context:import0.DatatableComponent;
