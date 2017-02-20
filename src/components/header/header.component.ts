@@ -41,7 +41,8 @@ import { DataTableColumnDirective } from '../columns';
           [sortDescendingIcon]="sortDescendingIcon"
           [allRowsSelected]="allRowsSelected"
           (sort)="onSort($event)"
-          (select)="select.emit($event)">
+          (select)="select.emit($event)"
+          (headerContextmenu)="headerContextmenu.emit($event)">
         </datatable-header-cell>
       </div>
     </div>
@@ -94,6 +95,7 @@ export class DataTableHeaderComponent {
   @Output() reorder: EventEmitter<any> = new EventEmitter();
   @Output() resize: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
+  @Output() headerContextmenu = new EventEmitter<{ event: MouseEvent, name: string, prop: string }>(false);
 
   columnsByPin: any;
   columnGroupWidths: any;

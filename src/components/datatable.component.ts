@@ -39,7 +39,8 @@ import { DatatableFooterDirective } from './footer';
         (sort)="onColumnSort($event)"
         (resize)="onColumnResize($event)"
         (reorder)="onColumnReorder($event)"
-        (select)="onHeaderSelect($event)">
+        (select)="onHeaderSelect($event)"
+        (headerContextmenu)="headerContextmenu.emit($event)">
       </datatable-header>
       <datatable-body
         [rows]="rows"
@@ -465,6 +466,13 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   @Output() rowContextmenu = new EventEmitter<{ event: MouseEvent, row: any }>(false);
+
+  /**
+   * The context menu was invoked on a header cell.
+   *
+   * @memberOf DatatableComponent
+   */
+  @Output() headerContextmenu = new EventEmitter<{ event: MouseEvent, name: string, prop: string }>(false);
 
   /**
    * CSS class applied if the header height if fixed height.

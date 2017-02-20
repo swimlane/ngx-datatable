@@ -299,6 +299,15 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
         row: any;
     }>;
     /**
+     * The context menu was invoked on the header.
+     *
+     * @memberOf DatatableComponent
+     */
+    headerContextmenu: EventEmitter<{
+        event: MouseEvent;
+        header: string;
+    }>;
+    /**
      * CSS class applied if the header height if fixed height.
      *
      * @readonly

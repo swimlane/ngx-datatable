@@ -18,6 +18,10 @@ import { Component } from '@angular/core';
         to display your own custom context menu.</p>
         <p *ngIf="rawEvent"><strong>Mouse position:</strong> <code>(x: {{rawEvent?.x}}, y: {{rawEvent?.y}})</code></p>
         <p *ngIf="contextmenuRow"><strong>Row:</strong> {{contextmenuRow?.name}}</p>
+        <p *ngIf="contextmenuHeader"><strong>Header:</strong> 
+          name: {{contextmenuHeader?.name}}
+          prop: {{contextmenuHeader?.prop}}
+        </p>
       </div>
       <ngx-datatable
         class="material"
@@ -27,7 +31,8 @@ import { Component } from '@angular/core';
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="'auto'"
-        (rowContextmenu)="onContextMenu($event)">
+        (rowContextmenu)="onRowContextMenu($event)"
+        (headerContextmenu)="onHeaderContextMenu($event)">
       </ngx-datatable>
     </div>
   `
@@ -44,6 +49,7 @@ export class ContextMenuDemoComponent {
 
   rawEvent: MouseEvent;
   contextmenuRow: any;
+  contextmenuHeader: string;
 
   constructor() {
     this.fetch((data) => {
@@ -51,12 +57,28 @@ export class ContextMenuDemoComponent {
     });
   }
 
-  onContextMenu(contextMenuEvent) {
+  onRowContextMenu(contextMenuEvent) {
     console.log(contextMenuEvent);
 
     this.rawEvent = contextMenuEvent.event;
     this.contextmenuRow = contextMenuEvent.row;
-    
+    this.contextmenuHeader = undefined;
+
+    contextMenuEvent.event.preventDefault();
+    contextMenuEvent.event.stopPropagation();
+  }
+
+  onHeaderContextMenu(contextMenuEvent) {
+    console.log(contextMenuEvent);
+
+    this.rawEvent = contextMenuEvent.event;
+    this.contextmenuHeader = {
+      name: contextMenuEvent.name,
+      prop: contextMenuEvent.prop
+    }
+
+    this.contextmenuRow = undefined;
+
     contextMenuEvent.event.preventDefault();
     contextMenuEvent.event.stopPropagation();
   }

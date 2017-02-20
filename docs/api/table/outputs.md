@@ -69,6 +69,18 @@ The context menu was invoked on a row.
 }
 ```
 
+### `headerContextmenu`
+The context menu was invoked on a header cell.
+
+```
+{
+  event,
+  header
+}
+```
+
+
+
 ### `scroll`
 Body was scrolled typically in a `scrollbarV:true` scenario.
 
