@@ -10,7 +10,7 @@ This project uses [npm tasks](http://blog.keithcirkel.co.uk/how-to-use-npm-as-a-
 ### Commands
 - `npm start`: Starts Webpack dev server
 - `npm run release`: Builds code to `dist` folder
-- `npm run tests`: Runs E2E Tests
+- `npm run test`: Runs E2E Tests
 - `npm run package`: Runs builds, packages and copies results to `./release`
 
 ### Depedencies
