@@ -1,5 +1,14 @@
 # Changelog
 
+## 6.2.0
+- Bug: Fix AoT builds with SCSS (#534)
+- Bug: Fix offset incorrect when filtering (#516)
+- Bug: Fix mouse press subscription cleanups (#522)
+- Bug: Fix header cell wrapper empty span (#504)
+- Bug: Fix selected count undefined in footer template (#537)
+- Bug: Fix orderable unsubscribe listeners (#538)
+- Chore: Update Angular and ZoneJS
+
 ## 6.1.2
 - Bug: Fix default sort (#475)
 

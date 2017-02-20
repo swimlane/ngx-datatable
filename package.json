@@ -1,6 +1,6 @@
 {
   "name": "@swimlane/ngx-datatable",
-  "version": "6.1.2",
+  "version": "6.2.0",
   "description": "ngx-datatable is a Angular2+ table grid component for presenting large and complex data.",
   "main": "release/index.js",
   "typings": "release/index.d.ts",
@@ -58,23 +58,23 @@
   },
   "homepage": "https://github.com/swimlane/ngx-datatable#readme",
   "peerDependencies": {
-    "@angular/common": "^2.4.7",
-    "@angular/compiler": "^2.4.7",
-    "@angular/core": "^2.4.7",
-    "@angular/platform-browser": "^2.4.7",
-    "@angular/platform-browser-dynamic": "^2.4.7",
-    "zone.js": "^0.7.6",
+    "@angular/common": "^2.4.8",
+    "@angular/compiler": "^2.4.8",
+    "@angular/core": "^2.4.8",
+    "@angular/platform-browser": "^2.4.8",
+    "@angular/platform-browser-dynamic": "^2.4.8",
+    "zone.js": "^0.7.7",
     "rxjs": "^5.1.0",
     "core-js": "^2.4.0"
   },
   "devDependencies": {
-    "@angular/common": "~2.4.7",
-    "@angular/compiler": "~2.4.7",
-    "@angular/compiler-cli": "^2.4.7",
-    "@angular/core": "~2.4.7",
-    "@angular/platform-browser": "~2.4.7",
-    "@angular/platform-browser-dynamic": "~2.4.7",
-    "@angular/platform-server": "~2.4.7",
+    "@angular/common": "~2.4.8",
+    "@angular/compiler": "~2.4.8",
+    "@angular/compiler-cli": "^2.4.8",
+    "@angular/core": "~2.4.8",
+    "@angular/platform-browser": "~2.4.8",
+    "@angular/platform-browser-dynamic": "~2.4.8",
+    "@angular/platform-server": "~2.4.8",
     "@types/jasmine": "2.5.41",
     "@types/node": "^7.0.4",
     "angular2-template-loader": "^0.6.0",
@@ -123,6 +123,6 @@
     "webpack-dev-server": "~2.2.0",
     "webpack-merge": "^2.4.0",
     "webpack-notifier": "^1.5.0",
-    "zone.js": "^0.7.6"
+    "zone.js": "^0.7.7"
   }
 }
