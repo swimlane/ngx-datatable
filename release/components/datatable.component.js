@@ -283,10 +283,6 @@ var DatatableComponent = (function () {
          * @memberOf DatatableComponent
          */
         set: function (val) {
-            if (val) {
-                utils_1.setColumnDefaults(val);
-                this.recalculateColumns(val);
-            }
             this._columns = val;
         },
         enumerable: true,
@@ -483,19 +479,43 @@ var DatatableComponent = (function () {
          * @memberOf DatatableComponent
          */
         set: function (val) {
+            var _this = this;
             this._columnTemplates = val;
-            if (val) {
-                // only set this if results were brought back
-                var arr = val.toArray();
-                if (arr.length) {
-                    // translate them to normal objects
-                    this.columns = utils_1.translateTemplates(arr);
-                }
-            }
+            this._columnTemplates.changes.subscribe(function (val) {
+                _this.updateColumnTemplate(val);
+            });
         },
         enumerable: true,
         configurable: true
     });
+    DatatableComponent.prototype.updateColumnTemplate = function (val) {
+        // only set this if results were brought back
+        if (val) {
+            var arr = val.toArray();
+            if (arr.length) {
+                var templates = utils_1.translateTemplates(arr);
+                var columns = [];
+                if (this.columns) {
+                    columns = this._addTemplates(templates);
+                }
+                else {
+                    // columns were set through template only
+                    columns = utils_1.setColumnDefaults(templates);
+                }
+                this.columns = this.recalculateColumns(columns);
+            }
+        }
+    };
+    DatatableComponent.prototype._addTemplates = function (templates) {
+        return this.columns.map(function (c) {
+            var templateColumn = templates
+                .find(function (col) { return col.name === c.name; });
+            if (templateColumn) {
+                return Object.assign({}, c, templateColumn);
+            }
+            return c;
+        });
+    };
     Object.defineProperty(DatatableComponent.prototype, "allRowsSelected", {
         /**
          * Returns if all rows are selected.
@@ -551,6 +571,17 @@ var DatatableComponent = (function () {
             this.recalculatePages();
         }
     };
+    DatatableComponent.prototype.ngOnChanges = function (changes) {
+        if (changes.hasOwnProperty('columns')) {
+            var change = changes['columns'];
+            if (change.currentValue) {
+                var columns = utils_1.setColumnDefaults(change.currentValue, false);
+                columns = this.recalculateColumns(columns);
+                this._columns = columns;
+                this._columnTemplates && this._columnTemplates.notifyOnChanges();
+            }
+        }
+    };
     /**
      * Recalc's the sizes of the grid.
      *
@@ -566,7 +597,7 @@ var DatatableComponent = (function () {
      */
     DatatableComponent.prototype.recalculate = function () {
         this.recalculateDims();
-        this.recalculateColumns();
+        this.columns = this.recalculateColumns(this.columns);
     };
     /**
      * Window resize handler to update sizes.
@@ -593,6 +624,7 @@ var DatatableComponent = (function () {
         if (allowBleed === void 0) { allowBleed = this.scrollbarH; }
         if (!columns)
             return;
+        columns = columns.map(function (c) { return Object.assign({}, c); });
         var width = this.innerWidth;
         if (this.scrollbarV) {
             width = width - utils_1.scrollbarWidth;
@@ -747,8 +779,7 @@ var DatatableComponent = (function () {
             }
             return c;
         });
-        this.recalculateColumns(cols, idx);
-        this._columns = cols;
+        this.columns = this.recalculateColumns(cols, idx);
         this.resize.emit({
             column: column,
             newValue: newValue
