@@ -37,6 +37,7 @@ import { nextSortDir } from '../../utils';
         }">
       </template>
       <span
+        (click)="onSort()"
         [class]="sortClass">
       </span>
     </div>
