@@ -1,5 +1,5 @@
 import {
-  Directive, ElementRef, HostListener, Input, Output, EventEmitter, OnDestroy
+  Directive, ElementRef, HostListener, Input, Output, EventEmitter, OnDestroy, AfterViewInit
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -12,7 +12,7 @@ import "rxjs/add/operator/takeUntil";
     '[class.resizeable]': 'resizeEnabled'
   }
 })
-export class ResizeableDirective implements OnDestroy {
+export class ResizeableDirective implements OnDestroy, AfterViewInit {
 
   @Input() resizeEnabled: boolean = true;
   @Input() minWidth: number;
@@ -26,7 +26,9 @@ export class ResizeableDirective implements OnDestroy {
 
   constructor(element: ElementRef) {
     this.element = element.nativeElement;
+  }
 
+  ngAfterViewInit(): void {
     if (this.resizeEnabled) {
       const node = document.createElement('span');
       node.classList.add('resize-handle');
