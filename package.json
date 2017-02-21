@@ -23,7 +23,7 @@
     "build:aot": "ngc",
     "build:sass": "node-sass -r build/ -o build/",
     "build:css": "postcss --use autoprefixer dist/*.css -d dist/",
-    "copy:build": "cp -R src build",
+    "copy:build": "cpx 'src/**/*' build",
     "copy:styles": "cpx 'build/**/*.css' release",
     "watch": "webpack --display-error-details --watch",
     "start": "webpack-dev-server",
