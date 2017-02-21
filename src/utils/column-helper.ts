@@ -1,5 +1,6 @@
 import { DataTableColumnDirective } from '../components/columns';
-import { camelCase, deCamelCase, id } from '../utils';
+import { camelCase, deCamelCase } from './camel-case';
+import { id } from './id';
 
 /**
  * Sets the column defaults
