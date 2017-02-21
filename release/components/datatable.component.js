@@ -260,8 +260,6 @@ var DatatableComponent = (function () {
                 val = utils_1.sortRows(val, this.columns, this.sorts);
             }
             this._rows = val;
-            //reset page offset on input changes due to filtering or other reason
-            this.offset = 0;
             // recalculate sizes/etc
             this.recalculate();
         },

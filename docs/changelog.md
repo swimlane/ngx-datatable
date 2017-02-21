@@ -1,5 +1,8 @@
 # Changelog
 
+## 6.2.1
+- Bug: Revert #516 causing server-side paging issue (#543)
+
 ## 6.2.0
 - Bug: Fix AoT builds with SCSS (#534)
 - Bug: Fix offset incorrect when filtering (#516)

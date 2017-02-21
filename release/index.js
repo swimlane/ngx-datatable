@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"6.2.0" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"6.2.1" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -3396,8 +3396,6 @@ var DatatableComponent = (function () {
                 val = utils_1.sortRows(val, this.columns, this.sorts);
             }
             this._rows = val;
-            //reset page offset on input changes due to filtering or other reason
-            this.offset = 0;
             // recalculate sizes/etc
             this.recalculate();
         },
