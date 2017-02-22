@@ -61,6 +61,7 @@ import { ScrollerComponent } from './scroller.component';
 })
 export class DataTableBodyComponent implements OnInit, OnDestroy {
 
+  @Input() externalPaging: boolean;
   @Input() scrollbarV: boolean;
   @Input() scrollbarH: boolean;
   @Input() loadingIndicator: boolean;
@@ -416,8 +417,13 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       first = this.rowHeightsCache.getRowIndex(this.offsetY);
       last = this.rowHeightsCache.getRowIndex(height + this.offsetY) + 1;
     } else {
-      first = Math.max(this.offset * this.pageSize, 0);
-      last = Math.min((first + this.pageSize), this.rowCount);
+      if(this.externalPaging){
+        first = 0;
+        last = this.pageSize;
+      }else {
+        first = Math.max(this.offset * this.pageSize, 0);
+        last = Math.min((first + this.pageSize), this.rowCount);
+      }
     }
 
     this.indexes = { first, last };
