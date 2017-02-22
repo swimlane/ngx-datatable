@@ -790,8 +790,8 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   recalculatePages(): void {
     this.pageSize = this.calcPageSize();
     this.rowCount = this.calcRowCount();
-    while(this.rowCount / this.pageSize < this.offset) { 
-      this.offset--;
+    if(this.rowCount / this.pageSize < this.offset) {
+      this.offset = Math.floor(this.rowCount / this.pageSize);
     }
   }
 
