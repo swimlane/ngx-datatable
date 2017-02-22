@@ -5,7 +5,7 @@ describe('Datatable component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ NgxDatatableModule ]
+      imports: [NgxDatatableModule]
     });
   });
 
@@ -18,9 +18,9 @@ describe('Datatable component', () => {
     it('should return a new array', () => {
       let fixture = TestBed.createComponent(DatatableComponent);
       let initialRows = [
-        { id: 1 },
-        { id: 2 },
-        { id: 3 }
+        {id: 1},
+        {id: 2},
+        {id: 3}
       ];
 
       let columns = [
@@ -41,16 +41,42 @@ describe('Datatable component', () => {
       expect(fixture.componentInstance.rows).toBe(initialRows);
 
       fixture.componentInstance.onColumnSort({
-        sorts: [{ prop: 'foo', dir: 'desc' }]
+        sorts: [{prop: 'foo', dir: 'desc'}]
       });
 
       fixture.componentInstance.sort
         .subscribe(() => {
-          console.log('sorted event');
         });
 
       expect(fixture.componentInstance.rows).not.toBe(initialRows);
     });
+  });
+
+  it('should set offset to 0 when sorting by a column', () => {
+    let fixture = TestBed.createComponent(DatatableComponent);
+    let initialRows = [
+      {id: 1},
+      {id: 2},
+      {id: 3}
+    ];
+
+    let columns = [
+      {
+        prop: 'id'
+      }
+    ];
+
+    fixture.componentInstance.rows = initialRows;
+    fixture.componentInstance.columns = columns;
+    fixture.componentInstance.offset = 1;
+
+    fixture.detectChanges();
+
+    fixture.componentInstance.onColumnSort({
+      sorts: [{prop: 'id', dir: 'desc'}]
+    });
+
+    expect(fixture.componentInstance.offset).toBe(0);
   });
 
 });
