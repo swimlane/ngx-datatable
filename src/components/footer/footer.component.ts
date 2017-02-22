@@ -16,6 +16,7 @@ import {
         {{rowCount.toLocaleString()}} {{totalMessage}}
       </div>
       <datatable-pager
+        [pagerClass]="pagerClass"
         [pagerLeftArrowIcon]="pagerLeftArrowIcon"
         [pagerRightArrowIcon]="pagerRightArrowIcon"
         [pagerPreviousIcon]="pagerPreviousIcon"

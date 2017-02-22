@@ -72,6 +72,7 @@ import { DatatableRowDetailDirective } from './row-detail';
         [offset]="offset"
         [footerHeight]="footerHeight"
         [totalMessage]="messages.totalMessage"
+        [pagerClass]="cssClasses.pagerClass"
         [pagerLeftArrowIcon]="cssClasses.pagerLeftArrow"
         [pagerRightArrowIcon]="cssClasses.pagerRightArrow"
         [pagerPreviousIcon]="cssClasses.pagerPrevious"
@@ -324,6 +325,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   @Input() cssClasses: any = {
+    pagerClass: 'pager',
     sortAscending: 'icon-down',
     sortDescending: 'icon-up',
     pagerLeftArrow: 'icon-left',
