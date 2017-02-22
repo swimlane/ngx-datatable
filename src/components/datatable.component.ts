@@ -324,8 +324,8 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   @Input() cssClasses: any = {
-    sortAscending: 'icon-down',
-    sortDescending: 'icon-up',
+    sortAscending: 'icon-up',
+    sortDescending: 'icon-down',
     pagerLeftArrow: 'icon-left',
     pagerRightArrow: 'icon-right',
     pagerPrevious: 'icon-prev',
