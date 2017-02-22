@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"6.2.1" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"6.3.0" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -118,7 +118,7 @@
         top: 0;
         bottom: 0;
         width: 5px;
-        padding: 0 8px;
+        padding: 0 4px;
         visibility: hidden;
         cursor: ew-resize; }
       .ngx-datatable .datatable-header .datatable-header-cell.resizeable:hover .resize-handle {

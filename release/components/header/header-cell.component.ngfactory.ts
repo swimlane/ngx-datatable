@@ -416,6 +416,7 @@ export class View_DataTableHeaderCellComponent0 extends import2.AppView<import0.
     this._text_10 = this.renderer.createText(this._el_9,'\n      ',(null as any));
     this._text_11 = this.renderer.createText(this._el_1,'\n    ',(null as any));
     this._text_12 = this.renderer.createText(parentRenderNode,'\n  ',(null as any));
+    var disposable_0:Function = import3.subscribeToRenderElement(this,this._el_9,new import3.InlineArray2(2,'click',(null as any)),this.eventHandler(this.handleEvent_9));
     this.init((null as any),((<any>this.renderer).directRenderer? (null as any): [
       this._text_0,
       this._el_1,
@@ -431,7 +432,7 @@ export class View_DataTableHeaderCellComponent0 extends import2.AppView<import0.
       this._text_11,
       this._text_12
     ]
-    ),(null as any));
+    ),[disposable_0]);
     return (null as any);
   }
   injectorGetInternal(token:any,requestNodeIndex:number,notFoundResult:any):any {
@@ -472,5 +473,14 @@ export class View_DataTableHeaderCellComponent0 extends import2.AppView<import0.
     if ((nodeIndex == 5)) { return new View_DataTableHeaderCellComponent2(this.viewUtils,this,5,this._anchor_5,this._vc_5); }
     if ((nodeIndex == 7)) { return new View_DataTableHeaderCellComponent3(this.viewUtils,this,7,this._anchor_7,this._vc_7); }
     return (null as any);
+  }
+  handleEvent_9(eventName:string,$event:any):boolean {
+    this.markPathToRootAsCheckOnce();
+    var result:boolean = true;
+    if ((eventName == 'click')) {
+      const pd_sub_0:any = ((<any>this.context.onSort()) !== false);
+      result = (pd_sub_0 && result);
+    }
+    return result;
   }
 }

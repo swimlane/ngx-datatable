@@ -1,5 +1,6 @@
 "use strict";
-var utils_1 = require('../utils');
+var camel_case_1 = require('./camel-case');
+var id_1 = require('./id');
 /**
  * Sets the column defaults
  *
@@ -13,15 +14,15 @@ function setColumnDefaults(columns) {
     for (var _i = 0, columns_1 = columns; _i < columns_1.length; _i++) {
         var column = columns_1[_i];
         if (!column.$$id) {
-            column.$$id = utils_1.id();
+            column.$$id = id_1.id();
         }
         // translate name => prop
         if (!column.prop && column.name) {
-            column.prop = utils_1.camelCase(column.name);
+            column.prop = camel_case_1.camelCase(column.name);
         }
         // format props if no name passed
         if (column.prop && !column.name) {
-            column.name = utils_1.deCamelCase(column.prop);
+            column.name = camel_case_1.deCamelCase(column.prop);
         }
         if (!column.hasOwnProperty('resizeable')) {
             column.resizeable = true;

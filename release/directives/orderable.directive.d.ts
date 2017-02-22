@@ -9,7 +9,7 @@ export declare class OrderableDirective implements AfterContentInit, OnDestroy {
     ngAfterContentInit(): void;
     ngOnDestroy(): void;
     updateSubscriptions(): void;
-    private createMapDiffs();
     onDragStart(): void;
     onDragEnd({element, model}: any): void;
+    private createMapDiffs();
 }

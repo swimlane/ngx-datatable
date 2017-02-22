@@ -1,19 +1,21 @@
 "use strict";
 var core_1 = require('@angular/core');
 var Observable_1 = require('rxjs/Observable');
-require("rxjs/add/operator/takeUntil");
+require('rxjs/add/operator/takeUntil');
 var ResizeableDirective = (function () {
     function ResizeableDirective(element) {
         this.resizeEnabled = true;
         this.resize = new core_1.EventEmitter();
         this.resizing = false;
         this.element = element.nativeElement;
+    }
+    ResizeableDirective.prototype.ngAfterViewInit = function () {
         if (this.resizeEnabled) {
             var node = document.createElement('span');
             node.classList.add('resize-handle');
             this.element.appendChild(node);
         }
-    }
+    };
     ResizeableDirective.prototype.ngOnDestroy = function () {
         if (this.subscription) {
             this._destroySubscription();

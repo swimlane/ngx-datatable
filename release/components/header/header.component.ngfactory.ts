@@ -300,6 +300,7 @@ class View_DataTableHeaderComponent2 extends import2.AppView<any> {
     this._LongPressDirective_0_5.checkHost(this,this.compView_0,this._el_0,throwOnChange);
     this._DataTableHeaderCellComponent_0_6.checkHost(this,this.compView_0,this._el_0,throwOnChange);
     this.compView_0.internalDetectChanges(throwOnChange);
+    if (!throwOnChange) { if ((this.numberOfChecks === 0)) { this._ResizeableDirective_0_4.context.ngAfterViewInit(); } }
   }
   dirtyParentQueriesInternal():void {
     (<View_DataTableHeaderComponent0>this.parentView.parentView)._query_DraggableDirective_1_0.setDirty();

@@ -612,9 +612,10 @@ var DatatableComponent = (function () {
      * @memberOf DatatableComponent
      */
     DatatableComponent.prototype.recalculateDims = function () {
-        var _a = this.element.getBoundingClientRect(), height = _a.height, width = _a.width;
-        this.innerWidth = Math.floor(width);
+        var dims = this.element.getBoundingClientRect();
+        this.innerWidth = Math.floor(dims.width);
         if (this.scrollbarV) {
+            var height = dims.height;
             if (this.headerHeight)
                 height = height - this.headerHeight;
             if (this.footerHeight)

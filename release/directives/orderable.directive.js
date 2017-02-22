@@ -41,13 +41,6 @@ var OrderableDirective = (function () {
             diffs.forEachRemovedItem(unsubscribe_1.bind(this));
         }
     };
-    OrderableDirective.prototype.createMapDiffs = function () {
-        return this.draggables.toArray()
-            .reduce(function (acc, curr) {
-            acc[curr.dragModel.$$id] = curr;
-            return acc;
-        }, {});
-    };
     OrderableDirective.prototype.onDragStart = function () {
         this.positions = {};
         var i = 0;
@@ -79,6 +72,13 @@ var OrderableDirective = (function () {
             i++;
         }
         element.style.left = 'auto';
+    };
+    OrderableDirective.prototype.createMapDiffs = function () {
+        return this.draggables.toArray()
+            .reduce(function (acc, curr) {
+            acc[curr.dragModel.$$id] = curr;
+            return acc;
+        }, {});
     };
     OrderableDirective.decorators = [
         { type: core_1.Directive, args: [{ selector: '[orderable]' },] },

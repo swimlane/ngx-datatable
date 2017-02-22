@@ -12,7 +12,7 @@ function selectRows(selected, row, comparefn) {
 exports.selectRows = selectRows;
 function selectRowsBetween(selected, rows, index, prevIndex, comparefn) {
     var reverse = index < prevIndex;
-    for (var i = 0, len = rows.length; i < len; i++) {
+    for (var i = 0; i < rows.length; i++) {
         var row = rows[i];
         var greater = i >= prevIndex && i <= index;
         var lesser = i <= prevIndex && i >= index;

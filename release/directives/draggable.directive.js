@@ -1,7 +1,7 @@
 "use strict";
 var core_1 = require('@angular/core');
 var Observable_1 = require('rxjs/Observable');
-require("rxjs/add/operator/takeUntil");
+require('rxjs/add/operator/takeUntil');
 /**
  * Draggable Directive for Angular2
  *

@@ -112,7 +112,7 @@
         top: 0;
         bottom: 0;
         width: 5px;
-        padding: 0 8px;
+        padding: 0 4px;
         visibility: hidden;
         cursor: ew-resize; }
       .ngx-datatable .datatable-header .datatable-header-cell.resizeable:hover .resize-handle {

@@ -10,7 +10,7 @@ function deepValueGetter(obj, path) {
     var current = obj;
     var split = path.split('.');
     if (split.length) {
-        for (var i = 0, len = split.length; i < len; i++) {
+        for (var i = 0; i < split.length; i++) {
             current = current[split[i]];
             // if found undefined, return empty string
             if (current === undefined || current === null)
