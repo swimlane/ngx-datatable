@@ -3,8 +3,7 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-
-import "rxjs/add/operator/takeUntil";
+import 'rxjs/add/operator/takeUntil';
 
 @Directive({
   selector: '[resizeable]',
@@ -61,11 +60,11 @@ export class ResizeableDirective implements OnDestroy, AfterViewInit {
       event.stopPropagation();
       this.resizing = true;
 
-      let mouseup = Observable.fromEvent(document, 'mouseup');
+      const mouseup = Observable.fromEvent(document, 'mouseup');
       this.subscription = mouseup
         .subscribe((ev: MouseEvent) => this.onMouseup());
 
-      let mouseMoveSub = Observable.fromEvent(document, 'mousemove')
+      const mouseMoveSub = Observable.fromEvent(document, 'mousemove')
         .takeUntil(mouseup)
         .subscribe((e: MouseEvent) => this.move(e, initialWidth, mouseDownScreenX));
 

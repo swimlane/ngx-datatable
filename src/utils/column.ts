@@ -3,14 +3,14 @@
  * @param {array} cols
  */
 export function columnsByPin(cols: any[]) {
-  let ret: {left: any, center: any, right: any} = {
+  const ret: {left: any, center: any, right: any} = {
     left: [],
     center: [],
     right: []
   };
 
   if(cols) {
-    for(let col of cols) {
+    for(const col of cols) {
       if(col.frozenLeft) {
         ret.left.push(col);
       } else if(col.frozenRight) {
@@ -47,7 +47,7 @@ export function columnTotalWidth(columns: any[], prop?: string) {
   let totalWidth = 0;
 
   if(columns) {
-    for(let c of columns) {
+    for(const c of columns) {
       const has = prop && c[prop];
       const width = has ? c[prop] : c.width;
       totalWidth = totalWidth + parseFloat(width);
@@ -65,7 +65,7 @@ export function columnTotalWidth(columns: any[], prop?: string) {
 export function columnsTotalWidth(columns: any, prop?: any) {
   let totalWidth = 0;
 
-  for(let column of columns) {
+  for(const column of columns) {
     const has = prop && column[prop];
     totalWidth = totalWidth + (has ? column[prop] : column.width);
   }
@@ -74,7 +74,7 @@ export function columnsTotalWidth(columns: any, prop?: any) {
 }
 
 export function columnsByPinArr(val: any) {
-  let colsByPinArr = [];
+  const colsByPinArr = [];
   const colsByPin = columnsByPin(val);
 
   colsByPinArr.push({ type: 'left', columns: colsByPin['left'] });

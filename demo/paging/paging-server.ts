@@ -39,7 +39,7 @@ export class ServerPagingComponent {
 
       const start = offset * limit;
       const end = start + limit;
-      let rows = [...this.rows];
+      const rows = [...this.rows];
 
       for (let i = start; i < end; i++) {
         rows[i] = results[i];

@@ -80,10 +80,10 @@ export class LiveDataComponent {
     const cellNum = this.randomNum(0, 3);
     const newRow = this.randomNum(0, 100);
     const prop = this.cols[cellNum];
-    let rows = this.rows;
+    const rows = this.rows;
 
     if(rows.length) {
-      let row = rows[rowNum];
+      const row = rows[rowNum];
       row[prop] = rows[newRow][prop];
       row.updated = Date.now().toString();
     }

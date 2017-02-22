@@ -19,7 +19,7 @@ export function selectRowsBetween(
 
   const reverse = index < prevIndex;
 
-  for(let i = 0, len = rows.length; i < len; i++) {
+  for(let i = 0; i < rows.length; i++) {
     const row = rows[i];
     const greater = i >= prevIndex && i <= index;
     const lesser = i <= prevIndex && i >= index;

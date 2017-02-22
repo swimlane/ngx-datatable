@@ -1,5 +1,11 @@
 # Changelog
 
+## 6.3.0
+- Bug: Perform sort when sort icon is clicked (#536)
+- Bug: Fix resize handle overlaped by label (#521)
+- Chore: Fix relative imports for rollup (#542)
+- Chore: Linting
+
 ## 6.2.1
 - Bug: Revert #516 causing server-side paging issue (#543)
 

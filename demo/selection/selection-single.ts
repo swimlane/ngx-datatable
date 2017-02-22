@@ -82,8 +82,8 @@ export class SingleSelectionComponent {
   }
 
   updateRowPosition() {
-    let ix = this.getSelectedIx();
-    let arr = [ ...this.rows ];
+    const ix = this.getSelectedIx();
+    const arr = [ ...this.rows ];
     arr[ix - 1] = this.rows[ix];
     arr[ix] = this.rows[ix - 1];
     this.rows = arr;

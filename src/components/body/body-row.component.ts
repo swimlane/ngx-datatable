@@ -97,7 +97,7 @@ export class DataTableBodyRowComponent {
     const widths = this.columnGroupWidths;
     const offsetX = this.offsetX;
 
-    let styles = {
+    const styles = {
       width: `${widths[group]}px`
     };
 

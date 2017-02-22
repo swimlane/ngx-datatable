@@ -127,10 +127,10 @@ export class DataTablePagerComponent {
   }
 
   calcPages(page?: number): any[] {
-    let pages = [];
+    const pages = [];
     let startPage = 1;
     let endPage = this.totalPages;
-    let maxSize = 5;
+    const maxSize = 5;
     const isMaxSized = maxSize < this.totalPages;
 
     page = page || this.page;

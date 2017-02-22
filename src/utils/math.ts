@@ -7,7 +7,7 @@ import { columnsByPin, columnsTotalWidth } from './column';
 export function getTotalFlexGrow(columns: any[]) {
   let totalFlexGrow = 0;
 
-  for (let c of columns) {
+  for (const c of columns) {
     totalFlexGrow += c.flexGrow || 0;
   }
 
@@ -21,9 +21,9 @@ export function getTotalFlexGrow(columns: any[]) {
  * @param {int} width
  */
 export function adjustColumnWidths(allColumns: any, expectedWidth: any) {
-  let columnsWidth = columnsTotalWidth(allColumns);
-  let totalFlexGrow = getTotalFlexGrow(allColumns);
-  let colsByGroup = columnsByPin(allColumns);
+  const columnsWidth = columnsTotalWidth(allColumns);
+  const totalFlexGrow = getTotalFlexGrow(allColumns);
+  const colsByGroup = columnsByPin(allColumns);
 
   if (columnsWidth !== expectedWidth) {
     scaleColumns(colsByGroup, expectedWidth, totalFlexGrow);
@@ -38,8 +38,8 @@ export function adjustColumnWidths(allColumns: any, expectedWidth: any) {
  */
 function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
   // calculate total width and flexgrow points for coulumns that can be resized
-  for(let attr in colsByGroup) {
-    for(let column of colsByGroup[attr]) {
+  for(const attr in colsByGroup) {
+    for(const column of colsByGroup[attr]) {
       if (!column.canAutoResize) {
         maxWidth -= column.width;
         totalFlexGrow -= column.flexGrow;
@@ -49,19 +49,19 @@ function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
     }
   }
 
-  let hasMinWidth = {};
+  const hasMinWidth = {};
   let remainingWidth = maxWidth;
 
   // resize columns until no width is left to be distributed
   do {
-    let widthPerFlexPoint = remainingWidth / totalFlexGrow;
+    const widthPerFlexPoint = remainingWidth / totalFlexGrow;
     remainingWidth = 0;
 
-    for(let attr in colsByGroup) {
-      for(let column of colsByGroup[attr]) {
+    for(const attr in colsByGroup) {
+      for(const column of colsByGroup[attr]) {
         // if the column can be resize and it hasn't reached its minimum width yet
         if (column.canAutoResize && !hasMinWidth[column.prop]) {
-          let newWidth = column.width  + column.flexGrow * widthPerFlexPoint;
+          const newWidth = column.width  + column.flexGrow * widthPerFlexPoint;
           if (column.minWidth !== undefined && newWidth < column.minWidth) {
             remainingWidth += newWidth - column.minWidth;
             column.width = column.minWidth;
@@ -104,13 +104,13 @@ export function forceFillColumnWidths(
   allowBleed: boolean,
   defaultColWidth: number = 300) {
   
-  let columnsToResize = allColumns
+  const columnsToResize = allColumns
     .slice(startIdx + 1, allColumns.length)
     .filter((c) => { 
       return c.canAutoResize !== false; 
     });
 
-  for (let column of columnsToResize) {
+  for (const column of columnsToResize) {
     if(!column.$$oldWidth) {
       column.$$oldWidth = column.width;
     }
@@ -120,14 +120,14 @@ export function forceFillColumnWidths(
   let exceedsWindow = false;
   let contentWidth = getContentWidth(allColumns, defaultColWidth);
   let remainingWidth = expectedWidth - contentWidth;
-  let columnsProcessed: any[] = [];
+  const columnsProcessed: any[] = [];
 
   // This loop takes care of the
   do {
     additionWidthPerColumn = remainingWidth / columnsToResize.length;
     exceedsWindow = contentWidth >= expectedWidth;
 
-    for (let column of columnsToResize) {
+    for (const column of columnsToResize) {
       if (exceedsWindow && allowBleed) {
         column.width = column.$$oldWidth || column.width || defaultColWidth;
       } else {
@@ -159,8 +159,8 @@ export function forceFillColumnWidths(
  * @param columnsToResize  Array containing the columns that need to be resized.
  * @param columnsProcessed Array containing the columns that have already been processed.
  */
-function removeProcessedColumns ( columnsToResize: any[], columnsProcessed: any[]) {
-  for(let column of columnsProcessed) {
+function removeProcessedColumns(columnsToResize: any[], columnsProcessed: any[]) {
+  for(const column of columnsProcessed) {
     const index = columnsToResize.indexOf(column);
     columnsToResize.splice(index, 1);
   }
@@ -176,7 +176,7 @@ function removeProcessedColumns ( columnsToResize: any[], columnsProcessed: any[
 function getContentWidth(allColumns: any, defaultColWidth: number = 300): number {
   let contentWidth = 0;
 
-  for(let column of allColumns) {
+  for(const column of allColumns) {
       contentWidth += (column.width || defaultColWidth);
   }
 

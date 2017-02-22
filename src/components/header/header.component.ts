@@ -146,7 +146,7 @@ export class DataTableHeaderComponent {
   calcNewSorts(column: any, prevValue: number, newValue: number): any[] {
     let idx = 0;
 
-    let sorts = this.sorts.map((s, i) => {
+    const sorts = this.sorts.map((s, i) => {
       s = Object.assign({}, s);
       if(s.prop === column.prop) idx = i;
       return s;
@@ -171,7 +171,7 @@ export class DataTableHeaderComponent {
     const widths = this.columnGroupWidths;
     const offsetX = this.offsetX;
 
-    let styles = {
+    const styles = {
       width: `${widths[group]}px`
     };
 

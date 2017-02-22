@@ -45,7 +45,7 @@ export class ServerSortingComponent {
     req.open('GET', `assets/data/company.json`);
 
     req.onload = () => {
-      let data = JSON.parse(req.response);
+      const data = JSON.parse(req.response);
       cb(data.splice(0, 20));
     };
 
@@ -58,11 +58,11 @@ export class ServerSortingComponent {
     this.loading = true;
     // emulate a server request with a timeout
     setTimeout(() => {
-      let rows = [...this.rows];
+      const rows = [...this.rows];
       // this is only for demo purposes, normally
       // your server would return the result for
       // you and you would just set the rows prop
-      let sort = event.sorts[0];
+      const sort = event.sorts[0];
       rows.sort((a, b) => {
         return a[sort.prop].localeCompare(b[sort.prop]) * (sort.dir === 'desc' ? -1 : 1);
       });

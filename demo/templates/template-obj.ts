@@ -57,7 +57,7 @@ export class TemplateRefTemplatesComponent {
   }
 
   fetch(cb) {
-    let req = new XMLHttpRequest();
+    const req = new XMLHttpRequest();
     req.open('GET', `assets/data/company.json`);
 
     req.onload = () => {

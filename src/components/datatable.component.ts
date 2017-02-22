@@ -681,7 +681,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    */
   ngAfterViewInit(): void {
     if (!this.externalSorting) {
-      let val = sortRows(this._rows, this.columns, this.sorts);
+      const val = sortRows(this._rows, this.columns, this.sorts);
       this._rows = val;
     }
 
@@ -768,10 +768,11 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   recalculateDims(): void {
-    let {height, width} = this.element.getBoundingClientRect();
-    this.innerWidth = Math.floor(width);
+    const dims = this.element.getBoundingClientRect();
+    this.innerWidth = Math.floor(dims.width);
 
     if (this.scrollbarV) {
+      let height = dims.height;
       if (this.headerHeight) height = height - this.headerHeight;
       if (this.footerHeight) height = height - this.footerHeight;
       this.bodyHeight = height;
@@ -896,8 +897,9 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
     if (column === undefined) {
       return;
     }
+
     let idx: number;
-    let cols = this.columns.map((c, i) => {
+    const cols = this.columns.map((c, i) => {
       c = Object.assign({}, c);
 
       if (c.$$id === column.$$id) {
@@ -929,7 +931,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   onColumnReorder({column, newValue, prevValue}: any): void {
-    let cols = this.columns.map(c => {
+    const cols = this.columns.map(c => {
       return Object.assign({}, c);
     });
 

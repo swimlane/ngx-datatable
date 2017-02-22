@@ -2,8 +2,7 @@ import {
   Directive, Output, EventEmitter, ContentChildren,
   QueryList, KeyValueDiffers, AfterContentInit, OnDestroy
 } from '@angular/core';
-
-import {DraggableDirective} from './draggable.directive';
+import { DraggableDirective } from './draggable.directive';
 
 @Directive({selector: '[orderable]'})
 export class OrderableDirective implements AfterContentInit, OnDestroy {
@@ -60,20 +59,12 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
     }
   }
 
-  private createMapDiffs(): { [key: string]: DraggableDirective } {
-    return this.draggables.toArray()
-      .reduce((acc, curr) => {
-        acc[curr.dragModel.$$id] = curr;
-        return acc;
-      }, {});
-  }
-
   onDragStart(): void {
     this.positions = {};
 
     let i = 0;
-    for (let dragger of this.draggables.toArray()) {
-      let elm = dragger.element;
+    for (const dragger of this.draggables.toArray()) {
+      const elm = dragger.element;
       this.positions[dragger.dragModel.prop] = {
         left: parseInt(elm.offsetLeft.toString(), 0),
         index: i++
@@ -86,11 +77,11 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
     const prevPos = this.positions[model.prop];
 
     let i = 0;
-    for (let prop in this.positions) {
-      let pos = this.positions[prop];
+    for (const prop in this.positions) {
+      const pos = this.positions[prop];
 
-      let movedLeft = newPos < pos.left && prevPos.left > pos.left;
-      let movedRight = newPos > pos.left && prevPos.left < pos.left;
+      const movedLeft = newPos < pos.left && prevPos.left > pos.left;
+      const movedRight = newPos > pos.left && prevPos.left < pos.left;
 
       if (movedLeft || movedRight) {
         this.reorder.emit({
@@ -104,6 +95,14 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
     }
 
     element.style.left = 'auto';
+  }
+
+  private createMapDiffs(): { [key: string]: DraggableDirective } {
+    return this.draggables.toArray()
+      .reduce((acc, curr) => {
+        acc[curr.dragModel.$$id] = curr;
+        return acc;
+      }, {});
   }
 
 }

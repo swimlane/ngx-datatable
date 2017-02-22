@@ -48,7 +48,7 @@ export class DefaultSortingComponent implements OnInit {
     req.open('GET', `assets/data/company.json`);
 
     req.onload = () => {
-      let data = JSON.parse(req.response);
+      const data = JSON.parse(req.response);
       cb(data);
     };
 

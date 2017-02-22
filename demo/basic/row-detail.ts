@@ -97,7 +97,7 @@ export class RowDetailsComponent {
   }
 
   fetch(cb) {
-    let req = new XMLHttpRequest();
+    const req = new XMLHttpRequest();
     req.open('GET', `assets/data/100k.json`);
 
     req.onload = () => {

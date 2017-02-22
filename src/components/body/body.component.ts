@@ -317,10 +317,10 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     const { first, last } = this.indexes;
     let rowIndex = first;
     let idx = 0;
-    let temp: any[] = [];
+    const temp: any[] = [];
 
     while (rowIndex < last && rowIndex < this.rowCount) {
-      let row = this.rows[rowIndex];
+      const row = this.rows[rowIndex];
 
       if(row) {
         row.$$index = rowIndex;
@@ -371,7 +371,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   getRowsStyles(row: any): any {
     const rowHeight = this.getRowHeight(row);
 
-    let styles = {
+    const styles = {
       height: rowHeight + 'px'
     };
 
@@ -457,7 +457,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     // Capture the row index of the first row that is visible on the viewport.
     // If the scroll bar is just below the row which is highlighted then make that as the
     // first index.
-    let viewPortFirstRowIndex = this.indexes.first;
+    const viewPortFirstRowIndex = this.indexes.first;
 
     if (this.scrollbarV) {
       const offsetScroll = this.rowHeightsCache.query(viewPortFirstRowIndex - 1);
@@ -479,7 +479,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   toggleRowExpansion(row: any): void {
     // Capture the row index of the first row that is visible on the viewport.
-    let viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
+    const viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
 
     // If the detailRowHeight is auto --> only in case of non-virtualized scroll
     if(this.scrollbarV) {
@@ -504,12 +504,12 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * @memberOf DataTableBodyComponent
    */
   toggleAllRows(expanded: boolean): void {
-    let rowExpanded = expanded ? 1 : 0;
+    const rowExpanded = expanded ? 1 : 0;
 
     // Capture the row index of the first row that is visible on the viewport.
-    let viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
+    const viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
 
-    for(let row of this.rows) {
+    for(const row of this.rows) {
       row.$$expanded = rowExpanded;
     }
 

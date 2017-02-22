@@ -12,7 +12,7 @@ import { id } from './id';
 export function setColumnDefaults(columns: any[]) {
   if(!columns) return;
 
-  for(let column of columns) {
+  for(const column of columns) {
     if(!column.$$id) {
       column.$$id = id();
     }
@@ -57,10 +57,10 @@ export function setColumnDefaults(columns: any[]) {
  * @returns {any[]}
  */
 export function translateTemplates(templates: DataTableColumnDirective[]): any[] {
-  let result: any[] = [];
+  const result: any[] = [];
 
   for(const temp of templates) {
-    let col: any = {};
+    const col: any = {};
 
     const props = Object.getOwnPropertyNames(temp);
     for(const prop of props) {

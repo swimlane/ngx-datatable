@@ -82,7 +82,7 @@ export class RowHeightCache {
    * @param atRowIndex Update the data at this index row in the grid.
    * @param byRowHeight Update by the rowHeight provided.
    */
-  update (atRowIndex: number, byRowHeight: number): void {
+  update(atRowIndex: number, byRowHeight: number): void {
     if (!this.treeArray.length) {
       throw new Error(`Update at index ${atRowIndex} with value ${byRowHeight} failed:
         Row Height cache not initialized.`);
@@ -146,7 +146,7 @@ export class RowHeightCache {
     const highestBit = Math.pow(2, dataLength.toString(2).length - 1);
 
     for (let blockSize = highestBit; blockSize !== 0; blockSize >>= 1) {
-      let nextPos = pos + blockSize;
+      const nextPos = pos + blockSize;
       if (nextPos < dataLength && sum >= this.treeArray[nextPos]) {
         sum -= this.treeArray[nextPos];
         pos = nextPos;

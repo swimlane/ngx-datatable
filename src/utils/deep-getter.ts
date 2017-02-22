@@ -7,10 +7,10 @@ export function deepValueGetter(obj: Object, path: string) {
   if(!obj || !path) return obj;
 
   let current = obj;
-  let split = path.split('.');
+  const split = path.split('.');
 
   if(split.length) {
-    for(let i = 0, len = split.length; i < len; i++) {
+    for(let i = 0; i < split.length; i++) {
       current = current[split[i]];
 
       // if found undefined, return empty string
