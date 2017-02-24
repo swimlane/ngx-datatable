@@ -11,16 +11,11 @@ export declare class DataTableHeaderCellComponent {
     sorts: any[];
     sort: EventEmitter<any>;
     select: EventEmitter<any>;
-    headerContextmenu: EventEmitter<{
-        event: MouseEvent;
-        header: string;
-    }>;
     readonly columnCssClasses: any;
     readonly name: string;
     readonly minWidth: number;
     readonly maxWidth: number;
     readonly width: number;
-    onContextmenu($event: MouseEvent): void;
     readonly isCheckboxable: boolean;
     sortFn: any;
     sortClass: string;

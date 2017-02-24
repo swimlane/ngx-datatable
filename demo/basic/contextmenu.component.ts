@@ -18,9 +18,9 @@ import { Component } from '@angular/core';
         to display your own custom context menu.</p>
         <p *ngIf="rawEvent"><strong>Mouse position:</strong> <code>(x: {{rawEvent?.x}}, y: {{rawEvent?.y}})</code></p>
         <p *ngIf="contextmenuRow"><strong>Row:</strong> {{contextmenuRow?.name}}</p>
-        <p *ngIf="contextmenuHeader"><strong>Header:</strong> 
-          name: {{contextmenuHeader?.name}}
-          prop: {{contextmenuHeader?.prop}}
+        <p *ngIf="contextmenuColumn"><strong>Header:</strong>
+          name: {{contextmenuColumn?.name}}
+          prop: {{contextmenuColumn?.prop}}
         </p>
       </div>
       <ngx-datatable
@@ -31,8 +31,7 @@ import { Component } from '@angular/core';
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="'auto'"
-        (rowContextmenu)="onRowContextMenu($event)"
-        (headerContextmenu)="onHeaderContextMenu($event)">
+        (tableContextmenu)="onTableContextMenu($event)">
       </ngx-datatable>
     </div>
   `
@@ -49,7 +48,7 @@ export class ContextMenuDemoComponent {
 
   rawEvent: MouseEvent;
   contextmenuRow: any;
-  contextmenuHeader: string;
+  contextmenuColumn: any;
 
   constructor() {
     this.fetch((data) => {
@@ -57,27 +56,17 @@ export class ContextMenuDemoComponent {
     });
   }
 
-  onRowContextMenu(contextMenuEvent) {
+  onTableContextMenu(contextMenuEvent) {
     console.log(contextMenuEvent);
 
     this.rawEvent = contextMenuEvent.event;
-    this.contextmenuRow = contextMenuEvent.row;
-    this.contextmenuHeader = undefined;
-
-    contextMenuEvent.event.preventDefault();
-    contextMenuEvent.event.stopPropagation();
-  }
-
-  onHeaderContextMenu(contextMenuEvent) {
-    console.log(contextMenuEvent);
-
-    this.rawEvent = contextMenuEvent.event;
-    this.contextmenuHeader = {
-      name: contextMenuEvent.name,
-      prop: contextMenuEvent.prop
+    if (contextMenuEvent.type == 'body') {
+      this.contextmenuRow = contextMenuEvent.content;
+      this.contextmenuColumn = undefined;
+    } else {
+      this.contextmenuColumn = contextMenuEvent.content;
+      this.contextmenuRow = undefined;
     }
-
-    this.contextmenuRow = undefined;
 
     contextMenuEvent.event.preventDefault();
     contextMenuEvent.event.stopPropagation();

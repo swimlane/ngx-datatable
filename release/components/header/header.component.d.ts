@@ -19,10 +19,6 @@ export declare class DataTableHeaderComponent {
     reorder: EventEmitter<any>;
     resize: EventEmitter<any>;
     select: EventEmitter<any>;
-    headerContextmenu: EventEmitter<{
-        event: MouseEvent;
-        header: string;
-    }>;
     columnsByPin: any;
     columnGroupWidths: any;
     _columns: any[];

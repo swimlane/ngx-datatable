@@ -73,7 +73,7 @@ export class DataTableHeaderCellComponent {
 
   @Output() sort: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
-  @Output() headerContextmenu = new EventEmitter<{ event: MouseEvent, name: string, prop: string }>(false);
+  @Output() columnContextmenu = new EventEmitter<{ event: MouseEvent, column: any }>(false);
 
   @HostBinding('class')
   get columnCssClasses(): any {
@@ -131,9 +131,8 @@ export class DataTableHeaderCellComponent {
 
   @HostListener('contextmenu', ['$event'])
   onContextmenu($event: MouseEvent): void {
-    this.headerContextmenu.emit({ event: $event, name: this.column.name, prop: this.column.prop });
+    this.columnContextmenu.emit({ event: $event, column: this.column });
   }
-
 
   get isCheckboxable(): boolean {
     return this.column.checkboxable && 

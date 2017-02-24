@@ -10,7 +10,7 @@ import {
   setColumnDefaults, throttleable, translateTemplates
 } from '../utils';
 import { ScrollbarHelper } from '../services';
-import { ColumnMode, SortType, SelectionType, TableColumn } from '../types';
+import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
@@ -40,7 +40,7 @@ import { DatatableFooterDirective } from './footer';
         (resize)="onColumnResize($event)"
         (reorder)="onColumnReorder($event)"
         (select)="onHeaderSelect($event)"
-        (headerContextmenu)="headerContextmenu.emit($event)">
+        (columnContextmenu)="onColumnContextmenu($event)">
       </datatable-header>
       <datatable-body
         [rows]="rows"
@@ -66,7 +66,7 @@ import { DatatableFooterDirective } from './footer';
         [selectCheck]="selectCheck"
         (page)="onBodyPage($event)"
         (activate)="activate.emit($event)"
-        (rowContextmenu)="rowContextmenu.emit($event)"
+        (rowContextmenu)="onRowContextmenu($event)"
         (select)="onBodySelect($event)"
         (scroll)="onBodyScroll($event)">
       </datatable-body>
@@ -461,18 +461,13 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   @Output() resize: EventEmitter<any> = new EventEmitter();
 
   /**
-   * The context menu was invoked on a row.
+   * The context menu was invoked on the table.
+   * type indicates whether the header or the body was clicked.
+   * content contains either the column or the row that was clicked.
    *
    * @memberOf DatatableComponent
    */
-  @Output() rowContextmenu = new EventEmitter<{ event: MouseEvent, row: any }>(false);
-
-  /**
-   * The context menu was invoked on a header cell.
-   *
-   * @memberOf DatatableComponent
-   */
-  @Output() headerContextmenu = new EventEmitter<{ event: MouseEvent, name: string, prop: string }>(false);
+  @Output() tableContextmenu = new EventEmitter<{ event: MouseEvent, type: ContextmenuType, content: any }>(false);
 
   /**
    * CSS class applied if the header height if fixed height.
@@ -935,6 +930,28 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
     }
 
     return this.count;
+  }
+
+  /**
+   * The header triggered a contextmenu event.
+   *
+   * @param {*} { event, column }
+   *
+   * @memberOf DatatableComponent
+   */
+  onColumnContextmenu({ event, column }: any): void {
+    this.tableContextmenu.emit({ event: event, type: ContextmenuType.header, content: column });
+  }
+
+  /**
+   * The body triggered a contextmenu event.
+   *
+   * @param {*} { event, row }
+   *
+   * @memberOf DatatableComponent
+   */
+  onRowContextmenu({ event, row }: any): void {
+    this.tableContextmenu.emit({ event: event, type: ContextmenuType.body, content: row });
   }
 
   /**
