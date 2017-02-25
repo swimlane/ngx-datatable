@@ -35,7 +35,7 @@ describe('Drag and drop columns [ Name, Company, Gender ]', () => {
   describe('when the first column is dragged to the third', () => {
 
     beforeEach(() => {
-      page.printColumns();
+      // page.printColumns();
       expect(page.table.columnText(NAME)).toBe('Name');
       expect(page.table.columnText(GENDER)).toBe('Gender');
     });
@@ -43,7 +43,7 @@ describe('Drag and drop columns [ Name, Company, Gender ]', () => {
     it('then it should swap the columns [ Gender, Company, Name ]', () => {
       page.table.drag(NAME, GENDER)
         .then(() => {
-          page.printColumns();
+          // page.printColumns();
           expect(page.table.columnText(NAME)).toBe('Gender');
           expect(page.table.columnText(GENDER)).toBe('Name');
         });

@@ -1,21 +1,22 @@
 import {
   Directive, Output, EventEmitter, ContentChildren,
-  QueryList, KeyValueDiffers, AfterContentInit, OnDestroy
+  QueryList, KeyValueDiffers, AfterContentInit, OnDestroy, Inject
 } from '@angular/core';
-import {DraggableDirective} from './draggable.directive';
+import { DraggableDirective } from './draggable.directive';
+import { DOCUMENT } from '@angular/platform-browser';
 
-@Directive({selector: '[orderable]'})
+@Directive({ selector: '[orderable]' })
 export class OrderableDirective implements AfterContentInit, OnDestroy {
 
   @Output() reorder: EventEmitter<any> = new EventEmitter();
 
-  @ContentChildren(DraggableDirective, {descendants: true})
+  @ContentChildren(DraggableDirective, { descendants: true })
   draggables: QueryList<DraggableDirective>;
 
   positions: any;
   differ: any;
 
-  constructor(differs: KeyValueDiffers) {
+  constructor(differs: KeyValueDiffers, @Inject(DOCUMENT) private document: any) {
     this.differ = differs.find({}).create(null);
   }
 
@@ -37,8 +38,8 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
     const diffs = this.differ.diff(this.createMapDiffs());
 
     if (diffs) {
-      const subscribe = ({currentValue, previousValue}: any) => {
-        unsubscribe({previousValue});
+      const subscribe = ({ currentValue, previousValue }: any) => {
+        unsubscribe({ previousValue });
 
         if (currentValue) {
           currentValue.dragStart.subscribe(this.onDragStart.bind(this));
@@ -46,7 +47,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
         }
       };
 
-      const unsubscribe = ({previousValue}: any) => {
+      const unsubscribe = ({ previousValue }: any) => {
         if (previousValue) {
           previousValue.dragStart.unsubscribe();
           previousValue.dragEnd.unsubscribe();
@@ -66,20 +67,19 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
     for (const dragger of this.draggables.toArray()) {
       const elm = dragger.element;
       let left = parseInt(elm.offsetLeft.toString(), 0);
-      this.positions[dragger.dragModel.prop] = {
+      this.positions[ dragger.dragModel.prop ] = {
         left: left,
         right: left + parseInt(elm.offsetWidth.toString(), 0),
-        index: i++
+        index: i++,
+        element: elm
       };
     }
   }
 
-  onDragEnd({element, model, event}: any) {
-    const newPos = parseInt(element.offsetLeft.toString(), 0);
-    const prevPos = this.positions[model.prop];
+  onDragEnd({ element, model, event }: any) {
+    const prevPos = this.positions[ model.prop ];
 
-    // add the mouseX to be closer to the cursor position when checking the target.
-    let target = this.isTarget(newPos + event.layerX, model);
+    let target = this.isTarget(model, event);
     if (target) {
       this.reorder.emit({
         prevIndex: prevPos.index,
@@ -91,15 +91,16 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
     element.style.left = 'auto';
   }
 
-  isTarget(newPos, model) {
+  isTarget(model, event) {
     let i = 0;
+    let targets = this.document.elementsFromPoint(event.x, event.y);
+
     for (const prop in this.positions) {
       // current column position which throws event.
-      const pos = this.positions[prop];
+      const pos = this.positions[ prop ];
 
-      // current column is not the dragging model
-      // && newPos in bounds
-      if (model.prop != prop && (newPos >= pos.left && newPos <= pos.right)) {
+      // since we drag the inner span, we need to find it in the elements at the cursor
+      if (model.prop != prop && targets.find((el) => el === pos.element)) {
         return {
           pos: pos,
           i: i
@@ -113,7 +114,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
   private createMapDiffs(): { [key: string]: DraggableDirective } {
     return this.draggables.toArray()
       .reduce((acc, curr) => {
-        acc[curr.dragModel.$$id] = curr;
+        acc[ curr.dragModel.$$id ] = curr;
         return acc;
       }, {});
   }
