@@ -9,8 +9,11 @@ import { id } from './id';
  * @param {any[]} columns
  * @returns
  */
-export function setColumnDefaults(columns: any[]) {
+export function setColumnDefaults(columns: any[], override = true) {
   if(!columns) return;
+  if(override) {
+    columns = columns.map(c => Object.assign({}, c));
+  }
 
   for(const column of columns) {
     if(!column.$$id) {
@@ -47,6 +50,8 @@ export function setColumnDefaults(columns: any[]) {
       column.width = 150;
     }
   }
+
+  return columns;
 }
 
 /**
