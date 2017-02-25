@@ -735,7 +735,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * distribution mode and scrollbar offsets.
    *
    * @param {any[]} [columns=this.columns]
-   * @param {number} [forceIdx=false]
+   * @param {number} [forceIdx=-1]
    * @param {boolean} [allowBleed=this.scrollH]
    * @returns {any[]}
    *
