@@ -23,12 +23,14 @@ import { DataTableColumnDirective } from '../columns';
           [resizeEnabled]="column.resizeable"
           (resize)="onColumnResized($event, column)"
           long-press
-          (longPress)="drag = true"
-          (longPressEnd)="drag = false"
+          [pressModel]="column"
+          (longPressStart)="onLongPressStart($event)"
+          (longPressEnd)="onLongPressEnd($event)"
           draggable
-          [dragX]="reorderable && column.draggable && drag"
+          [dragX]="reorderable && column.draggable && column.dragging"
           [dragY]="false"
           [dragModel]="column"
+          [dragEventTarget]="dragEventTarget"
           [headerHeight]="headerHeight"
           [column]="column"
           [sortType]="sortType"
@@ -59,9 +61,11 @@ export class DataTableHeaderComponent {
   @Input() selectionType: SelectionType;
   @Input() reorderable: boolean;
 
+  dragEventTarget: any;
+
   @HostBinding('style.height')
   @Input() set headerHeight(val: any) {
-    if(val !== 'auto') { 
+    if (val !== 'auto') {
       this._headerHeight = `${val}px`;
     } else {
       this._headerHeight = val;
@@ -80,8 +84,8 @@ export class DataTableHeaderComponent {
     this.columnGroupWidths = columnGroupWidths(colsByPin, val);
   }
 
-  get columns(): any[] { 
-    return this._columns; 
+  get columns(): any[] {
+    return this._columns;
   }
 
   @Output() sort: EventEmitter<any> = new EventEmitter();
@@ -94,9 +98,19 @@ export class DataTableHeaderComponent {
   _columns: any[];
   _headerHeight: string;
 
+  onLongPressStart({ event, model }) {
+    model.dragging = true;
+    this.dragEventTarget = event;
+  }
+
+  onLongPressEnd({ event, model }) {
+    model.dragging = false;
+    this.dragEventTarget = event;
+  }
+
   @HostBinding('style.width')
   get headerWidth(): string {
-    if(this.scrollbarH) {
+    if (this.scrollbarH) {
       return this.innerWidth + 'px';
     }
 
@@ -114,7 +128,7 @@ export class DataTableHeaderComponent {
   onColumnResized(width: number, column: DataTableColumnDirective): void {
     if (width <= column.minWidth) {
       width = column.minWidth;
-    } else if(width >= column.maxWidth) {
+    } else if (width >= column.maxWidth) {
       width = column.maxWidth;
     }
 
@@ -148,14 +162,14 @@ export class DataTableHeaderComponent {
 
     const sorts = this.sorts.map((s, i) => {
       s = Object.assign({}, s);
-      if(s.prop === column.prop) idx = i;
+      if (s.prop === column.prop) idx = i;
       return s;
     });
 
     if (newValue === undefined) {
       sorts.splice(idx, 1);
     } else if (prevValue) {
-      sorts[idx].dir = newValue;
+      sorts[ idx ].dir = newValue;
     } else {
       if (this.sortType === SortType.single) {
         sorts.splice(0, this.sorts.length);
@@ -172,12 +186,12 @@ export class DataTableHeaderComponent {
     const offsetX = this.offsetX;
 
     const styles = {
-      width: `${widths[group]}px`
+      width: `${widths[ group ]}px`
     };
 
-    if(group === 'center') {
+    if (group === 'center') {
       translateXY(styles, offsetX * -1, 0);
-    } else if(group === 'right') {
+    } else if (group === 'right') {
       const totalDiff = widths.total - this.innerWidth;
       const offset = totalDiff * -1;
       translateXY(styles, offset, 0);

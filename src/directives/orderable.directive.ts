@@ -74,11 +74,12 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
     }
   }
 
-  onDragEnd({element, model}: any) {
-    const newPos = Math.abs(parseInt(element.offsetLeft.toString(), 0));
+  onDragEnd({element, model, event}: any) {
+    const newPos = parseInt(element.offsetLeft.toString(), 0);
     const prevPos = this.positions[model.prop];
 
-    let target = this.isTarget(newPos, model);
+    // add the mouseX to be closer to the cursor position when checking the target.
+    let target = this.isTarget(newPos + event.layerX, model);
     if (target) {
       this.reorder.emit({
         prevIndex: prevPos.index,

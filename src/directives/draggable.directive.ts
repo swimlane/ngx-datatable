@@ -1,5 +1,5 @@
 import {
-  Directive, ElementRef, HostListener, Input, Output, EventEmitter, OnDestroy
+  Directive, ElementRef, Input, Output, EventEmitter, OnDestroy, OnChanges
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -14,8 +14,9 @@ import 'rxjs/add/operator/takeUntil';
  *
  */
 @Directive({ selector: '[draggable]' })
-export class DraggableDirective implements OnDestroy {
+export class DraggableDirective implements OnDestroy, OnChanges {
 
+  @Input() dragEventTarget: any;
   @Input() dragModel: any;
   @Input() dragX: boolean = true;
   @Input() dragY: boolean = true;
@@ -52,7 +53,12 @@ export class DraggableDirective implements OnDestroy {
     }
   }
 
-  @HostListener('mousedown', [ '$event' ])
+  ngOnChanges(changes) {
+    if(changes['dragEventTarget'] && changes['dragEventTarget'].currentValue && this.dragModel.dragging) {
+      this.onMousedown(changes['dragEventTarget'].currentValue)
+    }
+  }
+
   onMousedown(event: MouseEvent): void {
     if ((<HTMLElement>event.target).classList.contains('draggable')) {
       event.preventDefault();
