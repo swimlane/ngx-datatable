@@ -935,8 +935,10 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
       return Object.assign({}, c);
     });
 
-    cols.splice(prevValue, 1);
-    cols.splice(newValue, 0, column);
+    let prevCol = cols[newValue];
+    cols[newValue] = column;
+    cols[prevValue] = prevCol;
+
     this.columns = cols;
 
     this.reorder.emit({
