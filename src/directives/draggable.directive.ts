@@ -33,9 +33,7 @@ export class DraggableDirective implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subscription) {
-      this._destroySubscription();
-    }
+    this._destroySubscription();
   }
 
   onMouseup(event: MouseEvent): void {
@@ -54,9 +52,9 @@ export class DraggableDirective implements OnDestroy {
     }
   }
 
-  @HostListener('mousedown', ['$event'])
+  @HostListener('mousedown', [ '$event' ])
   onMousedown(event: MouseEvent): void {
-    if ( (<HTMLElement>event.target).classList.contains('draggable')) {
+    if ((<HTMLElement>event.target).classList.contains('draggable')) {
       event.preventDefault();
       this.isDragging = true;
 
@@ -80,7 +78,7 @@ export class DraggableDirective implements OnDestroy {
     }
   }
 
-  move(event: MouseEvent, mouseDownPos: {x: number, y: number }): void {
+  move(event: MouseEvent, mouseDownPos: { x: number, y: number }): void {
     if (!this.isDragging) return;
 
     const x = event.clientX - mouseDownPos.x;
@@ -101,7 +99,9 @@ export class DraggableDirective implements OnDestroy {
   }
 
   private _destroySubscription() {
-    this.subscription.unsubscribe();
-    this.subscription = undefined;
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+      this.subscription = undefined;
+    }
   }
 }
