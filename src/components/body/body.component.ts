@@ -1,4 +1,4 @@
-import {
+  import {
   Component, Output, EventEmitter, Input, HostBinding, ViewChild, OnInit, OnDestroy
 } from '@angular/core';
 import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '../../utils';
@@ -298,7 +298,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     let offset = this.indexes.first / this.pageSize;
 
     if(direction === 'up') {
-      offset = Math.floor(offset);
+      offset = Math.ceil(offset);
     } else if(direction === 'down') {
       offset = Math.ceil(offset);
     }
