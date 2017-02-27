@@ -96,8 +96,10 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   @Input() set rows(val: any) {
-    // auto sort on new updates
     if (!this.externalSorting) {
+      // store original rows (so we can return to the default sort)
+      this._origRows = val;
+      // auto sort on new updates
       val = sortRows(val, this.columns, this.sorts);
     }
 
@@ -651,6 +653,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   _count: number = 0;
 
   _rows: any[];
+  _origRows: any[];
   _columns: any[];
   _columnTemplates: QueryList<DataTableColumnDirective>;
 
@@ -960,7 +963,12 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
     // the rows again on the 'push' detection...
     if (this.externalSorting === false) {
       // don't use normal setter so we don't resort
-      this._rows = sortRows(this.rows, this.columns, sorts);
+      if (!sorts || sorts.length === 0) {
+        // restore original (unsorted) rows
+        this._rows = this._origRows;
+      } else {
+        this._rows = sortRows(this.rows, this.columns, sorts);
+      }
     }
 
     this.sorts = sorts;
