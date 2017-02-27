@@ -24,10 +24,7 @@ import {
         (activate)="onActivate($event, ii)">
       </datatable-body-cell>
     </div>
-  `,
-  host: {
-    class: 'datatable-body-row'
-  }
+  `
 })
 export class DataTableBodyRowComponent {
 
@@ -55,18 +52,21 @@ export class DataTableBodyRowComponent {
   @HostBinding('style.height.px')
   @Input() rowHeight: number;
 
-  @HostBinding('class.active')
+  @Input() rowClasses: (row: any) => string|string[];
+
+  @HostBinding('class')
+  get classes(): string {
+    let rowClasses = this.rowClasses ? this.rowClasses(this.row) : [];
+    rowClasses = (Array.isArray(rowClasses) ? rowClasses : [rowClasses]) as string[];
+    return [
+      'datatable-body-row',
+      ...rowClasses,
+      ...(this.isSelected ? ['active'] : []),
+      ...(this.row.$$index % 2 === 0 ? ['datatable-row-even'] : ['datatable-row-odd'])
+    ].filter(c => !!c).join(' ');
+  }
+
   @Input() isSelected: boolean;
-
-  @HostBinding('class.datatable-row-even')
-  get isEvenRow(): boolean {
-    return this.row.$$index % 2 === 0;
-  }
-
-  @HostBinding('class.datatable-row-odd')
-  get isOddRow(): boolean {
-    return this.row.$$index % 2 !== 0;
-  }
 
   @HostBinding('style.width.px')
   get columnsTotalWidths(): string {

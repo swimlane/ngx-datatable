@@ -46,6 +46,7 @@ import { DatatableRowDetailDirective } from './row-detail';
         [loadingIndicator]="loadingIndicator"
         [rowHeight]="rowHeight"
         [rowCount]="rowCount"
+        [rowClasses]="rowClasses"
         [offset]="offset"
         [trackByProp]="trackByProp"
         [columns]="columns"
@@ -176,6 +177,14 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   @Input() rowHeight: number = 30;
+
+  /**
+   * A function that returns CSS classes for the given row.
+   *
+   * @type {*}
+   * @memberOf DatatableComponent
+   */
+  @Input() rowClasses: (row: any) => string|string[];
 
   /**
    * Type of column width distribution formula.
@@ -368,8 +377,8 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * A boolean/function you can use to check whether you want
    * to select a particular row based on a criteria. Example:
    *
-   *    (selection) => { 
-   *      return selection !== 'Ethel Price'; 
+   *    (selection) => {
+   *      return selection !== 'Ethel Price';
    *    }
    *
    * @type {*}
