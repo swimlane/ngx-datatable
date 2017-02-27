@@ -1,4 +1,4 @@
-  import {
+import {
   Component, Output, EventEmitter, Input, HostBinding, ViewChild, OnInit, OnDestroy
 } from '@angular/core';
 import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '../../utils';
