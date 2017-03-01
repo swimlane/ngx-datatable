@@ -14,7 +14,7 @@
 <!-- Describe what the behavior would be without the bug. -->
 
 **Reproduction of the problem**
-<!-- If the current behavior is a bug or you can illustrate your feature request better with an example, please provide the steps to reproduce and if possible a minimal demo of the problem via https://plnkr.co or similar (you can use this template as a starting point: http://plnkr.co/edit/TLx2vYlCTLsqcLwvWafd). -->
+<!-- If the current behavior is a bug or you can illustrate your feature request better with an example, please provide the steps to reproduce and if possible a minimal demo of the problem via https://plnkr.co or similar (you can use this template as a starting point: http://plnkr.co/edit/vtAo2zzWFn8kFOGRH88r). -->
 
 **What is the motivation / use case for changing the behavior?**
 <!-- Describe the motivation or the concrete use case -->
