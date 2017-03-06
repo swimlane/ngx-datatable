@@ -2,6 +2,7 @@
 
 ## 7.0.0
 - BREAKING: Update to Angular4!
+- Feature: Row classes (#571), (#348)
 - Bug: Show first page after sorting (#553)
 - Chore: Upgrade misc deps and lint fixes
 
