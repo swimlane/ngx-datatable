@@ -248,20 +248,12 @@ export class View_DataTablePagerComponent0 extends import2.AppView<import0.DataT
   /*private*/ _expr_42:any;
   /*private*/ _expr_43:any;
   /*private*/ _expr_44:any;
-  /*private*/ _expr_45:any;
-  /*private*/ _expr_46:any;
-  /*private*/ _expr_47:any;
-  /*private*/ _expr_48:any;
   constructor(viewUtils:import3.ViewUtils,parentView:import2.AppView<any>,parentIndex:number,parentElement:any) {
     super(View_DataTablePagerComponent0,renderType_DataTablePagerComponent,import6.ViewType.COMPONENT,viewUtils,parentView,parentIndex,parentElement,import7.ChangeDetectorStatus.CheckOnce);
     this._expr_41 = import1.UNINITIALIZED;
     this._expr_42 = import1.UNINITIALIZED;
     this._expr_43 = import1.UNINITIALIZED;
     this._expr_44 = import1.UNINITIALIZED;
-    this._expr_45 = import1.UNINITIALIZED;
-    this._expr_46 = import1.UNINITIALIZED;
-    this._expr_47 = import1.UNINITIALIZED;
-    this._expr_48 = import1.UNINITIALIZED;
   }
   createInternal(rootSelector:string):import8.ComponentRef<any> {
     const parentRenderNode:any = this.renderer.createViewRoot(this.parentElement);
@@ -272,7 +264,7 @@ export class View_DataTablePagerComponent0 extends import2.AppView<import0.DataT
     this._text_4 = this.renderer.createText(this._el_3,'\n        ',(null as any));
     this._el_5 = import3.createRenderElement(this.renderer,this._el_3,'a',new import3.InlineArray2(2,'href','javascript:void(0)'),(null as any));
     this._text_6 = this.renderer.createText(this._el_5,'\n          ',(null as any));
-    this._el_7 = import3.createRenderElement(this.renderer,this._el_5,'i',import3.EMPTY_INLINE_ARRAY,(null as any));
+    this._el_7 = import3.createRenderElement(this.renderer,this._el_5,'i',new import3.InlineArray4(4,'aria-hidden','true','class','fa fa-fast-backward'),(null as any));
     this._text_8 = this.renderer.createText(this._el_5,'\n        ',(null as any));
     this._text_9 = this.renderer.createText(this._el_3,'\n      ',(null as any));
     this._text_10 = this.renderer.createText(this._el_1,'\n      ',(null as any));
@@ -280,7 +272,7 @@ export class View_DataTablePagerComponent0 extends import2.AppView<import0.DataT
     this._text_12 = this.renderer.createText(this._el_11,'\n        ',(null as any));
     this._el_13 = import3.createRenderElement(this.renderer,this._el_11,'a',new import3.InlineArray2(2,'href','javascript:void(0)'),(null as any));
     this._text_14 = this.renderer.createText(this._el_13,'\n          ',(null as any));
-    this._el_15 = import3.createRenderElement(this.renderer,this._el_13,'i',import3.EMPTY_INLINE_ARRAY,(null as any));
+    this._el_15 = import3.createRenderElement(this.renderer,this._el_13,'i',new import3.InlineArray4(4,'aria-hidden','true','class','fa fa-step-backward'),(null as any));
     this._text_16 = this.renderer.createText(this._el_13,'\n        ',(null as any));
     this._text_17 = this.renderer.createText(this._el_11,'\n      ',(null as any));
     this._text_18 = this.renderer.createText(this._el_1,'\n      ',(null as any));
@@ -293,7 +285,7 @@ export class View_DataTablePagerComponent0 extends import2.AppView<import0.DataT
     this._text_22 = this.renderer.createText(this._el_21,'\n        ',(null as any));
     this._el_23 = import3.createRenderElement(this.renderer,this._el_21,'a',new import3.InlineArray2(2,'href','javascript:void(0)'),(null as any));
     this._text_24 = this.renderer.createText(this._el_23,'\n          ',(null as any));
-    this._el_25 = import3.createRenderElement(this.renderer,this._el_23,'i',import3.EMPTY_INLINE_ARRAY,(null as any));
+    this._el_25 = import3.createRenderElement(this.renderer,this._el_23,'i',new import3.InlineArray4(4,'aria-hidden','true','class','fa fa-step-forward'),(null as any));
     this._text_26 = this.renderer.createText(this._el_23,'\n        ',(null as any));
     this._text_27 = this.renderer.createText(this._el_21,'\n      ',(null as any));
     this._text_28 = this.renderer.createText(this._el_1,'\n      ',(null as any));
@@ -301,7 +293,7 @@ export class View_DataTablePagerComponent0 extends import2.AppView<import0.DataT
     this._text_30 = this.renderer.createText(this._el_29,'\n        ',(null as any));
     this._el_31 = import3.createRenderElement(this.renderer,this._el_29,'a',new import3.InlineArray2(2,'href','javascript:void(0)'),(null as any));
     this._text_32 = this.renderer.createText(this._el_31,'\n          ',(null as any));
-    this._el_33 = import3.createRenderElement(this.renderer,this._el_31,'i',import3.EMPTY_INLINE_ARRAY,(null as any));
+    this._el_33 = import3.createRenderElement(this.renderer,this._el_31,'i',new import3.InlineArray4(4,'aria-hidden','true','class','fa fa-fast-forward'),(null as any));
     this._text_34 = this.renderer.createText(this._el_31,'\n        ',(null as any));
     this._text_35 = this.renderer.createText(this._el_29,'\n      ',(null as any));
     this._text_36 = this.renderer.createText(this._el_1,'\n    ',(null as any));
@@ -374,40 +366,20 @@ export class View_DataTablePagerComponent0 extends import2.AppView<import0.DataT
       this.renderer.setElementClass(this._el_3,'disabled',currVal_41);
       this._expr_41 = currVal_41;
     }
-    const currVal_42:any = import3.inlineInterpolate(1,'',this.context.pagerPreviousIcon,'');
+    const currVal_42:boolean = !this.context.canPrevious();
     if (import3.checkBinding(throwOnChange,this._expr_42,currVal_42)) {
-      this.renderer.setElementProperty(this._el_7,'className',currVal_42);
+      this.renderer.setElementClass(this._el_11,'disabled',currVal_42);
       this._expr_42 = currVal_42;
     }
-    const currVal_43:boolean = !this.context.canPrevious();
+    const currVal_43:boolean = !this.context.canNext();
     if (import3.checkBinding(throwOnChange,this._expr_43,currVal_43)) {
-      this.renderer.setElementClass(this._el_11,'disabled',currVal_43);
+      this.renderer.setElementClass(this._el_21,'disabled',currVal_43);
       this._expr_43 = currVal_43;
     }
-    const currVal_44:any = import3.inlineInterpolate(1,'',this.context.pagerLeftArrowIcon,'');
+    const currVal_44:boolean = !this.context.canNext();
     if (import3.checkBinding(throwOnChange,this._expr_44,currVal_44)) {
-      this.renderer.setElementProperty(this._el_15,'className',currVal_44);
+      this.renderer.setElementClass(this._el_29,'disabled',currVal_44);
       this._expr_44 = currVal_44;
-    }
-    const currVal_45:boolean = !this.context.canNext();
-    if (import3.checkBinding(throwOnChange,this._expr_45,currVal_45)) {
-      this.renderer.setElementClass(this._el_21,'disabled',currVal_45);
-      this._expr_45 = currVal_45;
-    }
-    const currVal_46:any = import3.inlineInterpolate(1,'',this.context.pagerRightArrowIcon,'');
-    if (import3.checkBinding(throwOnChange,this._expr_46,currVal_46)) {
-      this.renderer.setElementProperty(this._el_25,'className',currVal_46);
-      this._expr_46 = currVal_46;
-    }
-    const currVal_47:boolean = !this.context.canNext();
-    if (import3.checkBinding(throwOnChange,this._expr_47,currVal_47)) {
-      this.renderer.setElementClass(this._el_29,'disabled',currVal_47);
-      this._expr_47 = currVal_47;
-    }
-    const currVal_48:any = import3.inlineInterpolate(1,'',this.context.pagerNextIcon,'');
-    if (import3.checkBinding(throwOnChange,this._expr_48,currVal_48)) {
-      this.renderer.setElementProperty(this._el_33,'className',currVal_48);
-      this._expr_48 = currVal_48;
     }
   }
   destroyInternal():void {

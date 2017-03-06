@@ -41,6 +41,7 @@ import { DatatableRowDetailDirective } from './row-detail';
       </datatable-header>
       <datatable-body
         [rows]="rows"
+        [externalPaging]="externalPaging"
         [scrollbarV]="scrollbarV"
         [scrollbarH]="scrollbarH"
         [loadingIndicator]="loadingIndicator"

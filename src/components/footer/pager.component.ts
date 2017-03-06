@@ -10,14 +10,14 @@ import {
         <a
           href="javascript:void(0)"
           (click)="selectPage(1)">
-          <i class="{{pagerPreviousIcon}}"></i>
+          <i class="fa fa-fast-backward" aria-hidden="true"></i>
         </a>
       </li>
       <li [class.disabled]="!canPrevious()">
         <a
           href="javascript:void(0)"
           (click)="prevPage()">
-          <i class="{{pagerLeftArrowIcon}}"></i>
+          <i class="fa fa-step-backward" aria-hidden="true"></i>
         </a>
       </li>
       <li
@@ -34,14 +34,14 @@ import {
         <a
           href="javascript:void(0)"
           (click)="nextPage()">
-          <i class="{{pagerRightArrowIcon}}"></i>
+          <i class="fa fa-step-forward" aria-hidden="true"></i>
         </a>
       </li>
       <li [class.disabled]="!canNext()">
         <a
           href="javascript:void(0)"
           (click)="selectPage(totalPages)">
-          <i class="{{pagerNextIcon}}"></i>
+          <i class="fa fa-fast-forward" aria-hidden="true"></i>
         </a>
       </li>
     </ul>

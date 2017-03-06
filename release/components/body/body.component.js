@@ -335,8 +335,14 @@ var DataTableBodyComponent = (function () {
             last = this.rowHeightsCache.getRowIndex(height + this.offsetY) + 1;
         }
         else {
-            first = Math.max(this.offset * this.pageSize, 0);
-            last = Math.min((first + this.pageSize), this.rowCount);
+            if (this.externalPaging) {
+                first = 0;
+                last = this.pageSize;
+            }
+            else {
+                first = Math.max(this.offset * this.pageSize, 0);
+                last = Math.min((first + this.pageSize), this.rowCount);
+            }
         }
         this.indexes = { first: first, last: last };
     };
@@ -450,6 +456,7 @@ var DataTableBodyComponent = (function () {
     /** @nocollapse */
     DataTableBodyComponent.ctorParameters = function () { return []; };
     DataTableBodyComponent.propDecorators = {
+        'externalPaging': [{ type: core_1.Input },],
         'scrollbarV': [{ type: core_1.Input },],
         'scrollbarH': [{ type: core_1.Input },],
         'loadingIndicator': [{ type: core_1.Input },],
