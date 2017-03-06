@@ -24,10 +24,7 @@ import {
         (activate)="onActivate($event, ii)">
       </datatable-body-cell>
     </div>
-  `,
-  host: {
-    class: 'datatable-body-row'
-  }
+  `
 })
 export class DataTableBodyRowComponent {
 
@@ -49,24 +46,35 @@ export class DataTableBodyRowComponent {
     return this._innerWidth;
   }
 
+  @Input() rowClass: any;
   @Input() row: any;
   @Input() offsetX: number;
+  @Input() isSelected: boolean;
+
+  @HostBinding('class')
+  get cssClass() {
+    let cls = 'datatable-body-row';
+    if(this.isSelected) cls += ' active';
+    if(this.row.$$index % 2 !== 0) cls += ' datatable-row-odd';
+    if(this.row.$$index % 2 === 0) cls += ' datatable-row-even';
+
+    if(this.rowClass) {
+      const res = this.rowClass(this.row);
+      if(typeof res === 'string') {
+        cls += res;
+      } else if(typeof res === 'object') {
+        const keys = Object.keys(res);
+        for(const k of keys) {
+          if(res[k] === true) cls += ` ${k}`;
+        }
+      }
+    }
+
+    return cls;
+  }
 
   @HostBinding('style.height.px')
   @Input() rowHeight: number;
-
-  @HostBinding('class.active')
-  @Input() isSelected: boolean;
-
-  @HostBinding('class.datatable-row-even')
-  get isEvenRow(): boolean {
-    return this.row.$$index % 2 === 0;
-  }
-
-  @HostBinding('class.datatable-row-odd')
-  get isOddRow(): boolean {
-    return this.row.$$index % 2 !== 0;
-  }
 
   @HostBinding('style.width.px')
   get columnsTotalWidths(): string {

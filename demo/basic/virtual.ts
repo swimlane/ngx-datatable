@@ -12,9 +12,10 @@ import { Component } from '@angular/core';
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="50"
+        [rowClass]="getRowClass"
         [scrollbarV]="true"
         (page)="onPage($event)">
-        <ngx-datatable-column name="Name" width="200">
+        <ngx-datatable-column name="Name" width="300">
           <ng-template let-value="value" ngx-datatable-cell-template>
             <strong>{{value}}</strong>
           </ng-template>
@@ -58,6 +59,12 @@ export class VirtualScrollComponent {
     };
 
     req.send();
+  }
+
+  getRowClass(row) {
+    return {
+      'age-is-ten': (row.age % 10) === 0
+    };
   }
 
 }

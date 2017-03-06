@@ -58,6 +58,7 @@ import { DatatableRowDetailDirective } from './row-detail';
         [selectionType]="selectionType"
         [emptyMessage]="messages.emptyMessage"
         [rowIdentity]="rowIdentity"
+        [rowClass]="rowClass"
         [selectCheck]="selectCheck"
         (page)="onBodyPage($event)"
         (activate)="activate.emit($event)"
@@ -363,6 +364,18 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   @Input() rowIdentity: (x: any) => any = ((x: any) => x);
+
+  /**
+   * Row specific classes. 
+   * Similar implementation to ngClass.
+   * 
+   *  [rowClass]="'first second'"
+   *  [rowClass]="{ 'first': true, 'second': true, 'third': false }"
+   * 
+   * @type {*}
+   * @memberOf DatatableComponent
+   */
+  @Input() rowClass: any;
 
   /**
    * A boolean/function you can use to check whether you want

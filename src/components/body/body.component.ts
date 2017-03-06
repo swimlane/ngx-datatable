@@ -44,6 +44,7 @@ import { ScrollerComponent } from './scroller.component';
             [columns]="columns"
             [rowHeight]="rowHeight"
             [row]="row"
+            [rowClass]="rowClass"
             (activate)="selector.onActivate($event, i)">
           </datatable-body-row>
         </datatable-row-wrapper>
@@ -73,6 +74,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() rowDetail: any;
   @Input() selectCheck: any;
   @Input() trackByProp: string;
+  @Input() rowClass: any;
 
   @Input() set pageSize(val: number) {
     this._pageSize = val;
