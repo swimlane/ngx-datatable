@@ -11,7 +11,7 @@ export class DataTableColumnDirective {
   @Input() frozenRight: any;
   @Input() flexGrow: number;
   @Input() resizeable: boolean;
-  @Input() comparator: Function;
+  @Input() comparator: any;
   @Input() pipe: any;
   @Input() sortable: boolean;
   @Input() draggable: boolean;

@@ -15,14 +15,14 @@ import { Component } from '@angular/core';
         [scrollbarV]="true"
         (page)="onPage($event)">
         <ngx-datatable-column name="Name" width="200">
-          <template let-value="value" ngx-datatable-cell-template>
+          <ng-template let-value="value" ngx-datatable-cell-template>
             <strong>{{value}}</strong>
-          </template>
+          </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Gender" width="300">
-          <template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
             <i [innerHTML]="row['name']"></i> and <i>{{value}}</i>
-          </template>
+          </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Age" width="80">
         </ngx-datatable-column>

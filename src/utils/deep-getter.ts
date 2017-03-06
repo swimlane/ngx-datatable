@@ -3,7 +3,7 @@
  * @param {object} obj
  * @param {string} path
  */
-export function deepValueGetter(obj: Object, path: string) {
+export function deepValueGetter(obj: object, path: string) {
   if(!obj || !path) return obj;
 
   let current = obj;

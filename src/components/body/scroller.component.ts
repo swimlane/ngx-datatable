@@ -31,7 +31,7 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   prevScrollXPos: number = 0;
   element: any;
   parentElement: any;
-  onScrollListener: Function;
+  onScrollListener: any;
 
   constructor(element: ElementRef, private renderer: Renderer) {
     this.element = element.nativeElement;

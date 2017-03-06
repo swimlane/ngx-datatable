@@ -13,19 +13,19 @@ import { Component } from '@angular/core';
         [rowHeight]="'auto'"
         [rows]="rows">
         <ngx-datatable-column name="Name" [width]="100">
-          <template let-value="value" ngx-datatable-cell-template>
+          <ng-template let-value="value" ngx-datatable-cell-template>
             {{value}}
-          </template>
+          </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Gender" [width]="100">
-          <template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
             {{value}}
-          </template>
+          </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Age" [width]="300">
-          <template let-value="value" ngx-datatable-cell-template>
+          <ng-template let-value="value" ngx-datatable-cell-template>
             {{value}}
-          </template>
+          </ng-template>
         </ngx-datatable-column>
       </ngx-datatable>
     </div>

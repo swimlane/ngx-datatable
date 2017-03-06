@@ -10,11 +10,11 @@ import {
       *ngIf="expanded"
       [style.height.px]="detailRowHeight" 
       class="datatable-row-detail">
-      <template
+      <ng-template
         *ngIf="rowDetail && rowDetail.template"
         [ngTemplateOutlet]="rowDetail.template"
         [ngOutletContext]="{ row: row }">
-      </template>
+      </ng-template>
     </div>
   `,
   host: {

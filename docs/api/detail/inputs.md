@@ -4,12 +4,12 @@
 Template to use in the detail row. Example:
 
 ```
-<template let-row="row">
+<ng-template let-row="row">
   <div>
     <div><strong>Address</strong></div>
     <div>{{row.address.city}}, {{row.address.state}}</div>
   </div>
-</template>
+</ng-template>
 ```
 
 ### `rowHeight`: `Number`
