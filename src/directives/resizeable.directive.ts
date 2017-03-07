@@ -36,9 +36,7 @@ export class ResizeableDirective implements OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    if (this.subscription) {
-      this._destroySubscription();
-    }
+    this._destroySubscription();
   }
 
   onMouseup(): void {
@@ -50,7 +48,7 @@ export class ResizeableDirective implements OnDestroy, AfterViewInit {
     }
   }
 
-  @HostListener('mousedown', ['$event'])
+  @HostListener('mousedown', [ '$event' ])
   onMousedown(event: MouseEvent): void {
     const isHandle = (<HTMLElement>(event.target)).classList.contains('resize-handle');
     const initialWidth = this.element.clientWidth;
@@ -85,8 +83,10 @@ export class ResizeableDirective implements OnDestroy, AfterViewInit {
   }
 
   private _destroySubscription() {
-    this.subscription.unsubscribe();
-    this.subscription = undefined;
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+      this.subscription = undefined;
+    }
   }
 
 }

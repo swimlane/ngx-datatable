@@ -1,5 +1,5 @@
 import {
-  Directive, ElementRef, HostListener, Input, Output, EventEmitter, OnDestroy
+  Directive, ElementRef, Input, Output, EventEmitter, OnDestroy, OnChanges
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -14,8 +14,9 @@ import 'rxjs/add/operator/takeUntil';
  *
  */
 @Directive({ selector: '[draggable]' })
-export class DraggableDirective implements OnDestroy {
+export class DraggableDirective implements OnDestroy, OnChanges {
 
+  @Input() dragEventTarget: any;
   @Input() dragModel: any;
   @Input() dragX: boolean = true;
   @Input() dragY: boolean = true;
@@ -33,9 +34,7 @@ export class DraggableDirective implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subscription) {
-      this._destroySubscription();
-    }
+    this._destroySubscription();
   }
 
   onMouseup(event: MouseEvent): void {
@@ -54,9 +53,14 @@ export class DraggableDirective implements OnDestroy {
     }
   }
 
-  @HostListener('mousedown', ['$event'])
+  ngOnChanges(changes) {
+    if(changes['dragEventTarget'] && changes['dragEventTarget'].currentValue && this.dragModel.dragging) {
+      this.onMousedown(changes['dragEventTarget'].currentValue)
+    }
+  }
+
   onMousedown(event: MouseEvent): void {
-    if ( (<HTMLElement>event.target).classList.contains('draggable')) {
+    if ((<HTMLElement>event.target).classList.contains('draggable')) {
       event.preventDefault();
       this.isDragging = true;
 
@@ -80,7 +84,7 @@ export class DraggableDirective implements OnDestroy {
     }
   }
 
-  move(event: MouseEvent, mouseDownPos: {x: number, y: number }): void {
+  move(event: MouseEvent, mouseDownPos: { x: number, y: number }): void {
     if (!this.isDragging) return;
 
     const x = event.clientX - mouseDownPos.x;
@@ -101,7 +105,9 @@ export class DraggableDirective implements OnDestroy {
   }
 
   private _destroySubscription() {
-    this.subscription.unsubscribe();
-    this.subscription = undefined;
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+      this.subscription = undefined;
+    }
   }
 }
