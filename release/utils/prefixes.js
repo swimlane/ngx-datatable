@@ -1,5 +1,6 @@
 "use strict";
-var camel_case_1 = require('./camel-case');
+Object.defineProperty(exports, "__esModule", { value: true });
+var camel_case_1 = require("./camel-case");
 var cache = {};
 var testStyle = document.createElement('div').style;
 // Get Prefix

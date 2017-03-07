@@ -2,12 +2,12 @@ import { ElementRef, EventEmitter } from '@angular/core';
 export declare class DataTableBodyRowComponent {
     columns: any[];
     innerWidth: number;
+    rowClass: any;
     row: any;
     offsetX: number;
-    rowHeight: number;
     isSelected: boolean;
-    readonly isEvenRow: boolean;
-    readonly isOddRow: boolean;
+    readonly cssClass: string;
+    rowHeight: number;
     readonly columnsTotalWidths: string;
     activate: EventEmitter<any>;
     element: any;

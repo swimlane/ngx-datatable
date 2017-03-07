@@ -1,7 +1,8 @@
 "use strict";
-var core_1 = require('@angular/core');
-var Observable_1 = require('rxjs/Observable');
-require('rxjs/add/operator/takeUntil');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var Observable_1 = require("rxjs/Observable");
+require("rxjs/add/operator/takeUntil");
 var ResizeableDirective = (function () {
     function ResizeableDirective(element) {
         this.resizeEnabled = true;
@@ -17,9 +18,7 @@ var ResizeableDirective = (function () {
         }
     };
     ResizeableDirective.prototype.ngOnDestroy = function () {
-        if (this.subscription) {
-            this._destroySubscription();
-        }
+        this._destroySubscription();
     };
     ResizeableDirective.prototype.onMouseup = function () {
         this.resizing = false;
@@ -55,29 +54,31 @@ var ResizeableDirective = (function () {
         }
     };
     ResizeableDirective.prototype._destroySubscription = function () {
-        this.subscription.unsubscribe();
-        this.subscription = undefined;
-    };
-    ResizeableDirective.decorators = [
-        { type: core_1.Directive, args: [{
-                    selector: '[resizeable]',
-                    host: {
-                        '[class.resizeable]': 'resizeEnabled'
-                    }
-                },] },
-    ];
-    /** @nocollapse */
-    ResizeableDirective.ctorParameters = function () { return [
-        { type: core_1.ElementRef, },
-    ]; };
-    ResizeableDirective.propDecorators = {
-        'resizeEnabled': [{ type: core_1.Input },],
-        'minWidth': [{ type: core_1.Input },],
-        'maxWidth': [{ type: core_1.Input },],
-        'resize': [{ type: core_1.Output },],
-        'onMousedown': [{ type: core_1.HostListener, args: ['mousedown', ['$event'],] },],
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+            this.subscription = undefined;
+        }
     };
     return ResizeableDirective;
 }());
+ResizeableDirective.decorators = [
+    { type: core_1.Directive, args: [{
+                selector: '[resizeable]',
+                host: {
+                    '[class.resizeable]': 'resizeEnabled'
+                }
+            },] },
+];
+/** @nocollapse */
+ResizeableDirective.ctorParameters = function () { return [
+    { type: core_1.ElementRef, },
+]; };
+ResizeableDirective.propDecorators = {
+    'resizeEnabled': [{ type: core_1.Input },],
+    'minWidth': [{ type: core_1.Input },],
+    'maxWidth': [{ type: core_1.Input },],
+    'resize': [{ type: core_1.Output },],
+    'onMousedown': [{ type: core_1.HostListener, args: ['mousedown', ['$event'],] },],
+};
 exports.ResizeableDirective = ResizeableDirective;
 //# sourceMappingURL=resizeable.directive.js.map

@@ -1,6 +1,7 @@
 "use strict";
-var core_1 = require('@angular/core');
-var utils_1 = require('../../utils');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var utils_1 = require("../../utils");
 var DataTableBodyRowComponent = (function () {
     function DataTableBodyRowComponent(element) {
         this.activate = new core_1.EventEmitter();
@@ -28,16 +29,30 @@ var DataTableBodyRowComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(DataTableBodyRowComponent.prototype, "isEvenRow", {
+    Object.defineProperty(DataTableBodyRowComponent.prototype, "cssClass", {
         get: function () {
-            return this.row.$$index % 2 === 0;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(DataTableBodyRowComponent.prototype, "isOddRow", {
-        get: function () {
-            return this.row.$$index % 2 !== 0;
+            var cls = 'datatable-body-row';
+            if (this.isSelected)
+                cls += ' active';
+            if (this.row.$$index % 2 !== 0)
+                cls += ' datatable-row-odd';
+            if (this.row.$$index % 2 === 0)
+                cls += ' datatable-row-even';
+            if (this.rowClass) {
+                var res = this.rowClass(this.row);
+                if (typeof res === 'string') {
+                    cls += res;
+                }
+                else if (typeof res === 'object') {
+                    var keys = Object.keys(res);
+                    for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
+                        var k = keys_1[_i];
+                        if (res[k] === true)
+                            cls += " " + k;
+                    }
+                }
+            }
+            return cls;
         },
         enumerable: true,
         configurable: true
@@ -103,33 +118,30 @@ var DataTableBodyRowComponent = (function () {
         this.columnsByPin = utils_1.columnsByPinArr(val);
         this.columnGroupWidths = utils_1.columnGroupWidths(colsByPin, val);
     };
-    DataTableBodyRowComponent.decorators = [
-        { type: core_1.Component, args: [{
-                    selector: 'datatable-body-row',
-                    template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: trackByGroups\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [isSelected]=\"isSelected\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>\n  ",
-                    host: {
-                        class: 'datatable-body-row'
-                    }
-                },] },
-    ];
-    /** @nocollapse */
-    DataTableBodyRowComponent.ctorParameters = function () { return [
-        { type: core_1.ElementRef, },
-    ]; };
-    DataTableBodyRowComponent.propDecorators = {
-        'columns': [{ type: core_1.Input },],
-        'innerWidth': [{ type: core_1.Input },],
-        'row': [{ type: core_1.Input },],
-        'offsetX': [{ type: core_1.Input },],
-        'rowHeight': [{ type: core_1.HostBinding, args: ['style.height.px',] }, { type: core_1.Input },],
-        'isSelected': [{ type: core_1.HostBinding, args: ['class.active',] }, { type: core_1.Input },],
-        'isEvenRow': [{ type: core_1.HostBinding, args: ['class.datatable-row-even',] },],
-        'isOddRow': [{ type: core_1.HostBinding, args: ['class.datatable-row-odd',] },],
-        'columnsTotalWidths': [{ type: core_1.HostBinding, args: ['style.width.px',] },],
-        'activate': [{ type: core_1.Output },],
-        'onKeyDown': [{ type: core_1.HostListener, args: ['keydown', ['$event'],] },],
-    };
     return DataTableBodyRowComponent;
 }());
+DataTableBodyRowComponent.decorators = [
+    { type: core_1.Component, args: [{
+                selector: 'datatable-body-row',
+                template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: trackByGroups\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [isSelected]=\"isSelected\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>\n  "
+            },] },
+];
+/** @nocollapse */
+DataTableBodyRowComponent.ctorParameters = function () { return [
+    { type: core_1.ElementRef, },
+]; };
+DataTableBodyRowComponent.propDecorators = {
+    'columns': [{ type: core_1.Input },],
+    'innerWidth': [{ type: core_1.Input },],
+    'rowClass': [{ type: core_1.Input },],
+    'row': [{ type: core_1.Input },],
+    'offsetX': [{ type: core_1.Input },],
+    'isSelected': [{ type: core_1.Input },],
+    'cssClass': [{ type: core_1.HostBinding, args: ['class',] },],
+    'rowHeight': [{ type: core_1.HostBinding, args: ['style.height.px',] }, { type: core_1.Input },],
+    'columnsTotalWidths': [{ type: core_1.HostBinding, args: ['style.width.px',] },],
+    'activate': [{ type: core_1.Output },],
+    'onKeyDown': [{ type: core_1.HostListener, args: ['keydown', ['$event'],] },],
+};
 exports.DataTableBodyRowComponent = DataTableBodyRowComponent;
 //# sourceMappingURL=body-row.component.js.map

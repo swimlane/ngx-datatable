@@ -6,7 +6,7 @@ export declare class DataTableColumnDirective {
     frozenRight: any;
     flexGrow: number;
     resizeable: boolean;
-    comparator: Function;
+    comparator: any;
     pipe: any;
     sortable: boolean;
     draggable: boolean;

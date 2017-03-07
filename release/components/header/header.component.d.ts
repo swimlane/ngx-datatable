@@ -12,6 +12,7 @@ export declare class DataTableHeaderComponent {
     allRowsSelected: boolean;
     selectionType: SelectionType;
     reorderable: boolean;
+    dragEventTarget: any;
     headerHeight: any;
     columns: any[];
     sort: EventEmitter<any>;
@@ -22,6 +23,14 @@ export declare class DataTableHeaderComponent {
     columnGroupWidths: any;
     _columns: any[];
     _headerHeight: string;
+    onLongPressStart({event, model}: {
+        event: any;
+        model: any;
+    }): void;
+    onLongPressEnd({event, model}: {
+        event: any;
+        model: any;
+    }): void;
     readonly headerWidth: string;
     trackByGroups(index: number, colGroup: any): any;
     columnTrackingFn(index: number, column: any): any;

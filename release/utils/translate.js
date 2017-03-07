@@ -1,6 +1,7 @@
 "use strict";
-var prefixes_1 = require('./prefixes');
-var camel_case_1 = require('./camel-case');
+Object.defineProperty(exports, "__esModule", { value: true });
+var prefixes_1 = require("./prefixes");
+var camel_case_1 = require("./camel-case");
 // browser detection and prefixing tools
 var transform = prefixes_1.getVendorPrefixedName('transform');
 var backfaceVisibility = prefixes_1.getVendorPrefixedName('backfaceVisibility');

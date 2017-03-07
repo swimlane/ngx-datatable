@@ -1,6 +1,7 @@
 "use strict";
-var core_1 = require('@angular/core');
-var row_detail_template_directive_1 = require('./row-detail-template.directive');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var row_detail_template_directive_1 = require("./row-detail-template.directive");
 var DatatableRowDetailDirective = (function () {
     function DatatableRowDetailDirective() {
         /**
@@ -52,17 +53,17 @@ var DatatableRowDetailDirective = (function () {
             value: false
         });
     };
-    DatatableRowDetailDirective.decorators = [
-        { type: core_1.Directive, args: [{ selector: 'ngx-datatable-row-detail' },] },
-    ];
-    /** @nocollapse */
-    DatatableRowDetailDirective.ctorParameters = function () { return []; };
-    DatatableRowDetailDirective.propDecorators = {
-        'rowHeight': [{ type: core_1.Input },],
-        'template': [{ type: core_1.Input }, { type: core_1.ContentChild, args: [row_detail_template_directive_1.DatatableRowDetailTemplateDirective, { read: core_1.TemplateRef },] },],
-        'toggle': [{ type: core_1.Output },],
-    };
     return DatatableRowDetailDirective;
 }());
+DatatableRowDetailDirective.decorators = [
+    { type: core_1.Directive, args: [{ selector: 'ngx-datatable-row-detail' },] },
+];
+/** @nocollapse */
+DatatableRowDetailDirective.ctorParameters = function () { return []; };
+DatatableRowDetailDirective.propDecorators = {
+    'rowHeight': [{ type: core_1.Input },],
+    'template': [{ type: core_1.Input }, { type: core_1.ContentChild, args: [row_detail_template_directive_1.DatatableRowDetailTemplateDirective, { read: core_1.TemplateRef },] },],
+    'toggle': [{ type: core_1.Output },],
+};
 exports.DatatableRowDetailDirective = DatatableRowDetailDirective;
 //# sourceMappingURL=row-detail.directive.js.map

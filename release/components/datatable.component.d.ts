@@ -1,4 +1,4 @@
-import { ElementRef, EventEmitter, OnInit, QueryList, AfterViewInit, IterableDiffer, DoCheck, KeyValueDiffers } from '@angular/core';
+import { ElementRef, EventEmitter, OnInit, QueryList, AfterViewInit, DoCheck, KeyValueDiffers, KeyValueDiffer } from '@angular/core';
 import { ColumnMode, SortType, SelectionType } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './columns';
@@ -207,6 +207,17 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      */
     rowIdentity: (x: any) => any;
     /**
+     * Row specific classes.
+     * Similar implementation to ngClass.
+     *
+     *  [rowClass]="'first second'"
+     *  [rowClass]="{ 'first': true, 'second': true, 'third': false }"
+     *
+     * @type {*}
+     * @memberOf DatatableComponent
+     */
+    rowClass: any;
+    /**
      * A boolean/function you can use to check whether you want
      * to select a particular row based on a criteria. Example:
      *
@@ -411,7 +422,7 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
     bodyHeight: number;
     rowCount: number;
     offsetX: number;
-    rowDiffer: IterableDiffer;
+    rowDiffer: KeyValueDiffer<{}, {}>;
     _count: number;
     _rows: any[];
     _columns: any[];
@@ -462,7 +473,7 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      * distribution mode and scrollbar offsets.
      *
      * @param {any[]} [columns=this.columns]
-     * @param {number} [forceIdx=false]
+     * @param {number} [forceIdx=-1]
      * @param {boolean} [allowBleed=this.scrollH]
      * @returns {any[]}
      *

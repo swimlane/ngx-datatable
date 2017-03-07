@@ -1,7 +1,8 @@
 "use strict";
-var core_1 = require('@angular/core');
-var Observable_1 = require('rxjs/Observable');
-require('rxjs/add/operator/takeUntil');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var Observable_1 = require("rxjs/Observable");
+require("rxjs/add/operator/takeUntil");
 /**
  * Draggable Directive for Angular2
  *
@@ -20,10 +21,13 @@ var DraggableDirective = (function () {
         this.isDragging = false;
         this.element = element.nativeElement;
     }
-    DraggableDirective.prototype.ngOnDestroy = function () {
-        if (this.subscription) {
-            this._destroySubscription();
+    DraggableDirective.prototype.ngOnChanges = function (changes) {
+        if (changes['dragEventTarget'] && changes['dragEventTarget'].currentValue && this.dragModel.dragging) {
+            this.onMousedown(changes['dragEventTarget'].currentValue);
         }
+    };
+    DraggableDirective.prototype.ngOnDestroy = function () {
+        this._destroySubscription();
     };
     DraggableDirective.prototype.onMouseup = function (event) {
         if (!this.isDragging)
@@ -78,26 +82,28 @@ var DraggableDirective = (function () {
         }
     };
     DraggableDirective.prototype._destroySubscription = function () {
-        this.subscription.unsubscribe();
-        this.subscription = undefined;
-    };
-    DraggableDirective.decorators = [
-        { type: core_1.Directive, args: [{ selector: '[draggable]' },] },
-    ];
-    /** @nocollapse */
-    DraggableDirective.ctorParameters = function () { return [
-        { type: core_1.ElementRef, },
-    ]; };
-    DraggableDirective.propDecorators = {
-        'dragModel': [{ type: core_1.Input },],
-        'dragX': [{ type: core_1.Input },],
-        'dragY': [{ type: core_1.Input },],
-        'dragStart': [{ type: core_1.Output },],
-        'dragging': [{ type: core_1.Output },],
-        'dragEnd': [{ type: core_1.Output },],
-        'onMousedown': [{ type: core_1.HostListener, args: ['mousedown', ['$event'],] },],
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+            this.subscription = undefined;
+        }
     };
     return DraggableDirective;
 }());
+DraggableDirective.decorators = [
+    { type: core_1.Directive, args: [{ selector: '[draggable]' },] },
+];
+/** @nocollapse */
+DraggableDirective.ctorParameters = function () { return [
+    { type: core_1.ElementRef, },
+]; };
+DraggableDirective.propDecorators = {
+    'dragEventTarget': [{ type: core_1.Input },],
+    'dragModel': [{ type: core_1.Input },],
+    'dragX': [{ type: core_1.Input },],
+    'dragY': [{ type: core_1.Input },],
+    'dragStart': [{ type: core_1.Output },],
+    'dragging': [{ type: core_1.Output },],
+    'dragEnd': [{ type: core_1.Output },],
+};
 exports.DraggableDirective = DraggableDirective;
 //# sourceMappingURL=draggable.directive.js.map

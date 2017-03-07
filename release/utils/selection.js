@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 function selectRows(selected, row, comparefn) {
     var selectedIndex = comparefn(row, selected);
     if (selectedIndex > -1) {

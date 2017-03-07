@@ -1,6 +1,7 @@
 "use strict";
-var camel_case_1 = require('./camel-case');
-var id_1 = require('./id');
+Object.defineProperty(exports, "__esModule", { value: true });
+var camel_case_1 = require("./camel-case");
+var id_1 = require("./id");
 /**
  * Sets the column defaults
  *

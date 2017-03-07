@@ -1,5 +1,6 @@
 "use strict";
-var core_1 = require('@angular/core');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
 /**
  * Visibility Observer Directive
  *
@@ -50,19 +51,19 @@ var VisibilityDirective = (function () {
         };
         setTimeout(function () { return check(); });
     };
-    VisibilityDirective.decorators = [
-        { type: core_1.Directive, args: [{ selector: '[visibility-observer]' },] },
-    ];
-    /** @nocollapse */
-    VisibilityDirective.ctorParameters = function () { return [
-        { type: core_1.ElementRef, },
-        { type: core_1.NgZone, },
-    ]; };
-    VisibilityDirective.propDecorators = {
-        'isVisible': [{ type: core_1.HostBinding, args: ['class.visible',] },],
-        'visible': [{ type: core_1.Output },],
-    };
     return VisibilityDirective;
 }());
+VisibilityDirective.decorators = [
+    { type: core_1.Directive, args: [{ selector: '[visibility-observer]' },] },
+];
+/** @nocollapse */
+VisibilityDirective.ctorParameters = function () { return [
+    { type: core_1.ElementRef, },
+    { type: core_1.NgZone, },
+]; };
+VisibilityDirective.propDecorators = {
+    'isVisible': [{ type: core_1.HostBinding, args: ['class.visible',] },],
+    'visible': [{ type: core_1.Output },],
+};
 exports.VisibilityDirective = VisibilityDirective;
 //# sourceMappingURL=visibility.directive.js.map

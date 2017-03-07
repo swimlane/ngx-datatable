@@ -15,6 +15,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     rowDetail: any;
     selectCheck: any;
     trackByProp: string;
+    rowClass: any;
     pageSize: number;
     rows: any[];
     columns: any[];

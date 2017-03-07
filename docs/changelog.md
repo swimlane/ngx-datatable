@@ -4,7 +4,10 @@
 - BREAKING: Update to Angular4!
 - Feature: Row classes (#571), (#348)
 - Bug: Show first page after sorting (#553)
+- Bug: When reordering and skipping a column, the column gets duplicated (#497), (#562), (#563)
 - Chore: Upgrade misc deps and lint fixes
+
+*NOTE: If you need support for ~Angular2, use version 6.x.*
 
 ## 6.3.0
 - Bug: Perform sort when sort icon is clicked (#536)

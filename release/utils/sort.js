@@ -1,6 +1,7 @@
 "use strict";
-var types_1 = require('../types');
-var deep_getter_1 = require('./deep-getter');
+Object.defineProperty(exports, "__esModule", { value: true });
+var types_1 = require("../types");
+var deep_getter_1 = require("./deep-getter");
 /**
  * Gets the next sort direction
  * @param  {SortType}      sortType
