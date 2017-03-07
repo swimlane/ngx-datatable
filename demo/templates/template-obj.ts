@@ -15,11 +15,11 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
         [rowHeight]="'auto'">
       </ngx-datatable>
 
-      <template #hdrTpl let-column="column" >
+      <ng-template #hdrTpl let-column="column" >
         <strong>Fancy</strong>: {{column.name}} !!
-      </template>
+      </ng-template>
 
-      <template #editTmpl let-row="row" let-value="value" let-i="index">
+      <ng-template #editTmpl let-row="row" let-value="value" let-i="index">
         <img
           *ngIf="value === 'male'"
           width="150"
@@ -30,7 +30,7 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
           width="150"
           src="https://media.giphy.com/media/sxSVG3XHf7yww/giphy.gif"
         />
-      </template>
+      </ng-template>
     </div>
   `
 })

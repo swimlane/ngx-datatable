@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.0.0
+- BREAKING: Update to Angular4!
+- Feature: Row classes (#571), (#348)
+- Bug: Show first page after sorting (#553)
+- Chore: Upgrade misc deps and lint fixes
+
 ## 6.3.0
 - Bug: Perform sort when sort icon is clicked (#536)
 - Bug: Fix resize handle overlaped by label (#521)

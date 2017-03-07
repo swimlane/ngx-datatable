@@ -15,7 +15,7 @@ import { Component } from '@angular/core';
         [rowHeight]="'auto'"
         [rows]="rows">
         <ngx-datatable-column name="Name">
-          <template ngx-datatable-cell-template let-value="value" let-row="row">
+          <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
             <span
               title="Double click to edit"
               (dblclick)="editing[row.$$index + '-name'] = true"
@@ -29,10 +29,10 @@ import { Component } from '@angular/core';
               type="text"
               [value]="value"
             />
-          </template>
+          </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Gender">
-          <template ngx-datatable-cell-template let-row="row" let-value="value">
+          <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
              <span
               title="Double click to edit"
               (dblclick)="editing[row.$$index + '-gender'] = true"
@@ -46,12 +46,12 @@ import { Component } from '@angular/core';
               <option value="male">Male</option>
               <option value="female">Female</option>
             </select>
-          </template>
+          </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Age">
-          <template ngx-datatable-cell-template let-value="value">
+          <ng-template ngx-datatable-cell-template let-value="value">
             {{value}}
-          </template>
+          </ng-template>
         </ngx-datatable-column>
       </ngx-datatable>
     </div>

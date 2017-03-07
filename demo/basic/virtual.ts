@@ -12,17 +12,18 @@ import { Component } from '@angular/core';
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="50"
+        [rowClass]="getRowClass"
         [scrollbarV]="true"
         (page)="onPage($event)">
-        <ngx-datatable-column name="Name" width="200">
-          <template let-value="value" ngx-datatable-cell-template>
+        <ngx-datatable-column name="Name" width="300">
+          <ng-template let-value="value" ngx-datatable-cell-template>
             <strong>{{value}}</strong>
-          </template>
+          </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Gender" width="300">
-          <template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
             <i [innerHTML]="row['name']"></i> and <i>{{value}}</i>
-          </template>
+          </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Age" width="80">
         </ngx-datatable-column>
@@ -58,6 +59,12 @@ export class VirtualScrollComponent {
     };
 
     req.send();
+  }
+
+  getRowClass(row) {
+    return {
+      'age-is-ten': (row.age % 10) === 0
+    };
   }
 
 }

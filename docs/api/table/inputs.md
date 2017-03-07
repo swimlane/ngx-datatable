@@ -107,3 +107,15 @@ Default value: `single`
 
 ## `trackByProp`
 A property on the row object that uniquely identifies the row. Example: `name`
+
+## `rowClass`
+A function that will invoked with each row's properties. The result of the function
+can be a string or object with key/boolean like:
+
+```javascript
+getRowClass(row) {
+  return {
+    'is-age-10': row.age === 10
+  }
+}
+```

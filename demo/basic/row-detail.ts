@@ -23,12 +23,12 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
         (page)="onPage($event)">
         <!-- Row Detail Template -->
         <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow (toggle)="onDetailToggle($event)">
-          <template let-row="row" ngx-datatable-row-detail-template>
+          <ng-template let-row="row" ngx-datatable-row-detail-template>
             <div style="padding-left:35px;">
               <div><strong>Address</strong></div>
               <div>{{row.address.city}}, {{row.address.state}}</div>
             </div>
-          </template>
+          </ng-template>
         </ngx-datatable-row-detail>
 
         <!-- Column Templates -->
@@ -38,7 +38,7 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
           [sortable]="false"
           [draggable]="false"
           [canAutoResize]="false">
-          <template let-row="row" ngx-datatable-cell-template>
+          <ng-template let-row="row" ngx-datatable-cell-template>
             <a
               href="#"
               [class.icon-right]="!row.$$expanded"
@@ -46,27 +46,27 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
               title="Expand/Collapse Row"
               (click)="toggleExpandRow(row)">
             </a>
-          </template>
+          </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Index" width="80">
-          <template let-row="row" ngx-datatable-cell-template>
+          <ng-template let-row="row" ngx-datatable-cell-template>
             <strong>{{row.$$index}}</strong>
-          </template>
+          </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Exapanded" width="80">
-          <template let-row="row" ngx-datatable-cell-template>
+          <ng-template let-row="row" ngx-datatable-cell-template>
             <strong>{{row.$$expanded === 1}}</strong>
-          </template>
+          </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Name" width="200">
-          <template let-value="value" ngx-datatable-cell-template>
+          <ng-template let-value="value" ngx-datatable-cell-template>
             <strong>{{value}}</strong>
-          </template>
+          </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Gender" width="300">
-          <template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
             <i [innerHTML]="row['name']"></i> and <i>{{value}}</i>
-          </template>
+          </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Age" ></ngx-datatable-column>
       </ngx-datatable>

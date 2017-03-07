@@ -200,3 +200,7 @@ select {
   height: 30px;
   margin: 5px 0;
 }
+
+.age-is-ten {
+  background: #ffc91f;
+}

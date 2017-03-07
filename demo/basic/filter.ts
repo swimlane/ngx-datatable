@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
+import {DatatableComponent} from '../../src/components/datatable.component';
 
 @Component({
   selector: 'filter-demo',
@@ -12,6 +13,7 @@ import { Component } from '@angular/core';
         (keyup)='updateFilter($event)'
       />
       <ngx-datatable
+        #table
         class='material'
         [columns]="columns"
         [columnMode]="'force'"
@@ -35,7 +37,8 @@ export class FilterBarComponent {
     { name: 'Company' },
     { name: 'Gender' }
   ];
-  
+  @ViewChild(DatatableComponent) table: DatatableComponent;
+
   constructor() {
     this.fetch((data) => {
       // cache our list
@@ -67,6 +70,8 @@ export class FilterBarComponent {
 
     // update the rows
     this.rows = temp;
+    // Whenever the filter changes, always go back to the first page
+    this.table.offset = 0;
   }
 
 }

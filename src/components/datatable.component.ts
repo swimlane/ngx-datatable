@@ -2,7 +2,7 @@ import {
   Component, Input, Output, ElementRef, EventEmitter, ViewChild,
   HostListener, ContentChildren, OnInit, QueryList, AfterViewInit,
   HostBinding, ContentChild, TemplateRef, IterableDiffer,
-  DoCheck, KeyValueDiffers, ViewEncapsulation
+  DoCheck, KeyValueDiffers, KeyValueDiffer, ViewEncapsulation
 } from '@angular/core';
 
 import {
@@ -58,6 +58,7 @@ import { DatatableRowDetailDirective } from './row-detail';
         [selectionType]="selectionType"
         [emptyMessage]="messages.emptyMessage"
         [rowIdentity]="rowIdentity"
+        [rowClass]="rowClass"
         [selectCheck]="selectCheck"
         (page)="onBodyPage($event)"
         (activate)="activate.emit($event)"
@@ -365,6 +366,18 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   @Input() rowIdentity: (x: any) => any = ((x: any) => x);
 
   /**
+   * Row specific classes. 
+   * Similar implementation to ngClass.
+   * 
+   *  [rowClass]="'first second'"
+   *  [rowClass]="{ 'first': true, 'second': true, 'third': false }"
+   * 
+   * @type {*}
+   * @memberOf DatatableComponent
+   */
+  @Input() rowClass: any;
+
+  /**
    * A boolean/function you can use to check whether you want
    * to select a particular row based on a criteria. Example:
    *
@@ -647,7 +660,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   bodyHeight: number;
   rowCount: number = 0;
   offsetX: number = 0;
-  rowDiffer: IterableDiffer;
+  rowDiffer: KeyValueDiffer<{}, {}>;
   _count: number = 0;
 
   _rows: any[];
@@ -735,7 +748,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * distribution mode and scrollbar offsets.
    *
    * @param {any[]} [columns=this.columns]
-   * @param {number} [forceIdx=false]
+   * @param {number} [forceIdx=-1]
    * @param {boolean} [allowBleed=this.scrollH]
    * @returns {any[]}
    *
@@ -966,7 +979,9 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
     }
 
     this.sorts = sorts;
-    this.bodyComponent.updateOffsetY(0);
+    // Always go to first page when sorting to see the newly sorted data
+    this.offset = 0;
+    this.bodyComponent.updateOffsetY(this.offset);
     this.sort.emit(event);
   }
 

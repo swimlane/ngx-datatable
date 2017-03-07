@@ -16,15 +16,15 @@ import { Component, OnInit } from '@angular/core';
         [sorts]="[{prop: 'name', dir: 'desc'}]">
 
         <ngx-datatable-column name="Company">
-          <template let-row="row" ngx-datatable-cell-template>
+          <ng-template let-row="row" ngx-datatable-cell-template>
             {{row.company}}
-          </template>
+          </ng-template>
         </ngx-datatable-column>
 
         <ngx-datatable-column name="Name">
-          <template let-row="row" ngx-datatable-cell-template>
+          <ng-template let-row="row" ngx-datatable-cell-template>
             {{row.name}}
-          </template>
+          </ng-template>
         </ngx-datatable-column>
 
         <ngx-datatable-column name="Gender">
