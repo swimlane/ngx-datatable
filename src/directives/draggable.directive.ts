@@ -33,6 +33,12 @@ export class DraggableDirective implements OnDestroy, OnChanges {
     this.element = element.nativeElement;
   }
 
+  ngOnChanges(changes): void {
+    if(changes['dragEventTarget'] && changes['dragEventTarget'].currentValue && this.dragModel.dragging) {
+      this.onMousedown(changes['dragEventTarget'].currentValue);
+    }
+  }
+
   ngOnDestroy(): void {
     this._destroySubscription();
   }
@@ -50,12 +56,6 @@ export class DraggableDirective implements OnDestroy, OnChanges {
         element: this.element,
         model: this.dragModel
       });
-    }
-  }
-
-  ngOnChanges(changes) {
-    if(changes['dragEventTarget'] && changes['dragEventTarget'].currentValue && this.dragModel.dragging) {
-      this.onMousedown(changes['dragEventTarget'].currentValue)
     }
   }
 
@@ -104,7 +104,7 @@ export class DraggableDirective implements OnDestroy, OnChanges {
     }
   }
 
-  private _destroySubscription() {
+  private _destroySubscription(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
       this.subscription = undefined;

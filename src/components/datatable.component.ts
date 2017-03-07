@@ -948,7 +948,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
       return Object.assign({}, c);
     });
 
-    let prevCol = cols[newValue];
+    const prevCol = cols[newValue];
     cols[newValue] = column;
     cols[prevValue] = prevCol;
 

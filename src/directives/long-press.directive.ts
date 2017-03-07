@@ -54,7 +54,7 @@ export class LongPressDirective implements OnDestroy {
     this.timeout = setTimeout(() => {
       this.isLongPressing = true;
       this.longPressStart.emit({
-        event: event,
+        event,
         model: this.pressModel
       });
 
@@ -85,7 +85,7 @@ export class LongPressDirective implements OnDestroy {
     if (this.isLongPressing) {
       this.timeout = setTimeout(() => {
         this.longPressing.emit({
-          event: event,
+          event,
           model: this.pressModel
         });
         this.loop(event);
@@ -100,7 +100,7 @@ export class LongPressDirective implements OnDestroy {
     this._destroySubscription();
 
     this.longPressEnd.emit({
-      event: event,
+      event,
       model: this.pressModel
     });
   }
