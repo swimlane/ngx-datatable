@@ -7,6 +7,11 @@ import { Component } from '@angular/core';
       <h3>
         Checkbox Selection
         <small>
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/selection/selection-chkbox.ts" target="_blank">
+            Source
+          </a>
+        </small>
+        <small>
           <a href="#" (click)="add()">Add</a> |
           <a href="#" (click)="update()">Update</a> |
           <a href="#" (click)="remove()">Remove</a> 

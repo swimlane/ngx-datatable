@@ -4,7 +4,14 @@ import { Component } from '@angular/core';
   selector: 'tabs-demo',
   template: `
     <div>
-      <h3>Hidden By Default</h3>
+      <h3>
+        Hidden By Default
+        <small>
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/tabs.ts" target="_blank">
+            Source
+          </a>
+        </small>
+      </h3>
 
       <div style="width:75%;margin:0 auto">
         <div>

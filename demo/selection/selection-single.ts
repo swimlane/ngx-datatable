@@ -7,6 +7,11 @@ import { Component } from '@angular/core';
       <h3>
         Single Row Selection
         <small>
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/selection/selection-single.ts" target="_blank">
+            Source
+          </a>
+        </small>
+        <small>
           <a href="#" (click)="updateRowPosition()">Update Rows</a>
         </small>
       </h3>

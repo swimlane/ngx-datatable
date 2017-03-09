@@ -7,6 +7,11 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
       <h3>
         Row Detail Demo
         <small>
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/row-detail.ts" target="_blank">
+            Source
+          </a>
+        </small>
+        <small>
           <a href="#" (click)="table.rowDetail.expandAllRows()">Expand All</a> | 
           <a href="#" (click)="table.rowDetail.collapseAllRows()">Collapse All</a>
         </small>

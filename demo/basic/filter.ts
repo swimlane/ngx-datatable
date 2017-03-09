@@ -5,7 +5,14 @@ import {DatatableComponent} from '../../src/components/datatable.component';
   selector: 'filter-demo',
   template: `
     <div>
-      <h3>Client-side Search and Filtering</h3>
+      <h3>
+        Client-side Search and Filtering
+        <small>
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/filter.ts" target="_blank">
+            Source
+          </a>
+        </small>
+      </h3>
       <input
         type='text'
         style='padding:8px;margin:15px auto;width:30%;'

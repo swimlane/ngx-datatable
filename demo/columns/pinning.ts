@@ -4,7 +4,14 @@ import { Component } from '@angular/core';
   selector: 'column-pinning-demo',
   template: `
     <div>
-      <h3>Column Pinning</h3>
+      <h3>
+        Column Pinning
+        <small>
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/columns/pinning.ts" target="_blank">
+            Source
+          </a>
+        </small>
+      </h3>
       <ngx-datatable
         class="material"
         [columnMode]="'force'"

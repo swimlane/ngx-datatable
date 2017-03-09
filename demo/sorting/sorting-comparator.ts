@@ -4,7 +4,14 @@ import { Component } from '@angular/core';
   selector: 'comparator-sorting-demo',
   template: `
     <div>
-      <h3>Custom Sorting Comparator</h3>
+      <h3>
+        Custom Sorting Comparator
+        <small>
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/sorting/sorting-comparator.ts" target="_blank">
+            Source
+          </a>
+        </small>
+      </h3>
       <ngx-datatable
         class="material"
         [rows]="rows"

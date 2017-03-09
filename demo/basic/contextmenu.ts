@@ -4,7 +4,14 @@ import { Component } from '@angular/core';
   selector: 'contextmenu-demo',
   template: `
     <div>
-      <h3>Context Menu EventEmitter</h3>
+      <h3>
+        Context Menu Event
+        <small>
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/contextmenu.ts" target="_blank">
+            Source
+          </a>
+        </small>
+      </h3>
       <div class="info">
         <p><strong>Note:</strong> angular2-data-table does not provide a context menu feature.
         This demonstrates how you would access the <code>contextmenu</code> event

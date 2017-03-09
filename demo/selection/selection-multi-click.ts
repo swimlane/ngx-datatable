@@ -4,7 +4,14 @@ import { Component } from '@angular/core';
   selector: 'multi-click-selection-demo',
   template: `
     <div>
-      <h3>Multi Click Selection</h3>
+      <h3>
+        Multi Click Selection
+        <small>
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/selection/selection-multi-click.ts" target="_blank">
+            Source
+          </a>
+        </small>
+      </h3>
       <div style='float:left;width:75%'>
         <div class="info">
           <p>This demonstrates multi selection table, where any click event causes a selection.</p>

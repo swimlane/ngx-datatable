@@ -4,7 +4,14 @@ import { Component } from '@angular/core';
   selector: 'multidisable-selection-demo',
   template: `
     <div>
-      <h3>Selection Callback to Disable Selections</h3>
+      <h3>
+        Selection Callback to Disable Selections
+        <small>
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/selection/selection-disabled.ts" target="_blank">
+            Source
+          </a>
+        </small>
+      </h3>
       <div style='float:left;width:75%'>
         <ngx-datatable
           class="material"

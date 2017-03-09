@@ -4,7 +4,14 @@ import { Component } from '@angular/core';
   selector: 'column-standard-demo',
   template: `
     <div>
-      <h3>Fixed Column Widths</h3>
+      <h3>
+        Fixed Column Widths
+        <small>
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/columns/column-standard.ts" target="_blank">
+            Source
+          </a>
+        </small>
+      </h3>
       <ngx-datatable
         class="material"
         [rows]="rows"

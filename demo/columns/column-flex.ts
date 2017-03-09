@@ -4,7 +4,14 @@ import { Component } from '@angular/core';
   selector: 'column-flex-demo',
   template: `
     <div>
-      <h3>Flex Column Width Distribution</h3>
+      <h3>
+        Flex Column Width Distribution
+        <small>
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/columns/column-flex.ts" target="_blank">
+            Source
+          </a>
+        </small>
+      </h3>
       <ngx-datatable
         class="material"
         [columnMode]="'flex'"

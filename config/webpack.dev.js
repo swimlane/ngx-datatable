@@ -44,7 +44,7 @@ module.exports = function(options) {
           enforce: 'pre',
           test: /\.ts$/,
           loader: 'tslint-loader',
-          exclude: /(node_modules|release|dist)/
+          exclude: /(node_modules|release|dist|demo)/
         },
         {
           test: /\.ts$/,

@@ -4,7 +4,14 @@ import { Component } from '@angular/core';
   selector: 'basic-fixed-demo',
   template: `
     <div>
-      <h3>Fix Row Height</h3>
+      <h3>
+        Fix Row Height
+        <small>
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/basic-fixed.ts" target="_blank">
+            Source
+          </a>
+        </small>
+      </h3>
       <ngx-datatable
         class="material striped"
         [rows]="rows"

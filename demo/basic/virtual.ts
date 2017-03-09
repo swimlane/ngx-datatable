@@ -4,7 +4,14 @@ import { Component } from '@angular/core';
   selector: 'virtual-scroll-demo',
   template: `
     <div>
-      <h3>Virtual Scrolling with 10k Rows</h3>
+      <h3>
+        Virtual Scrolling with 10k Rows
+        <small>
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/virtual.ts" target="_blank">
+            Source
+          </a>
+        </small>
+      </h3>
       <ngx-datatable
         class='material'
         [rows]='rows'

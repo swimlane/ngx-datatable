@@ -7,6 +7,11 @@ import { Component } from '@angular/core';
       <h3>
         Live Data Demo
         <small>
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/live.ts" target="_blank">
+            Source
+          </a>
+        </small>
+        <small>
           <a href="#" (click)="start()">Start</a> |
           <a href="#" (click)="stop()">Stop</a> | 
           <a href="#" (click)="add()">Add</a> |

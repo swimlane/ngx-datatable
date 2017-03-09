@@ -4,7 +4,14 @@ import { Component } from '@angular/core';
   selector: 'cell-selection-demo',
   template: `
     <div>
-      <h3>Cell Selection</h3>
+      <h3>
+        Cell Selection
+        <small>
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/selection/selection-cell.ts" target="_blank">
+            Source
+          </a>
+        </small>
+      </h3>
       <ngx-datatable
         class="material selection-cell"
         [rows]="rows"

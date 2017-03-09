@@ -4,7 +4,14 @@ import { Component } from '@angular/core';
   selector: 'multi-selection-demo',
   template: `
     <div>
-      <h3>Multi Select</h3>
+      <h3>
+        Multi Select
+        <small>
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/selection/selection-multi.ts" target="_blank">
+            Source
+          </a>
+        </small>
+      </h3>
       <div style='float:left;width:75%'>
         <div class="info">
           <p>This demonstrates multi selection table, use CTRL or SHIFT click to select multiple items.</p>

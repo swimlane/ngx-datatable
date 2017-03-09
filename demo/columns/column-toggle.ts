@@ -4,7 +4,14 @@ import { Component } from '@angular/core';
   selector: 'column-toggle-demo',
   template: `
     <div>
-      <h3>Column Toggling</h3>
+      <h3>
+        Column Toggling
+        <small>
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/columns/column-toggle.ts" target="_blank">
+            Source
+          </a>
+        </small>
+      </h3>
       <div style='float:left;width:75%'>
         <ngx-datatable
           class='material'

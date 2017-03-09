@@ -4,7 +4,14 @@ import { Component } from '@angular/core';
   selector: 'server-sorting-demo',
   template: `
     <div>
-      <h3>Server-side Sorting</h3>
+      <h3>
+        Server-side Sorting
+        <small>
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/sorting/sorting-server.ts" target="_blank">
+            Source
+          </a>
+        </small>
+      </h3>
       <ngx-datatable
         class="material"
         [rows]="rows"

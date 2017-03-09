@@ -4,7 +4,14 @@ import { Component } from '@angular/core';
   selector: 'server-paging-demo',
   template: `
     <div>
-      <h3>Server-side Paging</h3>
+      <h3>
+        Server-side Paging
+        <small>
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/paging/paging-server.ts" target="_blank">
+            Source
+          </a>
+        </small>
+      </h3>
       <ngx-datatable
         class="material"
         [rows]="rows"
