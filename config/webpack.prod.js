@@ -41,7 +41,7 @@ module.exports = function(env) {
       new HtmlWebpackPlugin({
         template: 'demo/index.ejs',
         chunksSortMode: 'dependency',
-        title: 'angular2-data-table',
+        title: 'ngx-datatable',
         googleAnalytics: {
           trackingId: 'UA-57474611-3',
           pageViewOnLoad: true

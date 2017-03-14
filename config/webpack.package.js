@@ -36,7 +36,7 @@ module.exports = function(env) {
     output: {
       path: dir('release'),
       libraryTarget: 'umd',
-      library: 'angular2-data-table',
+      library: 'ngxDatatable',
       umdNamedDefine: true
     },
     externals: {

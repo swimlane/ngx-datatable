@@ -19,7 +19,6 @@
     "suppressExcessPropertyErrors": true,
     "suppressImplicitAnyIndexErrors": true,
     "outDir": "dist",
-    "declarationDir": "release",
     "lib": ["es6", "dom"],
     "skipLibCheck": true
   },
