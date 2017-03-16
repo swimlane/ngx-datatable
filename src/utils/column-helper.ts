@@ -1,4 +1,4 @@
-import { TableColumn } from "../types";
+import { TableColumn } from '../types';
 import { DataTableColumnDirective } from '../components/columns';
 import { camelCase, deCamelCase } from './camel-case';
 import { id } from './id';

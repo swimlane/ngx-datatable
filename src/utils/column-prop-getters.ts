@@ -1,6 +1,6 @@
 // maybe rename this file to prop-getters.ts
 
-import { TableColumnProp } from "../types";
+import { TableColumnProp } from '../types';
 
 export type ValueGetter = (obj: any, prop: TableColumnProp) => any;
 
@@ -21,13 +21,11 @@ export function getterForProp(prop: TableColumnProp): ValueGetter {
 
   if (typeof prop === 'number') {
     return numericIndexGetter;
-  }
-  else {
+  } else {
     // deep or simple
     if (prop.indexOf('.') !== -1) {
       return deepValueGetter;
-    }
-    else {
+    } else {
       return shallowValueGetter;
     }
   }
@@ -55,10 +53,10 @@ export function numericIndexGetter(row: any[], index: number) {
  * @param fieldName field name string
  * @returns {any}
  */
-export function shallowValueGetter(obj: Object, fieldName: string) {
+export function shallowValueGetter(obj: object, fieldName: string) {
   if(!obj || !fieldName) return obj;
 
-  let value = obj[fieldName];
+  const value = obj[fieldName];
   if (value == null) return '';
   return value;
 }
