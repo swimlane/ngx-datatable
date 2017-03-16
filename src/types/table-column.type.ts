@@ -1,4 +1,5 @@
 import { PipeTransform } from '@angular/core';
+import {ValueGetter} from "../utils/column-prop-getters";
 
 /**
  * Column property that indicates how to retrieve this column's
@@ -18,6 +19,9 @@ export interface TableColumn {
 
   // used internally for resize calcs
   $$oldWidth?: number;
+
+  // defined by setColumnDefaults
+  $$valueGetter?: ValueGetter;
 
   // defines if its expressive
   isExpressive?: boolean;
@@ -73,5 +77,8 @@ export interface TableColumn {
 
   // ng2 template ref
   headerTemplate?: any;
+
+  // TODO verify cssClasses exists on this type (referenced by DataTableBodyCellComponent)
+  cssClasses: string;
 
 }

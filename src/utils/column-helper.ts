@@ -2,6 +2,7 @@ import { TableColumn } from '../types';
 import { DataTableColumnDirective } from '../components/columns';
 import { camelCase, deCamelCase } from './camel-case';
 import { id } from './id';
+import { getterForProp } from './column-prop-getters';
 
 /**
  * Sets the column defaults
@@ -22,6 +23,10 @@ export function setColumnDefaults(columns: TableColumn[]) {
     // translate name => prop
     if(column.prop == null && column.name) {
       column.prop = camelCase(column.name);
+    }
+
+    if (!column.$$valueGetter) {
+      column.$$valueGetter = getterForProp(column.prop);
     }
 
     // format props if no name passed

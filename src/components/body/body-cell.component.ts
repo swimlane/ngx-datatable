@@ -3,8 +3,9 @@ import {
   Output, EventEmitter, HostListener, ElementRef, ViewContainerRef, OnDestroy
 } from '@angular/core';
 
-import { getterForProp, Keys, ValueGetter, emptyStringGetter } from '../../utils';
+import { Keys } from '../../utils';
 import { SortDirection } from '../../types';
+import { TableColumn } from '../../types/table-column.type';
 
 @Component({
   selector: 'datatable-body-cell',
@@ -38,21 +39,7 @@ import { SortDirection } from '../../types';
 export class DataTableBodyCellComponent implements OnDestroy {
 
   @Input() row: any;
-
-  private _column: any;
-  private _valueGetter: ValueGetter;
-  @Input()
-  set column(column: any) {
-    this._column = column;
-    if (column) {
-      this._valueGetter = getterForProp(column.prop);
-    }
-    else {
-      this._valueGetter = emptyStringGetter;
-    }
-  }
-  get column() { return this._column; }
-
+  @Input() column: TableColumn;
   @Input() rowHeight: number;
   @Input() isSelected: boolean;
 
@@ -72,7 +59,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
   @HostBinding('class')
   get columnCssClasses(): any {
     let cls = 'datatable-body-cell';
-    if(this._column.cssClasses) cls += ' ' + this._column.cssClasses;
+    if(this.column.cssClasses) cls += ' ' + this.column.cssClasses;
     return cls;
   }
 
@@ -96,7 +83,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
 
   @HostBinding('style.width.px')
   get width(): number {
-    return this._column.width;
+    return this.column.width;
   }
 
   @HostBinding('style.height')
@@ -107,9 +94,9 @@ export class DataTableBodyCellComponent implements OnDestroy {
   }
 
   get value(): any {
-    if (!this.row) return '';
-    const val = this._valueGetter(this.row, this._column.prop);
-    const userPipe: PipeTransform = this._column.pipe;
+    if (!this.row || !this.column) return '';
+    const val = this.column.$$valueGetter(this.row, this.column.prop);
+    const userPipe: PipeTransform = this.column.pipe;
 
     if(userPipe) return userPipe.transform(val);
     if(val !== undefined) return val;
@@ -146,7 +133,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
       type: 'click',
       event,
       row: this.row,
-      column: this._column,
+      column: this.column,
       value: this.value,
       cellElement: this.element
     });
@@ -158,7 +145,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
       type: 'dblclick',
       event,
       row: this.row,
-      column: this._column,
+      column: this.column,
       value: this.value,
       cellElement: this.element
     });
@@ -184,7 +171,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
         type: 'keydown',
         event,
         row: this.row,
-        column: this._column,
+        column: this.column,
         value: this.value,
         cellElement: this.element
       });
@@ -196,7 +183,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
       type: 'checkbox',
       event,
       row: this.row,
-      column: this._column,
+      column: this.column,
       value: this.value,
       cellElement: this.element
     });
@@ -206,7 +193,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
     if(!sorts) return;
 
     const sort = sorts.find((s: any) => {
-      return s.prop === this._column.prop;
+      return s.prop === this.column.prop;
     });
 
     if(sort) return sort.dir;
