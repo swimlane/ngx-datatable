@@ -86,11 +86,8 @@ export class DataTableHeaderCellComponent {
 
   @HostBinding('attr.title')
   get name(): string {
-    // TODO review this.column.name logic. just return this.column.name?
-    // column name is guaranteed by setColumnDefaults()
-    // so this.column.prop is probably never returned
-    // However, if name is not truthy, this.column.prop could be a number and return
-    return this.column.name || this.column.prop;
+    // guaranteed to have a value by setColumnDefaults() in column-helper.ts
+    return this.column.name;
   }
 
   @HostBinding('style.minWidth.px')
