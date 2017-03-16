@@ -79,6 +79,6 @@ export interface TableColumn {
   headerTemplate?: any;
 
   // TODO verify cssClasses exists on this type (referenced by DataTableBodyCellComponent)
-  cssClasses: string;
+  cssClasses?: string;
 
 }

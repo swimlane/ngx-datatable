@@ -1,6 +1,9 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 
 import { DataTableBodyCellComponent } from '.';
+import { numericIndexGetter } from '../../utils/column-prop-getters';
+import { setColumnDefaults } from '../../utils/column-helper';
+import { TableColumn } from '../../types/table-column.type';
 
 describe('DataTableBodyCellComponent', () => {
   let fixture: ComponentFixture<DataTableBodyCellComponent>;
@@ -35,7 +38,15 @@ describe('DataTableBodyCellComponent', () => {
     // resulted in a code path for missing column prop
     it('should get value from zero-index prop', () => {
       component.row = ['Hello'];
-      component.column = { name:"First Column", prop: 0 };
+      const columns: TableColumn[] = [
+        { name: "First Column", prop: 0 }
+      ];
+      // users should never set columns on DataTableBodyCellComponent directly
+      // setColumnDefaults will be run on columns before they are set on BodyCellComponent
+      setColumnDefaults(columns);
+      expect(columns[0].$$valueGetter).toBe(numericIndexGetter);
+
+      component.column = columns[0];
       expect(component.value).toEqual('Hello');
     });
   });
