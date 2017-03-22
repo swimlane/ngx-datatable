@@ -325,15 +325,14 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     const temp: RowMeta[] = [];
 
     while (rowIndex < rowLimit) {
-      const row = this._rows[rowIndex];
+      const rowMeta = this._rowsMeta[rowIndex]
+        || this._rows[rowIndex] && (this._rowsMeta[rowIndex] = { row: this._rows[rowIndex], rowIndex });
 
-      if(row) {
-        const rowMeta = this._rowsMeta[rowIndex] || (this._rowsMeta[rowIndex] = { row, rowIndex });
+      if(rowMeta) {
         rowMeta.rowIndex = rowIndex;
-        temp[idx] = rowMeta;
+        temp[idx++] = rowMeta;
       }
 
-      idx++;
       rowIndex++;
     }
 
