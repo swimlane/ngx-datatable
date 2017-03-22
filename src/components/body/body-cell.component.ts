@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 
 import { deepValueGetter, Keys } from '../../utils';
-import { SortDirection } from '../../types';
+import { SortDirection, RowMeta } from '../../types';
 
 @Component({
   selector: 'datatable-body-cell',
@@ -36,7 +36,7 @@ import { SortDirection } from '../../types';
 })
 export class DataTableBodyCellComponent {
 
-  @Input() row: any;
+  @Input() row: RowMeta;
   @Input() column: any;
   @Input() rowHeight: number;
   @Input() isSelected: boolean;
@@ -91,7 +91,7 @@ export class DataTableBodyCellComponent {
 
   get value(): any {
     if (!this.row || !this.column || !this.column.prop) return '';
-    const val = deepValueGetter(this.row, this.column.prop);
+    const val = deepValueGetter(this.row.row, this.column.prop);
     const userPipe: PipeTransform = this.column.pipe;
 
     if(userPipe) return userPipe.transform(val);

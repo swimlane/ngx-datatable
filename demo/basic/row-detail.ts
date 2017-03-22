@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
+import { RowMeta } from "../../src/types/row-meta";
 
 @Component({
   selector: 'row-details-demo',
@@ -31,7 +32,7 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
           <ng-template let-row="row" ngx-datatable-row-detail-template>
             <div style="padding-left:35px;">
               <div><strong>Address</strong></div>
-              <div>{{row.address.city}}, {{row.address.state}}</div>
+              <div>{{row.row.address.city}}, {{row.row.address.state}}</div>
             </div>
           </ng-template>
         </ngx-datatable-row-detail>
@@ -46,8 +47,8 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
           <ng-template let-row="row" ngx-datatable-cell-template>
             <a
               href="#"
-              [class.icon-right]="!row.$$expanded"
-              [class.icon-down]="row.$$expanded"
+              [class.icon-right]="!row.expanded"
+              [class.icon-down]="row.expanded"
               title="Expand/Collapse Row"
               (click)="toggleExpandRow(row)">
             </a>
@@ -55,12 +56,12 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
         </ngx-datatable-column>
         <ngx-datatable-column name="Index" width="80">
           <ng-template let-row="row" ngx-datatable-cell-template>
-            <strong>{{row.$$index}}</strong>
+            <strong>{{row.rowIndex}}</strong>
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Exapanded" width="80">
           <ng-template let-row="row" ngx-datatable-cell-template>
-            <strong>{{row.$$expanded === 1}}</strong>
+            <strong>{{row.rowIndex === 1}}</strong>
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Name" width="200">
@@ -70,7 +71,7 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
         </ngx-datatable-column>
         <ngx-datatable-column name="Gender" width="300">
           <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-            <i [innerHTML]="row['name']"></i> and <i>{{value}}</i>
+            <i [innerHTML]="row.row['name']"></i> and <i>{{value}}</i>
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Age" ></ngx-datatable-column>
@@ -112,7 +113,7 @@ export class RowDetailsComponent {
     req.send();
   }
 
-  toggleExpandRow(row) {
+  toggleExpandRow(row: RowMeta) {
     console.log('Toggled Expand Row!', row);
     this.table.rowDetail.toggleExpandRow(row);
   }

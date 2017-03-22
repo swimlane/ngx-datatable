@@ -7,6 +7,8 @@ import {
   translateXY, Keys, scrollbarWidth
 } from '../../utils';
 
+import { RowMeta } from '../../types';
+
 @Component({
   selector: 'datatable-body-row',
   template: `
@@ -47,7 +49,7 @@ export class DataTableBodyRowComponent {
   }
 
   @Input() rowClass: any;
-  @Input() row: any;
+  @Input() row: RowMeta;
   @Input() offsetX: number;
   @Input() isSelected: boolean;
 
@@ -55,11 +57,12 @@ export class DataTableBodyRowComponent {
   get cssClass() {
     let cls = 'datatable-body-row';
     if(this.isSelected) cls += ' active';
-    if(this.row.$$index % 2 !== 0) cls += ' datatable-row-odd';
-    if(this.row.$$index % 2 === 0) cls += ' datatable-row-even';
+    if(this.row.rowIndex % 2 !== 0) cls += ' datatable-row-odd';
+    if(this.row.rowIndex % 2 === 0) cls += ' datatable-row-even';
 
     if(this.rowClass) {
-      const res = this.rowClass(this.row);
+      // TODO: Breaking change - send RowMeta to the function so implementation can get be smarter.
+      const res = this.rowClass(this.row.row);
       if(typeof res === 'string') {
         cls += res;
       } else if(typeof res === 'object') {

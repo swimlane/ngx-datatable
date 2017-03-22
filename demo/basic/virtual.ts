@@ -29,7 +29,7 @@ import { Component } from '@angular/core';
         </ngx-datatable-column>
         <ngx-datatable-column name="Gender" width="300">
           <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-            <i [innerHTML]="row['name']"></i> and <i>{{value}}</i>
+            <i [innerHTML]="row.row['name']"></i> and <i>{{value}}</i>
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Age" width="80">

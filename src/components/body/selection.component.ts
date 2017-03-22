@@ -1,11 +1,11 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Keys, selectRows, selectRowsBetween } from '../../utils';
-import { SelectionType } from '../../types';
+import { SelectionType, RowMeta } from '../../types';
 
 export interface Model {
   type: string;
   event: MouseEvent | KeyboardEvent;
-  row: any;
+  row: RowMeta;
   rowElement: any;
   cellElement: any;
   cellIndex: number;
@@ -19,7 +19,7 @@ export interface Model {
 })
 export class DataTableSelectionComponent {
 
-  @Input() rows: any[];
+  @Input() rows: RowMeta[];
   @Input() selected: any[];
   @Input() selectEnabled: boolean;
   @Input() selectionType: SelectionType;
@@ -31,7 +31,7 @@ export class DataTableSelectionComponent {
 
   prevIndex: number;
 
-  selectRow(event: KeyboardEvent | MouseEvent, index: number, row: any): void {
+  selectRow(event: KeyboardEvent | MouseEvent, index: number, row: RowMeta): void {
     if (!this.selectEnabled) return;
 
     const chkbox = this.selectionType === SelectionType.checkbox;
@@ -42,10 +42,10 @@ export class DataTableSelectionComponent {
     if (multi || chkbox || multiClick) {
       if (event.shiftKey) {
         selected = selectRowsBetween(
-          [], 
-          this.rows, 
-          index, 
-          this.prevIndex, 
+          [],
+          this.rows,
+          index,
+          this.prevIndex,
           this.getRowSelectedIdx.bind(this));
       } else if (event.ctrlKey || multiClick || chkbox) {
           selected = selectRows([...this.selected], row, this.getRowSelectedIdx.bind(this));
@@ -62,7 +62,7 @@ export class DataTableSelectionComponent {
 
     this.selected.splice(0, this.selected.length);
     this.selected.push(...selected);
-    
+
     this.prevIndex = index;
 
     this.select.emit({
@@ -73,7 +73,7 @@ export class DataTableSelectionComponent {
   onActivate(model: Model, index: number): void {
     const { type, event, row } = model;
     const chkbox = this.selectionType === SelectionType.checkbox;
-    const select = (!chkbox && (type === 'click' || type === 'dblclick')) || 
+    const select = (!chkbox && (type === 'click' || type === 'dblclick')) ||
       (chkbox && type === 'checkbox');
 
     if(select) {
@@ -148,14 +148,14 @@ export class DataTableSelectionComponent {
     if(nextCellElement) nextCellElement.focus();
   }
 
-  getRowSelected(row: any): boolean {
+  getRowSelected(row: RowMeta): boolean {
     return this.getRowSelectedIdx(row, this.selected) > -1;
   }
 
-  getRowSelectedIdx(row: any, selected: any[]): number {
+  getRowSelectedIdx(row: RowMeta, selected: any[]): number {
     if(!selected || !selected.length) return -1;
 
-    const rowId = this.rowIdentity(row);
+    const rowId = this.rowIdentity(row.row); // TODO: Breaking change - send RowMeta
     return selected.findIndex((r) => {
       const id = this.rowIdentity(r);
       return id === rowId;

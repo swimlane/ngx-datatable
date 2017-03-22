@@ -25,14 +25,14 @@ import { Component } from '@angular/core';
           <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
             <span
               title="Double click to edit"
-              (dblclick)="editing[row.$$index + '-name'] = true"
-              *ngIf="!editing[row.$$index + '-name']">
+              (dblclick)="editing[row.rowIndex + '-name'] = true"
+              *ngIf="!editing[row.rowIndex + '-name']">
               {{value}}
             </span>
             <input
               autofocus
               (blur)="updateValue($event, 'name', value, row)"
-              *ngIf="editing[row.$$index + '-name']"
+              *ngIf="editing[row.rowIndex + '-name']"
               type="text"
               [value]="value"
             />
@@ -42,12 +42,12 @@ import { Component } from '@angular/core';
           <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
              <span
               title="Double click to edit"
-              (dblclick)="editing[row.$$index + '-gender'] = true"
-              *ngIf="!editing[row.$$index + '-gender']">
+              (dblclick)="editing[row.rowIndex + '-gender'] = true"
+              *ngIf="!editing[row.rowIndex + '-gender']">
               {{value}}
             </span>
             <select
-              *ngIf="editing[row.$$index + '-gender']"
+              *ngIf="editing[row.rowIndex + '-gender']"
               (change)="updateValue($event, 'gender', value, row)"
               [value]="value">
               <option value="male">Male</option>
@@ -87,8 +87,8 @@ export class InlineEditComponent {
   }
 
   updateValue(event, cell, cellValue, row) {
-    this.editing[row.$$index + '-' + cell] = false;
-    this.rows[row.$$index][cell] = event.target.value;
+    this.editing[row.rowIndex + '-' + cell] = false;
+    this.rows[row.rowIndex][cell] = event.target.value;
   }
 
 }

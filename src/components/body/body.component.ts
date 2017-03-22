@@ -2,7 +2,7 @@ import {
   Component, Output, EventEmitter, Input, HostBinding, ViewChild, OnInit, OnDestroy
 } from '@angular/core';
 import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '../../utils';
-import { SelectionType } from '../../types';
+import { SelectionType, RowMeta } from '../../types';
 import { ScrollerComponent } from './scroller.component';
 
 @Component({
@@ -34,7 +34,7 @@ import { ScrollerComponent } from './scroller.component';
           [rowDetail]="rowDetail"
           [detailRowHeight]="detailRowHeight"
           [row]="row"
-          [expanded]="row.$$expanded === 1"
+          [expanded]="row.expanded === 1"
           (rowContextmenu)="rowContextmenu.emit($event)">
           <datatable-body-row
             tabindex="-1"
@@ -86,6 +86,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   }
 
   @Input() set rows(val: any[]) {
+    this._rowsMeta = new Array<RowMeta>(val.length);
     this._rows = val;
     this.recalcLayout();
   }
@@ -191,14 +192,16 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   }
 
   rowHeightsCache: RowHeightCache = new RowHeightCache();
-  temp: any[] = [];
+  temp: RowMeta[] = [];
   offsetY: number = 0;
-  indexes: any = {};
+  indexes: { first: number, last: number } = <any>{};
   columnGroupWidths: any;
   rowTrackingFn: any;
   listener: any;
 
   _rows: any[];
+  _rowsMeta: RowMeta[];
+
   _bodyHeight: any;
   _columns: any[];
   _rowCount: number;
@@ -207,11 +210,11 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   constructor() {
     // declare fn here so we can get access to the `this` property
-    this.rowTrackingFn = function(index: number, row: any): any {
+    this.rowTrackingFn = function(index: number, row: RowMeta): any {
       if(this.trackByProp) {
-        return `${row.$$index}-${this.trackByProp}`;
+        return `${row.rowIndex}-${this.trackByProp}`;
       } else {
-        return row.$$index;
+        return row.rowIndex;
       }
     }.bind(this);
   }
@@ -319,14 +322,15 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     const rowLimit = Math.min(this.indexes.last, this.rowCount);
     let rowIndex = this.indexes.first;
     let idx = 0;
-    const temp: any[] = [];
+    const temp: RowMeta[] = [];
 
     while (rowIndex < rowLimit) {
-      const row = this.rows[rowIndex];
+      const row = this._rows[rowIndex];
 
       if(row) {
-        row.$$index = rowIndex;
-        temp[idx] = row;
+        const rowMeta = this._rowsMeta[rowIndex] || (this._rowsMeta[rowIndex] = { row, rowIndex });
+        rowMeta.rowIndex = rowIndex;
+        temp[idx] = rowMeta;
       }
 
       idx++;
@@ -344,10 +348,10 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * 
    * @memberOf DataTableBodyComponent
    */
-  getRowHeight(row: any): number {
+  getRowHeight(row: RowMeta): number {
     // Adding detail row height if its expanded.
     return this.rowHeight +
-      (row.$$expanded === 1 ? this.detailRowHeight : 0);
+      (row.expanded === 1 ? this.detailRowHeight : 0);
   }
 
   /**
@@ -370,7 +374,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * 
    * @memberOf DataTableBodyComponent
    */
-  getRowsStyles(row: any): any {
+  getRowsStyles(row: RowMeta): any {
     const rowHeight = this.getRowHeight(row);
 
     const styles = {
@@ -378,7 +382,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     };
 
     if(this.scrollbarV) {
-      const idx = row ? row.$$index : 0;
+      const idx = row ? row.rowIndex : 0;
 
       // const pos = idx * rowHeight;
       // The position of this row would be the sum of all row heights
@@ -443,8 +447,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
     // Initialize the tree only if there are rows inside the tree.
     if (this.rows && this.rows.length) {
-      this.rowHeightsCache.initCache(
-        this.rows, this.rowHeight, this.detailRowHeight);
+      this.rowHeightsCache.initCache(this._rowsMeta, this.rowHeight, this.detailRowHeight);
     }
   }
 
@@ -479,21 +482,21 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * 
    * @memberOf DataTableBodyComponent
    */
-  toggleRowExpansion(row: any): void {
+  toggleRowExpansion(row: RowMeta): void {
     // Capture the row index of the first row that is visible on the viewport.
     const viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
 
     // If the detailRowHeight is auto --> only in case of non-virtualized scroll
     if(this.scrollbarV) {
-      const detailRowHeight = this.detailRowHeight * (row.$$expanded ? -1 : 1);
-      this.rowHeightsCache.update(row.$$index, detailRowHeight);
+      const detailRowHeight = this.detailRowHeight * (row.expanded ? -1 : 1);
+      this.rowHeightsCache.update(row.rowIndex, detailRowHeight);
     }
 
     // Update the toggled row and update the heights in the cache.
-    row.$$expanded ^= 1;
+    row.expanded ^= 1;
 
     this.detailToggle.emit({
-      rows: [row],
+      rows: [row.row],
       currentIndex: viewPortFirstRowIndex
     });
   }
@@ -512,7 +515,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     const viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
 
     for(const row of this.rows) {
-      row.$$expanded = rowExpanded;
+      row.expanded = rowExpanded;
     }
 
     if(this.scrollbarV) {

@@ -1,5 +1,6 @@
 import { Input, Output, EventEmitter, Directive, TemplateRef, ContentChild } from '@angular/core';
 import { DatatableRowDetailTemplateDirective } from './row-detail-template.directive';
+import { RowMeta } from '../../types/';
 
 @Directive({ selector: 'ngx-datatable-row-detail' })
 export class DatatableRowDetailDirective {
@@ -23,14 +24,14 @@ export class DatatableRowDetailDirective {
    * @type {EventEmitter<any>}
    * @memberOf DatatableComponent
    */
-  @Output() toggle: EventEmitter<any> = new EventEmitter();
+  @Output() toggle: EventEmitter<{type: 'row' | 'all', value: RowMeta | boolean}> = new EventEmitter();
 
   /**
    * Toggle the expansion of the row
    *
    * @param rowIndex
    */
-  toggleExpandRow(row: any): void {
+  toggleExpandRow(row: RowMeta): void {
     this.toggle.emit({
       type: 'row',
       value: row

@@ -1,3 +1,5 @@
+import { RowMeta } from '../types';
+
 /**
  * This object contains the cache of the various row heights that are present inside
  * the data table.   Its based on Fenwick tree data structure that helps with
@@ -26,11 +28,11 @@ export class RowHeightCache {
   /**
    * Initialize the Fenwick tree with row Heights.
    *
-   * @param rows The array of rows which contain the expanded status.
+   * @param rowsMeta The array of RowMeta which contain the expanded status, not all indices are populated.
    * @param rowHeight The row height.
    * @param detailRowHeight The detail row height.
    */
-  initCache(rows: any[], rowHeight: number, detailRowHeight: number): void {
+  initCache(rowsMeta: RowMeta[], rowHeight: number, detailRowHeight: number): void {
     if (isNaN(rowHeight)) {
       throw new Error(`Row Height cache initialization failed. Please ensure that 'rowHeight' is a
         valid number value: (${rowHeight}) when 'scrollbarV' is enabled.`);
@@ -42,7 +44,7 @@ export class RowHeightCache {
         valid number value: (${detailRowHeight}) when 'scrollbarV' is enabled.`);
     }
 
-    const n = rows.length;
+    const n = rowsMeta.length;
     this.treeArray = new Array(n);
 
     for(let i = 0; i < n; ++i) {
@@ -54,7 +56,7 @@ export class RowHeightCache {
 
       // Add the detail row height to the already expanded rows.
       // This is useful for the table that goes through a filter or sort.
-      if (rows[i] && rows[i].$$expanded === 1) {
+      if (rowsMeta[i] && rowsMeta[i].expanded === 1) {
         currentRowHeight += detailRowHeight;
       }
 

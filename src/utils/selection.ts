@@ -1,10 +1,12 @@
-export function selectRows(selected: any[], row: any, comparefn: any) {
+import { RowMeta } from '../types';
+
+export function selectRows(selected: any[], row: RowMeta, comparefn: any) {
   const selectedIndex = comparefn(row, selected);
 
   if(selectedIndex > -1) {
     selected.splice(selectedIndex, 1);
   } else {
-    selected.push(row);
+    selected.push(row.row);
   }
 
   return selected;
@@ -12,7 +14,7 @@ export function selectRows(selected: any[], row: any, comparefn: any) {
 
 export function selectRowsBetween(
   selected: any[], 
-  rows: any[], 
+  rows: RowMeta[],
   index: number, 
   prevIndex: number, 
   comparefn: any): any[] {
@@ -20,7 +22,7 @@ export function selectRowsBetween(
   const reverse = index < prevIndex;
 
   for(let i = 0; i < rows.length; i++) {
-    const row = rows[i];
+    const row = rows[i].row;
     const greater = i >= prevIndex && i <= index;
     const lesser = i <= prevIndex && i >= index;
 

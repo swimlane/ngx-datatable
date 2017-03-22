@@ -1,6 +1,7 @@
 import { 
   Component, Input, Output, EventEmitter, HostListener 
 } from '@angular/core';
+import { RowMeta } from '../../types';
 
 @Component({
   selector: 'datatable-row-wrapper',
@@ -26,9 +27,9 @@ export class DataTableRowWrapperComponent {
   @Input() rowDetail: any;
   @Input() detailRowHeight: any;
   @Input() expanded: boolean = false;
-  @Input() row: any;
+  @Input() row: RowMeta;
   
-  @Output() rowContextmenu = new EventEmitter<{event: MouseEvent, row: any}>(false);
+  @Output() rowContextmenu = new EventEmitter<{event: MouseEvent, row: RowMeta}>(false);
 
   @HostListener('contextmenu', ['$event'])
   onContextmenu($event: MouseEvent): void {
