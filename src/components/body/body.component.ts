@@ -316,12 +316,12 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * @memberOf DataTableBodyComponent
    */
   updateRows(): void {
-    const { first, last } = this.indexes;
-    let rowIndex = first;
+    const rowLimit = Math.min(this.indexes.last, this.rowCount);
+    let rowIndex = this.indexes.first;
     let idx = 0;
     const temp: any[] = [];
 
-    while (rowIndex < last && rowIndex < this.rowCount) {
+    while (rowIndex < rowLimit) {
       const row = this.rows[rowIndex];
 
       if(row) {
