@@ -5,6 +5,7 @@
  */
  /* tslint:disable */
 
+
 import * as import0 from '@angular/core';
 import * as import1 from '../../build/datatable.module';
 import * as import2 from '@angular/common';
@@ -34,3 +35,4 @@ class NgxDatatableModuleInjector extends import0.ɵNgModuleInjector<import1.NgxD
   }
 }
 export const NgxDatatableModuleNgFactory:import0.NgModuleFactory<import1.NgxDatatableModule> = new import0.NgModuleFactory<any>(NgxDatatableModuleInjector,import1.NgxDatatableModule);
+//# sourceMappingURL=data:application/json;base64,eyJmaWxlIjoiL1VzZXJzL2F1c3Rpbi9kZXYvbmd4LWRhdGF0YWJsZS9idWlsZC9kYXRhdGFibGUubW9kdWxlLm5nZmFjdG9yeS50cyIsInZlcnNpb24iOjMsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIm5nOi8vL1VzZXJzL2F1c3Rpbi9kZXYvbmd4LWRhdGF0YWJsZS9idWlsZC9kYXRhdGFibGUubW9kdWxlLnRzIl0sInNvdXJjZXNDb250ZW50IjpbIiAiXSwibWFwcGluZ3MiOiJBQUFBOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7In0=

@@ -5,44 +5,45 @@
  */
  /* tslint:disable */
 
+
 import * as import0 from '@angular/core';
 import * as import1 from '@angular/common';
 import * as import2 from '../../../../build/components/footer/footer.component';
 import * as import3 from './pager.component.ngfactory';
 import * as import4 from '../../../../build/components/footer/pager.component';
 const styles_DataTableFooterComponent:any[] = ([] as any[]);
-export const RenderType_DataTableFooterComponent:import0.RendererTypeV2 = import0.ɵcrt({
+export const RenderType_DataTableFooterComponent:import0.RendererType2 = import0.ɵcrt({
   encapsulation: 2,
   styles: styles_DataTableFooterComponent,
   data: {}
 }
 );
-function View_DataTableFooterComponent_1():import0.ɵViewDefinition {
+function View_DataTableFooterComponent_1(l:any):import0.ɵViewDefinition {
   return import0.ɵvid(0,[
-    import0.ɵeld(0,(null as any),(null as any),1,'span',([] as any[]),(null as any),(null as any),(null as any),(null as any),(null as any)),
-    import0.ɵted((null as any),[
+    (l()(),import0.ɵeld(0,(null as any),(null as any),1,'span',([] as any[]),(null as any),(null as any),(null as any),(null as any),(null as any))),
+    (l()(),import0.ɵted((null as any),[
       '\n          ',
       ' ',
       ' / \n        '
     ]
-    )
+    ))
   ]
-  ,(null as any),(check,view) => {
-    var comp:any = view.component;
-    const currVal_0:any = comp.selectedCount.toLocaleString();
-    const currVal_1:any = comp.selectedMessage;
-    check(view,1,0,currVal_0,currVal_1);
+  ,(null as any),(ck,v) => {
+    var co:any = v.component;
+    const currVal_0:any = co.selectedCount.toLocaleString();
+    const currVal_1:any = co.selectedMessage;
+    ck(v,1,0,currVal_0,currVal_1);
   });
 }
-export function View_DataTableFooterComponent_0():import0.ɵViewDefinition {
+export function View_DataTableFooterComponent_0(l:any):import0.ɵViewDefinition {
   return import0.ɵvid(2,[
-    import0.ɵted((null as any),['\n    ']),
-      import0.ɵeld(0,(null as any),(null as any),13,'div',([] as any[]),[[
-        2,
+    (l()(),import0.ɵted((null as any),['\n    '])),
+      (l()(),import0.ɵeld(0,(null as any),(null as any),13,'div',([] as any[]),[[
+        4,
         'height',
         'px'
       ]
-    ],(null as any),(null as any),(null as any),(null as any)),
+    ],(null as any),(null as any),(null as any),(null as any))),
     import0.ɵdid(139264,(null as any),0,import1.NgClass,[
       import0.IterableDiffers,
       import0.KeyValueDiffers,
@@ -55,14 +56,14 @@ export function View_DataTableFooterComponent_0():import0.ɵViewDefinition {
       ]
     },(null as any)),
     import0.ɵpod(['selected-count']),
-    import0.ɵted((null as any),['\n      ']),
-      import0.ɵeld(0,(null as any),(null as any),4,'div',[[
+    (l()(),import0.ɵted((null as any),['\n      '])),
+      (l()(),import0.ɵeld(0,(null as any),(null as any),4,'div',[[
         'class',
         'page-count'
       ]
-    ],(null as any),(null as any),(null as any),(null as any),(null as any)),
-    import0.ɵted((null as any),['\n        ']),
-    import0.ɵand(8388608,(null as any),(null as any),1,(null as any),View_DataTableFooterComponent_1),
+    ],(null as any),(null as any),(null as any),(null as any),(null as any))),
+    (l()(),import0.ɵted((null as any),['\n        '])),
+    (l()(),import0.ɵand(8388608,(null as any),(null as any),1,(null as any),View_DataTableFooterComponent_1)),
     import0.ɵdid(8192,(null as any),0,import1.NgIf,[
       import0.ViewContainerRef,
       import0.TemplateRef
@@ -72,19 +73,19 @@ export function View_DataTableFooterComponent_0():import0.ɵViewDefinition {
         'ngIf'
       ]
     },(null as any)),
-    import0.ɵted((null as any),[
+    (l()(),import0.ɵted((null as any),[
       '\n\n        ',
       ' ',
       '\n      '
     ]
-    ),
-    import0.ɵted((null as any),['\n      ']),
-      import0.ɵeld(0,(null as any),(null as any),2,'datatable-pager',[[
+    )),
+    (l()(),import0.ɵted((null as any),['\n      '])),
+      (l()(),import0.ɵeld(0,(null as any),(null as any),2,'datatable-pager',[[
         'class',
         'datatable-pager'
       ]
       ],[[
-        3,
+        8,
         'hidden',
         0
       ]
@@ -92,15 +93,15 @@ export function View_DataTableFooterComponent_0():import0.ɵViewDefinition {
         (null as any),
         'change'
       ]
-    ],(view,eventName,$event) => {
-      var allowDefault:boolean = true;
-      var comp:import2.DataTableFooterComponent = view.component;
-      if (('change' === eventName)) {
-        const pd_0:any = ((<any>comp.page.emit($event)) !== false);
-        allowDefault = (pd_0 && allowDefault);
+    ],(v,en,$event) => {
+      var ad:boolean = true;
+      var co:import2.DataTableFooterComponent = v.component;
+      if (('change' === en)) {
+        const pd_0:any = ((<any>co.page.emit($event)) !== false);
+        ad = (pd_0 && ad);
       }
-      return allowDefault;
-    },import3.View_DataTablePagerComponent_0,import3.RenderType_DataTablePagerComponent),
+      return ad;
+    },import3.View_DataTablePagerComponent_0,import3.RenderType_DataTablePagerComponent)),
     import0.ɵdid(24576,(null as any),0,import4.DataTablePagerComponent,([] as any[]),{
       pagerLeftArrowIcon: [
         0,
@@ -139,50 +140,58 @@ export function View_DataTableFooterComponent_0():import0.ɵViewDefinition {
 
     }
     ,{change: 'change'}),
-    import0.ɵted((null as any),['\n      ']),
-    import0.ɵted((null as any),['\n    ']),
-    import0.ɵted((null as any),['\n  '])
+    (l()(),import0.ɵted((null as any),['\n      '])),
+    (l()(),import0.ɵted((null as any),['\n    '])),
+    (l()(),import0.ɵted((null as any),['\n  ']))
   ]
-  ,(check,view) => {
-    var comp:import2.DataTableFooterComponent = view.component;
-    const currVal_0:any = check(view,3,0,comp.selectedMessage);
-    check(view,2,0,currVal_0);
-    const currVal_1:any = comp.selectedMessage;
-    check(view,8,0,currVal_1);
-    const currVal_2:any = comp.pagerLeftArrowIcon;
-    const currVal_3:any = comp.pagerRightArrowIcon;
-    const currVal_4:any = comp.pagerPreviousIcon;
-    const currVal_5:any = comp.pagerNextIcon;
-    const currVal_6:any = comp.pageSize;
-    const currVal_7:any = comp.rowCount;
-    const currVal_8:any = comp.curPage;
-    check(view,12,0,currVal_2,currVal_3,currVal_4,currVal_5,currVal_6,currVal_7,currVal_8);
-  },(check,view) => {
-    var comp:import2.DataTableFooterComponent = view.component;
-    const currVal_0:any = comp.footerHeight;
-    check(view,1,0,currVal_0);
-    const currVal_1:any = comp.rowCount.toLocaleString();
-    const currVal_2:any = comp.totalMessage;
-    check(view,9,0,currVal_1,currVal_2);
-    const currVal_3:boolean = !comp.isVisible;
-    check(view,11,0,currVal_3);
+  ,(ck,v) => {
+    var co:import2.DataTableFooterComponent = v.component;
+    const currVal_1:any = ck(v,3,0,co.selectedMessage);
+    ck(v,2,0,currVal_1);
+    const currVal_2:any = co.selectedMessage;
+    ck(v,8,0,currVal_2);
+    const currVal_6:any = co.pagerLeftArrowIcon;
+    const currVal_7:any = co.pagerRightArrowIcon;
+    const currVal_8:any = co.pagerPreviousIcon;
+    const currVal_9:any = co.pagerNextIcon;
+    const currVal_10:any = co.pageSize;
+    const currVal_11:any = co.rowCount;
+    const currVal_12:any = co.curPage;
+    ck(v,12,0,currVal_6,currVal_7,currVal_8,currVal_9,currVal_10,currVal_11,currVal_12);
+  },(ck,v) => {
+    var co:import2.DataTableFooterComponent = v.component;
+    const currVal_0:any = co.footerHeight;
+    ck(v,1,0,currVal_0);
+    const currVal_3:any = co.rowCount.toLocaleString();
+    const currVal_4:any = co.totalMessage;
+    ck(v,9,0,currVal_3,currVal_4);
+    const currVal_5:boolean = !co.isVisible;
+    ck(v,11,0,currVal_5);
   });
 }
-const RenderType_DataTableFooterComponent_Host:import0.RendererTypeV2 = import0.ɵcrt({
-  encapsulation: 2,
-  styles: ([] as any[]),
-  data: {}
-}
-);
-function View_DataTableFooterComponent_Host_0():import0.ɵViewDefinition {
+function View_DataTableFooterComponent_Host_0(l:any):import0.ɵViewDefinition {
   return import0.ɵvid(0,[
-      import0.ɵeld(0,(null as any),(null as any),1,'datatable-footer',[[
+      (l()(),import0.ɵeld(0,(null as any),(null as any),1,'datatable-footer',[[
         'class',
         'datatable-footer'
       ]
-    ],(null as any),(null as any),(null as any),View_DataTableFooterComponent_0,RenderType_DataTableFooterComponent),
+    ],(null as any),(null as any),(null as any),View_DataTableFooterComponent_0,RenderType_DataTableFooterComponent)),
     import0.ɵdid(24576,(null as any),0,import2.DataTableFooterComponent,([] as any[]),(null as any),(null as any))
   ]
   ,(null as any),(null as any));
 }
-export const DataTableFooterComponentNgFactory:import0.ComponentFactory<import2.DataTableFooterComponent> = import0.ɵccf('datatable-footer',import2.DataTableFooterComponent,View_DataTableFooterComponent_Host_0);
+export const DataTableFooterComponentNgFactory:import0.ComponentFactory<import2.DataTableFooterComponent> = import0.ɵccf('datatable-footer',import2.DataTableFooterComponent,View_DataTableFooterComponent_Host_0,{
+  footerHeight: 'footerHeight',
+  rowCount: 'rowCount',
+  pageSize: 'pageSize',
+  offset: 'offset',
+  pagerLeftArrowIcon: 'pagerLeftArrowIcon',
+  pagerRightArrowIcon: 'pagerRightArrowIcon',
+  pagerPreviousIcon: 'pagerPreviousIcon',
+  pagerNextIcon: 'pagerNextIcon',
+  totalMessage: 'totalMessage',
+  selectedCount: 'selectedCount',
+  selectedMessage: 'selectedMessage'
+}
+,{page: 'page'},([] as any[]));
+//# sourceMappingURL=data:application/json;base64,eyJmaWxlIjoiL1VzZXJzL2F1c3Rpbi9kZXYvbmd4LWRhdGF0YWJsZS9idWlsZC9jb21wb25lbnRzL2Zvb3Rlci9mb290ZXIuY29tcG9uZW50Lm5nZmFjdG9yeS50cyIsInZlcnNpb24iOjMsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIm5nOi8vL1VzZXJzL2F1c3Rpbi9kZXYvbmd4LWRhdGF0YWJsZS9idWlsZC9jb21wb25lbnRzL2Zvb3Rlci9mb290ZXIuY29tcG9uZW50LnRzIiwibmc6Ly8vVXNlcnMvYXVzdGluL2Rldi9uZ3gtZGF0YXRhYmxlL2J1aWxkL2NvbXBvbmVudHMvZm9vdGVyL2Zvb3Rlci5jb21wb25lbnQudHMuRGF0YVRhYmxlRm9vdGVyQ29tcG9uZW50Lmh0bWwiLCJuZzovLy9Vc2Vycy9hdXN0aW4vZGV2L25neC1kYXRhdGFibGUvYnVpbGQvY29tcG9uZW50cy9mb290ZXIvZm9vdGVyLmNvbXBvbmVudC50cy5EYXRhVGFibGVGb290ZXJDb21wb25lbnRfSG9zdC5odG1sIl0sInNvdXJjZXNDb250ZW50IjpbIiAiLCJcbiAgICA8ZGl2XG4gICAgICBbbmdDbGFzc109XCJ7J3NlbGVjdGVkLWNvdW50Jzogc2VsZWN0ZWRNZXNzYWdlfVwiXG4gICAgICBbc3R5bGUuaGVpZ2h0LnB4XT1cImZvb3RlckhlaWdodFwiPlxuICAgICAgPGRpdiBjbGFzcz1cInBhZ2UtY291bnRcIj5cbiAgICAgICAgPHNwYW4gKm5nSWY9XCJzZWxlY3RlZE1lc3NhZ2VcIj5cbiAgICAgICAgICB7e3NlbGVjdGVkQ291bnQudG9Mb2NhbGVTdHJpbmcoKX19IHt7c2VsZWN0ZWRNZXNzYWdlfX0gLyBcbiAgICAgICAgPC9zcGFuPlxuXG4gICAgICAgIHt7cm93Q291bnQudG9Mb2NhbGVTdHJpbmcoKX19IHt7dG90YWxNZXNzYWdlfX1cbiAgICAgIDwvZGl2PlxuICAgICAgPGRhdGF0YWJsZS1wYWdlclxuICAgICAgICBbcGFnZXJMZWZ0QXJyb3dJY29uXT1cInBhZ2VyTGVmdEFycm93SWNvblwiXG4gICAgICAgIFtwYWdlclJpZ2h0QXJyb3dJY29uXT1cInBhZ2VyUmlnaHRBcnJvd0ljb25cIlxuICAgICAgICBbcGFnZXJQcmV2aW91c0ljb25dPVwicGFnZXJQcmV2aW91c0ljb25cIlxuICAgICAgICBbcGFnZXJOZXh0SWNvbl09XCJwYWdlck5leHRJY29uXCJcbiAgICAgICAgW3BhZ2VdPVwiY3VyUGFnZVwiXG4gICAgICAgIFtzaXplXT1cInBhZ2VTaXplXCJcbiAgICAgICAgW2NvdW50XT1cInJvd0NvdW50XCJcbiAgICAgICAgW2hpZGRlbl09XCIhaXNWaXNpYmxlXCJcbiAgICAgICAgKGNoYW5nZSk9XCJwYWdlLmVtaXQoJGV2ZW50KVwiPlxuICAgICAgPC9kYXRhdGFibGUtcGFnZXI+XG4gICAgPC9kaXY+XG4gICIsIjxkYXRhdGFibGUtZm9vdGVyPjwvZGF0YXRhYmxlLWZvb3Rlcj4iXSwibWFwcGluZ3MiOiJBQUFBOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0lDS1E7SUFBOEI7TUFBQTtNQUFBO01BQUE7SUFBQTtJQUFBOzs7O0lBQUE7SUFBQTtJQUFBOzs7OztJQUx0QztNQUNJO1FBQUE7UUFBQTtRQUFBO01BQUE7SUFBQTtnQkFBQTs7Ozs7SUFBQTtPQUFBO1FBQUE7UUFBQTtNQUFBO0lBQUE7Z0JBQ0U7SUFDaUM7TUFDakM7UUFBQTtRQUFBO01BQUE7SUFBQTtJQUF3QjtJQUN0QjtnQkFBQTs7O0lBQUE7T0FBQTtRQUFBO1FBQUE7TUFBQTtJQUFBO0lBRU87TUFBQTtNQUFBO01BQUE7SUFBQTtJQUFBO0lBR0g7TUFDTjtRQUFBO1FBQUE7TUFBQTtNQUFBO1FBQUE7UUFBQTtRQUFBO01BQUE7TUFBQTtRQUFBO1FBQUE7TUFBQTtJQUFBO01BQUE7TUFBQTtNQVNFO1FBQUE7UUFBQTtNQUFBO01BVEY7SUFBQTtnQkFBQTtNQUFBO1FBQUE7UUFBQTtNQUFBOztNQUFBO1FBQUE7UUFBQTtNQUFBOztNQUFBO1FBQUE7UUFBQTtNQUFBOztNQUFBO1FBQUE7UUFBQTtNQUFBOztNQUFBO1FBQUE7UUFBQTtNQUFBOztNQUFBO1FBQUE7UUFBQTtNQUFBOztNQUFBO1FBQUE7UUFBQTtNQUFBOztJQUFBO0tBQUE7SUFTK0I7SUFDYjtJQUNkOzs7O0lBcEJKO0lBREYsU0FDRSxTQURGO0lBSVU7SUFBTixTQUFNLFNBQU47SUFPQTtJQUNBO0lBQ0E7SUFDQTtJQUVBO0lBQ0E7SUFGQTtJQUxGLFVBQ0UsVUFDQSxVQUNBLFVBQ0EsVUFFQSxXQUNBLFdBRkEsVUFMRjs7O0lBUkE7SUFGRixTQUVFLFNBRkY7SUFNVztJQUFBO0lBQUE7SUFZUDtJQVJGLFVBUUUsU0FSRjs7Ozs7TUNYTjtRQUFBO1FBQUE7TUFBQTtJQUFBO2dCQUFBOzs7Ozs7Ozs7Ozs7Ozs7OzsifQ==

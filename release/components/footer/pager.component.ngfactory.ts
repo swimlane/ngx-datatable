@@ -5,29 +5,31 @@
  */
  /* tslint:disable */
 
+
 import * as import0 from '@angular/core';
 import * as import1 from '../../../../build/components/footer/pager.component';
 import * as import2 from '@angular/common';
 const styles_DataTablePagerComponent:any[] = ([] as any[]);
-export const RenderType_DataTablePagerComponent:import0.RendererTypeV2 = import0.ɵcrt({
+export const RenderType_DataTablePagerComponent:import0.RendererType2 = import0.ɵcrt({
   encapsulation: 2,
   styles: styles_DataTablePagerComponent,
   data: {}
 }
 );
-function View_DataTablePagerComponent_1():import0.ɵViewDefinition {
+function View_DataTablePagerComponent_1(l:any):import0.ɵViewDefinition {
   return import0.ɵvid(0,[
-      import0.ɵeld(0,(null as any),(null as any),4,'li',[[
+      (l()(),import0.ɵeld(0,(null as any),(null as any),4,'li',[[
         'class',
         'pages'
       ]
       ],[[
-        1,
-        'active'
+        2,
+        'active',
+        (null as any)
       ]
-    ],(null as any),(null as any),(null as any),(null as any)),
-    import0.ɵted((null as any),['\n        ']),
-      import0.ɵeld(0,(null as any),(null as any),1,'a',[[
+    ],(null as any),(null as any),(null as any),(null as any))),
+    (l()(),import0.ɵted((null as any),['\n        '])),
+      (l()(),import0.ɵeld(0,(null as any),(null as any),1,'a',[[
         'href',
         'javascript:void(0)'
       ]
@@ -35,46 +37,47 @@ function View_DataTablePagerComponent_1():import0.ɵViewDefinition {
         (null as any),
         'click'
       ]
-    ],(view,eventName,$event) => {
-      var allowDefault:boolean = true;
-      var comp:any = view.component;
-      if (('click' === eventName)) {
-        const pd_0:any = ((<any>comp.selectPage(view.context.$implicit.number)) !== false);
-        allowDefault = (pd_0 && allowDefault);
+    ],(v,en,$event) => {
+      var ad:boolean = true;
+      var co:any = v.component;
+      if (('click' === en)) {
+        const pd_0:any = ((<any>co.selectPage(v.context.$implicit.number)) !== false);
+        ad = (pd_0 && ad);
       }
-      return allowDefault;
-    },(null as any),(null as any)),
-    import0.ɵted((null as any),[
+      return ad;
+    },(null as any),(null as any))),
+    (l()(),import0.ɵted((null as any),[
       '\n          ',
       '\n        '
     ]
-    ),
-    import0.ɵted((null as any),['\n      '])
+    )),
+    (l()(),import0.ɵted((null as any),['\n      ']))
   ]
-  ,(null as any),(check,view) => {
-    var comp:any = view.component;
-    const currVal_0:any = (view.context.$implicit.number === comp.page);
-    check(view,0,0,currVal_0);
-    const currVal_1:any = view.context.$implicit.text;
-    check(view,3,0,currVal_1);
+  ,(null as any),(ck,v) => {
+    var co:any = v.component;
+    const currVal_0:any = (v.context.$implicit.number === co.page);
+    ck(v,0,0,currVal_0);
+    const currVal_1:any = v.context.$implicit.text;
+    ck(v,3,0,currVal_1);
   });
 }
-export function View_DataTablePagerComponent_0():import0.ɵViewDefinition {
+export function View_DataTablePagerComponent_0(l:any):import0.ɵViewDefinition {
   return import0.ɵvid(2,[
-    import0.ɵted((null as any),['\n    ']),
-      import0.ɵeld(0,(null as any),(null as any),36,'ul',[[
+    (l()(),import0.ɵted((null as any),['\n    '])),
+      (l()(),import0.ɵeld(0,(null as any),(null as any),36,'ul',[[
         'class',
         'pager'
       ]
-    ],(null as any),(null as any),(null as any),(null as any),(null as any)),
-    import0.ɵted((null as any),['\n      ']),
-      import0.ɵeld(0,(null as any),(null as any),6,'li',([] as any[]),[[
-        1,
-        'disabled'
+    ],(null as any),(null as any),(null as any),(null as any),(null as any))),
+    (l()(),import0.ɵted((null as any),['\n      '])),
+      (l()(),import0.ɵeld(0,(null as any),(null as any),6,'li',([] as any[]),[[
+        2,
+        'disabled',
+        (null as any)
       ]
-    ],(null as any),(null as any),(null as any),(null as any)),
-    import0.ɵted((null as any),['\n        ']),
-      import0.ɵeld(0,(null as any),(null as any),3,'a',[[
+    ],(null as any),(null as any),(null as any),(null as any))),
+    (l()(),import0.ɵted((null as any),['\n        '])),
+      (l()(),import0.ɵeld(0,(null as any),(null as any),3,'a',[[
         'href',
         'javascript:void(0)'
       ]
@@ -82,32 +85,33 @@ export function View_DataTablePagerComponent_0():import0.ɵViewDefinition {
         (null as any),
         'click'
       ]
-    ],(view,eventName,$event) => {
-      var allowDefault:boolean = true;
-      var comp:import1.DataTablePagerComponent = view.component;
-      if (('click' === eventName)) {
-        const pd_0:any = ((<any>comp.selectPage(1)) !== false);
-        allowDefault = (pd_0 && allowDefault);
+    ],(v,en,$event) => {
+      var ad:boolean = true;
+      var co:import1.DataTablePagerComponent = v.component;
+      if (('click' === en)) {
+        const pd_0:any = ((<any>co.selectPage(1)) !== false);
+        ad = (pd_0 && ad);
       }
-      return allowDefault;
-    },(null as any),(null as any)),
-    import0.ɵted((null as any),['\n          ']),
-      import0.ɵeld(0,(null as any),(null as any),0,'i',([] as any[]),[[
-        3,
+      return ad;
+    },(null as any),(null as any))),
+    (l()(),import0.ɵted((null as any),['\n          '])),
+      (l()(),import0.ɵeld(0,(null as any),(null as any),0,'i',([] as any[]),[[
+        8,
         'className',
         0
       ]
-    ],(null as any),(null as any),(null as any),(null as any)),
-    import0.ɵted((null as any),['\n        ']),
-    import0.ɵted((null as any),['\n      ']),
-    import0.ɵted((null as any),['\n      ']),
-      import0.ɵeld(0,(null as any),(null as any),6,'li',([] as any[]),[[
-        1,
-        'disabled'
+    ],(null as any),(null as any),(null as any),(null as any))),
+    (l()(),import0.ɵted((null as any),['\n        '])),
+    (l()(),import0.ɵted((null as any),['\n      '])),
+    (l()(),import0.ɵted((null as any),['\n      '])),
+      (l()(),import0.ɵeld(0,(null as any),(null as any),6,'li',([] as any[]),[[
+        2,
+        'disabled',
+        (null as any)
       ]
-    ],(null as any),(null as any),(null as any),(null as any)),
-    import0.ɵted((null as any),['\n        ']),
-      import0.ɵeld(0,(null as any),(null as any),3,'a',[[
+    ],(null as any),(null as any),(null as any),(null as any))),
+    (l()(),import0.ɵted((null as any),['\n        '])),
+      (l()(),import0.ɵeld(0,(null as any),(null as any),3,'a',[[
         'href',
         'javascript:void(0)'
       ]
@@ -115,26 +119,26 @@ export function View_DataTablePagerComponent_0():import0.ɵViewDefinition {
         (null as any),
         'click'
       ]
-    ],(view,eventName,$event) => {
-      var allowDefault:boolean = true;
-      var comp:import1.DataTablePagerComponent = view.component;
-      if (('click' === eventName)) {
-        const pd_0:any = ((<any>comp.prevPage()) !== false);
-        allowDefault = (pd_0 && allowDefault);
+    ],(v,en,$event) => {
+      var ad:boolean = true;
+      var co:import1.DataTablePagerComponent = v.component;
+      if (('click' === en)) {
+        const pd_0:any = ((<any>co.prevPage()) !== false);
+        ad = (pd_0 && ad);
       }
-      return allowDefault;
-    },(null as any),(null as any)),
-    import0.ɵted((null as any),['\n          ']),
-      import0.ɵeld(0,(null as any),(null as any),0,'i',([] as any[]),[[
-        3,
+      return ad;
+    },(null as any),(null as any))),
+    (l()(),import0.ɵted((null as any),['\n          '])),
+      (l()(),import0.ɵeld(0,(null as any),(null as any),0,'i',([] as any[]),[[
+        8,
         'className',
         0
       ]
-    ],(null as any),(null as any),(null as any),(null as any)),
-    import0.ɵted((null as any),['\n        ']),
-    import0.ɵted((null as any),['\n      ']),
-    import0.ɵted((null as any),['\n      ']),
-    import0.ɵand(8388608,(null as any),(null as any),1,(null as any),View_DataTablePagerComponent_1),
+    ],(null as any),(null as any),(null as any),(null as any))),
+    (l()(),import0.ɵted((null as any),['\n        '])),
+    (l()(),import0.ɵted((null as any),['\n      '])),
+    (l()(),import0.ɵted((null as any),['\n      '])),
+    (l()(),import0.ɵand(8388608,(null as any),(null as any),1,(null as any),View_DataTablePagerComponent_1)),
     import0.ɵdid(401408,(null as any),0,import2.NgForOf,[
       import0.ViewContainerRef,
       import0.TemplateRef,
@@ -145,14 +149,15 @@ export function View_DataTablePagerComponent_0():import0.ɵViewDefinition {
         'ngForOf'
       ]
     },(null as any)),
-    import0.ɵted((null as any),['\n      ']),
-      import0.ɵeld(0,(null as any),(null as any),6,'li',([] as any[]),[[
-        1,
-        'disabled'
+    (l()(),import0.ɵted((null as any),['\n      '])),
+      (l()(),import0.ɵeld(0,(null as any),(null as any),6,'li',([] as any[]),[[
+        2,
+        'disabled',
+        (null as any)
       ]
-    ],(null as any),(null as any),(null as any),(null as any)),
-    import0.ɵted((null as any),['\n        ']),
-      import0.ɵeld(0,(null as any),(null as any),3,'a',[[
+    ],(null as any),(null as any),(null as any),(null as any))),
+    (l()(),import0.ɵted((null as any),['\n        '])),
+      (l()(),import0.ɵeld(0,(null as any),(null as any),3,'a',[[
         'href',
         'javascript:void(0)'
       ]
@@ -160,32 +165,33 @@ export function View_DataTablePagerComponent_0():import0.ɵViewDefinition {
         (null as any),
         'click'
       ]
-    ],(view,eventName,$event) => {
-      var allowDefault:boolean = true;
-      var comp:import1.DataTablePagerComponent = view.component;
-      if (('click' === eventName)) {
-        const pd_0:any = ((<any>comp.nextPage()) !== false);
-        allowDefault = (pd_0 && allowDefault);
+    ],(v,en,$event) => {
+      var ad:boolean = true;
+      var co:import1.DataTablePagerComponent = v.component;
+      if (('click' === en)) {
+        const pd_0:any = ((<any>co.nextPage()) !== false);
+        ad = (pd_0 && ad);
       }
-      return allowDefault;
-    },(null as any),(null as any)),
-    import0.ɵted((null as any),['\n          ']),
-      import0.ɵeld(0,(null as any),(null as any),0,'i',([] as any[]),[[
-        3,
+      return ad;
+    },(null as any),(null as any))),
+    (l()(),import0.ɵted((null as any),['\n          '])),
+      (l()(),import0.ɵeld(0,(null as any),(null as any),0,'i',([] as any[]),[[
+        8,
         'className',
         0
       ]
-    ],(null as any),(null as any),(null as any),(null as any)),
-    import0.ɵted((null as any),['\n        ']),
-    import0.ɵted((null as any),['\n      ']),
-    import0.ɵted((null as any),['\n      ']),
-      import0.ɵeld(0,(null as any),(null as any),6,'li',([] as any[]),[[
-        1,
-        'disabled'
+    ],(null as any),(null as any),(null as any),(null as any))),
+    (l()(),import0.ɵted((null as any),['\n        '])),
+    (l()(),import0.ɵted((null as any),['\n      '])),
+    (l()(),import0.ɵted((null as any),['\n      '])),
+      (l()(),import0.ɵeld(0,(null as any),(null as any),6,'li',([] as any[]),[[
+        2,
+        'disabled',
+        (null as any)
       ]
-    ],(null as any),(null as any),(null as any),(null as any)),
-    import0.ɵted((null as any),['\n        ']),
-      import0.ɵeld(0,(null as any),(null as any),3,'a',[[
+    ],(null as any),(null as any),(null as any),(null as any))),
+    (l()(),import0.ɵted((null as any),['\n        '])),
+      (l()(),import0.ɵeld(0,(null as any),(null as any),3,'a',[[
         'href',
         'javascript:void(0)'
       ]
@@ -193,66 +199,70 @@ export function View_DataTablePagerComponent_0():import0.ɵViewDefinition {
         (null as any),
         'click'
       ]
-    ],(view,eventName,$event) => {
-      var allowDefault:boolean = true;
-      var comp:import1.DataTablePagerComponent = view.component;
-      if (('click' === eventName)) {
-        const pd_0:any = ((<any>comp.selectPage(comp.totalPages)) !== false);
-        allowDefault = (pd_0 && allowDefault);
+    ],(v,en,$event) => {
+      var ad:boolean = true;
+      var co:import1.DataTablePagerComponent = v.component;
+      if (('click' === en)) {
+        const pd_0:any = ((<any>co.selectPage(co.totalPages)) !== false);
+        ad = (pd_0 && ad);
       }
-      return allowDefault;
-    },(null as any),(null as any)),
-    import0.ɵted((null as any),['\n          ']),
-      import0.ɵeld(0,(null as any),(null as any),0,'i',([] as any[]),[[
-        3,
+      return ad;
+    },(null as any),(null as any))),
+    (l()(),import0.ɵted((null as any),['\n          '])),
+      (l()(),import0.ɵeld(0,(null as any),(null as any),0,'i',([] as any[]),[[
+        8,
         'className',
         0
       ]
-    ],(null as any),(null as any),(null as any),(null as any)),
-    import0.ɵted((null as any),['\n        ']),
-    import0.ɵted((null as any),['\n      ']),
-    import0.ɵted((null as any),['\n    ']),
-    import0.ɵted((null as any),['\n  '])
+    ],(null as any),(null as any),(null as any),(null as any))),
+    (l()(),import0.ɵted((null as any),['\n        '])),
+    (l()(),import0.ɵted((null as any),['\n      '])),
+    (l()(),import0.ɵted((null as any),['\n    '])),
+    (l()(),import0.ɵted((null as any),['\n  ']))
   ]
-  ,(check,view) => {
-    var comp:import1.DataTablePagerComponent = view.component;
-    const currVal_0:any = comp.pages;
-    check(view,20,0,currVal_0);
-  },(check,view) => {
-    var comp:import1.DataTablePagerComponent = view.component;
-    const currVal_0:boolean = !comp.canPrevious();
-    check(view,3,0,currVal_0);
-    const currVal_1:any = import0.ɵinlineInterpolate(1,'',comp.pagerPreviousIcon,'');
-    check(view,7,0,currVal_1);
-    const currVal_2:boolean = !comp.canPrevious();
-    check(view,11,0,currVal_2);
-    const currVal_3:any = import0.ɵinlineInterpolate(1,'',comp.pagerLeftArrowIcon,'');
-    check(view,15,0,currVal_3);
-    const currVal_4:boolean = !comp.canNext();
-    check(view,22,0,currVal_4);
-    const currVal_5:any = import0.ɵinlineInterpolate(1,'',comp.pagerRightArrowIcon,'');
-    check(view,26,0,currVal_5);
-    const currVal_6:boolean = !comp.canNext();
-    check(view,30,0,currVal_6);
-    const currVal_7:any = import0.ɵinlineInterpolate(1,'',comp.pagerNextIcon,'');
-    check(view,34,0,currVal_7);
+  ,(ck,v) => {
+    var co:import1.DataTablePagerComponent = v.component;
+    const currVal_4:any = co.pages;
+    ck(v,20,0,currVal_4);
+  },(ck,v) => {
+    var co:import1.DataTablePagerComponent = v.component;
+    const currVal_0:boolean = !co.canPrevious();
+    ck(v,3,0,currVal_0);
+    const currVal_1:any = import0.ɵinlineInterpolate(1,'',co.pagerPreviousIcon,'');
+    ck(v,7,0,currVal_1);
+    const currVal_2:boolean = !co.canPrevious();
+    ck(v,11,0,currVal_2);
+    const currVal_3:any = import0.ɵinlineInterpolate(1,'',co.pagerLeftArrowIcon,'');
+    ck(v,15,0,currVal_3);
+    const currVal_5:boolean = !co.canNext();
+    ck(v,22,0,currVal_5);
+    const currVal_6:any = import0.ɵinlineInterpolate(1,'',co.pagerRightArrowIcon,'');
+    ck(v,26,0,currVal_6);
+    const currVal_7:boolean = !co.canNext();
+    ck(v,30,0,currVal_7);
+    const currVal_8:any = import0.ɵinlineInterpolate(1,'',co.pagerNextIcon,'');
+    ck(v,34,0,currVal_8);
   });
 }
-const RenderType_DataTablePagerComponent_Host:import0.RendererTypeV2 = import0.ɵcrt({
-  encapsulation: 2,
-  styles: ([] as any[]),
-  data: {}
-}
-);
-function View_DataTablePagerComponent_Host_0():import0.ɵViewDefinition {
+function View_DataTablePagerComponent_Host_0(l:any):import0.ɵViewDefinition {
   return import0.ɵvid(0,[
-      import0.ɵeld(0,(null as any),(null as any),1,'datatable-pager',[[
+      (l()(),import0.ɵeld(0,(null as any),(null as any),1,'datatable-pager',[[
         'class',
         'datatable-pager'
       ]
-    ],(null as any),(null as any),(null as any),View_DataTablePagerComponent_0,RenderType_DataTablePagerComponent),
+    ],(null as any),(null as any),(null as any),View_DataTablePagerComponent_0,RenderType_DataTablePagerComponent)),
     import0.ɵdid(24576,(null as any),0,import1.DataTablePagerComponent,([] as any[]),(null as any),(null as any))
   ]
   ,(null as any),(null as any));
 }
-export const DataTablePagerComponentNgFactory:import0.ComponentFactory<import1.DataTablePagerComponent> = import0.ɵccf('datatable-pager',import1.DataTablePagerComponent,View_DataTablePagerComponent_Host_0);
+export const DataTablePagerComponentNgFactory:import0.ComponentFactory<import1.DataTablePagerComponent> = import0.ɵccf('datatable-pager',import1.DataTablePagerComponent,View_DataTablePagerComponent_Host_0,{
+  pagerLeftArrowIcon: 'pagerLeftArrowIcon',
+  pagerRightArrowIcon: 'pagerRightArrowIcon',
+  pagerPreviousIcon: 'pagerPreviousIcon',
+  pagerNextIcon: 'pagerNextIcon',
+  size: 'size',
+  count: 'count',
+  page: 'page'
+}
+,{change: 'change'},([] as any[]));
+//# sourceMappingURL=data:application/json;base64,eyJmaWxlIjoiL1VzZXJzL2F1c3Rpbi9kZXYvbmd4LWRhdGF0YWJsZS9idWlsZC9jb21wb25lbnRzL2Zvb3Rlci9wYWdlci5jb21wb25lbnQubmdmYWN0b3J5LnRzIiwidmVyc2lvbiI6Mywic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsibmc6Ly8vVXNlcnMvYXVzdGluL2Rldi9uZ3gtZGF0YXRhYmxlL2J1aWxkL2NvbXBvbmVudHMvZm9vdGVyL3BhZ2VyLmNvbXBvbmVudC50cyIsIm5nOi8vL1VzZXJzL2F1c3Rpbi9kZXYvbmd4LWRhdGF0YWJsZS9idWlsZC9jb21wb25lbnRzL2Zvb3Rlci9wYWdlci5jb21wb25lbnQudHMuRGF0YVRhYmxlUGFnZXJDb21wb25lbnQuaHRtbCIsIm5nOi8vL1VzZXJzL2F1c3Rpbi9kZXYvbmd4LWRhdGF0YWJsZS9idWlsZC9jb21wb25lbnRzL2Zvb3Rlci9wYWdlci5jb21wb25lbnQudHMuRGF0YVRhYmxlUGFnZXJDb21wb25lbnRfSG9zdC5odG1sIl0sInNvdXJjZXNDb250ZW50IjpbIiAiLCJcbiAgICA8dWwgY2xhc3M9XCJwYWdlclwiPlxuICAgICAgPGxpIFtjbGFzcy5kaXNhYmxlZF09XCIhY2FuUHJldmlvdXMoKVwiPlxuICAgICAgICA8YVxuICAgICAgICAgIGhyZWY9XCJqYXZhc2NyaXB0OnZvaWQoMClcIlxuICAgICAgICAgIChjbGljayk9XCJzZWxlY3RQYWdlKDEpXCI+XG4gICAgICAgICAgPGkgY2xhc3M9XCJ7e3BhZ2VyUHJldmlvdXNJY29ufX1cIj48L2k+XG4gICAgICAgIDwvYT5cbiAgICAgIDwvbGk+XG4gICAgICA8bGkgW2NsYXNzLmRpc2FibGVkXT1cIiFjYW5QcmV2aW91cygpXCI+XG4gICAgICAgIDxhXG4gICAgICAgICAgaHJlZj1cImphdmFzY3JpcHQ6dm9pZCgwKVwiXG4gICAgICAgICAgKGNsaWNrKT1cInByZXZQYWdlKClcIj5cbiAgICAgICAgICA8aSBjbGFzcz1cInt7cGFnZXJMZWZ0QXJyb3dJY29ufX1cIj48L2k+XG4gICAgICAgIDwvYT5cbiAgICAgIDwvbGk+XG4gICAgICA8bGlcbiAgICAgICAgY2xhc3M9XCJwYWdlc1wiXG4gICAgICAgICpuZ0Zvcj1cImxldCBwZyBvZiBwYWdlc1wiXG4gICAgICAgIFtjbGFzcy5hY3RpdmVdPVwicGcubnVtYmVyID09PSBwYWdlXCI+XG4gICAgICAgIDxhXG4gICAgICAgICAgaHJlZj1cImphdmFzY3JpcHQ6dm9pZCgwKVwiXG4gICAgICAgICAgKGNsaWNrKT1cInNlbGVjdFBhZ2UocGcubnVtYmVyKVwiPlxuICAgICAgICAgIHt7cGcudGV4dH19XG4gICAgICAgIDwvYT5cbiAgICAgIDwvbGk+XG4gICAgICA8bGkgW2NsYXNzLmRpc2FibGVkXT1cIiFjYW5OZXh0KClcIj5cbiAgICAgICAgPGFcbiAgICAgICAgICBocmVmPVwiamF2YXNjcmlwdDp2b2lkKDApXCJcbiAgICAgICAgICAoY2xpY2spPVwibmV4dFBhZ2UoKVwiPlxuICAgICAgICAgIDxpIGNsYXNzPVwie3twYWdlclJpZ2h0QXJyb3dJY29ufX1cIj48L2k+XG4gICAgICAgIDwvYT5cbiAgICAgIDwvbGk+XG4gICAgICA8bGkgW2NsYXNzLmRpc2FibGVkXT1cIiFjYW5OZXh0KClcIj5cbiAgICAgICAgPGFcbiAgICAgICAgICBocmVmPVwiamF2YXNjcmlwdDp2b2lkKDApXCJcbiAgICAgICAgICAoY2xpY2spPVwic2VsZWN0UGFnZSh0b3RhbFBhZ2VzKVwiPlxuICAgICAgICAgIDxpIGNsYXNzPVwie3twYWdlck5leHRJY29ufX1cIj48L2k+XG4gICAgICAgIDwvYT5cbiAgICAgIDwvbGk+XG4gICAgPC91bD5cbiAgIiwiPGRhdGF0YWJsZS1wYWdlcj48L2RhdGF0YWJsZS1wYWdlcj4iXSwibWFwcGluZ3MiOiJBQUFBOzs7Ozs7Ozs7Ozs7Ozs7Ozs7OztNQ2dCTTtRQUFBO1FBQUE7TUFBQTtNQUFBO1FBQUE7UUFBQTtRQUFBO01BQUE7SUFBQTtJQUdzQztNQUNwQztRQUFBO1FBQUE7TUFBQTtNQUFBO1FBQUE7UUFBQTtNQUFBO0lBQUE7TUFBQTtNQUFBO01BRUU7UUFBQTtRQUFBO01BQUE7TUFGRjtJQUFBO0lBRWtDO01BQUE7TUFBQTtJQUFBO0lBQUE7SUFFOUI7Ozs7SUFMSjtJQUhGLFNBR0UsU0FIRjtJQU1vQztJQUFBOzs7OztJQXRCMUM7TUFDSTtRQUFBO1FBQUE7TUFBQTtJQUFBO0lBQWtCO01BQ2hCO1FBQUE7UUFBQTtRQUFBO01BQUE7SUFBQTtJQUFzQztNQUNwQztRQUFBO1FBQUE7TUFBQTtNQUFBO1FBQUE7UUFBQTtNQUFBO0lBQUE7TUFBQTtNQUFBO01BRUU7UUFBQTtRQUFBO01BQUE7TUFGRjtJQUFBO0lBRTBCO01BQ3hCO1FBQUE7UUFBQTtRQUFBO01BQUE7SUFBQTtJQUFxQztJQUNuQztJQUNEO01BQ0w7UUFBQTtRQUFBO1FBQUE7TUFBQTtJQUFBO0lBQXNDO01BQ3BDO1FBQUE7UUFBQTtNQUFBO01BQUE7UUFBQTtRQUFBO01BQUE7SUFBQTtNQUFBO01BQUE7TUFFRTtRQUFBO1FBQUE7TUFBQTtNQUZGO0lBQUE7SUFFdUI7TUFDckI7UUFBQTtRQUFBO1FBQUE7TUFBQTtJQUFBO0lBQXNDO0lBQ3BDO0lBQ0Q7SUFDTDtnQkFBQTs7OztJQUFBO09BQUE7UUFBQTtRQUFBO01BQUE7SUFBQTtJQVNLO01BQ0w7UUFBQTtRQUFBO1FBQUE7TUFBQTtJQUFBO0lBQWtDO01BQ2hDO1FBQUE7UUFBQTtNQUFBO01BQUE7UUFBQTtRQUFBO01BQUE7SUFBQTtNQUFBO01BQUE7TUFFRTtRQUFBO1FBQUE7TUFBQTtNQUZGO0lBQUE7SUFFdUI7TUFDckI7UUFBQTtRQUFBO1FBQUE7TUFBQTtJQUFBO0lBQXVDO0lBQ3JDO0lBQ0Q7TUFDTDtRQUFBO1FBQUE7UUFBQTtNQUFBO0lBQUE7SUFBa0M7TUFDaEM7UUFBQTtRQUFBO01BQUE7TUFBQTtRQUFBO1FBQUE7TUFBQTtJQUFBO01BQUE7TUFBQTtNQUVFO1FBQUE7UUFBQTtNQUFBO01BRkY7SUFBQTtJQUVtQztNQUNqQztRQUFBO1FBQUE7UUFBQTtNQUFBO0lBQUE7SUFBaUM7SUFDL0I7SUFDRDtJQUNGOzs7O0lBdEJEO0lBRkYsVUFFRSxTQUZGOzs7SUFkSTtJQUFKLFNBQUksU0FBSjtJQUlPO0lBQUgsU0FBRyxTQUFIO0lBR0E7SUFBSixVQUFJLFNBQUo7SUFJTztJQUFILFVBQUcsU0FBSDtJQWFBO0lBQUosVUFBSSxTQUFKO0lBSU87SUFBSCxVQUFHLFNBQUg7SUFHQTtJQUFKLFVBQUksU0FBSjtJQUlPO0lBQUgsVUFBRyxTQUFIOzs7OztNQ3JDVjtRQUFBO1FBQUE7TUFBQTtJQUFBO2dCQUFBOzs7Ozs7Ozs7Ozs7OyJ9

@@ -5,22 +5,23 @@
  */
  /* tslint:disable */
 
+
 import * as import0 from '@angular/core';
 import * as import1 from '@angular/common';
 import * as import2 from '../../../../build/components/body/body-row-wrapper.component';
 const styles_DataTableRowWrapperComponent:any[] = ([] as any[]);
-export const RenderType_DataTableRowWrapperComponent:import0.RendererTypeV2 = import0.ɵcrt({
+export const RenderType_DataTableRowWrapperComponent:import0.RendererType2 = import0.ɵcrt({
   encapsulation: 2,
   styles: styles_DataTableRowWrapperComponent,
   data: {}
 }
 );
-function View_DataTableRowWrapperComponent_3():import0.ɵViewDefinition {
-  return import0.ɵvid(0,[import0.ɵted((null as any),['\n      '])],(null as any),(null as any));
+function View_DataTableRowWrapperComponent_3(l:any):import0.ɵViewDefinition {
+  return import0.ɵvid(0,[(l()(),import0.ɵted((null as any),['\n      ']))],(null as any),(null as any));
 }
-function View_DataTableRowWrapperComponent_2():import0.ɵViewDefinition {
+function View_DataTableRowWrapperComponent_2(l:any):import0.ɵViewDefinition {
   return import0.ɵvid(0,[
-    import0.ɵand(8388608,(null as any),(null as any),2,(null as any),View_DataTableRowWrapperComponent_3),
+    (l()(),import0.ɵand(8388608,(null as any),(null as any),2,(null as any),View_DataTableRowWrapperComponent_3)),
     import0.ɵdid(270336,(null as any),0,import1.NgTemplateOutlet,[import0.ViewContainerRef],{
       ngTemplateOutlet: [
         0,
@@ -35,29 +36,29 @@ function View_DataTableRowWrapperComponent_2():import0.ɵViewDefinition {
     }
     ,(null as any)),
     import0.ɵpod(['row']),
-    import0.ɵand(0,(null as any),(null as any),0)
+    (l()(),import0.ɵand(0,(null as any),(null as any),0))
   ]
-  ,(check,view) => {
-    var comp:any = view.component;
-    const currVal_0:any = comp.rowDetail.template;
-    const currVal_1:any = check(view,2,0,comp.row);
-    check(view,1,0,currVal_0,currVal_1);
+  ,(ck,v) => {
+    var co:any = v.component;
+    const currVal_0:any = co.rowDetail.template;
+    const currVal_1:any = ck(v,2,0,co.row);
+    ck(v,1,0,currVal_0,currVal_1);
   },(null as any));
 }
-function View_DataTableRowWrapperComponent_1():import0.ɵViewDefinition {
+function View_DataTableRowWrapperComponent_1(l:any):import0.ɵViewDefinition {
   return import0.ɵvid(0,[
-      import0.ɵeld(0,(null as any),(null as any),4,'div',[[
+      (l()(),import0.ɵeld(0,(null as any),(null as any),4,'div',[[
         'class',
         'datatable-row-detail'
       ]
       ],[[
-        2,
+        4,
         'height',
         'px'
       ]
-    ],(null as any),(null as any),(null as any),(null as any)),
-    import0.ɵted((null as any),['\n      ']),
-    import0.ɵand(8388608,(null as any),(null as any),1,(null as any),View_DataTableRowWrapperComponent_2),
+    ],(null as any),(null as any),(null as any),(null as any))),
+    (l()(),import0.ɵted((null as any),['\n      '])),
+    (l()(),import0.ɵand(8388608,(null as any),(null as any),1,(null as any),View_DataTableRowWrapperComponent_2)),
     import0.ɵdid(8192,(null as any),0,import1.NgIf,[
       import0.ViewContainerRef,
       import0.TemplateRef
@@ -67,24 +68,24 @@ function View_DataTableRowWrapperComponent_1():import0.ɵViewDefinition {
         'ngIf'
       ]
     },(null as any)),
-    import0.ɵted((null as any),['\n    '])
+    (l()(),import0.ɵted((null as any),['\n    ']))
   ]
-  ,(check,view) => {
-    var comp:any = view.component;
-    const currVal_0:any = (comp.rowDetail && comp.rowDetail.template);
-    check(view,3,0,currVal_0);
-  },(check,view) => {
-    var comp:any = view.component;
-    const currVal_0:any = comp.detailRowHeight;
-    check(view,0,0,currVal_0);
+  ,(ck,v) => {
+    var co:any = v.component;
+    const currVal_1:any = (co.rowDetail && co.rowDetail.template);
+    ck(v,3,0,currVal_1);
+  },(ck,v) => {
+    var co:any = v.component;
+    const currVal_0:any = co.detailRowHeight;
+    ck(v,0,0,currVal_0);
   });
 }
-export function View_DataTableRowWrapperComponent_0():import0.ɵViewDefinition {
+export function View_DataTableRowWrapperComponent_0(l:any):import0.ɵViewDefinition {
   return import0.ɵvid(0,[
-    import0.ɵted((null as any),['\n    ']),
+    (l()(),import0.ɵted((null as any),['\n    '])),
     import0.ɵncd((null as any),0),
-    import0.ɵted((null as any),['\n    ']),
-    import0.ɵand(8388608,(null as any),(null as any),1,(null as any),View_DataTableRowWrapperComponent_1),
+    (l()(),import0.ɵted((null as any),['\n    '])),
+    (l()(),import0.ɵand(8388608,(null as any),(null as any),1,(null as any),View_DataTableRowWrapperComponent_1)),
     import0.ɵdid(8192,(null as any),0,import1.NgIf,[
       import0.ViewContainerRef,
       import0.TemplateRef
@@ -94,23 +95,17 @@ export function View_DataTableRowWrapperComponent_0():import0.ɵViewDefinition {
         'ngIf'
       ]
     },(null as any)),
-    import0.ɵted((null as any),['\n  '])
+    (l()(),import0.ɵted((null as any),['\n  ']))
   ]
-  ,(check,view) => {
-    var comp:import2.DataTableRowWrapperComponent = view.component;
-    const currVal_0:any = comp.expanded;
-    check(view,4,0,currVal_0);
+  ,(ck,v) => {
+    var co:import2.DataTableRowWrapperComponent = v.component;
+    const currVal_0:any = co.expanded;
+    ck(v,4,0,currVal_0);
   },(null as any));
 }
-const RenderType_DataTableRowWrapperComponent_Host:import0.RendererTypeV2 = import0.ɵcrt({
-  encapsulation: 2,
-  styles: ([] as any[]),
-  data: {}
-}
-);
-function View_DataTableRowWrapperComponent_Host_0():import0.ɵViewDefinition {
+function View_DataTableRowWrapperComponent_Host_0(l:any):import0.ɵViewDefinition {
   return import0.ɵvid(0,[
-      import0.ɵeld(0,(null as any),(null as any),1,'datatable-row-wrapper',[[
+      (l()(),import0.ɵeld(0,(null as any),(null as any),1,'datatable-row-wrapper',[[
         'class',
         'datatable-row-wrapper'
       ]
@@ -118,16 +113,23 @@ function View_DataTableRowWrapperComponent_Host_0():import0.ɵViewDefinition {
         (null as any),
         'contextmenu'
       ]
-    ],(view,eventName,$event) => {
-      var allowDefault:boolean = true;
-      if (('contextmenu' === eventName)) {
-        const pd_0:any = ((<any>import0.ɵnov(view,1).onContextmenu($event)) !== false);
-        allowDefault = (pd_0 && allowDefault);
+    ],(v,en,$event) => {
+      var ad:boolean = true;
+      if (('contextmenu' === en)) {
+        const pd_0:any = ((<any>import0.ɵnov(v,1).onContextmenu($event)) !== false);
+        ad = (pd_0 && ad);
       }
-      return allowDefault;
-    },View_DataTableRowWrapperComponent_0,RenderType_DataTableRowWrapperComponent),
+      return ad;
+    },View_DataTableRowWrapperComponent_0,RenderType_DataTableRowWrapperComponent)),
     import0.ɵdid(24576,(null as any),0,import2.DataTableRowWrapperComponent,([] as any[]),(null as any),(null as any))
   ]
   ,(null as any),(null as any));
 }
-export const DataTableRowWrapperComponentNgFactory:import0.ComponentFactory<import2.DataTableRowWrapperComponent> = import0.ɵccf('datatable-row-wrapper',import2.DataTableRowWrapperComponent,View_DataTableRowWrapperComponent_Host_0);
+export const DataTableRowWrapperComponentNgFactory:import0.ComponentFactory<import2.DataTableRowWrapperComponent> = import0.ɵccf('datatable-row-wrapper',import2.DataTableRowWrapperComponent,View_DataTableRowWrapperComponent_Host_0,{
+  rowDetail: 'rowDetail',
+  detailRowHeight: 'detailRowHeight',
+  expanded: 'expanded',
+  row: 'row'
+}
+,{rowContextmenu: 'rowContextmenu'},['*']);
+//# sourceMappingURL=data:application/json;base64,eyJmaWxlIjoiL1VzZXJzL2F1c3Rpbi9kZXYvbmd4LWRhdGF0YWJsZS9idWlsZC9jb21wb25lbnRzL2JvZHkvYm9keS1yb3ctd3JhcHBlci5jb21wb25lbnQubmdmYWN0b3J5LnRzIiwidmVyc2lvbiI6Mywic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsibmc6Ly8vVXNlcnMvYXVzdGluL2Rldi9uZ3gtZGF0YXRhYmxlL2J1aWxkL2NvbXBvbmVudHMvYm9keS9ib2R5LXJvdy13cmFwcGVyLmNvbXBvbmVudC50cyIsIm5nOi8vL1VzZXJzL2F1c3Rpbi9kZXYvbmd4LWRhdGF0YWJsZS9idWlsZC9jb21wb25lbnRzL2JvZHkvYm9keS1yb3ctd3JhcHBlci5jb21wb25lbnQudHMuRGF0YVRhYmxlUm93V3JhcHBlckNvbXBvbmVudC5odG1sIiwibmc6Ly8vVXNlcnMvYXVzdGluL2Rldi9uZ3gtZGF0YXRhYmxlL2J1aWxkL2NvbXBvbmVudHMvYm9keS9ib2R5LXJvdy13cmFwcGVyLmNvbXBvbmVudC50cy5EYXRhVGFibGVSb3dXcmFwcGVyQ29tcG9uZW50X0hvc3QuaHRtbCJdLCJzb3VyY2VzQ29udGVudCI6WyIgIiwiXG4gICAgPG5nLWNvbnRlbnQ+PC9uZy1jb250ZW50PlxuICAgIDxkaXYgXG4gICAgICAqbmdJZj1cImV4cGFuZGVkXCJcbiAgICAgIFtzdHlsZS5oZWlnaHQucHhdPVwiZGV0YWlsUm93SGVpZ2h0XCIgXG4gICAgICBjbGFzcz1cImRhdGF0YWJsZS1yb3ctZGV0YWlsXCI+XG4gICAgICA8bmctdGVtcGxhdGVcbiAgICAgICAgKm5nSWY9XCJyb3dEZXRhaWwgJiYgcm93RGV0YWlsLnRlbXBsYXRlXCJcbiAgICAgICAgW25nVGVtcGxhdGVPdXRsZXRdPVwicm93RGV0YWlsLnRlbXBsYXRlXCJcbiAgICAgICAgW25nT3V0bGV0Q29udGV4dF09XCJ7IHJvdzogcm93IH1cIj5cbiAgICAgIDwvbmctdGVtcGxhdGU+XG4gICAgPC9kaXY+XG4gICIsIjxkYXRhdGFibGUtcm93LXdyYXBwZXI+PC9kYXRhdGFibGUtcm93LXdyYXBwZXI+Il0sIm1hcHBpbmdzIjoiQUFBQTs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozt5QkNTeUM7Ozs7SUFIbkM7Z0JBQUE7TUFBQTtRQUFBO1FBQUE7TUFBQTs7TUFBQTtRQUFBO1FBQUE7TUFBQTs7SUFBQTtLQUFBO2dCQUdFOzs7OztJQURBO0lBQ0E7SUFIRixTQUVFLFVBQ0EsU0FIRjs7Ozs7TUFKRjtRQUFBO1FBQUE7TUFBQTtNQUFBO1FBQUE7UUFBQTtRQUFBO01BQUE7SUFBQTtJQUcrQjtJQUM3QjtnQkFBQTs7O0lBQUE7T0FBQTtRQUFBO1FBQUE7TUFBQTtJQUFBO0lBSWM7Ozs7SUFIWjtJQURGLFNBQ0UsU0FERjs7O0lBRkE7SUFGRixTQUVFLFNBRkY7Ozs7O0lBRko7Z0JBQ0k7SUFBeUI7SUFDekI7Z0JBQUE7OztJQUFBO09BQUE7UUFBQTtRQUFBO01BQUE7SUFBQTtJQVNNOzs7O0lBUko7SUFERixTQUNFLFNBREY7Ozs7O01DRko7UUFBQTtRQUFBO01BQUE7TUFBQTtRQUFBO1FBQUE7TUFBQTtJQUFBO01BQUE7TUFBQTtRQUFBO1FBQUE7TUFBQTtNQUFBO0lBQUE7Z0JBQUE7Ozs7Ozs7Ozs7In0=

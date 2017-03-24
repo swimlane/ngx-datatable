@@ -5,34 +5,42 @@
  */
  /* tslint:disable */
 
+
 import * as import0 from '@angular/core';
 import * as import1 from '../../../../build/components/body/selection.component';
 const styles_DataTableSelectionComponent:any[] = ([] as any[]);
-export const RenderType_DataTableSelectionComponent:import0.RendererTypeV2 = import0.ɵcrt({
+export const RenderType_DataTableSelectionComponent:import0.RendererType2 = import0.ɵcrt({
   encapsulation: 2,
   styles: styles_DataTableSelectionComponent,
   data: {}
 }
 );
-export function View_DataTableSelectionComponent_0():import0.ɵViewDefinition {
+export function View_DataTableSelectionComponent_0(l:any):import0.ɵViewDefinition {
   return import0.ɵvid(0,[
-    import0.ɵted((null as any),['\n    ']),
+    (l()(),import0.ɵted((null as any),['\n    '])),
     import0.ɵncd((null as any),0),
-    import0.ɵted((null as any),['\n  '])
+    (l()(),import0.ɵted((null as any),['\n  ']))
   ]
   ,(null as any),(null as any));
 }
-const RenderType_DataTableSelectionComponent_Host:import0.RendererTypeV2 = import0.ɵcrt({
-  encapsulation: 2,
-  styles: ([] as any[]),
-  data: {}
-}
-);
-function View_DataTableSelectionComponent_Host_0():import0.ɵViewDefinition {
+function View_DataTableSelectionComponent_Host_0(l:any):import0.ɵViewDefinition {
   return import0.ɵvid(0,[
-    import0.ɵeld(0,(null as any),(null as any),1,'datatable-selection',([] as any[]),(null as any),(null as any),(null as any),View_DataTableSelectionComponent_0,RenderType_DataTableSelectionComponent),
+    (l()(),import0.ɵeld(0,(null as any),(null as any),1,'datatable-selection',([] as any[]),(null as any),(null as any),(null as any),View_DataTableSelectionComponent_0,RenderType_DataTableSelectionComponent)),
     import0.ɵdid(24576,(null as any),0,import1.DataTableSelectionComponent,([] as any[]),(null as any),(null as any))
   ]
   ,(null as any),(null as any));
 }
-export const DataTableSelectionComponentNgFactory:import0.ComponentFactory<import1.DataTableSelectionComponent> = import0.ɵccf('datatable-selection',import1.DataTableSelectionComponent,View_DataTableSelectionComponent_Host_0);
+export const DataTableSelectionComponentNgFactory:import0.ComponentFactory<import1.DataTableSelectionComponent> = import0.ɵccf('datatable-selection',import1.DataTableSelectionComponent,View_DataTableSelectionComponent_Host_0,{
+  rows: 'rows',
+  selected: 'selected',
+  selectEnabled: 'selectEnabled',
+  selectionType: 'selectionType',
+  rowIdentity: 'rowIdentity',
+  selectCheck: 'selectCheck'
+}
+,{
+  activate: 'activate',
+  select: 'select'
+}
+,['*']);
+//# sourceMappingURL=data:application/json;base64,eyJmaWxlIjoiL1VzZXJzL2F1c3Rpbi9kZXYvbmd4LWRhdGF0YWJsZS9idWlsZC9jb21wb25lbnRzL2JvZHkvc2VsZWN0aW9uLmNvbXBvbmVudC5uZ2ZhY3RvcnkudHMiLCJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJuZzovLy9Vc2Vycy9hdXN0aW4vZGV2L25neC1kYXRhdGFibGUvYnVpbGQvY29tcG9uZW50cy9ib2R5L3NlbGVjdGlvbi5jb21wb25lbnQudHMiLCJuZzovLy9Vc2Vycy9hdXN0aW4vZGV2L25neC1kYXRhdGFibGUvYnVpbGQvY29tcG9uZW50cy9ib2R5L3NlbGVjdGlvbi5jb21wb25lbnQudHMuRGF0YVRhYmxlU2VsZWN0aW9uQ29tcG9uZW50Lmh0bWwiLCJuZzovLy9Vc2Vycy9hdXN0aW4vZGV2L25neC1kYXRhdGFibGUvYnVpbGQvY29tcG9uZW50cy9ib2R5L3NlbGVjdGlvbi5jb21wb25lbnQudHMuRGF0YVRhYmxlU2VsZWN0aW9uQ29tcG9uZW50X0hvc3QuaHRtbCJdLCJzb3VyY2VzQ29udGVudCI6WyIgIiwiXG4gICAgPG5nLWNvbnRlbnQ+PC9uZy1jb250ZW50PlxuICAiLCI8ZGF0YXRhYmxlLXNlbGVjdGlvbj48L2RhdGF0YWJsZS1zZWxlY3Rpb24+Il0sIm1hcHBpbmdzIjoiQUFBQTs7Ozs7Ozs7Ozs7Ozs7Ozs7OztJQ0FBO2dCQUNJO0lBQXlCOzs7Ozs7SUNEN0I7Z0JBQUE7Ozs7Ozs7Ozs7Ozs7Ozs7In0=
