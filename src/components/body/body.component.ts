@@ -517,7 +517,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
     if(this.scrollbarV) {
       // Refresh the full row heights cache since every row was affected.
-      this.refreshRowHeightCache();
+      this.recalcLayout();
     }
 
     // Emit all rows that have been expanded.
