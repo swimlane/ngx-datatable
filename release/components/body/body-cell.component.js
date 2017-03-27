@@ -83,6 +83,11 @@ var DataTableBodyCellComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    DataTableBodyCellComponent.prototype.ngOnDestroy = function () {
+        if (this.cellTemplate) {
+            this.cellTemplate.clear();
+        }
+    };
     DataTableBodyCellComponent.prototype.onFocus = function () {
         this.isFocused = true;
     };
@@ -172,6 +177,7 @@ DataTableBodyCellComponent.propDecorators = {
     'isSelected': [{ type: core_1.Input },],
     'sorts': [{ type: core_1.Input },],
     'activate': [{ type: core_1.Output },],
+    'cellTemplate': [{ type: core_1.ViewChild, args: ['cellTemplate', { read: core_1.ViewContainerRef },] },],
     'columnCssClasses': [{ type: core_1.HostBinding, args: ['class',] },],
     'isFocused': [{ type: core_1.HostBinding, args: ['class.active',] },],
     'isSortActive': [{ type: core_1.HostBinding, args: ['class.sort-active',] },],

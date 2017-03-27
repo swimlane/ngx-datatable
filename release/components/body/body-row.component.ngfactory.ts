@@ -137,7 +137,7 @@ function View_DataTableBodyRowComponent_2(l:any):import0.ɵViewDefinition {
       }
       return ad;
     },import1.View_DataTableBodyCellComponent_0,import1.RenderType_DataTableBodyCellComponent)),
-    import0.ɵdid(24576,(null as any),0,import2.DataTableBodyCellComponent,[import0.ElementRef],{
+    import0.ɵdid(90112,(null as any),0,import2.DataTableBodyCellComponent,[import0.ElementRef],{
       row: [
         0,
         'row'

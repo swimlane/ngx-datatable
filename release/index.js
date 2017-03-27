@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"7.1.0" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"7.1.1" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -3646,6 +3646,11 @@ var DataTableBodyCellComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    DataTableBodyCellComponent.prototype.ngOnDestroy = function () {
+        if (this.cellTemplate) {
+            this.cellTemplate.clear();
+        }
+    };
     DataTableBodyCellComponent.prototype.onFocus = function () {
         this.isFocused = true;
     };
@@ -3740,6 +3745,10 @@ __decorate([
     core_1.Output(),
     __metadata("design:type", core_1.EventEmitter)
 ], DataTableBodyCellComponent.prototype, "activate", void 0);
+__decorate([
+    core_1.ViewChild('cellTemplate', { read: core_1.ViewContainerRef }),
+    __metadata("design:type", core_1.ViewContainerRef)
+], DataTableBodyCellComponent.prototype, "cellTemplate", void 0);
 __decorate([
     core_1.HostBinding('class'),
     __metadata("design:type", Object),
@@ -4520,7 +4529,7 @@ var DataTableBodyComponent = (function () {
         }
         if (this.scrollbarV) {
             // Refresh the full row heights cache since every row was affected.
-            this.refreshRowHeightCache();
+            this.recalcLayout();
         }
         // Emit all rows that have been expanded.
         this.detailToggle.emit({

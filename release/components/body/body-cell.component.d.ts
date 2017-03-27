@@ -1,12 +1,13 @@
-import { EventEmitter, ElementRef } from '@angular/core';
+import { EventEmitter, ElementRef, ViewContainerRef, OnDestroy } from '@angular/core';
 import { SortDirection } from '../../types';
-export declare class DataTableBodyCellComponent {
+export declare class DataTableBodyCellComponent implements OnDestroy {
     row: any;
     column: any;
     rowHeight: number;
     isSelected: boolean;
     sorts: any[];
     activate: EventEmitter<any>;
+    cellTemplate: ViewContainerRef;
     readonly columnCssClasses: any;
     isFocused: boolean;
     readonly isSortActive: boolean;
@@ -19,6 +20,7 @@ export declare class DataTableBodyCellComponent {
     element: any;
     _sorts: any[];
     constructor(element: ElementRef);
+    ngOnDestroy(): void;
     onFocus(): void;
     onBlur(): void;
     onClick(event: MouseEvent): void;
