@@ -1,6 +1,6 @@
 import {
-  Component, Input, PipeTransform, HostBinding, 
-  Output, EventEmitter, HostListener, ElementRef
+  Component, Input, PipeTransform, HostBinding, ViewChild,
+  Output, EventEmitter, HostListener, ElementRef, ViewContainerRef, OnDestroy
 } from '@angular/core';
 
 import { deepValueGetter, Keys } from '../../utils';
@@ -35,7 +35,7 @@ import { SortDirection } from '../../types';
     class: 'datatable-body-cell'
   }
 })
-export class DataTableBodyCellComponent {
+export class DataTableBodyCellComponent implements OnDestroy {
 
   @Input() row: any;
   @Input() column: any;
@@ -52,6 +52,8 @@ export class DataTableBodyCellComponent {
   }
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
+
+  @ViewChild('cellTemplate', { read: ViewContainerRef }) cellTemplate: ViewContainerRef;
    
   @HostBinding('class')
   get columnCssClasses(): any {
@@ -106,6 +108,12 @@ export class DataTableBodyCellComponent {
 
   constructor(element: ElementRef) {
     this.element = element.nativeElement;
+  }
+
+  ngOnDestroy(): void {
+    if (this.cellTemplate) {
+      this.cellTemplate.clear();
+    }
   }
 
   @HostListener('focus')
