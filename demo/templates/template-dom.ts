@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
       <h3>
         Expressive Templates
         <small>
-          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/template/template-dom.ts" target="_blank">
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/templates/template-dom.ts" target="_blank">
             Source
           </a>
         </small>
