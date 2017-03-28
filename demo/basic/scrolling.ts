@@ -15,7 +15,7 @@ import { Component } from '@angular/core';
       <ngx-datatable
         class="material"
         [rows]="rows"
-        [columnMode]="'force'"
+        columnMode="force"
         [headerHeight]="50"
         [footerHeight]="0"
         [rowHeight]="50"
