@@ -53,7 +53,7 @@ export function numericIndexGetter(row: any[], index: number) {
  * @param fieldName field name string
  * @returns {any}
  */
-export function shallowValueGetter(obj: object, fieldName: string) {
+export function shallowValueGetter(obj: Object, fieldName: string) {
   if(!obj || !fieldName) return obj;
 
   const value = obj[fieldName];
@@ -66,7 +66,7 @@ export function shallowValueGetter(obj: object, fieldName: string) {
  * @param {object} obj
  * @param {string} path
  */
-export function deepValueGetter(obj: object, path: string) {
+export function deepValueGetter(obj: Object, path: string) {
   if(!obj || !path) return obj;
 
   let current = obj;
