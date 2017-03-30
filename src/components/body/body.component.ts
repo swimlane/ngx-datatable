@@ -185,11 +185,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     }
   }
 
-  detailRowHeight(row?:any,index?:any): number {
-    if(!this.rowDetail) return 0;
-    return typeof this.rowDetail.rowHeight === 'function' ? this.rowDetail.rowHeight(row,index) : this.rowDetail.rowHeight;
-  }
-
   rowHeightsCache: RowHeightCache = new RowHeightCache();
   temp: any[] = [];
   offsetY: number = 0;
@@ -214,6 +209,12 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         return row.$$index;
       }
     }.bind(this);
+  }
+
+  detailRowHeight(row?: any, index?: any): number {
+    if (!this.rowDetail) return 0;
+    const rowHeight = this.rowDetail.rowHeight;
+    return typeof rowHeight === 'function' ? rowHeight(row, index) : rowHeight;
   }
 
   /**
