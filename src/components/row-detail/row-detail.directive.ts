@@ -8,10 +8,10 @@ export class DatatableRowDetailDirective {
    * The detail row height is required especially 
    * when virtual scroll is enabled.
    * 
-   * @type {number}
+   * @type {number|function(row?:any,index?:any): number}
    * @memberOf DatatableComponent
    */
-  @Input() rowHeight: number = 0;
+  @Input() rowHeight: number | ((row?,index?)=>number) = 0;
 
   @Input()
   @ContentChild(DatatableRowDetailTemplateDirective, { read: TemplateRef }) 
