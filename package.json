@@ -1,6 +1,6 @@
 {
   "name": "@swimlane/ngx-datatable",
-  "version": "7.1.1",
+  "version": "7.1.1-m.1",
   "description": "ngx-datatable is a Angular2+ table grid component for presenting large and complex data.",
   "main": "release/index.js",
   "typings": "release/index.d.ts",
@@ -23,8 +23,8 @@
     "build:aot": "ngc",
     "build:sass": "node-sass -r build/ -o build/",
     "build:css": "postcss --use autoprefixer dist/*.css -d dist/",
-    "copy:build": "cpx 'src/**/*' build",
-    "copy:styles": "cpx 'build/**/*.css' release",
+    "copy:build": "cpx src/**/* build",
+    "copy:styles": "cpx build/**/*.css release",
     "watch": "webpack --display-error-details --watch",
     "start": "webpack-dev-server",
     "start:hmr": "webpack-dev-server --env.HMR",
@@ -47,7 +47,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/swimlane/ngx-datatable.git"
+    "url": "git+https://github.com/yobryon/ngx-datatable.git"
   },
   "keywords": [
     "angularjs",
@@ -70,8 +70,8 @@
     "@angular/core": "^4.0.0",
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-browser-dynamic": "^4.0.0",
-    "rxjs": "^5.1.0",
-    "core-js": "^2.4.0"
+    "core-js": "^2.4.0",
+    "rxjs": "^5.1.0"
   },
   "devDependencies": {
     "@angular/animations": "^4.0.0",
@@ -127,6 +127,7 @@
     "tslint-config-swimlane": "^2.0.1",
     "tslint-loader": "^3.4.3",
     "typescript": "^2.2.1",
+    "uglifyjs": "^2.4.10",
     "url-loader": "^0.5.8",
     "webpack": "^2.3.1",
     "webpack-combine-loaders": "^2.0.3",

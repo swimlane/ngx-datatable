@@ -142,15 +142,12 @@ var DataTableBodyComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(DataTableBodyComponent.prototype, "detailRowHeight", {
-        get: function () {
-            if (!this.rowDetail)
-                return 0;
-            return this.rowDetail.rowHeight;
-        },
-        enumerable: true,
-        configurable: true
-    });
+    DataTableBodyComponent.prototype.detailRowHeight = function (row, index) {
+        if (!this.rowDetail)
+            return 0;
+        var rowHeight = this.rowDetail.rowHeight;
+        return typeof rowHeight === 'function' ? rowHeight(row, index) : rowHeight;
+    };
     /**
      * Called after the constructor, initializing input properties
      *
@@ -272,7 +269,7 @@ var DataTableBodyComponent = (function () {
     DataTableBodyComponent.prototype.getRowHeight = function (row) {
         // Adding detail row height if its expanded.
         return this.rowHeight +
-            (row.$$expanded === 1 ? this.detailRowHeight : 0);
+            (row.$$expanded === 1 ? this.detailRowHeight(row) : 0);
     };
     /**
      * Calculates the styles for the row so that the rows can be moved in 2D space
@@ -358,7 +355,7 @@ var DataTableBodyComponent = (function () {
         this.rowHeightsCache.clearCache();
         // Initialize the tree only if there are rows inside the tree.
         if (this.rows && this.rows.length) {
-            this.rowHeightsCache.initCache(this.rows, this.rowHeight, this.detailRowHeight);
+            this.rowHeightsCache.initCache(this.rows, this.rowHeight, this.detailRowHeight());
         }
     };
     /**
@@ -394,7 +391,7 @@ var DataTableBodyComponent = (function () {
         var viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
         // If the detailRowHeight is auto --> only in case of non-virtualized scroll
         if (this.scrollbarV) {
-            var detailRowHeight = this.detailRowHeight * (row.$$expanded ? -1 : 1);
+            var detailRowHeight = this.detailRowHeight(row) * (row.$$expanded ? -1 : 1);
             this.rowHeightsCache.update(row.$$index, detailRowHeight);
         }
         // Update the toggled row and update the heights in the cache.
@@ -444,7 +441,7 @@ var DataTableBodyComponent = (function () {
 DataTableBodyComponent.decorators = [
     { type: core_1.Component, args: [{
                 selector: 'datatable-body',
-                template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [rows]=\"temp\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-row-wrapper\n          *ngFor=\"let row of temp; let i = index; trackBy: rowTrackingFn;\"\n          [ngStyle]=\"getRowsStyles(row)\"\n          [rowDetail]=\"rowDetail\"\n          [detailRowHeight]=\"detailRowHeight\"\n          [row]=\"row\"\n          [expanded]=\"row.$$expanded === 1\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-row\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(row)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"rowHeight\"\n            [row]=\"row\"\n            [rowClass]=\"rowClass\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-row>\n        </datatable-row-wrapper>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
+                template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [rows]=\"temp\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-row-wrapper\n          *ngFor=\"let row of temp; let i = index; trackBy: rowTrackingFn;\"\n          [ngStyle]=\"getRowsStyles(row)\"\n          [rowDetail]=\"rowDetail\"\n          [detailRowHeight]=\"detailRowHeight(row,i)\"\n          [row]=\"row\"\n          [expanded]=\"row.$$expanded === 1\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-row\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(row)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"rowHeight\"\n            [row]=\"row\"\n            [rowClass]=\"rowClass\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-row>\n        </datatable-row-wrapper>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
                 host: {
                     class: 'datatable-body'
                 }
