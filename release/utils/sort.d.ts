@@ -1,4 +1,4 @@
-import { SortType, SortDirection } from '../types';
+import { SortType, SortDirection, SortPropDir } from '../types';
 /**
  * Gets the next sort direction
  * @param  {SortType}      sortType
@@ -23,4 +23,4 @@ export declare function orderByComparator(a: any, b: any): number;
  * @param {any[]} dirs
  * @returns
  */
-export declare function sortRows(rows: any[], columns: any[], dirs: any[]): any[];
+export declare function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[];

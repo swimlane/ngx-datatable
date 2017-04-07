@@ -5,7 +5,7 @@ function __export(m) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./id"));
 __export(require("./column"));
-__export(require("./deep-getter"));
+__export(require("./column-prop-getters"));
 __export(require("./camel-case"));
 __export(require("./keys"));
 __export(require("./math"));

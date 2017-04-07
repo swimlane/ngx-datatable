@@ -41,7 +41,8 @@ var DataTableHeaderCellComponent = (function () {
     });
     Object.defineProperty(DataTableHeaderCellComponent.prototype, "name", {
         get: function () {
-            return this.column.name || this.column.prop;
+            // guaranteed to have a value by setColumnDefaults() in column-helper.ts
+            return this.column.name;
         },
         enumerable: true,
         configurable: true

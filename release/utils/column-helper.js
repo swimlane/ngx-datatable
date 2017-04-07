@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var camel_case_1 = require("./camel-case");
 var id_1 = require("./id");
+var column_prop_getters_1 = require("./column-prop-getters");
 /**
  * Sets the column defaults
  *
@@ -17,13 +18,17 @@ function setColumnDefaults(columns) {
         if (!column.$$id) {
             column.$$id = id_1.id();
         }
+        // prop can be numeric; zero is valid not a missing prop
         // translate name => prop
-        if (!column.prop && column.name) {
+        if (column.prop == null && column.name) {
             column.prop = camel_case_1.camelCase(column.name);
         }
+        if (!column.$$valueGetter) {
+            column.$$valueGetter = column_prop_getters_1.getterForProp(column.prop);
+        }
         // format props if no name passed
-        if (column.prop && !column.name) {
-            column.name = camel_case_1.deCamelCase(column.prop);
+        if (column.prop != null && !column.name) {
+            column.name = camel_case_1.deCamelCase(String(column.prop));
         }
         if (!column.hasOwnProperty('resizeable')) {
             column.resizeable = true;

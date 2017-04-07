@@ -1,8 +1,9 @@
 import { EventEmitter, ElementRef, ViewContainerRef, OnDestroy } from '@angular/core';
 import { SortDirection } from '../../types';
+import { TableColumn } from '../../types/table-column.type';
 export declare class DataTableBodyCellComponent implements OnDestroy {
     row: any;
-    column: any;
+    column: TableColumn;
     rowHeight: number;
     isSelected: boolean;
     sorts: any[];

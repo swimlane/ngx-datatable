@@ -1,5 +1,12 @@
 # Changelog
 
+## 7.2.0
+- Feature: Allow for dynamic Detail Row heights (#653)
+- Feature: Numeric prop support via support array rows (#494)
+- Perf: Optimize sort code by caching valueGetter and compareFn outside loop.
+- Perf: Set ValueGetter on `TableColumn.$$valueGetter`
+- Bug: Alter setColumnDefaults to work with numeric prop values.
+
 ## 7.1.1
 - Perf: Fix memory leaks with templates (#464)
 - Bug: Fix row detail expanded and then collapsed not showing anything until scroll

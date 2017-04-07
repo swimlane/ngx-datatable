@@ -70,9 +70,9 @@ var DataTableBodyCellComponent = (function () {
     });
     Object.defineProperty(DataTableBodyCellComponent.prototype, "value", {
         get: function () {
-            if (!this.row || !this.column || !this.column.prop)
+            if (!this.row || !this.column)
                 return '';
-            var val = utils_1.deepValueGetter(this.row, this.column.prop);
+            var val = this.column.$$valueGetter(this.row, this.column.prop);
             var userPipe = this.column.pipe;
             if (userPipe)
                 return userPipe.transform(val);
