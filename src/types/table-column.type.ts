@@ -14,71 +14,179 @@ export type TableColumnProp = string|number;
  */
 export interface TableColumn {
 
-  // unique id
+  /**
+   * Internal unique id
+   * 
+   * @type {string}
+   * @memberOf TableColumn
+   */
   $$id?: string;
 
-  // used internally for resize calcs
+  /**
+   * Internal for column width distributions
+   * 
+   * @type {number}
+   * @memberOf TableColumn
+   */
   $$oldWidth?: number;
 
-  // defined by setColumnDefaults
+  /**
+   * Internal for setColumnDefaults
+   * 
+   * @type {ValueGetter}
+   * @memberOf TableColumn
+   */
   $$valueGetter?: ValueGetter;
 
-  // defines if its expressive
-  isExpressive?: boolean;
+  /**
+   * Determines if column is checkbox
+   * 
+   * @type {boolean}
+   * @memberOf TableColumn
+   */
+  checkboxable?: boolean;
 
-  // pinned to the left
+  /**
+   * Determines if the column is frozen to the left
+   * 
+   * @type {boolean}
+   * @memberOf TableColumn
+   */
   frozenLeft?: boolean;
 
-  // pinned to the right
+  /**
+   * Determines if the column is frozen to the right
+   * 
+   * @type {boolean}
+   * @memberOf TableColumn
+   */
   frozenRight?: boolean;
 
-  // The grow factor relative to other columns. Same as the flex-grow
-  // API from http =//www.w3.org/TR/css3-flexbox/. Basically;
-  // take any available extra width and distribute it proportionally
-  // according to all columns' flexGrow values.
+  /**
+   * The grow factor relative to other columns. Same as the flex-grow
+   * API from http =//www.w3.org/TR/css3-flexbox/. Basically; 
+   * take any available extra width and distribute it proportionally
+   * according to all columns' flexGrow values.
+   * 
+   * @type {number}
+   * @memberOf TableColumn
+   */
   flexGrow?: number;
 
-  // Minimum width of the column.
+  /**
+   * Min width of the column
+   * 
+   * @type {number}
+   * @memberOf TableColumn
+   */
   minWidth?: number;
 
-  // Maximum width of the column.
+  /**
+   * Max width of the column
+   * 
+   * @type {number}
+   * @memberOf TableColumn
+   */
   maxWidth?: number;
 
-  // The width of the column; by default (in pixels).
+  /**
+   * The default width of the column, in pixels
+   * 
+   * @type {number}
+   * @memberOf TableColumn
+   */
   width?: number;
 
-  // If yes then the column can be resized; otherwise it cannot.
+  /**
+   * Can the column be resized
+   * 
+   * @type {boolean}
+   * @memberOf TableColumn
+   */
   resizeable?: boolean;
 
-  // Custom sort comparator
+  /**
+   * Custom sort comparator
+   * 
+   * @type {*}
+   * @memberOf TableColumn
+   */
   comparator?: any;
 
-  // Custom pipe
+  /**
+   * Custom pipe transforms
+   * 
+   * @type {PipeTransform}
+   * @memberOf TableColumn
+   */
   pipe?: PipeTransform;
 
-  // If yes then the column can be sorted.
+  /**
+   * Can the column be sorted
+   * 
+   * @type {boolean}
+   * @memberOf TableColumn
+   */
   sortable?: boolean;
 
-  // can column be dragged
+  /**
+   * Can the column be re-arranged by dragging
+   * 
+   * @type {boolean}
+   * @memberOf TableColumn
+   */
   draggable?: boolean;
 
-  // Whether the column can automatically resize to fill space in the table.
+  /**
+   * Whether the column can automatically resize to fill space in the table.
+   * 
+   * @type {boolean}
+   * @memberOf TableColumn
+   */
   canAutoResize?: boolean;
 
-  // column name / label
+  /**
+   * Column name or label
+   * 
+   * @type {string}
+   * @memberOf TableColumn
+   */
   name?: string;
 
-  // property to bind to on the row
-  // 'somefield', 'a.deep.value', 0 (numeric)
+  /**
+   * Property to bind to the row. Example:
+   * 
+   * `someField` or `some.field.nested`, 0 (numeric)
+   * 
+   * If left blank, will use the name as camel case conversion
+   * 
+   * @type {TableColumnProp}
+   * @memberOf TableColumn
+   */
   prop?: TableColumnProp;
 
-  // ng2 template ref
+  /**
+   * Cell template ref
+   * 
+   * @type {*}
+   * @memberOf TableColumn
+   */
   cellTemplate?: any;
 
-  // ng2 template ref
+  /**
+   * Header template ref
+   * 
+   * @type {*}
+   * @memberOf TableColumn
+   */
   headerTemplate?: any;
 
-  // TODO verify cssClasses exists on this type (referenced by DataTableBodyCellComponent)
+  /**
+   * CSS Classes for the cell
+   * 
+   * @type {string}
+   * @memberOf TableColumn
+   */
   cssClasses?: string;
 
 }
