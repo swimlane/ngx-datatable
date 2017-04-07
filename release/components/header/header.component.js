@@ -1,14 +1,12 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var types_1 = require("../../types");
-var utils_1 = require("../../utils");
+import { Component, Output, EventEmitter, Input, HostBinding } from '@angular/core';
+import { SortType } from '../../types';
+import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY } from '../../utils';
 var DataTableHeaderComponent = (function () {
     function DataTableHeaderComponent() {
-        this.sort = new core_1.EventEmitter();
-        this.reorder = new core_1.EventEmitter();
-        this.resize = new core_1.EventEmitter();
-        this.select = new core_1.EventEmitter();
+        this.sort = new EventEmitter();
+        this.reorder = new EventEmitter();
+        this.resize = new EventEmitter();
+        this.select = new EventEmitter();
     }
     Object.defineProperty(DataTableHeaderComponent.prototype, "headerHeight", {
         get: function () {
@@ -31,9 +29,9 @@ var DataTableHeaderComponent = (function () {
         },
         set: function (val) {
             this._columns = val;
-            var colsByPin = utils_1.columnsByPin(val);
-            this.columnsByPin = utils_1.columnsByPinArr(val);
-            this.columnGroupWidths = utils_1.columnGroupWidths(colsByPin, val);
+            var colsByPin = columnsByPin(val);
+            this.columnsByPin = columnsByPinArr(val);
+            this.columnGroupWidths = columnGroupWidths(colsByPin, val);
         },
         enumerable: true,
         configurable: true
@@ -110,7 +108,7 @@ var DataTableHeaderComponent = (function () {
             sorts[idx].dir = newValue;
         }
         else {
-            if (this.sortType === types_1.SortType.single) {
+            if (this.sortType === SortType.single) {
                 sorts.splice(0, this.sorts.length);
             }
             sorts.push({ dir: newValue, prop: column.prop });
@@ -124,19 +122,20 @@ var DataTableHeaderComponent = (function () {
             width: widths[group] + "px"
         };
         if (group === 'center') {
-            utils_1.translateXY(styles, offsetX * -1, 0);
+            translateXY(styles, offsetX * -1, 0);
         }
         else if (group === 'right') {
             var totalDiff = widths.total - this.innerWidth;
             var offset = totalDiff * -1;
-            utils_1.translateXY(styles, offset, 0);
+            translateXY(styles, offset, 0);
         }
         return styles;
     };
     return DataTableHeaderComponent;
 }());
+export { DataTableHeaderComponent };
 DataTableHeaderComponent.decorators = [
-    { type: core_1.Component, args: [{
+    { type: Component, args: [{
                 selector: 'datatable-header',
                 template: "\n    <div\n      orderable\n      (reorder)=\"onColumnReordered($event)\"\n      [style.width.px]=\"columnGroupWidths.total\"\n      class=\"datatable-header-inner\">\n      <div\n        *ngFor=\"let colGroup of columnsByPin; trackBy: trackByGroups\"\n        [class]=\"'datatable-row-' + colGroup.type\"\n        [ngStyle]=\"stylesByGroup(colGroup.type)\">\n        <datatable-header-cell\n          *ngFor=\"let column of colGroup.columns; trackBy: columnTrackingFn\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (resize)=\"onColumnResized($event, column)\"\n          long-press\n          [pressModel]=\"column\"\n          (longPressStart)=\"onLongPressStart($event)\"\n          (longPressEnd)=\"onLongPressEnd($event)\"\n          draggable\n          [dragX]=\"reorderable && column.draggable && column.dragging\"\n          [dragY]=\"false\"\n          [dragModel]=\"column\"\n          [dragEventTarget]=\"dragEventTarget\"\n          [headerHeight]=\"headerHeight\"\n          [column]=\"column\"\n          [sortType]=\"sortType\"\n          [sorts]=\"sorts\"\n          [selectionType]=\"selectionType\"\n          [sortAscendingIcon]=\"sortAscendingIcon\"\n          [sortDescendingIcon]=\"sortDescendingIcon\"\n          (sort)=\"onSort($event)\"\n          (select)=\"select.emit($event)\">\n        </datatable-header-cell>\n      </div>\n    </div>\n  ",
                 host: {
@@ -147,23 +146,22 @@ DataTableHeaderComponent.decorators = [
 /** @nocollapse */
 DataTableHeaderComponent.ctorParameters = function () { return []; };
 DataTableHeaderComponent.propDecorators = {
-    'sortAscendingIcon': [{ type: core_1.Input },],
-    'sortDescendingIcon': [{ type: core_1.Input },],
-    'scrollbarH': [{ type: core_1.Input },],
-    'innerWidth': [{ type: core_1.Input },],
-    'offsetX': [{ type: core_1.Input },],
-    'sorts': [{ type: core_1.Input },],
-    'sortType': [{ type: core_1.Input },],
-    'allRowsSelected': [{ type: core_1.Input },],
-    'selectionType': [{ type: core_1.Input },],
-    'reorderable': [{ type: core_1.Input },],
-    'headerHeight': [{ type: core_1.HostBinding, args: ['style.height',] }, { type: core_1.Input },],
-    'columns': [{ type: core_1.Input },],
-    'sort': [{ type: core_1.Output },],
-    'reorder': [{ type: core_1.Output },],
-    'resize': [{ type: core_1.Output },],
-    'select': [{ type: core_1.Output },],
-    'headerWidth': [{ type: core_1.HostBinding, args: ['style.width',] },],
+    'sortAscendingIcon': [{ type: Input },],
+    'sortDescendingIcon': [{ type: Input },],
+    'scrollbarH': [{ type: Input },],
+    'innerWidth': [{ type: Input },],
+    'offsetX': [{ type: Input },],
+    'sorts': [{ type: Input },],
+    'sortType': [{ type: Input },],
+    'allRowsSelected': [{ type: Input },],
+    'selectionType': [{ type: Input },],
+    'reorderable': [{ type: Input },],
+    'headerHeight': [{ type: HostBinding, args: ['style.height',] }, { type: Input },],
+    'columns': [{ type: Input },],
+    'sort': [{ type: Output },],
+    'reorder': [{ type: Output },],
+    'resize': [{ type: Output },],
+    'select': [{ type: Output },],
+    'headerWidth': [{ type: HostBinding, args: ['style.width',] },],
 };
-exports.DataTableHeaderComponent = DataTableHeaderComponent;
 //# sourceMappingURL=header.component.js.map

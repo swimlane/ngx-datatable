@@ -1,11 +1,13 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Gets the width of the scrollbar.  Nesc for windows
  * http://stackoverflow.com/a/13382873/888165
  * @return {int} width
  */
-function getScrollBarWidth() {
+/**
+ * Gets the width of the scrollbar.  Nesc for windows
+ * http://stackoverflow.com/a/13382873/888165
+ * @return {int} width
+ */ export function getScrollBarWidth() {
     var outer = document.createElement('div');
     outer.style.visibility = 'hidden';
     outer.style.width = '100px';
@@ -20,7 +22,6 @@ function getScrollBarWidth() {
     outer.parentNode.removeChild(outer);
     return widthNoScroll - widthWithScroll;
 }
-exports.getScrollBarWidth = getScrollBarWidth;
 ;
-exports.scrollbarWidth = getScrollBarWidth();
+export var scrollbarWidth = getScrollBarWidth();
 //# sourceMappingURL=scrollbar-width.js.map

@@ -1,19 +1,16 @@
 // maybe rename this file to prop-getters.ts
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Always returns the empty string ''
  * @returns {string}
  */
-function emptyStringGetter() {
+export function emptyStringGetter() {
     return '';
 }
-exports.emptyStringGetter = emptyStringGetter;
 /**
  * Returns the appropriate getter function for this kind of prop.
  * If prop == null, returns the emptyStringGetter.
  */
-function getterForProp(prop) {
+export function getterForProp(prop) {
     if (prop == null)
         return emptyStringGetter;
     if (typeof prop === 'number') {
@@ -29,14 +26,13 @@ function getterForProp(prop) {
         }
     }
 }
-exports.getterForProp = getterForProp;
 /**
  * Returns the value at this numeric index.
  * @param row array of values
  * @param index numeric index
  * @returns {any} or '' if invalid index
  */
-function numericIndexGetter(row, index) {
+export function numericIndexGetter(row, index) {
     // mimic behavior of deepValueGetter
     if (!row || index == null)
         return row;
@@ -45,7 +41,6 @@ function numericIndexGetter(row, index) {
         return '';
     return value;
 }
-exports.numericIndexGetter = numericIndexGetter;
 /**
  * Returns the value of a field.
  * (more efficient than deepValueGetter)
@@ -53,7 +48,7 @@ exports.numericIndexGetter = numericIndexGetter;
  * @param fieldName field name string
  * @returns {any}
  */
-function shallowValueGetter(obj, fieldName) {
+export function shallowValueGetter(obj, fieldName) {
     if (!obj || !fieldName)
         return obj;
     var value = obj[fieldName];
@@ -61,13 +56,12 @@ function shallowValueGetter(obj, fieldName) {
         return '';
     return value;
 }
-exports.shallowValueGetter = shallowValueGetter;
 /**
  * Returns a deep object given a string. zoo['animal.type']
  * @param {object} obj
  * @param {string} path
  */
-function deepValueGetter(obj, path) {
+export function deepValueGetter(obj, path) {
     if (!obj || !path)
         return obj;
     var current = obj;
@@ -82,5 +76,4 @@ function deepValueGetter(obj, path) {
     }
     return current;
 }
-exports.deepValueGetter = deepValueGetter;
 //# sourceMappingURL=column-prop-getters.js.map

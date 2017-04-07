@@ -1,6 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
+import { Directive, TemplateRef } from '@angular/core';
 var DataTableColumnCellDirective = (function () {
     function DataTableColumnCellDirective(template) {
         this.template = template;
@@ -8,12 +6,12 @@ var DataTableColumnCellDirective = (function () {
     ;
     return DataTableColumnCellDirective;
 }());
+export { DataTableColumnCellDirective };
 DataTableColumnCellDirective.decorators = [
-    { type: core_1.Directive, args: [{ selector: '[ngx-datatable-cell-template]' },] },
+    { type: Directive, args: [{ selector: '[ngx-datatable-cell-template]' },] },
 ];
 /** @nocollapse */
 DataTableColumnCellDirective.ctorParameters = function () { return [
-    { type: core_1.TemplateRef, },
+    { type: TemplateRef, },
 ]; };
-exports.DataTableColumnCellDirective = DataTableColumnCellDirective;
 //# sourceMappingURL=column-cell.directive.js.map

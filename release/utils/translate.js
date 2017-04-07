@@ -1,22 +1,20 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var prefixes_1 = require("./prefixes");
-var camel_case_1 = require("./camel-case");
+import { getVendorPrefixedName } from './prefixes';
+import { camelCase } from './camel-case';
 // browser detection and prefixing tools
-var transform = prefixes_1.getVendorPrefixedName('transform');
-var backfaceVisibility = prefixes_1.getVendorPrefixedName('backfaceVisibility');
-var hasCSSTransforms = !!prefixes_1.getVendorPrefixedName('transform');
-var hasCSS3DTransforms = !!prefixes_1.getVendorPrefixedName('perspective');
+var transform = getVendorPrefixedName('transform');
+var backfaceVisibility = getVendorPrefixedName('backfaceVisibility');
+var hasCSSTransforms = !!getVendorPrefixedName('transform');
+var hasCSS3DTransforms = !!getVendorPrefixedName('perspective');
 var ua = window.navigator.userAgent;
 var isSafari = (/Safari\//).test(ua) && !(/Chrome\//).test(ua);
-function translateXY(styles, x, y) {
+export function translateXY(styles, x, y) {
     if (hasCSSTransforms) {
         if (!isSafari && hasCSS3DTransforms) {
             styles[transform] = "translate3d(" + x + "px, " + y + "px, 0)";
             styles[backfaceVisibility] = 'hidden';
         }
         else {
-            styles[camel_case_1.camelCase(transform)] = "translate(" + x + "px, " + y + "px)";
+            styles[camelCase(transform)] = "translate(" + x + "px, " + y + "px)";
         }
     }
     else {
@@ -24,5 +22,4 @@ function translateXY(styles, x, y) {
         styles.left = x + "px";
     }
 }
-exports.translateXY = translateXY;
 //# sourceMappingURL=translate.js.map

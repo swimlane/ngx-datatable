@@ -1,11 +1,9 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var utils_1 = require("../../utils");
-var types_1 = require("../../types");
+import { Component, Input, HostBinding, ViewChild, Output, EventEmitter, HostListener, ElementRef, ViewContainerRef } from '@angular/core';
+import { Keys } from '../../utils';
+import { SortDirection } from '../../types';
 var DataTableBodyCellComponent = (function () {
     function DataTableBodyCellComponent(element) {
-        this.activate = new core_1.EventEmitter();
+        this.activate = new EventEmitter();
         this.isFocused = false;
         this.element = element.nativeElement;
     }
@@ -39,14 +37,14 @@ var DataTableBodyCellComponent = (function () {
     });
     Object.defineProperty(DataTableBodyCellComponent.prototype, "isSortAscending", {
         get: function () {
-            return this.sortDir === types_1.SortDirection.asc;
+            return this.sortDir === SortDirection.asc;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(DataTableBodyCellComponent.prototype, "isSortDescending", {
         get: function () {
-            return this.sortDir === types_1.SortDirection.desc;
+            return this.sortDir === SortDirection.desc;
         },
         enumerable: true,
         configurable: true
@@ -117,11 +115,11 @@ var DataTableBodyCellComponent = (function () {
     DataTableBodyCellComponent.prototype.onKeyDown = function (event) {
         var keyCode = event.keyCode;
         var isTargetCell = event.target === this.element;
-        var isAction = keyCode === utils_1.Keys.return ||
-            keyCode === utils_1.Keys.down ||
-            keyCode === utils_1.Keys.up ||
-            keyCode === utils_1.Keys.left ||
-            keyCode === utils_1.Keys.right;
+        var isAction = keyCode === Keys.return ||
+            keyCode === Keys.down ||
+            keyCode === Keys.up ||
+            keyCode === Keys.left ||
+            keyCode === Keys.right;
         if (isAction && isTargetCell) {
             event.preventDefault();
             event.stopPropagation();
@@ -157,8 +155,9 @@ var DataTableBodyCellComponent = (function () {
     };
     return DataTableBodyCellComponent;
 }());
+export { DataTableBodyCellComponent };
 DataTableBodyCellComponent.decorators = [
-    { type: core_1.Component, args: [{
+    { type: Component, args: [{
                 selector: 'datatable-body-cell',
                 template: "\n    <div class=\"datatable-body-cell-label\">\n      <label\n        *ngIf=\"column.checkboxable\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [checked]=\"isSelected\"\n          (click)=\"onCheckboxChange($event)\" \n        />\n      </label>\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [title]=\"value\"\n        [innerHTML]=\"value\">\n      </span>\n      <ng-template\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngOutletContext]=\"{ value: value, row: row, column: column }\">\n      </ng-template>\n    </div>\n  ",
                 host: {
@@ -168,28 +167,27 @@ DataTableBodyCellComponent.decorators = [
 ];
 /** @nocollapse */
 DataTableBodyCellComponent.ctorParameters = function () { return [
-    { type: core_1.ElementRef, },
+    { type: ElementRef, },
 ]; };
 DataTableBodyCellComponent.propDecorators = {
-    'row': [{ type: core_1.Input },],
-    'column': [{ type: core_1.Input },],
-    'rowHeight': [{ type: core_1.Input },],
-    'isSelected': [{ type: core_1.Input },],
-    'sorts': [{ type: core_1.Input },],
-    'activate': [{ type: core_1.Output },],
-    'cellTemplate': [{ type: core_1.ViewChild, args: ['cellTemplate', { read: core_1.ViewContainerRef },] },],
-    'columnCssClasses': [{ type: core_1.HostBinding, args: ['class',] },],
-    'isFocused': [{ type: core_1.HostBinding, args: ['class.active',] },],
-    'isSortActive': [{ type: core_1.HostBinding, args: ['class.sort-active',] },],
-    'isSortAscending': [{ type: core_1.HostBinding, args: ['class.sort-asc',] },],
-    'isSortDescending': [{ type: core_1.HostBinding, args: ['class.sort-desc',] },],
-    'width': [{ type: core_1.HostBinding, args: ['style.width.px',] },],
-    'height': [{ type: core_1.HostBinding, args: ['style.height',] },],
-    'onFocus': [{ type: core_1.HostListener, args: ['focus',] },],
-    'onBlur': [{ type: core_1.HostListener, args: ['blur',] },],
-    'onClick': [{ type: core_1.HostListener, args: ['click', ['$event'],] },],
-    'onDblClick': [{ type: core_1.HostListener, args: ['dblclick', ['$event'],] },],
-    'onKeyDown': [{ type: core_1.HostListener, args: ['keydown', ['$event'],] },],
+    'row': [{ type: Input },],
+    'column': [{ type: Input },],
+    'rowHeight': [{ type: Input },],
+    'isSelected': [{ type: Input },],
+    'sorts': [{ type: Input },],
+    'activate': [{ type: Output },],
+    'cellTemplate': [{ type: ViewChild, args: ['cellTemplate', { read: ViewContainerRef },] },],
+    'columnCssClasses': [{ type: HostBinding, args: ['class',] },],
+    'isFocused': [{ type: HostBinding, args: ['class.active',] },],
+    'isSortActive': [{ type: HostBinding, args: ['class.sort-active',] },],
+    'isSortAscending': [{ type: HostBinding, args: ['class.sort-asc',] },],
+    'isSortDescending': [{ type: HostBinding, args: ['class.sort-desc',] },],
+    'width': [{ type: HostBinding, args: ['style.width.px',] },],
+    'height': [{ type: HostBinding, args: ['style.height',] },],
+    'onFocus': [{ type: HostListener, args: ['focus',] },],
+    'onBlur': [{ type: HostListener, args: ['blur',] },],
+    'onClick': [{ type: HostListener, args: ['click', ['$event'],] },],
+    'onDblClick': [{ type: HostListener, args: ['dblclick', ['$event'],] },],
+    'onKeyDown': [{ type: HostListener, args: ['keydown', ['$event'],] },],
 };
-exports.DataTableBodyCellComponent = DataTableBodyCellComponent;
 //# sourceMappingURL=body-cell.component.js.map

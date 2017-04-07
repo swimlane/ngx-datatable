@@ -1,12 +1,10 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var types_1 = require("../../types");
-var utils_1 = require("../../utils");
+import { Component, Input, EventEmitter, Output, HostBinding } from '@angular/core';
+import { SortDirection, SelectionType } from '../../types';
+import { nextSortDir } from '../../utils';
 var DataTableHeaderCellComponent = (function () {
     function DataTableHeaderCellComponent() {
-        this.sort = new core_1.EventEmitter();
-        this.select = new core_1.EventEmitter();
+        this.sort = new EventEmitter();
+        this.select = new EventEmitter();
         this.sortFn = this.onSort.bind(this);
     }
     Object.defineProperty(DataTableHeaderCellComponent.prototype, "sorts", {
@@ -72,7 +70,7 @@ var DataTableHeaderCellComponent = (function () {
         get: function () {
             return this.column.checkboxable &&
                 this.column.headerCheckboxable &&
-                this.selectionType === types_1.SelectionType.checkbox;
+                this.selectionType === SelectionType.checkbox;
         },
         enumerable: true,
         configurable: true
@@ -90,7 +88,7 @@ var DataTableHeaderCellComponent = (function () {
     DataTableHeaderCellComponent.prototype.onSort = function () {
         if (!this.column.sortable)
             return;
-        var newValue = utils_1.nextSortDir(this.sortType, this.sortDir);
+        var newValue = nextSortDir(this.sortType, this.sortDir);
         this.sort.emit({
             column: this.column,
             prevValue: this.sortDir,
@@ -98,10 +96,10 @@ var DataTableHeaderCellComponent = (function () {
         });
     };
     DataTableHeaderCellComponent.prototype.calcSortClass = function (sortDir) {
-        if (sortDir === types_1.SortDirection.asc) {
+        if (sortDir === SortDirection.asc) {
             return "sort-btn sort-asc " + this.sortAscendingIcon;
         }
-        else if (sortDir === types_1.SortDirection.desc) {
+        else if (sortDir === SortDirection.desc) {
             return "sort-btn sort-desc " + this.sortDescendingIcon;
         }
         else {
@@ -110,8 +108,9 @@ var DataTableHeaderCellComponent = (function () {
     };
     return DataTableHeaderCellComponent;
 }());
+export { DataTableHeaderCellComponent };
 DataTableHeaderCellComponent.decorators = [
-    { type: core_1.Component, args: [{
+    { type: Component, args: [{
                 selector: 'datatable-header-cell',
                 template: "\n    <div>\n      <label\n        *ngIf=\"isCheckboxable\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [attr.checked]=\"allRowsSelected\"\n          (change)=\"select.emit(!allRowsSelected)\" \n        />\n      </label>\n      <span \n        *ngIf=\"!column.headerTemplate\"\n        class=\"datatable-header-cell-wrapper\">\n        <span\n          class=\"datatable-header-cell-label draggable\"\n          (click)=\"onSort()\"\n          [innerHTML]=\"name\">\n        </span>\n      </span>\n      <ng-template\n        *ngIf=\"column.headerTemplate\"\n        [ngTemplateOutlet]=\"column.headerTemplate\"\n        [ngOutletContext]=\"{ \n          column: column, \n          sortDir: sortDir,\n          sortFn: sortFn\n        }\">\n      </ng-template>\n      <span\n        (click)=\"onSort()\"\n        [class]=\"sortClass\">\n      </span>\n    </div>\n  "
             },] },
@@ -119,21 +118,20 @@ DataTableHeaderCellComponent.decorators = [
 /** @nocollapse */
 DataTableHeaderCellComponent.ctorParameters = function () { return []; };
 DataTableHeaderCellComponent.propDecorators = {
-    'sortType': [{ type: core_1.Input },],
-    'column': [{ type: core_1.Input },],
-    'sortAscendingIcon': [{ type: core_1.Input },],
-    'sortDescendingIcon': [{ type: core_1.Input },],
-    'allRowsSelected': [{ type: core_1.Input },],
-    'selectionType': [{ type: core_1.Input },],
-    'headerHeight': [{ type: core_1.HostBinding, args: ['style.height.px',] }, { type: core_1.Input },],
-    'sorts': [{ type: core_1.Input },],
-    'sort': [{ type: core_1.Output },],
-    'select': [{ type: core_1.Output },],
-    'columnCssClasses': [{ type: core_1.HostBinding, args: ['class',] },],
-    'name': [{ type: core_1.HostBinding, args: ['attr.title',] },],
-    'minWidth': [{ type: core_1.HostBinding, args: ['style.minWidth.px',] },],
-    'maxWidth': [{ type: core_1.HostBinding, args: ['style.maxWidth.px',] },],
-    'width': [{ type: core_1.HostBinding, args: ['style.width.px',] },],
+    'sortType': [{ type: Input },],
+    'column': [{ type: Input },],
+    'sortAscendingIcon': [{ type: Input },],
+    'sortDescendingIcon': [{ type: Input },],
+    'allRowsSelected': [{ type: Input },],
+    'selectionType': [{ type: Input },],
+    'headerHeight': [{ type: HostBinding, args: ['style.height.px',] }, { type: Input },],
+    'sorts': [{ type: Input },],
+    'sort': [{ type: Output },],
+    'select': [{ type: Output },],
+    'columnCssClasses': [{ type: HostBinding, args: ['class',] },],
+    'name': [{ type: HostBinding, args: ['attr.title',] },],
+    'minWidth': [{ type: HostBinding, args: ['style.minWidth.px',] },],
+    'maxWidth': [{ type: HostBinding, args: ['style.maxWidth.px',] },],
+    'width': [{ type: HostBinding, args: ['style.width.px',] },],
 };
-exports.DataTableHeaderCellComponent = DataTableHeaderCellComponent;
 //# sourceMappingURL=header-cell.component.js.map

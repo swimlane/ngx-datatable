@@ -1,8 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var Observable_1 = require("rxjs/Observable");
-require("rxjs/add/operator/takeUntil");
+import { Directive, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/takeUntil';
 /**
  * Draggable Directive for Angular2
  *
@@ -15,9 +13,9 @@ var DraggableDirective = (function () {
     function DraggableDirective(element) {
         this.dragX = true;
         this.dragY = true;
-        this.dragStart = new core_1.EventEmitter();
-        this.dragging = new core_1.EventEmitter();
-        this.dragEnd = new core_1.EventEmitter();
+        this.dragStart = new EventEmitter();
+        this.dragging = new EventEmitter();
+        this.dragEnd = new EventEmitter();
         this.isDragging = false;
         this.element = element.nativeElement;
     }
@@ -49,10 +47,10 @@ var DraggableDirective = (function () {
             event.preventDefault();
             this.isDragging = true;
             var mouseDownPos_1 = { x: event.clientX, y: event.clientY };
-            var mouseup = Observable_1.Observable.fromEvent(document, 'mouseup');
+            var mouseup = Observable.fromEvent(document, 'mouseup');
             this.subscription = mouseup
                 .subscribe(function (ev) { return _this.onMouseup(ev); });
-            var mouseMoveSub = Observable_1.Observable.fromEvent(document, 'mousemove')
+            var mouseMoveSub = Observable.fromEvent(document, 'mousemove')
                 .takeUntil(mouseup)
                 .subscribe(function (ev) { return _this.move(ev, mouseDownPos_1); });
             this.subscription.add(mouseMoveSub);
@@ -89,21 +87,21 @@ var DraggableDirective = (function () {
     };
     return DraggableDirective;
 }());
+export { DraggableDirective };
 DraggableDirective.decorators = [
-    { type: core_1.Directive, args: [{ selector: '[draggable]' },] },
+    { type: Directive, args: [{ selector: '[draggable]' },] },
 ];
 /** @nocollapse */
 DraggableDirective.ctorParameters = function () { return [
-    { type: core_1.ElementRef, },
+    { type: ElementRef, },
 ]; };
 DraggableDirective.propDecorators = {
-    'dragEventTarget': [{ type: core_1.Input },],
-    'dragModel': [{ type: core_1.Input },],
-    'dragX': [{ type: core_1.Input },],
-    'dragY': [{ type: core_1.Input },],
-    'dragStart': [{ type: core_1.Output },],
-    'dragging': [{ type: core_1.Output },],
-    'dragEnd': [{ type: core_1.Output },],
+    'dragEventTarget': [{ type: Input },],
+    'dragModel': [{ type: Input },],
+    'dragX': [{ type: Input },],
+    'dragY': [{ type: Input },],
+    'dragStart': [{ type: Output },],
+    'dragging': [{ type: Output },],
+    'dragEnd': [{ type: Output },],
 };
-exports.DraggableDirective = DraggableDirective;
 //# sourceMappingURL=draggable.directive.js.map

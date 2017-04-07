@@ -1,8 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var SortType;
+export var SortType;
 (function (SortType) {
     SortType[SortType["single"] = 'single'] = "single";
     SortType[SortType["multi"] = 'multi'] = "multi";
-})(SortType = exports.SortType || (exports.SortType = {}));
+})(SortType || (SortType = {}));
 //# sourceMappingURL=sort.type.js.map

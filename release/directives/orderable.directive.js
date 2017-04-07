@@ -1,12 +1,10 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var draggable_directive_1 = require("./draggable.directive");
-var platform_browser_1 = require("@angular/platform-browser");
+import { Directive, Output, EventEmitter, ContentChildren, KeyValueDiffers, Inject } from '@angular/core';
+import { DraggableDirective } from './draggable.directive';
+import { DOCUMENT } from '@angular/platform-browser';
 var OrderableDirective = (function () {
     function OrderableDirective(differs, document) {
         this.document = document;
-        this.reorder = new core_1.EventEmitter();
+        this.reorder = new EventEmitter();
         this.differ = differs.find({}).create(null);
     }
     OrderableDirective.prototype.ngAfterContentInit = function () {
@@ -103,17 +101,17 @@ var OrderableDirective = (function () {
     };
     return OrderableDirective;
 }());
+export { OrderableDirective };
 OrderableDirective.decorators = [
-    { type: core_1.Directive, args: [{ selector: '[orderable]' },] },
+    { type: Directive, args: [{ selector: '[orderable]' },] },
 ];
 /** @nocollapse */
 OrderableDirective.ctorParameters = function () { return [
-    { type: core_1.KeyValueDiffers, },
-    { type: undefined, decorators: [{ type: core_1.Inject, args: [platform_browser_1.DOCUMENT,] },] },
+    { type: KeyValueDiffers, },
+    { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] },] },
 ]; };
 OrderableDirective.propDecorators = {
-    'reorder': [{ type: core_1.Output },],
-    'draggables': [{ type: core_1.ContentChildren, args: [draggable_directive_1.DraggableDirective, { descendants: true },] },],
+    'reorder': [{ type: Output },],
+    'draggables': [{ type: ContentChildren, args: [DraggableDirective, { descendants: true },] },],
 };
-exports.OrderableDirective = OrderableDirective;
 //# sourceMappingURL=orderable.directive.js.map

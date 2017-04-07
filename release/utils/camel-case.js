@@ -1,12 +1,15 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Converts strings from something to camel case
  * http://stackoverflow.com/questions/10425287/convert-dash-separated-string-to-camelcase
  * @param  {string} str
  * @return {string} camel case string
  */
-function camelCase(str) {
+/**
+ * Converts strings from something to camel case
+ * http://stackoverflow.com/questions/10425287/convert-dash-separated-string-to-camelcase
+ * @param  {string} str
+ * @return {string} camel case string
+ */ export function camelCase(str) {
     // Replace special characters with a space
     str = str.replace(/[^a-zA-Z0-9 ]/g, ' ');
     // put a space before an uppercase letter
@@ -19,7 +22,6 @@ function camelCase(str) {
     });
     return str;
 }
-exports.camelCase = camelCase;
 /**
  * Converts strings from camel case to words
  * http://stackoverflow.com/questions/7225407/convert-camelcasetext-to-camel-case-text
@@ -28,10 +30,9 @@ exports.camelCase = camelCase;
  * @param {any} str
  * @returns string
  */
-function deCamelCase(str) {
+export function deCamelCase(str) {
     return str
         .replace(/([A-Z])/g, function (match) { return " " + match; })
         .replace(/^./, function (match) { return match.toUpperCase(); });
 }
-exports.deCamelCase = deCamelCase;
 //# sourceMappingURL=camel-case.js.map
