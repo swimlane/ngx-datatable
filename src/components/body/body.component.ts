@@ -32,7 +32,7 @@ import { ScrollerComponent } from './scroller.component';
           *ngFor="let row of temp; let i = index; trackBy: rowTrackingFn;"
           [ngStyle]="getRowsStyles(row)"
           [rowDetail]="rowDetail"
-          [detailRowHeight]="detailRowHeight"
+          [detailRowHeight]="detailRowHeight(row,i)"
           [row]="row"
           [expanded]="row.$$expanded === 1"
           (rowContextmenu)="rowContextmenu.emit($event)">
@@ -185,11 +185,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     }
   }
 
-  get detailRowHeight(): number {
-    if(!this.rowDetail) return 0;
-    return this.rowDetail.rowHeight;
-  }
-
   rowHeightsCache: RowHeightCache = new RowHeightCache();
   temp: any[] = [];
   offsetY: number = 0;
@@ -214,6 +209,12 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         return row.$$index;
       }
     }.bind(this);
+  }
+
+  detailRowHeight(row?: any, index?: any): number {
+    if (!this.rowDetail) return 0;
+    const rowHeight = this.rowDetail.rowHeight;
+    return typeof rowHeight === 'function' ? rowHeight(row, index) : rowHeight;
   }
 
   /**
@@ -347,7 +348,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   getRowHeight(row: any): number {
     // Adding detail row height if its expanded.
     return this.rowHeight +
-      (row.$$expanded === 1 ? this.detailRowHeight : 0);
+      (row.$$expanded === 1 ? this.detailRowHeight(row) : 0);
   }
 
   /**
@@ -444,7 +445,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     // Initialize the tree only if there are rows inside the tree.
     if (this.rows && this.rows.length) {
       this.rowHeightsCache.initCache(
-        this.rows, this.rowHeight, this.detailRowHeight);
+        this.rows, this.rowHeight, this.detailRowHeight());
     }
   }
 
@@ -485,7 +486,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
     // If the detailRowHeight is auto --> only in case of non-virtualized scroll
     if(this.scrollbarV) {
-      const detailRowHeight = this.detailRowHeight * (row.$$expanded ? -1 : 1);
+      const detailRowHeight = this.detailRowHeight(row) * (row.$$expanded ? -1 : 1);
       this.rowHeightsCache.update(row.$$index, detailRowHeight);
     }
 

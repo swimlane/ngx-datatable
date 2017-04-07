@@ -8,7 +8,7 @@ var DatatableRowDetailDirective = (function () {
          * The detail row height is required especially
          * when virtual scroll is enabled.
          *
-         * @type {number}
+         * @type {number|function(row?:any,index?:any): number}
          * @memberOf DatatableComponent
          */
         this.rowHeight = 0;
