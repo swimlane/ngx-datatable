@@ -50,7 +50,7 @@ export class RxDemoComponent {
 
   fetch(cb) {
     const req = new XMLHttpRequest();
-    req.open('GET', `assets/data/security.json`);
+    req.open('GET', `assets/data/company.json`);
 
     req.onload = () => {
       cb(JSON.parse(req.response));
