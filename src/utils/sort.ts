@@ -77,7 +77,7 @@ export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[
   const cachedDirs = dirs.map(dir => {
     const prop = dir.prop;
     return {
-      prop: prop,
+      prop,
       dir: dir.dir,
       valueGetter: getterForProp(prop),
       compareFn: cols[prop] || orderByComparator
