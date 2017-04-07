@@ -52,7 +52,6 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      * @memberOf DataTableBodyComponent
      */
     readonly scrollHeight: number;
-    readonly detailRowHeight: number;
     rowHeightsCache: RowHeightCache;
     temp: any[];
     offsetY: number;
@@ -67,6 +66,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     _offset: number;
     _pageSize: number;
     constructor();
+    detailRowHeight(row?: any, index?: any): number;
     /**
      * Called after the constructor, initializing input properties
      *

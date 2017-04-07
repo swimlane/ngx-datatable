@@ -1,3 +1,4 @@
+import { TableColumn } from '../types';
 import { DataTableColumnDirective } from '../components/columns';
 /**
  * Sets the column defaults
@@ -6,7 +7,7 @@ import { DataTableColumnDirective } from '../components/columns';
  * @param {any[]} columns
  * @returns
  */
-export declare function setColumnDefaults(columns: any[]): void;
+export declare function setColumnDefaults(columns: TableColumn[]): void;
 /**
  * Translates templates definitions to objects
  *

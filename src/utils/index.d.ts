@@ -1,6 +1,6 @@
 export * from './id';
 export * from './column';
-export * from './deep-getter';
+export * from './column-prop-getters';
 export * from './camel-case';
 export * from './keys';
 export * from './math';

@@ -1,7 +1,8 @@
 import { TemplateRef } from '@angular/core';
+import { TableColumnProp } from '../../types';
 export declare class DataTableColumnDirective {
     name: string;
-    prop: string;
+    prop: TableColumnProp;
     frozenLeft: any;
     frozenRight: any;
     flexGrow: number;
