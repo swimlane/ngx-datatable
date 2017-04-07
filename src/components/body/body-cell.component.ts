@@ -3,8 +3,9 @@ import {
   Output, EventEmitter, HostListener, ElementRef, ViewContainerRef, OnDestroy
 } from '@angular/core';
 
-import { deepValueGetter, Keys } from '../../utils';
+import { Keys } from '../../utils';
 import { SortDirection } from '../../types';
+import { TableColumn } from '../../types/table-column.type';
 
 @Component({
   selector: 'datatable-body-cell',
@@ -38,7 +39,7 @@ import { SortDirection } from '../../types';
 export class DataTableBodyCellComponent implements OnDestroy {
 
   @Input() row: any;
-  @Input() column: any;
+  @Input() column: TableColumn;
   @Input() rowHeight: number;
   @Input() isSelected: boolean;
 
@@ -93,8 +94,8 @@ export class DataTableBodyCellComponent implements OnDestroy {
   }
 
   get value(): any {
-    if (!this.row || !this.column || !this.column.prop) return '';
-    const val = deepValueGetter(this.row, this.column.prop);
+    if (!this.row || !this.column) return '';
+    const val = this.column.$$valueGetter(this.row, this.column.prop);
     const userPipe: PipeTransform = this.column.pipe;
 
     if(userPipe) return userPipe.transform(val);

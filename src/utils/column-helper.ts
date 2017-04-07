@@ -1,6 +1,8 @@
+import { TableColumn } from '../types';
 import { DataTableColumnDirective } from '../components/columns';
 import { camelCase, deCamelCase } from './camel-case';
 import { id } from './id';
+import { getterForProp } from './column-prop-getters';
 
 /**
  * Sets the column defaults
@@ -9,7 +11,7 @@ import { id } from './id';
  * @param {any[]} columns
  * @returns
  */
-export function setColumnDefaults(columns: any[]) {
+export function setColumnDefaults(columns: TableColumn[]) {
   if(!columns) return;
 
   for(const column of columns) {
@@ -17,14 +19,19 @@ export function setColumnDefaults(columns: any[]) {
       column.$$id = id();
     }
 
+    // prop can be numeric; zero is valid not a missing prop
     // translate name => prop
-    if(!column.prop && column.name) {
+    if(column.prop == null && column.name) {
       column.prop = camelCase(column.name);
     }
 
+    if (!column.$$valueGetter) {
+      column.$$valueGetter = getterForProp(column.prop);
+    }
+
     // format props if no name passed
-    if(column.prop && !column.name) {
-      column.name = deCamelCase(column.prop);
+    if(column.prop != null && !column.name) {
+      column.name = deCamelCase(String(column.prop));
     }
 
     if(!column.hasOwnProperty('resizeable')) {

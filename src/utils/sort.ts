@@ -1,5 +1,5 @@
-import { SortType, SortDirection } from '../types';
-import { deepValueGetter } from './deep-getter';
+import { SortType, SortDirection, SortPropDir } from '../types';
+import { getterForProp } from './column-prop-getters';
 /**
  * Gets the next sort direction
  * @param  {SortType}      sortType
@@ -61,7 +61,7 @@ export function orderByComparator(a: any, b: any): number {
  * @param {any[]} dirs
  * @returns
  */
-export function sortRows(rows: any[], columns: any[], dirs: any[]): any[] {
+export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[] {
   if(!rows || !dirs || !dirs.length || !columns) return rows;
 
   const temp = [...rows];
@@ -72,15 +72,28 @@ export function sortRows(rows: any[], columns: any[], dirs: any[]): any[] {
     return obj;
   }, {});
 
-  return temp.sort(function(a: any, b: any) {
-    for(const { prop, dir } of dirs) {
-      const propA = deepValueGetter(a, prop);
-      const propB = deepValueGetter(b, prop);
+  // cache valueGetter and compareFn so that they
+  // do not need to be looked-up in the sort function body
+  const cachedDirs = dirs.map(dir => {
+    const prop = dir.prop;
+    return {
+      prop: prop,
+      dir: dir.dir,
+      valueGetter: getterForProp(prop),
+      compareFn: cols[prop] || orderByComparator
+    };
+  });
 
-      const compareFn = cols[prop] || orderByComparator;
-      const comparison = dir !== SortDirection.desc ?
-        compareFn(propA, propB) :
-        -compareFn(propA, propB);
+  return temp.sort(function(a: any, b: any) {
+
+    for(const cachedDir of cachedDirs) {
+      const { prop, valueGetter } = cachedDir;
+      const propA = valueGetter(a, prop);
+      const propB = valueGetter(b, prop);
+
+      const comparison = cachedDir.dir !== SortDirection.desc ?
+        cachedDir.compareFn(propA, propB) :
+        -cachedDir.compareFn(propA, propB);
 
       // Don't return 0 yet in case of needing to sort by next property
       if (comparison !== 0) return comparison;
