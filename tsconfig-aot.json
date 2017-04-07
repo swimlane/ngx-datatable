@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
+    "module": "es2015",
     "moduleResolution": "node",
     "declaration": true,
     "noEmitHelpers": false,
@@ -21,7 +21,8 @@
     "outDir": "release",
     "declarationDir": "release",
     "lib": ["es6", "dom"],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": []
   },
   "files": [
     "build/declarations.d.ts",
@@ -38,6 +39,7 @@
   },
   "angularCompilerOptions": {
     "genDir": "release/",
-    "skipMetadataEmit": false
+    "strictMetadataEmit": true,
+    "skipTemplateCodegen": true
   }
 }
