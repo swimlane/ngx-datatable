@@ -107,7 +107,7 @@ export class LongPressDirective implements OnDestroy {
     this._destroySubscription();
   }
 
-  private _destroySubscription() {
+  private _destroySubscription(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
       this.subscription = undefined;
