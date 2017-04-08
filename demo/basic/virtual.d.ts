@@ -5,6 +5,7 @@ export declare class VirtualScrollComponent {
     constructor();
     onPage(event: any): void;
     fetch(cb: any): void;
+    getRowHeight(row: any): any;
     getRowClass(row: any): {
         'age-is-ten': boolean;
     };

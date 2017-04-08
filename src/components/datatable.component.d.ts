@@ -1,9 +1,11 @@
 import { ElementRef, EventEmitter, OnInit, QueryList, AfterViewInit, DoCheck, KeyValueDiffers, KeyValueDiffer } from '@angular/core';
+import { ScrollbarHelper } from '../services';
 import { ColumnMode, SortType, SelectionType, TableColumn } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 export declare class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
+    private scrollbarHelper;
     /**
      * Gets the rows.
      *
@@ -427,7 +429,7 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
     _rows: any[];
     _columns: TableColumn[];
     _columnTemplates: QueryList<DataTableColumnDirective>;
-    constructor(element: ElementRef, differs: KeyValueDiffers);
+    constructor(scrollbarHelper: ScrollbarHelper, element: ElementRef, differs: KeyValueDiffers);
     /**
      * Lifecycle hook that is called after data-bound
      * properties of a directive are initialized.
