@@ -1,11 +1,6 @@
 import {
-  Directive,
-  Input,
-  Output,
-  EventEmitter,
-  HostBinding,
-  HostListener,
-  OnDestroy
+  Directive, Input, Output, EventEmitter, HostBinding,
+  HostListener, OnDestroy
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
