@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import 'rxjs/add/observable/fromEvent';
 import { DatatableComponent, DataTableColumnDirective, DataTableHeaderComponent, DataTableBodyComponent, DataTableFooterComponent, DataTableHeaderCellComponent, DataTablePagerComponent, DataTableBodyRowComponent, DataTableRowWrapperComponent, ProgressBarComponent, DataTableBodyCellComponent, DatatableRowDetailDirective, ScrollerComponent, DataTableSelectionComponent, DataTableColumnHeaderDirective, DataTableColumnCellDirective, DatatableRowDetailTemplateDirective } from './components';
 import { VisibilityDirective, LongPressDirective, ResizeableDirective, OrderableDirective, DraggableDirective } from './directives';
+import { ScrollbarHelper } from './services';
 var NgxDatatableModule = (function () {
     function NgxDatatableModule() {
     }
@@ -13,6 +14,9 @@ NgxDatatableModule.decorators = [
     { type: NgModule, args: [{
                 imports: [
                     CommonModule
+                ],
+                providers: [
+                    ScrollbarHelper
                 ],
                 declarations: [
                     VisibilityDirective,

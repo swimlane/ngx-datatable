@@ -73,7 +73,6 @@ var LongPressDirective = (function () {
         this.pressing = false;
         this._destroySubscription();
         this.longPressEnd.emit({
-            event: event,
             model: this.pressModel
         });
     };

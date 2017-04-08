@@ -8,13 +8,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, Input, Output, ElementRef, EventEmitter, ViewChild, HostListener, ContentChildren, HostBinding, ContentChild, KeyValueDiffers, ViewEncapsulation } from '@angular/core';
-import { forceFillColumnWidths, adjustColumnWidths, sortRows, scrollbarWidth, setColumnDefaults, throttleable, translateTemplates } from '../utils';
+import { forceFillColumnWidths, adjustColumnWidths, sortRows, setColumnDefaults, throttleable, translateTemplates } from '../utils';
+import { ScrollbarHelper } from '../services';
 import { ColumnMode, SortType, SelectionType } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 var DatatableComponent = (function () {
-    function DatatableComponent(element, differs) {
+    function DatatableComponent(scrollbarHelper, element, differs) {
+        this.scrollbarHelper = scrollbarHelper;
         /**
          * List of row objects that should be
          * represented as selected in the grid.
@@ -594,7 +596,7 @@ var DatatableComponent = (function () {
             return;
         var width = this.innerWidth;
         if (this.scrollbarV) {
-            width = width - scrollbarWidth;
+            width = width - this.scrollbarHelper.width;
         }
         if (this.columnMode === ColumnMode.force) {
             forceFillColumnWidths(columns, width, forceIdx, allowBleed);
@@ -843,6 +845,7 @@ DatatableComponent.decorators = [
 ];
 /** @nocollapse */
 DatatableComponent.ctorParameters = function () { return [
+    { type: ScrollbarHelper, },
     { type: ElementRef, },
     { type: KeyValueDiffers, },
 ]; };

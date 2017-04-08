@@ -1,17 +1,17 @@
 /**
- * angular2-data-table v"7.2.1" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"7.3.0" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("@angular/core"), require("@angular/common"), require("@angular/platform-browser"));
+		module.exports = factory(require("@angular/core"), require("@angular/platform-browser"), require("@angular/common"));
 	else if(typeof define === 'function' && define.amd)
-		define("ngxDatatable", ["@angular/core", "@angular/common", "@angular/platform-browser"], factory);
+		define("ngxDatatable", ["@angular/core", "@angular/platform-browser", "@angular/common"], factory);
 	else if(typeof exports === 'object')
-		exports["ngxDatatable"] = factory(require("@angular/core"), require("@angular/common"), require("@angular/platform-browser"));
+		exports["ngxDatatable"] = factory(require("@angular/core"), require("@angular/platform-browser"), require("@angular/common"));
 	else
-		root["ngxDatatable"] = factory(root["@angular/core"], root["@angular/common"], root["@angular/platform-browser"]);
+		root["ngxDatatable"] = factory(root["@angular/core"], root["@angular/platform-browser"], root["@angular/common"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -3922,6 +3922,7 @@ DataTableRowWrapperComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__angular_core__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils__ = __webpack_require__("./src/utils/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services__ = __webpack_require__("./src/services/index.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DataTableBodyRowComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3934,8 +3935,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var DataTableBodyRowComponent = (function () {
-    function DataTableBodyRowComponent(element) {
+    function DataTableBodyRowComponent(scrollbarHelper, element) {
+        this.scrollbarHelper = scrollbarHelper;
         this.activate = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
         this.element = element.nativeElement;
     }
@@ -4015,7 +4018,7 @@ var DataTableBodyRowComponent = (function () {
             var bodyWidth = parseInt(this.innerWidth + '', 0);
             var totalDiff = widths.total - bodyWidth;
             var offsetDiff = totalDiff - offsetX;
-            var offset = (offsetDiff + __WEBPACK_IMPORTED_MODULE_1__utils__["e" /* scrollbarWidth */]) * -1;
+            var offset = (offsetDiff + this.scrollbarHelper.width) * -1;
             __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["d" /* translateXY */])(styles, offset, 0);
         }
         return styles;
@@ -4046,9 +4049,9 @@ var DataTableBodyRowComponent = (function () {
     };
     DataTableBodyRowComponent.prototype.recalculateColumns = function (val) {
         if (val === void 0) { val = this.columns; }
-        var colsByPin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["f" /* columnsByPin */])(val);
-        this.columnsByPin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["g" /* columnsByPinArr */])(val);
-        this.columnGroupWidths = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["h" /* columnGroupWidths */])(colsByPin, val);
+        var colsByPin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["e" /* columnsByPin */])(val);
+        this.columnsByPin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["f" /* columnsByPinArr */])(val);
+        this.columnGroupWidths = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["g" /* columnGroupWidths */])(colsByPin, val);
     };
     return DataTableBodyRowComponent;
 }());
@@ -4108,7 +4111,7 @@ DataTableBodyRowComponent = __decorate([
         selector: 'datatable-body-row',
         template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: trackByGroups\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [isSelected]=\"isSelected\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>\n  "
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__services__["a" /* ScrollbarHelper */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]])
 ], DataTableBodyRowComponent);
 
 
@@ -4139,6 +4142,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var DataTableBodyComponent = (function () {
+    /**
+     * Creates an instance of DataTableBodyComponent.
+     *
+     * @memberOf DataTableBodyComponent
+     */
     function DataTableBodyComponent() {
         this.selected = [];
         this.scroll = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
@@ -4147,7 +4155,7 @@ var DataTableBodyComponent = (function () {
         this.select = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
         this.detailToggle = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
         this.rowContextmenu = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"](false);
-        this.rowHeightsCache = new __WEBPACK_IMPORTED_MODULE_1__utils__["i" /* RowHeightCache */]();
+        this.rowHeightsCache = new __WEBPACK_IMPORTED_MODULE_1__utils__["h" /* RowHeightCache */]();
         this.temp = [];
         this.offsetY = 0;
         this.indexes = {};
@@ -4189,8 +4197,8 @@ var DataTableBodyComponent = (function () {
         },
         set: function (val) {
             this._columns = val;
-            var colsByPin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["f" /* columnsByPin */])(val);
-            this.columnGroupWidths = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["h" /* columnGroupWidths */])(colsByPin, val);
+            var colsByPin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["e" /* columnsByPin */])(val);
+            this.columnGroupWidths = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["g" /* columnGroupWidths */])(colsByPin, val);
         },
         enumerable: true,
         configurable: true
@@ -4277,12 +4285,6 @@ var DataTableBodyComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    DataTableBodyComponent.prototype.detailRowHeight = function (row, index) {
-        if (!this.rowDetail)
-            return 0;
-        var rowHeight = this.rowDetail.rowHeight;
-        return typeof rowHeight === 'function' ? rowHeight(row, index) : rowHeight;
-    };
     /**
      * Called after the constructor, initializing input properties
      *
@@ -4393,6 +4395,22 @@ var DataTableBodyComponent = (function () {
         this.temp = temp;
     };
     /**
+     * Get the row height
+     *
+     * @param {*} row
+     * @returns {number}
+     *
+     * @memberOf DataTableBodyComponent
+     */
+    DataTableBodyComponent.prototype.getRowHeight = function (row) {
+        var rowHeight = this.rowHeight;
+        // if its a function return it
+        if (typeof this.rowHeight === 'function') {
+            rowHeight = this.rowHeight(row);
+        }
+        return rowHeight;
+    };
+    /**
      * Calculate row height based on the expanded state of the row.
      *
      * @param {*} row the row for which the height need to be calculated.
@@ -4400,10 +4418,28 @@ var DataTableBodyComponent = (function () {
      *
      * @memberOf DataTableBodyComponent
      */
-    DataTableBodyComponent.prototype.getRowHeight = function (row) {
+    DataTableBodyComponent.prototype.getRowAndDetailHeight = function (row) {
+        var rowHeight = this.getRowHeight(row);
         // Adding detail row height if its expanded.
-        return this.rowHeight +
-            (row.$$expanded === 1 ? this.detailRowHeight(row) : 0);
+        if (row.$$expanded === 1) {
+            rowHeight += this.getDetailRowHeight(row);
+        }
+        return rowHeight;
+    };
+    /**
+     * Get the height of the detail row.
+     *
+     * @param {*} [row]
+     * @param {*} [index]
+     * @returns {number}
+     *
+     * @memberOf DataTableBodyComponent
+     */
+    DataTableBodyComponent.prototype.getDetailRowHeight = function (row, index) {
+        if (!this.rowDetail)
+            return 0;
+        var rowHeight = this.rowDetail.rowHeight;
+        return typeof rowHeight === 'function' ? rowHeight(row, index) : rowHeight;
     };
     /**
      * Calculates the styles for the row so that the rows can be moved in 2D space
@@ -4426,7 +4462,7 @@ var DataTableBodyComponent = (function () {
      * @memberOf DataTableBodyComponent
      */
     DataTableBodyComponent.prototype.getRowsStyles = function (row) {
-        var rowHeight = this.getRowHeight(row);
+        var rowHeight = this.getRowAndDetailHeight(row);
         var styles = {
             height: rowHeight + 'px'
         };
@@ -4489,7 +4525,7 @@ var DataTableBodyComponent = (function () {
         this.rowHeightsCache.clearCache();
         // Initialize the tree only if there are rows inside the tree.
         if (this.rows && this.rows.length) {
-            this.rowHeightsCache.initCache(this.rows, this.rowHeight, this.detailRowHeight());
+            this.rowHeightsCache.initCache(this.rows, this.rowHeight, this.getDetailRowHeight());
         }
     };
     /**
@@ -4525,7 +4561,7 @@ var DataTableBodyComponent = (function () {
         var viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
         // If the detailRowHeight is auto --> only in case of non-virtualized scroll
         if (this.scrollbarV) {
-            var detailRowHeight = this.detailRowHeight(row) * (row.$$expanded ? -1 : 1);
+            var detailRowHeight = this.getDetailRowHeight(row) * (row.$$expanded ? -1 : 1);
             this.rowHeightsCache.update(row.$$index, detailRowHeight);
         }
         // Update the toggled row and update the heights in the cache.
@@ -4695,7 +4731,7 @@ __decorate([
 DataTableBodyComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'datatable-body',
-        template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [rows]=\"temp\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-row-wrapper\n          *ngFor=\"let row of temp; let i = index; trackBy: rowTrackingFn;\"\n          [ngStyle]=\"getRowsStyles(row)\"\n          [rowDetail]=\"rowDetail\"\n          [detailRowHeight]=\"detailRowHeight(row,i)\"\n          [row]=\"row\"\n          [expanded]=\"row.$$expanded === 1\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-row\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(row)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"rowHeight\"\n            [row]=\"row\"\n            [rowClass]=\"rowClass\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-row>\n        </datatable-row-wrapper>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
+        template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [rows]=\"temp\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-row-wrapper\n          *ngFor=\"let row of temp; let i = index; trackBy: rowTrackingFn;\"\n          [ngStyle]=\"getRowsStyles(row)\"\n          [rowDetail]=\"rowDetail\"\n          [detailRowHeight]=\"getDetailRowHeight(row,i)\"\n          [row]=\"row\"\n          [expanded]=\"row.$$expanded === 1\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-row\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(row)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"getRowHeight(row)\"\n            [row]=\"row\"\n            [rowClass]=\"rowClass\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-row>\n        </datatable-row-wrapper>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
         host: {
             class: 'datatable-body'
         }
@@ -5276,10 +5312,11 @@ DataTableColumnDirective = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__angular_core__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils__ = __webpack_require__("./src/utils/index.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__types__ = __webpack_require__("./src/types/index.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__body__ = __webpack_require__("./src/components/body/index.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__columns__ = __webpack_require__("./src/components/columns/index.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__row_detail__ = __webpack_require__("./src/components/row-detail/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services__ = __webpack_require__("./src/services/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__types__ = __webpack_require__("./src/types/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__body__ = __webpack_require__("./src/components/body/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__columns__ = __webpack_require__("./src/components/columns/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__row_detail__ = __webpack_require__("./src/components/row-detail/index.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DatatableComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5296,8 +5333,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var DatatableComponent = (function () {
-    function DatatableComponent(element, differs) {
+    function DatatableComponent(scrollbarHelper, element, differs) {
+        this.scrollbarHelper = scrollbarHelper;
         /**
          * List of row objects that should be
          * represented as selected in the grid.
@@ -5336,7 +5375,7 @@ var DatatableComponent = (function () {
          * @type {ColumnMode}
          * @memberOf DatatableComponent
          */
-        this.columnMode = __WEBPACK_IMPORTED_MODULE_2__types__["a" /* ColumnMode */].standard;
+        this.columnMode = __WEBPACK_IMPORTED_MODULE_3__types__["a" /* ColumnMode */].standard;
         /**
          * The minimum header height in pixels.
          * Pass a falsey for no header
@@ -5407,7 +5446,7 @@ var DatatableComponent = (function () {
          * @type {SortType}
          * @memberOf DatatableComponent
          */
-        this.sortType = __WEBPACK_IMPORTED_MODULE_2__types__["b" /* SortType */].single;
+        this.sortType = __WEBPACK_IMPORTED_MODULE_3__types__["b" /* SortType */].single;
         /**
          * Array of sorted columns by property and type.
          * Default value: `[]`
@@ -5539,7 +5578,7 @@ var DatatableComponent = (function () {
         set: function (val) {
             // auto sort on new updates
             if (!this.externalSorting) {
-                val = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["k" /* sortRows */])(val, this.columns, this.sorts);
+                val = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["j" /* sortRows */])(val, this.columns, this.sorts);
             }
             this._rows = val;
             // recalculate sizes/etc
@@ -5566,7 +5605,7 @@ var DatatableComponent = (function () {
          */
         set: function (val) {
             if (val) {
-                __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["l" /* setColumnDefaults */])(val);
+                __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["k" /* setColumnDefaults */])(val);
                 this.recalculateColumns(val);
             }
             this._columns = val;
@@ -5686,7 +5725,7 @@ var DatatableComponent = (function () {
          * @memberOf DatatableComponent
          */
         get: function () {
-            return this.selectionType === __WEBPACK_IMPORTED_MODULE_2__types__["d" /* SelectionType */].checkbox;
+            return this.selectionType === __WEBPACK_IMPORTED_MODULE_3__types__["d" /* SelectionType */].checkbox;
         },
         enumerable: true,
         configurable: true
@@ -5700,7 +5739,7 @@ var DatatableComponent = (function () {
          * @memberOf DatatableComponent
          */
         get: function () {
-            return this.selectionType === __WEBPACK_IMPORTED_MODULE_2__types__["d" /* SelectionType */].cell;
+            return this.selectionType === __WEBPACK_IMPORTED_MODULE_3__types__["d" /* SelectionType */].cell;
         },
         enumerable: true,
         configurable: true
@@ -5714,7 +5753,7 @@ var DatatableComponent = (function () {
          * @memberOf DatatableComponent
          */
         get: function () {
-            return this.selectionType === __WEBPACK_IMPORTED_MODULE_2__types__["d" /* SelectionType */].single;
+            return this.selectionType === __WEBPACK_IMPORTED_MODULE_3__types__["d" /* SelectionType */].single;
         },
         enumerable: true,
         configurable: true
@@ -5728,7 +5767,7 @@ var DatatableComponent = (function () {
          * @memberOf DatatableComponent
          */
         get: function () {
-            return this.selectionType === __WEBPACK_IMPORTED_MODULE_2__types__["d" /* SelectionType */].multi;
+            return this.selectionType === __WEBPACK_IMPORTED_MODULE_3__types__["d" /* SelectionType */].multi;
         },
         enumerable: true,
         configurable: true
@@ -5742,7 +5781,7 @@ var DatatableComponent = (function () {
          * @memberOf DatatableComponent
          */
         get: function () {
-            return this.selectionType === __WEBPACK_IMPORTED_MODULE_2__types__["d" /* SelectionType */].multiClick;
+            return this.selectionType === __WEBPACK_IMPORTED_MODULE_3__types__["d" /* SelectionType */].multiClick;
         },
         enumerable: true,
         configurable: true
@@ -5771,7 +5810,7 @@ var DatatableComponent = (function () {
                 var arr = val.toArray();
                 if (arr.length) {
                     // translate them to normal objects
-                    this.columns = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["m" /* translateTemplates */])(arr);
+                    this.columns = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["l" /* translateTemplates */])(arr);
                 }
             }
         },
@@ -5816,7 +5855,7 @@ var DatatableComponent = (function () {
     DatatableComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
         if (!this.externalSorting) {
-            var val = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["k" /* sortRows */])(this._rows, this.columns, this.sorts);
+            var val = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["j" /* sortRows */])(this._rows, this.columns, this.sorts);
             this._rows = val;
         }
         // this has to be done to prevent the change detection
@@ -5877,13 +5916,13 @@ var DatatableComponent = (function () {
             return;
         var width = this.innerWidth;
         if (this.scrollbarV) {
-            width = width - __WEBPACK_IMPORTED_MODULE_1__utils__["e" /* scrollbarWidth */];
+            width = width - this.scrollbarHelper.width;
         }
-        if (this.columnMode === __WEBPACK_IMPORTED_MODULE_2__types__["a" /* ColumnMode */].force) {
-            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["n" /* forceFillColumnWidths */])(columns, width, forceIdx, allowBleed);
+        if (this.columnMode === __WEBPACK_IMPORTED_MODULE_3__types__["a" /* ColumnMode */].force) {
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["m" /* forceFillColumnWidths */])(columns, width, forceIdx, allowBleed);
         }
-        else if (this.columnMode === __WEBPACK_IMPORTED_MODULE_2__types__["a" /* ColumnMode */].flex) {
-            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["o" /* adjustColumnWidths */])(columns, width);
+        else if (this.columnMode === __WEBPACK_IMPORTED_MODULE_3__types__["a" /* ColumnMode */].flex) {
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["n" /* adjustColumnWidths */])(columns, width);
         }
         return columns;
     };
@@ -6071,7 +6110,7 @@ var DatatableComponent = (function () {
         // the rows again on the 'push' detection...
         if (this.externalSorting === false) {
             // don't use normal setter so we don't resort
-            this._rows = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["k" /* sortRows */])(this.rows, this.columns, sorts);
+            this._rows = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["j" /* sortRows */])(this.rows, this.columns, sorts);
         }
         this.sorts = sorts;
         // Always go to first page when sorting to see the newly sorted data
@@ -6298,21 +6337,21 @@ __decorate([
     __metadata("design:paramtypes", [])
 ], DatatableComponent.prototype, "isMultiClickSelection", null);
 __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ContentChildren"])(__WEBPACK_IMPORTED_MODULE_4__columns__["a" /* DataTableColumnDirective */]),
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ContentChildren"])(__WEBPACK_IMPORTED_MODULE_5__columns__["a" /* DataTableColumnDirective */]),
     __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["QueryList"]),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["QueryList"]])
 ], DatatableComponent.prototype, "columnTemplates", null);
 __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ContentChild"])(__WEBPACK_IMPORTED_MODULE_5__row_detail__["a" /* DatatableRowDetailDirective */]),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_5__row_detail__["a" /* DatatableRowDetailDirective */])
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ContentChild"])(__WEBPACK_IMPORTED_MODULE_6__row_detail__["a" /* DatatableRowDetailDirective */]),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_6__row_detail__["a" /* DatatableRowDetailDirective */])
 ], DatatableComponent.prototype, "rowDetail", void 0);
 __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_3__body__["a" /* DataTableBodyComponent */]),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_3__body__["a" /* DataTableBodyComponent */])
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_4__body__["a" /* DataTableBodyComponent */]),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_4__body__["a" /* DataTableBodyComponent */])
 ], DatatableComponent.prototype, "bodyComponent", void 0);
 __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["HostListener"])('window:resize'),
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["p" /* throttleable */])(5),
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["o" /* throttleable */])(5),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
@@ -6327,7 +6366,9 @@ DatatableComponent = __decorate([
             class: 'ngx-datatable'
         }
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"], __WEBPACK_IMPORTED_MODULE_0__angular_core__["KeyValueDiffers"]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__services__["a" /* ScrollbarHelper */],
+        __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"],
+        __WEBPACK_IMPORTED_MODULE_0__angular_core__["KeyValueDiffers"]])
 ], DatatableComponent);
 
 
@@ -6713,7 +6754,7 @@ var DataTableHeaderCellComponent = (function () {
     DataTableHeaderCellComponent.prototype.onSort = function () {
         if (!this.column.sortable)
             return;
-        var newValue = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["j" /* nextSortDir */])(this.sortType, this.sortDir);
+        var newValue = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["i" /* nextSortDir */])(this.sortType, this.sortDir);
         this.sort.emit({
             column: this.column,
             prevValue: this.sortDir,
@@ -6860,9 +6901,9 @@ var DataTableHeaderComponent = (function () {
         },
         set: function (val) {
             this._columns = val;
-            var colsByPin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["f" /* columnsByPin */])(val);
-            this.columnsByPin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["g" /* columnsByPinArr */])(val);
-            this.columnGroupWidths = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["h" /* columnGroupWidths */])(colsByPin, val);
+            var colsByPin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["e" /* columnsByPin */])(val);
+            this.columnsByPin = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["f" /* columnsByPinArr */])(val);
+            this.columnGroupWidths = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["g" /* columnGroupWidths */])(colsByPin, val);
         },
         enumerable: true,
         configurable: true
@@ -7249,12 +7290,13 @@ DatatableRowDetailDirective = __decorate([
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__angular_core__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__angular_common__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_observable_fromEvent__ = __webpack_require__("./node_modules/rxjs/add/observable/fromEvent.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_observable_fromEvent___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_observable_fromEvent__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components__ = __webpack_require__("./src/components/index.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__directives__ = __webpack_require__("./src/directives/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services__ = __webpack_require__("./src/services/index.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NgxDatatableModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7262,6 +7304,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -7276,6 +7319,9 @@ NgxDatatableModule = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
         imports: [
             __WEBPACK_IMPORTED_MODULE_1__angular_common__["CommonModule"]
+        ],
+        providers: [
+            __WEBPACK_IMPORTED_MODULE_5__services__["a" /* ScrollbarHelper */]
         ],
         declarations: [
             __WEBPACK_IMPORTED_MODULE_4__directives__["a" /* VisibilityDirective */],
@@ -7580,7 +7626,6 @@ var LongPressDirective = (function () {
         this.pressing = false;
         this._destroySubscription();
         this.longPressEnd.emit({
-            event: event,
             model: this.pressModel
         });
     };
@@ -7649,7 +7694,7 @@ LongPressDirective = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__angular_core__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__draggable_directive__ = __webpack_require__("./src/directives/draggable.directive.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OrderableDirective; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -8021,6 +8066,79 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "DatatableRowDetailTemplateDirective", function() { return __WEBPACK_IMPORTED_MODULE_2__components__["q"]; });
 
 
+
+
+
+/***/ }),
+
+/***/ "./src/services/index.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__scrollbar_helper_service__ = __webpack_require__("./src/services/scrollbar-helper.service.ts");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__scrollbar_helper_service__["a"]; });
+
+
+
+/***/ }),
+
+/***/ "./src/services/scrollbar-helper.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__angular_core__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ScrollbarHelper; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+/**
+ * Gets the width of the scrollbar.  Nesc for windows
+ * http://stackoverflow.com/a/13382873/888165
+ *
+ * @export
+ * @class ScrollbarHelper
+ */
+var ScrollbarHelper = (function () {
+    function ScrollbarHelper(document) {
+        this.document = document;
+        this.width = this.getWidth();
+    }
+    ScrollbarHelper.prototype.getWidth = function () {
+        var outer = this.document.createElement('div');
+        outer.style.visibility = 'hidden';
+        outer.style.width = '100px';
+        outer.style.msOverflowStyle = 'scrollbar';
+        this.document.body.appendChild(outer);
+        var widthNoScroll = outer.offsetWidth;
+        outer.style.overflow = 'scroll';
+        var inner = this.document.createElement('div');
+        inner.style.width = '100%';
+        outer.appendChild(inner);
+        var widthWithScroll = inner.offsetWidth;
+        outer.parentNode.removeChild(outer);
+        return widthNoScroll - widthWithScroll;
+    };
+    return ScrollbarHelper;
+}());
+ScrollbarHelper = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __param(0, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["DOCUMENT"])),
+    __metadata("design:paramtypes", [Object])
+], ScrollbarHelper);
 
 
 
@@ -8468,9 +8586,9 @@ function columnsByPinArr(val) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__id__ = __webpack_require__("./src/utils/id.ts");
 /* unused harmony namespace reexport */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__column__ = __webpack_require__("./src/utils/column.ts");
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_1__column__["b"]; });
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_1__column__["c"]; });
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "h", function() { return __WEBPACK_IMPORTED_MODULE_1__column__["d"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_1__column__["b"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_1__column__["c"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_1__column__["d"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__column_prop_getters__ = __webpack_require__("./src/utils/column-prop-getters.ts");
 /* unused harmony namespace reexport */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__camel_case__ = __webpack_require__("./src/utils/camel-case.ts");
@@ -8478,28 +8596,25 @@ function columnsByPinArr(val) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__keys__ = __webpack_require__("./src/utils/keys.ts");
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_4__keys__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__math__ = __webpack_require__("./src/utils/math.ts");
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "n", function() { return __WEBPACK_IMPORTED_MODULE_5__math__["a"]; });
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "o", function() { return __WEBPACK_IMPORTED_MODULE_5__math__["b"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "m", function() { return __WEBPACK_IMPORTED_MODULE_5__math__["a"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "n", function() { return __WEBPACK_IMPORTED_MODULE_5__math__["b"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__prefixes__ = __webpack_require__("./src/utils/prefixes.ts");
 /* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__scrollbar_width__ = __webpack_require__("./src/utils/scrollbar-width.ts");
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_7__scrollbar_width__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__selection__ = __webpack_require__("./src/utils/selection.ts");
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_8__selection__["a"]; });
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_8__selection__["b"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__translate__ = __webpack_require__("./src/utils/translate.ts");
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_9__translate__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__throttle__ = __webpack_require__("./src/utils/throttle.ts");
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "p", function() { return __WEBPACK_IMPORTED_MODULE_10__throttle__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__sort__ = __webpack_require__("./src/utils/sort.ts");
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "j", function() { return __WEBPACK_IMPORTED_MODULE_11__sort__["a"]; });
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "k", function() { return __WEBPACK_IMPORTED_MODULE_11__sort__["b"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__row_height_cache__ = __webpack_require__("./src/utils/row-height-cache.ts");
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "i", function() { return __WEBPACK_IMPORTED_MODULE_12__row_height_cache__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__column_helper__ = __webpack_require__("./src/utils/column-helper.ts");
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "l", function() { return __WEBPACK_IMPORTED_MODULE_13__column_helper__["a"]; });
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "m", function() { return __WEBPACK_IMPORTED_MODULE_13__column_helper__["b"]; });
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__selection__ = __webpack_require__("./src/utils/selection.ts");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_7__selection__["a"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_7__selection__["b"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__translate__ = __webpack_require__("./src/utils/translate.ts");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_8__translate__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__throttle__ = __webpack_require__("./src/utils/throttle.ts");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "o", function() { return __WEBPACK_IMPORTED_MODULE_9__throttle__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__sort__ = __webpack_require__("./src/utils/sort.ts");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "i", function() { return __WEBPACK_IMPORTED_MODULE_10__sort__["a"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "j", function() { return __WEBPACK_IMPORTED_MODULE_10__sort__["b"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__row_height_cache__ = __webpack_require__("./src/utils/row-height-cache.ts");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "h", function() { return __WEBPACK_IMPORTED_MODULE_11__row_height_cache__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__column_helper__ = __webpack_require__("./src/utils/column-helper.ts");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "k", function() { return __WEBPACK_IMPORTED_MODULE_12__column_helper__["a"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "l", function() { return __WEBPACK_IMPORTED_MODULE_12__column_helper__["b"]; });
 
 
 
@@ -8796,11 +8911,12 @@ var RowHeightCache = (function () {
      * @param detailRowHeight The detail row height.
      */
     RowHeightCache.prototype.initCache = function (rows, rowHeight, detailRowHeight) {
-        if (isNaN(rowHeight)) {
+        var isFn = typeof rowHeight === 'function';
+        if (!isFn && isNaN(rowHeight)) {
             throw new Error("Row Height cache initialization failed. Please ensure that 'rowHeight' is a\n        valid number value: (" + rowHeight + ") when 'scrollbarV' is enabled.");
         }
         // Add this additional guard in case detailRowHeight is set to 'auto' as it wont work.
-        if (isNaN(detailRowHeight)) {
+        if (!isFn && isNaN(detailRowHeight)) {
             throw new Error("Row Height cache initialization failed. Please ensure that 'detailRowHeight' is a\n        valid number value: (" + detailRowHeight + ") when 'scrollbarV' is enabled.");
         }
         var n = rows.length;
@@ -8809,10 +8925,14 @@ var RowHeightCache = (function () {
             this.treeArray[i] = 0;
         }
         for (var i = 0; i < n; ++i) {
+            var row = rows[i];
             var currentRowHeight = rowHeight;
+            if (isFn) {
+                currentRowHeight = rowHeight(row);
+            }
             // Add the detail row height to the already expanded rows.
             // This is useful for the table that goes through a filter or sort.
-            if (rows[i] && rows[i].$$expanded === 1) {
+            if (row && row.$$expanded === 1) {
                 currentRowHeight += detailRowHeight;
             }
             this.update(i, currentRowHeight);
@@ -8902,42 +9022,6 @@ var RowHeightCache = (function () {
     return RowHeightCache;
 }());
 
-
-
-/***/ }),
-
-/***/ "./src/utils/scrollbar-width.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export getScrollBarWidth */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return scrollbarWidth; });
-/**
- * Gets the width of the scrollbar.  Nesc for windows
- * http://stackoverflow.com/a/13382873/888165
- * @return {int} width
- */
-/**
- * Gets the width of the scrollbar.  Nesc for windows
- * http://stackoverflow.com/a/13382873/888165
- * @return {int} width
- */ function getScrollBarWidth() {
-    var outer = document.createElement('div');
-    outer.style.visibility = 'hidden';
-    outer.style.width = '100px';
-    outer.style.msOverflowStyle = 'scrollbar';
-    document.body.appendChild(outer);
-    var widthNoScroll = outer.offsetWidth;
-    outer.style.overflow = 'scroll';
-    var inner = document.createElement('div');
-    inner.style.width = '100%';
-    outer.appendChild(inner);
-    var widthWithScroll = inner.offsetWidth;
-    outer.parentNode.removeChild(outer);
-    return widthNoScroll - widthWithScroll;
-}
-;
-var scrollbarWidth = getScrollBarWidth();
 
 
 /***/ }),

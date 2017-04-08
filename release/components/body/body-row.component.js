@@ -1,7 +1,9 @@
 import { Component, Input, HostBinding, ElementRef, Output, EventEmitter, HostListener } from '@angular/core';
-import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys, scrollbarWidth } from '../../utils';
+import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys } from '../../utils';
+import { ScrollbarHelper } from '../../services';
 var DataTableBodyRowComponent = (function () {
-    function DataTableBodyRowComponent(element) {
+    function DataTableBodyRowComponent(scrollbarHelper, element) {
+        this.scrollbarHelper = scrollbarHelper;
         this.activate = new EventEmitter();
         this.element = element.nativeElement;
     }
@@ -81,7 +83,7 @@ var DataTableBodyRowComponent = (function () {
             var bodyWidth = parseInt(this.innerWidth + '', 0);
             var totalDiff = widths.total - bodyWidth;
             var offsetDiff = totalDiff - offsetX;
-            var offset = (offsetDiff + scrollbarWidth) * -1;
+            var offset = (offsetDiff + this.scrollbarHelper.width) * -1;
             translateXY(styles, offset, 0);
         }
         return styles;
@@ -127,6 +129,7 @@ DataTableBodyRowComponent.decorators = [
 ];
 /** @nocollapse */
 DataTableBodyRowComponent.ctorParameters = function () { return [
+    { type: ScrollbarHelper, },
     { type: ElementRef, },
 ]; };
 DataTableBodyRowComponent.propDecorators = {
