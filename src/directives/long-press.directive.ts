@@ -100,7 +100,6 @@ export class LongPressDirective implements OnDestroy {
     this._destroySubscription();
 
     this.longPressEnd.emit({
-      event,
       model: this.pressModel
     });
   }
