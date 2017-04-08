@@ -60,8 +60,19 @@ The current offset ( page - 1 ) shown. Default value: `0`
 ## `reorderable`
 Column re-ordering enabled/disabled. Default value: `true`
 
-## `rowHeight`
-The height of the row. This is necessary for virtual scrolling in order to calculate height for the scrollbar.
+## `rowHeight`: `Function|number|undefined`
+The height of the row. 
+
+Pass undefined for fluid heights, this is not possible in virtual scrolling.
+
+If using virtual scrolling, you must pass a function or a number to caculate
+the heights.
+
+Using a function, you can bind individual row heights such as:
+
+```javascript
+getRowHeight(row) { return row.height; }
+```
 
 ## `rowIdentity`
 This will be used when displaying or selecting rows.
