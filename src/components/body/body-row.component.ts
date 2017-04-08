@@ -3,9 +3,9 @@ import {
 } from '@angular/core';
 
 import {
-  columnsByPin, columnGroupWidths, columnsByPinArr,
-  translateXY, Keys, scrollbarWidth
+  columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys
 } from '../../utils';
+import { ScrollbarHelper } from '../../services';
 
 @Component({
   selector: 'datatable-body-row',
@@ -89,7 +89,7 @@ export class DataTableBodyRowComponent {
   _columns: any[];
   _innerWidth: number;
 
-  constructor(element: ElementRef) {
+  constructor(private scrollbarHelper: ScrollbarHelper, element: ElementRef) {
     this.element = element.nativeElement;
   }
 
@@ -115,7 +115,7 @@ export class DataTableBodyRowComponent {
       const bodyWidth = parseInt(this.innerWidth + '', 0);
       const totalDiff = widths.total - bodyWidth;
       const offsetDiff = totalDiff - offsetX;
-      const offset = (offsetDiff + scrollbarWidth) * -1;
+      const offset = (offsetDiff + this.scrollbarHelper.width) * -1;
       translateXY(styles, offset, 0);
     }
 

@@ -30,9 +30,14 @@ import {
   DraggableDirective
 } from './directives';
 
+import { ScrollbarHelper } from './services';
+
 @NgModule({
   imports: [
     CommonModule
+  ],
+  providers: [
+    ScrollbarHelper
   ],
   declarations: [
     VisibilityDirective,

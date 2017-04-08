@@ -6,9 +6,10 @@ import {
 } from '@angular/core';
 
 import {
-  forceFillColumnWidths, adjustColumnWidths, sortRows, scrollbarWidth,
+  forceFillColumnWidths, adjustColumnWidths, sortRows,
   setColumnDefaults, throttleable, translateTemplates
 } from '../utils';
+import { ScrollbarHelper } from '../services';
 import { ColumnMode, SortType, SelectionType, TableColumn } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './columns';
@@ -667,7 +668,11 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   _columns: TableColumn[];
   _columnTemplates: QueryList<DataTableColumnDirective>;
 
-  constructor(element: ElementRef, differs: KeyValueDiffers) {
+  constructor(
+    private scrollbarHelper: ScrollbarHelper, 
+    element: ElementRef, 
+    differs: KeyValueDiffers) {
+
     // get ref to elm for measuring
     this.element = element.nativeElement;
     this.rowDiffer = differs.find({}).create(null);
@@ -762,7 +767,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
     let width = this.innerWidth;
     if (this.scrollbarV) {
-      width = width - scrollbarWidth;
+      width = width - this.scrollbarHelper.width;
     }
 
     if (this.columnMode === ColumnMode.force) {

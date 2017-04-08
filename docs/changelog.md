@@ -1,5 +1,8 @@
 # Changelog
 
+## Master
+- Bug: Do not use `document` for universal support (#668)
+
 ## 7.2.0
 - Feature: Allow for dynamic Detail Row heights (#653)
 - Feature: Numeric prop support via support array rows (#494)
