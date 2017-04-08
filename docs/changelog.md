@@ -1,6 +1,7 @@
 # Changelog
 
-## Master
+## 7.3.0
+- Feature: Dynamic row heights for virtual scrolling
 - Bug: Do not use `document` for universal support (#668)
 
 ## 7.2.0

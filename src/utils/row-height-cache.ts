@@ -30,14 +30,16 @@ export class RowHeightCache {
    * @param rowHeight The row height.
    * @param detailRowHeight The detail row height.
    */
-  initCache(rows: any[], rowHeight: number, detailRowHeight: number): void {
-    if (isNaN(rowHeight)) {
+  initCache(rows: any[], rowHeight: any, detailRowHeight: number): void {
+    const isFn = typeof rowHeight === 'function';
+
+    if (!isFn && isNaN(rowHeight)) {
       throw new Error(`Row Height cache initialization failed. Please ensure that 'rowHeight' is a
         valid number value: (${rowHeight}) when 'scrollbarV' is enabled.`);
     }
 
     // Add this additional guard in case detailRowHeight is set to 'auto' as it wont work.
-    if (isNaN(detailRowHeight)) {
+    if (!isFn && isNaN(detailRowHeight)) {
       throw new Error(`Row Height cache initialization failed. Please ensure that 'detailRowHeight' is a
         valid number value: (${detailRowHeight}) when 'scrollbarV' is enabled.`);
     }
@@ -50,11 +52,15 @@ export class RowHeightCache {
     }
 
     for(let i = 0; i < n; ++i) {
+      const row = rows[i];
       let currentRowHeight = rowHeight;
+      if(isFn) {
+        currentRowHeight = rowHeight(row);
+      }
 
       // Add the detail row height to the already expanded rows.
       // This is useful for the table that goes through a filter or sort.
-      if (rows[i] && rows[i].$$expanded === 1) {
+      if(row && row.$$expanded === 1) {
         currentRowHeight += detailRowHeight;
       }
 

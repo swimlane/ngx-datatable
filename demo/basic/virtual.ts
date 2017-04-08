@@ -18,7 +18,7 @@ import { Component } from '@angular/core';
         [columnMode]="'standard'"
         [headerHeight]="50"
         [footerHeight]="50"
-        [rowHeight]="50"
+        [rowHeight]="getRowHeight"
         [rowClass]="getRowClass"
         [scrollbarV]="true"
         (page)="onPage($event)">
@@ -32,7 +32,7 @@ import { Component } from '@angular/core';
             <i [innerHTML]="row['name']"></i> and <i>{{value}}</i>
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Age" width="80">
+        <ngx-datatable-column name="Row Height" prop="height" width="80">
         </ngx-datatable-column>
       </ngx-datatable>
     </div>
@@ -62,10 +62,20 @@ export class VirtualScrollComponent {
     req.open('GET', `assets/data/100k.json`);
 
     req.onload = () => {
-      cb(JSON.parse(req.response));
+      const rows = JSON.parse(req.response);
+
+      for(const row of rows) {
+        row.height = Math.floor(Math.random() * 80) + 50;
+      }
+
+      cb(rows);
     };
 
     req.send();
+  }
+
+  getRowHeight(row) {
+    return row.height;
   }
 
   getRowClass(row) {
