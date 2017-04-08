@@ -1,7 +1,7 @@
-import {async, TestBed, ComponentFixture, fakeAsync, tick} from "@angular/core/testing";
-import {Component} from "@angular/core";
-import {By} from "@angular/platform-browser";
-import {LongPressDirective} from ".";
+import { async, TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
+import { Component } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { LongPressDirective } from './long-press.directive';
 
 @Component({
   selector: 'test-fixture-component',
