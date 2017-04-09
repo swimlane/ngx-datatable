@@ -5,48 +5,50 @@ import { NgxDatatableModule } from '../src';
 import { AppComponent } from './app.component';
 
 // -- Basic
-import { BasicFixedComponent } from './basic/basic-fixed';
-import { BasicAutoComponent } from './basic/basic-auto';
-import { VirtualScrollComponent } from './basic/virtual';
-import { InlineEditComponent } from './basic/inline';
-import { HorzVertScrolling } from './basic/scrolling';
-import { MultipleTablesComponent } from './basic/multiple';
-import { FullScreenComponent } from './basic/fullscreen';
-import { RowDetailsComponent } from './basic/row-detail';
-import { FilterBarComponent } from './basic/filter';
-import { TabsDemoComponent } from './basic/tabs';
-import { LiveDataComponent } from './basic/live';
-import { RxDemoComponent } from './basic/rx';
-import { ContextMenuDemoComponent } from './basic/contextmenu';
+import { BasicFixedComponent } from './basic/basic-fixed.component';
+import { BasicAutoComponent } from './basic/basic-auto.component';
+import { VirtualScrollComponent } from './basic/virtual.component';
+import { InlineEditComponent } from './basic/inline.component';
+import { HorzVertScrolling } from './basic/scrolling.component';
+import { MultipleTablesComponent } from './basic/multiple.component';
+import { FullScreenComponent } from './basic/fullscreen.component';
+import { RowDetailsComponent } from './basic/row-detail.component';
+import { FilterBarComponent } from './basic/filter.component';
+import { TabsDemoComponent } from './basic/tabs.component';
+import { LiveDataComponent } from './basic/live.component';
+import { RxDemoComponent } from './basic/rx.component';
+import { ContextMenuDemoComponent } from './basic/contextmenu.component';
+import { RowCssComponent } from './basic/css.component';
+import { DynamicHeightComponent } from './basic/dynamic-height.component';
 
 // -- Paging
-import { ClientPagingComponent } from './paging/paging-client';
-import { ServerPagingComponent } from './paging/paging-server';
+import { ClientPagingComponent } from './paging/paging-client.component';
+import { ServerPagingComponent } from './paging/paging-server.component';
 
 // -- Sorting
-import { SortingComparatorComponent } from './sorting/sorting-comparator';
-import { DefaultSortingComponent } from './sorting/sorting-default';
-import { ServerSortingComponent } from './sorting/sorting-server';
-import { ClientSortingComponent } from './sorting/sorting-client';
+import { SortingComparatorComponent } from './sorting/sorting-comparator.component';
+import { DefaultSortingComponent } from './sorting/sorting-default.component';
+import { ServerSortingComponent } from './sorting/sorting-server.component';
+import { ClientSortingComponent } from './sorting/sorting-client.component';
 
 // -- Templates
-import { InlineTemplatesComponent } from './templates/template-dom';
-import { TemplateRefTemplatesComponent } from './templates/template-obj';
+import { InlineTemplatesComponent } from './templates/template-dom.component';
+import { TemplateRefTemplatesComponent } from './templates/template-obj.component';
 
 // -- Selection
-import { CellSelectionComponent } from './selection/selection-cell';
-import { MultiSelectionComponent } from './selection/selection-multi';
-import { SingleSelectionComponent } from './selection/selection-single';
-import { MultiDisableSelectionComponent } from './selection/selection-disabled';
-import { CheckboxSelectionComponent } from './selection/selection-chkbox';
-import { MultiClickSelectionComponent } from './selection/selection-multi-click';
+import { CellSelectionComponent } from './selection/selection-cell.component';
+import { MultiSelectionComponent } from './selection/selection-multi.component';
+import { SingleSelectionComponent } from './selection/selection-single.component';
+import { MultiDisableSelectionComponent } from './selection/selection-disabled.component';
+import { CheckboxSelectionComponent } from './selection/selection-chkbox.component';
+import { MultiClickSelectionComponent } from './selection/selection-multi-click.component';
 
 // -- Columns
-import { ColumnToggleComponent } from './columns/column-toggle';
-import { ColumnStandardComponent } from './columns/column-standard';
-import { ColumnForceComponent } from './columns/column-force';
-import { ColumnFlexComponent } from './columns/column-flex';
-import { ColumnPinningComponent } from './columns/pinning';
+import { ColumnToggleComponent } from './columns/column-toggle.component';
+import { ColumnStandardComponent } from './columns/column-standard.component';
+import { ColumnForceComponent } from './columns/column-force.component';
+import { ColumnFlexComponent } from './columns/column-flex.component';
+import { ColumnPinningComponent } from './columns/pinning.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +84,9 @@ import { ColumnPinningComponent } from './columns/pinning';
     RxDemoComponent,
     ContextMenuDemoComponent,
     CheckboxSelectionComponent,
-    MultiClickSelectionComponent
+    MultiClickSelectionComponent,
+    RowCssComponent,
+    DynamicHeightComponent
   ],
   imports: [BrowserModule, NgxDatatableModule],
   bootstrap: [AppComponent]

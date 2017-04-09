@@ -23,19 +23,26 @@ import { Component, ViewEncapsulation } from '@angular/core';
           <li>
             <h4>Basic</h4>
             <ul>
-              <li><a href="#" (click)="state=''">Auto Row Height</a></li>
-              <li><a href="#" (click)="state='basic-fixed'">Fixed Row Height</a></li>
               <li><a href="#" (click)="state='virtual-scroll'">10k Rows</a></li>
               <li><a href="#" (click)="state='full-screen'">Full Screen</a></li>
               <li><a href="#" (click)="state='inline-edit'">Inline Editing</a></li>
               <li><a href="#" (click)="state='horz-vert-scrolling'">Horz/Vert Scrolling</a></li>
-              <li><a href="#" (click)="state='multiple-tables'">Multiple Instances</a></li>
-              <li><a href="#" (click)="state='row-details'">Row Detail</a></li>
+              <li><a href="#" (click)="state='multiple-tables'">Multiple Tables</a></li>
               <li><a href="#" (click)="state='filter'">Filtering</a></li>
               <li><a href="#" (click)="state='hidden'">Hidden On Load</a></li>
               <li><a href="#" (click)="state='live'">Live Data</a></li>
               <li><a href="#" (click)="state='rx'">RxJS</a></li>
               <li><a href="#" (click)="state='contextmenu'">Context Menu</a></li>
+            </ul>
+          </li>
+          <li>
+            <h4>Rows</h4>
+            <ul>
+              <li><a href="#" (click)="state=''">Fluid Row Height</a></li>
+              <li><a href="#" (click)="state='basic-fixed'">Fixed Row Height</a></li>
+              <li><a href="#" (click)="state='dynamic'">Dynamic Row Height</a></li>
+              <li><a href="#" (click)="state='row-details'">Row Detail</a></li>
+              <li><a href="#" (click)="state='css'">Row Css</a></li>
             </ul>
           </li>
           <li>
@@ -99,6 +106,8 @@ import { Component, ViewEncapsulation } from '@angular/core';
         <live-data-demo *ngIf="state === 'live'"></live-data-demo>
         <rx-demo *ngIf="state === 'rx'"></rx-demo>
         <contextmenu-demo *ngIf="state === 'contextmenu'"></contextmenu-demo>
+        <row-css-demo *ngIf="state === 'css'"></row-css-demo>
+        <dynamic-height-demo *ngIf="state === 'dynamic'"></dynamic-height-demo>
 
         <!-- Paging -->
         <client-paging-demo *ngIf="state === 'client-paging'"></client-paging-demo>
