@@ -1,5 +1,8 @@
 # Changelog
 
+## Master
+- Bug: Fix resize handle drag triggering long press
+
 ## 7.3.0
 - Feature: Dynamic row heights for virtual scrolling
 - Bug: Do not use `document` for universal support (#668)

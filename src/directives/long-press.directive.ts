@@ -37,6 +37,10 @@ export class LongPressDirective implements OnDestroy {
     // don't do right/middle clicks
     if (event.which !== 1) return;
 
+    // don't start drag if its on resize handle
+    const target = (<HTMLElement>event.target);
+    if(target.classList.contains('resize-handle')) return;
+
     this.mouseX = event.clientX;
     this.mouseY = event.clientY;
 
