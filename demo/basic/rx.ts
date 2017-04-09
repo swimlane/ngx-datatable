@@ -30,9 +30,9 @@ export class RxDemoComponent {
   rows: Observable<any[]>;
   
   columns = [
-    { prop: 'Organization' },
-    { prop: 'DateAdded' },
-    { prop: 'Tags' }
+    { name: 'Name' },
+    { name: 'Gender' },
+    { name: 'Company' }
   ];
 
   constructor() {
