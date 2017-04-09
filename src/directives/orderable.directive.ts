@@ -93,7 +93,9 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
 
   isTarget(model, event): any {
     let i = 0;
-    const targets = this.document.elementsFromPoint(event.x, event.y);
+    const x = event.x || event.clientX;
+    const y = event.y || event.clientY;
+    const targets = this.document.elementsFromPoint(x, y);
 
     for (const prop in this.positions) {
       // current column position which throws event.

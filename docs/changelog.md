@@ -3,6 +3,7 @@
 ## Master
 - Bug: Fix resize handle drag triggering long press
 - Bug: Fix dragging trigging column sorting
+- Bug: Fix column re-ordering not working on FF
 
 ## 7.3.0
 - Feature: Dynamic row heights for virtual scrolling
