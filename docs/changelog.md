@@ -2,6 +2,7 @@
 
 ## Master
 - Bug: Fix resize handle drag triggering long press
+- Bug: Fix dragging trigging column sorting
 
 ## 7.3.0
 - Feature: Dynamic row heights for virtual scrolling

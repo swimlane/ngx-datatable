@@ -72,7 +72,7 @@ export class DataTableHeaderComponent {
     }
   }
 
-  get headerHeight() {
+  get headerHeight(): any {
     return this._headerHeight;
   }
 
@@ -104,8 +104,13 @@ export class DataTableHeaderComponent {
   }
 
   onLongPressEnd({ event, model }) {
-    model.dragging = false;
     this.dragEventTarget = event;
+
+    // delay resetting so sort can be 
+    // prevented if we were dragging
+    setTimeout(() => { 
+      model.dragging = false;
+    }, 5);
   }
 
   @HostBinding('style.width')
@@ -148,6 +153,9 @@ export class DataTableHeaderComponent {
   }
 
   onSort({ column, prevValue, newValue }: any): void {
+    // if we are dragging don't sort!
+    if(column.dragging) return;
+
     const sorts = this.calcNewSorts(column, prevValue, newValue);
     this.sort.emit({
       sorts,
