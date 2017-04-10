@@ -1,10 +1,12 @@
-import { Directive, Output, EventEmitter, ContentChildren, KeyValueDiffers, Inject } from '@angular/core';
-import { DraggableDirective } from './draggable.directive';
-import { DOCUMENT } from '@angular/platform-browser';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var draggable_directive_1 = require("./draggable.directive");
+var platform_browser_1 = require("@angular/platform-browser");
 var OrderableDirective = (function () {
     function OrderableDirective(differs, document) {
         this.document = document;
-        this.reorder = new EventEmitter();
+        this.reorder = new core_1.EventEmitter();
         this.differ = differs.find({}).create(null);
     }
     OrderableDirective.prototype.ngAfterContentInit = function () {
@@ -72,7 +74,9 @@ var OrderableDirective = (function () {
     };
     OrderableDirective.prototype.isTarget = function (model, event) {
         var i = 0;
-        var targets = this.document.elementsFromPoint(event.x, event.y);
+        var x = event.x || event.clientX;
+        var y = event.y || event.clientY;
+        var targets = this.document.elementsFromPoint(x, y);
         var _loop_1 = function (prop) {
             // current column position which throws event.
             var pos = this_1.positions[prop];
@@ -101,17 +105,17 @@ var OrderableDirective = (function () {
     };
     return OrderableDirective;
 }());
-export { OrderableDirective };
 OrderableDirective.decorators = [
-    { type: Directive, args: [{ selector: '[orderable]' },] },
+    { type: core_1.Directive, args: [{ selector: '[orderable]' },] },
 ];
 /** @nocollapse */
 OrderableDirective.ctorParameters = function () { return [
-    { type: KeyValueDiffers, },
-    { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] },] },
+    { type: core_1.KeyValueDiffers, },
+    { type: undefined, decorators: [{ type: core_1.Inject, args: [platform_browser_1.DOCUMENT,] },] },
 ]; };
 OrderableDirective.propDecorators = {
-    'reorder': [{ type: Output },],
-    'draggables': [{ type: ContentChildren, args: [DraggableDirective, { descendants: true },] },],
+    'reorder': [{ type: core_1.Output },],
+    'draggables': [{ type: core_1.ContentChildren, args: [draggable_directive_1.DraggableDirective, { descendants: true },] },],
 };
+exports.OrderableDirective = OrderableDirective;
 //# sourceMappingURL=orderable.directive.js.map

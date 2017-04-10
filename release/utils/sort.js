@@ -1,32 +1,35 @@
-import { SortType, SortDirection } from '../types';
-import { getterForProp } from './column-prop-getters';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var types_1 = require("../types");
+var column_prop_getters_1 = require("./column-prop-getters");
 /**
  * Gets the next sort direction
  * @param  {SortType}      sortType
  * @param  {SortDirection} currentSort
  * @return {SortDirection}
  */
-export function nextSortDir(sortType, current) {
-    if (sortType === SortType.single) {
-        if (current === SortDirection.asc) {
-            return SortDirection.desc;
+function nextSortDir(sortType, current) {
+    if (sortType === types_1.SortType.single) {
+        if (current === types_1.SortDirection.asc) {
+            return types_1.SortDirection.desc;
         }
         else {
-            return SortDirection.asc;
+            return types_1.SortDirection.asc;
         }
     }
     else {
         if (!current) {
-            return SortDirection.asc;
+            return types_1.SortDirection.asc;
         }
-        else if (current === SortDirection.asc) {
-            return SortDirection.desc;
+        else if (current === types_1.SortDirection.asc) {
+            return types_1.SortDirection.desc;
         }
-        else if (current === SortDirection.desc) {
+        else if (current === types_1.SortDirection.desc) {
             return undefined;
         }
     }
 }
+exports.nextSortDir = nextSortDir;
 ;
 /**
  * Adapted from fueld-ui on 6/216
@@ -35,7 +38,7 @@ export function nextSortDir(sortType, current) {
  * @param  {any}    b
  * @return {number} position
  */
-export function orderByComparator(a, b) {
+function orderByComparator(a, b) {
     if (a === null || typeof a === 'undefined')
         a = 0;
     if (b === null || typeof b === 'undefined')
@@ -60,6 +63,7 @@ export function orderByComparator(a, b) {
     // equal each other
     return 0;
 }
+exports.orderByComparator = orderByComparator;
 /**
  * Sorts the rows
  *
@@ -69,7 +73,7 @@ export function orderByComparator(a, b) {
  * @param {any[]} dirs
  * @returns
  */
-export function sortRows(rows, columns, dirs) {
+function sortRows(rows, columns, dirs) {
     if (!rows || !dirs || !dirs.length || !columns)
         return rows;
     var temp = rows.slice();
@@ -86,7 +90,7 @@ export function sortRows(rows, columns, dirs) {
         return {
             prop: prop,
             dir: dir.dir,
-            valueGetter: getterForProp(prop),
+            valueGetter: column_prop_getters_1.getterForProp(prop),
             compareFn: cols[prop] || orderByComparator
         };
     });
@@ -96,7 +100,7 @@ export function sortRows(rows, columns, dirs) {
             var prop = cachedDir.prop, valueGetter = cachedDir.valueGetter;
             var propA = valueGetter(a, prop);
             var propB = valueGetter(b, prop);
-            var comparison = cachedDir.dir !== SortDirection.desc ?
+            var comparison = cachedDir.dir !== types_1.SortDirection.desc ?
                 cachedDir.compareFn(propA, propB) :
                 -cachedDir.compareFn(propA, propB);
             // Don't return 0 yet in case of needing to sort by next property
@@ -107,4 +111,5 @@ export function sortRows(rows, columns, dirs) {
         return 0;
     });
 }
+exports.sortRows = sortRows;
 //# sourceMappingURL=sort.js.map

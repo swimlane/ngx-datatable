@@ -1,5 +1,7 @@
-import { Input, Output, EventEmitter, Directive, TemplateRef, ContentChild } from '@angular/core';
-import { DatatableRowDetailTemplateDirective } from './row-detail-template.directive';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var row_detail_template_directive_1 = require("./row-detail-template.directive");
 var DatatableRowDetailDirective = (function () {
     function DatatableRowDetailDirective() {
         /**
@@ -16,7 +18,7 @@ var DatatableRowDetailDirective = (function () {
          * @type {EventEmitter<any>}
          * @memberOf DatatableComponent
          */
-        this.toggle = new EventEmitter();
+        this.toggle = new core_1.EventEmitter();
     }
     /**
      * Toggle the expansion of the row
@@ -53,15 +55,15 @@ var DatatableRowDetailDirective = (function () {
     };
     return DatatableRowDetailDirective;
 }());
-export { DatatableRowDetailDirective };
 DatatableRowDetailDirective.decorators = [
-    { type: Directive, args: [{ selector: 'ngx-datatable-row-detail' },] },
+    { type: core_1.Directive, args: [{ selector: 'ngx-datatable-row-detail' },] },
 ];
 /** @nocollapse */
 DatatableRowDetailDirective.ctorParameters = function () { return []; };
 DatatableRowDetailDirective.propDecorators = {
-    'rowHeight': [{ type: Input },],
-    'template': [{ type: Input }, { type: ContentChild, args: [DatatableRowDetailTemplateDirective, { read: TemplateRef },] },],
-    'toggle': [{ type: Output },],
+    'rowHeight': [{ type: core_1.Input },],
+    'template': [{ type: core_1.Input }, { type: core_1.ContentChild, args: [row_detail_template_directive_1.DatatableRowDetailTemplateDirective, { read: core_1.TemplateRef },] },],
+    'toggle': [{ type: core_1.Output },],
 };
+exports.DatatableRowDetailDirective = DatatableRowDetailDirective;
 //# sourceMappingURL=row-detail.directive.js.map

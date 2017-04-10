@@ -1,4 +1,6 @@
-import { Directive, Output, EventEmitter, ElementRef, HostBinding, NgZone } from '@angular/core';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
 /**
  * Visibility Observer Directive
  *
@@ -15,7 +17,7 @@ var VisibilityDirective = (function () {
         this.element = element;
         this.zone = zone;
         this.isVisible = false;
-        this.visible = new EventEmitter();
+        this.visible = new core_1.EventEmitter();
     }
     VisibilityDirective.prototype.ngOnInit = function () {
         this.runCheck();
@@ -51,17 +53,17 @@ var VisibilityDirective = (function () {
     };
     return VisibilityDirective;
 }());
-export { VisibilityDirective };
 VisibilityDirective.decorators = [
-    { type: Directive, args: [{ selector: '[visibility-observer]' },] },
+    { type: core_1.Directive, args: [{ selector: '[visibility-observer]' },] },
 ];
 /** @nocollapse */
 VisibilityDirective.ctorParameters = function () { return [
-    { type: ElementRef, },
-    { type: NgZone, },
+    { type: core_1.ElementRef, },
+    { type: core_1.NgZone, },
 ]; };
 VisibilityDirective.propDecorators = {
-    'isVisible': [{ type: HostBinding, args: ['class.visible',] },],
-    'visible': [{ type: Output },],
+    'isVisible': [{ type: core_1.HostBinding, args: ['class.visible',] },],
+    'visible': [{ type: core_1.Output },],
 };
+exports.VisibilityDirective = VisibilityDirective;
 //# sourceMappingURL=visibility.directive.js.map

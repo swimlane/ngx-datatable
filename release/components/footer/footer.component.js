@@ -1,8 +1,10 @@
-import { Component, Output, EventEmitter, ChangeDetectionStrategy, Input } from '@angular/core';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
 var DataTableFooterComponent = (function () {
     function DataTableFooterComponent() {
         this.selectedCount = 0;
-        this.page = new EventEmitter();
+        this.page = new core_1.EventEmitter();
     }
     Object.defineProperty(DataTableFooterComponent.prototype, "isVisible", {
         get: function () {
@@ -20,31 +22,31 @@ var DataTableFooterComponent = (function () {
     });
     return DataTableFooterComponent;
 }());
-export { DataTableFooterComponent };
 DataTableFooterComponent.decorators = [
-    { type: Component, args: [{
+    { type: core_1.Component, args: [{
                 selector: 'datatable-footer',
                 template: "\n    <div\n      [ngClass]=\"{'selected-count': selectedMessage}\"\n      [style.height.px]=\"footerHeight\">\n      <div class=\"page-count\">\n        <span *ngIf=\"selectedMessage\">\n          {{selectedCount.toLocaleString()}} {{selectedMessage}} / \n        </span>\n\n        {{rowCount.toLocaleString()}} {{totalMessage}}\n      </div>\n      <datatable-pager\n        [pagerLeftArrowIcon]=\"pagerLeftArrowIcon\"\n        [pagerRightArrowIcon]=\"pagerRightArrowIcon\"\n        [pagerPreviousIcon]=\"pagerPreviousIcon\"\n        [pagerNextIcon]=\"pagerNextIcon\"\n        [page]=\"curPage\"\n        [size]=\"pageSize\"\n        [count]=\"rowCount\"\n        [hidden]=\"!isVisible\"\n        (change)=\"page.emit($event)\">\n      </datatable-pager>\n    </div>\n  ",
                 host: {
                     class: 'datatable-footer'
                 },
-                changeDetection: ChangeDetectionStrategy.OnPush
+                changeDetection: core_1.ChangeDetectionStrategy.OnPush
             },] },
 ];
 /** @nocollapse */
 DataTableFooterComponent.ctorParameters = function () { return []; };
 DataTableFooterComponent.propDecorators = {
-    'footerHeight': [{ type: Input },],
-    'rowCount': [{ type: Input },],
-    'pageSize': [{ type: Input },],
-    'offset': [{ type: Input },],
-    'pagerLeftArrowIcon': [{ type: Input },],
-    'pagerRightArrowIcon': [{ type: Input },],
-    'pagerPreviousIcon': [{ type: Input },],
-    'pagerNextIcon': [{ type: Input },],
-    'totalMessage': [{ type: Input },],
-    'selectedCount': [{ type: Input },],
-    'selectedMessage': [{ type: Input },],
-    'page': [{ type: Output },],
+    'footerHeight': [{ type: core_1.Input },],
+    'rowCount': [{ type: core_1.Input },],
+    'pageSize': [{ type: core_1.Input },],
+    'offset': [{ type: core_1.Input },],
+    'pagerLeftArrowIcon': [{ type: core_1.Input },],
+    'pagerRightArrowIcon': [{ type: core_1.Input },],
+    'pagerPreviousIcon': [{ type: core_1.Input },],
+    'pagerNextIcon': [{ type: core_1.Input },],
+    'totalMessage': [{ type: core_1.Input },],
+    'selectedCount': [{ type: core_1.Input },],
+    'selectedMessage': [{ type: core_1.Input },],
+    'page': [{ type: core_1.Output },],
 };
+exports.DataTableFooterComponent = DataTableFooterComponent;
 //# sourceMappingURL=footer.component.js.map

@@ -1,4 +1,6 @@
-import { camelCase } from './camel-case';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var camel_case_1 = require("./camel-case");
 var cache = {};
 var testStyle = document.createElement('div').style;
 // Get Prefix
@@ -14,8 +16,8 @@ var prefix = (function () {
         js: pre[0].toUpperCase() + pre.substr(1)
     };
 })();
-export function getVendorPrefixedName(property) {
-    var name = camelCase(property);
+function getVendorPrefixedName(property) {
+    var name = camel_case_1.camelCase(property);
     if (!cache[name]) {
         if (testStyle[prefix.css + property] !== undefined) {
             cache[name] = prefix.css + property;
@@ -26,4 +28,5 @@ export function getVendorPrefixedName(property) {
     }
     return cache[name];
 }
+exports.getVendorPrefixedName = getVendorPrefixedName;
 //# sourceMappingURL=prefixes.js.map

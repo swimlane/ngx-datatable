@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Throttle a function
  *
@@ -7,15 +9,7 @@
  * @param {*} [options]
  * @returns
  */
-/**
- * Throttle a function
- *
- * @export
- * @param {*} func
- * @param {number} wait
- * @param {*} [options]
- * @returns
- */ export function throttle(func, wait, options) {
+function throttle(func, wait, options) {
     options = options || {};
     var context;
     var args;
@@ -47,6 +41,7 @@
         return result;
     };
 }
+exports.throttle = throttle;
 /**
  * Throttle decorator
  *
@@ -60,7 +55,7 @@
  * @param {*} [options]
  * @returns
  */
-export function throttleable(duration, options) {
+function throttleable(duration, options) {
     return function innerDecorator(target, key, descriptor) {
         return {
             configurable: true,
@@ -76,4 +71,5 @@ export function throttleable(duration, options) {
         };
     };
 }
+exports.throttleable = throttleable;
 //# sourceMappingURL=throttle.js.map

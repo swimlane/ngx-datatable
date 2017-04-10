@@ -1,5 +1,7 @@
-import { Inject, Injectable } from '@angular/core';
-import { DOCUMENT } from '@angular/platform-browser';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var platform_browser_1 = require("@angular/platform-browser");
 /**
  * Gets the width of the scrollbar.  Nesc for windows
  * http://stackoverflow.com/a/13382873/888165
@@ -29,12 +31,12 @@ var ScrollbarHelper = (function () {
     };
     return ScrollbarHelper;
 }());
-export { ScrollbarHelper };
 ScrollbarHelper.decorators = [
-    { type: Injectable },
+    { type: core_1.Injectable },
 ];
 /** @nocollapse */
 ScrollbarHelper.ctorParameters = function () { return [
-    { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] },] },
+    { type: undefined, decorators: [{ type: core_1.Inject, args: [platform_browser_1.DOCUMENT,] },] },
 ]; };
+exports.ScrollbarHelper = ScrollbarHelper;
 //# sourceMappingURL=scrollbar-helper.service.js.map

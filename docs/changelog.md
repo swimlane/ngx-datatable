@@ -1,6 +1,6 @@
 # Changelog
 
-## Master
+## 7.3.1
 - Bug: Fix resize handle drag triggering long press
 - Bug: Fix dragging trigging column sorting
 - Bug: Fix column re-ordering not working on FF

@@ -1,12 +1,14 @@
-import { Directive, Input, Output, EventEmitter, HostBinding, HostListener } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/takeUntil';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var Observable_1 = require("rxjs/Observable");
+require("rxjs/add/operator/takeUntil");
 var LongPressDirective = (function () {
     function LongPressDirective() {
         this.duration = 500;
-        this.longPressStart = new EventEmitter();
-        this.longPressing = new EventEmitter();
-        this.longPressEnd = new EventEmitter();
+        this.longPressStart = new core_1.EventEmitter();
+        this.longPressing = new core_1.EventEmitter();
+        this.longPressEnd = new core_1.EventEmitter();
         this.mouseX = 0;
         this.mouseY = 0;
     }
@@ -27,11 +29,15 @@ var LongPressDirective = (function () {
         // don't do right/middle clicks
         if (event.which !== 1)
             return;
+        // don't start drag if its on resize handle
+        var target = event.target;
+        if (target.classList.contains('resize-handle'))
+            return;
         this.mouseX = event.clientX;
         this.mouseY = event.clientY;
         this.pressing = true;
         this.isLongPressing = false;
-        var mouseup = Observable.fromEvent(document, 'mouseup');
+        var mouseup = Observable_1.Observable.fromEvent(document, 'mouseup');
         this.subscription = mouseup.subscribe(function (ev) { return _this.onMouseup(); });
         this.timeout = setTimeout(function () {
             _this.isLongPressing = true;
@@ -39,7 +45,7 @@ var LongPressDirective = (function () {
                 event: event,
                 model: _this.pressModel
             });
-            _this.subscription.add(Observable.fromEvent(document, 'mousemove')
+            _this.subscription.add(Observable_1.Observable.fromEvent(document, 'mousemove')
                 .takeUntil(mouseup)
                 .subscribe(function (mouseEvent) { return _this.onMouseMove(mouseEvent); }));
             _this.loop(event);
@@ -90,20 +96,20 @@ var LongPressDirective = (function () {
     };
     return LongPressDirective;
 }());
-export { LongPressDirective };
 LongPressDirective.decorators = [
-    { type: Directive, args: [{ selector: '[long-press]' },] },
+    { type: core_1.Directive, args: [{ selector: '[long-press]' },] },
 ];
 /** @nocollapse */
 LongPressDirective.ctorParameters = function () { return []; };
 LongPressDirective.propDecorators = {
-    'pressModel': [{ type: Input },],
-    'duration': [{ type: Input },],
-    'longPressStart': [{ type: Output },],
-    'longPressing': [{ type: Output },],
-    'longPressEnd': [{ type: Output },],
-    'press': [{ type: HostBinding, args: ['class.press',] },],
-    'isLongPress': [{ type: HostBinding, args: ['class.longpress',] },],
-    'onMouseDown': [{ type: HostListener, args: ['mousedown', ['$event'],] },],
+    'pressModel': [{ type: core_1.Input },],
+    'duration': [{ type: core_1.Input },],
+    'longPressStart': [{ type: core_1.Output },],
+    'longPressing': [{ type: core_1.Output },],
+    'longPressEnd': [{ type: core_1.Output },],
+    'press': [{ type: core_1.HostBinding, args: ['class.press',] },],
+    'isLongPress': [{ type: core_1.HostBinding, args: ['class.longpress',] },],
+    'onMouseDown': [{ type: core_1.HostListener, args: ['mousedown', ['$event'],] },],
 };
+exports.LongPressDirective = LongPressDirective;
 //# sourceMappingURL=long-press.directive.js.map

@@ -1,6 +1,8 @@
-import { camelCase, deCamelCase } from './camel-case';
-import { id } from './id';
-import { getterForProp } from './column-prop-getters';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var camel_case_1 = require("./camel-case");
+var id_1 = require("./id");
+var column_prop_getters_1 = require("./column-prop-getters");
 /**
  * Sets the column defaults
  *
@@ -8,25 +10,25 @@ import { getterForProp } from './column-prop-getters';
  * @param {any[]} columns
  * @returns
  */
-export function setColumnDefaults(columns) {
+function setColumnDefaults(columns) {
     if (!columns)
         return;
     for (var _i = 0, columns_1 = columns; _i < columns_1.length; _i++) {
         var column = columns_1[_i];
         if (!column.$$id) {
-            column.$$id = id();
+            column.$$id = id_1.id();
         }
         // prop can be numeric; zero is valid not a missing prop
         // translate name => prop
         if (column.prop == null && column.name) {
-            column.prop = camelCase(column.name);
+            column.prop = camel_case_1.camelCase(column.name);
         }
         if (!column.$$valueGetter) {
-            column.$$valueGetter = getterForProp(column.prop);
+            column.$$valueGetter = column_prop_getters_1.getterForProp(column.prop);
         }
         // format props if no name passed
         if (column.prop != null && !column.name) {
-            column.name = deCamelCase(String(column.prop));
+            column.name = camel_case_1.deCamelCase(String(column.prop));
         }
         if (!column.hasOwnProperty('resizeable')) {
             column.resizeable = true;
@@ -45,6 +47,7 @@ export function setColumnDefaults(columns) {
         }
     }
 }
+exports.setColumnDefaults = setColumnDefaults;
 /**
  * Translates templates definitions to objects
  *
@@ -52,7 +55,7 @@ export function setColumnDefaults(columns) {
  * @param {DataTableColumnDirective[]} templates
  * @returns {any[]}
  */
-export function translateTemplates(templates) {
+function translateTemplates(templates) {
     var result = [];
     for (var _i = 0, templates_1 = templates; _i < templates_1.length; _i++) {
         var temp = templates_1[_i];
@@ -72,4 +75,5 @@ export function translateTemplates(templates) {
     }
     return result;
 }
+exports.translateTemplates = translateTemplates;
 //# sourceMappingURL=column-helper.js.map

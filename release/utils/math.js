@@ -1,9 +1,11 @@
-import { columnsByPin, columnsTotalWidth } from './column';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var column_1 = require("./column");
 /**
  * Calculates the Total Flex Grow
  * @param {array}
  */
-export function getTotalFlexGrow(columns) {
+function getTotalFlexGrow(columns) {
     var totalFlexGrow = 0;
     for (var _i = 0, columns_1 = columns; _i < columns_1.length; _i++) {
         var c = columns_1[_i];
@@ -11,20 +13,22 @@ export function getTotalFlexGrow(columns) {
     }
     return totalFlexGrow;
 }
+exports.getTotalFlexGrow = getTotalFlexGrow;
 /**
  * Adjusts the column widths.
  * Inspired by: https://github.com/facebook/fixed-data-table/blob/master/src/FixedDataTableWidthHelper.js
  * @param {array} all columns
  * @param {int} width
  */
-export function adjustColumnWidths(allColumns, expectedWidth) {
-    var columnsWidth = columnsTotalWidth(allColumns);
+function adjustColumnWidths(allColumns, expectedWidth) {
+    var columnsWidth = column_1.columnsTotalWidth(allColumns);
     var totalFlexGrow = getTotalFlexGrow(allColumns);
-    var colsByGroup = columnsByPin(allColumns);
+    var colsByGroup = column_1.columnsByPin(allColumns);
     if (columnsWidth !== expectedWidth) {
         scaleColumns(colsByGroup, expectedWidth, totalFlexGrow);
     }
 }
+exports.adjustColumnWidths = adjustColumnWidths;
 /**
  * Resizes columns based on the flexGrow property, while respecting manually set widths
  * @param {array} colsByGroup
@@ -95,7 +99,7 @@ function scaleColumns(colsByGroup, maxWidth, totalFlexGrow) {
  * @param {boolean} allowBleed
  * @param {int} defaultColWidth
  */
-export function forceFillColumnWidths(allColumns, expectedWidth, startIdx, allowBleed, defaultColWidth) {
+function forceFillColumnWidths(allColumns, expectedWidth, startIdx, allowBleed, defaultColWidth) {
     if (defaultColWidth === void 0) { defaultColWidth = 300; }
     var columnsToResize = allColumns
         .slice(startIdx + 1, allColumns.length)
@@ -143,6 +147,7 @@ export function forceFillColumnWidths(allColumns, expectedWidth, startIdx, allow
         removeProcessedColumns(columnsToResize, columnsProcessed);
     } while (remainingWidth > 0 && columnsToResize.length !== 0);
 }
+exports.forceFillColumnWidths = forceFillColumnWidths;
 /**
  * Remove the processed columns from the current active columns.
  *
