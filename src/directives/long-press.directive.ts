@@ -9,6 +9,7 @@ import 'rxjs/add/operator/takeUntil';
 @Directive({ selector: '[long-press]' })
 export class LongPressDirective implements OnDestroy {
 
+  @Input() pressEnabled: boolean = true;
   @Input() pressModel: any;
   @Input() duration: number = 500;
 
@@ -35,7 +36,7 @@ export class LongPressDirective implements OnDestroy {
   @HostListener('mousedown', [ '$event' ])
   onMouseDown(event: MouseEvent): void {
     // don't do right/middle clicks
-    if (event.which !== 1) return;
+    if(event.which !== 1 || !this.pressEnabled) return;
 
     // don't start drag if its on resize handle
     const target = (<HTMLElement>event.target);

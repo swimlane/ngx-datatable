@@ -20,7 +20,8 @@ import { Component } from '@angular/core';
         [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
-        [rowHeight]="'auto'">
+        [rowHeight]="'auto'"
+        [reorderable]="reorderable">
       </ngx-datatable>
     </div>
   `
@@ -29,6 +30,7 @@ export class BasicAutoComponent {
 
   rows = [];
   loadingIndicator: boolean = true;
+  reorderable: boolean = true;
 
   columns = [
     { prop: 'name' },

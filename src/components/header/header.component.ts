@@ -24,6 +24,7 @@ import { DataTableColumnDirective } from '../columns';
           (resize)="onColumnResized($event, column)"
           long-press
           [pressModel]="column"
+          [pressEnabled]="reorderable && column.draggable"
           (longPressStart)="onLongPressStart($event)"
           (longPressEnd)="onLongPressEnd($event)"
           draggable
