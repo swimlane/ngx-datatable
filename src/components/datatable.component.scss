@@ -140,7 +140,7 @@
         cursor: move;
       }
 
-      &.sortable {
+      .datatable-header-cell-wrapper {
         cursor: pointer;
       }
 
@@ -148,6 +148,7 @@
         line-height: 100%;
         vertical-align: middle;
         display: inline-block;
+        cursor: pointer;
       }
 
       .resize-handle{
