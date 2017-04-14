@@ -33,6 +33,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
               <li><a href="#" (click)="state='live'">Live Data</a></li>
               <li><a href="#" (click)="state='rx'">RxJS</a></li>
               <li><a href="#" (click)="state='contextmenu'">Context Menu</a></li>
+              <li><a href="#" (click)="state='css'">CSS Classes</a></li>
             </ul>
           </li>
           <li>
@@ -42,7 +43,6 @@ import { Component, ViewEncapsulation } from '@angular/core';
               <li><a href="#" (click)="state='basic-fixed'">Fixed Row Height</a></li>
               <li><a href="#" (click)="state='dynamic'">Dynamic Row Height</a></li>
               <li><a href="#" (click)="state='row-details'">Row Detail</a></li>
-              <li><a href="#" (click)="state='css'">Row Css</a></li>
             </ul>
           </li>
           <li>

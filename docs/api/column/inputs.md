@@ -48,3 +48,9 @@ applicable when the selection mode is `checkbox`.
 ### `headerCheckboxable`: `boolean`
 Indicates whether the column should show a checkbox component in the header cell.
 Only applicable when the selection mode is `checkbox`.
+
+## `headerClass`: `string|Function`
+Header CSS classes to apply to the header cell
+
+## `cellClass`: `string|Function`
+Cell classes to apply to the body cell

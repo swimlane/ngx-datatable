@@ -2,7 +2,7 @@ import {
   Component, Input, EventEmitter, Output, HostBinding
 } from '@angular/core';
 
-import { SortDirection, SortType, SelectionType } from '../../types';
+import { SortDirection, SortType, SelectionType, TableColumn } from '../../types';
 import { nextSortDir } from '../../utils';
 
 @Component({
@@ -46,7 +46,7 @@ import { nextSortDir } from '../../utils';
 export class DataTableHeaderCellComponent {
 
   @Input() sortType: SortType;
-  @Input() column: any;
+  @Input() column: TableColumn;
   @Input() sortAscendingIcon: string;
   @Input() sortDescendingIcon: string;
   @Input() allRowsSelected: boolean;
@@ -74,7 +74,24 @@ export class DataTableHeaderCellComponent {
 
     if(this.column.sortable) cls += ' sortable';
     if(this.column.resizeable) cls += ' resizeable';
-    if(this.column.cssClasses) cls += ' ' + this.column.cssClasses;
+    if(this.column.headerClass) {
+      if(typeof this.column.headerClass === 'string') {
+        cls += ' ' + this.column.headerClass;
+      } else if(typeof this.column.headerClass === 'function') {
+        const res = this.column.headerClass({ 
+          column: this.column
+        });
+
+        if(typeof res === 'string') {
+          cls += res;
+        } else if(typeof res === 'object') {
+          const keys = Object.keys(res);
+          for(const k of keys) {
+            if(res[k] === true) cls += ` ${k}`;
+          }
+        }
+      }
+    }
 
     const sortDir = this.sortDir;
     if(sortDir) {

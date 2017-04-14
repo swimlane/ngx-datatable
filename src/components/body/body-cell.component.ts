@@ -59,26 +59,31 @@ export class DataTableBodyCellComponent implements OnDestroy {
   @HostBinding('class')
   get columnCssClasses(): any {
     let cls = 'datatable-body-cell';
-    if(this.column.cssClasses) cls += ' ' + this.column.cssClasses;
+    if(this.column.cellClass) {
+      if(typeof this.column.cellClass === 'string') {
+        cls += ' ' + this.column.cellClass;
+      } else if(typeof this.column.cellClass === 'function') {
+        const res = this.column.cellClass({ 
+          row: this.row, 
+          column: this.column, 
+          value: this.value 
+        });
+
+        if(typeof res === 'string') {
+          cls += res;
+        } else if(typeof res === 'object') {
+          const keys = Object.keys(res);
+          for(const k of keys) {
+            if(res[k] === true) cls += ` ${k}`;
+          }
+        }
+      }
+    }
+    if(!this.sortDir) cls += ' sort-active';
+    if(this.isFocused) cls += ' active';
+    if(this.sortDir === SortDirection.asc) cls += ' sort-asc';
+    if(this.sortDir === SortDirection.desc) cls += ' sort-desc';
     return cls;
-  }
-
-  @HostBinding('class.active')
-  isFocused: boolean = false;
-
-  @HostBinding('class.sort-active')
-  get isSortActive(): boolean {
-    return !this.sortDir;
-  }
-
-  @HostBinding('class.sort-asc')
-  get isSortAscending(): boolean {
-    return this.sortDir === SortDirection.asc;
-  }
-
-  @HostBinding('class.sort-desc')
-  get isSortDescending(): boolean {
-    return this.sortDir === SortDirection.desc;
   }
 
   @HostBinding('style.width.px')
@@ -106,6 +111,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
   sortDir: SortDirection;
   element: any;
   _sorts: any[];
+  isFocused: boolean = false;
 
   constructor(element: ElementRef) {
     this.element = element.nativeElement;

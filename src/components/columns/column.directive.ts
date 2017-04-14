@@ -22,6 +22,8 @@ export class DataTableColumnDirective {
   @Input() maxWidth: number;
   @Input() checkboxable: boolean;
   @Input() headerCheckboxable: boolean;
+  @Input() headerClass: string | ((data: any) => string|any);
+  @Input() cellClass: string | ((data: any) => string|any);
 
   @Input()
   @ContentChild(DataTableColumnCellDirective, { read: TemplateRef }) 

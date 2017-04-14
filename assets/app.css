@@ -204,3 +204,12 @@ select {
 .age-is-ten {
   background: #ffc91f;
 }
+
+.is-gender {
+  background: blue;
+  color: white;
+}
+
+.is-female {
+  background: pink;
+}

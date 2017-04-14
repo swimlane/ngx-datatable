@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <h3>
-        Row CSS Demo
+        Row/Header/Cell CSS Class Demo
         <small>
           <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/css.component.ts" target="_blank">
             Source
@@ -21,7 +21,7 @@ import { Component } from '@angular/core';
         [rowClass]="getRowClass"
         [scrollbarV]="true">
         <ngx-datatable-column name="Name"></ngx-datatable-column>
-        <ngx-datatable-column name="Gender"></ngx-datatable-column>
+        <ngx-datatable-column name="Gender" headerClass="is-gender" [cellClass]="getCellClass"></ngx-datatable-column>
         <ngx-datatable-column name="Age"></ngx-datatable-column>
       </ngx-datatable>
     </div>
@@ -54,6 +54,12 @@ export class RowCssComponent {
   getRowClass(row) {
     return {
       'age-is-ten': (row.age % 10) === 0
+    };
+  }
+
+  getCellClass({ row, column, value }): any {
+    return {
+      'is-female': value === 'female'
     };
   }
 
