@@ -26,7 +26,7 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
         <strong>Fancy</strong>: {{column.name}} !!
       </ng-template>
 
-      <ng-template #editTmpl let-row="row" let-value="value" let-i="index">
+      <ng-template #editTmpl let-row="row" let-value="value">
         <img
           *ngIf="value === 'male'"
           width="150"
