@@ -1002,7 +1002,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
     const allSelected = this.selected.length === this.rows.length;
 
     // remove all existing either way
-    this.selected.splice(0, this.selected.length);
+    this.selected = [];
 
     // do the opposite here
     if (!allSelected) {
