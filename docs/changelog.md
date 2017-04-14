@@ -1,5 +1,11 @@
 # Changelog
 
+## 8.0.0
+- Breaking: Removed `cssClass` from columns in favor of explicit
+- Feature: Added explicit `headerClass` and `cellClass`
+- Feature: Add ability to have callback for those class getters
+- Bug: Fix checkbox select all not updating ui correctly
+
 ## 7.3.1
 - Bug: Fix resize handle drag triggering long press
 - Bug: Fix dragging trigging column sorting

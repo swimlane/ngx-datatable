@@ -161,8 +161,22 @@ export interface TableColumn {
     /**
      * CSS Classes for the cell
      *
-     * @type {string}
+     *
      * @memberOf TableColumn
      */
-    cssClasses?: string;
+    cellClass?: string | ((data: any) => string | any);
+    /**
+     * CSS classes for the header
+     *
+     *
+     * @memberOf TableColumn
+     */
+    headerClass?: string | ((data: any) => string | any);
+    /**
+     * Header checkbox enabled
+     *
+     * @type {boolean}
+     * @memberOf TableColumn
+     */
+    headerCheckboxable?: boolean;
 }

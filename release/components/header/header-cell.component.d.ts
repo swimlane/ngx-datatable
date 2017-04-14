@@ -1,8 +1,8 @@
 import { EventEmitter } from '@angular/core';
-import { SortDirection, SortType, SelectionType } from '../../types';
+import { SortDirection, SortType, SelectionType, TableColumn } from '../../types';
 export declare class DataTableHeaderCellComponent {
     sortType: SortType;
-    column: any;
+    column: TableColumn;
     sortAscendingIcon: string;
     sortDescendingIcon: string;
     allRowsSelected: boolean;

@@ -28,8 +28,27 @@ var DataTableHeaderCellComponent = (function () {
                 cls += ' sortable';
             if (this.column.resizeable)
                 cls += ' resizeable';
-            if (this.column.cssClasses)
-                cls += ' ' + this.column.cssClasses;
+            if (this.column.headerClass) {
+                if (typeof this.column.headerClass === 'string') {
+                    cls += ' ' + this.column.headerClass;
+                }
+                else if (typeof this.column.headerClass === 'function') {
+                    var res = this.column.headerClass({
+                        column: this.column
+                    });
+                    if (typeof res === 'string') {
+                        cls += res;
+                    }
+                    else if (typeof res === 'object') {
+                        var keys = Object.keys(res);
+                        for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
+                            var k = keys_1[_i];
+                            if (res[k] === true)
+                                cls += " " + k;
+                        }
+                    }
+                }
+            }
             var sortDir = this.sortDir;
             if (sortDir) {
                 cls += " sort-active sort-" + sortDir;

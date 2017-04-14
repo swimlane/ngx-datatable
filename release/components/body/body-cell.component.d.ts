@@ -10,16 +10,13 @@ export declare class DataTableBodyCellComponent implements OnDestroy {
     activate: EventEmitter<any>;
     cellTemplate: ViewContainerRef;
     readonly columnCssClasses: any;
-    isFocused: boolean;
-    readonly isSortActive: boolean;
-    readonly isSortAscending: boolean;
-    readonly isSortDescending: boolean;
     readonly width: number;
     readonly height: string | number;
     readonly value: any;
     sortDir: SortDirection;
     element: any;
     _sorts: any[];
+    isFocused: boolean;
     constructor(element: ElementRef);
     ngOnDestroy(): void;
     onFocus(): void;

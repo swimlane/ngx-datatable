@@ -45,7 +45,9 @@ var DraggableDirective = (function () {
     };
     DraggableDirective.prototype.onMousedown = function (event) {
         var _this = this;
-        if (event.target.classList.contains('draggable')) {
+        // we only want to drag the inner header text
+        var isDragElm = event.target.classList.contains('draggable');
+        if (isDragElm && (this.dragX || this.dragY)) {
             event.preventDefault();
             this.isDragging = true;
             var mouseDownPos_1 = { x: event.clientX, y: event.clientY };
@@ -72,14 +74,12 @@ var DraggableDirective = (function () {
             this.element.style.left = x + "px";
         if (this.dragY)
             this.element.style.top = y + "px";
-        if (this.dragX || this.dragY) {
-            this.element.classList.add('dragging');
-            this.dragging.emit({
-                event: event,
-                element: this.element,
-                model: this.dragModel
-            });
-        }
+        this.element.classList.add('dragging');
+        this.dragging.emit({
+            event: event,
+            element: this.element,
+            model: this.dragModel
+        });
     };
     DraggableDirective.prototype._destroySubscription = function () {
         if (this.subscription) {

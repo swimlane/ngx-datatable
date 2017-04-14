@@ -811,7 +811,7 @@ var DatatableComponent = (function () {
         // before we splice, chk if we currently have all selected
         var allSelected = this.selected.length === this.rows.length;
         // remove all existing either way
-        this.selected.splice(0, this.selected.length);
+        this.selected = [];
         // do the opposite here
         if (!allSelected) {
             (_a = this.selected).push.apply(_a, this.rows);

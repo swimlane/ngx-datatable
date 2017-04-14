@@ -30,6 +30,8 @@ DataTableColumnDirective.propDecorators = {
     'maxWidth': [{ type: core_1.Input },],
     'checkboxable': [{ type: core_1.Input },],
     'headerCheckboxable': [{ type: core_1.Input },],
+    'headerClass': [{ type: core_1.Input },],
+    'cellClass': [{ type: core_1.Input },],
     'cellTemplate': [{ type: core_1.Input }, { type: core_1.ContentChild, args: [column_cell_directive_1.DataTableColumnCellDirective, { read: core_1.TemplateRef },] },],
     'headerTemplate': [{ type: core_1.Input }, { type: core_1.ContentChild, args: [column_header_directive_1.DataTableColumnHeaderDirective, { read: core_1.TemplateRef },] },],
 };

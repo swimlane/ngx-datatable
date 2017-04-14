@@ -23,30 +23,38 @@ var DataTableBodyCellComponent = (function () {
     Object.defineProperty(DataTableBodyCellComponent.prototype, "columnCssClasses", {
         get: function () {
             var cls = 'datatable-body-cell';
-            if (this.column.cssClasses)
-                cls += ' ' + this.column.cssClasses;
+            if (this.column.cellClass) {
+                if (typeof this.column.cellClass === 'string') {
+                    cls += ' ' + this.column.cellClass;
+                }
+                else if (typeof this.column.cellClass === 'function') {
+                    var res = this.column.cellClass({
+                        row: this.row,
+                        column: this.column,
+                        value: this.value
+                    });
+                    if (typeof res === 'string') {
+                        cls += res;
+                    }
+                    else if (typeof res === 'object') {
+                        var keys = Object.keys(res);
+                        for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
+                            var k = keys_1[_i];
+                            if (res[k] === true)
+                                cls += " " + k;
+                        }
+                    }
+                }
+            }
+            if (!this.sortDir)
+                cls += ' sort-active';
+            if (this.isFocused)
+                cls += ' active';
+            if (this.sortDir === types_1.SortDirection.asc)
+                cls += ' sort-asc';
+            if (this.sortDir === types_1.SortDirection.desc)
+                cls += ' sort-desc';
             return cls;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(DataTableBodyCellComponent.prototype, "isSortActive", {
-        get: function () {
-            return !this.sortDir;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(DataTableBodyCellComponent.prototype, "isSortAscending", {
-        get: function () {
-            return this.sortDir === types_1.SortDirection.asc;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(DataTableBodyCellComponent.prototype, "isSortDescending", {
-        get: function () {
-            return this.sortDir === types_1.SortDirection.desc;
         },
         enumerable: true,
         configurable: true
@@ -179,10 +187,6 @@ DataTableBodyCellComponent.propDecorators = {
     'activate': [{ type: core_1.Output },],
     'cellTemplate': [{ type: core_1.ViewChild, args: ['cellTemplate', { read: core_1.ViewContainerRef },] },],
     'columnCssClasses': [{ type: core_1.HostBinding, args: ['class',] },],
-    'isFocused': [{ type: core_1.HostBinding, args: ['class.active',] },],
-    'isSortActive': [{ type: core_1.HostBinding, args: ['class.sort-active',] },],
-    'isSortAscending': [{ type: core_1.HostBinding, args: ['class.sort-asc',] },],
-    'isSortDescending': [{ type: core_1.HostBinding, args: ['class.sort-desc',] },],
     'width': [{ type: core_1.HostBinding, args: ['style.width.px',] },],
     'height': [{ type: core_1.HostBinding, args: ['style.height',] },],
     'onFocus': [{ type: core_1.HostListener, args: ['focus',] },],
