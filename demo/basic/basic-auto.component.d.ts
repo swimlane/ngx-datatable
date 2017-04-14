@@ -1,6 +1,7 @@
 export declare class BasicAutoComponent {
     rows: any[];
     loadingIndicator: boolean;
+    reorderable: boolean;
     columns: ({
         prop: string;
     } | {

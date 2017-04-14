@@ -2,6 +2,7 @@ import { EventEmitter, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/takeUntil';
 export declare class LongPressDirective implements OnDestroy {
+    pressEnabled: boolean;
     pressModel: any;
     duration: number;
     longPressStart: EventEmitter<any>;
