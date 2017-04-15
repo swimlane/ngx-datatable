@@ -25,9 +25,11 @@ describe('DataTableBodyRowComponent', () => {
     });
   }));
 
+  /*
   describe('fixture', () => {
     it('should have a component instance', () => {
       expect(component).toBeTruthy();
     });
   });
+  */
 });
