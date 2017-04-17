@@ -223,10 +223,11 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     if(this.rowDetail) {
-      this.listener = this.rowDetail.toggle.subscribe(({ type, value }) => {
-        if(type === 'row') this.toggleRowExpansion(value);
-        if(type === 'all') this.toggleAllRows(value);
-      });
+      this.listener = this.rowDetail.toggle
+        .subscribe(({ type, value }: { type: string, value: any }) => {
+          if(type === 'row') this.toggleRowExpansion(value);
+          if(type === 'all') this.toggleAllRows(value);
+        });
     }
   }
 

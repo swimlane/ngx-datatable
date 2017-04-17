@@ -10,7 +10,7 @@ import {
 import {By} from "@angular/platform-browser";
 
 describe('DataTableFooterComponent', () => {
-  let fixture;
+  let fixture: any;
   let component: DataTableFooterComponent;
   let element;
 

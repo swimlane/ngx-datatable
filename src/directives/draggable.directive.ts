@@ -1,5 +1,5 @@
 import {
-  Directive, ElementRef, Input, Output, EventEmitter, OnDestroy, OnChanges
+  Directive, ElementRef, Input, Output, EventEmitter, OnDestroy, OnChanges, SimpleChanges
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -33,7 +33,7 @@ export class DraggableDirective implements OnDestroy, OnChanges {
     this.element = element.nativeElement;
   }
 
-  ngOnChanges(changes): void {
+  ngOnChanges(changes: SimpleChanges): void {
     if(changes['dragEventTarget'] && changes['dragEventTarget'].currentValue && this.dragModel.dragging) {
       this.onMousedown(changes['dragEventTarget'].currentValue);
     }

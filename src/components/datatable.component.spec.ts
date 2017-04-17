@@ -26,7 +26,7 @@ describe('Datatable component', () => {
       let columns = [
         {
           prop: 'foo',
-          comparator: (propA, propB) => {
+          comparator: (propA: string, propB: string) => {
             if (propA.toLowerCase() > propB.toLowerCase()) return -1;
             if (propA.toLowerCase() < propB.toLowerCase()) return 1;
           }
