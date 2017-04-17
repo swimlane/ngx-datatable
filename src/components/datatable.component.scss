@@ -136,12 +136,12 @@
       position: relative;
       display: inline-block;
 
-      &.longpress {
-        cursor: move;
-      }
-
       .datatable-header-cell-wrapper {
         cursor: pointer;
+      }
+
+      &.longpress .datatable-header-cell-wrapper {
+        cursor: move;
       }
 
       .sort-btn {
