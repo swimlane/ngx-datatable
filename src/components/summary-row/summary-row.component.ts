@@ -27,7 +27,6 @@ import {
 })
 export class DataTableSummaryRowComponent {
     @Input() set row(val: any) {
-        console.debug('Incoming Summary Row', val);
         this._row = val;
     }
 
@@ -36,7 +35,6 @@ export class DataTableSummaryRowComponent {
     }
 
     @Input() set columns(val: any[]) {
-        console.debug('Incoming Summary Row Columns', val);
         this._columns = val;
         this.recalculateColumns(val);
     }
@@ -100,7 +98,6 @@ export class DataTableSummaryRowComponent {
     }
 
     columnTrackingFn(index: number, column: any): any {
-        console.debug('Column', column);
         return column.$$id;
     }
 
@@ -128,7 +125,6 @@ export class DataTableSummaryRowComponent {
     recalculateColumns(val: any[] = this.columns): void {
         const colsByPin = columnsByPin(val);
         this.columnsByPin = columnsByPinArr(val);
-        console.debug('Columns By Pin', this.columnsByPin);
         this.columnGroupWidths = columnGroupWidths(colsByPin, val);
     }
 
