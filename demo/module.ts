@@ -20,6 +20,7 @@ import { RxDemoComponent } from './basic/rx.component';
 import { ContextMenuDemoComponent } from './basic/contextmenu.component';
 import { RowCssComponent } from './basic/css.component';
 import { DynamicHeightComponent } from './basic/dynamic-height.component';
+import { SummaryRowComponent } from './basic/summary-row.component';
 
 // -- Paging
 import { ClientPagingComponent } from './paging/paging-client.component';
@@ -55,6 +56,7 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     AppComponent,
     BasicAutoComponent,
     BasicFixedComponent,
+    SummaryRowComponent,
     FullScreenComponent,
     InlineEditComponent,
     VirtualScrollComponent,

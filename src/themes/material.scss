@@ -52,7 +52,7 @@
   }
 
   &.cell-selection {
-    .datatable-body-cell {
+    .datatable-body-cell, .datatable-summary-row-cell {
       &:hover,
 			&:hover .datatable-row-group {
 	      background-color: #eee;
@@ -179,6 +179,23 @@
   }
 
 	/**
+	 * Summary Row Styles
+	 */
+
+	.datatable-summary-row {
+		.datatable-summary-row-cell{
+			text-align: left;
+			padding: .5rem 1.2rem;
+			vertical-align: top;
+			border-top: 0;
+
+			-webkit-transition: width 0.3s ease;
+			transition: width 0.3s ease;
+
+		}
+	}
+
+	/**
 	 * Body Styles
 	 */
 	.datatable-body {
@@ -187,8 +204,8 @@
 			padding: 10px;
 		}
 
-	  .datatable-body-row {
-	    .datatable-body-cell {
+	  .datatable-body-row, .datatable-summary-row {
+	    .datatable-body-cell, .datatable-summary-row-cell {
 	      text-align: left;
 	      padding: .5rem 1.2rem;
 	      vertical-align: top;

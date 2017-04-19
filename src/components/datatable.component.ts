@@ -67,6 +67,12 @@ import { DatatableRowDetailDirective } from './row-detail';
         (select)="onBodySelect($event)"
         (scroll)="onBodyScroll($event)">
       </datatable-body>
+      <datatable-summary-row 
+        *ngIf="summaryRow"
+        [row]="summaryRow"
+        [columns]="columns"
+        [rowHeight]="summaryRowHeight">
+      </datatable-summary-row>
       <datatable-footer
         *ngIf="footerHeight"
         [rowCount]="rowCount"
@@ -117,6 +123,29 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    */
   get rows(): any {
     return this._rows;
+  }
+
+  /**
+   * Set the summary row
+   *
+   * @param val
+   * @memberOf DatatableComponent
+   */
+  @Input() set summaryRow(val: any) {
+    console.debug('Incoming SR', val);
+    this._summaryRow = val;
+  }
+
+  /**
+   * Gets the summary row
+   *
+   * @readonly
+   * @type {*}
+   * @memberOf DatatableComponent
+   */
+  get summaryRow(): any {
+    console.log('Trying to get summary row');
+    return this._summaryRow;
   }
 
   /**
@@ -178,6 +207,14 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   @Input() rowHeight: number = 30;
+
+  /**
+   * The summary row height
+   *
+   * @type {number}
+   * @memberOf DatatableComponent
+   */
+  @Input() summaryRowHeight: number = 30;
 
   /**
    * Type of column width distribution formula.
@@ -665,6 +702,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   _count: number = 0;
 
   _rows: any[];
+  _summaryRow: any;
   _columns: TableColumn[];
   _columnTemplates: QueryList<DataTableColumnDirective>;
 
