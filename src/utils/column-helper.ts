@@ -12,47 +12,55 @@ import { getterForProp } from './column-prop-getters';
  * @returns
  */
 export function setColumnDefaults(columns: TableColumn[]) {
-  if(!columns) return;
+  if (!columns) return;
 
-  for(const column of columns) {
-    if(!column.$$id) {
-      column.$$id = id();
-    }
+  for (const column of columns) {
+    setSingleColumnDefaults(column);
+  }
+}
 
-    // prop can be numeric; zero is valid not a missing prop
-    // translate name => prop
-    if(column.prop == null && column.name) {
-      column.prop = camelCase(column.name);
-    }
+/**
+ * Set the defaults of a single column.
+ * @param column
+ */
+export function setSingleColumnDefaults(column: TableColumn) {
+  if(!column.$$id) {
+    column.$$id = id();
+  }
 
-    if (!column.$$valueGetter) {
-      column.$$valueGetter = getterForProp(column.prop);
-    }
+  // prop can be numeric; zero is valid not a missing prop
+  // translate name => prop
+  if(column.prop == null && column.name) {
+    column.prop = camelCase(column.name);
+  }
 
-    // format props if no name passed
-    if(column.prop != null && !column.name) {
-      column.name = deCamelCase(String(column.prop));
-    }
+  if (!column.$$valueGetter) {
+    column.$$valueGetter = getterForProp(column.prop);
+  }
 
-    if(!column.hasOwnProperty('resizeable')) {
-      column.resizeable = true;
-    }
+  // format props if no name passed
+  if(column.prop != null && !column.name) {
+    column.name = deCamelCase(String(column.prop));
+  }
 
-    if(!column.hasOwnProperty('sortable')) {
-      column.sortable = true;
-    }
+  if(!column.hasOwnProperty('resizeable')) {
+    column.resizeable = true;
+  }
 
-    if(!column.hasOwnProperty('draggable')) {
-      column.draggable = true;
-    }
+  if(!column.hasOwnProperty('sortable')) {
+    column.sortable = true;
+  }
 
-    if(!column.hasOwnProperty('canAutoResize')) {
-      column.canAutoResize = true;
-    }
+  if(!column.hasOwnProperty('draggable')) {
+    column.draggable = true;
+  }
 
-    if(!column.hasOwnProperty('width')) {
-      column.width = 150;
-    }
+  if(!column.hasOwnProperty('canAutoResize')) {
+    column.canAutoResize = true;
+  }
+
+  if(!column.hasOwnProperty('width')) {
+    column.width = 150;
   }
 }
 
