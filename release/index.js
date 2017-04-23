@@ -21,9 +21,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -4126,6 +4126,7 @@ var DataTableBodyComponent = (function () {
      * @memberOf DataTableBodyComponent
      */
     function DataTableBodyComponent() {
+        var _this = this;
         this.selected = [];
         this.scroll = new core_1.EventEmitter();
         this.page = new core_1.EventEmitter();
@@ -4137,6 +4138,21 @@ var DataTableBodyComponent = (function () {
         this.temp = [];
         this.offsetY = 0;
         this.indexes = {};
+        /**
+         * Get the height of the detail row.
+         *
+         * @param {*} [row]
+         * @param {*} [index]
+         * @returns {number}
+         *
+         * @memberOf DataTableBodyComponent
+         */
+        this.getDetailRowHeight = function (row, index) {
+            if (!_this.rowDetail)
+                return 0;
+            var rowHeight = _this.rowDetail.rowHeight;
+            return typeof rowHeight === 'function' ? rowHeight(row, index) : rowHeight;
+        };
         // declare fn here so we can get access to the `this` property
         this.rowTrackingFn = function (index, row) {
             if (this.trackByProp) {
@@ -4405,21 +4421,6 @@ var DataTableBodyComponent = (function () {
         return rowHeight;
     };
     /**
-     * Get the height of the detail row.
-     *
-     * @param {*} [row]
-     * @param {*} [index]
-     * @returns {number}
-     *
-     * @memberOf DataTableBodyComponent
-     */
-    DataTableBodyComponent.prototype.getDetailRowHeight = function (row, index) {
-        if (!this.rowDetail)
-            return 0;
-        var rowHeight = this.rowDetail.rowHeight;
-        return typeof rowHeight === 'function' ? rowHeight(row, index) : rowHeight;
-    };
-    /**
      * Calculates the styles for the row so that the rows can be moved in 2D space
      * during virtual scroll inside the DOM.   In the below case the Y position is
      * manipulated.   As an example, if the height of row 0 is 30 px and row 1 is
@@ -4503,7 +4504,7 @@ var DataTableBodyComponent = (function () {
         this.rowHeightsCache.clearCache();
         // Initialize the tree only if there are rows inside the tree.
         if (this.rows && this.rows.length) {
-            this.rowHeightsCache.initCache(this.rows, this.rowHeight, this.getDetailRowHeight());
+            this.rowHeightsCache.initCache(this.rows, this.rowHeight, this.getDetailRowHeight);
         }
     };
     /**
@@ -8853,11 +8854,12 @@ var RowHeightCache = (function () {
      */
     RowHeightCache.prototype.initCache = function (rows, rowHeight, detailRowHeight) {
         var isFn = typeof rowHeight === 'function';
+        var isDetailFn = typeof detailRowHeight === 'function';
         if (!isFn && isNaN(rowHeight)) {
             throw new Error("Row Height cache initialization failed. Please ensure that 'rowHeight' is a\n        valid number value: (" + rowHeight + ") when 'scrollbarV' is enabled.");
         }
         // Add this additional guard in case detailRowHeight is set to 'auto' as it wont work.
-        if (!isFn && isNaN(detailRowHeight)) {
+        if (!isDetailFn && isNaN(detailRowHeight)) {
             throw new Error("Row Height cache initialization failed. Please ensure that 'detailRowHeight' is a\n        valid number value: (" + detailRowHeight + ") when 'scrollbarV' is enabled.");
         }
         var n = rows.length;
@@ -8874,7 +8876,12 @@ var RowHeightCache = (function () {
             // Add the detail row height to the already expanded rows.
             // This is useful for the table that goes through a filter or sort.
             if (row && row.$$expanded === 1) {
-                currentRowHeight += detailRowHeight;
+                if (isDetailFn) {
+                    currentRowHeight += detailRowHeight(row, row.$$index);
+                }
+                else {
+                    currentRowHeight += detailRowHeight;
+                }
             }
             this.update(i, currentRowHeight);
         }

@@ -141,7 +141,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      *
      * @memberOf DataTableBodyComponent
      */
-    getDetailRowHeight(row?: any, index?: any): number;
+    getDetailRowHeight: (row?: any, index?: any) => number;
     /**
      * Calculates the styles for the row so that the rows can be moved in 2D space
      * during virtual scroll inside the DOM.   In the below case the Y position is
