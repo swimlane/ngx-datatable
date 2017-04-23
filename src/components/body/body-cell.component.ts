@@ -25,7 +25,7 @@ import { TableColumn } from '../../types/table-column.type';
         [title]="value"
         [innerHTML]="value">
       </span>
-      <ng-template
+      <ng-template #cellTemplate
         *ngIf="column.cellTemplate"
         [ngTemplateOutlet]="column.cellTemplate"
         [ngOutletContext]="{ value: value, row: row, column: column }">
