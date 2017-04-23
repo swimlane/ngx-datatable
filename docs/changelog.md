@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.0.1
+- Bug: Fix `noImplicitAny` error on row detail (#671)
+- Bug: Fix memory leak (#702)
+
 ## 8.0.0
 - Breaking: Removed `cssClass` from columns in favor of explicit
 - Feature: Added explicit `headerClass` and `cellClass`
