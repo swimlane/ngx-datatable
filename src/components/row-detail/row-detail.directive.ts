@@ -11,7 +11,7 @@ export class DatatableRowDetailDirective {
    * @type {number|function(row?:any,index?:any): number}
    * @memberOf DatatableComponent
    */
-  @Input() rowHeight: (number | ((row?, index?) => number)) = 0;
+  @Input() rowHeight: (number | ((row?: any, index?: number) => number)) = 0;
 
   @Input()
   @ContentChild(DatatableRowDetailTemplateDirective, { read: TemplateRef }) 
