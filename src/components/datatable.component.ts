@@ -177,7 +177,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @type {number}
    * @memberOf DatatableComponent
    */
-  @Input() rowHeight: number = 30;
+  @Input() rowHeight: ((row: any) => number) | number = 30;
 
   /**
    * Type of column width distribution formula.
@@ -487,7 +487,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    */
   @HostBinding('class.fixed-row')
   get isFixedRow(): boolean {
-    const rowHeight: number | string = this.rowHeight;
+    const rowHeight = this.rowHeight;
     return (typeof rowHeight === 'string') ?
       (<string>rowHeight) !== 'auto' : true;
   }
@@ -872,7 +872,8 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
     // This is because an expanded row is still considered to be a child of
     // the original row.  Hence calculation would use rowHeight only.
     if (this.scrollbarV) {
-      const size = Math.ceil(this.bodyHeight / this.rowHeight);
+      const height = typeof this.rowHeight === 'function' ? this.rowHeight() : this.rowHeight;
+      const size = Math.ceil(this.bodyHeight / height);
       return Math.max(size, 0);
     }
 

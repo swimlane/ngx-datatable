@@ -5,13 +5,23 @@ import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '..
 import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
 
+export interface TrackedRow {
+  $$index: number;
+  $$expanded: 1 | 0;
+}
+
+export interface ViewRow {
+  $$viewIndex: number;
+  row?: TrackedRow;
+}
+
 @Component({
   selector: 'datatable-body',
   template: `
     <datatable-selection
       #selector
       [selected]="selected"
-      [rows]="temp"
+      [rows]="temp2"
       [selectCheck]="selectCheck"
       [selectEnabled]="selectEnabled"
       [selectionType]="selectionType"
@@ -29,21 +39,21 @@ import { ScrollerComponent } from './scroller.component';
         [scrollWidth]="columnGroupWidths.total"
         (scroll)="onBodyScroll($event)">
         <datatable-row-wrapper
-          *ngFor="let row of temp; let i = index; trackBy: rowTrackingFn;"
-          [ngStyle]="getRowsStyles(row)"
+          *ngFor="let viewRow of temp; let i = index; trackBy: rowTrackingFn;"
+          [ngStyle]="getRowsStyles(viewRow.row)"
           [rowDetail]="rowDetail"
-          [detailRowHeight]="getDetailRowHeight(row,i)"
-          [row]="row"
-          [expanded]="row.$$expanded === 1"
+          [detailRowHeight]="getDetailRowHeight(viewRow.row,i)"
+          [row]="viewRow.row"
+          [expanded]="viewRow.row.$$expanded === 1"
           (rowContextmenu)="rowContextmenu.emit($event)">
           <datatable-body-row
             tabindex="-1"
-            [isSelected]="selector.getRowSelected(row)"
+            [isSelected]="selector.getRowSelected(viewRow.row)"
             [innerWidth]="innerWidth"
             [offsetX]="offsetX"
             [columns]="columns"
-            [rowHeight]="getRowHeight(row)"
-            [row]="row"
+            [rowHeight]="getRowHeight(viewRow.row)"
+            [row]="viewRow.row"
             [rowClass]="rowClass"
             (activate)="selector.onActivate($event, i)">
           </datatable-body-row>
@@ -78,6 +88,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   @Input() set pageSize(val: number) {
     this._pageSize = val;
+    this.updateViewRows();
     this.recalcLayout();
   }
 
@@ -187,12 +198,15 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   rowHeightsCache: RowHeightCache = new RowHeightCache();
   temp: any[] = [];
+  temp2: any[] = [];
   offsetY: number = 0;
   indexes: any = {};
   columnGroupWidths: any;
   rowTrackingFn: any;
   listener: any;
 
+  _viewRows: ViewRow[] = [];
+  _counter = 0;
   _rows: any[];
   _bodyHeight: any;
   _columns: any[];
@@ -209,9 +223,9 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     // declare fn here so we can get access to the `this` property
     this.rowTrackingFn = function(index: number, row: any): any {
       if(this.trackByProp) {
-        return `${row.$$index}-${this.trackByProp}`;
+        return `${row.$$viewIndex}-${this.trackByProp}`; // Todo: make sure this doesn't break by inserting ViewRow
       } else {
-        return row.$$index;
+        return row.$$viewIndex;
       }
     }.bind(this);
   }
@@ -319,13 +333,19 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     let rowIndex = first;
     let idx = 0;
     const temp: any[] = [];
+    const temp2: any[] = [];
 
     while (rowIndex < last && rowIndex < this.rowCount) {
       const row = this.rows[rowIndex];
+      const trackedRow = this._viewRows[idx];
 
       if(row) {
         row.$$index = rowIndex;
-        temp[idx] = row;
+        temp[idx] = trackedRow;
+        temp2[idx] = trackedRow.row;
+        trackedRow.row = row;
+      } else {
+        trackedRow.row = undefined;
       }
 
       idx++;
@@ -333,6 +353,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     }
 
     this.temp = temp;
+    this.temp2 = temp2;
   }
 
   /**
@@ -574,6 +595,26 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     this.refreshRowHeightCache();
     this.updateIndexes();
     this.updateRows();
+  }
+
+  /**
+   * Resizes the ViewRow with new page size
+   * 
+   * @memberOf DataTableBodyComponent
+   */
+  updateViewRows(): void {
+    const diff = this._pageSize - this._viewRows.length;
+    if(diff === 0) {
+      return;
+    } 
+    if(diff > 0) {
+      const newCounter = this._counter + diff;
+      for(let x = this._counter; x < newCounter; x++) {
+        this._viewRows.push({ $$viewIndex: x });
+      }
+    } else {
+      this._viewRows.splice(this._pageSize);
+    }
   }
 
 }
