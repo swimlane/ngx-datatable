@@ -104,7 +104,7 @@ export class DataTableHeaderCellComponent {
   @HostBinding('attr.title')
   get name(): string {
     // guaranteed to have a value by setColumnDefaults() in column-helper.ts
-    return this.column.name;
+    return this.column.headerTemplate === undefined ? this.column.name : undefined;
   }
 
   @HostBinding('style.minWidth.px')
@@ -154,7 +154,7 @@ export class DataTableHeaderCellComponent {
     });
   }
 
-  calcSortClass(sortDir): string {
+  calcSortClass(sortDir: SortDirection): string {
     if(sortDir === SortDirection.asc) {
       return `sort-btn sort-asc ${this.sortAscendingIcon}`;
     } else if(sortDir === SortDirection.desc) {

@@ -15,10 +15,10 @@ if (!document.elementsFromPoint) {
  * @param {any} y 
  * @returns 
  */
-export function elementsFromPoint(x, y) {
+export function elementsFromPoint(x: number, y: number) {
   const elements = [];
   const previousPointerEvents = [];
-  let current;
+  let current: any;  // TODO: window.getComputedStyle should be used with inferred type (Element)
   let i;
   let d;
 
