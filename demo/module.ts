@@ -20,6 +20,7 @@ import { RxDemoComponent } from './basic/rx.component';
 import { ContextMenuDemoComponent } from './basic/contextmenu.component';
 import { RowCssComponent } from './basic/css.component';
 import { DynamicHeightComponent } from './basic/dynamic-height.component';
+import { DarkThemeComponent } from './basic/dark-theme.component';
 
 // -- Paging
 import { ClientPagingComponent } from './paging/paging-client.component';
@@ -77,6 +78,7 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     ColumnForceComponent,
     ColumnPinningComponent,
     FilterBarComponent,
+    DarkThemeComponent,
     TabsDemoComponent,
     SingleSelectionComponent,
     LiveDataComponent,
