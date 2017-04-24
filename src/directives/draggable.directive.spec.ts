@@ -60,6 +60,7 @@ describe('DraggableDirective', () => {
         element.classList.add('draggable');
         mouseDown = <MouseEvent>{
           target: element,
+          // tslint:disable-next-line
           preventDefault: () => {}
         };
       });

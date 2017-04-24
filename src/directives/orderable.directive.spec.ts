@@ -1,10 +1,10 @@
-import {async, ComponentFixture, TestBed} from "@angular/core/testing";
-import {Component, ElementRef} from "@angular/core";
-import {By} from "@angular/platform-browser";
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, ElementRef } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
-import {OrderableDirective} from ".";
-import {DraggableDirective} from "./draggable.directive";
-import {id} from "../utils/id";
+import { OrderableDirective } from './orderable.directive';
+import { DraggableDirective } from './draggable.directive';
+import { id } from '../utils/id';
 
 @Component({
   selector: 'test-fixture-component',
@@ -62,24 +62,24 @@ describe('OrderableDirective', () => {
       expect(directive).toBeTruthy();
     });
 
-   describe('when a draggable is removed', () => {
+    describe('when a draggable is removed', () => {
 
       function checkAllSubscriptionsForActiveObservers() {
-        let subs = directive.draggables.map(d => {
+        const subs = directive.draggables.map(d => {
           expect(d.dragEnd.isStopped).toBe(false);
           expect(d.dragStart.isStopped).toBe(false);
 
           return {
             dragStart: d.dragStart.observers,
             dragEnd: d.dragEnd.observers
-          }
+          };
         });
 
         subs.forEach((sub) => {
           expect(sub.dragStart.length).toBe(1);
           expect(sub.dragEnd.length).toBe(1);
 
-        })
+        });
       }
 
       function newDraggable() {
@@ -110,7 +110,7 @@ describe('OrderableDirective', () => {
       });
 
       it('then dragStart and dragEnd are unsubscribed from the removed draggable', () => {
-        let unsubbed = draggables.splice(0,1)[0];
+        const unsubbed = draggables.splice(0, 1)[0];
 
         expect(unsubbed.dragStart.isStopped).toBe(false);
         expect(unsubbed.dragEnd.isStopped).toBe(false);
