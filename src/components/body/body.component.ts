@@ -88,7 +88,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   @Input() set pageSize(val: number) {
     this._pageSize = val;
-    this.updateViewRows();
     this.recalcLayout();
   }
 
@@ -299,6 +298,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
     this.updateIndexes();
     this.updatePage(event.direction);
+    this.updateViewRows();
     this.updateRows();
   }
 
@@ -342,8 +342,12 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       if(row) {
         row.$$index = rowIndex;
         temp[idx] = trackedRow;
-        temp2[idx] = trackedRow.row;
-        trackedRow.row = row;
+        temp2[idx] = row;
+        if(trackedRow === undefined) {
+          console.log('undefined');
+        } else {
+          trackedRow.row = row;
+        }
       } else {
         trackedRow.row = undefined;
       }
@@ -594,6 +598,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   recalcLayout(): void {
     this.refreshRowHeightCache();
     this.updateIndexes();
+    this.updateViewRows();
     this.updateRows();
   }
 
@@ -603,7 +608,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * @memberOf DataTableBodyComponent
    */
   updateViewRows(): void {
-    const diff = this._pageSize - this._viewRows.length;
+    const pageSize = this.indexes.last - this.indexes.first;
+    const diff = pageSize - this._viewRows.length;
     if(diff === 0) {
       return;
     } 
@@ -612,8 +618,9 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       for(let x = this._counter; x < newCounter; x++) {
         this._viewRows.push({ $$viewIndex: x });
       }
+      this._counter = newCounter;
     } else {
-      this._viewRows.splice(this._pageSize);
+      this._viewRows.splice(pageSize);
     }
   }
 
