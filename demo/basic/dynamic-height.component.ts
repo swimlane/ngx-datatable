@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'dynamic-height-demo',
@@ -13,52 +13,82 @@ import { Component } from '@angular/core';
         </small>
       </h3>
       <ngx-datatable
-        class='material'
-        [rows]='rows'
+        #myTable
+        class="material expandable gk-toplevel-container"
         [columnMode]="'force'"
-        [headerHeight]="50"
+        [headerHeight]="40"
         [footerHeight]="50"
-        [rowHeight]="getRowHeight"
-        [scrollbarV]="true"
-        (page)="onPage($event)">
-        <ngx-datatable-column name="Name"></ngx-datatable-column>
-        <ngx-datatable-column name="Gender"></ngx-datatable-column>
-        <ngx-datatable-column name="Row Height" prop="height"></ngx-datatable-column>
-      </ngx-datatable>
-    </div>
+        [rowHeight]="40"
+        [scrollbarV]="40"
+        [rows]="yearlySums">
+        <!-- Row Detail Template -->
+        <ngx-datatable-row-detail [rowHeight]="getRowDetailsHeight" (toggle)="onDetailToggle($event)">
+            <ng-template let-yearrow="row" ngx-datatable-row-detail-template>
+                
+            </ng-template>
+        </ngx-datatable-row-detail>
+        <!-- Column Templates -->
+        <ngx-datatable-column
+          [width]="60" [resizeable]="false" [sortable]="false" [draggable]="false" [canAutoResize]="false">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                <a
+                  href="#"
+                  [class.icon-right]="!row.$$expanded"
+                  [class.icon-down]="row.$$expanded"
+                  title="Expand/Collapse Row"
+                  (click)="toggleExpandRow(row)">
+                </a>
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="year">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                <strong>{{row.year}}</strong>
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="sum">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                <strong>{{row.sum}}</strong>
+            </ng-template>
+        </ngx-datatable-column>
+    </ngx-datatable>
+</div>
   `
 })
 export class DynamicHeightComponent {
 
-  rows = [];
-  expanded = {};
-  timeout: any;
+  @ViewChild('myTable') table: any;
+
+  // year, sum pairs
+  public yearlySums: Array<{year: number, sum: number, height: number}> = [];
 
   constructor() {
-    this.fetch((data) => {
-      this.rows = data;
-    });
+    this.fetch();
   }
 
-  fetch(cb) {
-    const req = new XMLHttpRequest();
-    req.open('GET', `assets/data/100k.json`);
-
-    req.onload = () => {
-      const rows = JSON.parse(req.response).splice(0, 100);
-
-      for(const row of rows) {
-        row.height = Math.floor(Math.random() * 80) + 50;
-      }
-
-      cb(rows);
-    };
-
-    req.send();
+  fetch() {
+    this.yearlySums.push({year: 2015, sum: 1750000, height: 50});
+    this.yearlySums.push({year: 2016, sum: 2750000, height: 150});
+    this.yearlySums.push({year: 2017, sum: 6750000, height: 75});
+    this.yearlySums.push({year: 2022, sum: 750000, height: 250});
   }
 
-  getRowHeight(row) {
-    return row.height;
+  public getRowDetailsHeight = (row) => {
+    if (row) {
+      // tslint:disable-next-line:no-console
+      console.log("Details height:", row.height, "index:", row.$$index);
+      return row.height;
+    }
+    console.log("NO Details height");
+    return 0;
+  }
+
+  public toggleExpandRow = (row) => {
+    console.log('Toggled Expand Row!', row);
+    this.table.rowDetail.toggleExpandRow(row);
+  }
+
+  public onDetailToggle = (event) => {
+    console.log('Detail Toggled', event);
   }
 
 }
