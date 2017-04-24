@@ -19,7 +19,9 @@ import {
   DataTableSelectionComponent,
   DataTableColumnHeaderDirective,
   DataTableColumnCellDirective,
-  DatatableRowDetailTemplateDirective
+  DatatableRowDetailTemplateDirective,
+  DataTableSummaryRowComponent,
+  DataTableSummaryRowCellComponent
 } from './components';
 
 import {
@@ -61,7 +63,9 @@ import { ScrollbarHelper } from './services';
     DataTableBodyCellComponent,
     DataTableSelectionComponent,
     DataTableColumnHeaderDirective,
-    DataTableColumnCellDirective
+    DataTableColumnCellDirective,
+    DataTableSummaryRowComponent,
+    DataTableSummaryRowCellComponent
   ],
   exports: [
     DatatableComponent,

@@ -43,6 +43,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
               <li><a href="#" (click)="state='basic-fixed'">Fixed Row Height</a></li>
               <li><a href="#" (click)="state='dynamic'">Dynamic Row Height</a></li>
               <li><a href="#" (click)="state='row-details'">Row Detail</a></li>
+              <li><a href="#" (click)="state='summary-row'">Summary Row</a></li>
             </ul>
           </li>
           <li>
@@ -108,6 +109,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
         <contextmenu-demo *ngIf="state === 'contextmenu'"></contextmenu-demo>
         <row-css-demo *ngIf="state === 'css'"></row-css-demo>
         <dynamic-height-demo *ngIf="state === 'dynamic'"></dynamic-height-demo>
+        <summary-row-demo *ngIf="state === 'summary-row'"></summary-row-demo>
 
         <!-- Paging -->
         <client-paging-demo *ngIf="state === 'client-paging'"></client-paging-demo>
