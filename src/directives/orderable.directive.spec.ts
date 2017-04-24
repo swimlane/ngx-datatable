@@ -93,7 +93,7 @@ describe('OrderableDirective', () => {
         return draggable;
       }
 
-      let draggables;
+      let draggables: Array<DraggableDirective>;
 
       beforeEach(() => {
         draggables = [

@@ -154,7 +154,7 @@ export class DataTableHeaderCellComponent {
     });
   }
 
-  calcSortClass(sortDir): string {
+  calcSortClass(sortDir: SortDirection): string {
     if(sortDir === SortDirection.asc) {
       return `sort-btn sort-asc ${this.sortAscendingIcon}`;
     } else if(sortDir === SortDirection.desc) {
