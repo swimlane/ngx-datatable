@@ -7,7 +7,7 @@ export declare class DatatableRowDetailDirective {
      * @type {number|function(row?:any,index?:any): number}
      * @memberOf DatatableComponent
      */
-    rowHeight: (number | ((row?, index?) => number));
+    rowHeight: (number | ((row?: any, index?: number) => number));
     template: TemplateRef<any>;
     /**
      * Row detail row visbility was toggled.
