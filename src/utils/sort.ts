@@ -22,7 +22,7 @@ export function nextSortDir(sortType: SortType, current: SortDirection): SortDir
       return undefined;
     }
   }
-};
+}
 
 /**
  * Adapted from fueld-ui on 6/216

@@ -71,7 +71,13 @@ the heights.
 Using a function, you can bind individual row heights such as:
 
 ```javascript
-getRowHeight(row) { return row.height; }
+getRowHeight(row) {
+  // set default
+  if(!row) return 50;
+
+  // return my height
+  return row.height; 
+}
 ```
 
 ## `rowIdentity`
