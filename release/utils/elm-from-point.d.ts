@@ -10,4 +10,4 @@
  * @param {any} y
  * @returns
  */
-export declare function elementsFromPoint(x: any, y: any): any[];
+export declare function elementsFromPoint(x: number, y: number): any[];

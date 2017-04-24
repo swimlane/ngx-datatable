@@ -171,7 +171,8 @@ var DataTableBodyComponent = (function () {
     DataTableBodyComponent.prototype.ngOnInit = function () {
         var _this = this;
         if (this.rowDetail) {
-            this.listener = this.rowDetail.toggle.subscribe(function (_a) {
+            this.listener = this.rowDetail.toggle
+                .subscribe(function (_a) {
                 var type = _a.type, value = _a.value;
                 if (type === 'row')
                     _this.toggleRowExpansion(value);

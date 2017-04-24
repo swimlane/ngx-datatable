@@ -19,7 +19,7 @@ if (!document.elementsFromPoint) {
 function elementsFromPoint(x, y) {
     var elements = [];
     var previousPointerEvents = [];
-    var current;
+    var current; // TODO: window.getComputedStyle should be used with inferred type (Element)
     var i;
     var d;
     // get all elements via elementFromPoint, and remove them from hit-testing in order

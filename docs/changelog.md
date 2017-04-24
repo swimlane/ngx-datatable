@@ -1,5 +1,8 @@
 # Changelog
 
+## 8.1.0
+- Feature: Dark Theme
+
 ## 8.0.1
 - Bug: Fix memory leak (#702)
 - Bug: Don't add column header title attribute when custom template provided (#643)

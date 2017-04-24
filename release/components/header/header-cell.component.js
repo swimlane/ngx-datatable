@@ -61,7 +61,7 @@ var DataTableHeaderCellComponent = (function () {
     Object.defineProperty(DataTableHeaderCellComponent.prototype, "name", {
         get: function () {
             // guaranteed to have a value by setColumnDefaults() in column-helper.ts
-            return this.column.name;
+            return this.column.headerTemplate === undefined ? this.column.name : undefined;
         },
         enumerable: true,
         configurable: true
