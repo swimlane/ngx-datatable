@@ -30,4 +30,4 @@ export declare function shallowValueGetter(obj: object, fieldName: string): any;
  * @param {object} obj
  * @param {string} path
  */
-export declare function deepValueGetter(obj: object, path: string): object | "";
+export declare function deepValueGetter(obj: object, path: string): any;

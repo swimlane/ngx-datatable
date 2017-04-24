@@ -98,10 +98,10 @@
     .ngx-datatable .datatable-header .datatable-header-cell {
       position: relative;
       display: inline-block; }
-      .ngx-datatable .datatable-header .datatable-header-cell.longpress {
-        cursor: move; }
       .ngx-datatable .datatable-header .datatable-header-cell .datatable-header-cell-wrapper {
         cursor: pointer; }
+      .ngx-datatable .datatable-header .datatable-header-cell.longpress .datatable-header-cell-wrapper {
+        cursor: move; }
       .ngx-datatable .datatable-header .datatable-header-cell .sort-btn {
         line-height: 100%;
         vertical-align: middle;
