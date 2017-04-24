@@ -36,13 +36,13 @@ export class RowHeightCache {
 
     if (!isFn && isNaN(rowHeight)) {
       throw new Error(`Row Height cache initialization failed. Please ensure that 'rowHeight' is a
-        valid number value: (${rowHeight}) when 'scrollbarV' is enabled.`);
+        valid number or function value: (${rowHeight}) when 'scrollbarV' is enabled.`);
     }
 
     // Add this additional guard in case detailRowHeight is set to 'auto' as it wont work.
     if (!isDetailFn && isNaN(detailRowHeight)) {
       throw new Error(`Row Height cache initialization failed. Please ensure that 'detailRowHeight' is a
-        valid number value: (${detailRowHeight}) when 'scrollbarV' is enabled.`);
+        valid number or function value: (${detailRowHeight}) when 'scrollbarV' is enabled.`);
     }
 
     const n = rows.length;
