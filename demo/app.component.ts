@@ -2,10 +2,13 @@ import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app',
-  styleUrls: ['../src/themes/material.scss'],
+  styleUrls: [
+    '../src/themes/material.scss',
+    '../src/themes/dark.scss'
+  ],
   encapsulation: ViewEncapsulation.None,
   template: `
-    <div>
+    <div [class.dark]="state === 'dark'">
       <nav>
         <h3>ngx-datatable <small>({{version}})</small></h3>
         <ul class="main-ul">
@@ -34,6 +37,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
               <li><a href="#" (click)="state='rx'">RxJS</a></li>
               <li><a href="#" (click)="state='contextmenu'">Context Menu</a></li>
               <li><a href="#" (click)="state='css'">CSS Classes</a></li>
+              <li><a href="#" (click)="state='dark'">Dark theme</a></li>
             </ul>
           </li>
           <li>
@@ -108,6 +112,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
         <contextmenu-demo *ngIf="state === 'contextmenu'"></contextmenu-demo>
         <row-css-demo *ngIf="state === 'css'"></row-css-demo>
         <dynamic-height-demo *ngIf="state === 'dynamic'"></dynamic-height-demo>
+        <basic-dark-theme-demo *ngIf="state === 'dark'"></basic-dark-theme-demo>
 
         <!-- Paging -->
         <client-paging-demo *ngIf="state === 'client-paging'"></client-paging-demo>
