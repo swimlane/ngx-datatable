@@ -4,6 +4,7 @@ import { ColumnMode, SortType, SelectionType, TableColumn } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
+import { DatatableFooterDirective } from './footer';
 export declare class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
     private scrollbarHelper;
     /**
@@ -400,6 +401,13 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      * @memberOf DatatableComponent
      */
     rowDetail: DatatableRowDetailDirective;
+    /**
+     * Footer template gathered from the ContentChild
+     *
+     * @type {DatatableFooterDirective}
+     * @memberOf DatatableComponent
+     */
+    footer: DatatableFooterDirective;
     /**
      * Reference to the body component for manually
      * invoking functions on the body.

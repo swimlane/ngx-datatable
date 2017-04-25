@@ -144,7 +144,8 @@
   .ngx-datatable .datatable-footer {
     display: block;
     width: 100%; }
-    .ngx-datatable .datatable-footer > div {
+    .ngx-datatable .datatable-footer .datatable-pager,
+    .ngx-datatable .datatable-footer .page-count {
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;

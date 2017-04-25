@@ -1,4 +1,4 @@
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, TemplateRef } from '@angular/core';
 export declare class DataTableFooterComponent {
     footerHeight: number;
     rowCount: number;
@@ -9,6 +9,7 @@ export declare class DataTableFooterComponent {
     pagerPreviousIcon: string;
     pagerNextIcon: string;
     totalMessage: string;
+    footerTemplate: TemplateRef<any>;
     selectedCount: number;
     selectedMessage: string | boolean;
     page: EventEmitter<any>;
