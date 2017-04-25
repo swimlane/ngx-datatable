@@ -228,7 +228,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @deprecated This has been replaced with serverPaging.  The serverPaging config flag calculates indexes differently
    *             so that pagination can be handled by the server.
    */
-  @Input() externalPaging: boolean = this.serverPaging;
+  @Input() externalPaging: boolean = false;
 
   /**
    * If the table should use external sorting or
@@ -919,7 +919,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   calcRowCount(val: any[] = this.rows): number {
-    if (!this.externalPaging) {
+    if (!this.externalPaging && !this.serverPaging) {
       if (!val) return 0;
       return val.length;
     }
