@@ -4,6 +4,7 @@ import { Component, Output, EventEmitter, ChangeDetectionStrategy, Input, Templa
   selector: 'datatable-footer',
   template: `
     <div
+      class="datatable-footer-inner"
       [ngClass]="{'selected-count': selectedMessage}"
       [style.height.px]="footerHeight">
       <ng-template
@@ -23,8 +24,7 @@ import { Component, Output, EventEmitter, ChangeDetectionStrategy, Input, Templa
         </span>
         {{rowCount.toLocaleString()}} {{totalMessage}}
       </div>
-      <datatable-pager
-        *ngIf="!footerTemplate"
+      <datatable-pager *ngIf="!footerTemplate"
         [pagerLeftArrowIcon]="pagerLeftArrowIcon"
         [pagerRightArrowIcon]="pagerRightArrowIcon"
         [pagerPreviousIcon]="pagerPreviousIcon"
