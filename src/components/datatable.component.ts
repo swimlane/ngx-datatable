@@ -14,6 +14,7 @@ import { ColumnMode, SortType, SelectionType, TableColumn } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
+import { DatatableFooterDirective } from './footer';
 
 @Component({
   selector: 'ngx-datatable',
@@ -73,6 +74,7 @@ import { DatatableRowDetailDirective } from './row-detail';
         [pageSize]="pageSize"
         [offset]="offset"
         [footerHeight]="footerHeight"
+        [footerTemplate]="footer"
         [totalMessage]="messages.totalMessage"
         [pagerLeftArrowIcon]="cssClasses.pagerLeftArrow"
         [pagerRightArrowIcon]="cssClasses.pagerRightArrow"
@@ -629,6 +631,15 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    */
   @ContentChild(DatatableRowDetailDirective)
   rowDetail: DatatableRowDetailDirective;
+
+  /**
+   * Footer template gathered from the ContentChild
+   * 
+   * @type {DatatableFooterDirective}
+   * @memberOf DatatableComponent
+   */
+  @ContentChild(DatatableFooterDirective)
+  footer: DatatableFooterDirective;
 
   /**
    * Reference to the body component for manually

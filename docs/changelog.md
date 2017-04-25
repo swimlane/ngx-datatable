@@ -1,5 +1,8 @@
 # Changelog
 
+## 8.2.0
+- Feature: Footer Templates
+
 ## 8.1.0
 - Feature: Dark Theme
 

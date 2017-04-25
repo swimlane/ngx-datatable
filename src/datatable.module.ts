@@ -19,7 +19,9 @@ import {
   DataTableSelectionComponent,
   DataTableColumnHeaderDirective,
   DataTableColumnCellDirective,
-  DatatableRowDetailTemplateDirective
+  DatatableRowDetailTemplateDirective,
+  DataTableFooterTemplateDirective,
+  DatatableFooterDirective
 } from './components';
 
 import {
@@ -40,6 +42,7 @@ import { ScrollbarHelper } from './services';
     ScrollbarHelper
   ],
   declarations: [
+    DataTableFooterTemplateDirective,
     VisibilityDirective,
     DraggableDirective,
     ResizeableDirective,
@@ -61,7 +64,8 @@ import { ScrollbarHelper } from './services';
     DataTableBodyCellComponent,
     DataTableSelectionComponent,
     DataTableColumnHeaderDirective,
-    DataTableColumnCellDirective
+    DataTableColumnCellDirective,
+    DatatableFooterDirective
   ],
   exports: [
     DatatableComponent,
@@ -69,7 +73,9 @@ import { ScrollbarHelper } from './services';
     DatatableRowDetailTemplateDirective,
     DataTableColumnDirective,
     DataTableColumnHeaderDirective,
-    DataTableColumnCellDirective
+    DataTableColumnCellDirective,
+    DataTableFooterTemplateDirective,
+    DatatableFooterDirective
   ]
 })
 export class NgxDatatableModule { }

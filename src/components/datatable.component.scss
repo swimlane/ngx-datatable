@@ -223,7 +223,8 @@
     display: block;
     width: 100%;
 
-    > div {
+    .datatable-pager,
+    .page-count {
       display: flex;
       align-items: center;
       width: 100%;

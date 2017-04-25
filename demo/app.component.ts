@@ -38,6 +38,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
               <li><a href="#" (click)="state='contextmenu'">Context Menu</a></li>
               <li><a href="#" (click)="state='css'">CSS Classes</a></li>
               <li><a href="#" (click)="state='dark'">Dark theme</a></li>
+              <li><a href="#" (click)="state='footer'">Footer Template</a></li>
             </ul>
           </li>
           <li>
@@ -113,6 +114,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
         <row-css-demo *ngIf="state === 'css'"></row-css-demo>
         <dynamic-height-demo *ngIf="state === 'dynamic'"></dynamic-height-demo>
         <basic-dark-theme-demo *ngIf="state === 'dark'"></basic-dark-theme-demo>
+        <footer-demo *ngIf="state === 'footer'"></footer-demo>
 
         <!-- Paging -->
         <client-paging-demo *ngIf="state === 'client-paging'"></client-paging-demo>
