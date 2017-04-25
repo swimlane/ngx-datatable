@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"8.1.0" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"8.2.0" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -149,7 +149,8 @@
   .ngx-datatable .datatable-footer {
     display: block;
     width: 100%; }
-    .ngx-datatable .datatable-footer > div {
+    .ngx-datatable .datatable-footer .datatable-pager,
+    .ngx-datatable .datatable-footer .page-count {
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;

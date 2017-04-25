@@ -150,7 +150,8 @@
   .ngx-datatable .datatable-footer {
     display: block;
     width: 100%; }
-    .ngx-datatable .datatable-footer > div {
+    .ngx-datatable .datatable-footer .datatable-pager,
+    .ngx-datatable .datatable-footer .page-count {
       display: flex;
       align-items: center;
       width: 100%; }
