@@ -48,7 +48,7 @@ describe('DataTableBodyComponent', () => {
   describe('Paging', () => {
 
     it('should have correct indexes for normal paging with rows > pageSize', () => {
-      component.externalPaging = false;
+      component.serverPaging = false;
       component.rows = [ {num: 1}, {num: 2}, {num: 3}, {num: 4}, {num: 5}, {num: 6}, {num: 7}, {num: 8}, {num: 9}, {num: 10} ];
       component.pageSize = 10;
       component.offset = 1;
@@ -59,7 +59,7 @@ describe('DataTableBodyComponent', () => {
     });
 
     it('should have correct indexes for normal paging with rows < pageSize', () => {
-      component.externalPaging = false;
+      component.serverPaging = false;
       component.rows = [ {num: 1}, {num: 2}, {num: 3}, {num: 4} ];
       component.pageSize = 5;
       component.offset = 1;
@@ -70,7 +70,7 @@ describe('DataTableBodyComponent', () => {
     });
 
     it('should have correct indexes for external paging with rows > pageSize', () => {
-      component.externalPaging = true;
+      component.serverPaging= true;
       component.rows = [ {num: 1}, {num: 2}, {num: 3}, {num: 4}, {num: 5}, {num: 6}, {num: 7}, {num: 8}, {num: 9}, {num: 10} ];
       component.pageSize = 10;
       component.offset = 1;
@@ -81,7 +81,7 @@ describe('DataTableBodyComponent', () => {
     });
 
     it('should have correct indexes for external paging with rows < pageSize', () => {
-      component.externalPaging = true;
+      component.serverPaging = true;
       component.rows = [ {num: 1}, {num: 2}, {num: 3}, {num: 4} ];
       component.pageSize = 5;
       component.offset = 1;

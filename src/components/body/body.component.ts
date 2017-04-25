@@ -65,7 +65,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() scrollbarV: boolean;
   @Input() scrollbarH: boolean;
   @Input() loadingIndicator: boolean;
-  @Input() externalPaging: boolean;
+  @Input() serverPaging: boolean;
   @Input() rowHeight: number;
   @Input() offsetX: number;
   @Input() emptyMessage: string;
@@ -460,7 +460,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     } else {
       // The server is handling paging and will pass an array that begins with the
       // element at a specified offset.  first should always be 0 with external paging.
-      if (!this.externalPaging) {
+      if (!this.serverPaging) {
         first = Math.max(this.offset * this.pageSize, 0);
       }
       last = Math.min((first + this.pageSize), this.rowCount);
