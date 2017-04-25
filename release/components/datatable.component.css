@@ -150,8 +150,7 @@
   .ngx-datatable .datatable-footer {
     display: block;
     width: 100%; }
-    .ngx-datatable .datatable-footer .datatable-pager,
-    .ngx-datatable .datatable-footer .page-count {
+    .ngx-datatable .datatable-footer .datatable-footer-inner {
       display: flex;
       align-items: center;
       width: 100%; }
@@ -160,10 +159,8 @@
     .ngx-datatable .datatable-footer .selected-count .datatable-pager {
       flex: 1 1 60%; }
     .ngx-datatable .datatable-footer .page-count {
-      display: inline-block;
       flex: 1 1 20%; }
     .ngx-datatable .datatable-footer .datatable-pager {
-      display: inline-block;
       flex: 1 1 80%;
       text-align: right; }
       .ngx-datatable .datatable-footer .datatable-pager .pager,

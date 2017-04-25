@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"8.2.0" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"8.2.1" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -149,8 +149,7 @@
   .ngx-datatable .datatable-footer {
     display: block;
     width: 100%; }
-    .ngx-datatable .datatable-footer .datatable-pager,
-    .ngx-datatable .datatable-footer .page-count {
+    .ngx-datatable .datatable-footer .datatable-footer-inner {
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
@@ -167,12 +166,10 @@
           -ms-flex: 1 1 60%;
               flex: 1 1 60%; }
     .ngx-datatable .datatable-footer .page-count {
-      display: inline-block;
       -webkit-box-flex: 1;
           -ms-flex: 1 1 20%;
               flex: 1 1 20%; }
     .ngx-datatable .datatable-footer .datatable-pager {
-      display: inline-block;
       -webkit-box-flex: 1;
           -ms-flex: 1 1 80%;
               flex: 1 1 80%;

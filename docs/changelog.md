@@ -1,5 +1,8 @@
 # Changelog
 
+## 8.2.1
+- Bug: Fix footer styles
+
 ## 8.2.0
 - Feature: Footer Templates
 
