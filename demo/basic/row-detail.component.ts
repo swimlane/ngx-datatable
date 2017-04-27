@@ -58,7 +58,7 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
             <strong>{{row.$$index}}</strong>
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Exapanded" width="80">
+        <ngx-datatable-column name="Expanded" width="80">
           <ng-template let-row="row" ngx-datatable-cell-template>
             <strong>{{row.$$expanded === 1}}</strong>
           </ng-template>
