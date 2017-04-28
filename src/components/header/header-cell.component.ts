@@ -33,7 +33,9 @@ import { nextSortDir } from '../../utils';
         [ngOutletContext]="{ 
           column: column, 
           sortDir: sortDir,
-          sortFn: sortFn
+          sortFn: sortFn,
+          allRowsSelected: allRowsSelected,
+          selectFn: selectFn
         }">
       </ng-template>
       <span
@@ -132,6 +134,7 @@ export class DataTableHeaderCellComponent {
   sortClass: string;
   sortDir: SortDirection;
   _sorts: any[];
+  selectFn = this.select.emit.bind(this.select);
 
   calcSortDir(sorts: any[]): any {
     if(sorts && this.column) {

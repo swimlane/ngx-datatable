@@ -28,7 +28,14 @@ import { TableColumn } from '../../types/table-column.type';
       <ng-template #cellTemplate
         *ngIf="column.cellTemplate"
         [ngTemplateOutlet]="column.cellTemplate"
-        [ngOutletContext]="{ value: value, row: row, column: column }">
+        [ngOutletContext]="{
+          value: value,
+          row: row,
+          column: column,
+          isSelected: isSelected,
+          onCheckboxChangeFn: onCheckboxChangeFn,
+          activateFn: activateFn
+        }">
       </ng-template>
     </div>
   `,
@@ -112,6 +119,8 @@ export class DataTableBodyCellComponent implements OnDestroy {
   element: any;
   _sorts: any[];
   isFocused: boolean = false;
+  onCheckboxChangeFn = this.onCheckboxChange.bind(this);
+  activateFn = this.activate.emit.bind(this.activate);
 
   constructor(element: ElementRef) {
     this.element = element.nativeElement;

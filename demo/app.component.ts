@@ -75,6 +75,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
               <li><a href="#" (click)="state='multi-click-selection'">Multi Click Row</a></li>
               <li><a href="#" (click)="state='multidisable-selection'">Disable Callback</a></li>
               <li><a href="#" (click)="state='chkbox-selection'">Checkbox</a></li>
+              <li><a href="#" (click)="state='chkbox-selection-template'">Custom Checkbox</a></li>
             </ul>
           </li>
           <li>
@@ -132,6 +133,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
         <multi-selection-demo *ngIf="state === 'multi-selection'"></multi-selection-demo>
         <multidisable-selection-demo *ngIf="state === 'multidisable-selection'"></multidisable-selection-demo>
         <chkbox-selection-demo *ngIf="state === 'chkbox-selection'"></chkbox-selection-demo>
+        <chkbox-selection-template-demo *ngIf="state === 'chkbox-selection-template'"></chkbox-selection-template-demo>
         <multi-click-selection-demo *ngIf="state === 'multi-click-selection'"></multi-click-selection-demo>
 
         <!-- Templates -->

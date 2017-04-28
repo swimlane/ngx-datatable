@@ -44,6 +44,7 @@ import { SingleSelectionComponent } from './selection/selection-single.component
 import { MultiDisableSelectionComponent } from './selection/selection-disabled.component';
 import { CheckboxSelectionComponent } from './selection/selection-chkbox.component';
 import { MultiClickSelectionComponent } from './selection/selection-multi-click.component';
+import { CustomCheckboxSelectionComponent } from './selection/selection-chkbox-template.component';
 
 // -- Columns
 import { ColumnToggleComponent } from './columns/column-toggle.component';
@@ -87,6 +88,7 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     RxDemoComponent,
     ContextMenuDemoComponent,
     CheckboxSelectionComponent,
+    CustomCheckboxSelectionComponent,
     MultiClickSelectionComponent,
     RowCssComponent,
     DynamicHeightComponent,
