@@ -14,7 +14,7 @@ import { nextSortDir } from '../../utils';
         class="datatable-checkbox">
         <input 
           type="checkbox"
-          [attr.checked]="allRowsSelected"
+          [checked]="allRowsSelected"
           (change)="select.emit(!allRowsSelected)" 
         />
       </label>
