@@ -46,7 +46,7 @@ import { DatatableFooterDirective } from './footer';
         [scrollbarV]="scrollbarV"
         [scrollbarH]="scrollbarH"
         [loadingIndicator]="loadingIndicator"
-        [serverPaging]="serverPaging"
+        [externalPaging]="externalPaging"
         [rowHeight]="rowHeight"
         [rowCount]="rowCount"
         [offset]="offset"
@@ -209,24 +209,12 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    */
   @Input() footerHeight: number = 0;
 
-
   /**
    * If the table should use external paging
    * otherwise its assumed that all data is preloaded.
    *
    * @type {boolean}
    * @memberOf DatatableComponent
-   */
-  @Input() serverPaging: boolean = false;
-
-  /**
-   * If the table should use external paging
-   * otherwise its assumed that all data is preloaded.
-   *
-   * @type {boolean}
-   * @memberOf DatatableComponent
-   * @deprecated This has been replaced with serverPaging.  The serverPaging config flag calculates indexes differently
-   *             so that pagination can be handled by the server.
    */
   @Input() externalPaging: boolean = false;
 
@@ -919,7 +907,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   calcRowCount(val: any[] = this.rows): number {
-    if (!this.externalPaging && !this.serverPaging) {
+    if (!this.externalPaging) {
       if (!val) return 0;
       return val.length;
     }
