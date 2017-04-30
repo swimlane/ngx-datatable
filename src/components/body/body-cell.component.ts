@@ -6,6 +6,7 @@ import {
 import { Keys } from '../../utils';
 import { SortDirection } from '../../types';
 import { TableColumn } from '../../types/table-column.type';
+import { setSingleColumnDefaults } from '../../utils/column-helper';
 
 @Component({
   selector: 'datatable-body-cell',
@@ -39,7 +40,17 @@ import { TableColumn } from '../../types/table-column.type';
 export class DataTableBodyCellComponent implements OnDestroy {
 
   @Input() row: any;
-  @Input() column: TableColumn;
+
+  @Input() set column(column: TableColumn) {
+    this._column = column;
+    // check both $$id and $$valueGetter in case users try to manage $$id values
+    if (column && (column.$$id === undefined || column.$$valueGetter === undefined)) {
+      // setColumnDefaults was not called on this column due to how this component was constructed
+      setSingleColumnDefaults(column);
+    }
+  }
+  get column(): TableColumn { return this._column; }
+
   @Input() rowHeight: number;
   @Input() isSelected: boolean;
 
@@ -110,8 +121,9 @@ export class DataTableBodyCellComponent implements OnDestroy {
 
   sortDir: SortDirection;
   element: any;
-  _sorts: any[];
   isFocused: boolean = false;
+  private _column: TableColumn;
+  private _sorts: any[];
 
   constructor(element: ElementRef) {
     this.element = element.nativeElement;
