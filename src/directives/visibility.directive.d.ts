@@ -5,7 +5,7 @@ import { EventEmitter, ElementRef, NgZone, OnInit, OnDestroy } from '@angular/co
  * Usage:
  *
  * 		<div
- * 			visibility-observer
+ * 			visibilityObserver
  * 			(visible)="onVisible($event)">
  * 		</div>
  *

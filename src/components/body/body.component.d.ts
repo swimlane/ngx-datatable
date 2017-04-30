@@ -6,6 +6,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     scrollbarV: boolean;
     scrollbarH: boolean;
     loadingIndicator: boolean;
+    externalPaging: boolean;
     rowHeight: number;
     offsetX: number;
     emptyMessage: string;
