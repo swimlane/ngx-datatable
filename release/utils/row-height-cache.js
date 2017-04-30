@@ -31,7 +31,8 @@ var RowHeightCache = (function () {
      * @param rowHeight The row height.
      * @param detailRowHeight The detail row height.
      */
-    RowHeightCache.prototype.initCache = function (rows, rowHeight, detailRowHeight) {
+    RowHeightCache.prototype.initCache = function (details) {
+        var rows = details.rows, rowHeight = details.rowHeight, detailRowHeight = details.detailRowHeight, externalVirtual = details.externalVirtual, rowCount = details.rowCount;
         var isFn = typeof rowHeight === 'function';
         var isDetailFn = typeof detailRowHeight === 'function';
         if (!isFn && isNaN(rowHeight)) {
@@ -41,7 +42,7 @@ var RowHeightCache = (function () {
         if (!isDetailFn && isNaN(detailRowHeight)) {
             throw new Error("Row Height cache initialization failed. Please ensure that 'detailRowHeight' is a\n        valid number or function value: (" + detailRowHeight + ") when 'scrollbarV' is enabled.");
         }
-        var n = rows.length;
+        var n = externalVirtual ? rowCount : rows.length;
         this.treeArray = new Array(n);
         for (var i = 0; i < n; ++i) {
             this.treeArray[i] = 0;

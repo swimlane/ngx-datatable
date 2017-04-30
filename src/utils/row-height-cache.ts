@@ -30,7 +30,8 @@ export class RowHeightCache {
    * @param rowHeight The row height.
    * @param detailRowHeight The detail row height.
    */
-  initCache({ rows, rowHeight, detailRowHeight, externalVirtual, rowCount }): void {
+  initCache(details: any): void {
+    const { rows, rowHeight, detailRowHeight, externalVirtual, rowCount } = details;
     const isFn = typeof rowHeight === 'function';
     const isDetailFn = typeof detailRowHeight === 'function';
 
