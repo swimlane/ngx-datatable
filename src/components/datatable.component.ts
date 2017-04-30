@@ -20,7 +20,7 @@ import { DatatableFooterDirective } from './footer';
   selector: 'ngx-datatable',
   template: `
     <div
-      visibility-observer
+      visibilityObserver
       (visible)="recalculate()">
       <datatable-header
         *ngIf="headerHeight"

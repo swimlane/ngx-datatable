@@ -13,7 +13,7 @@ import { VisibilityDirective } from '.';
     }
   `],
   template: `
-    <div visibility-observer></div>
+    <div visibilityObserver></div>
   `
 })
 class TestFixtureComponent {
