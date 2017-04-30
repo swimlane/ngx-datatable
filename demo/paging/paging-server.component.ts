@@ -1,7 +1,14 @@
 import { Component } from '@angular/core';
+import {MockServerResultsService} from "./mock-server-results-service";
+import {PagedData} from "./model/paged-data";
+import {CorporateEmployee} from "./model/corporate-employee";
+import {Page} from "./model/page";
 
 @Component({
   selector: 'server-paging-demo',
+  providers: [
+      MockServerResultsService
+  ],
   template: `
     <div>
       <h3>
@@ -21,56 +28,38 @@ import { Component } from '@angular/core';
         [footerHeight]="50"
         [rowHeight]="'auto'"
         [externalPaging]="true"
-        [count]="count"
-        [offset]="offset"
-        [limit]="limit"
-        (page)='onPage($event)'>
+        [count]="page.totalElements"
+        [offset]="page.pageNumber"
+        [limit]="page.size"
+        (page)='setPage($event)'>
       </ngx-datatable>
     </div>
   `
 })
 export class ServerPagingComponent {
 
-  rows = [];
-  count: number = 0;
-  offset: number = 0;
-  limit: number = 10;
+  page = new Page();
+  rows = new Array<CorporateEmployee>();
+
+  constructor(private serverResultsService: MockServerResultsService) {
+    this.page.pageNumber = 0;
+    this.page.size = 20;
+  }
 
   ngOnInit() {
-    this.page(this.offset, this.limit);
+    this.setPage({ offset: 0 });
   }
 
-  page(offset, limit) {
-    this.fetch((results) => {
-      this.count = results.length;
-
-      const start = offset * limit;
-      const end = start + limit;
-      const rows = [...this.rows];
-
-      for (let i = start; i < end; i++) {
-        rows[i] = results[i];
-      }
-
-      this.rows = rows;
-      console.log('Page Results', start, end, rows);
+  /**
+   * Populate the table with new data based on the page number
+   * @param page The page to select
+   */
+  setPage(pageInfo){
+    this.page.pageNumber = pageInfo.offset;
+    this.serverResultsService.getResults(this.page).subscribe(pagedData => {
+      this.page = pagedData.page;
+      this.rows = pagedData.data;
     });
-  }
-
-  fetch(cb) {
-    const req = new XMLHttpRequest();
-    req.open('GET', `assets/data/company.json`);
-
-    req.onload = () => {
-      cb(JSON.parse(req.response));
-    };
-
-    req.send();
-  }
-
-  onPage(event) {
-    console.log('Page Event', event);
-    this.page(event.offset, event.limit);
   }
 
 }

@@ -46,6 +46,7 @@ import { DatatableFooterDirective } from './footer';
         [scrollbarV]="scrollbarV"
         [scrollbarH]="scrollbarH"
         [loadingIndicator]="loadingIndicator"
+        [externalPaging]="externalPaging"
         [rowHeight]="rowHeight"
         [rowCount]="rowCount"
         [offset]="offset"
