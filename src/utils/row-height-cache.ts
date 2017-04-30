@@ -30,7 +30,7 @@ export class RowHeightCache {
    * @param rowHeight The row height.
    * @param detailRowHeight The detail row height.
    */
-  initCache(rows: any[], rowHeight: any, detailRowHeight: any): void {
+  initCache({ rows, rowHeight, detailRowHeight, externalVirtual, rowCount }): void {
     const isFn = typeof rowHeight === 'function';
     const isDetailFn = typeof detailRowHeight === 'function';
 
@@ -45,7 +45,7 @@ export class RowHeightCache {
         valid number or function value: (${detailRowHeight}) when 'scrollbarV' is enabled.`);
     }
 
-    const n = rows.length;
+    const n = externalVirtual ? rowCount : rows.length;
     this.treeArray = new Array(n);
 
     for(let i = 0; i < n; ++i) {

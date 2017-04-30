@@ -487,8 +487,13 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
     // Initialize the tree only if there are rows inside the tree.
     if (this.rows && this.rows.length) {
-      this.rowHeightsCache.initCache(
-        this.rows, this.rowHeight, this.getDetailRowHeight);
+      this.rowHeightsCache.initCache({
+        rows: this.rows, 
+        rowHeight: this.rowHeight, 
+        detailRowHeight: this.getDetailRowHeight,
+        externalVirtual: this.scrollbarV && this.externalPaging,
+        rowCount: this.rowCount
+      });
     }
   }
 

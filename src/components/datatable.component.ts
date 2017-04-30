@@ -717,7 +717,19 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
     // this has to be done to prevent the change detection
     // tree from freaking out because we are readjusting
-    setTimeout(() => this.recalculate());
+    setTimeout(() => {
+      this.recalculate();
+
+      // emit page for virtual server-side kickoff
+      if(this.externalPaging && this.scrollbarV) {
+        this.page.emit({
+          count: this.count,
+          pageSize: this.pageSize,
+          limit: this.limit,
+          offset: 0
+        });
+      }
+    });
   }
 
   /**
@@ -771,9 +783,10 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    *
    * @memberOf DatatableComponent
    */
-  recalculateColumns(columns: any[] = this.columns,
-                     forceIdx: number = -1,
-                     allowBleed: boolean = this.scrollbarH): any[] {
+  recalculateColumns(
+    columns: any[] = this.columns,
+    forceIdx: number = -1,
+    allowBleed: boolean = this.scrollbarH): any[] {
 
     if (!columns) return;
 
