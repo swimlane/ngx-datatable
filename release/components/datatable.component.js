@@ -145,12 +145,12 @@ var DatatableComponent = (function () {
          * @memberOf DatatableComponent
          */
         this.cssClasses = {
-            sortAscending: 'icon-up',
-            sortDescending: 'icon-down',
-            pagerLeftArrow: 'icon-left',
-            pagerRightArrow: 'icon-right',
-            pagerPrevious: 'icon-prev',
-            pagerNext: 'icon-skip'
+            sortAscending: 'datatable-icon-up',
+            sortDescending: 'datatable-icon-down',
+            pagerLeftArrow: 'datatable-icon-left',
+            pagerRightArrow: 'datatable-icon-right',
+            pagerPrevious: 'datatable-icon-prev',
+            pagerNext: 'datatable-icon-skip'
         };
         /**
          * Message overrides for localization
