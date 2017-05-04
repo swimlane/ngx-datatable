@@ -1,5 +1,5 @@
-// maybe rename this file to prop-getters.ts
 "use strict";
+// maybe rename this file to prop-getters.ts
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Always returns the empty string ''
