@@ -75,7 +75,8 @@ import { ScrollbarHelper } from './services';
     DataTableColumnHeaderDirective,
     DataTableColumnCellDirective,
     DataTableFooterTemplateDirective,
-    DatatableFooterDirective
+    DatatableFooterDirective,
+    DataTablePagerComponent
   ]
 })
 export class NgxDatatableModule { }
