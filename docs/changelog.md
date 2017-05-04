@@ -1,5 +1,10 @@
 # Changelog
 
+## 9.0.0
+- BREAKING: Fixes for external pagination fixes. Index calculation change being last page = `0 + pageSize` (#714, #138, #391)
+- Feature: Server-side virtual scrolling pagination
+- Demos: Deep linking of demo pages
+
 ## 8.2.1
 - Bug: Fix footer styles
 

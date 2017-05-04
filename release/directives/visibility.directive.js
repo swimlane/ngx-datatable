@@ -7,7 +7,7 @@ var core_1 = require("@angular/core");
  * Usage:
  *
  * 		<div
- * 			visibility-observer
+ * 			visibilityObserver
  * 			(visible)="onVisible($event)">
  * 		</div>
  *
@@ -54,7 +54,7 @@ var VisibilityDirective = (function () {
     return VisibilityDirective;
 }());
 VisibilityDirective.decorators = [
-    { type: core_1.Directive, args: [{ selector: '[visibility-observer]' },] },
+    { type: core_1.Directive, args: [{ selector: '[visibilityObserver]' },] },
 ];
 /** @nocollapse */
 VisibilityDirective.ctorParameters = function () { return [

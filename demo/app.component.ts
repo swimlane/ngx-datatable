@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { Location, LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 @Component({
   selector: 'app',
@@ -7,6 +8,12 @@ import { Component, ViewEncapsulation } from '@angular/core';
     '../src/themes/dark.scss'
   ],
   encapsulation: ViewEncapsulation.None,
+  providers: [
+    Location, {
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy
+    }
+  ],
   template: `
     <div [class.dark]="state === 'dark'">
       <nav>
@@ -26,73 +33,74 @@ import { Component, ViewEncapsulation } from '@angular/core';
           <li>
             <h4>Basic</h4>
             <ul>
-              <li><a href="#" (click)="state='virtual-scroll'">10k Rows</a></li>
-              <li><a href="#" (click)="state='full-screen'">Full Screen</a></li>
-              <li><a href="#" (click)="state='inline-edit'">Inline Editing</a></li>
-              <li><a href="#" (click)="state='horz-vert-scrolling'">Horz/Vert Scrolling</a></li>
-              <li><a href="#" (click)="state='multiple-tables'">Multiple Tables</a></li>
-              <li><a href="#" (click)="state='filter'">Filtering</a></li>
-              <li><a href="#" (click)="state='hidden'">Hidden On Load</a></li>
-              <li><a href="#" (click)="state='live'">Live Data</a></li>
-              <li><a href="#" (click)="state='rx'">RxJS</a></li>
-              <li><a href="#" (click)="state='contextmenu'">Context Menu</a></li>
-              <li><a href="#" (click)="state='css'">CSS Classes</a></li>
-              <li><a href="#" (click)="state='dark'">Dark theme</a></li>
-              <li><a href="#" (click)="state='footer'">Footer Template</a></li>
+              <li><a href="#virtual-scroll" (click)="state='virtual-scroll'">10k Rows</a></li>
+              <li><a href="#full-screen" (click)="state='full-screen'">Full Screen</a></li>
+              <li><a href="#inline-edit" (click)="state='inline-edit'">Inline Editing</a></li>
+              <li><a href="#horz-vert-scrolling" (click)="state='horz-vert-scrolling'">Horz/Vert Scrolling</a></li>
+              <li><a href="#multiple-tables" (click)="state='multiple-tables'">Multiple Tables</a></li>
+              <li><a href="#filter" (click)="state='filter'">Filtering</a></li>
+              <li><a href="#hidden" (click)="state='hidden'">Hidden On Load</a></li>
+              <li><a href="#live" (click)="state='live'">Live Data</a></li>
+              <li><a href="#rx" (click)="state='rx'">RxJS</a></li>
+              <li><a href="#contextmenu" (click)="state='contextmenu'">Context Menu</a></li>
+              <li><a href="#css" (click)="state='css'">CSS Classes</a></li>
+              <li><a href="#dark" (click)="state='dark'">Dark theme</a></li>
+              <li><a href="#footer" (click)="state='footer'">Footer Template</a></li>
             </ul>
           </li>
           <li>
             <h4>Rows</h4>
             <ul>
               <li><a href="#" (click)="state=''">Fluid Row Height</a></li>
-              <li><a href="#" (click)="state='basic-fixed'">Fixed Row Height</a></li>
-              <li><a href="#" (click)="state='dynamic'">Dynamic Row Height</a></li>
-              <li><a href="#" (click)="state='row-details'">Row Detail</a></li>
+              <li><a href="#basic-fixed" (click)="state='basic-fixed'">Fixed Row Height</a></li>
+              <li><a href="#dynamic" (click)="state='dynamic'">Dynamic Row Height</a></li>
+              <li><a href="#row-details'" (click)="state='row-details'">Row Detail</a></li>
             </ul>
           </li>
           <li>
             <h4>Paging</h4>
             <ul>
-              <li><a href="#" (click)="state='client-paging'">Client-side</a></li>
-              <li><a href="#" (click)="state='server-paging'">Server-side</a></li>
+              <li><a href="#client-paging" (click)="state='client-paging'">Client-side</a></li>
+              <li><a href="#server-paging" (click)="state='server-paging'">Server-side</a></li>
+              <li><a href="#virtual-paging" (click)="state='virtual-paging'">Virual server-side</a></li>
             </ul>
           </li>
           <li>
             <h4>Sorting</h4>
             <ul>
-              <li><a href="#" (click)="state='client-sorting'">Client-side</a></li>
-              <li><a href="#" (click)="state='default-sorting'">Default sort</a></li>
-              <li><a href="#" (click)="state='server-sorting'">Server-side</a></li>
-              <li><a href="#" (click)="state='comparator-sorting'">Comparator</a></li>
+              <li><a href="#client-sorting" (click)="state='client-sorting'">Client-side</a></li>
+              <li><a href="#default-sorting" (click)="state='default-sorting'">Default sort</a></li>
+              <li><a href="#server-sorting" (click)="state='server-sorting'">Server-side</a></li>
+              <li><a href="#comparator-sorting" (click)="state='comparator-sorting'">Comparator</a></li>
             </ul>
           </li>
           <li>
             <h4>Selection</h4>
             <ul>
-              <li><a href="#" (click)="state='cell-selection'">Cell</a></li>
-              <li><a href="#" (click)="state='single-selection'">Single Row</a></li>
-              <li><a href="#" (click)="state='multi-selection'">Multi Row</a></li>
-              <li><a href="#" (click)="state='multi-click-selection'">Multi Click Row</a></li>
-              <li><a href="#" (click)="state='multidisable-selection'">Disable Callback</a></li>
-              <li><a href="#" (click)="state='chkbox-selection'">Checkbox</a></li>
-              <li><a href="#" (click)="state='chkbox-selection-template'">Custom Checkbox</a></li>
+              <li><a href="#cell-selection" (click)="state='cell-selection'">Cell</a></li>
+              <li><a href="#single-selection" (click)="state='single-selection'">Single Row</a></li>
+              <li><a href="#multi-selection" (click)="state='multi-selection'">Multi Row</a></li>
+              <li><a href="#multi-click-selection'" (click)="state='multi-click-selection'">Multi Click Row</a></li>
+              <li><a href="#multidisable-selection" (click)="state='multidisable-selection'">Disable Callback</a></li>
+              <li><a href="#chkbox-selection" (click)="state='chkbox-selection'">Checkbox</a></li>
+              <li><a href="#chkbox-selection-template" (click)="state='chkbox-selection-template'">Custom Checkbox</a></li>
             </ul>
           </li>
           <li>
             <h4>Templates</h4>
             <ul>
-              <li><a href="#" (click)="state='inline'">Inline</a></li>
-              <li><a href="#" (click)="state='templateref'">TemplateRef</a></li>
+              <li><a href="#inline" (click)="state='inline'">Inline</a></li>
+              <li><a href="#templateref" (click)="state='templateref'">TemplateRef</a></li>
             </ul>
           </li>
           <li>
             <h4>Column</h4>
             <ul>
-              <li><a href="#" (click)="state='flex'">Flex</a></li>
-              <li><a href="#" (click)="state='toggle'">Toggling</a></li>
-              <li><a href="#" (click)="state='fixed'">Fixed</a></li>
-              <li><a href="#" (click)="state='force'">Force</a></li>
-              <li><a href="#" (click)="state='pinning'">Pinning</a></li>
+              <li><a href="#flex" (click)="state='flex'">Flex</a></li>
+              <li><a href="#toggle" (click)="state='toggle'">Toggling</a></li>
+              <li><a href="#fixed" (click)="state='fixed'">Fixed</a></li>
+              <li><a href="#force" (click)="state='force'">Force</a></li>
+              <li><a href="#pinning" (click)="state='pinning'">Pinning</a></li>
             </ul>
           </li>
         </ul>
@@ -120,6 +128,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
         <!-- Paging -->
         <client-paging-demo *ngIf="state === 'client-paging'"></client-paging-demo>
         <server-paging-demo *ngIf="state === 'server-paging'"></server-paging-demo>
+        <virtual-paging-demo *ngIf="state === 'virtual-paging'"></virtual-paging-demo>
 
         <!-- Sorting -->
         <client-sorting-demo *ngIf="state === 'client-sorting'"></client-sorting-demo>
@@ -162,8 +171,8 @@ export class AppComponent {
 
   version: string = APP_VERSION;
 
-  constructor() {
-    // this.state = 'chkbox-selection';
+  constructor(location: Location) {
+    this.state = location.path(true);
   }
 
 }
