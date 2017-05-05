@@ -409,7 +409,11 @@ var DataTableBodyComponent = (function () {
             last = this.rowHeightsCache.getRowIndex(height + this.offsetY) + 1;
         }
         else {
-            first = Math.max(this.offset * this.pageSize, 0);
+            // The server is handling paging and will pass an array that begins with the
+            // element at a specified offset.  first should always be 0 with external paging.
+            if (!this.externalPaging) {
+                first = Math.max(this.offset * this.pageSize, 0);
+            }
             last = Math.min((first + this.pageSize), this.rowCount);
         }
         this.indexes = { first: first, last: last };
@@ -431,7 +435,13 @@ var DataTableBodyComponent = (function () {
         this.rowHeightsCache.clearCache();
         // Initialize the tree only if there are rows inside the tree.
         if (this.rows && this.rows.length) {
-            this.rowHeightsCache.initCache(this.rows, this.rowHeight, this.getDetailRowHeight);
+            this.rowHeightsCache.initCache({
+                rows: this.rows,
+                rowHeight: this.rowHeight,
+                detailRowHeight: this.getDetailRowHeight,
+                externalVirtual: this.scrollbarV && this.externalPaging,
+                rowCount: this.rowCount
+            });
         }
     };
     /**
@@ -578,6 +588,7 @@ DataTableBodyComponent.propDecorators = {
     'scrollbarV': [{ type: core_1.Input },],
     'scrollbarH': [{ type: core_1.Input },],
     'loadingIndicator': [{ type: core_1.Input },],
+    'externalPaging': [{ type: core_1.Input },],
     'rowHeight': [{ type: core_1.Input },],
     'offsetX': [{ type: core_1.Input },],
     'emptyMessage': [{ type: core_1.Input },],
