@@ -131,7 +131,8 @@ var DataTableSelectionComponent = (function () {
 DataTableSelectionComponent.decorators = [
     { type: core_1.Component, args: [{
                 selector: 'datatable-selection',
-                template: "\n    <ng-content></ng-content>\n  "
+                template: "\n    <ng-content></ng-content>\n  ",
+                changeDetection: core_1.ChangeDetectionStrategy.OnPush
             },] },
 ];
 /** @nocollapse */

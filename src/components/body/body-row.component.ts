@@ -1,5 +1,5 @@
 import {
-  Component, Input, HostBinding, ElementRef, Output, EventEmitter, HostListener
+  Component, Input, HostBinding, ElementRef, Output, EventEmitter, HostListener, ChangeDetectionStrategy
 } from '@angular/core';
 
 import {
@@ -24,7 +24,8 @@ import { ScrollbarHelper } from '../../services';
         (activate)="onActivate($event, ii)">
       </datatable-body-cell>
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableBodyRowComponent {
 

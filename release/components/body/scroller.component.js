@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var platform_browser_1 = require("@angular/platform-browser");
 var ScrollerComponent = (function () {
-    function ScrollerComponent(element, renderer) {
+    function ScrollerComponent(element, renderer, _ngZone) {
         this.renderer = renderer;
+        this._ngZone = _ngZone;
         this.scrollbarV = false;
         this.scrollbarH = false;
         this.scroll = new core_1.EventEmitter();
@@ -14,10 +16,14 @@ var ScrollerComponent = (function () {
         this.element = element.nativeElement;
     }
     ScrollerComponent.prototype.ngOnInit = function () {
+        var _this = this;
         // manual bind so we don't always listen
         if (this.scrollbarV || this.scrollbarH) {
             this.parentElement = this.element.parentElement.parentElement;
-            this.onScrollListener = this.renderer.listen(this.parentElement, 'scroll', this.onScrolled.bind(this));
+            this._ngZone.runOutsideAngular(function () {
+                var manager = new platform_browser_1.EventManager([new platform_browser_1.ɵDomEventsPlugin(platform_browser_1.DOCUMENT)], new core_1.NgZone({ enableLongStackTrace: false }));
+                _this.onScrollListener = manager.addEventListener(_this.parentElement, 'scroll', _this.onScrolled.bind(_this));
+            });
         }
     };
     ScrollerComponent.prototype.ngOnDestroy = function () {
@@ -60,13 +66,15 @@ ScrollerComponent.decorators = [
                 template: "\n    <ng-content></ng-content>\n  ",
                 host: {
                     class: 'datatable-scroll'
-                }
+                },
+                changeDetection: core_1.ChangeDetectionStrategy.OnPush
             },] },
 ];
 /** @nocollapse */
 ScrollerComponent.ctorParameters = function () { return [
     { type: core_1.ElementRef, },
     { type: core_1.Renderer, },
+    { type: core_1.NgZone, },
 ]; };
 ScrollerComponent.propDecorators = {
     'scrollbarV': [{ type: core_1.Input },],

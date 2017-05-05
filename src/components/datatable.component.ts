@@ -65,7 +65,7 @@ import { DatatableRowDetailDirective } from './row-detail';
         (activate)="activate.emit($event)"
         (rowContextmenu)="rowContextmenu.emit($event)"
         (select)="onBodySelect($event)"
-        (scroll)="onBodyScroll($event)">
+        (bodyScroll)="onBodyScroll($event)">
       </datatable-body>
       <datatable-footer
         *ngIf="footerHeight"
