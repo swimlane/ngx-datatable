@@ -9,13 +9,9 @@ var DataTableBodyComponent = (function () {
      *
      * @memberOf DataTableBodyComponent
      */
-<<<<<<< HEAD
     function DataTableBodyComponent(cdRef) {
-        this.cdRef = cdRef;
-=======
-    function DataTableBodyComponent() {
         var _this = this;
->>>>>>> refs/remotes/swimlane/master
+        this.cdRef = cdRef;
         this.selected = [];
         this.bodyScroll = new core_1.EventEmitter();
         this.page = new core_1.EventEmitter();
@@ -28,11 +24,9 @@ var DataTableBodyComponent = (function () {
         this.temp2 = [];
         this.offsetY = 0;
         this.indexes = {};
-<<<<<<< HEAD
         this._viewRowsBuffer = [];
         this._previousFirst = 0;
         this._counter = 0;
-=======
         /**
          * Get the height of the detail row.
          *
@@ -48,7 +42,6 @@ var DataTableBodyComponent = (function () {
             var rowHeight = _this.rowDetail.rowHeight;
             return typeof rowHeight === 'function' ? rowHeight(row, index) : rowHeight;
         };
->>>>>>> refs/remotes/swimlane/master
         // declare fn here so we can get access to the `this` property
         this.rowTrackingFn = function (index, row) {
             if (this.trackByProp) {
