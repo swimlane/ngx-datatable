@@ -1,11 +1,17 @@
 import {
   Component, Input, PipeTransform, HostBinding, ViewChild,
-  Output, EventEmitter, HostListener, ElementRef, ViewContainerRef, OnDestroy
+  Output, EventEmitter, HostListener, ElementRef, ViewContainerRef, OnDestroy, OnChanges, ChangeDetectionStrategy
 } from '@angular/core';
 
 import { Keys } from '../../utils';
 import { SortDirection } from '../../types';
 import { TableColumn } from '../../types/table-column.type';
+
+export interface RowContext {
+  row: any;
+  column: any;
+  value: () => any;
+}
 
 @Component({
   selector: 'datatable-body-cell',
@@ -28,15 +34,16 @@ import { TableColumn } from '../../types/table-column.type';
       <ng-template #cellTemplate
         *ngIf="column.cellTemplate"
         [ngTemplateOutlet]="column.cellTemplate"
-        [ngOutletContext]="{ value: value, row: row, column: column }">
+        [ngOutletContext]="_rowContext">
       </ng-template>
     </div>
   `,
   host: {
     class: 'datatable-body-cell'
-  }
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DataTableBodyCellComponent implements OnDestroy {
+export class DataTableBodyCellComponent implements OnDestroy, OnChanges {
 
   @Input() row: any;
   @Input() column: TableColumn;
@@ -112,9 +119,16 @@ export class DataTableBodyCellComponent implements OnDestroy {
   element: any;
   _sorts: any[];
   isFocused: boolean = false;
+  _rowContext: RowContext = { row: this.row, column: this.column, value: this.value };
 
   constructor(element: ElementRef) {
     this.element = element.nativeElement;
+  }
+
+  ngOnChanges() {
+    this._rowContext.row = this.row;
+    this._rowContext.column = this.column;
+    this._rowContext.value = this.value;
   }
 
   ngOnDestroy(): void {

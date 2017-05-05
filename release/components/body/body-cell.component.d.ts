@@ -1,7 +1,12 @@
-import { EventEmitter, ElementRef, ViewContainerRef, OnDestroy } from '@angular/core';
+import { EventEmitter, ElementRef, ViewContainerRef, OnDestroy, OnChanges } from '@angular/core';
 import { SortDirection } from '../../types';
 import { TableColumn } from '../../types/table-column.type';
-export declare class DataTableBodyCellComponent implements OnDestroy {
+export interface RowContext {
+    row: any;
+    column: any;
+    value: () => any;
+}
+export declare class DataTableBodyCellComponent implements OnDestroy, OnChanges {
     row: any;
     column: TableColumn;
     rowHeight: number;
@@ -17,7 +22,9 @@ export declare class DataTableBodyCellComponent implements OnDestroy {
     element: any;
     _sorts: any[];
     isFocused: boolean;
+    _rowContext: RowContext;
     constructor(element: ElementRef);
+    ngOnChanges(): void;
     ngOnDestroy(): void;
     onFocus(): void;
     onBlur(): void;

@@ -1,5 +1,5 @@
 import { 
-  Component, Input, Output, EventEmitter, HostListener 
+  Component, Input, Output, EventEmitter, HostListener, ChangeDetectionStrategy
 } from '@angular/core';
 
 @Component({
@@ -19,7 +19,8 @@ import {
   `,
   host: {
     class: 'datatable-row-wrapper'
-  }
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableRowWrapperComponent {
 

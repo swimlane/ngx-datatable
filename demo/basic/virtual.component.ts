@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'virtual-scroll-demo',
@@ -15,6 +15,7 @@ import { Component } from '@angular/core';
       <ngx-datatable
         class='material'
         [rows]='rows'
+        [loadingIndicator]="loadingIndicator"
         [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
@@ -37,8 +38,9 @@ import { Component } from '@angular/core';
     </div>
   `
 })
-export class VirtualScrollComponent {
+export class VirtualScrollComponent implements AfterViewInit {
 
+  loadingIndicator: boolean = true;
   rows = [];
   expanded = {};
   timeout: any;
@@ -47,6 +49,13 @@ export class VirtualScrollComponent {
     this.fetch((data) => {
       this.rows = data;
     });
+    
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.loadingIndicator = false;
+    }, 1500);
   }
 
   onPage(event) {

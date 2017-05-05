@@ -206,12 +206,11 @@
 
 		.progress-linear {
 		  display: block;
-		  position: relative;
+		  position: fixed;
 		  width: 100%;
 		  height: 5px;
 		  padding: 0;
 		  margin: 0;
-      position: absolute;
 
 			.container {
 			  display: block;

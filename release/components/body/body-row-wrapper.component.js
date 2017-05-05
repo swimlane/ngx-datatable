@@ -17,7 +17,8 @@ DataTableRowWrapperComponent.decorators = [
                 template: "\n    <ng-content></ng-content>\n    <div \n      *ngIf=\"expanded\"\n      [style.height.px]=\"detailRowHeight\" \n      class=\"datatable-row-detail\">\n      <ng-template\n        *ngIf=\"rowDetail && rowDetail.template\"\n        [ngTemplateOutlet]=\"rowDetail.template\"\n        [ngOutletContext]=\"{ row: row }\">\n      </ng-template>\n    </div>\n  ",
                 host: {
                     class: 'datatable-row-wrapper'
-                }
+                },
+                changeDetection: core_1.ChangeDetectionStrategy.OnPush
             },] },
 ];
 /** @nocollapse */

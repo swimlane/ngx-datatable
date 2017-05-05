@@ -1,8 +1,10 @@
-import { EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { EventEmitter, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { RowHeightCache } from '../../utils';
 import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
+import { TrackedRow, ViewRow } from '../../types';
 export declare class DataTableBodyComponent implements OnInit, OnDestroy {
+    private cdRef;
     scrollbarV: boolean;
     scrollbarH: boolean;
     loadingIndicator: boolean;
@@ -25,7 +27,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     innerWidth: number;
     readonly bodyWidth: string;
     bodyHeight: any;
-    scroll: EventEmitter<any>;
+    bodyScroll: EventEmitter<any>;
     page: EventEmitter<any>;
     activate: EventEmitter<any>;
     select: EventEmitter<any>;
@@ -54,12 +56,16 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      */
     readonly scrollHeight: number;
     rowHeightsCache: RowHeightCache;
-    temp: any[];
+    temp: ViewRow[];
+    temp2: TrackedRow[];
     offsetY: number;
     indexes: any;
     columnGroupWidths: any;
     rowTrackingFn: any;
     listener: any;
+    _viewRowsBuffer: ViewRow[];
+    _previousFirst: number;
+    _counter: number;
     _rows: any[];
     _bodyHeight: any;
     _columns: any[];
@@ -71,7 +77,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      *
      * @memberOf DataTableBodyComponent
      */
-    constructor();
+    constructor(cdRef: ChangeDetectorRef);
     /**
      * Called after the constructor, initializing input properties
      *
@@ -114,7 +120,8 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      *
      * @memberOf DataTableBodyComponent
      */
-    updateRows(): void;
+    updateRows(redrawAllRows?: boolean): void;
+    assignRowValues(begin: number, end: number, rowIndex: number): void;
     /**
      * Get the row height
      *
@@ -218,5 +225,11 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      *
      * @memberOf DataTableBodyComponent
      */
-    recalcLayout(): void;
+    recalcLayout(redrawAllRows?: boolean): void;
+    /**
+     * Resizes the ViewRow with new page size
+     *
+     * @memberOf DataTableBodyComponent
+     */
+    updateViewRows(shift: number, grow: number): void;
 }

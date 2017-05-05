@@ -1,7 +1,8 @@
 import {
   Component, Input, ElementRef, Output, EventEmitter, Renderer,
-  OnInit, OnDestroy, HostBinding
+  OnInit, OnDestroy, HostBinding, ChangeDetectionStrategy, NgZone
 } from '@angular/core';
+import { ɵDomEventsPlugin as DomEventsPlugin, EventManager, DOCUMENT } from '@angular/platform-browser';
 
 @Component({
   selector: 'datatable-scroller',
@@ -10,7 +11,8 @@ import {
   `,
   host: {
     class: 'datatable-scroll'
-  }
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ScrollerComponent implements OnInit, OnDestroy {
 
@@ -33,7 +35,8 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   parentElement: any;
   onScrollListener: any;
 
-  constructor(element: ElementRef, private renderer: Renderer) {
+  constructor(
+    element: ElementRef, private renderer: Renderer, private zone: NgZone) {
     this.element = element.nativeElement;
   }
 
@@ -41,8 +44,11 @@ export class ScrollerComponent implements OnInit, OnDestroy {
     // manual bind so we don't always listen
     if(this.scrollbarV || this.scrollbarH) {
       this.parentElement = this.element.parentElement.parentElement;
-      this.onScrollListener = this.renderer.listen(
-        this.parentElement, 'scroll', this.onScrolled.bind(this));
+      this.zone.runOutsideAngular(() => {
+        const manager = new EventManager([new DomEventsPlugin(DOCUMENT)], new NgZone({enableLongStackTrace: false}));
+        this.onScrollListener = manager.addEventListener(
+          this.parentElement, 'scroll', this.onScrolled.bind(this));
+      });
     }
   }
 

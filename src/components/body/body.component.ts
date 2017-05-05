@@ -1,9 +1,11 @@
 import {
-  Component, Output, EventEmitter, Input, HostBinding, ViewChild, OnInit, OnDestroy
+  Component, Output, EventEmitter, Input, HostBinding, ViewChild, OnInit, OnDestroy,
+    ChangeDetectorRef, ChangeDetectionStrategy
 } from '@angular/core';
 import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '../../utils';
 import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
+import { TrackedRow, ViewRow, ViewMap } from '../../types';
 
 @Component({
   selector: 'datatable-body',
@@ -11,7 +13,7 @@ import { ScrollerComponent } from './scroller.component';
     <datatable-selection
       #selector
       [selected]="selected"
-      [rows]="temp"
+      [rows]="temp2"
       [selectCheck]="selectCheck"
       [selectEnabled]="selectEnabled"
       [selectionType]="selectionType"
@@ -29,21 +31,21 @@ import { ScrollerComponent } from './scroller.component';
         [scrollWidth]="columnGroupWidths.total"
         (scroll)="onBodyScroll($event)">
         <datatable-row-wrapper
-          *ngFor="let row of temp; let i = index; trackBy: rowTrackingFn;"
-          [ngStyle]="getRowsStyles(row)"
+          *ngFor="let viewRow of temp; let i = index; trackBy: rowTrackingFn;"
+          [ngStyle]="getRowsStyles(viewRow.row)"
           [rowDetail]="rowDetail"
-          [detailRowHeight]="getDetailRowHeight(row,i)"
-          [row]="row"
-          [expanded]="row.$$expanded === 1"
+          [detailRowHeight]="getDetailRowHeight(viewRow.row,i)"
+          [row]="viewRow.row"
+          [expanded]="viewRow.row.$$expanded === 1"
           (rowContextmenu)="rowContextmenu.emit($event)">
           <datatable-body-row
             tabindex="-1"
-            [isSelected]="selector.getRowSelected(row)"
+            [isSelected]="selector.getRowSelected(viewRow.row)"
             [innerWidth]="innerWidth"
             [offsetX]="offsetX"
             [columns]="columns"
-            [rowHeight]="getRowHeight(row)"
-            [row]="row"
+            [rowHeight]="getRowHeight(viewRow.row)"
+            [row]="viewRow.row"
             [rowClass]="rowClass"
             (activate)="selector.onActivate($event, i)">
           </datatable-body-row>
@@ -58,7 +60,8 @@ import { ScrollerComponent } from './scroller.component';
   `,
   host: {
     class: 'datatable-body'
-  }
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableBodyComponent implements OnInit, OnDestroy {
 
@@ -88,7 +91,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   @Input() set rows(val: any[]) {
     this._rows = val;
-    this.recalcLayout();
+    this.recalcLayout(true);
   }
 
   get rows(): any[] {
@@ -151,7 +154,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     return this._bodyHeight;
   }
 
-  @Output() scroll: EventEmitter<any> = new EventEmitter();
+  @Output() bodyScroll: EventEmitter<any> = new EventEmitter();
   @Output() page: EventEmitter<any> = new EventEmitter();
   @Output() activate: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
@@ -187,13 +190,17 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   }
 
   rowHeightsCache: RowHeightCache = new RowHeightCache();
-  temp: any[] = [];
+  temp: ViewRow[]= [];
+  temp2: TrackedRow[] = [];
   offsetY: number = 0;
   indexes: any = {};
   columnGroupWidths: any;
   rowTrackingFn: any;
   listener: any;
 
+  _viewRowsBuffer: ViewRow[] = [];
+  _previousFirst = 0;
+  _counter = 0;
   _rows: any[];
   _bodyHeight: any;
   _columns: any[];
@@ -206,13 +213,13 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * 
    * @memberOf DataTableBodyComponent
    */
-  constructor() {
+  constructor(private cdRef: ChangeDetectorRef) {
     // declare fn here so we can get access to the `this` property
     this.rowTrackingFn = function(index: number, row: any): any {
       if(this.trackByProp) {
-        return `${row.$$index}-${this.trackByProp}`;
+        return `${row.$$viewIndex}-${this.trackByProp}`; // Todo: make sure this doesn't break by inserting ViewRow
       } else {
-        return row.$$index;
+        return row.$$viewIndex;
       }
     }.bind(this);
   }
@@ -276,7 +283,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     // if scroll change, trigger update
     // this is mainly used for header cell positions
     if(this.offsetY !== scrollYPos || this.offsetX !== scrollXPos) {
-      this.scroll.emit({
+      this.bodyScroll.emit({
         offsetY: scrollYPos,
         offsetX: scrollXPos
       });
@@ -288,6 +295,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     this.updateIndexes();
     this.updatePage(event.direction);
     this.updateRows();
+    this.cdRef.detectChanges();
   }
 
   /**
@@ -316,25 +324,47 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * 
    * @memberOf DataTableBodyComponent
    */
-  updateRows(): void {
+  updateRows(redrawAllRows: boolean = false): void {
+    const nearest = 10;
     const { first, last } = this.indexes;
-    let rowIndex = first;
-    let idx = 0;
-    const temp: any[] = [];
-
-    while (rowIndex < last && rowIndex < this.rowCount) {
-      const row = this.rows[rowIndex];
-
-      if(row) {
-        row.$$index = rowIndex;
-        temp[idx] = row;
+    const pageSize = this.scrollbarV ? Math.ceil((last - first) / nearest) * nearest : this.pageSize;
+    if(redrawAllRows || !this.rows || pageSize === 0) {
+      this.temp2 = [];
+      this._previousFirst = 0;
+      if(!this.rows || pageSize === 0) {
+        return;
       }
-
-      idx++;
-      rowIndex++;
     }
 
-    this.temp = temp;
+    const shift = first - this._previousFirst;
+    if(redrawAllRows || Math.abs(shift) >= pageSize) {
+      this.updateViewRows(0, pageSize - this.temp.length);
+      this.assignRowValues(0, this.temp.length, first);
+    } else {
+      // Redraw only difference
+      const begin = shift > 0 ? pageSize - shift : 0;
+      const end = shift > 0 ? pageSize : Math.abs(shift);
+      const rowIndex = shift > 0 ? first + pageSize - shift : first;
+      this.updateViewRows(shift, pageSize - this.temp.length);
+      this.assignRowValues(begin, end, rowIndex);
+    }
+   
+    this.temp2 = this.temp.filter(y => y.row !== undefined).map(y => y.row);
+    this._previousFirst = first;
+  }
+
+  assignRowValues(begin: number, end: number, rowIndex: number): void {
+    for (let x = begin; x < end; x++) {
+      const row = this.rows[rowIndex];
+      const viewRow = this.temp[x]; // Added comment
+      if(row) {
+        row.$$index = rowIndex;
+        viewRow.row = row;
+      } else {
+        viewRow.row = undefined;
+      }
+      rowIndex++;
+    }
   }
 
   /**
@@ -438,7 +468,10 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * @memberOf DataTableBodyComponent
    */
   hideIndicator(): void {
-    setTimeout(() => this.loadingIndicator = false, 500);
+    setTimeout(() => {
+      this.loadingIndicator = false;
+      this.cdRef.markForCheck();
+    }, 500);
   }
 
   /**
@@ -581,10 +614,58 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * 
    * @memberOf DataTableBodyComponent
    */
-  recalcLayout(): void {
+  recalcLayout(redrawAllRows: boolean = false): void {
     this.refreshRowHeightCache();
     this.updateIndexes();
-    this.updateRows();
+    this.updateRows(redrawAllRows);
+  }
+
+  /**
+   * Resizes the ViewRow with new page size
+   * 
+   * @memberOf DataTableBodyComponent
+   */
+  updateViewRows(shift: number, grow: number): void {
+    const { first } = this.indexes;
+    const oldLength = this.temp.length;
+    const rowCount = this.rowCount ? this.rowCount : 0;
+    const newLength = first + oldLength + grow > rowCount ?
+     rowCount - (rowCount < first ? 0 : first) :
+      oldLength + grow;
+    if(grow > 0 && oldLength + grow > newLength) {
+      grow = newLength - oldLength;
+    }
+
+    // Shift
+    if(oldLength > 0) {
+      shift = shift % oldLength;
+      if(Math.abs(shift) > 0) {
+        const move = shift < 0 ? oldLength + shift : shift;
+        this.temp = this.temp.slice(move).concat(this.temp.slice(0, move));
+      }
+    }
+    
+    if(grow > 0) {
+      const bufferLength = this._viewRowsBuffer.length;
+      const oldItems = grow - (grow - bufferLength);
+      if(oldItems > 0) {
+        this.temp.push(...this._viewRowsBuffer.splice(0, oldItems));
+      }
+
+      const newCounter = this._counter + (grow - oldItems);
+      for(let x = this._counter; x < newCounter; x++) {
+        this.temp.push({ $$viewIndex: x });
+      }
+      this._counter = newCounter;
+
+      // Check and add grown items
+      this.assignRowValues(oldLength, newLength, oldLength + first);
+    } else {
+      for(let x = newLength; x < oldLength; x++) {
+        this.temp[x].row = undefined;
+      }
+      this._viewRowsBuffer.push(...this.temp.splice(newLength));
+    }
   }
 
 }

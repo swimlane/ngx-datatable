@@ -7,6 +7,7 @@ var DataTableBodyCellComponent = (function () {
     function DataTableBodyCellComponent(element) {
         this.activate = new core_1.EventEmitter();
         this.isFocused = false;
+        this._rowContext = { row: this.row, column: this.column, value: this.value };
         this.element = element.nativeElement;
     }
     Object.defineProperty(DataTableBodyCellComponent.prototype, "sorts", {
@@ -91,6 +92,11 @@ var DataTableBodyCellComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    DataTableBodyCellComponent.prototype.ngOnChanges = function () {
+        this._rowContext.row = this.row;
+        this._rowContext.column = this.column;
+        this._rowContext.value = this.value;
+    };
     DataTableBodyCellComponent.prototype.ngOnDestroy = function () {
         if (this.cellTemplate) {
             this.cellTemplate.clear();
@@ -168,10 +174,11 @@ var DataTableBodyCellComponent = (function () {
 DataTableBodyCellComponent.decorators = [
     { type: core_1.Component, args: [{
                 selector: 'datatable-body-cell',
-                template: "\n    <div class=\"datatable-body-cell-label\">\n      <label\n        *ngIf=\"column.checkboxable\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [checked]=\"isSelected\"\n          (click)=\"onCheckboxChange($event)\" \n        />\n      </label>\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [title]=\"value\"\n        [innerHTML]=\"value\">\n      </span>\n      <ng-template #cellTemplate\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngOutletContext]=\"{ value: value, row: row, column: column }\">\n      </ng-template>\n    </div>\n  ",
+                template: "\n    <div class=\"datatable-body-cell-label\">\n      <label\n        *ngIf=\"column.checkboxable\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [checked]=\"isSelected\"\n          (click)=\"onCheckboxChange($event)\" \n        />\n      </label>\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [title]=\"value\"\n        [innerHTML]=\"value\">\n      </span>\n      <ng-template #cellTemplate\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngOutletContext]=\"_rowContext\">\n      </ng-template>\n    </div>\n  ",
                 host: {
                     class: 'datatable-body-cell'
-                }
+                },
+                changeDetection: core_1.ChangeDetectionStrategy.OnPush
             },] },
 ];
 /** @nocollapse */

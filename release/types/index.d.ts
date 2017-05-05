@@ -5,3 +5,6 @@ export * from './selection.type';
 export * from './click.type';
 export * from './table-column.type';
 export * from './sort-prop-dir.type';
+export * from './tracked-row.type';
+export * from './view-row.type';
+export * from './view-map.type';
