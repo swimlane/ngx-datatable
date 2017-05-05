@@ -43,7 +43,7 @@ var DataTableBodyRowComponent = (function () {
             if (this.rowClass) {
                 var res = this.rowClass(this.row);
                 if (typeof res === 'string') {
-                    cls += res;
+                    cls += " " + res;
                 }
                 else if (typeof res === 'object') {
                     var keys = Object.keys(res);

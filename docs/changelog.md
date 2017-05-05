@@ -1,5 +1,12 @@
 # Changelog
 
+## 9.1.0
+- Enhancement: Add more context to cells #720
+- Enhancement: Export Pager component #735
+- Bug: Header checkbox when row selection is changed #659
+- Bug: When rowClass() returns a string, the class is not properly added #710
+- Bug: Rename icons so don't conflict with other libs #729
+
 ## 9.0.0
 - BREAKING: Fixes for external pagination fixes. Index calculation change being last page = `0 + pageSize` (#714, #138, #391)
 - Feature: Server-side virtual scrolling pagination

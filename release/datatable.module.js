@@ -53,7 +53,8 @@ NgxDatatableModule.decorators = [
                     components_1.DataTableColumnHeaderDirective,
                     components_1.DataTableColumnCellDirective,
                     components_1.DataTableFooterTemplateDirective,
-                    components_1.DatatableFooterDirective
+                    components_1.DatatableFooterDirective,
+                    components_1.DataTablePagerComponent
                 ]
             },] },
 ];
