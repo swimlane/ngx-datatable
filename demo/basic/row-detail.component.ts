@@ -46,8 +46,8 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
           <ng-template let-row="row" ngx-datatable-cell-template>
             <a
               href="#"
-              [class.icon-right]="!row.$$expanded"
-              [class.icon-down]="row.$$expanded"
+              [class.datatable-icon-right]="!row.$$expanded"
+              [class.datatable-icon-down]="row.$$expanded"
               title="Expand/Collapse Row"
               (click)="toggleExpandRow(row)">
             </a>

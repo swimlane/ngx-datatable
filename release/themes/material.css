@@ -196,10 +196,10 @@
         .ngx-datatable.material .datatable-footer .datatable-pager a:hover {
           color: rgba(0, 0, 0, 0.75);
           background-color: rgba(158, 158, 158, 0.2); }
-      .ngx-datatable.material .datatable-footer .datatable-pager .icon-left,
-      .ngx-datatable.material .datatable-footer .datatable-pager .icon-skip,
-      .ngx-datatable.material .datatable-footer .datatable-pager .icon-right,
-      .ngx-datatable.material .datatable-footer .datatable-pager .icon-prev {
+      .ngx-datatable.material .datatable-footer .datatable-pager .datatable-icon-left,
+      .ngx-datatable.material .datatable-footer .datatable-pager .datatable-icon-skip,
+      .ngx-datatable.material .datatable-footer .datatable-pager .datatable-icon-right,
+      .ngx-datatable.material .datatable-footer .datatable-pager .datatable-icon-prev {
         font-size: 20px;
         line-height: 20px;
         padding: 0 3px; }

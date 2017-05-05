@@ -60,10 +60,10 @@
         text-decoration: none;
         vertical-align: bottom;
         color: #72809b; }
-      .ngx-datatable.dark .datatable-footer .datatable-pager .icon-left,
-      .ngx-datatable.dark .datatable-footer .datatable-pager .icon-skip,
-      .ngx-datatable.dark .datatable-footer .datatable-pager .icon-right,
-      .ngx-datatable.dark .datatable-footer .datatable-pager .icon-prev {
+      .ngx-datatable.dark .datatable-footer .datatable-pager .datatable-icon-left,
+      .ngx-datatable.dark .datatable-footer .datatable-pager .datatable-icon-skip,
+      .ngx-datatable.dark .datatable-footer .datatable-pager .datatable-icon-right,
+      .ngx-datatable.dark .datatable-footer .datatable-pager .datatable-icon-prev {
         font-size: 18px;
         line-height: 27px;
         padding: 0 3px; }
