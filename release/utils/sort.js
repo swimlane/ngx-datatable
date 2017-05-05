@@ -30,7 +30,6 @@ function nextSortDir(sortType, current) {
     }
 }
 exports.nextSortDir = nextSortDir;
-;
 /**
  * Adapted from fueld-ui on 6/216
  * https://github.com/FuelInteractive/fuel-ui/tree/master/src/pipes/OrderBy

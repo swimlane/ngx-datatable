@@ -5,7 +5,7 @@ describe('Math function', () => {
   describe('forceFillColumnWidths', () => {
     describe('when column expanded', () => {
       it('should resize only columns right to the resized column', () => {
-        let columns = [
+        const columns = [
           { prop: 'id', width: 250, canAutoResize: true },
           { prop: 'name', width: 400, canAutoResize: true },
           { prop: 'email', width: 250, canAutoResize: true }
@@ -22,7 +22,7 @@ describe('Math function', () => {
 
     describe('when column compressed', () => {
       it('should resize only columns right to the resized column', () => {
-        let columns = [
+        const columns = [
           { prop: 'id', width: 250, canAutoResize: true },
           { prop: 'name', width: 180, canAutoResize: true },
           { prop: 'email', width: 250, canAutoResize: true }

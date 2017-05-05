@@ -5,7 +5,6 @@ var DataTableColumnCellDirective = (function () {
     function DataTableColumnCellDirective(template) {
         this.template = template;
     }
-    ;
     return DataTableColumnCellDirective;
 }());
 DataTableColumnCellDirective.decorators = [

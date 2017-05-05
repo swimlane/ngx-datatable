@@ -1,5 +1,23 @@
 # Changelog
 
+## 8.2.1
+- Bug: Fix footer styles
+
+## 8.2.0
+- Feature: Footer Templates
+
+## 8.1.0
+- Feature: Dark Theme
+
+## 8.0.1
+- Bug: Fix memory leak (#702)
+- Bug: Don't add column header title attribute when custom template provided (#643)
+- Bug: Only apply pointer to header text (#682)
+- Bug: Fix prop field name with dots (#596)
+- Bug: Virtual scroll + dynamic height in cell detail not working right (#703)
+- Bug: Fix dynamic row height not working right if using server-side pagination
+- Chore: Implement `noImplicitAny` (#671)
+
 ## 8.0.0
 - Breaking: Removed `cssClass` from columns in favor of explicit
 - Feature: Added explicit `headerClass` and `cellClass`

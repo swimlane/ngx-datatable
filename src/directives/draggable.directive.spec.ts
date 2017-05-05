@@ -16,7 +16,7 @@ class TestFixtureComponent {
 describe('DraggableDirective', () => {
   let fixture: ComponentFixture<TestFixtureComponent>;
   let component: TestFixtureComponent;
-  let element;
+  let element: any;
 
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
@@ -60,6 +60,7 @@ describe('DraggableDirective', () => {
         element.classList.add('draggable');
         mouseDown = <MouseEvent>{
           target: element,
+          // tslint:disable-next-line
           preventDefault: () => {}
         };
       });

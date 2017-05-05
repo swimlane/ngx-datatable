@@ -99,12 +99,12 @@ export class DataTableHeaderComponent {
   _columns: any[];
   _headerHeight: string;
 
-  onLongPressStart({ event, model }) {
+  onLongPressStart({ event, model }: { event: any, model: any }) {
     model.dragging = true;
     this.dragEventTarget = event;
   }
 
-  onLongPressEnd({ event, model }) {
+  onLongPressEnd({ event, model }: { event: any, model: any }) {
     this.dragEventTarget = event;
 
     // delay resetting so sort can be 

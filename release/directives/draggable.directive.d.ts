@@ -1,4 +1,4 @@
-import { ElementRef, EventEmitter, OnDestroy, OnChanges } from '@angular/core';
+import { ElementRef, EventEmitter, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/takeUntil';
 /**
@@ -21,7 +21,7 @@ export declare class DraggableDirective implements OnDestroy, OnChanges {
     isDragging: boolean;
     subscription: Subscription;
     constructor(element: ElementRef);
-    ngOnChanges(changes: any): void;
+    ngOnChanges(changes: SimpleChanges): void;
     ngOnDestroy(): void;
     onMouseup(event: MouseEvent): void;
     onMousedown(event: MouseEvent): void;

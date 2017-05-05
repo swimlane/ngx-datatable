@@ -53,7 +53,7 @@ describe('LongPressDirective', () => {
     });
 
     it('should have isLongPress set to false', () => {
-      expect(directive.isLongPress).toBeFalsy()
+      expect(directive.isLongPress).toBeFalsy();
     });
 
     /*

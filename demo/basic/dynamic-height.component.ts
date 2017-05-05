@@ -58,6 +58,8 @@ export class DynamicHeightComponent {
   }
 
   getRowHeight(row) {
+    if(!row) return 50;
+    if(row.height === undefined) return 50;
     return row.height;
   }
 

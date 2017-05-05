@@ -213,3 +213,19 @@ select {
 .is-female {
   background: pink;
 }
+
+.dark {
+  background: #181B24;
+}
+
+.dark nav {
+  background: #232837;
+}
+
+.dark nav a {
+  color:#fff;
+}
+
+.dark nav h4 {
+  color: #72809b;
+}

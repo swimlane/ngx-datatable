@@ -9,8 +9,13 @@ var DataTableBodyComponent = (function () {
      *
      * @memberOf DataTableBodyComponent
      */
+<<<<<<< HEAD
     function DataTableBodyComponent(cdRef) {
         this.cdRef = cdRef;
+=======
+    function DataTableBodyComponent() {
+        var _this = this;
+>>>>>>> refs/remotes/swimlane/master
         this.selected = [];
         this.bodyScroll = new core_1.EventEmitter();
         this.page = new core_1.EventEmitter();
@@ -23,9 +28,27 @@ var DataTableBodyComponent = (function () {
         this.temp2 = [];
         this.offsetY = 0;
         this.indexes = {};
+<<<<<<< HEAD
         this._viewRowsBuffer = [];
         this._previousFirst = 0;
         this._counter = 0;
+=======
+        /**
+         * Get the height of the detail row.
+         *
+         * @param {*} [row]
+         * @param {*} [index]
+         * @returns {number}
+         *
+         * @memberOf DataTableBodyComponent
+         */
+        this.getDetailRowHeight = function (row, index) {
+            if (!_this.rowDetail)
+                return 0;
+            var rowHeight = _this.rowDetail.rowHeight;
+            return typeof rowHeight === 'function' ? rowHeight(row, index) : rowHeight;
+        };
+>>>>>>> refs/remotes/swimlane/master
         // declare fn here so we can get access to the `this` property
         this.rowTrackingFn = function (index, row) {
             if (this.trackByProp) {
@@ -160,7 +183,8 @@ var DataTableBodyComponent = (function () {
     DataTableBodyComponent.prototype.ngOnInit = function () {
         var _this = this;
         if (this.rowDetail) {
-            this.listener = this.rowDetail.toggle.subscribe(function (_a) {
+            this.listener = this.rowDetail.toggle
+                .subscribe(function (_a) {
                 var type = _a.type, value = _a.value;
                 if (type === 'row')
                     _this.toggleRowExpansion(value);
@@ -321,21 +345,6 @@ var DataTableBodyComponent = (function () {
         return rowHeight;
     };
     /**
-     * Get the height of the detail row.
-     *
-     * @param {*} [row]
-     * @param {*} [index]
-     * @returns {number}
-     *
-     * @memberOf DataTableBodyComponent
-     */
-    DataTableBodyComponent.prototype.getDetailRowHeight = function (row, index) {
-        if (!this.rowDetail)
-            return 0;
-        var rowHeight = this.rowDetail.rowHeight;
-        return typeof rowHeight === 'function' ? rowHeight(row, index) : rowHeight;
-    };
-    /**
      * Calculates the styles for the row so that the rows can be moved in 2D space
      * during virtual scroll inside the DOM.   In the below case the Y position is
      * manipulated.   As an example, if the height of row 0 is 30 px and row 1 is
@@ -422,7 +431,7 @@ var DataTableBodyComponent = (function () {
         this.rowHeightsCache.clearCache();
         // Initialize the tree only if there are rows inside the tree.
         if (this.rows && this.rows.length) {
-            this.rowHeightsCache.initCache(this.rows, this.rowHeight, this.getDetailRowHeight());
+            this.rowHeightsCache.initCache(this.rows, this.rowHeight, this.getDetailRowHeight);
         }
     };
     /**

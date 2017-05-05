@@ -198,7 +198,7 @@ export class DataTableBodyCellComponent implements OnDestroy, OnChanges {
     }
   }
 
-  onCheckboxChange(event): void {
+  onCheckboxChange(event: any): void {
     this.activate.emit({
       type: 'checkbox',
       event,

@@ -5,7 +5,6 @@ var DatatableRowDetailTemplateDirective = (function () {
     function DatatableRowDetailTemplateDirective(template) {
         this.template = template;
     }
-    ;
     return DatatableRowDetailTemplateDirective;
 }());
 DatatableRowDetailTemplateDirective.decorators = [

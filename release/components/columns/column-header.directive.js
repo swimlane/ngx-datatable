@@ -5,7 +5,6 @@ var DataTableColumnHeaderDirective = (function () {
     function DataTableColumnHeaderDirective(template) {
         this.template = template;
     }
-    ;
     return DataTableColumnHeaderDirective;
 }());
 DataTableColumnHeaderDirective.decorators = [
