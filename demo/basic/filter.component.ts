@@ -68,7 +68,7 @@ export class FilterBarComponent {
   }
 
   updateFilter(event) {
-    const val = event.target.value;
+    const val = event.target.value.toLowerCase();
 
     // filter our data
     const temp = this.temp.filter(function(d) {
