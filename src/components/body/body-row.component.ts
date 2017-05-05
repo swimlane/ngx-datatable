@@ -61,7 +61,7 @@ export class DataTableBodyRowComponent {
     if(this.rowClass) {
       const res = this.rowClass(this.row);
       if(typeof res === 'string') {
-        cls += res;
+        cls += ` ${res}`;
       } else if(typeof res === 'object') {
         const keys = Object.keys(res);
         for(const k of keys) {
