@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'chkbox-selection-demo',
@@ -7,14 +7,15 @@ import { Component } from '@angular/core';
       <h3>
         Checkbox Selection
         <small>
-          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/selection/selection-chkbox.component.ts" target="_blank">
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/selection/selection-chkbox.component.ts"
+             target="_blank">
             Source
           </a>
         </small>
         <small>
           <a href="#" (click)="add()">Add</a> |
           <a href="#" (click)="update()">Update</a> |
-          <a href="#" (click)="remove()">Remove</a> 
+          <a href="#" (click)="remove()">Remove</a>
         </small>
       </h3>
       <div style='float:left;width:75%'>
@@ -47,7 +48,9 @@ import { Component } from '@angular/core';
       </div>
 
       <div class='selected-column'>
-        <h4>Selections <small>({{selected?.length}})</small></h4>
+        <h4>Selections
+          <small>({{selected?.length}})</small>
+        </h4>
         <ul>
           <li *ngFor='let sel of selected'>
             {{sel.name}}
@@ -80,7 +83,7 @@ export class CheckboxSelectionComponent {
     req.send();
   }
 
-  onSelect({ selected }) {
+  onSelect({selected}) {
     console.log('Select Event', selected, this.selected);
 
     this.selected.splice(0, this.selected.length);
@@ -96,7 +99,7 @@ export class CheckboxSelectionComponent {
   }
 
   update() {
-    this.selected = [ this.rows[1], this.rows[3] ];
+    this.selected = [this.rows[1], this.rows[3]];
   }
 
   remove() {

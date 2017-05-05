@@ -9,12 +9,12 @@ import {
   forceFillColumnWidths, adjustColumnWidths, sortRows,
   setColumnDefaults, throttleable, translateTemplates
 } from '../utils';
-import { ScrollbarHelper } from '../services';
-import { ColumnMode, SortType, SelectionType, TableColumn } from '../types';
-import { DataTableBodyComponent } from './body';
-import { DataTableColumnDirective } from './columns';
-import { DatatableRowDetailDirective } from './row-detail';
-import { DatatableFooterDirective } from './footer';
+import {ScrollbarHelper} from '../services';
+import {ColumnMode, SortType, SelectionType, TableColumn} from '../types';
+import {DataTableBodyComponent} from './body';
+import {DataTableColumnDirective} from './columns';
+import {DatatableRowDetailDirective} from './row-detail';
+import {DatatableFooterDirective} from './footer';
 
 @Component({
   selector: 'ngx-datatable',
@@ -63,6 +63,7 @@ import { DatatableFooterDirective } from './footer';
         [rowIdentity]="rowIdentity"
         [rowClass]="rowClass"
         [selectCheck]="selectCheck"
+        [externalPaging]="externalPaging"
         (page)="onBodyPage($event)"
         (activate)="activate.emit($event)"
         (rowContextmenu)="rowContextmenu.emit($event)"
@@ -128,7 +129,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   @Input() set columns(val: TableColumn[]) {
-    if(val) {
+    if (val) {
       setColumnDefaults(val);
       this.recalculateColumns(val);
     }
@@ -370,12 +371,12 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   @Input() rowIdentity: (x: any) => any = ((x: any) => x);
 
   /**
-   * Row specific classes. 
+   * Row specific classes.
    * Similar implementation to ngClass.
-   * 
+   *
    *  [rowClass]="'first second'"
    *  [rowClass]="{ 'first': true, 'second': true, 'third': false }"
-   * 
+   *
    * @type {*}
    * @memberOf DatatableComponent
    */
@@ -635,7 +636,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Footer template gathered from the ContentChild
-   * 
+   *
    * @type {DatatableFooterDirective}
    * @memberOf DatatableComponent
    */
@@ -653,20 +654,6 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   @ViewChild(DataTableBodyComponent)
   bodyComponent: DataTableBodyComponent;
 
-  /**
-   * Returns if all rows are selected.
-   *
-   * @readonly
-   * @private
-   * @type {boolean}
-   * @memberOf DatatableComponent
-   */
-  get allRowsSelected(): boolean {
-    return this.selected &&
-      this.rows &&
-      this.selected.length === this.rows.length;
-  }
-
   element: HTMLElement;
   innerWidth: number;
   pageSize: number;
@@ -679,11 +666,11 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   _rows: any[];
   _columns: TableColumn[];
   _columnTemplates: QueryList<DataTableColumnDirective>;
+  allRowsSelected: boolean;
 
-  constructor(
-    private scrollbarHelper: ScrollbarHelper, 
-    element: ElementRef, 
-    differs: KeyValueDiffers) {
+  constructor(private scrollbarHelper: ScrollbarHelper,
+              element: ElementRef,
+              differs: KeyValueDiffers) {
 
     // get ref to elm for measuring
     this.element = element.nativeElement;
@@ -721,7 +708,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
       this.recalculate();
 
       // emit page for virtual server-side kickoff
-      if(this.externalPaging && this.scrollbarV) {
+      if (this.externalPaging && this.scrollbarV) {
         this.page.emit({
           count: this.count,
           pageSize: this.pageSize,
@@ -783,10 +770,9 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    *
    * @memberOf DatatableComponent
    */
-  recalculateColumns(
-    columns: any[] = this.columns,
-    forceIdx: number = -1,
-    allowBleed: boolean = this.scrollbarH): any[] {
+  recalculateColumns(columns: any[] = this.columns,
+                     forceIdx: number = -1,
+                     allowBleed: boolean = this.scrollbarH): any[] {
 
     if (!columns) return;
 
@@ -843,6 +829,9 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   onBodyPage({offset}: any): void {
+    // Always clear the selection when switching pages. Server-side and Client-side tables have the same behavior.
+    this.selected = [];
+    this.allRowsSelected = false;
     this.offset = offset;
 
     this.page.emit({
@@ -873,6 +862,10 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   onFooterPage(event: any) {
+    // Always clear the selection when switching pages. Server-side and Client-side tables have the same behavior.
+    this.selected = [];
+    this.allRowsSelected = false;
+
     this.offset = event.page - 1;
     this.bodyComponent.updateOffsetY(this.offset);
 
@@ -999,6 +992,10 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   onColumnSort(event: any): void {
+    // Always clear the selection when sorting. Server-side and Client-side tables have the same behavior.
+    this.selected = [];
+    this.allRowsSelected = false;
+
     const {sorts} = event;
 
     // this could be optimized better since it will resort
@@ -1022,16 +1019,24 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    *
    * @memberOf DatatableComponent
    */
-  onHeaderSelect(event: any): void {
+  onHeaderSelect(event: boolean): void {
     // before we splice, chk if we currently have all selected
-    const allSelected = this.selected.length === this.rows.length;
+    this.allRowsSelected = event;
 
     // remove all existing either way
     this.selected = [];
 
     // do the opposite here
-    if (!allSelected) {
-      this.selected.push(...this.rows);
+    if (this.allRowsSelected) {
+      if (!this.externalPaging) {
+        const auxList = [];
+        auxList.push(...this.rows);
+        this.selected = auxList.slice(this.offset * this.limit, ((this.offset + 1) * this.limit));
+      } else {
+        this.selected.push(...this.rows);
+      }
+    } else {
+      this.selected = [];
     }
 
     this.select.emit({
@@ -1047,6 +1052,12 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   onBodySelect(event: any): void {
+    // When a unselected happens, remove the header checkbox select if it is marked
+    if (this.selected.length === this.limit && !this.allRowsSelected && this.rows.length > 0) {
+      this.allRowsSelected = true;
+    } else {
+      this.allRowsSelected = false;
+    }
     this.select.emit(event);
   }
 
