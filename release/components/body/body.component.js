@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var utils_1 = require("../../utils");
 var scroller_component_1 = require("./scroller.component");
-var rxjs_1 = require("rxjs");
 var DataTableBodyComponent = (function () {
     /**
      * Creates an instance of DataTableBodyComponent.
@@ -13,14 +12,14 @@ var DataTableBodyComponent = (function () {
     function DataTableBodyComponent(cdRef) {
         this.cdRef = cdRef;
         this.selected = [];
-        this.scroll2 = new core_1.EventEmitter();
+        this.bodyScroll = new core_1.EventEmitter();
         this.page = new core_1.EventEmitter();
         this.activate = new core_1.EventEmitter();
         this.select = new core_1.EventEmitter();
         this.detailToggle = new core_1.EventEmitter();
         this.rowContextmenu = new core_1.EventEmitter(false);
         this.rowHeightsCache = new utils_1.RowHeightCache();
-        this.temp = new rxjs_1.BehaviorSubject([]);
+        this.temp = [];
         this.temp2 = [];
         this.offsetY = 0;
         this.indexes = {};
@@ -211,7 +210,7 @@ var DataTableBodyComponent = (function () {
         // if scroll change, trigger update
         // this is mainly used for header cell positions
         if (this.offsetY !== scrollYPos || this.offsetX !== scrollXPos) {
-            this.scroll2.emit({
+            this.bodyScroll.emit({
                 offsetY: scrollYPos,
                 offsetX: scrollXPos
             });
@@ -249,7 +248,9 @@ var DataTableBodyComponent = (function () {
      */
     DataTableBodyComponent.prototype.updateRows = function (redrawAllRows) {
         if (redrawAllRows === void 0) { redrawAllRows = false; }
-        var _a = this.indexes, first = _a.first, pageSize = _a.pageSize;
+        var nearest = 10;
+        var _a = this.indexes, first = _a.first, last = _a.last;
+        var pageSize = this.scrollbarV ? Math.ceil((last - first) / nearest) * nearest : this.pageSize;
         if (redrawAllRows || !this.rows || pageSize === 0) {
             this.temp2 = [];
             this._previousFirst = 0;
@@ -259,24 +260,24 @@ var DataTableBodyComponent = (function () {
         }
         var shift = first - this._previousFirst;
         if (redrawAllRows || Math.abs(shift) >= pageSize) {
-            this.updateViewRows(0, pageSize - this.temp.value.length);
-            this.assignRowValues(0, this.temp.value.length, first);
+            this.updateViewRows(0, pageSize - this.temp.length);
+            this.assignRowValues(0, this.temp.length, first);
         }
         else {
             // Redraw only difference
             var begin = shift > 0 ? pageSize - shift : 0;
             var end = shift > 0 ? pageSize : Math.abs(shift);
             var rowIndex = shift > 0 ? first + pageSize - shift : first;
-            this.updateViewRows(shift, pageSize - this.temp.value.length);
+            this.updateViewRows(shift, pageSize - this.temp.length);
             this.assignRowValues(begin, end, rowIndex);
         }
-        this.temp2 = this.temp.value.filter(function (y) { return y.row !== undefined; }).map(function (y) { return y.row; });
+        this.temp2 = this.temp.filter(function (y) { return y.row !== undefined; }).map(function (y) { return y.row; });
         this._previousFirst = first;
     };
     DataTableBodyComponent.prototype.assignRowValues = function (begin, end, rowIndex) {
         for (var x = begin; x < end; x++) {
             var row = this.rows[rowIndex];
-            var viewRow = this.temp.value[x]; // Added comment
+            var viewRow = this.temp[x]; // Added comment
             if (row) {
                 row.$$index = rowIndex;
                 viewRow.row = row;
@@ -377,18 +378,19 @@ var DataTableBodyComponent = (function () {
      */
     DataTableBodyComponent.prototype.hideIndicator = function () {
         var _this = this;
-        setTimeout(function () { return _this.loadingIndicator = false; }, 500);
+        setTimeout(function () {
+            _this.loadingIndicator = false;
+            _this.cdRef.markForCheck();
+        }, 500);
     };
     /**
      * Updates the index of the rows in the viewport
      *
      * @memberOf DataTableBodyComponent
      */
-    DataTableBodyComponent.prototype.updateIndexes = function (nearest) {
-        if (nearest === void 0) { nearest = 10; }
+    DataTableBodyComponent.prototype.updateIndexes = function () {
         var first = 0;
         var last = 0;
-        var pageSize = 0;
         if (this.scrollbarV) {
             // Calculation of the first and last indexes will be based on where the
             // scrollY position would be at.  The last index would be the one
@@ -396,14 +398,12 @@ var DataTableBodyComponent = (function () {
             var height = parseInt(this.bodyHeight, 0);
             first = this.rowHeightsCache.getRowIndex(this.offsetY);
             last = this.rowHeightsCache.getRowIndex(height + this.offsetY) + 1;
-            pageSize = Math.ceil((last - first) / nearest) * nearest;
         }
         else {
             first = Math.max(this.offset * this.pageSize, 0);
             last = Math.min((first + this.pageSize), this.rowCount);
-            pageSize = this.pageSize;
         }
-        this.indexes = { first: first, last: last, pageSize: pageSize };
+        this.indexes = { first: first, last: last };
     };
     /**
      * Refreshes the full Row Height cache.  Should be used
@@ -511,33 +511,31 @@ var DataTableBodyComponent = (function () {
      */
     DataTableBodyComponent.prototype.updateViewRows = function (shift, grow) {
         var first = this.indexes.first;
-        var oldLength = this.temp.value.length;
-        var rowCount = this.rowCount ? (this.rowCount < first ? first : this.rowCount) : 0;
-        var newLength = first + oldLength + grow > rowCount ? rowCount - first : oldLength + grow;
+        var oldLength = this.temp.length;
+        var rowCount = this.rowCount ? this.rowCount : 0;
+        var newLength = first + oldLength + grow > rowCount ?
+            rowCount - (rowCount < first ? 0 : first) :
+            oldLength + grow;
         if (grow > 0 && oldLength + grow > newLength) {
             grow = newLength - oldLength;
         }
-        if (newLength < 0) {
-            throw Error("grow number is less than viewRows. first: " + first + ", oldLength: " + oldLength + ", grow: " + grow + ", shift: " + shift + ", rowCount: " + rowCount + ", newLength: " + newLength);
-        }
-        var temp = this.temp.value;
         // Shift
         if (oldLength > 0) {
             shift = shift % oldLength;
             if (Math.abs(shift) > 0) {
                 var move = shift < 0 ? oldLength + shift : shift;
-                temp = temp.slice(move).concat(temp.slice(0, move));
+                this.temp = this.temp.slice(move).concat(this.temp.slice(0, move));
             }
         }
         if (grow > 0) {
             var bufferLength = this._viewRowsBuffer.length;
             var oldItems = grow - (grow - bufferLength);
             if (oldItems > 0) {
-                temp.push.apply(temp, this._viewRowsBuffer.splice(0, oldItems));
+                (_a = this.temp).push.apply(_a, this._viewRowsBuffer.splice(0, oldItems));
             }
             var newCounter = this._counter + (grow - oldItems);
             for (var x = this._counter; x < newCounter; x++) {
-                temp.push({ $$viewIndex: x });
+                this.temp.push({ $$viewIndex: x });
             }
             this._counter = newCounter;
             // Check and add grown items
@@ -545,19 +543,18 @@ var DataTableBodyComponent = (function () {
         }
         else {
             for (var x = newLength; x < oldLength; x++) {
-                temp[x].row = undefined;
+                this.temp[x].row = undefined;
             }
-            (_a = this._viewRowsBuffer).push.apply(_a, temp.splice(newLength));
+            (_b = this._viewRowsBuffer).push.apply(_b, this.temp.splice(newLength));
         }
-        this.temp.next(temp);
-        var _a;
+        var _a, _b;
     };
     return DataTableBodyComponent;
 }());
 DataTableBodyComponent.decorators = [
     { type: core_1.Component, args: [{
                 selector: 'datatable-body',
-                template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [rows]=\"temp2\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-row-wrapper\n          *ngFor=\"let viewRow of temp | async; let i = index; trackBy: rowTrackingFn;\"\n          [ngStyle]=\"getRowsStyles(viewRow.row)\"\n          [rowDetail]=\"rowDetail\"\n          [detailRowHeight]=\"getDetailRowHeight(viewRow.row,i)\"\n          [row]=\"viewRow.row\"\n          [expanded]=\"viewRow.row.$$expanded === 1\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-row\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(viewRow.row)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"getRowHeight(viewRow.row)\"\n            [row]=\"viewRow.row\"\n            [rowClass]=\"rowClass\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-row>\n        </datatable-row-wrapper>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
+                template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [rows]=\"temp2\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-row-wrapper\n          *ngFor=\"let viewRow of temp; let i = index; trackBy: rowTrackingFn;\"\n          [ngStyle]=\"getRowsStyles(viewRow.row)\"\n          [rowDetail]=\"rowDetail\"\n          [detailRowHeight]=\"getDetailRowHeight(viewRow.row,i)\"\n          [row]=\"viewRow.row\"\n          [expanded]=\"viewRow.row.$$expanded === 1\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-row\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(viewRow.row)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"getRowHeight(viewRow.row)\"\n            [row]=\"viewRow.row\"\n            [rowClass]=\"rowClass\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-row>\n        </datatable-row-wrapper>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
                 host: {
                     class: 'datatable-body'
                 },
@@ -590,7 +587,7 @@ DataTableBodyComponent.propDecorators = {
     'innerWidth': [{ type: core_1.Input },],
     'bodyWidth': [{ type: core_1.HostBinding, args: ['style.width',] },],
     'bodyHeight': [{ type: core_1.Input }, { type: core_1.HostBinding, args: ['style.height',] },],
-    'scroll2': [{ type: core_1.Output },],
+    'bodyScroll': [{ type: core_1.Output },],
     'page': [{ type: core_1.Output },],
     'activate': [{ type: core_1.Output },],
     'select': [{ type: core_1.Output },],

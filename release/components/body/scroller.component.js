@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var ScrollerComponent = (function () {
-    function ScrollerComponent(element, renderer, _ngZone) {
+    function ScrollerComponent(element, renderer, zone) {
         this.renderer = renderer;
-        this._ngZone = _ngZone;
+        this.zone = zone;
         this.scrollbarV = false;
         this.scrollbarH = false;
         this.scroll = new core_1.EventEmitter();
@@ -20,7 +20,7 @@ var ScrollerComponent = (function () {
         // manual bind so we don't always listen
         if (this.scrollbarV || this.scrollbarH) {
             this.parentElement = this.element.parentElement.parentElement;
-            this._ngZone.runOutsideAngular(function () {
+            this.zone.runOutsideAngular(function () {
                 var manager = new platform_browser_1.EventManager([new platform_browser_1.ɵDomEventsPlugin(platform_browser_1.DOCUMENT)], new core_1.NgZone({ enableLongStackTrace: false }));
                 _this.onScrollListener = manager.addEventListener(_this.parentElement, 'scroll', _this.onScrolled.bind(_this));
             });

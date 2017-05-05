@@ -1,8 +1,12 @@
-import { EventEmitter, ElementRef, ViewContainerRef, OnDestroy, AfterViewInit, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
+import { EventEmitter, ElementRef, ViewContainerRef, OnDestroy, OnChanges } from '@angular/core';
 import { SortDirection } from '../../types';
 import { TableColumn } from '../../types/table-column.type';
-export declare class DataTableBodyCellComponent implements OnDestroy, AfterViewInit, OnChanges {
-    private cRef;
+export interface RowContext {
+    row: any;
+    column: any;
+    value: () => any;
+}
+export declare class DataTableBodyCellComponent implements OnDestroy, OnChanges {
     row: any;
     column: TableColumn;
     rowHeight: number;
@@ -18,10 +22,9 @@ export declare class DataTableBodyCellComponent implements OnDestroy, AfterViewI
     element: any;
     _sorts: any[];
     isFocused: boolean;
-    private _rowContext;
-    constructor(element: ElementRef, cRef: ChangeDetectorRef);
-    ngAfterViewInit(): void;
-    ngOnChanges(changes: SimpleChanges): void;
+    _rowContext: RowContext;
+    constructor(element: ElementRef);
+    ngOnChanges(): void;
     ngOnDestroy(): void;
     onFocus(): void;
     onBlur(): void;

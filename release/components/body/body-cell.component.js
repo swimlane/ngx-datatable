@@ -4,12 +4,11 @@ var core_1 = require("@angular/core");
 var utils_1 = require("../../utils");
 var types_1 = require("../../types");
 var DataTableBodyCellComponent = (function () {
-    function DataTableBodyCellComponent(element, cRef) {
-        this.cRef = cRef;
+    function DataTableBodyCellComponent(element) {
         this.activate = new core_1.EventEmitter();
         this.isFocused = false;
-        this.element = element.nativeElement;
         this._rowContext = { row: this.row, column: this.column, value: this.value };
+        this.element = element.nativeElement;
     }
     Object.defineProperty(DataTableBodyCellComponent.prototype, "sorts", {
         get: function () {
@@ -93,13 +92,7 @@ var DataTableBodyCellComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    DataTableBodyCellComponent.prototype.ngAfterViewInit = function () {
-        this.cRef.markForCheck();
-    };
-    DataTableBodyCellComponent.prototype.ngOnChanges = function (changes) {
-        if (!this._rowContext) {
-            return;
-        }
+    DataTableBodyCellComponent.prototype.ngOnChanges = function () {
         this._rowContext.row = this.row;
         this._rowContext.column = this.column;
         this._rowContext.value = this.value;
@@ -191,7 +184,6 @@ DataTableBodyCellComponent.decorators = [
 /** @nocollapse */
 DataTableBodyCellComponent.ctorParameters = function () { return [
     { type: core_1.ElementRef, },
-    { type: core_1.ChangeDetectorRef, },
 ]; };
 DataTableBodyCellComponent.propDecorators = {
     'row': [{ type: core_1.Input },],
