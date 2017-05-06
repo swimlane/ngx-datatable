@@ -26,6 +26,7 @@ import { FooterDemoComponent } from './basic/footer.component';
 // -- Paging
 import { ClientPagingComponent } from './paging/paging-client.component';
 import { ServerPagingComponent } from './paging/paging-server.component';
+import { ServerScrollingComponent } from './paging/scrolling-server.component';
 import { VirualPagingComponent } from './paging/paging-virtual.component';
 
 // -- Sorting
@@ -67,6 +68,7 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     RowDetailsComponent,
     ClientPagingComponent,
     ServerPagingComponent,
+    ServerScrollingComponent,
     ClientSortingComponent,
     DefaultSortingComponent,
     ServerSortingComponent,

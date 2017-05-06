@@ -62,6 +62,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
             <ul>
               <li><a href="#client-paging" (click)="state='client-paging'">Client-side</a></li>
               <li><a href="#server-paging" (click)="state='server-paging'">Server-side</a></li>
+              <li><a href="#server-scrolling" (click)="state='server-scrolling'">Scrolling server-side</a></li>
               <li><a href="#virtual-paging" (click)="state='virtual-paging'">Virual server-side</a></li>
             </ul>
           </li>
@@ -128,6 +129,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
         <!-- Paging -->
         <client-paging-demo *ngIf="state === 'client-paging'"></client-paging-demo>
         <server-paging-demo *ngIf="state === 'server-paging'"></server-paging-demo>
+        <server-scrolling-demo *ngIf="state === 'server-scrolling'"></server-scrolling-demo>
         <virtual-paging-demo *ngIf="state === 'virtual-paging'"></virtual-paging-demo>
 
         <!-- Sorting -->
