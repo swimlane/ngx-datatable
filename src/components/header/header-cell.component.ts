@@ -8,41 +8,48 @@ import { nextSortDir } from '../../utils';
 @Component({
   selector: 'datatable-header-cell',
   template: `
-    <div>
-      <label
-        *ngIf="isCheckboxable" 
-        class="datatable-checkbox">
-        <input 
-          type="checkbox"
-          [checked]="allRowsSelected"
-          (change)="select.emit(!allRowsSelected)" 
-        />
-      </label>
-      <span 
-        *ngIf="!column.headerTemplate"
-        class="datatable-header-cell-wrapper">
-        <span
-          class="datatable-header-cell-label draggable"
-          (click)="onSort()"
-          [innerHTML]="name">
+      <div>
+        <label
+          *ngIf="isCheckboxable" 
+          class="datatable-checkbox">
+          <input 
+            type="checkbox"
+            [checked]="allRowsSelected"
+            (change)="select.emit(!allRowsSelected)" 
+          />
+        </label>
+        <span 
+          *ngIf="!column.headerTemplate"
+          class="datatable-header-cell-wrapper">
+          <span
+            class="datatable-header-cell-label draggable"
+            (click)="onSort()"
+            [innerHTML]="name">
+          </span>
         </span>
-      </span>
-      <ng-template
-        *ngIf="column.headerTemplate"
-        [ngTemplateOutlet]="column.headerTemplate"
-        [ngOutletContext]="{ 
-          column: column, 
-          sortDir: sortDir,
-          sortFn: sortFn,
-          allRowsSelected: allRowsSelected,
-          selectFn: selectFn
-        }">
-      </ng-template>
-      <span
-        (click)="onSort()"
-        [class]="sortClass">
-      </span>
-    </div>
+        <ng-template
+          *ngIf="column.headerTemplate"
+          [ngTemplateOutlet]="column.headerTemplate"
+          [ngOutletContext]="{ 
+            column: column, 
+            sortDir: sortDir,
+            sortFn: sortFn,
+            allRowsSelected: allRowsSelected,
+            selectFn: selectFn
+          }">
+        </ng-template>
+        <span
+          (click)="onSort()"
+          [class]="sortClass">
+        </span>
+      </div>
+
+      <div class="datatable-sub-header-cell draggable" *ngIf="column.subHeaderTemplate">
+        <ng-template
+          [ngTemplateOutlet]="column.subHeaderTemplate"
+          [ngOutletContext]="{ column: column }">
+        </ng-template>
+      </div>
   `
 })
 export class DataTableHeaderCellComponent {

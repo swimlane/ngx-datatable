@@ -17,11 +17,12 @@ import {
   DatatableRowDetailDirective,
   ScrollerComponent,
   DataTableSelectionComponent,
-  DataTableColumnHeaderDirective,
+  DataTableColumnHeaderDirective,  
   DataTableColumnCellDirective,
   DatatableRowDetailTemplateDirective,
   DataTableFooterTemplateDirective,
-  DatatableFooterDirective
+  DatatableFooterDirective,
+  DataTableColumnSubHeaderDirective,
 } from './components';
 
 import {
@@ -64,6 +65,7 @@ import { ScrollbarHelper } from './services';
     DataTableBodyCellComponent,
     DataTableSelectionComponent,
     DataTableColumnHeaderDirective,
+    DataTableColumnSubHeaderDirective,
     DataTableColumnCellDirective,
     DatatableFooterDirective
   ],
@@ -73,6 +75,7 @@ import { ScrollbarHelper } from './services';
     DatatableRowDetailTemplateDirective,
     DataTableColumnDirective,
     DataTableColumnHeaderDirective,
+    DataTableColumnSubHeaderDirective,
     DataTableColumnCellDirective,
     DataTableFooterTemplateDirective,
     DatatableFooterDirective,
