@@ -78,6 +78,10 @@ export function translateTemplates(templates: DataTableColumnDirective[]): any[]
       col.headerTemplate = temp.headerTemplate;
     }
 
+    if(temp.subHeaderTemplate) {
+      col.subHeaderTemplate = temp.subHeaderTemplate;
+    }
+
     if(temp.cellTemplate) {
       col.cellTemplate = temp.cellTemplate;
     }

@@ -46,6 +46,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
               <li><a href="#css" (click)="state='css'">CSS Classes</a></li>
               <li><a href="#dark" (click)="state='dark'">Dark theme</a></li>
               <li><a href="#footer" (click)="state='footer'">Footer Template</a></li>
+              <li><a href="#sub-header" (click)="state='sub-header'">Sub Header Template</a></li>
             </ul>
           </li>
           <li>
@@ -125,6 +126,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
         <dynamic-height-demo *ngIf="state === 'dynamic'"></dynamic-height-demo>
         <basic-dark-theme-demo *ngIf="state === 'dark'"></basic-dark-theme-demo>
         <footer-demo *ngIf="state === 'footer'"></footer-demo>
+        <sub-header-demo *ngIf="state === 'sub-header'"></sub-header-demo>
 
         <!-- Paging -->
         <client-paging-demo *ngIf="state === 'client-paging'"></client-paging-demo>
