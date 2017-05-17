@@ -47,7 +47,7 @@ export class DataTableSelectionComponent {
           index, 
           this.prevIndex, 
           this.getRowSelectedIdx.bind(this));
-      } else if (event.ctrlKey || multiClick || chkbox) {
+      } else if (event.ctrlKey || event.metaKey || multiClick || chkbox) {
           selected = selectRows([...this.selected], row, this.getRowSelectedIdx.bind(this));
       } else {
         selected = selectRows([], row, this.getRowSelectedIdx.bind(this));
