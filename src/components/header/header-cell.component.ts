@@ -1,5 +1,5 @@
 import {
-  Component, Input, EventEmitter, Output, HostBinding
+  Component, Input, EventEmitter, Output, HostBinding, HostListener
 } from '@angular/core';
 
 import { SortDirection, SortType, SelectionType, TableColumn } from '../../types';
@@ -43,8 +43,12 @@ import { nextSortDir } from '../../utils';
         [class]="sortClass">
       </span>
     </div>
-  `
+  `,
+  host: {
+    class: 'datatable-header-cell'
+  }
 })
+
 export class DataTableHeaderCellComponent {
 
   @Input() sortType: SortType;
@@ -69,6 +73,7 @@ export class DataTableHeaderCellComponent {
 
   @Output() sort: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
+  @Output() columnContextmenu = new EventEmitter<{ event: MouseEvent, column: any }>(false);
 
   @HostBinding('class')
   get columnCssClasses(): any {
@@ -122,6 +127,11 @@ export class DataTableHeaderCellComponent {
   @HostBinding('style.width.px')
   get width(): number {
     return this.column.width;
+  }
+
+  @HostListener('contextmenu', ['$event'])
+  onContextmenu($event: MouseEvent): void {
+    this.columnContextmenu.emit({ event: $event, column: this.column });
   }
 
   get isCheckboxable(): boolean {
