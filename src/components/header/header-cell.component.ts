@@ -1,9 +1,9 @@
 import {
   Component, Input, EventEmitter, Output, HostBinding, HostListener
 } from '@angular/core';
-
 import { SortDirection, SortType, SelectionType, TableColumn } from '../../types';
 import { nextSortDir } from '../../utils';
+import { MouseEvent } from '../../events';
 
 @Component({
   selector: 'datatable-header-cell',

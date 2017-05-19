@@ -3,6 +3,7 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import { MouseEvent } from '../events';
 import 'rxjs/add/operator/takeUntil';
 
 @Directive({

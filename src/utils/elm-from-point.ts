@@ -1,4 +1,4 @@
-if (!document.elementsFromPoint) {
+if (document !== undefined && !document.elementsFromPoint) {
   document.elementsFromPoint = elementsFromPoint;
 }
 
@@ -21,6 +21,8 @@ export function elementsFromPoint(x: number, y: number) {
   let current: any;  // TODO: window.getComputedStyle should be used with inferred type (Element)
   let i;
   let d;
+
+  //if (document === undefined) return elements;
 
   // get all elements via elementFromPoint, and remove them from hit-testing in order
   while ((current = document.elementFromPoint(x, y)) && elements.indexOf(current) === -1 && current != null) {

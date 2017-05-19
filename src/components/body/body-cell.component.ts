@@ -6,6 +6,7 @@ import {
 import { Keys } from '../../utils';
 import { SortDirection } from '../../types';
 import { TableColumn } from '../../types/table-column.type';
+import { MouseEvent, KeyboardEvent } from '../../events';
 
 @Component({
   selector: 'datatable-body-cell',

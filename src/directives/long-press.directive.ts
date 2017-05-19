@@ -5,6 +5,7 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/takeUntil';
+import { MouseEvent } from './../events';
 
 @Directive({ selector: '[long-press]' })
 export class LongPressDirective implements OnDestroy {
