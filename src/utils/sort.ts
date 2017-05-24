@@ -34,8 +34,10 @@ export function nextSortDir(sortType: SortType, current: SortDirection): SortDir
 export function orderByComparator(a: any, b: any): number {
   if (a === null || typeof a === 'undefined') a = 0;
   if (b === null || typeof b === 'undefined') b = 0;
-
-  if ((isNaN(parseFloat(a)) || !isFinite(a)) || (isNaN(parseFloat(b)) || !isFinite(b))) {
+  if (a instanceof Date && b instanceof Date) {
+    if (a < b) return -1;
+    if (a > b) return 1;
+  } else if ((isNaN(parseFloat(a)) || !isFinite(a)) || (isNaN(parseFloat(b)) || !isFinite(b))) {
     // Convert to string in case of a=0 or b=0
     a = String(a);
     b = String(b);
