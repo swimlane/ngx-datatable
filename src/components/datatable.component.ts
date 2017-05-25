@@ -940,7 +940,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   onColumnContextmenu({ event, column }: any): void {
-    this.tableContextmenu.emit({ event: event, type: ContextmenuType.header, content: column });
+    this.tableContextmenu.emit({ event, type: ContextmenuType.header, content: column });
   }
 
   /**
@@ -951,7 +951,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   onRowContextmenu({ event, row }: any): void {
-    this.tableContextmenu.emit({ event: event, type: ContextmenuType.body, content: row });
+    this.tableContextmenu.emit({ event, type: ContextmenuType.body, content: row });
   }
 
   /**
@@ -969,7 +969,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
     let idx: number;
     const cols = this.columns.map((c, i) => {
-      c = Object.assign({}, c);
+      c = { ...c };
 
       if (c.$$id === column.$$id) {
         idx = i;
@@ -1001,7 +1001,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    */
   onColumnReorder({column, newValue, prevValue}: any): void {
     const cols = this.columns.map(c => {
-      return Object.assign({}, c);
+      return { ...c };
     });
 
     const prevCol = cols[newValue];

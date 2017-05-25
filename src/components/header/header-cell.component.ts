@@ -129,11 +129,6 @@ export class DataTableHeaderCellComponent {
     return this.column.width;
   }
 
-  @HostListener('contextmenu', ['$event'])
-  onContextmenu($event: MouseEvent): void {
-    this.columnContextmenu.emit({ event: $event, column: this.column });
-  }
-
   get isCheckboxable(): boolean {
     return this.column.checkboxable && 
       this.column.headerCheckboxable && 
@@ -145,6 +140,11 @@ export class DataTableHeaderCellComponent {
   sortDir: SortDirection;
   _sorts: any[];
   selectFn = this.select.emit.bind(this.select);
+
+  @HostListener('contextmenu', ['$event'])
+  onContextmenu($event: MouseEvent): void {
+    this.columnContextmenu.emit({ event: $event, column: this.column });
+  }
 
   calcSortDir(sorts: any[]): any {
     if(sorts && this.column) {

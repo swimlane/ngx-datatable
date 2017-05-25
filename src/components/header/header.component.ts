@@ -173,7 +173,7 @@ export class DataTableHeaderComponent {
     let idx = 0;
 
     const sorts = this.sorts.map((s, i) => {
-      s = Object.assign({}, s);
+      s = { ...s };
       if (s.prop === column.prop) idx = i;
       return s;
     });
