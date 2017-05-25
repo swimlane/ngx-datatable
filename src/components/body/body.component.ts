@@ -13,7 +13,6 @@ import { ScrollerComponent } from './scroller.component';
       [selected]="selected"
       [rows]="temp"
       [selectCheck]="selectCheck"
-      [selectEnabled]="selectEnabled"
       [selectionType]="selectionType"
       [rowIdentity]="rowIdentity"
       (select)="select.emit($event)"
@@ -38,7 +37,7 @@ import { ScrollerComponent } from './scroller.component';
           (rowContextmenu)="rowContextmenu.emit($event)">
           <datatable-body-row
             tabindex="-1"
-            [isSelected]="selector.getRowSelected(row)"
+            [isSelected]="selector.isRowSelected(row)"
             [innerWidth]="innerWidth"
             [offsetX]="offsetX"
             [columns]="columns"
