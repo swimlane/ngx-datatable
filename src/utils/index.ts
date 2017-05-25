@@ -5,7 +5,6 @@ export * from './camel-case';
 export * from './keys';
 export * from './math';
 export * from './prefixes';
-export * from './selection';
 export * from './translate';
 export * from './throttle';
 export * from './sort';
