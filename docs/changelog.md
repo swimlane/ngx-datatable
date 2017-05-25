@@ -1,5 +1,10 @@
 # Changelog
 
+## 9.2.0
+- Enhancement: Add header context menu event
+- Bug: Fix sort blowing up when undefined and adding new sort
+- Bug: Fix multi-selection key with Mac
+
 ## 9.1.0
 - Enhancement: Add more context to cells #720
 - Enhancement: Export Pager component #735

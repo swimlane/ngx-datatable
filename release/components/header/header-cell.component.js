@@ -7,6 +7,7 @@ var DataTableHeaderCellComponent = (function () {
     function DataTableHeaderCellComponent() {
         this.sort = new core_1.EventEmitter();
         this.select = new core_1.EventEmitter();
+        this.columnContextmenu = new core_1.EventEmitter(false);
         this.sortFn = this.onSort.bind(this);
         this.selectFn = this.select.emit.bind(this.select);
     }
@@ -97,6 +98,9 @@ var DataTableHeaderCellComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    DataTableHeaderCellComponent.prototype.onContextmenu = function ($event) {
+        this.columnContextmenu.emit({ event: $event, column: this.column });
+    };
     DataTableHeaderCellComponent.prototype.calcSortDir = function (sorts) {
         var _this = this;
         if (sorts && this.column) {
@@ -133,7 +137,10 @@ var DataTableHeaderCellComponent = (function () {
 DataTableHeaderCellComponent.decorators = [
     { type: core_1.Component, args: [{
                 selector: 'datatable-header-cell',
-                template: "\n    <div>\n      <label\n        *ngIf=\"isCheckboxable\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [checked]=\"allRowsSelected\"\n          (change)=\"select.emit(!allRowsSelected)\" \n        />\n      </label>\n      <span \n        *ngIf=\"!column.headerTemplate\"\n        class=\"datatable-header-cell-wrapper\">\n        <span\n          class=\"datatable-header-cell-label draggable\"\n          (click)=\"onSort()\"\n          [innerHTML]=\"name\">\n        </span>\n      </span>\n      <ng-template\n        *ngIf=\"column.headerTemplate\"\n        [ngTemplateOutlet]=\"column.headerTemplate\"\n        [ngOutletContext]=\"{ \n          column: column, \n          sortDir: sortDir,\n          sortFn: sortFn,\n          allRowsSelected: allRowsSelected,\n          selectFn: selectFn\n        }\">\n      </ng-template>\n      <span\n        (click)=\"onSort()\"\n        [class]=\"sortClass\">\n      </span>\n    </div>\n  "
+                template: "\n    <div>\n      <label\n        *ngIf=\"isCheckboxable\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [checked]=\"allRowsSelected\"\n          (change)=\"select.emit(!allRowsSelected)\" \n        />\n      </label>\n      <span \n        *ngIf=\"!column.headerTemplate\"\n        class=\"datatable-header-cell-wrapper\">\n        <span\n          class=\"datatable-header-cell-label draggable\"\n          (click)=\"onSort()\"\n          [innerHTML]=\"name\">\n        </span>\n      </span>\n      <ng-template\n        *ngIf=\"column.headerTemplate\"\n        [ngTemplateOutlet]=\"column.headerTemplate\"\n        [ngOutletContext]=\"{ \n          column: column, \n          sortDir: sortDir,\n          sortFn: sortFn,\n          allRowsSelected: allRowsSelected,\n          selectFn: selectFn\n        }\">\n      </ng-template>\n      <span\n        (click)=\"onSort()\"\n        [class]=\"sortClass\">\n      </span>\n    </div>\n  ",
+                host: {
+                    class: 'datatable-header-cell'
+                }
             },] },
 ];
 /** @nocollapse */
@@ -149,11 +156,13 @@ DataTableHeaderCellComponent.propDecorators = {
     'sorts': [{ type: core_1.Input },],
     'sort': [{ type: core_1.Output },],
     'select': [{ type: core_1.Output },],
+    'columnContextmenu': [{ type: core_1.Output },],
     'columnCssClasses': [{ type: core_1.HostBinding, args: ['class',] },],
     'name': [{ type: core_1.HostBinding, args: ['attr.title',] },],
     'minWidth': [{ type: core_1.HostBinding, args: ['style.minWidth.px',] },],
     'maxWidth': [{ type: core_1.HostBinding, args: ['style.maxWidth.px',] },],
     'width': [{ type: core_1.HostBinding, args: ['style.width.px',] },],
+    'onContextmenu': [{ type: core_1.HostListener, args: ['contextmenu', ['$event'],] },],
 };
 exports.DataTableHeaderCellComponent = DataTableHeaderCellComponent;
 //# sourceMappingURL=header-cell.component.js.map
