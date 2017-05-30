@@ -28,7 +28,7 @@ export function selectRowsBetween(
     if (reverse) {
       range = {
         start: index,
-        end: (prevIndex - index)
+        end: prevIndex
       };
     } else {
       range = {
