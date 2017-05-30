@@ -13,6 +13,92 @@ describe('Datatable component', () => {
     TestBed.compileComponents();
   }));
 
+  describe('When the column is sorted', () => {
+    it('should sort a column with Date values', () => {
+      const fixture = TestBed.createComponent(DatatableComponent);
+      const initialRows = [
+        {birthDate: new Date(1980, 12, 1)},
+        {birthDate: new Date(1978, 8, 5)},
+        {birthDate: new Date(1995, 4, 3)}
+      ];
+  
+      const columns = [
+        {
+          prop: 'birthDate'
+        }
+      ];
+  
+      fixture.componentInstance.rows = initialRows;
+      fixture.componentInstance.columns = columns;
+  
+      fixture.detectChanges();
+  
+      fixture.componentInstance.onColumnSort({
+        sorts: [{prop: 'birthDate', dir: 'desc'}]
+      });
+  
+      expect(fixture.componentInstance.rows[0]).toBe(initialRows[2]);
+      expect(fixture.componentInstance.rows[1]).toBe(initialRows[0]);
+      expect(fixture.componentInstance.rows[2]).toBe(initialRows[1]);
+    });
+
+    it('should sort a column with number values', () => {
+      const fixture = TestBed.createComponent(DatatableComponent);
+      const initialRows = [
+        {id: 5},
+        {id: 20},
+        {id: 12}
+      ];
+  
+      const columns = [
+        {
+          prop: 'id'
+        }
+      ];
+  
+      fixture.componentInstance.rows = initialRows;
+      fixture.componentInstance.columns = columns;
+  
+      fixture.detectChanges();
+  
+      fixture.componentInstance.onColumnSort({
+        sorts: [{prop: 'id', dir: 'desc'}]
+      });
+  
+      expect(fixture.componentInstance.rows[0]).toBe(initialRows[1]);
+      expect(fixture.componentInstance.rows[1]).toBe(initialRows[2]);
+      expect(fixture.componentInstance.rows[2]).toBe(initialRows[0]);
+    });
+
+    it('should sort a column with string values', () => {
+      const fixture = TestBed.createComponent(DatatableComponent);
+      const initialRows = [
+        {product: 'Computers'},
+        {product: 'Bikes'},
+        {product: 'Smartphones'}
+      ];
+  
+      const columns = [
+        {
+          prop: 'product'
+        }
+      ];
+  
+      fixture.componentInstance.rows = initialRows;
+      fixture.componentInstance.columns = columns;
+  
+      fixture.detectChanges();
+  
+      fixture.componentInstance.onColumnSort({
+        sorts: [{prop: 'product', dir: 'desc'}]
+      });
+  
+      expect(fixture.componentInstance.rows[0]).toBe(initialRows[2]);
+      expect(fixture.componentInstance.rows[1]).toBe(initialRows[0]);
+      expect(fixture.componentInstance.rows[2]).toBe(initialRows[1]);
+    });
+  });
+
   describe('When the column is sorted with a custom comparator', () => {
 
     it('should return a new array', () => {
