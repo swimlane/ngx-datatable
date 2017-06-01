@@ -1,9 +1,26 @@
 import {
-  Component, Input, EventEmitter, Output, HostBinding, HostListener
+  Component, Input, EventEmitter, Output, HostBinding, HostListener, ChangeDetectionStrategy, OnChanges, SimpleChanges,
+  OnInit
 } from '@angular/core';
 import { SortDirection, SortType, SelectionType, TableColumn } from '../../types';
 import { nextSortDir } from '../../utils';
 import { MouseEvent } from '../../events';
+
+/**
+ * properties provided to the headerTemplate
+ */
+interface HeaderTemplateContext {
+  column: TableColumn;
+  sortDir: SortDirection;
+  sortFn: () => void;
+  allRowsSelected: boolean;
+  selectFn: (o: any) => void;
+}
+
+/**
+ * Input properties that if changed, should re-generate the headerTemplateContext
+ */
+const headerContextProps = ['column', 'sorts', 'allRowsSelected'];
 
 @Component({
   selector: 'datatable-header-cell',
@@ -30,13 +47,7 @@ import { MouseEvent } from '../../events';
       <ng-template
         *ngIf="column.headerTemplate"
         [ngTemplateOutlet]="column.headerTemplate"
-        [ngOutletContext]="{ 
-          column: column, 
-          sortDir: sortDir,
-          sortFn: sortFn,
-          allRowsSelected: allRowsSelected,
-          selectFn: selectFn
-        }">
+        [ngOutletContext]="headerTemplateContext">
       </ng-template>
       <span
         (click)="onSort()"
@@ -46,10 +57,11 @@ import { MouseEvent } from '../../events';
   `,
   host: {
     class: 'datatable-header-cell'
-  }
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class DataTableHeaderCellComponent {
+export class DataTableHeaderCellComponent implements OnInit, OnChanges {
 
   @Input() sortType: SortType;
   @Input() column: TableColumn;
@@ -141,9 +153,39 @@ export class DataTableHeaderCellComponent {
   _sorts: any[];
   selectFn = this.select.emit.bind(this.select);
 
+  private headerTemplateContext: HeaderTemplateContext;
+
+  private initialized: boolean;
+
   @HostListener('contextmenu', ['$event'])
   onContextmenu($event: MouseEvent): void {
     this.columnContextmenu.emit({ event: $event, column: this.column });
+  }
+
+  ngOnInit() {
+    this.updateHeaderTemplateContext();
+    this.initialized = true;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!this.initialized) return;
+    // determine if a property that affects headerTemplateContext has changed
+    for (const prop in headerContextProps) {
+      if (changes.hasOwnProperty(prop)) {
+        this.updateHeaderTemplateContext();
+        break;
+      }
+    }
+  }
+
+  private updateHeaderTemplateContext() {
+    this.headerTemplateContext = {
+      column: this.column,
+      sortDir: this.sortDir,
+      sortFn: this.sortFn,
+      allRowsSelected: this.allRowsSelected,
+      selectFn: this.selectFn
+    };
   }
 
   calcSortDir(sorts: any[]): any {
