@@ -1,7 +1,9 @@
-import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
+import {
+  Component, Input, EventEmitter, Output, HostBinding, HostListener
+} from '@angular/core';
 
-import { SelectionType, SortDirection, SortType, TableColumn } from '../../types/index';
-import { nextSortDir } from '../../utils/sort';
+import { SortDirection, SortType, SelectionType, TableColumn } from '../../types';
+import { nextSortDir } from '../../utils';
 
 @Component({
   selector: 'datatable-header-cell',
@@ -41,8 +43,12 @@ import { nextSortDir } from '../../utils/sort';
         [class]="sortClass">
       </span>
     </div>
-  `
+  `,
+  host: {
+    class: 'datatable-header-cell'
+  }
 })
+
 export class DataTableHeaderCellComponent {
 
   @Input() sortType: SortType;
@@ -67,52 +73,39 @@ export class DataTableHeaderCellComponent {
 
   @Output() sort: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
+  @Output() columnContextmenu = new EventEmitter<{ event: MouseEvent, column: any }>(false);
 
   @HostBinding('class')
   get columnCssClasses(): any {
-    let columnClass = 'datatable-header-cell';
+    let cls = 'datatable-header-cell';
 
-    if (!this.column) {
-      return columnClass;
-    }
-
-    if (this.column.sortable) {
-      columnClass += ' sortable';
-    }
-
-    if (this.column.resizeable) {
-      columnClass += ' resizeable';
-    }
-
-    if (this.column.headerClass) {
-      if (typeof this.column.headerClass === 'string') {
-        columnClass += ' ' + this.column.headerClass;
-      } else if (typeof this.column.headerClass === 'function') {
-        const res = this.column.headerClass({
+    if(this.column.sortable) cls += ' sortable';
+    if(this.column.resizeable) cls += ' resizeable';
+    if(this.column.headerClass) {
+      if(typeof this.column.headerClass === 'string') {
+        cls += ' ' + this.column.headerClass;
+      } else if(typeof this.column.headerClass === 'function') {
+        const res = this.column.headerClass({ 
           column: this.column
         });
 
-        if (typeof res === 'string') {
-          columnClass += res;
-        } else if (typeof res === 'object') {
+        if(typeof res === 'string') {
+          cls += res;
+        } else if(typeof res === 'object') {
           const keys = Object.keys(res);
-
-          for (const k of keys) {
-            if (res[k] === true) {
-              columnClass += ` ${k}`;
-            }
+          for(const k of keys) {
+            if(res[k] === true) cls += ` ${k}`;
           }
         }
       }
     }
 
     const sortDir = this.sortDir;
-
-    if (sortDir) {
-      columnClass += ` sort-active sort-${sortDir}`;
+    if(sortDir) {
+      cls += ` sort-active sort-${sortDir}`;
     }
 
-    return columnClass;
+    return cls;
   }
 
   @HostBinding('attr.title')
@@ -137,8 +130,8 @@ export class DataTableHeaderCellComponent {
   }
 
   get isCheckboxable(): boolean {
-    return this.column.checkboxable &&
-      this.column.headerCheckboxable &&
+    return this.column.checkboxable && 
+      this.column.headerCheckboxable && 
       this.selectionType === SelectionType.checkbox;
   }
 
@@ -154,19 +147,17 @@ export class DataTableHeaderCellComponent {
   }
 
   calcSortDir(sorts: any[]): any {
-    if (sorts && this.column) {
+    if(sorts && this.column) {
       const sort = sorts.find((s: any) => {
         return s.prop === this.column.prop;
       });
 
-      if (sort) {
-        return sort.dir;
-      }
+      if(sort) return sort.dir;
     }
   }
 
   onSort(): void {
-    if (!this.column.sortable) return;
+    if(!this.column.sortable) return;
 
     const newValue = nextSortDir(this.sortType, this.sortDir);
     this.sort.emit({
@@ -177,12 +168,13 @@ export class DataTableHeaderCellComponent {
   }
 
   calcSortClass(sortDir: SortDirection): string {
-    if (sortDir === SortDirection.asc) {
+    if(sortDir === SortDirection.asc) {
       return `sort-btn sort-asc ${this.sortAscendingIcon}`;
-    } else if (sortDir === SortDirection.desc) {
+    } else if(sortDir === SortDirection.desc) {
       return `sort-btn sort-desc ${this.sortDescendingIcon}`;
     } else {
       return `sort-btn`;
     }
   }
+
 }
