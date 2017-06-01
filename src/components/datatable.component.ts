@@ -221,6 +221,15 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   @Input() externalPaging: boolean = false;
 
   /**
+   * If the table should use pagination on scroll
+   * otherwise it only uses the pagination in the footer
+   * 
+   * @type {boolean}
+   * @memberOf DatatableComponent
+   */
+  @Input() scrollPaging: boolean = true;
+
+  /**
    * If the table should use external sorting or
    * the built-in basic sorting.
    *
@@ -848,14 +857,16 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   onBodyPage({offset}: any): void {
-    this.offset = offset;
+    if (this.scrollPaging) {
+      this.offset = offset;
 
-    this.page.emit({
-      count: this.count,
-      pageSize: this.pageSize,
-      limit: this.limit,
-      offset: this.offset
-    });
+      this.page.emit({
+        count: this.count,
+        pageSize: this.pageSize,
+        limit: this.limit,
+        offset: this.offset
+      });
+    }
   }
 
   /**
