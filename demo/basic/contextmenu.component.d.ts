@@ -7,7 +7,8 @@ export declare class ContextMenuDemoComponent {
     })[];
     rawEvent: MouseEvent;
     contextmenuRow: any;
+    contextmenuColumn: any;
     constructor();
-    onContextMenu(contextMenuEvent: any): void;
+    onTableContextMenu(contextMenuEvent: any): void;
     fetch(cb: any): void;
 }

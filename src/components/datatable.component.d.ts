@@ -1,6 +1,6 @@
 import { ElementRef, EventEmitter, OnInit, QueryList, AfterViewInit, DoCheck, KeyValueDiffers, KeyValueDiffer } from '@angular/core';
 import { ScrollbarHelper } from '../services';
-import { ColumnMode, SortType, SelectionType, TableColumn } from '../types';
+import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
@@ -290,13 +290,16 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      */
     resize: EventEmitter<any>;
     /**
-     * The context menu was invoked on a row.
+     * The context menu was invoked on the table.
+     * type indicates whether the header or the body was clicked.
+     * content contains either the column or the row that was clicked.
      *
      * @memberOf DatatableComponent
      */
-    rowContextmenu: EventEmitter<{
+    tableContextmenu: EventEmitter<{
         event: MouseEvent;
-        row: any;
+        type: ContextmenuType;
+        content: any;
     }>;
     /**
      * CSS class applied if the header height if fixed height.
@@ -546,6 +549,22 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      * @memberOf DatatableComponent
      */
     calcRowCount(val?: any[]): number;
+    /**
+     * The header triggered a contextmenu event.
+     *
+     * @param {*} { event, column }
+     *
+     * @memberOf DatatableComponent
+     */
+    onColumnContextmenu({event, column}: any): void;
+    /**
+     * The body triggered a contextmenu event.
+     *
+     * @param {*} { event, row }
+     *
+     * @memberOf DatatableComponent
+     */
+    onRowContextmenu({event, row}: any): void;
     /**
      * The header triggered a column resize event.
      *

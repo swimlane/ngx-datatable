@@ -17,6 +17,8 @@ export declare class DataTableBodyCellComponent implements OnDestroy {
     element: any;
     _sorts: any[];
     isFocused: boolean;
+    onCheckboxChangeFn: any;
+    activateFn: any;
     constructor(element: ElementRef);
     ngOnDestroy(): void;
     onFocus(): void;
