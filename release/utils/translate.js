@@ -7,7 +7,7 @@ var transform = prefixes_1.getVendorPrefixedName('transform');
 var backfaceVisibility = prefixes_1.getVendorPrefixedName('backfaceVisibility');
 var hasCSSTransforms = !!prefixes_1.getVendorPrefixedName('transform');
 var hasCSS3DTransforms = !!prefixes_1.getVendorPrefixedName('perspective');
-var ua = window.navigator.userAgent;
+var ua = window ? window.navigator.userAgent : "Chrome";
 var isSafari = (/Safari\//).test(ua) && !(/Chrome\//).test(ua);
 function translateXY(styles, x, y) {
     if (hasCSSTransforms) {

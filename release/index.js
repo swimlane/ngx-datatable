@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"9.2.0" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"9.3.0" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -3591,6 +3591,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var utils_1 = __webpack_require__("./src/utils/index.ts");
 var types_1 = __webpack_require__("./src/types/index.ts");
+var events_1 = __webpack_require__("./src/events.ts");
 var DataTableBodyCellComponent = (function () {
     function DataTableBodyCellComponent(element) {
         this.activate = new core_1.EventEmitter();
@@ -3814,19 +3815,19 @@ __decorate([
 __decorate([
     core_1.HostListener('click', ['$event']),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [MouseEvent]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], DataTableBodyCellComponent.prototype, "onClick", null);
 __decorate([
     core_1.HostListener('dblclick', ['$event']),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [MouseEvent]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], DataTableBodyCellComponent.prototype, "onDblClick", null);
 __decorate([
     core_1.HostListener('keydown', ['$event']),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [KeyboardEvent]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], DataTableBodyCellComponent.prototype, "onKeyDown", null);
 DataTableBodyCellComponent = __decorate([
@@ -3860,6 +3861,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
+var events_1 = __webpack_require__("./src/events.ts");
 var DataTableRowWrapperComponent = (function () {
     function DataTableRowWrapperComponent() {
         this.expanded = false;
@@ -3893,7 +3895,7 @@ __decorate([
 __decorate([
     core_1.HostListener('contextmenu', ['$event']),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [MouseEvent]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], DataTableRowWrapperComponent.prototype, "onContextmenu", null);
 DataTableRowWrapperComponent = __decorate([
@@ -3928,6 +3930,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var utils_1 = __webpack_require__("./src/utils/index.ts");
 var services_1 = __webpack_require__("./src/services/index.ts");
+var events_1 = __webpack_require__("./src/events.ts");
 var DataTableBodyRowComponent = (function () {
     function DataTableBodyRowComponent(scrollbarHelper, element) {
         this.scrollbarHelper = scrollbarHelper;
@@ -4095,7 +4098,7 @@ __decorate([
 __decorate([
     core_1.HostListener('keydown', ['$event']),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [KeyboardEvent]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], DataTableBodyRowComponent.prototype, "onKeyDown", null);
 DataTableBodyRowComponent = __decorate([
@@ -6795,6 +6798,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var types_1 = __webpack_require__("./src/types/index.ts");
 var utils_1 = __webpack_require__("./src/utils/index.ts");
+var events_1 = __webpack_require__("./src/events.ts");
 var DataTableHeaderCellComponent = (function () {
     function DataTableHeaderCellComponent() {
         this.sort = new core_1.EventEmitter();
@@ -7000,7 +7004,7 @@ __decorate([
 __decorate([
     core_1.HostListener('contextmenu', ['$event']),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [MouseEvent]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], DataTableHeaderCellComponent.prototype, "onContextmenu", null);
 DataTableHeaderCellComponent = __decorate([
@@ -7701,6 +7705,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var Observable_1 = __webpack_require__("./node_modules/rxjs/Observable.js");
 __webpack_require__("./node_modules/rxjs/add/operator/takeUntil.js");
+var events_1 = __webpack_require__("./src/events.ts");
 var LongPressDirective = (function () {
     function LongPressDirective() {
         this.pressEnabled = true;
@@ -7832,7 +7837,7 @@ __decorate([
 __decorate([
     core_1.HostListener('mousedown', ['$event']),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [MouseEvent]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], LongPressDirective.prototype, "onMouseDown", null);
 LongPressDirective = __decorate([
@@ -8001,6 +8006,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var Observable_1 = __webpack_require__("./node_modules/rxjs/Observable.js");
+var events_1 = __webpack_require__("./src/events.ts");
 __webpack_require__("./node_modules/rxjs/add/operator/takeUntil.js");
 var ResizeableDirective = (function () {
     function ResizeableDirective(element) {
@@ -8079,7 +8085,7 @@ __decorate([
 __decorate([
     core_1.HostListener('mousedown', ['$event']),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [MouseEvent]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], ResizeableDirective.prototype, "onMousedown", null);
 ResizeableDirective = __decorate([
@@ -8178,6 +8184,19 @@ VisibilityDirective = __decorate([
 ], VisibilityDirective);
 exports.VisibilityDirective = VisibilityDirective;
 
+
+/***/ }),
+
+/***/ "./src/events.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.MouseEvent = global.MouseEvent;
+exports.KeyboardEvent = global.KeyboardEvent;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -8710,7 +8729,7 @@ exports.columnsByPinArr = columnsByPinArr;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-if (!document.elementsFromPoint) {
+if (document !== undefined && !document.elementsFromPoint) {
     document.elementsFromPoint = elementsFromPoint;
 }
 /*tslint:disable*/
@@ -8732,6 +8751,7 @@ function elementsFromPoint(x, y) {
     var current; // TODO: window.getComputedStyle should be used with inferred type (Element)
     var i;
     var d;
+    //if (document === undefined) return elements;
     // get all elements via elementFromPoint, and remove them from hit-testing in order
     while ((current = document.elementFromPoint(x, y)) && elements.indexOf(current) === -1 && current != null) {
         // push the element and its current style
@@ -9015,24 +9035,24 @@ function getContentWidth(allColumns, defaultColWidth) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var camel_case_1 = __webpack_require__("./src/utils/camel-case.ts");
 var cache = {};
-var testStyle = document.createElement('div').style;
+var testStyle = document !== undefined ? document.createElement('div').style : undefined;
 // Get Prefix
 // http://davidwalsh.name/vendor-prefix
 var prefix = (function () {
-    var styles = window.getComputedStyle(document.documentElement, '');
-    var pre = (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/))[1];
-    var dom = ('WebKit|Moz|MS|O').match(new RegExp('(' + pre + ')', 'i'))[1];
-    return {
+    var styles = window !== undefined ? window.getComputedStyle(document.documentElement, '') : undefined;
+    var pre = styles !== undefined ? (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/))[1] : undefined;
+    var dom = pre !== undefined ? ('WebKit|Moz|MS|O').match(new RegExp('(' + pre + ')', 'i'))[1] : undefined;
+    return dom ? {
         dom: dom,
         lowercase: pre,
         css: "-" + pre + "-",
         js: pre[0].toUpperCase() + pre.substr(1)
-    };
+    } : undefined;
 })();
 function getVendorPrefixedName(property) {
     var name = camel_case_1.camelCase(property);
     if (!cache[name]) {
-        if (testStyle[prefix.css + property] !== undefined) {
+        if (prefix !== undefined && testStyle[prefix.css + property] !== undefined) {
             cache[name] = prefix.css + property;
         }
         else if (testStyle[property] !== undefined) {
@@ -9233,7 +9253,7 @@ function selectRowsBetween(selected, rows, index, prevIndex, comparefn) {
         if (reverse) {
             range = {
                 start: index,
-                end: (prevIndex - index)
+                end: prevIndex
             };
         }
         else {
@@ -9305,7 +9325,13 @@ function orderByComparator(a, b) {
         a = 0;
     if (b === null || typeof b === 'undefined')
         b = 0;
-    if ((isNaN(parseFloat(a)) || !isFinite(a)) || (isNaN(parseFloat(b)) || !isFinite(b))) {
+    if (a instanceof Date && b instanceof Date) {
+        if (a < b)
+            return -1;
+        if (a > b)
+            return 1;
+    }
+    else if ((isNaN(parseFloat(a)) || !isFinite(a)) || (isNaN(parseFloat(b)) || !isFinite(b))) {
         // Convert to string in case of a=0 or b=0
         a = String(a);
         b = String(b);
@@ -9473,7 +9499,7 @@ var transform = prefixes_1.getVendorPrefixedName('transform');
 var backfaceVisibility = prefixes_1.getVendorPrefixedName('backfaceVisibility');
 var hasCSSTransforms = !!prefixes_1.getVendorPrefixedName('transform');
 var hasCSS3DTransforms = !!prefixes_1.getVendorPrefixedName('perspective');
-var ua = window.navigator.userAgent;
+var ua = window ? window.navigator.userAgent : "Chrome";
 var isSafari = (/Safari\//).test(ua) && !(/Chrome\//).test(ua);
 function translateXY(styles, x, y) {
     if (hasCSSTransforms) {

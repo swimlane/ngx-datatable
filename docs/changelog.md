@@ -1,5 +1,8 @@
 # Changelog
 
+## 9.3.0
+- Feature: Unviseral Rendering (#764)
+
 ## 9.2.0
 - Enhancement: Add header context menu event
 - Bug: Fix sort blowing up when undefined and adding new sort

@@ -2,24 +2,24 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var camel_case_1 = require("./camel-case");
 var cache = {};
-var testStyle = document.createElement('div').style;
+var testStyle = document !== undefined ? document.createElement('div').style : undefined;
 // Get Prefix
 // http://davidwalsh.name/vendor-prefix
 var prefix = (function () {
-    var styles = window.getComputedStyle(document.documentElement, '');
-    var pre = (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/))[1];
-    var dom = ('WebKit|Moz|MS|O').match(new RegExp('(' + pre + ')', 'i'))[1];
-    return {
+    var styles = window !== undefined ? window.getComputedStyle(document.documentElement, '') : undefined;
+    var pre = styles !== undefined ? (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/))[1] : undefined;
+    var dom = pre !== undefined ? ('WebKit|Moz|MS|O').match(new RegExp('(' + pre + ')', 'i'))[1] : undefined;
+    return dom ? {
         dom: dom,
         lowercase: pre,
         css: "-" + pre + "-",
         js: pre[0].toUpperCase() + pre.substr(1)
-    };
+    } : undefined;
 })();
 function getVendorPrefixedName(property) {
     var name = camel_case_1.camelCase(property);
     if (!cache[name]) {
-        if (testStyle[prefix.css + property] !== undefined) {
+        if (prefix !== undefined && testStyle[prefix.css + property] !== undefined) {
             cache[name] = prefix.css + property;
         }
         else if (testStyle[property] !== undefined) {
