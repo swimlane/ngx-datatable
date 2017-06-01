@@ -173,8 +173,12 @@ export class DataTableHeaderComponent {
   calcNewSorts(column: any, prevValue: number, newValue: number): any[] {
     let idx = 0;
 
+    if(!this.sorts) {
+      this.sorts = [];
+    }
+
     const sorts = this.sorts.map((s, i) => {
-      s = Object.assign({}, s);
+      s = { ...s };
       if (s.prop === column.prop) idx = i;
       return s;
     });

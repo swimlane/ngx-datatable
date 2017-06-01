@@ -19,7 +19,7 @@ var DataTableSelectionComponent = (function () {
             if (event.shiftKey) {
                 selected = utils_1.selectRowsBetween([], this.rows, index, this.prevIndex, this.getRowSelectedIdx.bind(this));
             }
-            else if (event.ctrlKey || multiClick || chkbox) {
+            else if (event.ctrlKey || event.metaKey || multiClick || chkbox) {
                 selected = utils_1.selectRows(this.selected.slice(), row, this.getRowSelectedIdx.bind(this));
             }
             else {

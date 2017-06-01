@@ -11,6 +11,10 @@ export declare class DataTableHeaderCellComponent {
     sorts: any[];
     sort: EventEmitter<any>;
     select: EventEmitter<any>;
+    columnContextmenu: EventEmitter<{
+        event: MouseEvent;
+        column: any;
+    }>;
     readonly columnCssClasses: any;
     readonly name: string;
     readonly minWidth: number;
@@ -22,6 +26,7 @@ export declare class DataTableHeaderCellComponent {
     sortDir: SortDirection;
     _sorts: any[];
     selectFn: any;
+    onContextmenu($event: MouseEvent): void;
     calcSortDir(sorts: any[]): any;
     onSort(): void;
     calcSortClass(sortDir: SortDirection): string;
