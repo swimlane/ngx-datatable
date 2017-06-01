@@ -6,7 +6,7 @@ const transform = getVendorPrefixedName('transform');
 const backfaceVisibility = getVendorPrefixedName('backfaceVisibility');
 const hasCSSTransforms = !!getVendorPrefixedName('transform');
 const hasCSS3DTransforms = !!getVendorPrefixedName('perspective');
-const ua = window.navigator.userAgent;
+const ua = window ? window.navigator.userAgent : "Chrome";
 const isSafari = (/Safari\//).test(ua) && !(/Chrome\//).test(ua);
 
 export function translateXY(styles: any, x: number, y: number) {

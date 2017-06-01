@@ -1,6 +1,7 @@
 import { 
   Component, Input, Output, EventEmitter, HostListener 
 } from '@angular/core';
+import { MouseEvent } from '../../events';
 
 @Component({
   selector: 'datatable-row-wrapper',

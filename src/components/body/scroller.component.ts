@@ -3,6 +3,8 @@ import {
   OnInit, OnDestroy, HostBinding
 } from '@angular/core';
 
+import { MouseEvent } from '../../events';
+
 @Component({
   selector: 'datatable-scroller',
   template: `

@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Keys, selectRows, selectRowsBetween } from '../../utils';
 import { SelectionType } from '../../types';
+import { MouseEvent, KeyboardEvent } from '../../events';
 
 export interface Model {
   type: string;

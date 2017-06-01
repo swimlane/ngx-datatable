@@ -15,6 +15,7 @@ import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
+import { MouseEvent } from '../events';
 
 @Component({
   selector: 'ngx-datatable',
