@@ -1,14 +1,14 @@
 import { camelCase } from './camel-case';
 
 const cache = {};
-const testStyle = document !== undefined ? document.createElement('div').style : undefined;
+const testStyle = typeof document !== 'undefined' ? document.createElement('div').style : undefined;
 
 // Get Prefix
 // http://davidwalsh.name/vendor-prefix
 const prefix = (function() {
-  const styles = window !== undefined ? window.getComputedStyle(document.documentElement, '') : undefined;
-  const pre = styles !== undefined ? (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/))[1] : undefined;
-  const dom = pre !== undefined ? ('WebKit|Moz|MS|O').match(new RegExp('(' + pre + ')', 'i'))[1] : undefined;
+  const styles = typeof window !== 'undefined' ? window.getComputedStyle(document.documentElement, '') : undefined;
+  const pre = typeof styles !== 'undefined' ? (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/))[1] : undefined;
+  const dom = typeof pre !== 'undefined' ? ('WebKit|Moz|MS|O').match(new RegExp('(' + pre + ')', 'i'))[1] : undefined;
 
   return dom ? {
     dom,
