@@ -90,7 +90,7 @@ import { MouseEvent } from '../events';
     </div>
   `,
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./datatable.component.scss'],
+  styleUrls: ['../../src/components/datatable.component.scss'],
   host: {
     class: 'ngx-datatable'
   }
