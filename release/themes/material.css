@@ -260,3 +260,42 @@
   100% {
     opacity: 0;
     transform: translateX(-50%) scale(0, 1); } }
+
+
+       .rowYellow{
+    
+          background-color: #ffff99 !important ;
+
+        }
+
+          .rowRed{
+    
+          background-color: #ff9999
+           !important;
+        }
+
+          .rowGreen{
+    
+          background-color: #ccffe6 !important;
+
+        }
+          .rowCyan{
+    
+          background-color: #00FFFF
+           !important;
+
+        }
+
+         .rowBlue{
+    
+          background-color: #b3d9ff
+           !important;
+
+        }
+
+          .rowOrange{
+    
+          background-color: #ffe4b3
+           !important;
+
+        }
