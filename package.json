@@ -133,6 +133,7 @@
     "webpack-dev-server": "^2.4.5",
     "webpack-merge": "^4.1.0",
     "webpack-notifier": "^1.5.0",
-    "zone.js": "^0.8.11"
+    "zone.js": "^0.8.11",
+    "xmlbuilder": "https://github.com/felixge/xmlbuilder-js/tarball/4303eb2650a4b819a980b1dc9d2965862a1e9faf"
   }
 }
