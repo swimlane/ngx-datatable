@@ -278,7 +278,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     const scrollYPos: number = event.scrollYPos;
     const scrollXPos: number = event.scrollXPos;
 
-    console.log(" +++++++++ ======= +++++ ", this.columnGroupWidths);
+    // console.log(" +++++++++ ======= +++++ ", this.columnGroupWidths);
 
     // if scroll change, trigger update
     // this is mainly used for header cell positions

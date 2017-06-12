@@ -31,7 +31,7 @@ export class DataTableBodyRowComponent {
 
   @Input() set columns(val: any[]) {
     this._columns = val;
-    console.log(" =============== ", this._columns);
+    // console.log(" =============== ", this._columns);
     this.recalculateColumns(val);
   }
 
@@ -80,7 +80,7 @@ export class DataTableBodyRowComponent {
 
   @HostBinding('style.width.px')
   get columnsTotalWidths(): string {
-    return this.columnGroupWidths.total - 15;
+    return (this.columnGroupWidths.total - 15) + '';
   }
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
