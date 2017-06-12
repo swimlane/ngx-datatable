@@ -214,8 +214,8 @@ export class DataTableHeaderComponent {
       translateXY(styles, offsetX * -1, 0);
     } else if (group === 'right') {
       const totalDiff = widths.total - this.innerWidth;
-      // const offset = totalDiff * -1;
-      const offset = (totalDiff + this.scrollbarHelper.width) * -1;
+      const offset = totalDiff * -1;
+      // const offset = (totalDiff + this.scrollbarHelper.width) * -1;
       translateXY(styles, offset, 0);
     }
 
