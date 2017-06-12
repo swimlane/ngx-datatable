@@ -1,18 +1,8 @@
 "use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var utils_1 = require("../../utils");
 var services_1 = require("../../services");
-var events_1 = require("../../events");
 var DataTableBodyRowComponent = (function () {
     function DataTableBodyRowComponent(scrollbarHelper, element) {
         this.scrollbarHelper = scrollbarHelper;
@@ -23,6 +13,7 @@ var DataTableBodyRowComponent = (function () {
         get: function () {
             return this._columns;
         },
+        // datatable-row-right datatable-row-group
         set: function (val) {
             this._columns = val;
             // console.log(" =============== ", this._columns);
@@ -136,63 +127,29 @@ var DataTableBodyRowComponent = (function () {
     };
     return DataTableBodyRowComponent;
 }());
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Array),
-    __metadata("design:paramtypes", [Array])
-], DataTableBodyRowComponent.prototype, "columns", null);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Number),
-    __metadata("design:paramtypes", [Number])
-], DataTableBodyRowComponent.prototype, "innerWidth", null);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Object)
-], DataTableBodyRowComponent.prototype, "rowClass", void 0);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Object)
-], DataTableBodyRowComponent.prototype, "row", void 0);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Number)
-], DataTableBodyRowComponent.prototype, "offsetX", void 0);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Boolean)
-], DataTableBodyRowComponent.prototype, "isSelected", void 0);
-__decorate([
-    core_1.HostBinding('class'),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [])
-], DataTableBodyRowComponent.prototype, "cssClass", null);
-__decorate([
-    core_1.HostBinding('style.height.px'),
-    core_1.Input(),
-    __metadata("design:type", Number)
-], DataTableBodyRowComponent.prototype, "rowHeight", void 0);
-__decorate([
-    core_1.HostBinding('style.width.px'),
-    __metadata("design:type", String),
-    __metadata("design:paramtypes", [])
-], DataTableBodyRowComponent.prototype, "columnsTotalWidths", null);
-__decorate([
-    core_1.Output(),
-    __metadata("design:type", core_1.EventEmitter)
-], DataTableBodyRowComponent.prototype, "activate", void 0);
-__decorate([
-    core_1.HostListener('keydown', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], DataTableBodyRowComponent.prototype, "onKeyDown", null);
-DataTableBodyRowComponent = __decorate([
-    core_1.Component({
-        selector: 'datatable-body-row',
-        template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: trackByGroups\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [isSelected]=\"isSelected\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>\n  "
-    }),
-    __metadata("design:paramtypes", [services_1.ScrollbarHelper, core_1.ElementRef])
-], DataTableBodyRowComponent);
+DataTableBodyRowComponent.decorators = [
+    { type: core_1.Component, args: [{
+                selector: 'datatable-body-row',
+                template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: trackByGroups\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [isSelected]=\"isSelected\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>\n  "
+            },] },
+];
+/** @nocollapse */
+DataTableBodyRowComponent.ctorParameters = function () { return [
+    { type: services_1.ScrollbarHelper, },
+    { type: core_1.ElementRef, },
+]; };
+DataTableBodyRowComponent.propDecorators = {
+    'columns': [{ type: core_1.Input },],
+    'innerWidth': [{ type: core_1.Input },],
+    'rowClass': [{ type: core_1.Input },],
+    'row': [{ type: core_1.Input },],
+    'offsetX': [{ type: core_1.Input },],
+    'isSelected': [{ type: core_1.Input },],
+    'cssClass': [{ type: core_1.HostBinding, args: ['class',] },],
+    'rowHeight': [{ type: core_1.HostBinding, args: ['style.height.px',] }, { type: core_1.Input },],
+    'columnsTotalWidths': [{ type: core_1.HostBinding, args: ['style.width.px',] },],
+    'activate': [{ type: core_1.Output },],
+    'onKeyDown': [{ type: core_1.HostListener, args: ['keydown', ['$event'],] },],
+};
 exports.DataTableBodyRowComponent = DataTableBodyRowComponent;
 //# sourceMappingURL=body-row.component.js.map

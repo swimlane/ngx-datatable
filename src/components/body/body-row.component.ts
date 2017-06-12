@@ -28,7 +28,7 @@ import { MouseEvent, KeyboardEvent } from '../../events';
   `
 })
 export class DataTableBodyRowComponent {
-
+  // datatable-row-right datatable-row-group
   @Input() set columns(val: any[]) {
     this._columns = val;
     // console.log(" =============== ", this._columns);

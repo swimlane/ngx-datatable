@@ -1,7 +1,9 @@
 import { EventEmitter } from '@angular/core';
 import { SortType, SelectionType } from '../../types';
 import { DataTableColumnDirective } from '../columns';
+import { ScrollbarHelper } from "../../services/scrollbar-helper.service";
 export declare class DataTableHeaderComponent {
+    private scrollbarHelper;
     sortAscendingIcon: any;
     sortDescendingIcon: any;
     scrollbarH: boolean;
@@ -27,6 +29,7 @@ export declare class DataTableHeaderComponent {
     columnGroupWidths: any;
     _columns: any[];
     _headerHeight: string;
+    constructor(scrollbarHelper: ScrollbarHelper);
     onLongPressStart({event, model}: {
         event: any;
         model: any;
