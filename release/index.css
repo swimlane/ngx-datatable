@@ -1,0 +1,191 @@
+/**
+ * angular2-data-table v"9.3.0" (https://github.com/swimlane/angular2-data-table)
+ * Copyright 2016
+ * Licensed under MIT
+ */
+.ngx-datatable {
+  display: block;
+  overflow: hidden;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: relative;
+  -webkit-transform: translate3d(0, 0, 0);
+  /**
+   * Vertical Scrolling Adjustments
+   */
+  /**
+   * Horizontal Scrolling Adjustments
+   */
+  /**
+   * Fixed Header Height Adjustments
+   */
+  /**
+   * Fixed row height adjustments
+   */
+  /**
+   * Shared Styles
+   */
+  /**
+   * Header Styles
+   */
+  /**
+   * Body Styles
+   */
+  /**
+   * Footer Styles
+   */ }
+  .ngx-datatable [hidden] {
+    display: none !important; }
+  .ngx-datatable *, .ngx-datatable *:before, .ngx-datatable *:after {
+    box-sizing: border-box; }
+  .ngx-datatable.scroll-vertical .datatable-body {
+    overflow-y: auto; }
+    .ngx-datatable.scroll-vertical .datatable-body .datatable-row-wrapper {
+      position: absolute; }
+  .ngx-datatable.scroll-horz .datatable-body {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; }
+  .ngx-datatable.fixed-header .datatable-header .datatable-header-inner {
+    white-space: nowrap; }
+    .ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis; }
+  .ngx-datatable.fixed-row .datatable-scroll {
+    white-space: nowrap; }
+    .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row {
+      white-space: nowrap; }
+      .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-cell {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
+  .ngx-datatable .datatable-body-row,
+  .ngx-datatable .datatable-header-inner {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-flow: row;
+    -o-flex-flow: row;
+    flex-flow: row; }
+  .ngx-datatable .datatable-body-cell,
+  .ngx-datatable .datatable-header-cell {
+    vertical-align: top;
+    display: inline-block;
+    line-height: 1.625;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none; }
+    .ngx-datatable .datatable-body-cell:focus,
+    .ngx-datatable .datatable-header-cell:focus {
+      outline: none; }
+  .ngx-datatable .datatable-row-left,
+  .ngx-datatable .datatable-row-right {
+    z-index: 9; }
+  .ngx-datatable .datatable-row-left,
+  .ngx-datatable .datatable-row-center,
+  .ngx-datatable .datatable-row-right {
+    position: relative; }
+  .ngx-datatable .datatable-header {
+    display: block;
+    overflow: hidden; }
+    .ngx-datatable .datatable-header .datatable-header-inner {
+      -webkit-box-align: stretch;
+          -ms-flex-align: stretch;
+              align-items: stretch;
+      -webkit-align-items: stretch; }
+    .ngx-datatable .datatable-header .datatable-header-cell {
+      position: relative;
+      display: inline-block; }
+      .ngx-datatable .datatable-header .datatable-header-cell .datatable-header-cell-wrapper {
+        cursor: pointer; }
+      .ngx-datatable .datatable-header .datatable-header-cell.longpress .datatable-header-cell-wrapper {
+        cursor: move; }
+      .ngx-datatable .datatable-header .datatable-header-cell .sort-btn {
+        line-height: 100%;
+        vertical-align: middle;
+        display: inline-block;
+        cursor: pointer; }
+      .ngx-datatable .datatable-header .datatable-header-cell .resize-handle {
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 5px;
+        padding: 0 4px;
+        visibility: hidden;
+        cursor: ew-resize; }
+      .ngx-datatable .datatable-header .datatable-header-cell.resizeable:hover .resize-handle {
+        visibility: visible; }
+  .ngx-datatable .datatable-body {
+    position: relative;
+    z-index: 10;
+    display: block; }
+    .ngx-datatable .datatable-body .datatable-scroll {
+      display: inline-block; }
+    .ngx-datatable .datatable-body .datatable-row-detail {
+      overflow-y: hidden; }
+    .ngx-datatable .datatable-body .datatable-row-wrapper {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column; }
+    .ngx-datatable .datatable-body .datatable-body-row {
+      outline: none; }
+      .ngx-datatable .datatable-body .datatable-body-row > div {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex; }
+  .ngx-datatable .datatable-footer {
+    display: block;
+    width: 100%; }
+    .ngx-datatable .datatable-footer .datatable-footer-inner {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      width: 100%; }
+    .ngx-datatable .datatable-footer .selected-count .page-count {
+      -webkit-box-flex: 1;
+          -ms-flex: 1 1 40%;
+              flex: 1 1 40%; }
+    .ngx-datatable .datatable-footer .selected-count .datatable-pager {
+      -webkit-box-flex: 1;
+          -ms-flex: 1 1 60%;
+              flex: 1 1 60%; }
+    .ngx-datatable .datatable-footer .page-count {
+      -webkit-box-flex: 1;
+          -ms-flex: 1 1 20%;
+              flex: 1 1 20%; }
+    .ngx-datatable .datatable-footer .datatable-pager {
+      -webkit-box-flex: 1;
+          -ms-flex: 1 1 80%;
+              flex: 1 1 80%;
+      text-align: right; }
+      .ngx-datatable .datatable-footer .datatable-pager .pager,
+      .ngx-datatable .datatable-footer .datatable-pager .pager li {
+        padding: 0;
+        margin: 0;
+        display: inline-block;
+        list-style: none; }
+      .ngx-datatable .datatable-footer .datatable-pager .pager li, .ngx-datatable .datatable-footer .datatable-pager .pager li a {
+        outline: none; }
+      .ngx-datatable .datatable-footer .datatable-pager .pager li a {
+        cursor: pointer;
+        display: inline-block; }
+      .ngx-datatable .datatable-footer .datatable-pager .pager li.disabled a {
+        cursor: not-allowed; }
+
+/*# sourceMappingURL=index.map*/
