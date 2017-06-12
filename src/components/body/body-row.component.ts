@@ -28,7 +28,7 @@ import { MouseEvent, KeyboardEvent } from '../../events';
   `
 })
 export class DataTableBodyRowComponent {
-
+  // datatable-row-right datatable-row-group
   @Input() set columns(val: any[]) {
     this._columns = val;
     this.recalculateColumns(val);
@@ -116,7 +116,8 @@ export class DataTableBodyRowComponent {
       const bodyWidth = parseInt(this.innerWidth + '', 0);
       const totalDiff = widths.total - bodyWidth;
       const offsetDiff = totalDiff - offsetX;
-      const offset = (offsetDiff + this.scrollbarHelper.width) * -1;
+      // const offset = (offsetDiff + this.scrollbarHelper.width) * -1;
+      const offset = (offsetDiff) * -1;
       translateXY(styles, offset, 0);
     }
 
