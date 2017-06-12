@@ -66,6 +66,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     _rowCount: number;
     _offset: number;
     _pageSize: number;
+    activeScrollWidth: number;
     /**
      * Creates an instance of DataTableBodyComponent.
      *

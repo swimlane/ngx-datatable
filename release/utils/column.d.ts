@@ -30,7 +30,4 @@ export declare function columnTotalWidth(columns: any[], prop?: string): number;
  * @param {string} property width to get
  */
 export declare function columnsTotalWidth(columns: any, prop?: any): number;
-export declare function columnsByPinArr(val: any): {
-    type: string;
-    columns: any;
-}[];
+export declare function columnsByPinArr(val: any): any[];
