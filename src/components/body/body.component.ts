@@ -28,6 +28,7 @@ import { MouseEvent } from '../../events';
         [scrollbarH]="scrollbarH"
         [scrollHeight]="scrollHeight"
         [scrollWidth]="columnGroupWidths.total"
+        [actualWith]="activeScrollWidth"
         (scroll)="onBodyScroll($event)">
         <datatable-row-wrapper
           *ngFor="let row of temp; let i = index; trackBy: rowTrackingFn;"
@@ -101,6 +102,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
     const colsByPin = columnsByPin(val);
     this.columnGroupWidths = columnGroupWidths(colsByPin, val);
+    this.activeScrollWidth = this.columnGroupWidths.total - this.columnGroupWidths.center;
   }
 
   get columns(): any[] {
@@ -202,6 +204,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   _offset: number;
   _pageSize: number;
 
+  activeScrollWidth: number;
+
   /**
    * Creates an instance of DataTableBodyComponent.
    * 
@@ -273,6 +277,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   onBodyScroll(event: any): void {
     const scrollYPos: number = event.scrollYPos;
     const scrollXPos: number = event.scrollXPos;
+
+    console.log(" +++++++++ ======= +++++ ", this.columnGroupWidths);
 
     // if scroll change, trigger update
     // this is mainly used for header cell positions
@@ -428,7 +434,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
       translateXY(styles, 0, pos);
     }
-
     return styles;
   }
 

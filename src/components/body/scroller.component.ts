@@ -25,6 +25,8 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   @HostBinding('style.width.px')
   @Input() scrollWidth: number;
 
+  @Input() actualWith: number;
+
   @Output() scroll: EventEmitter<any> = new EventEmitter();
 
   scrollYPos: number = 0;
@@ -65,6 +67,9 @@ export class ScrollerComponent implements OnInit, OnDestroy {
     this.scrollYPos = dom.scrollTop;
     this.scrollXPos = dom.scrollLeft;
 
+    if (this.scrollXPos > this.actualWith) {
+      return;
+    }
     requestAnimationFrame(this.updateOffset.bind(this));
   }
 
