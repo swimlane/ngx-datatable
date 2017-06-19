@@ -25,7 +25,7 @@ import { Component } from '@angular/core';
             ngx-datatable-footer-template 
             let-rowCount="rowCount"
             let-pageSize="pageSize"
-            let-selectedCount="selectedCount",
+            let-selectedCount="selectedCount"
             let-curPage="curPage"
             let-offset="offset">
             <div style="padding: 5px 10px">
