@@ -27,7 +27,7 @@ import { FooterDemoComponent } from './basic/footer.component';
 import { ClientPagingComponent } from './paging/paging-client.component';
 import { ServerPagingComponent } from './paging/paging-server.component';
 import { ServerScrollingComponent } from './paging/scrolling-server.component';
-import { VirualPagingComponent } from './paging/paging-virtual.component';
+import { VirtualPagingComponent } from './paging/paging-virtual.component';
 
 // -- Sorting
 import { SortingComparatorComponent } from './sorting/sorting-comparator.component';
@@ -83,7 +83,7 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     ColumnForceComponent,
     ColumnPinningComponent,
     FilterBarComponent,
-    VirualPagingComponent,
+    VirtualPagingComponent,
     DarkThemeComponent,
     TabsDemoComponent,
     SingleSelectionComponent,

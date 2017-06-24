@@ -63,7 +63,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
               <li><a href="#client-paging" (click)="state='client-paging'">Client-side</a></li>
               <li><a href="#server-paging" (click)="state='server-paging'">Server-side</a></li>
               <li><a href="#server-scrolling" (click)="state='server-scrolling'">Scrolling server-side</a></li>
-              <li><a href="#virtual-paging" (click)="state='virtual-paging'">Virual server-side</a></li>
+              <li><a href="#virtual-paging" (click)="state='virtual-paging'">Virtual server-side</a></li>
             </ul>
           </li>
           <li>
