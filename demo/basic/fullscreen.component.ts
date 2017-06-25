@@ -12,9 +12,10 @@ import { Component } from '@angular/core';
           </a>
         </small>
       </h3>
+      <div style="padding: 20px; width: 100%; height: 100%;">
       <ngx-datatable
         class="material fullscreen"
-        style="top: 52px"
+        style="top: 52px;"
         [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="0"
@@ -27,8 +28,9 @@ import { Component } from '@angular/core';
         <ngx-datatable-column name="Gender"></ngx-datatable-column>
         <ngx-datatable-column name="Age"></ngx-datatable-column>
         <ngx-datatable-column name="City" [width]="300" prop="address.city"></ngx-datatable-column>
-        <ngx-datatable-column name="State" [width]="300" prop="address.state"></ngx-datatable-column>
+        <ngx-datatable-column name="State" [width]="300" prop="address.state" [frozenRight]="true"></ngx-datatable-column>
       </ngx-datatable>
+      </div>
     </div>
   `
 })

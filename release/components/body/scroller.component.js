@@ -34,6 +34,9 @@ var ScrollerComponent = (function () {
         var dom = event.currentTarget;
         this.scrollYPos = dom.scrollTop;
         this.scrollXPos = dom.scrollLeft;
+        if (this.scrollXPos > this.actualWith) {
+            return;
+        }
         requestAnimationFrame(this.updateOffset.bind(this));
     };
     ScrollerComponent.prototype.updateOffset = function () {
@@ -73,6 +76,7 @@ ScrollerComponent.propDecorators = {
     'scrollbarH': [{ type: core_1.Input },],
     'scrollHeight': [{ type: core_1.HostBinding, args: ['style.height.px',] }, { type: core_1.Input },],
     'scrollWidth': [{ type: core_1.HostBinding, args: ['style.width.px',] }, { type: core_1.Input },],
+    'actualWith': [{ type: core_1.Input },],
     'scroll': [{ type: core_1.Output },],
 };
 exports.ScrollerComponent = ScrollerComponent;

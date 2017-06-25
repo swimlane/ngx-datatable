@@ -5,6 +5,7 @@ import { SortType, SelectionType } from '../../types';
 import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY } from '../../utils';
 import { DataTableColumnDirective } from '../columns';
 import { MouseEvent } from '../../events';
+import {ScrollbarHelper} from "../../services/scrollbar-helper.service";
 
 @Component({
   selector: 'datatable-header',
@@ -103,6 +104,9 @@ export class DataTableHeaderComponent {
   _columns: any[];
   _headerHeight: string;
 
+  constructor(private scrollbarHelper: ScrollbarHelper) {
+
+  }
   onLongPressStart({ event, model }: { event: any, model: any }) {
     model.dragging = true;
     this.dragEventTarget = event;
@@ -211,6 +215,7 @@ export class DataTableHeaderComponent {
     } else if (group === 'right') {
       const totalDiff = widths.total - this.innerWidth;
       const offset = totalDiff * -1;
+      // const offset = (totalDiff + this.scrollbarHelper.width) * -1;
       translateXY(styles, offset, 0);
     }
 

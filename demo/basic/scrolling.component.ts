@@ -13,19 +13,20 @@ import { Component } from '@angular/core';
         </small>
       </h3>
       <ngx-datatable
-        class="material"
+        class="material striped"
         [rows]="rows"
         columnMode="force"
         [headerHeight]="50"
         [footerHeight]="0"
         [rowHeight]="50"
         [scrollbarV]="true"
-        [scrollbarH]="true">
-        <ngx-datatable-column name="Name" [width]="300"></ngx-datatable-column>
-        <ngx-datatable-column name="Gender"></ngx-datatable-column>
-        <ngx-datatable-column name="Age"></ngx-datatable-column>
-        <ngx-datatable-column name="City" [width]="300" prop="address.city"></ngx-datatable-column>
-        <ngx-datatable-column name="State" [width]="300" prop="address.state"></ngx-datatable-column>
+        [scrollbarH]="true" 
+      >
+        <ngx-datatable-column name="Name" [width]="200" [frozenLeft]="true"></ngx-datatable-column>
+        <ngx-datatable-column name="Gender" [width]="300"></ngx-datatable-column>
+        <ngx-datatable-column name="Age" [width]="300"></ngx-datatable-column>
+        <ngx-datatable-column name="City" [width]="300" prop="address.city" [frozenRight]="true"></ngx-datatable-column>
+        <ngx-datatable-column name="State" [width]="200" prop="address.state"></ngx-datatable-column>
       </ngx-datatable>
     </div>
   `

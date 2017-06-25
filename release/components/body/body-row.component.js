@@ -13,8 +13,10 @@ var DataTableBodyRowComponent = (function () {
         get: function () {
             return this._columns;
         },
+        // datatable-row-right datatable-row-group
         set: function (val) {
             this._columns = val;
+            // console.log(" =============== ", this._columns);
             this.recalculateColumns(val);
         },
         enumerable: true,
@@ -61,7 +63,7 @@ var DataTableBodyRowComponent = (function () {
     });
     Object.defineProperty(DataTableBodyRowComponent.prototype, "columnsTotalWidths", {
         get: function () {
-            return this.columnGroupWidths.total;
+            return (this.columnGroupWidths.total - 15) + '';
         },
         enumerable: true,
         configurable: true
@@ -85,8 +87,11 @@ var DataTableBodyRowComponent = (function () {
             var bodyWidth = parseInt(this.innerWidth + '', 0);
             var totalDiff = widths.total - bodyWidth;
             var offsetDiff = totalDiff - offsetX;
-            var offset = (offsetDiff + this.scrollbarHelper.width) * -1;
-            utils_1.translateXY(styles, offset, 0);
+            // const offset = (offsetDiff + this.scrollbarHelper.width) * -1; //origin
+            var offset = (offsetDiff) * -1;
+            if (!isNaN(offset) && offset < 0) {
+                utils_1.translateXY(styles, offset, 0);
+            }
         }
         return styles;
     };

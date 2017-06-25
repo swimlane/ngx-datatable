@@ -28,9 +28,10 @@ import { MouseEvent, KeyboardEvent } from '../../events';
   `
 })
 export class DataTableBodyRowComponent {
-
+  // datatable-row-right datatable-row-group
   @Input() set columns(val: any[]) {
     this._columns = val;
+    // console.log(" =============== ", this._columns);
     this.recalculateColumns(val);
   }
 
@@ -79,7 +80,7 @@ export class DataTableBodyRowComponent {
 
   @HostBinding('style.width.px')
   get columnsTotalWidths(): string {
-    return this.columnGroupWidths.total;
+    return (this.columnGroupWidths.total - 15) + '';
   }
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
@@ -116,10 +117,13 @@ export class DataTableBodyRowComponent {
       const bodyWidth = parseInt(this.innerWidth + '', 0);
       const totalDiff = widths.total - bodyWidth;
       const offsetDiff = totalDiff - offsetX;
-      const offset = (offsetDiff + this.scrollbarHelper.width) * -1;
-      translateXY(styles, offset, 0);
-    }
+      // const offset = (offsetDiff + this.scrollbarHelper.width) * -1; //origin
+      const offset = (offsetDiff) * -1;
 
+      if ( !isNaN(offset) && offset < 0) {
+        translateXY(styles, offset, 0);
+      }
+    }
     return styles;
   }
 

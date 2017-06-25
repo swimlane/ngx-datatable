@@ -5,6 +5,7 @@ export declare class ScrollerComponent implements OnInit, OnDestroy {
     scrollbarH: boolean;
     scrollHeight: number;
     scrollWidth: number;
+    actualWith: number;
     scroll: EventEmitter<any>;
     scrollYPos: number;
     scrollXPos: number;

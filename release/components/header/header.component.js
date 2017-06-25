@@ -11,8 +11,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var types_1 = require("../../types");
 var utils_1 = require("../../utils");
+var scrollbar_helper_service_1 = require("../../services/scrollbar-helper.service");
 var DataTableHeaderComponent = (function () {
-    function DataTableHeaderComponent() {
+    function DataTableHeaderComponent(scrollbarHelper) {
+        this.scrollbarHelper = scrollbarHelper;
         this.sort = new core_1.EventEmitter();
         this.reorder = new core_1.EventEmitter();
         this.resize = new core_1.EventEmitter();
@@ -148,6 +150,7 @@ var DataTableHeaderComponent = (function () {
         else if (group === 'right') {
             var totalDiff = widths.total - this.innerWidth;
             var offset = totalDiff * -1;
+            // const offset = (totalDiff + this.scrollbarHelper.width) * -1;
             utils_1.translateXY(styles, offset, 0);
         }
         return styles;
@@ -164,7 +167,9 @@ DataTableHeaderComponent.decorators = [
             },] },
 ];
 /** @nocollapse */
-DataTableHeaderComponent.ctorParameters = function () { return []; };
+DataTableHeaderComponent.ctorParameters = function () { return [
+    { type: scrollbar_helper_service_1.ScrollbarHelper, },
+]; };
 DataTableHeaderComponent.propDecorators = {
     'sortAscendingIcon': [{ type: core_1.Input },],
     'sortDescendingIcon': [{ type: core_1.Input },],
