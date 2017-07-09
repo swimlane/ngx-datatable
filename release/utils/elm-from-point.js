@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-if (document !== undefined && !document.elementsFromPoint) {
+if (typeof document !== 'undefined' && !document.elementsFromPoint) {
     document.elementsFromPoint = elementsFromPoint;
 }
 /*tslint:disable*/
@@ -42,5 +42,5 @@ function elementsFromPoint(x, y) {
     return elements;
 }
 exports.elementsFromPoint = elementsFromPoint;
-/*tslint:enable*/
+/*tslint:enable*/ 
 //# sourceMappingURL=elm-from-point.js.map

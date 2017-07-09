@@ -59,26 +59,26 @@ var ResizeableDirective = (function () {
             this.subscription = undefined;
         }
     };
+    ResizeableDirective.decorators = [
+        { type: core_1.Directive, args: [{
+                    selector: '[resizeable]',
+                    host: {
+                        '[class.resizeable]': 'resizeEnabled'
+                    }
+                },] },
+    ];
+    /** @nocollapse */
+    ResizeableDirective.ctorParameters = function () { return [
+        { type: core_1.ElementRef, },
+    ]; };
+    ResizeableDirective.propDecorators = {
+        'resizeEnabled': [{ type: core_1.Input },],
+        'minWidth': [{ type: core_1.Input },],
+        'maxWidth': [{ type: core_1.Input },],
+        'resize': [{ type: core_1.Output },],
+        'onMousedown': [{ type: core_1.HostListener, args: ['mousedown', ['$event'],] },],
+    };
     return ResizeableDirective;
 }());
-ResizeableDirective.decorators = [
-    { type: core_1.Directive, args: [{
-                selector: '[resizeable]',
-                host: {
-                    '[class.resizeable]': 'resizeEnabled'
-                }
-            },] },
-];
-/** @nocollapse */
-ResizeableDirective.ctorParameters = function () { return [
-    { type: core_1.ElementRef, },
-]; };
-ResizeableDirective.propDecorators = {
-    'resizeEnabled': [{ type: core_1.Input },],
-    'minWidth': [{ type: core_1.Input },],
-    'maxWidth': [{ type: core_1.Input },],
-    'resize': [{ type: core_1.Output },],
-    'onMousedown': [{ type: core_1.HostListener, args: ['mousedown', ['$event'],] },],
-};
 exports.ResizeableDirective = ResizeableDirective;
 //# sourceMappingURL=resizeable.directive.js.map

@@ -165,37 +165,37 @@ var DataTableBodyCellComponent = (function () {
         if (sort)
             return sort.dir;
     };
+    DataTableBodyCellComponent.decorators = [
+        { type: core_1.Component, args: [{
+                    selector: 'datatable-body-cell',
+                    template: "\n    <div class=\"datatable-body-cell-label\">\n      <label\n        *ngIf=\"column.checkboxable\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [checked]=\"isSelected\"\n          (click)=\"onCheckboxChange($event)\" \n        />\n      </label>\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [title]=\"value\"\n        [innerHTML]=\"value\">\n      </span>\n      <ng-template #cellTemplate\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngOutletContext]=\"{\n          value: value,\n          row: row,\n          column: column,\n          isSelected: isSelected,\n          onCheckboxChangeFn: onCheckboxChangeFn,\n          activateFn: activateFn\n        }\">\n      </ng-template>\n    </div>\n  ",
+                    host: {
+                        class: 'datatable-body-cell'
+                    }
+                },] },
+    ];
+    /** @nocollapse */
+    DataTableBodyCellComponent.ctorParameters = function () { return [
+        { type: core_1.ElementRef, },
+    ]; };
+    DataTableBodyCellComponent.propDecorators = {
+        'row': [{ type: core_1.Input },],
+        'column': [{ type: core_1.Input },],
+        'rowHeight': [{ type: core_1.Input },],
+        'isSelected': [{ type: core_1.Input },],
+        'sorts': [{ type: core_1.Input },],
+        'activate': [{ type: core_1.Output },],
+        'cellTemplate': [{ type: core_1.ViewChild, args: ['cellTemplate', { read: core_1.ViewContainerRef },] },],
+        'columnCssClasses': [{ type: core_1.HostBinding, args: ['class',] },],
+        'width': [{ type: core_1.HostBinding, args: ['style.width.px',] },],
+        'height': [{ type: core_1.HostBinding, args: ['style.height',] },],
+        'onFocus': [{ type: core_1.HostListener, args: ['focus',] },],
+        'onBlur': [{ type: core_1.HostListener, args: ['blur',] },],
+        'onClick': [{ type: core_1.HostListener, args: ['click', ['$event'],] },],
+        'onDblClick': [{ type: core_1.HostListener, args: ['dblclick', ['$event'],] },],
+        'onKeyDown': [{ type: core_1.HostListener, args: ['keydown', ['$event'],] },],
+    };
     return DataTableBodyCellComponent;
 }());
-DataTableBodyCellComponent.decorators = [
-    { type: core_1.Component, args: [{
-                selector: 'datatable-body-cell',
-                template: "\n    <div class=\"datatable-body-cell-label\">\n      <label\n        *ngIf=\"column.checkboxable\" \n        class=\"datatable-checkbox\">\n        <input \n          type=\"checkbox\"\n          [checked]=\"isSelected\"\n          (click)=\"onCheckboxChange($event)\" \n        />\n      </label>\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [title]=\"value\"\n        [innerHTML]=\"value\">\n      </span>\n      <ng-template #cellTemplate\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngOutletContext]=\"{\n          value: value,\n          row: row,\n          column: column,\n          isSelected: isSelected,\n          onCheckboxChangeFn: onCheckboxChangeFn,\n          activateFn: activateFn\n        }\">\n      </ng-template>\n    </div>\n  ",
-                host: {
-                    class: 'datatable-body-cell'
-                }
-            },] },
-];
-/** @nocollapse */
-DataTableBodyCellComponent.ctorParameters = function () { return [
-    { type: core_1.ElementRef, },
-]; };
-DataTableBodyCellComponent.propDecorators = {
-    'row': [{ type: core_1.Input },],
-    'column': [{ type: core_1.Input },],
-    'rowHeight': [{ type: core_1.Input },],
-    'isSelected': [{ type: core_1.Input },],
-    'sorts': [{ type: core_1.Input },],
-    'activate': [{ type: core_1.Output },],
-    'cellTemplate': [{ type: core_1.ViewChild, args: ['cellTemplate', { read: core_1.ViewContainerRef },] },],
-    'columnCssClasses': [{ type: core_1.HostBinding, args: ['class',] },],
-    'width': [{ type: core_1.HostBinding, args: ['style.width.px',] },],
-    'height': [{ type: core_1.HostBinding, args: ['style.height',] },],
-    'onFocus': [{ type: core_1.HostListener, args: ['focus',] },],
-    'onBlur': [{ type: core_1.HostListener, args: ['blur',] },],
-    'onClick': [{ type: core_1.HostListener, args: ['click', ['$event'],] },],
-    'onDblClick': [{ type: core_1.HostListener, args: ['dblclick', ['$event'],] },],
-    'onKeyDown': [{ type: core_1.HostListener, args: ['keydown', ['$event'],] },],
-};
 exports.DataTableBodyCellComponent = DataTableBodyCellComponent;
 //# sourceMappingURL=body-cell.component.js.map

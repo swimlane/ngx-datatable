@@ -5,14 +5,14 @@ var DataTableColumnHeaderDirective = (function () {
     function DataTableColumnHeaderDirective(template) {
         this.template = template;
     }
+    DataTableColumnHeaderDirective.decorators = [
+        { type: core_1.Directive, args: [{ selector: '[ngx-datatable-header-template]' },] },
+    ];
+    /** @nocollapse */
+    DataTableColumnHeaderDirective.ctorParameters = function () { return [
+        { type: core_1.TemplateRef, },
+    ]; };
     return DataTableColumnHeaderDirective;
 }());
-DataTableColumnHeaderDirective.decorators = [
-    { type: core_1.Directive, args: [{ selector: '[ngx-datatable-header-template]' },] },
-];
-/** @nocollapse */
-DataTableColumnHeaderDirective.ctorParameters = function () { return [
-    { type: core_1.TemplateRef, },
-]; };
 exports.DataTableColumnHeaderDirective = DataTableColumnHeaderDirective;
 //# sourceMappingURL=column-header.directive.js.map

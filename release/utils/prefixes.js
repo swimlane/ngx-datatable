@@ -2,13 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var camel_case_1 = require("./camel-case");
 var cache = {};
-var testStyle = document !== undefined ? document.createElement('div').style : undefined;
+var testStyle = typeof document !== 'undefined' ? document.createElement('div').style : undefined;
 // Get Prefix
 // http://davidwalsh.name/vendor-prefix
 var prefix = (function () {
-    var styles = window !== undefined ? window.getComputedStyle(document.documentElement, '') : undefined;
-    var pre = styles !== undefined ? (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/))[1] : undefined;
-    var dom = pre !== undefined ? ('WebKit|Moz|MS|O').match(new RegExp('(' + pre + ')', 'i'))[1] : undefined;
+    var styles = typeof window !== 'undefined' ? window.getComputedStyle(document.documentElement, '') : undefined;
+    var pre = typeof styles !== 'undefined' ? (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/))[1] : undefined;
+    var dom = typeof pre !== 'undefined' ? ('WebKit|Moz|MS|O').match(new RegExp('(' + pre + ')', 'i'))[1] : undefined;
     return dom ? {
         dom: dom,
         lowercase: pre,

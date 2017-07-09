@@ -1,5 +1,9 @@
 # Changelog
 
+# 9.3.1
+- Bug: More Universal Rendering Fixes (#795)
+- Chore: Build optimizations from new webpack version
+
 ## 9.3.0
 - Feature: Unviseral Rendering (#764)
 

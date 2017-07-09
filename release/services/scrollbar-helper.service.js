@@ -29,14 +29,14 @@ var ScrollbarHelper = (function () {
         outer.parentNode.removeChild(outer);
         return widthNoScroll - widthWithScroll;
     };
+    ScrollbarHelper.decorators = [
+        { type: core_1.Injectable },
+    ];
+    /** @nocollapse */
+    ScrollbarHelper.ctorParameters = function () { return [
+        { type: undefined, decorators: [{ type: core_1.Inject, args: [platform_browser_1.DOCUMENT,] },] },
+    ]; };
     return ScrollbarHelper;
 }());
-ScrollbarHelper.decorators = [
-    { type: core_1.Injectable },
-];
-/** @nocollapse */
-ScrollbarHelper.ctorParameters = function () { return [
-    { type: undefined, decorators: [{ type: core_1.Inject, args: [platform_browser_1.DOCUMENT,] },] },
-]; };
 exports.ScrollbarHelper = ScrollbarHelper;
 //# sourceMappingURL=scrollbar-helper.service.js.map

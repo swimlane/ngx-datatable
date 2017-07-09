@@ -103,19 +103,19 @@ var OrderableDirective = (function () {
             return acc;
         }, {});
     };
+    OrderableDirective.decorators = [
+        { type: core_1.Directive, args: [{ selector: '[orderable]' },] },
+    ];
+    /** @nocollapse */
+    OrderableDirective.ctorParameters = function () { return [
+        { type: core_1.KeyValueDiffers, },
+        { type: undefined, decorators: [{ type: core_1.Inject, args: [platform_browser_1.DOCUMENT,] },] },
+    ]; };
+    OrderableDirective.propDecorators = {
+        'reorder': [{ type: core_1.Output },],
+        'draggables': [{ type: core_1.ContentChildren, args: [draggable_directive_1.DraggableDirective, { descendants: true },] },],
+    };
     return OrderableDirective;
 }());
-OrderableDirective.decorators = [
-    { type: core_1.Directive, args: [{ selector: '[orderable]' },] },
-];
-/** @nocollapse */
-OrderableDirective.ctorParameters = function () { return [
-    { type: core_1.KeyValueDiffers, },
-    { type: undefined, decorators: [{ type: core_1.Inject, args: [platform_browser_1.DOCUMENT,] },] },
-]; };
-OrderableDirective.propDecorators = {
-    'reorder': [{ type: core_1.Output },],
-    'draggables': [{ type: core_1.ContentChildren, args: [draggable_directive_1.DraggableDirective, { descendants: true },] },],
-};
 exports.OrderableDirective = OrderableDirective;
 //# sourceMappingURL=orderable.directive.js.map

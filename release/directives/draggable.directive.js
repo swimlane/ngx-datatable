@@ -87,23 +87,23 @@ var DraggableDirective = (function () {
             this.subscription = undefined;
         }
     };
+    DraggableDirective.decorators = [
+        { type: core_1.Directive, args: [{ selector: '[draggable]' },] },
+    ];
+    /** @nocollapse */
+    DraggableDirective.ctorParameters = function () { return [
+        { type: core_1.ElementRef, },
+    ]; };
+    DraggableDirective.propDecorators = {
+        'dragEventTarget': [{ type: core_1.Input },],
+        'dragModel': [{ type: core_1.Input },],
+        'dragX': [{ type: core_1.Input },],
+        'dragY': [{ type: core_1.Input },],
+        'dragStart': [{ type: core_1.Output },],
+        'dragging': [{ type: core_1.Output },],
+        'dragEnd': [{ type: core_1.Output },],
+    };
     return DraggableDirective;
 }());
-DraggableDirective.decorators = [
-    { type: core_1.Directive, args: [{ selector: '[draggable]' },] },
-];
-/** @nocollapse */
-DraggableDirective.ctorParameters = function () { return [
-    { type: core_1.ElementRef, },
-]; };
-DraggableDirective.propDecorators = {
-    'dragEventTarget': [{ type: core_1.Input },],
-    'dragModel': [{ type: core_1.Input },],
-    'dragX': [{ type: core_1.Input },],
-    'dragY': [{ type: core_1.Input },],
-    'dragStart': [{ type: core_1.Output },],
-    'dragging': [{ type: core_1.Output },],
-    'dragEnd': [{ type: core_1.Output },],
-};
 exports.DraggableDirective = DraggableDirective;
 //# sourceMappingURL=draggable.directive.js.map

@@ -126,25 +126,25 @@ var DataTableSelectionComponent = (function () {
             return id === rowId;
         });
     };
+    DataTableSelectionComponent.decorators = [
+        { type: core_1.Component, args: [{
+                    selector: 'datatable-selection',
+                    template: "\n    <ng-content></ng-content>\n  "
+                },] },
+    ];
+    /** @nocollapse */
+    DataTableSelectionComponent.ctorParameters = function () { return []; };
+    DataTableSelectionComponent.propDecorators = {
+        'rows': [{ type: core_1.Input },],
+        'selected': [{ type: core_1.Input },],
+        'selectEnabled': [{ type: core_1.Input },],
+        'selectionType': [{ type: core_1.Input },],
+        'rowIdentity': [{ type: core_1.Input },],
+        'selectCheck': [{ type: core_1.Input },],
+        'activate': [{ type: core_1.Output },],
+        'select': [{ type: core_1.Output },],
+    };
     return DataTableSelectionComponent;
 }());
-DataTableSelectionComponent.decorators = [
-    { type: core_1.Component, args: [{
-                selector: 'datatable-selection',
-                template: "\n    <ng-content></ng-content>\n  "
-            },] },
-];
-/** @nocollapse */
-DataTableSelectionComponent.ctorParameters = function () { return []; };
-DataTableSelectionComponent.propDecorators = {
-    'rows': [{ type: core_1.Input },],
-    'selected': [{ type: core_1.Input },],
-    'selectEnabled': [{ type: core_1.Input },],
-    'selectionType': [{ type: core_1.Input },],
-    'rowIdentity': [{ type: core_1.Input },],
-    'selectCheck': [{ type: core_1.Input },],
-    'activate': [{ type: core_1.Output },],
-    'select': [{ type: core_1.Output },],
-};
 exports.DataTableSelectionComponent = DataTableSelectionComponent;
 //# sourceMappingURL=selection.component.js.map

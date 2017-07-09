@@ -95,23 +95,23 @@ var LongPressDirective = (function () {
             this.subscription = undefined;
         }
     };
+    LongPressDirective.decorators = [
+        { type: core_1.Directive, args: [{ selector: '[long-press]' },] },
+    ];
+    /** @nocollapse */
+    LongPressDirective.ctorParameters = function () { return []; };
+    LongPressDirective.propDecorators = {
+        'pressEnabled': [{ type: core_1.Input },],
+        'pressModel': [{ type: core_1.Input },],
+        'duration': [{ type: core_1.Input },],
+        'longPressStart': [{ type: core_1.Output },],
+        'longPressing': [{ type: core_1.Output },],
+        'longPressEnd': [{ type: core_1.Output },],
+        'press': [{ type: core_1.HostBinding, args: ['class.press',] },],
+        'isLongPress': [{ type: core_1.HostBinding, args: ['class.longpress',] },],
+        'onMouseDown': [{ type: core_1.HostListener, args: ['mousedown', ['$event'],] },],
+    };
     return LongPressDirective;
 }());
-LongPressDirective.decorators = [
-    { type: core_1.Directive, args: [{ selector: '[long-press]' },] },
-];
-/** @nocollapse */
-LongPressDirective.ctorParameters = function () { return []; };
-LongPressDirective.propDecorators = {
-    'pressEnabled': [{ type: core_1.Input },],
-    'pressModel': [{ type: core_1.Input },],
-    'duration': [{ type: core_1.Input },],
-    'longPressStart': [{ type: core_1.Output },],
-    'longPressing': [{ type: core_1.Output },],
-    'longPressEnd': [{ type: core_1.Output },],
-    'press': [{ type: core_1.HostBinding, args: ['class.press',] },],
-    'isLongPress': [{ type: core_1.HostBinding, args: ['class.longpress',] },],
-    'onMouseDown': [{ type: core_1.HostListener, args: ['mousedown', ['$event'],] },],
-};
 exports.LongPressDirective = LongPressDirective;
 //# sourceMappingURL=long-press.directive.js.map
