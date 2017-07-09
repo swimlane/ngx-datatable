@@ -1,7 +1,7 @@
 import { MockServerResultsService } from "./mock-server-results-service";
 import { CorporateEmployee } from "./model/corporate-employee";
 import { Page } from "./model/page";
-export declare class VirualPagingComponent {
+export declare class VirtualPagingComponent {
     private serverResultsService;
     page: Page;
     rows: CorporateEmployee[];
