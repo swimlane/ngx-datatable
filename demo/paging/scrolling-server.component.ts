@@ -1,8 +1,25 @@
-import { Component } from '@angular/core';
-import {MockServerResultsService} from "./mock-server-results-service";
-import {PagedData} from "./model/paged-data";
-import {CorporateEmployee} from "./model/corporate-employee";
-import {Page} from "./model/page";
+import { Component, ElementRef, Injectable } from '@angular/core';
+import { Observable } from "rxjs";
+import { CorporateEmployee } from "./model/corporate-employee";
+
+const companyData = require('../../assets/data/company.json');
+
+class PagedData<T> {
+  data: T[];
+}
+
+/**
+ * A server used to mock a paged data result from a server
+ */
+@Injectable()
+export class MockServerResultsService {
+
+  public getResults(offset: number, limit: number): Observable<PagedData<CorporateEmployee>> {
+    return Observable.of(companyData.slice(offset, offset + limit))
+      .delay(new Date(Date.now() + 500))
+      .map(data => ({ data }));
+  }
+}
 
 @Component({
   selector: 'server-scrolling-demo',
@@ -14,7 +31,7 @@ import {Page} from "./model/page";
       <h3>
         Server-side Scrolling
         <small>
-          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/paging/server-scrolling.component.ts" target="_blank">
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/paging/scrolling-server.component.ts" target="_blank">
             Source
           </a>
         </small>
@@ -24,49 +41,64 @@ import {Page} from "./model/page";
         [rows]="rows"
         [columns]="[{name:'Name'},{name:'Gender'},{name:'Company'}]"
         [columnMode]="'force'"
-        [headerHeight]="50"
-        [footerHeight]="0"
-        [rowHeight]="50"
+        [headerHeight]="headerHeight"
+        [rowHeight]="rowHeight"
+        [loadingIndicator]="isLoading"
         [scrollbarV]="true"
-        (page)='onPage($event.offset)'>
-      </ngx-datatable>
+        (scroll)="onScroll($event.offsetY)"
+      ></ngx-datatable>
     </div>
-  `
+  `,
+  styleUrls: ['./scrolling-server.component.css'],
 })
 export class ServerScrollingComponent {
-  
-  lastPage = new Page();
-  rows = new Array<CorporateEmployee>();
 
-  constructor(private serverResultsService: MockServerResultsService) {
-    this.lastPage.pageNumber = -1;
-    this.lastPage.size = 5;
-  }
+  readonly headerHeight = 50;
+  readonly rowHeight = 50;
+  readonly pageLimit = 10;
+
+  rows: CorporateEmployee[] = [];
+  isLoading: boolean;
+
+  constructor(private serverResultsService: MockServerResultsService, private el: ElementRef) { }
 
   ngOnInit() {
-    this.addPage(0);
-    this.addPage(1);
+    this.onScroll(0);
   }
-  
-  onPage(pageNumber: number) {
-    // pre-fetch the next page
-    if (this.lastPage.pageNumber === pageNumber) {
-      this.addPage(pageNumber + 1);
+
+  onScroll(offsetY: number) {
+    // total height of all rows in the viewport
+    const viewHeight = this.el.nativeElement.getBoundingClientRect().height - this.headerHeight;
+
+    // check if we scrolled to the end of the viewport
+    if (!this.isLoading && offsetY + viewHeight >= this.rows.length * this.rowHeight) {
+
+      // total number of results to load
+      let limit = this.pageLimit;
+
+      // check if we haven't fetched any results yet
+      if (this.rows.length === 0) {
+
+        // calculate the number of rows that fit within viewport
+        const pageSize = Math.ceil(viewHeight / this.rowHeight);
+
+        // change the limit to pageSize such that we fill the first page entirely
+        // (otherwise, we won't be able to scroll past it)
+        limit = Math.max(pageSize, this.pageLimit);
+      }
+      this.loadPage(limit);
     }
   }
 
-  /**
-   * Populate the table with new data based on the page number
-   * @param pageNumber The page number to add
-   */
-  addPage(pageNumber: number){
-    // cache the new page, but only once
-    if (this.lastPage.pageNumber < pageNumber) {
-      this.lastPage.pageNumber++;
-      this.serverResultsService.getResults(this.lastPage).subscribe(pagedData => {
-        this.lastPage = pagedData.page;
-        this.rows = this.rows.concat(pagedData.data);
-      });
-    }
+  private loadPage(limit: number) {
+    // set the loading flag, which serves two purposes:
+    // 1) it prevents the same page from being loaded twice
+    // 2) it enables display of the loading indicator
+    this.isLoading = true;
+
+    this.serverResultsService.getResults(this.rows.length, limit).subscribe(results => {
+      this.rows.push(...results.data);
+      this.isLoading = false;
+    });
   }
 }
