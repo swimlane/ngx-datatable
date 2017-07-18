@@ -136,14 +136,14 @@ export class DataTablePagerComponent {
     page = page || this.page;
 
     if (isMaxSized) {
-      startPage = page-Math.floor(maxSize/2);
-      endPage = page+Math.floor(maxSize/2), this.totalPages;
+      startPage = page - Math.floor(maxSize / 2);
+      endPage = page + Math.floor(maxSize / 2), this.totalPages;
 
-      if(startPage <1){
+      if(startPage < 1){
         startPage = 1;
-        endPage = startPage+maxSize-1;
+        endPage = Math.max(startPage + maxSize - 1, this.totalPages);
       }else if(endPage > this.totalPages){
-        startPage = this.totalPages-maxSize+1;
+        startPage = Math.max(this.totalPages - maxSize + 1, 1);
         endPage = this.totalPages;
       }
     }
