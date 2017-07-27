@@ -20,9 +20,9 @@ import { Component, Output, EventEmitter, ChangeDetectionStrategy, Input, Templa
       </ng-template>
       <div class="page-count" *ngIf="!footerTemplate">
         <span *ngIf="selectedMessage">
-          {{selectedCount.toLocaleString()}} {{selectedMessage}} / 
+          {{selectedMessage}} /
         </span>
-        {{totalMessage}}
+        xx {{totalMessage}}
       </div>
       <datatable-pager *ngIf="!footerTemplate"
         [pagerLeftArrowIcon]="pagerLeftArrowIcon"
