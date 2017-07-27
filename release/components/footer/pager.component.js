@@ -77,8 +77,16 @@ var DataTablePagerComponent = (function () {
         var isMaxSized = maxSize < this.totalPages;
         page = page || this.page;
         if (isMaxSized) {
-            startPage = ((Math.ceil(page / maxSize) - 1) * maxSize) + 1;
-            endPage = Math.min(startPage + maxSize - 1, this.totalPages);
+            startPage = page - Math.floor(maxSize / 2);
+            endPage = page + Math.floor(maxSize / 2), this.totalPages;
+            if (startPage < 1) {
+                startPage = 1;
+                endPage = Math.max(startPage + maxSize - 1, this.totalPages);
+            }
+            else if (endPage > this.totalPages) {
+                startPage = Math.max(this.totalPages - maxSize + 1, 1);
+                endPage = this.totalPages;
+            }
         }
         for (var num = startPage; num <= endPage; num++) {
             pages.push({
