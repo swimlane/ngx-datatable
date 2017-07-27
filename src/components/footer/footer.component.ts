@@ -22,7 +22,7 @@ import { Component, Output, EventEmitter, ChangeDetectionStrategy, Input, Templa
         <span *ngIf="selectedMessage">
           {{selectedCount.toLocaleString()}} {{selectedMessage}} / 
         </span>
-        {{rowCount.toLocaleString()}} {{totalMessage}}
+        {{totalMessage}}
       </div>
       <datatable-pager *ngIf="!footerTemplate"
         [pagerLeftArrowIcon]="pagerLeftArrowIcon"
