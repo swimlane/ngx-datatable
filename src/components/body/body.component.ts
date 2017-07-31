@@ -29,26 +29,30 @@ import { MouseEvent } from '../../events';
         [scrollHeight]="scrollHeight"
         [scrollWidth]="columnGroupWidths.total"
         (scroll)="onBodyScroll($event)">
-        <datatable-row-wrapper
-          *ngFor="let row of temp; let i = index; trackBy: rowTrackingFn;"
-          [ngStyle]="getRowsStyles(row)"
-          [rowDetail]="rowDetail"
-          [detailRowHeight]="getDetailRowHeight(row,i)"
-          [row]="row"
-          [expanded]="row.$$expanded === 1"
-          (rowContextmenu)="rowContextmenu.emit($event)">
-          <datatable-body-row
-            tabindex="-1"
-            [isSelected]="selector.getRowSelected(row)"
-            [innerWidth]="innerWidth"
-            [offsetX]="offsetX"
-            [columns]="columns"
-            [rowHeight]="getRowHeight(row)"
+        <datatable-group-wrapper         
+          [groupByIndex]="groupByIndex"
+          *ngFor="let group of groupedRows" #group{{group.key}}>
+          <datatable-row-wrapper
+            *ngFor="let row of group.value; let i = index; trackBy: rowTrackingFn;"
+            [ngStyle]="getRowsStyles(row)"
+            [rowDetail]="rowDetail"
+            [detailRowHeight]="getDetailRowHeight(row,i)"
             [row]="row"
-            [rowClass]="rowClass"
-            (activate)="selector.onActivate($event, i)">
-          </datatable-body-row>
-        </datatable-row-wrapper>
+            [expanded]="row.$$expanded === 1"
+            (rowContextmenu)="rowContextmenu.emit($event)">
+            <datatable-body-row
+              tabindex="-1"
+              [isSelected]="selector.getRowSelected(row)"
+              [innerWidth]="innerWidth"
+              [offsetX]="offsetX"
+              [columns]="columns"
+              [rowHeight]="getRowHeight(row)"
+              [row]="row"
+              [rowClass]="rowClass"
+              (activate)="selector.onActivate($event, i)">
+            </datatable-body-row>
+          </datatable-row-wrapper>
+        </datatable-group-wrapper>
       </datatable-scroller>
       <div
         class="empty-row"
@@ -77,6 +81,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() selectCheck: any;
   @Input() trackByProp: string;
   @Input() rowClass: any;
+  @Input() groupByIndex: number = 2;
 
   @Input() set pageSize(val: number) {
     this._pageSize = val;
@@ -194,6 +199,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   columnGroupWidths: any;
   rowTrackingFn: any;
   listener: any;
+  groupedRows: Array<any>;
 
   _rows: any[];
   _bodyHeight: any;
@@ -201,6 +207,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   _rowCount: number;
   _offset: number;
   _pageSize: number;
+
 
   /**
    * Creates an instance of DataTableBodyComponent.
@@ -216,6 +223,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         return row.$$index;
       }
     }.bind(this);
+
   }
 
   /**
@@ -240,6 +248,34 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   ngOnDestroy(): void {
     if(this.rowDetail) this.listener.unsubscribe();
+  }
+
+  /**
+   * Creates a map with the data grouped by the user choise of grouping index
+   * 
+   * @param originalArray the original array passed via parameter
+   * @param groupByIndex  the index of the column to group the data by
+   */
+   groupArrayBy(originalArray, groupByIndex) {
+    // create a map to hold groups with their corresponding results
+    const map = new Map();
+    originalArray.forEach((item) => {
+        const key = item[groupByIndex];
+        if (!map.has(key)) {
+            map.set(key, [item]);
+        } else {
+            map.get(key).push(item);
+        }
+    });
+
+    // convert map back to a simple array of objects
+    let groups: Array<any> = Array.from(map, x => addGroup(x[0], x[1]) );
+
+    // output groups to the console for demostration
+    console.log("map = ", map);
+    console.log("groups = ", groups);    
+  
+    return groups;
   }
 
   /**
@@ -289,6 +325,9 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     this.updateIndexes();
     this.updatePage(event.direction);
     this.updateRows();
+
+    //Creates a new array grouped by the index chosen by the user. In fact the result will be an array of arrays.
+    this.groupedRows = this.groupArrayBy(this.rows, this.groupByIndex)    
   }
 
   /**
@@ -588,4 +627,13 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     this.updateRows();
   }
 
+}
+
+/**
+ * 
+ * @param key the element key, unique content
+ * @param value the element value, it can be single content or an array
+ */
+function addGroup(key, value) {
+  return { "key": key, "value": value };
 }
