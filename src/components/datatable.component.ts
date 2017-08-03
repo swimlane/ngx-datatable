@@ -23,6 +23,22 @@ import { MouseEvent } from '../events';
     <div
       visibilityObserver
       (visible)="recalculate()">
+      <datatable-footer
+        *ngIf="footerHeight && (footerPosition == 'top' || footerPosition == 'both')"
+        [rowCount]="rowCount"
+        [pageSize]="pageSize"
+        [offset]="offset"
+        [footerHeight]="footerHeight"
+        [footerTemplate]="footer"
+        [totalMessage]="messages.totalMessage"
+        [pagerLeftArrowIcon]="cssClasses.pagerLeftArrow"
+        [pagerRightArrowIcon]="cssClasses.pagerRightArrow"
+        [pagerPreviousIcon]="cssClasses.pagerPrevious"
+        [selectedCount]="selected.length"
+        [selectedMessage]="!!selectionType && messages.selectedMessage"
+        [pagerNextIcon]="cssClasses.pagerNext"
+        (page)="onFooterPage($event)">
+      </datatable-footer>
       <datatable-header
         *ngIf="headerHeight"
         [sorts]="sorts"
@@ -72,7 +88,7 @@ import { MouseEvent } from '../events';
         (scroll)="onBodyScroll($event)">
       </datatable-body>
       <datatable-footer
-        *ngIf="footerHeight"
+        *ngIf="footerHeight && (footerPosition == 'bottom' || footerPosition == 'both')"
         [rowCount]="rowCount"
         [pageSize]="pageSize"
         [offset]="offset"
@@ -210,6 +226,15 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   @Input() footerHeight: number = 0;
+  
+  /**
+   * To display footer postion at the top or bottom or in both places of the table.
+   * Default value: `bottom`
+   *
+   * @type {string}
+   * @memberOf DatatableComponent
+   */
+  @Input() footerPosition: string = 'bottom';
 
   /**
    * If the table should use external paging
@@ -660,17 +685,11 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   /**
    * Returns if all rows are selected.
    *
-   * @readonly
    * @private
    * @type {boolean}
    * @memberOf DatatableComponent
    */
-  get allRowsSelected(): boolean {
-    return this.selected &&
-      this.rows &&
-      this.rows.length !== 0 &&
-      this.selected.length === this.rows.length;
-  }
+  allRowsSelected: boolean;
 
   element: HTMLElement;
   innerWidth: number;
@@ -848,6 +867,12 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   onBodyPage({offset}: any): void {
+    this.selected = [];
+    this.allRowsSelected = false;
+    this.select.emit({
+      selected: this.selected
+    });
+    
     this.offset = offset;
 
     this.page.emit({
@@ -878,6 +903,12 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   onFooterPage(event: any) {
+    this.selected = [];
+    this.allRowsSelected = false;
+    this.select.emit({
+      selected: this.selected
+    });
+    
     this.offset = event.page - 1;
     this.bodyComponent.updateOffsetY(this.offset);
 
@@ -1026,6 +1057,12 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   onColumnSort(event: any): void {
+    this.selected = [];
+    this.allRowsSelected = false;
+    this.select.emit({
+      selected: this.selected
+    });
+    
     const {sorts} = event;
 
     // this could be optimized better since it will resort
@@ -1049,16 +1086,23 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    *
    * @memberOf DatatableComponent
    */
-  onHeaderSelect(event: any): void {
-    // before we splice, chk if we currently have all selected
-    const allSelected = this.selected.length === this.rows.length;
-
+  onHeaderSelect(event: boolean): void {
+    this.allRowsSelected = event;
     // remove all existing either way
     this.selected = [];
 
-    // do the opposite here
-    if (!allSelected) {
-      this.selected.push(...this.rows);
+    if (this.allRowsSelected) {
+      if (!this.externalPaging) {
+        const auxList = [];
+        auxList.push(...this.rows);
+        this.selected = auxList.slice(this.offset * this.limit, ((this.offset + 1) * this.limit));
+      }
+      else {
+        this.selected.push(...this.rows);
+      }
+    }
+    else {
+      this.selected = [];
     }
 
     this.select.emit({
@@ -1074,6 +1118,13 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   onBodySelect(event: any): void {
+    if (this.selected.length === this.limit && !this.allRowsSelected && this.rows.length > 0) {
+      this.allRowsSelected = true;
+    }
+    else {
+      this.allRowsSelected = false;
+    }
+    
     this.select.emit(event);
   }
 
