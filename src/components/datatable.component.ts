@@ -23,6 +23,22 @@ import { MouseEvent } from '../events';
     <div
       visibilityObserver
       (visible)="recalculate()">
+      <datatable-footer
+        *ngIf="footerHeight && (footerPosition == 'top' || footerPosition == 'both')"
+        [rowCount]="rowCount"
+        [pageSize]="pageSize"
+        [offset]="offset"
+        [footerHeight]="footerHeight"
+        [footerTemplate]="footer"
+        [totalMessage]="messages.totalMessage"
+        [pagerLeftArrowIcon]="cssClasses.pagerLeftArrow"
+        [pagerRightArrowIcon]="cssClasses.pagerRightArrow"
+        [pagerPreviousIcon]="cssClasses.pagerPrevious"
+        [selectedCount]="selected.length"
+        [selectedMessage]="!!selectionType && messages.selectedMessage"
+        [pagerNextIcon]="cssClasses.pagerNext"
+        (page)="onFooterPage($event)">
+      </datatable-footer>
       <datatable-header
         *ngIf="headerHeight"
         [sorts]="sorts"
@@ -72,7 +88,7 @@ import { MouseEvent } from '../events';
         (scroll)="onBodyScroll($event)">
       </datatable-body>
       <datatable-footer
-        *ngIf="footerHeight"
+        *ngIf="footerHeight && (footerPosition == 'bottom' || footerPosition == 'both')"
         [rowCount]="rowCount"
         [pageSize]="pageSize"
         [offset]="offset"
@@ -210,6 +226,15 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   @Input() footerHeight: number = 0;
+  
+  /**
+   * To display footer postion at the top or bottom or in both places of the table.
+   * Default value: `bottom`
+   *
+   * @type {string}
+   * @memberOf DatatableComponent
+   */
+  @Input() footerPosition: string = 'bottom';
 
   /**
    * If the table should use external paging
@@ -1061,10 +1086,8 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    *
    * @memberOf DatatableComponent
    */
-  onHeaderSelect(event: any): void {
-    // before we splice, chk if we currently have all selected
-    const allSelected = this.selected.length === this.rows.length;
-
+  onHeaderSelect(event: boolean): void {
+    this.allRowsSelected = event;
     // remove all existing either way
     this.selected = [];
 
