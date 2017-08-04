@@ -28,7 +28,7 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
         (page)="onPage($event)">
         <!-- Row Detail Template -->
         <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow (toggle)="onDetailToggle($event)">
-          <ng-template let-row="row" ngx-datatable-row-detail-template>
+          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
             <div style="padding-left:35px;">
               <div><strong>Address</strong></div>
               <div>{{row.address.city}}, {{row.address.state}}</div>
@@ -43,11 +43,11 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
           [sortable]="false"
           [draggable]="false"
           [canAutoResize]="false">
-          <ng-template let-row="row" ngx-datatable-cell-template>
+          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
             <a
               href="#"
-              [class.datatable-icon-right]="!row.$$expanded"
-              [class.datatable-icon-down]="row.$$expanded"
+              [class.datatable-icon-right]="!expanded"
+              [class.datatable-icon-down]="expanded"
               title="Expand/Collapse Row"
               (click)="toggleExpandRow(row)">
             </a>

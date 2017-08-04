@@ -33,6 +33,7 @@ import { mouseEvent, keyboardEvent } from '../../events';
           value: value,
           row: row,
           column: column,
+          expanded: expanded,
           isSelected: isSelected,
           onCheckboxChangeFn: onCheckboxChangeFn,
           activateFn: activateFn
@@ -50,6 +51,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
   @Input() column: TableColumn;
   @Input() rowHeight: number;
   @Input() isSelected: boolean;
+  @Input() expanded: boolean;
 
   @Input() set sorts(val: any[]) {
     this._sorts = val;

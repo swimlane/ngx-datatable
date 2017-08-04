@@ -19,6 +19,7 @@ import { mouseEvent, keyboardEvent } from '../../events';
         *ngFor="let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn"
         tabindex="-1"
         [row]="row"
+        [expanded]="expanded"
         [isSelected]="isSelected"
         [column]="column"
         [rowHeight]="rowHeight"
@@ -47,6 +48,7 @@ export class DataTableBodyRowComponent {
     return this._innerWidth;
   }
 
+  @Input() expanded: boolean;
   @Input() rowClass: any;
   @Input() row: any;
   @Input() offsetX: number;
