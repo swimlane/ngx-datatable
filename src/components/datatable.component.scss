@@ -98,11 +98,13 @@
     display: inline-block;
     line-height: 1.625;
 
+    /*
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     -o-user-select: none;
     user-select: none;
+    */
     
     &:focus {
       outline: none;
