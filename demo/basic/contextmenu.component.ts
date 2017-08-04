@@ -46,7 +46,7 @@ export class ContextMenuDemoComponent {
     { name: 'Company' }
   ];
 
-  rawEvent: MouseEvent;
+  rawEvent: any;
   contextmenuRow: any;
   contextmenuColumn: any;
 
@@ -60,7 +60,7 @@ export class ContextMenuDemoComponent {
     console.log(contextMenuEvent);
 
     this.rawEvent = contextMenuEvent.event;
-    if (contextMenuEvent.type == 'body') {
+    if (contextMenuEvent.type === 'body') {
       this.contextmenuRow = contextMenuEvent.content;
       this.contextmenuColumn = undefined;
     } else {
