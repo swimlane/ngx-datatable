@@ -21,6 +21,7 @@ import { mouseEvent, keyboardEvent } from '../../events';
         [row]="row"
         [expanded]="expanded"
         [isSelected]="isSelected"
+        [rowIndex]="rowIndex"
         [column]="column"
         [rowHeight]="rowHeight"
         (activate)="onActivate($event, ii)">
@@ -53,13 +54,14 @@ export class DataTableBodyRowComponent {
   @Input() row: any;
   @Input() offsetX: number;
   @Input() isSelected: boolean;
+  @Input() rowIndex: number;
 
   @HostBinding('class')
   get cssClass() {
     let cls = 'datatable-body-row';
     if (this.isSelected) cls += ' active';
-    if (this.row.$$index % 2 !== 0) cls += ' datatable-row-odd';
-    if (this.row.$$index % 2 === 0) cls += ' datatable-row-even';
+    if (this.rowIndex % 2 !== 0) cls += ' datatable-row-odd';
+    if (this.rowIndex % 2 === 0) cls += ' datatable-row-even';
 
     if (this.rowClass) {
       const res = this.rowClass(this.row);

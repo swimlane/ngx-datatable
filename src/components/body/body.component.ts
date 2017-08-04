@@ -45,6 +45,7 @@ import { mouseEvent } from '../../events';
             [columns]="columns"
             [rowHeight]="getRowHeight(row)"
             [row]="row"
+            [rowIndex]="getRowIndex(row)"
             [expanded]="getRowExpanded(row)"
             [rowClass]="rowClass"
             (activate)="selector.onActivate($event, i)">
@@ -502,7 +503,9 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         rowHeight: this.rowHeight,
         detailRowHeight: this.getDetailRowHeight,
         externalVirtual: this.scrollbarV && this.externalPaging,
-        rowCount: this.rowCount
+        rowCount: this.rowCount,
+        rowIndexes: this.rowIndexes,
+        rowExpansions: this.rowExpansions
       });
     }
   }
@@ -613,6 +616,17 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   getRowExpanded(row: any): boolean {
     const expanded = this.rowExpansions.get(row);
     return expanded === 1;
+  }
+
+  /**
+   * Gets the row index of the item
+   * 
+   * @param {*} row 
+   * @returns {number} 
+   * @memberof DataTableBodyComponent
+   */
+  getRowIndex(row: any): number {
+    return this.rowIndexes.get(row);
   }
 
 }

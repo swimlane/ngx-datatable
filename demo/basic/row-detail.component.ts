@@ -54,13 +54,13 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Index" width="80">
-          <ng-template let-row="row" ngx-datatable-cell-template>
-            <strong>{{row.$$index}}</strong>
+          <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+            <strong>{{rowIndex}}</strong>
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Expanded" width="80">
-          <ng-template let-row="row" ngx-datatable-cell-template>
-            <strong>{{row.$$expanded === 1}}</strong>
+          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+            <strong>{{expanded === 1}}</strong>
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Name" width="200">

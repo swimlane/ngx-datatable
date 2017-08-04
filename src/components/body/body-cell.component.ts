@@ -36,7 +36,8 @@ import { mouseEvent, keyboardEvent } from '../../events';
           expanded: expanded,
           isSelected: isSelected,
           onCheckboxChangeFn: onCheckboxChangeFn,
-          activateFn: activateFn
+          activateFn: activateFn,
+          rowIndex: rowIndex
         }">
       </ng-template>
     </div>
@@ -52,6 +53,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
   @Input() rowHeight: number;
   @Input() isSelected: boolean;
   @Input() expanded: boolean;
+  @Input() rowIndex: number;
 
   @Input() set sorts(val: any[]) {
     this._sorts = val;
