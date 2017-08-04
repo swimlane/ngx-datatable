@@ -6,24 +6,24 @@ import {
 import { Keys } from '../../utils';
 import { SortDirection } from '../../types';
 import { TableColumn } from '../../types/table-column.type';
-import { MouseEvent, KeyboardEvent } from '../../events';
+import { mouseEvent, keyboardEvent } from '../../events';
 
 @Component({
   selector: 'datatable-body-cell',
   template: `
     <div class="datatable-body-cell-label">
       <label
-        *ngIf="column.checkboxable" 
+        *ngIf="column.checkboxable"
         class="datatable-checkbox">
-        <input 
+        <input
           type="checkbox"
           [checked]="isSelected"
-          (click)="onCheckboxChange($event)" 
+          (click)="onCheckboxChange($event)"
         />
       </label>
       <span
         *ngIf="!column.cellTemplate"
-        [title]="value"
+        [title]="valueStripped"
         [innerHTML]="value">
       </span>
       <ng-template #cellTemplate
@@ -63,34 +63,34 @@ export class DataTableBodyCellComponent implements OnDestroy {
   @Output() activate: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('cellTemplate', { read: ViewContainerRef }) cellTemplate: ViewContainerRef;
-   
+
   @HostBinding('class')
   get columnCssClasses(): any {
     let cls = 'datatable-body-cell';
-    if(this.column.cellClass) {
-      if(typeof this.column.cellClass === 'string') {
+    if (this.column.cellClass) {
+      if (typeof this.column.cellClass === 'string') {
         cls += ' ' + this.column.cellClass;
-      } else if(typeof this.column.cellClass === 'function') {
-        const res = this.column.cellClass({ 
-          row: this.row, 
-          column: this.column, 
-          value: this.value 
+      } else if (typeof this.column.cellClass === 'function') {
+        const res = this.column.cellClass({
+          row: this.row,
+          column: this.column,
+          value: this.value
         });
 
-        if(typeof res === 'string') {
+        if (typeof res === 'string') {
           cls += res;
-        } else if(typeof res === 'object') {
+        } else if (typeof res === 'object') {
           const keys = Object.keys(res);
-          for(const k of keys) {
-            if(res[k] === true) cls += ` ${k}`;
+          for (const k of keys) {
+            if (res[k] === true) cls += ` ${k}`;
           }
         }
       }
     }
-    if(!this.sortDir) cls += ' sort-active';
-    if(this.isFocused) cls += ' active';
-    if(this.sortDir === SortDirection.asc) cls += ' sort-asc';
-    if(this.sortDir === SortDirection.desc) cls += ' sort-desc';
+    if (!this.sortDir) cls += ' sort-active';
+    if (this.isFocused) cls += ' active';
+    if (this.sortDir === SortDirection.asc) cls += ' sort-asc';
+    if (this.sortDir === SortDirection.desc) cls += ' sort-desc';
     return cls;
   }
 
@@ -100,9 +100,9 @@ export class DataTableBodyCellComponent implements OnDestroy {
   }
 
   @HostBinding('style.height')
-  get height(): string|number {
+  get height(): string | number {
     const height = this.rowHeight;
-    if(isNaN(height)) return height;
+    if (isNaN(height)) return height;
     return height + 'px';
   }
 
@@ -111,9 +111,13 @@ export class DataTableBodyCellComponent implements OnDestroy {
     const val = this.column.$$valueGetter(this.row, this.column.prop);
     const userPipe: PipeTransform = this.column.pipe;
 
-    if(userPipe) return userPipe.transform(val);
-    if(val !== undefined) return val;
+    if (userPipe) return userPipe.transform(val);
+    if (val !== undefined) return val;
     return '';
+  }
+
+  get valueStripped(): any {
+    return this.stripHtml(this.value);
   }
 
   sortDir: SortDirection;
@@ -179,7 +183,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
       keyCode === Keys.left ||
       keyCode === Keys.right;
 
-    if(isAction && isTargetCell) {
+    if (isAction && isTargetCell) {
       event.preventDefault();
       event.stopPropagation();
 
@@ -206,13 +210,17 @@ export class DataTableBodyCellComponent implements OnDestroy {
   }
 
   calcSortDir(sorts: any[]): any {
-    if(!sorts) return;
+    if (!sorts) return;
 
     const sort = sorts.find((s: any) => {
       return s.prop === this.column.prop;
     });
 
-    if(sort) return sort.dir;
+    if (sort) return sort.dir;
+  }
+
+  stripHtml(html: string): string {
+    return html.replace(/<\/?[^>]+(>|$)/g, '');
   }
 
 }

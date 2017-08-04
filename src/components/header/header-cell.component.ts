@@ -3,22 +3,22 @@ import {
 } from '@angular/core';
 import { SortDirection, SortType, SelectionType, TableColumn } from '../../types';
 import { nextSortDir } from '../../utils';
-import { MouseEvent } from '../../events';
+import { mouseEvent } from '../../events';
 
 @Component({
   selector: 'datatable-header-cell',
   template: `
     <div>
       <label
-        *ngIf="isCheckboxable" 
+        *ngIf="isCheckboxable"
         class="datatable-checkbox">
-        <input 
+        <input
           type="checkbox"
           [checked]="allRowsSelected"
-          (change)="select.emit(!allRowsSelected)" 
+          (change)="select.emit(!allRowsSelected)"
         />
       </label>
-      <span 
+      <span
         *ngIf="!column.headerTemplate"
         class="datatable-header-cell-wrapper">
         <span
@@ -30,8 +30,8 @@ import { MouseEvent } from '../../events';
       <ng-template
         *ngIf="column.headerTemplate"
         [ngTemplateOutlet]="column.headerTemplate"
-        [ngOutletContext]="{ 
-          column: column, 
+        [ngOutletContext]="{
+          column: column,
           sortDir: sortDir,
           sortFn: sortFn,
           allRowsSelected: allRowsSelected,
@@ -79,29 +79,29 @@ export class DataTableHeaderCellComponent {
   get columnCssClasses(): any {
     let cls = 'datatable-header-cell';
 
-    if(this.column.sortable) cls += ' sortable';
-    if(this.column.resizeable) cls += ' resizeable';
-    if(this.column.headerClass) {
-      if(typeof this.column.headerClass === 'string') {
+    if (this.column.sortable) cls += ' sortable';
+    if (this.column.resizeable) cls += ' resizeable';
+    if (this.column.headerClass) {
+      if (typeof this.column.headerClass === 'string') {
         cls += ' ' + this.column.headerClass;
-      } else if(typeof this.column.headerClass === 'function') {
-        const res = this.column.headerClass({ 
+      } else if (typeof this.column.headerClass === 'function') {
+        const res = this.column.headerClass({
           column: this.column
         });
 
-        if(typeof res === 'string') {
+        if (typeof res === 'string') {
           cls += res;
-        } else if(typeof res === 'object') {
+        } else if (typeof res === 'object') {
           const keys = Object.keys(res);
-          for(const k of keys) {
-            if(res[k] === true) cls += ` ${k}`;
+          for (const k of keys) {
+            if (res[k] === true) cls += ` ${k}`;
           }
         }
       }
     }
 
     const sortDir = this.sortDir;
-    if(sortDir) {
+    if (sortDir) {
       cls += ` sort-active sort-${sortDir}`;
     }
 
@@ -130,8 +130,8 @@ export class DataTableHeaderCellComponent {
   }
 
   get isCheckboxable(): boolean {
-    return this.column.checkboxable && 
-      this.column.headerCheckboxable && 
+    return this.column.checkboxable &&
+      this.column.headerCheckboxable &&
       this.selectionType === SelectionType.checkbox;
   }
 
@@ -147,17 +147,17 @@ export class DataTableHeaderCellComponent {
   }
 
   calcSortDir(sorts: any[]): any {
-    if(sorts && this.column) {
+    if (sorts && this.column) {
       const sort = sorts.find((s: any) => {
         return s.prop === this.column.prop;
       });
 
-      if(sort) return sort.dir;
+      if (sort) return sort.dir;
     }
   }
 
   onSort(): void {
-    if(!this.column.sortable) return;
+    if (!this.column.sortable) return;
 
     const newValue = nextSortDir(this.sortType, this.sortDir);
     this.sort.emit({
@@ -168,9 +168,9 @@ export class DataTableHeaderCellComponent {
   }
 
   calcSortClass(sortDir: SortDirection): string {
-    if(sortDir === SortDirection.asc) {
+    if (sortDir === SortDirection.asc) {
       return `sort-btn sort-asc ${this.sortAscendingIcon}`;
-    } else if(sortDir === SortDirection.desc) {
+    } else if (sortDir === SortDirection.desc) {
       return `sort-btn sort-desc ${this.sortDescendingIcon}`;
     } else {
       return `sort-btn`;
