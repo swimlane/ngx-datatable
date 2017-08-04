@@ -23,7 +23,7 @@ import { MouseEvent, KeyboardEvent } from '../../events';
       </label>
       <span
         *ngIf="!column.cellTemplate"
-        [title]="value"
+        [title]="valueStripped"
         [innerHTML]="value">
       </span>
       <ng-template #cellTemplate
@@ -114,6 +114,10 @@ export class DataTableBodyCellComponent implements OnDestroy {
     if(userPipe) return userPipe.transform(val);
     if(val !== undefined) return val;
     return '';
+  }
+  
+  get valueStripped(): any {
+    return this.stripHtml(this.value);
   }
 
   sortDir: SortDirection;
@@ -213,6 +217,10 @@ export class DataTableBodyCellComponent implements OnDestroy {
     });
 
     if(sort) return sort.dir;
+  }
+  
+  stripHtml(html: string): string {
+    return html.replace(/<\/?[^>]+(>|$)/g, '');
   }
 
 }
