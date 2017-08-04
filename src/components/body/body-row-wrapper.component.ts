@@ -14,7 +14,11 @@ import { mouseEvent } from '../../events';
       <ng-template
         *ngIf="rowDetail && rowDetail.template"
         [ngTemplateOutlet]="rowDetail.template"
-        [ngOutletContext]="{ row: row, expanded: expanded }">
+        [ngOutletContext]="{ 
+          row: row, 
+          expanded: expanded,
+          rowIndex: rowIndex
+        }">
       </ng-template>
     </div>
   `,
@@ -28,6 +32,7 @@ export class DataTableRowWrapperComponent {
   @Input() detailRowHeight: any;
   @Input() expanded: boolean = false;
   @Input() row: any;
+  @Input() rowIndex: number;
 
   @Output() rowContextmenu = new EventEmitter<{ event: MouseEvent, row: any }>(false);
 

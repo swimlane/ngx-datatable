@@ -1,4 +1,8 @@
 # Changelog
+
+## Master
+- Enhancement: Add `rowIndex` to row-detail template
+
 ## 10.0.1
 - Bug: Fix old references to `$$index` and `$$expanded`
 - Bug: Add `$$index` in cell templates as `rowIndex`

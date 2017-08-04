@@ -35,6 +35,7 @@ import { mouseEvent } from '../../events';
           [rowDetail]="rowDetail"
           [detailRowHeight]="getDetailRowHeight(row,i)"
           [row]="row"
+          [rowIndex]="getRowIndex(row)"
           [expanded]="getRowExpanded(row)"
           (rowContextmenu)="rowContextmenu.emit($event)">
           <datatable-body-row
