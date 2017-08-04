@@ -2,6 +2,7 @@
 ## 10.0.1
 - Bug: Fix old references to `$$index` and `$$expanded`
 - Bug: Add `$$index` in cell templates as `rowIndex`
+- Bug: Fix MouseEvent undefined in JIT (#893)
 
 ## 10.0.0
 - BREAKING: `$$expanded` is no longer on row of detail templates, use `let-expanded` to get pop now
