@@ -220,6 +220,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
   }
 
   stripHtml(html: string): string {
+    if(!html.replace) return html;
     return html.replace(/<\/?[^>]+(>|$)/g, '');
   }
 
