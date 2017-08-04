@@ -7,6 +7,7 @@ export declare class DataTableBodyCellComponent implements OnDestroy {
     rowHeight: number;
     isSelected: boolean;
     expanded: boolean;
+    rowIndex: number;
     sorts: any[];
     activate: EventEmitter<any>;
     cellTemplate: ViewContainerRef;

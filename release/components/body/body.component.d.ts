@@ -229,4 +229,12 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      * @memberof DataTableBodyComponent
      */
     getRowExpanded(row: any): boolean;
+    /**
+     * Gets the row index of the item
+     *
+     * @param {*} row
+     * @returns {number}
+     * @memberof DataTableBodyComponent
+     */
+    getRowIndex(row: any): number;
 }

@@ -9,6 +9,7 @@ export declare class DataTableBodyRowComponent {
     row: any;
     offsetX: number;
     isSelected: boolean;
+    rowIndex: number;
     readonly cssClass: string;
     rowHeight: number;
     readonly columnsTotalWidths: string;

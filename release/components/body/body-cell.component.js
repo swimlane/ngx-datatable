@@ -180,7 +180,7 @@ var DataTableBodyCellComponent = (function () {
     DataTableBodyCellComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'datatable-body-cell',
-                    template: "\n    <div class=\"datatable-body-cell-label\">\n      <label\n        *ngIf=\"column.checkboxable\"\n        class=\"datatable-checkbox\">\n        <input\n          type=\"checkbox\"\n          [checked]=\"isSelected\"\n          (click)=\"onCheckboxChange($event)\"\n        />\n      </label>\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [title]=\"valueStripped\"\n        [innerHTML]=\"value\">\n      </span>\n      <ng-template #cellTemplate\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngOutletContext]=\"{\n          value: value,\n          row: row,\n          column: column,\n          expanded: expanded,\n          isSelected: isSelected,\n          onCheckboxChangeFn: onCheckboxChangeFn,\n          activateFn: activateFn\n        }\">\n      </ng-template>\n    </div>\n  ",
+                    template: "\n    <div class=\"datatable-body-cell-label\">\n      <label\n        *ngIf=\"column.checkboxable\"\n        class=\"datatable-checkbox\">\n        <input\n          type=\"checkbox\"\n          [checked]=\"isSelected\"\n          (click)=\"onCheckboxChange($event)\"\n        />\n      </label>\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [title]=\"valueStripped\"\n        [innerHTML]=\"value\">\n      </span>\n      <ng-template #cellTemplate\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngOutletContext]=\"{\n          value: value,\n          row: row,\n          column: column,\n          expanded: expanded,\n          isSelected: isSelected,\n          onCheckboxChangeFn: onCheckboxChangeFn,\n          activateFn: activateFn,\n          rowIndex: rowIndex\n        }\">\n      </ng-template>\n    </div>\n  ",
                     host: {
                         class: 'datatable-body-cell'
                     }
@@ -196,6 +196,7 @@ var DataTableBodyCellComponent = (function () {
         'rowHeight': [{ type: core_1.Input },],
         'isSelected': [{ type: core_1.Input },],
         'expanded': [{ type: core_1.Input },],
+        'rowIndex': [{ type: core_1.Input },],
         'sorts': [{ type: core_1.Input },],
         'activate': [{ type: core_1.Output },],
         'cellTemplate': [{ type: core_1.ViewChild, args: ['cellTemplate', { read: core_1.ViewContainerRef },] },],
