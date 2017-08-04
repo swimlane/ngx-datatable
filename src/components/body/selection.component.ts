@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Keys, selectRows, selectRowsBetween } from '../../utils';
 import { SelectionType } from '../../types';
-import { MouseEvent, KeyboardEvent } from '../../events';
+import { mouseEvent, keyboardEvent } from '../../events';
 
 export interface Model {
   type: string;
@@ -43,13 +43,13 @@ export class DataTableSelectionComponent {
     if (multi || chkbox || multiClick) {
       if (event.shiftKey) {
         selected = selectRowsBetween(
-          [], 
-          this.rows, 
-          index, 
-          this.prevIndex, 
+          [],
+          this.rows,
+          index,
+          this.prevIndex,
           this.getRowSelectedIdx.bind(this));
       } else if (event.ctrlKey || event.metaKey || multiClick || chkbox) {
-          selected = selectRows([...this.selected], row, this.getRowSelectedIdx.bind(this));
+        selected = selectRows([...this.selected], row, this.getRowSelectedIdx.bind(this));
       } else {
         selected = selectRows([], row, this.getRowSelectedIdx.bind(this));
       }
@@ -57,13 +57,13 @@ export class DataTableSelectionComponent {
       selected = selectRows([], row, this.getRowSelectedIdx.bind(this));
     }
 
-    if(typeof this.selectCheck === 'function') {
+    if (typeof this.selectCheck === 'function') {
       selected = selected.filter(this.selectCheck.bind(this));
     }
 
     this.selected.splice(0, this.selected.length);
     this.selected.push(...selected);
-    
+
     this.prevIndex = index;
 
     this.select.emit({
@@ -74,12 +74,12 @@ export class DataTableSelectionComponent {
   onActivate(model: Model, index: number): void {
     const { type, event, row } = model;
     const chkbox = this.selectionType === SelectionType.checkbox;
-    const select = (!chkbox && (type === 'click' || type === 'dblclick')) || 
+    const select = (!chkbox && (type === 'click' || type === 'dblclick')) ||
       (chkbox && type === 'checkbox');
 
-    if(select) {
+    if (select) {
       this.selectRow(event, index, row);
-    } else if(type === 'keydown') {
+    } else if (type === 'keydown') {
       if ((<KeyboardEvent>event).keyCode === Keys.return) {
         this.selectRow(event, index, row);
       } else {
@@ -97,13 +97,13 @@ export class DataTableSelectionComponent {
       keyCode === Keys.right ||
       keyCode === Keys.left;
 
-    if(shouldFocus) {
+    if (shouldFocus) {
       const isCellSelection =
         this.selectionType === SelectionType.cell;
 
-      if(!model.cellElement || !isCellSelection) {
+      if (!model.cellElement || !isCellSelection) {
         this.focusRow(model.rowElement, keyCode);
-      } else if(isCellSelection) {
+      } else if (isCellSelection) {
         this.focusCell(model.cellElement, model.rowElement, keyCode, model.cellIndex);
       }
     }
@@ -111,21 +111,21 @@ export class DataTableSelectionComponent {
 
   focusRow(rowElement: any, keyCode: number): void {
     const nextRowElement = this.getPrevNextRow(rowElement, keyCode);
-    if(nextRowElement) nextRowElement.focus();
+    if (nextRowElement) nextRowElement.focus();
   }
 
   getPrevNextRow(rowElement: any, keyCode: number): any {
     const parentElement = rowElement.parentElement;
 
-    if(parentElement) {
+    if (parentElement) {
       let focusElement: HTMLElement;
-      if(keyCode === Keys.up) {
+      if (keyCode === Keys.up) {
         focusElement = parentElement.previousElementSibling;
-      } else if(keyCode === Keys.down) {
+      } else if (keyCode === Keys.down) {
         focusElement = parentElement.nextElementSibling;
       }
 
-      if(focusElement && focusElement.children.length) {
+      if (focusElement && focusElement.children.length) {
         return focusElement.children[0];
       }
     }
@@ -134,19 +134,19 @@ export class DataTableSelectionComponent {
   focusCell(cellElement: any, rowElement: any, keyCode: number, cellIndex: number): void {
     let nextCellElement: HTMLElement;
 
-    if(keyCode === Keys.left) {
+    if (keyCode === Keys.left) {
       nextCellElement = cellElement.previousElementSibling;
-    } else if(keyCode === Keys.right) {
+    } else if (keyCode === Keys.right) {
       nextCellElement = cellElement.nextElementSibling;
-    } else if(keyCode === Keys.up || keyCode === Keys.down) {
+    } else if (keyCode === Keys.up || keyCode === Keys.down) {
       const nextRowElement = this.getPrevNextRow(rowElement, keyCode);
-      if(nextRowElement) {
+      if (nextRowElement) {
         const children = nextRowElement.getElementsByClassName('datatable-body-cell');
-        if(children.length) nextCellElement = children[cellIndex];
+        if (children.length) nextCellElement = children[cellIndex];
       }
     }
 
-    if(nextCellElement) nextCellElement.focus();
+    if (nextCellElement) nextCellElement.focus();
   }
 
   getRowSelected(row: any): boolean {
@@ -154,7 +154,7 @@ export class DataTableSelectionComponent {
   }
 
   getRowSelectedIdx(row: any, selected: any[]): number {
-    if(!selected || !selected.length) return -1;
+    if (!selected || !selected.length) return -1;
 
     const rowId = this.rowIdentity(row);
     return selected.findIndex((r) => {

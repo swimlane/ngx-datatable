@@ -15,7 +15,7 @@ import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
-import { MouseEvent } from '../events';
+import { mouseEvent } from '../events';
 
 @Component({
   selector: 'ngx-datatable',
@@ -130,7 +130,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   @Input() set columns(val: TableColumn[]) {
-    if(val) {
+    if (val) {
       setColumnDefaults(val);
       this.recalculateColumns(val);
     }
@@ -372,12 +372,12 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   @Input() rowIdentity: (x: any) => any = ((x: any) => x);
 
   /**
-   * Row specific classes. 
+   * Row specific classes.
    * Similar implementation to ngClass.
-   * 
+   *
    *  [rowClass]="'first second'"
    *  [rowClass]="{ 'first': true, 'second': true, 'third': false }"
-   * 
+   *
    * @type {*}
    * @memberOf DatatableComponent
    */
@@ -387,8 +387,8 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * A boolean/function you can use to check whether you want
    * to select a particular row based on a criteria. Example:
    *
-   *    (selection) => { 
-   *      return selection !== 'Ethel Price'; 
+   *    (selection) => {
+   *      return selection !== 'Ethel Price';
    *    }
    *
    * @type {*}
@@ -639,7 +639,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Footer template gathered from the ContentChild
-   * 
+   *
    * @type {DatatableFooterDirective}
    * @memberOf DatatableComponent
    */
@@ -686,8 +686,8 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   _columnTemplates: QueryList<DataTableColumnDirective>;
 
   constructor(
-    private scrollbarHelper: ScrollbarHelper, 
-    element: ElementRef, 
+    private scrollbarHelper: ScrollbarHelper,
+    element: ElementRef,
     differs: KeyValueDiffers) {
 
     // get ref to elm for measuring
@@ -726,7 +726,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
       this.recalculate();
 
       // emit page for virtual server-side kickoff
-      if(this.externalPaging && this.scrollbarV) {
+      if (this.externalPaging && this.scrollbarV) {
         this.page.emit({
           count: this.count,
           pageSize: this.pageSize,
@@ -847,7 +847,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    *
    * @memberOf DatatableComponent
    */
-  onBodyPage({offset}: any): void {
+  onBodyPage({ offset }: any): void {
     this.offset = offset;
 
     this.page.emit({
@@ -962,7 +962,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    *
    * @memberOf DatatableComponent
    */
-  onColumnResize({column, newValue}: any): void {
+  onColumnResize({ column, newValue }: any): void {
     /* Safari/iOS 10.2 workaround */
     if (column === undefined) {
       return;
@@ -1000,7 +1000,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    *
    * @memberOf DatatableComponent
    */
-  onColumnReorder({column, newValue, prevValue}: any): void {
+  onColumnReorder({ column, newValue, prevValue }: any): void {
     const cols = this.columns.map(c => {
       return { ...c };
     });
@@ -1026,7 +1026,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   onColumnSort(event: any): void {
-    const {sorts} = event;
+    const { sorts } = event;
 
     // this could be optimized better since it will resort
     // the rows again on the 'push' detection...

@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { MouseEvent } from '../events';
+import { mouseEvent } from '../events';
 import 'rxjs/add/operator/takeUntil';
 
 @Directive({
@@ -49,7 +49,7 @@ export class ResizeableDirective implements OnDestroy, AfterViewInit {
     }
   }
 
-  @HostListener('mousedown', [ '$event' ])
+  @HostListener('mousedown', ['$event'])
   onMousedown(event: MouseEvent): void {
     const isHandle = (<HTMLElement>(event.target)).classList.contains('resize-handle');
     const initialWidth = this.element.clientWidth;

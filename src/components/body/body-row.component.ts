@@ -6,7 +6,7 @@ import {
   columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys
 } from '../../utils';
 import { ScrollbarHelper } from '../../services';
-import { MouseEvent, KeyboardEvent } from '../../events';
+import { mouseEvent, keyboardEvent } from '../../events';
 
 @Component({
   selector: 'datatable-body-row',
@@ -55,18 +55,18 @@ export class DataTableBodyRowComponent {
   @HostBinding('class')
   get cssClass() {
     let cls = 'datatable-body-row';
-    if(this.isSelected) cls += ' active';
-    if(this.row.$$index % 2 !== 0) cls += ' datatable-row-odd';
-    if(this.row.$$index % 2 === 0) cls += ' datatable-row-even';
+    if (this.isSelected) cls += ' active';
+    if (this.row.$$index % 2 !== 0) cls += ' datatable-row-odd';
+    if (this.row.$$index % 2 === 0) cls += ' datatable-row-even';
 
-    if(this.rowClass) {
+    if (this.rowClass) {
       const res = this.rowClass(this.row);
-      if(typeof res === 'string') {
+      if (typeof res === 'string') {
         cls += ` ${res}`;
-      } else if(typeof res === 'object') {
+      } else if (typeof res === 'object') {
         const keys = Object.keys(res);
-        for(const k of keys) {
-          if(res[k] === true) cls += ` ${k}`;
+        for (const k of keys) {
+          if (res[k] === true) cls += ` ${k}`;
         }
       }
     }
@@ -110,9 +110,9 @@ export class DataTableBodyRowComponent {
       width: `${widths[group]}px`
     };
 
-    if(group === 'left') {
+    if (group === 'left') {
       translateXY(styles, offsetX, 0);
-    } else if(group === 'right') {
+    } else if (group === 'right') {
       const bodyWidth = parseInt(this.innerWidth + '', 0);
       const totalDiff = widths.total - bodyWidth;
       const offsetDiff = totalDiff - offsetX;
@@ -141,7 +141,7 @@ export class DataTableBodyRowComponent {
       keyCode === Keys.left ||
       keyCode === Keys.right;
 
-    if(isAction && isTargetRow) {
+    if (isAction && isTargetRow) {
       event.preventDefault();
       event.stopPropagation();
 
