@@ -53,7 +53,7 @@ export function numericIndexGetter(row: any[], index: number): any {
  * @param fieldName field name string
  * @returns {any}
  */
-export function shallowValueGetter(obj: Object, fieldName: string): any {
+export function shallowValueGetter(obj: any, fieldName: string): any {
   if(!obj || !fieldName) return obj;
 
   const value = obj[fieldName];
@@ -66,7 +66,7 @@ export function shallowValueGetter(obj: Object, fieldName: string): any {
  * @param {object} obj
  * @param {string} path
  */
-export function deepValueGetter(obj: Object, path: string): any {
+export function deepValueGetter(obj: any, path: string): any {
   if(!obj || !path) return obj;
 
   // check if path matches a root-level field

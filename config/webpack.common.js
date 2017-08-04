@@ -2,7 +2,6 @@ const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { ENV, IS_PRODUCTION, APP_VERSION, IS_DEV, dir } = require('./helpers');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = function(options = {}) {
   return {
@@ -40,36 +39,41 @@ module.exports = function(options = {}) {
         },
         {
           test: /\.css/,
-          loaders: [
-            ExtractTextPlugin.extract({
-              fallbackLoader: "style-loader",
-              loader: 'css-loader'
-            }),
-            'to-string-loader',
-            'css-loader',
-            'postcss-loader?sourceMap',
+          use: [
+            { loader: 'to-string-loader' }, 
+            { loader: 'css-loader' },
+            { 
+              loader:'postcss-loader',
+              options: {
+                sourceMap: true,
+                plugins: [autoprefixer]
+              }
+            }
           ]
         },
         {
           test: /\.scss$/,
-          loaders: [
-            ExtractTextPlugin.extract({
-              fallbackLoader: 'style-loader',
-              loader: 'css-loader'
-            }),
-            'to-string-loader',
-            'css-loader',
-            'postcss-loader?sourceMap',
-            'sass-loader?sourceMap'
+          use: [
+            { loader: 'to-string-loader' }, 
+            { loader: 'css-loader' },
+            { 
+              loader:'postcss-loader',
+              options: {
+                sourceMap: true,
+                plugins: [autoprefixer]
+              }
+            },
+            { 
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true
+              }
+            }
           ]
         }
       ]
     },
     plugins: [
-      new ExtractTextPlugin({
-        filename: '[name].css',
-        allChunks: true
-      }),
       new webpack.NamedModulesPlugin(),
       new webpack.DefinePlugin({
         ENV,
@@ -88,9 +92,6 @@ module.exports = function(options = {}) {
             emitErrors: false,
             failOnHint: false,
             resourcePath: 'src'
-          },
-          postcss: function() {
-            return [ autoprefixer ];
           }
         }
       })
