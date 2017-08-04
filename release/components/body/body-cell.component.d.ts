@@ -6,6 +6,7 @@ export declare class DataTableBodyCellComponent implements OnDestroy {
     column: TableColumn;
     rowHeight: number;
     isSelected: boolean;
+    expanded: boolean;
     sorts: any[];
     activate: EventEmitter<any>;
     cellTemplate: ViewContainerRef;
@@ -13,6 +14,7 @@ export declare class DataTableBodyCellComponent implements OnDestroy {
     readonly width: number;
     readonly height: string | number;
     readonly value: any;
+    readonly valueStripped: any;
     sortDir: SortDirection;
     element: any;
     _sorts: any[];
@@ -28,4 +30,5 @@ export declare class DataTableBodyCellComponent implements OnDestroy {
     onKeyDown(event: KeyboardEvent): void;
     onCheckboxChange(event: any): void;
     calcSortDir(sorts: any[]): any;
+    stripHtml(html: string): string;
 }

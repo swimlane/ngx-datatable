@@ -24,10 +24,10 @@ export declare function numericIndexGetter(row: any[], index: number): any;
  * @param fieldName field name string
  * @returns {any}
  */
-export declare function shallowValueGetter(obj: Object, fieldName: string): any;
+export declare function shallowValueGetter(obj: any, fieldName: string): any;
 /**
  * Returns a deep object given a string. zoo['animal.type']
  * @param {object} obj
  * @param {string} path
  */
-export declare function deepValueGetter(obj: Object, path: string): any;
+export declare function deepValueGetter(obj: any, path: string): any;

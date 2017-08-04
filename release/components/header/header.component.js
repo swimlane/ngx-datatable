@@ -55,7 +55,7 @@ var DataTableHeaderComponent = (function () {
     DataTableHeaderComponent.prototype.onLongPressEnd = function (_a) {
         var event = _a.event, model = _a.model;
         this.dragEventTarget = event;
-        // delay resetting so sort can be 
+        // delay resetting so sort can be
         // prevented if we were dragging
         setTimeout(function () {
             model.dragging = false;

@@ -73,11 +73,13 @@
     vertical-align: top;
     display: inline-block;
     line-height: 1.625;
+    /*
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     -o-user-select: none;
-    user-select: none; }
+    user-select: none;
+    */ }
     .ngx-datatable .datatable-body-cell:focus,
     .ngx-datatable .datatable-header-cell:focus {
       outline: none; }
