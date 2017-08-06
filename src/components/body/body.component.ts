@@ -203,7 +203,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   set temp(val) {
     this._temp = val;
-    //console.log('temp', this._temp.length)
   }
 
   get temp() {
@@ -218,7 +217,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   columnGroupWidths: any;
   rowTrackingFn: any;
   listener: any;
-  //groupedRows: Array<any>;
 
   _rows: any[];
   _bodyHeight: any;
@@ -242,17 +240,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         return row.$$index;
       }
     }.bind(this);
-
-    /*
-    if (this.rows)
-      console.log('rows', this.rows.length);
-
-    if (this._rows)
-      console.log('_rows', this._rows.length);
-
-    if (this.temp)
-      console.log('temp', this.temp.length);
-    */
 
   }
 
@@ -377,7 +364,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     const maxRowsPerGroup = 3;
     if(this._groupRowsBy)
     {      
-      console.log('this.groupedRows.length', this.groupedRows.length);
       while (rowIndex < last && rowIndex < this.groupedRows.length -1) {
 
           //Add the groups into this page
@@ -389,20 +375,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
           }
 
           idx++;
-/*         let rowIndexDetail = 0;
-        console.log('inside loop');
-        while (rowIndexDetail < this.groupedRows[rowIndex].value.length) {  
-          const row = this.groupedRows[rowIndex].value[rowIndexDetail];
-
-          if(row) {
-            //row.$$index = rowIndex + (rowIndex*maxRowsPerGroup);
-            temp[idx] = row;
-          }
-
-          idx++;
-          rowIndexDetail++;
-        } */
-        rowIndex++; //Group index
+          rowIndex++; //Group index
       }      
     }
     else
@@ -522,31 +495,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
     return styles;
   }
-  /*
-
-  getRowsStyles(row: any): any {
-    const rowHeight = this.getRowAndDetailHeight(row);
-
-    const styles = {
-      height: rowHeight + 'px',
-      //border: '2px solid black'
-    };
-
-    if(this.scrollbarV) {
-      const idx = row ? row.$$index : 0;
-
-      // const pos = idx * rowHeight;
-      // The position of this row would be the sum of all row heights
-      // until the previous row position.
-      const pos = this.rowHeightsCache.query(idx - 1);
-
-      translateXY(styles, 0, pos);
-    }
-
-    return styles;
-  }
-*/
-
+ 
   /**
    * Hides the loading indicator
    * 
