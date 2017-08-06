@@ -6,6 +6,7 @@ import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
 import { MouseEvent } from '../../events';
 
+//      [groupRowsBy]="groupRowsBy"
 @Component({
   selector: 'datatable-body',
   template: `
@@ -29,30 +30,28 @@ import { MouseEvent } from '../../events';
         [scrollHeight]="scrollHeight"
         [scrollWidth]="columnGroupWidths.total"
         (scroll)="onBodyScroll($event)">
-        <datatable-group-wrapper         
-          [groupByIndex]="groupByIndex"
-          *ngFor="let group of groupedRows" #group{{group.key}}>
-          <datatable-row-wrapper
+        <datatable-row-wrapper
+          [groupedRows]="groupedRows"
+          *ngFor="let group of temp; let i = index; trackBy: rowTrackingFn;"
+          [ngStyle]="getRowsStyles(group.value)"
+          [rowDetail]="rowDetail"
+          [detailRowHeight]="getDetailRowHeight(group[i],i)"
+          [row]="group"
+          [expanded]="group.value[0].$$expanded === 1"
+          (rowContextmenu)="rowContextmenu.emit($event)">
+          <datatable-body-row
             *ngFor="let row of group.value; let i = index; trackBy: rowTrackingFn;"
-            [ngStyle]="getRowsStyles(row)"
-            [rowDetail]="rowDetail"
-            [detailRowHeight]="getDetailRowHeight(row,i)"
+            tabindex="-1"
+            [isSelected]="selector.getRowSelected(row)"
+            [innerWidth]="innerWidth"
+            [offsetX]="offsetX"
+            [columns]="columns"
+            [rowHeight]="getRowHeight(row)"
             [row]="row"
-            [expanded]="row.$$expanded === 1"
-            (rowContextmenu)="rowContextmenu.emit($event)">
-            <datatable-body-row
-              tabindex="-1"
-              [isSelected]="selector.getRowSelected(row)"
-              [innerWidth]="innerWidth"
-              [offsetX]="offsetX"
-              [columns]="columns"
-              [rowHeight]="getRowHeight(row)"
-              [row]="row"
-              [rowClass]="rowClass"
-              (activate)="selector.onActivate($event, i)">
-            </datatable-body-row>
-          </datatable-row-wrapper>
-        </datatable-group-wrapper>
+            [rowClass]="rowClass"
+            (activate)="selector.onActivate($event, i)">
+          </datatable-body-row>
+        </datatable-row-wrapper>
       </datatable-scroller>
       <div
         class="empty-row"
@@ -81,7 +80,17 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() selectCheck: any;
   @Input() trackByProp: string;
   @Input() rowClass: any;
-  @Input() groupByIndex: number = 2;
+  @Input() groupedRows: any;
+
+  _groupRowsBy: string;
+
+  @Input() set groupRowsBy(val: string){
+    this._groupRowsBy = val
+  }
+
+  get groupRowsBy(): string{
+    return this._groupRowsBy;
+  }
 
   @Input() set pageSize(val: number) {
     this._pageSize = val;
@@ -192,14 +201,24 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     }
   }
 
+  set temp(val) {
+    this._temp = val;
+    //console.log('temp', this._temp.length)
+  }
+
+  get temp() {
+    return this._temp;
+  }
+
   rowHeightsCache: RowHeightCache = new RowHeightCache();
-  temp: any[] = [];
+  //temp: any[] = [];
+  _temp: any[] = [];
   offsetY: number = 0;
   indexes: any = {};
   columnGroupWidths: any;
   rowTrackingFn: any;
   listener: any;
-  groupedRows: Array<any>;
+  //groupedRows: Array<any>;
 
   _rows: any[];
   _bodyHeight: any;
@@ -223,6 +242,17 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         return row.$$index;
       }
     }.bind(this);
+
+    /*
+    if (this.rows)
+      console.log('rows', this.rows.length);
+
+    if (this._rows)
+      console.log('_rows', this._rows.length);
+
+    if (this.temp)
+      console.log('temp', this.temp.length);
+    */
 
   }
 
@@ -248,34 +278,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   ngOnDestroy(): void {
     if(this.rowDetail) this.listener.unsubscribe();
-  }
-
-  /**
-   * Creates a map with the data grouped by the user choise of grouping index
-   * 
-   * @param originalArray the original array passed via parameter
-   * @param groupByIndex  the index of the column to group the data by
-   */
-   groupArrayBy(originalArray, groupByIndex) {
-    // create a map to hold groups with their corresponding results
-    const map = new Map();
-    originalArray.forEach((item) => {
-        const key = item[groupByIndex];
-        if (!map.has(key)) {
-            map.set(key, [item]);
-        } else {
-            map.get(key).push(item);
-        }
-    });
-
-    // convert map back to a simple array of objects
-    let groups: Array<any> = Array.from(map, x => addGroup(x[0], x[1]) );
-
-    // output groups to the console for demostration
-    console.log("map = ", map);
-    console.log("groups = ", groups);    
-  
-    return groups;
   }
 
   /**
@@ -325,9 +327,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     this.updateIndexes();
     this.updatePage(event.direction);
     this.updateRows();
-
-    //Creates a new array grouped by the index chosen by the user. In fact the result will be an array of arrays.
-    this.groupedRows = this.groupArrayBy(this.rows, this.groupByIndex)    
   }
 
   /**
@@ -362,6 +361,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     let idx = 0;
     const temp: any[] = [];
 
+    /*
     while (rowIndex < last && rowIndex < this.rowCount) {
       const row = this.rows[rowIndex];
 
@@ -369,12 +369,58 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         row.$$index = rowIndex;
         temp[idx] = row;
       }
+*/
 
-      idx++;
-      rowIndex++;
+  //if grouprowsby has been specified consider treat row paging parameters as group paging parameters
+  //ie if limit 10 has been spified treat it as 10 groups rather than 10 rows
+    //TODO: This requires more thinking to get a sequencial number for rows
+    const maxRowsPerGroup = 3;
+    if(this._groupRowsBy)
+    {      
+      console.log('this.groupedRows.length', this.groupedRows.length);
+      while (rowIndex < last && rowIndex < this.groupedRows.length -1) {
+
+          //Add the groups into this page
+          const group = this.groupedRows[rowIndex];
+
+          if(group) {
+            //row.$$index = rowIndex + (rowIndex*maxRowsPerGroup);
+            temp[idx] = group;
+          }
+
+          idx++;
+/*         let rowIndexDetail = 0;
+        console.log('inside loop');
+        while (rowIndexDetail < this.groupedRows[rowIndex].value.length) {  
+          const row = this.groupedRows[rowIndex].value[rowIndexDetail];
+
+          if(row) {
+            //row.$$index = rowIndex + (rowIndex*maxRowsPerGroup);
+            temp[idx] = row;
+          }
+
+          idx++;
+          rowIndexDetail++;
+        } */
+        rowIndex++; //Group index
+      }      
     }
+    else
+      while (rowIndex < last && rowIndex < this.rowCount) {
+        const row = this.rows[rowIndex];
+
+        if(row) {
+          row.$$index = rowIndex;
+          temp[idx] = row;
+        }
+
+        idx++;
+        rowIndex++;
+      }
 
     this.temp = temp;
+
+   
   }
 
   /**
@@ -386,7 +432,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * @memberOf DataTableBodyComponent
    */
   getRowHeight(row: any): number {
-    let rowHeight = this.rowHeight;
+    let rowHeight = this.rowHeight;  
 
     // if its a function return it
     if(typeof this.rowHeight === 'function') {
@@ -445,16 +491,45 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * case the positionY of the translate3d for row2 would be the sum of all the
    * heights of the rows before it (i.e. row0 and row1).
    * 
-   * @param {*} row The row that needs to be placed in the 2D space.
+   * @param {*} rows The row that needs to be placed in the 2D space.
    * @returns {*} Returns the CSS3 style to be applied
    * 
    * @memberOf DataTableBodyComponent
    */
+  
+  getRowsStyles(rows: any): any {
+    var rowHeight=0;
+    for (var index = 0; index < rows.length; index++) {
+      rowHeight += this.getRowAndDetailHeight(rows[index]);     
+    }    
+
+    const styles = {
+      height: rowHeight + 'px',
+      border: '1px solid black',
+      width: this.innerWidth
+    };
+
+    if(this.scrollbarV) {
+      const idx = rows[rows.length-1] ? rows[rows.length-1].$$index : 0;
+
+      // const pos = idx * rowHeight;
+      // The position of this row would be the sum of all row heights
+      // until the previous row position.
+      const pos = this.rowHeightsCache.query(idx - 1);
+
+      translateXY(styles, 0, pos);
+    }
+
+    return styles;
+  }
+  /*
+
   getRowsStyles(row: any): any {
     const rowHeight = this.getRowAndDetailHeight(row);
 
     const styles = {
-      height: rowHeight + 'px'
+      height: rowHeight + 'px',
+      //border: '2px solid black'
     };
 
     if(this.scrollbarV) {
@@ -470,6 +545,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
     return styles;
   }
+*/
 
   /**
    * Hides the loading indicator

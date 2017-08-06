@@ -4,5 +4,4 @@ export * from './body-row.component';
 export * from './progress-bar.component';
 export * from './scroller.component';
 export * from './body-row-wrapper.component';
-export * from './body-group-wrapper.component';
 export * from './selection.component';

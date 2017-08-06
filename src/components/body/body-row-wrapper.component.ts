@@ -28,6 +28,7 @@ export class DataTableRowWrapperComponent {
   @Input() detailRowHeight: any;
   @Input() expanded: boolean = false;
   @Input() row: any;
+  @Input() groupedRows: any;
   
   @Output() rowContextmenu = new EventEmitter<{event: MouseEvent, row: any}>(false);
 

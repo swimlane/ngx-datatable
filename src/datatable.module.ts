@@ -59,7 +59,6 @@ import { ScrollbarHelper } from './services';
     DataTablePagerComponent,
     ProgressBarComponent,    
     DataTableBodyRowComponent,
-    DataTableGroupWrapperComponent,
     DataTableRowWrapperComponent,
     DatatableRowDetailDirective,
     DatatableRowDetailTemplateDirective,
