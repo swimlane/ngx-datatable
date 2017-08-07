@@ -37,7 +37,7 @@ export class MockServerResultsService {
         </small>
       </h3>
       <ngx-datatable
-        class="material"
+        class="material server-scrolling-demo"
         [rows]="rows"
         [columns]="[{name:'Name'},{name:'Gender'},{name:'Company'}]"
         [columnMode]="'force'"
