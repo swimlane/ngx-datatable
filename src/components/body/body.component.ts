@@ -33,12 +33,23 @@ import { MouseEvent } from '../../events';
         <datatable-row-wrapper
           [groupedRows]="groupedRows"
           *ngFor="let group of temp; let i = index; trackBy: rowTrackingFn;"
-          [ngStyle]="getRowsStyles(group.value)"
+          [ngStyle]="getRowsStyles(group)"
           [rowDetail]="rowDetail"
           [detailRowHeight]="getDetailRowHeight(group[i],i)"
           [row]="group"
-          [expanded]="group.value[0].$$expanded === 1"
-          (rowContextmenu)="rowContextmenu.emit($event)">
+          [expanded]="group.$$expanded === 1"
+          (rowContextmenu)="rowContextmenu.emit($event)">      
+          <datatable-body-row *ngIf="!group.value"        
+            tabindex="-1"
+            [isSelected]="selector.getRowSelected(group)"
+            [innerWidth]="innerWidth"
+            [offsetX]="offsetX"
+            [columns]="columns"
+            [rowHeight]="getRowHeight(group)"
+            [row]="group"
+            [rowClass]="rowClass"
+            (activate)="selector.onActivate($event, i)">
+          </datatable-body-row>                       
           <datatable-body-row
             *ngFor="let row of group.value; let i = index; trackBy: rowTrackingFn;"
             tabindex="-1"
@@ -65,6 +76,24 @@ import { MouseEvent } from '../../events';
   }
 })
 export class DataTableBodyComponent implements OnInit, OnDestroy {
+
+//          [expanded]="group.value[0].$$expanded === 1"
+//*ngFor="let row of group.value; let i = index; trackBy: rowTrackingFn;"
+//conditional ngfor example: *ngFor="let row of (group.value ? group.value : temp); let i = index; trackBy: rowTrackingFn;"
+
+/*
+ <datatable-body-row *ngIf="!group.value"        
+            tabindex="-1"
+            [isSelected]="selector.getRowSelected(group)"
+            [innerWidth]="innerWidth"
+            [offsetX]="offsetX"
+            [columns]="columns"
+            [rowHeight]="getRowHeight(group)"
+            [row]="group"
+            [rowClass]="rowClass"
+            (activate)="selector.onActivate($event, i)">
+          </datatable-body-row>          
+*/
 
   @Input() scrollbarV: boolean;
   @Input() scrollbarH: boolean;
@@ -358,13 +387,19 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       }
 */
 
-  //if grouprowsby has been specified consider treat row paging parameters as group paging parameters
-  //ie if limit 10 has been spified treat it as 10 groups rather than 10 rows
-    //TODO: This requires more thinking to get a sequencial number for rows
-    const maxRowsPerGroup = 3;
-    if(this._groupRowsBy)
-    {      
-      while (rowIndex < last && rowIndex < this.groupedRows.length -1) {
+  //if grouprowsby has been specified treat row paging parameters as group paging parameters
+  //ie if limit 10 has been specified treat it as 10 groups rather than 10 rows    
+    if(this.groupedRows)
+    {
+      var maxRowsPerGroup = 3;
+
+
+      //if there is only one group set the maximum number of rows per group the same as the total number of rows
+        if (this.groupedRows.length==1){
+          maxRowsPerGroup = this.groupedRows[0].value.length
+        }
+
+        while (rowIndex < last && rowIndex < this.groupedRows.length) {
 
           //Add the groups into this page
           const group = this.groupedRows[rowIndex];
@@ -376,24 +411,24 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
           idx++;
           rowIndex++; //Group index
-      }      
-    }
-    else
-      while (rowIndex < last && rowIndex < this.rowCount) {
-        const row = this.rows[rowIndex];
-
-        if(row) {
-          row.$$index = rowIndex;
-          temp[idx] = row;
-        }
-
-        idx++;
-        rowIndex++;
+        }      
       }
+      else
+      {
+        while (rowIndex < last && rowIndex < this.rowCount) {
+          const row = this.rows[rowIndex];
 
-    this.temp = temp;
+          if(row) {
+            row.$$index = rowIndex;
+            temp[idx] = row;
+          }
 
-   
+          idx++;
+          rowIndex++;
+        }
+      }
+    
+    this.temp = temp;   
   }
 
   /**
@@ -472,27 +507,52 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   
   getRowsStyles(rows: any): any {
     var rowHeight=0;
-    for (var index = 0; index < rows.length; index++) {
-      rowHeight += this.getRowAndDetailHeight(rows[index]);     
-    }    
+    var styles = {};
 
-    const styles = {
-      height: rowHeight + 'px',
-      border: '1px solid black',
-      width: this.innerWidth
-    };
+    //check if it's a group
+    if (rows)
+      {
+      if (rows.value){
+        for (var index = 0; index < rows.value.length; index++) {
+          rowHeight += this.getRowAndDetailHeight(rows.value[index]);     
+        }          
+      }  
+      else{
+        rowHeight += this.getRowAndDetailHeight(rows);
+      }
 
-    if(this.scrollbarV) {
-      const idx = rows[rows.length-1] ? rows[rows.length-1].$$index : 0;
+      styles = {
+        height: rowHeight + 'px'
+        //border: '1px solid black',
+        //width: this.innerWidth
+      };
 
-      // const pos = idx * rowHeight;
-      // The position of this row would be the sum of all row heights
-      // until the previous row position.
-      const pos = this.rowHeightsCache.query(idx - 1);
+      //only add styles for the group if there is a group
+      if (this.groupedRows){
+        styles['border'] = '1px solid black';
+        styles['width'] = this.innerWidth;
+      }
 
-      translateXY(styles, 0, pos);
+      if(this.scrollbarV) {
+
+        var idx = 0
+        if (this.groupedRows){
+          idx = rows[rows.length-1] ? rows[rows.length-1].$$index : 0;
+        }
+        else{
+          idx = rows ? rows.$$index : 0;
+        }        
+
+        //const idx = row ? row.$$index : 0;
+
+        // const pos = idx * rowHeight;
+        // The position of this row would be the sum of all row heights
+        // until the previous row position.
+        const pos = this.rowHeightsCache.query(idx - 1);
+
+        translateXY(styles, 0, pos);
+      }
     }
-
     return styles;
   }
  

@@ -119,6 +119,40 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
       //If a column has been specified in _groupRowsBy created a new array with the data grouped by that row
       this._groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy)
     }
+     /*
+
+    else //even if there is no group specified add rows to a parent element
+    {
+     
+      if (this._rows)
+      {
+        if (this._rows.length>0)
+        {
+          console.log('this._rows', this._rows);
+
+          this._groupedRows = [ {"key": "group", "value": this._rows }]
+
+          console.log('this._groupedRows', this._groupedRows);
+        }
+       
+      }
+    }
+
+    */
+
+/*
+        var group: Array<any> = [];
+        group.push(this._rows)
+
+        console.log('group.length', group.length);
+
+        this._groupedRows = group
+*/
+
+
+    //Elimiante rows to clear memory
+    //this._rows = [];
+    
   }
 
   /**
@@ -1183,5 +1217,5 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
  * @param value the element value, it can be single content or an array
  */  
 function addGroup(key, value) {
-  return { "key": key, "value": value };
+  return { "key": key, "$$expanded": 0, "value": value };
 }
