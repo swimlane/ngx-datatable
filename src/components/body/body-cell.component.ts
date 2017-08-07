@@ -1,5 +1,5 @@
 import {
-  Component, Input, PipeTransform, HostBinding, ViewChild,
+  Component, Input, PipeTransform, HostBinding, ViewChild, ChangeDetectorRef,
   Output, EventEmitter, HostListener, ElementRef, ViewContainerRef, OnDestroy
 } from '@angular/core';
 
@@ -23,22 +23,13 @@ import { mouseEvent, keyboardEvent } from '../../events';
       </label>
       <span
         *ngIf="!column.cellTemplate"
-        [title]="valueStripped"
+        [title]="sanitizedValue"
         [innerHTML]="value">
       </span>
       <ng-template #cellTemplate
         *ngIf="column.cellTemplate"
         [ngTemplateOutlet]="column.cellTemplate"
-        [ngOutletContext]="{
-          value: value,
-          row: row,
-          column: column,
-          expanded: expanded,
-          isSelected: isSelected,
-          onCheckboxChangeFn: onCheckboxChangeFn,
-          activateFn: activateFn,
-          rowIndex: rowIndex
-        }">
+        [ngOutletContext]="cellContext">
       </ng-template>
     </div>
   `,
@@ -48,12 +39,60 @@ import { mouseEvent, keyboardEvent } from '../../events';
 })
 export class DataTableBodyCellComponent implements OnDestroy {
 
-  @Input() row: any;
-  @Input() column: TableColumn;
   @Input() rowHeight: number;
-  @Input() isSelected: boolean;
-  @Input() expanded: boolean;
-  @Input() rowIndex: number;
+
+  @Input() set isSelected(val: boolean) {
+    this._isSelected = val;
+    this.cellContext.isSelected = val;
+    this.cd.markForCheck();
+  }
+
+  get isSelected(): boolean {
+    return this._isSelected;
+  }
+  
+  @Input() set expanded(val: boolean) {
+    this._expanded = val;
+    this.cellContext.expanded = val;
+    this.cd.markForCheck();
+  }
+
+  get expanded(): boolean {
+    return this._expanded;
+  }
+
+  @Input() set rowIndex(val: number) {
+    this._rowIndex = val;
+    this.cellContext.rowIndex = val;
+    this.calculateValue();
+    this.cd.markForCheck();
+  }
+
+  get rowIndex(): number {
+    return this._rowIndex;
+  }
+
+  @Input() set column(column: TableColumn) {
+    this._column = column;
+    this.cellContext.column = column;
+    this.calculateValue();
+    this.cd.markForCheck();
+  }
+
+  get column(): TableColumn {
+    return this._column;
+  }
+
+  @Input() set row(row: any) {
+    this._row = row;
+    this.cellContext.row = row;
+    this.calculateValue();
+    this.cd.markForCheck();
+  }
+
+  get row(): any {
+    return this._row;
+  }
 
   @Input() set sorts(val: any[]) {
     this._sorts = val;
@@ -110,34 +149,61 @@ export class DataTableBodyCellComponent implements OnDestroy {
     return height + 'px';
   }
 
-  get value(): any {
-    if (!this.row || !this.column) return '';
-    const val = this.column.$$valueGetter(this.row, this.column.prop);
-    const userPipe: PipeTransform = this.column.pipe;
-
-    if (userPipe) return userPipe.transform(val);
-    if (val !== undefined) return val;
-    return '';
-  }
-
-  get valueStripped(): any {
-    return this.stripHtml(this.value);
-  }
-
+  sanitizedValue: any;
+  value: any;
   sortDir: SortDirection;
-  element: any;
-  _sorts: any[];
   isFocused: boolean = false;
   onCheckboxChangeFn = this.onCheckboxChange.bind(this);
   activateFn = this.activate.emit.bind(this.activate);
 
-  constructor(element: ElementRef) {
-    this.element = element.nativeElement;
+  cellContext: any = {
+    onCheckboxChangeFn: this.onCheckboxChangeFn,
+    activateFn: this.activateFn,
+    row: this.row,
+    value: this.value,
+    column: this.column,
+    isSelected: this.isSelected,
+    rowIndex: this.rowIndex
+  };
+
+  private _isSelected: boolean;
+  private _sorts: any[];
+  private _column: TableColumn;
+  private _row: any;
+  private _rowIndex: number;
+  private _expanded: boolean;
+  private _element: any;
+
+  constructor(element: ElementRef, private cd: ChangeDetectorRef) {
+    this._element = element.nativeElement;
   }
 
   ngOnDestroy(): void {
     if (this.cellTemplate) {
       this.cellTemplate.clear();
+    }
+  }
+
+  calculateValue(): void {
+    let value = '';
+
+    if (!this.row || !this.column) {
+      value = '';
+    } else {
+      const val = this.column.$$valueGetter(this.row, this.column.prop);
+      const userPipe: PipeTransform = this.column.pipe;
+
+      if (userPipe) {
+        value = userPipe.transform(val);
+      } else if (value !== undefined) {
+        value = val;
+      }
+    }
+
+    if(this.value !== value) {
+      this.value = value;
+      this.cellContext.value = value;
+      this.sanitizedValue = this.stripHtml(value);
     }
   }
 
@@ -159,7 +225,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
       row: this.row,
       column: this.column,
       value: this.value,
-      cellElement: this.element
+      cellElement: this._element
     });
   }
 
@@ -171,14 +237,14 @@ export class DataTableBodyCellComponent implements OnDestroy {
       row: this.row,
       column: this.column,
       value: this.value,
-      cellElement: this.element
+      cellElement: this._element
     });
   }
 
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
     const keyCode = event.keyCode;
-    const isTargetCell = event.target === this.element;
+    const isTargetCell = event.target === this._element;
 
     const isAction =
       keyCode === Keys.return ||
@@ -197,7 +263,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
         row: this.row,
         column: this.column,
         value: this.value,
-        cellElement: this.element
+        cellElement: this._element
       });
     }
   }
@@ -209,7 +275,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
       row: this.row,
       column: this.column,
       value: this.value,
-      cellElement: this.element
+      cellElement: this._element
     });
   }
 
