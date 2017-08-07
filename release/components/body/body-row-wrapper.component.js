@@ -12,7 +12,7 @@ var DataTableRowWrapperComponent = (function () {
     DataTableRowWrapperComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'datatable-row-wrapper',
-                    template: "\n    <ng-content></ng-content>\n    <div\n      *ngIf=\"expanded\"\n      [style.height.px]=\"detailRowHeight\"\n      class=\"datatable-row-detail\">\n      <ng-template\n        *ngIf=\"rowDetail && rowDetail.template\"\n        [ngTemplateOutlet]=\"rowDetail.template\"\n        [ngOutletContext]=\"{ row: row, expanded: expanded }\">\n      </ng-template>\n    </div>\n  ",
+                    template: "\n    <ng-content></ng-content>\n    <div\n      *ngIf=\"expanded\"\n      [style.height.px]=\"detailRowHeight\"\n      class=\"datatable-row-detail\">\n      <ng-template\n        *ngIf=\"rowDetail && rowDetail.template\"\n        [ngTemplateOutlet]=\"rowDetail.template\"\n        [ngOutletContext]=\"{ \n          row: row, \n          expanded: expanded,\n          rowIndex: rowIndex\n        }\">\n      </ng-template>\n    </div>\n  ",
                     host: {
                         class: 'datatable-row-wrapper'
                     }
@@ -25,6 +25,7 @@ var DataTableRowWrapperComponent = (function () {
         'detailRowHeight': [{ type: core_1.Input },],
         'expanded': [{ type: core_1.Input },],
         'row': [{ type: core_1.Input },],
+        'rowIndex': [{ type: core_1.Input },],
         'rowContextmenu': [{ type: core_1.Output },],
         'onContextmenu': [{ type: core_1.HostListener, args: ['contextmenu', ['$event'],] },],
     };

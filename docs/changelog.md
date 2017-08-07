@@ -1,7 +1,8 @@
 # Changelog
 
-## Master
+## 10.0.2
 - Enhancement: Add `rowIndex` to row-detail template
+- Bug: Add `index.css` back to build
 
 ## 10.0.1
 - Bug: Fix old references to `$$index` and `$$expanded`

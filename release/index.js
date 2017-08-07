@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"10.0.1" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"10.0.2" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -80,7 +80,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ({
 
-/***/ "./node_modules/css-loader/index.js!./node_modules/postcss-loader/lib/index.js?{\"sourceMap\":true,\"plugins\":[null]}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":true}!./src/components/datatable.component.scss":
+/***/ "./node_modules/css-loader/index.js!./node_modules/postcss-loader/index.js!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":true}!./src/components/datatable.component.scss":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(undefined);
@@ -1993,6 +1993,10 @@ var DataTableRowWrapperComponent = (function () {
         __metadata("design:type", Object)
     ], DataTableRowWrapperComponent.prototype, "row", void 0);
     __decorate([
+        core_1.Input(),
+        __metadata("design:type", Number)
+    ], DataTableRowWrapperComponent.prototype, "rowIndex", void 0);
+    __decorate([
         core_1.Output(),
         __metadata("design:type", Object)
     ], DataTableRowWrapperComponent.prototype, "rowContextmenu", void 0);
@@ -2005,7 +2009,7 @@ var DataTableRowWrapperComponent = (function () {
     DataTableRowWrapperComponent = __decorate([
         core_1.Component({
             selector: 'datatable-row-wrapper',
-            template: "\n    <ng-content></ng-content>\n    <div\n      *ngIf=\"expanded\"\n      [style.height.px]=\"detailRowHeight\"\n      class=\"datatable-row-detail\">\n      <ng-template\n        *ngIf=\"rowDetail && rowDetail.template\"\n        [ngTemplateOutlet]=\"rowDetail.template\"\n        [ngOutletContext]=\"{ row: row, expanded: expanded }\">\n      </ng-template>\n    </div>\n  ",
+            template: "\n    <ng-content></ng-content>\n    <div\n      *ngIf=\"expanded\"\n      [style.height.px]=\"detailRowHeight\"\n      class=\"datatable-row-detail\">\n      <ng-template\n        *ngIf=\"rowDetail && rowDetail.template\"\n        [ngTemplateOutlet]=\"rowDetail.template\"\n        [ngOutletContext]=\"{ \n          row: row, \n          expanded: expanded,\n          rowIndex: rowIndex\n        }\">\n      </ng-template>\n    </div>\n  ",
             host: {
                 class: 'datatable-row-wrapper'
             }
@@ -2883,7 +2887,7 @@ var DataTableBodyComponent = (function () {
     DataTableBodyComponent = __decorate([
         core_1.Component({
             selector: 'datatable-body',
-            template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [rows]=\"temp\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-row-wrapper\n          *ngFor=\"let row of temp; let i = index; trackBy: rowTrackingFn;\"\n          [ngStyle]=\"getRowsStyles(row)\"\n          [rowDetail]=\"rowDetail\"\n          [detailRowHeight]=\"getDetailRowHeight(row,i)\"\n          [row]=\"row\"\n          [expanded]=\"getRowExpanded(row)\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-row\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(row)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"getRowHeight(row)\"\n            [row]=\"row\"\n            [rowIndex]=\"getRowIndex(row)\"\n            [expanded]=\"getRowExpanded(row)\"\n            [rowClass]=\"rowClass\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-row>\n        </datatable-row-wrapper>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
+            template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [rows]=\"temp\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-row-wrapper\n          *ngFor=\"let row of temp; let i = index; trackBy: rowTrackingFn;\"\n          [ngStyle]=\"getRowsStyles(row)\"\n          [rowDetail]=\"rowDetail\"\n          [detailRowHeight]=\"getDetailRowHeight(row,i)\"\n          [row]=\"row\"\n          [rowIndex]=\"getRowIndex(row)\"\n          [expanded]=\"getRowExpanded(row)\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-row\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(row)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"getRowHeight(row)\"\n            [row]=\"row\"\n            [rowIndex]=\"getRowIndex(row)\"\n            [expanded]=\"getRowExpanded(row)\"\n            [rowClass]=\"rowClass\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-row>\n        </datatable-row-wrapper>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
             host: {
                 class: 'datatable-body'
             }
@@ -3434,7 +3438,7 @@ __export(__webpack_require__("./src/components/columns/column-cell.directive.ts"
 /***/ (function(module, exports, __webpack_require__) {
 
 
-        var result = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/postcss-loader/lib/index.js?{\"sourceMap\":true,\"plugins\":[null]}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":true}!./src/components/datatable.component.scss");
+        var result = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/postcss-loader/index.js!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":true}!./src/components/datatable.component.scss");
 
         if (typeof result === "string") {
             module.exports = result;

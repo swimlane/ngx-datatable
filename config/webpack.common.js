@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { ENV, IS_PRODUCTION, APP_VERSION, IS_DEV, dir } = require('./helpers');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = function(options = {}) {
   return {
@@ -40,29 +41,25 @@ module.exports = function(options = {}) {
         {
           test: /\.css/,
           use: [
+            ExtractTextPlugin.extract({
+              fallbackLoader: 'style-loader',
+              loader: 'css-loader'
+            }),
             { loader: 'to-string-loader' }, 
             { loader: 'css-loader' },
-            { 
-              loader:'postcss-loader',
-              options: {
-                sourceMap: true,
-                plugins: [autoprefixer]
-              }
-            }
+            { loader: 'postcss-loader' }
           ]
         },
         {
           test: /\.scss$/,
           use: [
+            ExtractTextPlugin.extract({
+              fallbackLoader: 'style-loader',
+              loader: 'css-loader'
+            }),
             { loader: 'to-string-loader' }, 
             { loader: 'css-loader' },
-            { 
-              loader:'postcss-loader',
-              options: {
-                sourceMap: true,
-                plugins: [autoprefixer]
-              }
-            },
+            { loader: 'postcss-loader' },
             { 
               loader: 'sass-loader',
               options: {
@@ -74,6 +71,7 @@ module.exports = function(options = {}) {
       ]
     },
     plugins: [
+      new ExtractTextPlugin('[name].css'),
       new webpack.NamedModulesPlugin(),
       new webpack.DefinePlugin({
         ENV,
@@ -92,6 +90,9 @@ module.exports = function(options = {}) {
             emitErrors: false,
             failOnHint: false,
             resourcePath: 'src'
+          },
+          postcss: function() {
+            return [ autoprefixer ];
           }
         }
       })
