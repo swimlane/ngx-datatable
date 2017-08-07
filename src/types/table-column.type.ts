@@ -145,6 +145,7 @@ export interface TableColumn {
    */
   canAutoResize?: boolean;
 
+
   /**
    * Column name or label
    * 

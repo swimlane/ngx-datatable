@@ -24,7 +24,7 @@ import { MouseEvent, KeyboardEvent } from '../../events';
         [rowHeight]="rowHeight"
         (activate)="onActivate($event, ii)">
       </datatable-body-cell>
-    </div>
+    </div>    
   `
 })
 export class DataTableBodyRowComponent {

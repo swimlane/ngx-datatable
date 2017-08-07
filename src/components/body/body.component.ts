@@ -38,7 +38,8 @@ import { MouseEvent } from '../../events';
           [detailRowHeight]="getDetailRowHeight(group[i],i)"
           [row]="group"
           [expanded]="group.$$expanded === 1"
-          (rowContextmenu)="rowContextmenu.emit($event)">      
+          (rowContextmenu)="rowContextmenu.emit($event)">
+          <table><tr><td>    
           <datatable-body-row *ngIf="!group.value"        
             tabindex="-1"
             [isSelected]="selector.getRowSelected(group)"
@@ -62,6 +63,12 @@ import { MouseEvent } from '../../events';
             [rowClass]="rowClass"
             (activate)="selector.onActivate($event, i)">
           </datatable-body-row>
+          </td>
+          <td>
+          <div style="height:auto"><input type="text" name="test"/></div>
+          </td>
+          </tr>
+          </table>
         </datatable-row-wrapper>
       </datatable-scroller>
       <div

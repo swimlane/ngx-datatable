@@ -1,7 +1,3 @@
-ngx-datatable {
-  height: calc(100vh - 110px);
-}
-
 ngx-datatable .progress-linear {
   position: fixed !important;
   bottom: 0px;
