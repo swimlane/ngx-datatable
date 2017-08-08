@@ -1,4 +1,6 @@
 # Changelog
+## 10.0.3
+- Perf: Better performance in cells
 
 ## 10.0.2
 - Enhancement: Add `rowIndex` to row-detail template
