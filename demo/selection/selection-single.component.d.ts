@@ -8,6 +8,4 @@ export declare class SingleSelectionComponent {
         selected: any;
     }): void;
     onActivate(event: any): void;
-    updateRowPosition(): void;
-    getSelectedIx(): any;
 }

@@ -4,6 +4,7 @@ export declare class DataTableRowWrapperComponent {
     detailRowHeight: any;
     expanded: boolean;
     row: any;
+    rowIndex: number;
     rowContextmenu: EventEmitter<{
         event: MouseEvent;
         row: any;

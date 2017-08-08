@@ -5,7 +5,7 @@ export declare class ContextMenuDemoComponent {
     } | {
         name: string;
     })[];
-    rawEvent: MouseEvent;
+    rawEvent: any;
     contextmenuRow: any;
     contextmenuColumn: any;
     constructor();
