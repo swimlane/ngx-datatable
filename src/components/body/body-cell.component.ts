@@ -1,6 +1,6 @@
 import {
   Component, Input, PipeTransform, HostBinding, ViewChild, ChangeDetectorRef,
-  Output, EventEmitter, HostListener, ElementRef, ViewContainerRef, OnDestroy
+  Output, EventEmitter, HostListener, ElementRef, ViewContainerRef, OnDestroy, DoCheck
 } from '@angular/core';
 
 import { Keys } from '../../utils';
@@ -37,7 +37,7 @@ import { mouseEvent, keyboardEvent } from '../../events';
     class: 'datatable-body-cell'
   }
 })
-export class DataTableBodyCellComponent implements OnDestroy {
+export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
 
   @Input() rowHeight: number;
 
@@ -64,7 +64,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
   @Input() set rowIndex(val: number) {
     this._rowIndex = val;
     this.cellContext.rowIndex = val;
-    this.calculateValue();
+    this.checkValueUpdates();
     this.cd.markForCheck();
   }
 
@@ -75,7 +75,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
   @Input() set column(column: TableColumn) {
     this._column = column;
     this.cellContext.column = column;
-    this.calculateValue();
+    this.checkValueUpdates();
     this.cd.markForCheck();
   }
 
@@ -86,7 +86,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
   @Input() set row(row: any) {
     this._row = row;
     this.cellContext.row = row;
-    this.calculateValue();
+    this.checkValueUpdates();
     this.cd.markForCheck();
   }
 
@@ -178,13 +178,17 @@ export class DataTableBodyCellComponent implements OnDestroy {
     this._element = element.nativeElement;
   }
 
+  ngDoCheck(): void {
+    this.checkValueUpdates();
+  }
+
   ngOnDestroy(): void {
     if (this.cellTemplate) {
       this.cellTemplate.clear();
     }
   }
 
-  calculateValue(): void {
+  checkValueUpdates(): void {
     let value = '';
 
     if (!this.row || !this.column) {
@@ -204,6 +208,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
       this.value = value;
       this.cellContext.value = value;
       this.sanitizedValue = this.stripHtml(value);
+      this.cd.markForCheck();
     }
   }
 
