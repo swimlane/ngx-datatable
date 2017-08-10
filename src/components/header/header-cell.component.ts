@@ -1,5 +1,6 @@
 import {
-  Component, Input, EventEmitter, Output, HostBinding, HostListener
+  Component, Input, EventEmitter, Output, HostBinding, 
+  HostListener, ChangeDetectionStrategy, ChangeDetectorRef
 } from '@angular/core';
 import { SortDirection, SortType, SelectionType, TableColumn } from '../../types';
 import { nextSortDir } from '../../utils';
@@ -30,13 +31,7 @@ import { mouseEvent } from '../../events';
       <ng-template
         *ngIf="column.headerTemplate"
         [ngTemplateOutlet]="column.headerTemplate"
-        [ngOutletContext]="{
-          column: column,
-          sortDir: sortDir,
-          sortFn: sortFn,
-          allRowsSelected: allRowsSelected,
-          selectFn: selectFn
-        }">
+        [ngOutletContext]="cellContext">
       </ng-template>
       <span
         (click)="onSort()"
@@ -46,17 +41,27 @@ import { mouseEvent } from '../../events';
   `,
   host: {
     class: 'datatable-header-cell'
-  }
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class DataTableHeaderCellComponent {
 
   @Input() sortType: SortType;
-  @Input() column: TableColumn;
   @Input() sortAscendingIcon: string;
   @Input() sortDescendingIcon: string;
   @Input() allRowsSelected: boolean;
   @Input() selectionType: SelectionType;
+
+  @Input() set column(column: TableColumn) {
+    this._column = column;
+    this.cellContext.column = column;
+    this.cd.markForCheck();
+  }
+
+  get column(): TableColumn {
+    return this._column;
+  }
 
   @HostBinding('style.height.px')
   @Input() headerHeight: number;
@@ -65,6 +70,7 @@ export class DataTableHeaderCellComponent {
     this._sorts = val;
     this.sortDir = this.calcSortDir(val);
     this.sortClass = this.calcSortClass(this.sortDir);
+    this.cd.markForCheck();
   }
 
   get sorts(): any[] {
@@ -138,8 +144,20 @@ export class DataTableHeaderCellComponent {
   sortFn = this.onSort.bind(this);
   sortClass: string;
   sortDir: SortDirection;
-  _sorts: any[];
   selectFn = this.select.emit.bind(this.select);
+
+  cellContext: any = {
+    column: this.column,
+    sortDir: this.sortDir,
+    sortFn: this.sortFn,
+    allRowsSelected: this.allRowsSelected,
+    selectFn: this.selectFn
+  };
+
+  private _column: TableColumn;
+  private _sorts: any[];
+
+  constructor(private cd: ChangeDetectorRef) { }
 
   @HostListener('contextmenu', ['$event'])
   onContextmenu($event: MouseEvent): void {
