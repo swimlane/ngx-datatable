@@ -1,4 +1,8 @@
 # Changelog
+## 10.0.5
+- Style: Material styles closer to spec
+- Bug: Non-sortable header showing pointer cursor
+
 ## 10.0.4
 - Perf: Changed everything internal to OnPush
 - Perf: Fixed header cell outlet cd
