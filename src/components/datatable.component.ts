@@ -2,7 +2,8 @@ import {
   Component, Input, Output, ElementRef, EventEmitter, ViewChild,
   HostListener, ContentChildren, OnInit, QueryList, AfterViewInit,
   HostBinding, ContentChild, TemplateRef, IterableDiffer,
-  DoCheck, KeyValueDiffers, KeyValueDiffer, ViewEncapsulation
+  DoCheck, KeyValueDiffers, KeyValueDiffer, ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import {
@@ -15,7 +16,7 @@ import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
-import { MouseEvent } from '../events';
+import { mouseEvent } from '../events';
 
 @Component({
   selector: 'ngx-datatable',
@@ -44,7 +45,7 @@ import { MouseEvent } from '../events';
         (columnContextmenu)="onColumnContextmenu($event)">
       </datatable-header>
       <datatable-body
-        [rows]="rows"
+        [rows]="_internalRows"
         [scrollbarV]="scrollbarV"
         [scrollbarH]="scrollbarH"
         [loadingIndicator]="loadingIndicator"
@@ -89,6 +90,7 @@ import { MouseEvent } from '../events';
       </datatable-footer>
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./datatable.component.scss'],
   host: {
@@ -103,12 +105,15 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   @Input() set rows(val: any) {
+    this._rows = val;
+    
     // auto sort on new updates
     if (!this.externalSorting) {
-      val = sortRows(val, this.columns, this.sorts);
+      this._internalRows = sortRows(val, this.columns, this.sorts);
+    } else {
+      this._internalRows = [...val];
     }
-
-    this._rows = val;
+    
     // recalculate sizes/etc
     this.recalculate();
   }
@@ -130,7 +135,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   @Input() set columns(val: TableColumn[]) {
-    if(val) {
+    if (val) {
       setColumnDefaults(val);
       this.recalculateColumns(val);
     }
@@ -372,12 +377,12 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   @Input() rowIdentity: (x: any) => any = ((x: any) => x);
 
   /**
-   * Row specific classes. 
+   * Row specific classes.
    * Similar implementation to ngClass.
-   * 
+   *
    *  [rowClass]="'first second'"
    *  [rowClass]="{ 'first': true, 'second': true, 'third': false }"
-   * 
+   *
    * @type {*}
    * @memberOf DatatableComponent
    */
@@ -387,8 +392,8 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * A boolean/function you can use to check whether you want
    * to select a particular row based on a criteria. Example:
    *
-   *    (selection) => { 
-   *      return selection !== 'Ethel Price'; 
+   *    (selection) => {
+   *      return selection !== 'Ethel Price';
    *    }
    *
    * @type {*}
@@ -639,7 +644,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   /**
    * Footer template gathered from the ContentChild
-   * 
+   *
    * @type {DatatableFooterDirective}
    * @memberOf DatatableComponent
    */
@@ -679,15 +684,16 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   rowCount: number = 0;
   offsetX: number = 0;
   rowDiffer: KeyValueDiffer<{}, {}>;
-  _count: number = 0;
 
+  _count: number = 0;
   _rows: any[];
+  _internalRows: any[];
   _columns: TableColumn[];
   _columnTemplates: QueryList<DataTableColumnDirective>;
 
   constructor(
-    private scrollbarHelper: ScrollbarHelper, 
-    element: ElementRef, 
+    private scrollbarHelper: ScrollbarHelper,
+    element: ElementRef,
     differs: KeyValueDiffers) {
 
     // get ref to elm for measuring
@@ -716,8 +722,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    */
   ngAfterViewInit(): void {
     if (!this.externalSorting) {
-      const val = sortRows(this._rows, this.columns, this.sorts);
-      this._rows = val;
+      this._internalRows = sortRows(this._rows, this.columns, this.sorts);
     }
 
     // this has to be done to prevent the change detection
@@ -726,7 +731,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
       this.recalculate();
 
       // emit page for virtual server-side kickoff
-      if(this.externalPaging && this.scrollbarV) {
+      if (this.externalPaging && this.scrollbarV) {
         this.page.emit({
           count: this.count,
           pageSize: this.pageSize,
@@ -744,6 +749,10 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    */
   ngDoCheck(): void {
     if (this.rowDiffer.diff(this.rows)) {
+      if (!this.externalSorting) {
+        this._internalRows = sortRows(this._rows, this.columns, this.sorts);
+      }
+
       this.recalculatePages();
     }
   }
@@ -847,7 +856,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    *
    * @memberOf DatatableComponent
    */
-  onBodyPage({offset}: any): void {
+  onBodyPage({ offset }: any): void {
     this.offset = offset;
 
     this.page.emit({
@@ -962,7 +971,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    *
    * @memberOf DatatableComponent
    */
-  onColumnResize({column, newValue}: any): void {
+  onColumnResize({ column, newValue }: any): void {
     /* Safari/iOS 10.2 workaround */
     if (column === undefined) {
       return;
@@ -1000,7 +1009,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    *
    * @memberOf DatatableComponent
    */
-  onColumnReorder({column, newValue, prevValue}: any): void {
+  onColumnReorder({ column, newValue, prevValue }: any): void {
     const cols = this.columns.map(c => {
       return { ...c };
     });
@@ -1026,13 +1035,13 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   onColumnSort(event: any): void {
-    const {sorts} = event;
+    const { sorts } = event;
 
     // this could be optimized better since it will resort
     // the rows again on the 'push' detection...
     if (this.externalSorting === false) {
       // don't use normal setter so we don't resort
-      this._rows = sortRows(this.rows, this.columns, sorts);
+      this._internalRows = sortRows(this.rows, this.columns, sorts);
     }
 
     this.sorts = sorts;

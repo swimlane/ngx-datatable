@@ -1,6 +1,33 @@
 # Changelog
+## 10.0.5
+- Style: Material styles closer to spec
+- Bug: Non-sortable header showing pointer cursor
 
-# 9.3.1
+## 10.0.4
+- Perf: Changed everything internal to OnPush
+- Perf: Fixed header cell outlet cd
+- Bug: Fixed sort mutating original rows
+
+## 10.0.3
+- Perf: Better performance in cells
+
+## 10.0.2
+- Enhancement: Add `rowIndex` to row-detail template
+- Bug: Add `index.css` back to build
+
+## 10.0.1
+- Bug: Fix old references to `$$index` and `$$expanded`
+- Bug: Add `$$index` in cell templates as `rowIndex`
+- Bug: Fix MouseEvent undefined in JIT (#893)
+
+## 10.0.0
+- BREAKING: `$$expanded` is no longer on row of detail templates, use `let-expanded` to get pop now
+- Feature: Always center activated page on pager
+- Bug: Remove row mutations of `$$index` and `$$expanded`
+- Bug: Pagination broken on large number of rows
+- Bug: Strip HTML from title tags (#892)
+
+## 9.3.1
 - Bug: More Universal Rendering Fixes (#795)
 - Chore: Build optimizations from new webpack version
 

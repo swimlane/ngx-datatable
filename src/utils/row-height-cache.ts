@@ -31,7 +31,7 @@ export class RowHeightCache {
    * @param detailRowHeight The detail row height.
    */
   initCache(details: any): void {
-    const { rows, rowHeight, detailRowHeight, externalVirtual, rowCount } = details;
+    const { rows, rowHeight, detailRowHeight, externalVirtual, rowCount, rowIndexes, rowExpansions } = details;
     const isFn = typeof rowHeight === 'function';
     const isDetailFn = typeof detailRowHeight === 'function';
 
@@ -62,9 +62,11 @@ export class RowHeightCache {
 
       // Add the detail row height to the already expanded rows.
       // This is useful for the table that goes through a filter or sort.
-      if(row && row.$$expanded === 1) {
+      const expanded = rowExpansions.get(row);
+      if(row && expanded === 1) {
         if(isDetailFn) {
-          currentRowHeight += detailRowHeight(row, row.$$index);
+          const index = rowIndexes.get(row);
+          currentRowHeight += detailRowHeight(row, index);
         } else {
           currentRowHeight += detailRowHeight;
         }

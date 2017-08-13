@@ -32,7 +32,7 @@ var RowHeightCache = (function () {
      * @param detailRowHeight The detail row height.
      */
     RowHeightCache.prototype.initCache = function (details) {
-        var rows = details.rows, rowHeight = details.rowHeight, detailRowHeight = details.detailRowHeight, externalVirtual = details.externalVirtual, rowCount = details.rowCount;
+        var rows = details.rows, rowHeight = details.rowHeight, detailRowHeight = details.detailRowHeight, externalVirtual = details.externalVirtual, rowCount = details.rowCount, rowIndexes = details.rowIndexes, rowExpansions = details.rowExpansions;
         var isFn = typeof rowHeight === 'function';
         var isDetailFn = typeof detailRowHeight === 'function';
         if (!isFn && isNaN(rowHeight)) {
@@ -55,9 +55,11 @@ var RowHeightCache = (function () {
             }
             // Add the detail row height to the already expanded rows.
             // This is useful for the table that goes through a filter or sort.
-            if (row && row.$$expanded === 1) {
+            var expanded = rowExpansions.get(row);
+            if (row && expanded === 1) {
                 if (isDetailFn) {
-                    currentRowHeight += detailRowHeight(row, row.$$index);
+                    var index = rowIndexes.get(row);
+                    currentRowHeight += detailRowHeight(row, index);
                 }
                 else {
                     currentRowHeight += detailRowHeight;

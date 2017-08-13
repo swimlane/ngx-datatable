@@ -22,33 +22,33 @@ import { Component } from '@angular/core';
         [rowHeight]="'auto'"
         [rows]="rows">
         <ngx-datatable-column name="Name">
-          <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
             <span
               title="Double click to edit"
-              (dblclick)="editing[row.$$index + '-name'] = true"
-              *ngIf="!editing[row.$$index + '-name']">
+              (dblclick)="editing[rowIndex + '-name'] = true"
+              *ngIf="!editing[rowIndex + '-name']">
               {{value}}
             </span>
             <input
               autofocus
               (blur)="updateValue($event, 'name', value, row)"
-              *ngIf="editing[row.$$index + '-name']"
+              *ngIf="editing[rowIndex+ '-name']"
               type="text"
               [value]="value"
             />
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Gender">
-          <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
              <span
               title="Double click to edit"
-              (dblclick)="editing[row.$$index + '-gender'] = true"
-              *ngIf="!editing[row.$$index + '-gender']">
+              (dblclick)="editing[rowIndex + '-gender'] = true"
+              *ngIf="!editing[rowIndex + '-gender']">
               {{value}}
             </span>
             <select
-              *ngIf="editing[row.$$index + '-gender']"
-              (change)="updateValue($event, 'gender', value, row)"
+              *ngIf="editing[rowIndex + '-gender']"
+              (change)="updateValue($event, 'gender', rowIndex)"
               [value]="value">
               <option value="male">Male</option>
               <option value="female">Female</option>
@@ -86,9 +86,10 @@ export class InlineEditComponent {
     req.send();
   }
 
-  updateValue(event, cell, cellValue, row) {
-    this.editing[row.$$index + '-' + cell] = false;
-    this.rows[row.$$index][cell] = event.target.value;
+  updateValue(event, cell, rowIndex) {
+    this.editing[rowIndex + '-' + cell] = false;
+    this.rows[rowIndex][cell] = event.target.value;
+    console.log('UPDATED!', this.rows[rowIndex][cell]);
   }
 
 }

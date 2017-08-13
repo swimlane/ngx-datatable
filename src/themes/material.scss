@@ -1,8 +1,6 @@
 .ngx-datatable.material {
 	background:#FFF;
-  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
-  -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
+  box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
 
 	&.striped {
 		.datatable-row-odd {
@@ -132,10 +130,12 @@
 
     .datatable-header-cell {
       text-align: left;
-      padding: .5rem 1.2rem;
+      padding: .9rem 1.2rem;
       font-weight: 400;
-      color: #757575;
+      color: rgba(0,0,0,.54);
       vertical-align: bottom;
+      font-size: 12px;
+      font-weight: 500;
 
       .datatable-header-cell-wrapper {
         position: relative;
@@ -190,12 +190,13 @@
 	  .datatable-body-row {
 	    .datatable-body-cell {
 	      text-align: left;
-	      padding: .5rem 1.2rem;
+	      padding: .9rem 1.2rem;
 	      vertical-align: top;
 	      border-top: 0;
-
-	      -webkit-transition: width 0.3s ease;
+        color: rgba(0,0,0,.87);
 	      transition: width 0.3s ease;
+        font-size: 14px;
+        font-weight: 400;
 
         // cell active class
         // &.active {
@@ -248,7 +249,9 @@
 	 */
 	.datatable-footer {
 		border-top: 1px solid rgba(0, 0, 0, 0.12);
-		font-size:16px;
+		font-size: 12px;
+    font-weight: 400;
+    color: rgba(0,0,0,.54);
 
 		.page-count{
 			line-height: 50px;
@@ -258,17 +261,16 @@
 
 		.datatable-pager {
 			margin: 0 10px;
-	    //line-height: 50px;
 
 			li {
 	    	vertical-align: middle;
 
-				&.disabled a{
+				&.disabled a {
 					color:rgba(0, 0, 0, 0.26) !important;
 					background-color: transparent !important;
 				}
 
-				&.active a{
+				&.active a {
 					background-color: rgba(158,158,158,0.2);
 					font-weight: bold;
 				}
@@ -287,7 +289,7 @@
 				text-decoration: none;
 		    vertical-align: bottom;
 
-				&:hover{
+				&:hover {
 					color: rgba(0,0,0,.75);
 					background-color: rgba(158,158,158,0.2);
 				}

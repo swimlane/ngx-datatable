@@ -6,7 +6,7 @@ const transform = typeof window !== 'undefined' ? getVendorPrefixedName('transfo
 const backfaceVisibility = typeof window !== 'undefined' ? getVendorPrefixedName('backfaceVisibility') : undefined;
 const hasCSSTransforms = typeof window !== 'undefined' ? !!getVendorPrefixedName('transform') : undefined;
 const hasCSS3DTransforms = typeof window !== 'undefined' ? !!getVendorPrefixedName('perspective') : undefined;
-const ua = typeof window !== 'undefined' ? window.navigator.userAgent : "Chrome";
+const ua = typeof window !== 'undefined' ? window.navigator.userAgent : 'Chrome';
 const isSafari = (/Safari\//).test(ua) && !(/Chrome\//).test(ua);
 
 export function translateXY(styles: any, x: number, y: number) {

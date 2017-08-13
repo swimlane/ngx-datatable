@@ -13,7 +13,7 @@ import { Component } from '@angular/core';
         </small>
       </h3>
       <div class="info">
-        <p><strong>Note:</strong> angular2-data-table does not provide a context menu feature.
+        <p><strong>Note:</strong> ngx-datatable does not provide a context menu feature.
         This demonstrates how you would access the <code>contextmenu</code> event
         to display your own custom context menu.</p>
         <p *ngIf="rawEvent"><strong>Mouse position:</strong> <code>(x: {{rawEvent?.x}}, y: {{rawEvent?.y}})</code></p>
@@ -46,7 +46,7 @@ export class ContextMenuDemoComponent {
     { name: 'Company' }
   ];
 
-  rawEvent: MouseEvent;
+  rawEvent: any;
   contextmenuRow: any;
   contextmenuColumn: any;
 
@@ -60,7 +60,7 @@ export class ContextMenuDemoComponent {
     console.log(contextMenuEvent);
 
     this.rawEvent = contextMenuEvent.event;
-    if (contextMenuEvent.type == 'body') {
+    if (contextMenuEvent.type === 'body') {
       this.contextmenuRow = contextMenuEvent.content;
       this.contextmenuColumn = undefined;
     } else {
