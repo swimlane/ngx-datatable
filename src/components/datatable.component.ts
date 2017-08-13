@@ -3,7 +3,7 @@ import {
   HostListener, ContentChildren, OnInit, QueryList, AfterViewInit,
   HostBinding, ContentChild, TemplateRef, IterableDiffer,
   DoCheck, KeyValueDiffers, KeyValueDiffer, ViewEncapsulation,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy, ChangeDetectorRef
 } from '@angular/core';
 
 import {
@@ -693,6 +693,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
   constructor(
     private scrollbarHelper: ScrollbarHelper,
+    private cd: ChangeDetectorRef,
     element: ElementRef,
     differs: KeyValueDiffers) {
 
@@ -727,7 +728,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
     // this has to be done to prevent the change detection
     // tree from freaking out because we are readjusting
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       this.recalculate();
 
       // emit page for virtual server-side kickoff
@@ -754,6 +755,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
       }
 
       this.recalculatePages();
+      this.cd.markForCheck();
     }
   }
 
