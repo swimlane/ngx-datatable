@@ -438,6 +438,7 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
     rowDiffer: KeyValueDiffer<{}, {}>;
     _count: number;
     _rows: any[];
+    _internalRows: any[];
     _columns: TableColumn[];
     _columnTemplates: QueryList<DataTableColumnDirective>;
     constructor(scrollbarHelper: ScrollbarHelper, element: ElementRef, differs: KeyValueDiffers);

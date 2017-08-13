@@ -3,5 +3,5 @@ export declare class InlineEditComponent {
     rows: any[];
     constructor();
     fetch(cb: any): void;
-    updateValue(event: any, cell: any, cellValue: any, row: any, rowIndex: any): void;
+    updateValue(event: any, cell: any, rowIndex: any): void;
 }
