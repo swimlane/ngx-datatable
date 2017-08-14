@@ -11,7 +11,7 @@ import {
   setColumnDefaults, throttleable, translateTemplates
 } from '../utils';
 import { ScrollbarHelper } from '../services';
-import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types';
+import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType, FooterPosition } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
@@ -24,22 +24,6 @@ import { mouseEvent } from '../events';
     <div
       visibilityObserver
       (visible)="recalculate()">
-      <datatable-footer
-        *ngIf="footerHeight && (footerPosition == 'top' || footerPosition == 'both')"
-        [rowCount]="rowCount"
-        [pageSize]="pageSize"
-        [offset]="offset"
-        [footerHeight]="footerHeight"
-        [footerTemplate]="footer"
-        [totalMessage]="messages.totalMessage"
-        [pagerLeftArrowIcon]="cssClasses.pagerLeftArrow"
-        [pagerRightArrowIcon]="cssClasses.pagerRightArrow"
-        [pagerPreviousIcon]="cssClasses.pagerPrevious"
-        [selectedCount]="selected.length"
-        [selectedMessage]="!!selectionType && messages.selectedMessage"
-        [pagerNextIcon]="cssClasses.pagerNext"
-        (page)="onFooterPage($event)">
-      </datatable-footer>
       <datatable-header
         *ngIf="headerHeight"
         [sorts]="sorts"
@@ -60,6 +44,22 @@ import { mouseEvent } from '../events';
         (select)="onHeaderSelect($event)"
         (columnContextmenu)="onColumnContextmenu($event)">
       </datatable-header>
+      <datatable-footer
+        *ngIf="footerHeight && (footerPosition === 'top' || footerPosition === 'both')"
+        [rowCount]="rowCount"
+        [pageSize]="pageSize"
+        [offset]="offset"
+        [footerHeight]="footerHeight"
+        [footerTemplate]="footer"
+        [totalMessage]="messages.totalMessage"
+        [pagerLeftArrowIcon]="cssClasses.pagerLeftArrow"
+        [pagerRightArrowIcon]="cssClasses.pagerRightArrow"
+        [pagerPreviousIcon]="cssClasses.pagerPrevious"
+        [selectedCount]="selected.length"
+        [selectedMessage]="!!selectionType && messages.selectedMessage"
+        [pagerNextIcon]="cssClasses.pagerNext"
+        (page)="onFooterPage($event)">
+      </datatable-footer>
       <datatable-body
         [rows]="_internalRows"
         [scrollbarV]="scrollbarV"
@@ -89,7 +89,7 @@ import { mouseEvent } from '../events';
         (scroll)="onBodyScroll($event)">
       </datatable-body>
       <datatable-footer
-        *ngIf="footerHeight && (footerPosition == 'bottom' || footerPosition == 'both')"
+        *ngIf="footerHeight && (footerPosition === 'bottom' || footerPosition === 'both')"
         [rowCount]="rowCount"
         [pageSize]="pageSize"
         [offset]="offset"
@@ -239,7 +239,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @type {string}
    * @memberOf DatatableComponent
    */
-  @Input() footerPosition: string = 'bottom';
+  @Input() footerPosition: FooterPosition = FooterPosition.bottom;
 
   /**
    * If the table should use external paging

@@ -5,9 +5,9 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <h3>
-        Custom Footer
+        Footer Template
         <small>
-          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/footer.component.ts" target="_blank">
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/footer-template.component.ts" target="_blank">
             Source
           </a>
         </small>

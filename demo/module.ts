@@ -21,7 +21,8 @@ import { ContextMenuDemoComponent } from './basic/contextmenu.component';
 import { RowCssComponent } from './basic/css.component';
 import { DynamicHeightComponent } from './basic/dynamic-height.component';
 import { DarkThemeComponent } from './basic/dark-theme.component';
-import { FooterDemoComponent } from './basic/footer.component';
+import { FooterDemoComponent } from './basic/footer-template.component';
+import { FooterPositionDemoComponent } from './basic/footer-position.component';
 
 // -- Paging
 import { ClientPagingComponent } from './paging/paging-client.component';
@@ -96,7 +97,8 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     MultiClickSelectionComponent,
     RowCssComponent,
     DynamicHeightComponent,
-    FooterDemoComponent
+    FooterDemoComponent,
+    FooterPositionDemoComponent
   ],
   imports: [BrowserModule, NgxDatatableModule],
   bootstrap: [AppComponent]
