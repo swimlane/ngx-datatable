@@ -1,4 +1,8 @@
 # Changelog
+## Master
+- BREAKING: Removing `ngDoCheck` on rows array diffing
+- BREAKING: Arrays are not mutated on sorts
+
 ## 10.0.5
 - Style: Material styles closer to spec
 - Bug: Non-sortable header showing pointer cursor

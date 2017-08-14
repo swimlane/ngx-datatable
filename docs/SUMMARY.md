@@ -6,6 +6,7 @@
    * [Installing](introduction/installing.md)
    * [Themeing](introduction/themes.md)
    * [Getting Started](introduction/getting-started.md)
+   * [Change Detection](introduction/cd.md)
 * API
    * Table
       * [Inputs](api/table/inputs.md)
