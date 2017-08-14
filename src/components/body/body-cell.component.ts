@@ -32,6 +32,7 @@ import { MouseEvent, KeyboardEvent } from '../../events';
         [ngOutletContext]="{
           value: value,
           row: row,
+          group: group,
           column: column,
           isSelected: isSelected,
           onCheckboxChangeFn: onCheckboxChangeFn,
@@ -47,6 +48,7 @@ import { MouseEvent, KeyboardEvent } from '../../events';
 export class DataTableBodyCellComponent implements OnDestroy {
 
   @Input() row: any;
+  @Input() group: any;
   @Input() column: TableColumn;
   @Input() rowHeight: number;
   @Input() isSelected: boolean;
@@ -73,6 +75,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
       } else if(typeof this.column.cellClass === 'function') {
         const res = this.column.cellClass({ 
           row: this.row, 
+          group: this.group, 
           column: this.column, 
           value: this.value 
         });
@@ -149,6 +152,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
       type: 'click',
       event,
       row: this.row,
+      group: this.group,
       column: this.column,
       value: this.value,
       cellElement: this.element
@@ -161,6 +165,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
       type: 'dblclick',
       event,
       row: this.row,
+      group: this.group,
       column: this.column,
       value: this.value,
       cellElement: this.element
@@ -187,6 +192,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
         type: 'keydown',
         event,
         row: this.row,
+        group: this.group,
         column: this.column,
         value: this.value,
         cellElement: this.element
@@ -199,6 +205,7 @@ export class DataTableBodyCellComponent implements OnDestroy {
       type: 'checkbox',
       event,
       row: this.row,
+      group: this.group,
       column: this.column,
       value: this.value,
       cellElement: this.element

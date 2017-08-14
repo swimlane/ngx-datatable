@@ -128,11 +128,9 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
       {
         if (this._rows.length>0)
         {
-          console.log('this._rows', this._rows);
 
           this._groupedRows = [ {"key": "group", "value": this._rows }]
 
-          console.log('this._groupedRows', this._groupedRows);
         }
        
       }
@@ -143,8 +141,6 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 /*
         var group: Array<any> = [];
         group.push(this._rows)
-
-        console.log('group.length', group.length);
 
         this._groupedRows = group
 */

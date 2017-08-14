@@ -1,3 +1,75 @@
+//#c1,#c2,#c3
+//.expectedpayment_checkbox
+input[type="checkbox"] 
+{
+  display: none;
+}
+
+//#c1
+
+.expectedpayment + label:before {
+  border: 1px solid #7f83a2;
+  content: "\00a0";
+  display: inline-block;
+  font: 16px/1em sans-serif;
+  height: 16px;
+  margin: 0 .25em 0 0;
+  padding: 0;
+  vertical-align: top;
+  width: 16px;  
+}
+
+.expectedpayment2 + label:before {
+  border: 1px solid #7f83a2;
+  content: "\00a0";
+  display: inline-block;
+  font: 16px/1em sans-serif;
+  height: 16px;
+  margin: 0 .25em 0 0;
+  padding: 0;
+  vertical-align: top;
+  width: 16px;  
+}
+
+.expectedpayment3 + label:before {
+  border: 1px solid #7f83a2;
+  content: "\00a0";
+  display: inline-block;
+  font: 16px/1em sans-serif;
+  height: 16px;
+  margin: 0 .25em 0 0;
+  padding: 0;
+  vertical-align: top;
+  width: 16px;  
+}
+
+//#c1
+
+.expectedpayment:checked + label:before{
+  color: black;
+  content: "\2713";
+	text-align: center;
+	font-weight: bold;
+	background-color: green;
+}
+
+.expectedpayment2:checked + label:before{
+  color: black;
+  content: "\2716";
+	text-align: center;
+	font-weight: bold;
+	background-color: red;
+}
+
+.expectedpayment3:checked + label:before {
+  color: black;
+  content: "\003F";
+	text-align: center;
+	font-weight: bold;
+	background-color: yellow;
+}
+
+
 .ngx-datatable.material {
 	background:#FFF;
   -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);

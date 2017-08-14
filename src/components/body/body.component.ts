@@ -39,7 +39,9 @@ import { MouseEvent } from '../../events';
           [row]="group"
           [expanded]="group.$$expanded === 1"
           (rowContextmenu)="rowContextmenu.emit($event)">
-          <table><tr><td>    
+          <table style="width: 100%">
+          <tr>
+          <td>
           <datatable-body-row *ngIf="!group.value"        
             tabindex="-1"
             [isSelected]="selector.getRowSelected(group)"
@@ -60,15 +62,27 @@ import { MouseEvent } from '../../events';
             [columns]="columns"
             [rowHeight]="getRowHeight(row)"
             [row]="row"
+            [group]="group.value"
             [rowClass]="rowClass"
             (activate)="selector.onActivate($event, i)">
           </datatable-body-row>
           </td>
-          <td>
-          <div style="height:auto"><input type="text" name="test"/></div>
-          </td>
+          <td *ngIf="groupColumns">
+            <datatable-body-row
+              tabindex="-1"
+              [isSelected]="selector.getRowSelected(group.value[1])"
+              [innerWidth]="innerWidth"
+              [offsetX]="offsetX"
+              [columns]="groupColumns"
+              [rowHeight]="getRowHeight(group)"
+              [row]="group.value[1]"
+              [group]="group.value"
+              [rowClass]="rowClass"
+              (activate)="selector.onActivate($event, i)">
+            </datatable-body-row>              
+          </td>              
           </tr>
-          </table>
+          </table>      
         </datatable-row-wrapper>
       </datatable-scroller>
       <div
@@ -83,6 +97,65 @@ import { MouseEvent } from '../../events';
   }
 })
 export class DataTableBodyComponent implements OnInit, OnDestroy {
+
+//            [firstGroupRow]="i===1000"
+
+//columnGroupWidths.total
+
+  /*
+
+  attempt 4
+ <div class="datatable-row-center datatable-row-group"
+            [ngStyle]="stylesByGroup('grouping')">          
+            <datatable-body-cell *ngFor="let column of groupColumns; let ii=index; trackBy: columnTrackingFn"
+              tabindex="-1"
+              [row]="group.value[ii] || row"
+              [isSelected]="isSelected"
+              [column]="column"
+              [rowHeight]="getRowHeight(group)"
+              (activate)="onActivate($event, ii)">
+            </datatable-body-cell>          
+            </div>
+
+attempt 3
+              <td *ngIf="groupColumns">
+                  <datatable-body-cell *ngFor="let column of groupColumns; let ii=index; trackBy: columnTrackingFn"
+                    tabindex="-1"
+                    [row]="group.value[ii] || row"
+                    [isSelected]="isSelected"
+                    [column]="column"
+                    [rowHeight]="getRowHeight(group)"
+                    (activate)="onActivate($event, ii)">
+                  </datatable-body-cell>          
+              </td>                   
+
+attempt 1
+    <td *ngFor="let column of groupColumns; let ii=index; trackBy: columnTrackingFn">
+            <datatable-body-cell
+              tabindex="-1"
+              [row]="group.value[ii] || row"
+              [isSelected]="isSelected"
+              [column]="column"
+              [rowHeight]="getRowHeight(group)"
+              (activate)="onActivate($event, ii)">
+            </datatable-body-cell>          
+          </td>
+
+attempt 2
+           <td *ngIf="groupColumns">
+            <datatable-body-row
+              tabindex="-1"
+              [isSelected]="selector.getRowSelected(group.value[1])"
+              [innerWidth]="innerWidth"
+              [offsetX]="offsetX"
+              [columns]="columns"
+              [rowHeight]="getRowHeight(group)"
+              [row]="group.value[1]"
+              [rowClass]="rowClass"
+              (activate)="selector.onActivate($event, i)">
+            </datatable-body-row>                                 
+          </td>
+*/          
 
 //          [expanded]="group.value[0].$$expanded === 1"
 //*ngFor="let row of group.value; let i = index; trackBy: rowTrackingFn;"
@@ -119,6 +192,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() groupedRows: any;
 
   _groupRowsBy: string;
+  _groupColumns: Array<any>;
+  _innerWidth: number;
 
   @Input() set groupRowsBy(val: string){
     this._groupRowsBy = val
@@ -147,10 +222,25 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   }
 
   @Input() set columns(val: any[]) {
-    this._columns = val;
 
-    const colsByPin = columnsByPin(val);
-    this.columnGroupWidths = columnGroupWidths(colsByPin, val);
+
+    this._columns = val.filter(column => !column.isGroup);
+
+    const colsByPin = columnsByPin(this._columns);
+    this.columnGroupWidths = columnGroupWidths(colsByPin, this._columns);
+    //this.columnGroupWidthsWithoutGroup = columnGroupWidths(colsByPin, val);
+
+    this._groupColumns = []; //clear the group array
+    for (var i=0; i< val.length; i++) {
+      if (val[i].isGroup)
+        {
+          this._groupColumns.push(val[i]);
+        }              
+    }        
+  }
+
+  get groupColumns(): Array<any>{
+    return this._groupColumns;
   }
 
   get columns(): any[] {
@@ -173,10 +263,28 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   get rowCount(): number {
     return this._rowCount;
+  }  
+
+  @Input() set innerWidth(val: number)
+  {
+    this._innerWidth = val
+/*
+    this._columns = val.filter(column => !column.isGroup);
+
+
+    const colsByPin = columnsByPin(this._columns);
+    this.columnGroupWidths = columnGroupWidths(colsByPin, this._columns);
+*/
+
+  };
+
+  get innerWidth(): number{
+    return this._innerWidth
   }
 
-  @Input() innerWidth: number;
-
+/*
+     
+*/
   @HostBinding('style.width')
   get bodyWidth(): string {
     if (this.scrollbarH) {
@@ -251,6 +359,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   offsetY: number = 0;
   indexes: any = {};
   columnGroupWidths: any;
+  columnGroupWidthsWithoutGroup: any;
   rowTrackingFn: any;
   listener: any;
 
@@ -719,6 +828,30 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     this.updateRows();
   }
 
+  columnTrackingFn(index: number, column: any): any {
+    return column.$$id;
+  }
+
+  stylesByGroup(group: string) {
+    const widths = this.columnGroupWidths;
+    const offsetX = this.offsetX;
+
+    const styles = {
+      width: `${widths[group]}px`
+    };
+
+    if(group === 'left') {
+      translateXY(styles, offsetX, 0);
+    } else if(group === 'right') {
+      const bodyWidth = parseInt(this.innerWidth + '', 0);
+      const totalDiff = widths.total - bodyWidth;
+      const offsetDiff = totalDiff - offsetX;
+      const offset = (offsetDiff + this.scrollbarHelper.width) * -1;
+      translateXY(styles, offset, 0);
+    }
+
+    return styles;
+  }  
 }
 
 /**
@@ -729,3 +862,4 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 function addGroup(key, value) {
   return { "key": key, "value": value };
 }
+
