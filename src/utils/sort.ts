@@ -92,7 +92,7 @@ export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[
     // Maintain grouping of rows independently of the sort.
     // Rows will sort within their groups.
     if (a.$$groupIndex !== b.$$groupIndex) {
-      return a.$$groupIndex < b.$$groupIndex ? -1 : 1;
+      return +a.$$groupIndex < +b.$$groupIndex ? -1 : 1;
     } else if (a.$$isRowGroupHeader || b.$$isRowGroupHeader) {
       return a.$$isRowGroupHeader ? -1 : 1;
     }

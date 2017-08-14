@@ -51,18 +51,16 @@ export class VirtualScrollComponent {
   rows = [];
   expanded = {};
   timeout: any;
-  groups = [
-    {
-      propValue: 59,
-      title: 'Fifty Nine'
-    },
-    {
-      propValue: 100,
-      title: 'One Hundred'
-    }
-  ];
+  groups = [];
 
   constructor() {
+    for (let height = 50; height < 130; height++) {
+      this.groups.push({
+        propValue: height,
+        title: `Group with height ${height}:`
+      });
+    }
+
     this.fetch((data) => {
       this.rows = data;
     });

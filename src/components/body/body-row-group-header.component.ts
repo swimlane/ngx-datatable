@@ -66,7 +66,7 @@ export class DataTableBodyRowGroupHeaderComponent {
   }
 
   @HostBinding('style.height.px')
-  @Input() rowHeight: number;
+  @Input() rowGroupHeaderHeight: number;
 
   @HostBinding('style.width.px')
   get columnsTotalWidths(): string {

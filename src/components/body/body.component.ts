@@ -45,7 +45,7 @@ import { mouseEvent } from '../../events';
             [innerWidth]="innerWidth"
             [offsetX]="offsetX"
             [columns]="columns"
-            [rowHeight]="getRowHeight(row)"
+            [rowGroupHeaderHeight]="getRowHeight(row)"
             [row]="row"
             [rowIndex]="getRowIndex(row)"
             [expanded]="getRowExpanded(row)"
@@ -86,6 +86,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() loadingIndicator: boolean;
   @Input() externalPaging: boolean;
   @Input() rowHeight: number;
+  @Input() rowGroupHeaderHeight: number;
   @Input() offsetX: number;
   @Input() emptyMessage: string;
   @Input() selectionType: SelectionType;
@@ -388,14 +389,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * @memberOf DataTableBodyComponent
    */
   getRowHeight(row: any): number {
-    let rowHeight = this.rowHeight;
-
-    // if its a function return it
-    if (typeof this.rowHeight === 'function') {
-      rowHeight = this.rowHeight(row);
-    }
-
-    return rowHeight;
+    const rowHeight = row.$$isRowGroupHeader ? this.rowGroupHeaderHeight : this.rowHeight;
+    return typeof rowHeight === 'function' ? rowHeight(row) : rowHeight;
   }
 
   /**
@@ -533,6 +528,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       this.rowHeightsCache.initCache({
         rows: this.rows,
         rowHeight: this.rowHeight,
+        rowGroupHeaderHeight: this.rowGroupHeaderHeight,
         detailRowHeight: this.getDetailRowHeight,
         externalVirtual: this.scrollbarV && this.externalPaging,
         rowCount: this.rowCount,

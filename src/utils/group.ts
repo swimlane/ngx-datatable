@@ -14,6 +14,7 @@ export function groupRows(rows: any[], prop: RowGroupProp, groups: RowGroup[]) {
   }
 
   // reduce to only rows that are part of a group and add a group index to each row
+  rows = rows || [];
   const groupedRows = rows.reduce((includedRows, row) => {
     const val = getter(row, prop);
     if (val in groupByValue) {
@@ -25,10 +26,8 @@ export function groupRows(rows: any[], prop: RowGroupProp, groups: RowGroup[]) {
 
   // add group header rows
   for (const groupIndex in groups) {
-    groupedRows.push({...(groups[groupIndex]), $$groupIndex: groupIndex, $$isRowGroupHeader: true, id: 0, height: 59});
+    groupedRows.push({...(groups[groupIndex]), $$groupIndex: groupIndex, $$isRowGroupHeader: true});
   }
-
-  console.log('GR', groupedRows);
 
   // sort by group index
   return groupedRows.sort((a, b) => {
@@ -41,6 +40,6 @@ export function groupRows(rows: any[], prop: RowGroupProp, groups: RowGroup[]) {
       }
       return 0;
     }
-    return a.$$groupIndex < b.$$groupIndex ? -1 : 1;
+    return +a.$$groupIndex < +b.$$groupIndex ? -1 : 1;
   });
 }

@@ -55,6 +55,7 @@ import { mouseEvent } from '../events';
         [loadingIndicator]="loadingIndicator"
         [externalPaging]="externalPaging"
         [rowHeight]="rowHeight"
+        [rowGroupHeaderHeight]="rowGroupHeaderHeight"
         [rowCount]="rowCount"
         [offset]="offset"
         [trackByProp]="trackByProp"
@@ -256,6 +257,14 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * @memberOf DatatableComponent
    */
   @Input() rowHeight: number = 30;
+
+  /**
+   * The row group header height
+   *
+   * @type {number}
+   * @memberOf DatatableComponent
+   */
+  @Input() rowGroupHeaderHeight: number = 30;
 
   /**
    * Type of column width distribution formula.
