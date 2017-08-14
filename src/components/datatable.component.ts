@@ -685,11 +685,17 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   /**
    * Returns if all rows are selected.
    *
+   * @readonly
    * @private
    * @type {boolean}
    * @memberOf DatatableComponent
    */
-  allRowsSelected: boolean;
+  get allRowsSelected(): boolean {
+    return this.selected &&
+      this.rows &&
+      this.rows.length !== 0 &&
+      this.selected.length === this.rows.length;
+  }
 
   element: HTMLElement;
   innerWidth: number;
@@ -866,13 +872,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    *
    * @memberOf DatatableComponent
    */
-  onBodyPage({offset}: any): void {
-    this.selected = [];
-    this.allRowsSelected = false;
-    this.select.emit({
-      selected: this.selected
-    });
-    
+  onBodyPage({ offset }: any): void {
     this.offset = offset;
 
     this.page.emit({
@@ -903,12 +903,6 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   onFooterPage(event: any) {
-    this.selected = [];
-    this.allRowsSelected = false;
-    this.select.emit({
-      selected: this.selected
-    });
-    
     this.offset = event.page - 1;
     this.bodyComponent.updateOffsetY(this.offset);
 
@@ -1057,19 +1051,13 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   onColumnSort(event: any): void {
-    this.selected = [];
-    this.allRowsSelected = false;
-    this.select.emit({
-      selected: this.selected
-    });
-    
-    const {sorts} = event;
+    const { sorts } = event;
 
     // this could be optimized better since it will resort
     // the rows again on the 'push' detection...
     if (this.externalSorting === false) {
       // don't use normal setter so we don't resort
-      this._rows = sortRows(this.rows, this.columns, sorts);
+      this._internalRows = sortRows(this.rows, this.columns, sorts);
     }
 
     this.sorts = sorts;
@@ -1086,23 +1074,16 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    *
    * @memberOf DatatableComponent
    */
-  onHeaderSelect(event: boolean): void {
-    this.allRowsSelected = event;
+  onHeaderSelect(event: any): void {
+    // before we splice, chk if we currently have all selected
+    const allSelected = this.selected.length === this.rows.length;
+
     // remove all existing either way
     this.selected = [];
 
-    if (this.allRowsSelected) {
-      if (!this.externalPaging) {
-        const auxList = [];
-        auxList.push(...this.rows);
-        this.selected = auxList.slice(this.offset * this.limit, ((this.offset + 1) * this.limit));
-      }
-      else {
-        this.selected.push(...this.rows);
-      }
-    }
-    else {
-      this.selected = [];
+    // do the opposite here
+    if (!allSelected) {
+      this.selected.push(...this.rows);
     }
 
     this.select.emit({
@@ -1118,13 +1099,6 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   onBodySelect(event: any): void {
-    if (this.selected.length === this.limit && !this.allRowsSelected && this.rows.length > 0) {
-      this.allRowsSelected = true;
-    }
-    else {
-      this.allRowsSelected = false;
-    }
-    
     this.select.emit(event);
   }
 
