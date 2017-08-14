@@ -1,6 +1,6 @@
 import {
   Component, Input, ElementRef, Output, EventEmitter, Renderer,
-  OnInit, OnDestroy, HostBinding
+  OnInit, OnDestroy, HostBinding, ChangeDetectionStrategy
 } from '@angular/core';
 
 import { mouseEvent } from '../../events';
@@ -12,7 +12,8 @@ import { mouseEvent } from '../../events';
   `,
   host: {
     class: 'datatable-scroll'
-  }
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ScrollerComponent implements OnInit, OnDestroy {
 

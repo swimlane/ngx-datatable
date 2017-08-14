@@ -35,7 +35,7 @@ export class BasicAutoComponent {
   columns = [
     { prop: 'name' },
     { name: 'Gender' },
-    { name: 'Company' }
+    { name: 'Company', sortable: false }
   ];
 
   constructor() {

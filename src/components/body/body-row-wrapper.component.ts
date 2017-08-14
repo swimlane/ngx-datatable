@@ -1,10 +1,11 @@
 import {
-  Component, Input, Output, EventEmitter, HostListener
+  Component, Input, Output, EventEmitter, HostListener, ChangeDetectionStrategy
 } from '@angular/core';
 import { mouseEvent } from '../../events';
 
 @Component({
   selector: 'datatable-row-wrapper',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ng-content></ng-content>
     <div

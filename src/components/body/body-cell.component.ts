@@ -1,6 +1,7 @@
 import {
   Component, Input, PipeTransform, HostBinding, ViewChild, ChangeDetectorRef,
-  Output, EventEmitter, HostListener, ElementRef, ViewContainerRef, OnDestroy, DoCheck
+  Output, EventEmitter, HostListener, ElementRef, ViewContainerRef, OnDestroy, DoCheck,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import { Keys } from '../../utils';
@@ -10,6 +11,7 @@ import { mouseEvent, keyboardEvent } from '../../events';
 
 @Component({
   selector: 'datatable-body-cell',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="datatable-body-cell-label">
       <label

@@ -48,7 +48,7 @@ import { Component } from '@angular/core';
             </span>
             <select
               *ngIf="editing[rowIndex + '-gender']"
-              (change)="updateValue($event, 'gender', value, row, rowIndex)"
+              (change)="updateValue($event, 'gender', rowIndex)"
               [value]="value">
               <option value="male">Male</option>
               <option value="female">Female</option>
@@ -86,9 +86,10 @@ export class InlineEditComponent {
     req.send();
   }
 
-  updateValue(event, cell, cellValue, row, rowIndex) {
+  updateValue(event, cell, rowIndex) {
     this.editing[rowIndex + '-' + cell] = false;
     this.rows[rowIndex][cell] = event.target.value;
+    console.log('UPDATED!', this.rows[rowIndex][cell]);
   }
 
 }
