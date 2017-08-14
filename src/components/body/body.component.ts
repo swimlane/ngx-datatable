@@ -38,7 +38,21 @@ import { mouseEvent } from '../../events';
           [rowIndex]="getRowIndex(row)"
           [expanded]="getRowExpanded(row)"
           (rowContextmenu)="rowContextmenu.emit($event)">
+          <datatable-body-row-group-header 
+            *ngIf="row.$$isRowGroupHeader"
+            tabindex="-1"
+            [isSelected]="selector.getRowSelected(row)"
+            [innerWidth]="innerWidth"
+            [offsetX]="offsetX"
+            [columns]="columns"
+            [rowHeight]="getRowHeight(row)"
+            [row]="row"
+            [rowIndex]="getRowIndex(row)"
+            [expanded]="getRowExpanded(row)"
+            [rowClass]="rowClass">
+          </datatable-body-row-group-header>
           <datatable-body-row
+            *ngIf="!row.$$isRowGroupHeader"
             tabindex="-1"
             [isSelected]="selector.getRowSelected(row)"
             [innerWidth]="innerWidth"
@@ -78,6 +92,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() selected: any[] = [];
   @Input() rowIdentity: any;
   @Input() rowDetail: any;
+  @Input() rowGroup: any;
   @Input() selectCheck: any;
   @Input() trackByProp: string;
   @Input() rowClass: any;
@@ -198,7 +213,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   indexes: any = {};
   columnGroupWidths: any;
   rowTrackingFn: any;
-  listener: any;
+  rowDetailListener: any;
+  rowGroupListener: any;
   rowIndexes: any = new Map();
   rowExpansions: any = new Map();
 
@@ -234,7 +250,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     if (this.rowDetail) {
-      this.listener = this.rowDetail.toggle
+      this.rowDetailListener = this.rowDetail.toggle
         .subscribe(({ type, value }: { type: string, value: any }) => {
           if (type === 'row') this.toggleRowExpansion(value);
           if (type === 'all') this.toggleAllRows(value);
@@ -245,6 +261,14 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
           this.updateRows();
         });
     }
+
+    if (this.rowGroup) {
+      this.rowGroupListener = this.rowGroup.toggle
+        .subscribe(({ type, value }: { type: string, value: any }) => {
+          if (type === 'group') this.toggleRowGroupExpansion(value);
+          if (type === 'all') this.toggleAllRowGroups(value);
+        });
+    }
   }
 
   /**
@@ -253,7 +277,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * @memberOf DataTableBodyComponent
    */
   ngOnDestroy(): void {
-    if (this.rowDetail) this.listener.unsubscribe();
+    if (this.rowDetail) this.rowDetailListener.unsubscribe();
+    if (this.rowGroup) this.rowGroupListener.unsubscribe();
   }
 
   /**
@@ -578,6 +603,68 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * @memberOf DataTableBodyComponent
    */
   toggleAllRows(expanded: boolean): void {
+    // clear prev expansions
+    this.rowExpansions.clear();
+
+    const rowExpanded = expanded ? 1 : 0;
+
+    // Capture the row index of the first row that is visible on the viewport.
+    const viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
+
+    for (const row of this.rows) {
+      this.rowExpansions.set(row, rowExpanded);
+    }
+
+    if (this.scrollbarV) {
+      // Refresh the full row heights cache since every row was affected.
+      this.recalcLayout();
+    }
+
+    // Emit all rows that have been expanded.
+    this.detailToggle.emit({
+      rows: this.rows,
+      currentIndex: viewPortFirstRowIndex
+    });
+  }
+
+  /**
+   * Toggle the Expansion of the group i.e. if the group is expanded then it will
+   * collapse and vice versa.
+   *
+   * @param {*} row The group row for which the expansion needs to be toggled.
+   *
+   * @memberOf DataTableBodyComponent
+   */
+  toggleRowGroupExpansion(row: any): void {
+    // Capture the row index of the first row that is visible on the viewport.
+    const viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
+    let expanded = this.rowExpansions.get(row);
+
+    // If the detailRowHeight is auto --> only in case of non-virtualized scroll
+    if (this.scrollbarV) {
+      const detailRowHeight = this.getDetailRowHeight(row) * (expanded ? -1 : 1);
+      const idx = this.rowIndexes.get(row) || 0;
+      this.rowHeightsCache.update(idx, detailRowHeight);
+    }
+
+    // Update the toggled row and update thive nevere heights in the cache.
+    expanded = expanded ^= 1;
+    this.rowExpansions.set(row, expanded);
+
+    this.detailToggle.emit({
+      rows: [row],
+      currentIndex: viewPortFirstRowIndex
+    });
+  }
+
+  /**
+   * Expand/Collapse all the row groups no matter what their state is.
+   *
+   * @param {boolean} expanded When true, all groups are expanded and when false, all groups will be collapsed.
+   *
+   * @memberOf DataTableBodyComponent
+   */
+  toggleAllRowGroups(expanded: boolean): void {
     // clear prev expansions
     this.rowExpansions.clear();
 

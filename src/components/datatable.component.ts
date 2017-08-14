@@ -7,14 +7,18 @@ import {
 } from '@angular/core';
 
 import {
-  forceFillColumnWidths, adjustColumnWidths, sortRows,
+  forceFillColumnWidths, adjustColumnWidths, sortRows, groupRows,
   setColumnDefaults, throttleable, translateTemplates
 } from '../utils';
 import { ScrollbarHelper } from '../services';
-import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types';
+import {
+  ColumnMode, SortType, SelectionType, TableColumn,
+  RowGroup, RowGroupProp, ContextmenuType
+} from '../types';
 import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
+import { DatatableRowGroupDirective } from './row-group';
 import { DatatableFooterDirective } from './footer';
 import { mouseEvent } from '../events';
 
@@ -58,6 +62,7 @@ import { mouseEvent } from '../events';
         [pageSize]="pageSize"
         [offsetX]="offsetX"
         [rowDetail]="rowDetail"
+        [rowGroup]="rowGroup"
         [selected]="selected"
         [innerWidth]="innerWidth"
         [bodyHeight]="bodyHeight"
@@ -105,15 +110,24 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * @memberOf DatatableComponent
    */
   @Input() set rows(val: any) {
-    this._rows = val;
     
+    // group rows
+    if (this._rowGroupProp) {
+      this._preGroupedRows = val;
+      val = groupRows(val, this._rowGroupProp, this._rowGroups);
+    } else {
+      this._preGroupedRows = null;
+    }
+
+    this._rows = val;
+
     // auto sort on new updates
     if (!this.externalSorting) {
       this._internalRows = sortRows(val, this.columns, this.sorts);
     } else {
       this._internalRows = [...val];
     }
-    
+
     // recalculate sizes/etc
     this.recalculate();
     this.cd.markForCheck();
@@ -153,6 +167,59 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    */
   get columns(): TableColumn[] {
     return this._columns;
+  }
+
+  /**
+   * Property to group rows on. Setting/clearing this will enable/disable row grouping.
+   *
+   * Example:
+   *
+   * `someField` or `some.field.nested`, 0 (numeric)
+   *
+   * @type {RowGroupProp}
+   * @memberOf DatatableComponent
+   */
+  @Input() set rowGroupProp(val: RowGroupProp) {
+    this._rowGroupProp = val;
+    if (val) {
+
+      // if transitioning from groups disabled to enabled
+      if (!this._rowGroupProp) {
+        this._preGroupedRows = this._rows;
+      }
+      this.groupRows();
+    } else {
+
+      // if transitioning from groups enabled to disabled
+      if (this._preGroupedRows) {
+
+        // update rows to pre-grouped set using row setter
+        this.rows = this._preGroupedRows;
+      }
+      this._preGroupedRows = null;
+    }
+  }
+
+  /**
+   * Set the row groups.
+   *
+   * @type {RowGroup[]}
+   * @memberOf DatatableComponent
+   */
+  @Input() set rowGroups(val: RowGroup[]) {
+    this._rowGroups = val;
+    this.groupRows();
+  }
+
+  /**
+   * Get the row groups.
+   *
+   * @readonly
+   * @type {RowGroup[]}
+   * @memberOf DatatableComponent
+   */
+  get rowGroups(): RowGroup[] {
+    return this._rowGroups;
   }
 
   /**
@@ -644,6 +711,14 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   rowDetail: DatatableRowDetailDirective;
 
   /**
+   * Row Group templates gathered from the ContentChild
+   *
+   * @memberOf DatatableComponent
+   */
+  @ContentChild(DatatableRowGroupDirective)
+  rowGroup: DatatableRowGroupDirective;
+
+  /**
    * Footer template gathered from the ContentChild
    *
    * @type {DatatableFooterDirective}
@@ -691,6 +766,9 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   _internalRows: any[];
   _columns: TableColumn[];
   _columnTemplates: QueryList<DataTableColumnDirective>;
+  _preGroupedRows: any[];
+  _rowGroupProp: RowGroupProp;
+  _rowGroups: RowGroup[];
 
   constructor(
     private scrollbarHelper: ScrollbarHelper,
@@ -771,6 +849,15 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   @throttleable(5)
   onWindowResize(): void {
     this.recalculate();
+  }
+
+  /**
+   * If grouping is enabled will reduce and index rows to configured groups
+   */
+  groupRows() {
+    if (this._rowGroupProp) {
+      this._rows = groupRows(this._preGroupedRows, this._rowGroupProp, this.rowGroups);
+    }
   }
 
   /**

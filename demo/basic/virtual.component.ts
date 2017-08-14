@@ -20,7 +20,16 @@ import { Component } from '@angular/core';
         [footerHeight]="50"
         [rowHeight]="getRowHeight"
         [scrollbarV]="true"
+        [rowGroups]="groups"
+        [rowGroupProp]="'height'"
         (page)="onPage($event)">
+        
+        <ngx-datatable-row-group>
+          <ng-template let-group="group" let-expanded="expanded" ngx-datatable-row-group-template>
+            <div>{{group.title}}</div>
+          </ng-template>
+        </ngx-datatable-row-group>
+
         <ngx-datatable-column name="Name" width="300">
           <ng-template let-value="value" ngx-datatable-cell-template>
             <strong>{{value}}</strong>
@@ -42,6 +51,16 @@ export class VirtualScrollComponent {
   rows = [];
   expanded = {};
   timeout: any;
+  groups = [
+    {
+      propValue: 59,
+      title: 'Fifty Nine'
+    },
+    {
+      propValue: 100,
+      title: 'One Hundred'
+    }
+  ];
 
   constructor() {
     this.fetch((data) => {

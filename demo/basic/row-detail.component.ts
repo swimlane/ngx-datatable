@@ -35,6 +35,12 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
             </div>
           </ng-template>
         </ngx-datatable-row-detail>
+        
+        <ngx-datatable-row-group>
+          <ng-template let-group="group" let-expanded="expanded" ngx-datatable-row-group-template>
+            <div>{{group.title}}</div>
+          </ng-template>
+        </ngx-datatable-row-group>
 
         <!-- Column Templates -->
          <ngx-datatable-column

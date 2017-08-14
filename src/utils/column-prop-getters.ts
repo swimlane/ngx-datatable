@@ -1,8 +1,9 @@
 // maybe rename this file to prop-getters.ts
 
-import { TableColumnProp } from '../types';
+import { TableColumnProp, RowGroupProp } from '../types';
+import { RowGroup } from '../types/row-group.type';
 
-export type ValueGetter = (obj: any, prop: TableColumnProp) => any;
+export type ValueGetter = (obj: any, prop: TableColumnProp | RowGroupProp) => any;
 
 /**
  * Always returns the empty string ''
@@ -16,7 +17,7 @@ export function emptyStringGetter(): string {
  * Returns the appropriate getter function for this kind of prop.
  * If prop == null, returns the emptyStringGetter.
  */
-export function getterForProp(prop: TableColumnProp): ValueGetter {
+export function getterForProp(prop: TableColumnProp | RowGroupProp): ValueGetter {
   if (prop == null) return emptyStringGetter;
 
   if (typeof prop === 'number') {
