@@ -1,5 +1,6 @@
 import {
-  Component, Input, HostBinding, ElementRef, Output, EventEmitter, HostListener, ChangeDetectionStrategy
+  Component, Input, HostBinding, ElementRef, Output, KeyValueDiffers, KeyValueDiffer,
+  EventEmitter, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, DoCheck
 } from '@angular/core';
 
 import {
@@ -30,7 +31,7 @@ import { mouseEvent, keyboardEvent } from '../../events';
     </div>
   `
 })
-export class DataTableBodyRowComponent {
+export class DataTableBodyRowComponent implements DoCheck {
 
   @Input() set columns(val: any[]) {
     this._columns = val;
@@ -95,8 +96,20 @@ export class DataTableBodyRowComponent {
   _columns: any[];
   _innerWidth: number;
 
-  constructor(private scrollbarHelper: ScrollbarHelper, element: ElementRef) {
+  private rowDiffer: KeyValueDiffer<{}, {}>;
+
+  constructor(
+    private differs: KeyValueDiffers,
+    private scrollbarHelper: ScrollbarHelper, 
+    private cd: ChangeDetectorRef, element: ElementRef) {
     this.element = element.nativeElement;
+    this.rowDiffer = differs.find({}).create(null);
+  }
+
+  ngDoCheck(): void {
+    if (this.rowDiffer.diff(this.row)) {
+      this.cd.markForCheck();
+    }
   }
 
   trackByGroups(index: number, colGroup: any): any {

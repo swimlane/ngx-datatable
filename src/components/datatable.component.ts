@@ -97,7 +97,7 @@ import { mouseEvent } from '../events';
     class: 'ngx-datatable'
   }
 })
-export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
+export class DatatableComponent implements OnInit, AfterViewInit {
 
   /**
    * Rows that are displayed in the table.
@@ -116,6 +116,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
     
     // recalculate sizes/etc
     this.recalculate();
+    this.cd.markForCheck();
   }
 
   /**
@@ -741,22 +742,6 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
         });
       }
     });
-  }
-
-  /**
-   * Lifecycle hook that is called when Angular dirty checks a directive.
-   *
-   * @memberOf DatatableComponent
-   */
-  ngDoCheck(): void {
-    if (this.rowDiffer.diff(this.rows)) {
-      if (!this.externalSorting) {
-        this._internalRows = sortRows(this._rows, this.columns, this.sorts);
-      }
-
-      this.recalculatePages();
-      this.cd.markForCheck();
-    }
   }
 
   /**
