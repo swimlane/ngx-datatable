@@ -20,6 +20,7 @@ export class DataTableColumnDirective {
   @Input() minWidth: number;
   @Input() width: number;
   @Input() maxWidth: number;
+  @Input() isGroup: boolean;
   @Input() checkboxable: boolean;
   @Input() headerCheckboxable: boolean;
   @Input() headerClass: string | ((data: any) => string|any);

@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 
 import {
-  columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys
+  groupColumnsArr, allColumnsByPinArr, columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys
 } from '../../utils';
 import { ScrollbarHelper } from '../../services';
 import { mouseEvent, keyboardEvent } from '../../events';
@@ -21,6 +21,7 @@ import { mouseEvent, keyboardEvent } from '../../events';
         *ngFor="let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn"
         tabindex="-1"
         [row]="row"
+        [group]="group"
         [expanded]="expanded"
         [isSelected]="isSelected"
         [rowIndex]="rowIndex"
@@ -28,13 +29,34 @@ import { mouseEvent, keyboardEvent } from '../../events';
         [rowHeight]="rowHeight"
         (activate)="onActivate($event, ii)">
       </datatable-body-cell>
-    </div>
+    </div>      
   `
 })
 export class DataTableBodyRowComponent implements DoCheck {
 
+/*
+
+  <div *ngIf="firstGroupRow"
+      style="width:100%px; transform: translate3d(0px, 0px, 0px); backface-visibility: hidden;">
+      <datatable-body-cell
+        *ngFor="let groupColumn of groupColumns; let ii = index; trackBy: columnTrackingFn"
+        tabindex="-1"
+        [row]="row"
+        [isSelected]="isSelected"
+        [column]="groupColumn"
+        [rowHeight]="rowHeight"
+        (activate)="onActivate($event, ii)">
+      </datatable-body-cell>
+    </div>    
+
+    */
+
   @Input() set columns(val: any[]) {
     this._columns = val;
+
+    //const colByPin = columnsByPin(this._columns);
+    //this.columnGroupWidths = columnGroupWidths(colByPin, colByPin);    
+
     this.recalculateColumns(val);
   }
 
@@ -43,6 +65,12 @@ export class DataTableBodyRowComponent implements DoCheck {
   }
 
   @Input() set innerWidth(val: number) {
+
+    if (this._columns){
+      const colByPin = columnsByPin(this._columns);
+      this.columnGroupWidths = columnGroupWidths(colByPin, colByPin);      
+    }
+
     this._innerWidth = val;
     this.recalculateColumns();
   }
@@ -54,6 +82,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   @Input() expanded: boolean;
   @Input() rowClass: any;
   @Input() row: any;
+  @Input() group: any;
   @Input() offsetX: number;
   @Input() isSelected: boolean;
   @Input() rowIndex: number;
@@ -93,6 +122,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   element: any;
   columnGroupWidths: any;
   columnsByPin: any;
+  groupColumns: any;
   _columns: any[];
   _innerWidth: number;
 
@@ -121,6 +151,12 @@ export class DataTableBodyRowComponent implements DoCheck {
   }
 
   stylesByGroup(group: string) {
+
+    
+    //const colByPin = columnsByPin(this._columns);
+    //this.columnGroupWidths = columnGroupWidths(colByPin, colByPin);    
+
+
     const widths = this.columnGroupWidths;
     const offsetX = this.offsetX;
 
@@ -173,9 +209,19 @@ export class DataTableBodyRowComponent implements DoCheck {
   }
 
   recalculateColumns(val: any[] = this.columns): void {
-    const colsByPin = columnsByPin(val);
-    this.columnsByPin = columnsByPinArr(val);
-    this.columnGroupWidths = columnGroupWidths(colsByPin, val);
+    //this._columns = val.filter(column => !column.isGroup);    
+    this._columns = val;
+
+    const colsByPin = columnsByPin(this._columns);
+    //this.columnsByPin = columnsByPinArr(this._columns);
+    this.columnsByPin = allColumnsByPinArr(this._columns);
+    
+    this.columnGroupWidths = columnGroupWidths(colsByPin, this._columns);
+
+    //const colsByPin = columnsByPin(val);
+    //this.columnsByPin = columnsByPinArr(val);    
+    //this.columnGroupWidths = columnGroupWidths(colsByPin, val);        
+    this.groupColumns=groupColumnsArr(val);
   }
 
 }

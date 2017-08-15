@@ -24,6 +24,7 @@ import { DarkThemeComponent } from './basic/dark-theme.component';
 import { FooterDemoComponent } from './basic/footer.component';
 
 // -- Paging
+import { RowGroupingComponent } from './paging/row-grouping.component';
 import { ClientPagingComponent } from './paging/paging-client.component';
 import { ServerPagingComponent } from './paging/paging-server.component';
 import { ServerScrollingComponent } from './paging/scrolling-server.component';
@@ -96,7 +97,8 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     MultiClickSelectionComponent,
     RowCssComponent,
     DynamicHeightComponent,
-    FooterDemoComponent
+    FooterDemoComponent,
+    RowGroupingComponent
   ],
   imports: [BrowserModule, NgxDatatableModule],
   bootstrap: [AppComponent]

@@ -1,0 +1,38 @@
+[
+    {
+        "info": [
+            {
+                "gender" : "female",
+                "company" : "bla1",
+                "name" : "bla2"
+            },
+            {
+                "gender" : "male",
+                "company" : "bla3",
+                "name" : "bla4"
+            }
+        ],
+        "name": "<label>Bla1</label></br><label>bla2</label>",
+        "age":"22",
+        "gender":"<input type='button' label='Ungroup'/>",
+        "company":"<label>ihc</label></br><label>ble</label>"
+    },
+    {
+        "info": [
+            {
+                "gender" : "female",
+                "company" : "bla1",
+                "name" : "bla2"
+            },
+            {
+                "gender" : "male",
+                "company" : "bla3",
+                "name" : "bla4"
+            }
+        ],
+        "name": "Bla",
+        "age":"22",
+        "gender":"male",
+        "company":"<label>ihc</label>"
+    }
+]

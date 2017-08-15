@@ -31,6 +31,15 @@ import { mouseEvent, keyboardEvent } from '../../events';
       <ng-template #cellTemplate
         *ngIf="column.cellTemplate"
         [ngTemplateOutlet]="column.cellTemplate"
+        [ngOutletContext]="{
+          value: value,
+          row: row,
+          group: group,
+          column: column,
+          isSelected: isSelected,
+          onCheckboxChangeFn: onCheckboxChangeFn,
+          activateFn: activateFn
+        }">
         [ngOutletContext]="cellContext">
       </ng-template>
     </div>
@@ -41,6 +50,8 @@ import { mouseEvent, keyboardEvent } from '../../events';
 })
 export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
 
+  @Input() group: any;
+  //@Input() column: TableColumn;
   @Input() rowHeight: number;
 
   @Input() set isSelected(val: boolean) {
@@ -115,11 +126,12 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     if (this.column.cellClass) {
       if (typeof this.column.cellClass === 'string') {
         cls += ' ' + this.column.cellClass;
-      } else if (typeof this.column.cellClass === 'function') {
-        const res = this.column.cellClass({
-          row: this.row,
-          column: this.column,
-          value: this.value
+      } else if(typeof this.column.cellClass === 'function') {
+        const res = this.column.cellClass({ 
+          row: this.row, 
+          group: this.group, 
+          column: this.column, 
+          value: this.value 
         });
 
         if (typeof res === 'string') {
@@ -230,6 +242,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
       type: 'click',
       event,
       row: this.row,
+      group: this.group,
       column: this.column,
       value: this.value,
       cellElement: this._element
@@ -242,6 +255,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
       type: 'dblclick',
       event,
       row: this.row,
+      group: this.group,
       column: this.column,
       value: this.value,
       cellElement: this._element
@@ -268,6 +282,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
         type: 'keydown',
         event,
         row: this.row,
+        group: this.group,
         column: this.column,
         value: this.value,
         cellElement: this._element
@@ -280,6 +295,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
       type: 'checkbox',
       event,
       row: this.row,
+      group: this.group,
       column: this.column,
       value: this.value,
       cellElement: this._element

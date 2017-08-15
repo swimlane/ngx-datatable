@@ -146,6 +146,14 @@ export interface TableColumn {
   canAutoResize?: boolean;
 
   /**
+   * Is the column part of the row group? if so, the column will be added to a separate component which wil span all the rows in a group
+   * 
+   * @type {boolean}
+   * @memberOf TableColumn
+   */
+  isGroup?: boolean;  
+
+  /**
    * Column name or label
    * 
    * @type {string}
