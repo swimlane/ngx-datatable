@@ -89,12 +89,12 @@ export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[
 
   return temp.sort(function(a: any, b: any) {
 
-    // Maintain grouping of rows independently of the sort.
-    // Rows will sort within their groups.
-    if (a.$$groupIndex !== b.$$groupIndex) {
-      return +a.$$groupIndex < +b.$$groupIndex ? -1 : 1;
-    } else if (a.$$isRowGroupHeader || b.$$isRowGroupHeader) {
-      return a.$$isRowGroupHeader ? -1 : 1;
+    // Maintain sectioning of rows independently of the sort.
+    // Rows will sort within their sections.
+    if (a.$$sectionIndex !== b.$$sectionIndex) {
+      return +a.$$sectionIndex < +b.$$sectionIndex ? -1 : 1;
+    } else if (a.$$isSectionHeader || b.$$isSectionHeader) {
+      return a.$$isSectionHeader ? -1 : 1;
     }
 
     for(const cachedDir of cachedDirs) {

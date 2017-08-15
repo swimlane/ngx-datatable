@@ -20,15 +20,18 @@ import { Component } from '@angular/core';
         [footerHeight]="50"
         [rowHeight]="getRowHeight"
         [scrollbarV]="true"
-        [rowGroups]="groups"
-        [rowGroupProp]="'height'"
+        [sections]="sections"
+        [sectionProp]="'height'"
         (page)="onPage($event)">
         
-        <ngx-datatable-row-group>
-          <ng-template let-group="group" let-expanded="expanded" ngx-datatable-row-group-template>
-            <div>{{group.title}}</div>
+        <ngx-datatable-section>
+          <ng-template
+            let-section="section"
+            let-expanded="expanded"
+            ngx-datatable-section-template>
+            <div (click)="toggleExpandSection(section)">{{section.title}}</div>
           </ng-template>
-        </ngx-datatable-row-group>
+        </ngx-datatable-section>
 
         <ngx-datatable-column name="Name" width="300">
           <ng-template let-value="value" ngx-datatable-cell-template>
@@ -51,13 +54,13 @@ export class VirtualScrollComponent {
   rows = [];
   expanded = {};
   timeout: any;
-  groups = [];
+  sections = [];
 
   constructor() {
     for (let height = 50; height < 130; height++) {
-      this.groups.push({
+      this.sections.push({
         propValue: height,
-        title: `Group with height ${height}:`
+        title: `Section with height ${height}:`
       });
     }
 
@@ -94,4 +97,8 @@ export class VirtualScrollComponent {
     return row.height;
   }
 
+  toggleExpandSection(section) {
+    console.log('Toggle expand section!', section);
+
+  }
 }

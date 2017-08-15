@@ -9,14 +9,14 @@ import { ScrollbarHelper } from '../../services';
 import { mouseEvent, keyboardEvent } from '../../events';
 
 @Component({
-  selector: 'datatable-body-row-group-header',
+  selector: 'datatable-body-section-header',
   template: `
     <div>
     {{row.title}}
     </div>
   `
 })
-export class DataTableBodyRowGroupHeaderComponent {
+export class DataTableBodySectionHeaderComponent {
 
   @Input() set columns(val: any[]) {
     this._columns = val;
@@ -66,7 +66,7 @@ export class DataTableBodyRowGroupHeaderComponent {
   }
 
   @HostBinding('style.height.px')
-  @Input() rowGroupHeaderHeight: number;
+  @Input() sectionHeaderHeight: number;
 
   @HostBinding('style.width.px')
   get columnsTotalWidths(): string {

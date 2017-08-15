@@ -36,11 +36,11 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
           </ng-template>
         </ngx-datatable-row-detail>
         
-        <ngx-datatable-row-group>
-          <ng-template let-group="group" let-expanded="expanded" ngx-datatable-row-group-template>
-            <div>{{group.title}}</div>
+        <ngx-datatable-section>
+          <ng-template let-section="section" let-expanded="expanded" ngx-datatable-section-template>
+            <div>{{section.title}}</div>
           </ng-template>
-        </ngx-datatable-row-group>
+        </ngx-datatable-section>
 
         <!-- Column Templates -->
          <ngx-datatable-column
@@ -126,5 +126,4 @@ export class RowDetailsComponent {
   onDetailToggle(event) {
     console.log('Detail Toggled', event);
   }
-
 }

@@ -7,18 +7,18 @@ import {
 } from '@angular/core';
 
 import {
-  forceFillColumnWidths, adjustColumnWidths, sortRows, groupRows,
+  forceFillColumnWidths, adjustColumnWidths, sortRows, sectionRows,
   setColumnDefaults, throttleable, translateTemplates
 } from '../utils';
 import { ScrollbarHelper } from '../services';
 import {
   ColumnMode, SortType, SelectionType, TableColumn,
-  RowGroup, RowGroupProp, ContextmenuType
+  Section, SectionProp, ContextmenuType
 } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
-import { DatatableRowGroupDirective } from './row-group';
+import { DatatableSectionDirective } from './section';
 import { DatatableFooterDirective } from './footer';
 import { mouseEvent } from '../events';
 
@@ -55,7 +55,7 @@ import { mouseEvent } from '../events';
         [loadingIndicator]="loadingIndicator"
         [externalPaging]="externalPaging"
         [rowHeight]="rowHeight"
-        [rowGroupHeaderHeight]="rowGroupHeaderHeight"
+        [sectionHeaderHeight]="sectionHeaderHeight"
         [rowCount]="rowCount"
         [offset]="offset"
         [trackByProp]="trackByProp"
@@ -63,7 +63,7 @@ import { mouseEvent } from '../events';
         [pageSize]="pageSize"
         [offsetX]="offsetX"
         [rowDetail]="rowDetail"
-        [rowGroup]="rowGroup"
+        [section]="section"
         [selected]="selected"
         [innerWidth]="innerWidth"
         [bodyHeight]="bodyHeight"
@@ -112,12 +112,12 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    */
   @Input() set rows(val: any) {
     
-    // group rows
-    if (this._rowGroupProp) {
-      this._preGroupedRows = val;
-      val = groupRows(val, this._rowGroupProp, this._rowGroups);
+    // section the rows
+    if (this._sectionProp) {
+      this._unsectionedRows = val;
+      val = sectionRows(val, this._sectionProp, this._sections);
     } else {
-      this._preGroupedRows = null;
+      this._unsectionedRows = null;
     }
 
     this._rows = val;
@@ -171,56 +171,56 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Property to group rows on. Setting/clearing this will enable/disable row grouping.
+   * Property to section rows on. Setting/clearing this will enable/disable sectioning.
    *
    * Example:
    *
    * `someField` or `some.field.nested`, 0 (numeric)
    *
-   * @type {RowGroupProp}
+   * @type {SectionProp}
    * @memberOf DatatableComponent
    */
-  @Input() set rowGroupProp(val: RowGroupProp) {
-    this._rowGroupProp = val;
+  @Input() set sectionProp(val: SectionProp) {
+    this._sectionProp = val;
     if (val) {
 
-      // if transitioning from groups disabled to enabled
-      if (!this._rowGroupProp) {
-        this._preGroupedRows = this._rows;
+      // if transitioning from sections disabled to enabled
+      if (!this._sectionProp) {
+        this._unsectionedRows = this._rows;
       }
-      this.groupRows();
+      this.sectionRows();
     } else {
 
-      // if transitioning from groups enabled to disabled
-      if (this._preGroupedRows) {
+      // if transitioning from sections enabled to disabled
+      if (this._unsectionedRows) {
 
-        // update rows to pre-grouped set using row setter
-        this.rows = this._preGroupedRows;
+        // update rows to unsectioned set using row setter
+        this.rows = this._unsectionedRows;
       }
-      this._preGroupedRows = null;
+      this._unsectionedRows = null;
     }
   }
 
   /**
-   * Set the row groups.
+   * Set the sections.
    *
-   * @type {RowGroup[]}
+   * @type {Section[]}
    * @memberOf DatatableComponent
    */
-  @Input() set rowGroups(val: RowGroup[]) {
-    this._rowGroups = val;
-    this.groupRows();
+  @Input() set sections(val: Section[]) {
+    this._sections = val;
+    this.sectionRows();
   }
 
   /**
-   * Get the row groups.
+   * Get the sections.
    *
    * @readonly
-   * @type {RowGroup[]}
+   * @type {Section[]}
    * @memberOf DatatableComponent
    */
-  get rowGroups(): RowGroup[] {
-    return this._rowGroups;
+  get sections(): Section[] {
+    return this._sections;
   }
 
   /**
@@ -259,12 +259,12 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   @Input() rowHeight: number = 30;
 
   /**
-   * The row group header height
+   * The section header height
    *
    * @type {number}
    * @memberOf DatatableComponent
    */
-  @Input() rowGroupHeaderHeight: number = 30;
+  @Input() sectionHeaderHeight: number = 30;
 
   /**
    * Type of column width distribution formula.
@@ -720,12 +720,12 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   rowDetail: DatatableRowDetailDirective;
 
   /**
-   * Row Group templates gathered from the ContentChild
+   * Section templates gathered from the ContentChild
    *
    * @memberOf DatatableComponent
    */
-  @ContentChild(DatatableRowGroupDirective)
-  rowGroup: DatatableRowGroupDirective;
+  @ContentChild(DatatableSectionDirective)
+  section: DatatableSectionDirective;
 
   /**
    * Footer template gathered from the ContentChild
@@ -775,9 +775,9 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   _internalRows: any[];
   _columns: TableColumn[];
   _columnTemplates: QueryList<DataTableColumnDirective>;
-  _preGroupedRows: any[];
-  _rowGroupProp: RowGroupProp;
-  _rowGroups: RowGroup[];
+  _unsectionedRows: any[];
+  _sectionProp: SectionProp;
+  _sections: Section[];
 
   constructor(
     private scrollbarHelper: ScrollbarHelper,
@@ -861,11 +861,11 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * If grouping is enabled will reduce and index rows to configured groups
+   * If sectioning is enabled will reduce and index rows to configured sections
    */
-  groupRows() {
-    if (this._rowGroupProp) {
-      this._rows = groupRows(this._preGroupedRows, this._rowGroupProp, this.rowGroups);
+  sectionRows() {
+    if (this._sectionProp) {
+      this._rows = sectionRows(this._unsectionedRows, this._sectionProp, this.sections);
     }
   }
 

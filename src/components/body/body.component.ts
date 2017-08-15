@@ -38,21 +38,22 @@ import { mouseEvent } from '../../events';
           [rowIndex]="getRowIndex(row)"
           [expanded]="getRowExpanded(row)"
           (rowContextmenu)="rowContextmenu.emit($event)">
-          <datatable-body-row-group-header 
-            *ngIf="row.$$isRowGroupHeader"
+          <datatable-body-section-header 
+            *ngIf="row.$$isSectionHeader"
             tabindex="-1"
             [isSelected]="selector.getRowSelected(row)"
             [innerWidth]="innerWidth"
             [offsetX]="offsetX"
             [columns]="columns"
-            [rowGroupHeaderHeight]="getRowHeight(row)"
+            [sectionHeaderHeight]="getRowHeight(row)"
             [row]="row"
             [rowIndex]="getRowIndex(row)"
             [expanded]="getRowExpanded(row)"
-            [rowClass]="rowClass">
-          </datatable-body-row-group-header>
+            [rowClass]="rowClass"
+            (activate)="selector.onActivate($event, i)">
+          </datatable-body-section-header>
           <datatable-body-row
-            *ngIf="!row.$$isRowGroupHeader"
+            *ngIf="!row.$$isSectionHeader"
             tabindex="-1"
             [isSelected]="selector.getRowSelected(row)"
             [innerWidth]="innerWidth"
@@ -86,14 +87,14 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() loadingIndicator: boolean;
   @Input() externalPaging: boolean;
   @Input() rowHeight: number;
-  @Input() rowGroupHeaderHeight: number;
+  @Input() sectionHeaderHeight: number;
   @Input() offsetX: number;
   @Input() emptyMessage: string;
   @Input() selectionType: SelectionType;
   @Input() selected: any[] = [];
   @Input() rowIdentity: any;
   @Input() rowDetail: any;
-  @Input() rowGroup: any;
+  @Input() section: any;
   @Input() selectCheck: any;
   @Input() trackByProp: string;
   @Input() rowClass: any;
@@ -178,6 +179,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Output() activate: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
   @Output() detailToggle: EventEmitter<any> = new EventEmitter();
+  @Output() sectionHeaderToggle: EventEmitter<any> = new EventEmitter();
   @Output() rowContextmenu = new EventEmitter<{ event: MouseEvent, row: any }>(false);
 
   @ViewChild(ScrollerComponent) scroller: ScrollerComponent;
@@ -215,7 +217,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   columnGroupWidths: any;
   rowTrackingFn: any;
   rowDetailListener: any;
-  rowGroupListener: any;
+  sectionListener: any;
   rowIndexes: any = new Map();
   rowExpansions: any = new Map();
 
@@ -263,11 +265,11 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         });
     }
 
-    if (this.rowGroup) {
-      this.rowGroupListener = this.rowGroup.toggle
+    if (this.section) {
+      this.sectionListener = this.section.toggle
         .subscribe(({ type, value }: { type: string, value: any }) => {
-          if (type === 'group') this.toggleRowGroupExpansion(value);
-          if (type === 'all') this.toggleAllRowGroups(value);
+          if (type === 'section') this.toggleSectionExpansion(value);
+          if (type === 'all') this.toggleAllSections(value);
         });
     }
   }
@@ -279,7 +281,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   ngOnDestroy(): void {
     if (this.rowDetail) this.rowDetailListener.unsubscribe();
-    if (this.rowGroup) this.rowGroupListener.unsubscribe();
+    if (this.section) this.sectionListener.unsubscribe();
   }
 
   /**
@@ -389,7 +391,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * @memberOf DataTableBodyComponent
    */
   getRowHeight(row: any): number {
-    const rowHeight = row.$$isRowGroupHeader ? this.rowGroupHeaderHeight : this.rowHeight;
+    const rowHeight = row.$$isSectionHeader ? this.sectionHeaderHeight : this.rowHeight;
     return typeof rowHeight === 'function' ? rowHeight(row) : rowHeight;
   }
 
@@ -528,7 +530,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       this.rowHeightsCache.initCache({
         rows: this.rows,
         rowHeight: this.rowHeight,
-        rowGroupHeaderHeight: this.rowGroupHeaderHeight,
+        sectionHeaderHeight: this.sectionHeaderHeight,
         detailRowHeight: this.getDetailRowHeight,
         externalVirtual: this.scrollbarV && this.externalPaging,
         rowCount: this.rowCount,
@@ -624,14 +626,14 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Toggle the Expansion of the group i.e. if the group is expanded then it will
+   * Toggle the Expansion of the section i.e. if the section is expanded then it will
    * collapse and vice versa.
    *
-   * @param {*} row The group row for which the expansion needs to be toggled.
+   * @param {*} row The section header row for which the expansion needs to be toggled.
    *
    * @memberOf DataTableBodyComponent
    */
-  toggleRowGroupExpansion(row: any): void {
+  toggleSectionExpansion(row: any): void {
     // Capture the row index of the first row that is visible on the viewport.
     const viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
     let expanded = this.rowExpansions.get(row);
@@ -647,20 +649,20 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     expanded = expanded ^= 1;
     this.rowExpansions.set(row, expanded);
 
-    this.detailToggle.emit({
+    this.sectionHeaderToggle.emit({
       rows: [row],
       currentIndex: viewPortFirstRowIndex
     });
   }
 
   /**
-   * Expand/Collapse all the row groups no matter what their state is.
+   * Expand/Collapse all the row sections no matter what their state is.
    *
-   * @param {boolean} expanded When true, all groups are expanded and when false, all groups will be collapsed.
+   * @param {boolean} expanded When true, all sections are expanded and when false, all sections will be collapsed.
    *
    * @memberOf DataTableBodyComponent
    */
-  toggleAllRowGroups(expanded: boolean): void {
+  toggleAllSections(expanded: boolean): void {
     // clear prev expansions
     this.rowExpansions.clear();
 
@@ -678,8 +680,9 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       this.recalcLayout();
     }
 
-    // Emit all rows that have been expanded.
-    this.detailToggle.emit({
+    // Emit all sections that have been expanded.
+    // todo - this shouldn't include all rows, just header rows
+    this.sectionHeaderToggle.emit({
       rows: this.rows,
       currentIndex: viewPortFirstRowIndex
     });
