@@ -140,15 +140,12 @@ export class RowGroupingComponent {
         
       if (event.target.checked)
         if (event.target.value==0){ //expected payment yes selected
-          console.log('here 0')
           row.exppayyes=1
         }
         else if (event.target.value==1){ //expected payment yes selected
-          console.log('here 1')
           row.exppayno=1
         }
         else if (event.target.value==2){ //expected payment yes selected              
-          console.log('here 2')
           row.exppaypending=1
         }
 
