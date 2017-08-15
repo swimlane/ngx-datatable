@@ -60,6 +60,8 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     columnGroupWidths: any;
     rowTrackingFn: any;
     listener: any;
+    rowIndexes: any;
+    rowExpansions: any;
     _rows: any[];
     _bodyHeight: any;
     _columns: any[];
@@ -219,4 +221,20 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      * @memberOf DataTableBodyComponent
      */
     recalcLayout(): void;
+    /**
+     * Returns if the row was expanded
+     *
+     * @param {*} row
+     * @returns {boolean}
+     * @memberof DataTableBodyComponent
+     */
+    getRowExpanded(row: any): boolean;
+    /**
+     * Gets the row index of the item
+     *
+     * @param {*} row
+     * @returns {number}
+     * @memberof DataTableBodyComponent
+     */
+    getRowIndex(row: any): number;
 }

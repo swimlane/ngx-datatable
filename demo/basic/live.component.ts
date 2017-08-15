@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'live-data-demo',
@@ -37,6 +37,8 @@ import { Component } from '@angular/core';
 })
 export class LiveDataComponent {
 
+  @ViewChild('mydatatable') mydatatable: any;
+
   count: number = 50;
   rows: any[] = [];
   active: boolean = true;
@@ -45,7 +47,7 @@ export class LiveDataComponent {
     'name', 'gender', 'company'
   ];
 
-  constructor() {
+  constructor(private cd: ChangeDetectorRef) {
     this.fetch((data) => {
       this.rows = data.map(d => {
         d.updated = Date.now().toString();
@@ -93,6 +95,10 @@ export class LiveDataComponent {
       row.updated = Date.now().toString();
     }
 
+    this.rows = [...this.rows];
+
+    // this.cd.markForCheck();
+    // this.mydatatable.update();
     this.start();
   }
 

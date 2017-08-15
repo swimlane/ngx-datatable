@@ -1,9 +1,9 @@
 import {
   Component, Input, ElementRef, Output, EventEmitter, Renderer,
-  OnInit, OnDestroy, HostBinding
+  OnInit, OnDestroy, HostBinding, ChangeDetectionStrategy
 } from '@angular/core';
 
-import { MouseEvent } from '../../events';
+import { mouseEvent } from '../../events';
 
 @Component({
   selector: 'datatable-scroller',
@@ -12,7 +12,8 @@ import { MouseEvent } from '../../events';
   `,
   host: {
     class: 'datatable-scroll'
-  }
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ScrollerComponent implements OnInit, OnDestroy {
 
@@ -41,7 +42,7 @@ export class ScrollerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // manual bind so we don't always listen
-    if(this.scrollbarV || this.scrollbarH) {
+    if (this.scrollbarV || this.scrollbarH) {
       this.parentElement = this.element.parentElement.parentElement;
       this.onScrollListener = this.renderer.listen(
         this.parentElement, 'scroll', this.onScrolled.bind(this));
@@ -49,13 +50,13 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if(this.scrollbarV || this.scrollbarH) {
+    if (this.scrollbarV || this.scrollbarH) {
       this.onScrollListener();
     }
   }
 
   setOffset(offsetY: number): void {
-    if(this.parentElement) {
+    if (this.parentElement) {
       this.parentElement.scrollTop = offsetY;
     }
   }
@@ -70,9 +71,9 @@ export class ScrollerComponent implements OnInit, OnDestroy {
 
   updateOffset(): void {
     let direction: string;
-    if(this.scrollYPos < this.prevScrollYPos) {
+    if (this.scrollYPos < this.prevScrollYPos) {
       direction = 'down';
-    } else if(this.scrollYPos > this.prevScrollYPos) {
+    } else if (this.scrollYPos > this.prevScrollYPos) {
       direction = 'up';
     }
 

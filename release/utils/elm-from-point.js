@@ -42,5 +42,5 @@ function elementsFromPoint(x, y) {
     return elements;
 }
 exports.elementsFromPoint = elementsFromPoint;
-/*tslint:enable*/ 
+/*tslint:enable*/
 //# sourceMappingURL=elm-from-point.js.map
