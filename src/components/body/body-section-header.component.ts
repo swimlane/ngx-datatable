@@ -1,5 +1,5 @@
 import {
-  Component, Input, HostBinding, ElementRef, Output, EventEmitter, HostListener
+  Component, Input, HostBinding, ElementRef, Output, EventEmitter, HostListener, TemplateRef
 } from '@angular/core';
 
 import {
@@ -11,8 +11,21 @@ import { mouseEvent, keyboardEvent } from '../../events';
 @Component({
   selector: 'datatable-body-section-header',
   template: `
-    <div>
-    {{row.title}}
+
+    <div
+      [style.height.px]="sectionHeaderHeight">
+      <ng-template
+        *ngIf="sectionHeaderTemplate"
+        [ngTemplateOutlet]="sectionHeaderTemplate.template"
+        [ngOutletContext]="{
+          section: row,
+          expanded: expanded,
+          isSelected: isSelected
+        }">
+      </ng-template>
+      <div *ngIf="!sectionHeaderTemplate">
+        {{row.title}}
+      </div>
     </div>
   `
 })
@@ -42,6 +55,8 @@ export class DataTableBodySectionHeaderComponent {
   @Input() offsetX: number;
   @Input() isSelected: boolean;
   @Input() rowIndex: number;
+
+  @Input() sectionHeaderTemplate: TemplateRef<any>;
 
   @HostBinding('class')
   get cssClass() {

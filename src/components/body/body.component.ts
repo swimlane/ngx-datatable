@@ -45,7 +45,8 @@ import { mouseEvent } from '../../events';
             [innerWidth]="innerWidth"
             [offsetX]="offsetX"
             [columns]="columns"
-            [sectionHeaderHeight]="getRowHeight(row)"
+            [sectionHeaderTemplate]="sectionHeader"
+            [sectionHeaderHeight]="getSectionHeaderHeight(row)"
             [row]="row"
             [rowIndex]="getRowIndex(row)"
             [expanded]="getRowExpanded(row)"
@@ -391,8 +392,10 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * @memberOf DataTableBodyComponent
    */
   getRowHeight(row: any): number {
-    const rowHeight = row.$$isSectionHeader ? this.sectionHeaderHeight : this.rowHeight;
-    return typeof rowHeight === 'function' ? rowHeight(row) : rowHeight;
+    if (row.$$isSectionHeader) {
+      return this.getSectionHeaderHeight(row);
+    }
+    return typeof this.rowHeight === 'function' ? this.rowHeight(row) : this.rowHeight;
   }
 
   /**
@@ -428,6 +431,18 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     if (!this.rowDetail) return 0;
     const rowHeight = this.rowDetail.rowHeight;
     return typeof rowHeight === 'function' ? rowHeight(row, index) : rowHeight;
+  }
+
+  /**
+   * Get the height of the section header
+   * @param section
+   * @returns {number}
+   *
+   * @memberOf DataTableBodyComponent
+   */
+  getSectionHeaderHeight = (section?: any): number => {
+    const height = this.sectionHeader ? this.sectionHeader.height : this.sectionHeaderHeight;
+    return typeof height === 'function' ? height(section) : height;
   }
 
   /**
@@ -530,7 +545,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       this.rowHeightsCache.initCache({
         rows: this.rows,
         rowHeight: this.rowHeight,
-        sectionHeaderHeight: this.sectionHeaderHeight,
+        sectionHeaderHeight: this.getSectionHeaderHeight,
         detailRowHeight: this.getDetailRowHeight,
         externalVirtual: this.scrollbarV && this.externalPaging,
         rowCount: this.rowCount,

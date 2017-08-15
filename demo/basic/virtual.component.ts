@@ -24,12 +24,13 @@ import { Component } from '@angular/core';
         [sectionProp]="'height'"
         (page)="onPage($event)">
         
-        <ngx-datatable-section-header>
+        <ngx-datatable-section-header
+          [height]="getRowHeight">
           <ng-template
             let-section="section"
             let-expanded="expanded"
-            ngx-datatable-section-template>
-            <div (click)="toggleExpandSection(section)">{{section.title}}</div>
+            ngx-datatable-section-header-template>
+            <div (click)="toggleExpandSection(section)">{{section.title}} woot!</div>
           </ng-template>
         </ngx-datatable-section-header>
 
@@ -60,7 +61,8 @@ export class VirtualScrollComponent {
     for (let height = 50; height < 130; height++) {
       this.sections.push({
         propValue: height,
-        title: `Section with height ${height}:`
+        title: `Section with height ${height}:`,
+        height: height
       });
     }
 
