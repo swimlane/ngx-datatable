@@ -70,12 +70,12 @@ import { MouseEvent } from '../../events';
           <td *ngIf="groupColumns">
             <datatable-body-row
               tabindex="-1"
-              [isSelected]="selector.getRowSelected(group.value[1])"
+              [isSelected]="selector.getRowSelected(group.value[0])"
               [innerWidth]="innerWidth"
               [offsetX]="offsetX"
               [columns]="groupColumns"
               [rowHeight]="getRowHeight(group)"
-              [row]="group.value[1]"
+              [row]="group.value[0]"
               [group]="group.value"
               [rowClass]="rowClass"
               (activate)="selector.onActivate($event, i)">

@@ -42,17 +42,18 @@ import { Component } from '@angular/core';
         [rowHeight]="'auto'"
         [limit]="3">
 
-        <ngx-datatable-column name="Exp. Pay." prop="exppay" editable="true">
+        <ngx-datatable-column name="Exp. Pay." prop="" editable="true">
           <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-group="group">
-              <input type="checkbox" id="ep1{{row.$$index}}" name="{{row.age}}[]" value="0" class="expectedpayment" (change)="checkGroup($event, group)" [checked]="value===0">
+              <input type="checkbox" id="ep1{{row.$$index}}" name="{{row.$$index}}" value="0" class="expectedpayment" (change)="checkGroup($event, row, group)" [checked]="row.exppayyes===1">
               <label for="ep1{{row.$$index}}"></label>
-              <input type="checkbox" id="ep2{{row.$$index}}" name="expectedpayment2" value="1" class="expectedpayment2"  [checked]="value===1">
+              <input type="checkbox" id="ep2{{row.$$index}}" name="{{row.$$index}}" value="1" class="expectedpayment2" (change)="checkGroup($event, row, group)" [checked]="row.exppayno===1">
               <label for="ep2{{row.$$index}}"></label>
-              <input type="checkbox" id="ep3{{row.$$index}}" name="expectedpayment3" value="2" class="expectedpayment3"  [checked]="value===2">
+              <input type="checkbox" id="ep3{{row.$$index}}" name="{{row.$$index}}" value="2" class="expectedpayment3" (change)="checkGroup($event, row, group)" [checked]="row.exppaypending===1">
               <label for="ep3{{row.$$index}}"></label>
           </ng-template>                    
         </ngx-datatable-column>
 
+        <ngx-datatable-column name="Source" prop="source" editable="false"></ngx-datatable-column>
         <ngx-datatable-column name="Name" prop="name" editable="true"></ngx-datatable-column>
         <ngx-datatable-column name="Gender" prop="gender"></ngx-datatable-column>
         <ngx-datatable-column name="Age" prop="age"></ngx-datatable-column>
@@ -73,12 +74,21 @@ import { Component } from '@angular/core';
             </textarea>
           </ng-template>        
         </ngx-datatable-column>
+        <ngx-datatable-column name="Group Status" prop="groupstatus" isGroup="true">
+          <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-group="group">
+            <span>
+              {{value}}
+            </span>          
+          </ng-template>
+        </ngx-datatable-column>
 
       </ngx-datatable>
     </div>
   `
 })
 export class RowGroupingComponent {
+
+//[disabled]="exppay1Disable($event, )"
 
 /*
             <input
@@ -92,8 +102,15 @@ export class RowGroupingComponent {
 
 //        [columns]="[{name:'Name'},{name:'Gender'},{name:'Age'},{name:'comment'},{name:'groupcomment'}]"
 
+  funder = []
+  calculated = []
+  pending = []
+  groups = []
+  
   editing = {};  
   rows = [];
+
+  //expectedPayment = {group: number, this.funder, this.calculated, this.pending};
   
   constructor() {
     this.fetch((data) => {
@@ -112,14 +129,115 @@ export class RowGroupingComponent {
     req.send();
   }
 
-  checkGroup(event, group){
-    console.log('group.length', group.length)
+  checkGroup(event, row, group){
+
+      var groupStatus: string = "Pending";
+      var expectedPaymentDealtWith:boolean = true;
+
+      row.exppayyes=0
+      row.exppayno=0
+      row.exppaypending=0
+        
+      if (event.target.checked)
+        if (event.target.value==0){ //expected payment yes selected
+          console.log('here 0')
+          row.exppayyes=1
+        }
+        else if (event.target.value==1){ //expected payment yes selected
+          console.log('here 1')
+          row.exppayno=1
+        }
+        else if (event.target.value==2){ //expected payment yes selected              
+          console.log('here 2')
+          row.exppaypending=1
+        }
+
+
+      //console.log('filtered', group.filter(row => row.source==='Calculated'))      
+
+    //console.log('row exp pay 0', group[0].exppayyes, group[0].exppayno, group[0].exppaypending)
+    //console.log('row exp pay 1', group[1].exppayyes, group[1].exppayno, group[1].exppaypending)
+
+    if (group.length===2){ //There are only 2 lines in a group
+      //console.log(["Calculated", "Funder"].indexOf(group[0].source))
+      //console.log(["Calculated", "Funder"].indexOf(group[1].source))
+      if (["Calculated", "Funder"].indexOf(group[0].source)>-1 && ["Calculated", "Funder"].indexOf(group[1].source)>-1){ //Sources are funder and calculated
+        if (group[0].startdate === group[1].startdate && group[0].enddate === group[1].enddate){ //Start dates and end dates match
+          for (var index = 0; index < group.length; index++) {
+            if (group[index].$$index == row.$$index){
+              console.log('here first');            
+            }
+            else{
+              if (event.target.value==0){ //expected payment yes selected
+                group[index].exppayyes=0;
+                group[index].exppaypending=0;
+                group[index].exppayno=1;
+              }
+            }
+
+            if (group[index].exppayyes === 0 && group[index].exppayno === 0 && group[index].exppaypending === 0)
+              expectedPaymentDealtWith = false;
+            console.log('expectedPaymentDealtWith', expectedPaymentDealtWith);
+          }
+        }
+      }
+    }
+    else{
+      for (var index = 0; index < group.length; index++) {
+        if (group[index].exppayyes === 0 && group[index].exppayno === 0 && group[index].exppaypending === 0)
+          expectedPaymentDealtWith = false;
+        console.log('expectedPaymentDealtWith', expectedPaymentDealtWith);
+      }      
+    }
+
+    //check if there is a pending selected payment or a row that does not have any expected payment selected
+    if (group.filter(row => row.exppaypending===1).length===0 && group.filter(row => row.exppaypending===0 && row.exppayyes===0 && row.exppayno===0).length===0)
+    //if (expectedPaymentDealtWith)
+    {
+      console.log('expected payment dealt with')
+      //check if can set the group status
+      const numberOfExpPayYes = group.filter(row => row.exppayyes===1).length;
+      const numberOfSourceFunder = group.filter(row => row.exppayyes===1 && row.source==='Funder').length;
+      const numberOfSourceCalculated = group.filter(row => row.exppayyes===1 && row.source==='Calculated').length;
+      const numberOfSourceManual = group.filter(row => row.exppayyes===1 && row.source==='Manual').length;
+
+      console.log('numberOfExpPayYes', numberOfExpPayYes)
+      console.log('numberOfSourceFunder', numberOfSourceFunder)
+      console.log('numberOfSourceCalculated', numberOfSourceCalculated)
+      console.log('numberOfSourceManual', numberOfSourceManual)
+
+      if (numberOfExpPayYes>0)
+        if (numberOfExpPayYes === numberOfSourceFunder)
+          groupStatus = 'Funder Selected'
+        else if (numberOfExpPayYes === numberOfSourceCalculated)
+          groupStatus = 'Calculated Selected'
+        else if (numberOfExpPayYes === numberOfSourceManual)
+          groupStatus = 'Manual Selected'  
+        else
+          groupStatus = 'Hybrid Selected'
+    }
+
+    group[0].groupstatus = groupStatus;
+
+    console.log('group', group);
+
+  console.log('group.length', group.length)
+
+  console.log('event.target.value', event.target.value)
+
     /*
-    console.log('event.target.value', event.target.value)
-    console.log('event.target.value', event.target.name)
-    console.log('event.target.value', event.target.id)
-    console.log('event.target.value', event.target.checked)
+    for (var index = 0; index < group.length; index++) {
+      var element = group[index];
+      
+    }
+    console.log('group.length', group.length)
+    
+    
+    console.log('event.target.name', event.target.name)
+    console.log('event.target.id', event.target.id)
+    console.log('event.target.checked', event.target.checked)
     */
+    
   }
 
   updateValue(event, cell, cellValue, row) {

@@ -1,6 +1,9 @@
 [
     {
-        "exppay": 0,
+        "exppayyes": 1,
+        "exppayno": 0,
+        "exppaypending": 0,
+        "source": "Funder",
         "name": "Ethel Price",
         "gender": "female",
         "company": "Johnson, Johnson and Partners, LLC CMP DDC",
@@ -9,7 +12,10 @@
         "groupcomment": "group comment test  with multiple lines of text. group comment test  with multiple lines of text."
     },
     {
-        "exppay": 1,
+        "exppayyes": 0,
+        "exppayno": 1,
+        "exppaypending": 0,
+        "source": "Calculated",
         "name": "Wilder Gonzales",
         "gender": "male",
         "company": "Geekko",
@@ -18,7 +24,10 @@
         "groupcomment": "group comment test  with multiple lines of text. group comment test  with multiple lines of text."
     },
     {
-        "exppay": 1,
+        "exppayyes": 0,
+        "exppayno": 0,
+        "exppaypending": 1,
+        "source": "Manual",
         "name": "Georgina Schultz",
         "gender": "female",
         "company": "Suretech",
@@ -27,7 +36,10 @@
         "groupcomment": "group comment test  with multiple lines of text. group comment test  with multiple lines of text."
     },
     {
-        "exppay": 2,
+        "exppayyes": 0,
+        "exppayno": 0,
+        "exppaypending": 0,
+        "source": "Manual",
         "name": "Carroll Buchanan",
         "gender": "male",
         "company": "Ecosys",
@@ -36,12 +48,18 @@
         "groupcomment": "group comment test  with multiple lines of text. group comment test  with multiple lines of text."
     },    
     {
-        "exppay": 0,
+        "exppayyes": 0,
+        "exppayno": 0,
+        "exppaypending": 0,
+        "source": "Funder",
         "name": "Claudine Neal",
+        "startdate": "01/01/2017",
+        "enddate": "14/01/2017",
         "gender": "female",
         "company": "Sealoud",
         "age": 55,
-        "groupcomment": "group comment test 2"
+        "groupcomment": "group comment test 2",
+        "groupstatus" : ""
     },
     {
         "name": "Beryl Rice",
@@ -50,12 +68,18 @@
         "age": 67
     },    
     {
-        "exppay": 1,
+        "exppayyes": 0,
+        "exppayno": 0,
+        "exppaypending": 0,
+        "source": "Calculated",
         "name": "Valarie Atkinson",
+        "startdate": "01/01/2017",
+        "enddate": "14/01/2017",        
         "gender": "female",
         "company": "Hopeli",
         "age": 55,
-        "groupcomment": "group comment test 2"
+        "groupcomment": "group comment test 2",
+        "groupstatus" : ""
     },
     {
         "name": "Schroeder Mathews",
