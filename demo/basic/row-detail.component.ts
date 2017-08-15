@@ -36,11 +36,11 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
           </ng-template>
         </ngx-datatable-row-detail>
         
-        <ngx-datatable-section>
+        <ngx-datatable-section-header>
           <ng-template let-section="section" let-expanded="expanded" ngx-datatable-section-template>
             <div>{{section.title}}</div>
           </ng-template>
-        </ngx-datatable-section>
+        </ngx-datatable-section-header>
 
         <!-- Column Templates -->
          <ngx-datatable-column

@@ -88,13 +88,13 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() externalPaging: boolean;
   @Input() rowHeight: number;
   @Input() sectionHeaderHeight: number;
+  @Input() sectionHeader: any;
   @Input() offsetX: number;
   @Input() emptyMessage: string;
   @Input() selectionType: SelectionType;
   @Input() selected: any[] = [];
   @Input() rowIdentity: any;
   @Input() rowDetail: any;
-  @Input() section: any;
   @Input() selectCheck: any;
   @Input() trackByProp: string;
   @Input() rowClass: any;
@@ -217,7 +217,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   columnGroupWidths: any;
   rowTrackingFn: any;
   rowDetailListener: any;
-  sectionListener: any;
+  sectionHeaderListener: any;
   rowIndexes: any = new Map();
   rowExpansions: any = new Map();
 
@@ -265,8 +265,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         });
     }
 
-    if (this.section) {
-      this.sectionListener = this.section.toggle
+    if (this.sectionHeader) {
+      this.sectionHeaderListener = this.sectionHeader.toggle
         .subscribe(({ type, value }: { type: string, value: any }) => {
           if (type === 'section') this.toggleSectionExpansion(value);
           if (type === 'all') this.toggleAllSections(value);
@@ -281,7 +281,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   ngOnDestroy(): void {
     if (this.rowDetail) this.rowDetailListener.unsubscribe();
-    if (this.section) this.sectionListener.unsubscribe();
+    if (this.sectionHeader) this.sectionHeaderListener.unsubscribe();
   }
 
   /**

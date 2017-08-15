@@ -1,8 +1,8 @@
 import { Directive, TemplateRef } from '@angular/core';
 
 @Directive({
-  selector: '[ngx-datatable-section-template]'
+  selector: '[ngx-datatable-section-header-template]'
 })
-export class DatatableSectionTemplateDirective {
+export class DatatableSectionHeaderTemplateDirective {
   constructor(public template: TemplateRef<any>) { }
 }

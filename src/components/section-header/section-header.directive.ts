@@ -1,20 +1,20 @@
 import { Input, Output, EventEmitter, Directive, TemplateRef, ContentChild } from '@angular/core';
-import { DatatableSectionTemplateDirective } from './section-template.directive';
+import { DatatableSectionHeaderTemplateDirective } from './section-header-template.directive';
 
-@Directive({ selector: 'ngx-datatable-section' })
-export class DatatableSectionDirective {
+@Directive({ selector: 'ngx-datatable-section-header' })
+export class DatatableSectionHeaderDirective {
 
   /**
-   * The section row height is the height of the collapsed header.
+   * Height of the header.
    * This is required especially when virtual scroll is enabled.
    *
    * @type {number|function(row?:any,index?:number): number}
-   * @memberOf DatatableSectionDirective
+   * @memberOf DatatableSectionHeaderDirective
    */
-  @Input() rowHeight: (number | ((row?: any, index?: number) => number)) = 0;
+  @Input() height: (number | ((row?: any, index?: number) => number)) = 0;
 
   @Input()
-  @ContentChild(DatatableSectionTemplateDirective, { read: TemplateRef })
+  @ContentChild(DatatableSectionHeaderTemplateDirective, { read: TemplateRef })
   template: TemplateRef<any>;
 
   /**

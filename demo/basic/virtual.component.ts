@@ -24,14 +24,14 @@ import { Component } from '@angular/core';
         [sectionProp]="'height'"
         (page)="onPage($event)">
         
-        <ngx-datatable-section>
+        <ngx-datatable-section-header>
           <ng-template
             let-section="section"
             let-expanded="expanded"
             ngx-datatable-section-template>
             <div (click)="toggleExpandSection(section)">{{section.title}}</div>
           </ng-template>
-        </ngx-datatable-section>
+        </ngx-datatable-section-header>
 
         <ngx-datatable-column name="Name" width="300">
           <ng-template let-value="value" ngx-datatable-cell-template>

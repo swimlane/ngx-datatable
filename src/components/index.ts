@@ -6,4 +6,4 @@ export * from './footer';
 
 export * from './columns';
 export * from './row-detail';
-export * from './section';
+export * from './section-header';

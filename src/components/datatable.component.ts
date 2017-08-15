@@ -18,7 +18,7 @@ import {
 import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
-import { DatatableSectionDirective } from './section';
+import { DatatableSectionHeaderDirective } from './section-header';
 import { DatatableFooterDirective } from './footer';
 import { mouseEvent } from '../events';
 
@@ -56,6 +56,7 @@ import { mouseEvent } from '../events';
         [externalPaging]="externalPaging"
         [rowHeight]="rowHeight"
         [sectionHeaderHeight]="sectionHeaderHeight"
+        [sectionHeader]="sectionHeader"
         [rowCount]="rowCount"
         [offset]="offset"
         [trackByProp]="trackByProp"
@@ -63,7 +64,6 @@ import { mouseEvent } from '../events';
         [pageSize]="pageSize"
         [offsetX]="offsetX"
         [rowDetail]="rowDetail"
-        [section]="section"
         [selected]="selected"
         [innerWidth]="innerWidth"
         [bodyHeight]="bodyHeight"
@@ -720,12 +720,12 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   rowDetail: DatatableRowDetailDirective;
 
   /**
-   * Section templates gathered from the ContentChild
+   * Section template gathered from the ContentChild
    *
    * @memberOf DatatableComponent
    */
-  @ContentChild(DatatableSectionDirective)
-  section: DatatableSectionDirective;
+  @ContentChild(DatatableSectionHeaderDirective)
+  sectionHeader: DatatableSectionHeaderDirective;
 
   /**
    * Footer template gathered from the ContentChild
