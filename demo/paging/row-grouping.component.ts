@@ -37,12 +37,13 @@ import { Component } from '@angular/core';
         [rows]="rows"
         [groupRowsBy]="'age'"
         [columnMode]="'force'"
+        [scrollbarH]="true"
         [headerHeight]="50"
         [footerHeight]="50"
-        [rowHeight]="'auto'"
+        [rowHeight]="'Auto'"
         [limit]="3">
 
-        <ngx-datatable-column name="Exp. Pay." prop="" editable="true">
+        <ngx-datatable-column name="Exp. Pay." prop="" editable="true" frozenLeft="True">
           <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-group="group">
               <input type="checkbox" id="ep1{{row.$$index}}" name="{{row.$$index}}" value="0" class="expectedpayment" (change)="checkGroup($event, row, group)" [checked]="row.exppayyes===1">
               <label for="ep1{{row.$$index}}"></label>

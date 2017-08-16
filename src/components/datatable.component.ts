@@ -32,6 +32,7 @@ import { mouseEvent } from '../events';
         [innerWidth]="innerWidth"
         [offsetX]="offsetX"
         [columns]="columns"
+        [dealsWithGroup]="groupedRows"
         [headerHeight]="headerHeight"
         [reorderable]="reorderable"
         [sortAscendingIcon]="cssClasses.sortAscending"

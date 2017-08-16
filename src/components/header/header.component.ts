@@ -57,6 +57,8 @@ export class DataTableHeaderComponent {
   @Input() sortAscendingIcon: any;
   @Input() sortDescendingIcon: any;
   @Input() scrollbarH: boolean;
+  @Input() dealsWithGroup: boolean;
+
   _innerWidth: number;
 
   @Input() set innerWidth(val: number){

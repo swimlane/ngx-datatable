@@ -103,86 +103,6 @@ import { mouseEvent } from '../../events';
   }
 })
 export class DataTableBodyComponent implements OnInit, OnDestroy {
-
-  //[expanded]="group.$$expanded === 1"
-
-//            [firstGroupRow]="i===1000"
-
-//columnGroupWidths.total
-
-  /*
-
-  attempt 4
- <div class="datatable-row-center datatable-row-group"
-            [ngStyle]="stylesByGroup('grouping')">          
-            <datatable-body-cell *ngFor="let column of groupColumns; let ii=index; trackBy: columnTrackingFn"
-              tabindex="-1"
-              [row]="group.value[ii] || row"
-              [isSelected]="isSelected"
-              [column]="column"
-              [rowHeight]="getRowHeight(group)"
-              (activate)="onActivate($event, ii)">
-            </datatable-body-cell>          
-            </div>
-
-attempt 3
-              <td *ngIf="groupColumns">
-                  <datatable-body-cell *ngFor="let column of groupColumns; let ii=index; trackBy: columnTrackingFn"
-                    tabindex="-1"
-                    [row]="group.value[ii] || row"
-                    [isSelected]="isSelected"
-                    [column]="column"
-                    [rowHeight]="getRowHeight(group)"
-                    (activate)="onActivate($event, ii)">
-                  </datatable-body-cell>          
-              </td>                   
-
-attempt 1
-    <td *ngFor="let column of groupColumns; let ii=index; trackBy: columnTrackingFn">
-            <datatable-body-cell
-              tabindex="-1"
-              [row]="group.value[ii] || row"
-              [isSelected]="isSelected"
-              [column]="column"
-              [rowHeight]="getRowHeight(group)"
-              (activate)="onActivate($event, ii)">
-            </datatable-body-cell>          
-          </td>
-
-attempt 2
-           <td *ngIf="groupColumns">
-            <datatable-body-row
-              tabindex="-1"
-              [isSelected]="selector.getRowSelected(group.value[1])"
-              [innerWidth]="innerWidth"
-              [offsetX]="offsetX"
-              [columns]="columns"
-              [rowHeight]="getRowHeight(group)"
-              [row]="group.value[1]"
-              [rowClass]="rowClass"
-              (activate)="selector.onActivate($event, i)">
-            </datatable-body-row>                                 
-          </td>
-*/          
-
-//          [expanded]="group.value[0].$$expanded === 1"
-//*ngFor="let row of group.value; let i = index; trackBy: rowTrackingFn;"
-//conditional ngfor example: *ngFor="let row of (group.value ? group.value : temp); let i = index; trackBy: rowTrackingFn;"
-
-/*
- <datatable-body-row *ngIf="!group.value"        
-            tabindex="-1"
-            [isSelected]="selector.getRowSelected(group)"
-            [innerWidth]="innerWidth"
-            [offsetX]="offsetX"
-            [columns]="columns"
-            [rowHeight]="getRowHeight(group)"
-            [row]="group"
-            [rowClass]="rowClass"
-            (activate)="selector.onActivate($event, i)">
-          </datatable-body-row>          
-*/
-
   @Input() scrollbarV: boolean;
   @Input() scrollbarH: boolean;
   @Input() loadingIndicator: boolean;
@@ -231,13 +151,8 @@ attempt 2
   }
 
   @Input() set columns(val: any[]) {
-
-
+    //don't add group columns to _columns because they are dealt with through a subsequent call of datatable-body-row using groupColumns
     this._columns = val.filter(column => !column.isGroup);
-
-    const colsByPin = columnsByPin(this._columns);
-    this.columnGroupWidths = columnGroupWidths(colsByPin, this._columns);
-    //this.columnGroupWidthsWithoutGroup = columnGroupWidths(colsByPin, val);
 
     this._groupColumns = []; //clear the group array
     for (var i=0; i< val.length; i++) {
@@ -245,7 +160,11 @@ attempt 2
         {
           this._groupColumns.push(val[i]);
         }              
-    }        
+    }
+
+    const colsByPin = columnsByPin(val);
+    this.columnGroupWidths = columnGroupWidths(colsByPin, val);    
+
   }
 
   get groupColumns(): Array<any>{
@@ -277,14 +196,6 @@ attempt 2
   @Input() set innerWidth(val: number)
   {
     this._innerWidth = val
-/*
-    this._columns = val.filter(column => !column.isGroup);
-
-
-    const colsByPin = columnsByPin(this._columns);
-    this.columnGroupWidths = columnGroupWidths(colsByPin, this._columns);
-*/
-
   };
 
   get innerWidth(): number{
@@ -363,7 +274,6 @@ attempt 2
   }
 
   rowHeightsCache: RowHeightCache = new RowHeightCache();
-  //temp: any[] = [];
   _temp: any[] = [];
   offsetY: number = 0;
   indexes: any = {};
@@ -506,24 +416,11 @@ attempt 2
     let idx = 0;
     const temp: any[] = [];
 
-    /*
-    this.rowIndexes.clear();
-
-    while (rowIndex < last && rowIndex < this.rowCount) {
-      const row = this.rows[rowIndex];
-
-      if (row) {
-        this.rowIndexes.set(row, rowIndex);
-        temp[idx] = row;
-      }
-*/
-
   //if grouprowsby has been specified treat row paging parameters as group paging parameters
   //ie if limit 10 has been specified treat it as 10 groups rather than 10 rows    
     if(this.groupedRows)
     {
       var maxRowsPerGroup = 3;
-
 
       //if there is only one group set the maximum number of rows per group the same as the total number of rows
         if (this.groupedRows.length==1){
@@ -559,21 +456,7 @@ attempt 2
 
           idx++;
           rowIndex++;
-        }
-
-        /*
-        while (rowIndex < last && rowIndex < this.rowCount) {
-          const row = this.rows[rowIndex];
-
-          if(row) {
-            row.$$index = rowIndex;
-            temp[idx] = row;
-          }
-
-          idx++;
-          rowIndex++;
-        }
-        */
+        }       
       }
     
     this.temp = temp;   
@@ -672,14 +555,12 @@ attempt 2
 
       styles = {
         height: rowHeight + 'px'
-        //border: '1px solid black',
-        //width: this.innerWidth
       };
 
       //only add styles for the group if there is a group
       if (this.groupedRows){
-        styles['border'] = '1px solid black';
-        styles['width'] = this.innerWidth;
+        styles['border-bottom'] = '1px solid black';
+        styles['width'] = this.columnGroupWidths.total;
       }
       if(this.scrollbarV) {
         var idx = 0
@@ -688,11 +569,8 @@ attempt 2
           idx = rows[rows.length-1] ? rows[rows.length-1].$$index : 0;
         }
         else{
-          //idx = rows ? rows.$$index : 0;
           idx = this.rowIndexes.get(rows) || 0;
         }        
-
-        //const idx = row ? row.$$index : 0;
 
         // const pos = idx * rowHeight;
         // The position of this row would be the sum of all row heights
@@ -887,7 +765,6 @@ attempt 2
       const bodyWidth = parseInt(this.innerWidth + '', 0);
       const totalDiff = widths.total - bodyWidth;
       const offsetDiff = totalDiff - offsetX;
-      //const offset = (offsetDiff + this.scrollbarHelper.width) * -1;
       const offset = offsetDiff * -1;
       translateXY(styles, offset, 0);
     }

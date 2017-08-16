@@ -22,7 +22,6 @@ import {Page} from "./model/page";
       <ngx-datatable
         class="material"
         [rows]="rows"
-        [groupRowsBy]="age"
         [columns]="[{name:'Name'},{name:'Gender'},{name:'Company'}]"
         [columnMode]="'force'"
         [headerHeight]="50"

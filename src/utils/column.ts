@@ -97,15 +97,9 @@ export function allColumnsByPinArr(val: any) {
   const colsByPin = columnsByPin(val);
   const colsTest = [];
 
-  //colsTest.concat(colsByPin['center']);
-
-  //if (colsByPin['group'])
-  //  colsTest.concat(colsByPin['group'])
-
   colsByPinArr.push({ type: 'left', columns: colsByPin['left'] });
   colsByPinArr.push({ type: 'center', columns: colsByPin['center'] });
   colsByPinArr.push({ type: 'grouping', columns: colsByPin['grouping'] });  
-  //colsByPinArr.push({ type: 'center', columns: colsTest });
   colsByPinArr.push({ type: 'right', columns: colsByPin['right'] });
 
   return colsByPinArr;

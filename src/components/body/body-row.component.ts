@@ -34,29 +34,8 @@ import { mouseEvent, keyboardEvent } from '../../events';
 })
 export class DataTableBodyRowComponent implements DoCheck {
 
-/*
-
-  <div *ngIf="firstGroupRow"
-      style="width:100%px; transform: translate3d(0px, 0px, 0px); backface-visibility: hidden;">
-      <datatable-body-cell
-        *ngFor="let groupColumn of groupColumns; let ii = index; trackBy: columnTrackingFn"
-        tabindex="-1"
-        [row]="row"
-        [isSelected]="isSelected"
-        [column]="groupColumn"
-        [rowHeight]="rowHeight"
-        (activate)="onActivate($event, ii)">
-      </datatable-body-cell>
-    </div>    
-
-    */
-
   @Input() set columns(val: any[]) {
     this._columns = val;
-
-    //const colByPin = columnsByPin(this._columns);
-    //this.columnGroupWidths = columnGroupWidths(colByPin, colByPin);    
-
     this.recalculateColumns(val);
   }
 
@@ -151,12 +130,6 @@ export class DataTableBodyRowComponent implements DoCheck {
   }
 
   stylesByGroup(group: string) {
-
-    
-    //const colByPin = columnsByPin(this._columns);
-    //this.columnGroupWidths = columnGroupWidths(colByPin, colByPin);    
-
-
     const widths = this.columnGroupWidths;
     const offsetX = this.offsetX;
 
@@ -165,7 +138,14 @@ export class DataTableBodyRowComponent implements DoCheck {
     };
 
     if (group === 'left') {
-      translateXY(styles, offsetX, 0);
+
+      if (this.groupColumns){
+        //offset x position in case there are group columns
+        translateXY(styles, offsetX-3, 0);
+      }
+      else
+        translateXY(styles, offsetX, 0);
+
     } else if (group === 'right') {
       const bodyWidth = parseInt(this.innerWidth + '', 0);
       const totalDiff = widths.total - bodyWidth;
@@ -209,18 +189,10 @@ export class DataTableBodyRowComponent implements DoCheck {
   }
 
   recalculateColumns(val: any[] = this.columns): void {
-    //this._columns = val.filter(column => !column.isGroup);    
     this._columns = val;
-
     const colsByPin = columnsByPin(this._columns);
-    //this.columnsByPin = columnsByPinArr(this._columns);
-    this.columnsByPin = allColumnsByPinArr(this._columns);
-    
+    this.columnsByPin = allColumnsByPinArr(this._columns);        
     this.columnGroupWidths = columnGroupWidths(colsByPin, this._columns);
-
-    //const colsByPin = columnsByPin(val);
-    //this.columnsByPin = columnsByPinArr(val);    
-    //this.columnGroupWidths = columnGroupWidths(colsByPin, val);        
     this.groupColumns=groupColumnsArr(val);
   }
 
