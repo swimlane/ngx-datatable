@@ -6,6 +6,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     scrollbarV: boolean;
     scrollbarH: boolean;
     loadingIndicator: boolean;
+    externalPaging: boolean;
     rowHeight: number;
     offsetX: number;
     emptyMessage: string;
@@ -59,6 +60,8 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     columnGroupWidths: any;
     rowTrackingFn: any;
     listener: any;
+    rowIndexes: any;
+    rowExpansions: any;
     _rows: any[];
     _bodyHeight: any;
     _columns: any[];
@@ -141,7 +144,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      *
      * @memberOf DataTableBodyComponent
      */
-    getDetailRowHeight(row?: any, index?: any): number;
+    getDetailRowHeight: (row?: any, index?: any) => number;
     /**
      * Calculates the styles for the row so that the rows can be moved in 2D space
      * during virtual scroll inside the DOM.   In the below case the Y position is
@@ -218,4 +221,20 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      * @memberOf DataTableBodyComponent
      */
     recalcLayout(): void;
+    /**
+     * Returns if the row was expanded
+     *
+     * @param {*} row
+     * @returns {boolean}
+     * @memberof DataTableBodyComponent
+     */
+    getRowExpanded(row: any): boolean;
+    /**
+     * Gets the row index of the item
+     *
+     * @param {*} row
+     * @returns {number}
+     * @memberof DataTableBodyComponent
+     */
+    getRowIndex(row: any): number;
 }

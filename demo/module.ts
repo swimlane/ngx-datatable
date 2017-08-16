@@ -20,10 +20,14 @@ import { RxDemoComponent } from './basic/rx.component';
 import { ContextMenuDemoComponent } from './basic/contextmenu.component';
 import { RowCssComponent } from './basic/css.component';
 import { DynamicHeightComponent } from './basic/dynamic-height.component';
+import { DarkThemeComponent } from './basic/dark-theme.component';
+import { FooterDemoComponent } from './basic/footer.component';
 
 // -- Paging
 import { ClientPagingComponent } from './paging/paging-client.component';
 import { ServerPagingComponent } from './paging/paging-server.component';
+import { ServerScrollingComponent } from './paging/scrolling-server.component';
+import { VirtualPagingComponent } from './paging/paging-virtual.component';
 
 // -- Sorting
 import { SortingComparatorComponent } from './sorting/sorting-comparator.component';
@@ -42,6 +46,7 @@ import { SingleSelectionComponent } from './selection/selection-single.component
 import { MultiDisableSelectionComponent } from './selection/selection-disabled.component';
 import { CheckboxSelectionComponent } from './selection/selection-chkbox.component';
 import { MultiClickSelectionComponent } from './selection/selection-multi-click.component';
+import { CustomCheckboxSelectionComponent } from './selection/selection-chkbox-template.component';
 
 // -- Columns
 import { ColumnToggleComponent } from './columns/column-toggle.component';
@@ -63,6 +68,7 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     RowDetailsComponent,
     ClientPagingComponent,
     ServerPagingComponent,
+    ServerScrollingComponent,
     ClientSortingComponent,
     DefaultSortingComponent,
     ServerSortingComponent,
@@ -77,6 +83,8 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     ColumnForceComponent,
     ColumnPinningComponent,
     FilterBarComponent,
+    VirtualPagingComponent,
+    DarkThemeComponent,
     TabsDemoComponent,
     SingleSelectionComponent,
     LiveDataComponent,
@@ -84,9 +92,11 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     RxDemoComponent,
     ContextMenuDemoComponent,
     CheckboxSelectionComponent,
+    CustomCheckboxSelectionComponent,
     MultiClickSelectionComponent,
     RowCssComponent,
-    DynamicHeightComponent
+    DynamicHeightComponent,
+    FooterDemoComponent
   ],
   imports: [BrowserModule, NgxDatatableModule],
   bootstrap: [AppComponent]

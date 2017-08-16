@@ -14,12 +14,12 @@ Custom CSS classes that can be defined to override the icons classes for up/down
 previous/next in the pager. Defaults:
 
 ```
-sortAscending: 'icon-down',
-sortDescending: 'icon-up',
-pagerLeftArrow: 'icon-left',
-pagerRightArrow: 'icon-right',
-pagerPrevious: 'icon-prev',
-pagerNext: 'icon-skip'
+sortAscending: 'datatable-icon-down',
+sortDescending: 'datatable-icon-up',
+pagerLeftArrow: 'datatable-icon-left',
+pagerRightArrow: 'datatable-icon-right',
+pagerPrevious: 'datatable-icon-prev',
+pagerNext: 'datatable-icon-skip'
 ```
 
 ## `externalPaging`
@@ -71,7 +71,13 @@ the heights.
 Using a function, you can bind individual row heights such as:
 
 ```javascript
-getRowHeight(row) { return row.height; }
+getRowHeight(row) {
+  // set default
+  if(!row) return 50;
+
+  // return my height
+  return row.height; 
+}
 ```
 
 ## `rowIdentity`

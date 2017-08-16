@@ -1,4 +1,12 @@
 "use strict";
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -16,6 +24,7 @@ var types_1 = require("../types");
 var body_1 = require("./body");
 var columns_1 = require("./columns");
 var row_detail_1 = require("./row-detail");
+var footer_1 = require("./footer");
 var DatatableComponent = (function () {
     function DatatableComponent(scrollbarHelper, element, differs) {
         this.scrollbarHelper = scrollbarHelper;
@@ -144,12 +153,12 @@ var DatatableComponent = (function () {
          * @memberOf DatatableComponent
          */
         this.cssClasses = {
-            sortAscending: 'icon-up',
-            sortDescending: 'icon-down',
-            pagerLeftArrow: 'icon-left',
-            pagerRightArrow: 'icon-right',
-            pagerPrevious: 'icon-prev',
-            pagerNext: 'icon-skip'
+            sortAscending: 'datatable-icon-up',
+            sortDescending: 'datatable-icon-down',
+            pagerLeftArrow: 'datatable-icon-left',
+            pagerRightArrow: 'datatable-icon-right',
+            pagerPrevious: 'datatable-icon-prev',
+            pagerNext: 'datatable-icon-skip'
         };
         /**
          * Message overrides for localization
@@ -229,11 +238,13 @@ var DatatableComponent = (function () {
          */
         this.resize = new core_1.EventEmitter();
         /**
-         * The context menu was invoked on a row.
+         * The context menu was invoked on the table.
+         * type indicates whether the header or the body was clicked.
+         * content contains either the column or the row that was clicked.
          *
          * @memberOf DatatableComponent
          */
-        this.rowContextmenu = new core_1.EventEmitter(false);
+        this.tableContextmenu = new core_1.EventEmitter(false);
         this.rowCount = 0;
         this.offsetX = 0;
         this._count = 0;
@@ -258,11 +269,14 @@ var DatatableComponent = (function () {
          * @memberOf DatatableComponent
          */
         set: function (val) {
+            this._rows = val;
             // auto sort on new updates
             if (!this.externalSorting) {
-                val = utils_1.sortRows(val, this.columns, this.sorts);
+                this._internalRows = utils_1.sortRows(val, this.columns, this.sorts);
             }
-            this._rows = val;
+            else {
+                this._internalRows = val.slice();
+            }
             // recalculate sizes/etc
             this.recalculate();
         },
@@ -511,6 +525,7 @@ var DatatableComponent = (function () {
         get: function () {
             return this.selected &&
                 this.rows &&
+                this.rows.length !== 0 &&
                 this.selected.length === this.rows.length;
         },
         enumerable: true,
@@ -537,12 +552,22 @@ var DatatableComponent = (function () {
     DatatableComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
         if (!this.externalSorting) {
-            var val = utils_1.sortRows(this._rows, this.columns, this.sorts);
-            this._rows = val;
+            this._internalRows = utils_1.sortRows(this._rows, this.columns, this.sorts);
         }
         // this has to be done to prevent the change detection
         // tree from freaking out because we are readjusting
-        setTimeout(function () { return _this.recalculate(); });
+        setTimeout(function () {
+            _this.recalculate();
+            // emit page for virtual server-side kickoff
+            if (_this.externalPaging && _this.scrollbarV) {
+                _this.page.emit({
+                    count: _this.count,
+                    pageSize: _this.pageSize,
+                    limit: _this.limit,
+                    offset: 0
+                });
+            }
+        });
     };
     /**
      * Lifecycle hook that is called when Angular dirty checks a directive.
@@ -551,6 +576,9 @@ var DatatableComponent = (function () {
      */
     DatatableComponent.prototype.ngDoCheck = function () {
         if (this.rowDiffer.diff(this.rows)) {
+            if (!this.externalSorting) {
+                this._internalRows = utils_1.sortRows(this._rows, this.columns, this.sorts);
+            }
             this.recalculatePages();
         }
     };
@@ -726,6 +754,28 @@ var DatatableComponent = (function () {
         return this.count;
     };
     /**
+     * The header triggered a contextmenu event.
+     *
+     * @param {*} { event, column }
+     *
+     * @memberOf DatatableComponent
+     */
+    DatatableComponent.prototype.onColumnContextmenu = function (_a) {
+        var event = _a.event, column = _a.column;
+        this.tableContextmenu.emit({ event: event, type: types_1.ContextmenuType.header, content: column });
+    };
+    /**
+     * The body triggered a contextmenu event.
+     *
+     * @param {*} { event, row }
+     *
+     * @memberOf DatatableComponent
+     */
+    DatatableComponent.prototype.onRowContextmenu = function (_a) {
+        var event = _a.event, row = _a.row;
+        this.tableContextmenu.emit({ event: event, type: types_1.ContextmenuType.body, content: row });
+    };
+    /**
      * The header triggered a column resize event.
      *
      * @param {*} { column, newValue }
@@ -740,7 +790,7 @@ var DatatableComponent = (function () {
         }
         var idx;
         var cols = this.columns.map(function (c, i) {
-            c = Object.assign({}, c);
+            c = __assign({}, c);
             if (c.$$id === column.$$id) {
                 idx = i;
                 c.width = newValue;
@@ -767,7 +817,7 @@ var DatatableComponent = (function () {
     DatatableComponent.prototype.onColumnReorder = function (_a) {
         var column = _a.column, newValue = _a.newValue, prevValue = _a.prevValue;
         var cols = this.columns.map(function (c) {
-            return Object.assign({}, c);
+            return __assign({}, c);
         });
         var prevCol = cols[newValue];
         cols[newValue] = column;
@@ -792,7 +842,7 @@ var DatatableComponent = (function () {
         // the rows again on the 'push' detection...
         if (this.externalSorting === false) {
             // don't use normal setter so we don't resort
-            this._rows = utils_1.sortRows(this.rows, this.columns, sorts);
+            this._internalRows = utils_1.sortRows(this.rows, this.columns, sorts);
         }
         this.sorts = sorts;
         // Always go to first page when sorting to see the newly sorted data
@@ -831,79 +881,81 @@ var DatatableComponent = (function () {
     DatatableComponent.prototype.onBodySelect = function (event) {
         this.select.emit(event);
     };
+    DatatableComponent.decorators = [
+        { type: core_1.Component, args: [{
+                    selector: 'ngx-datatable',
+                    template: "\n    <div\n      visibilityObserver\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"columns\"\n        [headerHeight]=\"headerHeight\"\n        [reorderable]=\"reorderable\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        [selectionType]=\"selectionType\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\"\n        (columnContextmenu)=\"onColumnContextmenu($event)\">\n      </datatable-header>\n      <datatable-body\n        [rows]=\"_internalRows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [externalPaging]=\"externalPaging\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"columns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetail]=\"rowDetail\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [rowClass]=\"rowClass\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"onRowContextmenu($event)\"\n        (select)=\"onBodySelect($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [footerTemplate]=\"footer\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [selectedCount]=\"selected.length\"\n        [selectedMessage]=\"!!selectionType && messages.selectedMessage\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
+                    changeDetection: core_1.ChangeDetectionStrategy.OnPush,
+                    encapsulation: core_1.ViewEncapsulation.None,
+                    styleUrls: ['./datatable.component.css'],
+                    host: {
+                        class: 'ngx-datatable'
+                    }
+                },] },
+    ];
+    /** @nocollapse */
+    DatatableComponent.ctorParameters = function () { return [
+        { type: services_1.ScrollbarHelper, },
+        { type: core_1.ElementRef, },
+        { type: core_1.KeyValueDiffers, },
+    ]; };
+    DatatableComponent.propDecorators = {
+        'rows': [{ type: core_1.Input },],
+        'columns': [{ type: core_1.Input },],
+        'selected': [{ type: core_1.Input },],
+        'scrollbarV': [{ type: core_1.Input },],
+        'scrollbarH': [{ type: core_1.Input },],
+        'rowHeight': [{ type: core_1.Input },],
+        'columnMode': [{ type: core_1.Input },],
+        'headerHeight': [{ type: core_1.Input },],
+        'footerHeight': [{ type: core_1.Input },],
+        'externalPaging': [{ type: core_1.Input },],
+        'externalSorting': [{ type: core_1.Input },],
+        'limit': [{ type: core_1.Input },],
+        'count': [{ type: core_1.Input },],
+        'offset': [{ type: core_1.Input },],
+        'loadingIndicator': [{ type: core_1.Input },],
+        'selectionType': [{ type: core_1.Input },],
+        'reorderable': [{ type: core_1.Input },],
+        'sortType': [{ type: core_1.Input },],
+        'sorts': [{ type: core_1.Input },],
+        'cssClasses': [{ type: core_1.Input },],
+        'messages': [{ type: core_1.Input },],
+        'rowIdentity': [{ type: core_1.Input },],
+        'rowClass': [{ type: core_1.Input },],
+        'selectCheck': [{ type: core_1.Input },],
+        'trackByProp': [{ type: core_1.Input },],
+        'scroll': [{ type: core_1.Output },],
+        'activate': [{ type: core_1.Output },],
+        'select': [{ type: core_1.Output },],
+        'sort': [{ type: core_1.Output },],
+        'page': [{ type: core_1.Output },],
+        'reorder': [{ type: core_1.Output },],
+        'resize': [{ type: core_1.Output },],
+        'tableContextmenu': [{ type: core_1.Output },],
+        'isFixedHeader': [{ type: core_1.HostBinding, args: ['class.fixed-header',] },],
+        'isFixedRow': [{ type: core_1.HostBinding, args: ['class.fixed-row',] },],
+        'isVertScroll': [{ type: core_1.HostBinding, args: ['class.scroll-vertical',] },],
+        'isHorScroll': [{ type: core_1.HostBinding, args: ['class.scroll-horz',] },],
+        'isSelectable': [{ type: core_1.HostBinding, args: ['class.selectable',] },],
+        'isCheckboxSelection': [{ type: core_1.HostBinding, args: ['class.checkbox-selection',] },],
+        'isCellSelection': [{ type: core_1.HostBinding, args: ['class.cell-selection',] },],
+        'isSingleSelection': [{ type: core_1.HostBinding, args: ['class.single-selection',] },],
+        'isMultiSelection': [{ type: core_1.HostBinding, args: ['class.multi-selection',] },],
+        'isMultiClickSelection': [{ type: core_1.HostBinding, args: ['class.multi-click-selection',] },],
+        'columnTemplates': [{ type: core_1.ContentChildren, args: [columns_1.DataTableColumnDirective,] },],
+        'rowDetail': [{ type: core_1.ContentChild, args: [row_detail_1.DatatableRowDetailDirective,] },],
+        'footer': [{ type: core_1.ContentChild, args: [footer_1.DatatableFooterDirective,] },],
+        'bodyComponent': [{ type: core_1.ViewChild, args: [body_1.DataTableBodyComponent,] },],
+        'onWindowResize': [{ type: core_1.HostListener, args: ['window:resize',] },],
+    };
+    __decorate([
+        utils_1.throttleable(5),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], DatatableComponent.prototype, "onWindowResize", null);
     return DatatableComponent;
 }());
-DatatableComponent.decorators = [
-    { type: core_1.Component, args: [{
-                selector: 'ngx-datatable',
-                template: "\n    <div\n      visibility-observer\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"columns\"\n        [headerHeight]=\"headerHeight\"\n        [reorderable]=\"reorderable\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        [selectionType]=\"selectionType\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\">\n      </datatable-header>\n      <datatable-body\n        [rows]=\"rows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"columns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetail]=\"rowDetail\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [rowClass]=\"rowClass\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"rowContextmenu.emit($event)\"\n        (select)=\"onBodySelect($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [selectedCount]=\"selected.length\"\n        [selectedMessage]=\"!!selectionType && messages.selectedMessage\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
-                encapsulation: core_1.ViewEncapsulation.None,
-                styleUrls: ['./datatable.component.css'],
-                host: {
-                    class: 'ngx-datatable'
-                }
-            },] },
-];
-/** @nocollapse */
-DatatableComponent.ctorParameters = function () { return [
-    { type: services_1.ScrollbarHelper, },
-    { type: core_1.ElementRef, },
-    { type: core_1.KeyValueDiffers, },
-]; };
-DatatableComponent.propDecorators = {
-    'rows': [{ type: core_1.Input },],
-    'columns': [{ type: core_1.Input },],
-    'selected': [{ type: core_1.Input },],
-    'scrollbarV': [{ type: core_1.Input },],
-    'scrollbarH': [{ type: core_1.Input },],
-    'rowHeight': [{ type: core_1.Input },],
-    'columnMode': [{ type: core_1.Input },],
-    'headerHeight': [{ type: core_1.Input },],
-    'footerHeight': [{ type: core_1.Input },],
-    'externalPaging': [{ type: core_1.Input },],
-    'externalSorting': [{ type: core_1.Input },],
-    'limit': [{ type: core_1.Input },],
-    'count': [{ type: core_1.Input },],
-    'offset': [{ type: core_1.Input },],
-    'loadingIndicator': [{ type: core_1.Input },],
-    'selectionType': [{ type: core_1.Input },],
-    'reorderable': [{ type: core_1.Input },],
-    'sortType': [{ type: core_1.Input },],
-    'sorts': [{ type: core_1.Input },],
-    'cssClasses': [{ type: core_1.Input },],
-    'messages': [{ type: core_1.Input },],
-    'rowIdentity': [{ type: core_1.Input },],
-    'rowClass': [{ type: core_1.Input },],
-    'selectCheck': [{ type: core_1.Input },],
-    'trackByProp': [{ type: core_1.Input },],
-    'scroll': [{ type: core_1.Output },],
-    'activate': [{ type: core_1.Output },],
-    'select': [{ type: core_1.Output },],
-    'sort': [{ type: core_1.Output },],
-    'page': [{ type: core_1.Output },],
-    'reorder': [{ type: core_1.Output },],
-    'resize': [{ type: core_1.Output },],
-    'rowContextmenu': [{ type: core_1.Output },],
-    'isFixedHeader': [{ type: core_1.HostBinding, args: ['class.fixed-header',] },],
-    'isFixedRow': [{ type: core_1.HostBinding, args: ['class.fixed-row',] },],
-    'isVertScroll': [{ type: core_1.HostBinding, args: ['class.scroll-vertical',] },],
-    'isHorScroll': [{ type: core_1.HostBinding, args: ['class.scroll-horz',] },],
-    'isSelectable': [{ type: core_1.HostBinding, args: ['class.selectable',] },],
-    'isCheckboxSelection': [{ type: core_1.HostBinding, args: ['class.checkbox-selection',] },],
-    'isCellSelection': [{ type: core_1.HostBinding, args: ['class.cell-selection',] },],
-    'isSingleSelection': [{ type: core_1.HostBinding, args: ['class.single-selection',] },],
-    'isMultiSelection': [{ type: core_1.HostBinding, args: ['class.multi-selection',] },],
-    'isMultiClickSelection': [{ type: core_1.HostBinding, args: ['class.multi-click-selection',] },],
-    'columnTemplates': [{ type: core_1.ContentChildren, args: [columns_1.DataTableColumnDirective,] },],
-    'rowDetail': [{ type: core_1.ContentChild, args: [row_detail_1.DatatableRowDetailDirective,] },],
-    'bodyComponent': [{ type: core_1.ViewChild, args: [body_1.DataTableBodyComponent,] },],
-    'onWindowResize': [{ type: core_1.HostListener, args: ['window:resize',] },],
-};
-__decorate([
-    utils_1.throttleable(5),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], DatatableComponent.prototype, "onWindowResize", null);
 exports.DatatableComponent = DatatableComponent;
 //# sourceMappingURL=datatable.component.js.map

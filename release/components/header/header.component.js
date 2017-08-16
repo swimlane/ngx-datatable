@@ -1,4 +1,12 @@
 "use strict";
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var types_1 = require("../../types");
@@ -9,6 +17,7 @@ var DataTableHeaderComponent = (function () {
         this.reorder = new core_1.EventEmitter();
         this.resize = new core_1.EventEmitter();
         this.select = new core_1.EventEmitter();
+        this.columnContextmenu = new core_1.EventEmitter(false);
     }
     Object.defineProperty(DataTableHeaderComponent.prototype, "headerHeight", {
         get: function () {
@@ -46,7 +55,7 @@ var DataTableHeaderComponent = (function () {
     DataTableHeaderComponent.prototype.onLongPressEnd = function (_a) {
         var event = _a.event, model = _a.model;
         this.dragEventTarget = event;
-        // delay resetting so sort can be 
+        // delay resetting so sort can be
         // prevented if we were dragging
         setTimeout(function () {
             model.dragging = false;
@@ -104,8 +113,11 @@ var DataTableHeaderComponent = (function () {
     };
     DataTableHeaderComponent.prototype.calcNewSorts = function (column, prevValue, newValue) {
         var idx = 0;
+        if (!this.sorts) {
+            this.sorts = [];
+        }
         var sorts = this.sorts.map(function (s, i) {
-            s = Object.assign({}, s);
+            s = __assign({}, s);
             if (s.prop === column.prop)
                 idx = i;
             return s;
@@ -140,37 +152,39 @@ var DataTableHeaderComponent = (function () {
         }
         return styles;
     };
+    DataTableHeaderComponent.decorators = [
+        { type: core_1.Component, args: [{
+                    selector: 'datatable-header',
+                    template: "\n    <div\n      orderable\n      (reorder)=\"onColumnReordered($event)\"\n      [style.width.px]=\"columnGroupWidths.total\"\n      class=\"datatable-header-inner\">\n      <div\n        *ngFor=\"let colGroup of columnsByPin; trackBy: trackByGroups\"\n        [class]=\"'datatable-row-' + colGroup.type\"\n        [ngStyle]=\"stylesByGroup(colGroup.type)\">\n        <datatable-header-cell\n          *ngFor=\"let column of colGroup.columns; trackBy: columnTrackingFn\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (resize)=\"onColumnResized($event, column)\"\n          long-press\n          [pressModel]=\"column\"\n          [pressEnabled]=\"reorderable && column.draggable\"\n          (longPressStart)=\"onLongPressStart($event)\"\n          (longPressEnd)=\"onLongPressEnd($event)\"\n          draggable\n          [dragX]=\"reorderable && column.draggable && column.dragging\"\n          [dragY]=\"false\"\n          [dragModel]=\"column\"\n          [dragEventTarget]=\"dragEventTarget\"\n          [headerHeight]=\"headerHeight\"\n          [column]=\"column\"\n          [sortType]=\"sortType\"\n          [sorts]=\"sorts\"\n          [selectionType]=\"selectionType\"\n          [sortAscendingIcon]=\"sortAscendingIcon\"\n          [sortDescendingIcon]=\"sortDescendingIcon\"\n          [allRowsSelected]=\"allRowsSelected\"\n          (sort)=\"onSort($event)\"\n          (select)=\"select.emit($event)\"\n          (columnContextmenu)=\"columnContextmenu.emit($event)\">\n        </datatable-header-cell>\n      </div>\n    </div>\n  ",
+                    host: {
+                        class: 'datatable-header'
+                    },
+                    changeDetection: core_1.ChangeDetectionStrategy.OnPush
+                },] },
+    ];
+    /** @nocollapse */
+    DataTableHeaderComponent.ctorParameters = function () { return []; };
+    DataTableHeaderComponent.propDecorators = {
+        'sortAscendingIcon': [{ type: core_1.Input },],
+        'sortDescendingIcon': [{ type: core_1.Input },],
+        'scrollbarH': [{ type: core_1.Input },],
+        'innerWidth': [{ type: core_1.Input },],
+        'offsetX': [{ type: core_1.Input },],
+        'sorts': [{ type: core_1.Input },],
+        'sortType': [{ type: core_1.Input },],
+        'allRowsSelected': [{ type: core_1.Input },],
+        'selectionType': [{ type: core_1.Input },],
+        'reorderable': [{ type: core_1.Input },],
+        'headerHeight': [{ type: core_1.HostBinding, args: ['style.height',] }, { type: core_1.Input },],
+        'columns': [{ type: core_1.Input },],
+        'sort': [{ type: core_1.Output },],
+        'reorder': [{ type: core_1.Output },],
+        'resize': [{ type: core_1.Output },],
+        'select': [{ type: core_1.Output },],
+        'columnContextmenu': [{ type: core_1.Output },],
+        'headerWidth': [{ type: core_1.HostBinding, args: ['style.width',] },],
+    };
     return DataTableHeaderComponent;
 }());
-DataTableHeaderComponent.decorators = [
-    { type: core_1.Component, args: [{
-                selector: 'datatable-header',
-                template: "\n    <div\n      orderable\n      (reorder)=\"onColumnReordered($event)\"\n      [style.width.px]=\"columnGroupWidths.total\"\n      class=\"datatable-header-inner\">\n      <div\n        *ngFor=\"let colGroup of columnsByPin; trackBy: trackByGroups\"\n        [class]=\"'datatable-row-' + colGroup.type\"\n        [ngStyle]=\"stylesByGroup(colGroup.type)\">\n        <datatable-header-cell\n          *ngFor=\"let column of colGroup.columns; trackBy: columnTrackingFn\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (resize)=\"onColumnResized($event, column)\"\n          long-press\n          [pressModel]=\"column\"\n          [pressEnabled]=\"reorderable && column.draggable\"\n          (longPressStart)=\"onLongPressStart($event)\"\n          (longPressEnd)=\"onLongPressEnd($event)\"\n          draggable\n          [dragX]=\"reorderable && column.draggable && column.dragging\"\n          [dragY]=\"false\"\n          [dragModel]=\"column\"\n          [dragEventTarget]=\"dragEventTarget\"\n          [headerHeight]=\"headerHeight\"\n          [column]=\"column\"\n          [sortType]=\"sortType\"\n          [sorts]=\"sorts\"\n          [selectionType]=\"selectionType\"\n          [sortAscendingIcon]=\"sortAscendingIcon\"\n          [sortDescendingIcon]=\"sortDescendingIcon\"\n          (sort)=\"onSort($event)\"\n          (select)=\"select.emit($event)\">\n        </datatable-header-cell>\n      </div>\n    </div>\n  ",
-                host: {
-                    class: 'datatable-header'
-                }
-            },] },
-];
-/** @nocollapse */
-DataTableHeaderComponent.ctorParameters = function () { return []; };
-DataTableHeaderComponent.propDecorators = {
-    'sortAscendingIcon': [{ type: core_1.Input },],
-    'sortDescendingIcon': [{ type: core_1.Input },],
-    'scrollbarH': [{ type: core_1.Input },],
-    'innerWidth': [{ type: core_1.Input },],
-    'offsetX': [{ type: core_1.Input },],
-    'sorts': [{ type: core_1.Input },],
-    'sortType': [{ type: core_1.Input },],
-    'allRowsSelected': [{ type: core_1.Input },],
-    'selectionType': [{ type: core_1.Input },],
-    'reorderable': [{ type: core_1.Input },],
-    'headerHeight': [{ type: core_1.HostBinding, args: ['style.height',] }, { type: core_1.Input },],
-    'columns': [{ type: core_1.Input },],
-    'sort': [{ type: core_1.Output },],
-    'reorder': [{ type: core_1.Output },],
-    'resize': [{ type: core_1.Output },],
-    'select': [{ type: core_1.Output },],
-    'headerWidth': [{ type: core_1.HostBinding, args: ['style.width',] },],
-};
 exports.DataTableHeaderComponent = DataTableHeaderComponent;
 //# sourceMappingURL=header.component.js.map

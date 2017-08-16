@@ -59,13 +59,14 @@ Column was resized.
 }
 ```
 
-### `rowContextmenu`
-The context menu was invoked on a row.
+### `tableContextmenu`
+The context menu was invoked on the table.
 
 ```
 {
   event,
-  row
+  type,
+  content
 }
 ```
 

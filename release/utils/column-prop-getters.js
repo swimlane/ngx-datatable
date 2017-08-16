@@ -1,5 +1,5 @@
-// maybe rename this file to prop-getters.ts
 "use strict";
+// maybe rename this file to prop-getters.ts
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Always returns the empty string ''
@@ -70,7 +70,12 @@ exports.shallowValueGetter = shallowValueGetter;
 function deepValueGetter(obj, path) {
     if (!obj || !path)
         return obj;
-    var current = obj;
+    // check if path matches a root-level field
+    // { "a.b.c": 123 }
+    var current = obj[path];
+    if (current !== undefined)
+        return current;
+    current = obj;
     var split = path.split('.');
     if (split.length) {
         for (var i = 0; i < split.length; i++) {

@@ -1,4 +1,77 @@
 # Changelog
+## Master
+- BREAKING: Removing `ngDoCheck` on rows array diffing
+- BREAKING: Arrays are not mutated on sorts
+
+## 10.0.5
+- Style: Material styles closer to spec
+- Bug: Non-sortable header showing pointer cursor
+
+## 10.0.4
+- Perf: Changed everything internal to OnPush
+- Perf: Fixed header cell outlet cd
+- Bug: Fixed sort mutating original rows
+
+## 10.0.3
+- Perf: Better performance in cells
+
+## 10.0.2
+- Enhancement: Add `rowIndex` to row-detail template
+- Bug: Add `index.css` back to build
+
+## 10.0.1
+- Bug: Fix old references to `$$index` and `$$expanded`
+- Bug: Add `$$index` in cell templates as `rowIndex`
+- Bug: Fix MouseEvent undefined in JIT (#893)
+
+## 10.0.0
+- BREAKING: `$$expanded` is no longer on row of detail templates, use `let-expanded` to get pop now
+- Feature: Always center activated page on pager
+- Bug: Remove row mutations of `$$index` and `$$expanded`
+- Bug: Pagination broken on large number of rows
+- Bug: Strip HTML from title tags (#892)
+
+## 9.3.1
+- Bug: More Universal Rendering Fixes (#795)
+- Chore: Build optimizations from new webpack version
+
+## 9.3.0
+- Feature: Unviseral Rendering (#764)
+
+## 9.2.0
+- Enhancement: Add header context menu event
+- Bug: Fix sort blowing up when undefined and adding new sort
+- Bug: Fix multi-selection key with Mac
+
+## 9.1.0
+- Enhancement: Add more context to cells #720
+- Enhancement: Export Pager component #735
+- Bug: Header checkbox when row selection is changed #659
+- Bug: When rowClass() returns a string, the class is not properly added #710
+- Bug: Rename icons so don't conflict with other libs #729
+
+## 9.0.0
+- BREAKING: Fixes for external pagination fixes. Index calculation change being last page = `0 + pageSize` (#714, #138, #391)
+- Feature: Server-side virtual scrolling pagination
+- Demos: Deep linking of demo pages
+
+## 8.2.1
+- Bug: Fix footer styles
+
+## 8.2.0
+- Feature: Footer Templates
+
+## 8.1.0
+- Feature: Dark Theme
+
+## 8.0.1
+- Bug: Fix memory leak (#702)
+- Bug: Don't add column header title attribute when custom template provided (#643)
+- Bug: Only apply pointer to header text (#682)
+- Bug: Fix prop field name with dots (#596)
+- Bug: Virtual scroll + dynamic height in cell detail not working right (#703)
+- Bug: Fix dynamic row height not working right if using server-side pagination
+- Chore: Implement `noImplicitAny` (#671)
 
 ## 8.0.0
 - Breaking: Removed `cssClass` from columns in favor of explicit

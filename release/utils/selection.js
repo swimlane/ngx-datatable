@@ -21,7 +21,7 @@ function selectRowsBetween(selected, rows, index, prevIndex, comparefn) {
         if (reverse) {
             range = {
                 start: index,
-                end: (prevIndex - index)
+                end: prevIndex
             };
         }
         else {

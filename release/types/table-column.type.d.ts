@@ -1,5 +1,5 @@
 import { PipeTransform } from '@angular/core';
-import { ValueGetter } from "../utils/column-prop-getters";
+import { ValueGetter } from '../utils/column-prop-getters';
 /**
  * Column property that indicates how to retrieve this column's
  * value from a row.

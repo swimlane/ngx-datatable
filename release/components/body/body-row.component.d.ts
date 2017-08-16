@@ -4,10 +4,12 @@ export declare class DataTableBodyRowComponent {
     private scrollbarHelper;
     columns: any[];
     innerWidth: number;
+    expanded: boolean;
     rowClass: any;
     row: any;
     offsetX: number;
     isSelected: boolean;
+    rowIndex: number;
     readonly cssClass: string;
     rowHeight: number;
     readonly columnsTotalWidths: string;

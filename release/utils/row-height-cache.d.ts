@@ -25,7 +25,7 @@ export declare class RowHeightCache {
      * @param rowHeight The row height.
      * @param detailRowHeight The detail row height.
      */
-    initCache(rows: any[], rowHeight: any, detailRowHeight: number): void;
+    initCache(details: any): void;
     /**
      * Given the ScrollY position i.e. sum, provide the rowIndex
      * that is present in the current view port.  Below handles edge cases.

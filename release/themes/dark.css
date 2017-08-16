@@ -1,0 +1,69 @@
+.ngx-datatable.dark {
+  box-shadow: none;
+  background: #1b1e27;
+  border: 1px solid #2f3646;
+  color: #fff;
+  font-size: 13px; }
+  .ngx-datatable.dark .datatable-header {
+    background: #181b24;
+    color: #72809b; }
+    .ngx-datatable.dark .datatable-header .datatable-header-cell {
+      text-align: left;
+      padding: .5rem 1.2rem;
+      font-weight: bold; }
+      .ngx-datatable.dark .datatable-header .datatable-header-cell .datatable-header-cell-label {
+        line-height: 24px; }
+  .ngx-datatable.dark .datatable-body {
+    background: #1a1e28; }
+    .ngx-datatable.dark .datatable-body .datatable-body-row {
+      border-top: 1px solid #2f3646; }
+      .ngx-datatable.dark .datatable-body .datatable-body-row .datatable-body-cell {
+        text-align: left;
+        padding: .5rem 1.2rem;
+        vertical-align: top; }
+      .ngx-datatable.dark .datatable-body .datatable-body-row:hover {
+        background: #171b24;
+        transition-property: background;
+        transition-duration: .3s;
+        transition-timing-function: linear; }
+      .ngx-datatable.dark .datatable-body .datatable-body-row:focus {
+        background-color: #232837; }
+      .ngx-datatable.dark .datatable-body .datatable-body-row.active {
+        background-color: #1483ff;
+        color: #FFF; }
+  .ngx-datatable.dark .datatable-footer {
+    background: #232837;
+    color: #72809b;
+    margin-top: -1px; }
+    .ngx-datatable.dark .datatable-footer .page-count {
+      line-height: 50px;
+      height: 50px;
+      padding: 0 1.2rem; }
+    .ngx-datatable.dark .datatable-footer .datatable-pager {
+      margin: 0 10px;
+      vertical-align: top; }
+      .ngx-datatable.dark .datatable-footer .datatable-pager ul li {
+        margin: 10px 0px; }
+        .ngx-datatable.dark .datatable-footer .datatable-pager ul li:not(.disabled).active a,
+        .ngx-datatable.dark .datatable-footer .datatable-pager ul li:not(.disabled):hover a {
+          background-color: #455066;
+          font-weight: bold; }
+      .ngx-datatable.dark .datatable-footer .datatable-pager a {
+        height: 22px;
+        min-width: 24px;
+        line-height: 22px;
+        padding: 0;
+        border-radius: 3px;
+        margin: 0 3px;
+        text-align: center;
+        vertical-align: top;
+        text-decoration: none;
+        vertical-align: bottom;
+        color: #72809b; }
+      .ngx-datatable.dark .datatable-footer .datatable-pager .datatable-icon-left,
+      .ngx-datatable.dark .datatable-footer .datatable-pager .datatable-icon-skip,
+      .ngx-datatable.dark .datatable-footer .datatable-pager .datatable-icon-right,
+      .ngx-datatable.dark .datatable-footer .datatable-pager .datatable-icon-prev {
+        font-size: 18px;
+        line-height: 27px;
+        padding: 0 3px; }

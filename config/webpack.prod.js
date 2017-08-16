@@ -33,6 +33,7 @@ module.exports = function(env) {
       ]
     },
     plugins: [
+      new webpack.optimize.ModuleConcatenationPlugin(),
       new CheckerPlugin(),
       new webpack.optimize.CommonsChunkPlugin({
         name: ['polyfills'],

@@ -1,0 +1,106 @@
+.ngx-datatable.dark {
+  box-shadow: none;
+  background: #1b1e27;
+  border: 1px solid #2f3646;
+  color: #fff;
+  font-size: 13px;
+
+  .datatable-header {
+    background: #181b24;
+    color: #72809b;
+
+    .datatable-header-cell {
+      text-align: left;
+      padding: .5rem 1.2rem;
+      font-weight: bold;
+
+      .datatable-header-cell-label {
+        line-height: 24px;
+      }
+    }
+  }
+
+  .datatable-body {
+    background: #1a1e28;
+
+    .datatable-body-row {
+      border-top: 1px solid #2f3646;
+
+      .datatable-body-cell {
+        text-align: left;
+        padding: .5rem 1.2rem;
+        vertical-align: top;
+      }
+
+      &:hover {
+        background: #171b24;
+        transition-property: background;
+        transition-duration: .3s;
+        transition-timing-function: linear;
+      }
+
+      &:focus {
+        background-color: #232837;
+      }
+
+      &.active {
+        background-color: #1483ff;
+        color: #FFF;
+      }
+    }
+  }
+
+  .datatable-footer {
+    background: #232837;
+    color: #72809b;
+    margin-top: -1px;
+
+    .page-count {
+      line-height: 50px;
+      height: 50px;
+      padding: 0 1.2rem;
+    }
+
+    .datatable-pager {
+			margin: 0 10px;
+      vertical-align: top;
+
+      ul {
+        li {
+          margin: 10px 0px;
+
+          &:not(.disabled) {
+            &.active a,
+            &:hover a {
+              background-color: #455066;
+              font-weight: bold;
+            }
+          }
+        }
+			}
+
+			a {
+				height: 22px;
+				min-width: 24px;
+				line-height: 22px;
+				padding: 0;
+				border-radius: 3px;
+				margin: 0 3px;
+				text-align: center;
+				vertical-align: top;
+				text-decoration: none;
+		    vertical-align: bottom;
+        color: #72809b;
+			}
+
+			.datatable-icon-left,
+			.datatable-icon-skip,
+			.datatable-icon-right,
+			.datatable-icon-prev {
+        font-size: 18px;
+        line-height: 27px;
+				padding:0 3px;
+			}
+		}
+  }
+}

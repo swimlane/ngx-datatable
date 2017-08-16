@@ -2,7 +2,8 @@ import {
   Component, Input, Output, ElementRef, EventEmitter, ViewChild,
   HostListener, ContentChildren, OnInit, QueryList, AfterViewInit,
   HostBinding, ContentChild, TemplateRef, IterableDiffer,
-  DoCheck, KeyValueDiffers, KeyValueDiffer, ViewEncapsulation
+  DoCheck, KeyValueDiffers, KeyValueDiffer, ViewEncapsulation,
+  ChangeDetectionStrategy, ChangeDetectorRef
 } from '@angular/core';
 
 import {
@@ -10,16 +11,18 @@ import {
   setColumnDefaults, throttleable, translateTemplates
 } from '../utils';
 import { ScrollbarHelper } from '../services';
-import { ColumnMode, SortType, SelectionType, TableColumn } from '../types';
+import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
+import { DatatableFooterDirective } from './footer';
+import { mouseEvent } from '../events';
 
 @Component({
   selector: 'ngx-datatable',
   template: `
     <div
-      visibility-observer
+      visibilityObserver
       (visible)="recalculate()">
       <datatable-header
         *ngIf="headerHeight"
@@ -38,13 +41,15 @@ import { DatatableRowDetailDirective } from './row-detail';
         (sort)="onColumnSort($event)"
         (resize)="onColumnResize($event)"
         (reorder)="onColumnReorder($event)"
-        (select)="onHeaderSelect($event)">
+        (select)="onHeaderSelect($event)"
+        (columnContextmenu)="onColumnContextmenu($event)">
       </datatable-header>
       <datatable-body
-        [rows]="rows"
+        [rows]="_internalRows"
         [scrollbarV]="scrollbarV"
         [scrollbarH]="scrollbarH"
         [loadingIndicator]="loadingIndicator"
+        [externalPaging]="externalPaging"
         [rowHeight]="rowHeight"
         [rowCount]="rowCount"
         [offset]="offset"
@@ -63,7 +68,7 @@ import { DatatableRowDetailDirective } from './row-detail';
         [selectCheck]="selectCheck"
         (page)="onBodyPage($event)"
         (activate)="activate.emit($event)"
-        (rowContextmenu)="rowContextmenu.emit($event)"
+        (rowContextmenu)="onRowContextmenu($event)"
         (select)="onBodySelect($event)"
         (scroll)="onBodyScroll($event)">
       </datatable-body>
@@ -73,6 +78,7 @@ import { DatatableRowDetailDirective } from './row-detail';
         [pageSize]="pageSize"
         [offset]="offset"
         [footerHeight]="footerHeight"
+        [footerTemplate]="footer"
         [totalMessage]="messages.totalMessage"
         [pagerLeftArrowIcon]="cssClasses.pagerLeftArrow"
         [pagerRightArrowIcon]="cssClasses.pagerRightArrow"
@@ -84,13 +90,14 @@ import { DatatableRowDetailDirective } from './row-detail';
       </datatable-footer>
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./datatable.component.scss'],
   host: {
     class: 'ngx-datatable'
   }
 })
-export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
+export class DatatableComponent implements OnInit, AfterViewInit {
 
   /**
    * Rows that are displayed in the table.
@@ -98,14 +105,18 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   @Input() set rows(val: any) {
+    this._rows = val;
+    
     // auto sort on new updates
     if (!this.externalSorting) {
-      val = sortRows(val, this.columns, this.sorts);
+      this._internalRows = sortRows(val, this.columns, this.sorts);
+    } else {
+      this._internalRows = [...val];
     }
-
-    this._rows = val;
+    
     // recalculate sizes/etc
     this.recalculate();
+    this.cd.markForCheck();
   }
 
   /**
@@ -125,7 +136,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   @Input() set columns(val: TableColumn[]) {
-    if(val) {
+    if (val) {
       setColumnDefaults(val);
       this.recalculateColumns(val);
     }
@@ -326,12 +337,12 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   @Input() cssClasses: any = {
-    sortAscending: 'icon-up',
-    sortDescending: 'icon-down',
-    pagerLeftArrow: 'icon-left',
-    pagerRightArrow: 'icon-right',
-    pagerPrevious: 'icon-prev',
-    pagerNext: 'icon-skip'
+    sortAscending: 'datatable-icon-up',
+    sortDescending: 'datatable-icon-down',
+    pagerLeftArrow: 'datatable-icon-left',
+    pagerRightArrow: 'datatable-icon-right',
+    pagerPrevious: 'datatable-icon-prev',
+    pagerNext: 'datatable-icon-skip'
   };
 
   /**
@@ -367,12 +378,12 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   @Input() rowIdentity: (x: any) => any = ((x: any) => x);
 
   /**
-   * Row specific classes. 
+   * Row specific classes.
    * Similar implementation to ngClass.
-   * 
+   *
    *  [rowClass]="'first second'"
    *  [rowClass]="{ 'first': true, 'second': true, 'third': false }"
-   * 
+   *
    * @type {*}
    * @memberOf DatatableComponent
    */
@@ -382,8 +393,8 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * A boolean/function you can use to check whether you want
    * to select a particular row based on a criteria. Example:
    *
-   *    (selection) => { 
-   *      return selection !== 'Ethel Price'; 
+   *    (selection) => {
+   *      return selection !== 'Ethel Price';
    *    }
    *
    * @type {*}
@@ -457,11 +468,13 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   @Output() resize: EventEmitter<any> = new EventEmitter();
 
   /**
-   * The context menu was invoked on a row.
+   * The context menu was invoked on the table.
+   * type indicates whether the header or the body was clicked.
+   * content contains either the column or the row that was clicked.
    *
    * @memberOf DatatableComponent
    */
-  @Output() rowContextmenu = new EventEmitter<{ event: MouseEvent, row: any }>(false);
+  @Output() tableContextmenu = new EventEmitter<{ event: MouseEvent, type: ContextmenuType, content: any }>(false);
 
   /**
    * CSS class applied if the header height if fixed height.
@@ -631,6 +644,15 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   rowDetail: DatatableRowDetailDirective;
 
   /**
+   * Footer template gathered from the ContentChild
+   *
+   * @type {DatatableFooterDirective}
+   * @memberOf DatatableComponent
+   */
+  @ContentChild(DatatableFooterDirective)
+  footer: DatatableFooterDirective;
+
+  /**
    * Reference to the body component for manually
    * invoking functions on the body.
    *
@@ -652,6 +674,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   get allRowsSelected(): boolean {
     return this.selected &&
       this.rows &&
+      this.rows.length !== 0 &&
       this.selected.length === this.rows.length;
   }
 
@@ -662,15 +685,17 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   rowCount: number = 0;
   offsetX: number = 0;
   rowDiffer: KeyValueDiffer<{}, {}>;
-  _count: number = 0;
 
+  _count: number = 0;
   _rows: any[];
+  _internalRows: any[];
   _columns: TableColumn[];
   _columnTemplates: QueryList<DataTableColumnDirective>;
 
   constructor(
-    private scrollbarHelper: ScrollbarHelper, 
-    element: ElementRef, 
+    private scrollbarHelper: ScrollbarHelper,
+    private cd: ChangeDetectorRef,
+    element: ElementRef,
     differs: KeyValueDiffers) {
 
     // get ref to elm for measuring
@@ -699,24 +724,24 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    */
   ngAfterViewInit(): void {
     if (!this.externalSorting) {
-      const val = sortRows(this._rows, this.columns, this.sorts);
-      this._rows = val;
+      this._internalRows = sortRows(this._rows, this.columns, this.sorts);
     }
 
     // this has to be done to prevent the change detection
     // tree from freaking out because we are readjusting
-    setTimeout(() => this.recalculate());
-  }
+    requestAnimationFrame(() => {
+      this.recalculate();
 
-  /**
-   * Lifecycle hook that is called when Angular dirty checks a directive.
-   *
-   * @memberOf DatatableComponent
-   */
-  ngDoCheck(): void {
-    if (this.rowDiffer.diff(this.rows)) {
-      this.recalculatePages();
-    }
+      // emit page for virtual server-side kickoff
+      if (this.externalPaging && this.scrollbarV) {
+        this.page.emit({
+          count: this.count,
+          pageSize: this.pageSize,
+          limit: this.limit,
+          offset: 0
+        });
+      }
+    });
   }
 
   /**
@@ -759,9 +784,10 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    *
    * @memberOf DatatableComponent
    */
-  recalculateColumns(columns: any[] = this.columns,
-                     forceIdx: number = -1,
-                     allowBleed: boolean = this.scrollbarH): any[] {
+  recalculateColumns(
+    columns: any[] = this.columns,
+    forceIdx: number = -1,
+    allowBleed: boolean = this.scrollbarH): any[] {
 
     if (!columns) return;
 
@@ -817,7 +843,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    *
    * @memberOf DatatableComponent
    */
-  onBodyPage({offset}: any): void {
+  onBodyPage({ offset }: any): void {
     this.offset = offset;
 
     this.page.emit({
@@ -904,13 +930,35 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   }
 
   /**
+   * The header triggered a contextmenu event.
+   *
+   * @param {*} { event, column }
+   *
+   * @memberOf DatatableComponent
+   */
+  onColumnContextmenu({ event, column }: any): void {
+    this.tableContextmenu.emit({ event, type: ContextmenuType.header, content: column });
+  }
+
+  /**
+   * The body triggered a contextmenu event.
+   *
+   * @param {*} { event, row }
+   *
+   * @memberOf DatatableComponent
+   */
+  onRowContextmenu({ event, row }: any): void {
+    this.tableContextmenu.emit({ event, type: ContextmenuType.body, content: row });
+  }
+
+  /**
    * The header triggered a column resize event.
    *
    * @param {*} { column, newValue }
    *
    * @memberOf DatatableComponent
    */
-  onColumnResize({column, newValue}: any): void {
+  onColumnResize({ column, newValue }: any): void {
     /* Safari/iOS 10.2 workaround */
     if (column === undefined) {
       return;
@@ -918,7 +966,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
 
     let idx: number;
     const cols = this.columns.map((c, i) => {
-      c = Object.assign({}, c);
+      c = { ...c };
 
       if (c.$$id === column.$$id) {
         idx = i;
@@ -948,9 +996,9 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    *
    * @memberOf DatatableComponent
    */
-  onColumnReorder({column, newValue, prevValue}: any): void {
+  onColumnReorder({ column, newValue, prevValue }: any): void {
     const cols = this.columns.map(c => {
-      return Object.assign({}, c);
+      return { ...c };
     });
 
     const prevCol = cols[newValue];
@@ -974,13 +1022,13 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   onColumnSort(event: any): void {
-    const {sorts} = event;
+    const { sorts } = event;
 
     // this could be optimized better since it will resort
     // the rows again on the 'push' detection...
     if (this.externalSorting === false) {
       // don't use normal setter so we don't resort
-      this._rows = sortRows(this.rows, this.columns, sorts);
+      this._internalRows = sortRows(this.rows, this.columns, sorts);
     }
 
     this.sorts = sorts;

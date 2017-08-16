@@ -1,19 +1,25 @@
-import { 
-  Component, Input, Output, EventEmitter, HostListener 
+import {
+  Component, Input, Output, EventEmitter, HostListener, ChangeDetectionStrategy
 } from '@angular/core';
+import { mouseEvent } from '../../events';
 
 @Component({
   selector: 'datatable-row-wrapper',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ng-content></ng-content>
-    <div 
+    <div
       *ngIf="expanded"
-      [style.height.px]="detailRowHeight" 
+      [style.height.px]="detailRowHeight"
       class="datatable-row-detail">
       <ng-template
         *ngIf="rowDetail && rowDetail.template"
         [ngTemplateOutlet]="rowDetail.template"
-        [ngOutletContext]="{ row: row }">
+        [ngOutletContext]="{ 
+          row: row, 
+          expanded: expanded,
+          rowIndex: rowIndex
+        }">
       </ng-template>
     </div>
   `,
@@ -27,8 +33,9 @@ export class DataTableRowWrapperComponent {
   @Input() detailRowHeight: any;
   @Input() expanded: boolean = false;
   @Input() row: any;
-  
-  @Output() rowContextmenu = new EventEmitter<{event: MouseEvent, row: any}>(false);
+  @Input() rowIndex: number;
+
+  @Output() rowContextmenu = new EventEmitter<{ event: MouseEvent, row: any }>(false);
 
   @HostListener('contextmenu', ['$event'])
   onContextmenu($event: MouseEvent): void {

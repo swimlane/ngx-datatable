@@ -8,7 +8,7 @@ export type ValueGetter = (obj: any, prop: TableColumnProp) => any;
  * Always returns the empty string ''
  * @returns {string}
  */
-export function emptyStringGetter() {
+export function emptyStringGetter(): string {
   return '';
 }
 
@@ -37,7 +37,7 @@ export function getterForProp(prop: TableColumnProp): ValueGetter {
  * @param index numeric index
  * @returns {any} or '' if invalid index
  */
-export function numericIndexGetter(row: any[], index: number) {
+export function numericIndexGetter(row: any[], index: number): any {
   // mimic behavior of deepValueGetter
   if (!row || index == null) return row;
 
@@ -53,7 +53,7 @@ export function numericIndexGetter(row: any[], index: number) {
  * @param fieldName field name string
  * @returns {any}
  */
-export function shallowValueGetter(obj: object, fieldName: string) {
+export function shallowValueGetter(obj: any, fieldName: string): any {
   if(!obj || !fieldName) return obj;
 
   const value = obj[fieldName];
@@ -66,10 +66,15 @@ export function shallowValueGetter(obj: object, fieldName: string) {
  * @param {object} obj
  * @param {string} path
  */
-export function deepValueGetter(obj: object, path: string) {
+export function deepValueGetter(obj: any, path: string): any {
   if(!obj || !path) return obj;
 
-  let current = obj;
+  // check if path matches a root-level field
+  // { "a.b.c": 123 }
+  let current = obj[path];
+  if (current !== undefined) return current;
+
+  current = obj;
   const split = path.split('.');
 
   if(split.length) {

@@ -8,12 +8,12 @@ import {
  * Usage:
  *
  * 		<div
- * 			visibility-observer
+ * 			visibilityObserver
  * 			(visible)="onVisible($event)">
  * 		</div>
  *
  */
-@Directive({ selector: '[visibility-observer]' })
+@Directive({ selector: '[visibilityObserver]' })
 export class VisibilityDirective implements OnInit, OnDestroy {
 
   @HostBinding('class.visible') 

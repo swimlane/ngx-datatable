@@ -52,28 +52,29 @@ var ScrollerComponent = (function () {
         this.prevScrollYPos = this.scrollYPos;
         this.prevScrollXPos = this.scrollXPos;
     };
+    ScrollerComponent.decorators = [
+        { type: core_1.Component, args: [{
+                    selector: 'datatable-scroller',
+                    template: "\n    <ng-content></ng-content>\n  ",
+                    host: {
+                        class: 'datatable-scroll'
+                    },
+                    changeDetection: core_1.ChangeDetectionStrategy.OnPush
+                },] },
+    ];
+    /** @nocollapse */
+    ScrollerComponent.ctorParameters = function () { return [
+        { type: core_1.ElementRef, },
+        { type: core_1.Renderer, },
+    ]; };
+    ScrollerComponent.propDecorators = {
+        'scrollbarV': [{ type: core_1.Input },],
+        'scrollbarH': [{ type: core_1.Input },],
+        'scrollHeight': [{ type: core_1.HostBinding, args: ['style.height.px',] }, { type: core_1.Input },],
+        'scrollWidth': [{ type: core_1.HostBinding, args: ['style.width.px',] }, { type: core_1.Input },],
+        'scroll': [{ type: core_1.Output },],
+    };
     return ScrollerComponent;
 }());
-ScrollerComponent.decorators = [
-    { type: core_1.Component, args: [{
-                selector: 'datatable-scroller',
-                template: "\n    <ng-content></ng-content>\n  ",
-                host: {
-                    class: 'datatable-scroll'
-                }
-            },] },
-];
-/** @nocollapse */
-ScrollerComponent.ctorParameters = function () { return [
-    { type: core_1.ElementRef, },
-    { type: core_1.Renderer, },
-]; };
-ScrollerComponent.propDecorators = {
-    'scrollbarV': [{ type: core_1.Input },],
-    'scrollbarH': [{ type: core_1.Input },],
-    'scrollHeight': [{ type: core_1.HostBinding, args: ['style.height.px',] }, { type: core_1.Input },],
-    'scrollWidth': [{ type: core_1.HostBinding, args: ['style.width.px',] }, { type: core_1.Input },],
-    'scroll': [{ type: core_1.Output },],
-};
 exports.ScrollerComponent = ScrollerComponent;
 //# sourceMappingURL=scroller.component.js.map

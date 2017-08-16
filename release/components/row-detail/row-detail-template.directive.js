@@ -5,17 +5,16 @@ var DatatableRowDetailTemplateDirective = (function () {
     function DatatableRowDetailTemplateDirective(template) {
         this.template = template;
     }
-    ;
+    DatatableRowDetailTemplateDirective.decorators = [
+        { type: core_1.Directive, args: [{
+                    selector: '[ngx-datatable-row-detail-template]'
+                },] },
+    ];
+    /** @nocollapse */
+    DatatableRowDetailTemplateDirective.ctorParameters = function () { return [
+        { type: core_1.TemplateRef, },
+    ]; };
     return DatatableRowDetailTemplateDirective;
 }());
-DatatableRowDetailTemplateDirective.decorators = [
-    { type: core_1.Directive, args: [{
-                selector: '[ngx-datatable-row-detail-template]'
-            },] },
-];
-/** @nocollapse */
-DatatableRowDetailTemplateDirective.ctorParameters = function () { return [
-    { type: core_1.TemplateRef, },
-]; };
 exports.DatatableRowDetailTemplateDirective = DatatableRowDetailTemplateDirective;
 //# sourceMappingURL=row-detail-template.directive.js.map

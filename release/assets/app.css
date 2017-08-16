@@ -3,11 +3,11 @@ body {
   text-align: left;
   font-style: normal;
   font-weight: 300;
-  font-size: 1.4rem;
+  font-size: 16px;
   line-height: 2rem;
   letter-spacing: 0.01rem;
   color: #212121;
-  background-color: #f5f5f5;
+  background-color: #fafafa;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -212,4 +212,20 @@ select {
 
 .is-female {
   background: pink;
+}
+
+.dark {
+  background: #181B24;
+}
+
+.dark nav {
+  background: #232837;
+}
+
+.dark nav a {
+  color:#fff;
+}
+
+.dark nav h4 {
+  color: #72809b;
 }
