@@ -23,7 +23,7 @@ export function columnsByPin(cols: any[]) {
         }
       }
       else{
-        ret.grouping.push(col);
+        ret.center.push(col);
       }
         
     }
@@ -41,16 +41,6 @@ export function columnGroupWidths(groups: any, all: any) {
   return {
     left: columnTotalWidth(groups.left),
     center: columnTotalWidth(groups.center),
-    right: columnTotalWidth(groups.right),
-    total: columnTotalWidth(all)
-  };
-}
-
-export function allColumnGroupWidths(groups: any, all: any) {
-  return {
-    left: columnTotalWidth(groups.left),
-    center: columnTotalWidth(groups.center),
-    grouping: columnTotalWidth(groups.grouping),
     right: columnTotalWidth(groups.right),
     total: columnTotalWidth(all)
   };

@@ -1,8 +1,8 @@
 import {
-  Component, Output, EventEmitter, Input, HostBinding, ChangeDetectionStrategy
+  Component, Output, EventEmitter, Input, HostBinding
 } from '@angular/core';
 import { SortType, SelectionType } from '../../types';
-import { columnsByPin, allColumnGroupWidths, columnGroupWidths, allColumnsByPinArr, columnsByPinArr, translateXY } from '../../utils';
+import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY } from '../../utils';
 import { DataTableColumnDirective } from '../columns';
 import { mouseEvent } from '../../events';
 
@@ -12,11 +12,11 @@ import { mouseEvent } from '../../events';
     <div
       orderable
       (reorder)="onColumnReordered($event)"
-      [style.width.px]="allColumnGroupWidths.total"
+      [style.width.px]="columnGroupWidths.total"
       class="datatable-header-inner">
-      <table style="width=100%"><tr><td>
+     
       <div
-        *ngFor="let colGroup of allColumns; trackBy: trackByGroups"
+        *ngFor="let colGroup of columnsByPin; trackBy: trackByGroups"
         [class]="'datatable-row-' + colGroup.type"
         [ngStyle]="stylesByGroup(colGroup.type)">
         <datatable-header-cell
@@ -47,61 +47,16 @@ import { mouseEvent } from '../../events';
           (columnContextmenu)="columnContextmenu.emit($event)">
         </datatable-header-cell>
       </div>
-      </td>    
-      </tr></table>
     </div>
   `,
   host: {
     class: 'datatable-header'
-  },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  }
 })
 export class DataTableHeaderComponent {
-
-/*
-
-  <td>
-        <div
-          *ngIf="allColumns[2]"
-          [class]="'datatable-row-' + allColumns[2].type"
-          [ngStyle]="stylesByGroup(allColumns[2].type)">
-          <datatable-header-cell
-            *ngFor="let column of allColumns[2].columns; trackBy: columnTrackingFn"
-            resizeable
-            [resizeEnabled]="column.resizeable"
-            (resize)="onColumnResized($event, column)"
-            long-press
-            [pressModel]="column"
-            [pressEnabled]="reorderable && column.draggable"
-            (longPressStart)="onLongPressStart($event)"
-            (longPressEnd)="onLongPressEnd($event)"
-            draggable
-            [dragX]="reorderable && column.draggable && column.dragging"
-            [dragY]="false"
-            [dragModel]="column"
-            [dragEventTarget]="dragEventTarget"
-            [headerHeight]="headerHeight"
-            [column]="column"
-            [sortType]="sortType"
-            [sorts]="sorts"
-            [selectionType]="selectionType"
-            [sortAscendingIcon]="sortAscendingIcon"
-            [sortDescendingIcon]="sortDescendingIcon"
-            [allRowsSelected]="allRowsSelected"
-            (sort)="onSort($event)"
-            (select)="select.emit($event)"
-            (columnContextmenu)="columnContextmenu.emit($event)">
-          </datatable-header-cell>
-        </div>
-      </td>
-
-*/
-
   @Input() sortAscendingIcon: any;
   @Input() sortDescendingIcon: any;
   @Input() scrollbarH: boolean;
-
-  //@Input() innerWidth: number;
   _innerWidth: number;
 
   @Input() set innerWidth(val: number){
@@ -109,7 +64,7 @@ export class DataTableHeaderComponent {
 
     if (this._columns){    
       const colByPin = columnsByPin(this._columns);
-      this.columnGroupWidths = columnGroupWidths(colByPin, this._columns.filter(column => !column.isGroup));       
+      this.columnGroupWidths = columnGroupWidths(colByPin, this._columns);       
     }
   }
     
@@ -144,13 +99,7 @@ export class DataTableHeaderComponent {
 
     const colsByPin = columnsByPin(val);
     this.columnsByPin = columnsByPinArr(val);
-    //this.columnsByPin = allColumnsByPinArr(val);    
-
-    this.allColumns = allColumnsByPinArr(val);    
-
-    this.columnGroupWidths = columnGroupWidths(colsByPin, val.filter(column => !column.isGroup));
-    //this.columnGroupWidths = allColumnGroupWidths(colsByPin, val);
-    this.allColumnGroupWidths = allColumnGroupWidths(colsByPin, val);
+    this.columnGroupWidths = columnGroupWidths(colsByPin, val);
   }
 
   get columns(): any[] {
@@ -165,8 +114,6 @@ export class DataTableHeaderComponent {
 
   columnsByPin: any;
   columnGroupWidths: any;
-  allColumns: any;
-  allColumnGroupWidths: any;
   _columns: any[];
   _headerHeight: string;
 
@@ -268,55 +215,14 @@ export class DataTableHeaderComponent {
   stylesByGroup(group: string): any {
     const widths = this.columnGroupWidths;
     const offsetX = this.offsetX;
-    var styles = {};
-    var widthCenterPlusGroup;
 
-
-     styles = {
-          width: `${widths[ group ]}px`
-        };    
-
-    /*
-      if (group === 'center'){
-        widthCenterPlusGroup = widths['center'] + widths['group']
-        styles = {
-          width: `${widthCenterPlusGroup}px`
-        };
-      }
-      else{
-        styles = {
-          width: `${widths[ group ]}px`
-        };        
-      }
-*/
-
-/*
     const styles = {
       width: `${widths[group]}px`
     };
 
- else if (group === 'group') {
-      //const totalDiff = widths.total - this.innerWidth;
-      //const offset = totalDiff * -1;
-      //translateXY(styles, offset, 0);
-      translateXY(styles, offsetX * -1, 0);
-    }      
-
-*/
-    
     if (group === 'center') {
       translateXY(styles, offsetX * -1, 0);
-    }    
-    else if (group === 'grouping') {
-      //const totalDiff = widths.total - this.innerWidth;
-      //const totalDiff = this.innerWidth - widths.total;
-
-      //const offset = widths.total * -1;
-      translateXY(styles, widths.total, -42);
-      //TODO: sort out height
-
-    }    
-    else if (group === 'right') {
+    } else if (group === 'right') {
       const totalDiff = widths.total - this.innerWidth;
       const offset = totalDiff * -1;
       translateXY(styles, offset, 0);
@@ -324,5 +230,4 @@ export class DataTableHeaderComponent {
 
     return styles;
   }
-
 }
