@@ -15,30 +15,20 @@ import { Component } from '@angular/core';
       <ngx-datatable
         class="material"
         [rows]="rows"
-        [groupRowsBy]="'age'"
         [columns]="[{name:'Name'},{name:'Gender'},{name:'Company'}]"
         [columnMode]="'force'"
         [headerHeight]="50"
-        [footerHeight]="50"        
+        [footerHeight]="50"
         [rowHeight]="'auto'"
-        [limit]="3"
-        >
+        [limit]="10">
       </ngx-datatable>
     </div>
   `
 })
 export class ClientPagingComponent {
 
-/*
-        [columnMode]="'force'"
-        [headerHeight]="50"
-        [footerHeight]="50"
-        [rowHeight]="'auto'"
-        [limit]="10"
-*/
-
   rows = [];
-  
+
   constructor() {
     this.fetch((data) => {
       this.rows = data;
@@ -47,8 +37,7 @@ export class ClientPagingComponent {
 
   fetch(cb) {
     const req = new XMLHttpRequest();
-    //req.open('GET', `assets/data/company.json`);
-    req.open('GET', `assets/data/forRowGrouping.json`);
+    req.open('GET', `assets/data/company.json`);
 
     req.onload = () => {
       cb(JSON.parse(req.response));
