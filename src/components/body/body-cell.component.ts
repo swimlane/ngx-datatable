@@ -43,15 +43,18 @@ import { mouseEvent, keyboardEvent } from '../../events';
         [ngOutletContext]="cellContext">
       </ng-template>
     </div>
-  `,
-  host: {
-    class: 'datatable-body-cell'
-  }
+  `
 })
 export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
 
+/*
+,
+  host: {
+    class: 'datatable-body-cell'
+  }
+  */
+
   @Input() group: any;
-  //@Input() column: TableColumn;
   @Input() rowHeight: number;
 
   @Input() set isSelected(val: boolean) {
@@ -121,33 +124,39 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   @ViewChild('cellTemplate', { read: ViewContainerRef }) cellTemplate: ViewContainerRef;
 
   @HostBinding('class')
-  get columnCssClasses(): any {
+  get columnCssClasses(): any {    
     let cls = 'datatable-body-cell';
-    if (this.column.cellClass) {
-      if (typeof this.column.cellClass === 'string') {
-        cls += ' ' + this.column.cellClass;
-      } else if(typeof this.column.cellClass === 'function') {
-        const res = this.column.cellClass({ 
-          row: this.row, 
-          group: this.group, 
-          column: this.column, 
-          value: this.value 
-        });
+    if (!this.column.isGroup){
+      if (this.column.cellClass) {
+        if (typeof this.column.cellClass === 'string') {
+          cls += ' ' + this.column.cellClass;
+        } else if(typeof this.column.cellClass === 'function') {
+          const res = this.column.cellClass({ 
+            row: this.row, 
+            group: this.group, 
+            column: this.column, 
+            value: this.value 
+          });
 
-        if (typeof res === 'string') {
-          cls += res;
-        } else if (typeof res === 'object') {
-          const keys = Object.keys(res);
-          for (const k of keys) {
-            if (res[k] === true) cls += ` ${k}`;
+          if (typeof res === 'string') {
+            cls += res;
+          } else if (typeof res === 'object') {
+            const keys = Object.keys(res);
+            for (const k of keys) {
+              if (res[k] === true) cls += ` ${k}`;
+            }
           }
         }
       }
+      if (!this.sortDir) cls += ' sort-active';
+      if (this.isFocused) cls += ' active';
+      if (this.sortDir === SortDirection.asc) cls += ' sort-asc';
+      if (this.sortDir === SortDirection.desc) cls += ' sort-desc';
     }
-    if (!this.sortDir) cls += ' sort-active';
-    if (this.isFocused) cls += ' active';
-    if (this.sortDir === SortDirection.asc) cls += ' sort-asc';
-    if (this.sortDir === SortDirection.desc) cls += ' sort-desc';
+    else{
+      cls = 'datatable-body-group-cell';
+    }
+
     return cls;
   }
 

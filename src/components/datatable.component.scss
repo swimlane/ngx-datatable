@@ -55,6 +55,13 @@
   }
 
   /**
+  *Group cell styling
+  */  
+  .datatable-body-group-cell {
+    white-space: normal;
+  }
+
+  /**
    * Fixed row height adjustments
    */
   &.fixed-row {

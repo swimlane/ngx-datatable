@@ -79,7 +79,7 @@ import { mouseEvent } from '../../events';
               [innerWidth]="innerWidth"
               [offsetX]="offsetX"
               [columns]="groupColumns"
-              [rowHeight]="getRowHeight(group)"
+              [rowHeight]="'auto'"
               [row]="group.value[0]"
               [group]="group.value"
               [rowClass]="rowClass"
@@ -118,6 +118,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() trackByProp: string;
   @Input() rowClass: any;
   @Input() groupedRows: any;
+  @Input() customGroupStyle: {};
 
   _groupRowsBy: string;
   _groupColumns: Array<any>;
@@ -169,7 +170,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   get groupColumns(): Array<any>{
     return this._groupColumns;
-  }
+  }  
 
   get columns(): any[] {
     return this._columns;
@@ -471,14 +472,30 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * @memberOf DataTableBodyComponent
    */
   getRowHeight(row: any): number {
-    let rowHeight = this.rowHeight;  
-
+    let rowHeight = this.rowHeight;
+   
     // if its a function return it
     if (typeof this.rowHeight === 'function') {
       rowHeight = this.rowHeight(row);
     }
 
     return rowHeight;
+  }
+
+  /**
+   * 
+   * @param group the group with all rows
+   */
+  getGroupHeight(group: any): number {
+    var rowHeight: number=0;
+
+    if (group.value){
+      for (var index = 0; index < group.value.length; index++) {
+        rowHeight += this.getRowAndDetailHeight(group.value[index]);     
+      }          
+    }      
+
+        return rowHeight;
   }
 
   /**
@@ -542,8 +559,9 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     var styles = {};
 
     //check if it's a group
-    if (rows)
-      {
+    /*
+    if (this.groupedRows)
+    {
       if (rows.value){
         for (var index = 0; index < rows.value.length; index++) {
           rowHeight += this.getRowAndDetailHeight(rows.value[index]);     
@@ -556,30 +574,38 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       styles = {
         height: rowHeight + 'px'
       };
-
-      //only add styles for the group if there is a group
-      if (this.groupedRows){
-        styles['border-bottom'] = '1px solid black';
-        styles['width'] = this.columnGroupWidths.total;
-      }
-      if(this.scrollbarV) {
-        var idx = 0
-
-        if (this.groupedRows){
-          idx = rows[rows.length-1] ? rows[rows.length-1].$$index : 0;
-        }
-        else{
-          idx = this.rowIndexes.get(rows) || 0;
-        }        
-
-        // const pos = idx * rowHeight;
-        // The position of this row would be the sum of all row heights
-        // until the previous row position.
-        const pos = this.rowHeightsCache.query(idx - 1);
-
-        translateXY(styles, 0, pos);
-      }
     }
+    */
+
+    //only add styles for the group if there is a group
+    if (this.groupedRows){
+      if (this.customGroupStyle){
+        Object.assign(styles, this.customGroupStyle)
+      }
+      else{
+          styles['border-bottom'] = '1px solid black';
+      }
+      styles['width'] = this.columnGroupWidths.total;
+    }
+      
+    if(this.scrollbarV) {
+      var idx = 0
+
+      if (this.groupedRows){
+        idx = rows[rows.length-1] ? rows[rows.length-1].$$index : 0;
+      }
+      else{
+        idx = this.rowIndexes.get(rows) || 0;
+      }        
+
+      // const pos = idx * rowHeight;
+      // The position of this row would be the sum of all row heights
+      // until the previous row position.
+      const pos = this.rowHeightsCache.query(idx - 1);
+
+      translateXY(styles, 0, pos);
+    }
+
     return styles;
   }
  

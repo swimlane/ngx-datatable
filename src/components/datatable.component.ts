@@ -48,6 +48,7 @@ import { mouseEvent } from '../events';
       <datatable-body
         [groupRowsBy]="groupRowsBy"
         [groupedRows]="groupedRows"
+        [customGroupStyle]="customGroupStyle"
         [rows]="_internalRows"
         [scrollbarV]="scrollbarV"
         [scrollbarH]="scrollbarH"
@@ -160,7 +161,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * This attribute allows the use to set a grouped array in the following format:
+   * This attribute allows the user to set a grouped array in the following format:
    * [
    * {groupid=1>[
    * {id=1 name="test1"},
@@ -210,6 +211,10 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   get columns(): TableColumn[] {
     return this._columns;
   }
+
+  @Input() customGroupStyle: {};
+
+
 
   /**
    * List of row objects that should be

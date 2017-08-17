@@ -40,7 +40,8 @@ import { Component } from '@angular/core';
         [scrollbarH]="true"
         [headerHeight]="50"
         [footerHeight]="50"
-        [rowHeight]="'Auto'"
+        [rowHeight]="50"
+
         [limit]="3">
 
         <ngx-datatable-column name="Exp. Pay." prop="" editable="true" frozenLeft="True">
@@ -82,6 +83,12 @@ import { Component } from '@angular/core';
             </span>          
           </ng-template>
         </ngx-datatable-column>
+
+        <ngx-datatable-column name="" prop="" isGroup="true" width="50">
+          <ng-template ngx-datatable-cell-template let-row="row" let-group="group">
+            <input type="button" name="Save" value="Save">
+          </ng-template>
+        </ngx-datatable-column>        
 
       </ngx-datatable>
     </div>

@@ -128,7 +128,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   columnTrackingFn(index: number, column: any): any {
     return column.$$id;
   }
-
+  
   stylesByGroup(group: string) {
     const widths = this.columnGroupWidths;
     const offsetX = this.offsetX;
