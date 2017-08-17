@@ -238,6 +238,11 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         .subscribe(({ type, value }: { type: string, value: any }) => {
           if (type === 'row') this.toggleRowExpansion(value);
           if (type === 'all') this.toggleAllRows(value);
+
+          // Refresh rows after toggle
+          // Fixes #883
+          this.updateIndexes();
+          this.updateRows();
         });
     }
   }
