@@ -928,6 +928,15 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     if (this._sectionProp) {
       ({ rows: this._rows, rowSections: this.rowSections, sectionCounts: this.sectionCounts } =
         sectionRows(this._unsectionedRows, this._sectionProp, this.sections));
+
+      // apply update to internal rows
+      if (!this.externalSorting) {
+        this._internalRows = sortRows(this._rows, this.columns, this.sorts, this.rowSections);
+      } else {
+        this._internalRows = [...this._rows];
+      }
+
+      this.recalculate();
     }
   }
 
