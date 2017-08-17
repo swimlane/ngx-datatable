@@ -6,32 +6,42 @@ export function sectionRows(rows: any[], prop: SectionProp, sections: Section[])
 
   // index sections by the section property value for fast lookup
   const sectionByValue = {};
+  const sectionCounts = [];
   for (const sectionIndex in sections) {
     sectionByValue[sections[sectionIndex].propValue] = {
       index: sectionIndex,
       section: sections[sectionIndex]
     };
+    sectionCounts[sectionIndex] = 0;
   }
 
-  // reduce to only rows that are part of a section and add a section index to each row
+  const rowSections = new Map();
+
+  // reduce to only rows that are part of an open section and add a section index to each row
   rows = rows || [];
-  const sectionedRows = rows.reduce((includedRows, row) => {
+  let sectionedRows = rows.reduce((includedRows, row) => {
     const val = getter(row, prop);
     if (val in sectionByValue) {
-      row.$$sectionIndex = sectionByValue[val].index;
-      includedRows.push(row);
+      const sectionIndex = sectionByValue[val].index;
+      rowSections.set(row, sectionIndex);
+      sectionCounts[sectionIndex]++;
+      if (sectionByValue[val].section.expanded) {
+        includedRows.push(row);
+      }
     }
     return includedRows;
   }, []);
 
   // add section header rows
   for (const sectionIndex in sections) {
-    sectionedRows.push({...(sections[sectionIndex]), $$sectionIndex: sectionIndex, $$isSectionHeader: true});
+    const sectionHeader = {...(sections[sectionIndex]), $$sectionIndex: sectionIndex, $$isSectionHeader: true};
+    sectionedRows.push(sectionHeader);
   }
 
-  // sort by section index
-  return sectionedRows.sort((a, b) => {
-    if (a.$$sectionIndex === b.$$sectionIndex) {
+  sectionedRows = sectionedRows.sort((a, b) => {
+    const aSection = a.$$isSectionHeader ? a.$$sectionIndex : rowSections.get(a);
+    const bSection = b.$$isSectionHeader ? b.$$sectionIndex : rowSections.get(b);
+    if (aSection === bSection) {
       if (a.$$isSectionHeader) {
         return -1;
       }
@@ -40,6 +50,13 @@ export function sectionRows(rows: any[], prop: SectionProp, sections: Section[])
       }
       return 0;
     }
-    return +a.$$sectionIndex < +b.$$sectionIndex ? -1 : 1;
+    return +aSection < +bSection ? -1 : 1;
   });
+
+  // sort by section index
+  return {
+    rows: sectionedRows,
+    rowSections,
+    sectionCounts
+  };
 }

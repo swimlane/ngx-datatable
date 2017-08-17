@@ -2,7 +2,7 @@ import {
   Component, Output, EventEmitter, Input, HostBinding, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy
 } from '@angular/core';
 import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '../../utils';
-import { SelectionType } from '../../types';
+import { SelectionType, Section } from '../../types';
 import { ScrollerComponent } from './scroller.component';
 import { mouseEvent } from '../../events';
 
@@ -42,14 +42,13 @@ import { mouseEvent } from '../../events';
             *ngIf="row.$$isSectionHeader"
             tabindex="-1"
             [isSelected]="selector.getRowSelected(row)"
-            [innerWidth]="innerWidth"
-            [offsetX]="offsetX"
             [columns]="columns"
             [sectionHeaderTemplate]="sectionHeader"
             [sectionHeaderHeight]="getSectionHeaderHeight(row)"
             [row]="row"
             [rowIndex]="getRowIndex(row)"
-            [expanded]="getRowExpanded(row)"
+            [expanded]="getSectionExpanded(row)"
+            [sectionCount]="getSectionCount(row.$$sectionIndex)"
             [rowClass]="rowClass"
             (activate)="selector.onActivate($event, i)">
           </datatable-body-section-header>
@@ -90,6 +89,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() rowHeight: number;
   @Input() sectionHeaderHeight: number;
   @Input() sectionHeader: any;
+  @Input() sections: Section[];
   @Input() offsetX: number;
   @Input() emptyMessage: string;
   @Input() selectionType: SelectionType;
@@ -99,6 +99,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() selectCheck: any;
   @Input() trackByProp: string;
   @Input() rowClass: any;
+  @Input() sectionCounts: number[];
 
   @Input() set pageSize(val: number) {
     this._pageSize = val;
@@ -303,6 +304,37 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     }
 
     this.scroller.setOffset(offset || 0);
+  }
+
+  /**
+   * Scrolls to the given row id. If the row is in a section the section must already be expanded.
+   *
+   * @param rowId
+   */
+  scrollToRow(rowId: any): void {
+    if (this.scrollbarV) {
+      // find row
+      const rowIndex = this.rows.findIndex((r) => {
+        return this.rowIdentity(r) === rowId;
+      });
+      const offset = this.rowHeightsCache.query(rowIndex - 1);
+      this.scroller.setOffset(offset);
+    }
+  }
+
+  /**
+   * Scrolls to the section header of the given section.
+   *
+   * @param sectionId
+   */
+  scrollToSection(sectionId: any): void {
+    if (this.scrollbarV && this.sections) {
+      const rowIndex = this.rows.findIndex((r) => {
+        return r.$$isSectionHeader && r.$$sectionIndex === sectionId;
+      });
+      const offset = this.rowHeightsCache.query(rowIndex - 1);
+      this.scroller.setOffset(offset);
+    }
   }
 
   /**
@@ -648,24 +680,16 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    *
    * @memberOf DataTableBodyComponent
    */
-  toggleSectionExpansion(row: any): void {
+  toggleSectionExpansion(section: any): void {
     // Capture the row index of the first row that is visible on the viewport.
     const viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
-    let expanded = this.rowExpansions.get(row);
-
-    // If the detailRowHeight is auto --> only in case of non-virtualized scroll
-    if (this.scrollbarV) {
-      const detailRowHeight = this.getDetailRowHeight(row) * (expanded ? -1 : 1);
-      const idx = this.rowIndexes.get(row) || 0;
-      this.rowHeightsCache.update(idx, detailRowHeight);
-    }
+    let expanded: number = +this.sections[section].expanded;
 
     // Update the toggled row and update thive nevere heights in the cache.
     expanded = expanded ^= 1;
-    this.rowExpansions.set(row, expanded);
 
     this.sectionHeaderToggle.emit({
-      rows: [row],
+      sections: [section],
       currentIndex: viewPortFirstRowIndex
     });
   }
@@ -722,8 +746,22 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * @memberof DataTableBodyComponent
    */
   getRowExpanded(row: any): boolean {
+    if (row.$$isSectionHeader) {
+      return false;
+    }
     const expanded = this.rowExpansions.get(row);
     return expanded === 1;
+  }
+
+  getSectionExpanded(section: any): boolean {
+    if (!section.$$isSectionHeader) {
+      return false;
+    }
+    return this.sections[section.$$sectionIndex].expanded;
+  }
+
+  getSectionCount(sectionId: number): number {
+    return this.sectionCounts ? this.sectionCounts[sectionId] : 0;
   }
 
   /**

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { DatatableSectionHeaderDirective } from '../../src';
 
 @Component({
   selector: 'virtual-scroll-demo',
@@ -13,6 +14,7 @@ import { Component } from '@angular/core';
         </small>
       </h3>
       <ngx-datatable
+        #myTable
         class='material'
         [rows]='rows'
         [columnMode]="'force'"
@@ -22,15 +24,18 @@ import { Component } from '@angular/core';
         [scrollbarV]="true"
         [sections]="sections"
         [sectionProp]="'height'"
-        (page)="onPage($event)">
+        (page)="onPage($event)"
+        (activate)="onActivate($event)">
         
         <ngx-datatable-section-header
+          #sectionHeader
           [height]="getRowHeight">
           <ng-template
             let-section="section"
             let-expanded="expanded"
+            let-sectionCount="sectionCount"
             ngx-datatable-section-header-template>
-            <div (click)="toggleExpandSection(section)">{{section.title}} woot!</div>
+            <div>{{section.title}} {{expanded ? 'expanded' : 'not expanded'}} ({{sectionCount}})</div>
           </ng-template>
         </ngx-datatable-section-header>
 
@@ -57,12 +62,15 @@ export class VirtualScrollComponent {
   timeout: any;
   sections = [];
 
+  @ViewChild('myTable') table: any;
+
   constructor() {
     for (let height = 50; height < 130; height++) {
       this.sections.push({
         propValue: height,
         title: `Section with height ${height}:`,
-        height: height
+        height: height,
+        expanded: height % 2
       });
     }
 
@@ -93,6 +101,36 @@ export class VirtualScrollComponent {
     };
 
     req.send();
+  }
+
+  onActivate(event) {
+    if (event.row.$$isSectionHeader) {
+      if ((event.type === 'keydown' && event.event.key === 'Enter') ||
+           event.type === 'click') {
+        this.sections[event.row.$$sectionIndex].expanded ^= 1;
+        this.sections = [...this.sections];
+      }
+      else {
+//        console.log('scrolling to row', this.rows[5]);
+//        this.table.scrollToRow(this.rows[5]);
+        this.table.sectionProp = 'gender';
+        this.sections = [{
+          propValue: 'male',
+          title: 'Male',
+          height: 50,
+          expanded: 0
+        },
+        {
+          propValue: 'female',
+          title: 'Female',
+          height: 50,
+          expanded: 0
+        }];
+        for (let count = 0; count < 25; count++) {
+          this.rows.pop();
+        }
+      }
+    }
   }
 
   getRowHeight(row) {

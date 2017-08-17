@@ -34,7 +34,7 @@ export class DataTableSelectionComponent {
   prevIndex: number;
 
   selectRow(event: KeyboardEvent | MouseEvent, index: number, row: any): void {
-    if (!this.selectEnabled) return;
+    if (!this.selectEnabled || row.$$isSectionHeader) return;
 
     const chkbox = this.selectionType === SelectionType.checkbox;
     const multi = this.selectionType === SelectionType.multi;

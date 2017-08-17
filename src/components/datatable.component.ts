@@ -57,6 +57,8 @@ import { mouseEvent } from '../events';
         [rowHeight]="rowHeight"
         [sectionHeaderHeight]="sectionHeaderHeight"
         [sectionHeader]="sectionHeader"
+        [sections]="sections"
+        [sectionCounts]="sectionCounts"
         [rowCount]="rowCount"
         [offset]="offset"
         [trackByProp]="trackByProp"
@@ -80,7 +82,7 @@ import { mouseEvent } from '../events';
       </datatable-body>
       <datatable-footer
         *ngIf="footerHeight"
-        [rowCount]="rowCount"
+        [rowCount]="recordRowCount"
         [pageSize]="pageSize"
         [offset]="offset"
         [footerHeight]="footerHeight"
@@ -115,7 +117,10 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     // section the rows
     if (this._sectionProp) {
       this._unsectionedRows = val;
-      val = sectionRows(val, this._sectionProp, this._sections);
+      const { rows, rowSections, sectionCounts } = sectionRows(val, this._sectionProp, this._sections);
+      this.rowSections = rowSections;
+      this.sectionCounts = sectionCounts;
+      val = rows;
     } else {
       this._unsectionedRows = null;
     }
@@ -124,7 +129,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
 
     // auto sort on new updates
     if (!this.externalSorting) {
-      this._internalRows = sortRows(val, this.columns, this.sorts);
+      this._internalRows = sortRows(val, this.columns, this.sorts, this.rowSections);
     } else {
       this._internalRows = [...val];
     }
@@ -199,6 +204,16 @@ export class DatatableComponent implements OnInit, AfterViewInit {
       }
       this._unsectionedRows = null;
     }
+  }
+
+  /**
+   * Get section property
+   *
+   * @type {SectionProp}
+   * @memberOf DatatableComponent
+   */
+  get sectionProp(): SectionProp {
+    return this._sectionProp;
   }
 
   /**
@@ -767,8 +782,11 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   pageSize: number;
   bodyHeight: number;
   rowCount: number = 0;
+  recordRowCount: number = 0;
   offsetX: number = 0;
   rowDiffer: KeyValueDiffer<{}, {}>;
+  rowSections: Map<any, any>;
+  sectionCounts: number[];
 
   _count: number = 0;
   _rows: any[];
@@ -788,6 +806,49 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     // get ref to elm for measuring
     this.element = element.nativeElement;
     this.rowDiffer = differs.find({}).create(null);
+  }
+
+  /**
+   * Scrolls to a specific row id (default id is the row object).
+   * If the row is in a section that is not expanded that section will be expanded.
+   *
+   * @param rowId
+   */
+  scrollToRow(rowId: any): void {
+    if (this.scrollbarV) {
+
+      // if sections enabled
+      if (this.sectionProp) {
+
+        // lookup row index from full row set
+        const rowIndex = this._unsectionedRows.findIndex((r) => {
+          return this.rowIdentity(r) === rowId;
+        });
+        const sectionId = this.rowSections.get(this._unsectionedRows[rowIndex]);
+
+        // if we found a section containing the row
+        if (sectionId) {
+          const section = this.sections[sectionId];
+
+          // if the section is collapsed
+          if (!section.expanded) {
+
+            // expand the section first
+            this.sections[sectionId].expanded = true;
+            this.sectionRows();
+
+            // do scroll on next cycle
+            setTimeout(() => {
+              this.bodyComponent.scrollToRow(rowId);
+            }, 0);
+          } else {
+            this.bodyComponent.scrollToRow(rowId);
+          }
+        }
+      } else {
+        this.bodyComponent.scrollToRow(rowId);
+      }
+    }
   }
 
   /**
@@ -811,7 +872,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    */
   ngAfterViewInit(): void {
     if (!this.externalSorting) {
-      this._internalRows = sortRows(this._rows, this.columns, this.sorts);
+      this._internalRows = sortRows(this._rows, this.columns, this.sorts, this.rowSections);
     }
 
     // this has to be done to prevent the change detection
@@ -865,7 +926,8 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    */
   sectionRows() {
     if (this._sectionProp) {
-      this._rows = sectionRows(this._unsectionedRows, this._sectionProp, this.sections);
+      ({ rows: this._rows, rowSections: this.rowSections, sectionCounts: this.sectionCounts } =
+        sectionRows(this._unsectionedRows, this._sectionProp, this.sections));
     }
   }
 
@@ -930,6 +992,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   recalculatePages(): void {
     this.pageSize = this.calcPageSize();
     this.rowCount = this.calcRowCount();
+    this.recordRowCount = this.calcRecordRowCount();
   }
 
   /**
@@ -1020,6 +1083,15 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     if (!this.externalPaging) {
       if (!val) return 0;
       return val.length;
+    }
+
+    return this.count;
+  }
+
+  calcRecordRowCount(val: any[] = this.rows): number {
+    if (!this.externalPaging) {
+      if (!val) return 0;
+      return this._unsectionedRows ? this._unsectionedRows.length : val.length;
     }
 
     return this.count;
@@ -1124,7 +1196,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     // the rows again on the 'push' detection...
     if (this.externalSorting === false) {
       // don't use normal setter so we don't resort
-      this._internalRows = sortRows(this.rows, this.columns, sorts);
+      this._internalRows = sortRows(this.rows, this.columns, sorts, this.rowSections);
     }
 
     this.sorts = sorts;

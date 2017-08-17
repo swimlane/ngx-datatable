@@ -17,6 +17,11 @@ export interface Section {
    * @memberOf Section
    */
   title?: string;
+
+  /**
+   * True if section is expanded displaying
+   */
+  expanded?: boolean;
 }
 
 

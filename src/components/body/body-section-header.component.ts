@@ -1,60 +1,46 @@
 import {
-  Component, Input, HostBinding, ElementRef, Output, EventEmitter, HostListener, TemplateRef
+  Component, Input, HostBinding, ElementRef, Output,
+  EventEmitter, HostListener, TemplateRef, ChangeDetectionStrategy
 } from '@angular/core';
 
-import {
-  columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys
-} from '../../utils';
-import { ScrollbarHelper } from '../../services';
-import { mouseEvent, keyboardEvent } from '../../events';
+import { Keys, columnsTotalWidth } from '../../utils';
 
 @Component({
   selector: 'datatable-body-section-header',
   template: `
-
-    <div
-      [style.height.px]="sectionHeaderHeight">
-      <ng-template
-        *ngIf="sectionHeaderTemplate"
-        [ngTemplateOutlet]="sectionHeaderTemplate.template"
-        [ngOutletContext]="{
-          section: row,
-          expanded: expanded,
-          isSelected: isSelected
-        }">
-      </ng-template>
-      <div *ngIf="!sectionHeaderTemplate">
-        {{row.title}}
-      </div>
+    <ng-template
+      *ngIf="sectionHeaderTemplate"
+      [ngTemplateOutlet]="sectionHeaderTemplate.template"
+      [ngOutletContext]="{
+        section: row,
+        expanded: expanded,
+        isSelected: isSelected,
+        sectionCount: sectionCount
+      }">
+    </ng-template>
+    <div *ngIf="!sectionHeaderTemplate">
+      {{row.title}}
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataTableBodySectionHeaderComponent {
 
   @Input() set columns(val: any[]) {
     this._columns = val;
-    this.recalculateColumns(val);
+    this._calculatedWidth = columnsTotalWidth(val);
   }
 
   get columns(): any[] {
     return this._columns;
   }
 
-  @Input() set innerWidth(val: number) {
-    this._innerWidth = val;
-    this.recalculateColumns();
-  }
-
-  get innerWidth(): number {
-    return this._innerWidth;
-  }
-
   @Input() expanded: boolean;
   @Input() rowClass: any;
   @Input() row: any;
-  @Input() offsetX: number;
   @Input() isSelected: boolean;
   @Input() rowIndex: number;
+  @Input() sectionCount: number;
 
   @Input() sectionHeaderTemplate: TemplateRef<any>;
 
@@ -83,56 +69,36 @@ export class DataTableBodySectionHeaderComponent {
   @HostBinding('style.height.px')
   @Input() sectionHeaderHeight: number;
 
-  @HostBinding('style.width.px')
-  get columnsTotalWidths(): string {
-    return this.columnGroupWidths.total;
-  }
-
   @Output() activate: EventEmitter<any> = new EventEmitter();
 
   element: any;
-  columnGroupWidths: any;
-  columnsByPin: any;
   _columns: any[];
-  _innerWidth: number;
 
-  constructor(private scrollbarHelper: ScrollbarHelper, element: ElementRef) {
+  @HostBinding('style.width.px')
+  _calculatedWidth: number;
+
+  constructor(element: ElementRef) {
     this.element = element.nativeElement;
   }
 
-  trackByGroups(index: number, colGroup: any): any {
-    return colGroup.type;
+  @HostListener('click', ['$event'])
+  onClick(event: MouseEvent): void {
+    this.activate.emit({
+      type: 'click',
+      event,
+      row: this.row,
+      rowElement: this.element
+    });
   }
 
-  columnTrackingFn(index: number, column: any): any {
-    return column.$$id;
-  }
-
-  stylesByGroup(group: string) {
-    const widths = this.columnGroupWidths;
-    const offsetX = this.offsetX;
-
-    const styles = {
-      width: `${widths[group]}px`
-    };
-
-    if (group === 'left') {
-      translateXY(styles, offsetX, 0);
-    } else if (group === 'right') {
-      const bodyWidth = parseInt(this.innerWidth + '', 0);
-      const totalDiff = widths.total - bodyWidth;
-      const offsetDiff = totalDiff - offsetX;
-      const offset = (offsetDiff + this.scrollbarHelper.width) * -1;
-      translateXY(styles, offset, 0);
-    }
-
-    return styles;
-  }
-
-  onActivate(event: any, index: number) {
-    event.cellIndex = index;
-    event.rowElement = this.element;
-    this.activate.emit(event);
+  @HostListener('dblclick', ['$event'])
+  onDblClick(event: MouseEvent): void {
+    this.activate.emit({
+      type: 'dblclick',
+      event,
+      row: this.row,
+      rowElement: this.element
+    });
   }
 
   @HostListener('keydown', ['$event'])
@@ -159,11 +125,4 @@ export class DataTableBodySectionHeaderComponent {
       });
     }
   }
-
-  recalculateColumns(val: any[] = this.columns): void {
-    const colsByPin = columnsByPin(val);
-    this.columnsByPin = columnsByPinArr(val);
-    this.columnGroupWidths = columnGroupWidths(colsByPin, val);
-  }
-
 }

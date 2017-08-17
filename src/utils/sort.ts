@@ -63,7 +63,7 @@ export function orderByComparator(a: any, b: any): number {
  * @param {any[]} dirs
  * @returns
  */
-export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[] {
+export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[], rowSections: Map<any, any>): any[] {
   if(!rows) return [];
   if(!dirs || !dirs.length || !columns) return [...rows];
 
@@ -91,8 +91,10 @@ export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[
 
     // Maintain sectioning of rows independently of the sort.
     // Rows will sort within their sections.
-    if (a.$$sectionIndex !== b.$$sectionIndex) {
-      return +a.$$sectionIndex < +b.$$sectionIndex ? -1 : 1;
+    const aSection = rowSections.get(a) || a.$$sectionIndex;
+    const bSection = rowSections.get(b) || b.$$sectionIndex;
+    if (aSection !== bSection) {
+      return +aSection < +bSection ? -1 : 1;
     } else if (a.$$isSectionHeader || b.$$isSectionHeader) {
       return a.$$isSectionHeader ? -1 : 1;
     }
