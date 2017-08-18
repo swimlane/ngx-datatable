@@ -17,7 +17,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
   differ: any;
 
   constructor(differs: KeyValueDiffers, @Inject(DOCUMENT) private document: any) {
-    this.differ = differs.find({}).create(null);
+    this.differ = differs.find({}).create();
   }
 
   ngAfterContentInit(): void {
