@@ -10,7 +10,7 @@ import { Component, Output, EventEmitter, ChangeDetectionStrategy, Input, Templa
       <ng-template
         *ngIf="footerTemplate"
         [ngTemplateOutlet]="footerTemplate.template"
-        [ngOutletContext]="{ 
+        [ngTemplateOutletContext]="{ 
           rowCount: rowCount, 
           pageSize: pageSize, 
           selectedCount: selectedCount,
