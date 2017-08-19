@@ -103,7 +103,7 @@ export class DataTableBodyRowComponent implements DoCheck {
     private scrollbarHelper: ScrollbarHelper, 
     private cd: ChangeDetectorRef, element: ElementRef) {
     this.element = element.nativeElement;
-    this.rowDiffer = differs.find({}).create(null);
+    this.rowDiffer = differs.find({}).create();
   }
 
   ngDoCheck(): void {
