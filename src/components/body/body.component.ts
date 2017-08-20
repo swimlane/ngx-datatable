@@ -1,5 +1,6 @@
 import {
-  Component, Output, EventEmitter, Input, HostBinding, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy
+  Component, Output, EventEmitter, Input, HostBinding, ChangeDetectorRef,
+  ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy
 } from '@angular/core';
 import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '../../utils';
 import { SelectionType } from '../../types';
@@ -204,7 +205,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   /**
    * Creates an instance of DataTableBodyComponent.
    */
-  constructor() {
+  constructor(private cd: ChangeDetectorRef) {
     // declare fn here so we can get access to the `this` property
     this.rowTrackingFn = function(index: number, row: any): any {
       const idx = this.rowIndexes.get(row);
@@ -231,6 +232,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
           // Fixes #883
           this.updateIndexes();
           this.updateRows();
+          this.cd.markForCheck();
         });
     }
   }
