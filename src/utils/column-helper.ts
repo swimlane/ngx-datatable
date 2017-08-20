@@ -6,10 +6,6 @@ import { getterForProp } from './column-prop-getters';
 
 /**
  * Sets the column defaults
- * 
- * @export
- * @param {any[]} columns
- * @returns
  */
 export function setColumnDefaults(columns: TableColumn[]) {
   if(!columns) return;
@@ -58,10 +54,6 @@ export function setColumnDefaults(columns: TableColumn[]) {
 
 /**
  * Translates templates definitions to objects
- * 
- * @export
- * @param {DataTableColumnDirective[]} templates
- * @returns {any[]}
  */
 export function translateTemplates(templates: DataTableColumnDirective[]): any[] {
   const result: any[] = [];

@@ -168,10 +168,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   /**
    * Returns if selection is enabled.
-   *
-   * @readonly
-   * @type {boolean}
-   * @memberOf DataTableBodyComponent
    */
   get selectEnabled(): boolean {
     return !!this.selectionType;
@@ -181,10 +177,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * Property that would calculate the height of scroll bar
    * based on the row heights cache for virtual scroll. Other scenarios
    * calculate scroll height automatically (as height will be undefined).
-   *
-   * @readonly
-   * @type {number}
-   * @memberOf DataTableBodyComponent
    */
   get scrollHeight(): number {
     if (this.scrollbarV) {
@@ -211,8 +203,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   /**
    * Creates an instance of DataTableBodyComponent.
-   *
-   * @memberOf DataTableBodyComponent
    */
   constructor() {
     // declare fn here so we can get access to the `this` property
@@ -229,8 +219,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   /**
    * Called after the constructor, initializing input properties
-   *
-   * @memberOf DataTableBodyComponent
    */
   ngOnInit(): void {
     if (this.rowDetail) {
@@ -249,8 +237,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   /**
    * Called once, before the instance is destroyed.
-   *
-   * @memberOf DataTableBodyComponent
    */
   ngOnDestroy(): void {
     if (this.rowDetail) this.listener.unsubscribe();
@@ -258,10 +244,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   /**
    * Updates the Y offset given a new offset.
-   *
-   * @param {number} [offset]
-   *
-   * @memberOf DataTableBodyComponent
    */
   updateOffsetY(offset?: number): void {
     // scroller is missing on empty table
@@ -279,10 +261,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   /**
    * Body was scrolled, this is mainly useful for
    * when a user is server-side pagination via virtual scroll.
-   *
-   * @param {*} event
-   *
-   * @memberOf DataTableBodyComponent
    */
   onBodyScroll(event: any): void {
     const scrollYPos: number = event.scrollYPos;
@@ -307,10 +285,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   /**
    * Updates the page given a direction.
-   *
-   * @param {string} direction
-   *
-   * @memberOf DataTableBodyComponent
    */
   updatePage(direction: string): void {
     let offset = this.indexes.first / this.pageSize;
@@ -328,8 +302,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   /**
    * Updates the rows in the view port
-   *
-   * @memberOf DataTableBodyComponent
    */
   updateRows(): void {
     const { first, last } = this.indexes;
@@ -356,11 +328,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   /**
    * Get the row height
-   *
-   * @param {*} row
-   * @returns {number}
-   *
-   * @memberOf DataTableBodyComponent
    */
   getRowHeight(row: any): number {
     let rowHeight = this.rowHeight;
@@ -375,11 +342,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   /**
    * Calculate row height based on the expanded state of the row.
-   *
-   * @param {*} row the row for which the height need to be calculated.
-   * @returns {number} height of the row.
-   *
-   * @memberOf DataTableBodyComponent
    */
   getRowAndDetailHeight(row: any): number {
     let rowHeight = this.getRowHeight(row);
@@ -395,12 +357,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   /**
    * Get the height of the detail row.
-   *
-   * @param {*} [row]
-   * @param {*} [index]
-   * @returns {number}
-   *
-   * @memberOf DataTableBodyComponent
    */
   getDetailRowHeight = (row?: any, index?: any): number => {
     if (!this.rowDetail) return 0;
@@ -422,11 +378,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * be able to determine which row is of what height before hand.  In the above
    * case the positionY of the translate3d for row2 would be the sum of all the
    * heights of the rows before it (i.e. row0 and row1).
-   *
-   * @param {*} row The row that needs to be placed in the 2D space.
-   * @returns {*} Returns the CSS3 style to be applied
-   *
-   * @memberOf DataTableBodyComponent
    */
   getRowsStyles(row: any): any {
     const rowHeight = this.getRowAndDetailHeight(row);
@@ -451,9 +402,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   /**
    * Hides the loading indicator
-   *
-   *
-   * @memberOf DataTableBodyComponent
    */
   hideIndicator(): void {
     setTimeout(() => this.loadingIndicator = false, 500);
@@ -461,8 +409,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   /**
    * Updates the index of the rows in the viewport
-   *
-   * @memberOf DataTableBodyComponent
    */
   updateIndexes(): void {
     let first = 0;
@@ -490,10 +436,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   /**
    * Refreshes the full Row Height cache.  Should be used
    * when the entire row array state has changed.
-   *
-   * @returns {void}
-   *
-   * @memberOf DataTableBodyComponent
    */
   refreshRowHeightCache(): void {
     if (!this.scrollbarV) return;
@@ -519,10 +461,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   /**
    * Gets the index for the view port
-   *
-   * @returns {number}
-   *
-   * @memberOf DataTableBodyComponent
    */
   getAdjustedViewPortIndex(): number {
     // Capture the row index of the first row that is visible on the viewport.
@@ -543,10 +481,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * collapse and vice versa.   Note that the expanded status is stored as
    * a part of the row object itself as we have to preserve the expanded row
    * status in case of sorting and filtering of the row set.
-   *
-   * @param {*} row The row for which the expansion needs to be toggled.
-   *
-   * @memberOf DataTableBodyComponent
    */
   toggleRowExpansion(row: any): void {
     // Capture the row index of the first row that is visible on the viewport.
@@ -572,10 +506,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   /**
    * Expand/Collapse all the rows no matter what their state is.
-   *
-   * @param {boolean} expanded When true, all rows are expanded and when false, all rows will be collapsed.
-   *
-   * @memberOf DataTableBodyComponent
    */
   toggleAllRows(expanded: boolean): void {
     // clear prev expansions
@@ -604,8 +534,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   /**
    * Recalculates the table
-   *
-   * @memberOf DataTableBodyComponent
    */
   recalcLayout(): void {
     this.refreshRowHeightCache();
@@ -615,10 +543,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   /**
    * Returns if the row was expanded
-   * 
-   * @param {*} row 
-   * @returns {boolean} 
-   * @memberof DataTableBodyComponent
    */
   getRowExpanded(row: any): boolean {
     const expanded = this.rowExpansions.get(row);
@@ -627,10 +551,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   /**
    * Gets the row index of the item
-   * 
-   * @param {*} row 
-   * @returns {number} 
-   * @memberof DataTableBodyComponent
    */
   getRowIndex(row: any): number {
     return this.rowIndexes.get(row);

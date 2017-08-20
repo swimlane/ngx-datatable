@@ -2,9 +2,6 @@ import { SortType, SortDirection, SortPropDir } from '../types';
 import { getterForProp } from './column-prop-getters';
 /**
  * Gets the next sort direction
- * @param  {SortType}      sortType
- * @param  {SortDirection} currentSort
- * @return {SortDirection}
  */
 export function nextSortDir(sortType: SortType, current: SortDirection): SortDirection {
   if (sortType === SortType.single) {
@@ -27,9 +24,6 @@ export function nextSortDir(sortType: SortType, current: SortDirection): SortDir
 /**
  * Adapted from fueld-ui on 6/216
  * https://github.com/FuelInteractive/fuel-ui/tree/master/src/pipes/OrderBy
- * @param  {any}    a
- * @param  {any}    b
- * @return {number} position
  */
 export function orderByComparator(a: any, b: any): number {
   if (a === null || typeof a === 'undefined') a = 0;
@@ -56,12 +50,6 @@ export function orderByComparator(a: any, b: any): number {
 
 /**
  * Sorts the rows
- * 
- * @export
- * @param {any[]} rows
- * @param {any[]} columns
- * @param {any[]} dirs
- * @returns
  */
 export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[] {
   if(!rows) return [];

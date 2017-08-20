@@ -2,7 +2,6 @@ import { columnsByPin, columnsTotalWidth } from './column';
 
 /**
  * Calculates the Total Flex Grow
- * @param {array}
  */
 export function getTotalFlexGrow(columns: any[]) {
   let totalFlexGrow = 0;
@@ -17,8 +16,6 @@ export function getTotalFlexGrow(columns: any[]) {
 /**
  * Adjusts the column widths.
  * Inspired by: https://github.com/facebook/fixed-data-table/blob/master/src/FixedDataTableWidthHelper.js
- * @param {array} all columns
- * @param {int} width
  */
 export function adjustColumnWidths(allColumns: any, expectedWidth: any) {
   const columnsWidth = columnsTotalWidth(allColumns);
@@ -32,9 +29,6 @@ export function adjustColumnWidths(allColumns: any, expectedWidth: any) {
 
 /**
  * Resizes columns based on the flexGrow property, while respecting manually set widths
- * @param {array} colsByGroup
- * @param {int} maxWidth
- * @param {int} totalFlexGrow
  */
 function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
   // calculate total width and flexgrow points for coulumns that can be resized
@@ -93,12 +87,6 @@ function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
  *
  *  - If the grid starts off small but then becomes greater than the size ( + / - )
  *    the width should use the original width; not the newly proportioned widths.
- *
- * @param {array} allColumns
- * @param {int} expectedWidth
- * @param {int} startIdx
- * @param {boolean} allowBleed
- * @param {int} defaultColWidth
  */
 export function forceFillColumnWidths(
   allColumns: any[],
@@ -158,9 +146,6 @@ export function forceFillColumnWidths(
 
 /**
  * Remove the processed columns from the current active columns.
- *
- * @param columnsToResize  Array containing the columns that need to be resized.
- * @param columnsProcessed Array containing the columns that have already been processed.
  */
 function removeProcessedColumns(columnsToResize: any[], columnsProcessed: any[]) {
   for(const column of columnsProcessed) {
@@ -171,10 +156,6 @@ function removeProcessedColumns(columnsToResize: any[], columnsProcessed: any[])
 
 /**
  * Gets the width of the columns
- *
- * @param {array} allColumns
- * @param {number} [defaultColWidth=300]
- * @returns {number}
  */
 function getContentWidth(allColumns: any, defaultColWidth: number = 300): number {
   let contentWidth = 0;
