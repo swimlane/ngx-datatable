@@ -31,7 +31,7 @@ import { mouseEvent } from '../events';
         [scrollbarH]="scrollbarH"
         [innerWidth]="innerWidth"
         [offsetX]="offsetX"
-        [columns]="columns"
+        [columns]="_internalColumns"
         [headerHeight]="headerHeight"
         [reorderable]="reorderable"
         [sortAscendingIcon]="cssClasses.sortAscending"
@@ -54,7 +54,7 @@ import { mouseEvent } from '../events';
         [rowCount]="rowCount"
         [offset]="offset"
         [trackByProp]="trackByProp"
-        [columns]="columns"
+        [columns]="_internalColumns"
         [pageSize]="pageSize"
         [offsetX]="offsetX"
         [rowDetail]="rowDetail"
@@ -107,7 +107,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     
     // auto sort on new updates
     if (!this.externalSorting) {
-      this._internalRows = sortRows(val, this.columns, this.sorts);
+      this._internalRows = sortRows(val, this._internalColumns, this.sorts);
     } else {
       this._internalRows = [...val];
     }
@@ -129,8 +129,9 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    */
   @Input() set columns(val: TableColumn[]) {
     if (val) {
-      setColumnDefaults(val);
-      this.recalculateColumns(val);
+      this._internalColumns = [...val];
+      setColumnDefaults(this._internalColumns);
+      this.recalculateColumns();
     }
 
     this._columns = val;
@@ -470,7 +471,9 @@ export class DatatableComponent implements OnInit, AfterViewInit {
 
       if (arr.length) {
         // translate them to normal objects
-        this.columns = translateTemplates(arr);
+        this._internalColumns = translateTemplates(arr);
+        setColumnDefaults(this._internalColumns);
+        this.recalculateColumns();
       }
     }
   }
@@ -522,6 +525,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   _count: number = 0;
   _rows: any[];
   _internalRows: any[];
+  _internalColumns: TableColumn[];
   _columns: TableColumn[];
   _columnTemplates: QueryList<DataTableColumnDirective>;
 
@@ -553,7 +557,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    */
   ngAfterViewInit(): void {
     if (!this.externalSorting) {
-      this._internalRows = sortRows(this._rows, this.columns, this.sorts);
+      this._internalRows = sortRows(this._rows, this._internalColumns, this.sorts);
     }
 
     // this has to be done to prevent the change detection
@@ -603,7 +607,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * distribution mode and scrollbar offsets.
    */
   recalculateColumns(
-    columns: any[] = this.columns,
+    columns: any[] = this._internalColumns,
     forceIdx: number = -1,
     allowBleed: boolean = this.scrollbarH): any[] {
 
@@ -745,7 +749,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     }
 
     let idx: number;
-    const cols = this.columns.map((c, i) => {
+    const cols = this._internalColumns.map((c, i) => {
       c = { ...c };
 
       if (c.$$id === column.$$id) {
@@ -761,7 +765,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     });
 
     this.recalculateColumns(cols, idx);
-    this._columns = cols;
+    this._internalColumns = cols;
 
     this.resize.emit({
       column,
@@ -773,7 +777,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * The header triggered a column re-order event.
    */
   onColumnReorder({ column, newValue, prevValue }: any): void {
-    const cols = this.columns.map(c => {
+    const cols = this._internalColumns.map(c => {
       return { ...c };
     });
 
@@ -781,7 +785,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     cols[newValue] = column;
     cols[prevValue] = prevCol;
 
-    this.columns = cols;
+    this._internalColumns = cols;
 
     this.reorder.emit({
       column,
@@ -800,7 +804,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     // the rows again on the 'push' detection...
     if (this.externalSorting === false) {
       // don't use normal setter so we don't resort
-      this._internalRows = sortRows(this.rows, this.columns, sorts);
+      this._internalRows = sortRows(this.rows, this._internalColumns, sorts);
     }
 
     this.sorts = sorts;
