@@ -577,6 +577,23 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     }
     */
 
+/*
+    if (this.groupedRows)
+    {      
+      if (rows.value){
+        for (var index = 0; index < rows.value.length; index++) {
+          rowHeight += this.getRowAndDetailHeight(rows.value[index]);     
+        }
+        this.rowHeight = rowHeight;
+        //console.log('rowHeight', rowHeight);
+      }  
+      else{
+        //this.rowHeight += this.getRowAndDetailHeight(rows);
+      }
+
+    }
+*/
+
     //only add styles for the group if there is a group
     if (this.groupedRows){
       if (this.customGroupStyle){

@@ -91,6 +91,27 @@ export class DataTableBodyRowComponent implements DoCheck {
   @HostBinding('style.height.px')
   @Input() rowHeight: number;
 
+  /*
+  _groupHeight: string;
+  @Input() set groupHeight(val: string){
+    this._groupHeight = val;
+  }
+
+  get groupHeight(): string{
+    return this._groupHeight
+  }
+
+  @HostBinding('style.height.px')
+  get rowHeight(): string{
+    if (!this.group){
+    return this._groupHeight
+    }
+    else{
+      return 'auto'
+    }
+  }
+*/
+
   @HostBinding('style.width.px')
   get columnsTotalWidths(): string {
     return this.columnGroupWidths.total;
@@ -128,7 +149,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   columnTrackingFn(index: number, column: any): any {
     return column.$$id;
   }
-  
+
   stylesByGroup(group: string) {
     const widths = this.columnGroupWidths;
     const offsetX = this.offsetX;

@@ -3,13 +3,13 @@ import {Observable} from "rxjs";
 import {PagedData} from "./model/paged-data";
 import {CorporateEmployee} from "./model/corporate-employee";
 import {Page} from "./model/page";
-const companyData = require('../../assets/data/company.json');
+const companyData = require('../../assets/data/forRowGrouping.json');
 
 /**
  * A server used to mock a paged data result from a server
  */
 @Injectable()
-export class MockServerResultsService {
+export class MockServerResultsRowGroupingService {
 
     /**
      * A method that mocks a paged server response

@@ -832,6 +832,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     let i: number=0;
     originalArray.forEach((item) => {
         const key = item[groupBy];
+        //TODO: This $$index potentially needs to be replaced with rowIndex
         item.$$index = i;
 
         if (!map.has(key)) {

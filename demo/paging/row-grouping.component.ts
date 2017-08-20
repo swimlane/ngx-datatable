@@ -1,28 +1,9 @@
 import { Component } from '@angular/core';
+import { NgStyle } from '@angular/common';
 
 @Component({
   selector: 'row-grouping-demo',
   template: `
-    <script>
-
-    function checkGroupCheckBoxes(group) {
-      var values = [];
-      var vehicles = document.getElementByName(group);
-
-      alert(vehicles.length)
-      /*
-      for (var i=0, iLen=vehicles.length; i<iLen; i++) {
-        if (vehicles[i].checked) {
-          values.push(vehicles[i].value);
-        }
-      }
-      // Do something with values
-      alert("Vehicles: " + values.join(', '));
-      return values;
-      */
-    }
-
-    </script>
     <div>
       <h3>
         Row Grouping
@@ -41,17 +22,18 @@ import { Component } from '@angular/core';
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="50"
+        [customGroupStyle]="{'border-bottom': '1px solid black'}"
 
         [limit]="3">
 
         <ngx-datatable-column name="Exp. Pay." prop="" editable="true" frozenLeft="True">
-          <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-group="group">
-              <input type="checkbox" id="ep1{{row.$$index}}" name="{{row.$$index}}" value="0" class="expectedpayment" (change)="checkGroup($event, row, group)" [checked]="row.exppayyes===1">
-              <label for="ep1{{row.$$index}}"></label>
-              <input type="checkbox" id="ep2{{row.$$index}}" name="{{row.$$index}}" value="1" class="expectedpayment2" (change)="checkGroup($event, row, group)" [checked]="row.exppayno===1">
-              <label for="ep2{{row.$$index}}"></label>
-              <input type="checkbox" id="ep3{{row.$$index}}" name="{{row.$$index}}" value="2" class="expectedpayment3" (change)="checkGroup($event, row, group)" [checked]="row.exppaypending===1">
-              <label for="ep3{{row.$$index}}"></label>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" let-group="group">
+              <input type="checkbox" id="ep1{{rowIndex}}" name="{{rowIndex}}" value="0" class="expectedpayment" (change)="checkGroup($event, row, group)" [checked]="row.exppayyes===1">
+              <label for="ep1{{rowIndex}}"></label>
+              <input type="checkbox" id="ep2{{rowIndex}}" name="{{rowIndex}}" value="1" class="expectedpayment2" (change)="checkGroup($event, row, group)" [checked]="row.exppayno===1">
+              <label for="ep2{{rowIndex}}"></label>
+              <input type="checkbox" id="ep3{{rowIndex}}" name="{{rowIndex}}" value="2" class="expectedpayment3" (change)="checkGroup($event, row, group)" [checked]="row.exppaypending===1">
+              <label for="ep3{{rowIndex}}"></label>
           </ng-template>                    
         </ngx-datatable-column>
 
@@ -61,17 +43,18 @@ import { Component } from '@angular/core';
         <ngx-datatable-column name="Age" prop="age"></ngx-datatable-column>
         <ngx-datatable-column name="Comment" prop="comment"></ngx-datatable-column>
         <ngx-datatable-column name="Group Comment" prop="groupcomment" isGroup="true">
-          <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" let-group="group" let-rowHeight="rowHeight">
             <span
               title="Double click to edit"
-              (dblclick)="editing[row.$$index + '-groupcomment'] = true"
-              *ngIf="!editing[row.$$index + '-groupcomment']">
+              (dblclick)="editing[rowIndex + '-groupcomment'] = true"
+              *ngIf="!editing[rowIndex + '-groupcomment']">
               {{value}}
             </span>
-            <textarea style="height: 100%; width: 100%"
+            <textarea 
+              *ngIf="editing[rowIndex + '-groupcomment']" 
               autofocus
-              (blur)="updateValue($event, 'groupcomment', value, row)"
-              *ngIf="editing[row.$$index + '-groupcomment']"
+              [ngStyle]="getGroupRowHeight(group, rowHeight)"
+              (blur)="updateValue($event, 'groupcomment', rowIndex)"
               [value]="value">
             </textarea>
           </ng-template>        
@@ -95,21 +78,6 @@ import { Component } from '@angular/core';
   `
 })
 export class RowGroupingComponent {
-
-//[disabled]="exppay1Disable($event, )"
-
-/*
-            <input
-              autofocus
-              (blur)="updateValue($event, 'groupcomment', value, row)"
-              *ngIf="editing[row.$$index + '-groupcomment']"
-              type="text"
-              [value]="value"
-            />
-*/
-
-//        [columns]="[{name:'Name'},{name:'Gender'},{name:'Age'},{name:'comment'},{name:'groupcomment'}]"
-
   funder = []
   calculated = []
   pending = []
@@ -137,6 +105,14 @@ export class RowGroupingComponent {
     req.send();
   }
 
+  getGroupRowHeight(group, rowHeight){
+    var style={};
+    console.log('rowHeight', rowHeight)
+    style = {height: rowHeight + 'px'}
+
+    return style;
+  }
+
   checkGroup(event, row, group){
 
       var groupStatus: string = "Pending";
@@ -157,23 +133,17 @@ export class RowGroupingComponent {
           row.exppaypending=1
         }
 
-
-      //console.log('filtered', group.filter(row => row.source==='Calculated'))      
-
-    //console.log('row exp pay 0', group[0].exppayyes, group[0].exppayno, group[0].exppaypending)
-    //console.log('row exp pay 1', group[1].exppayyes, group[1].exppayno, group[1].exppaypending)
-
     if (group.length===2){ //There are only 2 lines in a group
-      //console.log(["Calculated", "Funder"].indexOf(group[0].source))
-      //console.log(["Calculated", "Funder"].indexOf(group[1].source))
       if (["Calculated", "Funder"].indexOf(group[0].source)>-1 && ["Calculated", "Funder"].indexOf(group[1].source)>-1){ //Sources are funder and calculated
         if (group[0].startdate === group[1].startdate && group[0].enddate === group[1].enddate){ //Start dates and end dates match
           for (var index = 0; index < group.length; index++) {
-            if (group[index].$$index == row.$$index){
+            console.log('group[index].$$index', group[index].$$index)
+            console.log('row.$$index', row.$$index)
+            if (group[index].$$index === row.$$index){
               console.log('here first');            
             }
             else{
-              if (event.target.value==0){ //expected payment yes selected
+              if (event.target.value==='0'){ //expected payment yes selected
                 group[index].exppayyes=0;
                 group[index].exppaypending=0;
                 group[index].exppayno=1;
@@ -226,28 +196,17 @@ export class RowGroupingComponent {
 
     console.log('group', group);
 
-  console.log('group.length', group.length)
-
-  console.log('event.target.value', event.target.value)
-
-    /*
-    for (var index = 0; index < group.length; index++) {
-      var element = group[index];
-      
-    }
     console.log('group.length', group.length)
-    
-    
-    console.log('event.target.name', event.target.name)
-    console.log('event.target.id', event.target.id)
-    console.log('event.target.checked', event.target.checked)
-    */
-    
+
+    console.log('event.target.value', event.target.value)    
   }
 
-  updateValue(event, cell, cellValue, row) {
-    this.editing[row.$$index + '-' + cell] = false;
-    this.rows[row.$$index][cell] = event.target.value;
+  updateValue(event, cell, rowIndex) {
+    this.editing[rowIndex + '-' + cell] = false;
+    console.log('rowIndex', rowIndex)
+    console.log('this.rows[rowIndex]', this.rows[rowIndex])
+    this.rows[rowIndex][cell] = event.target.value;
+    this.rows = [...this.rows];
   }
 
 }
