@@ -1,4 +1,4 @@
 export declare enum ClickType {
-    single,
-    double,
+    single = "single",
+    double = "double",
 }

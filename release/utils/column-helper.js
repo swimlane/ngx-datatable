@@ -5,10 +5,6 @@ var id_1 = require("./id");
 var column_prop_getters_1 = require("./column-prop-getters");
 /**
  * Sets the column defaults
- *
- * @export
- * @param {any[]} columns
- * @returns
  */
 function setColumnDefaults(columns) {
     if (!columns)
@@ -50,10 +46,6 @@ function setColumnDefaults(columns) {
 exports.setColumnDefaults = setColumnDefaults;
 /**
  * Translates templates definitions to objects
- *
- * @export
- * @param {DataTableColumnDirective[]} templates
- * @returns {any[]}
  */
 function translateTemplates(templates) {
     var result = [];

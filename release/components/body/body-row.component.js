@@ -4,10 +4,13 @@ var core_1 = require("@angular/core");
 var utils_1 = require("../../utils");
 var services_1 = require("../../services");
 var DataTableBodyRowComponent = (function () {
-    function DataTableBodyRowComponent(scrollbarHelper, element) {
+    function DataTableBodyRowComponent(differs, scrollbarHelper, cd, element) {
+        this.differs = differs;
         this.scrollbarHelper = scrollbarHelper;
+        this.cd = cd;
         this.activate = new core_1.EventEmitter();
         this.element = element.nativeElement;
+        this.rowDiffer = differs.find({}).create();
     }
     Object.defineProperty(DataTableBodyRowComponent.prototype, "columns", {
         get: function () {
@@ -66,6 +69,11 @@ var DataTableBodyRowComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    DataTableBodyRowComponent.prototype.ngDoCheck = function () {
+        if (this.rowDiffer.diff(this.row)) {
+            this.cd.markForCheck();
+        }
+    };
     DataTableBodyRowComponent.prototype.trackByGroups = function (index, colGroup) {
         return colGroup.type;
     };
@@ -114,6 +122,14 @@ var DataTableBodyRowComponent = (function () {
             });
         }
     };
+    DataTableBodyRowComponent.prototype.onMouseenter = function (event) {
+        this.activate.emit({
+            type: 'mouseenter',
+            event: event,
+            row: this.row,
+            rowElement: this.element
+        });
+    };
     DataTableBodyRowComponent.prototype.recalculateColumns = function (val) {
         if (val === void 0) { val = this.columns; }
         var colsByPin = utils_1.columnsByPin(val);
@@ -129,7 +145,9 @@ var DataTableBodyRowComponent = (function () {
     ];
     /** @nocollapse */
     DataTableBodyRowComponent.ctorParameters = function () { return [
+        { type: core_1.KeyValueDiffers, },
         { type: services_1.ScrollbarHelper, },
+        { type: core_1.ChangeDetectorRef, },
         { type: core_1.ElementRef, },
     ]; };
     DataTableBodyRowComponent.propDecorators = {
@@ -146,6 +164,7 @@ var DataTableBodyRowComponent = (function () {
         'columnsTotalWidths': [{ type: core_1.HostBinding, args: ['style.width.px',] },],
         'activate': [{ type: core_1.Output },],
         'onKeyDown': [{ type: core_1.HostListener, args: ['keydown', ['$event'],] },],
+        'onMouseenter': [{ type: core_1.HostListener, args: ['mouseenter', ['$event'],] },],
     };
     return DataTableBodyRowComponent;
 }());

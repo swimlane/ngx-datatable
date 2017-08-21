@@ -6,11 +6,10 @@ var scroller_component_1 = require("./scroller.component");
 var DataTableBodyComponent = (function () {
     /**
      * Creates an instance of DataTableBodyComponent.
-     *
-     * @memberOf DataTableBodyComponent
      */
-    function DataTableBodyComponent() {
+    function DataTableBodyComponent(cd) {
         var _this = this;
+        this.cd = cd;
         this.selected = [];
         this.scroll = new core_1.EventEmitter();
         this.page = new core_1.EventEmitter();
@@ -26,12 +25,6 @@ var DataTableBodyComponent = (function () {
         this.rowExpansions = new Map();
         /**
          * Get the height of the detail row.
-         *
-         * @param {*} [row]
-         * @param {*} [index]
-         * @returns {number}
-         *
-         * @memberOf DataTableBodyComponent
          */
         this.getDetailRowHeight = function (row, index) {
             if (!_this.rowDetail)
@@ -138,10 +131,6 @@ var DataTableBodyComponent = (function () {
     Object.defineProperty(DataTableBodyComponent.prototype, "selectEnabled", {
         /**
          * Returns if selection is enabled.
-         *
-         * @readonly
-         * @type {boolean}
-         * @memberOf DataTableBodyComponent
          */
         get: function () {
             return !!this.selectionType;
@@ -154,10 +143,6 @@ var DataTableBodyComponent = (function () {
          * Property that would calculate the height of scroll bar
          * based on the row heights cache for virtual scroll. Other scenarios
          * calculate scroll height automatically (as height will be undefined).
-         *
-         * @readonly
-         * @type {number}
-         * @memberOf DataTableBodyComponent
          */
         get: function () {
             if (this.scrollbarV) {
@@ -169,8 +154,6 @@ var DataTableBodyComponent = (function () {
     });
     /**
      * Called after the constructor, initializing input properties
-     *
-     * @memberOf DataTableBodyComponent
      */
     DataTableBodyComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -182,13 +165,16 @@ var DataTableBodyComponent = (function () {
                     _this.toggleRowExpansion(value);
                 if (type === 'all')
                     _this.toggleAllRows(value);
+                // Refresh rows after toggle
+                // Fixes #883
+                _this.updateIndexes();
+                _this.updateRows();
+                _this.cd.markForCheck();
             });
         }
     };
     /**
      * Called once, before the instance is destroyed.
-     *
-     * @memberOf DataTableBodyComponent
      */
     DataTableBodyComponent.prototype.ngOnDestroy = function () {
         if (this.rowDetail)
@@ -196,10 +182,6 @@ var DataTableBodyComponent = (function () {
     };
     /**
      * Updates the Y offset given a new offset.
-     *
-     * @param {number} [offset]
-     *
-     * @memberOf DataTableBodyComponent
      */
     DataTableBodyComponent.prototype.updateOffsetY = function (offset) {
         // scroller is missing on empty table
@@ -215,10 +197,6 @@ var DataTableBodyComponent = (function () {
     /**
      * Body was scrolled, this is mainly useful for
      * when a user is server-side pagination via virtual scroll.
-     *
-     * @param {*} event
-     *
-     * @memberOf DataTableBodyComponent
      */
     DataTableBodyComponent.prototype.onBodyScroll = function (event) {
         var scrollYPos = event.scrollYPos;
@@ -239,10 +217,6 @@ var DataTableBodyComponent = (function () {
     };
     /**
      * Updates the page given a direction.
-     *
-     * @param {string} direction
-     *
-     * @memberOf DataTableBodyComponent
      */
     DataTableBodyComponent.prototype.updatePage = function (direction) {
         var offset = this.indexes.first / this.pageSize;
@@ -258,8 +232,6 @@ var DataTableBodyComponent = (function () {
     };
     /**
      * Updates the rows in the view port
-     *
-     * @memberOf DataTableBodyComponent
      */
     DataTableBodyComponent.prototype.updateRows = function () {
         var _a = this.indexes, first = _a.first, last = _a.last;
@@ -280,11 +252,6 @@ var DataTableBodyComponent = (function () {
     };
     /**
      * Get the row height
-     *
-     * @param {*} row
-     * @returns {number}
-     *
-     * @memberOf DataTableBodyComponent
      */
     DataTableBodyComponent.prototype.getRowHeight = function (row) {
         var rowHeight = this.rowHeight;
@@ -296,11 +263,6 @@ var DataTableBodyComponent = (function () {
     };
     /**
      * Calculate row height based on the expanded state of the row.
-     *
-     * @param {*} row the row for which the height need to be calculated.
-     * @returns {number} height of the row.
-     *
-     * @memberOf DataTableBodyComponent
      */
     DataTableBodyComponent.prototype.getRowAndDetailHeight = function (row) {
         var rowHeight = this.getRowHeight(row);
@@ -325,11 +287,6 @@ var DataTableBodyComponent = (function () {
      * be able to determine which row is of what height before hand.  In the above
      * case the positionY of the translate3d for row2 would be the sum of all the
      * heights of the rows before it (i.e. row0 and row1).
-     *
-     * @param {*} row The row that needs to be placed in the 2D space.
-     * @returns {*} Returns the CSS3 style to be applied
-     *
-     * @memberOf DataTableBodyComponent
      */
     DataTableBodyComponent.prototype.getRowsStyles = function (row) {
         var rowHeight = this.getRowAndDetailHeight(row);
@@ -348,9 +305,6 @@ var DataTableBodyComponent = (function () {
     };
     /**
      * Hides the loading indicator
-     *
-     *
-     * @memberOf DataTableBodyComponent
      */
     DataTableBodyComponent.prototype.hideIndicator = function () {
         var _this = this;
@@ -358,8 +312,6 @@ var DataTableBodyComponent = (function () {
     };
     /**
      * Updates the index of the rows in the viewport
-     *
-     * @memberOf DataTableBodyComponent
      */
     DataTableBodyComponent.prototype.updateIndexes = function () {
         var first = 0;
@@ -385,10 +337,6 @@ var DataTableBodyComponent = (function () {
     /**
      * Refreshes the full Row Height cache.  Should be used
      * when the entire row array state has changed.
-     *
-     * @returns {void}
-     *
-     * @memberOf DataTableBodyComponent
      */
     DataTableBodyComponent.prototype.refreshRowHeightCache = function () {
         if (!this.scrollbarV)
@@ -412,10 +360,6 @@ var DataTableBodyComponent = (function () {
     };
     /**
      * Gets the index for the view port
-     *
-     * @returns {number}
-     *
-     * @memberOf DataTableBodyComponent
      */
     DataTableBodyComponent.prototype.getAdjustedViewPortIndex = function () {
         // Capture the row index of the first row that is visible on the viewport.
@@ -433,10 +377,6 @@ var DataTableBodyComponent = (function () {
      * collapse and vice versa.   Note that the expanded status is stored as
      * a part of the row object itself as we have to preserve the expanded row
      * status in case of sorting and filtering of the row set.
-     *
-     * @param {*} row The row for which the expansion needs to be toggled.
-     *
-     * @memberOf DataTableBodyComponent
      */
     DataTableBodyComponent.prototype.toggleRowExpansion = function (row) {
         // Capture the row index of the first row that is visible on the viewport.
@@ -458,10 +398,6 @@ var DataTableBodyComponent = (function () {
     };
     /**
      * Expand/Collapse all the rows no matter what their state is.
-     *
-     * @param {boolean} expanded When true, all rows are expanded and when false, all rows will be collapsed.
-     *
-     * @memberOf DataTableBodyComponent
      */
     DataTableBodyComponent.prototype.toggleAllRows = function (expanded) {
         // clear prev expansions
@@ -485,8 +421,6 @@ var DataTableBodyComponent = (function () {
     };
     /**
      * Recalculates the table
-     *
-     * @memberOf DataTableBodyComponent
      */
     DataTableBodyComponent.prototype.recalcLayout = function () {
         this.refreshRowHeightCache();
@@ -495,10 +429,6 @@ var DataTableBodyComponent = (function () {
     };
     /**
      * Returns if the row was expanded
-     *
-     * @param {*} row
-     * @returns {boolean}
-     * @memberof DataTableBodyComponent
      */
     DataTableBodyComponent.prototype.getRowExpanded = function (row) {
         var expanded = this.rowExpansions.get(row);
@@ -506,10 +436,6 @@ var DataTableBodyComponent = (function () {
     };
     /**
      * Gets the row index of the item
-     *
-     * @param {*} row
-     * @returns {number}
-     * @memberof DataTableBodyComponent
      */
     DataTableBodyComponent.prototype.getRowIndex = function (row) {
         return this.rowIndexes.get(row);
@@ -525,7 +451,9 @@ var DataTableBodyComponent = (function () {
                 },] },
     ];
     /** @nocollapse */
-    DataTableBodyComponent.ctorParameters = function () { return []; };
+    DataTableBodyComponent.ctorParameters = function () { return [
+        { type: core_1.ChangeDetectorRef, },
+    ]; };
     DataTableBodyComponent.propDecorators = {
         'scrollbarV': [{ type: core_1.Input },],
         'scrollbarH': [{ type: core_1.Input },],
