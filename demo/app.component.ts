@@ -55,6 +55,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
               <li><a href="#basic-fixed" (click)="state='basic-fixed'">Fixed Row Height</a></li>
               <li><a href="#dynamic" (click)="state='dynamic'">Dynamic Row Height</a></li>
               <li><a href="#row-details'" (click)="state='row-details'">Row Detail</a></li>
+              <li><a href="#responsive'" (click)="state='responsive'">Responsive</a></li>
             </ul>
           </li>
           <li>
@@ -116,6 +117,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
         <horz-vert-scrolling-demo *ngIf="state === 'horz-vert-scrolling'"></horz-vert-scrolling-demo>
         <multiple-tables-demo *ngIf="state === 'multiple-tables'"></multiple-tables-demo>
         <row-details-demo *ngIf="state === 'row-details'"></row-details-demo>
+        <responsive-demo *ngIf="state === 'responsive'"></responsive-demo>
         <filter-demo *ngIf="state === 'filter'"></filter-demo>
         <tabs-demo *ngIf="state === 'hidden'"></tabs-demo>
         <live-data-demo *ngIf="state === 'live'"></live-data-demo>
