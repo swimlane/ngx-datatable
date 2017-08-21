@@ -119,8 +119,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     // recalculate sizes/etc
     this.recalculate();
 
-    if (this._rows && this._groupRowsBy)
-    {
+    if (this._rows && this._groupRowsBy){
       //If a column has been specified in _groupRowsBy created a new array with the data grouped by that row
       this._groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy)
     }
@@ -143,8 +142,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     }
     
     if (val)
-      if (this._rows && this._groupRowsBy)
-      {
+      if (this._rows && this._groupRowsBy){
         //cretes a new array with the data grouped
         this._groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy)
       }
@@ -641,17 +639,6 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Lifecycle hook that is called when Angular dirty checks a directive.
-   *
-   * @memberOf DatatableComponent
-   */
-  ngDoCheck(): void {
-    if (this.rowDiffer.diff(this.rows)) {
-      this.recalculatePages();
-    }
-  }
-
-  /**
    * Creates a map with the data grouped by the user choice of grouping index
    * 
    * @param originalArray the original array passed via parameter
@@ -664,22 +651,17 @@ export class DatatableComponent implements OnInit, AfterViewInit {
 
     let i: number=0;
     originalArray.forEach((item) => {
-        const key = item[groupBy];
-        //TODO: This $$index potentially needs to be replaced with rowIndex
-        item.$$index = i;
-
-        if (!map.has(key)) {
-            map.set(key, [item]);
-        } else {
-            map.get(key).push(item);
-        }
-        i++;
+      const key = item[groupBy];
+      if (!map.has(key)) {
+          map.set(key, [item]);
+      } else {
+          map.get(key).push(item);
+      }
+      i++;
     });
 
     // convert map back to a simple array of objects
-    const groups: Array<any> = Array.from(map, x => addGroup(x[0], x[1]) );  
-
-    return groups;
+    return Array.from(map, x => addGroup(x[0], x[1]) )
   }
 
   /**
@@ -803,21 +785,18 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     // Keep the page size constant even if the row has been expanded.
     // This is because an expanded row is still considered to be a child of
     // the original row.  Hence calculation would use rowHeight only.
-    if (this.scrollbarV) {
-      
+    if (this.scrollbarV) {      
       const size = Math.ceil(this.bodyHeight / this.rowHeight);
       return Math.max(size, 0);
     }
 
     // if limit is passed, we are paging
-    if (this.limit !== undefined){
-      
+    if (this.limit !== undefined){      
       return this.limit;
     }
 
     // otherwise use row length
-    if (val) {
-     
+    if (val) {     
       return val.length;
     }
 
@@ -832,12 +811,11 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     if (!this.externalPaging) {
       if (!val) return 0;
 
-      if (this.groupedRows)
-        {
+      if (this.groupedRows){
           return this.groupedRows.length;
-        }
-        else
-          return val.length;
+      } else{
+        return val.length;
+      }        
     }
 
     return this.count;
@@ -967,5 +945,5 @@ export class DatatableComponent implements OnInit, AfterViewInit {
  * @param value the element value, it can be single content or an array
  */  
 function addGroup(key, value) {
-  return { "key": key, "$$expanded": 0, "value": value };
+  return { "key": key, "value": value };
 }

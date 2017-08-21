@@ -28,11 +28,11 @@ import { NgStyle } from '@angular/common';
 
         <ngx-datatable-column name="Exp. Pay." prop="" editable="true" frozenLeft="True">
           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" let-group="group">
-              <input type="checkbox" id="ep1{{rowIndex}}" name="{{rowIndex}}" value="0" class="expectedpayment" (change)="checkGroup($event, row, group)" [checked]="row.exppayyes===1">
+              <input type="checkbox" id="ep1{{rowIndex}}" name="{{rowIndex}}" value="0" class="expectedpayment" (change)="checkGroup($event, row, rowIndex, group)" [checked]="row.exppayyes===1">
               <label for="ep1{{rowIndex}}"></label>
-              <input type="checkbox" id="ep2{{rowIndex}}" name="{{rowIndex}}" value="1" class="expectedpayment2" (change)="checkGroup($event, row, group)" [checked]="row.exppayno===1">
+              <input type="checkbox" id="ep2{{rowIndex}}" name="{{rowIndex}}" value="1" class="expectedpayment2" (change)="checkGroup($event, row, rowIndex, group)" [checked]="row.exppayno===1">
               <label for="ep2{{rowIndex}}"></label>
-              <input type="checkbox" id="ep3{{rowIndex}}" name="{{rowIndex}}" value="2" class="expectedpayment3" (change)="checkGroup($event, row, group)" [checked]="row.exppaypending===1">
+              <input type="checkbox" id="ep3{{rowIndex}}" name="{{rowIndex}}" value="2" class="expectedpayment3" (change)="checkGroup($event, row, rowIndex, group)" [checked]="row.exppaypending===1">
               <label for="ep3{{rowIndex}}"></label>
           </ng-template>                    
         </ngx-datatable-column>
@@ -54,7 +54,7 @@ import { NgStyle } from '@angular/common';
               *ngIf="editing[rowIndex + '-groupcomment']" 
               autofocus
               [ngStyle]="getGroupRowHeight(group, rowHeight)"
-              (blur)="updateValue($event, 'groupcomment', rowIndex)"
+              (blur)="updateValue($event, row, 'groupcomment', rowIndex, group)"
               [value]="value">
             </textarea>
           </ng-template>        
@@ -113,7 +113,11 @@ export class RowGroupingComponent {
     return style;
   }
 
-  checkGroup(event, row, group){
+  checkGroup(event, row, rowIndex, group){
+
+      console.log('row', row)
+      console.log('group', group)
+      console.log('rowIndex', rowIndex)
 
       var groupStatus: string = "Pending";
       var expectedPaymentDealtWith:boolean = true;
@@ -133,16 +137,14 @@ export class RowGroupingComponent {
           row.exppaypending=1
         }
 
+    //console.log('group.length', group.length);
+
     if (group.length===2){ //There are only 2 lines in a group
       if (["Calculated", "Funder"].indexOf(group[0].source)>-1 && ["Calculated", "Funder"].indexOf(group[1].source)>-1){ //Sources are funder and calculated
         if (group[0].startdate === group[1].startdate && group[0].enddate === group[1].enddate){ //Start dates and end dates match
           for (var index = 0; index < group.length; index++) {
-            console.log('group[index].$$index', group[index].$$index)
-            console.log('row.$$index', row.$$index)
-            if (group[index].$$index === row.$$index){
-              console.log('here first');            
-            }
-            else{
+            if (group[index].source != row.source)
+            {
               if (event.target.value==='0'){ //expected payment yes selected
                 group[index].exppayyes=0;
                 group[index].exppaypending=0;
@@ -201,12 +203,19 @@ export class RowGroupingComponent {
     console.log('event.target.value', event.target.value)    
   }
 
-  updateValue(event, cell, rowIndex) {
-    this.editing[rowIndex + '-' + cell] = false;
+  updateValue(event, row, cell, rowIndex, group) {
+
     console.log('rowIndex', rowIndex)
     console.log('this.rows[rowIndex]', this.rows[rowIndex])
-    this.rows[rowIndex][cell] = event.target.value;
-    this.rows = [...this.rows];
+    console.log('row', row)
+    console.log('group', group)
+
+    this.editing[rowIndex + '-' + cell] = false;
+    group[row].groupcomment = event.target.value;
+    //row.groupcomment = event.target.value;
+    //row[cell] = event.target.value;
+    //this.rows[rowIndex][cell] = event.target.value;
+    //this.rows = [...this.rows];
   }
 
 }

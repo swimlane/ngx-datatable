@@ -122,7 +122,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   element: any;
   columnGroupWidths: any;
   columnsByPin: any;
-  groupColumns: any;
+  groupColumns: any[];
   _columns: any[];
   _innerWidth: number;
 
@@ -134,12 +134,6 @@ export class DataTableBodyRowComponent implements DoCheck {
     private cd: ChangeDetectorRef, element: ElementRef) {
     this.element = element.nativeElement;
     this.rowDiffer = differs.find({}).create();
-  }
-
-  ngDoCheck(): void {
-    if (this.rowDiffer.diff(this.row)) {
-      this.cd.markForCheck();
-    }
   }
 
   trackByGroups(index: number, colGroup: any): any {
@@ -160,12 +154,13 @@ export class DataTableBodyRowComponent implements DoCheck {
 
     if (group === 'left') {
 
-      if (this.groupColumns){
-        //offset x position in case there are group columns
+      if (this.groupColumns) {
+        // The grouping of rows add some elements to ngx-datatable which total 3 pixels on the x axis which needs to be
+        // offset to maintain the header columns aligned with the data columns.
         translateXY(styles, offsetX-3, 0);
-      }
-      else
+      } else {
         translateXY(styles, offsetX, 0);
+      }        
 
     } else if (group === 'right') {
       const bodyWidth = parseInt(this.innerWidth + '', 0);
@@ -224,7 +219,7 @@ export class DataTableBodyRowComponent implements DoCheck {
     const colsByPin = columnsByPin(this._columns);
     this.columnsByPin = allColumnsByPinArr(this._columns);        
     this.columnGroupWidths = columnGroupWidths(colsByPin, this._columns);
-    this.groupColumns=groupColumnsArr(val);
+    this.groupColumns = groupColumnsArr(val);
   }
 
 }

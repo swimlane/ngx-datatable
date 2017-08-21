@@ -31,7 +31,7 @@ import { Component } from '@angular/core';
             </span>
             <input
               autofocus
-              (blur)="updateValue($event, 'name', value, row)"
+              (blur)="updateValue($event, 'name', rowIndex)"
               *ngIf="editing[rowIndex+ '-name']"
               type="text"
               [value]="value"

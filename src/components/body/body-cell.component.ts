@@ -37,16 +37,27 @@ import { mouseEvent, keyboardEvent } from '../../events';
   `
 })
 export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
-
-/*
-,
-  host: {
-    class: 'datatable-body-cell'
+  @Input() set group(group: any){
+    this._group = group;
+    this.cellContext.group = group;
+    this.checkValueUpdates();
+    this.cd.markForCheck();    
   }
-  */
 
-  @Input() group: any;
-  @Input() rowHeight: number;
+  get group(){
+    return this._group;
+  }
+
+  @Input() set rowHeight(val: number){
+    this._rowHeight = val;
+    this.cellContext.rowHeight = val;
+    this.checkValueUpdates();
+    this.cd.markForCheck();        
+  }
+
+  get rowHeight(){
+    return this._rowHeight;
+  }
 
   @Input() set isSelected(val: boolean) {
     this._isSelected = val;
@@ -187,16 +198,14 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   private _sorts: any[];
   private _column: TableColumn;
   private _row: any;
+  private _group: any;
+  private _rowHeight: number;
   private _rowIndex: number;
   private _expanded: boolean;
   private _element: any;
 
   constructor(element: ElementRef, private cd: ChangeDetectorRef) {
     this._element = element.nativeElement;
-  }
-
-  ngDoCheck(): void {
-    this.checkValueUpdates();
   }
 
   ngOnDestroy(): void {

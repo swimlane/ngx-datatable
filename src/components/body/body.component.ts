@@ -104,6 +104,7 @@ import { mouseEvent } from '../../events';
   }
 })
 export class DataTableBodyComponent implements OnInit, OnDestroy {
+
   @Input() scrollbarV: boolean;
   @Input() scrollbarH: boolean;
   @Input() loadingIndicator: boolean;
@@ -275,7 +276,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   columnGroupWidthsWithoutGroup: any;
   rowTrackingFn: any;
   listener: any;
-  rowIndexes: any = new Map();
+  //rowIndexes: any = new Map();
+  groupIndexes: any = new Map();
   rowExpansions: any = new Map();
 
   _rows: any[];
@@ -292,7 +294,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   constructor(private cd: ChangeDetectorRef) {
     // declare fn here so we can get access to the `this` property
     this.rowTrackingFn = function(index: number, row: any): any {
-      const idx = this.rowIndexes.get(row);
+      //const idx = this.rowIndexes.get(row);
+      const idx = this.getRowIndex(row);
       
       if (this.trackByProp) {
         return `${idx}-${this.trackByProp}`;
@@ -396,48 +399,55 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     let idx = 0;
     const temp: any[] = [];
 
+    //this.rowIndexes.clear();
+    //this.groupIndexes.clear();
+
   //if grouprowsby has been specified treat row paging parameters as group paging parameters
   //ie if limit 10 has been specified treat it as 10 groups rather than 10 rows    
     if(this.groupedRows)
     {
       var maxRowsPerGroup = 3;
+      //var rowIndexInsideGroup;
 
       //if there is only one group set the maximum number of rows per group the same as the total number of rows
-        if (this.groupedRows.length==1){
-          maxRowsPerGroup = this.groupedRows[0].value.length
+      if (this.groupedRows.length==1){
+        maxRowsPerGroup = this.groupedRows[0].value.length
+      }
+
+      while (rowIndex < last && rowIndex < this.groupedRows.length) {
+
+        //rowIndexInsideGroup = 0;
+        
+        //Add the groups into this page
+        const group = this.groupedRows[rowIndex];
+
+        //if(group) {
+        //group.value.forEach(row => {
+        //     this.rowIndexes.set(row, row.rowIndex);
+        //     rowIndexInsideGroup++
+        //});
+     
+        temp[idx] = group;
+        //}
+
+        idx++;
+        rowIndex++; //Group index in this context
+      }      
+    }
+    else
+    {           
+      while (rowIndex < last && rowIndex < this.rowCount) {
+        const row = this.rows[rowIndex];
+
+        if (row) {
+          //this.rowIndexes.set(row, rowIndex);
+          temp[idx] = row;
         }
 
-        while (rowIndex < last && rowIndex < this.groupedRows.length) {
-
-          //Add the groups into this page
-          const group = this.groupedRows[rowIndex];
-
-          if(group) {
-            //row.$$index = rowIndex + (rowIndex*maxRowsPerGroup);
-            temp[idx] = group;
-          }
-
-          idx++;
-          rowIndex++; //Group index
-        }      
-      }
-      else
-      {
-
-        this.rowIndexes.clear();
-
-        while (rowIndex < last && rowIndex < this.rowCount) {
-          const row = this.rows[rowIndex];
-
-          if (row) {
-            this.rowIndexes.set(row, rowIndex);
-            temp[idx] = row;
-          }
-
-          idx++;
-          rowIndex++;
-        }       
-      }
+        idx++;
+        rowIndex++;
+      }       
+    }
     
     this.temp = temp;   
   }
@@ -521,61 +531,26 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     var rowHeight=0;
     var styles = {};
 
-    //check if it's a group
-    /*
-    if (this.groupedRows)
-    {
-      if (rows.value){
-        for (var index = 0; index < rows.value.length; index++) {
-          rowHeight += this.getRowAndDetailHeight(rows.value[index]);     
-        }          
-      }  
-      else{
-        rowHeight += this.getRowAndDetailHeight(rows);
-      }
-
-      styles = {
-        height: rowHeight + 'px'
-      };
-    }
-    */
-
-/*
-    if (this.groupedRows)
-    {      
-      if (rows.value){
-        for (var index = 0; index < rows.value.length; index++) {
-          rowHeight += this.getRowAndDetailHeight(rows.value[index]);     
-        }
-        this.rowHeight = rowHeight;
-        //console.log('rowHeight', rowHeight);
-      }  
-      else{
-        //this.rowHeight += this.getRowAndDetailHeight(rows);
-      }
-
-    }
-*/
-
     //only add styles for the group if there is a group
-    if (this.groupedRows){
-      if (this.customGroupStyle){
+    if (this.groupedRows) {
+      if (this.customGroupStyle) {
         Object.assign(styles, this.customGroupStyle)
-      }
-      else{
+      } else {
           styles['border-bottom'] = '1px solid black';
       }
       styles['width'] = this.columnGroupWidths.total;
     }
       
-    if(this.scrollbarV) {
+    if (this.scrollbarV) {
       var idx = 0
 
-      if (this.groupedRows){
-        idx = rows[rows.length-1] ? rows[rows.length-1].$$index : 0;
-      }
-      else{
-        idx = this.rowIndexes.get(rows) || 0;
+      if (this.groupedRows) {
+        //idx = rows[rows.length-1] ? rows[rows.length-1].$$index : 0;
+        //Get the latest row rowindex in a group
+        idx = rows[rows.length-1] ? this.getRowIndex(rows[rows.length-1]) : 0;
+      } else {
+        //idx = this.rowIndexes.get(rows) || 0;
+        idx = this.getRowIndex(rows) || 0;
       }        
 
       // const pos = idx * rowHeight;
@@ -642,7 +617,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         detailRowHeight: this.getDetailRowHeight,
         externalVirtual: this.scrollbarV && this.externalPaging,
         rowCount: this.rowCount,
-        rowIndexes: this.rowIndexes,
+        //rowIndexes: this.rowIndexes,
         rowExpansions: this.rowExpansions
       });
     }
@@ -679,7 +654,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     // If the detailRowHeight is auto --> only in case of non-virtualized scroll
     if (this.scrollbarV) {
       const detailRowHeight = this.getDetailRowHeight(row) * (expanded ? -1 : 1);
-      const idx = this.rowIndexes.get(row) || 0;
+      //const idx = this.rowIndexes.get(row) || 0;
+      const idx = this.getRowIndex(row) || 0;
       this.rowHeightsCache.update(idx, detailRowHeight);
     }
 
@@ -767,7 +743,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * Gets the row index of the item
    */
   getRowIndex(row: any): number {
-    return this.rowIndexes.get(row);
+    return this._rows.indexOf(row);
   }  
 }
 

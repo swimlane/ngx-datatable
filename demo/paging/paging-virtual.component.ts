@@ -3,7 +3,7 @@ import {MockServerResultsService} from "./mock-server-results-service";
 import {PagedData} from "./model/paged-data";
 import {CorporateEmployee} from "./model/corporate-employee";
 import {Page} from "./model/page";
-//[columns]="[{name:'Name'},{name:'Gender'},{name:'Company'}]"
+
 @Component({
   selector: 'virtual-paging-demo',
   providers: [
@@ -27,7 +27,7 @@ import {Page} from "./model/page";
         [headerHeight]="50"
         [scrollbarV]="true"
         [footerHeight]="50"
-        [rowHeight]="100"
+        [rowHeight]="50"
         [externalPaging]="true"
         [count]="page.totalElements"
         [offset]="page.pageNumber"
@@ -40,7 +40,6 @@ export class VirtualPagingComponent {
 
   page = new Page();
   rows = new Array<CorporateEmployee>();
-  //rows = new Array<any>();
   cache: any = {};
 
   constructor(private serverResultsService: MockServerResultsService) {

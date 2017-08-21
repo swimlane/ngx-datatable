@@ -42,7 +42,7 @@ export function setColumnDefaults(columns: TableColumn[]) {
       column.draggable = true;
     }
 
-    if(!column.hasOwnProperty('draggable')) {
+    if(!column.hasOwnProperty('isGroup')) {
       column.isGroup = false;
     }
 
