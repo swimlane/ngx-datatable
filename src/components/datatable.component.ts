@@ -101,7 +101,7 @@ import { mouseEvent } from '../events';
     class: 'ngx-datatable'
   }
 })
-export class DatatableComponent implements OnInit, AfterViewInit {
+export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
   /**
    * Rows that are displayed in the table.
@@ -662,6 +662,22 @@ export class DatatableComponent implements OnInit, AfterViewInit {
 
     // convert map back to a simple array of objects
     return Array.from(map, x => addGroup(x[0], x[1]) )
+   }
+
+   /*
+   * Lifecycle hook that is called when Angular dirty checks a directive.
+   */
+  ngDoCheck(): void {
+    if (this.rowDiffer.diff(this.rows)) {
+      if (!this.externalSorting) {
+        this._internalRows = sortRows(this._rows, this.columns, this.sorts);
+      } else {
+        this._internalRows = [...this.rows];
+      }
+      
+      this.recalculatePages();
+      this.cd.markForCheck();
+    }
   }
 
   /**

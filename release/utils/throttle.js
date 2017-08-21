@@ -2,12 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Throttle a function
- *
- * @export
- * @param {*} func
- * @param {number} wait
- * @param {*} [options]
- * @returns
  */
 function throttle(func, wait, options) {
     options = options || {};
@@ -49,11 +43,6 @@ exports.throttle = throttle;
  *    throttleable(10)
  *    myFn() { ... }
  *  }
- *
- * @export
- * @param {number} duration
- * @param {*} [options]
- * @returns
  */
 function throttleable(duration, options) {
     return function innerDecorator(target, key, descriptor) {

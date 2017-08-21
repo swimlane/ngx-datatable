@@ -7,7 +7,7 @@ var OrderableDirective = (function () {
     function OrderableDirective(differs, document) {
         this.document = document;
         this.reorder = new core_1.EventEmitter();
-        this.differ = differs.find({}).create(null);
+        this.differ = differs.find({}).create();
     }
     OrderableDirective.prototype.ngAfterContentInit = function () {
         // HACK: Investigate Better Way

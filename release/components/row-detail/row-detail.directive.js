@@ -7,23 +7,15 @@ var DatatableRowDetailDirective = (function () {
         /**
          * The detail row height is required especially
          * when virtual scroll is enabled.
-         *
-         * @type {number|function(row?:any,index?:number): number}
-         * @memberOf DatatableComponent
          */
         this.rowHeight = 0;
         /**
          * Row detail row visbility was toggled.
-         *
-         * @type {EventEmitter<any>}
-         * @memberOf DatatableComponent
          */
         this.toggle = new core_1.EventEmitter();
     }
     /**
      * Toggle the expansion of the row
-     *
-     * @param rowIndex
      */
     DatatableRowDetailDirective.prototype.toggleExpandRow = function (row) {
         this.toggle.emit({
@@ -33,8 +25,6 @@ var DatatableRowDetailDirective = (function () {
     };
     /**
      * API method to expand all the rows.
-     *
-     * @memberOf DatatableComponent
      */
     DatatableRowDetailDirective.prototype.expandAllRows = function () {
         this.toggle.emit({
@@ -44,8 +34,6 @@ var DatatableRowDetailDirective = (function () {
     };
     /**
      * API method to collapse all the rows.
-     *
-     * @memberOf DatatableComponent
      */
     DatatableRowDetailDirective.prototype.collapseAllRows = function () {
         this.toggle.emit({

@@ -71,9 +71,6 @@ var RowHeightCache = (function () {
     /**
      * Given the ScrollY position i.e. sum, provide the rowIndex
      * that is present in the current view port.  Below handles edge cases.
-     *
-     * @param scrollY - The scrollY position.
-     * @returns {number} - Index representing the first row visible in the viewport
      */
     RowHeightCache.prototype.getRowIndex = function (scrollY) {
         if (scrollY === 0)
@@ -83,10 +80,6 @@ var RowHeightCache = (function () {
     /**
      * When a row is expanded or rowHeight is changed, update the height.  This can
      * be utilized in future when Angular Data table supports dynamic row heights.
-     *
-     *
-     * @param atRowIndex Update the data at this index row in the grid.
-     * @param byRowHeight Update by the rowHeight provided.
      */
     RowHeightCache.prototype.update = function (atRowIndex, byRowHeight) {
         if (!this.treeArray.length) {
@@ -101,9 +94,6 @@ var RowHeightCache = (function () {
     };
     /**
      * Range Sum query from 1 to the rowIndex
-     *
-     * @param atIndex The row index until which the total height needs to be obtained.
-     * @returns {number} The total height from row 1 to the rowIndex.
      */
     RowHeightCache.prototype.query = function (atIndex) {
         if (!this.treeArray.length) {
@@ -119,9 +109,6 @@ var RowHeightCache = (function () {
     };
     /**
      * Find the total height between 2 row indexes
-     * @param atIndexA The row index from
-     * @param atIndexB The row index to
-     * @returns {number} total pixel height between 2 row indexes.
      */
     RowHeightCache.prototype.queryBetween = function (atIndexA, atIndexB) {
         return this.query(atIndexB) - this.query(atIndexA - 1);
@@ -129,9 +116,6 @@ var RowHeightCache = (function () {
     /**
      * Given the ScrollY position i.e. sum, provide the rowIndex
      * that is present in the current view port.
-     *
-     * @param sum - The scrollY position.
-     * @returns {number} - Index representing the first row visible in the viewport
      */
     RowHeightCache.prototype.calcRowIndex = function (sum) {
         if (!this.treeArray.length)
