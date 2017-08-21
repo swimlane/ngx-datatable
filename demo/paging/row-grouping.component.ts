@@ -21,10 +21,10 @@ import { NgStyle } from '@angular/common';
         [scrollbarH]="true"
         [headerHeight]="50"
         [footerHeight]="50"
-        [rowHeight]="50"
+        [rowHeight]="'auto'"
         [customGroupStyle]="{'border-bottom': '1px solid black'}"
 
-        [limit]="3">
+        [limit]="5">
 
         <ngx-datatable-column name="Exp. Pay." prop="" editable="true" frozenLeft="True">
           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" let-group="group">
@@ -41,20 +41,21 @@ import { NgStyle } from '@angular/common';
         <ngx-datatable-column name="Name" prop="name" editable="true"></ngx-datatable-column>
         <ngx-datatable-column name="Gender" prop="gender"></ngx-datatable-column>
         <ngx-datatable-column name="Age" prop="age"></ngx-datatable-column>
-        <ngx-datatable-column name="Comment" prop="comment"></ngx-datatable-column>
+        <ngx-datatable-column name="Comment" prop="comment">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" let-group="group" let-rowHeight="rowHeight">           
+            <input autofocus
+              (blur)="updateValue($event, 'comment', rowIndex)"
+              type="text" 
+              name="comment" 
+              [value]="value"/>
+          </ng-template>                
+        </ngx-datatable-column>
         <ngx-datatable-column name="Group Comment" prop="groupcomment" isGroup="true">
-          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" let-group="group" let-rowHeight="rowHeight">
-            <span
-              title="Double click to edit"
-              (dblclick)="editing[rowIndex + '-groupcomment'] = true"
-              *ngIf="!editing[rowIndex + '-groupcomment']">
-              {{value}}
-            </span>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" let-group="group" let-rowHeight="rowHeight">           
             <textarea 
-              *ngIf="editing[rowIndex + '-groupcomment']" 
               autofocus
               [ngStyle]="getGroupRowHeight(group, rowHeight)"
-              (blur)="updateValue($event, row, 'groupcomment', rowIndex, group)"
+              (blur)="updateValue($event, 'groupcomment', rowIndex)"
               [value]="value">
             </textarea>
           </ng-template>        
@@ -78,6 +79,19 @@ import { NgStyle } from '@angular/common';
   `
 })
 export class RowGroupingComponent {
+
+  /*
+
+              *ngIf="editing[rowIndex + '-groupcomment']" 
+
+ <span
+              title="Double click to edit"
+              (dblclick)="editing[rowIndex + '-groupcomment'] = true"
+              *ngIf="!editing[rowIndex + '-groupcomment']">
+              {{value}}
+            </span>
+*/
+
   funder = []
   calculated = []
   pending = []
@@ -107,8 +121,9 @@ export class RowGroupingComponent {
 
   getGroupRowHeight(group, rowHeight){
     var style={};
-    console.log('rowHeight', rowHeight)
-    style = {height: rowHeight + 'px'}
+    style = {
+              height: (group.length*30) + 'px',
+              width: '150px'}
 
     return style;
   }
@@ -203,7 +218,7 @@ export class RowGroupingComponent {
     console.log('event.target.value', event.target.value)    
   }
 
-  updateValue(event, row, cell, rowIndex, group) {
+  updateValue(event, cell, rowIndex) {
     this.editing[rowIndex + '-' + cell] = false;
     this.rows[rowIndex][cell] = event.target.value;
     this.rows = [...this.rows];
