@@ -83,6 +83,7 @@ import { mouseEvent } from '../../events';
               [rowHeight]="'auto'"
               [row]="group.value[0]"
               [group]="group.value"
+              [rowIndex]="getRowIndex(group.value[0])"
               [rowClass]="rowClass"
               (activate)="selector.onActivate($event, i)">
             </datatable-body-row>              

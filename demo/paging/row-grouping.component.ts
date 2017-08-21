@@ -204,18 +204,9 @@ export class RowGroupingComponent {
   }
 
   updateValue(event, row, cell, rowIndex, group) {
-
-    console.log('rowIndex', rowIndex)
-    console.log('this.rows[rowIndex]', this.rows[rowIndex])
-    console.log('row', row)
-    console.log('group', group)
-
     this.editing[rowIndex + '-' + cell] = false;
-    group[row].groupcomment = event.target.value;
-    //row.groupcomment = event.target.value;
-    //row[cell] = event.target.value;
-    //this.rows[rowIndex][cell] = event.target.value;
-    //this.rows = [...this.rows];
+    this.rows[rowIndex][cell] = event.target.value;
+    this.rows = [...this.rows];
   }
 
 }
