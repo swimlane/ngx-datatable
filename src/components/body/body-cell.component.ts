@@ -208,6 +208,11 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     this._element = element.nativeElement;
   }
 
+  
+  ngDoCheck(): void {
+    this.checkValueUpdates();
+  }
+
   ngOnDestroy(): void {
     if (this.cellTemplate) {
       this.cellTemplate.clear();

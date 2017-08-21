@@ -87,6 +87,7 @@ export class InlineEditComponent {
   }
 
   updateValue(event, cell, rowIndex) {
+    console.log('inline editing rowIndex', rowIndex)
     this.editing[rowIndex + '-' + cell] = false;
     this.rows[rowIndex][cell] = event.target.value;
     this.rows = [...this.rows];

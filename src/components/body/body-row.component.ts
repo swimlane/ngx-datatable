@@ -136,6 +136,12 @@ export class DataTableBodyRowComponent implements DoCheck {
     this.rowDiffer = differs.find({}).create();
   }
 
+  ngDoCheck(): void {
+    if (this.rowDiffer.diff(this.row)) {
+      this.cd.markForCheck();
+    }
+  }
+  
   trackByGroups(index: number, colGroup: any): any {
     return colGroup.type;
   }
