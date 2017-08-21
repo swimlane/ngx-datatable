@@ -1,7 +1,7 @@
 export declare enum SelectionType {
-    single,
-    multi,
-    multiClick,
-    cell,
-    checkbox,
+    single = "single",
+    multi = "multi",
+    multiClick = "multiClick",
+    cell = "cell",
+    checkbox = "checkbox",
 }
