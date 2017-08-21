@@ -130,10 +130,10 @@ export class DataTableBodyRowComponent implements DoCheck {
 
   constructor(
     private differs: KeyValueDiffers,
-    private scrollbarHelper: ScrollbarHelper, 
+    private scrollbarHelper: ScrollbarHelper,
     private cd: ChangeDetectorRef, element: ElementRef) {
     this.element = element.nativeElement;
-    this.rowDiffer = differs.find({}).create(null);
+    this.rowDiffer = differs.find({}).create();
   }
 
   ngDoCheck(): void {
@@ -207,6 +207,16 @@ export class DataTableBodyRowComponent implements DoCheck {
         rowElement: this.element
       });
     }
+  }
+
+  @HostListener('mouseenter', ['$event'])
+  onMouseenter(event: Event) {
+    this.activate.emit({
+        type: 'mouseenter',
+        event,
+        row: this.row,
+        rowElement: this.element
+      });
   }
 
   recalculateColumns(val: any[] = this.columns): void {

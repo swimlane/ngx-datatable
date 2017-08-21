@@ -1,7 +1,12 @@
 # Changelog
 ## Master
 - BREAKING: Removing `ngDoCheck` on rows array diffing
-- BREAKING: Arrays are not mutated on sorts
+- BREAKING: Rows are not mutated on sorts
+- BREAKING: Columns are no longer mutated!
+- Feature: Row Hover Event
+- Bug: Fixes for Angular v5!
+- Bug: Fix expand all row detail not working #917
+- Chore: Remove useless jsdoc comments
 
 ## 10.0.5
 - Style: Material styles closer to spec

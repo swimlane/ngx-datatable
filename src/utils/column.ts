@@ -1,6 +1,5 @@
 /**
  * Returns the columns by pin.
- * @param {array} cols
  */
 export function columnsByPin(cols: any[]) {
   const ret: {left: any, center: any, grouping: any, right: any} = {
@@ -34,8 +33,6 @@ export function columnsByPin(cols: any[]) {
 
 /**
  * Returns the widths of all group sets of a column
- * @param {object} groups
- * @param {array} all
  */
 export function columnGroupWidths(groups: any, all: any) {
   return {
@@ -48,8 +45,6 @@ export function columnGroupWidths(groups: any, all: any) {
 
 /**
  * Calculates the total width of all columns and their groups
- * @param {array} columns
- * @param {string} prop width to get
  */
 export function columnTotalWidth(columns: any[], prop?: string) {
   let totalWidth = 0;
@@ -67,8 +62,6 @@ export function columnTotalWidth(columns: any[], prop?: string) {
 
 /**
  * Calculates the total width of all columns and their groups
- * @param {array} columns
- * @param {string} property width to get
  */
 export function columnsTotalWidth(columns: any, prop?: any) {
   let totalWidth = 0;

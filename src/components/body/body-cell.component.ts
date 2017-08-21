@@ -29,10 +29,10 @@ import { mouseEvent, keyboardEvent } from '../../events';
         [innerHTML]="value">
       </span>
       <ng-template #cellTemplate
-          *ngIf="column.cellTemplate"
-          [ngTemplateOutlet]="column.cellTemplate"
-          [ngTemplateOutletContext]="cellContext">
-        </ng-template>
+        *ngIf="column.cellTemplate"
+        [ngTemplateOutlet]="column.cellTemplate"
+        [ngTemplateOutletContext]="cellContext">
+      </ng-template>
     </div>
   `
 })

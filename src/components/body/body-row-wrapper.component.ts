@@ -15,7 +15,7 @@ import { mouseEvent } from '../../events';
       <ng-template
         *ngIf="rowDetail && rowDetail.template"
         [ngTemplateOutlet]="rowDetail.template"
-        [ngOutletContext]="{ 
+        [ngTemplateOutletContext]="{ 
           row: row, 
           expanded: expanded,
           rowIndex: rowIndex
