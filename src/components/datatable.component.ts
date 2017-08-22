@@ -119,9 +119,9 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     // recalculate sizes/etc
     this.recalculate();
 
-    if (this._rows && this._groupRowsBy){
-      //If a column has been specified in _groupRowsBy created a new array with the data grouped by that row
-      this._groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy)
+    if (this._rows && this._groupRowsBy) {
+      // If a column has been specified in _groupRowsBy created a new array with the data grouped by that row
+      this._groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
     }
 
     this.cd.markForCheck();
@@ -133,22 +133,23 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   get rows(): any {
     return this._rows;
   }
-/**
- * This attribute allows the user to set the name of the column to group the data with
-  */
-  @Input() set groupRowsBy(val: string){
-    if (val){
+
+  /**
+   * This attribute allows the user to set the name of the column to group the data with
+   */
+  @Input() set groupRowsBy(val: string) {
+    if (val) {
       this._groupRowsBy = val;
     }
     
     if (val)
-      if (this._rows && this._groupRowsBy){
-        //cretes a new array with the data grouped
-        this._groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy)
+      if (this._rows && this._groupRowsBy) {
+        // cretes a new array with the data grouped
+        this._groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
       }
   }
 
-  get groupRowsBy(){
+  get groupRowsBy() {
     return this._groupRowsBy;
   }
 
@@ -167,7 +168,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * ]}
    * ]
    */
-  @Input() set groupedRows(val: any){
+  @Input() set groupedRows(val: any) {
     if (val)
       this._groupedRows = val;
   }
@@ -175,7 +176,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   /**
    * Get the array with grouped rows
    */
-  get groupedRows(): any{
+  get groupedRows(): any {
     return this._groupedRows;
   }
 
@@ -200,8 +201,6 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   }
 
   @Input() customGroupStyle: {};
-
-
 
   /**
    * List of row objects that should be
@@ -644,12 +643,12 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * @param originalArray the original array passed via parameter
    * @param groupByIndex  the index of the column to group the data by
    */
-   groupArrayBy(originalArray, groupBy) {
-    
+  groupArrayBy(originalArray, groupBy) {
+  
     // create a map to hold groups with their corresponding results
     const map = new Map();
+    let i: number = 0;
 
-    let i: number=0;
     originalArray.forEach((item) => {
       const key = item[groupBy];
       if (!map.has(key)) {
@@ -661,7 +660,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     });
 
     // convert map back to a simple array of objects
-    return Array.from(map, x => addGroup(x[0], x[1]) )
+    return Array.from(map, x => addGroup(x[0], x[1]));
    }
 
    /*
@@ -807,7 +806,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     }
 
     // if limit is passed, we are paging
-    if (this.limit !== undefined){      
+    if (this.limit !== undefined) {      
       return this.limit;
     }
 
@@ -827,9 +826,9 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     if (!this.externalPaging) {
       if (!val) return 0;
 
-      if (this.groupedRows){
-          return this.groupedRows.length;
-      } else{
+      if (this.groupedRows) {
+        return this.groupedRows.length;
+      } else {
         return val.length;
       }        
     }
@@ -961,5 +960,5 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
  * @param value the element value, it can be single content or an array
  */  
 function addGroup(key, value) {
-  return { "key": key, "value": value };
+  return {key, value};
 }

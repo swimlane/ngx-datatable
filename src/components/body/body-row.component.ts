@@ -45,7 +45,7 @@ export class DataTableBodyRowComponent implements DoCheck {
 
   @Input() set innerWidth(val: number) {
 
-    if (this._columns){
+    if (this._columns) {
       const colByPin = columnsByPin(this._columns);
       this.columnGroupWidths = columnGroupWidths(colByPin, colByPin);      
     }
@@ -163,7 +163,7 @@ export class DataTableBodyRowComponent implements DoCheck {
       if (this.groupColumns) {
         // The grouping of rows add some elements to ngx-datatable which total 3 pixels on the x axis which needs to be
         // offset to maintain the header columns aligned with the data columns.
-        translateXY(styles, offsetX-3, 0);
+        translateXY(styles, offsetX - 3, 0);
       } else {
         translateXY(styles, offsetX, 0);
       }        

@@ -126,7 +126,7 @@ export class DataTablePagerComponent {
     }
   }
 
-   calcPages(page?: number): any[] {
+  calcPages(page?: number): any[] {
     const pages = [];
     let startPage = 1;
     let endPage = this.totalPages;
@@ -157,6 +157,5 @@ export class DataTablePagerComponent {
 
     return pages;
   }
-
 
 }

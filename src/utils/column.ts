@@ -11,7 +11,7 @@ export function columnsByPin(cols: any[]) {
 
   if(cols) {
     for(const col of cols) {
-      //if the column is part of a group it will be treated once per group, rathern than once per row.
+      // if the column is part of a group it will be treated once per group, rathern than once per row.
       if(!col.isGroup) {
         if(col.frozenLeft) {
           ret.left.push(col);
@@ -20,11 +20,9 @@ export function columnsByPin(cols: any[]) {
         } else {
           ret.center.push(col);
         }
-      }
-      else{
+      } else {
         ret.center.push(col);
-      }
-        
+      }        
     }
   }
 

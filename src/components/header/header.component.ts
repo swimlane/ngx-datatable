@@ -61,17 +61,17 @@ export class DataTableHeaderComponent {
 
   _innerWidth: number;
 
-  @Input() set innerWidth(val: number){
+  @Input() set innerWidth(val: number) {
     this._innerWidth = val;
 
-    if (this._columns){    
+    if (this._columns) {    
       const colByPin = columnsByPin(this._columns);
       this.columnGroupWidths = columnGroupWidths(colByPin, this._columns);       
     }
   }
     
-  get innerWidth(): number{
-    return this._innerWidth
+  get innerWidth(): number {
+    return this._innerWidth;
   }
 
   @Input() offsetX: number;

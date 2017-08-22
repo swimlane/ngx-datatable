@@ -128,7 +128,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   @HostBinding('class')
   get columnCssClasses(): any {    
     let cls = 'datatable-body-cell';
-    if (!this.column.isGroup){
+    if (!this.column.isGroup) {
       if (this.column.cellClass) {
         if (typeof this.column.cellClass === 'string') {
           cls += ' ' + this.column.cellClass;
@@ -155,8 +155,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
       if (this.isFocused) cls += ' active';
       if (this.sortDir === SortDirection.asc) cls += ' sort-asc';
       if (this.sortDir === SortDirection.desc) cls += ' sort-desc';
-    }
-    else{
+    } else {
       cls = 'datatable-body-group-cell';
     }
 
@@ -207,7 +206,6 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   constructor(element: ElementRef, private cd: ChangeDetectorRef) {
     this._element = element.nativeElement;
   }
-
   
   ngDoCheck(): void {
     this.checkValueUpdates();
