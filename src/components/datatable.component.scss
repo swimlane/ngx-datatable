@@ -55,13 +55,6 @@
   }
 
   /**
-  *Group cell styling
-  */  
-  .datatable-body-group-cell {
-    white-space: normal;
-  }
-
-  /**
    * Fixed row height adjustments
    */
   &.fixed-row {
@@ -76,6 +69,12 @@
           white-space: nowrap;
           text-overflow: ellipsis;
         }
+
+        .datatable-body-group-cell {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }        
       }
     }
   }

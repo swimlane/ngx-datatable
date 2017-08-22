@@ -21,10 +21,10 @@ import { NgStyle } from '@angular/common';
         [scrollbarH]="true"
         [headerHeight]="50"
         [footerHeight]="50"
-        [rowHeight]="'auto'"
+        [rowHeight]="40"
         [customGroupStyle]="{'border-bottom': '1px solid black'}"
 
-        [limit]="5">
+        [limit]="4">
 
         <ngx-datatable-column name="Exp. Pay." prop="" editable="true" frozenLeft="True">
           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" let-group="group">
@@ -37,7 +37,7 @@ import { NgStyle } from '@angular/common';
           </ng-template>                    
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="Source" prop="source" editable="false"></ngx-datatable-column>
+        <ngx-datatable-column name="Source" prop="source" editable="false" frozenLeft="True"></ngx-datatable-column>
         <ngx-datatable-column name="Name" prop="name" editable="true"></ngx-datatable-column>
         <ngx-datatable-column name="Gender" prop="gender"></ngx-datatable-column>
         <ngx-datatable-column name="Age" prop="age"></ngx-datatable-column>
@@ -121,9 +121,10 @@ export class RowGroupingComponent {
 
   getGroupRowHeight(group, rowHeight){
     var style={};
+
     style = {
-              height: (group.length*30) + 'px',
-              width: '150px'}
+              height: (group.length*40) + 'px',
+              width: '100%'}
 
     return style;
   }
