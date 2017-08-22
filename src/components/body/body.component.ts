@@ -314,7 +314,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     this.rowIndexes.clear();
 
     while (rowIndex < last && rowIndex < this.rowCount) {
-      const row = this.rows[rowIndex];
+      const row = Object.assign({}, this.rows[rowIndex]);
 
       if (row) {
         this.rowIndexes.set(row, rowIndex);
