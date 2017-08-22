@@ -80,18 +80,6 @@ import { NgStyle } from '@angular/common';
 })
 export class RowGroupingComponent {
 
-  /*
-
-              *ngIf="editing[rowIndex + '-groupcomment']" 
-
- <span
-              title="Double click to edit"
-              (dblclick)="editing[rowIndex + '-groupcomment'] = true"
-              *ngIf="!editing[rowIndex + '-groupcomment']">
-              {{value}}
-            </span>
-*/
-
   funder = []
   calculated = []
   pending = []
@@ -99,8 +87,6 @@ export class RowGroupingComponent {
   
   editing = {};  
   rows = [];
-
-  //expectedPayment = {group: number, this.funder, this.calculated, this.pending};
   
   constructor() {
     this.fetch((data) => {
@@ -130,11 +116,6 @@ export class RowGroupingComponent {
   }
 
   checkGroup(event, row, rowIndex, group){
-
-      console.log('row', row)
-      console.log('group', group)
-      console.log('rowIndex', rowIndex)
-
       var groupStatus: string = "Pending";
       var expectedPaymentDealtWith:boolean = true;
 
@@ -153,70 +134,62 @@ export class RowGroupingComponent {
           row.exppaypending=1
         }
 
-    //console.log('group.length', group.length);
-
-    if (group.length===2){ //There are only 2 lines in a group
-      if (["Calculated", "Funder"].indexOf(group[0].source)>-1 && ["Calculated", "Funder"].indexOf(group[1].source)>-1){ //Sources are funder and calculated
-        if (group[0].startdate === group[1].startdate && group[0].enddate === group[1].enddate){ //Start dates and end dates match
-          for (var index = 0; index < group.length; index++) {
-            if (group[index].source != row.source)
-            {
-              if (event.target.value==='0'){ //expected payment yes selected
-                group[index].exppayyes=0;
-                group[index].exppaypending=0;
-                group[index].exppayno=1;
+      if (group.length===2){ //There are only 2 lines in a group
+        if (["Calculated", "Funder"].indexOf(group[0].source)>-1 && ["Calculated", "Funder"].indexOf(group[1].source)>-1){ //Sources are funder and calculated
+          if (group[0].startdate === group[1].startdate && group[0].enddate === group[1].enddate){ //Start dates and end dates match
+            for (var index = 0; index < group.length; index++) {
+              if (group[index].source != row.source)
+              {
+                if (event.target.value==='0'){ //expected payment yes selected
+                  group[index].exppayyes=0;
+                  group[index].exppaypending=0;
+                  group[index].exppayno=1;
+                }
               }
-            }
 
-            if (group[index].exppayyes === 0 && group[index].exppayno === 0 && group[index].exppaypending === 0)
-              expectedPaymentDealtWith = false;
-            console.log('expectedPaymentDealtWith', expectedPaymentDealtWith);
+              if (group[index].exppayyes === 0 && group[index].exppayno === 0 && group[index].exppaypending === 0)
+                expectedPaymentDealtWith = false;
+              console.log('expectedPaymentDealtWith', expectedPaymentDealtWith);
+            }
           }
         }
       }
-    }
-    else{
-      for (var index = 0; index < group.length; index++) {
-        if (group[index].exppayyes === 0 && group[index].exppayno === 0 && group[index].exppaypending === 0)
-          expectedPaymentDealtWith = false;
-        console.log('expectedPaymentDealtWith', expectedPaymentDealtWith);
-      }      
-    }
+      else{
+        for (var index = 0; index < group.length; index++) {
+          if (group[index].exppayyes === 0 && group[index].exppayno === 0 && group[index].exppaypending === 0)
+            expectedPaymentDealtWith = false;
+          console.log('expectedPaymentDealtWith', expectedPaymentDealtWith);
+        }      
+      }
 
-    //check if there is a pending selected payment or a row that does not have any expected payment selected
-    if (group.filter(row => row.exppaypending===1).length===0 && group.filter(row => row.exppaypending===0 && row.exppayyes===0 && row.exppayno===0).length===0)
-    //if (expectedPaymentDealtWith)
-    {
-      console.log('expected payment dealt with')
-      //check if can set the group status
-      const numberOfExpPayYes = group.filter(row => row.exppayyes===1).length;
-      const numberOfSourceFunder = group.filter(row => row.exppayyes===1 && row.source==='Funder').length;
-      const numberOfSourceCalculated = group.filter(row => row.exppayyes===1 && row.source==='Calculated').length;
-      const numberOfSourceManual = group.filter(row => row.exppayyes===1 && row.source==='Manual').length;
+      //check if there is a pending selected payment or a row that does not have any expected payment selected
+      if (group.filter(row => row.exppaypending===1).length===0 && group.filter(row => row.exppaypending===0 && row.exppayyes===0 && row.exppayno===0).length===0)
+      //if (expectedPaymentDealtWith)
+      {
+        console.log('expected payment dealt with')
+        //check if can set the group status
+        const numberOfExpPayYes = group.filter(row => row.exppayyes===1).length;
+        const numberOfSourceFunder = group.filter(row => row.exppayyes===1 && row.source==='Funder').length;
+        const numberOfSourceCalculated = group.filter(row => row.exppayyes===1 && row.source==='Calculated').length;
+        const numberOfSourceManual = group.filter(row => row.exppayyes===1 && row.source==='Manual').length;
 
-      console.log('numberOfExpPayYes', numberOfExpPayYes)
-      console.log('numberOfSourceFunder', numberOfSourceFunder)
-      console.log('numberOfSourceCalculated', numberOfSourceCalculated)
-      console.log('numberOfSourceManual', numberOfSourceManual)
+        console.log('numberOfExpPayYes', numberOfExpPayYes)
+        console.log('numberOfSourceFunder', numberOfSourceFunder)
+        console.log('numberOfSourceCalculated', numberOfSourceCalculated)
+        console.log('numberOfSourceManual', numberOfSourceManual)
 
-      if (numberOfExpPayYes>0)
-        if (numberOfExpPayYes === numberOfSourceFunder)
-          groupStatus = 'Funder Selected'
-        else if (numberOfExpPayYes === numberOfSourceCalculated)
-          groupStatus = 'Calculated Selected'
-        else if (numberOfExpPayYes === numberOfSourceManual)
-          groupStatus = 'Manual Selected'  
-        else
-          groupStatus = 'Hybrid Selected'
-    }
+        if (numberOfExpPayYes>0)
+          if (numberOfExpPayYes === numberOfSourceFunder)
+            groupStatus = 'Funder Selected'
+          else if (numberOfExpPayYes === numberOfSourceCalculated)
+            groupStatus = 'Calculated Selected'
+          else if (numberOfExpPayYes === numberOfSourceManual)
+            groupStatus = 'Manual Selected'  
+          else
+            groupStatus = 'Hybrid Selected'
+      }
 
-    group[0].groupstatus = groupStatus;
-
-    console.log('group', group);
-
-    console.log('group.length', group.length)
-
-    console.log('event.target.value', event.target.value)    
+    group[0].groupstatus = groupStatus;    
   }
 
   updateValue(event, cell, rowIndex) {
