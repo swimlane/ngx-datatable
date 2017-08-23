@@ -146,12 +146,15 @@ export class DataTableHeaderCellComponent {
   sortDir: SortDirection;
   selectFn = this.select.emit.bind(this.select);
 
-  cellContext: any = {
-    column: this.column,
-    sortDir: this.sortDir,
-    sortFn: this.sortFn,
-    allRowsSelected: this.allRowsSelected,
-    selectFn: this.selectFn
+  get cellContext(): any {
+    return {
+      column: this.column,
+      sortDir: this.sortDir,
+      sortClass: this.sortClass,
+      sortFn: this.sortFn,
+      allRowsSelected: this.allRowsSelected,
+      selectFn: this.selectFn
+    }
   };
 
   private _column: TableColumn;
