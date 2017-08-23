@@ -104,13 +104,15 @@ function sortRows(rows, columns, dirs, rowSections) {
     return temp.sort(function (a, b) {
         // Maintain sectioning of rows independently of the sort.
         // Rows will sort within their sections.
-        var aSection = rowSections.get(a) || a.$$sectionIndex;
-        var bSection = rowSections.get(b) || b.$$sectionIndex;
-        if (aSection !== bSection) {
-            return +aSection < +bSection ? -1 : 1;
-        }
-        else if (a.$$isSectionHeader || b.$$isSectionHeader) {
-            return a.$$isSectionHeader ? -1 : 1;
+        if (rowSections) {
+            var aSection = rowSections.get(a) || a.$$sectionIndex;
+            var bSection = rowSections.get(b) || b.$$sectionIndex;
+            if (aSection !== bSection) {
+                return +aSection < +bSection ? -1 : 1;
+            }
+            else if (a.$$isSectionHeader || b.$$isSectionHeader) {
+                return a.$$isSectionHeader ? -1 : 1;
+            }
         }
         for (var _i = 0, cachedDirs_1 = cachedDirs; _i < cachedDirs_1.length; _i++) {
             var cachedDir = cachedDirs_1[_i];
