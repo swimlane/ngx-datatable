@@ -179,3 +179,11 @@
       pointer-events: none; }
     .datatable-header-cell * {
       pointer-events: auto; } }
+
+@supports (-ms-ime-align: auto) {
+  .datatable-header-cell {
+    pointer-events: none; }
+    .datatable-header-cell > div {
+      pointer-events: none; }
+    .datatable-header-cell * {
+      pointer-events: auto; } }

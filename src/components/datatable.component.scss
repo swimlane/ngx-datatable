@@ -283,3 +283,17 @@
     }
   }
 }
+
+@supports (-ms-ime-align: auto) {
+  .datatable-header-cell {
+    pointer-events: none;
+
+    > div {
+      pointer-events: none;
+    }
+
+    * {
+      pointer-events: auto;
+    }
+  }
+}
