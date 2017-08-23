@@ -793,15 +793,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * The header triggered a column re-order event.
    */
   onColumnReorder({ column, newValue, prevValue }: any): void {
-    const cols = this._internalColumns.map(c => {
-      return { ...c };
-    });
-
-    const prevCol = cols[newValue];
-    cols[newValue] = column;
-    cols[prevValue] = prevCol;
-
-    this._internalColumns = cols;
+    this._internalColumns = this.moveColumns(this._internalColumns, prevValue, newValue);
 
     this.reorder.emit({
       column,
@@ -857,4 +849,11 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     this.select.emit(event);
   }
 
+  /**
+   * Method to move columns
+   */
+  private moveColumns(array: any[], from: number, to: number) {
+    array.splice(to, 0, array.splice(from, 1)[0]);
+    return array.slice();
+  }
 }

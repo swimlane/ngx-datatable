@@ -116,7 +116,7 @@
         bottom: 0;
         width: 5px;
         padding: 0 4px;
-        visibility: hidden;
+        visibility: visible;
         cursor: ew-resize; }
       .ngx-datatable .datatable-header .datatable-header-cell.resizeable:hover .resize-handle {
         visibility: visible; }
@@ -183,5 +183,13 @@
         display: inline-block; }
       .ngx-datatable .datatable-footer .datatable-pager .pager li.disabled a {
         cursor: not-allowed; }
+
+@media all and (-ms-high-contrast: none) {
+  .datatable-header-cell {
+    pointer-events: none; }
+    .datatable-header-cell > div {
+      pointer-events: none; }
+    .datatable-header-cell * {
+      pointer-events: auto; } }
 
 /*# sourceMappingURL=index.map*/

@@ -620,13 +620,7 @@ var DatatableComponent = (function () {
      */
     DatatableComponent.prototype.onColumnReorder = function (_a) {
         var column = _a.column, newValue = _a.newValue, prevValue = _a.prevValue;
-        var cols = this._internalColumns.map(function (c) {
-            return __assign({}, c);
-        });
-        var prevCol = cols[newValue];
-        cols[newValue] = column;
-        cols[prevValue] = prevCol;
-        this._internalColumns = cols;
+        this._internalColumns = this.moveColumns(this._internalColumns, prevValue, newValue);
         this.reorder.emit({
             column: column,
             newValue: newValue,
@@ -672,6 +666,13 @@ var DatatableComponent = (function () {
      */
     DatatableComponent.prototype.onBodySelect = function (event) {
         this.select.emit(event);
+    };
+    /**
+     * Method to move columns
+     */
+    DatatableComponent.prototype.moveColumns = function (array, from, to) {
+        array.splice(to, 0, array.splice(from, 1)[0]);
+        return array.slice();
     };
     DatatableComponent.decorators = [
         { type: core_1.Component, args: [{

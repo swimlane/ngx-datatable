@@ -155,7 +155,7 @@
         bottom: 0;
         width: 5px;
         padding: 0 4px;
-        visibility: hidden;
+        visibility: visible;
         cursor: ew-resize;
       }
 
@@ -266,6 +266,20 @@
           }
         }
       }
+    }
+  }
+}
+
+@media all and (-ms-high-contrast: none) {
+  .datatable-header-cell {
+    pointer-events: none;
+
+    > div {
+      pointer-events: none;
+    }
+
+    * {
+      pointer-events: auto;
     }
   }
 }
