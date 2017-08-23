@@ -13,6 +13,7 @@ import {
 import { ScrollbarHelper } from '../services';
 import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types';
 import { DataTableBodyComponent } from './body';
+import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
@@ -62,6 +63,7 @@ import { mouseEvent } from '../events';
         [pageSize]="pageSize"
         [offsetX]="offsetX"
         [rowDetail]="rowDetail"
+        [groupHeader]="groupHeader"
         [selected]="selected"
         [innerWidth]="innerWidth"
         [bodyHeight]="bodyHeight"
@@ -548,6 +550,12 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    */
   @ContentChild(DatatableRowDetailDirective)
   rowDetail: DatatableRowDetailDirective;
+
+  /**
+   * Group Header templates gathered from the ContentChild
+   */
+  @ContentChild(DatatableGroupHeaderDirective)
+  groupHeader: DatatableGroupHeaderDirective;  
 
   /**
    * Footer template gathered from the ContentChild

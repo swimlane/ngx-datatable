@@ -15,13 +15,15 @@ import {
   ProgressBarComponent,
   DataTableBodyCellComponent,
   DatatableRowDetailDirective,
+  DatatableGroupHeaderDirective,
   ScrollerComponent,
   DataTableSelectionComponent,
   DataTableColumnHeaderDirective,
   DataTableColumnCellDirective,
   DatatableRowDetailTemplateDirective,
   DataTableFooterTemplateDirective,
-  DatatableFooterDirective
+  DatatableFooterDirective,
+  DatatableGroupHeaderTemplateDirective
 } from './components';
 
 import {
@@ -60,23 +62,27 @@ import { ScrollbarHelper } from './services';
     DataTableBodyRowComponent,
     DataTableRowWrapperComponent,
     DatatableRowDetailDirective,
+    DatatableGroupHeaderDirective,
     DatatableRowDetailTemplateDirective,
     DataTableBodyCellComponent,
     DataTableSelectionComponent,
     DataTableColumnHeaderDirective,
     DataTableColumnCellDirective,
-    DatatableFooterDirective
+    DatatableFooterDirective,
+    DatatableGroupHeaderTemplateDirective
   ],
   exports: [
     DatatableComponent,
     DatatableRowDetailDirective,
+    DatatableGroupHeaderDirective,
     DatatableRowDetailTemplateDirective,
     DataTableColumnDirective,
     DataTableColumnHeaderDirective,
     DataTableColumnCellDirective,
     DataTableFooterTemplateDirective,
     DatatableFooterDirective,
-    DataTablePagerComponent
+    DataTablePagerComponent,
+    DatatableGroupHeaderTemplateDirective
   ]
 })
 export class NgxDatatableModule { }

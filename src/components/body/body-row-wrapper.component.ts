@@ -7,6 +7,19 @@ import { mouseEvent } from '../../events';
   selector: 'datatable-row-wrapper',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
+    <div 
+      *ngIf="groupHeader && groupHeader.template"
+      [ngStyle]="getGroupHeaderStyle()">
+      <ng-template
+        *ngIf="groupHeader && groupHeader.template"
+        [ngTemplateOutlet]="groupHeader.template"
+        [ngTemplateOutletContext]="{ 
+          group: row, 
+          expanded: expanded,
+          rowIndex: rowIndex
+        }">
+      </ng-template>
+    </div>
     <ng-content></ng-content>
     <div
       *ngIf="expanded"
@@ -29,7 +42,10 @@ import { mouseEvent } from '../../events';
 })
 export class DataTableRowWrapperComponent {
 
+  @Input() innerWidth: number;
   @Input() rowDetail: any;
+  @Input() groupHeader: any;
+  @Input() offsetX: number;
   @Input() detailRowHeight: any;
   @Input() expanded: boolean = false;
   @Input() row: any;
@@ -40,5 +56,15 @@ export class DataTableRowWrapperComponent {
   @HostListener('contextmenu', ['$event'])
   onContextmenu($event: MouseEvent): void {
     this.rowContextmenu.emit({ event: $event, row: this.row });
+  }
+
+  getGroupHeaderStyle(group: any): any {
+    const styles = {};
+
+    styles['transform'] = 'translate3d(' + this.offsetX + 'px, 0px, 0px)';
+    styles['backface-visibility'] = 'hidden';
+    styles['width'] = this.innerWidth;
+
+    return styles; 
   }
 }

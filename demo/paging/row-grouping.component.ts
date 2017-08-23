@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { NgStyle } from '@angular/common';
 
 @Component({
@@ -14,7 +14,8 @@ import { NgStyle } from '@angular/common';
         </small>
       </h3>
       <ngx-datatable
-        class="material"
+        #myTable
+         class='material expandable'
         [rows]="rows"
         [groupRowsBy]="'age'"
         [columnMode]="'force'"
@@ -23,9 +24,25 @@ import { NgStyle } from '@angular/common';
         [footerHeight]="50"
         [rowHeight]="40"
         [customGroupStyle]="{'border-bottom': '1px solid black'}"
-
         [limit]="4">
 
+        <!-- Group Header Template -->
+        <ngx-datatable-group-header [rowHeight]="50" #myGroupHeader (toggle)="onDetailToggle($event)">
+          <ng-template let-group="group" let-expanded="expanded" ngx-datatable-group-header-template>
+            <div style="padding-left:5px;">
+              <a
+                href="#"
+                [class.datatable-icon-right]="!expanded"
+                [class.datatable-icon-down]="expanded"
+                title="Expand/Collapse Group"
+                (click)="toggleExpandRow(group)">
+                <b>Age: {{group.value[0].age}}</b>
+              </a>                          
+            </div>
+          </ng-template>
+        </ngx-datatable-group-header>
+
+        <!-- Row Column Template -->
         <ngx-datatable-column name="Exp. Pay." prop="" editable="true" frozenLeft="True">
           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" 
           let-group="group">
@@ -92,7 +109,7 @@ import { NgStyle } from '@angular/common';
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="" prop="" isGroup="true" width="50">
+        <ngx-datatable-column name="" prop="" isGroup="true" width="75">
           <ng-template ngx-datatable-cell-template let-row="row" let-group="group">
             <input type="button" name="Save" value="Save">
           </ng-template>
@@ -103,6 +120,8 @@ import { NgStyle } from '@angular/common';
   `
 })
 export class RowGroupingComponent {
+
+  @ViewChild('myTable') table: any;
 
   funder = [];
   calculated = [];
@@ -223,6 +242,15 @@ export class RowGroupingComponent {
     this.editing[rowIndex + '-' + cell] = false;
     this.rows[rowIndex][cell] = event.target.value;
     this.rows = [...this.rows];
+  }
+
+  toggleExpandGroup(group) {
+    console.log('Toggled Expand Group!', group);
+    this.table.groupHeader.toggleExpandGroup(group);
+  }  
+
+  onDetailToggle(event) {
+    console.log('Detail Toggled', event);
   }
 
 }

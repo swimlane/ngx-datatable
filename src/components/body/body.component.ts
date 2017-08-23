@@ -34,8 +34,11 @@ import { mouseEvent } from '../../events';
         <datatable-row-wrapper
           [groupedRows]="groupedRows"
           *ngFor="let group of temp; let i = index; trackBy: rowTrackingFn;"
+          [innerWidth]="innerWidth"
           [ngStyle]="getRowsStyles(group)"
           [rowDetail]="rowDetail"
+          [groupHeader]="groupHeader"
+          [offsetX]="offsetX"
           [detailRowHeight]="getDetailRowHeight(group[i],i)"
           [row]="group"
           [expanded]="getRowExpanded(group)"
@@ -117,6 +120,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() selected: any[] = [];
   @Input() rowIdentity: any;
   @Input() rowDetail: any;
+  @Input() groupHeader: any;
   @Input() selectCheck: any;
   @Input() trackByProp: string;
   @Input() rowClass: any;
@@ -521,7 +525,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   
   getRowsStyles(rows: any): any {
-    let styles = {};
+    const styles = {};
 
     // only add styles for the group if there is a group
     if (this.groupedRows) {
