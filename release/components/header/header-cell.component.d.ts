@@ -26,7 +26,7 @@ export declare class DataTableHeaderCellComponent {
     sortClass: string;
     sortDir: SortDirection;
     selectFn: any;
-    cellContext: any;
+    readonly cellContext: any;
     private _column;
     private _sorts;
     constructor(cd: ChangeDetectorRef);

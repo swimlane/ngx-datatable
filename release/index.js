@@ -5544,13 +5544,6 @@ var DataTableHeaderCellComponent = /** @class */ (function () {
         this.columnContextmenu = new core_1.EventEmitter(false);
         this.sortFn = this.onSort.bind(this);
         this.selectFn = this.select.emit.bind(this.select);
-        this.cellContext = {
-            column: this.column,
-            sortDir: this.sortDir,
-            sortFn: this.sortFn,
-            allRowsSelected: this.allRowsSelected,
-            selectFn: this.selectFn
-        };
     }
     Object.defineProperty(DataTableHeaderCellComponent.prototype, "column", {
         get: function () {
@@ -5652,6 +5645,21 @@ var DataTableHeaderCellComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(DataTableHeaderCellComponent.prototype, "cellContext", {
+        get: function () {
+            return {
+                column: this.column,
+                sortDir: this.sortDir,
+                sortClass: this.sortClass,
+                sortFn: this.sortFn,
+                allRowsSelected: this.allRowsSelected,
+                selectFn: this.selectFn
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
     DataTableHeaderCellComponent.prototype.onContextmenu = function ($event) {
         this.columnContextmenu.emit({ event: $event, column: this.column });
     };
