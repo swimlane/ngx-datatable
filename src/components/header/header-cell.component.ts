@@ -28,15 +28,16 @@ import { mouseEvent } from '../../events';
           [innerHTML]="name">
         </span>
       </span>
+      <span
+        *ngIf="!column.headerTemplate"
+        (click)="onSort()"
+        [class]="sortClass">
+      </span>
       <ng-template
         *ngIf="column.headerTemplate"
         [ngTemplateOutlet]="column.headerTemplate"
         [ngOutletContext]="cellContext">
       </ng-template>
-      <span
-        (click)="onSort()"
-        [class]="sortClass">
-      </span>
     </div>
   `,
   host: {
