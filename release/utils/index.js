@@ -16,5 +16,4 @@ __export(require("./throttle"));
 __export(require("./sort"));
 __export(require("./row-height-cache"));
 __export(require("./column-helper"));
-__export(require("./elm-from-point"));
 //# sourceMappingURL=index.js.map

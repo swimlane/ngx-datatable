@@ -1,12 +1,11 @@
 import { EventEmitter, QueryList, KeyValueDiffers, AfterContentInit, OnDestroy } from '@angular/core';
 import { DraggableDirective } from './draggable.directive';
 export declare class OrderableDirective implements AfterContentInit, OnDestroy {
-    private document;
     reorder: EventEmitter<any>;
     draggables: QueryList<DraggableDirective>;
     positions: any;
     differ: any;
-    constructor(differs: KeyValueDiffers, document: any);
+    constructor(differs: KeyValueDiffers);
     ngAfterContentInit(): void;
     ngOnDestroy(): void;
     updateSubscriptions(): void;

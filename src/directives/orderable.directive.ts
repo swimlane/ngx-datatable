@@ -3,7 +3,13 @@ import {
   QueryList, KeyValueDiffers, AfterContentInit, OnDestroy, Inject
 } from '@angular/core';
 import { DraggableDirective } from './draggable.directive';
-import { DOCUMENT } from '@angular/platform-browser';
+
+const getElementsFromPoint = (x: number, y: number) => {
+  if (document.msElementsFromPoint) {
+    return Array.from(document.msElementsFromPoint(x, y));
+  }
+  return document.elementsFromPoint(x, y);
+};
 
 @Directive({ selector: '[orderable]' })
 export class OrderableDirective implements AfterContentInit, OnDestroy {
@@ -16,7 +22,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
   positions: any;
   differ: any;
 
-  constructor(differs: KeyValueDiffers, @Inject(DOCUMENT) private document: any) {
+  constructor(differs: KeyValueDiffers) {
     this.differ = differs.find({}).create();
   }
 
@@ -93,9 +99,12 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
 
   isTarget(model: any, event: any): any {
     let i = 0;
-    const x = event.x || event.clientX;
-    const y = event.y || event.clientY;
-    const targets = this.document.elementsFromPoint(x, y);
+    /*
+    * Fixed problem with getting coordinates in IE
+    */
+    const x = event.clientX;
+    const y = event.clientY;
+    const targets = getElementsFromPoint(x, y);
 
     for (const prop in this.positions) {
       // current column position which throws event.

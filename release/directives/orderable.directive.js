@@ -2,10 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var draggable_directive_1 = require("./draggable.directive");
-var platform_browser_1 = require("@angular/platform-browser");
+var getElementsFromPoint = function (x, y) {
+    if (document.msElementsFromPoint) {
+        return Array.from(document.msElementsFromPoint(x, y));
+    }
+    return document.elementsFromPoint(x, y);
+};
 var OrderableDirective = (function () {
-    function OrderableDirective(differs, document) {
-        this.document = document;
+    function OrderableDirective(differs) {
         this.reorder = new core_1.EventEmitter();
         this.differ = differs.find({}).create();
     }
@@ -74,9 +78,12 @@ var OrderableDirective = (function () {
     };
     OrderableDirective.prototype.isTarget = function (model, event) {
         var i = 0;
-        var x = event.x || event.clientX;
-        var y = event.y || event.clientY;
-        var targets = this.document.elementsFromPoint(x, y);
+        /*
+        * Fixed problem with getting coordinates in IE
+        */
+        var x = event.clientX;
+        var y = event.clientY;
+        var targets = getElementsFromPoint(x, y);
         var _loop_1 = function (prop) {
             // current column position which throws event.
             var pos = this_1.positions[prop];
@@ -109,7 +116,6 @@ var OrderableDirective = (function () {
     /** @nocollapse */
     OrderableDirective.ctorParameters = function () { return [
         { type: core_1.KeyValueDiffers, },
-        { type: undefined, decorators: [{ type: core_1.Inject, args: [platform_browser_1.DOCUMENT,] },] },
     ]; };
     OrderableDirective.propDecorators = {
         'reorder': [{ type: core_1.Output },],
