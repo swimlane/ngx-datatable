@@ -91,12 +91,14 @@ export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[], rowSe
 
     // Maintain sectioning of rows independently of the sort.
     // Rows will sort within their sections.
-    const aSection = rowSections.get(a) || a.$$sectionIndex;
-    const bSection = rowSections.get(b) || b.$$sectionIndex;
-    if (aSection !== bSection) {
-      return +aSection < +bSection ? -1 : 1;
-    } else if (a.$$isSectionHeader || b.$$isSectionHeader) {
-      return a.$$isSectionHeader ? -1 : 1;
+    if (rowSections) {
+      const aSection = rowSections.get(a) || a.$$sectionIndex;
+      const bSection = rowSections.get(b) || b.$$sectionIndex;
+      if (aSection !== bSection) {
+        return +aSection < +bSection ? -1 : 1;
+      } else if (a.$$isSectionHeader || b.$$isSectionHeader) {
+        return a.$$isSectionHeader ? -1 : 1;
+      }
     }
 
     for(const cachedDir of cachedDirs) {
