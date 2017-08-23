@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var draggable_directive_1 = require("./draggable.directive");
 var platform_browser_1 = require("@angular/platform-browser");
-var OrderableDirective = (function () {
+var OrderableDirective = /** @class */ (function () {
     function OrderableDirective(differs, document) {
         this.document = document;
         this.reorder = new core_1.EventEmitter();

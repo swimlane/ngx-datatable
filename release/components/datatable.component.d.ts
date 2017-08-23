@@ -1,12 +1,14 @@
-import { ElementRef, EventEmitter, OnInit, QueryList, AfterViewInit, DoCheck, KeyValueDiffers, KeyValueDiffer } from '@angular/core';
+import { ElementRef, EventEmitter, OnInit, QueryList, AfterViewInit, KeyValueDiffers, KeyValueDiffer, ChangeDetectorRef } from '@angular/core';
 import { ScrollbarHelper } from '../services';
-import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types';
+import { ColumnMode, SortType, SelectionType, TableColumn, Section, SectionProp, ContextmenuType } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
+import { DatatableSectionHeaderDirective } from './section-header';
 import { DatatableFooterDirective } from './footer';
-export declare class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
+export declare class DatatableComponent implements OnInit, AfterViewInit {
     private scrollbarHelper;
+    private cd;
     /**
      * Gets the rows.
      *
@@ -33,6 +35,37 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      * @memberOf DatatableComponent
      */
     columns: TableColumn[];
+    /**
+     * Get section property
+     *
+     * @type {SectionProp}
+     * @memberOf DatatableComponent
+     */
+    /**
+     * Property to section rows on. Setting/clearing this will enable/disable sectioning.
+     *
+     * Example:
+     *
+     * `someField` or `some.field.nested`, 0 (numeric)
+     *
+     * @type {SectionProp}
+     * @memberOf DatatableComponent
+     */
+    sectionProp: SectionProp;
+    /**
+     * Get the sections.
+     *
+     * @readonly
+     * @type {Section[]}
+     * @memberOf DatatableComponent
+     */
+    /**
+     * Set the sections.
+     *
+     * @type {Section[]}
+     * @memberOf DatatableComponent
+     */
+    sections: Section[];
     /**
      * List of row objects that should be
      * represented as selected in the grid.
@@ -64,6 +97,13 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      * @memberOf DatatableComponent
      */
     rowHeight: number;
+    /**
+     * The section header height
+     *
+     * @type {number}
+     * @memberOf DatatableComponent
+     */
+    sectionHeaderHeight: number;
     /**
      * Type of column width distribution formula.
      * Example: flex, force, standard
@@ -405,6 +445,12 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      */
     rowDetail: DatatableRowDetailDirective;
     /**
+     * Section template gathered from the ContentChild
+     *
+     * @memberOf DatatableComponent
+     */
+    sectionHeader: DatatableSectionHeaderDirective;
+    /**
      * Footer template gathered from the ContentChild
      *
      * @type {DatatableFooterDirective}
@@ -434,14 +480,27 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
     pageSize: number;
     bodyHeight: number;
     rowCount: number;
+    recordRowCount: number;
     offsetX: number;
     rowDiffer: KeyValueDiffer<{}, {}>;
+    rowSections: Map<any, any>;
+    sectionCounts: number[];
     _count: number;
     _rows: any[];
     _internalRows: any[];
     _columns: TableColumn[];
     _columnTemplates: QueryList<DataTableColumnDirective>;
-    constructor(scrollbarHelper: ScrollbarHelper, element: ElementRef, differs: KeyValueDiffers);
+    _unsectionedRows: any[];
+    _sectionProp: SectionProp;
+    _sections: Section[];
+    constructor(scrollbarHelper: ScrollbarHelper, cd: ChangeDetectorRef, element: ElementRef, differs: KeyValueDiffers);
+    /**
+     * Scrolls to a specific row id (default id is the row object).
+     * If the row is in a section that is not expanded that section will be expanded.
+     *
+     * @param rowId
+     */
+    scrollToRow(rowId: any): void;
     /**
      * Lifecycle hook that is called after data-bound
      * properties of a directive are initialized.
@@ -456,12 +515,6 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      * @memberOf DatatableComponent
      */
     ngAfterViewInit(): void;
-    /**
-     * Lifecycle hook that is called when Angular dirty checks a directive.
-     *
-     * @memberOf DatatableComponent
-     */
-    ngDoCheck(): void;
     /**
      * Recalc's the sizes of the grid.
      *
@@ -482,6 +535,10 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      * @memberOf DatatableComponent
      */
     onWindowResize(): void;
+    /**
+     * If sectioning is enabled will reduce and index rows to configured sections
+     */
+    sectionRows(): void;
     /**
      * Recalulcates the column widths based on column width
      * distribution mode and scrollbar offsets.
@@ -550,6 +607,7 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
      * @memberOf DatatableComponent
      */
     calcRowCount(val?: any[]): number;
+    calcRecordRowCount(val?: any[]): number;
     /**
      * The header triggered a contextmenu event.
      *

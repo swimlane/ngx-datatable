@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var utils_1 = require("../../utils");
 var scroller_component_1 = require("./scroller.component");
-var DataTableBodyComponent = (function () {
+var DataTableBodyComponent = /** @class */ (function () {
     /**
      * Creates an instance of DataTableBodyComponent.
      *
@@ -17,6 +17,7 @@ var DataTableBodyComponent = (function () {
         this.activate = new core_1.EventEmitter();
         this.select = new core_1.EventEmitter();
         this.detailToggle = new core_1.EventEmitter();
+        this.sectionHeaderToggle = new core_1.EventEmitter();
         this.rowContextmenu = new core_1.EventEmitter(false);
         this.rowHeightsCache = new utils_1.RowHeightCache();
         this.temp = [];
@@ -38,6 +39,17 @@ var DataTableBodyComponent = (function () {
                 return 0;
             var rowHeight = _this.rowDetail.rowHeight;
             return typeof rowHeight === 'function' ? rowHeight(row, index) : rowHeight;
+        };
+        /**
+         * Get the height of the section header
+         * @param section
+         * @returns {number}
+         *
+         * @memberOf DataTableBodyComponent
+         */
+        this.getSectionHeaderHeight = function (section) {
+            var height = _this.sectionHeader ? _this.sectionHeader.height : _this.sectionHeaderHeight;
+            return typeof height === 'function' ? height(section) : height;
         };
         // declare fn here so we can get access to the `this` property
         this.rowTrackingFn = function (index, row) {
@@ -175,13 +187,27 @@ var DataTableBodyComponent = (function () {
     DataTableBodyComponent.prototype.ngOnInit = function () {
         var _this = this;
         if (this.rowDetail) {
-            this.listener = this.rowDetail.toggle
+            this.rowDetailListener = this.rowDetail.toggle
                 .subscribe(function (_a) {
                 var type = _a.type, value = _a.value;
                 if (type === 'row')
                     _this.toggleRowExpansion(value);
                 if (type === 'all')
                     _this.toggleAllRows(value);
+                // Refresh rows after toggle
+                // Fixes #883
+                _this.updateIndexes();
+                _this.updateRows();
+            });
+        }
+        if (this.sectionHeader) {
+            this.sectionHeaderListener = this.sectionHeader.toggle
+                .subscribe(function (_a) {
+                var type = _a.type, value = _a.value;
+                if (type === 'section')
+                    _this.toggleSectionExpansion(value);
+                if (type === 'all')
+                    _this.toggleAllSections(value);
             });
         }
     };
@@ -192,7 +218,9 @@ var DataTableBodyComponent = (function () {
      */
     DataTableBodyComponent.prototype.ngOnDestroy = function () {
         if (this.rowDetail)
-            this.listener.unsubscribe();
+            this.rowDetailListener.unsubscribe();
+        if (this.sectionHeader)
+            this.sectionHeaderListener.unsubscribe();
     };
     /**
      * Updates the Y offset given a new offset.
@@ -211,6 +239,36 @@ var DataTableBodyComponent = (function () {
             offset = this.rowHeightsCache.query(rowIndex - 1);
         }
         this.scroller.setOffset(offset || 0);
+    };
+    /**
+     * Scrolls to the given row id. If the row is in a section the section must already be expanded.
+     *
+     * @param rowId
+     */
+    DataTableBodyComponent.prototype.scrollToRow = function (rowId) {
+        var _this = this;
+        if (this.scrollbarV) {
+            // find row
+            var rowIndex = this.rows.findIndex(function (r) {
+                return _this.rowIdentity(r) === rowId;
+            });
+            var offset = this.rowHeightsCache.query(rowIndex - 1);
+            this.scroller.setOffset(offset);
+        }
+    };
+    /**
+     * Scrolls to the section header of the given section.
+     *
+     * @param sectionId
+     */
+    DataTableBodyComponent.prototype.scrollToSection = function (sectionId) {
+        if (this.scrollbarV && this.sections) {
+            var rowIndex = this.rows.findIndex(function (r) {
+                return r.$$isSectionHeader && r.$$sectionIndex === sectionId;
+            });
+            var offset = this.rowHeightsCache.query(rowIndex - 1);
+            this.scroller.setOffset(offset);
+        }
     };
     /**
      * Body was scrolled, this is mainly useful for
@@ -287,12 +345,10 @@ var DataTableBodyComponent = (function () {
      * @memberOf DataTableBodyComponent
      */
     DataTableBodyComponent.prototype.getRowHeight = function (row) {
-        var rowHeight = this.rowHeight;
-        // if its a function return it
-        if (typeof this.rowHeight === 'function') {
-            rowHeight = this.rowHeight(row);
+        if (row.$$isSectionHeader) {
+            return this.getSectionHeaderHeight(row);
         }
-        return rowHeight;
+        return typeof this.rowHeight === 'function' ? this.rowHeight(row) : this.rowHeight;
     };
     /**
      * Calculate row height based on the expanded state of the row.
@@ -402,6 +458,7 @@ var DataTableBodyComponent = (function () {
             this.rowHeightsCache.initCache({
                 rows: this.rows,
                 rowHeight: this.rowHeight,
+                sectionHeaderHeight: this.getSectionHeaderHeight,
                 detailRowHeight: this.getDetailRowHeight,
                 externalVirtual: this.scrollbarV && this.externalPaging,
                 rowCount: this.rowCount,
@@ -484,6 +541,53 @@ var DataTableBodyComponent = (function () {
         });
     };
     /**
+     * Toggle the Expansion of the section i.e. if the section is expanded then it will
+     * collapse and vice versa.
+     *
+     * @param {*} row The section header row for which the expansion needs to be toggled.
+     *
+     * @memberOf DataTableBodyComponent
+     */
+    DataTableBodyComponent.prototype.toggleSectionExpansion = function (section) {
+        // Capture the row index of the first row that is visible on the viewport.
+        var viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
+        var expanded = +this.sections[section].expanded;
+        // Update the toggled row and update thive nevere heights in the cache.
+        expanded = expanded ^= 1;
+        this.sectionHeaderToggle.emit({
+            sections: [section],
+            currentIndex: viewPortFirstRowIndex
+        });
+    };
+    /**
+     * Expand/Collapse all the row sections no matter what their state is.
+     *
+     * @param {boolean} expanded When true, all sections are expanded and when false, all sections will be collapsed.
+     *
+     * @memberOf DataTableBodyComponent
+     */
+    DataTableBodyComponent.prototype.toggleAllSections = function (expanded) {
+        // clear prev expansions
+        this.rowExpansions.clear();
+        var rowExpanded = expanded ? 1 : 0;
+        // Capture the row index of the first row that is visible on the viewport.
+        var viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
+        for (var _i = 0, _a = this.rows; _i < _a.length; _i++) {
+            var row = _a[_i];
+            this.rowExpansions.set(row, rowExpanded);
+        }
+        if (this.scrollbarV) {
+            // Refresh the full row heights cache since every row was affected.
+            this.recalcLayout();
+        }
+        // Emit all sections that have been expanded.
+        // todo - this shouldn't include all rows, just header rows
+        this.sectionHeaderToggle.emit({
+            rows: this.rows,
+            currentIndex: viewPortFirstRowIndex
+        });
+    };
+    /**
      * Recalculates the table
      *
      * @memberOf DataTableBodyComponent
@@ -501,8 +605,20 @@ var DataTableBodyComponent = (function () {
      * @memberof DataTableBodyComponent
      */
     DataTableBodyComponent.prototype.getRowExpanded = function (row) {
+        if (row.$$isSectionHeader) {
+            return false;
+        }
         var expanded = this.rowExpansions.get(row);
         return expanded === 1;
+    };
+    DataTableBodyComponent.prototype.getSectionExpanded = function (section) {
+        if (!section.$$isSectionHeader) {
+            return false;
+        }
+        return this.sections[section.$$sectionIndex].expanded;
+    };
+    DataTableBodyComponent.prototype.getSectionCount = function (sectionId) {
+        return this.sectionCounts ? this.sectionCounts[sectionId] : 0;
     };
     /**
      * Gets the row index of the item
@@ -517,7 +633,7 @@ var DataTableBodyComponent = (function () {
     DataTableBodyComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'datatable-body',
-                    template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [rows]=\"temp\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-row-wrapper\n          *ngFor=\"let row of temp; let i = index; trackBy: rowTrackingFn;\"\n          [ngStyle]=\"getRowsStyles(row)\"\n          [rowDetail]=\"rowDetail\"\n          [detailRowHeight]=\"getDetailRowHeight(row,i)\"\n          [row]=\"row\"\n          [rowIndex]=\"getRowIndex(row)\"\n          [expanded]=\"getRowExpanded(row)\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-row\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(row)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"getRowHeight(row)\"\n            [row]=\"row\"\n            [rowIndex]=\"getRowIndex(row)\"\n            [expanded]=\"getRowExpanded(row)\"\n            [rowClass]=\"rowClass\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-row>\n        </datatable-row-wrapper>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
+                    template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [rows]=\"temp\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-row-wrapper\n          *ngFor=\"let row of temp; let i = index; trackBy: rowTrackingFn;\"\n          [ngStyle]=\"getRowsStyles(row)\"\n          [rowDetail]=\"rowDetail\"\n          [detailRowHeight]=\"getDetailRowHeight(row,i)\"\n          [row]=\"row\"\n          [rowIndex]=\"getRowIndex(row)\"\n          [expanded]=\"getRowExpanded(row)\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-section-header \n            *ngIf=\"row.$$isSectionHeader\"\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(row)\"\n            [columns]=\"columns\"\n            [sectionHeaderTemplate]=\"sectionHeader\"\n            [sectionHeaderHeight]=\"getSectionHeaderHeight(row)\"\n            [row]=\"row\"\n            [rowIndex]=\"getRowIndex(row)\"\n            [expanded]=\"getSectionExpanded(row)\"\n            [sectionCount]=\"getSectionCount(row.$$sectionIndex)\"\n            [rowClass]=\"rowClass\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-section-header>\n          <datatable-body-row\n            *ngIf=\"!row.$$isSectionHeader\"\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(row)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"getRowHeight(row)\"\n            [row]=\"row\"\n            [rowIndex]=\"getRowIndex(row)\"\n            [expanded]=\"getRowExpanded(row)\"\n            [rowClass]=\"rowClass\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-row>\n        </datatable-row-wrapper>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
                     changeDetection: core_1.ChangeDetectionStrategy.OnPush,
                     host: {
                         class: 'datatable-body'
@@ -532,6 +648,9 @@ var DataTableBodyComponent = (function () {
         'loadingIndicator': [{ type: core_1.Input },],
         'externalPaging': [{ type: core_1.Input },],
         'rowHeight': [{ type: core_1.Input },],
+        'sectionHeaderHeight': [{ type: core_1.Input },],
+        'sectionHeader': [{ type: core_1.Input },],
+        'sections': [{ type: core_1.Input },],
         'offsetX': [{ type: core_1.Input },],
         'emptyMessage': [{ type: core_1.Input },],
         'selectionType': [{ type: core_1.Input },],
@@ -541,6 +660,7 @@ var DataTableBodyComponent = (function () {
         'selectCheck': [{ type: core_1.Input },],
         'trackByProp': [{ type: core_1.Input },],
         'rowClass': [{ type: core_1.Input },],
+        'sectionCounts': [{ type: core_1.Input },],
         'pageSize': [{ type: core_1.Input },],
         'rows': [{ type: core_1.Input },],
         'columns': [{ type: core_1.Input },],
@@ -554,6 +674,7 @@ var DataTableBodyComponent = (function () {
         'activate': [{ type: core_1.Output },],
         'select': [{ type: core_1.Output },],
         'detailToggle': [{ type: core_1.Output },],
+        'sectionHeaderToggle': [{ type: core_1.Output },],
         'rowContextmenu': [{ type: core_1.Output },],
         'scroller': [{ type: core_1.ViewChild, args: [scroller_component_1.ScrollerComponent,] },],
     };

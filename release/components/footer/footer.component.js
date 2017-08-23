@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var DataTableFooterComponent = (function () {
+var DataTableFooterComponent = /** @class */ (function () {
     function DataTableFooterComponent() {
         this.selectedCount = 0;
         this.page = new core_1.EventEmitter();

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var DataTableRowWrapperComponent = (function () {
+var DataTableRowWrapperComponent = /** @class */ (function () {
     function DataTableRowWrapperComponent() {
         this.expanded = false;
         this.rowContextmenu = new core_1.EventEmitter(false);

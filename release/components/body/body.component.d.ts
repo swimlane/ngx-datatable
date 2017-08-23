@@ -1,6 +1,6 @@
 import { EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { RowHeightCache } from '../../utils';
-import { SelectionType } from '../../types';
+import { SelectionType, Section } from '../../types';
 import { ScrollerComponent } from './scroller.component';
 export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     scrollbarV: boolean;
@@ -8,6 +8,9 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     loadingIndicator: boolean;
     externalPaging: boolean;
     rowHeight: number;
+    sectionHeaderHeight: number;
+    sectionHeader: any;
+    sections: Section[];
     offsetX: number;
     emptyMessage: string;
     selectionType: SelectionType;
@@ -17,6 +20,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     selectCheck: any;
     trackByProp: string;
     rowClass: any;
+    sectionCounts: number[];
     pageSize: number;
     rows: any[];
     columns: any[];
@@ -30,6 +34,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     activate: EventEmitter<any>;
     select: EventEmitter<any>;
     detailToggle: EventEmitter<any>;
+    sectionHeaderToggle: EventEmitter<any>;
     rowContextmenu: EventEmitter<{
         event: MouseEvent;
         row: any;
@@ -59,7 +64,8 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     indexes: any;
     columnGroupWidths: any;
     rowTrackingFn: any;
-    listener: any;
+    rowDetailListener: any;
+    sectionHeaderListener: any;
     rowIndexes: any;
     rowExpansions: any;
     _rows: any[];
@@ -94,6 +100,18 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      * @memberOf DataTableBodyComponent
      */
     updateOffsetY(offset?: number): void;
+    /**
+     * Scrolls to the given row id. If the row is in a section the section must already be expanded.
+     *
+     * @param rowId
+     */
+    scrollToRow(rowId: any): void;
+    /**
+     * Scrolls to the section header of the given section.
+     *
+     * @param sectionId
+     */
+    scrollToSection(sectionId: any): void;
     /**
      * Body was scrolled, this is mainly useful for
      * when a user is server-side pagination via virtual scroll.
@@ -145,6 +163,14 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      * @memberOf DataTableBodyComponent
      */
     getDetailRowHeight: (row?: any, index?: any) => number;
+    /**
+     * Get the height of the section header
+     * @param section
+     * @returns {number}
+     *
+     * @memberOf DataTableBodyComponent
+     */
+    getSectionHeaderHeight: (section?: any) => number;
     /**
      * Calculates the styles for the row so that the rows can be moved in 2D space
      * during virtual scroll inside the DOM.   In the below case the Y position is
@@ -216,6 +242,23 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      */
     toggleAllRows(expanded: boolean): void;
     /**
+     * Toggle the Expansion of the section i.e. if the section is expanded then it will
+     * collapse and vice versa.
+     *
+     * @param {*} row The section header row for which the expansion needs to be toggled.
+     *
+     * @memberOf DataTableBodyComponent
+     */
+    toggleSectionExpansion(section: any): void;
+    /**
+     * Expand/Collapse all the row sections no matter what their state is.
+     *
+     * @param {boolean} expanded When true, all sections are expanded and when false, all sections will be collapsed.
+     *
+     * @memberOf DataTableBodyComponent
+     */
+    toggleAllSections(expanded: boolean): void;
+    /**
      * Recalculates the table
      *
      * @memberOf DataTableBodyComponent
@@ -229,6 +272,8 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      * @memberof DataTableBodyComponent
      */
     getRowExpanded(row: any): boolean;
+    getSectionExpanded(section: any): boolean;
+    getSectionCount(sectionId: number): number;
     /**
      * Gets the row index of the item
      *

@@ -1,5 +1,5 @@
-import { TableColumnProp } from '../types';
-export declare type ValueGetter = (obj: any, prop: TableColumnProp) => any;
+import { TableColumnProp, SectionProp } from '../types';
+export declare type ValueGetter = (obj: any, prop: TableColumnProp | SectionProp) => any;
 /**
  * Always returns the empty string ''
  * @returns {string}
@@ -9,7 +9,7 @@ export declare function emptyStringGetter(): string;
  * Returns the appropriate getter function for this kind of prop.
  * If prop == null, returns the emptyStringGetter.
  */
-export declare function getterForProp(prop: TableColumnProp): ValueGetter;
+export declare function getterForProp(prop: TableColumnProp | SectionProp): ValueGetter;
 /**
  * Returns the value at this numeric index.
  * @param row array of values

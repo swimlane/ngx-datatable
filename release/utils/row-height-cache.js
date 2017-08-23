@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * https://github.com/mikolalysenko/fenwick-tree
  *
  */
-var RowHeightCache = (function () {
+var RowHeightCache = /** @class */ (function () {
     function RowHeightCache() {
         /**
          * Tree Array stores the cumulative information of the row heights to perform efficient
@@ -32,7 +32,7 @@ var RowHeightCache = (function () {
      * @param detailRowHeight The detail row height.
      */
     RowHeightCache.prototype.initCache = function (details) {
-        var rows = details.rows, rowHeight = details.rowHeight, detailRowHeight = details.detailRowHeight, externalVirtual = details.externalVirtual, rowCount = details.rowCount, rowIndexes = details.rowIndexes, rowExpansions = details.rowExpansions;
+        var rows = details.rows, rowHeight = details.rowHeight, sectionHeaderHeight = details.sectionHeaderHeight, detailRowHeight = details.detailRowHeight, externalVirtual = details.externalVirtual, rowCount = details.rowCount, rowIndexes = details.rowIndexes, rowExpansions = details.rowExpansions;
         var isFn = typeof rowHeight === 'function';
         var isDetailFn = typeof detailRowHeight === 'function';
         if (!isFn && isNaN(rowHeight)) {
@@ -49,10 +49,8 @@ var RowHeightCache = (function () {
         }
         for (var i = 0; i < n; ++i) {
             var row = rows[i];
-            var currentRowHeight = rowHeight;
-            if (isFn) {
-                currentRowHeight = rowHeight(row);
-            }
+            var currentRowHeight = row.$$isSectionHeader ? sectionHeaderHeight : rowHeight;
+            currentRowHeight = typeof currentRowHeight === 'function' ? currentRowHeight(row) : currentRowHeight;
             // Add the detail row height to the already expanded rows.
             // This is useful for the table that goes through a filter or sort.
             var expanded = rowExpansions.get(row);

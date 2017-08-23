@@ -6,7 +6,7 @@ export function sectionRows(rows: any[], prop: SectionProp, sections: Section[])
 
   // index sections by the section property value for fast lookup
   const sectionByValue = {};
-  const sectionCounts = [];
+  const sectionCounts: any[] = [];
   for (const sectionIndex in sections) {
     sectionByValue[sections[sectionIndex].propValue] = {
       index: sectionIndex,
@@ -38,7 +38,7 @@ export function sectionRows(rows: any[], prop: SectionProp, sections: Section[])
     sectionedRows.push(sectionHeader);
   }
 
-  sectionedRows = sectionedRows.sort((a, b) => {
+  sectionedRows = sectionedRows.sort((a: any, b: any) => {
     const aSection = a.$$isSectionHeader ? a.$$sectionIndex : rowSections.get(a);
     const bSection = b.$$isSectionHeader ? b.$$sectionIndex : rowSections.get(b);
     if (aSection === bSection) {

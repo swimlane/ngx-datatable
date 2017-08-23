@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./body.component"));
 __export(require("./body-cell.component"));
 __export(require("./body-row.component"));
+__export(require("./body-section-header.component"));
 __export(require("./progress-bar.component"));
 __export(require("./scroller.component"));
 __export(require("./body-row-wrapper.component"));

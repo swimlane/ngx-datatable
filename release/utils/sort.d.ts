@@ -23,4 +23,4 @@ export declare function orderByComparator(a: any, b: any): number;
  * @param {any[]} dirs
  * @returns
  */
-export declare function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[];
+export declare function sortRows(rows: any[], columns: any[], dirs: SortPropDir[], rowSections: Map<any, any>): any[];

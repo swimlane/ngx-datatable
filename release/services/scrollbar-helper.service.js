@@ -9,7 +9,7 @@ var platform_browser_1 = require("@angular/platform-browser");
  * @export
  * @class ScrollbarHelper
  */
-var ScrollbarHelper = (function () {
+var ScrollbarHelper = /** @class */ (function () {
     function ScrollbarHelper(document) {
         this.document = document;
         this.width = this.getWidth();

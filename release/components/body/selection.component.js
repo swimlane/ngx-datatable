@@ -3,13 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var utils_1 = require("../../utils");
 var types_1 = require("../../types");
-var DataTableSelectionComponent = (function () {
+var DataTableSelectionComponent = /** @class */ (function () {
     function DataTableSelectionComponent() {
         this.activate = new core_1.EventEmitter();
         this.select = new core_1.EventEmitter();
     }
     DataTableSelectionComponent.prototype.selectRow = function (event, index, row) {
-        if (!this.selectEnabled)
+        if (!this.selectEnabled || row.$$isSectionHeader)
             return;
         var chkbox = this.selectionType === types_1.SelectionType.checkbox;
         var multi = this.selectionType === types_1.SelectionType.multi;

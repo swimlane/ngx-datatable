@@ -6,7 +6,7 @@ require("rxjs/add/observable/fromEvent");
 var components_1 = require("./components");
 var directives_1 = require("./directives");
 var services_1 = require("./services");
-var NgxDatatableModule = (function () {
+var NgxDatatableModule = /** @class */ (function () {
     function NgxDatatableModule() {
     }
     NgxDatatableModule.decorators = [
@@ -34,9 +34,12 @@ var NgxDatatableModule = (function () {
                         components_1.DataTablePagerComponent,
                         components_1.ProgressBarComponent,
                         components_1.DataTableBodyRowComponent,
+                        components_1.DataTableBodySectionHeaderComponent,
                         components_1.DataTableRowWrapperComponent,
                         components_1.DatatableRowDetailDirective,
                         components_1.DatatableRowDetailTemplateDirective,
+                        components_1.DatatableSectionHeaderDirective,
+                        components_1.DatatableSectionHeaderTemplateDirective,
                         components_1.DataTableBodyCellComponent,
                         components_1.DataTableSelectionComponent,
                         components_1.DataTableColumnHeaderDirective,
@@ -47,6 +50,8 @@ var NgxDatatableModule = (function () {
                         components_1.DatatableComponent,
                         components_1.DatatableRowDetailDirective,
                         components_1.DatatableRowDetailTemplateDirective,
+                        components_1.DatatableSectionHeaderDirective,
+                        components_1.DatatableSectionHeaderTemplateDirective,
                         components_1.DataTableColumnDirective,
                         components_1.DataTableColumnHeaderDirective,
                         components_1.DataTableColumnCellDirective,

@@ -3,11 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var utils_1 = require("../../utils");
 var services_1 = require("../../services");
-var DataTableBodyRowComponent = (function () {
-    function DataTableBodyRowComponent(scrollbarHelper, element) {
+var DataTableBodyRowComponent = /** @class */ (function () {
+    function DataTableBodyRowComponent(differs, scrollbarHelper, cd, element) {
+        this.differs = differs;
         this.scrollbarHelper = scrollbarHelper;
+        this.cd = cd;
         this.activate = new core_1.EventEmitter();
         this.element = element.nativeElement;
+        this.rowDiffer = differs.find({}).create(null);
     }
     Object.defineProperty(DataTableBodyRowComponent.prototype, "columns", {
         get: function () {
@@ -66,6 +69,11 @@ var DataTableBodyRowComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    DataTableBodyRowComponent.prototype.ngDoCheck = function () {
+        if (this.rowDiffer.diff(this.row)) {
+            this.cd.markForCheck();
+        }
+    };
     DataTableBodyRowComponent.prototype.trackByGroups = function (index, colGroup) {
         return colGroup.type;
     };
@@ -129,7 +137,9 @@ var DataTableBodyRowComponent = (function () {
     ];
     /** @nocollapse */
     DataTableBodyRowComponent.ctorParameters = function () { return [
+        { type: core_1.KeyValueDiffers, },
         { type: services_1.ScrollbarHelper, },
+        { type: core_1.ChangeDetectorRef, },
         { type: core_1.ElementRef, },
     ]; };
     DataTableBodyRowComponent.propDecorators = {

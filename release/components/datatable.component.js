@@ -24,10 +24,12 @@ var types_1 = require("../types");
 var body_1 = require("./body");
 var columns_1 = require("./columns");
 var row_detail_1 = require("./row-detail");
+var section_header_1 = require("./section-header");
 var footer_1 = require("./footer");
-var DatatableComponent = (function () {
-    function DatatableComponent(scrollbarHelper, element, differs) {
+var DatatableComponent = /** @class */ (function () {
+    function DatatableComponent(scrollbarHelper, cd, element, differs) {
         this.scrollbarHelper = scrollbarHelper;
+        this.cd = cd;
         /**
          * List of row objects that should be
          * represented as selected in the grid.
@@ -59,6 +61,13 @@ var DatatableComponent = (function () {
          * @memberOf DatatableComponent
          */
         this.rowHeight = 30;
+        /**
+         * The section header height
+         *
+         * @type {number}
+         * @memberOf DatatableComponent
+         */
+        this.sectionHeaderHeight = 30;
         /**
          * Type of column width distribution formula.
          * Example: flex, force, standard
@@ -246,6 +255,7 @@ var DatatableComponent = (function () {
          */
         this.tableContextmenu = new core_1.EventEmitter(false);
         this.rowCount = 0;
+        this.recordRowCount = 0;
         this.offsetX = 0;
         this._count = 0;
         // get ref to elm for measuring
@@ -269,16 +279,28 @@ var DatatableComponent = (function () {
          * @memberOf DatatableComponent
          */
         set: function (val) {
+            // section the rows
+            if (this._sectionProp) {
+                this._unsectionedRows = val;
+                var _a = utils_1.sectionRows(val, this._sectionProp, this._sections), rows = _a.rows, rowSections = _a.rowSections, sectionCounts = _a.sectionCounts;
+                this.rowSections = rowSections;
+                this.sectionCounts = sectionCounts;
+                val = rows;
+            }
+            else {
+                this._unsectionedRows = null;
+            }
             this._rows = val;
             // auto sort on new updates
             if (!this.externalSorting) {
-                this._internalRows = utils_1.sortRows(val, this.columns, this.sorts);
+                this._internalRows = utils_1.sortRows(val, this.columns, this.sorts, this.rowSections);
             }
             else {
                 this._internalRows = val.slice();
             }
             // recalculate sizes/etc
             this.recalculate();
+            this.cd.markForCheck();
         },
         enumerable: true,
         configurable: true
@@ -305,6 +327,71 @@ var DatatableComponent = (function () {
                 this.recalculateColumns(val);
             }
             this._columns = val;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DatatableComponent.prototype, "sectionProp", {
+        /**
+         * Get section property
+         *
+         * @type {SectionProp}
+         * @memberOf DatatableComponent
+         */
+        get: function () {
+            return this._sectionProp;
+        },
+        /**
+         * Property to section rows on. Setting/clearing this will enable/disable sectioning.
+         *
+         * Example:
+         *
+         * `someField` or `some.field.nested`, 0 (numeric)
+         *
+         * @type {SectionProp}
+         * @memberOf DatatableComponent
+         */
+        set: function (val) {
+            this._sectionProp = val;
+            if (val) {
+                // if transitioning from sections disabled to enabled
+                if (!this._sectionProp) {
+                    this._unsectionedRows = this._rows;
+                }
+                this.sectionRows();
+            }
+            else {
+                // if transitioning from sections enabled to disabled
+                if (this._unsectionedRows) {
+                    // update rows to unsectioned set using row setter
+                    this.rows = this._unsectionedRows;
+                }
+                this._unsectionedRows = null;
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DatatableComponent.prototype, "sections", {
+        /**
+         * Get the sections.
+         *
+         * @readonly
+         * @type {Section[]}
+         * @memberOf DatatableComponent
+         */
+        get: function () {
+            return this._sections;
+        },
+        /**
+         * Set the sections.
+         *
+         * @type {Section[]}
+         * @memberOf DatatableComponent
+         */
+        set: function (val) {
+            this._sections = val;
+            this.sectionRows();
         },
         enumerable: true,
         configurable: true
@@ -532,6 +619,45 @@ var DatatableComponent = (function () {
         configurable: true
     });
     /**
+     * Scrolls to a specific row id (default id is the row object).
+     * If the row is in a section that is not expanded that section will be expanded.
+     *
+     * @param rowId
+     */
+    DatatableComponent.prototype.scrollToRow = function (rowId) {
+        var _this = this;
+        if (this.scrollbarV) {
+            // if sections enabled
+            if (this.sectionProp) {
+                // lookup row index from full row set
+                var rowIndex = this._unsectionedRows.findIndex(function (r) {
+                    return _this.rowIdentity(r) === rowId;
+                });
+                var sectionId = this.rowSections.get(this._unsectionedRows[rowIndex]);
+                // if we found a section containing the row
+                if (sectionId) {
+                    var section = this.sections[sectionId];
+                    // if the section is collapsed
+                    if (!section.expanded) {
+                        // expand the section first
+                        this.sections[sectionId].expanded = true;
+                        this.sectionRows();
+                        // do scroll on next cycle
+                        setTimeout(function () {
+                            _this.bodyComponent.scrollToRow(rowId);
+                        }, 0);
+                    }
+                    else {
+                        this.bodyComponent.scrollToRow(rowId);
+                    }
+                }
+            }
+            else {
+                this.bodyComponent.scrollToRow(rowId);
+            }
+        }
+    };
+    /**
      * Lifecycle hook that is called after data-bound
      * properties of a directive are initialized.
      *
@@ -552,11 +678,11 @@ var DatatableComponent = (function () {
     DatatableComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
         if (!this.externalSorting) {
-            this._internalRows = utils_1.sortRows(this._rows, this.columns, this.sorts);
+            this._internalRows = utils_1.sortRows(this._rows, this.columns, this.sorts, this.rowSections);
         }
         // this has to be done to prevent the change detection
         // tree from freaking out because we are readjusting
-        setTimeout(function () {
+        requestAnimationFrame(function () {
             _this.recalculate();
             // emit page for virtual server-side kickoff
             if (_this.externalPaging && _this.scrollbarV) {
@@ -568,19 +694,6 @@ var DatatableComponent = (function () {
                 });
             }
         });
-    };
-    /**
-     * Lifecycle hook that is called when Angular dirty checks a directive.
-     *
-     * @memberOf DatatableComponent
-     */
-    DatatableComponent.prototype.ngDoCheck = function () {
-        if (this.rowDiffer.diff(this.rows)) {
-            if (!this.externalSorting) {
-                this._internalRows = utils_1.sortRows(this._rows, this.columns, this.sorts);
-            }
-            this.recalculatePages();
-        }
     };
     /**
      * Recalc's the sizes of the grid.
@@ -606,6 +719,23 @@ var DatatableComponent = (function () {
      */
     DatatableComponent.prototype.onWindowResize = function () {
         this.recalculate();
+    };
+    /**
+     * If sectioning is enabled will reduce and index rows to configured sections
+     */
+    DatatableComponent.prototype.sectionRows = function () {
+        if (this._sectionProp) {
+            (_a = utils_1.sectionRows(this._unsectionedRows, this._sectionProp, this.sections), this._rows = _a.rows, this.rowSections = _a.rowSections, this.sectionCounts = _a.sectionCounts);
+            // apply update to internal rows
+            if (!this.externalSorting) {
+                this._internalRows = utils_1.sortRows(this._rows, this.columns, this.sorts, this.rowSections);
+            }
+            else {
+                this._internalRows = this._rows.slice();
+            }
+            this.recalculate();
+        }
+        var _a;
     };
     /**
      * Recalulcates the column widths based on column width
@@ -664,6 +794,7 @@ var DatatableComponent = (function () {
     DatatableComponent.prototype.recalculatePages = function () {
         this.pageSize = this.calcPageSize();
         this.rowCount = this.calcRowCount();
+        this.recordRowCount = this.calcRecordRowCount();
     };
     /**
      * Body triggered a page event.
@@ -750,6 +881,15 @@ var DatatableComponent = (function () {
             if (!val)
                 return 0;
             return val.length;
+        }
+        return this.count;
+    };
+    DatatableComponent.prototype.calcRecordRowCount = function (val) {
+        if (val === void 0) { val = this.rows; }
+        if (!this.externalPaging) {
+            if (!val)
+                return 0;
+            return this._unsectionedRows ? this._unsectionedRows.length : val.length;
         }
         return this.count;
     };
@@ -842,7 +982,7 @@ var DatatableComponent = (function () {
         // the rows again on the 'push' detection...
         if (this.externalSorting === false) {
             // don't use normal setter so we don't resort
-            this._internalRows = utils_1.sortRows(this.rows, this.columns, sorts);
+            this._internalRows = utils_1.sortRows(this.rows, this.columns, sorts, this.rowSections);
         }
         this.sorts = sorts;
         // Always go to first page when sorting to see the newly sorted data
@@ -884,7 +1024,7 @@ var DatatableComponent = (function () {
     DatatableComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'ngx-datatable',
-                    template: "\n    <div\n      visibilityObserver\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"columns\"\n        [headerHeight]=\"headerHeight\"\n        [reorderable]=\"reorderable\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        [selectionType]=\"selectionType\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\"\n        (columnContextmenu)=\"onColumnContextmenu($event)\">\n      </datatable-header>\n      <datatable-body\n        [rows]=\"_internalRows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [externalPaging]=\"externalPaging\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"columns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetail]=\"rowDetail\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [rowClass]=\"rowClass\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"onRowContextmenu($event)\"\n        (select)=\"onBodySelect($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [footerTemplate]=\"footer\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [selectedCount]=\"selected.length\"\n        [selectedMessage]=\"!!selectionType && messages.selectedMessage\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
+                    template: "\n    <div\n      visibilityObserver\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"columns\"\n        [headerHeight]=\"headerHeight\"\n        [reorderable]=\"reorderable\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        [selectionType]=\"selectionType\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\"\n        (columnContextmenu)=\"onColumnContextmenu($event)\">\n      </datatable-header>\n      <datatable-body\n        [rows]=\"_internalRows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [externalPaging]=\"externalPaging\"\n        [rowHeight]=\"rowHeight\"\n        [sectionHeaderHeight]=\"sectionHeaderHeight\"\n        [sectionHeader]=\"sectionHeader\"\n        [sections]=\"sections\"\n        [sectionCounts]=\"sectionCounts\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"columns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetail]=\"rowDetail\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [rowClass]=\"rowClass\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"onRowContextmenu($event)\"\n        (select)=\"onBodySelect($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"recordRowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [footerTemplate]=\"footer\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [selectedCount]=\"selected.length\"\n        [selectedMessage]=\"!!selectionType && messages.selectedMessage\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
                     changeDetection: core_1.ChangeDetectionStrategy.OnPush,
                     encapsulation: core_1.ViewEncapsulation.None,
                     styleUrls: ['./datatable.component.css'],
@@ -896,16 +1036,20 @@ var DatatableComponent = (function () {
     /** @nocollapse */
     DatatableComponent.ctorParameters = function () { return [
         { type: services_1.ScrollbarHelper, },
+        { type: core_1.ChangeDetectorRef, },
         { type: core_1.ElementRef, },
         { type: core_1.KeyValueDiffers, },
     ]; };
     DatatableComponent.propDecorators = {
         'rows': [{ type: core_1.Input },],
         'columns': [{ type: core_1.Input },],
+        'sectionProp': [{ type: core_1.Input },],
+        'sections': [{ type: core_1.Input },],
         'selected': [{ type: core_1.Input },],
         'scrollbarV': [{ type: core_1.Input },],
         'scrollbarH': [{ type: core_1.Input },],
         'rowHeight': [{ type: core_1.Input },],
+        'sectionHeaderHeight': [{ type: core_1.Input },],
         'columnMode': [{ type: core_1.Input },],
         'headerHeight': [{ type: core_1.Input },],
         'footerHeight': [{ type: core_1.Input },],
@@ -945,6 +1089,7 @@ var DatatableComponent = (function () {
         'isMultiClickSelection': [{ type: core_1.HostBinding, args: ['class.multi-click-selection',] },],
         'columnTemplates': [{ type: core_1.ContentChildren, args: [columns_1.DataTableColumnDirective,] },],
         'rowDetail': [{ type: core_1.ContentChild, args: [row_detail_1.DatatableRowDetailDirective,] },],
+        'sectionHeader': [{ type: core_1.ContentChild, args: [section_header_1.DatatableSectionHeaderDirective,] },],
         'footer': [{ type: core_1.ContentChild, args: [footer_1.DatatableFooterDirective,] },],
         'bodyComponent': [{ type: core_1.ViewChild, args: [body_1.DataTableBodyComponent,] },],
         'onWindowResize': [{ type: core_1.HostListener, args: ['window:resize',] },],

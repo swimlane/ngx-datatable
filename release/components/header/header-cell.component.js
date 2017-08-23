@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var types_1 = require("../../types");
 var utils_1 = require("../../utils");
-var DataTableHeaderCellComponent = (function () {
+var DataTableHeaderCellComponent = /** @class */ (function () {
     function DataTableHeaderCellComponent(cd) {
         this.cd = cd;
         this.sort = new core_1.EventEmitter();

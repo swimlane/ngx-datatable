@@ -14,6 +14,7 @@ __export(require("./selection"));
 __export(require("./translate"));
 __export(require("./throttle"));
 __export(require("./sort"));
+__export(require("./section"));
 __export(require("./row-height-cache"));
 __export(require("./column-helper"));
 __export(require("./elm-from-point"));
