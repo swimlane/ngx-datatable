@@ -68,7 +68,8 @@ export class DataTableSelectionComponent {
     this.prevIndex = index;
 
     this.select.emit({
-      selected
+        selected,
+        rowIndex: index
     });
   }
 
