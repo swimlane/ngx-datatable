@@ -7,7 +7,6 @@ import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
 import { mouseEvent } from '../../events';
 
-//      [groupRowsBy]="groupRowsBy"
 @Component({
   selector: 'datatable-body',
   template: `
@@ -126,6 +125,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() rowClass: any;
   @Input() groupedRows: any;
   @Input() customGroupStyle: {};
+  @Input() groupExpansionDefault: boolean;
 
   _groupRowsBy: string;
   _groupColumns: any[];
@@ -324,6 +324,20 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
           this.cd.markForCheck();
         });
     }
+
+    if (this.groupHeader) {
+      this.listener = this.groupHeader.toggle
+        .subscribe(({ type, value }: { type: string, value: any }) => {
+          if (type === 'group') this.toggleRowExpansion(value);
+          if (type === 'all') this.toggleAllRows(value);
+
+          // Refresh rows after toggle
+          // Fixes #883
+          this.updateIndexes();
+          this.updateRows();
+          this.cd.markForCheck();
+        });              
+    }             
   }
 
   /**
@@ -331,6 +345,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   ngOnDestroy(): void {
     if (this.rowDetail) this.listener.unsubscribe();
+    if (this.groupHeader) this.listener.unsubscribe();
   }
 
   /**
@@ -728,9 +743,16 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   }
   
   /**
-   * Returns if the row was expanded
+   * Returns if the row was expanded and set default row expansion when row expansion is empty
    */
   getRowExpanded(row: any): boolean {
+    
+    if (this.rowExpansions.size === 0 && this.groupExpansionDefault) {
+      for (const group of this.groupedRows) {
+        this.rowExpansions.set(group, 1);
+      }
+    }    
+
     const expanded = this.rowExpansions.get(row);
     return expanded === 1;
   }

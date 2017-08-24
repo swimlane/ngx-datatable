@@ -51,6 +51,7 @@ import { mouseEvent } from '../events';
         [groupedRows]="groupedRows"
         [customGroupStyle]="customGroupStyle"
         [rows]="_internalRows"
+        [groupExpansionDefault]="groupExpansionDefault"
         [scrollbarV]="scrollbarV"
         [scrollbarH]="scrollbarH"
         [loadingIndicator]="loadingIndicator"
@@ -381,6 +382,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    *    }
    */
   @Input() selectCheck: any;
+
+  /**
+   * A boolean you can use to set the detault behaviour of rows and groups
+   * whether they will start expanded or not. If ommited the default is NOT expanded.
+   *
+   */
+  @Input() groupExpansionDefault: boolean = false;
 
   /**
    * Property to which you can use for custom tracking of rows.

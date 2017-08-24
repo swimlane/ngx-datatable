@@ -24,7 +24,8 @@ import { NgStyle } from '@angular/common';
         [footerHeight]="50"
         [rowHeight]="40"
         [customGroupStyle]="{'border-bottom': '1px solid black'}"
-        [limit]="4">
+        [limit]="4"
+        [groupExpansionDefault]="true">
 
         <!-- Group Header Template -->
         <ngx-datatable-group-header [rowHeight]="50" #myGroupHeader (toggle)="onDetailToggle($event)">
@@ -35,7 +36,7 @@ import { NgStyle } from '@angular/common';
                 [class.datatable-icon-right]="!expanded"
                 [class.datatable-icon-down]="expanded"
                 title="Expand/Collapse Group"
-                (click)="toggleExpandRow(group)">
+                (click)="toggleExpandGroup(group)">
                 <b>Age: {{group.value[0].age}}</b>
               </a>                          
             </div>
@@ -135,6 +136,7 @@ export class RowGroupingComponent {
     this.fetch((data) => {
       this.rows = data;
     });
+
   }
 
   fetch(cb) {
