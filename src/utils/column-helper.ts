@@ -42,6 +42,10 @@ export function setColumnDefaults(columns: TableColumn[]) {
       column.draggable = true;
     }
 
+    if(!column.hasOwnProperty('isGroup')) {
+      column.isGroup = false;
+    }
+
     if(!column.hasOwnProperty('canAutoResize')) {
       column.canAutoResize = true;
     }

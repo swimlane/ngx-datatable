@@ -51,6 +51,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
           <li>
             <h4>Rows</h4>
             <ul>
+              <li><a href="#row-grouping" (click)="state='row-grouping'">Row Grouping</a></li>            
               <li><a href="#" (click)="state=''">Fluid Row Height</a></li>
               <li><a href="#basic-fixed" (click)="state='basic-fixed'">Fixed Row Height</a></li>
               <li><a href="#dynamic" (click)="state='dynamic'">Dynamic Row Height</a></li>
@@ -127,8 +128,9 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
         <dynamic-height-demo *ngIf="state === 'dynamic'"></dynamic-height-demo>
         <basic-dark-theme-demo *ngIf="state === 'dark'"></basic-dark-theme-demo>
         <footer-demo *ngIf="state === 'footer'"></footer-demo>
-
+        
         <!-- Paging -->
+        <row-grouping-demo *ngIf="state === 'row-grouping'"></row-grouping-demo>
         <client-paging-demo *ngIf="state === 'client-paging'"></client-paging-demo>
         <server-paging-demo *ngIf="state === 'server-paging'"></server-paging-demo>
         <server-scrolling-demo *ngIf="state === 'server-scrolling'"></server-scrolling-demo>

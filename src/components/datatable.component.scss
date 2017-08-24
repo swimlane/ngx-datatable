@@ -69,6 +69,12 @@
           white-space: nowrap;
           text-overflow: ellipsis;
         }
+
+        .datatable-body-group-cell {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }        
       }
     }
   }
@@ -110,6 +116,7 @@
 
   .datatable-row-left,
   .datatable-row-center,
+  .datatable-row-grouping,
   .datatable-row-right {
     position:relative;
   }
