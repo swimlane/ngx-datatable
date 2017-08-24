@@ -37,7 +37,7 @@ export function columnGroupWidths(groups: any, all: any) {
     left: columnTotalWidth(groups.left),
     center: columnTotalWidth(groups.center),
     right: columnTotalWidth(groups.right),
-    total: columnTotalWidth(all)
+    total: Math.floor(columnTotalWidth(all))
   };
 }
 
