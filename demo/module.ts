@@ -13,6 +13,7 @@ import { HorzVertScrolling } from './basic/scrolling.component';
 import { MultipleTablesComponent } from './basic/multiple.component';
 import { FullScreenComponent } from './basic/fullscreen.component';
 import { RowDetailsComponent } from './basic/row-detail.component';
+import { ResponsiveComponent } from './basic/responsive.component';
 import { FilterBarComponent } from './basic/filter.component';
 import { TabsDemoComponent } from './basic/tabs.component';
 import { LiveDataComponent } from './basic/live.component';
@@ -66,6 +67,7 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     HorzVertScrolling,
     MultipleTablesComponent,
     RowDetailsComponent,
+    ResponsiveComponent,
     ClientPagingComponent,
     ServerPagingComponent,
     ServerScrollingComponent,

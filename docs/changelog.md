@@ -1,4 +1,12 @@
 # Changelog
+
+## 10.1.0
+- Feature: Row Hover Event
+- Bug: Columns are no longer mutated!
+- Bug: Fixes for Angular v5!
+- Bug: Fix expand all row detail not working #917
+- Chore: Remove useless jsdoc comments
+
 ## 10.0.5
 - Style: Material styles closer to spec
 - Bug: Non-sortable header showing pointer cursor

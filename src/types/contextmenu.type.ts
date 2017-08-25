@@ -1,4 +1,4 @@
 export enum ContextmenuType {
-  header = 'header' as any,
-  body = 'body' as any
+  header = 'header',
+  body = 'body'
 }

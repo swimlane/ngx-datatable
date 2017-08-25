@@ -4,9 +4,6 @@ var types_1 = require("../types");
 var column_prop_getters_1 = require("./column-prop-getters");
 /**
  * Gets the next sort direction
- * @param  {SortType}      sortType
- * @param  {SortDirection} currentSort
- * @return {SortDirection}
  */
 function nextSortDir(sortType, current) {
     if (sortType === types_1.SortType.single) {
@@ -33,9 +30,6 @@ exports.nextSortDir = nextSortDir;
 /**
  * Adapted from fueld-ui on 6/216
  * https://github.com/FuelInteractive/fuel-ui/tree/master/src/pipes/OrderBy
- * @param  {any}    a
- * @param  {any}    b
- * @return {number} position
  */
 function orderByComparator(a, b) {
     if (a === null || typeof a === 'undefined')
@@ -71,16 +65,12 @@ function orderByComparator(a, b) {
 exports.orderByComparator = orderByComparator;
 /**
  * Sorts the rows
- *
- * @export
- * @param {any[]} rows
- * @param {any[]} columns
- * @param {any[]} dirs
- * @returns
  */
 function sortRows(rows, columns, dirs) {
-    if (!rows || !dirs || !dirs.length || !columns)
-        return rows;
+    if (!rows)
+        return [];
+    if (!dirs || !dirs.length || !columns)
+        return rows.slice();
     var temp = rows.slice();
     var cols = columns.reduce(function (obj, col) {
         if (col.comparator && typeof col.comparator === 'function') {

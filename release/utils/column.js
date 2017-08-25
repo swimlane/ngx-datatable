@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Returns the columns by pin.
- * @param {array} cols
  */
 function columnsByPin(cols) {
     var ret = {
@@ -29,8 +28,6 @@ function columnsByPin(cols) {
 exports.columnsByPin = columnsByPin;
 /**
  * Returns the widths of all group sets of a column
- * @param {object} groups
- * @param {array} all
  */
 function columnGroupWidths(groups, all) {
     return {
@@ -43,8 +40,6 @@ function columnGroupWidths(groups, all) {
 exports.columnGroupWidths = columnGroupWidths;
 /**
  * Calculates the total width of all columns and their groups
- * @param {array} columns
- * @param {string} prop width to get
  */
 function columnTotalWidth(columns, prop) {
     var totalWidth = 0;
@@ -61,8 +56,6 @@ function columnTotalWidth(columns, prop) {
 exports.columnTotalWidth = columnTotalWidth;
 /**
  * Calculates the total width of all columns and their groups
- * @param {array} columns
- * @param {string} property width to get
  */
 function columnsTotalWidth(columns, prop) {
     var totalWidth = 0;
