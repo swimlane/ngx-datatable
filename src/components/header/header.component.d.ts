@@ -5,6 +5,8 @@ export declare class DataTableHeaderComponent {
     sortAscendingIcon: any;
     sortDescendingIcon: any;
     scrollbarH: boolean;
+    dealsWithGroup: boolean;
+    _innerWidth: number;
     innerWidth: number;
     offsetX: number;
     sorts: any[];

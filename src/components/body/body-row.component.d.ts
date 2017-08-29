@@ -9,6 +9,7 @@ export declare class DataTableBodyRowComponent implements DoCheck {
     expanded: boolean;
     rowClass: any;
     row: any;
+    group: any;
     offsetX: number;
     isSelected: boolean;
     rowIndex: number;
