@@ -36,23 +36,27 @@ var NgxDatatableModule = (function () {
                         components_1.DataTableBodyRowComponent,
                         components_1.DataTableRowWrapperComponent,
                         components_1.DatatableRowDetailDirective,
+                        components_1.DatatableGroupHeaderDirective,
                         components_1.DatatableRowDetailTemplateDirective,
                         components_1.DataTableBodyCellComponent,
                         components_1.DataTableSelectionComponent,
                         components_1.DataTableColumnHeaderDirective,
                         components_1.DataTableColumnCellDirective,
-                        components_1.DatatableFooterDirective
+                        components_1.DatatableFooterDirective,
+                        components_1.DatatableGroupHeaderTemplateDirective
                     ],
                     exports: [
                         components_1.DatatableComponent,
                         components_1.DatatableRowDetailDirective,
+                        components_1.DatatableGroupHeaderDirective,
                         components_1.DatatableRowDetailTemplateDirective,
                         components_1.DataTableColumnDirective,
                         components_1.DataTableColumnHeaderDirective,
                         components_1.DataTableColumnCellDirective,
                         components_1.DataTableFooterTemplateDirective,
                         components_1.DatatableFooterDirective,
-                        components_1.DataTablePagerComponent
+                        components_1.DataTablePagerComponent,
+                        components_1.DatatableGroupHeaderTemplateDirective
                     ]
                 },] },
     ];

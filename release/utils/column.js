@@ -7,6 +7,7 @@ function columnsByPin(cols) {
     var ret = {
         left: [],
         center: [],
+        grouping: [],
         right: []
     };
     if (cols) {
@@ -34,7 +35,7 @@ function columnGroupWidths(groups, all) {
         left: columnTotalWidth(groups.left),
         center: columnTotalWidth(groups.center),
         right: columnTotalWidth(groups.right),
-        total: columnTotalWidth(all)
+        total: Math.floor(columnTotalWidth(all))
     };
 }
 exports.columnGroupWidths = columnGroupWidths;
@@ -76,4 +77,15 @@ function columnsByPinArr(val) {
     return colsByPinArr;
 }
 exports.columnsByPinArr = columnsByPinArr;
+function allColumnsByPinArr(val) {
+    var colsByPinArr = [];
+    var colsByPin = columnsByPin(val);
+    var colsTest = [];
+    colsByPinArr.push({ type: 'left', columns: colsByPin['left'] });
+    colsByPinArr.push({ type: 'center', columns: colsByPin['center'] });
+    colsByPinArr.push({ type: 'grouping', columns: colsByPin['grouping'] });
+    colsByPinArr.push({ type: 'right', columns: colsByPin['right'] });
+    return colsByPinArr;
+}
+exports.allColumnsByPinArr = allColumnsByPinArr;
 //# sourceMappingURL=column.js.map

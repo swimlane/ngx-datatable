@@ -28,6 +28,10 @@ var DataTableBodyRowComponent = (function () {
             return this._innerWidth;
         },
         set: function (val) {
+            if (this._columns) {
+                var colByPin = utils_1.columnsByPin(this._columns);
+                this.columnGroupWidths = utils_1.columnGroupWidths(colByPin, colByPin);
+            }
             this._innerWidth = val;
             this.recalculateColumns();
         },
@@ -132,15 +136,16 @@ var DataTableBodyRowComponent = (function () {
     };
     DataTableBodyRowComponent.prototype.recalculateColumns = function (val) {
         if (val === void 0) { val = this.columns; }
-        var colsByPin = utils_1.columnsByPin(val);
-        this.columnsByPin = utils_1.columnsByPinArr(val);
-        this.columnGroupWidths = utils_1.columnGroupWidths(colsByPin, val);
+        this._columns = val;
+        var colsByPin = utils_1.columnsByPin(this._columns);
+        this.columnsByPin = utils_1.allColumnsByPinArr(this._columns);
+        this.columnGroupWidths = utils_1.columnGroupWidths(colsByPin, this._columns);
     };
     DataTableBodyRowComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'datatable-body-row',
                     changeDetection: core_1.ChangeDetectionStrategy.OnPush,
-                    template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: trackByGroups\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [expanded]=\"expanded\"\n        [isSelected]=\"isSelected\"\n        [rowIndex]=\"rowIndex\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>\n  "
+                    template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: trackByGroups\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [group]=\"group\"\n        [expanded]=\"expanded\"\n        [isSelected]=\"isSelected\"\n        [rowIndex]=\"rowIndex\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>      \n  "
                 },] },
     ];
     /** @nocollapse */
@@ -156,6 +161,7 @@ var DataTableBodyRowComponent = (function () {
         'expanded': [{ type: core_1.Input },],
         'rowClass': [{ type: core_1.Input },],
         'row': [{ type: core_1.Input },],
+        'group': [{ type: core_1.Input },],
         'offsetX': [{ type: core_1.Input },],
         'isSelected': [{ type: core_1.Input },],
         'rowIndex': [{ type: core_1.Input },],

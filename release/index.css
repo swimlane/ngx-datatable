@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"10.1.0" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"10.2.0" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -61,6 +61,10 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis; }
+      .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-group-cell {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
   .ngx-datatable .datatable-body-row,
   .ngx-datatable .datatable-header-inner {
     display: -webkit-box;
@@ -86,6 +90,7 @@
     z-index: 9; }
   .ngx-datatable .datatable-row-left,
   .ngx-datatable .datatable-row-center,
+  .ngx-datatable .datatable-row-grouping,
   .ngx-datatable .datatable-row-right {
     position: relative; }
   .ngx-datatable .datatable-header {

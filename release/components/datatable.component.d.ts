@@ -2,6 +2,7 @@ import { ElementRef, EventEmitter, OnInit, QueryList, AfterViewInit, DoCheck, Ke
 import { ScrollbarHelper } from '../services';
 import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types';
 import { DataTableBodyComponent } from './body';
+import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
@@ -15,6 +16,29 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      * Rows that are displayed in the table.
      */
     rows: any;
+    /**
+     * This attribute allows the user to set the name of the column to group the data with
+     */
+    groupRowsBy: string;
+    /**
+     * Get the array with grouped rows
+     */
+    /**
+     * This attribute allows the user to set a grouped array in the following format:
+     * [
+     * {groupid=1>[
+     * {id=1 name="test1"},
+     * {id=2 name="test2"},
+     * {id=3 name="test3"}
+     * ]},
+     * {groupid=2>[
+     * {id=4 name="test4"},
+     * {id=5 name="test5"},
+     * {id=6 name="test6"}
+     * ]}
+     * ]
+     */
+    groupedRows: any;
     /**
      * Get the columns.
      */
@@ -153,6 +177,12 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     selectCheck: any;
     /**
+     * A boolean you can use to set the detault behaviour of rows and groups
+     * whether they will start expanded or not. If ommited the default is NOT expanded.
+     *
+     */
+    groupExpansionDefault: boolean;
+    /**
      * Property to which you can use for custom tracking of rows.
      * Example: 'name'
      */
@@ -251,6 +281,10 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     rowDetail: DatatableRowDetailDirective;
     /**
+     * Group Header templates gathered from the ContentChild
+     */
+    groupHeader: DatatableGroupHeaderDirective;
+    /**
      * Footer template gathered from the ContentChild
      */
     footer: DatatableFooterDirective;
@@ -272,6 +306,8 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
     rowDiffer: KeyValueDiffer<{}, {}>;
     _count: number;
     _rows: any[];
+    _groupRowsBy: string;
+    _groupedRows: any[];
     _internalRows: any[];
     _internalColumns: TableColumn[];
     _columns: TableColumn[];
@@ -288,8 +324,15 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     ngAfterViewInit(): void;
     /**
-     * Lifecycle hook that is called when Angular dirty checks a directive.
+     * Creates a map with the data grouped by the user choice of grouping index
+     *
+     * @param originalArray the original array passed via parameter
+     * @param groupByIndex  the index of the column to group the data by
      */
+    groupArrayBy(originalArray: any, groupBy: any): {
+        key: any;
+        value: any;
+    }[];
     ngDoCheck(): void;
     /**
      * Recalc's the sizes of the grid.

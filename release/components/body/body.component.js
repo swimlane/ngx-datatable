@@ -18,10 +18,11 @@ var DataTableBodyComponent = (function () {
         this.detailToggle = new core_1.EventEmitter();
         this.rowContextmenu = new core_1.EventEmitter(false);
         this.rowHeightsCache = new utils_1.RowHeightCache();
-        this.temp = [];
+        this._temp = [];
         this.offsetY = 0;
         this.indexes = {};
-        this.rowIndexes = new Map();
+        // rowIndexes: any = new Map();
+        this.groupIndexes = new Map();
         this.rowExpansions = new Map();
         /**
          * Get the height of the detail row.
@@ -34,7 +35,8 @@ var DataTableBodyComponent = (function () {
         };
         // declare fn here so we can get access to the `this` property
         this.rowTrackingFn = function (index, row) {
-            var idx = this.rowIndexes.get(row);
+            // const idx = this.rowIndexes.get(row);
+            var idx = this.getRowIndex(row);
             if (this.trackByProp) {
                 return idx + "-" + this.trackByProp;
             }
@@ -43,6 +45,16 @@ var DataTableBodyComponent = (function () {
             }
         }.bind(this);
     }
+    Object.defineProperty(DataTableBodyComponent.prototype, "groupRowsBy", {
+        get: function () {
+            return this._groupRowsBy;
+        },
+        set: function (val) {
+            this._groupRowsBy = val;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(DataTableBodyComponent.prototype, "pageSize", {
         get: function () {
             return this._pageSize;
@@ -100,6 +112,16 @@ var DataTableBodyComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(DataTableBodyComponent.prototype, "innerWidth", {
+        get: function () {
+            return this._innerWidth;
+        },
+        set: function (val) {
+            this._innerWidth = val;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(DataTableBodyComponent.prototype, "bodyWidth", {
         get: function () {
             if (this.scrollbarH) {
@@ -152,6 +174,16 @@ var DataTableBodyComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(DataTableBodyComponent.prototype, "temp", {
+        get: function () {
+            return this._temp;
+        },
+        set: function (val) {
+            this._temp = val;
+        },
+        enumerable: true,
+        configurable: true
+    });
     /**
      * Called after the constructor, initializing input properties
      */
@@ -172,12 +204,29 @@ var DataTableBodyComponent = (function () {
                 _this.cd.markForCheck();
             });
         }
+        if (this.groupHeader) {
+            this.listener = this.groupHeader.toggle
+                .subscribe(function (_a) {
+                var type = _a.type, value = _a.value;
+                if (type === 'group')
+                    _this.toggleRowExpansion(value);
+                if (type === 'all')
+                    _this.toggleAllRows(value);
+                // Refresh rows after toggle
+                // Fixes #883
+                _this.updateIndexes();
+                _this.updateRows();
+                _this.cd.markForCheck();
+            });
+        }
     };
     /**
      * Called once, before the instance is destroyed.
      */
     DataTableBodyComponent.prototype.ngOnDestroy = function () {
         if (this.rowDetail)
+            this.listener.unsubscribe();
+        if (this.groupHeader)
             this.listener.unsubscribe();
     };
     /**
@@ -238,15 +287,42 @@ var DataTableBodyComponent = (function () {
         var rowIndex = first;
         var idx = 0;
         var temp = [];
-        this.rowIndexes.clear();
-        while (rowIndex < last && rowIndex < this.rowCount) {
-            var row = this.rows[rowIndex];
-            if (row) {
-                this.rowIndexes.set(row, rowIndex);
-                temp[idx] = row;
+        // this.rowIndexes.clear();
+        // this.groupIndexes.clear();
+        // if grouprowsby has been specified treat row paging parameters as group paging parameters
+        // ie if limit 10 has been specified treat it as 10 groups rather than 10 rows    
+        if (this.groupedRows) {
+            var maxRowsPerGroup = 3;
+            // var rowIndexInsideGroup;
+            // if there is only one group set the maximum number of rows per group the same as the total number of rows
+            if (this.groupedRows.length === 1) {
+                maxRowsPerGroup = this.groupedRows[0].value.length;
             }
-            idx++;
-            rowIndex++;
+            while (rowIndex < last && rowIndex < this.groupedRows.length) {
+                // rowIndexInsideGroup = 0;
+                // Add the groups into this page
+                var group = this.groupedRows[rowIndex];
+                // if(group) {
+                // group.value.forEach(row => {
+                //     this.rowIndexes.set(row, row.rowIndex);
+                //     rowIndexInsideGroup++
+                // });
+                temp[idx] = group;
+                // }
+                idx++;
+                rowIndex++; // Group index in this context
+            }
+        }
+        else {
+            while (rowIndex < last && rowIndex < this.rowCount) {
+                var row = this.rows[rowIndex];
+                if (row) {
+                    // this.rowIndexes.set(row, rowIndex);
+                    temp[idx] = row;
+                }
+                idx++;
+                rowIndex++;
+            }
         }
         this.temp = temp;
     };
@@ -258,6 +334,18 @@ var DataTableBodyComponent = (function () {
         // if its a function return it
         if (typeof this.rowHeight === 'function') {
             rowHeight = this.rowHeight(row);
+        }
+        return rowHeight;
+    };
+    /**
+     * @param group the group with all rows
+     */
+    DataTableBodyComponent.prototype.getGroupHeight = function (group) {
+        var rowHeight = 0;
+        if (group.value) {
+            for (var index = 0; index < group.value.length; index++) {
+                rowHeight += this.getRowAndDetailHeight(group.value[index]);
+            }
         }
         return rowHeight;
     };
@@ -287,14 +375,29 @@ var DataTableBodyComponent = (function () {
      * be able to determine which row is of what height before hand.  In the above
      * case the positionY of the translate3d for row2 would be the sum of all the
      * heights of the rows before it (i.e. row0 and row1).
+     *
+     * @param {*} rows The row that needs to be placed in the 2D space.
+     * @returns {*} Returns the CSS3 style to be applied
+     *
+     * @memberOf DataTableBodyComponent
      */
-    DataTableBodyComponent.prototype.getRowsStyles = function (row) {
-        var rowHeight = this.getRowAndDetailHeight(row);
-        var styles = {
-            height: rowHeight + 'px'
-        };
+    DataTableBodyComponent.prototype.getRowsStyles = function (rows) {
+        var styles = {};
+        // only add styles for the group if there is a group
+        if (this.groupedRows) {
+            styles['width'] = this.columnGroupWidths.total;
+        }
         if (this.scrollbarV) {
-            var idx = this.rowIndexes.get(row) || 0;
+            var idx = 0;
+            if (this.groupedRows) {
+                // idx = rows[rows.length-1] ? rows[rows.length-1].$$index : 0;
+                // Get the latest row rowindex in a group
+                idx = rows[rows.length - 1] ? this.getRowIndex(rows[rows.length - 1]) : 0;
+            }
+            else {
+                // idx = this.rowIndexes.get(rows) || 0;
+                idx = this.getRowIndex(rows) || 0;
+            }
             // const pos = idx * rowHeight;
             // The position of this row would be the sum of all row heights
             // until the previous row position.
@@ -353,7 +456,7 @@ var DataTableBodyComponent = (function () {
                 detailRowHeight: this.getDetailRowHeight,
                 externalVirtual: this.scrollbarV && this.externalPaging,
                 rowCount: this.rowCount,
-                rowIndexes: this.rowIndexes,
+                // rowIndexes: this.rowIndexes,
                 rowExpansions: this.rowExpansions
             });
         }
@@ -385,7 +488,8 @@ var DataTableBodyComponent = (function () {
         // If the detailRowHeight is auto --> only in case of non-virtualized scroll
         if (this.scrollbarV) {
             var detailRowHeight = this.getDetailRowHeight(row) * (expanded ? -1 : 1);
-            var idx = this.rowIndexes.get(row) || 0;
+            // const idx = this.rowIndexes.get(row) || 0;
+            var idx = this.getRowIndex(row) || 0;
             this.rowHeightsCache.update(idx, detailRowHeight);
         }
         // Update the toggled row and update thive nevere heights in the cache.
@@ -427,10 +531,37 @@ var DataTableBodyComponent = (function () {
         this.updateIndexes();
         this.updateRows();
     };
+    DataTableBodyComponent.prototype.columnTrackingFn = function (index, column) {
+        return column.$$id;
+    };
+    DataTableBodyComponent.prototype.stylesByGroup = function (group) {
+        var widths = this.columnGroupWidths;
+        var offsetX = this.offsetX;
+        var styles = {
+            width: widths[group] + "px"
+        };
+        if (group === 'left') {
+            utils_1.translateXY(styles, offsetX, 0);
+        }
+        else if (group === 'right') {
+            var bodyWidth = parseInt(this.innerWidth + '', 0);
+            var totalDiff = widths.total - bodyWidth;
+            var offsetDiff = totalDiff - offsetX;
+            var offset = offsetDiff * -1;
+            utils_1.translateXY(styles, offset, 0);
+        }
+        return styles;
+    };
     /**
-     * Returns if the row was expanded
+     * Returns if the row was expanded and set default row expansion when row expansion is empty
      */
     DataTableBodyComponent.prototype.getRowExpanded = function (row) {
+        if (this.rowExpansions.size === 0 && this.groupExpansionDefault) {
+            for (var _i = 0, _a = this.groupedRows; _i < _a.length; _i++) {
+                var group = _a[_i];
+                this.rowExpansions.set(group, 1);
+            }
+        }
         var expanded = this.rowExpansions.get(row);
         return expanded === 1;
     };
@@ -438,12 +569,12 @@ var DataTableBodyComponent = (function () {
      * Gets the row index of the item
      */
     DataTableBodyComponent.prototype.getRowIndex = function (row) {
-        return this.rowIndexes.get(row);
+        return this._rows.indexOf(row);
     };
     DataTableBodyComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'datatable-body',
-                    template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [rows]=\"temp\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-row-wrapper\n          *ngFor=\"let row of temp; let i = index; trackBy: rowTrackingFn;\"\n          [ngStyle]=\"getRowsStyles(row)\"\n          [rowDetail]=\"rowDetail\"\n          [detailRowHeight]=\"getDetailRowHeight(row,i)\"\n          [row]=\"row\"\n          [rowIndex]=\"getRowIndex(row)\"\n          [expanded]=\"getRowExpanded(row)\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-row\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(row)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"getRowHeight(row)\"\n            [row]=\"row\"\n            [rowIndex]=\"getRowIndex(row)\"\n            [expanded]=\"getRowExpanded(row)\"\n            [rowClass]=\"rowClass\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-row>\n        </datatable-row-wrapper>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
+                    template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [rows]=\"temp\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-row-wrapper\n          [groupedRows]=\"groupedRows\"\n          *ngFor=\"let group of temp; let i = index; trackBy: rowTrackingFn;\"\n          [innerWidth]=\"innerWidth\"\n          [ngStyle]=\"getRowsStyles(group)\"\n          [rowDetail]=\"rowDetail\"\n          [groupHeader]=\"groupHeader\"\n          [offsetX]=\"offsetX\"\n          [detailRowHeight]=\"getDetailRowHeight(group[i],i)\"\n          [row]=\"group\"\n          [expanded]=\"getRowExpanded(group)\"\n          [rowIndex]=\"getRowIndex(group[i])\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-row \n            *ngIf=\"!group.value\"        \n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(group)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"getRowHeight(group)\"\n            [row]=\"group\"\n            [rowIndex]=\"getRowIndex(group)\"\n            [expanded]=\"getRowExpanded(group)\"            \n            [rowClass]=\"rowClass\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-row>                       \n          <datatable-body-row\n            *ngFor=\"let row of group.value; let i = index; trackBy: rowTrackingFn;\"\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(row)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"getRowHeight(row)\"\n            [row]=\"row\"\n            [group]=\"group.value\"\n            [rowIndex]=\"getRowIndex(row)\"\n            [expanded]=\"getRowExpanded(row)\"\n            [rowClass]=\"rowClass\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-row>\n        </datatable-row-wrapper>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
                     changeDetection: core_1.ChangeDetectionStrategy.OnPush,
                     host: {
                         class: 'datatable-body'
@@ -466,9 +597,13 @@ var DataTableBodyComponent = (function () {
         'selected': [{ type: core_1.Input },],
         'rowIdentity': [{ type: core_1.Input },],
         'rowDetail': [{ type: core_1.Input },],
+        'groupHeader': [{ type: core_1.Input },],
         'selectCheck': [{ type: core_1.Input },],
         'trackByProp': [{ type: core_1.Input },],
         'rowClass': [{ type: core_1.Input },],
+        'groupedRows': [{ type: core_1.Input },],
+        'groupExpansionDefault': [{ type: core_1.Input },],
+        'groupRowsBy': [{ type: core_1.Input },],
         'pageSize': [{ type: core_1.Input },],
         'rows': [{ type: core_1.Input },],
         'columns': [{ type: core_1.Input },],

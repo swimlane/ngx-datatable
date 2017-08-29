@@ -22,6 +22,7 @@ var utils_1 = require("../utils");
 var services_1 = require("../services");
 var types_1 = require("../types");
 var body_1 = require("./body");
+var body_group_header_directive_1 = require("./body/body-group-header.directive");
 var columns_1 = require("./columns");
 var row_detail_1 = require("./row-detail");
 var footer_1 = require("./footer");
@@ -137,6 +138,12 @@ var DatatableComponent = (function () {
          */
         this.rowIdentity = (function (x) { return x; });
         /**
+         * A boolean you can use to set the detault behaviour of rows and groups
+         * whether they will start expanded or not. If ommited the default is NOT expanded.
+         *
+         */
+        this.groupExpansionDefault = false;
+        /**
          * Body was scrolled typically in a `scrollbarV:true` scenario.
          */
         this.scroll = new core_1.EventEmitter();
@@ -198,7 +205,60 @@ var DatatableComponent = (function () {
             }
             // recalculate sizes/etc
             this.recalculate();
+            if (this._rows && this._groupRowsBy) {
+                // If a column has been specified in _groupRowsBy created a new array with the data grouped by that row
+                this._groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
+            }
             this.cd.markForCheck();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DatatableComponent.prototype, "groupRowsBy", {
+        get: function () {
+            return this._groupRowsBy;
+        },
+        /**
+         * This attribute allows the user to set the name of the column to group the data with
+         */
+        set: function (val) {
+            if (val) {
+                this._groupRowsBy = val;
+            }
+            if (val)
+                if (this._rows && this._groupRowsBy) {
+                    // cretes a new array with the data grouped
+                    this._groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
+                }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DatatableComponent.prototype, "groupedRows", {
+        /**
+         * Get the array with grouped rows
+         */
+        get: function () {
+            return this._groupedRows;
+        },
+        /**
+         * This attribute allows the user to set a grouped array in the following format:
+         * [
+         * {groupid=1>[
+         * {id=1 name="test1"},
+         * {id=2 name="test2"},
+         * {id=3 name="test3"}
+         * ]},
+         * {groupid=2>[
+         * {id=4 name="test4"},
+         * {id=5 name="test5"},
+         * {id=6 name="test6"}
+         * ]}
+         * ]
+         */
+        set: function (val) {
+            if (val)
+                this._groupedRows = val;
         },
         enumerable: true,
         configurable: true
@@ -425,8 +485,34 @@ var DatatableComponent = (function () {
         });
     };
     /**
-     * Lifecycle hook that is called when Angular dirty checks a directive.
+     * Creates a map with the data grouped by the user choice of grouping index
+     *
+     * @param originalArray the original array passed via parameter
+     * @param groupByIndex  the index of the column to group the data by
      */
+    DatatableComponent.prototype.groupArrayBy = function (originalArray, groupBy) {
+        // create a map to hold groups with their corresponding results
+        var map = new Map();
+        var i = 0;
+        originalArray.forEach(function (item) {
+            var key = item[groupBy];
+            if (!map.has(key)) {
+                map.set(key, [item]);
+            }
+            else {
+                map.get(key).push(item);
+            }
+            i++;
+        });
+        var addGroup = function (key, value) {
+            return { key: key, value: value };
+        };
+        // convert map back to a simple array of objects
+        return Array.from(map, function (x) { return addGroup(x[0], x[1]); });
+    };
+    /*
+    * Lifecycle hook that is called when Angular dirty checks a directive.
+    */
     DatatableComponent.prototype.ngDoCheck = function () {
         if (this.rowDiffer.diff(this.rows)) {
             if (!this.externalSorting) {
@@ -553,11 +639,13 @@ var DatatableComponent = (function () {
             return Math.max(size, 0);
         }
         // if limit is passed, we are paging
-        if (this.limit !== undefined)
+        if (this.limit !== undefined) {
             return this.limit;
+        }
         // otherwise use row length
-        if (val)
+        if (val) {
             return val.length;
+        }
         // other empty :(
         return 0;
     };
@@ -569,7 +657,12 @@ var DatatableComponent = (function () {
         if (!this.externalPaging) {
             if (!val)
                 return 0;
-            return val.length;
+            if (this.groupedRows) {
+                return this.groupedRows.length;
+            }
+            else {
+                return val.length;
+            }
         }
         return this.count;
     };
@@ -676,7 +769,7 @@ var DatatableComponent = (function () {
     DatatableComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'ngx-datatable',
-                    template: "\n    <div\n      visibilityObserver\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"_internalColumns\"\n        [headerHeight]=\"headerHeight\"\n        [reorderable]=\"reorderable\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        [selectionType]=\"selectionType\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\"\n        (columnContextmenu)=\"onColumnContextmenu($event)\">\n      </datatable-header>\n      <datatable-body\n        [rows]=\"_internalRows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [externalPaging]=\"externalPaging\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"_internalColumns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetail]=\"rowDetail\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [rowClass]=\"rowClass\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"onRowContextmenu($event)\"\n        (select)=\"onBodySelect($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [footerTemplate]=\"footer\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [selectedCount]=\"selected.length\"\n        [selectedMessage]=\"!!selectionType && messages.selectedMessage\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
+                    template: "\n    <div\n      visibilityObserver\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [dealsWithGroup]=\"groupedRows\"\n        [columns]=\"_internalColumns\"\n        [headerHeight]=\"headerHeight\"\n        [reorderable]=\"reorderable\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        [selectionType]=\"selectionType\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\"\n        (columnContextmenu)=\"onColumnContextmenu($event)\">\n      </datatable-header>\n      <datatable-body\n        [groupRowsBy]=\"groupRowsBy\"\n        [groupedRows]=\"groupedRows\"\n        [rows]=\"_internalRows\"\n        [groupExpansionDefault]=\"groupExpansionDefault\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [externalPaging]=\"externalPaging\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"_internalColumns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetail]=\"rowDetail\"\n        [groupHeader]=\"groupHeader\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [rowClass]=\"rowClass\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"onRowContextmenu($event)\"\n        (select)=\"onBodySelect($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [footerTemplate]=\"footer\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [selectedCount]=\"selected.length\"\n        [selectedMessage]=\"!!selectionType && messages.selectedMessage\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
                     changeDetection: core_1.ChangeDetectionStrategy.OnPush,
                     encapsulation: core_1.ViewEncapsulation.None,
                     styleUrls: ['./datatable.component.css'],
@@ -694,6 +787,8 @@ var DatatableComponent = (function () {
     ]; };
     DatatableComponent.propDecorators = {
         'rows': [{ type: core_1.Input },],
+        'groupRowsBy': [{ type: core_1.Input },],
+        'groupedRows': [{ type: core_1.Input },],
         'columns': [{ type: core_1.Input },],
         'selected': [{ type: core_1.Input },],
         'scrollbarV': [{ type: core_1.Input },],
@@ -717,6 +812,7 @@ var DatatableComponent = (function () {
         'rowIdentity': [{ type: core_1.Input },],
         'rowClass': [{ type: core_1.Input },],
         'selectCheck': [{ type: core_1.Input },],
+        'groupExpansionDefault': [{ type: core_1.Input },],
         'trackByProp': [{ type: core_1.Input },],
         'scroll': [{ type: core_1.Output },],
         'activate': [{ type: core_1.Output },],
@@ -738,6 +834,7 @@ var DatatableComponent = (function () {
         'isMultiClickSelection': [{ type: core_1.HostBinding, args: ['class.multi-click-selection',] },],
         'columnTemplates': [{ type: core_1.ContentChildren, args: [columns_1.DataTableColumnDirective,] },],
         'rowDetail': [{ type: core_1.ContentChild, args: [row_detail_1.DatatableRowDetailDirective,] },],
+        'groupHeader': [{ type: core_1.ContentChild, args: [body_group_header_directive_1.DatatableGroupHeaderDirective,] },],
         'footer': [{ type: core_1.ContentChild, args: [footer_1.DatatableFooterDirective,] },],
         'bodyComponent': [{ type: core_1.ViewChild, args: [body_1.DataTableBodyComponent,] },],
         'onWindowResize': [{ type: core_1.HostListener, args: ['window:resize',] },],

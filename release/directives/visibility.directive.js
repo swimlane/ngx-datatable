@@ -49,7 +49,7 @@ var VisibilityDirective = (function () {
                 });
             }
         };
-        setTimeout(function () { return check(); });
+        this.timeout = setTimeout(function () { return check(); });
     };
     VisibilityDirective.decorators = [
         { type: core_1.Directive, args: [{ selector: '[visibilityObserver]' },] },

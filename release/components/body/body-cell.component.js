@@ -14,13 +14,41 @@ var DataTableBodyCellComponent = (function () {
             onCheckboxChangeFn: this.onCheckboxChangeFn,
             activateFn: this.activateFn,
             row: this.row,
+            group: this.group,
             value: this.value,
             column: this.column,
+            rowHeight: this.rowHeight,
             isSelected: this.isSelected,
             rowIndex: this.rowIndex
         };
         this._element = element.nativeElement;
     }
+    Object.defineProperty(DataTableBodyCellComponent.prototype, "group", {
+        get: function () {
+            return this._group;
+        },
+        set: function (group) {
+            this._group = group;
+            this.cellContext.group = group;
+            this.checkValueUpdates();
+            this.cd.markForCheck();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataTableBodyCellComponent.prototype, "rowHeight", {
+        get: function () {
+            return this._rowHeight;
+        },
+        set: function (val) {
+            this._rowHeight = val;
+            this.cellContext.rowHeight = val;
+            this.checkValueUpdates();
+            this.cd.markForCheck();
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(DataTableBodyCellComponent.prototype, "isSelected", {
         get: function () {
             return this._isSelected;
@@ -105,8 +133,10 @@ var DataTableBodyCellComponent = (function () {
                 else if (typeof this.column.cellClass === 'function') {
                     var res = this.column.cellClass({
                         row: this.row,
+                        group: this.group,
                         column: this.column,
-                        value: this.value
+                        value: this.value,
+                        rowHeight: this.rowHeight
                     });
                     if (typeof res === 'string') {
                         cls += res;
@@ -192,6 +222,8 @@ var DataTableBodyCellComponent = (function () {
             type: 'click',
             event: event,
             row: this.row,
+            group: this.group,
+            rowHeight: this.rowHeight,
             column: this.column,
             value: this.value,
             cellElement: this._element
@@ -202,6 +234,8 @@ var DataTableBodyCellComponent = (function () {
             type: 'dblclick',
             event: event,
             row: this.row,
+            group: this.group,
+            rowHeight: this.rowHeight,
             column: this.column,
             value: this.value,
             cellElement: this._element
@@ -222,6 +256,8 @@ var DataTableBodyCellComponent = (function () {
                 type: 'keydown',
                 event: event,
                 row: this.row,
+                group: this.group,
+                rowHeight: this.rowHeight,
                 column: this.column,
                 value: this.value,
                 cellElement: this._element
@@ -233,6 +269,8 @@ var DataTableBodyCellComponent = (function () {
             type: 'checkbox',
             event: event,
             row: this.row,
+            group: this.group,
+            rowHeight: this.rowHeight,
             column: this.column,
             value: this.value,
             cellElement: this._element
@@ -257,10 +295,7 @@ var DataTableBodyCellComponent = (function () {
         { type: core_1.Component, args: [{
                     selector: 'datatable-body-cell',
                     changeDetection: core_1.ChangeDetectionStrategy.OnPush,
-                    template: "\n    <div class=\"datatable-body-cell-label\">\n      <label\n        *ngIf=\"column.checkboxable\"\n        class=\"datatable-checkbox\">\n        <input\n          type=\"checkbox\"\n          [checked]=\"isSelected\"\n          (click)=\"onCheckboxChange($event)\"\n        />\n      </label>\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [title]=\"sanitizedValue\"\n        [innerHTML]=\"value\">\n      </span>\n      <ng-template #cellTemplate\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngTemplateOutletContext]=\"cellContext\">\n      </ng-template>\n    </div>\n  ",
-                    host: {
-                        class: 'datatable-body-cell'
-                    }
+                    template: "\n    <div class=\"datatable-body-cell-label\">\n      <label\n        *ngIf=\"column.checkboxable\"\n        class=\"datatable-checkbox\">\n        <input\n          type=\"checkbox\"\n          [checked]=\"isSelected\"\n          (click)=\"onCheckboxChange($event)\"\n        />\n      </label>\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [title]=\"sanitizedValue\"\n        [innerHTML]=\"value\">\n      </span>\n      <ng-template #cellTemplate\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngTemplateOutletContext]=\"cellContext\">\n      </ng-template>\n    </div>\n  "
                 },] },
     ];
     /** @nocollapse */
@@ -269,6 +304,7 @@ var DataTableBodyCellComponent = (function () {
         { type: core_1.ChangeDetectorRef, },
     ]; };
     DataTableBodyCellComponent.propDecorators = {
+        'group': [{ type: core_1.Input },],
         'rowHeight': [{ type: core_1.Input },],
         'isSelected': [{ type: core_1.Input },],
         'expanded': [{ type: core_1.Input },],

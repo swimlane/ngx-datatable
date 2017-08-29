@@ -55,6 +55,10 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis; }
+      .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-group-cell {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
   .ngx-datatable .datatable-body-row,
   .ngx-datatable .datatable-header-inner {
     display: -webkit-box;
@@ -81,6 +85,7 @@
     z-index: 9; }
   .ngx-datatable .datatable-row-left,
   .ngx-datatable .datatable-row-center,
+  .ngx-datatable .datatable-row-grouping,
   .ngx-datatable .datatable-row-right {
     position: relative; }
   .ngx-datatable .datatable-header {

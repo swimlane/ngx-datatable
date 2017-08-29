@@ -47,14 +47,26 @@ body {
   margin-bottom: 45px;
 }
 
+
 input[type=text] {
-  font-size: 18px;
-  padding: 10px 10px 10px 5px;
+  font-size: 14px;
   display: block;
   background: transparent;
   width: 100%;
   border: none;
   border-bottom: 1px solid #5264AE;
+}
+
+
+textarea {
+  font-size: 14px;
+  font-family: sans-serif;
+  display: block;
+  background: transparent;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #5264AE;
+  resize: vertical;
 }
 
 input:focus {
@@ -228,4 +240,64 @@ select {
 
 .dark nav h4 {
   color: #72809b;
+}
+
+.expectedpayment + label:before {
+  border: 1px solid #7f83a2;
+  content: "\00a0";
+  display: inline-block;
+  font: 16px/1em sans-serif;
+  height: 16px;
+  margin: 0 .25em 0 0;
+  padding: 0;
+  vertical-align: top;
+  width: 16px;  
+}
+
+.expectedpayment2 + label:before {
+  border: 1px solid #7f83a2;
+  content: "\00a0";
+  display: inline-block;
+  font: 16px/1em sans-serif;
+  height: 16px;
+  margin: 0 .25em 0 0;
+  padding: 0;
+  vertical-align: top;
+  width: 16px;  
+}
+
+.expectedpayment3 + label:before {
+  border: 1px solid #7f83a2;
+  content: "\00a0";
+  display: inline-block;
+  font: 16px/1em sans-serif;
+  height: 16px;
+  margin: 0 .25em 0 0;
+  padding: 0;
+  vertical-align: top;
+  width: 16px;  
+}
+
+.expectedpayment:checked + label:before{
+  color: #EEE;
+  content: "\2713";
+	text-align: center;
+	font-weight: bold;
+	background-color:#66bb6a;
+}
+
+.expectedpayment2:checked + label:before{
+  color: #EEE;
+  content: "\2716";
+	text-align: center;
+	font-weight: bold;
+	background-color: #ff1744;
+}
+
+.expectedpayment3:checked + label:before {
+  color: #EEE;
+  content: "\003F";
+	text-align: center;
+	font-weight: bold;
+	background-color: #ffeb3b;
 }
