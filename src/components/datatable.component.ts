@@ -656,21 +656,24 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * @param originalArray the original array passed via parameter
    * @param groupByIndex  the index of the column to group the data by
    */
-  groupArrayBy(originalArray, groupBy) {
-  
+  groupArrayBy(originalArray: any, groupBy: any) {
     // create a map to hold groups with their corresponding results
     const map = new Map();
     let i: number = 0;
 
-    originalArray.forEach((item) => {
+    originalArray.forEach((item: any) => {
       const key = item[groupBy];
       if (!map.has(key)) {
-          map.set(key, [item]);
+        map.set(key, [item]);
       } else {
-          map.get(key).push(item);
+        map.get(key).push(item);
       }
       i++;
     });
+
+    const addGroup = (key: any, value: any) => {
+      return {key, value};
+    };
 
     // convert map back to a simple array of objects
     return Array.from(map, x => addGroup(x[0], x[1]));
@@ -964,14 +967,4 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   onBodySelect(event: any): void {
     this.select.emit(event);
   }
-
-}
-
-/**
- * 
- * @param key the element key, unique content
- * @param value the element value, it can be single content or an array
- */  
-function addGroup(key, value) {
-  return {key, value};
 }
