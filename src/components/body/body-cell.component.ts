@@ -34,14 +34,30 @@ import { mouseEvent, keyboardEvent } from '../../events';
         [ngTemplateOutletContext]="cellContext">
       </ng-template>
     </div>
-  `,
-  host: {
-    class: 'datatable-body-cell'
-  }
+  `
 })
 export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
+  @Input() set group(group: any){
+    this._group = group;
+    this.cellContext.group = group;
+    this.checkValueUpdates();
+    this.cd.markForCheck();    
+  }
 
-  @Input() rowHeight: number;
+  get group(){
+    return this._group;
+  }
+
+  @Input() set rowHeight(val: number){
+    this._rowHeight = val;
+    this.cellContext.rowHeight = val;
+    this.checkValueUpdates();
+    this.cd.markForCheck();        
+  }
+
+  get rowHeight(){
+    return this._rowHeight;
+  }
 
   @Input() set isSelected(val: boolean) {
     this._isSelected = val;
@@ -110,16 +126,18 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   @ViewChild('cellTemplate', { read: ViewContainerRef }) cellTemplate: ViewContainerRef;
 
   @HostBinding('class')
-  get columnCssClasses(): any {
+  get columnCssClasses(): any {    
     let cls = 'datatable-body-cell';
     if (this.column.cellClass) {
       if (typeof this.column.cellClass === 'string') {
         cls += ' ' + this.column.cellClass;
-      } else if (typeof this.column.cellClass === 'function') {
-        const res = this.column.cellClass({
-          row: this.row,
-          column: this.column,
-          value: this.value
+      } else if(typeof this.column.cellClass === 'function') {
+        const res = this.column.cellClass({ 
+          row: this.row, 
+          group: this.group, 
+          column: this.column, 
+          value: this.value ,
+          rowHeight: this.rowHeight
         });
 
         if (typeof res === 'string') {
@@ -136,6 +154,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     if (this.isFocused) cls += ' active';
     if (this.sortDir === SortDirection.asc) cls += ' sort-asc';
     if (this.sortDir === SortDirection.desc) cls += ' sort-desc';
+
     return cls;
   }
 
@@ -162,8 +181,10 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     onCheckboxChangeFn: this.onCheckboxChangeFn,
     activateFn: this.activateFn,
     row: this.row,
+    group: this.group,
     value: this.value,
     column: this.column,
+    rowHeight: this.rowHeight,
     isSelected: this.isSelected,
     rowIndex: this.rowIndex
   };
@@ -172,6 +193,8 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   private _sorts: any[];
   private _column: TableColumn;
   private _row: any;
+  private _group: any;
+  private _rowHeight: number;
   private _rowIndex: number;
   private _expanded: boolean;
   private _element: any;
@@ -179,7 +202,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   constructor(element: ElementRef, private cd: ChangeDetectorRef) {
     this._element = element.nativeElement;
   }
-
+  
   ngDoCheck(): void {
     this.checkValueUpdates();
   }
@@ -230,6 +253,8 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
       type: 'click',
       event,
       row: this.row,
+      group: this.group,
+      rowHeight: this.rowHeight,
       column: this.column,
       value: this.value,
       cellElement: this._element
@@ -242,8 +267,10 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
       type: 'dblclick',
       event,
       row: this.row,
+      group: this.group,
+      rowHeight: this.rowHeight,
       column: this.column,
-      value: this.value,
+      value: this.value,      
       cellElement: this._element
     });
   }
@@ -268,6 +295,8 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
         type: 'keydown',
         event,
         row: this.row,
+        group: this.group,
+        rowHeight: this.rowHeight,
         column: this.column,
         value: this.value,
         cellElement: this._element
@@ -280,6 +309,8 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
       type: 'checkbox',
       event,
       row: this.row,
+      group: this.group,
+      rowHeight: this.rowHeight,
       column: this.column,
       value: this.value,
       cellElement: this._element

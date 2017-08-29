@@ -2,9 +2,10 @@
  * Returns the columns by pin.
  */
 export function columnsByPin(cols: any[]) {
-  const ret: {left: any, center: any, right: any} = {
+  const ret: {left: any, center: any, grouping: any, right: any} = {
     left: [],
     center: [],
+    grouping: [],
     right: []
   };
 
@@ -31,7 +32,7 @@ export function columnGroupWidths(groups: any, all: any) {
     left: columnTotalWidth(groups.left),
     center: columnTotalWidth(groups.center),
     right: columnTotalWidth(groups.right),
-    total: columnTotalWidth(all)
+    total: Math.floor(columnTotalWidth(all))
   };
 }
 
@@ -72,6 +73,19 @@ export function columnsByPinArr(val: any) {
 
   colsByPinArr.push({ type: 'left', columns: colsByPin['left'] });
   colsByPinArr.push({ type: 'center', columns: colsByPin['center'] });
+  colsByPinArr.push({ type: 'right', columns: colsByPin['right'] });
+
+  return colsByPinArr;
+}
+
+export function allColumnsByPinArr(val: any) {
+  const colsByPinArr = [];
+  const colsByPin = columnsByPin(val);
+  const colsTest = [];
+
+  colsByPinArr.push({ type: 'left', columns: colsByPin['left'] });
+  colsByPinArr.push({ type: 'center', columns: colsByPin['center'] });
+  colsByPinArr.push({ type: 'grouping', columns: colsByPin['grouping'] });  
   colsByPinArr.push({ type: 'right', columns: colsByPin['right'] });
 
   return colsByPinArr;

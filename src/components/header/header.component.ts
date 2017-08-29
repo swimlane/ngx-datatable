@@ -1,5 +1,5 @@
 import {
-  Component, Output, EventEmitter, Input, HostBinding, ChangeDetectionStrategy
+  Component, Output, EventEmitter, Input, HostBinding
 } from '@angular/core';
 import { SortType, SelectionType } from '../../types';
 import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY } from '../../utils';
@@ -14,6 +14,7 @@ import { mouseEvent } from '../../events';
       (reorder)="onColumnReordered($event)"
       [style.width.px]="columnGroupWidths.total"
       class="datatable-header-inner">
+     
       <div
         *ngFor="let colGroup of columnsByPin; trackBy: trackByGroups"
         [class]="'datatable-row-' + colGroup.type"
@@ -50,15 +51,29 @@ import { mouseEvent } from '../../events';
   `,
   host: {
     class: 'datatable-header'
-  },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  }
 })
 export class DataTableHeaderComponent {
-
   @Input() sortAscendingIcon: any;
   @Input() sortDescendingIcon: any;
   @Input() scrollbarH: boolean;
-  @Input() innerWidth: number;
+  @Input() dealsWithGroup: boolean;
+
+  _innerWidth: number;
+
+  @Input() set innerWidth(val: number) {
+    this._innerWidth = val;
+
+    if (this._columns) {    
+      const colByPin = columnsByPin(this._columns);
+      this.columnGroupWidths = columnGroupWidths(colByPin, this._columns);       
+    }
+  }
+    
+  get innerWidth(): number {
+    return this._innerWidth;
+  }
+
   @Input() offsetX: number;
   @Input() sorts: any[];
   @Input() sortType: SortType;
@@ -82,7 +97,7 @@ export class DataTableHeaderComponent {
   }
 
   @Input() set columns(val: any[]) {
-    this._columns = val;
+    this._columns = val;    
 
     const colsByPin = columnsByPin(val);
     this.columnsByPin = columnsByPinArr(val);
@@ -128,7 +143,7 @@ export class DataTableHeaderComponent {
     return '100%';
   }
 
-  trackByGroups(index: number, colGroup: any): any {
+  trackByGroups(index: number, colGroup: any): any {    
     return colGroup.type;
   }
 
@@ -217,5 +232,4 @@ export class DataTableHeaderComponent {
 
     return styles;
   }
-
 }

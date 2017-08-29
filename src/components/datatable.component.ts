@@ -13,6 +13,7 @@ import {
 import { ScrollbarHelper } from '../services';
 import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types';
 import { DataTableBodyComponent } from './body';
+import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
@@ -31,6 +32,7 @@ import { mouseEvent } from '../events';
         [scrollbarH]="scrollbarH"
         [innerWidth]="innerWidth"
         [offsetX]="offsetX"
+        [dealsWithGroup]="groupedRows"
         [columns]="_internalColumns"
         [headerHeight]="headerHeight"
         [reorderable]="reorderable"
@@ -45,7 +47,10 @@ import { mouseEvent } from '../events';
         (columnContextmenu)="onColumnContextmenu($event)">
       </datatable-header>
       <datatable-body
+        [groupRowsBy]="groupRowsBy"
+        [groupedRows]="groupedRows"
         [rows]="_internalRows"
+        [groupExpansionDefault]="groupExpansionDefault"
         [scrollbarV]="scrollbarV"
         [scrollbarH]="scrollbarH"
         [loadingIndicator]="loadingIndicator"
@@ -58,6 +63,7 @@ import { mouseEvent } from '../events';
         [pageSize]="pageSize"
         [offsetX]="offsetX"
         [rowDetail]="rowDetail"
+        [groupHeader]="groupHeader"
         [selected]="selected"
         [innerWidth]="innerWidth"
         [bodyHeight]="bodyHeight"
@@ -114,6 +120,12 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     
     // recalculate sizes/etc
     this.recalculate();
+
+    if (this._rows && this._groupRowsBy) {
+      // If a column has been specified in _groupRowsBy created a new array with the data grouped by that row
+      this._groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
+    }
+
     this.cd.markForCheck();
   }
 
@@ -122,6 +134,52 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    */
   get rows(): any {
     return this._rows;
+  }
+
+  /**
+   * This attribute allows the user to set the name of the column to group the data with
+   */
+  @Input() set groupRowsBy(val: string) {
+    if (val) {
+      this._groupRowsBy = val;
+    }
+    
+    if (val)
+      if (this._rows && this._groupRowsBy) {
+        // cretes a new array with the data grouped
+        this._groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
+      }
+  }
+
+  get groupRowsBy() {
+    return this._groupRowsBy;
+  }
+
+  /**
+   * This attribute allows the user to set a grouped array in the following format:
+   * [
+   * {groupid=1>[
+   * {id=1 name="test1"},
+   * {id=2 name="test2"},
+   * {id=3 name="test3"}
+   * ]},
+   * {groupid=2>[
+   * {id=4 name="test4"},
+   * {id=5 name="test5"},
+   * {id=6 name="test6"}
+   * ]}
+   * ]
+   */
+  @Input() set groupedRows(val: any) {
+    if (val)
+      this._groupedRows = val;
+  }
+
+  /**
+   * Get the array with grouped rows
+   */
+  get groupedRows(): any {
+    return this._groupedRows;
   }
 
   /**
@@ -323,6 +381,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   @Input() selectCheck: any;
 
   /**
+   * A boolean you can use to set the detault behaviour of rows and groups
+   * whether they will start expanded or not. If ommited the default is NOT expanded.
+   *
+   */
+  @Input() groupExpansionDefault: boolean = false;
+
+  /**
    * Property to which you can use for custom tracking of rows.
    * Example: 'name'
    */
@@ -492,6 +557,12 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   rowDetail: DatatableRowDetailDirective;
 
   /**
+   * Group Header templates gathered from the ContentChild
+   */
+  @ContentChild(DatatableGroupHeaderDirective)
+  groupHeader: DatatableGroupHeaderDirective;  
+
+  /**
    * Footer template gathered from the ContentChild
    */
   @ContentChild(DatatableFooterDirective)
@@ -524,6 +595,8 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
   _count: number = 0;
   _rows: any[];
+  _groupRowsBy: string;
+  _groupedRows: any[];
   _internalRows: any[];
   _internalColumns: TableColumn[];
   _columns: TableColumn[];
@@ -548,7 +621,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     // need to call this immediatly to size
     // if the table is hidden the visibility
     // listener will invoke this itself upon show
-    this.recalculate();
+    this.recalculate();    
   }
 
   /**
@@ -578,6 +651,32 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   }
 
   /**
+   * Creates a map with the data grouped by the user choice of grouping index
+   * 
+   * @param originalArray the original array passed via parameter
+   * @param groupByIndex  the index of the column to group the data by
+   */
+  groupArrayBy(originalArray, groupBy) {
+  
+    // create a map to hold groups with their corresponding results
+    const map = new Map();
+    let i: number = 0;
+
+    originalArray.forEach((item) => {
+      const key = item[groupBy];
+      if (!map.has(key)) {
+          map.set(key, [item]);
+      } else {
+          map.get(key).push(item);
+      }
+      i++;
+    });
+
+    // convert map back to a simple array of objects
+    return Array.from(map, x => addGroup(x[0], x[1]));
+   }
+
+   /*
    * Lifecycle hook that is called when Angular dirty checks a directive.
    */
   ngDoCheck(): void {
@@ -714,16 +813,20 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     // Keep the page size constant even if the row has been expanded.
     // This is because an expanded row is still considered to be a child of
     // the original row.  Hence calculation would use rowHeight only.
-    if (this.scrollbarV) {
+    if (this.scrollbarV) {      
       const size = Math.ceil(this.bodyHeight / this.rowHeight);
       return Math.max(size, 0);
     }
 
     // if limit is passed, we are paging
-    if (this.limit !== undefined) return this.limit;
+    if (this.limit !== undefined) {      
+      return this.limit;
+    }
 
     // otherwise use row length
-    if (val) return val.length;
+    if (val) {     
+      return val.length;
+    }
 
     // other empty :(
     return 0;
@@ -735,7 +838,12 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   calcRowCount(val: any[] = this.rows): number {
     if (!this.externalPaging) {
       if (!val) return 0;
-      return val.length;
+
+      if (this.groupedRows) {
+        return this.groupedRows.length;
+      } else {
+        return val.length;
+      }        
     }
 
     return this.count;
@@ -857,4 +965,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     this.select.emit(event);
   }
 
+}
+
+/**
+ * 
+ * @param key the element key, unique content
+ * @param value the element value, it can be single content or an array
+ */  
+function addGroup(key, value) {
+  return {key, value};
 }
