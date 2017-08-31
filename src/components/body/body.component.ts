@@ -587,7 +587,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         detailRowHeight: this.getDetailRowHeight,
         externalVirtual: this.scrollbarV && this.externalPaging,
         rowCount: this.rowCount,
-        // rowIndexes: this.rowIndexes,
+        rowIndexes: this.groupIndexes,
         rowExpansions: this.rowExpansions
       });
     }
