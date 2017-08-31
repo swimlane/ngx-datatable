@@ -2,10 +2,9 @@
  * Returns the columns by pin.
  */
 export function columnsByPin(cols: any[]) {
-  const ret: {left: any, center: any, grouping: any, right: any} = {
+  const ret: {left: any, center: any, right: any} = {
     left: [],
     center: [],
-    grouping: [],
     right: []
   };
 
@@ -85,7 +84,6 @@ export function allColumnsByPinArr(val: any) {
 
   colsByPinArr.push({ type: 'left', columns: colsByPin['left'] });
   colsByPinArr.push({ type: 'center', columns: colsByPin['center'] });
-  colsByPinArr.push({ type: 'grouping', columns: colsByPin['grouping'] });  
   colsByPinArr.push({ type: 'right', columns: colsByPin['right'] });
 
   return colsByPinArr;

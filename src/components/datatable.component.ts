@@ -123,7 +123,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
     if (this._rows && this._groupRowsBy) {
       // If a column has been specified in _groupRowsBy created a new array with the data grouped by that row
-      this._groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
+      this.groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
     }
 
     this.cd.markForCheck();
@@ -142,13 +142,11 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   @Input() set groupRowsBy(val: string) {
     if (val) {
       this._groupRowsBy = val;
-    }
-    
-    if (val)
       if (this._rows && this._groupRowsBy) {
         // cretes a new array with the data grouped
-        this._groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
+        this.groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
       }
+    }
   }
 
   get groupRowsBy() {
@@ -157,30 +155,20 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
   /**
    * This attribute allows the user to set a grouped array in the following format:
-   * [
-   * {groupid=1>[
-   * {id=1 name="test1"},
-   * {id=2 name="test2"},
-   * {id=3 name="test3"}
-   * ]},
-   * {groupid=2>[
-   * {id=4 name="test4"},
-   * {id=5 name="test5"},
-   * {id=6 name="test6"}
-   * ]}
-   * ]
+   *  [
+   *    {groupid=1} [
+   *      {id=1 name="test1"},
+   *      {id=2 name="test2"},
+   *      {id=3 name="test3"}
+   *    ]},
+   *    {groupid=2>[
+   *      {id=4 name="test4"},
+   *      {id=5 name="test5"},
+   *      {id=6 name="test6"}
+   *    ]}
+   *  ]
    */
-  @Input() set groupedRows(val: any) {
-    if (val)
-      this._groupedRows = val;
-  }
-
-  /**
-   * Get the array with grouped rows
-   */
-  get groupedRows(): any {
-    return this._groupedRows;
-  }
+  @Input() groupedRows: any[];
 
   /**
    * Columns to be displayed.
@@ -596,7 +584,6 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   _count: number = 0;
   _rows: any[];
   _groupRowsBy: string;
-  _groupedRows: any[];
   _internalRows: any[];
   _internalColumns: TableColumn[];
   _columns: TableColumn[];
