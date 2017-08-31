@@ -7,7 +7,6 @@ function columnsByPin(cols) {
     var ret = {
         left: [],
         center: [],
-        grouping: [],
         right: []
     };
     if (cols) {
@@ -83,7 +82,6 @@ function allColumnsByPinArr(val) {
     var colsTest = [];
     colsByPinArr.push({ type: 'left', columns: colsByPin['left'] });
     colsByPinArr.push({ type: 'center', columns: colsByPin['center'] });
-    colsByPinArr.push({ type: 'grouping', columns: colsByPin['grouping'] });
     colsByPinArr.push({ type: 'right', columns: colsByPin['right'] });
     return colsByPinArr;
 }

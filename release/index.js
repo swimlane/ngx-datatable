@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"10.2.0" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"10.2.1" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -2608,11 +2608,10 @@ var DataTableBodyComponent = (function () {
         this.detailToggle = new core_1.EventEmitter();
         this.rowContextmenu = new core_1.EventEmitter(false);
         this.rowHeightsCache = new utils_1.RowHeightCache();
-        this._temp = [];
+        this.temp = [];
         this.offsetY = 0;
         this.indexes = {};
-        // rowIndexes: any = new Map();
-        this.groupIndexes = new Map();
+        this.rowIndexes = new Map();
         this.rowExpansions = new Map();
         /**
          * Get the height of the detail row.
@@ -2625,7 +2624,6 @@ var DataTableBodyComponent = (function () {
         };
         // declare fn here so we can get access to the `this` property
         this.rowTrackingFn = function (index, row) {
-            // const idx = this.rowIndexes.get(row);
             var idx = this.getRowIndex(row);
             if (this.trackByProp) {
                 return idx + "-" + this.trackByProp;
@@ -2635,16 +2633,6 @@ var DataTableBodyComponent = (function () {
             }
         }.bind(this);
     }
-    Object.defineProperty(DataTableBodyComponent.prototype, "groupRowsBy", {
-        get: function () {
-            return this._groupRowsBy;
-        },
-        set: function (val) {
-            this._groupRowsBy = val;
-        },
-        enumerable: true,
-        configurable: true
-    });
     Object.defineProperty(DataTableBodyComponent.prototype, "pageSize", {
         get: function () {
             return this._pageSize;
@@ -2702,16 +2690,6 @@ var DataTableBodyComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(DataTableBodyComponent.prototype, "innerWidth", {
-        get: function () {
-            return this._innerWidth;
-        },
-        set: function (val) {
-            this._innerWidth = val;
-        },
-        enumerable: true,
-        configurable: true
-    });
     Object.defineProperty(DataTableBodyComponent.prototype, "bodyWidth", {
         get: function () {
             if (this.scrollbarH) {
@@ -2760,16 +2738,6 @@ var DataTableBodyComponent = (function () {
             if (this.scrollbarV) {
                 return this.rowHeightsCache.query(this.rowCount - 1);
             }
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(DataTableBodyComponent.prototype, "temp", {
-        get: function () {
-            return this._temp;
-        },
-        set: function (val) {
-            this._temp = val;
         },
         enumerable: true,
         configurable: true
@@ -2877,37 +2845,31 @@ var DataTableBodyComponent = (function () {
         var rowIndex = first;
         var idx = 0;
         var temp = [];
-        // this.rowIndexes.clear();
-        // this.groupIndexes.clear();
-        // if grouprowsby has been specified treat row paging parameters as group paging parameters
-        // ie if limit 10 has been specified treat it as 10 groups rather than 10 rows    
+        this.rowIndexes.clear();
+        // if grouprowsby has been specified treat row paging 
+        // parameters as group paging parameters ie if limit 10 has been 
+        // specified treat it as 10 groups rather than 10 rows    
         if (this.groupedRows) {
             var maxRowsPerGroup = 3;
-            // var rowIndexInsideGroup;
-            // if there is only one group set the maximum number of rows per group the same as the total number of rows
+            // if there is only one group set the maximum number of 
+            // rows per group the same as the total number of rows
             if (this.groupedRows.length === 1) {
                 maxRowsPerGroup = this.groupedRows[0].value.length;
             }
             while (rowIndex < last && rowIndex < this.groupedRows.length) {
-                // rowIndexInsideGroup = 0;
                 // Add the groups into this page
                 var group = this.groupedRows[rowIndex];
-                // if(group) {
-                // group.value.forEach(row => {
-                //     this.rowIndexes.set(row, row.rowIndex);
-                //     rowIndexInsideGroup++
-                // });
                 temp[idx] = group;
-                // }
                 idx++;
-                rowIndex++; // Group index in this context
+                // Group index in this context
+                rowIndex++;
             }
         }
         else {
             while (rowIndex < last && rowIndex < this.rowCount) {
                 var row = this.rows[rowIndex];
                 if (row) {
-                    // this.rowIndexes.set(row, rowIndex);
+                    this.rowIndexes.set(row, rowIndex);
                     temp[idx] = row;
                 }
                 idx++;
@@ -2980,13 +2942,12 @@ var DataTableBodyComponent = (function () {
         if (this.scrollbarV) {
             var idx = 0;
             if (this.groupedRows) {
-                // idx = rows[rows.length-1] ? rows[rows.length-1].$$index : 0;
                 // Get the latest row rowindex in a group
-                idx = rows[rows.length - 1] ? this.getRowIndex(rows[rows.length - 1]) : 0;
+                var row = rows[rows.length - 1];
+                idx = row ? this.getRowIndex(row) : 0;
             }
             else {
-                // idx = this.rowIndexes.get(rows) || 0;
-                idx = this.getRowIndex(rows) || 0;
+                idx = this.getRowIndex(rows);
             }
             // const pos = idx * rowHeight;
             // The position of this row would be the sum of all row heights
@@ -3046,7 +3007,7 @@ var DataTableBodyComponent = (function () {
                 detailRowHeight: this.getDetailRowHeight,
                 externalVirtual: this.scrollbarV && this.externalPaging,
                 rowCount: this.rowCount,
-                // rowIndexes: this.rowIndexes,
+                rowIndexes: this.rowIndexes,
                 rowExpansions: this.rowExpansions
             });
         }
@@ -3079,7 +3040,7 @@ var DataTableBodyComponent = (function () {
         if (this.scrollbarV) {
             var detailRowHeight = this.getDetailRowHeight(row) * (expanded ? -1 : 1);
             // const idx = this.rowIndexes.get(row) || 0;
-            var idx = this.getRowIndex(row) || 0;
+            var idx = this.getRowIndex(row);
             this.rowHeightsCache.update(idx, detailRowHeight);
         }
         // Update the toggled row and update thive nevere heights in the cache.
@@ -3121,9 +3082,15 @@ var DataTableBodyComponent = (function () {
         this.updateIndexes();
         this.updateRows();
     };
+    /**
+     * Tracks the column
+     */
     DataTableBodyComponent.prototype.columnTrackingFn = function (index, column) {
         return column.$$id;
     };
+    /**
+     * Gets the row pinning group styles
+     */
     DataTableBodyComponent.prototype.stylesByGroup = function (group) {
         var widths = this.columnGroupWidths;
         var offsetX = this.offsetX;
@@ -3156,10 +3123,10 @@ var DataTableBodyComponent = (function () {
         return expanded === 1;
     };
     /**
-     * Gets the row index of the item
+     * Gets the row index given a row
      */
     DataTableBodyComponent.prototype.getRowIndex = function (row) {
-        return this._rows.indexOf(row);
+        return this.rowIndexes.get(row) || 0;
     };
     __decorate([
         core_1.Input(),
@@ -3231,9 +3198,12 @@ var DataTableBodyComponent = (function () {
     ], DataTableBodyComponent.prototype, "groupExpansionDefault", void 0);
     __decorate([
         core_1.Input(),
-        __metadata("design:type", String),
-        __metadata("design:paramtypes", [String])
-    ], DataTableBodyComponent.prototype, "groupRowsBy", null);
+        __metadata("design:type", Number)
+    ], DataTableBodyComponent.prototype, "innerWidth", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", String)
+    ], DataTableBodyComponent.prototype, "groupRowsBy", void 0);
     __decorate([
         core_1.Input(),
         __metadata("design:type", Number),
@@ -3259,11 +3229,6 @@ var DataTableBodyComponent = (function () {
         __metadata("design:type", Number),
         __metadata("design:paramtypes", [Number])
     ], DataTableBodyComponent.prototype, "rowCount", null);
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", Number),
-        __metadata("design:paramtypes", [Number])
-    ], DataTableBodyComponent.prototype, "innerWidth", null);
     __decorate([
         core_1.HostBinding('style.width'),
         __metadata("design:type", String),
@@ -4086,7 +4051,7 @@ var DatatableComponent = (function () {
             this.recalculate();
             if (this._rows && this._groupRowsBy) {
                 // If a column has been specified in _groupRowsBy created a new array with the data grouped by that row
-                this._groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
+                this.groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
             }
             this.cd.markForCheck();
         },
@@ -4103,41 +4068,11 @@ var DatatableComponent = (function () {
         set: function (val) {
             if (val) {
                 this._groupRowsBy = val;
-            }
-            if (val)
                 if (this._rows && this._groupRowsBy) {
                     // cretes a new array with the data grouped
-                    this._groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
+                    this.groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
                 }
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(DatatableComponent.prototype, "groupedRows", {
-        /**
-         * Get the array with grouped rows
-         */
-        get: function () {
-            return this._groupedRows;
-        },
-        /**
-         * This attribute allows the user to set a grouped array in the following format:
-         * [
-         * {groupid=1>[
-         * {id=1 name="test1"},
-         * {id=2 name="test2"},
-         * {id=3 name="test3"}
-         * ]},
-         * {groupid=2>[
-         * {id=4 name="test4"},
-         * {id=5 name="test5"},
-         * {id=6 name="test6"}
-         * ]}
-         * ]
-         */
-        set: function (val) {
-            if (val)
-                this._groupedRows = val;
+            }
         },
         enumerable: true,
         configurable: true
@@ -4657,9 +4592,8 @@ var DatatableComponent = (function () {
     ], DatatableComponent.prototype, "groupRowsBy", null);
     __decorate([
         core_1.Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
-    ], DatatableComponent.prototype, "groupedRows", null);
+        __metadata("design:type", Array)
+    ], DatatableComponent.prototype, "groupedRows", void 0);
     __decorate([
         core_1.Input(),
         __metadata("design:type", Array),
@@ -7138,7 +7072,6 @@ function columnsByPin(cols) {
     var ret = {
         left: [],
         center: [],
-        grouping: [],
         right: []
     };
     if (cols) {
@@ -7214,7 +7147,6 @@ function allColumnsByPinArr(val) {
     var colsTest = [];
     colsByPinArr.push({ type: 'left', columns: colsByPin['left'] });
     colsByPinArr.push({ type: 'center', columns: colsByPin['center'] });
-    colsByPinArr.push({ type: 'grouping', columns: colsByPin['grouping'] });
     colsByPinArr.push({ type: 'right', columns: colsByPin['right'] });
     return colsByPinArr;
 }

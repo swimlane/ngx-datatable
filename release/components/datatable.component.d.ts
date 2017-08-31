@@ -21,24 +21,21 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     groupRowsBy: string;
     /**
-     * Get the array with grouped rows
-     */
-    /**
      * This attribute allows the user to set a grouped array in the following format:
-     * [
-     * {groupid=1>[
-     * {id=1 name="test1"},
-     * {id=2 name="test2"},
-     * {id=3 name="test3"}
-     * ]},
-     * {groupid=2>[
-     * {id=4 name="test4"},
-     * {id=5 name="test5"},
-     * {id=6 name="test6"}
-     * ]}
-     * ]
+     *  [
+     *    {groupid=1} [
+     *      {id=1 name="test1"},
+     *      {id=2 name="test2"},
+     *      {id=3 name="test3"}
+     *    ]},
+     *    {groupid=2>[
+     *      {id=4 name="test4"},
+     *      {id=5 name="test5"},
+     *      {id=6 name="test6"}
+     *    ]}
+     *  ]
      */
-    groupedRows: any;
+    groupedRows: any[];
     /**
      * Get the columns.
      */
@@ -307,7 +304,6 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
     _count: number;
     _rows: any[];
     _groupRowsBy: string;
-    _groupedRows: any[];
     _internalRows: any[];
     _internalColumns: TableColumn[];
     _columns: TableColumn[];

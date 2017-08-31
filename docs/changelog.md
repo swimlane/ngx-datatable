@@ -1,5 +1,8 @@
 # Changelog
 
+## 10.1.1
+- Bug: Detail Row Broken
+
 ## 10.1.0
 - Feature: Row Hover Event
 - Bug: Columns are no longer mutated!

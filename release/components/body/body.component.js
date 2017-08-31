@@ -18,11 +18,10 @@ var DataTableBodyComponent = (function () {
         this.detailToggle = new core_1.EventEmitter();
         this.rowContextmenu = new core_1.EventEmitter(false);
         this.rowHeightsCache = new utils_1.RowHeightCache();
-        this._temp = [];
+        this.temp = [];
         this.offsetY = 0;
         this.indexes = {};
-        // rowIndexes: any = new Map();
-        this.groupIndexes = new Map();
+        this.rowIndexes = new Map();
         this.rowExpansions = new Map();
         /**
          * Get the height of the detail row.
@@ -35,7 +34,6 @@ var DataTableBodyComponent = (function () {
         };
         // declare fn here so we can get access to the `this` property
         this.rowTrackingFn = function (index, row) {
-            // const idx = this.rowIndexes.get(row);
             var idx = this.getRowIndex(row);
             if (this.trackByProp) {
                 return idx + "-" + this.trackByProp;
@@ -45,16 +43,6 @@ var DataTableBodyComponent = (function () {
             }
         }.bind(this);
     }
-    Object.defineProperty(DataTableBodyComponent.prototype, "groupRowsBy", {
-        get: function () {
-            return this._groupRowsBy;
-        },
-        set: function (val) {
-            this._groupRowsBy = val;
-        },
-        enumerable: true,
-        configurable: true
-    });
     Object.defineProperty(DataTableBodyComponent.prototype, "pageSize", {
         get: function () {
             return this._pageSize;
@@ -112,16 +100,6 @@ var DataTableBodyComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(DataTableBodyComponent.prototype, "innerWidth", {
-        get: function () {
-            return this._innerWidth;
-        },
-        set: function (val) {
-            this._innerWidth = val;
-        },
-        enumerable: true,
-        configurable: true
-    });
     Object.defineProperty(DataTableBodyComponent.prototype, "bodyWidth", {
         get: function () {
             if (this.scrollbarH) {
@@ -170,16 +148,6 @@ var DataTableBodyComponent = (function () {
             if (this.scrollbarV) {
                 return this.rowHeightsCache.query(this.rowCount - 1);
             }
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(DataTableBodyComponent.prototype, "temp", {
-        get: function () {
-            return this._temp;
-        },
-        set: function (val) {
-            this._temp = val;
         },
         enumerable: true,
         configurable: true
@@ -287,37 +255,31 @@ var DataTableBodyComponent = (function () {
         var rowIndex = first;
         var idx = 0;
         var temp = [];
-        // this.rowIndexes.clear();
-        // this.groupIndexes.clear();
-        // if grouprowsby has been specified treat row paging parameters as group paging parameters
-        // ie if limit 10 has been specified treat it as 10 groups rather than 10 rows    
+        this.rowIndexes.clear();
+        // if grouprowsby has been specified treat row paging 
+        // parameters as group paging parameters ie if limit 10 has been 
+        // specified treat it as 10 groups rather than 10 rows    
         if (this.groupedRows) {
             var maxRowsPerGroup = 3;
-            // var rowIndexInsideGroup;
-            // if there is only one group set the maximum number of rows per group the same as the total number of rows
+            // if there is only one group set the maximum number of 
+            // rows per group the same as the total number of rows
             if (this.groupedRows.length === 1) {
                 maxRowsPerGroup = this.groupedRows[0].value.length;
             }
             while (rowIndex < last && rowIndex < this.groupedRows.length) {
-                // rowIndexInsideGroup = 0;
                 // Add the groups into this page
                 var group = this.groupedRows[rowIndex];
-                // if(group) {
-                // group.value.forEach(row => {
-                //     this.rowIndexes.set(row, row.rowIndex);
-                //     rowIndexInsideGroup++
-                // });
                 temp[idx] = group;
-                // }
                 idx++;
-                rowIndex++; // Group index in this context
+                // Group index in this context
+                rowIndex++;
             }
         }
         else {
             while (rowIndex < last && rowIndex < this.rowCount) {
                 var row = this.rows[rowIndex];
                 if (row) {
-                    // this.rowIndexes.set(row, rowIndex);
+                    this.rowIndexes.set(row, rowIndex);
                     temp[idx] = row;
                 }
                 idx++;
@@ -390,13 +352,12 @@ var DataTableBodyComponent = (function () {
         if (this.scrollbarV) {
             var idx = 0;
             if (this.groupedRows) {
-                // idx = rows[rows.length-1] ? rows[rows.length-1].$$index : 0;
                 // Get the latest row rowindex in a group
-                idx = rows[rows.length - 1] ? this.getRowIndex(rows[rows.length - 1]) : 0;
+                var row = rows[rows.length - 1];
+                idx = row ? this.getRowIndex(row) : 0;
             }
             else {
-                // idx = this.rowIndexes.get(rows) || 0;
-                idx = this.getRowIndex(rows) || 0;
+                idx = this.getRowIndex(rows);
             }
             // const pos = idx * rowHeight;
             // The position of this row would be the sum of all row heights
@@ -456,7 +417,7 @@ var DataTableBodyComponent = (function () {
                 detailRowHeight: this.getDetailRowHeight,
                 externalVirtual: this.scrollbarV && this.externalPaging,
                 rowCount: this.rowCount,
-                // rowIndexes: this.rowIndexes,
+                rowIndexes: this.rowIndexes,
                 rowExpansions: this.rowExpansions
             });
         }
@@ -489,7 +450,7 @@ var DataTableBodyComponent = (function () {
         if (this.scrollbarV) {
             var detailRowHeight = this.getDetailRowHeight(row) * (expanded ? -1 : 1);
             // const idx = this.rowIndexes.get(row) || 0;
-            var idx = this.getRowIndex(row) || 0;
+            var idx = this.getRowIndex(row);
             this.rowHeightsCache.update(idx, detailRowHeight);
         }
         // Update the toggled row and update thive nevere heights in the cache.
@@ -531,9 +492,15 @@ var DataTableBodyComponent = (function () {
         this.updateIndexes();
         this.updateRows();
     };
+    /**
+     * Tracks the column
+     */
     DataTableBodyComponent.prototype.columnTrackingFn = function (index, column) {
         return column.$$id;
     };
+    /**
+     * Gets the row pinning group styles
+     */
     DataTableBodyComponent.prototype.stylesByGroup = function (group) {
         var widths = this.columnGroupWidths;
         var offsetX = this.offsetX;
@@ -566,10 +533,10 @@ var DataTableBodyComponent = (function () {
         return expanded === 1;
     };
     /**
-     * Gets the row index of the item
+     * Gets the row index given a row
      */
     DataTableBodyComponent.prototype.getRowIndex = function (row) {
-        return this._rows.indexOf(row);
+        return this.rowIndexes.get(row) || 0;
     };
     DataTableBodyComponent.decorators = [
         { type: core_1.Component, args: [{
@@ -603,13 +570,13 @@ var DataTableBodyComponent = (function () {
         'rowClass': [{ type: core_1.Input },],
         'groupedRows': [{ type: core_1.Input },],
         'groupExpansionDefault': [{ type: core_1.Input },],
+        'innerWidth': [{ type: core_1.Input },],
         'groupRowsBy': [{ type: core_1.Input },],
         'pageSize': [{ type: core_1.Input },],
         'rows': [{ type: core_1.Input },],
         'columns': [{ type: core_1.Input },],
         'offset': [{ type: core_1.Input },],
         'rowCount': [{ type: core_1.Input },],
-        'innerWidth': [{ type: core_1.Input },],
         'bodyWidth': [{ type: core_1.HostBinding, args: ['style.width',] },],
         'bodyHeight': [{ type: core_1.Input }, { type: core_1.HostBinding, args: ['style.height',] },],
         'scroll': [{ type: core_1.Output },],
