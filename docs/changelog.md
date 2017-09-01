@@ -1,7 +1,10 @@
 # Changelog
 
-## 10.1.1
+## 10.2.1
 - Bug: Detail Row Broken
+
+## 10.2.0
+- Feature: Row Grouping
 
 ## 10.1.0
 - Feature: Row Hover Event
