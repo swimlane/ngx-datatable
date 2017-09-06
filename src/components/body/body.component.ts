@@ -682,7 +682,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * Gets the row index given a row
    */
   getRowIndex(row: any): number {
-    return this.rowIndexes.get(row) || 0;
+    // return this.rowIndexes.get(row) || 0;
+    return this._rows.indexOf(row);
   }
 
 }
