@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var body_group_header_template_directive_1 = require("./body-group-header-template.directive");
-var DatatableGroupHeaderDirective = (function () {
+var DatatableGroupHeaderDirective = /** @class */ (function () {
     function DatatableGroupHeaderDirective() {
         /**
          * The detail row height is required especially

@@ -1,5 +1,8 @@
 # Changelog
 
+## 10.2.2
+- Bug: Recalculate limit properly #963
+
 ## 10.2.1
 - Bug: Detail Row Broken
 

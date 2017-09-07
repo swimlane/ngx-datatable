@@ -26,7 +26,7 @@ var body_group_header_directive_1 = require("./body/body-group-header.directive"
 var columns_1 = require("./columns");
 var row_detail_1 = require("./row-detail");
 var footer_1 = require("./footer");
-var DatatableComponent = (function () {
+var DatatableComponent = /** @class */ (function () {
     function DatatableComponent(scrollbarHelper, cd, element, differs) {
         this.scrollbarHelper = scrollbarHelper;
         this.cd = cd;
@@ -74,11 +74,6 @@ var DatatableComponent = (function () {
          * the built-in basic sorting.
          */
         this.externalSorting = false;
-        /**
-         * The page size to be shown.
-         * Default value: `undefined`
-         */
-        this.limit = undefined;
         /**
          * The current offset ( page - 1 ) shown.
          * Default value: `0`
@@ -250,6 +245,25 @@ var DatatableComponent = (function () {
                 this.recalculateColumns();
             }
             this._columns = val;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DatatableComponent.prototype, "limit", {
+        /**
+         * Gets the limit.
+         */
+        get: function () {
+            return this._limit;
+        },
+        /**
+         * The page size to be shown.
+         * Default value: `undefined`
+         */
+        set: function (val) {
+            this._limit = val;
+            // recalculate sizes/etc
+            this.recalculate();
         },
         enumerable: true,
         configurable: true

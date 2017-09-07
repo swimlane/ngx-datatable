@@ -88,10 +88,13 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     externalSorting: boolean;
     /**
+     * Gets the limit.
+     */
+    /**
      * The page size to be shown.
      * Default value: `undefined`
      */
-    limit: number;
+    limit: number | undefined;
     /**
      * Gets the count.
      */
@@ -301,6 +304,7 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
     rowCount: number;
     offsetX: number;
     rowDiffer: KeyValueDiffer<{}, {}>;
+    _limit: number | undefined;
     _count: number;
     _rows: any[];
     _groupRowsBy: string;
