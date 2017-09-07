@@ -1,5 +1,3 @@
-
-
 # Table Column Options
 
 ### `name`: `string`
