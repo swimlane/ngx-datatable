@@ -247,7 +247,19 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * The page size to be shown.
    * Default value: `undefined`
    */
-  @Input() limit: number = undefined;
+  @Input() set limit(val: number | undefined) {
+    this._limit = val;
+
+    // recalculate sizes/etc
+    this.recalculate();
+  }
+
+  /**
+   * Gets the limit.
+   */
+  get limit(): number | undefined {
+    return this._limit;
+  }
 
   /**
    * The total count of all rows.
@@ -581,6 +593,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   offsetX: number = 0;
   rowDiffer: KeyValueDiffer<{}, {}>;
 
+  _limit: number | undefined;
   _count: number = 0;
   _rows: any[];
   _groupRowsBy: string;
