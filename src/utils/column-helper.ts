@@ -26,8 +26,12 @@ export function setColumnDefaults(columns: TableColumn[]) {
     }
 
     // format props if no name passed
-    if(column.prop != null && !column.name) {
+    if(column.prop != null && column.name == null) {
       column.name = deCamelCase(String(column.prop));
+    }
+    
+    if(column.prop == null && column.name == null) {
+      column.name = ''; // Fixes IE and Edge displaying `null`
     }
 
     if(!column.hasOwnProperty('resizeable')) {
