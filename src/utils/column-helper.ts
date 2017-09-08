@@ -17,7 +17,7 @@ export function setColumnDefaults(columns: TableColumn[]) {
 
     // prop can be numeric; zero is valid not a missing prop
     // translate name => prop
-    if(column.prop == null && column.name) {
+    if(isNullOrUndefined(column.prop) && column.name) {
       column.prop = camelCase(column.name);
     }
 
@@ -26,11 +26,11 @@ export function setColumnDefaults(columns: TableColumn[]) {
     }
 
     // format props if no name passed
-    if(column.prop != null && column.name == null) {
+    if(!isNullOrUndefined(column.prop) && isNullOrUndefined(column.name)) {
       column.name = deCamelCase(String(column.prop));
     }
     
-    if(column.prop == null && column.name == null) {
+    if(isNullOrUndefined(column.prop) && isNullOrUndefined(column.name)) {
       column.name = ''; // Fixes IE and Edge displaying `null`
     }
 
@@ -54,6 +54,10 @@ export function setColumnDefaults(columns: TableColumn[]) {
       column.width = 150;
     }
   }
+}
+
+export function isNullOrUndefined<T>(value: T | null | undefined): value is null | undefined {
+    return value === null || value === undefined;
 }
 
 /**
