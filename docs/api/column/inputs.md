@@ -49,8 +49,17 @@ applicable when the selection mode is `checkbox`.
 Indicates whether the column should show a checkbox component in the header cell.
 Only applicable when the selection mode is `checkbox`.
 
-## `headerClass`: `string|Function`
+### `headerClass`: `string|Function`
 Header CSS classes to apply to the header cell
 
-## `cellClass`: `string|Function`
+### `cellClass`: `string|Function`
 Cell classes to apply to the body cell
+
+### `frozenLeft`: `boolean`
+Determines if the column is frozen to the left. Default value: `false`
+
+### `frozenRight`: `boolean`
+Determines if the column is frozen to the right. Default value: `false`
+
+### `pipe`: `PipeTransform`
+Custom pipe transforms. Default value: `undefined`
