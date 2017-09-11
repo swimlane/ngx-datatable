@@ -13,7 +13,7 @@ import { mouseEvent } from '../../events';
     <datatable-selection
       #selector
       [selected]="selected"
-      [rows]="temp"
+      [rows]="rows"
       [selectCheck]="selectCheck"
       [selectEnabled]="selectEnabled"
       [selectionType]="selectionType"
@@ -55,7 +55,7 @@ import { mouseEvent } from '../../events';
             [rowIndex]="getRowIndex(group)"
             [expanded]="getRowExpanded(group)"            
             [rowClass]="rowClass"
-            (activate)="selector.onActivate($event, i)">
+            (activate)="selector.onActivate($event, indexes.first + i)">
           </datatable-body-row>                       
           <datatable-body-row
             *ngFor="let row of group.value; let i = index; trackBy: rowTrackingFn;"
