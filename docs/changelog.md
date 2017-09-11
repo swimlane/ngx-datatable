@@ -1,4 +1,8 @@
 # Changelog
+## 10.2.3
+- Bug: Fix checkbox not being shown #956
+- Bug: Fix IE displaying null #967
+- Bug: Fix emptry string is row is null #951
 
 ## 10.2.2
 - Bug: Recalculate limit properly #963

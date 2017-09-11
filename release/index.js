@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"10.2.2" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"10.2.3" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -6920,15 +6920,18 @@ function setColumnDefaults(columns) {
         }
         // prop can be numeric; zero is valid not a missing prop
         // translate name => prop
-        if (column.prop == null && column.name) {
+        if (isNullOrUndefined(column.prop) && column.name) {
             column.prop = camel_case_1.camelCase(column.name);
         }
         if (!column.$$valueGetter) {
             column.$$valueGetter = column_prop_getters_1.getterForProp(column.prop);
         }
         // format props if no name passed
-        if (column.prop != null && !column.name) {
+        if (!isNullOrUndefined(column.prop) && isNullOrUndefined(column.name)) {
             column.name = camel_case_1.deCamelCase(String(column.prop));
+        }
+        if (isNullOrUndefined(column.prop) && isNullOrUndefined(column.name)) {
+            column.name = ''; // Fixes IE and Edge displaying `null`
         }
         if (!column.hasOwnProperty('resizeable')) {
             column.resizeable = true;
@@ -6948,6 +6951,10 @@ function setColumnDefaults(columns) {
     }
 }
 exports.setColumnDefaults = setColumnDefaults;
+function isNullOrUndefined(value) {
+    return value === null || value === undefined;
+}
+exports.isNullOrUndefined = isNullOrUndefined;
 /**
  * Translates templates definitions to objects
  */
@@ -7019,6 +7026,8 @@ exports.getterForProp = getterForProp;
  * @returns {any} or '' if invalid index
  */
 function numericIndexGetter(row, index) {
+    if (row == null)
+        return '';
     // mimic behavior of deepValueGetter
     if (!row || index == null)
         return row;
@@ -7036,6 +7045,8 @@ exports.numericIndexGetter = numericIndexGetter;
  * @returns {any}
  */
 function shallowValueGetter(obj, fieldName) {
+    if (obj == null)
+        return '';
     if (!obj || !fieldName)
         return obj;
     var value = obj[fieldName];
@@ -7050,6 +7061,8 @@ exports.shallowValueGetter = shallowValueGetter;
  * @param {string} path
  */
 function deepValueGetter(obj, path) {
+    if (obj == null)
+        return '';
     if (!obj || !path)
         return obj;
     // check if path matches a root-level field
