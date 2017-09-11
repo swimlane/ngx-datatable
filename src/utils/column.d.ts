@@ -4,7 +4,6 @@
 export declare function columnsByPin(cols: any[]): {
     left: any;
     center: any;
-    grouping: any;
     right: any;
 };
 /**

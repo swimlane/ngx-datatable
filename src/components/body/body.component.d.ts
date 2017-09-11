@@ -21,15 +21,13 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     rowClass: any;
     groupedRows: any;
     groupExpansionDefault: boolean;
-    _groupRowsBy: string;
-    _innerWidth: number;
+    innerWidth: number;
     groupRowsBy: string;
     pageSize: number;
     rows: any[];
     columns: any[];
     offset: number;
     rowCount: number;
-    innerWidth: number;
     readonly bodyWidth: string;
     bodyHeight: any;
     scroll: EventEmitter<any>;
@@ -52,16 +50,15 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      * calculate scroll height automatically (as height will be undefined).
      */
     readonly scrollHeight: number;
-    temp: any[];
     rowHeightsCache: RowHeightCache;
-    _temp: any[];
+    temp: any[];
     offsetY: number;
     indexes: any;
     columnGroupWidths: any;
     columnGroupWidthsWithoutGroup: any;
     rowTrackingFn: any;
     listener: any;
-    groupIndexes: any;
+    rowIndexes: any;
     rowExpansions: any;
     _rows: any[];
     _bodyHeight: any;
@@ -167,7 +164,13 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      * Recalculates the table
      */
     recalcLayout(): void;
+    /**
+     * Tracks the column
+     */
     columnTrackingFn(index: number, column: any): any;
+    /**
+     * Gets the row pinning group styles
+     */
     stylesByGroup(group: string): {
         width: string;
     };
@@ -176,7 +179,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      */
     getRowExpanded(row: any): boolean;
     /**
-     * Gets the row index of the item
+     * Gets the row index given a row
      */
     getRowIndex(row: any): number;
 }
