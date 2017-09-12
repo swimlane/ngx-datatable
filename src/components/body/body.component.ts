@@ -335,7 +335,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       offset = Math.ceil(offset);
     }
 
-    if (direction !== undefined && !isNaN(offset)) {
+    if (this.scrollbarV && direction !== undefined && !isNaN(offset)) {
       this.page.emit({ offset });
     }
   }
