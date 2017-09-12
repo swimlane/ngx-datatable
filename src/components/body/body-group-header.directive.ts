@@ -23,7 +23,6 @@ export class DatatableGroupHeaderDirective {
    * Toggle the expansion of a group
    */
   toggleExpandGroup(group: any): void {
-    console.log('Inside body-group-header.directive.ts group', group);
     this.toggle.emit({
       type: 'group',
       value: group
