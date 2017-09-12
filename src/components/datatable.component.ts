@@ -44,11 +44,13 @@ import { mouseEvent } from '../events';
         (select)="onHeaderSelect($event)"
         (columnContextmenu)="onColumnContextmenu($event)">
       </datatable-header>
+      <datatable-progress
+        *ngIf="loadingIndicator">
+      </datatable-progress>
       <datatable-body
         [rows]="_internalRows"
         [scrollbarV]="scrollbarV"
         [scrollbarH]="scrollbarH"
-        [loadingIndicator]="loadingIndicator"
         [externalPaging]="externalPaging"
         [rowHeight]="rowHeight"
         [rowCount]="rowCount"
