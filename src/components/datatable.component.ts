@@ -283,7 +283,12 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * The current offset ( page - 1 ) shown.
    * Default value: `0`
    */
-  @Input() offset: number = 0;
+  @Input() set offset(val: number) {
+    this._offset = val;
+  }
+  get offset(): number {
+    return Math.max(Math.min(this._offset, Math.ceil(this.rowCount / this.pageSize) - 1), 0);
+  }
 
   /**
    * Show the linear loading bar.
@@ -595,6 +600,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
   _limit: number | undefined;
   _count: number = 0;
+  _offset: number = 0;
   _rows: any[];
   _groupRowsBy: string;
   _internalRows: any[];
