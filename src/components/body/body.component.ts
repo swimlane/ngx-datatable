@@ -9,7 +9,7 @@ import { mouseEvent } from '../../events';
 
 @Component({
   selector: 'datatable-body',
-  template: `    
+  template: `
     <datatable-selection
       #selector
       [selected]="selected"
@@ -20,6 +20,9 @@ import { mouseEvent } from '../../events';
       [rowIdentity]="rowIdentity"
       (select)="select.emit($event)"
       (activate)="activate.emit($event)">
+      <datatable-progress
+        *ngIf="loadingIndicator">
+      </datatable-progress>
       <datatable-scroller
         *ngIf="rows?.length"
         [scrollbarV]="scrollbarV"
