@@ -56,7 +56,7 @@ import { mouseEvent } from '../events';
         [loadingIndicator]="loadingIndicator"
         [externalPaging]="externalPaging"
         [rowHeight]="rowHeight"
-        [rowCount]="rowCount"
+        [rowCount]="bodyRowCount"
         [offset]="offset"
         [trackByProp]="trackByProp"
         [columns]="_internalColumns"
@@ -600,6 +600,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   pageSize: number;
   bodyHeight: number;
   rowCount: number = 0;
+  bodyRowCount: number = 0;
   offsetX: number = 0;
   rowDiffer: KeyValueDiffer<{}, {}>;
 
@@ -781,6 +782,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   recalculatePages(): void {
     this.pageSize = this.calcPageSize();
     this.rowCount = this.calcRowCount();
+    this.bodyRowCount = this.onlyPagerToChangePage ? this.limit : this.rowCount;
   }
 
   /**
