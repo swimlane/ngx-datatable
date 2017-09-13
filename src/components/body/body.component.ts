@@ -1,5 +1,14 @@
 import {
-  Component, Output, EventEmitter, Input, HostBinding, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy
+  Component,
+  Output,
+  EventEmitter,
+  Input,
+  HostBinding,
+  ViewChild,
+  OnInit,
+  OnDestroy,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '../../utils';
 import { SelectionType, Section } from '../../types';
@@ -13,6 +22,7 @@ import { mouseEvent } from '../../events';
       #selector
       [selected]="selected"
       [activated]="activated"
+      [columns]="columns"
       [rows]="temp"
       [selectCheck]="selectCheck"
       [selectEnabled]="selectEnabled"
@@ -224,6 +234,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   rowTrackingFn: any;
   rowDetailListener: any;
   sectionHeaderListener: any;
+  activateListener: any;
   rowIndexes: any = new Map();
   rowExpansions: any = new Map();
 
@@ -239,7 +250,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    *
    * @memberOf DataTableBodyComponent
    */
-  constructor() {
+  constructor(private cd: ChangeDetectorRef) {
     // declare fn here so we can get access to the `this` property
     this.rowTrackingFn = function(index: number, row: any): any {
       const idx = this.rowIndexes.get(row);
@@ -278,6 +289,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
           if (type === 'all') this.toggleAllSections(value);
         });
     }
+    this.activateListener = this.activate.subscribe(() => { this.cd.markForCheck(); });
   }
 
   /**
@@ -288,6 +300,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.rowDetail) this.rowDetailListener.unsubscribe();
     if (this.sectionHeader) this.sectionHeaderListener.unsubscribe();
+    if (this.activateListener) this.activateListener.unsubscribe();
   }
 
   /**

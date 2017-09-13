@@ -257,7 +257,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * @type {{row: any, column?: number}}
    * @memberOf DatatableComponent
    */
-  @Input() activated: { row?: any, column?: number } = {};
+  @Input() activated: { row?: any, column?: number, $$isDefault?: boolean } = { $$isDefault: true };
 
   /**
    * Enable vertical scrollbars
