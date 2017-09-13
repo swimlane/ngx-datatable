@@ -23,6 +23,7 @@ export class DataTableSelectionComponent {
 
   @Input() rows: any[];
   @Input() selected: any[];
+  @Input() activated: { row?: any, column?: number};
   @Input() selectEnabled: boolean;
   @Input() selectionType: SelectionType;
   @Input() rowIdentity: any;
@@ -32,6 +33,11 @@ export class DataTableSelectionComponent {
   @Output() select: EventEmitter<any> = new EventEmitter();
 
   prevIndex: number;
+
+  constructor() {
+    this.getCellActive = this.getCellActive.bind(this);
+    this.getRowActive  = this.getRowActive.bind(this);
+  }
 
   selectRow(event: KeyboardEvent | MouseEvent, index: number, row: any): void {
     if (!this.selectEnabled || row.$$isSectionHeader) return;
@@ -77,6 +83,9 @@ export class DataTableSelectionComponent {
     const chkbox = this.selectionType === SelectionType.checkbox;
     const select = (!chkbox && (type === 'click' || type === 'dblclick')) ||
       (chkbox && type === 'checkbox');
+
+    this.activated.row = row;
+    this.activated.column = model.cellIndex;
 
     if (select) {
       this.selectRow(event, index, row);
@@ -152,6 +161,19 @@ export class DataTableSelectionComponent {
 
   getRowSelected(row: any): boolean {
     return this.getRowSelectedIdx(row, this.selected) > -1;
+  }
+
+  getRowActive(row: any): boolean {
+    return this.activated.row
+      && this.rowIdentity(this.activated.row) === this.rowIdentity(row)
+      && this.selectionType !== SelectionType.cell;
+  }
+
+  getCellActive(row: any, columnIndex: number): boolean {
+    return this.activated.row
+      && this.rowIdentity(this.activated.row) === this.rowIdentity(row)
+      && columnIndex === this.activated.column
+      && this.selectionType === SelectionType.cell;
   }
 
   getRowSelectedIdx(row: any, selected: any[]): number {

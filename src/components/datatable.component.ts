@@ -75,6 +75,7 @@ import { mouseEvent } from '../events';
         [rowClass]="rowClass"
         [selectCheck]="selectCheck"
         (page)="onBodyPage($event)"
+        [activated]="activated"
         (activate)="activate.emit($event)"
         (rowContextmenu)="onRowContextmenu($event)"
         (select)="onBodySelect($event)"
@@ -113,7 +114,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * @memberOf DatatableComponent
    */
   @Input() set rows(val: any) {
-    
+
     // section the rows
     if (this._sectionProp) {
       this._unsectionedRows = val;
@@ -247,6 +248,16 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * @memberOf DatatableComponent
    */
   @Input() selected: any[] = [];
+
+  /**
+   * Row and column that should be
+   * represented as active in the grid.
+   * Default value: `{}`
+   *
+   * @type {{row: any, column?: number}}
+   * @memberOf DatatableComponent
+   */
+  @Input() activated: { row?: any, column?: number } = {};
 
   /**
    * Enable vertical scrollbars

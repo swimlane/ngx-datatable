@@ -49,11 +49,18 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     this.cellContext.isSelected = val;
     this.cd.markForCheck();
   }
-
   get isSelected(): boolean {
     return this._isSelected;
   }
-  
+
+  @Input() set isActive(val: boolean) {
+    this.cellContext.isActive = val;
+    this._isActive = val;
+  }
+  get isActive(): boolean {
+    return this._isActive;
+  }
+
   @Input() set expanded(val: boolean) {
     this._expanded = val;
     this.cellContext.expanded = val;
@@ -110,6 +117,17 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
 
   @ViewChild('cellTemplate', { read: ViewContainerRef }) cellTemplate: ViewContainerRef;
 
+  @HostListener('blur')
+  onBlur() {
+    this._isFocused = false;
+    this.cellContext.isFocused = false;
+  }
+  @HostListener('focus')
+  onFocus() {
+    this._isFocused = true;
+    this.cellContext.isFocused = true;
+  }
+
   @HostBinding('class')
   get columnCssClasses(): any {
     let cls = 'datatable-body-cell';
@@ -134,7 +152,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
       }
     }
     if (!this.sortDir) cls += ' sort-active';
-    if (this.isFocused) cls += ' active';
+    if (this.isActive) cls += ' active';
     if (this.sortDir === SortDirection.asc) cls += ' sort-asc';
     if (this.sortDir === SortDirection.desc) cls += ' sort-desc';
     return cls;
@@ -155,7 +173,6 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   sanitizedValue: any;
   value: any;
   sortDir: SortDirection;
-  isFocused: boolean = false;
   onCheckboxChangeFn = this.onCheckboxChange.bind(this);
   activateFn = this.activate.emit.bind(this.activate);
 
@@ -166,10 +183,14 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     value: this.value,
     column: this.column,
     isSelected: this.isSelected,
-    rowIndex: this.rowIndex
+    isActive: this.isActive,
+    rowIndex: this.rowIndex,
+    isFocused: false,
   };
 
   private _isSelected: boolean;
+  private _isActive: boolean;
+  private _isFocused: boolean;
   private _sorts: any[];
   private _column: TableColumn;
   private _row: any;
@@ -213,16 +234,6 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
       this.sanitizedValue = this.stripHtml(value);
       this.cd.markForCheck();
     }
-  }
-
-  @HostListener('focus')
-  onFocus(): void {
-    this.isFocused = true;
-  }
-
-  @HostListener('blur')
-  onBlur(): void {
-    this.isFocused = false;
   }
 
   @HostListener('click', ['$event'])

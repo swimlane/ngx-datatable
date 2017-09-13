@@ -23,6 +23,7 @@ import { mouseEvent, keyboardEvent } from '../../events';
         [row]="row"
         [expanded]="expanded"
         [isSelected]="isSelected"
+        [isActive]="getCellActive(row, ii)"
         [rowIndex]="rowIndex"
         [column]="column"
         [rowHeight]="rowHeight"
@@ -56,6 +57,8 @@ export class DataTableBodyRowComponent implements DoCheck {
   @Input() row: any;
   @Input() offsetX: number;
   @Input() isSelected: boolean;
+  @Input() isActive: boolean;
+  @Input() getCellActive: (row: any, col: number) => boolean;
   @Input() rowIndex: number;
 
   @HostBinding('class')
@@ -100,7 +103,7 @@ export class DataTableBodyRowComponent implements DoCheck {
 
   constructor(
     private differs: KeyValueDiffers,
-    private scrollbarHelper: ScrollbarHelper, 
+    private scrollbarHelper: ScrollbarHelper,
     private cd: ChangeDetectorRef, element: ElementRef) {
     this.element = element.nativeElement;
     this.rowDiffer = differs.find({}).create(null);
