@@ -12,6 +12,7 @@ import { mouseEvent } from '../../events';
     <datatable-selection
       #selector
       [selected]="selected"
+      [activated]="activated"
       [rows]="temp"
       [selectCheck]="selectCheck"
       [selectEnabled]="selectEnabled"
@@ -38,7 +39,7 @@ import { mouseEvent } from '../../events';
           [rowIndex]="getRowIndex(row)"
           [expanded]="getRowExpanded(row)"
           (rowContextmenu)="rowContextmenu.emit($event)">
-          <datatable-body-section-header 
+          <datatable-body-section-header
             *ngIf="row.$$isSectionHeader"
             tabindex="-1"
             [isSelected]="selector.getRowSelected(row)"
@@ -56,6 +57,8 @@ import { mouseEvent } from '../../events';
             *ngIf="!row.$$isSectionHeader"
             tabindex="-1"
             [isSelected]="selector.getRowSelected(row)"
+            [isActive]="selector.getRowActive(row)"
+            [getCellActive]="selector.getCellActive"
             [innerWidth]="innerWidth"
             [offsetX]="offsetX"
             [columns]="columns"
@@ -93,6 +96,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() offsetX: number;
   @Input() emptyMessage: string;
   @Input() selectionType: SelectionType;
+  @Input() activated: { row?: any, column?: number };
   @Input() selected: any[] = [];
   @Input() rowIdentity: any;
   @Input() rowDetail: any;
@@ -239,7 +243,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     // declare fn here so we can get access to the `this` property
     this.rowTrackingFn = function(index: number, row: any): any {
       const idx = this.rowIndexes.get(row);
-      
+
       if (this.trackByProp) {
         return `${idx}-${this.trackByProp}`;
       } else {
@@ -740,9 +744,9 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   /**
    * Returns if the row was expanded
-   * 
-   * @param {*} row 
-   * @returns {boolean} 
+   *
+   * @param {*} row
+   * @returns {boolean}
    * @memberof DataTableBodyComponent
    */
   getRowExpanded(row: any): boolean {
@@ -766,9 +770,9 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   /**
    * Gets the row index of the item
-   * 
-   * @param {*} row 
-   * @returns {number} 
+   *
+   * @param {*} row
+   * @returns {number}
    * @memberof DataTableBodyComponent
    */
   getRowIndex(row: any): number {
