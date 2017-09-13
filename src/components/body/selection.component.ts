@@ -50,11 +50,11 @@ export class DataTableSelectionComponent {
         const rowIndex = filteredRows.findIndex((t) => this.rowIdentity(t) === row);
         if (event.keyCode === Keys.up) {
           nextRow = filteredRows[Math.max(rowIndex - 1, 0)];
-        } else if (event.keyCode === Keys.down) {
+        } else if (event.keyCode === Keys.down || event.keyCode === Keys.return) {
           nextRow = filteredRows[Math.min(rowIndex + 1, filteredRows.length - 1)];
-        } else if (event.keyCode === Keys.left) {
+        } else if (event.keyCode === Keys.left || (event.shiftKey && event.keyCode === Keys.tab)) {
           nextColumn = Math.max(columnIndex - 1, 0);
-        } else if (event.keyCode === Keys.right) {
+        } else if (event.keyCode === Keys.right || event.keyCode === Keys.tab) {
           nextColumn = Math.min(columnIndex + 1, this.columns.length - 1);
         }
         console.log('RowLength: ', filteredRows.length, ', Index:', rowIndex);
@@ -132,7 +132,8 @@ export class DataTableSelectionComponent {
       keyCode === Keys.up ||
       keyCode === Keys.down ||
       keyCode === Keys.right ||
-      keyCode === Keys.left;
+      keyCode === Keys.left ||
+      keyCode === Keys.tab;
 
     if (shouldFocus) {
       const isCellSelection =
