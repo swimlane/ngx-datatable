@@ -56,7 +56,7 @@ import { mouseEvent } from '../events';
         [loadingIndicator]="loadingIndicator"
         [externalPaging]="externalPaging"
         [rowHeight]="rowHeight"
-        [rowCount]="rowCount"
+        [rowCount]="bodyRowCount"
         [offset]="offset"
         [trackByProp]="trackByProp"
         [columns]="_internalColumns"
@@ -206,6 +206,11 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Enable horz scrollbars
    */
   @Input() scrollbarH: boolean = false;
+
+  /**
+   * Weather or not to use only the footer pager to change page
+   */
+  @Input() onlyPagerToChangePage: boolean = false;
 
   /**
    * The row height; which is necessary
@@ -595,6 +600,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   pageSize: number;
   bodyHeight: number;
   rowCount: number = 0;
+  bodyRowCount: number = 0;
   offsetX: number = 0;
   rowDiffer: KeyValueDiffer<{}, {}>;
 
@@ -776,20 +782,23 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   recalculatePages(): void {
     this.pageSize = this.calcPageSize();
     this.rowCount = this.calcRowCount();
+    this.bodyRowCount = this.onlyPagerToChangePage ? this.pageSize : this.rowCount;
   }
 
   /**
    * Body triggered a page event.
    */
   onBodyPage({ offset }: any): void {
-    this.offset = offset;
+    if (!this.onlyPagerToChangePage) {
+      this.offset = offset;
 
-    this.page.emit({
-      count: this.count,
-      pageSize: this.pageSize,
-      limit: this.limit,
-      offset: this.offset
-    });
+      this.page.emit({
+        count: this.count,
+        pageSize: this.pageSize,
+        limit: this.limit,
+        offset: this.offset
+      });
+    }
   }
 
   /**
@@ -805,7 +814,11 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    */
   onFooterPage(event: any) {
     this.offset = event.page - 1;
-    this.bodyComponent.updateOffsetY(this.offset);
+    if (this.onlyPagerToChangePage) {
+      this.bodyComponent.updateOffsetY();
+    } else {
+      this.bodyComponent.updateOffsetY(this.offset);
+    }
 
     this.page.emit({
       count: this.count,
@@ -822,7 +835,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     // Keep the page size constant even if the row has been expanded.
     // This is because an expanded row is still considered to be a child of
     // the original row.  Hence calculation would use rowHeight only.
-    if (this.scrollbarV) {      
+    if (this.scrollbarV && !this.onlyPagerToChangePage) {
       const size = Math.ceil(this.bodyHeight / this.rowHeight);
       return Math.max(size, 0);
     }
