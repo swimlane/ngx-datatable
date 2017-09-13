@@ -278,16 +278,17 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy, OnInit {
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
     const keyCode = event.keyCode;
-    const isTargetCell = event.target === this._element;
+    const isContainedCell = this._element.contains(event.target);
 
     const isAction =
       keyCode === Keys.return ||
       keyCode === Keys.down ||
       keyCode === Keys.up ||
       keyCode === Keys.left ||
-      keyCode === Keys.right;
+      keyCode === Keys.right ||
+      keyCode === Keys.tab;
 
-    if (isAction && isTargetCell) {
+    if (isAction && isContainedCell) {
       event.preventDefault();
       event.stopPropagation();
 
