@@ -782,7 +782,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   recalculatePages(): void {
     this.pageSize = this.calcPageSize();
     this.rowCount = this.calcRowCount();
-    this.bodyRowCount = this.onlyPagerToChangePage ? this.limit : this.rowCount;
+    this.bodyRowCount = this.onlyPagerToChangePage ? this.pageSize : this.rowCount;
   }
 
   /**
@@ -835,7 +835,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     // Keep the page size constant even if the row has been expanded.
     // This is because an expanded row is still considered to be a child of
     // the original row.  Hence calculation would use rowHeight only.
-    if (this.scrollbarV) {      
+    if (this.scrollbarV && !this.onlyPagerToChangePage) {
       const size = Math.ceil(this.bodyHeight / this.rowHeight);
       return Math.max(size, 0);
     }
