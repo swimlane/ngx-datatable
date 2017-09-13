@@ -31,6 +31,7 @@ export class DataTableSelectionComponent {
   @Input() selectCheck: any;
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
+  @Output() activateCell: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
 
   prevIndex: number;
@@ -41,25 +42,28 @@ export class DataTableSelectionComponent {
   }
 
   activateRow(row: any, columnIndex: number, event?: KeyboardEvent) {
-    if ((this.activated as any).$$isDefault) {
+    if ((this.activated as any).$$isDefault && !row.$$isSectionHeader) {
       let nextRow = row;
       let nextColumn = columnIndex;
       if (event) {
-        const first = this.rows.findIndex(t => !t.$$isSectionHeader);
-        const last = [...this.rows].reverse().findIndex(t => !t.$$isSectionHeader);
-        const rowIndex = this.getRowSelectedIdx(row, this.rows);
+        const filteredRows = this.rows.filter(t => !t.$$isSectionHeader);
+        const rowIndex = filteredRows.findIndex((t) => this.rowIdentity(t) === row);
         if (event.keyCode === Keys.up) {
-          nextRow = this.rows[Math.max(rowIndex - 1, first)];
+          nextRow = filteredRows[Math.max(rowIndex - 1, 0)];
         } else if (event.keyCode === Keys.down) {
-          nextRow = this.rows[Math.min(rowIndex + 1, last)];
+          nextRow = filteredRows[Math.min(rowIndex + 1, filteredRows.length - 1)];
         } else if (event.keyCode === Keys.left) {
           nextColumn = Math.max(columnIndex - 1, 0);
         } else if (event.keyCode === Keys.right) {
           nextColumn = Math.min(columnIndex + 1, this.columns.length - 1);
         }
+        console.log('RowLength: ', filteredRows.length, ', Index:', rowIndex);
       }
-      this.activated.row = nextRow;
+
+      console.log('Row:', nextRow.itemTitle, ', Column:', nextColumn);
+      this.activated.row = this.rowIdentity(nextRow);
       this.activated.column = nextColumn;
+      this.activateCell.emit(this.activated);
     }
   }
 
@@ -187,14 +191,12 @@ export class DataTableSelectionComponent {
   }
 
   getRowActive(row: any): boolean {
-    return this.activated.row
-      && this.rowIdentity(this.activated.row) === this.rowIdentity(row)
+    return this.activated.row === this.rowIdentity(row)
       && this.selectionType !== SelectionType.cell;
   }
 
   getCellActive(row: any, columnIndex: number): boolean {
-    return this.activated.row
-      && this.rowIdentity(this.activated.row) === this.rowIdentity(row)
+    return this.activated.row === this.rowIdentity(row)
       && columnIndex === this.activated.column
       && this.selectionType === SelectionType.cell;
   }

@@ -578,6 +578,14 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    */
   @Output() tableContextmenu = new EventEmitter<{ event: MouseEvent, type: ContextmenuType, content: any }>(false);
 
+  @HostListener('blur')
+  onBlur() {
+    this.cd.markForCheck();
+  }
+  @HostListener('focus')
+  onFocus() {
+    this.cd.markForCheck();
+  }
   /**
    * CSS class applied if the header height if fixed height.
    *
