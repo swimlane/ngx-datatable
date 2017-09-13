@@ -208,7 +208,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   @Input() scrollbarH: boolean = false;
 
   /**
-   * Weather or not use only page to change page
+   * Weather or not to use only the footer pager to change page
    */
   @Input() onlyPagerToChangePage: boolean = false;
 
