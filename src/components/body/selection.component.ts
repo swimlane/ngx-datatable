@@ -22,6 +22,7 @@ export interface Model {
 export class DataTableSelectionComponent {
 
   @Input() rows: any[];
+  @Input() columns: any[];
   @Input() selected: any[];
   @Input() activated: { row?: any, column?: number};
   @Input() selectEnabled: boolean;
@@ -37,6 +38,29 @@ export class DataTableSelectionComponent {
   constructor() {
     this.getCellActive = this.getCellActive.bind(this);
     this.getRowActive  = this.getRowActive.bind(this);
+  }
+
+  activateRow(row: any, columnIndex: number, event?: KeyboardEvent) {
+    if ((this.activated as any).$$isDefault) {
+      let nextRow = row;
+      let nextColumn = columnIndex;
+      if (event) {
+        const first = this.rows.findIndex(t => !t.$$isSectionHeader);
+        const last = [...this.rows].reverse().findIndex(t => !t.$$isSectionHeader);
+        const rowIndex = this.getRowSelectedIdx(row, this.rows);
+        if (event.keyCode === Keys.up) {
+          nextRow = this.rows[Math.max(rowIndex - 1, first)];
+        } else if (event.keyCode === Keys.down) {
+          nextRow = this.rows[Math.min(rowIndex + 1, last)];
+        } else if (event.keyCode === Keys.left) {
+          nextColumn = Math.max(columnIndex - 1, 0);
+        } else if (event.keyCode === Keys.right) {
+          nextColumn = Math.min(columnIndex + 1, this.columns.length - 1);
+        }
+      }
+      this.activated.row = nextRow;
+      this.activated.column = nextColumn;
+    }
   }
 
   selectRow(event: KeyboardEvent | MouseEvent, index: number, row: any): void {
@@ -84,12 +108,11 @@ export class DataTableSelectionComponent {
     const select = (!chkbox && (type === 'click' || type === 'dblclick')) ||
       (chkbox && type === 'checkbox');
 
-    this.activated.row = row;
-    this.activated.column = model.cellIndex;
-
     if (select) {
       this.selectRow(event, index, row);
+      this.activateRow(row, model.cellIndex);
     } else if (type === 'keydown') {
+      this.activateRow(row, model.cellIndex, event as KeyboardEvent);
       if ((<KeyboardEvent>event).keyCode === Keys.return) {
         this.selectRow(event, index, row);
       } else {

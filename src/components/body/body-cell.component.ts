@@ -54,8 +54,9 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   }
 
   @Input() set isActive(val: boolean) {
-    this.cellContext.isActive = val;
     this._isActive = val;
+    this.cellContext.isActive = val;
+    this.cd.markForCheck();
   }
   get isActive(): boolean {
     return this._isActive;
@@ -117,17 +118,6 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
 
   @ViewChild('cellTemplate', { read: ViewContainerRef }) cellTemplate: ViewContainerRef;
 
-  @HostListener('blur')
-  onBlur() {
-    this._isFocused = false;
-    this.cellContext.isFocused = false;
-  }
-  @HostListener('focus')
-  onFocus() {
-    this._isFocused = true;
-    this.cellContext.isFocused = true;
-  }
-
   @HostBinding('class')
   get columnCssClasses(): any {
     let cls = 'datatable-body-cell';
@@ -185,12 +175,10 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     isSelected: this.isSelected,
     isActive: this.isActive,
     rowIndex: this.rowIndex,
-    isFocused: false,
   };
 
   private _isSelected: boolean;
   private _isActive: boolean;
-  private _isFocused: boolean;
   private _sorts: any[];
   private _column: TableColumn;
   private _row: any;
