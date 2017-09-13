@@ -208,6 +208,11 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   @Input() scrollbarH: boolean = false;
 
   /**
+   * Weather or not use only page to change page
+   */
+  @Input() onlyPagerToChangePage: boolean = false;
+
+  /**
    * The row height; which is necessary
    * to calculate the height for the lazy rendering.
    */
@@ -782,14 +787,16 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Body triggered a page event.
    */
   onBodyPage({ offset }: any): void {
-    this.offset = offset;
+    if (!this.onlyPagerToChangePage) {
+      this.offset = offset;
 
-    this.page.emit({
-      count: this.count,
-      pageSize: this.pageSize,
-      limit: this.limit,
-      offset: this.offset
-    });
+      this.page.emit({
+        count: this.count,
+        pageSize: this.pageSize,
+        limit: this.limit,
+        offset: this.offset
+      });
+    }
   }
 
   /**
@@ -805,7 +812,11 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    */
   onFooterPage(event: any) {
     this.offset = event.page - 1;
-    this.bodyComponent.updateOffsetY(this.offset);
+    if (this.onlyPagerToChangePage) {
+      this.bodyComponent.updateOffsetY();
+    } else {
+      this.bodyComponent.updateOffsetY(this.offset);
+    }
 
     this.page.emit({
       count: this.count,
