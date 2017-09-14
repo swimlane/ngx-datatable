@@ -132,7 +132,7 @@ var DataTableBodyRowComponent = /** @class */ (function () {
         { type: core_1.Component, args: [{
                     selector: 'datatable-body-row',
                     changeDetection: core_1.ChangeDetectionStrategy.OnPush,
-                    template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: trackByGroups\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [expanded]=\"expanded\"\n        [isSelected]=\"isSelected\"\n        [rowIndex]=\"rowIndex\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>\n  "
+                    template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: trackByGroups\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [expanded]=\"expanded\"\n        [isSelected]=\"isSelected\"\n        [isActive]=\"getCellActive(row, ii)\"\n        [rowIndex]=\"rowIndex\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        [activateCell$]=\"activateCell$\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>\n  "
                 },] },
     ];
     /** @nocollapse */
@@ -148,9 +148,13 @@ var DataTableBodyRowComponent = /** @class */ (function () {
         'expanded': [{ type: core_1.Input },],
         'rowClass': [{ type: core_1.Input },],
         'row': [{ type: core_1.Input },],
+        'rowIdentity': [{ type: core_1.Input },],
         'offsetX': [{ type: core_1.Input },],
         'isSelected': [{ type: core_1.Input },],
+        'isActive': [{ type: core_1.Input },],
+        'getCellActive': [{ type: core_1.Input },],
         'rowIndex': [{ type: core_1.Input },],
+        'activateCell$': [{ type: core_1.Input },],
         'cssClass': [{ type: core_1.HostBinding, args: ['class',] },],
         'rowHeight': [{ type: core_1.HostBinding, args: ['style.height.px',] }, { type: core_1.Input },],
         'columnsTotalWidths': [{ type: core_1.HostBinding, args: ['style.width.px',] },],

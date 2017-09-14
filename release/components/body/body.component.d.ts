@@ -1,8 +1,9 @@
-import { EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { EventEmitter, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { RowHeightCache } from '../../utils';
 import { SelectionType, Section } from '../../types';
 import { ScrollerComponent } from './scroller.component';
 export declare class DataTableBodyComponent implements OnInit, OnDestroy {
+    private cd;
     scrollbarV: boolean;
     scrollbarH: boolean;
     loadingIndicator: boolean;
@@ -14,6 +15,10 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     offsetX: number;
     emptyMessage: string;
     selectionType: SelectionType;
+    activated: {
+        row?: any;
+        column?: number;
+    };
     selected: any[];
     rowIdentity: any;
     rowDetail: any;
@@ -32,6 +37,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     scroll: EventEmitter<any>;
     page: EventEmitter<any>;
     activate: EventEmitter<any>;
+    activateCell: EventEmitter<any>;
     select: EventEmitter<any>;
     detailToggle: EventEmitter<any>;
     sectionHeaderToggle: EventEmitter<any>;
@@ -66,6 +72,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     rowTrackingFn: any;
     rowDetailListener: any;
     sectionHeaderListener: any;
+    activateListener: any;
     rowIndexes: any;
     rowExpansions: any;
     _rows: any[];
@@ -79,7 +86,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      *
      * @memberOf DataTableBodyComponent
      */
-    constructor();
+    constructor(cd: ChangeDetectorRef);
     /**
      * Called after the constructor, initializing input properties
      *

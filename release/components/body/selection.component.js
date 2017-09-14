@@ -6,8 +6,38 @@ var types_1 = require("../../types");
 var DataTableSelectionComponent = /** @class */ (function () {
     function DataTableSelectionComponent() {
         this.activate = new core_1.EventEmitter();
+        this.activateCell = new core_1.EventEmitter();
         this.select = new core_1.EventEmitter();
+        this.getCellActive = this.getCellActive.bind(this);
+        this.getRowActive = this.getRowActive.bind(this);
     }
+    DataTableSelectionComponent.prototype.activateRow = function (row, columnIndex, event) {
+        var _this = this;
+        if (this.activated.$$isDefault && !row.$$isSectionHeader) {
+            var nextRow = row;
+            var nextColumn = columnIndex;
+            if (event) {
+                var filteredRows = this.rows.filter(function (t) { return !t.$$isSectionHeader; });
+                var rowId_1 = this.rowIdentity(row);
+                var rowIndex = filteredRows.findIndex(function (t) { return _this.rowIdentity(t) === rowId_1; });
+                if (event.keyCode === utils_1.Keys.up) {
+                    nextRow = filteredRows[Math.max(rowIndex - 1, 0)];
+                }
+                else if (event.keyCode === utils_1.Keys.down || event.keyCode === utils_1.Keys.return) {
+                    nextRow = filteredRows[Math.min(rowIndex + 1, filteredRows.length - 1)];
+                }
+                else if (event.keyCode === utils_1.Keys.left || (event.shiftKey && event.keyCode === utils_1.Keys.tab)) {
+                    nextColumn = Math.max(columnIndex - 1, 0);
+                }
+                else if (event.keyCode === utils_1.Keys.right || event.keyCode === utils_1.Keys.tab) {
+                    nextColumn = Math.min(columnIndex + 1, this.columns.length - 1);
+                }
+            }
+            this.activated.row = this.rowIdentity(nextRow);
+            this.activated.column = nextColumn;
+            this.activateCell.emit(this.activated);
+        }
+    };
     DataTableSelectionComponent.prototype.selectRow = function (event, index, row) {
         if (!this.selectEnabled || row.$$isSectionHeader)
             return;
@@ -47,8 +77,10 @@ var DataTableSelectionComponent = /** @class */ (function () {
             (chkbox && type === 'checkbox');
         if (select) {
             this.selectRow(event, index, row);
+            this.activateRow(row, model.cellIndex);
         }
         else if (type === 'keydown') {
+            this.activateRow(row, model.cellIndex, event);
             if (event.keyCode === utils_1.Keys.return) {
                 this.selectRow(event, index, row);
             }
@@ -63,7 +95,8 @@ var DataTableSelectionComponent = /** @class */ (function () {
         var shouldFocus = keyCode === utils_1.Keys.up ||
             keyCode === utils_1.Keys.down ||
             keyCode === utils_1.Keys.right ||
-            keyCode === utils_1.Keys.left;
+            keyCode === utils_1.Keys.left ||
+            keyCode === utils_1.Keys.tab;
         if (shouldFocus) {
             var isCellSelection = this.selectionType === types_1.SelectionType.cell;
             if (!model.cellElement || !isCellSelection) {
@@ -116,6 +149,15 @@ var DataTableSelectionComponent = /** @class */ (function () {
     DataTableSelectionComponent.prototype.getRowSelected = function (row) {
         return this.getRowSelectedIdx(row, this.selected) > -1;
     };
+    DataTableSelectionComponent.prototype.getRowActive = function (row) {
+        return this.activated.row === this.rowIdentity(row)
+            && this.selectionType !== types_1.SelectionType.cell;
+    };
+    DataTableSelectionComponent.prototype.getCellActive = function (row, columnIndex) {
+        return this.activated.row === this.rowIdentity(row)
+            && columnIndex === this.activated.column
+            && this.selectionType === types_1.SelectionType.cell;
+    };
     DataTableSelectionComponent.prototype.getRowSelectedIdx = function (row, selected) {
         var _this = this;
         if (!selected || !selected.length)
@@ -137,12 +179,15 @@ var DataTableSelectionComponent = /** @class */ (function () {
     DataTableSelectionComponent.ctorParameters = function () { return []; };
     DataTableSelectionComponent.propDecorators = {
         'rows': [{ type: core_1.Input },],
+        'columns': [{ type: core_1.Input },],
         'selected': [{ type: core_1.Input },],
+        'activated': [{ type: core_1.Input },],
         'selectEnabled': [{ type: core_1.Input },],
         'selectionType': [{ type: core_1.Input },],
         'rowIdentity': [{ type: core_1.Input },],
         'selectCheck': [{ type: core_1.Input },],
         'activate': [{ type: core_1.Output },],
+        'activateCell': [{ type: core_1.Output },],
         'select': [{ type: core_1.Output },],
     };
     return DataTableSelectionComponent;

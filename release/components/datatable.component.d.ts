@@ -76,6 +76,19 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
      */
     selected: any[];
     /**
+     * Row and column that should be
+     * represented as active in the grid.
+     * Default value: `{}`
+     *
+     * @type {{row: any, column?: number}}
+     * @memberOf DatatableComponent
+     */
+    activated: {
+        row?: any;
+        column?: number;
+        $$isDefault?: boolean;
+    };
+    /**
      * Enable vertical scrollbars
      *
      * @type {boolean}
@@ -341,6 +354,8 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
         type: ContextmenuType;
         content: any;
     }>;
+    onBlur(): void;
+    onFocus(): void;
     /**
      * CSS class applied if the header height if fixed height.
      *

@@ -9,9 +9,13 @@ export declare class DataTableBodyRowComponent implements DoCheck {
     expanded: boolean;
     rowClass: any;
     row: any;
+    rowIdentity: (t: any) => any;
     offsetX: number;
     isSelected: boolean;
+    isActive: boolean;
+    getCellActive: (row: any, col: number) => boolean;
     rowIndex: number;
+    activateCell$: EventEmitter<any>;
     readonly cssClass: string;
     rowHeight: number;
     readonly columnsTotalWidths: string;

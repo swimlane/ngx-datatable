@@ -10,14 +10,22 @@ export interface Model {
 }
 export declare class DataTableSelectionComponent {
     rows: any[];
+    columns: any[];
     selected: any[];
+    activated: {
+        row?: any;
+        column?: number;
+    };
     selectEnabled: boolean;
     selectionType: SelectionType;
     rowIdentity: any;
     selectCheck: any;
     activate: EventEmitter<any>;
+    activateCell: EventEmitter<any>;
     select: EventEmitter<any>;
     prevIndex: number;
+    constructor();
+    activateRow(row: any, columnIndex: number, event?: KeyboardEvent): void;
     selectRow(event: KeyboardEvent | MouseEvent, index: number, row: any): void;
     onActivate(model: Model, index: number): void;
     onKeyboardFocus(model: Model): void;
@@ -25,5 +33,7 @@ export declare class DataTableSelectionComponent {
     getPrevNextRow(rowElement: any, keyCode: number): any;
     focusCell(cellElement: any, rowElement: any, keyCode: number, cellIndex: number): void;
     getRowSelected(row: any): boolean;
+    getRowActive(row: any): boolean;
+    getCellActive(row: any, columnIndex: number): boolean;
     getRowSelectedIdx(row: any, selected: any[]): number;
 }

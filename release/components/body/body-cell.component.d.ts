@@ -1,15 +1,18 @@
-import { ChangeDetectorRef, EventEmitter, ElementRef, ViewContainerRef, OnDestroy, DoCheck } from '@angular/core';
+import { ChangeDetectorRef, EventEmitter, ElementRef, ViewContainerRef, OnDestroy, DoCheck, OnInit } from '@angular/core';
 import { SortDirection } from '../../types';
 import { TableColumn } from '../../types/table-column.type';
-export declare class DataTableBodyCellComponent implements DoCheck, OnDestroy {
+export declare class DataTableBodyCellComponent implements DoCheck, OnDestroy, OnInit {
     private cd;
     rowHeight: number;
     isSelected: boolean;
+    isActive: boolean;
     expanded: boolean;
     rowIndex: number;
     column: TableColumn;
     row: any;
+    rowIdentity: (t: any) => any;
     sorts: any[];
+    activateCell$: EventEmitter<any>;
     activate: EventEmitter<any>;
     cellTemplate: ViewContainerRef;
     readonly columnCssClasses: any;
@@ -18,20 +21,22 @@ export declare class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     sanitizedValue: any;
     value: any;
     sortDir: SortDirection;
-    isFocused: boolean;
     onCheckboxChangeFn: any;
     activateFn: any;
     cellContext: any;
     private _isSelected;
+    private _isActive;
     private _sorts;
     private _column;
     private _row;
     private _rowIndex;
     private _expanded;
     private _element;
+    private activateCellSub;
     constructor(element: ElementRef, cd: ChangeDetectorRef);
     ngDoCheck(): void;
     ngOnDestroy(): void;
+    ngOnInit(): void;
     checkValueUpdates(): void;
     onFocus(): void;
     onBlur(): void;
