@@ -7,7 +7,6 @@ var DataTableBodyCellComponent = /** @class */ (function () {
     function DataTableBodyCellComponent(element, cd) {
         this.cd = cd;
         this.activate = new core_1.EventEmitter();
-        this.isFocused = false;
         this.onCheckboxChangeFn = this.onCheckboxChange.bind(this);
         this.activateFn = this.activate.emit.bind(this.activate);
         this.cellContext = {
@@ -17,7 +16,8 @@ var DataTableBodyCellComponent = /** @class */ (function () {
             value: this.value,
             column: this.column,
             isSelected: this.isSelected,
-            rowIndex: this.rowIndex
+            isActive: this.isActive,
+            rowIndex: this.rowIndex,
         };
         this._element = element.nativeElement;
     }
@@ -29,6 +29,21 @@ var DataTableBodyCellComponent = /** @class */ (function () {
             this._isSelected = val;
             this.cellContext.isSelected = val;
             this.cd.markForCheck();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataTableBodyCellComponent.prototype, "isActive", {
+        get: function () {
+            return this._isActive;
+        },
+        set: function (val) {
+            this._isActive = val;
+            this.cellContext.isActive = val;
+            this.cd.markForCheck();
+            if (val) {
+                this._element.focus();
+            }
         },
         enumerable: true,
         configurable: true
@@ -123,7 +138,7 @@ var DataTableBodyCellComponent = /** @class */ (function () {
             }
             if (!this.sortDir)
                 cls += ' sort-active';
-            if (this.isFocused)
+            if (this.isActive)
                 cls += ' active';
             if (this.sortDir === types_1.SortDirection.asc)
                 cls += ' sort-asc';
@@ -158,6 +173,15 @@ var DataTableBodyCellComponent = /** @class */ (function () {
         if (this.cellTemplate) {
             this.cellTemplate.clear();
         }
+        if (this.activateCellSub) {
+            this.activateCellSub.unsubscribe();
+        }
+    };
+    DataTableBodyCellComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.activateCellSub = this.activateCell$.subscribe(function () {
+            _this.cd.markForCheck();
+        });
     };
     DataTableBodyCellComponent.prototype.checkValueUpdates = function () {
         var value = '';
@@ -182,10 +206,10 @@ var DataTableBodyCellComponent = /** @class */ (function () {
         }
     };
     DataTableBodyCellComponent.prototype.onFocus = function () {
-        this.isFocused = true;
+        this.cd.markForCheck();
     };
     DataTableBodyCellComponent.prototype.onBlur = function () {
-        this.isFocused = false;
+        this.cd.markForCheck();
     };
     DataTableBodyCellComponent.prototype.onClick = function (event) {
         this.activate.emit({
@@ -209,13 +233,14 @@ var DataTableBodyCellComponent = /** @class */ (function () {
     };
     DataTableBodyCellComponent.prototype.onKeyDown = function (event) {
         var keyCode = event.keyCode;
-        var isTargetCell = event.target === this._element;
+        var isContainedCell = this._element.contains(event.target);
         var isAction = keyCode === utils_1.Keys.return ||
             keyCode === utils_1.Keys.down ||
             keyCode === utils_1.Keys.up ||
             keyCode === utils_1.Keys.left ||
-            keyCode === utils_1.Keys.right;
-        if (isAction && isTargetCell) {
+            keyCode === utils_1.Keys.right ||
+            keyCode === utils_1.Keys.tab;
+        if (isAction && isContainedCell) {
             event.preventDefault();
             event.stopPropagation();
             this.activate.emit({
@@ -271,11 +296,14 @@ var DataTableBodyCellComponent = /** @class */ (function () {
     DataTableBodyCellComponent.propDecorators = {
         'rowHeight': [{ type: core_1.Input },],
         'isSelected': [{ type: core_1.Input },],
+        'isActive': [{ type: core_1.Input },],
         'expanded': [{ type: core_1.Input },],
         'rowIndex': [{ type: core_1.Input },],
         'column': [{ type: core_1.Input },],
         'row': [{ type: core_1.Input },],
+        'rowIdentity': [{ type: core_1.Input },],
         'sorts': [{ type: core_1.Input },],
+        'activateCell$': [{ type: core_1.Input },],
         'activate': [{ type: core_1.Output },],
         'cellTemplate': [{ type: core_1.ViewChild, args: ['cellTemplate', { read: core_1.ViewContainerRef },] },],
         'columnCssClasses': [{ type: core_1.HostBinding, args: ['class',] },],

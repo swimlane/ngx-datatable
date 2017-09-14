@@ -1683,7 +1683,6 @@ var DataTableBodyCellComponent = /** @class */ (function () {
     function DataTableBodyCellComponent(element, cd) {
         this.cd = cd;
         this.activate = new core_1.EventEmitter();
-        this.isFocused = false;
         this.onCheckboxChangeFn = this.onCheckboxChange.bind(this);
         this.activateFn = this.activate.emit.bind(this.activate);
         this.cellContext = {
@@ -1693,7 +1692,8 @@ var DataTableBodyCellComponent = /** @class */ (function () {
             value: this.value,
             column: this.column,
             isSelected: this.isSelected,
-            rowIndex: this.rowIndex
+            isActive: this.isActive,
+            rowIndex: this.rowIndex,
         };
         this._element = element.nativeElement;
     }
@@ -1705,6 +1705,21 @@ var DataTableBodyCellComponent = /** @class */ (function () {
             this._isSelected = val;
             this.cellContext.isSelected = val;
             this.cd.markForCheck();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataTableBodyCellComponent.prototype, "isActive", {
+        get: function () {
+            return this._isActive;
+        },
+        set: function (val) {
+            this._isActive = val;
+            this.cellContext.isActive = val;
+            this.cd.markForCheck();
+            if (val) {
+                this._element.focus();
+            }
         },
         enumerable: true,
         configurable: true
@@ -1799,7 +1814,7 @@ var DataTableBodyCellComponent = /** @class */ (function () {
             }
             if (!this.sortDir)
                 cls += ' sort-active';
-            if (this.isFocused)
+            if (this.isActive)
                 cls += ' active';
             if (this.sortDir === types_1.SortDirection.asc)
                 cls += ' sort-asc';
@@ -1834,6 +1849,15 @@ var DataTableBodyCellComponent = /** @class */ (function () {
         if (this.cellTemplate) {
             this.cellTemplate.clear();
         }
+        if (this.activateCellSub) {
+            this.activateCellSub.unsubscribe();
+        }
+    };
+    DataTableBodyCellComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.activateCellSub = this.activateCell$.subscribe(function () {
+            _this.cd.markForCheck();
+        });
     };
     DataTableBodyCellComponent.prototype.checkValueUpdates = function () {
         var value = '';
@@ -1858,10 +1882,10 @@ var DataTableBodyCellComponent = /** @class */ (function () {
         }
     };
     DataTableBodyCellComponent.prototype.onFocus = function () {
-        this.isFocused = true;
+        this.cd.markForCheck();
     };
     DataTableBodyCellComponent.prototype.onBlur = function () {
-        this.isFocused = false;
+        this.cd.markForCheck();
     };
     DataTableBodyCellComponent.prototype.onClick = function (event) {
         this.activate.emit({
@@ -1885,13 +1909,14 @@ var DataTableBodyCellComponent = /** @class */ (function () {
     };
     DataTableBodyCellComponent.prototype.onKeyDown = function (event) {
         var keyCode = event.keyCode;
-        var isTargetCell = event.target === this._element;
+        var isContainedCell = this._element.contains(event.target);
         var isAction = keyCode === utils_1.Keys.return ||
             keyCode === utils_1.Keys.down ||
             keyCode === utils_1.Keys.up ||
             keyCode === utils_1.Keys.left ||
-            keyCode === utils_1.Keys.right;
-        if (isAction && isTargetCell) {
+            keyCode === utils_1.Keys.right ||
+            keyCode === utils_1.Keys.tab;
+        if (isAction && isContainedCell) {
             event.preventDefault();
             event.stopPropagation();
             this.activate.emit({
@@ -1942,6 +1967,11 @@ var DataTableBodyCellComponent = /** @class */ (function () {
         core_1.Input(),
         __metadata("design:type", Boolean),
         __metadata("design:paramtypes", [Boolean])
+    ], DataTableBodyCellComponent.prototype, "isActive", null);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
     ], DataTableBodyCellComponent.prototype, "expanded", null);
     __decorate([
         core_1.Input(),
@@ -1960,9 +1990,17 @@ var DataTableBodyCellComponent = /** @class */ (function () {
     ], DataTableBodyCellComponent.prototype, "row", null);
     __decorate([
         core_1.Input(),
+        __metadata("design:type", Function)
+    ], DataTableBodyCellComponent.prototype, "rowIdentity", void 0);
+    __decorate([
+        core_1.Input(),
         __metadata("design:type", Array),
         __metadata("design:paramtypes", [Array])
     ], DataTableBodyCellComponent.prototype, "sorts", null);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", core_1.EventEmitter)
+    ], DataTableBodyCellComponent.prototype, "activateCell$", void 0);
     __decorate([
         core_1.Output(),
         __metadata("design:type", core_1.EventEmitter)
@@ -2272,6 +2310,10 @@ var DataTableBodyRowComponent = /** @class */ (function () {
     ], DataTableBodyRowComponent.prototype, "row", void 0);
     __decorate([
         core_1.Input(),
+        __metadata("design:type", Function)
+    ], DataTableBodyRowComponent.prototype, "rowIdentity", void 0);
+    __decorate([
+        core_1.Input(),
         __metadata("design:type", Number)
     ], DataTableBodyRowComponent.prototype, "offsetX", void 0);
     __decorate([
@@ -2280,8 +2322,20 @@ var DataTableBodyRowComponent = /** @class */ (function () {
     ], DataTableBodyRowComponent.prototype, "isSelected", void 0);
     __decorate([
         core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], DataTableBodyRowComponent.prototype, "isActive", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Function)
+    ], DataTableBodyRowComponent.prototype, "getCellActive", void 0);
+    __decorate([
+        core_1.Input(),
         __metadata("design:type", Number)
     ], DataTableBodyRowComponent.prototype, "rowIndex", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", core_1.EventEmitter)
+    ], DataTableBodyRowComponent.prototype, "activateCell$", void 0);
     __decorate([
         core_1.HostBinding('class'),
         __metadata("design:type", Object),
@@ -2311,7 +2365,7 @@ var DataTableBodyRowComponent = /** @class */ (function () {
         core_1.Component({
             selector: 'datatable-body-row',
             changeDetection: core_1.ChangeDetectionStrategy.OnPush,
-            template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: trackByGroups\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [expanded]=\"expanded\"\n        [isSelected]=\"isSelected\"\n        [rowIndex]=\"rowIndex\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>\n  "
+            template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: trackByGroups\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [expanded]=\"expanded\"\n        [isSelected]=\"isSelected\"\n        [isActive]=\"getCellActive(row, ii)\"\n        [rowIndex]=\"rowIndex\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        [activateCell$]=\"activateCell$\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>\n  "
         }),
         __metadata("design:paramtypes", [core_1.KeyValueDiffers,
             services_1.ScrollbarHelper,
@@ -2529,12 +2583,14 @@ var DataTableBodyComponent = /** @class */ (function () {
      *
      * @memberOf DataTableBodyComponent
      */
-    function DataTableBodyComponent() {
+    function DataTableBodyComponent(cd) {
         var _this = this;
+        this.cd = cd;
         this.selected = [];
         this.scroll = new core_1.EventEmitter();
         this.page = new core_1.EventEmitter();
         this.activate = new core_1.EventEmitter();
+        this.activateCell = new core_1.EventEmitter();
         this.select = new core_1.EventEmitter();
         this.detailToggle = new core_1.EventEmitter();
         this.sectionHeaderToggle = new core_1.EventEmitter();
@@ -2730,6 +2786,7 @@ var DataTableBodyComponent = /** @class */ (function () {
                     _this.toggleAllSections(value);
             });
         }
+        this.activateListener = this.activate.subscribe(function () { _this.cd.markForCheck(); });
     };
     /**
      * Called once, before the instance is destroyed.
@@ -2741,6 +2798,8 @@ var DataTableBodyComponent = /** @class */ (function () {
             this.rowDetailListener.unsubscribe();
         if (this.sectionHeader)
             this.sectionHeaderListener.unsubscribe();
+        if (this.activateListener)
+            this.activateListener.unsubscribe();
     };
     /**
      * Updates the Y offset given a new offset.
@@ -3196,6 +3255,10 @@ var DataTableBodyComponent = /** @class */ (function () {
     ], DataTableBodyComponent.prototype, "selectionType", void 0);
     __decorate([
         core_1.Input(),
+        __metadata("design:type", Object)
+    ], DataTableBodyComponent.prototype, "activated", void 0);
+    __decorate([
+        core_1.Input(),
         __metadata("design:type", Array)
     ], DataTableBodyComponent.prototype, "selected", void 0);
     __decorate([
@@ -3277,6 +3340,10 @@ var DataTableBodyComponent = /** @class */ (function () {
     __decorate([
         core_1.Output(),
         __metadata("design:type", core_1.EventEmitter)
+    ], DataTableBodyComponent.prototype, "activateCell", void 0);
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
     ], DataTableBodyComponent.prototype, "select", void 0);
     __decorate([
         core_1.Output(),
@@ -3297,13 +3364,13 @@ var DataTableBodyComponent = /** @class */ (function () {
     DataTableBodyComponent = __decorate([
         core_1.Component({
             selector: 'datatable-body',
-            template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [rows]=\"temp\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-row-wrapper\n          *ngFor=\"let row of temp; let i = index; trackBy: rowTrackingFn;\"\n          [ngStyle]=\"getRowsStyles(row)\"\n          [rowDetail]=\"rowDetail\"\n          [detailRowHeight]=\"getDetailRowHeight(row,i)\"\n          [row]=\"row\"\n          [rowIndex]=\"getRowIndex(row)\"\n          [expanded]=\"getRowExpanded(row)\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-section-header \n            *ngIf=\"row.$$isSectionHeader\"\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(row)\"\n            [columns]=\"columns\"\n            [sectionHeaderTemplate]=\"sectionHeader\"\n            [sectionHeaderHeight]=\"getSectionHeaderHeight(row)\"\n            [row]=\"row\"\n            [rowIndex]=\"getRowIndex(row)\"\n            [expanded]=\"getSectionExpanded(row)\"\n            [sectionCount]=\"getSectionCount(row.$$sectionIndex)\"\n            [rowClass]=\"rowClass\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-section-header>\n          <datatable-body-row\n            *ngIf=\"!row.$$isSectionHeader\"\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(row)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"getRowHeight(row)\"\n            [row]=\"row\"\n            [rowIndex]=\"getRowIndex(row)\"\n            [expanded]=\"getRowExpanded(row)\"\n            [rowClass]=\"rowClass\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-row>\n        </datatable-row-wrapper>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
+            template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [activated]=\"activated\"\n      [columns]=\"columns\"\n      [rows]=\"temp\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\"\n      (activateCell)=\"activateCell.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-row-wrapper\n          *ngFor=\"let row of temp; let i = index; trackBy: rowTrackingFn;\"\n          [ngStyle]=\"getRowsStyles(row)\"\n          [rowDetail]=\"rowDetail\"\n          [detailRowHeight]=\"getDetailRowHeight(row,i)\"\n          [row]=\"row\"\n          [rowIndex]=\"getRowIndex(row)\"\n          [expanded]=\"getRowExpanded(row)\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-section-header\n            *ngIf=\"row.$$isSectionHeader\"\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(row)\"\n            [columns]=\"columns\"\n            [sectionHeaderTemplate]=\"sectionHeader\"\n            [sectionHeaderHeight]=\"getSectionHeaderHeight(row)\"\n            [row]=\"row\"\n            [rowIndex]=\"getRowIndex(row)\"\n            [expanded]=\"getSectionExpanded(row)\"\n            [sectionCount]=\"getSectionCount(row.$$sectionIndex)\"\n            [rowClass]=\"rowClass\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-section-header>\n          <datatable-body-row\n            *ngIf=\"!row.$$isSectionHeader\"\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(row)\"\n            [isActive]=\"selector.getRowActive(row)\"\n            [getCellActive]=\"selector.getCellActive\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"getRowHeight(row)\"\n            [row]=\"row\"\n            [rowIndex]=\"getRowIndex(row)\"\n            [expanded]=\"getRowExpanded(row)\"\n            [rowClass]=\"rowClass\"\n            [activateCell$]=\"activateCell\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-row>\n        </datatable-row-wrapper>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
             changeDetection: core_1.ChangeDetectionStrategy.OnPush,
             host: {
                 class: 'datatable-body'
             }
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [core_1.ChangeDetectorRef])
     ], DataTableBodyComponent);
     return DataTableBodyComponent;
 }());
@@ -3491,8 +3558,38 @@ var types_1 = __webpack_require__("./src/types/index.ts");
 var DataTableSelectionComponent = /** @class */ (function () {
     function DataTableSelectionComponent() {
         this.activate = new core_1.EventEmitter();
+        this.activateCell = new core_1.EventEmitter();
         this.select = new core_1.EventEmitter();
+        this.getCellActive = this.getCellActive.bind(this);
+        this.getRowActive = this.getRowActive.bind(this);
     }
+    DataTableSelectionComponent.prototype.activateRow = function (row, columnIndex, event) {
+        var _this = this;
+        if (this.activated.$$isDefault && !row.$$isSectionHeader) {
+            var nextRow = row;
+            var nextColumn = columnIndex;
+            if (event) {
+                var filteredRows = this.rows.filter(function (t) { return !t.$$isSectionHeader; });
+                var rowId_1 = this.rowIdentity(row);
+                var rowIndex = filteredRows.findIndex(function (t) { return _this.rowIdentity(t) === rowId_1; });
+                if (event.keyCode === utils_1.Keys.up) {
+                    nextRow = filteredRows[Math.max(rowIndex - 1, 0)];
+                }
+                else if (event.keyCode === utils_1.Keys.down || event.keyCode === utils_1.Keys.return) {
+                    nextRow = filteredRows[Math.min(rowIndex + 1, filteredRows.length - 1)];
+                }
+                else if (event.keyCode === utils_1.Keys.left || (event.shiftKey && event.keyCode === utils_1.Keys.tab)) {
+                    nextColumn = Math.max(columnIndex - 1, 0);
+                }
+                else if (event.keyCode === utils_1.Keys.right || event.keyCode === utils_1.Keys.tab) {
+                    nextColumn = Math.min(columnIndex + 1, this.columns.length - 1);
+                }
+            }
+            this.activated.row = this.rowIdentity(nextRow);
+            this.activated.column = nextColumn;
+            this.activateCell.emit(this.activated);
+        }
+    };
     DataTableSelectionComponent.prototype.selectRow = function (event, index, row) {
         if (!this.selectEnabled || row.$$isSectionHeader)
             return;
@@ -3532,8 +3629,10 @@ var DataTableSelectionComponent = /** @class */ (function () {
             (chkbox && type === 'checkbox');
         if (select) {
             this.selectRow(event, index, row);
+            this.activateRow(row, model.cellIndex);
         }
         else if (type === 'keydown') {
+            this.activateRow(row, model.cellIndex, event);
             if (event.keyCode === utils_1.Keys.return) {
                 this.selectRow(event, index, row);
             }
@@ -3548,7 +3647,8 @@ var DataTableSelectionComponent = /** @class */ (function () {
         var shouldFocus = keyCode === utils_1.Keys.up ||
             keyCode === utils_1.Keys.down ||
             keyCode === utils_1.Keys.right ||
-            keyCode === utils_1.Keys.left;
+            keyCode === utils_1.Keys.left ||
+            keyCode === utils_1.Keys.tab;
         if (shouldFocus) {
             var isCellSelection = this.selectionType === types_1.SelectionType.cell;
             if (!model.cellElement || !isCellSelection) {
@@ -3601,6 +3701,15 @@ var DataTableSelectionComponent = /** @class */ (function () {
     DataTableSelectionComponent.prototype.getRowSelected = function (row) {
         return this.getRowSelectedIdx(row, this.selected) > -1;
     };
+    DataTableSelectionComponent.prototype.getRowActive = function (row) {
+        return this.activated.row === this.rowIdentity(row)
+            && this.selectionType !== types_1.SelectionType.cell;
+    };
+    DataTableSelectionComponent.prototype.getCellActive = function (row, columnIndex) {
+        return this.activated.row === this.rowIdentity(row)
+            && columnIndex === this.activated.column
+            && this.selectionType === types_1.SelectionType.cell;
+    };
     DataTableSelectionComponent.prototype.getRowSelectedIdx = function (row, selected) {
         var _this = this;
         if (!selected || !selected.length)
@@ -3618,7 +3727,15 @@ var DataTableSelectionComponent = /** @class */ (function () {
     __decorate([
         core_1.Input(),
         __metadata("design:type", Array)
+    ], DataTableSelectionComponent.prototype, "columns", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Array)
     ], DataTableSelectionComponent.prototype, "selected", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Object)
+    ], DataTableSelectionComponent.prototype, "activated", void 0);
     __decorate([
         core_1.Input(),
         __metadata("design:type", Boolean)
@@ -3642,13 +3759,18 @@ var DataTableSelectionComponent = /** @class */ (function () {
     __decorate([
         core_1.Output(),
         __metadata("design:type", core_1.EventEmitter)
+    ], DataTableSelectionComponent.prototype, "activateCell", void 0);
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
     ], DataTableSelectionComponent.prototype, "select", void 0);
     DataTableSelectionComponent = __decorate([
         core_1.Component({
             selector: 'datatable-selection',
             template: "\n    <ng-content></ng-content>\n  ",
             changeDetection: core_1.ChangeDetectionStrategy.OnPush
-        })
+        }),
+        __metadata("design:paramtypes", [])
     ], DataTableSelectionComponent);
     return DataTableSelectionComponent;
 }());
@@ -3908,6 +4030,15 @@ var DatatableComponent = /** @class */ (function () {
          * @memberOf DatatableComponent
          */
         this.selected = [];
+        /**
+         * Row and column that should be
+         * represented as active in the grid.
+         * Default value: `{}`
+         *
+         * @type {{row: any, column?: number}}
+         * @memberOf DatatableComponent
+         */
+        this.activated = { $$isDefault: true };
         /**
          * Enable vertical scrollbars
          *
@@ -4291,6 +4422,12 @@ var DatatableComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    DatatableComponent.prototype.onBlur = function () {
+        this.cd.markForCheck();
+    };
+    DatatableComponent.prototype.onFocus = function () {
+        this.cd.markForCheck();
+    };
     Object.defineProperty(DatatableComponent.prototype, "isFixedHeader", {
         /**
          * CSS class applied if the header height if fixed height.
@@ -4916,6 +5053,10 @@ var DatatableComponent = /** @class */ (function () {
     ], DatatableComponent.prototype, "selected", void 0);
     __decorate([
         core_1.Input(),
+        __metadata("design:type", Object)
+    ], DatatableComponent.prototype, "activated", void 0);
+    __decorate([
+        core_1.Input(),
         __metadata("design:type", Boolean)
     ], DatatableComponent.prototype, "scrollbarV", void 0);
     __decorate([
@@ -5040,6 +5181,18 @@ var DatatableComponent = /** @class */ (function () {
         __metadata("design:type", Object)
     ], DatatableComponent.prototype, "tableContextmenu", void 0);
     __decorate([
+        core_1.HostListener('blur'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], DatatableComponent.prototype, "onBlur", null);
+    __decorate([
+        core_1.HostListener('focus'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], DatatableComponent.prototype, "onFocus", null);
+    __decorate([
         core_1.HostBinding('class.fixed-header'),
         __metadata("design:type", Boolean),
         __metadata("design:paramtypes", [])
@@ -5120,7 +5273,7 @@ var DatatableComponent = /** @class */ (function () {
     DatatableComponent = __decorate([
         core_1.Component({
             selector: 'ngx-datatable',
-            template: "\n    <div\n      visibilityObserver\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"columns\"\n        [headerHeight]=\"headerHeight\"\n        [reorderable]=\"reorderable\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        [selectionType]=\"selectionType\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\"\n        (columnContextmenu)=\"onColumnContextmenu($event)\">\n      </datatable-header>\n      <datatable-body\n        [rows]=\"_internalRows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [externalPaging]=\"externalPaging\"\n        [rowHeight]=\"rowHeight\"\n        [sectionHeaderHeight]=\"sectionHeaderHeight\"\n        [sectionHeader]=\"sectionHeader\"\n        [sections]=\"sections\"\n        [sectionCounts]=\"sectionCounts\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"columns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetail]=\"rowDetail\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [rowClass]=\"rowClass\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"onRowContextmenu($event)\"\n        (select)=\"onBodySelect($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"recordRowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [footerTemplate]=\"footer\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [selectedCount]=\"selected.length\"\n        [selectedMessage]=\"!!selectionType && messages.selectedMessage\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
+            template: "\n    <div\n      visibilityObserver\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"columns\"\n        [headerHeight]=\"headerHeight\"\n        [reorderable]=\"reorderable\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        [selectionType]=\"selectionType\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\"\n        (columnContextmenu)=\"onColumnContextmenu($event)\">\n      </datatable-header>\n      <datatable-body\n        [rows]=\"_internalRows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [externalPaging]=\"externalPaging\"\n        [rowHeight]=\"rowHeight\"\n        [sectionHeaderHeight]=\"sectionHeaderHeight\"\n        [sectionHeader]=\"sectionHeader\"\n        [sections]=\"sections\"\n        [sectionCounts]=\"sectionCounts\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"columns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetail]=\"rowDetail\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [rowClass]=\"rowClass\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        [activated]=\"activated\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"onRowContextmenu($event)\"\n        (select)=\"onBodySelect($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"recordRowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [footerTemplate]=\"footer\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [selectedCount]=\"selected.length\"\n        [selectedMessage]=\"!!selectionType && messages.selectedMessage\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
             changeDetection: core_1.ChangeDetectionStrategy.OnPush,
             encapsulation: core_1.ViewEncapsulation.None,
             styles: [__webpack_require__("./src/components/datatable.component.scss")],
@@ -7737,6 +7890,7 @@ var Keys;
     Keys[Keys["escape"] = 27] = "escape";
     Keys[Keys["left"] = 37] = "left";
     Keys[Keys["right"] = 39] = "right";
+    Keys[Keys["tab"] = 9] = "tab";
 })(Keys = exports.Keys || (exports.Keys = {}));
 
 

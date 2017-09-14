@@ -40,6 +40,15 @@ var DatatableComponent = /** @class */ (function () {
          */
         this.selected = [];
         /**
+         * Row and column that should be
+         * represented as active in the grid.
+         * Default value: `{}`
+         *
+         * @type {{row: any, column?: number}}
+         * @memberOf DatatableComponent
+         */
+        this.activated = { $$isDefault: true };
+        /**
          * Enable vertical scrollbars
          *
          * @type {boolean}
@@ -422,6 +431,12 @@ var DatatableComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    DatatableComponent.prototype.onBlur = function () {
+        this.cd.markForCheck();
+    };
+    DatatableComponent.prototype.onFocus = function () {
+        this.cd.markForCheck();
+    };
     Object.defineProperty(DatatableComponent.prototype, "isFixedHeader", {
         /**
          * CSS class applied if the header height if fixed height.
@@ -1024,7 +1039,7 @@ var DatatableComponent = /** @class */ (function () {
     DatatableComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'ngx-datatable',
-                    template: "\n    <div\n      visibilityObserver\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"columns\"\n        [headerHeight]=\"headerHeight\"\n        [reorderable]=\"reorderable\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        [selectionType]=\"selectionType\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\"\n        (columnContextmenu)=\"onColumnContextmenu($event)\">\n      </datatable-header>\n      <datatable-body\n        [rows]=\"_internalRows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [externalPaging]=\"externalPaging\"\n        [rowHeight]=\"rowHeight\"\n        [sectionHeaderHeight]=\"sectionHeaderHeight\"\n        [sectionHeader]=\"sectionHeader\"\n        [sections]=\"sections\"\n        [sectionCounts]=\"sectionCounts\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"columns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetail]=\"rowDetail\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [rowClass]=\"rowClass\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"onRowContextmenu($event)\"\n        (select)=\"onBodySelect($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"recordRowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [footerTemplate]=\"footer\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [selectedCount]=\"selected.length\"\n        [selectedMessage]=\"!!selectionType && messages.selectedMessage\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
+                    template: "\n    <div\n      visibilityObserver\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [columns]=\"columns\"\n        [headerHeight]=\"headerHeight\"\n        [reorderable]=\"reorderable\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        [selectionType]=\"selectionType\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\"\n        (columnContextmenu)=\"onColumnContextmenu($event)\">\n      </datatable-header>\n      <datatable-body\n        [rows]=\"_internalRows\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [externalPaging]=\"externalPaging\"\n        [rowHeight]=\"rowHeight\"\n        [sectionHeaderHeight]=\"sectionHeaderHeight\"\n        [sectionHeader]=\"sectionHeader\"\n        [sections]=\"sections\"\n        [sectionCounts]=\"sectionCounts\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"columns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetail]=\"rowDetail\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [rowClass]=\"rowClass\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        [activated]=\"activated\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"onRowContextmenu($event)\"\n        (select)=\"onBodySelect($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"recordRowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [footerTemplate]=\"footer\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [selectedCount]=\"selected.length\"\n        [selectedMessage]=\"!!selectionType && messages.selectedMessage\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
                     changeDetection: core_1.ChangeDetectionStrategy.OnPush,
                     encapsulation: core_1.ViewEncapsulation.None,
                     styleUrls: ['./datatable.component.css'],
@@ -1046,6 +1061,7 @@ var DatatableComponent = /** @class */ (function () {
         'sectionProp': [{ type: core_1.Input },],
         'sections': [{ type: core_1.Input },],
         'selected': [{ type: core_1.Input },],
+        'activated': [{ type: core_1.Input },],
         'scrollbarV': [{ type: core_1.Input },],
         'scrollbarH': [{ type: core_1.Input },],
         'rowHeight': [{ type: core_1.Input },],
@@ -1077,6 +1093,8 @@ var DatatableComponent = /** @class */ (function () {
         'reorder': [{ type: core_1.Output },],
         'resize': [{ type: core_1.Output },],
         'tableContextmenu': [{ type: core_1.Output },],
+        'onBlur': [{ type: core_1.HostListener, args: ['blur',] },],
+        'onFocus': [{ type: core_1.HostListener, args: ['focus',] },],
         'isFixedHeader': [{ type: core_1.HostBinding, args: ['class.fixed-header',] },],
         'isFixedRow': [{ type: core_1.HostBinding, args: ['class.fixed-row',] },],
         'isVertScroll': [{ type: core_1.HostBinding, args: ['class.scroll-vertical',] },],
