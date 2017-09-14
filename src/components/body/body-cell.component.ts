@@ -1,7 +1,7 @@
 import {
   Component, Input, PipeTransform, HostBinding, ViewChild, ChangeDetectorRef,
   Output, EventEmitter, HostListener, ElementRef, ViewContainerRef, OnDestroy, DoCheck,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy, OnInit
 } from '@angular/core';
 
 import { Keys } from '../../utils';
@@ -40,7 +40,7 @@ import { mouseEvent, keyboardEvent } from '../../events';
     class: 'datatable-body-cell'
   }
 })
-export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
+export class DataTableBodyCellComponent implements DoCheck, OnDestroy, OnInit {
 
   @Input() rowHeight: number;
 
@@ -118,6 +118,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     return this._sorts;
   }
 
+  @Input() activateCell$: EventEmitter<any>;
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
 
@@ -190,6 +191,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   private _rowIndex: number;
   private _expanded: boolean;
   private _element: any;
+  private activateCellSub: any;
 
   constructor(element: ElementRef, private cd: ChangeDetectorRef) {
     this._element = element.nativeElement;
@@ -203,6 +205,16 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     if (this.cellTemplate) {
       this.cellTemplate.clear();
     }
+    if (this.activateCellSub) { this.activateCellSub.unsubscribe(); }
+  }
+
+  ngOnInit(): void {
+    this.activateCellSub = this.activateCell$.subscribe((activate) => {
+      this.cd.markForCheck();
+      // if (this.rowIdentity(activate.row)) {
+      //
+      // }
+    });
   }
 
   checkValueUpdates(): void {
