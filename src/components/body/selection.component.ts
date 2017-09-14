@@ -58,10 +58,8 @@ export class DataTableSelectionComponent {
         } else if (event.keyCode === Keys.right || event.keyCode === Keys.tab) {
           nextColumn = Math.min(columnIndex + 1, this.columns.length - 1);
         }
-        console.log('RowLength: ', filteredRows.length, ', Index:', rowIndex);
       }
 
-      console.log('Row:', nextRow.itemTitle, ', Column:', nextColumn);
       this.activated.row = this.rowIdentity(nextRow);
       this.activated.column = nextColumn;
       this.activateCell.emit(this.activated);

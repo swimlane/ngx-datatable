@@ -211,9 +211,6 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy, OnInit {
   ngOnInit(): void {
     this.activateCellSub = this.activateCell$.subscribe((activate) => {
       this.cd.markForCheck();
-      // if (this.rowIdentity(activate.row)) {
-      //
-      // }
     });
   }
 
