@@ -47,7 +47,8 @@ export class DataTableSelectionComponent {
       let nextColumn = columnIndex;
       if (event) {
         const filteredRows = this.rows.filter(t => !t.$$isSectionHeader);
-        const rowIndex = filteredRows.findIndex((t) => this.rowIdentity(t) === row);
+        const rowId = this.rowIdentity(row);
+        const rowIndex = filteredRows.findIndex((t) => this.rowIdentity(t) === rowId);
         if (event.keyCode === Keys.up) {
           nextRow = filteredRows[Math.max(rowIndex - 1, 0)];
         } else if (event.keyCode === Keys.down || event.keyCode === Keys.return) {
