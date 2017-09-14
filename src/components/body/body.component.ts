@@ -29,8 +29,7 @@ import { mouseEvent } from '../../events';
       [selectionType]="selectionType"
       [rowIdentity]="rowIdentity"
       (select)="select.emit($event)"
-      (activate)="activate.emit($event)"
-      (activateCell)="activateCell.emit($event)">
+      (activate)="activate.emit($event)">
       <datatable-progress
         *ngIf="loadingIndicator">
       </datatable-progress>
@@ -78,7 +77,6 @@ import { mouseEvent } from '../../events';
             [rowIndex]="getRowIndex(row)"
             [expanded]="getRowExpanded(row)"
             [rowClass]="rowClass"
-            [activateCell$]="activateCell"
             (activate)="selector.onActivate($event, i)">
           </datatable-body-row>
         </datatable-row-wrapper>
@@ -195,7 +193,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Output() scroll: EventEmitter<any> = new EventEmitter();
   @Output() page: EventEmitter<any> = new EventEmitter();
   @Output() activate: EventEmitter<any> = new EventEmitter();
-  @Output() activateCell: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
   @Output() detailToggle: EventEmitter<any> = new EventEmitter();
   @Output() sectionHeaderToggle: EventEmitter<any> = new EventEmitter();
