@@ -232,7 +232,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     if(this.value !== value) {
       this.value = value;
       this.cellContext.value = value;
-      this.sanitizedValue = this.stripHtml(value);
+      this.sanitizedValue = value !== null && value !== undefined ? this.stripHtml(value) : value;
       this.cd.markForCheck();
     }
   }
