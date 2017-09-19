@@ -44,6 +44,7 @@ import { mouseEvent } from '../../events';
         <datatable-row-wrapper
           *ngFor="let row of temp; let i = index; trackBy: rowTrackingFn;"
           [ngStyle]="getRowsStyles(row)"
+          [isSelected]="selector.getRowSelected(row)"
           [rowDetail]="rowDetail"
           [detailRowHeight]="getDetailRowHeight(row,i)"
           [row]="row"
