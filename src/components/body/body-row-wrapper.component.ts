@@ -22,10 +22,7 @@ import { mouseEvent } from '../../events';
         }">
       </ng-template>
     </div>
-  `,
-  host: {
-    class: 'datatable-row-wrapper'
-  }
+  `
 })
 export class DataTableRowWrapperComponent {
 
@@ -45,6 +42,10 @@ export class DataTableRowWrapperComponent {
 
   @HostBinding('class')
   get cssClass() {
-    return this.isSelected ? 'active' : '';
+    let classes = 'datatable-row-wrapper';
+    if (this.isSelected) {
+      classes += ' selected';
+    }
+    return classes;
   }
 }
