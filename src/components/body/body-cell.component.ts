@@ -104,10 +104,11 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy, OnInit {
     this.cd.markForCheck();
   }
 
-  @Input() rowIdentity: (t: any) => any;
   get row(): any {
     return this._row;
   }
+
+  @Input() rowIdentity: (t: any) => any;
 
   @Input() set sorts(val: any[]) {
     this._sorts = val;

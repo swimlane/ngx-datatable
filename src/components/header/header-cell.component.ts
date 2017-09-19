@@ -155,8 +155,8 @@ export class DataTableHeaderCellComponent {
       sortFn: this.sortFn,
       allRowsSelected: this.allRowsSelected,
       selectFn: this.selectFn
-    }
-  };
+    };
+  }
 
   private _column: TableColumn;
   private _sorts: any[];
