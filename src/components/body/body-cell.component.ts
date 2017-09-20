@@ -210,7 +210,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    this.activateCellSub = this.activateCell$.subscribe((activate) => {
+    this.activateCellSub = this.activateCell$.subscribe(() => {
 
       this.cd.markForCheck();
     });

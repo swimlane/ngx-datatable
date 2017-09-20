@@ -2091,11 +2091,23 @@ var core_1 = __webpack_require__("@angular/core");
 var DataTableRowWrapperComponent = /** @class */ (function () {
     function DataTableRowWrapperComponent() {
         this.expanded = false;
+        this.isSelected = false;
         this.rowContextmenu = new core_1.EventEmitter(false);
     }
     DataTableRowWrapperComponent.prototype.onContextmenu = function ($event) {
         this.rowContextmenu.emit({ event: $event, row: this.row });
     };
+    Object.defineProperty(DataTableRowWrapperComponent.prototype, "cssClass", {
+        get: function () {
+            var classes = 'datatable-row-wrapper';
+            if (this.isSelected) {
+                classes += ' selected';
+            }
+            return classes;
+        },
+        enumerable: true,
+        configurable: true
+    });
     __decorate([
         core_1.Input(),
         __metadata("design:type", Object)
@@ -2117,6 +2129,10 @@ var DataTableRowWrapperComponent = /** @class */ (function () {
         __metadata("design:type", Number)
     ], DataTableRowWrapperComponent.prototype, "rowIndex", void 0);
     __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], DataTableRowWrapperComponent.prototype, "isSelected", void 0);
+    __decorate([
         core_1.Output(),
         __metadata("design:type", Object)
     ], DataTableRowWrapperComponent.prototype, "rowContextmenu", void 0);
@@ -2126,14 +2142,16 @@ var DataTableRowWrapperComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [MouseEvent]),
         __metadata("design:returntype", void 0)
     ], DataTableRowWrapperComponent.prototype, "onContextmenu", null);
+    __decorate([
+        core_1.HostBinding('class'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [])
+    ], DataTableRowWrapperComponent.prototype, "cssClass", null);
     DataTableRowWrapperComponent = __decorate([
         core_1.Component({
             selector: 'datatable-row-wrapper',
             changeDetection: core_1.ChangeDetectionStrategy.OnPush,
-            template: "\n    <ng-content></ng-content>\n    <div\n      *ngIf=\"expanded\"\n      [style.height.px]=\"detailRowHeight\"\n      class=\"datatable-row-detail\">\n      <ng-template\n        *ngIf=\"rowDetail && rowDetail.template\"\n        [ngTemplateOutlet]=\"rowDetail.template\"\n        [ngOutletContext]=\"{ \n          row: row, \n          expanded: expanded,\n          rowIndex: rowIndex\n        }\">\n      </ng-template>\n    </div>\n  ",
-            host: {
-                class: 'datatable-row-wrapper'
-            }
+            template: "\n    <ng-content></ng-content>\n    <div\n      *ngIf=\"expanded\"\n      [style.height.px]=\"detailRowHeight\"\n      class=\"datatable-row-detail\">\n      <ng-template\n        *ngIf=\"rowDetail && rowDetail.template\"\n        [ngTemplateOutlet]=\"rowDetail.template\"\n        [ngOutletContext]=\"{ \n          row: row, \n          expanded: expanded,\n          rowIndex: rowIndex\n        }\">\n      </ng-template>\n    </div>\n  "
         })
     ], DataTableRowWrapperComponent);
     return DataTableRowWrapperComponent;
@@ -3364,7 +3382,7 @@ var DataTableBodyComponent = /** @class */ (function () {
     DataTableBodyComponent = __decorate([
         core_1.Component({
             selector: 'datatable-body',
-            template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [activated]=\"activated\"\n      [columns]=\"columns\"\n      [rows]=\"temp\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\"\n      (activateCell)=\"activateCell.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-row-wrapper\n          *ngFor=\"let row of temp; let i = index; trackBy: rowTrackingFn;\"\n          [ngStyle]=\"getRowsStyles(row)\"\n          [rowDetail]=\"rowDetail\"\n          [detailRowHeight]=\"getDetailRowHeight(row,i)\"\n          [row]=\"row\"\n          [rowIndex]=\"getRowIndex(row)\"\n          [expanded]=\"getRowExpanded(row)\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-section-header\n            *ngIf=\"row.$$isSectionHeader\"\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(row)\"\n            [columns]=\"columns\"\n            [sectionHeaderTemplate]=\"sectionHeader\"\n            [sectionHeaderHeight]=\"getSectionHeaderHeight(row)\"\n            [row]=\"row\"\n            [rowIndex]=\"getRowIndex(row)\"\n            [expanded]=\"getSectionExpanded(row)\"\n            [sectionCount]=\"getSectionCount(row.$$sectionIndex)\"\n            [rowClass]=\"rowClass\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-section-header>\n          <datatable-body-row\n            *ngIf=\"!row.$$isSectionHeader\"\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(row)\"\n            [isActive]=\"selector.getRowActive(row)\"\n            [getCellActive]=\"selector.getCellActive\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"getRowHeight(row)\"\n            [row]=\"row\"\n            [rowIndex]=\"getRowIndex(row)\"\n            [expanded]=\"getRowExpanded(row)\"\n            [rowClass]=\"rowClass\"\n            [activateCell$]=\"activateCell\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-row>\n        </datatable-row-wrapper>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
+            template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [activated]=\"activated\"\n      [columns]=\"columns\"\n      [rows]=\"temp\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\"\n      (activateCell)=\"activateCell.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-row-wrapper\n          *ngFor=\"let row of temp; let i = index; trackBy: rowTrackingFn;\"\n          [ngStyle]=\"getRowsStyles(row)\"\n          [isSelected]=\"selector.getRowSelected(row)\"\n          [rowDetail]=\"rowDetail\"\n          [detailRowHeight]=\"getDetailRowHeight(row,i)\"\n          [row]=\"row\"\n          [rowIndex]=\"getRowIndex(row)\"\n          [expanded]=\"getRowExpanded(row)\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-section-header\n            *ngIf=\"row.$$isSectionHeader\"\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(row)\"\n            [columns]=\"columns\"\n            [sectionHeaderTemplate]=\"sectionHeader\"\n            [sectionHeaderHeight]=\"getSectionHeaderHeight(row)\"\n            [row]=\"row\"\n            [rowIndex]=\"getRowIndex(row)\"\n            [expanded]=\"getSectionExpanded(row)\"\n            [sectionCount]=\"getSectionCount(row.$$sectionIndex)\"\n            [rowClass]=\"rowClass\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-section-header>\n          <datatable-body-row\n            *ngIf=\"!row.$$isSectionHeader\"\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(row)\"\n            [isActive]=\"selector.getRowActive(row)\"\n            [getCellActive]=\"selector.getCellActive\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"getRowHeight(row)\"\n            [row]=\"row\"\n            [rowIndex]=\"getRowIndex(row)\"\n            [expanded]=\"getRowExpanded(row)\"\n            [rowClass]=\"rowClass\"\n            [activateCell$]=\"activateCell\"\n            (activate)=\"selector.onActivate($event, i)\">\n          </datatable-body-row>\n        </datatable-row-wrapper>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
             changeDetection: core_1.ChangeDetectionStrategy.OnPush,
             host: {
                 class: 'datatable-body'
@@ -4422,12 +4440,6 @@ var DatatableComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    DatatableComponent.prototype.onBlur = function () {
-        this.cd.markForCheck();
-    };
-    DatatableComponent.prototype.onFocus = function () {
-        this.cd.markForCheck();
-    };
     Object.defineProperty(DatatableComponent.prototype, "isFixedHeader", {
         /**
          * CSS class applied if the header height if fixed height.
@@ -4624,6 +4636,12 @@ var DatatableComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    DatatableComponent.prototype.onBlur = function () {
+        this.cd.markForCheck();
+    };
+    DatatableComponent.prototype.onFocus = function () {
+        this.cd.markForCheck();
+    };
     /**
      * Scrolls to a specific row id (default id is the row object).
      * If the row is in a section that is not expanded that section will be expanded.
@@ -5181,18 +5199,6 @@ var DatatableComponent = /** @class */ (function () {
         __metadata("design:type", Object)
     ], DatatableComponent.prototype, "tableContextmenu", void 0);
     __decorate([
-        core_1.HostListener('blur'),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
-        __metadata("design:returntype", void 0)
-    ], DatatableComponent.prototype, "onBlur", null);
-    __decorate([
-        core_1.HostListener('focus'),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
-        __metadata("design:returntype", void 0)
-    ], DatatableComponent.prototype, "onFocus", null);
-    __decorate([
         core_1.HostBinding('class.fixed-header'),
         __metadata("design:type", Boolean),
         __metadata("design:paramtypes", [])
@@ -5263,6 +5269,18 @@ var DatatableComponent = /** @class */ (function () {
         core_1.ViewChild(body_1.DataTableBodyComponent),
         __metadata("design:type", body_1.DataTableBodyComponent)
     ], DatatableComponent.prototype, "bodyComponent", void 0);
+    __decorate([
+        core_1.HostListener('blur'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], DatatableComponent.prototype, "onBlur", null);
+    __decorate([
+        core_1.HostListener('focus'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], DatatableComponent.prototype, "onFocus", null);
     __decorate([
         core_1.HostListener('window:resize'),
         utils_1.throttleable(5),
@@ -5812,7 +5830,6 @@ var DataTableHeaderCellComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    ;
     DataTableHeaderCellComponent.prototype.onContextmenu = function ($event) {
         this.columnContextmenu.emit({ event: $event, column: this.column });
     };

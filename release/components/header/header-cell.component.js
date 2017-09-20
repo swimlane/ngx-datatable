@@ -126,7 +126,6 @@ var DataTableHeaderCellComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    ;
     DataTableHeaderCellComponent.prototype.onContextmenu = function ($event) {
         this.columnContextmenu.emit({ event: $event, column: this.column });
     };

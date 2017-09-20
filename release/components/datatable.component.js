@@ -431,12 +431,6 @@ var DatatableComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    DatatableComponent.prototype.onBlur = function () {
-        this.cd.markForCheck();
-    };
-    DatatableComponent.prototype.onFocus = function () {
-        this.cd.markForCheck();
-    };
     Object.defineProperty(DatatableComponent.prototype, "isFixedHeader", {
         /**
          * CSS class applied if the header height if fixed height.
@@ -633,6 +627,12 @@ var DatatableComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    DatatableComponent.prototype.onBlur = function () {
+        this.cd.markForCheck();
+    };
+    DatatableComponent.prototype.onFocus = function () {
+        this.cd.markForCheck();
+    };
     /**
      * Scrolls to a specific row id (default id is the row object).
      * If the row is in a section that is not expanded that section will be expanded.
@@ -1093,8 +1093,6 @@ var DatatableComponent = /** @class */ (function () {
         'reorder': [{ type: core_1.Output },],
         'resize': [{ type: core_1.Output },],
         'tableContextmenu': [{ type: core_1.Output },],
-        'onBlur': [{ type: core_1.HostListener, args: ['blur',] },],
-        'onFocus': [{ type: core_1.HostListener, args: ['focus',] },],
         'isFixedHeader': [{ type: core_1.HostBinding, args: ['class.fixed-header',] },],
         'isFixedRow': [{ type: core_1.HostBinding, args: ['class.fixed-row',] },],
         'isVertScroll': [{ type: core_1.HostBinding, args: ['class.scroll-vertical',] },],
@@ -1110,6 +1108,8 @@ var DatatableComponent = /** @class */ (function () {
         'sectionHeader': [{ type: core_1.ContentChild, args: [section_header_1.DatatableSectionHeaderDirective,] },],
         'footer': [{ type: core_1.ContentChild, args: [footer_1.DatatableFooterDirective,] },],
         'bodyComponent': [{ type: core_1.ViewChild, args: [body_1.DataTableBodyComponent,] },],
+        'onBlur': [{ type: core_1.HostListener, args: ['blur',] },],
+        'onFocus': [{ type: core_1.HostListener, args: ['focus',] },],
         'onWindowResize': [{ type: core_1.HostListener, args: ['window:resize',] },],
     };
     __decorate([

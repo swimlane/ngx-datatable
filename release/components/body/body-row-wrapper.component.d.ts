@@ -5,9 +5,11 @@ export declare class DataTableRowWrapperComponent {
     expanded: boolean;
     row: any;
     rowIndex: number;
+    isSelected: boolean;
     rowContextmenu: EventEmitter<{
         event: MouseEvent;
         row: any;
     }>;
     onContextmenu($event: MouseEvent): void;
+    readonly cssClass: string;
 }

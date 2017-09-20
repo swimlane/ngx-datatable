@@ -354,8 +354,6 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
         type: ContextmenuType;
         content: any;
     }>;
-    onBlur(): void;
-    onFocus(): void;
     /**
      * CSS class applied if the header height if fixed height.
      *
@@ -509,6 +507,8 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
     _sectionProp: SectionProp;
     _sections: Section[];
     constructor(scrollbarHelper: ScrollbarHelper, cd: ChangeDetectorRef, element: ElementRef, differs: KeyValueDiffers);
+    onBlur(): void;
+    onFocus(): void;
     /**
      * Scrolls to a specific row id (default id is the row object).
      * If the row is in a section that is not expanded that section will be expanded.
