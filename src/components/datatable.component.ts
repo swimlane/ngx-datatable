@@ -55,6 +55,7 @@ import { mouseEvent } from '../events';
         [loadingIndicator]="loadingIndicator"
         [externalPaging]="externalPaging"
         [rowHeight]="rowHeight"
+        [viewportBuffer]="viewportBuffer"
         [sectionHeaderHeight]="sectionHeaderHeight"
         [sectionHeader]="sectionHeader"
         [sections]="sections"
@@ -291,6 +292,12 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * @memberOf DatatableComponent
    */
   @Input() sectionHeaderHeight: number = 30;
+
+  /**
+   * Number of pixles to render grid rows above and below the viewport (hidden)
+   * @type {number}
+   */
+  @Input() viewportBuffer: number = 100;
 
   /**
    * Type of column width distribution formula.

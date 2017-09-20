@@ -103,6 +103,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() loadingIndicator: boolean;
   @Input() externalPaging: boolean;
   @Input() rowHeight: number;
+  @Input() viewportBuffer: number = 0;
   @Input() sectionHeaderHeight: number;
   @Input() sectionHeader: any;
   @Input() sections: Section[];
@@ -566,8 +567,9 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       // scrollY position would be at.  The last index would be the one
       // that shows up inside the view port the last.
       const height = parseInt(this.bodyHeight, 0);
-      first = this.rowHeightsCache.getRowIndex(this.offsetY);
-      last = this.rowHeightsCache.getRowIndex(height + this.offsetY) + 1;
+      const startY = this.offsetY > this.viewportBuffer ? this.offsetY - this.viewportBuffer : 0;
+      first = this.rowHeightsCache.getRowIndex(startY);
+      last = this.rowHeightsCache.getRowIndex(height + this.offsetY + this.viewportBuffer) + 1;
     } else {
       // The server is handling paging and will pass an array that begins with the
       // element at a specified offset.  first should always be 0 with external paging.
