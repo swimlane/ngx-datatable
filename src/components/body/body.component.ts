@@ -43,7 +43,7 @@ import { mouseEvent } from '../../events';
         (scroll)="onBodyScroll($event)">
         <datatable-row-wrapper
           *ngFor="let row of temp; let i = index; trackBy: rowTrackingFn;"
-          [ngStyle]="getRowsStyles(row)"
+          [ngStyle]="getRowsStyles(row, i)"
           [isSelected]="selector.getRowSelected(row)"
           [rowDetail]="rowDetail"
           [detailRowHeight]="getDetailRowHeight(row,i)"
@@ -518,11 +518,14 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    *
    * @memberOf DataTableBodyComponent
    */
-  getRowsStyles(row: any): any {
+  getRowsStyles(row: any, index: number): any {
     const rowHeight = this.getRowAndDetailHeight(row);
 
     const styles = {
-      height: rowHeight + 'px'
+      height: rowHeight + 'px',
+
+      // cells with drop-down behavior will be at higher z-index than those below
+      'z-index': 1000 - index
     };
 
     if (this.scrollbarV) {

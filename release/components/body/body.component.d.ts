@@ -198,7 +198,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      *
      * @memberOf DataTableBodyComponent
      */
-    getRowsStyles(row: any): any;
+    getRowsStyles(row: any, index: number): any;
     /**
      * Hides the loading indicator
      *
