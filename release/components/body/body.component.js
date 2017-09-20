@@ -12,6 +12,7 @@ var DataTableBodyComponent = /** @class */ (function () {
     function DataTableBodyComponent(cd) {
         var _this = this;
         this.cd = cd;
+        this.viewportBuffer = 0;
         this.selected = [];
         this.scroll = new core_1.EventEmitter();
         this.page = new core_1.EventEmitter();
@@ -432,8 +433,9 @@ var DataTableBodyComponent = /** @class */ (function () {
             // scrollY position would be at.  The last index would be the one
             // that shows up inside the view port the last.
             var height = parseInt(this.bodyHeight, 0);
-            first = this.rowHeightsCache.getRowIndex(this.offsetY);
-            last = this.rowHeightsCache.getRowIndex(height + this.offsetY) + 1;
+            var startY = this.offsetY > this.viewportBuffer ? this.offsetY - this.viewportBuffer : 0;
+            first = this.rowHeightsCache.getRowIndex(startY);
+            last = this.rowHeightsCache.getRowIndex(height + this.offsetY + this.viewportBuffer) + 1;
         }
         else {
             // The server is handling paging and will pass an array that begins with the
@@ -657,6 +659,7 @@ var DataTableBodyComponent = /** @class */ (function () {
         'loadingIndicator': [{ type: core_1.Input },],
         'externalPaging': [{ type: core_1.Input },],
         'rowHeight': [{ type: core_1.Input },],
+        'viewportBuffer': [{ type: core_1.Input },],
         'sectionHeaderHeight': [{ type: core_1.Input },],
         'sectionHeader': [{ type: core_1.Input },],
         'sections': [{ type: core_1.Input },],

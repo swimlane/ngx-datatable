@@ -9,6 +9,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     loadingIndicator: boolean;
     externalPaging: boolean;
     rowHeight: number;
+    viewportBuffer: number;
     sectionHeaderHeight: number;
     sectionHeader: any;
     sections: Section[];

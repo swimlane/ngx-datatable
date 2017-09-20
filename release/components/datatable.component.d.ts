@@ -118,6 +118,11 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
      */
     sectionHeaderHeight: number;
     /**
+     * Number of pixles to render grid rows above and below the viewport (hidden)
+     * @type {number}
+     */
+    viewportBuffer: number;
+    /**
      * Type of column width distribution formula.
      * Example: flex, force, standard
      *
