@@ -25,7 +25,12 @@ export declare class DataTableSelectionComponent {
     select: EventEmitter<any>;
     prevIndex: number;
     constructor();
-    activateRow(row: any, columnIndex: number, event?: KeyboardEvent): void;
+    getNextRow(rows: any[], index: number, direction: number): any;
+    activateRow(row: any, columnIndex: number, event?: KeyboardEvent): {
+        newRow: any;
+        upRow: any;
+        downRow: any;
+    };
     selectRow(event: KeyboardEvent | MouseEvent, index: number, row: any): void;
     onActivate(model: Model, index: number): void;
     onKeyboardFocus(model: Model): void;

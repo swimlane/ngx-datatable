@@ -1717,9 +1717,6 @@ var DataTableBodyCellComponent = /** @class */ (function () {
             this._isActive = val;
             this.cellContext.isActive = val;
             this.cd.markForCheck();
-            if (val) {
-                this._element.focus();
-            }
         },
         enumerable: true,
         configurable: true
@@ -2092,6 +2089,7 @@ var DataTableRowWrapperComponent = /** @class */ (function () {
     function DataTableRowWrapperComponent() {
         this.expanded = false;
         this.isSelected = false;
+        this.isActive = true;
         this.rowContextmenu = new core_1.EventEmitter(false);
     }
     DataTableRowWrapperComponent.prototype.onContextmenu = function ($event) {
@@ -2102,6 +2100,9 @@ var DataTableRowWrapperComponent = /** @class */ (function () {
             var classes = 'datatable-row-wrapper';
             if (this.isSelected) {
                 classes += ' selected';
+            }
+            if (this.isActive) {
+                classes += ' active';
             }
             return classes;
         },
@@ -2133,6 +2134,10 @@ var DataTableRowWrapperComponent = /** @class */ (function () {
         __metadata("design:type", Boolean)
     ], DataTableRowWrapperComponent.prototype, "isSelected", void 0);
     __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], DataTableRowWrapperComponent.prototype, "isActive", void 0);
+    __decorate([
         core_1.Output(),
         __metadata("design:type", Object)
     ], DataTableRowWrapperComponent.prototype, "rowContextmenu", void 0);
@@ -2151,7 +2156,7 @@ var DataTableRowWrapperComponent = /** @class */ (function () {
         core_1.Component({
             selector: 'datatable-row-wrapper',
             changeDetection: core_1.ChangeDetectionStrategy.OnPush,
-            template: "\n    <ng-content></ng-content>\n    <div\n      *ngIf=\"expanded\"\n      [style.height.px]=\"detailRowHeight\"\n      class=\"datatable-row-detail\">\n      <ng-template\n        *ngIf=\"rowDetail && rowDetail.template\"\n        [ngTemplateOutlet]=\"rowDetail.template\"\n        [ngOutletContext]=\"{ \n          row: row, \n          expanded: expanded,\n          rowIndex: rowIndex\n        }\">\n      </ng-template>\n    </div>\n  "
+            template: "\n    <ng-content></ng-content>\n    <div\n      *ngIf=\"expanded\"\n      [style.height.px]=\"detailRowHeight\"\n      class=\"datatable-row-detail\">\n      <ng-template\n        *ngIf=\"rowDetail && rowDetail.template\"\n        [ngTemplateOutlet]=\"rowDetail.template\"\n        [ngOutletContext]=\"{\n          row: row,\n          expanded: expanded,\n          rowIndex: rowIndex\n        }\">\n      </ng-template>\n    </div>\n  "
         })
     ], DataTableRowWrapperComponent);
     return DataTableRowWrapperComponent;
@@ -3568,6 +3573,14 @@ exports.ScrollerComponent = ScrollerComponent;
 
 "use strict";
 
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3589,32 +3602,46 @@ var DataTableSelectionComponent = /** @class */ (function () {
         this.getCellActive = this.getCellActive.bind(this);
         this.getRowActive = this.getRowActive.bind(this);
     }
+    DataTableSelectionComponent.prototype.getNextRow = function (rows, index, direction) {
+        return rows[Math.min(Math.max(index + direction, 0), rows.length - 1)];
+    };
     DataTableSelectionComponent.prototype.activateRow = function (row, columnIndex, event) {
         var _this = this;
-        if (this.activated.$$isDefault && !row.$$isSectionHeader) {
-            var nextRow = row;
-            var nextColumn = columnIndex;
-            if (event) {
-                var filteredRows = this.rows.filter(function (t) { return !t.$$isSectionHeader; });
-                var rowId_1 = this.rowIdentity(row);
-                var rowIndex = filteredRows.findIndex(function (t) { return _this.rowIdentity(t) === rowId_1; });
-                if (event.keyCode === utils_1.Keys.up) {
-                    nextRow = filteredRows[Math.max(rowIndex - 1, 0)];
-                }
-                else if (event.keyCode === utils_1.Keys.down || event.keyCode === utils_1.Keys.return) {
-                    nextRow = filteredRows[Math.min(rowIndex + 1, filteredRows.length - 1)];
-                }
-                else if (event.keyCode === utils_1.Keys.left || (event.shiftKey && event.keyCode === utils_1.Keys.tab)) {
-                    nextColumn = Math.max(columnIndex - 1, 0);
-                }
-                else if (event.keyCode === utils_1.Keys.right || event.keyCode === utils_1.Keys.tab) {
-                    nextColumn = Math.min(columnIndex + 1, this.columns.length - 1);
-                }
+        var upRow = row;
+        var newRow = row;
+        var downRow = row;
+        var nextColumn = columnIndex;
+        var filteredRows = this.rows.filter(function (t) {
+            return !t.$$isSectionHeader || (t.$isSectionHeader && t.$$sectionIndex === row.$$sectionIndex);
+        });
+        var rowId = row.$$isSectionHeader ? this.rowIdentity(row) : row.$$sectionIndex;
+        var rowIndex = !row.$$isSectionHeader ?
+            filteredRows.findIndex(function (t) { return _this.rowIdentity(t) === rowId; }) :
+            filteredRows.findIndex(function (t) { return t.$$sectionIndex === rowId; });
+        if (event) {
+            if (event.keyCode === utils_1.Keys.up) {
+                newRow = this.getNextRow(filteredRows, rowIndex, -1);
             }
-            this.activated.row = this.rowIdentity(nextRow);
+            else if (event.keyCode === utils_1.Keys.down || event.keyCode === utils_1.Keys.return) {
+                newRow = this.getNextRow(filteredRows, rowIndex, 1);
+            }
+            else if (event.keyCode === utils_1.Keys.left || (event.shiftKey && event.keyCode === utils_1.Keys.tab)) {
+                nextColumn = Math.max(columnIndex - 1, 0);
+            }
+            else if (event.keyCode === utils_1.Keys.right || event.keyCode === utils_1.Keys.tab) {
+                nextColumn = Math.min(columnIndex + 1, this.columns.length - 1);
+            }
+        }
+        var newRowId = this.rowIdentity(newRow);
+        var newIndex = filteredRows.findIndex(function (t) { return _this.rowIdentity(t) === newRowId; });
+        upRow = this.getNextRow(filteredRows, newIndex, -1);
+        downRow = this.getNextRow(filteredRows, newIndex, 1);
+        if (this.activated.$$isDefault) {
+            this.activated.row = this.rowIdentity(newRow);
             this.activated.column = nextColumn;
             this.activateCell.emit(this.activated);
         }
+        return { newRow: newRow, upRow: upRow, downRow: downRow };
     };
     DataTableSelectionComponent.prototype.selectRow = function (event, index, row) {
         if (!this.selectEnabled || row.$$isSectionHeader)
@@ -3653,12 +3680,13 @@ var DataTableSelectionComponent = /** @class */ (function () {
         var chkbox = this.selectionType === types_1.SelectionType.checkbox;
         var select = (!chkbox && (type === 'click' || type === 'dblclick')) ||
             (chkbox && type === 'checkbox');
+        var activated = { upRow: row, newRow: row, downRow: row };
         if (select) {
             this.selectRow(event, index, row);
-            this.activateRow(row, model.cellIndex);
+            activated = this.activateRow(row, model.cellIndex);
         }
         else if (type === 'keydown') {
-            this.activateRow(row, model.cellIndex, event);
+            activated = this.activateRow(row, model.cellIndex, event);
             if (event.keyCode === utils_1.Keys.return) {
                 this.selectRow(event, index, row);
             }
@@ -3666,7 +3694,7 @@ var DataTableSelectionComponent = /** @class */ (function () {
                 this.onKeyboardFocus(model);
             }
         }
-        this.activate.emit(model);
+        this.activate.emit(__assign({}, model, { row: activated.newRow, upRow: activated.upRow, downRow: activated.downRow, column: this.columns[this.activated.column], cellIndex: this.activated.column }));
     };
     DataTableSelectionComponent.prototype.onKeyboardFocus = function (model) {
         var keyCode = model.event.keyCode;
