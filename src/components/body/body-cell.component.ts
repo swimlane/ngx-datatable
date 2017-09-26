@@ -57,9 +57,6 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy, OnInit {
     this._isActive = val;
     this.cellContext.isActive = val;
     this.cd.markForCheck();
-    if(val) {
-      this._element.focus();
-    }
   }
   get isActive(): boolean {
     return this._isActive;

@@ -15,8 +15,8 @@ import { mouseEvent } from '../../events';
       <ng-template
         *ngIf="rowDetail && rowDetail.template"
         [ngTemplateOutlet]="rowDetail.template"
-        [ngOutletContext]="{ 
-          row: row, 
+        [ngOutletContext]="{
+          row: row,
           expanded: expanded,
           rowIndex: rowIndex
         }">
@@ -32,6 +32,7 @@ export class DataTableRowWrapperComponent {
   @Input() row: any;
   @Input() rowIndex: number;
   @Input() isSelected: boolean = false;
+  @Input() isActive: boolean = true;
 
   @Output() rowContextmenu = new EventEmitter<{ event: MouseEvent, row: any }>(false);
 
@@ -45,6 +46,9 @@ export class DataTableRowWrapperComponent {
     let classes = 'datatable-row-wrapper';
     if (this.isSelected) {
       classes += ' selected';
+    }
+    if (this.isActive) {
+      classes += ' active';
     }
     return classes;
   }

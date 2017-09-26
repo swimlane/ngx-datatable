@@ -41,29 +41,47 @@ export class DataTableSelectionComponent {
     this.getRowActive  = this.getRowActive.bind(this);
   }
 
-  activateRow(row: any, columnIndex: number, event?: KeyboardEvent) {
-    if ((this.activated as any).$$isDefault && !row.$$isSectionHeader) {
-      let nextRow = row;
-      let nextColumn = columnIndex;
-      if (event) {
-        const filteredRows = this.rows.filter(t => !t.$$isSectionHeader);
-        const rowId = this.rowIdentity(row);
-        const rowIndex = filteredRows.findIndex((t) => this.rowIdentity(t) === rowId);
-        if (event.keyCode === Keys.up) {
-          nextRow = filteredRows[Math.max(rowIndex - 1, 0)];
-        } else if (event.keyCode === Keys.down || event.keyCode === Keys.return) {
-          nextRow = filteredRows[Math.min(rowIndex + 1, filteredRows.length - 1)];
-        } else if (event.keyCode === Keys.left || (event.shiftKey && event.keyCode === Keys.tab)) {
-          nextColumn = Math.max(columnIndex - 1, 0);
-        } else if (event.keyCode === Keys.right || event.keyCode === Keys.tab) {
-          nextColumn = Math.min(columnIndex + 1, this.columns.length - 1);
-        }
-      }
+  getNextRow(rows: any[], index: number, direction: number) {
+    return rows[Math.min(Math.max(index + direction, 0), rows.length - 1)];
+  }
 
-      this.activated.row = this.rowIdentity(nextRow);
+  activateRow(row: any, columnIndex: number, event?: KeyboardEvent) {
+    let upRow = row;
+    let newRow = row;
+    let downRow = row;
+    let nextColumn = columnIndex;
+
+    const filteredRows = this.rows.filter(t =>
+      !t.$$isSectionHeader || (t.$isSectionHeader && t.$$sectionIndex === row.$$sectionIndex));
+    const rowId = row.$$isSectionHeader ? this.rowIdentity(row) : row.$$sectionIndex;
+    const rowIndex = !row.$$isSectionHeader ?
+    filteredRows.findIndex((t) => this.rowIdentity(t) === rowId) :
+    filteredRows.findIndex(t => t.$$sectionIndex === rowId);
+
+    if (event) {
+      if (event.keyCode === Keys.up) {
+        newRow = this.getNextRow(filteredRows, rowIndex, -1);
+      } else if (event.keyCode === Keys.down || event.keyCode === Keys.return) {
+        newRow = this.getNextRow(filteredRows, rowIndex, 1);
+      } else if (event.keyCode === Keys.left || (event.shiftKey && event.keyCode === Keys.tab)) {
+        nextColumn = Math.max(columnIndex - 1, 0);
+      } else if (event.keyCode === Keys.right || event.keyCode === Keys.tab) {
+        nextColumn = Math.min(columnIndex + 1, this.columns.length - 1);
+      }
+    }
+
+    const newRowId = this.rowIdentity(newRow);
+    const newIndex = filteredRows.findIndex((t) => this.rowIdentity(t) === newRowId);
+    upRow = this.getNextRow(filteredRows, newIndex, -1);
+    downRow = this.getNextRow(filteredRows, newIndex, 1);
+
+    if ((this.activated as any).$$isDefault) {
+      this.activated.row = this.rowIdentity(newRow);
       this.activated.column = nextColumn;
       this.activateCell.emit(this.activated);
     }
+
+    return { newRow, upRow, downRow };
   }
 
   selectRow(event: KeyboardEvent | MouseEvent, index: number, row: any): void {
@@ -111,18 +129,31 @@ export class DataTableSelectionComponent {
     const select = (!chkbox && (type === 'click' || type === 'dblclick')) ||
       (chkbox && type === 'checkbox');
 
+    let activated = { upRow: row, newRow: row, downRow: row};
     if (select) {
       this.selectRow(event, index, row);
-      this.activateRow(row, model.cellIndex);
+      activated = this.activateRow(row, model.cellIndex);
     } else if (type === 'keydown') {
-      this.activateRow(row, model.cellIndex, event as KeyboardEvent);
+      activated = this.activateRow(row, model.cellIndex, event as KeyboardEvent);
       if ((<KeyboardEvent>event).keyCode === Keys.return) {
         this.selectRow(event, index, row);
       } else {
         this.onKeyboardFocus(model);
       }
     }
-    this.activate.emit(model);
+
+    if(!activated) {
+      debugger;
+    }
+
+    this.activate.emit({
+      ...model,
+      row: activated.newRow,
+      upRow: activated.upRow,
+      downRow: activated.downRow,
+      column: this.columns[this.activated.column],
+      cellIndex: this.activated.column
+    });
   }
 
   onKeyboardFocus(model: Model): void {
