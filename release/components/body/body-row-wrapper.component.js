@@ -5,6 +5,7 @@ var DataTableRowWrapperComponent = /** @class */ (function () {
     function DataTableRowWrapperComponent() {
         this.expanded = false;
         this.isSelected = false;
+        this.isActive = true;
         this.rowContextmenu = new core_1.EventEmitter(false);
     }
     DataTableRowWrapperComponent.prototype.onContextmenu = function ($event) {
@@ -16,6 +17,9 @@ var DataTableRowWrapperComponent = /** @class */ (function () {
             if (this.isSelected) {
                 classes += ' selected';
             }
+            if (this.isActive) {
+                classes += ' active';
+            }
             return classes;
         },
         enumerable: true,
@@ -25,7 +29,7 @@ var DataTableRowWrapperComponent = /** @class */ (function () {
         { type: core_1.Component, args: [{
                     selector: 'datatable-row-wrapper',
                     changeDetection: core_1.ChangeDetectionStrategy.OnPush,
-                    template: "\n    <ng-content></ng-content>\n    <div\n      *ngIf=\"expanded\"\n      [style.height.px]=\"detailRowHeight\"\n      class=\"datatable-row-detail\">\n      <ng-template\n        *ngIf=\"rowDetail && rowDetail.template\"\n        [ngTemplateOutlet]=\"rowDetail.template\"\n        [ngOutletContext]=\"{ \n          row: row, \n          expanded: expanded,\n          rowIndex: rowIndex\n        }\">\n      </ng-template>\n    </div>\n  "
+                    template: "\n    <ng-content></ng-content>\n    <div\n      *ngIf=\"expanded\"\n      [style.height.px]=\"detailRowHeight\"\n      class=\"datatable-row-detail\">\n      <ng-template\n        *ngIf=\"rowDetail && rowDetail.template\"\n        [ngTemplateOutlet]=\"rowDetail.template\"\n        [ngOutletContext]=\"{\n          row: row,\n          expanded: expanded,\n          rowIndex: rowIndex\n        }\">\n      </ng-template>\n    </div>\n  "
                 },] },
     ];
     /** @nocollapse */
@@ -37,6 +41,7 @@ var DataTableRowWrapperComponent = /** @class */ (function () {
         'row': [{ type: core_1.Input },],
         'rowIndex': [{ type: core_1.Input },],
         'isSelected': [{ type: core_1.Input },],
+        'isActive': [{ type: core_1.Input },],
         'rowContextmenu': [{ type: core_1.Output },],
         'onContextmenu': [{ type: core_1.HostListener, args: ['contextmenu', ['$event'],] },],
         'cssClass': [{ type: core_1.HostBinding, args: ['class',] },],

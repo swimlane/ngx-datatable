@@ -41,9 +41,6 @@ var DataTableBodyCellComponent = /** @class */ (function () {
             this._isActive = val;
             this.cellContext.isActive = val;
             this.cd.markForCheck();
-            if (val) {
-                this._element.focus();
-            }
         },
         enumerable: true,
         configurable: true

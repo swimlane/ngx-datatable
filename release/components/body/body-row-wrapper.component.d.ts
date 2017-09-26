@@ -6,6 +6,7 @@ export declare class DataTableRowWrapperComponent {
     row: any;
     rowIndex: number;
     isSelected: boolean;
+    isActive: boolean;
     rowContextmenu: EventEmitter<{
         event: MouseEvent;
         row: any;
