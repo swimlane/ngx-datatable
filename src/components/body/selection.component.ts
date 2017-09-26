@@ -142,10 +142,6 @@ export class DataTableSelectionComponent {
       }
     }
 
-    if(!activated) {
-      debugger;
-    }
-
     this.activate.emit({
       ...model,
       row: activated.newRow,
