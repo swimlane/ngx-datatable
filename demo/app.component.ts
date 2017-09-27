@@ -5,7 +5,8 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
   selector: 'app',
   styleUrls: [
     '../src/themes/material.scss',
-    '../src/themes/dark.scss'
+    '../src/themes/dark.scss',
+    '../src/themes/bootstrap.scss'
   ],
   encapsulation: ViewEncapsulation.None,
   providers: [
