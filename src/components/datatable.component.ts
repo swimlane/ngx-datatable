@@ -258,7 +258,14 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * @type {{row: any, column?: number}}
    * @memberOf DatatableComponent
    */
-  @Input() activated: { row?: any, column?: number, $$isDefault?: boolean } = { $$isDefault: true };
+  @Input() set activated(val: { row?: any, column?: number }) {
+    if (val) {
+      this._activated = val;
+    }
+  }
+  get activated() {
+    return this._activated;
+  }
 
   /**
    * Enable vertical scrollbars
@@ -814,6 +821,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   _unsectionedRows: any[];
   _sectionProp: SectionProp;
   _sections: Section[];
+  _activated: any = { $$isDefault: true };
 
   constructor(
     private scrollbarHelper: ScrollbarHelper,

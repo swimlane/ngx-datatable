@@ -24,17 +24,25 @@ export class DataTableSelectionComponent {
   @Input() rows: any[];
   @Input() columns: any[];
   @Input() selected: any[];
-  @Input() activated: { row?: any, column?: number};
   @Input() selectEnabled: boolean;
   @Input() selectionType: SelectionType;
   @Input() rowIdentity: any;
   @Input() selectCheck: any;
+
+  @Input() set activated(val: { row?: any, column?: number}) {
+    this._activated = val;
+    this.activateCell.emit(val);
+  }
+  get activated() {
+    return this._activated;
+  }
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
   @Output() activateCell: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
 
   prevIndex: number;
+  _activated: { row?: string, column?: number };
 
   constructor() {
     this.getCellActive = this.getCellActive.bind(this);
@@ -53,7 +61,7 @@ export class DataTableSelectionComponent {
 
     const filteredRows = this.rows.filter(t =>
       !t.$$isSectionHeader || (t.$isSectionHeader && t.$$sectionIndex === row.$$sectionIndex));
-    const rowId = row.$$isSectionHeader ? this.rowIdentity(row) : row.$$sectionIndex;
+    const rowId = !row.$$isSectionHeader ? this.rowIdentity(row) : row.$$sectionIndex;
     const rowIndex = !row.$$isSectionHeader ?
     filteredRows.findIndex((t) => this.rowIdentity(t) === rowId) :
     filteredRows.findIndex(t => t.$$sectionIndex === rowId);
@@ -81,7 +89,7 @@ export class DataTableSelectionComponent {
       this.activateCell.emit(this.activated);
     }
 
-    return { newRow, upRow, downRow };
+    return { newRow, upRow, downRow, nextColumn };
   }
 
   selectRow(event: KeyboardEvent | MouseEvent, index: number, row: any): void {
@@ -129,7 +137,7 @@ export class DataTableSelectionComponent {
     const select = (!chkbox && (type === 'click' || type === 'dblclick')) ||
       (chkbox && type === 'checkbox');
 
-    let activated = { upRow: row, newRow: row, downRow: row};
+    let activated = { upRow: row, newRow: row, downRow: row, nextColumn: model.cellIndex };
     if (select) {
       this.selectRow(event, index, row);
       activated = this.activateRow(row, model.cellIndex);
@@ -147,8 +155,8 @@ export class DataTableSelectionComponent {
       row: activated.newRow,
       upRow: activated.upRow,
       downRow: activated.downRow,
-      column: this.columns[this.activated.column],
-      cellIndex: this.activated.column
+      column: this.columns[activated.nextColumn],
+      cellIndex: activated.nextColumn
     });
   }
 

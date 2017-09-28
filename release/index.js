@@ -3602,6 +3602,17 @@ var DataTableSelectionComponent = /** @class */ (function () {
         this.getCellActive = this.getCellActive.bind(this);
         this.getRowActive = this.getRowActive.bind(this);
     }
+    Object.defineProperty(DataTableSelectionComponent.prototype, "activated", {
+        get: function () {
+            return this._activated;
+        },
+        set: function (val) {
+            this._activated = val;
+            this.activateCell.emit(val);
+        },
+        enumerable: true,
+        configurable: true
+    });
     DataTableSelectionComponent.prototype.getNextRow = function (rows, index, direction) {
         return rows[Math.min(Math.max(index + direction, 0), rows.length - 1)];
     };
@@ -3614,7 +3625,7 @@ var DataTableSelectionComponent = /** @class */ (function () {
         var filteredRows = this.rows.filter(function (t) {
             return !t.$$isSectionHeader || (t.$isSectionHeader && t.$$sectionIndex === row.$$sectionIndex);
         });
-        var rowId = row.$$isSectionHeader ? this.rowIdentity(row) : row.$$sectionIndex;
+        var rowId = !row.$$isSectionHeader ? this.rowIdentity(row) : row.$$sectionIndex;
         var rowIndex = !row.$$isSectionHeader ?
             filteredRows.findIndex(function (t) { return _this.rowIdentity(t) === rowId; }) :
             filteredRows.findIndex(function (t) { return t.$$sectionIndex === rowId; });
@@ -3641,7 +3652,7 @@ var DataTableSelectionComponent = /** @class */ (function () {
             this.activated.column = nextColumn;
             this.activateCell.emit(this.activated);
         }
-        return { newRow: newRow, upRow: upRow, downRow: downRow };
+        return { newRow: newRow, upRow: upRow, downRow: downRow, nextColumn: nextColumn };
     };
     DataTableSelectionComponent.prototype.selectRow = function (event, index, row) {
         if (!this.selectEnabled || row.$$isSectionHeader)
@@ -3680,7 +3691,7 @@ var DataTableSelectionComponent = /** @class */ (function () {
         var chkbox = this.selectionType === types_1.SelectionType.checkbox;
         var select = (!chkbox && (type === 'click' || type === 'dblclick')) ||
             (chkbox && type === 'checkbox');
-        var activated = { upRow: row, newRow: row, downRow: row };
+        var activated = { upRow: row, newRow: row, downRow: row, nextColumn: model.cellIndex };
         if (select) {
             this.selectRow(event, index, row);
             activated = this.activateRow(row, model.cellIndex);
@@ -3694,7 +3705,7 @@ var DataTableSelectionComponent = /** @class */ (function () {
                 this.onKeyboardFocus(model);
             }
         }
-        this.activate.emit(__assign({}, model, { row: activated.newRow, upRow: activated.upRow, downRow: activated.downRow, column: this.columns[this.activated.column], cellIndex: this.activated.column }));
+        this.activate.emit(__assign({}, model, { row: activated.newRow, upRow: activated.upRow, downRow: activated.downRow, column: this.columns[activated.nextColumn], cellIndex: activated.nextColumn }));
     };
     DataTableSelectionComponent.prototype.onKeyboardFocus = function (model) {
         var keyCode = model.event.keyCode;
@@ -3788,10 +3799,6 @@ var DataTableSelectionComponent = /** @class */ (function () {
     ], DataTableSelectionComponent.prototype, "selected", void 0);
     __decorate([
         core_1.Input(),
-        __metadata("design:type", Object)
-    ], DataTableSelectionComponent.prototype, "activated", void 0);
-    __decorate([
-        core_1.Input(),
         __metadata("design:type", Boolean)
     ], DataTableSelectionComponent.prototype, "selectEnabled", void 0);
     __decorate([
@@ -3806,6 +3813,11 @@ var DataTableSelectionComponent = /** @class */ (function () {
         core_1.Input(),
         __metadata("design:type", Object)
     ], DataTableSelectionComponent.prototype, "selectCheck", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], DataTableSelectionComponent.prototype, "activated", null);
     __decorate([
         core_1.Output(),
         __metadata("design:type", core_1.EventEmitter)
@@ -4085,15 +4097,6 @@ var DatatableComponent = /** @class */ (function () {
          */
         this.selected = [];
         /**
-         * Row and column that should be
-         * represented as active in the grid.
-         * Default value: `{}`
-         *
-         * @type {{row: any, column?: number}}
-         * @memberOf DatatableComponent
-         */
-        this.activated = { $$isDefault: true };
-        /**
          * Enable vertical scrollbars
          *
          * @type {boolean}
@@ -4317,6 +4320,7 @@ var DatatableComponent = /** @class */ (function () {
         this.recordRowCount = 0;
         this.offsetX = 0;
         this._count = 0;
+        this._activated = { $$isDefault: true };
         // get ref to elm for measuring
         this.element = element.nativeElement;
         this.rowDiffer = differs.find({}).create(null);
@@ -4451,6 +4455,26 @@ var DatatableComponent = /** @class */ (function () {
         set: function (val) {
             this._sections = val;
             this.sectionRows();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DatatableComponent.prototype, "activated", {
+        get: function () {
+            return this._activated;
+        },
+        /**
+         * Row and column that should be
+         * represented as active in the grid.
+         * Default value: `{}`
+         *
+         * @type {{row: any, column?: number}}
+         * @memberOf DatatableComponent
+         */
+        set: function (val) {
+            if (val) {
+                this._activated = val;
+            }
         },
         enumerable: true,
         configurable: true
@@ -5112,8 +5136,9 @@ var DatatableComponent = /** @class */ (function () {
     ], DatatableComponent.prototype, "selected", void 0);
     __decorate([
         core_1.Input(),
-        __metadata("design:type", Object)
-    ], DatatableComponent.prototype, "activated", void 0);
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], DatatableComponent.prototype, "activated", null);
     __decorate([
         core_1.Input(),
         __metadata("design:type", Boolean)

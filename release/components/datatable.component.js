@@ -40,15 +40,6 @@ var DatatableComponent = /** @class */ (function () {
          */
         this.selected = [];
         /**
-         * Row and column that should be
-         * represented as active in the grid.
-         * Default value: `{}`
-         *
-         * @type {{row: any, column?: number}}
-         * @memberOf DatatableComponent
-         */
-        this.activated = { $$isDefault: true };
-        /**
          * Enable vertical scrollbars
          *
          * @type {boolean}
@@ -272,6 +263,7 @@ var DatatableComponent = /** @class */ (function () {
         this.recordRowCount = 0;
         this.offsetX = 0;
         this._count = 0;
+        this._activated = { $$isDefault: true };
         // get ref to elm for measuring
         this.element = element.nativeElement;
         this.rowDiffer = differs.find({}).create(null);
@@ -406,6 +398,26 @@ var DatatableComponent = /** @class */ (function () {
         set: function (val) {
             this._sections = val;
             this.sectionRows();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DatatableComponent.prototype, "activated", {
+        get: function () {
+            return this._activated;
+        },
+        /**
+         * Row and column that should be
+         * represented as active in the grid.
+         * Default value: `{}`
+         *
+         * @type {{row: any, column?: number}}
+         * @memberOf DatatableComponent
+         */
+        set: function (val) {
+            if (val) {
+                this._activated = val;
+            }
         },
         enumerable: true,
         configurable: true

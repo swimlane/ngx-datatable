@@ -12,24 +12,29 @@ export declare class DataTableSelectionComponent {
     rows: any[];
     columns: any[];
     selected: any[];
-    activated: {
-        row?: any;
-        column?: number;
-    };
     selectEnabled: boolean;
     selectionType: SelectionType;
     rowIdentity: any;
     selectCheck: any;
+    activated: {
+        row?: any;
+        column?: number;
+    };
     activate: EventEmitter<any>;
     activateCell: EventEmitter<any>;
     select: EventEmitter<any>;
     prevIndex: number;
+    _activated: {
+        row?: string;
+        column?: number;
+    };
     constructor();
     getNextRow(rows: any[], index: number, direction: number): any;
     activateRow(row: any, columnIndex: number, event?: KeyboardEvent): {
         newRow: any;
         upRow: any;
         downRow: any;
+        nextColumn: number;
     };
     selectRow(event: KeyboardEvent | MouseEvent, index: number, row: any): void;
     onActivate(model: Model, index: number): void;

@@ -86,7 +86,6 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
     activated: {
         row?: any;
         column?: number;
-        $$isDefault?: boolean;
     };
     /**
      * Enable vertical scrollbars
@@ -511,6 +510,7 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
     _unsectionedRows: any[];
     _sectionProp: SectionProp;
     _sections: Section[];
+    _activated: any;
     constructor(scrollbarHelper: ScrollbarHelper, cd: ChangeDetectorRef, element: ElementRef, differs: KeyValueDiffers);
     onBlur(): void;
     onFocus(): void;
