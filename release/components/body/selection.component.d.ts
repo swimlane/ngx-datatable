@@ -39,9 +39,9 @@ export declare class DataTableSelectionComponent {
     selectRow(event: KeyboardEvent | MouseEvent, index: number, row: any): void;
     onActivate(model: Model, index: number): void;
     onKeyboardFocus(model: Model): void;
-    focusRow(rowElement: any, keyCode: number): void;
-    getPrevNextRow(rowElement: any, keyCode: number): any;
-    focusCell(cellElement: any, rowElement: any, keyCode: number, cellIndex: number): void;
+    focusRow(rowElement: any, code: string): void;
+    getPrevNextRow(rowElement: any, code: string): any;
+    focusCell(cellElement: any, rowElement: any, code: string, cellIndex: number): void;
     getRowSelected(row: any): boolean;
     getRowActive(row: any): boolean;
     getCellActive(row: any, columnIndex: number): boolean;

@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 
 import {
-  columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys
+  columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Codes
 } from '../../utils';
 import { ScrollbarHelper } from '../../services';
 import { mouseEvent, keyboardEvent } from '../../events';
@@ -155,15 +155,15 @@ export class DataTableBodyRowComponent implements DoCheck {
 
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
-    const keyCode = event.keyCode;
+    const code = event.key || event.code;
     const isTargetRow = event.target === this.element;
 
     const isAction =
-      keyCode === Keys.return ||
-      keyCode === Keys.down ||
-      keyCode === Keys.up ||
-      keyCode === Keys.left ||
-      keyCode === Keys.right;
+      code === Codes.return ||
+      code === Codes.down ||
+      code === Codes.up ||
+      code === Codes.left ||
+      code === Codes.right;
 
     if (isAction && isTargetRow) {
       event.preventDefault();

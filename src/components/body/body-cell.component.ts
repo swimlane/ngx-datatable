@@ -4,7 +4,7 @@ import {
   ChangeDetectionStrategy, OnInit
 } from '@angular/core';
 
-import { Keys } from '../../utils';
+import { Codes } from '../../utils';
 import { SortDirection } from '../../types';
 import { TableColumn } from '../../types/table-column.type';
 import { mouseEvent, keyboardEvent } from '../../events';
@@ -273,16 +273,16 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy, OnInit {
 
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
-    const keyCode = event.keyCode;
+    const code = event.key || event.code;
     const isContainedCell = this._element.contains(event.target);
 
     const isAction =
-      keyCode === Keys.return ||
-      keyCode === Keys.down ||
-      keyCode === Keys.up ||
-      keyCode === Keys.left ||
-      keyCode === Keys.right ||
-      keyCode === Keys.tab;
+      code === Codes.return ||
+      code === Codes.down ||
+      code === Codes.up ||
+      code === Codes.left ||
+      code === Codes.right ||
+      code === Codes.tab;
 
     if (isAction && isContainedCell) {
       event.preventDefault();

@@ -47,16 +47,17 @@ var DataTableSelectionComponent = /** @class */ (function () {
             filteredRows.findIndex(function (t) { return _this.rowIdentity(t) === rowId; }) :
             filteredRows.findIndex(function (t) { return t.$$sectionIndex === rowId; });
         if (event) {
-            if (event.keyCode === utils_1.Keys.up) {
+            var code = event.key || event.code;
+            if (code === utils_1.Codes.up) {
                 newRow = this.getNextRow(filteredRows, rowIndex, -1);
             }
-            else if (event.keyCode === utils_1.Keys.down || event.keyCode === utils_1.Keys.return) {
+            else if (code === utils_1.Codes.down || code === utils_1.Codes.return) {
                 newRow = this.getNextRow(filteredRows, rowIndex, 1);
             }
-            else if (event.keyCode === utils_1.Keys.left || (event.shiftKey && event.keyCode === utils_1.Keys.tab)) {
+            else if (code === utils_1.Codes.left || (event.shiftKey && code === utils_1.Codes.tab)) {
                 nextColumn = Math.max(columnIndex - 1, 0);
             }
-            else if (event.keyCode === utils_1.Keys.right || event.keyCode === utils_1.Keys.tab) {
+            else if (code === utils_1.Codes.right || code === utils_1.Codes.tab) {
                 nextColumn = Math.min(columnIndex + 1, this.columns.length - 1);
             }
         }
@@ -114,8 +115,9 @@ var DataTableSelectionComponent = /** @class */ (function () {
             activated = this.activateRow(row, model.cellIndex);
         }
         else if (type === 'keydown') {
+            var code = event.key || event.code;
             activated = this.activateRow(row, model.cellIndex, event);
-            if (event.keyCode === utils_1.Keys.return) {
+            if (code === utils_1.Codes.return) {
                 this.selectRow(event, index, row);
             }
             else {
@@ -125,35 +127,35 @@ var DataTableSelectionComponent = /** @class */ (function () {
         this.activate.emit(__assign({}, model, { row: activated.newRow, upRow: activated.upRow, downRow: activated.downRow, column: this.columns[activated.nextColumn], cellIndex: activated.nextColumn }));
     };
     DataTableSelectionComponent.prototype.onKeyboardFocus = function (model) {
-        var keyCode = model.event.keyCode;
-        var shouldFocus = keyCode === utils_1.Keys.up ||
-            keyCode === utils_1.Keys.down ||
-            keyCode === utils_1.Keys.right ||
-            keyCode === utils_1.Keys.left ||
-            keyCode === utils_1.Keys.tab;
+        var code = model.event.key || model.event.code;
+        var shouldFocus = code === utils_1.Codes.up ||
+            code === utils_1.Codes.down ||
+            code === utils_1.Codes.right ||
+            code === utils_1.Codes.left ||
+            code === utils_1.Codes.tab;
         if (shouldFocus) {
             var isCellSelection = this.selectionType === types_1.SelectionType.cell;
             if (!model.cellElement || !isCellSelection) {
-                this.focusRow(model.rowElement, keyCode);
+                this.focusRow(model.rowElement, code);
             }
             else if (isCellSelection) {
-                this.focusCell(model.cellElement, model.rowElement, keyCode, model.cellIndex);
+                this.focusCell(model.cellElement, model.rowElement, code, model.cellIndex);
             }
         }
     };
-    DataTableSelectionComponent.prototype.focusRow = function (rowElement, keyCode) {
-        var nextRowElement = this.getPrevNextRow(rowElement, keyCode);
+    DataTableSelectionComponent.prototype.focusRow = function (rowElement, code) {
+        var nextRowElement = this.getPrevNextRow(rowElement, code);
         if (nextRowElement)
             nextRowElement.focus();
     };
-    DataTableSelectionComponent.prototype.getPrevNextRow = function (rowElement, keyCode) {
+    DataTableSelectionComponent.prototype.getPrevNextRow = function (rowElement, code) {
         var parentElement = rowElement.parentElement;
         if (parentElement) {
             var focusElement = void 0;
-            if (keyCode === utils_1.Keys.up) {
+            if (code === utils_1.Codes.up) {
                 focusElement = parentElement.previousElementSibling;
             }
-            else if (keyCode === utils_1.Keys.down) {
+            else if (code === utils_1.Codes.down) {
                 focusElement = parentElement.nextElementSibling;
             }
             if (focusElement && focusElement.children.length) {
@@ -161,16 +163,16 @@ var DataTableSelectionComponent = /** @class */ (function () {
             }
         }
     };
-    DataTableSelectionComponent.prototype.focusCell = function (cellElement, rowElement, keyCode, cellIndex) {
+    DataTableSelectionComponent.prototype.focusCell = function (cellElement, rowElement, code, cellIndex) {
         var nextCellElement;
-        if (keyCode === utils_1.Keys.left) {
+        if (code === utils_1.Codes.left) {
             nextCellElement = cellElement.previousElementSibling;
         }
-        else if (keyCode === utils_1.Keys.right) {
+        else if (code === utils_1.Codes.right) {
             nextCellElement = cellElement.nextElementSibling;
         }
-        else if (keyCode === utils_1.Keys.up || keyCode === utils_1.Keys.down) {
-            var nextRowElement = this.getPrevNextRow(rowElement, keyCode);
+        else if (code === utils_1.Codes.up || code === utils_1.Codes.down) {
+            var nextRowElement = this.getPrevNextRow(rowElement, code);
             if (nextRowElement) {
                 var children = nextRowElement.getElementsByClassName('datatable-body-cell');
                 if (children.length)

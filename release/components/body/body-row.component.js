@@ -104,13 +104,13 @@ var DataTableBodyRowComponent = /** @class */ (function () {
         this.activate.emit(event);
     };
     DataTableBodyRowComponent.prototype.onKeyDown = function (event) {
-        var keyCode = event.keyCode;
+        var code = event.key || event.code;
         var isTargetRow = event.target === this.element;
-        var isAction = keyCode === utils_1.Keys.return ||
-            keyCode === utils_1.Keys.down ||
-            keyCode === utils_1.Keys.up ||
-            keyCode === utils_1.Keys.left ||
-            keyCode === utils_1.Keys.right;
+        var isAction = code === utils_1.Codes.return ||
+            code === utils_1.Codes.down ||
+            code === utils_1.Codes.up ||
+            code === utils_1.Codes.left ||
+            code === utils_1.Codes.right;
         if (isAction && isTargetRow) {
             event.preventDefault();
             event.stopPropagation();

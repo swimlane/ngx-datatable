@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { Keys, selectRows, selectRowsBetween } from '../../utils';
+import { Codes, selectRows, selectRowsBetween } from '../../utils';
 import { SelectionType } from '../../types';
 import { mouseEvent, keyboardEvent } from '../../events';
 
@@ -67,13 +67,14 @@ export class DataTableSelectionComponent {
     filteredRows.findIndex(t => t.$$sectionIndex === rowId);
 
     if (event) {
-      if (event.keyCode === Keys.up) {
+      const code = event.key || event.code;
+      if (code === Codes.up) {
         newRow = this.getNextRow(filteredRows, rowIndex, -1);
-      } else if (event.keyCode === Keys.down || event.keyCode === Keys.return) {
+      } else if (code === Codes.down || code === Codes.return) {
         newRow = this.getNextRow(filteredRows, rowIndex, 1);
-      } else if (event.keyCode === Keys.left || (event.shiftKey && event.keyCode === Keys.tab)) {
+      } else if (code === Codes.left || (event.shiftKey && code === Codes.tab)) {
         nextColumn = Math.max(columnIndex - 1, 0);
-      } else if (event.keyCode === Keys.right || event.keyCode === Keys.tab) {
+      } else if (code === Codes.right || code === Codes.tab) {
         nextColumn = Math.min(columnIndex + 1, this.columns.length - 1);
       }
     }
@@ -142,8 +143,9 @@ export class DataTableSelectionComponent {
       this.selectRow(event, index, row);
       activated = this.activateRow(row, model.cellIndex);
     } else if (type === 'keydown') {
+      const code = (<KeyboardEvent>event).key || (<KeyboardEvent>event).code;
       activated = this.activateRow(row, model.cellIndex, event as KeyboardEvent);
-      if ((<KeyboardEvent>event).keyCode === Keys.return) {
+      if (code === Codes.return) {
         this.selectRow(event, index, row);
       } else {
         this.onKeyboardFocus(model);
@@ -161,39 +163,39 @@ export class DataTableSelectionComponent {
   }
 
   onKeyboardFocus(model: Model): void {
-    const { keyCode } = <KeyboardEvent>model.event;
+    const code = (<KeyboardEvent>model.event).key || (<KeyboardEvent>model.event).code;
     const shouldFocus =
-      keyCode === Keys.up ||
-      keyCode === Keys.down ||
-      keyCode === Keys.right ||
-      keyCode === Keys.left ||
-      keyCode === Keys.tab;
+      code === Codes.up ||
+      code === Codes.down ||
+      code === Codes.right ||
+      code === Codes.left ||
+      code === Codes.tab;
 
     if (shouldFocus) {
       const isCellSelection =
         this.selectionType === SelectionType.cell;
 
       if (!model.cellElement || !isCellSelection) {
-        this.focusRow(model.rowElement, keyCode);
+        this.focusRow(model.rowElement, code);
       } else if (isCellSelection) {
-        this.focusCell(model.cellElement, model.rowElement, keyCode, model.cellIndex);
+        this.focusCell(model.cellElement, model.rowElement, code, model.cellIndex);
       }
     }
   }
 
-  focusRow(rowElement: any, keyCode: number): void {
-    const nextRowElement = this.getPrevNextRow(rowElement, keyCode);
+  focusRow(rowElement: any, code: string): void {
+    const nextRowElement = this.getPrevNextRow(rowElement, code);
     if (nextRowElement) nextRowElement.focus();
   }
 
-  getPrevNextRow(rowElement: any, keyCode: number): any {
+  getPrevNextRow(rowElement: any, code: string): any {
     const parentElement = rowElement.parentElement;
 
     if (parentElement) {
       let focusElement: HTMLElement;
-      if (keyCode === Keys.up) {
+      if (code === Codes.up) {
         focusElement = parentElement.previousElementSibling;
-      } else if (keyCode === Keys.down) {
+      } else if (code === Codes.down) {
         focusElement = parentElement.nextElementSibling;
       }
 
@@ -203,15 +205,15 @@ export class DataTableSelectionComponent {
     }
   }
 
-  focusCell(cellElement: any, rowElement: any, keyCode: number, cellIndex: number): void {
+  focusCell(cellElement: any, rowElement: any, code: string, cellIndex: number): void {
     let nextCellElement: HTMLElement;
 
-    if (keyCode === Keys.left) {
+    if (code === Codes.left) {
       nextCellElement = cellElement.previousElementSibling;
-    } else if (keyCode === Keys.right) {
+    } else if (code === Codes.right) {
       nextCellElement = cellElement.nextElementSibling;
-    } else if (keyCode === Keys.up || keyCode === Keys.down) {
-      const nextRowElement = this.getPrevNextRow(rowElement, keyCode);
+    } else if (code === Codes.up || code === Codes.down) {
+      const nextRowElement = this.getPrevNextRow(rowElement, code);
       if (nextRowElement) {
         const children = nextRowElement.getElementsByClassName('datatable-body-cell');
         if (children.length) nextCellElement = children[cellIndex];

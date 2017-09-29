@@ -229,14 +229,14 @@ var DataTableBodyCellComponent = /** @class */ (function () {
         });
     };
     DataTableBodyCellComponent.prototype.onKeyDown = function (event) {
-        var keyCode = event.keyCode;
+        var code = event.key || event.code;
         var isContainedCell = this._element.contains(event.target);
-        var isAction = keyCode === utils_1.Keys.return ||
-            keyCode === utils_1.Keys.down ||
-            keyCode === utils_1.Keys.up ||
-            keyCode === utils_1.Keys.left ||
-            keyCode === utils_1.Keys.right ||
-            keyCode === utils_1.Keys.tab;
+        var isAction = code === utils_1.Codes.return ||
+            code === utils_1.Codes.down ||
+            code === utils_1.Codes.up ||
+            code === utils_1.Codes.left ||
+            code === utils_1.Codes.right ||
+            code === utils_1.Codes.tab;
         if (isAction && isContainedCell) {
             event.preventDefault();
             event.stopPropagation();

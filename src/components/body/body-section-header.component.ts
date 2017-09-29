@@ -3,7 +3,7 @@ import {
   EventEmitter, HostListener, TemplateRef, ChangeDetectionStrategy
 } from '@angular/core';
 
-import { Keys, columnsTotalWidth } from '../../utils';
+import { Codes, columnsTotalWidth } from '../../utils';
 
 @Component({
   selector: 'datatable-body-section-header',
@@ -103,15 +103,15 @@ export class DataTableBodySectionHeaderComponent {
 
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
-    const keyCode = event.keyCode;
+    const code = event.key || event.code;
     const isTargetRow = event.target === this.element;
 
     const isAction =
-      keyCode === Keys.return ||
-      keyCode === Keys.down ||
-      keyCode === Keys.up ||
-      keyCode === Keys.left ||
-      keyCode === Keys.right;
+      code === Codes.return ||
+      code === Codes.down ||
+      code === Codes.up ||
+      code === Codes.left ||
+      code === Codes.right;
 
     if (isAction && isTargetRow) {
       event.preventDefault();
