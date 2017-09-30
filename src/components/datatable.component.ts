@@ -691,7 +691,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   ngDoCheck(): void {
     if (this.rowDiffer.diff(this.rows)) {
       if (!this.externalSorting) {
-        this._internalRows = sortRows(this._rows, this.columns, this.sorts);
+        this._internalRows = sortRows(this._rows, this._internalColumns, this.sorts);
       } else {
         this._internalRows = [...this.rows];
       }
