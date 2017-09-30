@@ -119,7 +119,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   @Input() set rows(val: any[]) {
     this._rows = val;
-    this.rowExpansions.clear();
+    this.groupsInit = false;
     this.recalcLayout();
   }
 
@@ -216,7 +216,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   rowTrackingFn: any;
   listener: any;
   rowIndexes: any = new Map();
-  rowExpansions: any = new Map();
+  rowExpansions: any = new WeakMap();
+  groupsInit: boolean = false;
 
   _rows: any[];
   _bodyHeight: any;
@@ -601,7 +602,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   toggleAllRows(expanded: boolean): void {
     // clear prev expansions
-    this.rowExpansions.clear();
+    this.groupsInit = false;
+    this.rowExpansions = new WeakMap();
 
     const rowExpanded = expanded ? 1 : 0;
 
@@ -668,7 +670,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * Returns if the row was expanded and set default row expansion when row expansion is empty
    */
   getRowExpanded(row: any): boolean {
-    if (this.rowExpansions.size === 0 && this.groupExpansionDefault) {
+    if (!this.groupsInit && this.groupExpansionDefault) {
+      this.groupsInit = true;
       for (const group of this.groupedRows) {
         this.rowExpansions.set(group, 1);
       }
