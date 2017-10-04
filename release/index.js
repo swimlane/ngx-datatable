@@ -3766,6 +3766,9 @@ var DataTableSelectionComponent = /** @class */ (function () {
             nextCellElement.focus();
     };
     DataTableSelectionComponent.prototype.getRowSelected = function (row) {
+        if (this.selectionType == types_1.SelectionType.cell) {
+            return this.activated.row === this.rowIdentity(row);
+        }
         return this.getRowSelectedIdx(row, this.selected) > -1;
     };
     DataTableSelectionComponent.prototype.getRowActive = function (row) {
