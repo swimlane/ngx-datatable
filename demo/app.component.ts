@@ -56,8 +56,8 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
               <li><a href="#" (click)="state=''">Fluid Row Height</a></li>
               <li><a href="#basic-fixed" (click)="state='basic-fixed'">Fixed Row Height</a></li>
               <li><a href="#dynamic" (click)="state='dynamic'">Dynamic Row Height</a></li>
-              <li><a href="#row-details'" (click)="state='row-details'">Row Detail</a></li>
-              <li><a href="#responsive'" (click)="state='responsive'">Responsive</a></li>
+              <li><a href="#row-details" (click)="state='row-details'">Row Detail</a></li>
+              <li><a href="#responsive" (click)="state='responsive'">Responsive</a></li>
             </ul>
           </li>
           <li>
@@ -84,7 +84,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
               <li><a href="#cell-selection" (click)="state='cell-selection'">Cell</a></li>
               <li><a href="#single-selection" (click)="state='single-selection'">Single Row</a></li>
               <li><a href="#multi-selection" (click)="state='multi-selection'">Multi Row</a></li>
-              <li><a href="#multi-click-selection'" (click)="state='multi-click-selection'">Multi Click Row</a></li>
+              <li><a href="#multi-click-selection" (click)="state='multi-click-selection'">Multi Click Row</a></li>
               <li><a href="#multidisable-selection" (click)="state='multidisable-selection'">Disable Callback</a></li>
               <li><a href="#chkbox-selection" (click)="state='chkbox-selection'">Checkbox</a></li>
               <li><a href="#chkbox-selection-template" (click)="state='chkbox-selection-template'">Custom Checkbox</a></li>
