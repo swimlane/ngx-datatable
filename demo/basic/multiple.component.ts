@@ -42,7 +42,7 @@ export class MultipleTablesComponent {
   ];
 
   columns2 = [
-    { prop: 'name', Name: '^^NAME^^' },
+    { prop: 'name', name: 'Name' },
     { name: 'Gender' }
   ];
 
