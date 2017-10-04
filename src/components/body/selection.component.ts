@@ -224,6 +224,9 @@ export class DataTableSelectionComponent {
   }
 
   getRowSelected(row: any): boolean {
+    if (this.selectionType == SelectionType.cell) {
+      return this.activated.row === this.rowIdentity(row);
+    }
     return this.getRowSelectedIdx(row, this.selected) > -1;
   }
 
@@ -247,5 +250,4 @@ export class DataTableSelectionComponent {
       return id === rowId;
     });
   }
-
 }
