@@ -51,10 +51,10 @@ export class VisibilityDirective implements OnInit, OnDestroy {
         this.onVisibilityChange();
       } else {
         clearTimeout(this.timeout);
-        this.zone.runOutsideAngular(() => {
-          this.timeout = setTimeout(() => check(), 50);
-        });
       }
+      this.zone.runOutsideAngular(() => {
+        this.timeout = setTimeout(() => check(), 50);
+      });
     };
 
     this.timeout = setTimeout(() => check());
