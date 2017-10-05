@@ -44,7 +44,7 @@ import { mouseEvent } from '../../events';
           [rowIndex]="getRowIndex(group[i])"
           (rowContextmenu)="rowContextmenu.emit($event)">
           <datatable-body-row 
-            *ngIf="!group.value"        
+            *ngIf="!groupedRows; else groupedRowsTemplate"        
             tabindex="-1"
             [isSelected]="selector.getRowSelected(group)"
             [innerWidth]="innerWidth"
@@ -56,22 +56,24 @@ import { mouseEvent } from '../../events';
             [expanded]="getRowExpanded(group)"            
             [rowClass]="rowClass"
             (activate)="selector.onActivate($event, indexes.first + i)">
-          </datatable-body-row>                       
-          <datatable-body-row
-            *ngFor="let row of group.value; let i = index; trackBy: rowTrackingFn;"
-            tabindex="-1"
-            [isSelected]="selector.getRowSelected(row)"
-            [innerWidth]="innerWidth"
-            [offsetX]="offsetX"
-            [columns]="columns"
-            [rowHeight]="getRowHeight(row)"
-            [row]="row"
-            [group]="group.value"
-            [rowIndex]="getRowIndex(row)"
-            [expanded]="getRowExpanded(row)"
-            [rowClass]="rowClass"
-            (activate)="selector.onActivate($event, i)">
           </datatable-body-row>
+          <ng-template #groupedRowsTemplate>
+            <datatable-body-row
+              *ngFor="let row of group.value; let i = index; trackBy: rowTrackingFn;"
+              tabindex="-1"
+              [isSelected]="selector.getRowSelected(row)"
+              [innerWidth]="innerWidth"
+              [offsetX]="offsetX"
+              [columns]="columns"
+              [rowHeight]="getRowHeight(row)"
+              [row]="row"
+              [group]="group.value"
+              [rowIndex]="getRowIndex(row)"
+              [expanded]="getRowExpanded(row)"
+              [rowClass]="rowClass"
+              (activate)="selector.onActivate($event, i)">
+            </datatable-body-row>
+          </ng-template>
         </datatable-row-wrapper>
       </datatable-scroller>
       <div
