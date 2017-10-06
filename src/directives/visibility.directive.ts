@@ -1,5 +1,5 @@
 import {
-  Directive, Output, EventEmitter, ElementRef, HostBinding, NgZone, OnInit, OnDestroy
+  Directive, Output, EventEmitter, ElementRef, HostBinding, NgZone, OnInit, OnDestroy, DoCheck
 } from '@angular/core';
 
 /**
@@ -14,7 +14,7 @@ import {
  *
  */
 @Directive({ selector: '[visibilityObserver]' })
-export class VisibilityDirective implements OnInit, OnDestroy {
+export class VisibilityDirective implements OnInit, OnDestroy, DoCheck {
 
   @HostBinding('class.visible') 
   isVisible: boolean = false;
@@ -26,11 +26,21 @@ export class VisibilityDirective implements OnInit, OnDestroy {
   constructor(private element: ElementRef, private zone: NgZone) { }
 
   ngOnInit(): void {
-    this.runCheck();
+    this.timeout = setTimeout(() => this.check());
+  }
+
+  ngDoCheck(): void {
+    if(this.timeout !== undefined) return;
+    this.check();
   }
 
   ngOnDestroy(): void {
+    this.clearTimeout();
+  }
+
+  clearTimeout(): void {
     clearTimeout(this.timeout);
+    this.timeout = undefined;
   }
 
   onVisibilityChange(): void {
@@ -41,23 +51,18 @@ export class VisibilityDirective implements OnInit, OnDestroy {
     });
   }
 
-  runCheck(): void {
-    const check = () => {
-      // https://davidwalsh.name/offsetheight-visibility
-      const { offsetHeight, offsetWidth } = this.element.nativeElement;
+  check: () => void = () => {
+    // https://davidwalsh.name/offsetheight-visibility
+    const { offsetHeight, offsetWidth } = this.element.nativeElement;
 
-      if (offsetHeight && offsetWidth) {
-        clearTimeout(this.timeout);
-        this.onVisibilityChange();
-      } else {
-        clearTimeout(this.timeout);
-      }
+    if (offsetHeight && offsetWidth) {
+      this.clearTimeout();
+      this.onVisibilityChange();
+    } else {
+      this.clearTimeout();
       this.zone.runOutsideAngular(() => {
-        this.timeout = setTimeout(() => check(), 50);
+        this.timeout = setTimeout(() => this.check(), 50);
       });
-    };
-
-    this.timeout = setTimeout(() => check());
+    }
   }
-
 }
