@@ -19,7 +19,7 @@ const styleChild = 'position: absolute; left: 0; top: 0; transition: 0s;';
     selector: '[resizeObserver]',
     template: `
         <ng-content></ng-content>
-        <div class="resize-sensor hi2" style="${style}" #resizeSensor>
+        <div class="resize-sensor" style="${style}" #resizeSensor>
             <div class="resize-sensor-expand" style="${style}" #expand>
                 <div style="${styleChild}" #expandChild></div>
             </div>
