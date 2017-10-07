@@ -1,5 +1,6 @@
+import { checkVisibility } from '../utils/visibility-observer';
 import {
-  Directive, Output, EventEmitter, ElementRef, HostBinding, NgZone, OnInit, OnDestroy
+  Directive, Output, EventEmitter, ElementRef, HostBinding
 } from '@angular/core';
 
 /**
@@ -14,50 +15,26 @@ import {
  *
  */
 @Directive({ selector: '[visibilityObserver]' })
-export class VisibilityDirective implements OnInit, OnDestroy {
+export class VisibilityDirective {
 
   @HostBinding('class.visible') 
-  isVisible: boolean = false;
+  isVisible: boolean | undefined;
 
-  @Output() visible: EventEmitter<any> = new EventEmitter();
+  @Output() visible: EventEmitter<boolean> = new EventEmitter();
 
-  timeout: any;
+  constructor(private element: ElementRef) { }
 
-  constructor(private element: ElementRef, private zone: NgZone) { }
-
-  ngOnInit(): void {
-    this.runCheck();
+  checkVisibility(): void {
+    const { offsetHeight, offsetWidth } = this.element.nativeElement;
+    this.onVisibilityChange(offsetHeight > 0 && offsetWidth > 0);
   }
 
-  ngOnDestroy(): void {
-    clearTimeout(this.timeout);
-  }
-
-  onVisibilityChange(): void {
+  onVisibilityChange(visible: boolean): void {
+    if(visible === this.isVisible) return;
+    this.isVisible = visible;
     // trigger zone recalc for columns
-    this.zone.run(() => {
-      this.isVisible = true;
-      this.visible.emit(true);
+    setTimeout(() => {
+      this.visible.emit(visible);
     });
   }
-
-  runCheck(): void {
-    const check = () => {
-      // https://davidwalsh.name/offsetheight-visibility
-      const { offsetHeight, offsetWidth } = this.element.nativeElement;
-
-      if (offsetHeight && offsetWidth) {
-        clearTimeout(this.timeout);
-        this.onVisibilityChange();
-      } else {
-        clearTimeout(this.timeout);
-        this.zone.runOutsideAngular(() => {
-          this.timeout = setTimeout(() => check(), 50);
-        });
-      }
-    };
-
-    this.timeout = setTimeout(() => check());
-  }
-
 }

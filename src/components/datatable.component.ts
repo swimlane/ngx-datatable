@@ -3,7 +3,7 @@ import {
   HostListener, ContentChildren, OnInit, QueryList, AfterViewInit,
   HostBinding, ContentChild, TemplateRef, IterableDiffer,
   DoCheck, KeyValueDiffers, KeyValueDiffer, ViewEncapsulation,
-  ChangeDetectionStrategy, ChangeDetectorRef
+  ChangeDetectionStrategy, ChangeDetectorRef, AfterViewChecked
 } from '@angular/core';
 
 import {
@@ -14,6 +14,7 @@ import { ScrollbarHelper } from '../services';
 import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
+import { VisibilityDirective } from '../directives';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
@@ -24,7 +25,10 @@ import { mouseEvent } from '../events';
   template: `
     <div
       visibilityObserver
-      (visible)="recalculate()">
+      (visible)="visible = $event;"
+      resizeObserver
+      [enabled]="visible"
+      (resize)="onResize();">
       <datatable-header
         *ngIf="headerHeight"
         [sorts]="sorts"
@@ -103,7 +107,7 @@ import { mouseEvent } from '../events';
     class: 'ngx-datatable'
   }
 })
-export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
+export class DatatableComponent implements OnInit, DoCheck, AfterViewInit, AfterViewChecked {
 
   /**
    * Rows that are displayed in the table.
@@ -580,6 +584,9 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   @ViewChild(DataTableBodyComponent)
   bodyComponent: DataTableBodyComponent;
 
+  @ViewChild(VisibilityDirective)
+  visibilityDirective: VisibilityDirective;
+
   /**
    * Returns if all rows are selected.
    */
@@ -588,6 +595,14 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       this.rows &&
       this.rows.length !== 0 &&
       this.selected.length === this.rows.length;
+  }
+  
+  get visible(): boolean {
+    return this._visible;
+  }
+  set visible(val: boolean ) {
+    this._visible = val;
+    if(val) this.onResize();
   }
 
   element: HTMLElement;
@@ -598,6 +613,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   offsetX: number = 0;
   rowDiffer: KeyValueDiffer<{}, {}>;
 
+  _visible: boolean;
   _limit: number | undefined;
   _count: number = 0;
   _offset: number = 0;
@@ -701,6 +717,10 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     }
   }
 
+  ngAfterViewChecked(): void {
+    this.visibilityDirective.checkVisibility();
+  }
+
   /**
    * Recalc's the sizes of the grid.
    *
@@ -720,9 +740,8 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   /**
    * Window resize handler to update sizes.
    */
-  @HostListener('window:resize')
   @throttleable(5)
-  onWindowResize(): void {
+  onResize(): void {
     this.recalculate();
   }
 
