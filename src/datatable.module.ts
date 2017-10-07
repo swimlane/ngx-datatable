@@ -23,7 +23,8 @@ import {
   DatatableRowDetailTemplateDirective,
   DataTableFooterTemplateDirective,
   DatatableFooterDirective,
-  DatatableGroupHeaderTemplateDirective
+  DatatableGroupHeaderTemplateDirective,
+  ResizeObserverComponent
 } from './components';
 
 import {
@@ -69,7 +70,8 @@ import { ScrollbarHelper } from './services';
     DataTableColumnHeaderDirective,
     DataTableColumnCellDirective,
     DatatableFooterDirective,
-    DatatableGroupHeaderTemplateDirective
+    DatatableGroupHeaderTemplateDirective,
+    ResizeObserverComponent
   ],
   exports: [
     DatatableComponent,

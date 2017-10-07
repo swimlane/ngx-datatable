@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'tabs-demo',
   template: `
-    <div>
+    <div  [ngClass]="{'collapsed': isCollapsed}">
       <h3>
         Hidden By Default
         <small>
@@ -12,6 +12,11 @@ import { Component } from '@angular/core';
           </a>
         </small>
       </h3>
+
+      <div class="sidebar" [ngClass]="{'collapsed': isCollapsed}">
+        <span>Sidebar</span>
+        <button (click)="toggleCollapseMode()">+ / -</button>
+      </div>
 
       <div style="width:75%;margin:0 auto">
         <div>
@@ -58,11 +63,34 @@ import { Component } from '@angular/core';
       </div>
 
     </div>
-  `
+  `,
+  styles: [`
+    .collapsed .ngx-datatable {
+      width: 90%;
+    }
+    div.sidebar {
+      background: silver;
+      float: left;
+      width: 25%;
+      height: 700px;
+    }
+    
+    
+    div.sidebar.collapsed {
+      width: 5%;
+      overflow: hidden;
+    }
+    
+    
+    div.sidebar.collapsed span {
+      display: none;
+    }
+  `]
 })
 export class TabsDemoComponent {
 
   rows = [];
+  isCollapsed: boolean = false;
 
   tab1 = true;
   tab2 = false;
@@ -83,6 +111,10 @@ export class TabsDemoComponent {
     };
 
     req.send();
+  }
+
+  toggleCollapseMode() {
+    this.isCollapsed = !this.isCollapsed;
   }
 
 }
