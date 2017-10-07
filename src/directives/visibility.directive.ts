@@ -1,6 +1,6 @@
 import { checkVisibility } from '../utils/visibility-observer';
 import {
-  Directive, Output, EventEmitter, ElementRef, HostBinding, DoCheck
+  Directive, Output, EventEmitter, ElementRef, HostBinding
 } from '@angular/core';
 
 /**
