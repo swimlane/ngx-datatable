@@ -1,5 +1,5 @@
 import {
-    Component, Input, Output, EventEmitter, ElementRef, OnDestroy, ViewChild, NgZone, HostBinding
+    Component, Input, Output, EventEmitter, ElementRef, OnDestroy, ViewChild
   } from '@angular/core';
 
 /**
@@ -76,7 +76,7 @@ export class ResizeObserverComponent implements OnDestroy {
     private onResized: () => void;
     private onScroll: () => void;
     
-    constructor(element: ElementRef, private zone: NgZone) {
+    constructor(element: ElementRef) {
         this.resizeElement = element.nativeElement;
 
         let dirty: boolean;
