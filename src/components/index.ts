@@ -1,5 +1,4 @@
 export * from './datatable.component';
-export * from './resize-observer.component';
 
 export * from './header';
 export * from './body';

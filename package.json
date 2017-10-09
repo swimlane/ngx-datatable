@@ -70,6 +70,7 @@
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-browser-dynamic": "^4.0.0",
     "core-js": "^2.4.0",
+    "resize-observer-polyfill": "^1.4.2",
     "rxjs": "^5.0.0"
   },
   "devDependencies": {

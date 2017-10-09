@@ -63,29 +63,7 @@ import { Component } from '@angular/core';
       </div>
 
     </div>
-  `,
-  styles: [`
-    .collapsed .ngx-datatable {
-      width: 90%;
-    }
-    div.sidebar {
-      background: silver;
-      float: left;
-      width: 25%;
-      height: 700px;
-    }
-    
-    
-    div.sidebar.collapsed {
-      width: 5%;
-      overflow: hidden;
-    }
-    
-    
-    div.sidebar.collapsed span {
-      display: none;
-    }
-  `]
+  `
 })
 export class TabsDemoComponent {
 
