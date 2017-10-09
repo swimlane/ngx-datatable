@@ -5,7 +5,7 @@ import {
 import ResizeObserver from 'resize-observer-polyfill';
 
 /**
- * ResizeObserverDirective is used to element resizes independent from a window resize event
+ * ResizeObserverDirective is used to detect element resizes independent from a window resize event
  */
 
 @Directive({
