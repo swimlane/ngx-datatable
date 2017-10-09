@@ -39,6 +39,20 @@
   }
 
   /**
+   * This prevents scrollbars appearing during table resize
+  */
+  &:not(.scroll-vertical) {
+    .datatable-body-wrapper {
+      overflow-y: hidden;
+    }
+  }
+  &:not(.scroll-horz) {
+    .datatable-body-wrapper {
+      overflow-x: hidden;
+    }
+  }
+
+  /**
    * Fixed Header Height Adjustments
    */
   &.fixed-header {

@@ -31,14 +31,9 @@ export class ResizeObserverDirective implements OnDestroy {
   private resizeObserver: ResizeObserver;
   
   private _enabled: boolean = false;
-  private onResized: () => void;
   
   constructor(element: ElementRef) {
     this.resizeElement = element.nativeElement;
-
-    this.onResized = () => {
-      this.resize.emit(undefined);
-    };
 
     this.resizeObserver = new ResizeObserver((entries, observer) => {
         for (const entry of entries) {
