@@ -15,7 +15,8 @@ var NgxDatatableModule = /** @class */ (function () {
                         common_1.CommonModule
                     ],
                     providers: [
-                        services_1.ScrollbarHelper
+                        services_1.ScrollbarHelper,
+                        services_1.DimensionsHelper
                     ],
                     declarations: [
                         components_1.DataTableFooterTemplateDirective,

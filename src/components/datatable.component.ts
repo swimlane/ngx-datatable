@@ -10,7 +10,7 @@ import {
   forceFillColumnWidths, adjustColumnWidths, sortRows,
   setColumnDefaults, throttleable, translateTemplates
 } from '../utils';
-import { ScrollbarHelper } from '../services';
+import { ScrollbarHelper, DimensionsHelper } from '../services';
 import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
@@ -610,6 +610,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
   constructor(
     private scrollbarHelper: ScrollbarHelper,
+    private dimensionsHelper: DimensionsHelper,
     private cd: ChangeDetectorRef,
     element: ElementRef,
     differs: KeyValueDiffers) {
@@ -641,6 +642,10 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
     // this has to be done to prevent the change detection
     // tree from freaking out because we are readjusting
+    if (typeof requestAnimationFrame === 'undefined') {
+      return;
+    }
+    
     requestAnimationFrame(() => {
       this.recalculate();
 
@@ -757,7 +762,8 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    *
    */
   recalculateDims(): void {
-    const dims = this.element.getBoundingClientRect();
+    // const dims = this.element.getBoundingClientRect();
+    const dims = this.dimensionsHelper.getDimensions(this.element);
     this.innerWidth = Math.floor(dims.width);
 
     if (this.scrollbarV) {

@@ -74,6 +74,7 @@
     flex-flow: row; }
   .ngx-datatable .datatable-body-cell,
   .ngx-datatable .datatable-header-cell {
+    overflow-x: hidden;
     vertical-align: top;
     display: inline-block;
     line-height: 1.625; }

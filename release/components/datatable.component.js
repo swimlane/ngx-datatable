@@ -27,8 +27,9 @@ var columns_1 = require("./columns");
 var row_detail_1 = require("./row-detail");
 var footer_1 = require("./footer");
 var DatatableComponent = /** @class */ (function () {
-    function DatatableComponent(scrollbarHelper, cd, element, differs) {
+    function DatatableComponent(scrollbarHelper, dimensionsHelper, cd, element, differs) {
         this.scrollbarHelper = scrollbarHelper;
+        this.dimensionsHelper = dimensionsHelper;
         this.cd = cd;
         /**
          * List of row objects that should be
@@ -74,11 +75,6 @@ var DatatableComponent = /** @class */ (function () {
          * the built-in basic sorting.
          */
         this.externalSorting = false;
-        /**
-         * The current offset ( page - 1 ) shown.
-         * Default value: `0`
-         */
-        this.offset = 0;
         /**
          * Show the linear loading bar.
          * Default value: `false`
@@ -175,6 +171,7 @@ var DatatableComponent = /** @class */ (function () {
         this.rowCount = 0;
         this.offsetX = 0;
         this._count = 0;
+        this._offset = 0;
         // get ref to elm for measuring
         this.element = element.nativeElement;
         this.rowDiffer = differs.find({}).create();
@@ -283,6 +280,20 @@ var DatatableComponent = /** @class */ (function () {
             this._count = val;
             // recalculate sizes/etc
             this.recalculate();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DatatableComponent.prototype, "offset", {
+        get: function () {
+            return Math.max(Math.min(this._offset, Math.ceil(this.rowCount / this.pageSize) - 1), 0);
+        },
+        /**
+         * The current offset ( page - 1 ) shown.
+         * Default value: `0`
+         */
+        set: function (val) {
+            this._offset = val;
         },
         enumerable: true,
         configurable: true
@@ -455,6 +466,9 @@ var DatatableComponent = /** @class */ (function () {
         }
         // this has to be done to prevent the change detection
         // tree from freaking out because we are readjusting
+        if (typeof requestAnimationFrame === 'undefined') {
+            return;
+        }
         requestAnimationFrame(function () {
             _this.recalculate();
             // emit page for virtual server-side kickoff
@@ -500,7 +514,7 @@ var DatatableComponent = /** @class */ (function () {
     DatatableComponent.prototype.ngDoCheck = function () {
         if (this.rowDiffer.diff(this.rows)) {
             if (!this.externalSorting) {
-                this._internalRows = utils_1.sortRows(this._rows, this.columns, this.sorts);
+                this._internalRows = utils_1.sortRows(this._rows, this._internalColumns, this.sorts);
             }
             else {
                 this._internalRows = this.rows.slice();
@@ -558,7 +572,8 @@ var DatatableComponent = /** @class */ (function () {
      *
      */
     DatatableComponent.prototype.recalculateDims = function () {
-        var dims = this.element.getBoundingClientRect();
+        // const dims = this.element.getBoundingClientRect();
+        var dims = this.dimensionsHelper.getDimensions(this.element);
         this.innerWidth = Math.floor(dims.width);
         if (this.scrollbarV) {
             var height = dims.height;
@@ -765,6 +780,7 @@ var DatatableComponent = /** @class */ (function () {
     /** @nocollapse */
     DatatableComponent.ctorParameters = function () { return [
         { type: services_1.ScrollbarHelper, },
+        { type: services_1.DimensionsHelper, },
         { type: core_1.ChangeDetectorRef, },
         { type: core_1.ElementRef, },
         { type: core_1.KeyValueDiffers, },

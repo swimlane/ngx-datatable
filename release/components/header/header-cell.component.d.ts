@@ -5,6 +5,7 @@ export declare class DataTableHeaderCellComponent {
     sortType: SortType;
     sortAscendingIcon: string;
     sortDescendingIcon: string;
+    _allRowsSelected: boolean;
     allRowsSelected: boolean;
     selectionType: SelectionType;
     column: TableColumn;
