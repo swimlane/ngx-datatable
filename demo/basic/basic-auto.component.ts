@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+// Test 1
 @Component({
   selector: 'basic-auto-demo',
   template: `
