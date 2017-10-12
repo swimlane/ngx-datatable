@@ -23,7 +23,7 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="50"
-        [scrollbarV]="50"
+        [scrollbarV]="true"
         [rows]='rows'
         (page)="onPage($event)">
         <!-- Row Detail Template -->
