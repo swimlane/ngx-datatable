@@ -102,6 +102,14 @@ to select a particular row based on a criteria. Example:
 (row, column, value) => { return value !== 'Ethel Price'; }
 ```
 
+## `displayCheck`
+A function you can use to check whether you want
+to show the checkbox for a particular row based on a criteria. Example:
+
+```
+(row) => { return row.name !== 'Ethel Price'; }
+```
+
 ## `selected`
 List of row objects that should be represented as selected in the grid. It does object
 equality, for prop checking use the `selectCheck` function.
