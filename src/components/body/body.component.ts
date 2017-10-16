@@ -5,7 +5,7 @@ import {
 import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '../../utils';
 import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
-import { mouseEvent } from '../../events';
+import { MouseEvent} from '../../utils/facade/browser';
 
 @Component({
   selector: 'datatable-body',

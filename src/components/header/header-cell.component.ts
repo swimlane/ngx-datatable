@@ -4,7 +4,8 @@ import {
 } from '@angular/core';
 import { SortDirection, SortType, SelectionType, TableColumn } from '../../types';
 import { nextSortDir } from '../../utils';
-import { mouseEvent } from '../../events';
+import { MouseEvent} from '../../utils/facade/browser';
+
 
 @Component({
   selector: 'datatable-header-cell',
