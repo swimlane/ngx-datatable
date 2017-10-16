@@ -1679,6 +1679,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var utils_1 = __webpack_require__("./src/utils/index.ts");
 var types_1 = __webpack_require__("./src/types/index.ts");
+// import { mouseEvent, keyboardEvent } from '../../events';
+var browser_1 = __webpack_require__("./src/utils/facade/browser.ts");
 var DataTableBodyCellComponent = /** @class */ (function () {
     function DataTableBodyCellComponent(element, cd) {
         this.cd = cd;
@@ -2045,19 +2047,19 @@ var DataTableBodyCellComponent = /** @class */ (function () {
     __decorate([
         core_1.HostListener('click', ['$event']),
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", [MouseEvent]),
+        __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", void 0)
     ], DataTableBodyCellComponent.prototype, "onClick", null);
     __decorate([
         core_1.HostListener('dblclick', ['$event']),
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", [MouseEvent]),
+        __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", void 0)
     ], DataTableBodyCellComponent.prototype, "onDblClick", null);
     __decorate([
         core_1.HostListener('keydown', ['$event']),
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", [KeyboardEvent]),
+        __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", void 0)
     ], DataTableBodyCellComponent.prototype, "onKeyDown", null);
     DataTableBodyCellComponent = __decorate([
@@ -7299,6 +7301,40 @@ function elementsFromPoint(x, y) {
 }
 exports.elementsFromPoint = elementsFromPoint;
 /*tslint:enable*/
+
+
+/***/ }),
+
+/***/ "./src/utils/facade/browser.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/*tslint:disable */
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * JS version of browser APIs. This library can only run in the browser.
+ */
+var win = (typeof window !== 'undefined' && window) || {};
+exports.window = win;
+exports.document = win.document;
+exports.location = win.location;
+exports.gc = win['gc'] ? function () { return win['gc'](); } : function () { return null; };
+exports.performance = win['performance'] ? win['performance'] : null;
+exports.Event = win['Event'];
+exports.MouseEvent = win['MouseEvent'];
+exports.KeyboardEvent = win['KeyboardEvent'];
+exports.EventTarget = win['EventTarget'];
+exports.History = win['History'];
+exports.Location = win['Location'];
+exports.EventListener = win['EventListener'];
 
 
 /***/ }),

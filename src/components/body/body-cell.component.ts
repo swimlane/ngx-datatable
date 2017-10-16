@@ -7,7 +7,8 @@ import {
 import { Keys } from '../../utils';
 import { SortDirection } from '../../types';
 import { TableColumn } from '../../types/table-column.type';
-import { mouseEvent, keyboardEvent } from '../../events';
+// import { mouseEvent, keyboardEvent } from '../../events';
+import { MouseEvent, KeyboardEvent} from '../../utils/facade/browser';
 
 @Component({
   selector: 'datatable-body-cell',
