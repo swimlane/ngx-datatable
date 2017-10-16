@@ -6516,6 +6516,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var Observable_1 = __webpack_require__("./node_modules/rxjs/Observable.js");
+var browser_1 = __webpack_require__("./src/utils/facade/browser.ts");
 __webpack_require__("./node_modules/rxjs/add/operator/takeUntil.js");
 var ResizeableDirective = /** @class */ (function () {
     function ResizeableDirective(element, renderer) {
@@ -6595,7 +6596,7 @@ var ResizeableDirective = /** @class */ (function () {
     __decorate([
         core_1.HostListener('mousedown', ['$event']),
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", [MouseEvent]),
+        __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", void 0)
     ], ResizeableDirective.prototype, "onMousedown", null);
     ResizeableDirective = __decorate([
