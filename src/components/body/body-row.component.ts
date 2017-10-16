@@ -7,7 +7,7 @@ import {
   allColumnsByPinArr, columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys
 } from '../../utils';
 import { ScrollbarHelper } from '../../services';
-import { MouseEvent, KeyboardEvent} from '../../utils/facade/browser';
+import { MouseEvent, KeyboardEvent, Event} from '../../utils/facade/browser';
 
 @Component({
   selector: 'datatable-body-row',
