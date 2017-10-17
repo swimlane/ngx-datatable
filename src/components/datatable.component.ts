@@ -390,7 +390,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * A function you can use to check whether you want
    * to show the checkbox for a particular row based on a criteria. Example:
    *
-   *    (row) => {
+   *    (row, column, value) => {
    *      return row.name !== 'Ethel Price';
    *    }
    */
