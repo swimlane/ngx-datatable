@@ -15,7 +15,7 @@ import { mouseEvent, keyboardEvent } from '../../events';
   template: `
     <div class="datatable-body-cell-label">
       <label
-        *ngIf="column.checkboxable && (!displayCheck || displayCheck(row))"
+        *ngIf="column.checkboxable && (!displayCheck || displayCheck(row, column, value))"
         class="datatable-checkbox">
         <input
           type="checkbox"

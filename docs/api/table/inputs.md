@@ -107,7 +107,7 @@ A function you can use to check whether you want
 to show the checkbox for a particular row based on a criteria. Example:
 
 ```
-(row) => { return row.name !== 'Ethel Price'; }
+(row, column, value) => { return row.name !== 'Ethel Price'; }
 ```
 
 ## `selected`
