@@ -26,7 +26,7 @@ var body_group_header_directive_1 = require("./body/body-group-header.directive"
 var columns_1 = require("./columns");
 var row_detail_1 = require("./row-detail");
 var footer_1 = require("./footer");
-var DatatableComponent = /** @class */ (function () {
+var DatatableComponent = (function () {
     function DatatableComponent(scrollbarHelper, cd, element, differs) {
         this.scrollbarHelper = scrollbarHelper;
         this.cd = cd;
@@ -74,11 +74,6 @@ var DatatableComponent = /** @class */ (function () {
          * the built-in basic sorting.
          */
         this.externalSorting = false;
-        /**
-         * The current offset ( page - 1 ) shown.
-         * Default value: `0`
-         */
-        this.offset = 0;
         /**
          * Show the linear loading bar.
          * Default value: `false`
@@ -175,6 +170,7 @@ var DatatableComponent = /** @class */ (function () {
         this.rowCount = 0;
         this.offsetX = 0;
         this._count = 0;
+        this._offset = 0;
         // get ref to elm for measuring
         this.element = element.nativeElement;
         this.rowDiffer = differs.find({}).create();
@@ -283,6 +279,20 @@ var DatatableComponent = /** @class */ (function () {
             this._count = val;
             // recalculate sizes/etc
             this.recalculate();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DatatableComponent.prototype, "offset", {
+        get: function () {
+            return Math.max(Math.min(this._offset, Math.ceil(this.rowCount / this.pageSize) - 1), 0);
+        },
+        /**
+         * The current offset ( page - 1 ) shown.
+         * Default value: `0`
+         */
+        set: function (val) {
+            this._offset = val;
         },
         enumerable: true,
         configurable: true
@@ -500,7 +510,7 @@ var DatatableComponent = /** @class */ (function () {
     DatatableComponent.prototype.ngDoCheck = function () {
         if (this.rowDiffer.diff(this.rows)) {
             if (!this.externalSorting) {
-                this._internalRows = utils_1.sortRows(this._rows, this.columns, this.sorts);
+                this._internalRows = utils_1.sortRows(this._rows, this._internalColumns, this.sorts);
             }
             else {
                 this._internalRows = this.rows.slice();

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var DataTableFooterTemplateDirective = /** @class */ (function () {
+var DataTableFooterTemplateDirective = (function () {
     function DataTableFooterTemplateDirective(template) {
         this.template = template;
     }

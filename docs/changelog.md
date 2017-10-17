@@ -1,4 +1,16 @@
 # Changelog
+
+## 10.3.0
+- Feature: Bootstrap theme
+- Bug: Fix CSS for row grouping (#1053)
+- Bug: Fix group row values (#1034)
+- Bug: Fix cell overflow w/ fluid height (#1030)
+- Bug: Fix for column sort (#1018)
+- Bug: Strip HTML for null values (#966)
+- Bug: Update context in cell header (#935)
+- Bug: Add bounds to offset (#978)
+- Bug: Make selection apply to all rows (#974)
+
 ## 10.2.3
 - Bug: Fix checkbox not being shown #956
 - Bug: Fix IE displaying null #967

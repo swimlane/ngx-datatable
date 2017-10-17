@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var DataTablePagerComponent = /** @class */ (function () {
+var DataTablePagerComponent = (function () {
     function DataTablePagerComponent() {
         this.change = new core_1.EventEmitter();
         this._count = 0;

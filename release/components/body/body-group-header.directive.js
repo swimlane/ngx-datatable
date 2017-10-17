@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var body_group_header_template_directive_1 = require("./body-group-header-template.directive");
-var DatatableGroupHeaderDirective = /** @class */ (function () {
+var DatatableGroupHeaderDirective = (function () {
     function DatatableGroupHeaderDirective() {
         /**
          * The detail row height is required especially
@@ -18,7 +18,6 @@ var DatatableGroupHeaderDirective = /** @class */ (function () {
      * Toggle the expansion of a group
      */
     DatatableGroupHeaderDirective.prototype.toggleExpandGroup = function (group) {
-        console.log('Inside body-group-header.directive.ts group', group);
         this.toggle.emit({
             type: 'group',
             value: group

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var utils_1 = require("../../utils");
 var types_1 = require("../../types");
-var DataTableBodyCellComponent = /** @class */ (function () {
+var DataTableBodyCellComponent = (function () {
     function DataTableBodyCellComponent(element, cd) {
         this.cd = cd;
         this.activate = new core_1.EventEmitter();
@@ -207,7 +207,7 @@ var DataTableBodyCellComponent = /** @class */ (function () {
         if (this.value !== value) {
             this.value = value;
             this.cellContext.value = value;
-            this.sanitizedValue = this.stripHtml(value);
+            this.sanitizedValue = value !== null && value !== undefined ? this.stripHtml(value) : value;
             this.cd.markForCheck();
         }
     };

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var types_1 = require("../../types");
 var utils_1 = require("../../utils");
-var DataTableHeaderCellComponent = /** @class */ (function () {
+var DataTableHeaderCellComponent = (function () {
     function DataTableHeaderCellComponent(cd) {
         this.cd = cd;
         this.sort = new core_1.EventEmitter();
@@ -19,6 +19,17 @@ var DataTableHeaderCellComponent = /** @class */ (function () {
             selectFn: this.selectFn
         };
     }
+    Object.defineProperty(DataTableHeaderCellComponent.prototype, "allRowsSelected", {
+        get: function () {
+            return this._allRowsSelected;
+        },
+        set: function (value) {
+            this._allRowsSelected = value;
+            this.cellContext.allRowsSelected = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(DataTableHeaderCellComponent.prototype, "column", {
         get: function () {
             return this._column;
