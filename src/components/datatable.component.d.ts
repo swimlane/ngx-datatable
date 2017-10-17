@@ -306,6 +306,7 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
     rowDiffer: KeyValueDiffer<{}, {}>;
     _limit: number | undefined;
     _count: number;
+    _offset: number;
     _rows: any[];
     _groupRowsBy: string;
     _internalRows: any[];

@@ -4,12 +4,9 @@ export declare class MultipleTablesComponent {
     } | {
         name: string;
     })[];
-    columns2: ({
-        prop: string;
-        Name: string;
-    } | {
+    columns2: {
         name: string;
-    })[];
+    }[];
     rows1: {
         name: string;
         gender: string;
