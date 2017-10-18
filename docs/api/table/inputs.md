@@ -113,7 +113,20 @@ Type of row selection. Options are `single`, `multi`, `multiClick` and `chkbox`.
 For no selection pass a `falsey`. Default value: `undefined`
 
 ## `sorts`
-Array of sorted columns by property and type. Default value: `[]`
+Array of sorted columns by property and type. Default value: `[]`. Example:
+
+```javascript
+[
+  {
+    prop: 'name',
+    dir: 'desc'
+  },
+  {
+    prop: 'age',
+    dir: 'asc'
+  }
+]
+```
 
 ## `sortType`
 Single vs Multi sorting. When in single mode, any click after the initial click
