@@ -395,7 +395,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    *      return row.name !== 'Ethel Price';
    *    }
    */
-  @Input() displayCheck: (row, column?, value?) => boolean;
+  @Input() displayCheck: (row: any, column?: any, value?: any) => boolean;
 
   /**
    * A boolean you can use to set the detault behaviour of rows and groups

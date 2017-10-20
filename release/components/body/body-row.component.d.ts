@@ -13,6 +13,7 @@ export declare class DataTableBodyRowComponent implements DoCheck {
     offsetX: number;
     isSelected: boolean;
     rowIndex: number;
+    displayCheck: any;
     readonly cssClass: string;
     rowHeight: number;
     readonly columnsTotalWidths: string;
