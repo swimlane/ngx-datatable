@@ -102,6 +102,14 @@ to select a particular row based on a criteria. Example:
 (row, column, value) => { return value !== 'Ethel Price'; }
 ```
 
+## `displayCheck`
+A function you can use to check whether you want
+to show the checkbox for a particular row based on a criteria. Example:
+
+```
+(row, column, value) => { return row.name !== 'Ethel Price'; }
+```
+
 ## `selected`
 List of row objects that should be represented as selected in the grid. It does object
 equality, for prop checking use the `selectCheck` function.
@@ -113,7 +121,20 @@ Type of row selection. Options are `single`, `multi`, `multiClick` and `chkbox`.
 For no selection pass a `falsey`. Default value: `undefined`
 
 ## `sorts`
-Array of sorted columns by property and type. Default value: `[]`
+Array of sorted columns by property and type. Default value: `[]`. Example:
+
+```javascript
+[
+  {
+    prop: 'name',
+    dir: 'desc'
+  },
+  {
+    prop: 'age',
+    dir: 'asc'
+  }
+]
+```
 
 ## `sortType`
 Single vs Multi sorting. When in single mode, any click after the initial click

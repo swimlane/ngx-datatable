@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"10.2.3" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"10.3.0" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -88,7 +88,11 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
+<<<<<<< HEAD
 exports.push([module.i, ".ngx-datatable {\n  display: block;\n  overflow: hidden;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  position: relative;\n  -webkit-transform: translate3d(0, 0, 0);\n  /**\n   * Vertical Scrolling Adjustments\n   */\n  /**\n   * Horizontal Scrolling Adjustments\n   */\n  /**\n   * Fixed Header Height Adjustments\n   */\n  /**\n   * Fixed row height adjustments\n   */\n  /**\n   * Shared Styles\n   */\n  /**\n   * Header Styles\n   */\n  /**\n   * Body Styles\n   */\n  /**\n   * Footer Styles\n   */ }\n  .ngx-datatable [hidden] {\n    display: none !important; }\n  .ngx-datatable *, .ngx-datatable *:before, .ngx-datatable *:after {\n    -webkit-box-sizing: border-box;\n    box-sizing: border-box; }\n  .ngx-datatable.scroll-vertical .datatable-body {\n    overflow-y: auto; }\n    .ngx-datatable.scroll-vertical .datatable-body .datatable-row-wrapper {\n      position: absolute; }\n  .ngx-datatable.scroll-horz .datatable-body {\n    overflow-x: auto;\n    -webkit-overflow-scrolling: touch; }\n  .ngx-datatable.fixed-header .datatable-header .datatable-header-inner {\n    white-space: nowrap; }\n    .ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell {\n      white-space: nowrap;\n      overflow: hidden;\n      text-overflow: ellipsis; }\n  .ngx-datatable.fixed-row .datatable-scroll {\n    white-space: nowrap; }\n    .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row {\n      white-space: nowrap; }\n      .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-cell {\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis; }\n      .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-group-cell {\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis; }\n  .ngx-datatable .datatable-body-row,\n  .ngx-datatable .datatable-header-inner {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -ms-flex-flow: row;\n    -o-flex-flow: row;\n    flex-flow: row; }\n  .ngx-datatable .datatable-body-cell,\n  .ngx-datatable .datatable-header-cell {\n    overflow-x: hidden;\n    vertical-align: top;\n    display: inline-block;\n    line-height: 1.625; }\n    .ngx-datatable .datatable-body-cell:focus,\n    .ngx-datatable .datatable-header-cell:focus {\n      outline: none; }\n  .ngx-datatable .datatable-row-left,\n  .ngx-datatable .datatable-row-right {\n    z-index: 9; }\n  .ngx-datatable .datatable-row-left,\n  .ngx-datatable .datatable-row-center,\n  .ngx-datatable .datatable-row-grouping,\n  .ngx-datatable .datatable-row-right {\n    position: relative; }\n  .ngx-datatable .datatable-header {\n    display: block;\n    overflow: hidden; }\n    .ngx-datatable .datatable-header .datatable-header-inner {\n      -webkit-box-align: stretch;\n          -ms-flex-align: stretch;\n              align-items: stretch;\n      -webkit-align-items: stretch; }\n    .ngx-datatable .datatable-header .datatable-header-cell {\n      position: relative;\n      display: inline-block; }\n      .ngx-datatable .datatable-header .datatable-header-cell.sortable .datatable-header-cell-wrapper {\n        cursor: pointer; }\n      .ngx-datatable .datatable-header .datatable-header-cell.longpress .datatable-header-cell-wrapper {\n        cursor: move; }\n      .ngx-datatable .datatable-header .datatable-header-cell .sort-btn {\n        line-height: 100%;\n        vertical-align: middle;\n        display: inline-block;\n        cursor: pointer; }\n      .ngx-datatable .datatable-header .datatable-header-cell .resize-handle {\n        display: inline-block;\n        position: absolute;\n        right: 0;\n        top: 0;\n        bottom: 0;\n        width: 5px;\n        padding: 0 4px;\n        visibility: hidden;\n        cursor: ew-resize; }\n      .ngx-datatable .datatable-header .datatable-header-cell.resizeable:hover .resize-handle {\n        visibility: visible; }\n  .ngx-datatable .datatable-body {\n    position: relative;\n    z-index: 10;\n    display: block; }\n    .ngx-datatable .datatable-body .datatable-scroll {\n      display: inline-block; }\n    .ngx-datatable .datatable-body .datatable-row-detail {\n      overflow-y: hidden; }\n    .ngx-datatable .datatable-body .datatable-row-wrapper {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n      flex-direction: column; }\n    .ngx-datatable .datatable-body .datatable-body-row {\n      outline: none; }\n      .ngx-datatable .datatable-body .datatable-body-row > div {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex; }\n  .ngx-datatable .datatable-footer {\n    display: block;\n    width: 100%; }\n    .ngx-datatable .datatable-footer .datatable-footer-inner {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-align: center;\n          -ms-flex-align: center;\n              align-items: center;\n      width: 100%; }\n    .ngx-datatable .datatable-footer .selected-count .page-count {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 40%;\n              flex: 1 1 40%; }\n    .ngx-datatable .datatable-footer .selected-count .datatable-pager {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 60%;\n              flex: 1 1 60%; }\n    .ngx-datatable .datatable-footer .page-count {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 20%;\n              flex: 1 1 20%; }\n    .ngx-datatable .datatable-footer .datatable-pager {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 80%;\n              flex: 1 1 80%;\n      text-align: right; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager,\n      .ngx-datatable .datatable-footer .datatable-pager .pager li {\n        padding: 0;\n        margin: 0;\n        display: inline-block;\n        list-style: none; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager li, .ngx-datatable .datatable-footer .datatable-pager .pager li a {\n        outline: none; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager li a {\n        cursor: pointer;\n        display: inline-block; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager li.disabled a {\n        cursor: not-allowed; }\n", ""]);
+=======
+exports.push([module.i, ".ngx-datatable {\n  display: block;\n  overflow: hidden;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  position: relative;\n  -webkit-transform: translate3d(0, 0, 0);\n  /**\n   * Vertical Scrolling Adjustments\n   */\n  /**\n   * Horizontal Scrolling Adjustments\n   */\n  /**\n   * Fixed Header Height Adjustments\n   */\n  /**\n   * Fixed row height adjustments\n   */\n  /**\n   * Shared Styles\n   */\n  /**\n   * Header Styles\n   */\n  /**\n   * Body Styles\n   */\n  /**\n   * Footer Styles\n   */ }\n  .ngx-datatable [hidden] {\n    display: none !important; }\n  .ngx-datatable *, .ngx-datatable *:before, .ngx-datatable *:after {\n    -webkit-box-sizing: border-box;\n    box-sizing: border-box; }\n  .ngx-datatable.scroll-vertical .datatable-body {\n    overflow-y: auto; }\n    .ngx-datatable.scroll-vertical .datatable-body .datatable-row-wrapper {\n      position: absolute; }\n  .ngx-datatable.scroll-horz .datatable-body {\n    overflow-x: auto;\n    -webkit-overflow-scrolling: touch; }\n  .ngx-datatable.fixed-header .datatable-header .datatable-header-inner {\n    white-space: nowrap; }\n    .ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell {\n      white-space: nowrap;\n      overflow: hidden;\n      text-overflow: ellipsis; }\n  .ngx-datatable.fixed-row .datatable-scroll {\n    white-space: nowrap; }\n    .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row {\n      white-space: nowrap; }\n      .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-cell {\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis; }\n      .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-group-cell {\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis; }\n  .ngx-datatable .datatable-body-row,\n  .ngx-datatable .datatable-header-inner {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -ms-flex-flow: row;\n    -o-flex-flow: row;\n    flex-flow: row; }\n  .ngx-datatable .datatable-body-cell,\n  .ngx-datatable .datatable-header-cell {\n    overflow-x: hidden;\n    vertical-align: top;\n    display: inline-block;\n    line-height: 1.625; }\n    .ngx-datatable .datatable-body-cell:focus,\n    .ngx-datatable .datatable-header-cell:focus {\n      outline: none; }\n  .ngx-datatable .datatable-row-left,\n  .ngx-datatable .datatable-row-right {\n    z-index: 9; }\n  .ngx-datatable .datatable-row-left,\n  .ngx-datatable .datatable-row-center,\n  .ngx-datatable .datatable-row-group,\n  .ngx-datatable .datatable-row-right {\n    position: relative; }\n  .ngx-datatable .datatable-header {\n    display: block;\n    overflow: hidden; }\n    .ngx-datatable .datatable-header .datatable-header-inner {\n      -webkit-box-align: stretch;\n          -ms-flex-align: stretch;\n              align-items: stretch;\n      -webkit-align-items: stretch; }\n    .ngx-datatable .datatable-header .datatable-header-cell {\n      position: relative;\n      display: inline-block; }\n      .ngx-datatable .datatable-header .datatable-header-cell.sortable .datatable-header-cell-wrapper {\n        cursor: pointer; }\n      .ngx-datatable .datatable-header .datatable-header-cell.longpress .datatable-header-cell-wrapper {\n        cursor: move; }\n      .ngx-datatable .datatable-header .datatable-header-cell .sort-btn {\n        line-height: 100%;\n        vertical-align: middle;\n        display: inline-block;\n        cursor: pointer; }\n      .ngx-datatable .datatable-header .datatable-header-cell .resize-handle {\n        display: inline-block;\n        position: absolute;\n        right: 0;\n        top: 0;\n        bottom: 0;\n        width: 5px;\n        padding: 0 4px;\n        visibility: hidden;\n        cursor: ew-resize; }\n      .ngx-datatable .datatable-header .datatable-header-cell.resizeable:hover .resize-handle {\n        visibility: visible; }\n  .ngx-datatable .datatable-body {\n    position: relative;\n    z-index: 10;\n    display: block; }\n    .ngx-datatable .datatable-body .datatable-scroll {\n      display: inline-block; }\n    .ngx-datatable .datatable-body .datatable-row-detail {\n      overflow-y: hidden; }\n    .ngx-datatable .datatable-body .datatable-row-wrapper {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n      flex-direction: column; }\n    .ngx-datatable .datatable-body .datatable-body-row {\n      outline: none; }\n      .ngx-datatable .datatable-body .datatable-body-row > div {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex; }\n  .ngx-datatable .datatable-footer {\n    display: block;\n    width: 100%; }\n    .ngx-datatable .datatable-footer .datatable-footer-inner {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-align: center;\n          -ms-flex-align: center;\n              align-items: center;\n      width: 100%; }\n    .ngx-datatable .datatable-footer .selected-count .page-count {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 40%;\n              flex: 1 1 40%; }\n    .ngx-datatable .datatable-footer .selected-count .datatable-pager {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 60%;\n              flex: 1 1 60%; }\n    .ngx-datatable .datatable-footer .page-count {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 20%;\n              flex: 1 1 20%; }\n    .ngx-datatable .datatable-footer .datatable-pager {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 80%;\n              flex: 1 1 80%;\n      text-align: right; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager,\n      .ngx-datatable .datatable-footer .datatable-pager .pager li {\n        padding: 0;\n        margin: 0;\n        display: inline-block;\n        list-style: none; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager li, .ngx-datatable .datatable-footer .datatable-pager .pager li a {\n        outline: none; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager li a {\n        cursor: pointer;\n        display: inline-block; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager li.disabled a {\n        cursor: not-allowed; }\n", ""]);
+>>>>>>> 73aba8f3b79b3cf9e836bdcf3de15f53ce0161f6
 
 // exports
 
@@ -230,7 +234,7 @@ var root_1 = __webpack_require__("./node_modules/rxjs/util/root.js");
 var toSubscriber_1 = __webpack_require__("./node_modules/rxjs/util/toSubscriber.js");
 var observable_1 = __webpack_require__("./node_modules/rxjs/symbol/observable.js");
 /**
- * A representation of any set of values over any amount of time. This is the most basic building block
+ * A representation of any set of values over any amount of time. This the most basic building block
  * of RxJS.
  *
  * @class Observable<T>
@@ -238,7 +242,7 @@ var observable_1 = __webpack_require__("./node_modules/rxjs/symbol/observable.js
 var Observable = (function () {
     /**
      * @constructor
-     * @param {Function} subscribe the function that is called when the Observable is
+     * @param {Function} subscribe the function that is  called when the Observable is
      * initially subscribed to. This function is given a Subscriber, to which new values
      * can be `next`ed, or an `error` method can be called to raise an error, or
      * `complete` can be called to notify of a successful completion.
@@ -267,7 +271,7 @@ var Observable = (function () {
      *
      * <span class="informal">Use it when you have all these Observables, but still nothing is happening.</span>
      *
-     * `subscribe` is not a regular operator, but a method that calls Observable's internal `subscribe` function. It
+     * `subscribe` is not a regular operator, but a method that calls Observables internal `subscribe` function. It
      * might be for example a function that you passed to a {@link create} static factory, but most of the time it is
      * a library implementation, which defines what and when will be emitted by an Observable. This means that calling
      * `subscribe` is actually the moment when Observable starts its work, not when it is created, as it is often
@@ -309,7 +313,7 @@ var Observable = (function () {
      *     console.log('Adding: ' + value);
      *     this.sum = this.sum + value;
      *   },
-     *   error() { // We actually could just remove this method,
+     *   error() { // We actually could just remote this method,
      *   },        // since we do not really care about errors right now.
      *   complete() {
      *     console.log('Sum equals: ' + this.sum);
@@ -364,7 +368,7 @@ var Observable = (function () {
      * // Logs:
      * // 0 after 1s
      * // 1 after 2s
-     * // "unsubscribed!" after 2.5s
+     * // "unsubscribed!" after 2,5s
      *
      *
      * @param {Observer|Function} observerOrNext (optional) Either an observer with methods to be called,
@@ -1679,8 +1683,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var utils_1 = __webpack_require__("./src/utils/index.ts");
 var types_1 = __webpack_require__("./src/types/index.ts");
+<<<<<<< HEAD
 var browser_1 = __webpack_require__("./src/utils/facade/browser.ts");
 var DataTableBodyCellComponent = /** @class */ (function () {
+=======
+var DataTableBodyCellComponent = (function () {
+>>>>>>> 73aba8f3b79b3cf9e836bdcf3de15f53ce0161f6
     function DataTableBodyCellComponent(element, cd) {
         this.cd = cd;
         this.activate = new core_1.EventEmitter();
@@ -2092,7 +2100,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
-var DatatableGroupHeaderTemplateDirective = /** @class */ (function () {
+var DatatableGroupHeaderTemplateDirective = (function () {
     function DatatableGroupHeaderTemplateDirective(template) {
         this.template = template;
     }
@@ -2126,7 +2134,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var body_group_header_template_directive_1 = __webpack_require__("./src/components/body/body-group-header-template.directive.ts");
-var DatatableGroupHeaderDirective = /** @class */ (function () {
+var DatatableGroupHeaderDirective = (function () {
     function DatatableGroupHeaderDirective() {
         /**
          * The detail row height is required especially
@@ -2204,8 +2212,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
+<<<<<<< HEAD
 var browser_1 = __webpack_require__("./src/utils/facade/browser.ts");
 var DataTableRowWrapperComponent = /** @class */ (function () {
+=======
+var DataTableRowWrapperComponent = (function () {
+>>>>>>> 73aba8f3b79b3cf9e836bdcf3de15f53ce0161f6
     function DataTableRowWrapperComponent(cd, differs) {
         this.cd = cd;
         this.differs = differs;
@@ -2350,8 +2362,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var utils_1 = __webpack_require__("./src/utils/index.ts");
 var services_1 = __webpack_require__("./src/services/index.ts");
+<<<<<<< HEAD
 var browser_1 = __webpack_require__("./src/utils/facade/browser.ts");
 var DataTableBodyRowComponent = /** @class */ (function () {
+=======
+var DataTableBodyRowComponent = (function () {
+>>>>>>> 73aba8f3b79b3cf9e836bdcf3de15f53ce0161f6
     function DataTableBodyRowComponent(differs, scrollbarHelper, cd, element) {
         this.differs = differs;
         this.scrollbarHelper = scrollbarHelper;
@@ -2595,7 +2611,7 @@ var core_1 = __webpack_require__("@angular/core");
 var utils_1 = __webpack_require__("./src/utils/index.ts");
 var types_1 = __webpack_require__("./src/types/index.ts");
 var scroller_component_1 = __webpack_require__("./src/components/body/scroller.component.ts");
-var DataTableBodyComponent = /** @class */ (function () {
+var DataTableBodyComponent = (function () {
     /**
      * Creates an instance of DataTableBodyComponent.
      */
@@ -3323,7 +3339,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
-var ProgressBarComponent = /** @class */ (function () {
+var ProgressBarComponent = (function () {
     function ProgressBarComponent() {
     }
     ProgressBarComponent = __decorate([
@@ -3356,7 +3372,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
-var ScrollerComponent = /** @class */ (function () {
+var ScrollerComponent = (function () {
     function ScrollerComponent(element, renderer) {
         this.renderer = renderer;
         this.scrollbarV = false;
@@ -3466,7 +3482,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var utils_1 = __webpack_require__("./src/utils/index.ts");
 var types_1 = __webpack_require__("./src/types/index.ts");
-var DataTableSelectionComponent = /** @class */ (function () {
+var DataTableSelectionComponent = (function () {
     function DataTableSelectionComponent() {
         this.activate = new core_1.EventEmitter();
         this.select = new core_1.EventEmitter();
@@ -3651,7 +3667,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
-var DataTableColumnCellDirective = /** @class */ (function () {
+var DataTableColumnCellDirective = (function () {
     function DataTableColumnCellDirective(template) {
         this.template = template;
     }
@@ -3682,7 +3698,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
-var DataTableColumnHeaderDirective = /** @class */ (function () {
+var DataTableColumnHeaderDirective = (function () {
     function DataTableColumnHeaderDirective(template) {
         this.template = template;
     }
@@ -3715,7 +3731,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var column_header_directive_1 = __webpack_require__("./src/components/columns/column-header.directive.ts");
 var column_cell_directive_1 = __webpack_require__("./src/components/columns/column-cell.directive.ts");
-var DataTableColumnDirective = /** @class */ (function () {
+var DataTableColumnDirective = (function () {
     function DataTableColumnDirective() {
     }
     __decorate([
@@ -3873,8 +3889,13 @@ var body_group_header_directive_1 = __webpack_require__("./src/components/body/b
 var columns_1 = __webpack_require__("./src/components/columns/index.ts");
 var row_detail_1 = __webpack_require__("./src/components/row-detail/index.ts");
 var footer_1 = __webpack_require__("./src/components/footer/index.ts");
+<<<<<<< HEAD
 var DatatableComponent = /** @class */ (function () {
     function DatatableComponent(scrollbarHelper, dimensionsHelper, cd, element, differs) {
+=======
+var DatatableComponent = (function () {
+    function DatatableComponent(scrollbarHelper, cd, element, differs) {
+>>>>>>> 73aba8f3b79b3cf9e836bdcf3de15f53ce0161f6
         this.scrollbarHelper = scrollbarHelper;
         this.dimensionsHelper = dimensionsHelper;
         this.cd = cd;
@@ -4880,7 +4901,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
-var DataTableFooterTemplateDirective = /** @class */ (function () {
+var DataTableFooterTemplateDirective = (function () {
     function DataTableFooterTemplateDirective(template) {
         this.template = template;
     }
@@ -4911,7 +4932,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
-var DataTableFooterComponent = /** @class */ (function () {
+var DataTableFooterComponent = (function () {
     function DataTableFooterComponent() {
         this.selectedCount = 0;
         this.page = new core_1.EventEmitter();
@@ -5016,7 +5037,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var footer_template_directive_1 = __webpack_require__("./src/components/footer/footer-template.directive.ts");
-var DatatableFooterDirective = /** @class */ (function () {
+var DatatableFooterDirective = (function () {
     function DatatableFooterDirective() {
     }
     __decorate([
@@ -5095,7 +5116,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
-var DataTablePagerComponent = /** @class */ (function () {
+var DataTablePagerComponent = (function () {
     function DataTablePagerComponent() {
         this.change = new core_1.EventEmitter();
         this._count = 0;
@@ -5260,8 +5281,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var types_1 = __webpack_require__("./src/types/index.ts");
 var utils_1 = __webpack_require__("./src/utils/index.ts");
+<<<<<<< HEAD
 var browser_1 = __webpack_require__("./src/utils/facade/browser.ts");
 var DataTableHeaderCellComponent = /** @class */ (function () {
+=======
+var DataTableHeaderCellComponent = (function () {
+>>>>>>> 73aba8f3b79b3cf9e836bdcf3de15f53ce0161f6
     function DataTableHeaderCellComponent(cd) {
         this.cd = cd;
         this.sort = new core_1.EventEmitter();
@@ -5545,7 +5570,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var types_1 = __webpack_require__("./src/types/index.ts");
 var utils_1 = __webpack_require__("./src/utils/index.ts");
-var DataTableHeaderComponent = /** @class */ (function () {
+var DataTableHeaderComponent = (function () {
     function DataTableHeaderComponent() {
         this.sort = new core_1.EventEmitter();
         this.reorder = new core_1.EventEmitter();
@@ -5862,7 +5887,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
-var DatatableRowDetailTemplateDirective = /** @class */ (function () {
+var DatatableRowDetailTemplateDirective = (function () {
     function DatatableRowDetailTemplateDirective(template) {
         this.template = template;
     }
@@ -5896,7 +5921,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var row_detail_template_directive_1 = __webpack_require__("./src/components/row-detail/row-detail-template.directive.ts");
-var DatatableRowDetailDirective = /** @class */ (function () {
+var DatatableRowDetailDirective = (function () {
     function DatatableRowDetailDirective() {
         /**
          * The detail row height is required especially
@@ -5976,7 +6001,7 @@ __webpack_require__("./node_modules/rxjs/add/observable/fromEvent.js");
 var components_1 = __webpack_require__("./src/components/index.ts");
 var directives_1 = __webpack_require__("./src/directives/index.ts");
 var services_1 = __webpack_require__("./src/services/index.ts");
-var NgxDatatableModule = /** @class */ (function () {
+var NgxDatatableModule = (function () {
     function NgxDatatableModule() {
     }
     NgxDatatableModule = __decorate([
@@ -6064,7 +6089,7 @@ __webpack_require__("./node_modules/rxjs/add/operator/takeUntil.js");
  *   http://stackoverflow.com/questions/35662530/how-to-implement-drag-and-drop-in-angular2
  *
  */
-var DraggableDirective = /** @class */ (function () {
+var DraggableDirective = (function () {
     function DraggableDirective(element) {
         this.dragX = true;
         this.dragY = true;
@@ -6215,8 +6240,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var Observable_1 = __webpack_require__("./node_modules/rxjs/Observable.js");
 __webpack_require__("./node_modules/rxjs/add/operator/takeUntil.js");
+<<<<<<< HEAD
 var browser_1 = __webpack_require__("./src/utils/facade/browser.ts");
 var LongPressDirective = /** @class */ (function () {
+=======
+var LongPressDirective = (function () {
+>>>>>>> 73aba8f3b79b3cf9e836bdcf3de15f53ce0161f6
     function LongPressDirective() {
         this.pressEnabled = true;
         this.duration = 500;
@@ -6379,7 +6408,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var draggable_directive_1 = __webpack_require__("./src/directives/draggable.directive.ts");
 var platform_browser_1 = __webpack_require__("@angular/platform-browser");
-var OrderableDirective = /** @class */ (function () {
+var OrderableDirective = (function () {
     function OrderableDirective(differs, document) {
         this.document = document;
         this.reorder = new core_1.EventEmitter();
@@ -6518,9 +6547,14 @@ var core_1 = __webpack_require__("@angular/core");
 var Observable_1 = __webpack_require__("./node_modules/rxjs/Observable.js");
 var browser_1 = __webpack_require__("./src/utils/facade/browser.ts");
 __webpack_require__("./node_modules/rxjs/add/operator/takeUntil.js");
+<<<<<<< HEAD
 var ResizeableDirective = /** @class */ (function () {
     function ResizeableDirective(element, renderer) {
         this.renderer = renderer;
+=======
+var ResizeableDirective = (function () {
+    function ResizeableDirective(element) {
+>>>>>>> 73aba8f3b79b3cf9e836bdcf3de15f53ce0161f6
         this.resizeEnabled = true;
         this.resize = new core_1.EventEmitter();
         this.resizing = false;
@@ -6642,7 +6676,7 @@ var core_1 = __webpack_require__("@angular/core");
  * 		</div>
  *
  */
-var VisibilityDirective = /** @class */ (function () {
+var VisibilityDirective = (function () {
     function VisibilityDirective(element, zone) {
         this.element = element;
         this.zone = zone;
@@ -6793,7 +6827,7 @@ var platform_browser_1 = __webpack_require__("@angular/platform-browser");
  * Gets the width of the scrollbar.  Nesc for windows
  * http://stackoverflow.com/a/13382873/888165
  */
-var ScrollbarHelper = /** @class */ (function () {
+var ScrollbarHelper = (function () {
     function ScrollbarHelper(document) {
         this.document = document;
         this.width = this.getWidth();
@@ -7630,7 +7664,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * https://github.com/mikolalysenko/fenwick-tree
  *
  */
-var RowHeightCache = /** @class */ (function () {
+var RowHeightCache = (function () {
     function RowHeightCache() {
         /**
          * Tree Array stores the cumulative information of the row heights to perform efficient

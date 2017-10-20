@@ -26,8 +26,13 @@ var body_group_header_directive_1 = require("./body/body-group-header.directive"
 var columns_1 = require("./columns");
 var row_detail_1 = require("./row-detail");
 var footer_1 = require("./footer");
+<<<<<<< HEAD
 var DatatableComponent = /** @class */ (function () {
     function DatatableComponent(scrollbarHelper, dimensionsHelper, cd, element, differs) {
+=======
+var DatatableComponent = (function () {
+    function DatatableComponent(scrollbarHelper, cd, element, differs) {
+>>>>>>> 73aba8f3b79b3cf9e836bdcf3de15f53ce0161f6
         this.scrollbarHelper = scrollbarHelper;
         this.dimensionsHelper = dimensionsHelper;
         this.cd = cd;

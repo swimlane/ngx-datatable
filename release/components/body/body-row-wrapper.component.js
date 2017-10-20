@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var DataTableRowWrapperComponent = /** @class */ (function () {
+var DataTableRowWrapperComponent = (function () {
     function DataTableRowWrapperComponent(cd, differs) {
         this.cd = cd;
         this.differs = differs;

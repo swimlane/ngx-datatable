@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var row_detail_template_directive_1 = require("./row-detail-template.directive");
-var DatatableRowDetailDirective = /** @class */ (function () {
+var DatatableRowDetailDirective = (function () {
     function DatatableRowDetailDirective() {
         /**
          * The detail row height is required especially

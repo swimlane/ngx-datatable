@@ -86,7 +86,7 @@
     z-index: 9; }
   .ngx-datatable .datatable-row-left,
   .ngx-datatable .datatable-row-center,
-  .ngx-datatable .datatable-row-grouping,
+  .ngx-datatable .datatable-row-group,
   .ngx-datatable .datatable-row-right {
     position: relative; }
   .ngx-datatable .datatable-header {

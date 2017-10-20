@@ -6,7 +6,7 @@ var platform_browser_1 = require("@angular/platform-browser");
  * Gets the width of the scrollbar.  Nesc for windows
  * http://stackoverflow.com/a/13382873/888165
  */
-var ScrollbarHelper = /** @class */ (function () {
+var ScrollbarHelper = (function () {
     function ScrollbarHelper(document) {
         this.document = document;
         this.width = this.getWidth();
