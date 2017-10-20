@@ -29,6 +29,7 @@ import { Component } from '@angular/core';
           [limit]="5"
           [selected]="selected"
           [selectionType]="'checkbox'"
+          [displayCheck]="displayCheck"
           (activate)="onActivate($event)"
           (select)='onSelect($event)'>
           <ngx-datatable-column
@@ -103,4 +104,7 @@ export class CheckboxSelectionComponent {
     this.selected = [];
   }
 
+  displayCheck(row) {
+    return row.name !== 'Ethel Price';
+  }
 }
