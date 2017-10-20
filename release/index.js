@@ -7628,7 +7628,8 @@ var RowHeightCache = (function () {
      */
     RowHeightCache.prototype.query = function (atIndex) {
         if (!this.treeArray.length) {
-            throw new Error("query at index " + atIndex + " failed: Fenwick tree array not initialized.");
+        	return 0;
+            // throw new Error("query at index " + atIndex + " failed: Fenwick tree array not initialized.");
         }
         var sum = 0;
         atIndex |= 0;
