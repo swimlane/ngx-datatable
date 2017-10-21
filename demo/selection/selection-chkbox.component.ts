@@ -12,9 +12,9 @@ import { Component } from '@angular/core';
           </a>
         </small>
         <small>
-          <a href="#" (click)="add()">Add</a> |
-          <a href="#" (click)="update()">Update</a> |
-          <a href="#" (click)="remove()">Remove</a> 
+          <a href="javascript:void(0)" (click)="add()">Add</a> |
+          <a href="javascript:void(0)" (click)="update()">Update</a> |
+          <a href="javascript:void(0)" (click)="remove()">Remove</a> 
         </small>
       </h3>
       <div style='float:left;width:75%'>
