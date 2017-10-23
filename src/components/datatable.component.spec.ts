@@ -185,4 +185,43 @@ describe('Datatable component', () => {
     });
   });
 
+
+  describe('table with row grouping', () => {
+    let fixture;
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(DatatableComponent);
+      fixture.componentInstance.rows = [
+        { k: 'B', v: 1},
+        { k: 'A', v: 2},
+        { k: 'A', v: 1},
+        { k: 'B', v: 3},
+        { k: 'B', v: 2},
+      ];
+
+      fixture.componentInstance.columns = [
+        { prop: 'k' },
+        { prop: 'v' }
+      ];
+    });
+
+    it('should sort groups according to component rows order', () => {
+      fixture.componentInstance.groupRowsBy = 'k';
+      fixture.detectChanges();
+      
+      expect(fixture.componentInstance.groupedRows[0].key).toBe('B');
+      expect(fixture.componentInstance.groupedRows[1].key).toBe('A');
+    });
+
+    it('should sort group values according to component rows order', () => {
+      fixture.componentInstance.groupRowsBy = 'k';
+      fixture.detectChanges();
+      
+      expect(fixture.componentInstance.groupedRows[0].value).toEqual(
+        fixture.componentInstance.rows.filter(r => r.k === 'B'));
+      expect(fixture.componentInstance.groupedRows[1].value).toEqual(
+        fixture.componentInstance.rows.filter(r => r.k === 'A'));
+    });
+  });
+
 });
