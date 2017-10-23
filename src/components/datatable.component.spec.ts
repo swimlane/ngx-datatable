@@ -37,9 +37,9 @@ describe('Datatable component', () => {
         sorts: [{prop: 'birthDate', dir: 'desc'}]
       });
   
-      expect(fixture.componentInstance._internalRows[0]).toBe(initialRows[2]);
-      expect(fixture.componentInstance._internalRows[1]).toBe(initialRows[0]);
-      expect(fixture.componentInstance._internalRows[2]).toBe(initialRows[1]);
+      expect(fixture.componentInstance.internalRows[0]).toBe(initialRows[2]);
+      expect(fixture.componentInstance.internalRows[1]).toBe(initialRows[0]);
+      expect(fixture.componentInstance.internalRows[2]).toBe(initialRows[1]);
     });
 
     it('should sort a column with number values', () => {
@@ -65,9 +65,9 @@ describe('Datatable component', () => {
         sorts: [{prop: 'id', dir: 'desc'}]
       });
   
-      expect(fixture.componentInstance._internalRows[0]).toBe(initialRows[1]);
-      expect(fixture.componentInstance._internalRows[1]).toBe(initialRows[2]);
-      expect(fixture.componentInstance._internalRows[2]).toBe(initialRows[0]);
+      expect(fixture.componentInstance.internalRows[0]).toBe(initialRows[1]);
+      expect(fixture.componentInstance.internalRows[1]).toBe(initialRows[2]);
+      expect(fixture.componentInstance.internalRows[2]).toBe(initialRows[0]);
     });
 
     it('should sort a column with string values', () => {
@@ -93,9 +93,35 @@ describe('Datatable component', () => {
         sorts: [{prop: 'product', dir: 'desc'}]
       });
   
-      expect(fixture.componentInstance._internalRows[0]).toBe(initialRows[2]);
-      expect(fixture.componentInstance._internalRows[1]).toBe(initialRows[0]);
-      expect(fixture.componentInstance._internalRows[2]).toBe(initialRows[1]);
+      expect(fixture.componentInstance.internalRows[0]).toBe(initialRows[2]);
+      expect(fixture.componentInstance.internalRows[1]).toBe(initialRows[0]);
+      expect(fixture.componentInstance.internalRows[2]).toBe(initialRows[1]);
+    });
+
+    it('should sort a column when the sorts input changes', () => {
+      const fixture = TestBed.createComponent(DatatableComponent);
+      const initialRows = [
+        {product: 'Computers'},
+        {product: 'Bikes'},
+        {product: 'Smartphones'}
+      ];
+  
+      const columns = [
+        {
+          prop: 'product'
+        }
+      ];
+  
+      fixture.componentInstance.rows = initialRows;
+      fixture.componentInstance.columns = columns;
+  
+      fixture.detectChanges();
+  
+      fixture.componentInstance.sorts = [{prop: 'product', dir: 'desc'}];
+  
+      expect(fixture.componentInstance.internalRows[0]).toBe(initialRows[2]);
+      expect(fixture.componentInstance.internalRows[1]).toBe(initialRows[0]);
+      expect(fixture.componentInstance.internalRows[2]).toBe(initialRows[1]);
     });
   });
 
@@ -124,7 +150,7 @@ describe('Datatable component', () => {
 
       fixture.detectChanges();
 
-      expect(fixture.componentInstance._internalRows).toBe(initialRows);
+      expect(fixture.componentInstance.internalRows).toBe(initialRows);
 
       fixture.componentInstance.onColumnSort({
         sorts: [{prop: 'foo', dir: 'desc'}]
@@ -133,7 +159,7 @@ describe('Datatable component', () => {
       fixture.componentInstance.sort
         .subscribe();
 
-      expect(fixture.componentInstance._internalRows).not.toBe(initialRows);
+      expect(fixture.componentInstance.internalRows).not.toBe(initialRows);
     });
   });
 
@@ -186,7 +212,7 @@ describe('Datatable component', () => {
   });
 
 
-  describe('table with row grouping', () => {
+  describe('When rows are grouped', () => {
     let fixture;
 
     beforeEach(() => {
@@ -221,6 +247,90 @@ describe('Datatable component', () => {
         fixture.componentInstance.rows.filter(r => r.k === 'B'));
       expect(fixture.componentInstance.groupedRows[1].value).toEqual(
         fixture.componentInstance.rows.filter(r => r.k === 'A'));
+    });
+
+    it('should take any value given to the groupedRows input', () => {
+      const unrelatedGroupedRows = [{key: 'foo', value: [{x: 1, y: 2}]}];
+      fixture.componentInstance.groupedRows = unrelatedGroupedRows;
+      fixture.detectChanges();
+      
+      expect(fixture.componentInstance.groupedRows).toEqual(unrelatedGroupedRows);
+    });
+
+    it('should discard any value given to the groupedRows input if groupRowsBy is specified', () => {
+      const unrelatedGroupedRows = [{key: 'foo', value: [{x: 1, y: 2}]}];
+      fixture.componentInstance.groupedRows = unrelatedGroupedRows;
+      fixture.componentInstance.groupRowsBy = 'k';
+      fixture.detectChanges();
+      
+      expect(fixture.componentInstance.groupedRows).not.toEqual(unrelatedGroupedRows);
+      expect(fixture.componentInstance.groupedRows[0].key).toBe('B');
+      expect(fixture.componentInstance.groupedRows[1].key).toBe('A');
+    });
+
+    it('should not fail before rows are added', () => {
+      fixture.componentInstance.rows = null;
+      fixture.componentInstance.groupRowsBy = 'k';
+      fixture.detectChanges();
+      
+      expect(fixture.componentInstance.groupedRows).not.toBeTruthy();
+    });
+      
+    it('should no longer have grouped rows after clearing groupRowsBy', () => {
+        fixture.componentInstance.groupRowsBy = 'k';
+        fixture.detectChanges();
+        
+        fixture.componentInstance.groupRowsBy = null;
+        fixture.detectChanges();
+        
+      expect(fixture.componentInstance.groupedRows).toBe(null);
+    });
+    
+    describe('with sorts applied', () => {
+      beforeEach(() => {
+        fixture.componentInstance.groupRowsBy = 'k';
+        fixture.componentInstance.sorts = [{prop: 'k', dir: 'asc'}];
+        fixture.detectChanges();
+      });
+      
+      it('should sort groups according to component rows order', () => {
+        expect(fixture.componentInstance.groupedRows[0].key).toBe('A');
+        expect(fixture.componentInstance.groupedRows[1].key).toBe('B');
+      });
+      
+      it('should sort group values according to component sorts', () => {
+        expect(fixture.componentInstance.groupedRows[0].value).toEqual(
+          fixture.componentInstance.rows.filter(r => r.k === 'A'));
+        expect(fixture.componentInstance.groupedRows[1].value).toEqual(
+          fixture.componentInstance.rows.filter(r => r.k === 'B'));
+      });
+    });
+    
+    describe('after column sort', () => {
+      // NOTE: Some use cases may achieve better user experience by disabling
+      // row grouping when the user sorts by an unrelated column; these tests
+      // simply probe the default behavior.
+
+      beforeEach(() => {
+        fixture.componentInstance.groupRowsBy = 'k';
+        fixture.detectChanges();
+        
+        fixture.componentInstance.onColumnSort({
+          sorts: [{prop: 'k', dir: 'asc'}]
+        });
+      });
+      
+      it('should sort groups according to component rows order', () => {
+        expect(fixture.componentInstance.groupedRows[0].key).toBe('A');
+        expect(fixture.componentInstance.groupedRows[1].key).toBe('B');
+      });
+      
+      it('should sort group values according to component sorts', () => {
+        expect(fixture.componentInstance.groupedRows[0].value).toEqual(
+          fixture.componentInstance.rows.filter(r => r.k === 'A'));
+        expect(fixture.componentInstance.groupedRows[1].value).toEqual(
+          fixture.componentInstance.rows.filter(r => r.k === 'B'));
+      });
     });
   });
 
