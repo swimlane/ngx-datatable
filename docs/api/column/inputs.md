@@ -23,8 +23,13 @@ The width of the column by default in pixels. Default value: `150`
 The column can be resized manually by the user. Default value: `true`
 
 ### `comparator`
-Custom sort comparator, used to apply custom sorting via client-side. See 
-[MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) for more info.
+Custom sort comparator, used to apply custom sorting via client-side.
+Function receives five parameters, namely values and rows of items to be sorted as well as direction of the sort ('asc'|'desc'):
+```
+(valueA, valueB, rowA, rowB, sortDirection) => -1|0|1
+```
+NOTE: Compare can be a standard JS comparison function (a,b) => -1|0|1 as additional parameters are silently ignored.
+See [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) for more info.
 
 ### `sortable`: `boolean`
 Sorting of the row values by this column. Default value: `true`
