@@ -83,8 +83,8 @@ export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[
       const propB = valueGetter(b, prop);
 
       const comparison = cachedDir.dir !== SortDirection.desc ?
-        cachedDir.compareFn(propA, propB, a, b) :
-        -cachedDir.compareFn(propA, propB, a, b);
+        cachedDir.compareFn(propA, propB, a, b, true) :
+        -cachedDir.compareFn(propA, propB, a, b, false);
 
       // Don't return 0 yet in case of needing to sort by next property
       if (comparison !== 0) return comparison;
