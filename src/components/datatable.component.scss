@@ -60,7 +60,7 @@
   &.fixed-row {
     .datatable-scroll{
       white-space: nowrap;
-      
+
       .datatable-body-row {
         white-space: nowrap;
 
@@ -74,7 +74,7 @@
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
-        }        
+        }
       }
     }
   }
@@ -83,6 +83,7 @@
    * Shared Styles
    */
   .datatable-body-row,
+  .datatable-row-center,
   .datatable-header-inner {
     display: -webkit-box;
     display: -moz-box;
