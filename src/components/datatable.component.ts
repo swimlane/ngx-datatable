@@ -72,6 +72,7 @@ import { MouseEvent } from '../events';
         [rowIdentity]="rowIdentity"
         [rowClass]="rowClass"
         [selectCheck]="selectCheck"
+        [displayCheck]="displayCheck"
         (page)="onBodyPage($event)"
         (activate)="activate.emit($event)"
         (rowContextmenu)="onRowContextmenu($event)"
@@ -384,6 +385,16 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    *    }
    */
   @Input() selectCheck: any;
+
+  /**
+   * A function you can use to check whether you want
+   * to show the checkbox for a particular row based on a criteria. Example:
+   *
+   *    (row, column, value) => {
+   *      return row.name !== 'Ethel Price';
+   *    }
+   */
+  @Input() displayCheck: (row, column?, value?) => boolean;
 
   /**
    * A boolean you can use to set the detault behaviour of rows and groups

@@ -12,10 +12,10 @@ import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
           </a>
         </small>
         <small>
-          <a href="#" (click)="start()">Start</a> |
-          <a href="#" (click)="stop()">Stop</a> | 
-          <a href="#" (click)="add()">Add</a> |
-          <a href="#" (click)="remove()">Remove</a>
+          <a href="javascript:void(0)" (click)="start()">Start</a> |
+          <a href="javascript:void(0)" (click)="stop()">Stop</a> | 
+          <a href="javascript:void(0)" (click)="add()">Add</a> |
+          <a href="javascript:void(0)" (click)="remove()">Remove</a>
         </small>
       </h3>
       <ngx-datatable

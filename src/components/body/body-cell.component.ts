@@ -15,7 +15,7 @@ import { MouseEvent, KeyboardEvent } from '../../events';
   template: `
     <div class="datatable-body-cell-label">
       <label
-        *ngIf="column.checkboxable"
+        *ngIf="column.checkboxable && (!displayCheck || displayCheck(row, column, value))"
         class="datatable-checkbox">
         <input
           type="checkbox"
@@ -37,6 +37,8 @@ import { MouseEvent, KeyboardEvent } from '../../events';
   `
 })
 export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
+  @Input() displayCheck: any;
+
   @Input() set group(group: any){
     this._group = group;
     this.cellContext.group = group;

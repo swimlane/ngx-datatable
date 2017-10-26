@@ -55,6 +55,7 @@ import { MouseEvent } from '../../events';
             [rowIndex]="getRowIndex(group)"
             [expanded]="getRowExpanded(group)"
             [rowClass]="rowClass"
+            [displayCheck]="displayCheck"
             (activate)="selector.onActivate($event, indexes.first + i)">
           </datatable-body-row>
           <ng-template #groupedRowsTemplate>
@@ -103,6 +104,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() rowDetail: any;
   @Input() groupHeader: any;
   @Input() selectCheck: any;
+  @Input() displayCheck: any;
   @Input() trackByProp: string;
   @Input() rowClass: any;
   @Input() groupedRows: any;
