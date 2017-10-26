@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var ScrollerComponent = (function () {
+var ScrollerComponent = /** @class */ (function () {
     function ScrollerComponent(element, renderer) {
         this.renderer = renderer;
         this.scrollbarV = false;

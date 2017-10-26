@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var Observable_1 = require("rxjs/Observable");
 require("rxjs/add/operator/takeUntil");
-var ResizeableDirective = (function () {
+var ResizeableDirective = /** @class */ (function () {
     function ResizeableDirective(element) {
         this.resizeEnabled = true;
         this.resize = new core_1.EventEmitter();

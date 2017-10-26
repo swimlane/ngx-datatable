@@ -7,7 +7,7 @@ import {
   allColumnsByPinArr, columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys
 } from '../../utils';
 import { ScrollbarHelper } from '../../services';
-import { mouseEvent, keyboardEvent } from '../../events';
+import { MouseEvent, KeyboardEvent } from '../../events';
 
 @Component({
   selector: 'datatable-body-row',
@@ -29,7 +29,7 @@ import { mouseEvent, keyboardEvent } from '../../events';
         [rowHeight]="rowHeight"
         (activate)="onActivate($event, ii)">
       </datatable-body-cell>
-    </div>      
+    </div>
   `
 })
 export class DataTableBodyRowComponent implements DoCheck {
@@ -46,7 +46,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   @Input() set innerWidth(val: number) {
     if (this._columns) {
       const colByPin = columnsByPin(this._columns);
-      this.columnGroupWidths = columnGroupWidths(colByPin, colByPin);      
+      this.columnGroupWidths = columnGroupWidths(colByPin, colByPin);
     }
 
     this._innerWidth = val;
@@ -108,7 +108,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   constructor(
       private differs: KeyValueDiffers,
       private scrollbarHelper: ScrollbarHelper,
-      private cd: ChangeDetectorRef, 
+      private cd: ChangeDetectorRef,
       element: ElementRef) {
     this.element = element.nativeElement;
     this.rowDiffer = differs.find({}).create();
@@ -119,7 +119,7 @@ export class DataTableBodyRowComponent implements DoCheck {
       this.cd.markForCheck();
     }
   }
-  
+
   trackByGroups(index: number, colGroup: any): any {
     return colGroup.type;
   }
@@ -193,7 +193,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   recalculateColumns(val: any[] = this.columns): void {
     this._columns = val;
     const colsByPin = columnsByPin(this._columns);
-    this.columnsByPin = allColumnsByPinArr(this._columns);        
+    this.columnsByPin = allColumnsByPinArr(this._columns);
     this.columnGroupWidths = columnGroupWidths(colsByPin, this._columns);
   }
 

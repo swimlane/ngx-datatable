@@ -4,7 +4,7 @@ import {
 import { SortType, SelectionType } from '../../types';
 import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY } from '../../utils';
 import { DataTableColumnDirective } from '../columns';
-import { mouseEvent } from '../../events';
+import { MouseEvent } from '../../events';
 
 @Component({
   selector: 'datatable-header',
@@ -14,7 +14,7 @@ import { mouseEvent } from '../../events';
       (reorder)="onColumnReordered($event)"
       [style.width.px]="columnGroupWidths.total"
       class="datatable-header-inner">
-     
+
       <div
         *ngFor="let colGroup of columnsByPin; trackBy: trackByGroups"
         [class]="'datatable-row-' + colGroup.type"
@@ -64,12 +64,12 @@ export class DataTableHeaderComponent {
   @Input() set innerWidth(val: number) {
     this._innerWidth = val;
 
-    if (this._columns) {    
+    if (this._columns) {
       const colByPin = columnsByPin(this._columns);
-      this.columnGroupWidths = columnGroupWidths(colByPin, this._columns);       
+      this.columnGroupWidths = columnGroupWidths(colByPin, this._columns);
     }
   }
-    
+
   get innerWidth(): number {
     return this._innerWidth;
   }
@@ -97,7 +97,7 @@ export class DataTableHeaderComponent {
   }
 
   @Input() set columns(val: any[]) {
-    this._columns = val;    
+    this._columns = val;
 
     const colsByPin = columnsByPin(val);
     this.columnsByPin = columnsByPinArr(val);
@@ -143,7 +143,7 @@ export class DataTableHeaderComponent {
     return '100%';
   }
 
-  trackByGroups(index: number, colGroup: any): any {    
+  trackByGroups(index: number, colGroup: any): any {
     return colGroup.type;
   }
 
