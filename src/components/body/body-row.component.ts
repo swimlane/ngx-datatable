@@ -181,7 +181,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   }
 
   @HostListener('mouseenter', ['$event'])
-  onMouseenter(event: Event): void {
+  onMouseenter(event: MouseEvent): void {
     this.activate.emit({
         type: 'mouseenter',
         event,

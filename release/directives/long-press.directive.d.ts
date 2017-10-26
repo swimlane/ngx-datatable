@@ -18,7 +18,7 @@ export declare class LongPressDirective implements OnDestroy {
     readonly isLongPress: boolean;
     onMouseDown(event: MouseEvent): void;
     onMouseMove(event: MouseEvent): void;
-    loop(event: Event): void;
+    loop(event: MouseEvent): void;
     endPress(): void;
     onMouseup(): void;
     ngOnDestroy(): void;

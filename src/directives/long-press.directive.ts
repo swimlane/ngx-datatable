@@ -83,7 +83,7 @@ export class LongPressDirective implements OnDestroy {
     }
   }
 
-  loop(event: Event): void {
+  loop(event: MouseEvent): void {
     if (this.isLongPressing) {
       this.timeout = setTimeout(() => {
         this.longPressing.emit({
