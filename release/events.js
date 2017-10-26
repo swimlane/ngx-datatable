@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mouseEvent = global.MouseEvent;
-exports.keyboardEvent = global.KeyboardEvent;
+/* tslint:disable:variable-name */
+exports.MouseEvent = global.MouseEvent;
+exports.KeyboardEvent = global.KeyboardEvent;
 //# sourceMappingURL=events.js.map

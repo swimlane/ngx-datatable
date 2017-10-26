@@ -2,13 +2,13 @@ import {
   Component, Input, Output, EventEmitter, HostListener, DoCheck,
   ChangeDetectionStrategy, KeyValueDiffer, ChangeDetectorRef, KeyValueDiffers
 } from '@angular/core';
-import { mouseEvent } from '../../events';
+import { MouseEvent } from '../../events';
 
 @Component({
   selector: 'datatable-row-wrapper',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div 
+    <div
       *ngIf="groupHeader && groupHeader.template"
       class="datatable-group-header"
       [ngStyle]="getGroupHeaderStyle()">
@@ -18,8 +18,8 @@ import { mouseEvent } from '../../events';
         [ngTemplateOutletContext]="groupContext">
       </ng-template>
     </div>
-    <ng-content 
-      *ngIf="(groupHeader && groupHeader.template && expanded) || 
+    <ng-content
+      *ngIf="(groupHeader && groupHeader.template && expanded) ||
              (!groupHeader || !groupHeader.template)">
     </ng-content>
     <div
@@ -45,7 +45,7 @@ export class DataTableRowWrapperComponent implements DoCheck {
   @Input() offsetX: number;
   @Input() detailRowHeight: any;
   @Input() row: any;
-  @Input() groupedRows: any;  
+  @Input() groupedRows: any;
   @Output() rowContextmenu = new EventEmitter<{event: MouseEvent, row: any}>(false);
 
   @Input() set rowIndex(val: number) {
@@ -85,7 +85,7 @@ export class DataTableRowWrapperComponent implements DoCheck {
   private rowDiffer: KeyValueDiffer<{}, {}>;
   private _expanded: boolean = false;
   private _rowIndex: number;
-  
+
   constructor(private cd: ChangeDetectorRef, private differs: KeyValueDiffers) {
     this.rowDiffer = differs.find({}).create();
   }
@@ -110,6 +110,6 @@ export class DataTableRowWrapperComponent implements DoCheck {
     styles['backface-visibility'] = 'hidden';
     styles['width'] = this.innerWidth;
 
-    return styles; 
+    return styles;
   }
 }

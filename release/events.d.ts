@@ -1,2 +1,2 @@
-export declare const mouseEvent: MouseEvent;
-export declare const keyboardEvent: KeyboardEvent;
+export declare const MouseEvent: MouseEvent;
+export declare const KeyboardEvent: KeyboardEvent;

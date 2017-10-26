@@ -12,7 +12,7 @@ var core_1 = require("@angular/core");
  * 		</div>
  *
  */
-var VisibilityDirective = (function () {
+var VisibilityDirective = /** @class */ (function () {
     function VisibilityDirective(element, zone) {
         this.element = element;
         this.zone = zone;

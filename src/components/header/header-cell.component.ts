@@ -1,10 +1,10 @@
 import {
-  Component, Input, EventEmitter, Output, HostBinding, 
+  Component, Input, EventEmitter, Output, HostBinding,
   HostListener, ChangeDetectionStrategy, ChangeDetectorRef
 } from '@angular/core';
 import { SortDirection, SortType, SelectionType, TableColumn } from '../../types';
 import { nextSortDir } from '../../utils';
-import { mouseEvent } from '../../events';
+import { MouseEvent } from '../../events';
 
 @Component({
   selector: 'datatable-header-cell',
@@ -60,7 +60,7 @@ export class DataTableHeaderCellComponent {
   get allRowsSelected() {
     return this._allRowsSelected;
   }
-  
+
   @Input() selectionType: SelectionType;
 
   @Input() set column(column: TableColumn) {

@@ -60,6 +60,7 @@
         white-space: nowrap;
         text-overflow: ellipsis; }
   .ngx-datatable .datatable-body-row,
+  .ngx-datatable .datatable-row-center,
   .ngx-datatable .datatable-header-inner {
     display: -webkit-box;
     display: -moz-box;

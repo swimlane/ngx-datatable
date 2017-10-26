@@ -6,6 +6,8 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/takeUntil';
 
+import { MouseEvent } from '../events';
+
 @Directive({ selector: '[long-press]' })
 export class LongPressDirective implements OnDestroy {
 
@@ -81,7 +83,7 @@ export class LongPressDirective implements OnDestroy {
     }
   }
 
-  loop(event: Event): void {
+  loop(event: MouseEvent): void {
     if (this.isLongPressing) {
       this.timeout = setTimeout(() => {
         this.longPressing.emit({
