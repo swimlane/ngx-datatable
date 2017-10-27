@@ -10,4 +10,5 @@ export declare class CheckboxSelectionComponent {
     add(): void;
     update(): void;
     remove(): void;
+    displayCheck(row: any): boolean;
 }
