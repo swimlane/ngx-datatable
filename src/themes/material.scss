@@ -13,19 +13,19 @@
   &.multi-click-selection {
     .datatable-body-row {
 			&.active,
-			&.active .datatable-row-group {
+			&.active .datatable-column-group {
 				background-color: #304FFE;
         color: #FFF;
 			}
 
 			&.active:hover,
-			&.active:hover .datatable-row-group {
+			&.active:hover .datatable-column-group {
 				background-color: #193AE4;
         color: #FFF;
 			}
 
 			&.active:focus,
-			&.active:focus .datatable-row-group {
+			&.active:focus .datatable-column-group {
 				background-color: #2041EF;
         color: #FFF;
 			}
@@ -35,7 +35,7 @@
   &:not(.cell-selection) {
     .datatable-body-row {
       &:hover,
-			&:hover .datatable-row-group {
+			&:hover .datatable-column-group {
 	      background-color: #eee;
 	      transition-property: background;
 	      transition-duration: .3s;
@@ -43,7 +43,7 @@
 	    }
 
 			&:focus,
-			&:focus .datatable-row-group {
+			&:focus .datatable-column-group {
 				background-color: #ddd;
 			}
     }
@@ -52,7 +52,7 @@
   &.cell-selection {
     .datatable-body-cell {
       &:hover,
-			&:hover .datatable-row-group {
+			&:hover .datatable-column-group {
 	      background-color: #eee;
 	      transition-property: background;
 	      transition-duration: .3s;
@@ -60,24 +60,24 @@
 	    }
 
 			&:focus,
-			&:focus .datatable-row-group {
+			&:focus .datatable-column-group {
 				background-color: #ddd;
 			}
 
 			&.active,
-			&.active .datatable-row-group {
+			&.active .datatable-column-group {
 				background-color: #304FFE;
         color: #FFF;
 			}
 
 			&.active:hover,
-			&.active:hover .datatable-row-group {
+			&.active:hover .datatable-column-group {
 				background-color: #193AE4;
         color: #FFF;
 			}
 
 			&.active:focus,
-			&.active:focus .datatable-row-group {
+			&.active:focus .datatable-column-group {
 				background-color: #2041EF;
         color: #FFF;
 			}
@@ -107,14 +107,14 @@
 	 */
 	 .datatable-header,
 	 .datatable-body {
-		 .datatable-row-left {
+		 .datatable-column-left {
 			background-color: #FFF;
 			background-position: 100% 0;
 			background-repeat: repeat-y;
 			background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQIHWPSkNeSBmJhTQVtbiDNCgASagIIuJX8OgAAAABJRU5ErkJggg==);
 		}
 
-		.datatable-row-right {
+		.datatable-column-right {
 			background-position: 0 0;
 	    background-color: #fff;
 	    background-repeat: repeat-y;

@@ -17,7 +17,7 @@ import { MouseEvent } from '../../events';
      
       <div
         *ngFor="let colGroup of columnsByPin; trackBy: trackByGroups"
-        [class]="'datatable-row-' + colGroup.type"
+        class="datatable-column-{{colGroup.type}} datatable-column-group"
         [ngStyle]="stylesByGroup(colGroup.type)">
         <datatable-header-cell
           *ngFor="let column of colGroup.columns; trackBy: columnTrackingFn"
