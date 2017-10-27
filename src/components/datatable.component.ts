@@ -9,14 +9,14 @@ import {
 import {
   forceFillColumnWidths, adjustColumnWidths, sortRows,
   setColumnDefaults, throttleable, translateTemplates
-} from '../utils';
-import { ScrollbarHelper } from '../services';
-import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types';
-import { DataTableBodyComponent } from './body';
+} from '../utils/index';
+import { ScrollbarHelper } from '../services/index';
+import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types/index';
+import { DataTableBodyComponent } from './body/index';
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
-import { DataTableColumnDirective } from './columns';
-import { DatatableRowDetailDirective } from './row-detail';
-import { DatatableFooterDirective } from './footer';
+import { DataTableColumnDirective } from './columns/index';
+import { DatatableRowDetailDirective } from './row-detail/index';
+import { DatatableFooterDirective } from './footer/index';
 import { mouseEvent } from '../events';
 
 @Component({
@@ -394,7 +394,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    *      return row.name !== 'Ethel Price';
    *    }
    */
-  @Input() displayCheck: (row, column?, value?) => boolean;
+  @Input() displayCheck: (row: any, column?: any, value?: any) => boolean;
 
   /**
    * A boolean you can use to set the detault behaviour of rows and groups

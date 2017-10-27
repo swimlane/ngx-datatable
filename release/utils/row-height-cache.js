@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * This object contains the cache of the various row heights that are present inside
  * the data table.   Its based on Fenwick tree data structure that helps with
@@ -9,8 +7,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * https://github.com/mikolalysenko/fenwick-tree
  *
  */
-var RowHeightCache = (function () {
-    function RowHeightCache() {
+export class RowHeightCache {
+    constructor() {
         /**
          * Tree Array stores the cumulative information of the row heights to perform efficient
          * range queries and updates.  Currently the tree is initialized to the base row
@@ -21,9 +19,9 @@ var RowHeightCache = (function () {
     /**
      * Clear the Tree array.
      */
-    RowHeightCache.prototype.clearCache = function () {
+    clearCache() {
         this.treeArray = [];
-    };
+    }
     /**
      * Initialize the Fenwick tree with row Heights.
      *
@@ -31,34 +29,36 @@ var RowHeightCache = (function () {
      * @param rowHeight The row height.
      * @param detailRowHeight The detail row height.
      */
-    RowHeightCache.prototype.initCache = function (details) {
-        var rows = details.rows, rowHeight = details.rowHeight, detailRowHeight = details.detailRowHeight, externalVirtual = details.externalVirtual, rowCount = details.rowCount, rowIndexes = details.rowIndexes, rowExpansions = details.rowExpansions;
-        var isFn = typeof rowHeight === 'function';
-        var isDetailFn = typeof detailRowHeight === 'function';
+    initCache(details) {
+        const { rows, rowHeight, detailRowHeight, externalVirtual, rowCount, rowIndexes, rowExpansions } = details;
+        const isFn = typeof rowHeight === 'function';
+        const isDetailFn = typeof detailRowHeight === 'function';
         if (!isFn && isNaN(rowHeight)) {
-            throw new Error("Row Height cache initialization failed. Please ensure that 'rowHeight' is a\n        valid number or function value: (" + rowHeight + ") when 'scrollbarV' is enabled.");
+            throw new Error(`Row Height cache initialization failed. Please ensure that 'rowHeight' is a
+        valid number or function value: (${rowHeight}) when 'scrollbarV' is enabled.`);
         }
         // Add this additional guard in case detailRowHeight is set to 'auto' as it wont work.
         if (!isDetailFn && isNaN(detailRowHeight)) {
-            throw new Error("Row Height cache initialization failed. Please ensure that 'detailRowHeight' is a\n        valid number or function value: (" + detailRowHeight + ") when 'scrollbarV' is enabled.");
+            throw new Error(`Row Height cache initialization failed. Please ensure that 'detailRowHeight' is a
+        valid number or function value: (${detailRowHeight}) when 'scrollbarV' is enabled.`);
         }
-        var n = externalVirtual ? rowCount : rows.length;
+        const n = externalVirtual ? rowCount : rows.length;
         this.treeArray = new Array(n);
-        for (var i = 0; i < n; ++i) {
+        for (let i = 0; i < n; ++i) {
             this.treeArray[i] = 0;
         }
-        for (var i = 0; i < n; ++i) {
-            var row = rows[i];
-            var currentRowHeight = rowHeight;
+        for (let i = 0; i < n; ++i) {
+            const row = rows[i];
+            let currentRowHeight = rowHeight;
             if (isFn) {
                 currentRowHeight = rowHeight(row);
             }
             // Add the detail row height to the already expanded rows.
             // This is useful for the table that goes through a filter or sort.
-            var expanded = rowExpansions.get(row);
+            const expanded = rowExpansions.get(row);
             if (row && expanded === 1) {
                 if (isDetailFn) {
-                    var index = rowIndexes.get(row);
+                    const index = rowIndexes.get(row);
                     currentRowHeight += detailRowHeight(row, index);
                 }
                 else {
@@ -67,73 +67,72 @@ var RowHeightCache = (function () {
             }
             this.update(i, currentRowHeight);
         }
-    };
+    }
     /**
      * Given the ScrollY position i.e. sum, provide the rowIndex
      * that is present in the current view port.  Below handles edge cases.
      */
-    RowHeightCache.prototype.getRowIndex = function (scrollY) {
+    getRowIndex(scrollY) {
         if (scrollY === 0)
             return 0;
         return this.calcRowIndex(scrollY);
-    };
+    }
     /**
      * When a row is expanded or rowHeight is changed, update the height.  This can
      * be utilized in future when Angular Data table supports dynamic row heights.
      */
-    RowHeightCache.prototype.update = function (atRowIndex, byRowHeight) {
+    update(atRowIndex, byRowHeight) {
         if (!this.treeArray.length) {
-            throw new Error("Update at index " + atRowIndex + " with value " + byRowHeight + " failed:\n        Row Height cache not initialized.");
+            throw new Error(`Update at index ${atRowIndex} with value ${byRowHeight} failed:
+        Row Height cache not initialized.`);
         }
-        var n = this.treeArray.length;
+        const n = this.treeArray.length;
         atRowIndex |= 0;
         while (atRowIndex < n) {
             this.treeArray[atRowIndex] += byRowHeight;
             atRowIndex |= (atRowIndex + 1);
         }
-    };
+    }
     /**
      * Range Sum query from 1 to the rowIndex
      */
-    RowHeightCache.prototype.query = function (atIndex) {
+    query(atIndex) {
         if (!this.treeArray.length) {
-            throw new Error("query at index " + atIndex + " failed: Fenwick tree array not initialized.");
+            throw new Error(`query at index ${atIndex} failed: Fenwick tree array not initialized.`);
         }
-        var sum = 0;
+        let sum = 0;
         atIndex |= 0;
         while (atIndex >= 0) {
             sum += this.treeArray[atIndex];
             atIndex = (atIndex & (atIndex + 1)) - 1;
         }
         return sum;
-    };
+    }
     /**
      * Find the total height between 2 row indexes
      */
-    RowHeightCache.prototype.queryBetween = function (atIndexA, atIndexB) {
+    queryBetween(atIndexA, atIndexB) {
         return this.query(atIndexB) - this.query(atIndexA - 1);
-    };
+    }
     /**
      * Given the ScrollY position i.e. sum, provide the rowIndex
      * that is present in the current view port.
      */
-    RowHeightCache.prototype.calcRowIndex = function (sum) {
+    calcRowIndex(sum) {
         if (!this.treeArray.length)
             return 0;
-        var pos = -1;
-        var dataLength = this.treeArray.length;
+        let pos = -1;
+        const dataLength = this.treeArray.length;
         // Get the highest bit for the block size.
-        var highestBit = Math.pow(2, dataLength.toString(2).length - 1);
-        for (var blockSize = highestBit; blockSize !== 0; blockSize >>= 1) {
-            var nextPos = pos + blockSize;
+        const highestBit = Math.pow(2, dataLength.toString(2).length - 1);
+        for (let blockSize = highestBit; blockSize !== 0; blockSize >>= 1) {
+            const nextPos = pos + blockSize;
             if (nextPos < dataLength && sum >= this.treeArray[nextPos]) {
                 sum -= this.treeArray[nextPos];
                 pos = nextPos;
             }
         }
         return pos + 1;
-    };
-    return RowHeightCache;
-}());
-exports.RowHeightCache = RowHeightCache;
+    }
+}
 //# sourceMappingURL=row-height-cache.js.map

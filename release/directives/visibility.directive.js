@@ -1,6 +1,13 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+import { Directive, Output, EventEmitter, ElementRef, HostBinding, NgZone } from '@angular/core';
 /**
  * Visibility Observer Directive
  *
@@ -12,58 +19,55 @@ var core_1 = require("@angular/core");
  * 		</div>
  *
  */
-var VisibilityDirective = (function () {
-    function VisibilityDirective(element, zone) {
+let VisibilityDirective = class VisibilityDirective {
+    constructor(element, zone) {
         this.element = element;
         this.zone = zone;
         this.isVisible = false;
-        this.visible = new core_1.EventEmitter();
+        this.visible = new EventEmitter();
     }
-    VisibilityDirective.prototype.ngOnInit = function () {
+    ngOnInit() {
         this.runCheck();
-    };
-    VisibilityDirective.prototype.ngOnDestroy = function () {
+    }
+    ngOnDestroy() {
         clearTimeout(this.timeout);
-    };
-    VisibilityDirective.prototype.onVisibilityChange = function () {
-        var _this = this;
+    }
+    onVisibilityChange() {
         // trigger zone recalc for columns
-        this.zone.run(function () {
-            _this.isVisible = true;
-            _this.visible.emit(true);
+        this.zone.run(() => {
+            this.isVisible = true;
+            this.visible.emit(true);
         });
-    };
-    VisibilityDirective.prototype.runCheck = function () {
-        var _this = this;
-        var check = function () {
+    }
+    runCheck() {
+        const check = () => {
             // https://davidwalsh.name/offsetheight-visibility
-            var _a = _this.element.nativeElement, offsetHeight = _a.offsetHeight, offsetWidth = _a.offsetWidth;
+            const { offsetHeight, offsetWidth } = this.element.nativeElement;
             if (offsetHeight && offsetWidth) {
-                clearTimeout(_this.timeout);
-                _this.onVisibilityChange();
+                clearTimeout(this.timeout);
+                this.onVisibilityChange();
             }
             else {
-                clearTimeout(_this.timeout);
-                _this.zone.runOutsideAngular(function () {
-                    _this.timeout = setTimeout(function () { return check(); }, 50);
+                clearTimeout(this.timeout);
+                this.zone.runOutsideAngular(() => {
+                    this.timeout = setTimeout(() => check(), 50);
                 });
             }
         };
-        this.timeout = setTimeout(function () { return check(); });
-    };
-    VisibilityDirective.decorators = [
-        { type: core_1.Directive, args: [{ selector: '[visibilityObserver]' },] },
-    ];
-    /** @nocollapse */
-    VisibilityDirective.ctorParameters = function () { return [
-        { type: core_1.ElementRef, },
-        { type: core_1.NgZone, },
-    ]; };
-    VisibilityDirective.propDecorators = {
-        'isVisible': [{ type: core_1.HostBinding, args: ['class.visible',] },],
-        'visible': [{ type: core_1.Output },],
-    };
-    return VisibilityDirective;
-}());
-exports.VisibilityDirective = VisibilityDirective;
+        this.timeout = setTimeout(() => check());
+    }
+};
+__decorate([
+    HostBinding('class.visible'),
+    __metadata("design:type", Boolean)
+], VisibilityDirective.prototype, "isVisible", void 0);
+__decorate([
+    Output(),
+    __metadata("design:type", EventEmitter)
+], VisibilityDirective.prototype, "visible", void 0);
+VisibilityDirective = __decorate([
+    Directive({ selector: '[visibilityObserver]' }),
+    __metadata("design:paramtypes", [ElementRef, NgZone])
+], VisibilityDirective);
+export { VisibilityDirective };
 //# sourceMappingURL=visibility.directive.js.map

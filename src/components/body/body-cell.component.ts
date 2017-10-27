@@ -4,8 +4,8 @@ import {
   ChangeDetectionStrategy
 } from '@angular/core';
 
-import { Keys } from '../../utils';
-import { SortDirection } from '../../types';
+import { Keys } from '../../utils/index';
+import { SortDirection } from '../../types/index';
 import { TableColumn } from '../../types/table-column.type';
 import { mouseEvent, keyboardEvent } from '../../events';
 

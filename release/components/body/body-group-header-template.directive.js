@@ -1,20 +1,23 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var DatatableGroupHeaderTemplateDirective = (function () {
-    function DatatableGroupHeaderTemplateDirective(template) {
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+import { Directive, TemplateRef } from '@angular/core';
+let DatatableGroupHeaderTemplateDirective = class DatatableGroupHeaderTemplateDirective {
+    constructor(template) {
         this.template = template;
     }
-    DatatableGroupHeaderTemplateDirective.decorators = [
-        { type: core_1.Directive, args: [{
-                    selector: '[ngx-datatable-group-header-template]'
-                },] },
-    ];
-    /** @nocollapse */
-    DatatableGroupHeaderTemplateDirective.ctorParameters = function () { return [
-        { type: core_1.TemplateRef, },
-    ]; };
-    return DatatableGroupHeaderTemplateDirective;
-}());
-exports.DatatableGroupHeaderTemplateDirective = DatatableGroupHeaderTemplateDirective;
+};
+DatatableGroupHeaderTemplateDirective = __decorate([
+    Directive({
+        selector: '[ngx-datatable-group-header-template]'
+    }),
+    __metadata("design:paramtypes", [TemplateRef])
+], DatatableGroupHeaderTemplateDirective);
+export { DatatableGroupHeaderTemplateDirective };
 //# sourceMappingURL=body-group-header-template.directive.js.map

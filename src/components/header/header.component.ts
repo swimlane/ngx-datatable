@@ -1,9 +1,9 @@
 import {
   Component, Output, EventEmitter, Input, HostBinding
 } from '@angular/core';
-import { SortType, SelectionType } from '../../types';
-import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY } from '../../utils';
-import { DataTableColumnDirective } from '../columns';
+import { SortType, SelectionType } from '../../types/index';
+import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY } from '../../utils/index';
+import { DataTableColumnDirective } from '../columns/index';
 import { mouseEvent } from '../../events';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Directive, TemplateRef, ContentChild, Input } from '@angular/core';
 import { DataTableColumnHeaderDirective } from './column-header.directive';
 import { DataTableColumnCellDirective } from './column-cell.directive';
-import { TableColumnProp } from '../../types';
+import { TableColumnProp } from '../../types/index';
 
 @Directive({ selector: 'ngx-datatable-column' })
 export class DataTableColumnDirective {

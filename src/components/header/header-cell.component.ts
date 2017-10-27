@@ -2,8 +2,8 @@ import {
   Component, Input, EventEmitter, Output, HostBinding, 
   HostListener, ChangeDetectionStrategy, ChangeDetectorRef
 } from '@angular/core';
-import { SortDirection, SortType, SelectionType, TableColumn } from '../../types';
-import { nextSortDir } from '../../utils';
+import { SortDirection, SortType, SelectionType, TableColumn } from '../../types/index';
+import { nextSortDir } from '../../utils/index';
 import { mouseEvent } from '../../events';
 
 @Component({

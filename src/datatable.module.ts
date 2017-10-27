@@ -24,7 +24,7 @@ import {
   DataTableFooterTemplateDirective,
   DatatableFooterDirective,
   DatatableGroupHeaderTemplateDirective
-} from './components';
+} from './components/index';
 
 import {
   VisibilityDirective,
@@ -32,9 +32,9 @@ import {
   ResizeableDirective,
   OrderableDirective,
   DraggableDirective
-} from './directives';
+} from './directives/index';
 
-import { ScrollbarHelper } from './services';
+import { ScrollbarHelper } from './services/index';
 
 @NgModule({
   imports: [

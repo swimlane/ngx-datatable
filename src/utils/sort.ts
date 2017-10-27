@@ -1,4 +1,4 @@
-import { SortType, SortDirection, SortPropDir } from '../types';
+import { SortType, SortDirection, SortPropDir } from '../types/index';
 import { getterForProp } from './column-prop-getters';
 /**
  * Gets the next sort direction

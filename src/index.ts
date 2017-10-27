@@ -1,3 +1,3 @@
+export * from './types/index';
+export * from './components/index';
 export * from './datatable.module';
-export * from './types';
-export * from './components';

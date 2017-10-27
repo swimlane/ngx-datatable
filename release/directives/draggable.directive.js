@@ -1,8 +1,15 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var Observable_1 = require("rxjs/Observable");
-require("rxjs/add/operator/takeUntil");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+import { Directive, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/takeUntil';
 /**
  * Draggable Directive for Angular2
  *
@@ -11,25 +18,25 @@ require("rxjs/add/operator/takeUntil");
  *   http://stackoverflow.com/questions/35662530/how-to-implement-drag-and-drop-in-angular2
  *
  */
-var DraggableDirective = (function () {
-    function DraggableDirective(element) {
+let DraggableDirective = class DraggableDirective {
+    constructor(element) {
         this.dragX = true;
         this.dragY = true;
-        this.dragStart = new core_1.EventEmitter();
-        this.dragging = new core_1.EventEmitter();
-        this.dragEnd = new core_1.EventEmitter();
+        this.dragStart = new EventEmitter();
+        this.dragging = new EventEmitter();
+        this.dragEnd = new EventEmitter();
         this.isDragging = false;
         this.element = element.nativeElement;
     }
-    DraggableDirective.prototype.ngOnChanges = function (changes) {
+    ngOnChanges(changes) {
         if (changes['dragEventTarget'] && changes['dragEventTarget'].currentValue && this.dragModel.dragging) {
             this.onMousedown(changes['dragEventTarget'].currentValue);
         }
-    };
-    DraggableDirective.prototype.ngOnDestroy = function () {
+    }
+    ngOnDestroy() {
         this._destroySubscription();
-    };
-    DraggableDirective.prototype.onMouseup = function (event) {
+    }
+    onMouseup(event) {
         if (!this.isDragging)
             return;
         this.isDragging = false;
@@ -37,73 +44,87 @@ var DraggableDirective = (function () {
         if (this.subscription) {
             this._destroySubscription();
             this.dragEnd.emit({
-                event: event,
+                event,
                 element: this.element,
                 model: this.dragModel
             });
         }
-    };
-    DraggableDirective.prototype.onMousedown = function (event) {
-        var _this = this;
+    }
+    onMousedown(event) {
         // we only want to drag the inner header text
-        var isDragElm = event.target.classList.contains('draggable');
+        const isDragElm = event.target.classList.contains('draggable');
         if (isDragElm && (this.dragX || this.dragY)) {
             event.preventDefault();
             this.isDragging = true;
-            var mouseDownPos_1 = { x: event.clientX, y: event.clientY };
-            var mouseup = Observable_1.Observable.fromEvent(document, 'mouseup');
+            const mouseDownPos = { x: event.clientX, y: event.clientY };
+            const mouseup = Observable.fromEvent(document, 'mouseup');
             this.subscription = mouseup
-                .subscribe(function (ev) { return _this.onMouseup(ev); });
-            var mouseMoveSub = Observable_1.Observable.fromEvent(document, 'mousemove')
+                .subscribe((ev) => this.onMouseup(ev));
+            const mouseMoveSub = Observable.fromEvent(document, 'mousemove')
                 .takeUntil(mouseup)
-                .subscribe(function (ev) { return _this.move(ev, mouseDownPos_1); });
+                .subscribe((ev) => this.move(ev, mouseDownPos));
             this.subscription.add(mouseMoveSub);
             this.dragStart.emit({
-                event: event,
+                event,
                 element: this.element,
                 model: this.dragModel
             });
         }
-    };
-    DraggableDirective.prototype.move = function (event, mouseDownPos) {
+    }
+    move(event, mouseDownPos) {
         if (!this.isDragging)
             return;
-        var x = event.clientX - mouseDownPos.x;
-        var y = event.clientY - mouseDownPos.y;
+        const x = event.clientX - mouseDownPos.x;
+        const y = event.clientY - mouseDownPos.y;
         if (this.dragX)
-            this.element.style.left = x + "px";
+            this.element.style.left = `${x}px`;
         if (this.dragY)
-            this.element.style.top = y + "px";
+            this.element.style.top = `${y}px`;
         this.element.classList.add('dragging');
         this.dragging.emit({
-            event: event,
+            event,
             element: this.element,
             model: this.dragModel
         });
-    };
-    DraggableDirective.prototype._destroySubscription = function () {
+    }
+    _destroySubscription() {
         if (this.subscription) {
             this.subscription.unsubscribe();
             this.subscription = undefined;
         }
-    };
-    DraggableDirective.decorators = [
-        { type: core_1.Directive, args: [{ selector: '[draggable]' },] },
-    ];
-    /** @nocollapse */
-    DraggableDirective.ctorParameters = function () { return [
-        { type: core_1.ElementRef, },
-    ]; };
-    DraggableDirective.propDecorators = {
-        'dragEventTarget': [{ type: core_1.Input },],
-        'dragModel': [{ type: core_1.Input },],
-        'dragX': [{ type: core_1.Input },],
-        'dragY': [{ type: core_1.Input },],
-        'dragStart': [{ type: core_1.Output },],
-        'dragging': [{ type: core_1.Output },],
-        'dragEnd': [{ type: core_1.Output },],
-    };
-    return DraggableDirective;
-}());
-exports.DraggableDirective = DraggableDirective;
+    }
+};
+__decorate([
+    Input(),
+    __metadata("design:type", Object)
+], DraggableDirective.prototype, "dragEventTarget", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", Object)
+], DraggableDirective.prototype, "dragModel", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", Boolean)
+], DraggableDirective.prototype, "dragX", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", Boolean)
+], DraggableDirective.prototype, "dragY", void 0);
+__decorate([
+    Output(),
+    __metadata("design:type", EventEmitter)
+], DraggableDirective.prototype, "dragStart", void 0);
+__decorate([
+    Output(),
+    __metadata("design:type", EventEmitter)
+], DraggableDirective.prototype, "dragging", void 0);
+__decorate([
+    Output(),
+    __metadata("design:type", EventEmitter)
+], DraggableDirective.prototype, "dragEnd", void 0);
+DraggableDirective = __decorate([
+    Directive({ selector: '[draggable]' }),
+    __metadata("design:paramtypes", [ElementRef])
+], DraggableDirective);
+export { DraggableDirective };
 //# sourceMappingURL=draggable.directive.js.map

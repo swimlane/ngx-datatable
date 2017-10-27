@@ -1,26 +1,24 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Throttle a function
  */
-function throttle(func, wait, options) {
+export function throttle(func, wait, options) {
     options = options || {};
-    var context;
-    var args;
-    var result;
-    var timeout = null;
-    var previous = 0;
+    let context;
+    let args;
+    let result;
+    let timeout = null;
+    let previous = 0;
     function later() {
         previous = options.leading === false ? 0 : +new Date();
         timeout = null;
         result = func.apply(context, args);
     }
     return function () {
-        var now = +new Date();
+        const now = +new Date();
         if (!previous && options.leading === false) {
             previous = now;
         }
-        var remaining = wait - (now - previous);
+        const remaining = wait - (now - previous);
         context = this;
         args = arguments;
         if (remaining <= 0) {
@@ -35,7 +33,6 @@ function throttle(func, wait, options) {
         return result;
     };
 }
-exports.throttle = throttle;
 /**
  * Throttle decorator
  *
@@ -44,7 +41,7 @@ exports.throttle = throttle;
  *    myFn() { ... }
  *  }
  */
-function throttleable(duration, options) {
+export function throttleable(duration, options) {
     return function innerDecorator(target, key, descriptor) {
         return {
             configurable: true,
@@ -60,5 +57,4 @@ function throttleable(duration, options) {
         };
     };
 }
-exports.throttleable = throttleable;
 //# sourceMappingURL=throttle.js.map

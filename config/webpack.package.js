@@ -49,7 +49,7 @@ module.exports = function(env) {
       'core-js/es6': 'core-js/es6',
       'core-js/es7/reflect': 'core-js/es7/reflect',
       'rxjs': 'rxjs',
-      'rxjs/Rx': 'rxjs/Rx',
+      'rxjs/Observable': 'rxjs/Observable',
       'rxjs/Subscription': 'rxjs/Subscription',
       'zone.js/dist/zone': 'zone.js/dist/zone'
     },

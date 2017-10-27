@@ -5,8 +5,8 @@ import {
 
 import {
   allColumnsByPinArr, columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys
-} from '../../utils';
-import { ScrollbarHelper } from '../../services';
+} from '../../utils/index';
+import { ScrollbarHelper } from '../../services/index';
 import { mouseEvent, keyboardEvent } from '../../events';
 
 @Component({

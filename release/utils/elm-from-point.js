@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 if (typeof document !== 'undefined' && !document.elementsFromPoint) {
     document.elementsFromPoint = elementsFromPoint;
 }
@@ -11,12 +9,12 @@ if (typeof document !== 'undefined' && !document.elementsFromPoint) {
  * https://gist.github.com/iddan/54d5d9e58311b0495a91bf06de661380
  * https://gist.github.com/oslego/7265412
  */
-function elementsFromPoint(x, y) {
-    var elements = [];
-    var previousPointerEvents = [];
-    var current; // TODO: window.getComputedStyle should be used with inferred type (Element)
-    var i;
-    var d;
+export function elementsFromPoint(x, y) {
+    const elements = [];
+    const previousPointerEvents = [];
+    let current; // TODO: window.getComputedStyle should be used with inferred type (Element)
+    let i;
+    let d;
     //if (document === undefined) return elements;
     // get all elements via elementFromPoint, and remove them from hit-testing in order
     while ((current = document.elementFromPoint(x, y)) && elements.indexOf(current) === -1 && current != null) {
@@ -36,6 +34,5 @@ function elementsFromPoint(x, y) {
     // return our results
     return elements;
 }
-exports.elementsFromPoint = elementsFromPoint;
 /*tslint:enable*/
 //# sourceMappingURL=elm-from-point.js.map

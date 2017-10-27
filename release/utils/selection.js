@@ -1,7 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-function selectRows(selected, row, comparefn) {
-    var selectedIndex = comparefn(row, selected);
+export function selectRows(selected, row, comparefn) {
+    const selectedIndex = comparefn(row, selected);
     if (selectedIndex > -1) {
         selected.splice(selectedIndex, 1);
     }
@@ -10,14 +8,13 @@ function selectRows(selected, row, comparefn) {
     }
     return selected;
 }
-exports.selectRows = selectRows;
-function selectRowsBetween(selected, rows, index, prevIndex, comparefn) {
-    var reverse = index < prevIndex;
-    for (var i = 0; i < rows.length; i++) {
-        var row = rows[i];
-        var greater = i >= prevIndex && i <= index;
-        var lesser = i <= prevIndex && i >= index;
-        var range = { start: 0, end: 0 };
+export function selectRowsBetween(selected, rows, index, prevIndex, comparefn) {
+    const reverse = index < prevIndex;
+    for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        const greater = i >= prevIndex && i <= index;
+        const lesser = i <= prevIndex && i >= index;
+        let range = { start: 0, end: 0 };
         if (reverse) {
             range = {
                 start: index,
@@ -40,5 +37,4 @@ function selectRowsBetween(selected, rows, index, prevIndex, comparefn) {
     }
     return selected;
 }
-exports.selectRowsBetween = selectRowsBetween;
 //# sourceMappingURL=selection.js.map

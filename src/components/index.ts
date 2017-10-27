@@ -1,8 +1,8 @@
+export * from './header/index';
+export * from './body/index';
+export * from './footer/index';
+
+export * from './columns/index';
+export * from './row-detail/index';
+
 export * from './datatable.component';
-
-export * from './header';
-export * from './body';
-export * from './footer';
-
-export * from './columns';
-export * from './row-detail';

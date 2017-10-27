@@ -2,8 +2,8 @@ import {
   Component, Output, EventEmitter, Input, HostBinding, ChangeDetectorRef,
   ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy
 } from '@angular/core';
-import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '../../utils';
-import { SelectionType } from '../../types';
+import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '../../utils/index';
+import { SelectionType } from '../../types/index';
 import { ScrollerComponent } from './scroller.component';
 import { mouseEvent } from '../../events';
 

@@ -1,68 +1,67 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var common_1 = require("@angular/common");
-require("rxjs/add/observable/fromEvent");
-var components_1 = require("./components");
-var directives_1 = require("./directives");
-var services_1 = require("./services");
-var NgxDatatableModule = (function () {
-    function NgxDatatableModule() {
-    }
-    NgxDatatableModule.decorators = [
-        { type: core_1.NgModule, args: [{
-                    imports: [
-                        common_1.CommonModule
-                    ],
-                    providers: [
-                        services_1.ScrollbarHelper
-                    ],
-                    declarations: [
-                        components_1.DataTableFooterTemplateDirective,
-                        directives_1.VisibilityDirective,
-                        directives_1.DraggableDirective,
-                        directives_1.ResizeableDirective,
-                        directives_1.OrderableDirective,
-                        directives_1.LongPressDirective,
-                        components_1.ScrollerComponent,
-                        components_1.DatatableComponent,
-                        components_1.DataTableColumnDirective,
-                        components_1.DataTableHeaderComponent,
-                        components_1.DataTableHeaderCellComponent,
-                        components_1.DataTableBodyComponent,
-                        components_1.DataTableFooterComponent,
-                        components_1.DataTablePagerComponent,
-                        components_1.ProgressBarComponent,
-                        components_1.DataTableBodyRowComponent,
-                        components_1.DataTableRowWrapperComponent,
-                        components_1.DatatableRowDetailDirective,
-                        components_1.DatatableGroupHeaderDirective,
-                        components_1.DatatableRowDetailTemplateDirective,
-                        components_1.DataTableBodyCellComponent,
-                        components_1.DataTableSelectionComponent,
-                        components_1.DataTableColumnHeaderDirective,
-                        components_1.DataTableColumnCellDirective,
-                        components_1.DatatableFooterDirective,
-                        components_1.DatatableGroupHeaderTemplateDirective
-                    ],
-                    exports: [
-                        components_1.DatatableComponent,
-                        components_1.DatatableRowDetailDirective,
-                        components_1.DatatableGroupHeaderDirective,
-                        components_1.DatatableRowDetailTemplateDirective,
-                        components_1.DataTableColumnDirective,
-                        components_1.DataTableColumnHeaderDirective,
-                        components_1.DataTableColumnCellDirective,
-                        components_1.DataTableFooterTemplateDirective,
-                        components_1.DatatableFooterDirective,
-                        components_1.DataTablePagerComponent,
-                        components_1.DatatableGroupHeaderTemplateDirective
-                    ]
-                },] },
-    ];
-    /** @nocollapse */
-    NgxDatatableModule.ctorParameters = function () { return []; };
-    return NgxDatatableModule;
-}());
-exports.NgxDatatableModule = NgxDatatableModule;
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import 'rxjs/add/observable/fromEvent';
+import { DatatableComponent, DataTableColumnDirective, DataTableHeaderComponent, DataTableBodyComponent, DataTableFooterComponent, DataTableHeaderCellComponent, DataTablePagerComponent, DataTableBodyRowComponent, DataTableRowWrapperComponent, ProgressBarComponent, DataTableBodyCellComponent, DatatableRowDetailDirective, DatatableGroupHeaderDirective, ScrollerComponent, DataTableSelectionComponent, DataTableColumnHeaderDirective, DataTableColumnCellDirective, DatatableRowDetailTemplateDirective, DataTableFooterTemplateDirective, DatatableFooterDirective, DatatableGroupHeaderTemplateDirective } from './components/index';
+import { VisibilityDirective, LongPressDirective, ResizeableDirective, OrderableDirective, DraggableDirective } from './directives/index';
+import { ScrollbarHelper } from './services/index';
+let NgxDatatableModule = class NgxDatatableModule {
+};
+NgxDatatableModule = __decorate([
+    NgModule({
+        imports: [
+            CommonModule
+        ],
+        providers: [
+            ScrollbarHelper
+        ],
+        declarations: [
+            DataTableFooterTemplateDirective,
+            VisibilityDirective,
+            DraggableDirective,
+            ResizeableDirective,
+            OrderableDirective,
+            LongPressDirective,
+            ScrollerComponent,
+            DatatableComponent,
+            DataTableColumnDirective,
+            DataTableHeaderComponent,
+            DataTableHeaderCellComponent,
+            DataTableBodyComponent,
+            DataTableFooterComponent,
+            DataTablePagerComponent,
+            ProgressBarComponent,
+            DataTableBodyRowComponent,
+            DataTableRowWrapperComponent,
+            DatatableRowDetailDirective,
+            DatatableGroupHeaderDirective,
+            DatatableRowDetailTemplateDirective,
+            DataTableBodyCellComponent,
+            DataTableSelectionComponent,
+            DataTableColumnHeaderDirective,
+            DataTableColumnCellDirective,
+            DatatableFooterDirective,
+            DatatableGroupHeaderTemplateDirective
+        ],
+        exports: [
+            DatatableComponent,
+            DatatableRowDetailDirective,
+            DatatableGroupHeaderDirective,
+            DatatableRowDetailTemplateDirective,
+            DataTableColumnDirective,
+            DataTableColumnHeaderDirective,
+            DataTableColumnCellDirective,
+            DataTableFooterTemplateDirective,
+            DatatableFooterDirective,
+            DataTablePagerComponent,
+            DatatableGroupHeaderTemplateDirective
+        ]
+    })
+], NgxDatatableModule);
+export { NgxDatatableModule };
 //# sourceMappingURL=datatable.module.js.map

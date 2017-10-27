@@ -20,7 +20,7 @@
     "suppressImplicitAnyIndexErrors": true,
     "outDir": "release",
     "declarationDir": "release",
-    "lib": ["es6", "dom"],
+    "lib": ["es6", "es2015", "dom"],
     "skipLibCheck": true,
     "types": []
   },
@@ -40,6 +40,7 @@
   "angularCompilerOptions": {
     "genDir": "release/",
     "strictMetadataEmit": true,
-    "skipTemplateCodegen": true
+    "skipTemplateCodegen": true,
+    "flatModuleId": "@swimlane/ngx-datatable"
   }
 }
