@@ -17,7 +17,7 @@ import { DatatableGroupHeaderDirective } from './body/body-group-header.directiv
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
-import { mouseEvent } from '../events';
+import { MouseEvent } from '../events';
 
 @Component({
   selector: 'ngx-datatable',
