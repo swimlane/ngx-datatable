@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var footer_template_directive_1 = require("./footer-template.directive");
-var DatatableFooterDirective = (function () {
+var DatatableFooterDirective = /** @class */ (function () {
     function DatatableFooterDirective() {
     }
     DatatableFooterDirective.decorators = [

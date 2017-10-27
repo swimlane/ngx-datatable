@@ -177,6 +177,15 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     selectCheck: any;
     /**
+     * A function you can use to check whether you want
+     * to show the checkbox for a particular row based on a criteria. Example:
+     *
+     *    (row, column, value) => {
+     *      return row.name !== 'Ethel Price';
+     *    }
+     */
+    displayCheck: (row: any, column?: any, value?: any) => boolean;
+    /**
      * A boolean you can use to set the detault behaviour of rows and groups
      * whether they will start expanded or not. If ommited the default is NOT expanded.
      *
