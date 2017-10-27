@@ -4,7 +4,7 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/takeUntil';
-import { mouseEvent } from '../events';
+import { MouseEvent } from '../events';
 
 /**
  * Draggable Directive for Angular2
