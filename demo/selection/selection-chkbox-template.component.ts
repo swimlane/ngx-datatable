@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
       <h3>
         Custom Checkbox Selection
         <small>
-          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/selection/selection-chkbox.component.ts" target="_blank">
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/selection/selection-chkbox-template.component.ts" target="_blank">
             Source
           </a>
         </small>
