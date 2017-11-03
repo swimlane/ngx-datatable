@@ -4,17 +4,20 @@ var core_1 = require("@angular/core");
 var Observable_1 = require("rxjs/Observable");
 require("rxjs/add/operator/takeUntil");
 var ResizeableDirective = /** @class */ (function () {
-    function ResizeableDirective(element) {
+    function ResizeableDirective(element, renderer) {
+        this.renderer = renderer;
         this.resizeEnabled = true;
         this.resize = new core_1.EventEmitter();
         this.resizing = false;
         this.element = element.nativeElement;
     }
     ResizeableDirective.prototype.ngAfterViewInit = function () {
+        var renderer2 = this.renderer;
         if (this.resizeEnabled) {
-            var node = document.createElement('span');
-            node.classList.add('resize-handle');
-            this.element.appendChild(node);
+            var node = renderer2.createElement('span');
+            // node.classList.add('resize-handle');
+            renderer2.addClass(node, 'resize-handle');
+            renderer2.appendChild(this.element, node);
         }
     };
     ResizeableDirective.prototype.ngOnDestroy = function () {
@@ -70,6 +73,7 @@ var ResizeableDirective = /** @class */ (function () {
     /** @nocollapse */
     ResizeableDirective.ctorParameters = function () { return [
         { type: core_1.ElementRef, },
+        { type: core_1.Renderer2, },
     ]; };
     ResizeableDirective.propDecorators = {
         'resizeEnabled': [{ type: core_1.Input },],

@@ -16,8 +16,9 @@ var ScrollerComponent = /** @class */ (function () {
     ScrollerComponent.prototype.ngOnInit = function () {
         // manual bind so we don't always listen
         if (this.scrollbarV || this.scrollbarH) {
-            this.parentElement = this.element.parentElement.parentElement;
-            this.onScrollListener = this.renderer.listen(this.parentElement, 'scroll', this.onScrolled.bind(this));
+            var renderer = this.renderer;
+            this.parentElement = renderer.parentNode(renderer.parentNode(this.element));
+            this.onScrollListener = renderer.listen(this.parentElement, 'scroll', this.onScrolled.bind(this));
         }
     };
     ScrollerComponent.prototype.ngOnDestroy = function () {
@@ -65,7 +66,7 @@ var ScrollerComponent = /** @class */ (function () {
     /** @nocollapse */
     ScrollerComponent.ctorParameters = function () { return [
         { type: core_1.ElementRef, },
-        { type: core_1.Renderer, },
+        { type: core_1.Renderer2, },
     ]; };
     ScrollerComponent.propDecorators = {
         'scrollbarV': [{ type: core_1.Input },],

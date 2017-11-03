@@ -10,14 +10,15 @@ import {
   forceFillColumnWidths, adjustColumnWidths, sortRows,
   setColumnDefaults, throttleable, translateTemplates
 } from '../utils';
-import { ScrollbarHelper } from '../services';
+import { ScrollbarHelper, DimensionsHelper } from '../services';
 import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
-import { mouseEvent } from '../events';
+import { MouseEvent} from '../utils/facade/browser';
+
 
 @Component({
   selector: 'ngx-datatable',
@@ -72,6 +73,7 @@ import { mouseEvent } from '../events';
         [rowIdentity]="rowIdentity"
         [rowClass]="rowClass"
         [selectCheck]="selectCheck"
+        [displayCheck]="displayCheck"
         (page)="onBodyPage($event)"
         (activate)="activate.emit($event)"
         (rowContextmenu)="onRowContextmenu($event)"
@@ -386,6 +388,16 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   @Input() selectCheck: any;
 
   /**
+   * A function you can use to check whether you want
+   * to show the checkbox for a particular row based on a criteria. Example:
+   *
+   *    (row, column, value) => {
+   *      return row.name !== 'Ethel Price';
+   *    }
+   */
+  @Input() displayCheck: (row: any, column?: any, value?: any) => boolean;
+
+  /**
    * A boolean you can use to set the detault behaviour of rows and groups
    * whether they will start expanded or not. If ommited the default is NOT expanded.
    *
@@ -610,6 +622,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
   constructor(
     private scrollbarHelper: ScrollbarHelper,
+    private dimensionsHelper: DimensionsHelper,
     private cd: ChangeDetectorRef,
     element: ElementRef,
     differs: KeyValueDiffers) {
@@ -641,6 +654,10 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
     // this has to be done to prevent the change detection
     // tree from freaking out because we are readjusting
+    if (typeof requestAnimationFrame === 'undefined') {
+      return;
+    }
+    
     requestAnimationFrame(() => {
       this.recalculate();
 
@@ -757,7 +774,8 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    *
    */
   recalculateDims(): void {
-    const dims = this.element.getBoundingClientRect();
+    // const dims = this.element.getBoundingClientRect();
+    const dims = this.dimensionsHelper.getDimensions(this.element);
     this.innerWidth = Math.floor(dims.width);
 
     if (this.scrollbarV) {

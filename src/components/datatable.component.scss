@@ -100,6 +100,7 @@
 
   .datatable-body-cell,
   .datatable-header-cell {
+    overflow-x: hidden;
     vertical-align: top;
     display: inline-block;
     line-height: 1.625;
@@ -116,7 +117,7 @@
 
   .datatable-row-left,
   .datatable-row-center,
-  .datatable-row-grouping,
+  .datatable-row-group,
   .datatable-row-right {
     position:relative;
   }

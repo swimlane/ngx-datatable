@@ -1,5 +1,5 @@
 import { ElementRef, EventEmitter, OnInit, QueryList, AfterViewInit, DoCheck, KeyValueDiffers, KeyValueDiffer, ChangeDetectorRef } from '@angular/core';
-import { ScrollbarHelper } from '../services';
+import { ScrollbarHelper, DimensionsHelper } from '../services';
 import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
@@ -8,6 +8,7 @@ import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
 export declare class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     private scrollbarHelper;
+    private dimensionsHelper;
     private cd;
     /**
      * Gets the rows.
@@ -177,6 +178,15 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     selectCheck: any;
     /**
+     * A function you can use to check whether you want
+     * to show the checkbox for a particular row based on a criteria. Example:
+     *
+     *    (row, column, value) => {
+     *      return row.name !== 'Ethel Price';
+     *    }
+     */
+    displayCheck: (row: any, column?: any, value?: any) => boolean;
+    /**
      * A boolean you can use to set the detault behaviour of rows and groups
      * whether they will start expanded or not. If ommited the default is NOT expanded.
      *
@@ -313,7 +323,7 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
     _internalColumns: TableColumn[];
     _columns: TableColumn[];
     _columnTemplates: QueryList<DataTableColumnDirective>;
-    constructor(scrollbarHelper: ScrollbarHelper, cd: ChangeDetectorRef, element: ElementRef, differs: KeyValueDiffers);
+    constructor(scrollbarHelper: ScrollbarHelper, dimensionsHelper: DimensionsHelper, cd: ChangeDetectorRef, element: ElementRef, differs: KeyValueDiffers);
     /**
      * Lifecycle hook that is called after data-bound
      * properties of a directive are initialized.

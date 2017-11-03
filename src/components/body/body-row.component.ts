@@ -7,7 +7,7 @@ import {
   allColumnsByPinArr, columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys
 } from '../../utils';
 import { ScrollbarHelper } from '../../services';
-import { mouseEvent, keyboardEvent } from '../../events';
+import { MouseEvent, KeyboardEvent, Event} from '../../utils/facade/browser';
 
 @Component({
   selector: 'datatable-body-row',
@@ -27,6 +27,7 @@ import { mouseEvent, keyboardEvent } from '../../events';
         [rowIndex]="rowIndex"
         [column]="column"
         [rowHeight]="rowHeight"
+        [displayCheck]="displayCheck"
         (activate)="onActivate($event, ii)">
       </datatable-body-cell>
     </div>      
@@ -64,6 +65,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   @Input() offsetX: number;
   @Input() isSelected: boolean;
   @Input() rowIndex: number;
+  @Input() displayCheck: any;
 
   @HostBinding('class')
   get cssClass() {

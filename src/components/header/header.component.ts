@@ -4,7 +4,7 @@ import {
 import { SortType, SelectionType } from '../../types';
 import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY } from '../../utils';
 import { DataTableColumnDirective } from '../columns';
-import { mouseEvent } from '../../events';
+import { MouseEvent} from '../../utils/facade/browser';
 
 @Component({
   selector: 'datatable-header',
