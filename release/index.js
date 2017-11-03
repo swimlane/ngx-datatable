@@ -2563,7 +2563,7 @@ var DataTableBodyRowComponent = /** @class */ (function () {
     __decorate([
         core_1.HostListener('mouseenter', ['$event']),
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", [Event]),
+        __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", void 0)
     ], DataTableBodyRowComponent.prototype, "onMouseenter", null);
     DataTableBodyRowComponent = __decorate([
@@ -6725,6 +6725,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /* tslint:disable:variable-name */
 exports.MouseEvent = global.MouseEvent;
 exports.KeyboardEvent = global.KeyboardEvent;
+exports.Event = global.Event;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/global.js")))
 
