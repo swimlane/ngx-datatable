@@ -19,6 +19,17 @@ var DataTableHeaderCellComponent = /** @class */ (function () {
             selectFn: this.selectFn
         };
     }
+    Object.defineProperty(DataTableHeaderCellComponent.prototype, "allRowsSelected", {
+        get: function () {
+            return this._allRowsSelected;
+        },
+        set: function (value) {
+            this._allRowsSelected = value;
+            this.cellContext.allRowsSelected = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(DataTableHeaderCellComponent.prototype, "column", {
         get: function () {
             return this._column;

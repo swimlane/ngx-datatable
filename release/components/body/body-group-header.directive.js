@@ -18,7 +18,6 @@ var DatatableGroupHeaderDirective = /** @class */ (function () {
      * Toggle the expansion of a group
      */
     DatatableGroupHeaderDirective.prototype.toggleExpandGroup = function (group) {
-        console.log('Inside body-group-header.directive.ts group', group);
         this.toggle.emit({
             type: 'group',
             value: group

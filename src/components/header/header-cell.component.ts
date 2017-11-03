@@ -51,7 +51,7 @@ export class DataTableHeaderCellComponent {
   @Input() sortAscendingIcon: string;
   @Input() sortDescendingIcon: string;
   
-  _allRowsSelected: boolean
+  _allRowsSelected: boolean;
   @Input() set allRowsSelected(value) {
     this._allRowsSelected = value;
     this.cellContext.allRowsSelected = value;
