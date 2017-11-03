@@ -1,5 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var types_1 = require("../types");
+var columns_1 = require("../components/columns");
 var camel_case_1 = require("./camel-case");
 var id_1 = require("./id");
 var column_prop_getters_1 = require("./column-prop-getters");
@@ -9,8 +11,8 @@ var column_prop_getters_1 = require("./column-prop-getters");
 function setColumnDefaults(columns) {
     if (!columns)
         return;
-    for (var _i = 0, columns_1 = columns; _i < columns_1.length; _i++) {
-        var column = columns_1[_i];
+    for (var _i = 0, columns_2 = columns; _i < columns_2.length; _i++) {
+        var column = columns_2[_i];
         if (!column.$$id) {
             column.$$id = id_1.id();
         }

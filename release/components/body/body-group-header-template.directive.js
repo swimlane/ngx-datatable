@@ -5,15 +5,6 @@ var DatatableGroupHeaderTemplateDirective = /** @class */ (function () {
     function DatatableGroupHeaderTemplateDirective(template) {
         this.template = template;
     }
-    DatatableGroupHeaderTemplateDirective.decorators = [
-        { type: core_1.Directive, args: [{
-                    selector: '[ngx-datatable-group-header-template]'
-                },] },
-    ];
-    /** @nocollapse */
-    DatatableGroupHeaderTemplateDirective.ctorParameters = function () { return [
-        { type: core_1.TemplateRef, },
-    ]; };
     return DatatableGroupHeaderTemplateDirective;
 }());
 exports.DatatableGroupHeaderTemplateDirective = DatatableGroupHeaderTemplateDirective;

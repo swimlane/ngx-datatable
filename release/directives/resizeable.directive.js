@@ -2,12 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var Observable_1 = require("rxjs/Observable");
+var Subscription_1 = require("rxjs/Subscription");
+var events_1 = require("../events");
 require("rxjs/add/operator/takeUntil");
 var ResizeableDirective = /** @class */ (function () {
     function ResizeableDirective(element) {
-        this.resizeEnabled = true;
-        this.resize = new core_1.EventEmitter();
-        this.resizing = false;
         this.element = element.nativeElement;
     }
     ResizeableDirective.prototype.ngAfterViewInit = function () {
@@ -58,25 +57,6 @@ var ResizeableDirective = /** @class */ (function () {
             this.subscription.unsubscribe();
             this.subscription = undefined;
         }
-    };
-    ResizeableDirective.decorators = [
-        { type: core_1.Directive, args: [{
-                    selector: '[resizeable]',
-                    host: {
-                        '[class.resizeable]': 'resizeEnabled'
-                    }
-                },] },
-    ];
-    /** @nocollapse */
-    ResizeableDirective.ctorParameters = function () { return [
-        { type: core_1.ElementRef, },
-    ]; };
-    ResizeableDirective.propDecorators = {
-        'resizeEnabled': [{ type: core_1.Input },],
-        'minWidth': [{ type: core_1.Input },],
-        'maxWidth': [{ type: core_1.Input },],
-        'resize': [{ type: core_1.Output },],
-        'onMousedown': [{ type: core_1.HostListener, args: ['mousedown', ['$event'],] },],
     };
     return ResizeableDirective;
 }());

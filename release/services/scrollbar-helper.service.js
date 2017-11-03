@@ -6,10 +6,13 @@ var platform_browser_1 = require("@angular/platform-browser");
  * Gets the width of the scrollbar.  Nesc for windows
  * http://stackoverflow.com/a/13382873/888165
  */
-var ScrollbarHelper = /** @class */ (function () {
+var /**
+ * Gets the width of the scrollbar.  Nesc for windows
+ * http://stackoverflow.com/a/13382873/888165
+ */
+ScrollbarHelper = /** @class */ (function () {
     function ScrollbarHelper(document) {
         this.document = document;
-        this.width = this.getWidth();
     }
     ScrollbarHelper.prototype.getWidth = function () {
         var outer = this.document.createElement('div');
@@ -26,13 +29,6 @@ var ScrollbarHelper = /** @class */ (function () {
         outer.parentNode.removeChild(outer);
         return widthNoScroll - widthWithScroll;
     };
-    ScrollbarHelper.decorators = [
-        { type: core_1.Injectable },
-    ];
-    /** @nocollapse */
-    ScrollbarHelper.ctorParameters = function () { return [
-        { type: undefined, decorators: [{ type: core_1.Inject, args: [platform_browser_1.DOCUMENT,] },] },
-    ]; };
     return ScrollbarHelper;
 }());
 exports.ScrollbarHelper = ScrollbarHelper;

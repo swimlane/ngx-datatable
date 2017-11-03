@@ -9,19 +9,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * https://github.com/mikolalysenko/fenwick-tree
  *
  */
-var RowHeightCache = /** @class */ (function () {
+var /**
+ * This object contains the cache of the various row heights that are present inside
+ * the data table.   Its based on Fenwick tree data structure that helps with
+ * querying sums that have time complexity of log n.
+ *
+ * Fenwick Tree Credits: http://petr-mitrichev.blogspot.com/2013/05/fenwick-tree-range-updates.html
+ * https://github.com/mikolalysenko/fenwick-tree
+ *
+ */
+RowHeightCache = /** @class */ (function () {
     function RowHeightCache() {
-        /**
-         * Tree Array stores the cumulative information of the row heights to perform efficient
-         * range queries and updates.  Currently the tree is initialized to the base row
-         * height instead of the detail row height.
-         */
-        this.treeArray = [];
     }
     /**
      * Clear the Tree array.
      */
-    RowHeightCache.prototype.clearCache = function () {
+    /**
+       * Clear the Tree array.
+       */
+    RowHeightCache.prototype.clearCache = /**
+       * Clear the Tree array.
+       */
+    function () {
         this.treeArray = [];
     };
     /**
@@ -31,7 +40,21 @@ var RowHeightCache = /** @class */ (function () {
      * @param rowHeight The row height.
      * @param detailRowHeight The detail row height.
      */
-    RowHeightCache.prototype.initCache = function (details) {
+    /**
+       * Initialize the Fenwick tree with row Heights.
+       *
+       * @param rows The array of rows which contain the expanded status.
+       * @param rowHeight The row height.
+       * @param detailRowHeight The detail row height.
+       */
+    RowHeightCache.prototype.initCache = /**
+       * Initialize the Fenwick tree with row Heights.
+       *
+       * @param rows The array of rows which contain the expanded status.
+       * @param rowHeight The row height.
+       * @param detailRowHeight The detail row height.
+       */
+    function (details) {
         var rows = details.rows, rowHeight = details.rowHeight, detailRowHeight = details.detailRowHeight, externalVirtual = details.externalVirtual, rowCount = details.rowCount, rowIndexes = details.rowIndexes, rowExpansions = details.rowExpansions;
         var isFn = typeof rowHeight === 'function';
         var isDetailFn = typeof detailRowHeight === 'function';
@@ -72,7 +95,15 @@ var RowHeightCache = /** @class */ (function () {
      * Given the ScrollY position i.e. sum, provide the rowIndex
      * that is present in the current view port.  Below handles edge cases.
      */
-    RowHeightCache.prototype.getRowIndex = function (scrollY) {
+    /**
+       * Given the ScrollY position i.e. sum, provide the rowIndex
+       * that is present in the current view port.  Below handles edge cases.
+       */
+    RowHeightCache.prototype.getRowIndex = /**
+       * Given the ScrollY position i.e. sum, provide the rowIndex
+       * that is present in the current view port.  Below handles edge cases.
+       */
+    function (scrollY) {
         if (scrollY === 0)
             return 0;
         return this.calcRowIndex(scrollY);
@@ -81,7 +112,15 @@ var RowHeightCache = /** @class */ (function () {
      * When a row is expanded or rowHeight is changed, update the height.  This can
      * be utilized in future when Angular Data table supports dynamic row heights.
      */
-    RowHeightCache.prototype.update = function (atRowIndex, byRowHeight) {
+    /**
+       * When a row is expanded or rowHeight is changed, update the height.  This can
+       * be utilized in future when Angular Data table supports dynamic row heights.
+       */
+    RowHeightCache.prototype.update = /**
+       * When a row is expanded or rowHeight is changed, update the height.  This can
+       * be utilized in future when Angular Data table supports dynamic row heights.
+       */
+    function (atRowIndex, byRowHeight) {
         if (!this.treeArray.length) {
             throw new Error("Update at index " + atRowIndex + " with value " + byRowHeight + " failed:\n        Row Height cache not initialized.");
         }
@@ -95,7 +134,13 @@ var RowHeightCache = /** @class */ (function () {
     /**
      * Range Sum query from 1 to the rowIndex
      */
-    RowHeightCache.prototype.query = function (atIndex) {
+    /**
+       * Range Sum query from 1 to the rowIndex
+       */
+    RowHeightCache.prototype.query = /**
+       * Range Sum query from 1 to the rowIndex
+       */
+    function (atIndex) {
         if (!this.treeArray.length) {
             throw new Error("query at index " + atIndex + " failed: Fenwick tree array not initialized.");
         }
@@ -110,14 +155,28 @@ var RowHeightCache = /** @class */ (function () {
     /**
      * Find the total height between 2 row indexes
      */
-    RowHeightCache.prototype.queryBetween = function (atIndexA, atIndexB) {
+    /**
+       * Find the total height between 2 row indexes
+       */
+    RowHeightCache.prototype.queryBetween = /**
+       * Find the total height between 2 row indexes
+       */
+    function (atIndexA, atIndexB) {
         return this.query(atIndexB) - this.query(atIndexA - 1);
     };
     /**
      * Given the ScrollY position i.e. sum, provide the rowIndex
      * that is present in the current view port.
      */
-    RowHeightCache.prototype.calcRowIndex = function (sum) {
+    /**
+       * Given the ScrollY position i.e. sum, provide the rowIndex
+       * that is present in the current view port.
+       */
+    RowHeightCache.prototype.calcRowIndex = /**
+       * Given the ScrollY position i.e. sum, provide the rowIndex
+       * that is present in the current view port.
+       */
+    function (sum) {
         if (!this.treeArray.length)
             return 0;
         var pos = -1;

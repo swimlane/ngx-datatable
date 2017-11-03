@@ -2,16 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var Observable_1 = require("rxjs/Observable");
+var Subscription_1 = require("rxjs/Subscription");
 require("rxjs/add/operator/takeUntil");
+var events_1 = require("../events");
 var LongPressDirective = /** @class */ (function () {
     function LongPressDirective() {
-        this.pressEnabled = true;
-        this.duration = 500;
-        this.longPressStart = new core_1.EventEmitter();
-        this.longPressing = new core_1.EventEmitter();
-        this.longPressEnd = new core_1.EventEmitter();
-        this.mouseX = 0;
-        this.mouseY = 0;
     }
     Object.defineProperty(LongPressDirective.prototype, "press", {
         get: function () { return this.pressing; },
@@ -94,22 +89,6 @@ var LongPressDirective = /** @class */ (function () {
             this.subscription.unsubscribe();
             this.subscription = undefined;
         }
-    };
-    LongPressDirective.decorators = [
-        { type: core_1.Directive, args: [{ selector: '[long-press]' },] },
-    ];
-    /** @nocollapse */
-    LongPressDirective.ctorParameters = function () { return []; };
-    LongPressDirective.propDecorators = {
-        'pressEnabled': [{ type: core_1.Input },],
-        'pressModel': [{ type: core_1.Input },],
-        'duration': [{ type: core_1.Input },],
-        'longPressStart': [{ type: core_1.Output },],
-        'longPressing': [{ type: core_1.Output },],
-        'longPressEnd': [{ type: core_1.Output },],
-        'press': [{ type: core_1.HostBinding, args: ['class.press',] },],
-        'isLongPress': [{ type: core_1.HostBinding, args: ['class.longpress',] },],
-        'onMouseDown': [{ type: core_1.HostListener, args: ['mousedown', ['$event'],] },],
     };
     return LongPressDirective;
 }());

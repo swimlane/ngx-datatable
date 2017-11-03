@@ -3,12 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var utils_1 = require("../../utils");
 var services_1 = require("../../services");
+var events_1 = require("../../events");
 var DataTableBodyRowComponent = /** @class */ (function () {
     function DataTableBodyRowComponent(differs, scrollbarHelper, cd, element) {
         this.differs = differs;
         this.scrollbarHelper = scrollbarHelper;
         this.cd = cd;
-        this.activate = new core_1.EventEmitter();
         this.element = element.nativeElement;
         this.rowDiffer = differs.find({}).create();
     }
@@ -140,38 +140,6 @@ var DataTableBodyRowComponent = /** @class */ (function () {
         var colsByPin = utils_1.columnsByPin(this._columns);
         this.columnsByPin = utils_1.allColumnsByPinArr(this._columns);
         this.columnGroupWidths = utils_1.columnGroupWidths(colsByPin, this._columns);
-    };
-    DataTableBodyRowComponent.decorators = [
-        { type: core_1.Component, args: [{
-                    selector: 'datatable-body-row',
-                    changeDetection: core_1.ChangeDetectionStrategy.OnPush,
-                    template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: trackByGroups\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [group]=\"group\"\n        [expanded]=\"expanded\"\n        [isSelected]=\"isSelected\"\n        [rowIndex]=\"rowIndex\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        [displayCheck]=\"displayCheck\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>      \n  "
-                },] },
-    ];
-    /** @nocollapse */
-    DataTableBodyRowComponent.ctorParameters = function () { return [
-        { type: core_1.KeyValueDiffers, },
-        { type: services_1.ScrollbarHelper, },
-        { type: core_1.ChangeDetectorRef, },
-        { type: core_1.ElementRef, },
-    ]; };
-    DataTableBodyRowComponent.propDecorators = {
-        'columns': [{ type: core_1.Input },],
-        'innerWidth': [{ type: core_1.Input },],
-        'expanded': [{ type: core_1.Input },],
-        'rowClass': [{ type: core_1.Input },],
-        'row': [{ type: core_1.Input },],
-        'group': [{ type: core_1.Input },],
-        'offsetX': [{ type: core_1.Input },],
-        'isSelected': [{ type: core_1.Input },],
-        'rowIndex': [{ type: core_1.Input },],
-        'displayCheck': [{ type: core_1.Input },],
-        'cssClass': [{ type: core_1.HostBinding, args: ['class',] },],
-        'rowHeight': [{ type: core_1.HostBinding, args: ['style.height.px',] }, { type: core_1.Input },],
-        'columnsTotalWidths': [{ type: core_1.HostBinding, args: ['style.width.px',] },],
-        'activate': [{ type: core_1.Output },],
-        'onKeyDown': [{ type: core_1.HostListener, args: ['keydown', ['$event'],] },],
-        'onMouseenter': [{ type: core_1.HostListener, args: ['mouseenter', ['$event'],] },],
     };
     return DataTableBodyRowComponent;
 }());

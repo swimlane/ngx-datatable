@@ -3,10 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var utils_1 = require("../../utils");
 var types_1 = require("../../types");
+var events_1 = require("../../events");
 var DataTableSelectionComponent = /** @class */ (function () {
     function DataTableSelectionComponent() {
-        this.activate = new core_1.EventEmitter();
-        this.select = new core_1.EventEmitter();
     }
     DataTableSelectionComponent.prototype.selectRow = function (event, index, row) {
         if (!this.selectEnabled)
@@ -125,25 +124,6 @@ var DataTableSelectionComponent = /** @class */ (function () {
             var id = _this.rowIdentity(r);
             return id === rowId;
         });
-    };
-    DataTableSelectionComponent.decorators = [
-        { type: core_1.Component, args: [{
-                    selector: 'datatable-selection',
-                    template: "\n    <ng-content></ng-content>\n  ",
-                    changeDetection: core_1.ChangeDetectionStrategy.OnPush
-                },] },
-    ];
-    /** @nocollapse */
-    DataTableSelectionComponent.ctorParameters = function () { return []; };
-    DataTableSelectionComponent.propDecorators = {
-        'rows': [{ type: core_1.Input },],
-        'selected': [{ type: core_1.Input },],
-        'selectEnabled': [{ type: core_1.Input },],
-        'selectionType': [{ type: core_1.Input },],
-        'rowIdentity': [{ type: core_1.Input },],
-        'selectCheck': [{ type: core_1.Input },],
-        'activate': [{ type: core_1.Output },],
-        'select': [{ type: core_1.Output },],
     };
     return DataTableSelectionComponent;
 }());

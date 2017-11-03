@@ -3,10 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var DataTablePagerComponent = /** @class */ (function () {
     function DataTablePagerComponent() {
-        this.change = new core_1.EventEmitter();
-        this._count = 0;
-        this._page = 1;
-        this._size = 0;
     }
     Object.defineProperty(DataTablePagerComponent.prototype, "size", {
         get: function () {
@@ -95,28 +91,6 @@ var DataTablePagerComponent = /** @class */ (function () {
             });
         }
         return pages;
-    };
-    DataTablePagerComponent.decorators = [
-        { type: core_1.Component, args: [{
-                    selector: 'datatable-pager',
-                    template: "\n    <ul class=\"pager\">\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(1)\">\n          <i class=\"{{pagerPreviousIcon}}\"></i>\n        </a>\n      </li>\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"prevPage()\">\n          <i class=\"{{pagerLeftArrowIcon}}\"></i>\n        </a>\n      </li>\n      <li\n        class=\"pages\"\n        *ngFor=\"let pg of pages\"\n        [class.active]=\"pg.number === page\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(pg.number)\">\n          {{pg.text}}\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"nextPage()\">\n          <i class=\"{{pagerRightArrowIcon}}\"></i>\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(totalPages)\">\n          <i class=\"{{pagerNextIcon}}\"></i>\n        </a>\n      </li>\n    </ul>\n  ",
-                    host: {
-                        class: 'datatable-pager'
-                    },
-                    changeDetection: core_1.ChangeDetectionStrategy.OnPush
-                },] },
-    ];
-    /** @nocollapse */
-    DataTablePagerComponent.ctorParameters = function () { return []; };
-    DataTablePagerComponent.propDecorators = {
-        'pagerLeftArrowIcon': [{ type: core_1.Input },],
-        'pagerRightArrowIcon': [{ type: core_1.Input },],
-        'pagerPreviousIcon': [{ type: core_1.Input },],
-        'pagerNextIcon': [{ type: core_1.Input },],
-        'size': [{ type: core_1.Input },],
-        'count': [{ type: core_1.Input },],
-        'page': [{ type: core_1.Input },],
-        'change': [{ type: core_1.Output },],
     };
     return DataTablePagerComponent;
 }());

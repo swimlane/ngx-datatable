@@ -2,7 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var Observable_1 = require("rxjs/Observable");
+var Subscription_1 = require("rxjs/Subscription");
 require("rxjs/add/operator/takeUntil");
+var events_1 = require("../events");
 /**
  * Draggable Directive for Angular2
  *
@@ -11,14 +13,16 @@ require("rxjs/add/operator/takeUntil");
  *   http://stackoverflow.com/questions/35662530/how-to-implement-drag-and-drop-in-angular2
  *
  */
-var DraggableDirective = /** @class */ (function () {
+var /**
+ * Draggable Directive for Angular2
+ *
+ * Inspiration:
+ *   https://github.com/AngularClass/angular2-examples/blob/master/rx-draggable/directives/draggable.ts
+ *   http://stackoverflow.com/questions/35662530/how-to-implement-drag-and-drop-in-angular2
+ *
+ */
+DraggableDirective = /** @class */ (function () {
     function DraggableDirective(element) {
-        this.dragX = true;
-        this.dragY = true;
-        this.dragStart = new core_1.EventEmitter();
-        this.dragging = new core_1.EventEmitter();
-        this.dragEnd = new core_1.EventEmitter();
-        this.isDragging = false;
         this.element = element.nativeElement;
     }
     DraggableDirective.prototype.ngOnChanges = function (changes) {
@@ -86,22 +90,6 @@ var DraggableDirective = /** @class */ (function () {
             this.subscription.unsubscribe();
             this.subscription = undefined;
         }
-    };
-    DraggableDirective.decorators = [
-        { type: core_1.Directive, args: [{ selector: '[draggable]' },] },
-    ];
-    /** @nocollapse */
-    DraggableDirective.ctorParameters = function () { return [
-        { type: core_1.ElementRef, },
-    ]; };
-    DraggableDirective.propDecorators = {
-        'dragEventTarget': [{ type: core_1.Input },],
-        'dragModel': [{ type: core_1.Input },],
-        'dragX': [{ type: core_1.Input },],
-        'dragY': [{ type: core_1.Input },],
-        'dragStart': [{ type: core_1.Output },],
-        'dragging': [{ type: core_1.Output },],
-        'dragEnd': [{ type: core_1.Output },],
     };
     return DraggableDirective;
 }());

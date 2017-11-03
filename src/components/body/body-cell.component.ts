@@ -39,25 +39,25 @@ import { MouseEvent, KeyboardEvent } from '../../events';
 export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   @Input() displayCheck: any;
 
-  @Input() set group(group: any){
+  @Input() set group(group: any) {
     this._group = group;
     this.cellContext.group = group;
     this.checkValueUpdates();
     this.cd.markForCheck();    
   }
 
-  get group(){
+  get group() {
     return this._group;
   }
 
-  @Input() set rowHeight(val: number){
+  @Input() set rowHeight(val: number) {
     this._rowHeight = val;
     this.cellContext.rowHeight = val;
     this.checkValueUpdates();
     this.cd.markForCheck();        
   }
 
-  get rowHeight(){
+  get rowHeight() {
     return this._rowHeight;
   }
 

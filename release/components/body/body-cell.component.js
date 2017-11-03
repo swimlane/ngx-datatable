@@ -3,24 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var utils_1 = require("../../utils");
 var types_1 = require("../../types");
+var table_column_type_1 = require("../../types/table-column.type");
+var events_1 = require("../../events");
 var DataTableBodyCellComponent = /** @class */ (function () {
     function DataTableBodyCellComponent(element, cd) {
         this.cd = cd;
-        this.activate = new core_1.EventEmitter();
-        this.isFocused = false;
-        this.onCheckboxChangeFn = this.onCheckboxChange.bind(this);
-        this.activateFn = this.activate.emit.bind(this.activate);
-        this.cellContext = {
-            onCheckboxChangeFn: this.onCheckboxChangeFn,
-            activateFn: this.activateFn,
-            row: this.row,
-            group: this.group,
-            value: this.value,
-            column: this.column,
-            rowHeight: this.rowHeight,
-            isSelected: this.isSelected,
-            rowIndex: this.rowIndex
-        };
         this._element = element.nativeElement;
     }
     Object.defineProperty(DataTableBodyCellComponent.prototype, "group", {
@@ -290,39 +277,6 @@ var DataTableBodyCellComponent = /** @class */ (function () {
         if (!html.replace)
             return html;
         return html.replace(/<\/?[^>]+(>|$)/g, '');
-    };
-    DataTableBodyCellComponent.decorators = [
-        { type: core_1.Component, args: [{
-                    selector: 'datatable-body-cell',
-                    changeDetection: core_1.ChangeDetectionStrategy.OnPush,
-                    template: "\n    <div class=\"datatable-body-cell-label\">\n      <label\n        *ngIf=\"column.checkboxable && (!displayCheck || displayCheck(row, column, value))\"\n        class=\"datatable-checkbox\">\n        <input\n          type=\"checkbox\"\n          [checked]=\"isSelected\"\n          (click)=\"onCheckboxChange($event)\"\n        />\n      </label>\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [title]=\"sanitizedValue\"\n        [innerHTML]=\"value\">\n      </span>\n      <ng-template #cellTemplate\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngTemplateOutletContext]=\"cellContext\">\n      </ng-template>\n    </div>\n  "
-                },] },
-    ];
-    /** @nocollapse */
-    DataTableBodyCellComponent.ctorParameters = function () { return [
-        { type: core_1.ElementRef, },
-        { type: core_1.ChangeDetectorRef, },
-    ]; };
-    DataTableBodyCellComponent.propDecorators = {
-        'displayCheck': [{ type: core_1.Input },],
-        'group': [{ type: core_1.Input },],
-        'rowHeight': [{ type: core_1.Input },],
-        'isSelected': [{ type: core_1.Input },],
-        'expanded': [{ type: core_1.Input },],
-        'rowIndex': [{ type: core_1.Input },],
-        'column': [{ type: core_1.Input },],
-        'row': [{ type: core_1.Input },],
-        'sorts': [{ type: core_1.Input },],
-        'activate': [{ type: core_1.Output },],
-        'cellTemplate': [{ type: core_1.ViewChild, args: ['cellTemplate', { read: core_1.ViewContainerRef },] },],
-        'columnCssClasses': [{ type: core_1.HostBinding, args: ['class',] },],
-        'width': [{ type: core_1.HostBinding, args: ['style.width.px',] },],
-        'height': [{ type: core_1.HostBinding, args: ['style.height',] },],
-        'onFocus': [{ type: core_1.HostListener, args: ['focus',] },],
-        'onBlur': [{ type: core_1.HostListener, args: ['blur',] },],
-        'onClick': [{ type: core_1.HostListener, args: ['click', ['$event'],] },],
-        'onDblClick': [{ type: core_1.HostListener, args: ['dblclick', ['$event'],] },],
-        'onKeyDown': [{ type: core_1.HostListener, args: ['keydown', ['$event'],] },],
     };
     return DataTableBodyCellComponent;
 }());

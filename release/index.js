@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"10.4.0" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"10.5.0" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -4892,8 +4892,8 @@ var DatatableComponent = /** @class */ (function () {
     ], DatatableComponent.prototype, "externalSorting", void 0);
     __decorate([
         core_1.Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
     ], DatatableComponent.prototype, "limit", null);
     __decorate([
         core_1.Input(),
@@ -6440,6 +6440,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var Observable_1 = __webpack_require__("./node_modules/rxjs/Observable.js");
 __webpack_require__("./node_modules/rxjs/add/operator/takeUntil.js");
+var events_1 = __webpack_require__("./src/events.ts");
 var LongPressDirective = /** @class */ (function () {
     function LongPressDirective() {
         this.pressEnabled = true;
@@ -6569,7 +6570,7 @@ var LongPressDirective = /** @class */ (function () {
     __decorate([
         core_1.HostListener('mousedown', ['$event']),
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", [MouseEvent]),
+        __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", void 0)
     ], LongPressDirective.prototype, "onMouseDown", null);
     LongPressDirective = __decorate([

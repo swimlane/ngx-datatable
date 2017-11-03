@@ -12,12 +12,21 @@ var core_1 = require("@angular/core");
  * 		</div>
  *
  */
-var VisibilityDirective = /** @class */ (function () {
+var /**
+ * Visibility Observer Directive
+ *
+ * Usage:
+ *
+ * 		<div
+ * 			visibilityObserver
+ * 			(visible)="onVisible($event)">
+ * 		</div>
+ *
+ */
+VisibilityDirective = /** @class */ (function () {
     function VisibilityDirective(element, zone) {
         this.element = element;
         this.zone = zone;
-        this.isVisible = false;
-        this.visible = new core_1.EventEmitter();
     }
     VisibilityDirective.prototype.ngOnInit = function () {
         this.runCheck();
@@ -50,18 +59,6 @@ var VisibilityDirective = /** @class */ (function () {
             }
         };
         this.timeout = setTimeout(function () { return check(); });
-    };
-    VisibilityDirective.decorators = [
-        { type: core_1.Directive, args: [{ selector: '[visibilityObserver]' },] },
-    ];
-    /** @nocollapse */
-    VisibilityDirective.ctorParameters = function () { return [
-        { type: core_1.ElementRef, },
-        { type: core_1.NgZone, },
-    ]; };
-    VisibilityDirective.propDecorators = {
-        'isVisible': [{ type: core_1.HostBinding, args: ['class.visible',] },],
-        'visible': [{ type: core_1.Output },],
     };
     return VisibilityDirective;
 }());

@@ -8,5 +8,7 @@ __export(require("./sort.type"));
 __export(require("./sort-direction.type"));
 __export(require("./selection.type"));
 __export(require("./click.type"));
+__export(require("./table-column.type"));
+__export(require("./sort-prop-dir.type"));
 __export(require("./contextmenu.type"));
 //# sourceMappingURL=index.js.map

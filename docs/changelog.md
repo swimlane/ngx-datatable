@@ -1,5 +1,8 @@
 # Changelog
 
+## 10.5.0
+- Chore: Upgrade to Angular5
+
 ## 10.4.0
 - Feature: Ability to filter checkable rows (#1056)
 - Feature: Allow sorting based on whole row (#1074)
