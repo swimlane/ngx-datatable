@@ -1,5 +1,14 @@
 # Changelog
 
+## 10.5.0
+- Chore: Upgrade to Angular5
+
+## 10.4.0
+- Feature: Ability to filter checkable rows (#1056)
+- Feature: Allow sorting based on whole row (#1074)
+- Bug: Fix protractor events (#1081)
+- Bug: Fix misalignment on smaller screens (#1081)
+
 ## 10.3.0
 - Feature: Bootstrap theme
 - Bug: Fix CSS for row grouping (#1053)

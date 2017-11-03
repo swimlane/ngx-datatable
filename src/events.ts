@@ -1,4 +1,5 @@
 declare let global: any;
 
-export const mouseEvent = (global as any).MouseEvent as MouseEvent;
-export const keyboardEvent = (global as any).KeyboardEvent as KeyboardEvent;
+/* tslint:disable:variable-name */
+export const MouseEvent = (global as any).MouseEvent as MouseEvent;
+export const KeyboardEvent = (global as any).KeyboardEvent as KeyboardEvent;

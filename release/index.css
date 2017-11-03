@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"10.3.0" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"10.5.0" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -66,6 +66,7 @@
         white-space: nowrap;
         text-overflow: ellipsis; }
   .ngx-datatable .datatable-body-row,
+  .ngx-datatable .datatable-row-center,
   .ngx-datatable .datatable-header-inner {
     display: -webkit-box;
     display: -ms-flexbox;

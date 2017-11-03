@@ -6,6 +6,7 @@ var core_1 = require("@angular/core");
  * http://stackoverflow.com/a/13382873/888165
  */
 var DimensionsHelper = /** @class */ (function () {
+    // tslint:disable-next-line:no-empty
     function DimensionsHelper() {
     }
     DimensionsHelper.prototype.getDimensions = function (element) {
