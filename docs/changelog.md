@@ -1,6 +1,6 @@
 # Changelog
 
-## 10.5.0
+## 11.0.0
 - Chore: Upgrade to Angular5
 
 ## 10.4.0
