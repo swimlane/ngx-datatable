@@ -1210,15 +1210,10 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * @memberOf DatatableComponent
    */
   onColumnReorder({ column, newValue, prevValue }: any): void {
-    const cols = this.columns.map(c => {
-      return { ...c };
-    });
 
-    const prevCol = cols[newValue];
-    cols[newValue] = column;
-    cols[prevValue] = prevCol;
-
-    this.columns = cols;
+    const cols = this.columns.map(c => ({...c}));
+    const removed = [...cols.slice(0, prevValue), ...cols.slice(prevValue + 1, cols.length)];
+    this.columns = [...removed.slice(0, newValue), column, ...removed.slice(newValue, removed.length)];
 
     this.reorder.emit({
       column,
