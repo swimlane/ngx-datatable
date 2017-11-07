@@ -145,11 +145,7 @@ export class DataTableSelectionComponent {
     } else if (type === 'keydown') {
       const code = (<KeyboardEvent>event).key || (<KeyboardEvent>event).code;
       activated = this.activateRow(row, model.cellIndex, event as KeyboardEvent);
-      if (code === Codes.return) {
-        this.selectRow(event, index, row);
-      } else {
-        this.onKeyboardFocus(model);
-      }
+      this.onKeyboardFocus(model);
     }
 
     this.activate.emit({
@@ -169,7 +165,8 @@ export class DataTableSelectionComponent {
       code === Codes.down ||
       code === Codes.right ||
       code === Codes.left ||
-      code === Codes.tab;
+      code === Codes.tab ||
+      code === Codes.return;
 
     if (shouldFocus) {
       const isCellSelection =
@@ -210,7 +207,7 @@ export class DataTableSelectionComponent {
 
     if (code === Codes.left) {
       nextCellElement = cellElement.previousElementSibling;
-    } else if (code === Codes.right) {
+    } else if (code === Codes.right || code === Codes.tab || code === Codes.return) {
       nextCellElement = cellElement.nextElementSibling;
     } else if (code === Codes.up || code === Codes.down) {
       const nextRowElement = this.getPrevNextRow(rowElement, code);
