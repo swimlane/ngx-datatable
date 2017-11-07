@@ -1,5 +1,5 @@
 import {
-  Component, Input, ElementRef, Output, EventEmitter, Renderer,
+  Component, Input, ElementRef, Output, EventEmitter,
   OnInit, OnDestroy, HostBinding, ChangeDetectionStrategy
 } from '@angular/core';
 
@@ -36,7 +36,7 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   parentElement: any;
   onScrollListener: any;
 
-  constructor(element: ElementRef, private renderer: Renderer) {
+  constructor(element: ElementRef) {
     this.element = element.nativeElement;
   }
 
@@ -44,14 +44,13 @@ export class ScrollerComponent implements OnInit, OnDestroy {
     // manual bind so we don't always listen
     if (this.scrollbarV || this.scrollbarH) {
       this.parentElement = this.element.parentElement.parentElement;
-      this.onScrollListener = this.renderer.listen(
-        this.parentElement, 'scroll', this.onScrolled.bind(this));
+      this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
     }
   }
 
   ngOnDestroy(): void {
     if (this.scrollbarV || this.scrollbarH) {
-      this.onScrollListener();
+      this.parentElement.removeEventListener('scroll', this.onScrolled.bind(this));
     }
   }
 
