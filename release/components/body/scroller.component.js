@@ -3,20 +3,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var events_1 = require("../../events");
 var ScrollerComponent = /** @class */ (function () {
-    function ScrollerComponent(element, renderer) {
-        this.renderer = renderer;
+    function ScrollerComponent(element) {
         this.element = element.nativeElement;
     }
     ScrollerComponent.prototype.ngOnInit = function () {
         // manual bind so we don't always listen
         if (this.scrollbarV || this.scrollbarH) {
             this.parentElement = this.element.parentElement.parentElement;
-            this.onScrollListener = this.renderer.listen(this.parentElement, 'scroll', this.onScrolled.bind(this));
+            this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
         }
     };
     ScrollerComponent.prototype.ngOnDestroy = function () {
         if (this.scrollbarV || this.scrollbarH) {
-            this.onScrollListener();
+            this.parentElement.removeEventListener('scroll', this.onScrolled.bind(this));
         }
     };
     ScrollerComponent.prototype.setOffset = function (offsetY) {

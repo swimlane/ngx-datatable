@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"10.5.0" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"11.0.2" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -3586,8 +3586,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var ScrollerComponent = /** @class */ (function () {
-    function ScrollerComponent(element, renderer) {
-        this.renderer = renderer;
+    function ScrollerComponent(element) {
         this.scrollbarV = false;
         this.scrollbarH = false;
         this.scroll = new core_1.EventEmitter();
@@ -3601,12 +3600,12 @@ var ScrollerComponent = /** @class */ (function () {
         // manual bind so we don't always listen
         if (this.scrollbarV || this.scrollbarH) {
             this.parentElement = this.element.parentElement.parentElement;
-            this.onScrollListener = this.renderer.listen(this.parentElement, 'scroll', this.onScrolled.bind(this));
+            this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
         }
     };
     ScrollerComponent.prototype.ngOnDestroy = function () {
         if (this.scrollbarV || this.scrollbarH) {
-            this.onScrollListener();
+            this.parentElement.removeEventListener('scroll', this.onScrolled.bind(this));
         }
     };
     ScrollerComponent.prototype.setOffset = function (offsetY) {
@@ -3667,7 +3666,7 @@ var ScrollerComponent = /** @class */ (function () {
             },
             changeDetection: core_1.ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [core_1.ElementRef, core_1.Renderer])
+        __metadata("design:paramtypes", [core_1.ElementRef])
     ], ScrollerComponent);
     return ScrollerComponent;
 }());
