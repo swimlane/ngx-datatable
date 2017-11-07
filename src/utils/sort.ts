@@ -3,7 +3,7 @@ import { getterForProp } from './column-prop-getters';
 /**
  * Gets the next sort direction
  */
-export function nextSortDir(sortType: SortType, current: SortDirection): SortDirection {
+export function nextSortDir(sortType: SortType, current: SortDirection): SortDirection | undefined {
   if (sortType === SortType.single) {
     if(current === SortDirection.asc) {
       return SortDirection.desc;
@@ -18,6 +18,8 @@ export function nextSortDir(sortType: SortType, current: SortDirection): SortDir
     } else if(current === SortDirection.desc) {
       return undefined;
     }
+    // avoid TS7030: Not all code paths return a value.
+    return undefined;
   }
 }
 
