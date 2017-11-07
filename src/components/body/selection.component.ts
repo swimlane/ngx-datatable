@@ -70,11 +70,11 @@ export class DataTableSelectionComponent {
       const code = event.key || event.code;
       if (code === Codes.up) {
         newRow = this.getNextRow(filteredRows, rowIndex, -1);
-      } else if (code === Codes.down || code === Codes.return) {
+      } else if (code === Codes.down) {
         newRow = this.getNextRow(filteredRows, rowIndex, 1);
       } else if (code === Codes.left || (event.shiftKey && code === Codes.tab)) {
         nextColumn = Math.max(columnIndex - 1, 0);
-      } else if (code === Codes.right || code === Codes.tab) {
+      } else if (code === Codes.right || code === Codes.tab || code === Codes.return) {
         nextColumn = Math.min(columnIndex + 1, this.columns.length - 1);
       }
     }
