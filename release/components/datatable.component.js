@@ -988,13 +988,9 @@ var DatatableComponent = /** @class */ (function () {
      */
     DatatableComponent.prototype.onColumnReorder = function (_a) {
         var column = _a.column, newValue = _a.newValue, prevValue = _a.prevValue;
-        var cols = this.columns.map(function (c) {
-            return __assign({}, c);
-        });
-        var prevCol = cols[newValue];
-        cols[newValue] = column;
-        cols[prevValue] = prevCol;
-        this.columns = cols;
+        var cols = this.columns.map(function (c) { return (__assign({}, c)); });
+        var removed = cols.slice(0, prevValue).concat(cols.slice(prevValue + 1, cols.length));
+        this.columns = removed.slice(0, newValue).concat([column], removed.slice(newValue, removed.length));
         this.reorder.emit({
             column: column,
             newValue: newValue,

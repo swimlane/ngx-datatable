@@ -51,13 +51,13 @@ var DataTableSelectionComponent = /** @class */ (function () {
             if (code === utils_1.Codes.up) {
                 newRow = this.getNextRow(filteredRows, rowIndex, -1);
             }
-            else if (code === utils_1.Codes.down || code === utils_1.Codes.return) {
+            else if (code === utils_1.Codes.down) {
                 newRow = this.getNextRow(filteredRows, rowIndex, 1);
             }
             else if (code === utils_1.Codes.left || (event.shiftKey && code === utils_1.Codes.tab)) {
                 nextColumn = Math.max(columnIndex - 1, 0);
             }
-            else if (code === utils_1.Codes.right || code === utils_1.Codes.tab) {
+            else if (code === utils_1.Codes.right || code === utils_1.Codes.tab || code === utils_1.Codes.return) {
                 nextColumn = Math.min(columnIndex + 1, this.columns.length - 1);
             }
         }
@@ -117,12 +117,7 @@ var DataTableSelectionComponent = /** @class */ (function () {
         else if (type === 'keydown') {
             var code = event.key || event.code;
             activated = this.activateRow(row, model.cellIndex, event);
-            if (code === utils_1.Codes.return) {
-                this.selectRow(event, index, row);
-            }
-            else {
-                this.onKeyboardFocus(model);
-            }
+            this.onKeyboardFocus(model);
         }
         this.activate.emit(__assign({}, model, { row: activated.newRow, upRow: activated.upRow, downRow: activated.downRow, column: this.columns[activated.nextColumn], cellIndex: activated.nextColumn }));
     };
@@ -132,7 +127,8 @@ var DataTableSelectionComponent = /** @class */ (function () {
             code === utils_1.Codes.down ||
             code === utils_1.Codes.right ||
             code === utils_1.Codes.left ||
-            code === utils_1.Codes.tab;
+            code === utils_1.Codes.tab ||
+            code === utils_1.Codes.return;
         if (shouldFocus) {
             var isCellSelection = this.selectionType === types_1.SelectionType.cell;
             if (!model.cellElement || !isCellSelection) {
@@ -168,7 +164,7 @@ var DataTableSelectionComponent = /** @class */ (function () {
         if (code === utils_1.Codes.left) {
             nextCellElement = cellElement.previousElementSibling;
         }
-        else if (code === utils_1.Codes.right) {
+        else if (code === utils_1.Codes.right || code === utils_1.Codes.tab || code === utils_1.Codes.return) {
             nextCellElement = cellElement.nextElementSibling;
         }
         else if (code === utils_1.Codes.up || code === utils_1.Codes.down) {
