@@ -15,7 +15,7 @@ export function throttle(func: any, wait: number, options?: any) {
     result = func.apply(context, args);
   }
 
-  return function() {
+  return function(this: any) {
     const now = +new Date();
 
     if (!previous && options.leading === false) {

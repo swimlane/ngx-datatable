@@ -205,10 +205,12 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * based on the row heights cache for virtual scroll. Other scenarios
    * calculate scroll height automatically (as height will be undefined).
    */
-  get scrollHeight(): number {
+  get scrollHeight(): number | undefined {
     if (this.scrollbarV) {
       return this.rowHeightsCache.query(this.rowCount - 1);
     }
+    // avoid TS7030: Not all code paths return a value.
+    return undefined;
   }
 
   rowHeightsCache: RowHeightCache = new RowHeightCache();
@@ -234,7 +236,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   constructor(private cd: ChangeDetectorRef) {
     // declare fn here so we can get access to the `this` property
-    this.rowTrackingFn = function(index: number, row: any): any {
+    this.rowTrackingFn = function(this: any, index: number, row: any): any {
       const idx = this.getRowIndex(row);
       if (this.trackByProp) {
         return `${idx}-${this.trackByProp}`;

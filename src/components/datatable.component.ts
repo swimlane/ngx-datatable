@@ -744,9 +744,9 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   recalculateColumns(
     columns: any[] = this._internalColumns,
     forceIdx: number = -1,
-    allowBleed: boolean = this.scrollbarH): any[] {
+    allowBleed: boolean = this.scrollbarH): any[] | undefined {
 
-    if (!columns) return;
+    if (!columns) return undefined;
 
     let width = this.innerWidth;
     if (this.scrollbarV) {
