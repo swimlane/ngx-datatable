@@ -2,7 +2,7 @@ import { SortType, SortDirection, SortPropDir } from '../types';
 /**
  * Gets the next sort direction
  */
-export declare function nextSortDir(sortType: SortType, current: SortDirection): SortDirection;
+export declare function nextSortDir(sortType: SortType, current: SortDirection): SortDirection | undefined;
 /**
  * Adapted from fueld-ui on 6/216
  * https://github.com/FuelInteractive/fuel-ui/tree/master/src/pipes/OrderBy

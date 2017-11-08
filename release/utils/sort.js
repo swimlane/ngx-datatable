@@ -24,6 +24,8 @@ function nextSortDir(sortType, current) {
         else if (current === types_1.SortDirection.desc) {
             return undefined;
         }
+        // avoid TS7030: Not all code paths return a value.
+        return undefined;
     }
 }
 exports.nextSortDir = nextSortDir;

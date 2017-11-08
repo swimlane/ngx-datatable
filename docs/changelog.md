@@ -1,5 +1,8 @@
 # Changelog
 
+## 11.0.1, 11.0.2, 11.0.3
+- Bug: Angular 5 bugs
+
 ## 11.0.0
 - Chore: Upgrade to Angular5
 

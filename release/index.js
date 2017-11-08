@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"11.0.2" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"11.0.3" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -2965,6 +2965,8 @@ var DataTableBodyComponent = /** @class */ (function () {
             if (this.scrollbarV) {
                 return this.rowHeightsCache.query(this.rowCount - 1);
             }
+            // avoid TS7030: Not all code paths return a value.
+            return undefined;
         },
         enumerable: true,
         configurable: true
@@ -4623,7 +4625,7 @@ var DatatableComponent = /** @class */ (function () {
         if (forceIdx === void 0) { forceIdx = -1; }
         if (allowBleed === void 0) { allowBleed = this.scrollbarH; }
         if (!columns)
-            return;
+            return undefined;
         var width = this.innerWidth;
         if (this.scrollbarV) {
             width = width - this.scrollbarHelper.width;
@@ -8004,6 +8006,8 @@ function nextSortDir(sortType, current) {
         else if (current === types_1.SortDirection.desc) {
             return undefined;
         }
+        // avoid TS7030: Not all code paths return a value.
+        return undefined;
     }
 }
 exports.nextSortDir = nextSortDir;

@@ -364,7 +364,7 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      * Recalulcates the column widths based on column width
      * distribution mode and scrollbar offsets.
      */
-    recalculateColumns(columns?: any[], forceIdx?: number, allowBleed?: boolean): any[];
+    recalculateColumns(columns?: any[], forceIdx?: number, allowBleed?: boolean): any[] | undefined;
     /**
      * Recalculates the dimensions of the table size.
      * Internally calls the page size and row count calcs too.

@@ -135,6 +135,8 @@ var DataTableBodyComponent = /** @class */ (function () {
             if (this.scrollbarV) {
                 return this.rowHeightsCache.query(this.rowCount - 1);
             }
+            // avoid TS7030: Not all code paths return a value.
+            return undefined;
         },
         enumerable: true,
         configurable: true
