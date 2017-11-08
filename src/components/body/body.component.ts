@@ -338,7 +338,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     if (direction === 'up') {
       offset = Math.ceil(offset);
     } else if (direction === 'down') {
-      offset = Math.ceil(offset);
+      offset = Math.floor(offset);
     }
 
     if (direction !== undefined && !isNaN(offset)) {
