@@ -3,7 +3,7 @@ import {
   HostListener, ContentChildren, OnInit, QueryList, AfterViewInit,
   HostBinding, ContentChild, TemplateRef, IterableDiffer,
   DoCheck, KeyValueDiffers, KeyValueDiffer, ViewEncapsulation,
-  ChangeDetectionStrategy, ChangeDetectorRef
+  ChangeDetectionStrategy, ChangeDetectorRef, SkipSelf
 } from '@angular/core';
 
 import {
@@ -620,8 +620,8 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   _columnTemplates: QueryList<DataTableColumnDirective>;
 
   constructor(
-    private scrollbarHelper: ScrollbarHelper,
-    private dimensionsHelper: DimensionsHelper,
+    @SkipSelf() private scrollbarHelper: ScrollbarHelper,
+    @SkipSelf() private dimensionsHelper: DimensionsHelper,
     private cd: ChangeDetectorRef,
     element: ElementRef,
     differs: KeyValueDiffers) {

@@ -779,8 +779,8 @@ var DatatableComponent = /** @class */ (function () {
     ];
     /** @nocollapse */
     DatatableComponent.ctorParameters = function () { return [
-        { type: services_1.ScrollbarHelper, },
-        { type: services_1.DimensionsHelper, },
+        { type: services_1.ScrollbarHelper, decorators: [{ type: core_1.SkipSelf },] },
+        { type: services_1.DimensionsHelper, decorators: [{ type: core_1.SkipSelf },] },
         { type: core_1.ChangeDetectorRef, },
         { type: core_1.ElementRef, },
         { type: core_1.KeyValueDiffers, },

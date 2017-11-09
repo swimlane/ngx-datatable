@@ -1,6 +1,6 @@
 import {
   Component, Input, HostBinding, ElementRef, Output, KeyValueDiffers, KeyValueDiffer,
-  EventEmitter, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, DoCheck
+  EventEmitter, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, DoCheck, SkipSelf
 } from '@angular/core';
 
 import {
@@ -109,7 +109,7 @@ export class DataTableBodyRowComponent implements DoCheck {
 
   constructor(
       private differs: KeyValueDiffers,
-      private scrollbarHelper: ScrollbarHelper,
+      @SkipSelf() private scrollbarHelper: ScrollbarHelper,
       private cd: ChangeDetectorRef, 
       element: ElementRef) {
     this.element = element.nativeElement;

@@ -151,7 +151,7 @@ var DataTableBodyRowComponent = /** @class */ (function () {
     /** @nocollapse */
     DataTableBodyRowComponent.ctorParameters = function () { return [
         { type: core_1.KeyValueDiffers, },
-        { type: services_1.ScrollbarHelper, },
+        { type: services_1.ScrollbarHelper, decorators: [{ type: core_1.SkipSelf },] },
         { type: core_1.ChangeDetectorRef, },
         { type: core_1.ElementRef, },
     ]; };
