@@ -30,6 +30,7 @@ import { Component } from '@angular/core';
           [selected]="selected"
           [selectionType]="'checkbox'"
           (activate)="onActivate($event)"
+          (selectAll)="onSelectAll($event)"
           (select)='onSelect($event)'>
           <ngx-datatable-column
             [width]="30"
@@ -89,6 +90,9 @@ export class CheckboxSelectionComponent {
 
   onActivate(event) {
     console.log('Activate Event', event);
+  }
+  onSelectAll(event: any) {
+    console.log('SELECT ALL EVENT', event);
   }
 
   add() {

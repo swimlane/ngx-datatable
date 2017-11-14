@@ -42,7 +42,7 @@ import { mouseEvent } from '../../events';
           [sortDescendingIcon]="sortDescendingIcon"
           [allRowsSelected]="allRowsSelected"
           (sort)="onSort($event)"
-          (select)="select.emit($event)"
+          (select)="selectEmit($event)"
           (columnContextmenu)="columnContextmenu.emit($event)">
         </datatable-header-cell>
       </div>
@@ -87,6 +87,9 @@ export class DataTableHeaderComponent {
     const colsByPin = columnsByPin(val);
     this.columnsByPin = columnsByPinArr(val);
     this.columnGroupWidths = columnGroupWidths(colsByPin, val);
+  }
+  selectEmit(event: any) {
+    this.select.emit(event);
   }
 
   get columns(): any[] {
