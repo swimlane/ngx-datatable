@@ -5,8 +5,9 @@ var cache = {};
 var testStyle = typeof document !== 'undefined' ? document.createElement('div').style : undefined;
 var ɵ0 = function () {
     var styles = typeof window !== 'undefined' ? window.getComputedStyle(document.documentElement, '') : undefined;
-    var pre = typeof styles !== 'undefined'
-        ? (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/))[1] : undefined;
+    var match = typeof styles !== 'undefined' ?
+        Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/) : null;
+    var pre = match !== null ? match[1] : undefined;
     var dom = typeof pre !== 'undefined' ? ('WebKit|Moz|MS|O').match(new RegExp('(' + pre + ')', 'i'))[1] : undefined;
     return dom ? {
         dom: dom,

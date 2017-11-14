@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"11.0.3" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"11.0.4" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -3060,7 +3060,7 @@ var DataTableBodyComponent = /** @class */ (function () {
             offset = Math.ceil(offset);
         }
         else if (direction === 'down') {
-            offset = Math.ceil(offset);
+            offset = Math.floor(offset);
         }
         if (direction !== undefined && !isNaN(offset)) {
             this.page.emit({ offset: offset });
@@ -7752,8 +7752,9 @@ var testStyle = typeof document !== 'undefined' ? document.createElement('div').
 // http://davidwalsh.name/vendor-prefix
 var prefix = function () {
     var styles = typeof window !== 'undefined' ? window.getComputedStyle(document.documentElement, '') : undefined;
-    var pre = typeof styles !== 'undefined'
-        ? (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/))[1] : undefined;
+    var match = typeof styles !== 'undefined' ?
+        Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/) : null;
+    var pre = match !== null ? match[1] : undefined;
     var dom = typeof pre !== 'undefined' ? ('WebKit|Moz|MS|O').match(new RegExp('(' + pre + ')', 'i'))[1] : undefined;
     return dom ? {
         dom: dom,

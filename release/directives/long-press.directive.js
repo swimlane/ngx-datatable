@@ -1,12 +1,27 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var Observable_1 = require("rxjs/Observable");
-var Subscription_1 = require("rxjs/Subscription");
 require("rxjs/add/operator/takeUntil");
 var events_1 = require("../events");
 var LongPressDirective = /** @class */ (function () {
     function LongPressDirective() {
+        this.pressEnabled = true;
+        this.duration = 500;
+        this.longPressStart = new core_1.EventEmitter();
+        this.longPressing = new core_1.EventEmitter();
+        this.longPressEnd = new core_1.EventEmitter();
+        this.mouseX = 0;
+        this.mouseY = 0;
     }
     Object.defineProperty(LongPressDirective.prototype, "press", {
         get: function () { return this.pressing; },
@@ -90,6 +105,49 @@ var LongPressDirective = /** @class */ (function () {
             this.subscription = undefined;
         }
     };
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], LongPressDirective.prototype, "pressEnabled", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Object)
+    ], LongPressDirective.prototype, "pressModel", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Number)
+    ], LongPressDirective.prototype, "duration", void 0);
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
+    ], LongPressDirective.prototype, "longPressStart", void 0);
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
+    ], LongPressDirective.prototype, "longPressing", void 0);
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
+    ], LongPressDirective.prototype, "longPressEnd", void 0);
+    __decorate([
+        core_1.HostBinding('class.press'),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], LongPressDirective.prototype, "press", null);
+    __decorate([
+        core_1.HostBinding('class.longpress'),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], LongPressDirective.prototype, "isLongPress", null);
+    __decorate([
+        core_1.HostListener('mousedown', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], LongPressDirective.prototype, "onMouseDown", null);
+    LongPressDirective = __decorate([
+        core_1.Directive({ selector: '[long-press]' })
+    ], LongPressDirective);
     return LongPressDirective;
 }());
 exports.LongPressDirective = LongPressDirective;
