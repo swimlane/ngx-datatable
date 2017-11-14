@@ -77,7 +77,7 @@ import { mouseEvent } from '../events';
         [selectCheck]="selectCheck"
         (page)="onBodyPage($event)"
         [activated]="activated"
-        (activate)="onActivate($event)"
+        (activate)="activate.emit($event)"
         (rowContextmenu)="onRowContextmenu($event)"
         (select)="onBodySelect($event)"
         (scroll)="onBodyScroll($event)">
@@ -1267,7 +1267,6 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    * @memberOf DatatableComponent
    */
   onHeaderSelect(event: any): void {
-
     // before we splice, chk if we currently have all selected
     const allSelected = this.selected.length === this.rows.length;
 
@@ -1294,9 +1293,6 @@ export class DatatableComponent implements OnInit, AfterViewInit {
    */
   onBodySelect(event: any): void {
     this.select.emit(event);
-  }
-  onActivate(event: any): void {
-    this.activate.emit(event);
   }
 
 }
