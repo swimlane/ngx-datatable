@@ -85,6 +85,7 @@ export class CustomCheckboxSelectionComponent {
     this.selected.splice(0, this.selected.length);
     this.selected.push(...selected);
   }
+
   onActivate(event) {
     console.log('Activate Event', event);
   }
