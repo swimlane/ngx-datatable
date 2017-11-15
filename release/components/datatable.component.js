@@ -259,6 +259,20 @@ var DatatableComponent = /** @class */ (function () {
          * @memberOf DatatableComponent
          */
         this.tableContextmenu = new core_1.EventEmitter(false);
+        /**
+         * CSS class applied if the header height if fixed height.
+         *
+         * @readonly
+         * @type {boolean}
+         * @memberOf DatatableComponent
+         */
+        /**
+         * A cell or row was focused via keyboard or mouse click.
+         *
+         * @type {EventEmitter<any>}
+         * @memberOf DatatableComponent
+         */
+        this.selectAll = new core_1.EventEmitter();
         this.rowCount = 0;
         this.recordRowCount = 0;
         this.offsetX = 0;
@@ -449,13 +463,6 @@ var DatatableComponent = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(DatatableComponent.prototype, "isFixedHeader", {
-        /**
-         * CSS class applied if the header height if fixed height.
-         *
-         * @readonly
-         * @type {boolean}
-         * @memberOf DatatableComponent
-         */
         get: function () {
             var headerHeight = this.headerHeight;
             return (typeof headerHeight === 'string') ?
@@ -1041,6 +1048,7 @@ var DatatableComponent = /** @class */ (function () {
         this.select.emit({
             selected: this.selected
         });
+        this.selectAll.emit({ allSelected: !allSelected });
         var _a;
     };
     /**
@@ -1111,6 +1119,7 @@ var DatatableComponent = /** @class */ (function () {
         'reorder': [{ type: core_1.Output },],
         'resize': [{ type: core_1.Output },],
         'tableContextmenu': [{ type: core_1.Output },],
+        'selectAll': [{ type: core_1.Output },],
         'isFixedHeader': [{ type: core_1.HostBinding, args: ['class.fixed-header',] },],
         'isFixedRow': [{ type: core_1.HostBinding, args: ['class.fixed-row',] },],
         'isVertScroll': [{ type: core_1.HostBinding, args: ['class.scroll-vertical',] },],

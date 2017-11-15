@@ -365,6 +365,13 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
      * @type {boolean}
      * @memberOf DatatableComponent
      */
+    /**
+     * A cell or row was focused via keyboard or mouse click.
+     *
+     * @type {EventEmitter<any>}
+     * @memberOf DatatableComponent
+     */
+    selectAll: EventEmitter<any>;
     readonly isFixedHeader: boolean;
     /**
      * CSS class applied to the root element if
