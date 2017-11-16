@@ -1,5 +1,85 @@
 # Changelog
 
+## 11.0.4
+- Bug: Fix Angular5 Aot Issue
+- Bug: Fix Vendor Prefix Error
+
+## 11.0.1, 11.0.2, 11.0.3
+- Bug: Angular 5 bugs
+
+## 11.0.0
+- Chore: Upgrade to Angular5
+
+## 10.4.0
+- Feature: Ability to filter checkable rows (#1056)
+- Feature: Allow sorting based on whole row (#1074)
+- Bug: Fix protractor events (#1081)
+- Bug: Fix misalignment on smaller screens (#1081)
+
+## 10.3.0
+- Feature: Bootstrap theme
+- Bug: Fix CSS for row grouping (#1053)
+- Bug: Fix group row values (#1034)
+- Bug: Fix cell overflow w/ fluid height (#1030)
+- Bug: Fix for column sort (#1018)
+- Bug: Strip HTML for null values (#966)
+- Bug: Update context in cell header (#935)
+- Bug: Add bounds to offset (#978)
+- Bug: Make selection apply to all rows (#974)
+
+## 10.2.3
+- Bug: Fix checkbox not being shown #956
+- Bug: Fix IE displaying null #967
+- Bug: Fix emptry string is row is null #951
+
+## 10.2.2
+- Bug: Recalculate limit properly #963
+
+## 10.2.1
+- Bug: Detail Row Broken
+
+## 10.2.0
+- Feature: Row Grouping
+
+## 10.1.0
+- Feature: Row Hover Event
+- Bug: Columns are no longer mutated!
+- Bug: Fixes for Angular v5!
+- Bug: Fix expand all row detail not working #917
+- Chore: Remove useless jsdoc comments
+
+## 10.0.5
+- Style: Material styles closer to spec
+- Bug: Non-sortable header showing pointer cursor
+
+## 10.0.4
+- Perf: Changed everything internal to OnPush
+- Perf: Fixed header cell outlet cd
+- Bug: Fixed sort mutating original rows
+
+## 10.0.3
+- Perf: Better performance in cells
+
+## 10.0.2
+- Enhancement: Add `rowIndex` to row-detail template
+- Bug: Add `index.css` back to build
+
+## 10.0.1
+- Bug: Fix old references to `$$index` and `$$expanded`
+- Bug: Add `$$index` in cell templates as `rowIndex`
+- Bug: Fix MouseEvent undefined in JIT (#893)
+
+## 10.0.0
+- BREAKING: `$$expanded` is no longer on row of detail templates, use `let-expanded` to get pop now
+- Feature: Always center activated page on pager
+- Bug: Remove row mutations of `$$index` and `$$expanded`
+- Bug: Pagination broken on large number of rows
+- Bug: Strip HTML from title tags (#892)
+
+## 9.3.1
+- Bug: More Universal Rendering Fixes (#795)
+- Chore: Build optimizations from new webpack version
+
 ## 9.3.0
 - Feature: Unviseral Rendering (#764)
 

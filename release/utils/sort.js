@@ -4,9 +4,6 @@ var types_1 = require("../types");
 var column_prop_getters_1 = require("./column-prop-getters");
 /**
  * Gets the next sort direction
- * @param  {SortType}      sortType
- * @param  {SortDirection} currentSort
- * @return {SortDirection}
  */
 function nextSortDir(sortType, current) {
     if (sortType === types_1.SortType.single) {
@@ -27,15 +24,14 @@ function nextSortDir(sortType, current) {
         else if (current === types_1.SortDirection.desc) {
             return undefined;
         }
+        // avoid TS7030: Not all code paths return a value.
+        return undefined;
     }
 }
 exports.nextSortDir = nextSortDir;
 /**
  * Adapted from fueld-ui on 6/216
  * https://github.com/FuelInteractive/fuel-ui/tree/master/src/pipes/OrderBy
- * @param  {any}    a
- * @param  {any}    b
- * @return {number} position
  */
 function orderByComparator(a, b) {
     if (a === null || typeof a === 'undefined')
@@ -71,16 +67,12 @@ function orderByComparator(a, b) {
 exports.orderByComparator = orderByComparator;
 /**
  * Sorts the rows
- *
- * @export
- * @param {any[]} rows
- * @param {any[]} columns
- * @param {any[]} dirs
- * @returns
  */
 function sortRows(rows, columns, dirs) {
-    if (!rows || !dirs || !dirs.length || !columns)
-        return rows;
+    if (!rows)
+        return [];
+    if (!dirs || !dirs.length || !columns)
+        return rows.slice();
     var temp = rows.slice();
     var cols = columns.reduce(function (obj, col) {
         if (col.comparator && typeof col.comparator === 'function') {
@@ -99,15 +91,24 @@ function sortRows(rows, columns, dirs) {
             compareFn: cols[prop] || orderByComparator
         };
     });
-    return temp.sort(function (a, b) {
+    return temp.sort(function (rowA, rowB) {
         for (var _i = 0, cachedDirs_1 = cachedDirs; _i < cachedDirs_1.length; _i++) {
             var cachedDir = cachedDirs_1[_i];
+            // Get property and valuegetters for column to be sorted
             var prop = cachedDir.prop, valueGetter = cachedDir.valueGetter;
-            var propA = valueGetter(a, prop);
-            var propB = valueGetter(b, prop);
+            // Get A and B cell values from rows based on properties of the columns
+            var propA = valueGetter(rowA, prop);
+            var propB = valueGetter(rowB, prop);
+            // Compare function gets five parameters:
+            // Two cell values to be compared as propA and propB
+            // Two rows corresponding to the cells as rowA and rowB
+            // Direction of the sort for this column as SortDirection
+            // Compare can be a standard JS comparison function (a,b) => -1|0|1
+            // as additional parameters are silently ignored. The whole row and sort
+            // direction enable more complex sort logic.
             var comparison = cachedDir.dir !== types_1.SortDirection.desc ?
-                cachedDir.compareFn(propA, propB) :
-                -cachedDir.compareFn(propA, propB);
+                cachedDir.compareFn(propA, propB, rowA, rowB, cachedDir.dir) :
+                -cachedDir.compareFn(propA, propB, rowA, rowB, cachedDir.dir);
             // Don't return 0 yet in case of needing to sort by next property
             if (comparison !== 0)
                 return comparison;

@@ -5,7 +5,8 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/takeUntil';
-import { MouseEvent } from './../events';
+
+import { MouseEvent } from '../events';
 
 @Directive({ selector: '[long-press]' })
 export class LongPressDirective implements OnDestroy {
@@ -34,14 +35,14 @@ export class LongPressDirective implements OnDestroy {
     return this.isLongPressing;
   }
 
-  @HostListener('mousedown', [ '$event' ])
+  @HostListener('mousedown', ['$event'])
   onMouseDown(event: MouseEvent): void {
     // don't do right/middle clicks
-    if(event.which !== 1 || !this.pressEnabled) return;
+    if (event.which !== 1 || !this.pressEnabled) return;
 
     // don't start drag if its on resize handle
     const target = (<HTMLElement>event.target);
-    if(target.classList.contains('resize-handle')) return;
+    if (target.classList.contains('resize-handle')) return;
 
     this.mouseX = event.clientX;
     this.mouseY = event.clientY;
@@ -82,7 +83,7 @@ export class LongPressDirective implements OnDestroy {
     }
   }
 
-  loop(event: Event): void {
+  loop(event: MouseEvent): void {
     if (this.isLongPressing) {
       this.timeout = setTimeout(() => {
         this.longPressing.emit({

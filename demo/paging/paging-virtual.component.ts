@@ -36,7 +36,7 @@ import {Page} from "./model/page";
     </div>
   `
 })
-export class VirualPagingComponent {
+export class VirtualPagingComponent {
 
   page = new Page();
   rows = new Array<CorporateEmployee>();

@@ -10,4 +10,6 @@ __export(require("./progress-bar.component"));
 __export(require("./scroller.component"));
 __export(require("./body-row-wrapper.component"));
 __export(require("./selection.component"));
+__export(require("./body-group-header.directive"));
+__export(require("./body-group-header-template.directive"));
 //# sourceMappingURL=index.js.map

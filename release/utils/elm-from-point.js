@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-if (document !== undefined && !document.elementsFromPoint) {
+if (typeof document !== 'undefined' && !document.elementsFromPoint) {
     document.elementsFromPoint = elementsFromPoint;
 }
 /*tslint:disable*/
@@ -10,11 +10,6 @@ if (document !== undefined && !document.elementsFromPoint) {
  * https://developer.mozilla.org/en-US/docs/Web/API/Document/elementsFromPoint
  * https://gist.github.com/iddan/54d5d9e58311b0495a91bf06de661380
  * https://gist.github.com/oslego/7265412
- *
- * @export
- * @param {any} x
- * @param {any} y
- * @returns
  */
 function elementsFromPoint(x, y) {
     var elements = [];

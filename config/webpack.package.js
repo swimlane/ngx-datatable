@@ -54,6 +54,7 @@ module.exports = function(env) {
       'zone.js/dist/zone': 'zone.js/dist/zone'
     },
     plugins: [
+      new webpack.optimize.ModuleConcatenationPlugin(),
       new CheckerPlugin(),
       new webpack.BannerPlugin({
         banner: banner,

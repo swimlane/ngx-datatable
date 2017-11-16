@@ -14,6 +14,7 @@ import { MouseEvent } from '../../events';
       (reorder)="onColumnReordered($event)"
       [style.width.px]="columnGroupWidths.total"
       class="datatable-header-inner">
+     
       <div
         *ngFor="let colGroup of columnsByPin; trackBy: trackByGroups"
         [class]="'datatable-row-' + colGroup.type"
@@ -53,11 +54,26 @@ import { MouseEvent } from '../../events';
   }
 })
 export class DataTableHeaderComponent {
-
   @Input() sortAscendingIcon: any;
   @Input() sortDescendingIcon: any;
   @Input() scrollbarH: boolean;
-  @Input() innerWidth: number;
+  @Input() dealsWithGroup: boolean;
+
+  _innerWidth: number;
+
+  @Input() set innerWidth(val: number) {
+    this._innerWidth = val;
+
+    if (this._columns) {    
+      const colByPin = columnsByPin(this._columns);
+      this.columnGroupWidths = columnGroupWidths(colByPin, this._columns);       
+    }
+  }
+    
+  get innerWidth(): number {
+    return this._innerWidth;
+  }
+
   @Input() offsetX: number;
   @Input() sorts: any[];
   @Input() sortType: SortType;
@@ -81,7 +97,7 @@ export class DataTableHeaderComponent {
   }
 
   @Input() set columns(val: any[]) {
-    this._columns = val;
+    this._columns = val;    
 
     const colsByPin = columnsByPin(val);
     this.columnsByPin = columnsByPinArr(val);
@@ -111,9 +127,9 @@ export class DataTableHeaderComponent {
   onLongPressEnd({ event, model }: { event: any, model: any }) {
     this.dragEventTarget = event;
 
-    // delay resetting so sort can be 
+    // delay resetting so sort can be
     // prevented if we were dragging
-    setTimeout(() => { 
+    setTimeout(() => {
       model.dragging = false;
     }, 5);
   }
@@ -127,7 +143,7 @@ export class DataTableHeaderComponent {
     return '100%';
   }
 
-  trackByGroups(index: number, colGroup: any): any {
+  trackByGroups(index: number, colGroup: any): any {    
     return colGroup.type;
   }
 
@@ -159,7 +175,7 @@ export class DataTableHeaderComponent {
 
   onSort({ column, prevValue, newValue }: any): void {
     // if we are dragging don't sort!
-    if(column.dragging) return;
+    if (column.dragging) return;
 
     const sorts = this.calcNewSorts(column, prevValue, newValue);
     this.sort.emit({
@@ -173,7 +189,7 @@ export class DataTableHeaderComponent {
   calcNewSorts(column: any, prevValue: number, newValue: number): any[] {
     let idx = 0;
 
-    if(!this.sorts) {
+    if (!this.sorts) {
       this.sorts = [];
     }
 
@@ -186,7 +202,7 @@ export class DataTableHeaderComponent {
     if (newValue === undefined) {
       sorts.splice(idx, 1);
     } else if (prevValue) {
-      sorts[ idx ].dir = newValue;
+      sorts[idx].dir = newValue;
     } else {
       if (this.sortType === SortType.single) {
         sorts.splice(0, this.sorts.length);
@@ -203,7 +219,7 @@ export class DataTableHeaderComponent {
     const offsetX = this.offsetX;
 
     const styles = {
-      width: `${widths[ group ]}px`
+      width: `${widths[group]}px`
     };
 
     if (group === 'center') {
@@ -216,5 +232,4 @@ export class DataTableHeaderComponent {
 
     return styles;
   }
-
 }

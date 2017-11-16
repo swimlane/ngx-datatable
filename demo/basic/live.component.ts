@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'live-data-demo',
@@ -12,10 +12,10 @@ import { Component } from '@angular/core';
           </a>
         </small>
         <small>
-          <a href="#" (click)="start()">Start</a> |
-          <a href="#" (click)="stop()">Stop</a> | 
-          <a href="#" (click)="add()">Add</a> |
-          <a href="#" (click)="remove()">Remove</a>
+          <a href="javascript:void(0)" (click)="start()">Start</a> |
+          <a href="javascript:void(0)" (click)="stop()">Stop</a> | 
+          <a href="javascript:void(0)" (click)="add()">Add</a> |
+          <a href="javascript:void(0)" (click)="remove()">Remove</a>
         </small>
       </h3>
       <ngx-datatable
@@ -37,6 +37,8 @@ import { Component } from '@angular/core';
 })
 export class LiveDataComponent {
 
+  @ViewChild('mydatatable') mydatatable: any;
+
   count: number = 50;
   rows: any[] = [];
   active: boolean = true;
@@ -45,7 +47,7 @@ export class LiveDataComponent {
     'name', 'gender', 'company'
   ];
 
-  constructor() {
+  constructor(private cd: ChangeDetectorRef) {
     this.fetch((data) => {
       this.rows = data.map(d => {
         d.updated = Date.now().toString();
@@ -93,6 +95,10 @@ export class LiveDataComponent {
       row.updated = Date.now().toString();
     }
 
+    this.rows = [...this.rows];
+
+    // this.cd.markForCheck();
+    // this.mydatatable.update();
     this.start();
   }
 

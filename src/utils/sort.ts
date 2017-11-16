@@ -2,11 +2,8 @@ import { SortType, SortDirection, SortPropDir } from '../types';
 import { getterForProp } from './column-prop-getters';
 /**
  * Gets the next sort direction
- * @param  {SortType}      sortType
- * @param  {SortDirection} currentSort
- * @return {SortDirection}
  */
-export function nextSortDir(sortType: SortType, current: SortDirection): SortDirection {
+export function nextSortDir(sortType: SortType, current: SortDirection): SortDirection | undefined {
   if (sortType === SortType.single) {
     if(current === SortDirection.asc) {
       return SortDirection.desc;
@@ -21,15 +18,14 @@ export function nextSortDir(sortType: SortType, current: SortDirection): SortDir
     } else if(current === SortDirection.desc) {
       return undefined;
     }
+    // avoid TS7030: Not all code paths return a value.
+    return undefined;
   }
 }
 
 /**
  * Adapted from fueld-ui on 6/216
  * https://github.com/FuelInteractive/fuel-ui/tree/master/src/pipes/OrderBy
- * @param  {any}    a
- * @param  {any}    b
- * @return {number} position
  */
 export function orderByComparator(a: any, b: any): number {
   if (a === null || typeof a === 'undefined') a = 0;
@@ -56,15 +52,10 @@ export function orderByComparator(a: any, b: any): number {
 
 /**
  * Sorts the rows
- * 
- * @export
- * @param {any[]} rows
- * @param {any[]} columns
- * @param {any[]} dirs
- * @returns
  */
 export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[] {
-  if(!rows || !dirs || !dirs.length || !columns) return rows;
+  if(!rows) return [];
+  if(!dirs || !dirs.length || !columns) return [...rows];
 
   const temp = [...rows];
   const cols = columns.reduce((obj, col) => {
@@ -86,16 +77,25 @@ export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[
     };
   });
 
-  return temp.sort(function(a: any, b: any) {
+  return temp.sort(function(rowA: any, rowB: any) {
 
     for(const cachedDir of cachedDirs) {
+      // Get property and valuegetters for column to be sorted
       const { prop, valueGetter } = cachedDir;
-      const propA = valueGetter(a, prop);
-      const propB = valueGetter(b, prop);
+      // Get A and B cell values from rows based on properties of the columns
+      const propA = valueGetter(rowA, prop);
+      const propB = valueGetter(rowB, prop);
 
+      // Compare function gets five parameters:
+      // Two cell values to be compared as propA and propB
+      // Two rows corresponding to the cells as rowA and rowB
+      // Direction of the sort for this column as SortDirection
+      // Compare can be a standard JS comparison function (a,b) => -1|0|1
+      // as additional parameters are silently ignored. The whole row and sort
+      // direction enable more complex sort logic.
       const comparison = cachedDir.dir !== SortDirection.desc ?
-        cachedDir.compareFn(propA, propB) :
-        -cachedDir.compareFn(propA, propB);
+        cachedDir.compareFn(propA, propB, rowA, rowB, cachedDir.dir) :
+        -cachedDir.compareFn(propA, propB, rowA, rowB, cachedDir.dir);
 
       // Don't return 0 yet in case of needing to sort by next property
       if (comparison !== 0) return comparison;

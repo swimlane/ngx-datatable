@@ -1,6 +1,5 @@
 /**
  * Returns the columns by pin.
- * @param {array} cols
  */
 export function columnsByPin(cols: any[]) {
   const ret: {left: any, center: any, right: any} = {
@@ -26,22 +25,18 @@ export function columnsByPin(cols: any[]) {
 
 /**
  * Returns the widths of all group sets of a column
- * @param {object} groups
- * @param {array} all
  */
 export function columnGroupWidths(groups: any, all: any) {
   return {
     left: columnTotalWidth(groups.left),
     center: columnTotalWidth(groups.center),
     right: columnTotalWidth(groups.right),
-    total: columnTotalWidth(all)
+    total: Math.floor(columnTotalWidth(all))
   };
 }
 
 /**
  * Calculates the total width of all columns and their groups
- * @param {array} columns
- * @param {string} prop width to get
  */
 export function columnTotalWidth(columns: any[], prop?: string) {
   let totalWidth = 0;
@@ -59,8 +54,6 @@ export function columnTotalWidth(columns: any[], prop?: string) {
 
 /**
  * Calculates the total width of all columns and their groups
- * @param {array} columns
- * @param {string} property width to get
  */
 export function columnsTotalWidth(columns: any, prop?: any) {
   let totalWidth = 0;
@@ -76,6 +69,18 @@ export function columnsTotalWidth(columns: any, prop?: any) {
 export function columnsByPinArr(val: any) {
   const colsByPinArr = [];
   const colsByPin = columnsByPin(val);
+
+  colsByPinArr.push({ type: 'left', columns: colsByPin['left'] });
+  colsByPinArr.push({ type: 'center', columns: colsByPin['center'] });
+  colsByPinArr.push({ type: 'right', columns: colsByPin['right'] });
+
+  return colsByPinArr;
+}
+
+export function allColumnsByPinArr(val: any) {
+  const colsByPinArr = [];
+  const colsByPin = columnsByPin(val);
+  const colsTest = [];
 
   colsByPinArr.push({ type: 'left', columns: colsByPin['left'] });
   colsByPinArr.push({ type: 'center', columns: colsByPin['center'] });

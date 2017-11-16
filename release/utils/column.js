@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Returns the columns by pin.
- * @param {array} cols
  */
 function columnsByPin(cols) {
     var ret = {
@@ -29,22 +28,18 @@ function columnsByPin(cols) {
 exports.columnsByPin = columnsByPin;
 /**
  * Returns the widths of all group sets of a column
- * @param {object} groups
- * @param {array} all
  */
 function columnGroupWidths(groups, all) {
     return {
         left: columnTotalWidth(groups.left),
         center: columnTotalWidth(groups.center),
         right: columnTotalWidth(groups.right),
-        total: columnTotalWidth(all)
+        total: Math.floor(columnTotalWidth(all))
     };
 }
 exports.columnGroupWidths = columnGroupWidths;
 /**
  * Calculates the total width of all columns and their groups
- * @param {array} columns
- * @param {string} prop width to get
  */
 function columnTotalWidth(columns, prop) {
     var totalWidth = 0;
@@ -61,8 +56,6 @@ function columnTotalWidth(columns, prop) {
 exports.columnTotalWidth = columnTotalWidth;
 /**
  * Calculates the total width of all columns and their groups
- * @param {array} columns
- * @param {string} property width to get
  */
 function columnsTotalWidth(columns, prop) {
     var totalWidth = 0;
@@ -83,4 +76,14 @@ function columnsByPinArr(val) {
     return colsByPinArr;
 }
 exports.columnsByPinArr = columnsByPinArr;
+function allColumnsByPinArr(val) {
+    var colsByPinArr = [];
+    var colsByPin = columnsByPin(val);
+    var colsTest = [];
+    colsByPinArr.push({ type: 'left', columns: colsByPin['left'] });
+    colsByPinArr.push({ type: 'center', columns: colsByPin['center'] });
+    colsByPinArr.push({ type: 'right', columns: colsByPin['right'] });
+    return colsByPinArr;
+}
+exports.allColumnsByPinArr = allColumnsByPinArr;
 //# sourceMappingURL=column.js.map

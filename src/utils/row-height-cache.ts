@@ -31,7 +31,7 @@ export class RowHeightCache {
    * @param detailRowHeight The detail row height.
    */
   initCache(details: any): void {
-    const { rows, rowHeight, detailRowHeight, externalVirtual, rowCount } = details;
+    const { rows, rowHeight, detailRowHeight, externalVirtual, rowCount, rowIndexes, rowExpansions } = details;
     const isFn = typeof rowHeight === 'function';
     const isDetailFn = typeof detailRowHeight === 'function';
 
@@ -62,9 +62,11 @@ export class RowHeightCache {
 
       // Add the detail row height to the already expanded rows.
       // This is useful for the table that goes through a filter or sort.
-      if(row && row.$$expanded === 1) {
+      const expanded = rowExpansions.get(row);
+      if(row && expanded === 1) {
         if(isDetailFn) {
-          currentRowHeight += detailRowHeight(row, row.$$index);
+          const index = rowIndexes.get(row);
+          currentRowHeight += detailRowHeight(row, index);
         } else {
           currentRowHeight += detailRowHeight;
         }
@@ -77,9 +79,6 @@ export class RowHeightCache {
   /**
    * Given the ScrollY position i.e. sum, provide the rowIndex
    * that is present in the current view port.  Below handles edge cases.
-   *
-   * @param scrollY - The scrollY position.
-   * @returns {number} - Index representing the first row visible in the viewport
    */
   getRowIndex(scrollY: number): number {
     if(scrollY === 0) return 0;
@@ -89,10 +88,6 @@ export class RowHeightCache {
   /**
    * When a row is expanded or rowHeight is changed, update the height.  This can
    * be utilized in future when Angular Data table supports dynamic row heights.
-   *
-   *
-   * @param atRowIndex Update the data at this index row in the grid.
-   * @param byRowHeight Update by the rowHeight provided.
    */
   update(atRowIndex: number, byRowHeight: number): void {
     if (!this.treeArray.length) {
@@ -111,9 +106,6 @@ export class RowHeightCache {
 
   /**
    * Range Sum query from 1 to the rowIndex
-   *
-   * @param atIndex The row index until which the total height needs to be obtained.
-   * @returns {number} The total height from row 1 to the rowIndex.
    */
   query(atIndex: number): number {
     if (!this.treeArray.length) {
@@ -133,9 +125,6 @@ export class RowHeightCache {
 
   /**
    * Find the total height between 2 row indexes
-   * @param atIndexA The row index from
-   * @param atIndexB The row index to
-   * @returns {number} total pixel height between 2 row indexes.
    */
   queryBetween(atIndexA: number, atIndexB: number): number {
     return this.query(atIndexB) - this.query(atIndexA - 1);
@@ -144,9 +133,6 @@ export class RowHeightCache {
   /**
    * Given the ScrollY position i.e. sum, provide the rowIndex
    * that is present in the current view port.
-   *
-   * @param sum - The scrollY position.
-   * @returns {number} - Index representing the first row visible in the viewport
    */
   private calcRowIndex(sum: number): number {
     if(!this.treeArray.length) return 0;

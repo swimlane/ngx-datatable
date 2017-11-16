@@ -13,6 +13,7 @@ import { HorzVertScrolling } from './basic/scrolling.component';
 import { MultipleTablesComponent } from './basic/multiple.component';
 import { FullScreenComponent } from './basic/fullscreen.component';
 import { RowDetailsComponent } from './basic/row-detail.component';
+import { ResponsiveComponent } from './basic/responsive.component';
 import { FilterBarComponent } from './basic/filter.component';
 import { TabsDemoComponent } from './basic/tabs.component';
 import { LiveDataComponent } from './basic/live.component';
@@ -20,14 +21,18 @@ import { RxDemoComponent } from './basic/rx.component';
 import { ContextMenuDemoComponent } from './basic/contextmenu.component';
 import { RowCssComponent } from './basic/css.component';
 import { DynamicHeightComponent } from './basic/dynamic-height.component';
-import { DarkThemeComponent } from './basic/dark-theme.component';
 import { FooterDemoComponent } from './basic/footer.component';
+import { RowGroupingComponent } from './basic/row-grouping.component';
+
+// -- Themes
+import { BootstrapThemeComponent } from './basic/bootstrap.component';
+import { DarkThemeComponent } from './basic/dark-theme.component';
 
 // -- Paging
 import { ClientPagingComponent } from './paging/paging-client.component';
 import { ServerPagingComponent } from './paging/paging-server.component';
 import { ServerScrollingComponent } from './paging/scrolling-server.component';
-import { VirualPagingComponent } from './paging/paging-virtual.component';
+import { VirtualPagingComponent } from './paging/paging-virtual.component';
 
 // -- Sorting
 import { SortingComparatorComponent } from './sorting/sorting-comparator.component';
@@ -66,6 +71,7 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     HorzVertScrolling,
     MultipleTablesComponent,
     RowDetailsComponent,
+    ResponsiveComponent,
     ClientPagingComponent,
     ServerPagingComponent,
     ServerScrollingComponent,
@@ -83,7 +89,7 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     ColumnForceComponent,
     ColumnPinningComponent,
     FilterBarComponent,
-    VirualPagingComponent,
+    VirtualPagingComponent,
     DarkThemeComponent,
     TabsDemoComponent,
     SingleSelectionComponent,
@@ -96,7 +102,9 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     MultiClickSelectionComponent,
     RowCssComponent,
     DynamicHeightComponent,
-    FooterDemoComponent
+    FooterDemoComponent,
+    RowGroupingComponent,
+    BootstrapThemeComponent
   ],
   imports: [BrowserModule, NgxDatatableModule],
   bootstrap: [AppComponent]

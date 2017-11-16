@@ -35,7 +35,7 @@ export class DraggableDirective implements OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes['dragEventTarget'] && changes['dragEventTarget'].currentValue && this.dragModel.dragging) {
+    if (changes['dragEventTarget'] && changes['dragEventTarget'].currentValue && this.dragModel.dragging) {
       this.onMousedown(changes['dragEventTarget'].currentValue);
     }
   }
@@ -63,8 +63,8 @@ export class DraggableDirective implements OnDestroy, OnChanges {
   onMousedown(event: MouseEvent): void {
     // we only want to drag the inner header text
     const isDragElm = (<HTMLElement>event.target).classList.contains('draggable');
-    
-    if(isDragElm && (this.dragX || this.dragY)) {
+
+    if (isDragElm && (this.dragX || this.dragY)) {
       event.preventDefault();
       this.isDragging = true;
 

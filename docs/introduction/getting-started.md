@@ -48,7 +48,7 @@ export class AppComponent {
 }
 ```
 
-and your off to the races! 
+and you're off to the races! 
 
 For more examples, visit the 
 [demos](https://github.com/swimlane/angular2-data-table/tree/master/demo) directory

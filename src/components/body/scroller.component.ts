@@ -1,6 +1,6 @@
 import {
-  Component, Input, ElementRef, Output, EventEmitter, Renderer,
-  OnInit, OnDestroy, HostBinding
+  Component, Input, ElementRef, Output, EventEmitter,
+  OnInit, OnDestroy, HostBinding, ChangeDetectionStrategy
 } from '@angular/core';
 
 import { MouseEvent } from '../../events';
@@ -12,7 +12,8 @@ import { MouseEvent } from '../../events';
   `,
   host: {
     class: 'datatable-scroll'
-  }
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ScrollerComponent implements OnInit, OnDestroy {
 
@@ -35,27 +36,26 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   parentElement: any;
   onScrollListener: any;
 
-  constructor(element: ElementRef, private renderer: Renderer) {
+  constructor(element: ElementRef) {
     this.element = element.nativeElement;
   }
 
   ngOnInit(): void {
     // manual bind so we don't always listen
-    if(this.scrollbarV || this.scrollbarH) {
+    if (this.scrollbarV || this.scrollbarH) {
       this.parentElement = this.element.parentElement.parentElement;
-      this.onScrollListener = this.renderer.listen(
-        this.parentElement, 'scroll', this.onScrolled.bind(this));
+      this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
     }
   }
 
   ngOnDestroy(): void {
-    if(this.scrollbarV || this.scrollbarH) {
-      this.onScrollListener();
+    if (this.scrollbarV || this.scrollbarH) {
+      this.parentElement.removeEventListener('scroll', this.onScrolled.bind(this));
     }
   }
 
   setOffset(offsetY: number): void {
-    if(this.parentElement) {
+    if (this.parentElement) {
       this.parentElement.scrollTop = offsetY;
     }
   }
@@ -70,9 +70,9 @@ export class ScrollerComponent implements OnInit, OnDestroy {
 
   updateOffset(): void {
     let direction: string;
-    if(this.scrollYPos < this.prevScrollYPos) {
+    if (this.scrollYPos < this.prevScrollYPos) {
       direction = 'down';
-    } else if(this.scrollYPos > this.prevScrollYPos) {
+    } else if (this.scrollYPos > this.prevScrollYPos) {
       direction = 'up';
     }
 
