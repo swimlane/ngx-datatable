@@ -15,6 +15,7 @@ import { DataTableBodyComponent } from './body';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
+import { DataTableHeaderComponent } from './header';
 import { MouseEvent } from '../events';
 
 @Component({
@@ -406,6 +407,15 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   @Input() trackByProp: string;
 
   /**
+   * Property to which you can use for determining select all
+   * rows on current page or not.
+   *
+   * @type {boolean}
+   * @memberOf DatatableComponent
+   */
+  @Input() selectAllRowsOnPage = false;
+
+  /**
    * Body was scrolled typically in a `scrollbarV:true` scenario.
    *
    * @type {EventEmitter<any>}
@@ -658,6 +668,17 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   bodyComponent: DataTableBodyComponent;
 
   /**
+   * Reference to the header component for manually
+   * invoking functions on the header.
+   *
+   * @private
+   * @type {DataTableHeaderComponent}
+   * @memberOf DatatableComponent
+   */
+  @ViewChild(DataTableHeaderComponent)
+  headerComponent: DataTableHeaderComponent;
+
+  /**
    * Returns if all rows are selected.
    *
    * @readonly
@@ -666,10 +687,16 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   get allRowsSelected(): boolean {
-    return this.selected &&
-      this.rows &&
-      this.rows.length !== 0 &&
-      this.selected.length === this.rows.length;
+    let allRowsSelected = (this.selected.length === this.rows.length);
+
+    if (this.selectAllRowsOnPage) {
+      const indexes = this.bodyComponent.indexes;
+      const rowsOnPage = indexes.last - indexes.first;
+      allRowsSelected = (this.selected.length === rowsOnPage);
+    }
+
+    return this.selected && this.rows &&
+      this.rows.length !== 0 && allRowsSelected;
   }
 
   element: HTMLElement;
@@ -686,8 +713,8 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
   _columnTemplates: QueryList<DataTableColumnDirective>;
 
   constructor(
-    private scrollbarHelper: ScrollbarHelper, 
-    element: ElementRef, 
+    private scrollbarHelper: ScrollbarHelper,
+    element: ElementRef,
     differs: KeyValueDiffers) {
 
     // get ref to elm for measuring
@@ -887,6 +914,13 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
       limit: this.limit,
       offset: this.offset
     });
+
+    if (this.selectAllRowsOnPage) {
+      this.selected = [];
+      this.select.emit({
+        selected: this.selected
+      });
+    }
   }
 
   /**
@@ -1050,15 +1084,29 @@ export class DatatableComponent implements OnInit, AfterViewInit, DoCheck {
    * @memberOf DatatableComponent
    */
   onHeaderSelect(event: any): void {
-    // before we splice, chk if we currently have all selected
-    const allSelected = this.selected.length === this.rows.length;
 
-    // remove all existing either way
-    this.selected = [];
+    if (this.selectAllRowsOnPage) {
+      // before we splice, chk if we currently have all selected
+      const first = this.bodyComponent.indexes.first;
+      const last = this.bodyComponent.indexes.last;
+      const allSelected = this.selected.length === (last - first);
 
-    // do the opposite here
-    if (!allSelected) {
-      this.selected.push(...this.rows);
+      // remove all existing either way
+      this.selected = [];
+      
+      // do the opposite here
+      if (!allSelected) {
+        this.selected.push(...this.rows.slice(first, last));
+      }
+    } else {
+      // before we splice, chk if we currently have all selected
+      const allSelected = this.selected.length === this.rows.length;
+      // remove all existing either way
+      this.selected = [];
+      // do the opposite here
+      if (!allSelected) {
+        this.selected.push(...this.rows);
+      }
     }
 
     this.select.emit({
