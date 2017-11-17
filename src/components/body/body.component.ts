@@ -79,7 +79,7 @@ import { MouseEvent } from '../../events';
       </datatable-scroller>
       <div
         class="empty-row"
-        *ngIf="!rows?.length"
+        *ngIf="!rows?.length && !loadingIndicator"
         [innerHTML]="emptyMessage">
       </div>
     </datatable-selection>
