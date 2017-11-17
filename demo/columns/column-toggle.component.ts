@@ -75,7 +75,11 @@ export class ColumnToggleComponent {
         return c.name !== col.name; 
       });
     } else {
-      this.columns = [...this.columns, col];
+      const newColumns = [...this.columns, col];
+      this.columns = this.allColumns.filter(
+            f => newColumns.filter(
+              s => s.name === f.name)
+            ).map(x => Object.assign({}, x));
     }
   }
 
