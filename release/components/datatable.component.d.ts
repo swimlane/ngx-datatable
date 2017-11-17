@@ -529,6 +529,12 @@ export declare class DatatableComponent implements OnInit, AfterViewInit {
      */
     scrollToRow(rowId: any): void;
     /**
+     * Scrolls to a specific section id
+     *
+     * @param sectionId
+     */
+    scrollToSection(sectionId: any): void;
+    /**
      * Lifecycle hook that is called after data-bound
      * properties of a directive are initialized.
      *

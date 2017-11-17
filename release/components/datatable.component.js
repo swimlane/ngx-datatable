@@ -697,6 +697,14 @@ var DatatableComponent = /** @class */ (function () {
         }
     };
     /**
+     * Scrolls to a specific section id
+     *
+     * @param sectionId
+     */
+    DatatableComponent.prototype.scrollToSection = function (sectionId) {
+        this.bodyComponent.scrollToSection(sectionId);
+    };
+    /**
      * Lifecycle hook that is called after data-bound
      * properties of a directive are initialized.
      *
