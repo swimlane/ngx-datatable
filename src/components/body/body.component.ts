@@ -321,12 +321,14 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       });
     }
 
-    this.offsetY = scrollYPos;
     this.offsetX = scrollXPos;
 
-    this.updateIndexes();
-    this.updatePage(event.direction);
-    this.updateRows();
+    if (this.offsetY !== scrollYPos) {
+      this.offsetY = scrollYPos;
+      this.updateIndexes();
+      this.updatePage(event.direction);
+      this.updateRows();
+    }
   }
 
   /**
@@ -644,30 +646,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   columnTrackingFn(index: number, column: any): any {
     return column.$$id;
-  }
-
-  /**
-   * Gets the row pinning group styles
-   */
-  stylesByGroup(group: string) {
-    const widths = this.columnGroupWidths;
-    const offsetX = this.offsetX;
-
-    const styles = {
-      width: `${widths[group]}px`
-    };
-
-    if(group === 'left') {
-      translateXY(styles, offsetX, 0);
-    } else if(group === 'right') {
-      const bodyWidth = parseInt(this.innerWidth + '', 0);
-      const totalDiff = widths.total - bodyWidth;
-      const offsetDiff = totalDiff - offsetX;
-      const offset = offsetDiff * -1;
-      translateXY(styles, offset, 0);
-    }
-
-    return styles;
   }
   
   /**

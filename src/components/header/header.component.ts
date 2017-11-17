@@ -1,10 +1,12 @@
 import {
-  Component, Output, EventEmitter, Input, HostBinding
+  Component, Output, EventEmitter, Input, HostBinding, ChangeDetectorRef, OnDestroy
 } from '@angular/core';
 import { SortType, SelectionType } from '../../types';
 import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY } from '../../utils';
 import { DataTableColumnDirective } from '../columns';
 import { MouseEvent } from '../../events';
+import { ScrollerService } from '../body/scroller.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'datatable-header',
@@ -14,11 +16,10 @@ import { MouseEvent } from '../../events';
       (reorder)="onColumnReordered($event)"
       [style.width.px]="columnGroupWidths.total"
       class="datatable-header-inner">
-     
       <div
         *ngFor="let colGroup of columnsByPin; trackBy: trackByGroups"
         [class]="'datatable-row-' + colGroup.type"
-        [ngStyle]="stylesByGroup(colGroup.type)">
+        [ngStyle]="groupStyles[colGroup.type]">
         <datatable-header-cell
           *ngFor="let column of colGroup.columns; trackBy: columnTrackingFn"
           resizeable
@@ -53,7 +54,7 @@ import { MouseEvent } from '../../events';
     class: 'datatable-header'
   }
 })
-export class DataTableHeaderComponent {
+export class DataTableHeaderComponent implements OnDestroy {
   @Input() sortAscendingIcon: any;
   @Input() sortDescendingIcon: any;
   @Input() scrollbarH: boolean;
@@ -74,7 +75,6 @@ export class DataTableHeaderComponent {
     return this._innerWidth;
   }
 
-  @Input() offsetX: number;
   @Input() sorts: any[];
   @Input() sortType: SortType;
   @Input() allRowsSelected: boolean;
@@ -118,6 +118,27 @@ export class DataTableHeaderComponent {
   columnGroupWidths: any;
   _columns: any[];
   _headerHeight: string;
+
+  groupStyles = {
+    left: {},
+    center: {},
+    right: {}
+  };
+
+  private subscription: Subscription;
+
+  constructor(private scroller: ScrollerService, private cd: ChangeDetectorRef) {
+    this.subscription = scroller.offset.subscribe((offset: any) => {
+      this.groupStyles.left = this.stylesByGroup('left', offset.scrollXPos);
+      this.groupStyles.center = this.stylesByGroup('center', offset.scrollXPos;
+      this.groupStyles.right = this.stylesByGroup('right', offset.scrollXPos);
+      this.cd.detectChanges();
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
   onLongPressStart({ event, model }: { event: any, model: any }) {
     model.dragging = true;
@@ -214,9 +235,8 @@ export class DataTableHeaderComponent {
     return sorts;
   }
 
-  stylesByGroup(group: string): any {
+  stylesByGroup(group: string, offsetX: number): any {
     const widths = this.columnGroupWidths;
-    const offsetX = this.offsetX;
 
     const styles = {
       width: `${widths[group]}px`

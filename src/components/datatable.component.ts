@@ -18,6 +18,7 @@ import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
 import { MouseEvent } from '../events';
+import { ScrollerService } from './body/scroller.service';
 
 @Component({
   selector: 'ngx-datatable',
@@ -31,7 +32,6 @@ import { MouseEvent } from '../events';
         [sortType]="sortType"
         [scrollbarH]="scrollbarH"
         [innerWidth]="innerWidth"
-        [offsetX]="offsetX"
         [dealsWithGroup]="groupedRows"
         [columns]="_internalColumns"
         [headerHeight]="headerHeight"
@@ -100,6 +100,7 @@ import { MouseEvent } from '../events';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./datatable.component.scss'],
+  providers: [ScrollerService],
   host: {
     class: 'ngx-datatable'
   }
@@ -620,6 +621,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   _columnTemplates: QueryList<DataTableColumnDirective>;
 
   constructor(
+    private scroller: ScrollerService,
     private scrollbarHelper: ScrollbarHelper,
     private cd: ChangeDetectorRef,
     element: ElementRef,

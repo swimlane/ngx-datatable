@@ -8,6 +8,8 @@ import {
 } from '../../utils';
 import { ScrollbarHelper } from '../../services';
 import { MouseEvent, KeyboardEvent } from '../../events';
+import { ScrollerService } from './scroller.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'datatable-body-row',
@@ -16,7 +18,7 @@ import { MouseEvent, KeyboardEvent } from '../../events';
     <div
       *ngFor="let colGroup of columnsByPin; let i = index; trackBy: trackByGroups"
       class="datatable-row-{{colGroup.type}} datatable-row-group"
-      [ngStyle]="stylesByGroup(colGroup.type)">
+      [ngStyle]="groupStyles[colGroup.type]">
       <datatable-body-cell
         *ngFor="let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn"
         tabindex="-1"
@@ -105,15 +107,30 @@ export class DataTableBodyRowComponent implements DoCheck {
   _columns: any[];
   _innerWidth: number;
 
+  groupStyles = {
+    left: {},
+    center: {},
+    right: {}
+  };
+
   private rowDiffer: KeyValueDiffer<{}, {}>;
+  private subscription: Subscription;
 
   constructor(
+      private scroller: ScrollerService,
       private differs: KeyValueDiffers,
       private scrollbarHelper: ScrollbarHelper,
       private cd: ChangeDetectorRef, 
       element: ElementRef) {
     this.element = element.nativeElement;
     this.rowDiffer = differs.find({}).create();
+
+    this.subscription = scroller.offset.subscribe((offset: any) => {
+      this.groupStyles.left = this.stylesByGroup('left', offset.scrollXPos);
+      this.groupStyles.center = this.stylesByGroup('center', offset.scrollXPos;
+      this.groupStyles.right = this.stylesByGroup('right', offset.scrollXPos);
+      this.cd.markForCheck();
+    });
   }
 
   ngDoCheck(): void {
@@ -130,9 +147,8 @@ export class DataTableBodyRowComponent implements DoCheck {
     return column.$$id;
   }
 
-  stylesByGroup(group: string) {
+  stylesByGroup(group: string, offsetX: number) {
     const widths = this.columnGroupWidths;
-    const offsetX = this.offsetX;
 
     const styles = {
       width: `${widths[group]}px`
