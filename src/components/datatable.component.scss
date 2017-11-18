@@ -83,7 +83,7 @@
    * Shared Styles
    */
   .datatable-body-row,
-  .datatable-row-center,
+  .datatable-column-group,
   .datatable-header-inner {
     display: -webkit-box;
     display: -moz-box;
@@ -91,7 +91,14 @@
     display: -webkit-flex;
     display: flex;
 
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: normal;
+    -ms-flex-direction: row;
     flex-direction: row;
+    
     -webkit-flex-flow: row;
     -moz-flex-flow: row;
     -ms-flex-flow: row;
@@ -111,15 +118,12 @@
     }
   }
 
-  .datatable-row-left,
-  .datatable-row-right {
+  .datatable-column-left,
+  .datatable-column-right {
     z-index: 9;
   }
 
-  .datatable-row-left,
-  .datatable-row-center,
-  .datatable-row-group,
-  .datatable-row-right {
+  .datatable-column-group {
     position:relative;
   }
 
@@ -210,14 +214,6 @@
 
     .datatable-body-row {
       outline:none;
-
-      > div {
-        display: -webkit-box;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-      }
     }
   }
 

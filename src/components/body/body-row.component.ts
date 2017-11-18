@@ -15,7 +15,7 @@ import { MouseEvent, KeyboardEvent } from '../../events';
   template: `
     <div
       *ngFor="let colGroup of columnsByPin; let i = index; trackBy: trackByGroups"
-      class="datatable-row-{{colGroup.type}} datatable-row-group"
+      class="datatable-column-{{colGroup.type}} datatable-column-group"
       [ngStyle]="stylesByGroup(colGroup.type)">
       <datatable-body-cell
         *ngFor="let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn"
