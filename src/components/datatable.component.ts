@@ -17,6 +17,7 @@ import { DatatableGroupHeaderDirective } from './body/body-group-header.directiv
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
+import { DataTableHeaderComponent } from './header';
 import { MouseEvent } from '../events';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
@@ -112,14 +113,14 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    */
   @Input() set rows(val: any) {
     this._rows = val;
-    
+
     // auto sort on new updates
     if (!this.externalSorting) {
       this._internalRows = sortRows(val, this._internalColumns, this.sorts);
     } else {
       this._internalRows = [...val];
     }
-    
+
     // recalculate sizes/etc
     this.recalculate();
 
@@ -411,6 +412,15 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   @Input() trackByProp: string;
 
   /**
+   * Property to which you can use for determining select all
+   * rows on current page or not.
+   *
+   * @type {boolean}
+   * @memberOf DatatableComponent
+   */
+  @Input() selectAllRowsOnPage = false;
+
+  /**
    * Body was scrolled typically in a `scrollbarV:true` scenario.
    */
   @Output() scroll: EventEmitter<any> = new EventEmitter();
@@ -577,7 +587,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Group Header templates gathered from the ContentChild
    */
   @ContentChild(DatatableGroupHeaderDirective)
-  groupHeader: DatatableGroupHeaderDirective;  
+  groupHeader: DatatableGroupHeaderDirective;
 
   /**
    * Footer template gathered from the ContentChild
@@ -593,13 +603,30 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   bodyComponent: DataTableBodyComponent;
 
   /**
+   * Reference to the header component for manually
+   * invoking functions on the header.
+   *
+   * @private
+   * @type {DataTableHeaderComponent}
+   * @memberOf DatatableComponent
+   */
+  @ViewChild(DataTableHeaderComponent)
+  headerComponent: DataTableHeaderComponent;
+
+  /**
    * Returns if all rows are selected.
    */
   get allRowsSelected(): boolean {
-    return this.selected &&
-      this.rows &&
-      this.rows.length !== 0 &&
-      this.selected.length === this.rows.length;
+    let allRowsSelected = (this.selected.length === this.rows.length);
+
+    if (this.selectAllRowsOnPage) {
+      const indexes = this.bodyComponent.indexes;
+      const rowsOnPage = indexes.last - indexes.first;
+      allRowsSelected = (this.selected.length === rowsOnPage);
+    }
+
+    return this.selected && this.rows &&
+      this.rows.length !== 0 && allRowsSelected;
   }
 
   element: HTMLElement;
@@ -639,7 +666,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     // need to call this immediatly to size
     // if the table is hidden the visibility
     // listener will invoke this itself upon show
-    this.recalculate();    
+    this.recalculate();
   }
 
   /**
@@ -695,11 +722,11 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
     // convert map back to a simple array of objects
     return Array.from(map, x => addGroup(x[0], x[1]));
-   }
+  }
 
-   /*
-   * Lifecycle hook that is called when Angular dirty checks a directive.
-   */
+  /*
+  * Lifecycle hook that is called when Angular dirty checks a directive.
+  */
   ngDoCheck(): void {
     if (this.rowDiffer.diff(this.rows)) {
       if (!this.externalSorting) {
@@ -707,7 +734,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       } else {
         this._internalRows = [...this.rows];
       }
-      
+
       this.recalculatePages();
       this.cd.markForCheck();
     }
@@ -826,6 +853,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       limit: this.limit,
       offset: this.offset
     });
+
+    if (this.selectAllRowsOnPage) {
+      this.selected = [];
+      this.select.emit({
+        selected: this.selected
+      });
+    }
   }
 
   /**
@@ -835,18 +869,18 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     // Keep the page size constant even if the row has been expanded.
     // This is because an expanded row is still considered to be a child of
     // the original row.  Hence calculation would use rowHeight only.
-    if (this.scrollbarV) {      
+    if (this.scrollbarV) {
       const size = Math.ceil(this.bodyHeight / this.rowHeight);
       return Math.max(size, 0);
     }
 
     // if limit is passed, we are paging
-    if (this.limit !== undefined) {      
+    if (this.limit !== undefined) {
       return this.limit;
     }
 
     // otherwise use row length
-    if (val) {     
+    if (val) {
       return val.length;
     }
 
@@ -865,7 +899,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
         return this.groupedRows.length;
       } else {
         return val.length;
-      }        
+      }
     }
 
     return this.count;
@@ -944,6 +978,14 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * The header triggered a column sort event.
    */
   onColumnSort(event: any): void {
+    // clean selected rows
+    if (this.selectAllRowsOnPage) {
+      this.selected = [];
+      this.select.emit({
+        selected: this.selected
+      });
+    }
+
     const { sorts } = event;
 
     // this could be optimized better since it will resort
@@ -964,15 +1006,29 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Toggle all row selection
    */
   onHeaderSelect(event: any): void {
-    // before we splice, chk if we currently have all selected
-    const allSelected = this.selected.length === this.rows.length;
 
-    // remove all existing either way
-    this.selected = [];
+    if (this.selectAllRowsOnPage) {
+      // before we splice, chk if we currently have all selected
+      const first = this.bodyComponent.indexes.first;
+      const last = this.bodyComponent.indexes.last;
+      const allSelected = this.selected.length === (last - first);
 
-    // do the opposite here
-    if (!allSelected) {
-      this.selected.push(...this.rows);
+      // remove all existing either way
+      this.selected = [];
+
+      // do the opposite here
+      if (!allSelected) {
+        this.selected.push(...this._internalRows.slice(first, last));
+      }
+    } else {
+      // before we splice, chk if we currently have all selected
+      const allSelected = this.selected.length === this.rows.length;
+      // remove all existing either way
+      this.selected = [];
+      // do the opposite here
+      if (!allSelected) {
+        this.selected.push(...this.rows);
+      }
     }
 
     this.select.emit({
