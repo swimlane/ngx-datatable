@@ -9,7 +9,7 @@ import { MouseEvent } from '../../events';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div 
-      *ngIf="groupHeader && groupHeader.template"
+      *ngIf="groupHeader && groupHeader.template && row?.value"
       class="datatable-group-header"
       [ngStyle]="getGroupHeaderStyle()">
       <ng-template
@@ -20,7 +20,7 @@ import { MouseEvent } from '../../events';
     </div>
     <ng-content 
       *ngIf="(groupHeader && groupHeader.template && expanded) || 
-             (!groupHeader || !groupHeader.template)">
+             (!groupHeader || !groupHeader.template || !row?.value)">
     </ng-content>
     <div
       *ngIf="rowDetail && rowDetail.template && expanded"

@@ -674,7 +674,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * Returns if the row was expanded and set default row expansion when row expansion is empty
    */
   getRowExpanded(row: any): boolean {
-    if (this.rowExpansions.size === 0 && this.groupExpansionDefault) {
+    if (this.rowExpansions.size === 0 && this.groupExpansionDefault && this.groupedRows) {
       for (const group of this.groupedRows) {
         this.rowExpansions.set(group, 1);
       }
