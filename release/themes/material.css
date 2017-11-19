@@ -231,7 +231,7 @@
   vertical-align: middle;
   display: inline-block;
   box-sizing: border-box;
-  padding: 10px 0; }
+  padding: 0; }
   .datatable-checkbox input[type='checkbox'] {
     position: relative;
     margin: 0 1rem 0 0;

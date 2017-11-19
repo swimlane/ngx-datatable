@@ -19,8 +19,13 @@ var DataTableBodyRowComponent = /** @class */ (function () {
         this.scrollbarHelper = scrollbarHelper;
         this.cd = cd;
         this.activate = new core_1.EventEmitter();
-        this.element = element.nativeElement;
-        this.rowDiffer = differs.find({}).create();
+        this._groupStyles = {
+            left: {},
+            center: {},
+            right: {}
+        };
+        this._element = element.nativeElement;
+        this._rowDiffer = differs.find({}).create();
     }
     Object.defineProperty(DataTableBodyRowComponent.prototype, "columns", {
         get: function () {
@@ -40,10 +45,20 @@ var DataTableBodyRowComponent = /** @class */ (function () {
         set: function (val) {
             if (this._columns) {
                 var colByPin = utils_1.columnsByPin(this._columns);
-                this.columnGroupWidths = utils_1.columnGroupWidths(colByPin, colByPin);
+                this._columnGroupWidths = utils_1.columnGroupWidths(colByPin, colByPin);
             }
             this._innerWidth = val;
             this.recalculateColumns();
+            this.buildStylesByGroup();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataTableBodyRowComponent.prototype, "offsetX", {
+        get: function () { return this._offsetX; },
+        set: function (val) {
+            this._offsetX = val;
+            this.buildStylesByGroup();
         },
         enumerable: true,
         configurable: true
@@ -78,13 +93,13 @@ var DataTableBodyRowComponent = /** @class */ (function () {
     });
     Object.defineProperty(DataTableBodyRowComponent.prototype, "columnsTotalWidths", {
         get: function () {
-            return this.columnGroupWidths.total;
+            return this._columnGroupWidths.total;
         },
         enumerable: true,
         configurable: true
     });
     DataTableBodyRowComponent.prototype.ngDoCheck = function () {
-        if (this.rowDiffer.diff(this.row)) {
+        if (this._rowDiffer.diff(this.row)) {
             this.cd.markForCheck();
         }
     };
@@ -94,8 +109,14 @@ var DataTableBodyRowComponent = /** @class */ (function () {
     DataTableBodyRowComponent.prototype.columnTrackingFn = function (index, column) {
         return column.$$id;
     };
-    DataTableBodyRowComponent.prototype.stylesByGroup = function (group) {
-        var widths = this.columnGroupWidths;
+    DataTableBodyRowComponent.prototype.buildStylesByGroup = function () {
+        this._groupStyles['left'] = this.calcStylesByGroup('left');
+        this._groupStyles['center'] = this.calcStylesByGroup('center');
+        this._groupStyles['right'] = this.calcStylesByGroup('right');
+        this.cd.detectChanges();
+    };
+    DataTableBodyRowComponent.prototype.calcStylesByGroup = function (group) {
+        var widths = this._columnGroupWidths;
         var offsetX = this.offsetX;
         var styles = {
             width: widths[group] + "px"
@@ -114,12 +135,12 @@ var DataTableBodyRowComponent = /** @class */ (function () {
     };
     DataTableBodyRowComponent.prototype.onActivate = function (event, index) {
         event.cellIndex = index;
-        event.rowElement = this.element;
+        event.rowElement = this._element;
         this.activate.emit(event);
     };
     DataTableBodyRowComponent.prototype.onKeyDown = function (event) {
         var keyCode = event.keyCode;
-        var isTargetRow = event.target === this.element;
+        var isTargetRow = event.target === this._element;
         var isAction = keyCode === utils_1.Keys.return ||
             keyCode === utils_1.Keys.down ||
             keyCode === utils_1.Keys.up ||
@@ -132,7 +153,7 @@ var DataTableBodyRowComponent = /** @class */ (function () {
                 type: 'keydown',
                 event: event,
                 row: this.row,
-                rowElement: this.element
+                rowElement: this._element
             });
         }
     };
@@ -141,15 +162,15 @@ var DataTableBodyRowComponent = /** @class */ (function () {
             type: 'mouseenter',
             event: event,
             row: this.row,
-            rowElement: this.element
+            rowElement: this._element
         });
     };
     DataTableBodyRowComponent.prototype.recalculateColumns = function (val) {
         if (val === void 0) { val = this.columns; }
         this._columns = val;
         var colsByPin = utils_1.columnsByPin(this._columns);
-        this.columnsByPin = utils_1.allColumnsByPinArr(this._columns);
-        this.columnGroupWidths = utils_1.columnGroupWidths(colsByPin, this._columns);
+        this._columnsByPin = utils_1.allColumnsByPinArr(this._columns);
+        this._columnGroupWidths = utils_1.columnGroupWidths(colsByPin, this._columns);
     };
     __decorate([
         core_1.Input(),
@@ -179,10 +200,6 @@ var DataTableBodyRowComponent = /** @class */ (function () {
     ], DataTableBodyRowComponent.prototype, "group", void 0);
     __decorate([
         core_1.Input(),
-        __metadata("design:type", Number)
-    ], DataTableBodyRowComponent.prototype, "offsetX", void 0);
-    __decorate([
-        core_1.Input(),
         __metadata("design:type", Boolean)
     ], DataTableBodyRowComponent.prototype, "isSelected", void 0);
     __decorate([
@@ -193,6 +210,11 @@ var DataTableBodyRowComponent = /** @class */ (function () {
         core_1.Input(),
         __metadata("design:type", Object)
     ], DataTableBodyRowComponent.prototype, "displayCheck", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
+    ], DataTableBodyRowComponent.prototype, "offsetX", null);
     __decorate([
         core_1.HostBinding('class'),
         __metadata("design:type", Object),
@@ -228,7 +250,7 @@ var DataTableBodyRowComponent = /** @class */ (function () {
         core_1.Component({
             selector: 'datatable-body-row',
             changeDetection: core_1.ChangeDetectionStrategy.OnPush,
-            template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: trackByGroups\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [group]=\"group\"\n        [expanded]=\"expanded\"\n        [isSelected]=\"isSelected\"\n        [rowIndex]=\"rowIndex\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        [displayCheck]=\"displayCheck\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>      \n  "
+            template: "\n    <div\n      *ngFor=\"let colGroup of _columnsByPin; let i = index; trackBy: trackByGroups\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"_groupStyles[colGroup.type]\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [group]=\"group\"\n        [expanded]=\"expanded\"\n        [isSelected]=\"isSelected\"\n        [rowIndex]=\"rowIndex\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        [displayCheck]=\"displayCheck\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>      \n  "
         }),
         __metadata("design:paramtypes", [core_1.KeyValueDiffers,
             services_1.ScrollbarHelper,

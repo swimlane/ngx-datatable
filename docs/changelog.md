@@ -1,5 +1,10 @@
 # Changelog
 
+## 11.1.0
+- Perf: Better performance on scrolling y and x
+- Feature: Select All on Current Page (#1132)
+- Bug: Don't show empty on loading (#1139)
+
 ## 11.0.4
 - Bug: Fix Angular5 Aot Issue
 - Bug: Fix Vendor Prefix Error

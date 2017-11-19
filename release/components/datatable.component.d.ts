@@ -6,6 +6,8 @@ import { DatatableGroupHeaderDirective } from './body/body-group-header.directiv
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
+import { DataTableHeaderComponent } from './header';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export declare class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     private scrollbarHelper;
     private cd;
@@ -197,6 +199,14 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     trackByProp: string;
     /**
+     * Property to which you can use for determining select all
+     * rows on current page or not.
+     *
+     * @type {boolean}
+     * @memberOf DatatableComponent
+     */
+    selectAllRowsOnPage: boolean;
+    /**
      * Body was scrolled typically in a `scrollbarV:true` scenario.
      */
     scroll: EventEmitter<any>;
@@ -303,16 +313,25 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     bodyComponent: DataTableBodyComponent;
     /**
+     * Reference to the header component for manually
+     * invoking functions on the header.
+     *
+     * @private
+     * @type {DataTableHeaderComponent}
+     * @memberOf DatatableComponent
+     */
+    headerComponent: DataTableHeaderComponent;
+    /**
      * Returns if all rows are selected.
      */
     readonly allRowsSelected: boolean;
     element: HTMLElement;
-    innerWidth: number;
+    _innerWidth: number;
     pageSize: number;
     bodyHeight: number;
     rowCount: number;
-    offsetX: number;
     rowDiffer: KeyValueDiffer<{}, {}>;
+    _offsetX: BehaviorSubject<number>;
     _limit: number | undefined;
     _count: number;
     _offset: number;
