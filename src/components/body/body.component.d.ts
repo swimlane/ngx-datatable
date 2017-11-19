@@ -50,7 +50,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      * based on the row heights cache for virtual scroll. Other scenarios
      * calculate scroll height automatically (as height will be undefined).
      */
-    readonly scrollHeight: number;
+    readonly scrollHeight: number | undefined;
     rowHeightsCache: RowHeightCache;
     temp: any[];
     offsetY: number;

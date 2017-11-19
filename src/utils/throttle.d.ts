@@ -1,7 +1,7 @@
 /**
  * Throttle a function
  */
-export declare function throttle(func: any, wait: number, options?: any): () => any;
+export declare function throttle(func: any, wait: number, options?: any): (this: any) => any;
 /**
  * Throttle decorator
  *
