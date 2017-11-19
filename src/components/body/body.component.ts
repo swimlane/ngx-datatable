@@ -28,7 +28,7 @@ import { MouseEvent } from '../../events';
         [scrollbarV]="scrollbarV"
         [scrollbarH]="scrollbarH"
         [scrollHeight]="scrollHeight"
-        [scrollWidth]="columnGroupWidths.total"
+        [scrollWidth]="columnGroupWidths?.total"
         (scroll)="onBodyScroll($event)">
         <datatable-row-wrapper
           [groupedRows]="groupedRows"
