@@ -18,6 +18,7 @@ import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
 import { MouseEvent } from '../events';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
   selector: 'ngx-datatable',
@@ -30,8 +31,8 @@ import { MouseEvent } from '../events';
         [sorts]="sorts"
         [sortType]="sortType"
         [scrollbarH]="scrollbarH"
-        [innerWidth]="innerWidth"
-        [offsetX]="offsetX"
+        [innerWidth]="_innerWidth"
+        [offsetX]="_offsetX | async"
         [dealsWithGroup]="groupedRows"
         [columns]="_internalColumns"
         [headerHeight]="headerHeight"
@@ -61,11 +62,11 @@ import { MouseEvent } from '../events';
         [trackByProp]="trackByProp"
         [columns]="_internalColumns"
         [pageSize]="pageSize"
-        [offsetX]="offsetX"
+        [offsetX]="_offsetX | async"
         [rowDetail]="rowDetail"
         [groupHeader]="groupHeader"
         [selected]="selected"
-        [innerWidth]="innerWidth"
+        [innerWidth]="_innerWidth"
         [bodyHeight]="bodyHeight"
         [selectionType]="selectionType"
         [emptyMessage]="messages.emptyMessage"
@@ -602,13 +603,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   }
 
   element: HTMLElement;
-  innerWidth: number;
+  _innerWidth: number;
   pageSize: number;
   bodyHeight: number;
   rowCount: number = 0;
-  offsetX: number = 0;
   rowDiffer: KeyValueDiffer<{}, {}>;
 
+  _offsetX = new BehaviorSubject(0);
   _limit: number | undefined;
   _count: number = 0;
   _offset: number = 0;
@@ -748,7 +749,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
     if (!columns) return undefined;
 
-    let width = this.innerWidth;
+    let width = this._innerWidth;
     if (this.scrollbarV) {
       width = width - this.scrollbarHelper.width;
     }
@@ -769,7 +770,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    */
   recalculateDims(): void {
     const dims = this.element.getBoundingClientRect();
-    this.innerWidth = Math.floor(dims.width);
+    this._innerWidth = Math.floor(dims.width);
 
     if (this.scrollbarV) {
       let height = dims.height;
@@ -807,8 +808,9 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * The body triggered a scroll event.
    */
   onBodyScroll(event: MouseEvent): void {
-    this.offsetX = event.offsetX;
+    this._offsetX.next(event.offsetX);
     this.scroll.emit(event);
+    this.cd.detectChanges();
   }
 
   /**
