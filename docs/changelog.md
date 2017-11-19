@@ -1,5 +1,8 @@
 # Changelog
 
+## 11.1.1
+- Bug: Fix race case with rows
+
 ## 11.1.0
 - Perf: Better performance on scrolling y and x
 - Feature: Select All on Current Page (#1132)

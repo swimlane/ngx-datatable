@@ -113,7 +113,7 @@ var DataTableBodyRowComponent = /** @class */ (function () {
         this._groupStyles['left'] = this.calcStylesByGroup('left');
         this._groupStyles['center'] = this.calcStylesByGroup('center');
         this._groupStyles['right'] = this.calcStylesByGroup('right');
-        this.cd.detectChanges();
+        this.cd.markForCheck();
     };
     DataTableBodyRowComponent.prototype.calcStylesByGroup = function (group) {
         var widths = this._columnGroupWidths;
