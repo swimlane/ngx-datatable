@@ -1,5 +1,8 @@
 # Changelog
 
+## 11.1.2
+- Bug: Fix total undefined (#1140)
+
 ## 11.1.1
 - Bug: Fix race case with rows
 
