@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"11.1.2" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"11.1.3" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -3114,7 +3114,7 @@ var DataTableBodyRowComponent = /** @class */ (function () {
     __decorate([
         core_1.HostListener('mouseenter', ['$event']),
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", [Event]),
+        __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", void 0)
     ], DataTableBodyRowComponent.prototype, "onMouseenter", null);
     DataTableBodyRowComponent = __decorate([

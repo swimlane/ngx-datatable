@@ -1,5 +1,8 @@
 # Changelog
 
+## 11.1.3
+- Bug: Angular SSR Event Undefined (#1144)
+
 ## 11.1.2
 - Bug: Fix total undefined (#1140)
 
