@@ -4,7 +4,7 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { MouseEvent } from '../events';
-import 'rxjs/add/operator/takeUntil';
+import { takeUntil } from 'rxjs/operators';
 
 @Directive({
   selector: '[resizeable]',
@@ -64,7 +64,7 @@ export class ResizeableDirective implements OnDestroy, AfterViewInit {
         .subscribe((ev: MouseEvent) => this.onMouseup());
 
       const mouseMoveSub = Observable.fromEvent(document, 'mousemove')
-        .takeUntil(mouseup)
+        .pipe(takeUntil(mouseup))
         .subscribe((e: MouseEvent) => this.move(e, initialWidth, mouseDownScreenX));
 
       this.subscription.add(mouseMoveSub);
