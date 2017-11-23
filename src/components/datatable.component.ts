@@ -556,18 +556,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   @ContentChildren(DataTableColumnDirective)
   set columnTemplates(val: QueryList<DataTableColumnDirective>) {
     this._columnTemplates = val;
-
-    if (val) {
-      // only set this if results were brought back
-      const arr = val.toArray();
-
-      if (arr.length) {
-        // translate them to normal objects
-        this._internalColumns = translateTemplates(arr);
-        setColumnDefaults(this._internalColumns);
-        this.recalculateColumns();
-      }
-    }
+    this.translateColumns(val);
   }
 
   /**
@@ -693,6 +682,30 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
         });
       }
     });
+  }
+
+  /**
+   * Lifecycle hook that is called after a component's
+   * content has been fully initialized.
+   */
+  ngAfterContentInit() {
+    this.columnTemplates.changes.subscribe(v =>
+      this.translateColumns(v));
+  }
+
+  /**
+   * Translates the templates to the column objects
+   */
+  translateColumns(val: any) {
+    if (val) {
+      const arr = val.toArray();
+      if (arr.length) {
+        this._internalColumns = translateTemplates(arr);
+        setColumnDefaults(this._internalColumns);
+        this.recalculateColumns();
+        this.cd.markForCheck();
+      }
+    }
   }
 
   /**
