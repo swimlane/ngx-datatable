@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var Observable_1 = require("rxjs/Observable");
-require("rxjs/add/operator/takeUntil");
+var operators_1 = require("rxjs/operators");
 var events_1 = require("../events");
 var LongPressDirective = /** @class */ (function () {
     function LongPressDirective() {
@@ -57,7 +57,7 @@ var LongPressDirective = /** @class */ (function () {
                 model: _this.pressModel
             });
             _this.subscription.add(Observable_1.Observable.fromEvent(document, 'mousemove')
-                .takeUntil(mouseup)
+                .pipe(operators_1.takeUntil(mouseup))
                 .subscribe(function (mouseEvent) { return _this.onMouseMove(mouseEvent); }));
             _this.loop(event);
         }, this.duration);

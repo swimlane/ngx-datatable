@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var Observable_1 = require("rxjs/Observable");
-require("rxjs/add/operator/takeUntil");
+var operators_1 = require("rxjs/operators");
 /**
  * Draggable Directive for Angular2
  *
@@ -64,7 +64,7 @@ var DraggableDirective = /** @class */ (function () {
             this.subscription = mouseup
                 .subscribe(function (ev) { return _this.onMouseup(ev); });
             var mouseMoveSub = Observable_1.Observable.fromEvent(document, 'mousemove')
-                .takeUntil(mouseup)
+                .pipe(operators_1.takeUntil(mouseup))
                 .subscribe(function (ev) { return _this.move(ev, mouseDownPos_1); });
             this.subscription.add(mouseMoveSub);
             this.dragStart.emit({

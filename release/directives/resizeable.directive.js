@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var Observable_1 = require("rxjs/Observable");
 var events_1 = require("../events");
-require("rxjs/add/operator/takeUntil");
+var operators_1 = require("rxjs/operators");
 var ResizeableDirective = /** @class */ (function () {
     function ResizeableDirective(element) {
         this.resizeEnabled = true;
@@ -49,7 +49,7 @@ var ResizeableDirective = /** @class */ (function () {
             this.subscription = mouseup
                 .subscribe(function (ev) { return _this.onMouseup(); });
             var mouseMoveSub = Observable_1.Observable.fromEvent(document, 'mousemove')
-                .takeUntil(mouseup)
+                .pipe(operators_1.takeUntil(mouseup))
                 .subscribe(function (e) { return _this.move(e, initialWidth, mouseDownScreenX); });
             this.subscription.add(mouseMoveSub);
         }
