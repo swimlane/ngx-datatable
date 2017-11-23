@@ -57,6 +57,12 @@ export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[
   if(!rows) return [];
   if(!dirs || !dirs.length || !columns) return [...rows];
 
+  /**
+   * create a mapping from each row to its row index prior to sorting
+   */
+  const rowToIndexMap = new Map<any, number>();
+  rows.forEach((row, index) => rowToIndexMap.set(row, index));
+
   const temp = [...rows];
   const cols = columns.reduce((obj, col) => {
     if(col.comparator && typeof col.comparator === 'function') {
@@ -101,7 +107,9 @@ export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[
       if (comparison !== 0) return comparison;
     }
 
-    // equal each other
-    return 0;
+    /**
+     * all else being equal, preserve original order of the rows (stable sort)
+     */
+    return rowToIndexMap.get(rowA) < rowToIndexMap.get(rowB) ? -1 : 1;
   });
 }
