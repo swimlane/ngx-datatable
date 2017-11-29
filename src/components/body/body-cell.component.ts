@@ -13,7 +13,8 @@ import { MouseEvent, KeyboardEvent } from '../../events';
   selector: 'datatable-body-cell',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="datatable-body-cell-label">
+    <div class="datatable-body-cell-label"
+      [style.margin-left.px]="column.isTreeColumn ? row.level * 50 : 0">
       <label
         *ngIf="column.checkboxable && (!displayCheck || displayCheck(row, column, value))"
         class="datatable-checkbox">
@@ -24,8 +25,17 @@ import { MouseEvent, KeyboardEvent } from '../../events';
         />
       </label>
       <label
-        *ngIf="column.isTreeColumn">
-        +
+        *ngIf="column.isTreeColumn"
+        (click)="onTreeAction()">
+        <span *ngIf="_treeStatus==='loading'">
+          ...
+        </span>
+        <span *ngIf="_treeStatus==='collapsed'">
+          +
+        </span>
+        <span *ngIf="_treeStatus==='expanded'">
+          -
+        </span>
       </label>
 
       <span
@@ -128,7 +138,26 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     return this._sorts;
   }
 
+  @Input() set treeStatus(status: string) {
+    if (status !== 'collapsed' &&
+        status !== 'expanded' &&
+        status !== 'loading') {
+      this._treeStatus = 'collapsed';
+    } else {
+      this._treeStatus = status;
+    }
+
+    this.checkValueUpdates();
+    this.cd.markForCheck();
+  }
+
+  get treeStatus(): string {
+    return this._treeStatus;
+  }
+
   @Output() activate: EventEmitter<any> = new EventEmitter();
+
+  @Output('treeAction') treeActionClick: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('cellTemplate', { read: ViewContainerRef }) cellTemplate: ViewContainerRef;
 
@@ -205,6 +234,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   private _rowIndex: number;
   private _expanded: boolean;
   private _element: any;
+  private _treeStatus: string;
 
   constructor(element: ElementRef, private cd: ChangeDetectorRef) {
     this._element = element.nativeElement;
@@ -337,6 +367,10 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   stripHtml(html: string): string {
     if(!html.replace) return html;
     return html.replace(/<\/?[^>]+(>|$)/g, '');
+  }
+
+  onTreeAction(row: any) {
+    this.treeActionClick.emit();
   }
 
 }

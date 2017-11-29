@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { setTimeout } from 'timers';
 
 @Component({
   selector: 'full-screen-tree-demo',
@@ -21,7 +22,8 @@ import { Component } from '@angular/core';
         [rowHeight]="50"
         [scrollbarV]="true"
         [scrollbarH]="true"
-        [rows]="rows">
+        [rows]="rows"
+        (treeAction)="onTreeAction($event)">
         <ngx-datatable-column name="Id" [width]="80"></ngx-datatable-column>
         <ngx-datatable-column name="Name" [isTreeColumn]="true" [width]="300"></ngx-datatable-column>
         <ngx-datatable-column name="Gender"></ngx-datatable-column>
@@ -35,9 +37,16 @@ import { Component } from '@angular/core';
 export class FullScreenTreeComponent {
 
   rows = [];
+  lastIndex = 15;
+
   constructor() {
     this.fetch((data) => {
-      this.rows = data;
+      data = data.slice(1, this.lastIndex);
+      this.rows = data.map((d) => {
+        d.treeStatus = 'collapsed';
+        d.parentId = null;
+        return d;
+      });
     });
   }
 
@@ -46,10 +55,35 @@ export class FullScreenTreeComponent {
     req.open('GET', `assets/data/100k.json`);
 
     req.onload = () => {
-      cb(JSON.parse(req.response));
+      setTimeout(() => {
+        cb(JSON.parse(req.response));
+      }, 500);
     };
 
     req.send();
+  }
+
+  onTreeAction(event: any) {
+    console.log('The event - ', event);
+    const index = event.rowIndex;
+    const row = event.row;
+    if (this.rows[index].treeStatus === 'collapsed') {
+      this.rows[index].treeStatus = 'loading';
+      this.fetch((data) => {
+        data = data.slice(this.lastIndex, this.lastIndex + 3)
+          .map((d) => {
+            d.treeStatus = 'collapsed';
+            d.parentId = row.id;
+            return d;
+          });
+        this.lastIndex = this.lastIndex + 3;
+        this.rows[index].treeStatus = 'expanded';
+        this.rows = [...this.rows, ...data];
+      });
+    } else {
+      this.rows[index].treeStatus = 'collapsed';
+      this.rows = [...this.rows];
+    }
   }
 
 }
