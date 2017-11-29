@@ -1,5 +1,8 @@
 # Changelog
 
+## 11.1.5
+- Compat: Fix Angular 4.x Compat
+
 ## 11.1.4
 - Bug: Fix column templates not updating with loops/ifs
 - Bug: Fix sorting on cross browser
