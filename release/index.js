@@ -16122,43 +16122,60 @@ var DataTableBodyComponent = /** @class */ (function () {
      * Updates the rows in the view port
      */
     DataTableBodyComponent.prototype.updateRows = function () {
-        var _a = this.indexes, first = _a.first, last = _a.last;
-        var rowIndex = first;
-        var idx = 0;
-        var temp = [];
-        this.rowIndexes.clear();
-        // if grouprowsby has been specified treat row paging 
-        // parameters as group paging parameters ie if limit 10 has been 
-        // specified treat it as 10 groups rather than 10 rows    
-        if (this.groupedRows) {
-            var maxRowsPerGroup = 3;
-            // if there is only one group set the maximum number of 
-            // rows per group the same as the total number of rows
-            if (this.groupedRows.length === 1) {
-                maxRowsPerGroup = this.groupedRows[0].value.length;
+        if (this.disableVirtualScroll) {
+            if (this.rowCount > 1) {
+                this.rowIndexes.clear();
+                for (var i = 0; i < this.rowCount; i++) {
+                    var row = this.rows[i];
+                    if (row) {
+                        this.rowIndexes.set(row, i);
+                    }
+                }
             }
-            while (rowIndex < last && rowIndex < this.groupedRows.length) {
-                // Add the groups into this page
-                var group = this.groupedRows[rowIndex];
-                temp[idx] = group;
-                idx++;
-                // Group index in this context
-                rowIndex++;
+            if (this.rows) {
+                this.temp = this.rows.slice();
+                this.cd.detectChanges();
             }
         }
         else {
-            while (rowIndex < last && rowIndex < this.rowCount) {
-                var row = this.rows[rowIndex];
-                if (row) {
-                    this.rowIndexes.set(row, rowIndex);
-                    temp[idx] = row;
+            var _a = this.indexes, first = _a.first, last = _a.last;
+            var rowIndex = first;
+            var idx = 0;
+            var temp = [];
+            this.rowIndexes.clear();
+            // if grouprowsby has been specified treat row paging 
+            // parameters as group paging parameters ie if limit 10 has been 
+            // specified treat it as 10 groups rather than 10 rows    
+            if (this.groupedRows) {
+                var maxRowsPerGroup = 3;
+                // if there is only one group set the maximum number of 
+                // rows per group the same as the total number of rows
+                if (this.groupedRows.length === 1) {
+                    maxRowsPerGroup = this.groupedRows[0].value.length;
                 }
-                idx++;
-                rowIndex++;
+                while (rowIndex < last && rowIndex < this.groupedRows.length) {
+                    // Add the groups into this page
+                    var group = this.groupedRows[rowIndex];
+                    temp[idx] = group;
+                    idx++;
+                    // Group index in this context
+                    rowIndex++;
+                }
             }
+            else {
+                while (rowIndex < last && rowIndex < this.rowCount) {
+                    var row = this.rows[rowIndex];
+                    if (row) {
+                        this.rowIndexes.set(row, rowIndex);
+                        temp[idx] = row;
+                    }
+                    idx++;
+                    rowIndex++;
+                }
+            }
+            this.temp = temp;
+            this.cd.detectChanges();
         }
-        this.temp = temp;
-        this.cd.detectChanges();
     };
     /**
      * Get the row height
@@ -16490,6 +16507,10 @@ var DataTableBodyComponent = /** @class */ (function () {
         core_1.Input(),
         __metadata("design:type", String)
     ], DataTableBodyComponent.prototype, "groupRowsBy", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], DataTableBodyComponent.prototype, "disableVirtualScroll", void 0);
     __decorate([
         core_1.Input(),
         __metadata("design:type", Number),
@@ -17280,6 +17301,14 @@ var DatatableComponent = /** @class */ (function () {
          */
         this.selectAllRowsOnPage = false;
         /**
+         * A boolean to enable/disable virtual scrolling.
+         * Enabled virtual scroll will remove not visible rows from the DOM.
+         *
+         * @type {boolean}
+         * @memberOf DatatableComponent
+         */
+        this.disableVirtualScroll = false;
+        /**
          * Body was scrolled typically in a `scrollbarV:true` scenario.
          */
         this.scroll = new core_1.EventEmitter();
@@ -17335,7 +17364,7 @@ var DatatableComponent = /** @class */ (function () {
             this._rows = val;
             // auto sort on new updates
             if (!this.externalSorting) {
-                this._internalRows = utils_1.sortRows(val, this._internalColumns, this.sorts);
+                this._internalRows = utils_1.sortRows(val, this._internalColumns, this.sorts, []);
             }
             else {
                 this._internalRows = val.slice();
@@ -17602,7 +17631,7 @@ var DatatableComponent = /** @class */ (function () {
     DatatableComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
         if (!this.externalSorting) {
-            this._internalRows = utils_1.sortRows(this._rows, this._internalColumns, this.sorts);
+            this._internalRows = utils_1.sortRows(this._rows, this._internalColumns, this.sorts, this._internalRows);
         }
         // this has to be done to prevent the change detection
         // tree from freaking out because we are readjusting
@@ -17675,7 +17704,7 @@ var DatatableComponent = /** @class */ (function () {
     DatatableComponent.prototype.ngDoCheck = function () {
         if (this.rowDiffer.diff(this.rows)) {
             if (!this.externalSorting) {
-                this._internalRows = utils_1.sortRows(this._rows, this._internalColumns, this.sorts);
+                this._internalRows = utils_1.sortRows(this._rows, this._internalColumns, this.sorts, this._internalRows);
             }
             else {
                 this._internalRows = this.rows.slice();
@@ -17908,7 +17937,7 @@ var DatatableComponent = /** @class */ (function () {
         // the rows again on the 'push' detection...
         if (this.externalSorting === false) {
             // don't use normal setter so we don't resort
-            this._internalRows = utils_1.sortRows(this.rows, this._internalColumns, sorts);
+            this._internalRows = utils_1.sortRows(this.rows, this._internalColumns, sorts, this._internalRows);
         }
         this.sorts = sorts;
         // Always go to first page when sorting to see the newly sorted data
@@ -18080,6 +18109,10 @@ var DatatableComponent = /** @class */ (function () {
         __metadata("design:type", Object)
     ], DatatableComponent.prototype, "selectAllRowsOnPage", void 0);
     __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], DatatableComponent.prototype, "disableVirtualScroll", void 0);
+    __decorate([
         core_1.Output(),
         __metadata("design:type", core_1.EventEmitter)
     ], DatatableComponent.prototype, "scroll", void 0);
@@ -18196,7 +18229,7 @@ var DatatableComponent = /** @class */ (function () {
     DatatableComponent = __decorate([
         core_1.Component({
             selector: 'ngx-datatable',
-            template: "\n    <div\n      visibilityObserver\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"_innerWidth\"\n        [offsetX]=\"_offsetX | async\"\n        [dealsWithGroup]=\"groupedRows\"\n        [columns]=\"_internalColumns\"\n        [headerHeight]=\"headerHeight\"\n        [reorderable]=\"reorderable\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        [selectionType]=\"selectionType\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\"\n        (columnContextmenu)=\"onColumnContextmenu($event)\">\n      </datatable-header>\n      <datatable-body\n        [groupRowsBy]=\"groupRowsBy\"\n        [groupedRows]=\"groupedRows\"\n        [rows]=\"_internalRows\"\n        [groupExpansionDefault]=\"groupExpansionDefault\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [externalPaging]=\"externalPaging\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"_internalColumns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"_offsetX | async\"\n        [rowDetail]=\"rowDetail\"\n        [groupHeader]=\"groupHeader\"\n        [selected]=\"selected\"\n        [innerWidth]=\"_innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [rowClass]=\"rowClass\"\n        [selectCheck]=\"selectCheck\"\n        [displayCheck]=\"displayCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"onRowContextmenu($event)\"\n        (select)=\"onBodySelect($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [footerTemplate]=\"footer\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [selectedCount]=\"selected.length\"\n        [selectedMessage]=\"!!selectionType && messages.selectedMessage\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
+            template: "\n    <div\n      visibilityObserver\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"_innerWidth\"\n        [offsetX]=\"_offsetX | async\"\n        [dealsWithGroup]=\"groupedRows\"\n        [columns]=\"_internalColumns\"\n        [headerHeight]=\"headerHeight\"\n        [reorderable]=\"reorderable\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        [selectionType]=\"selectionType\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\"\n        (columnContextmenu)=\"onColumnContextmenu($event)\">\n      </datatable-header>\n      <datatable-body\n        [groupRowsBy]=\"groupRowsBy\"\n        [groupedRows]=\"groupedRows\"\n        [rows]=\"_internalRows\"\n        [groupExpansionDefault]=\"groupExpansionDefault\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [externalPaging]=\"externalPaging\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"_internalColumns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"_offsetX | async\"\n        [rowDetail]=\"rowDetail\"\n        [groupHeader]=\"groupHeader\"\n        [selected]=\"selected\"\n        [innerWidth]=\"_innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [rowClass]=\"rowClass\"\n        [selectCheck]=\"selectCheck\"\n        [displayCheck]=\"displayCheck\"\n        [disableVirtualScroll]=\"disableVirtualScroll\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"onRowContextmenu($event)\"\n        (select)=\"onBodySelect($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [footerTemplate]=\"footer\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [selectedCount]=\"selected.length\"\n        [selectedMessage]=\"!!selectionType && messages.selectedMessage\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
             changeDetection: core_1.ChangeDetectionStrategy.OnPush,
             encapsulation: core_1.ViewEncapsulation.None,
             styles: [__webpack_require__("./src/components/datatable.component.scss")],
@@ -21199,18 +21232,22 @@ function orderByComparator(a, b) {
 }
 exports.orderByComparator = orderByComparator;
 /**
- * Sorts the rows
+ * creates a shallow copy of the `rows` input and returns the sorted copy. this function
+ * does not sort the `rows` argument in place
  */
-function sortRows(rows, columns, dirs) {
+function sortRows(rows, columns, dirs, priorSortResult) {
     if (!rows)
         return [];
     if (!dirs || !dirs.length || !columns)
         return rows.slice();
     /**
-     * create a mapping from each row to its row index prior to sorting
+     * record the row ordering of results from prior sort operations (if applicable)
+     * this is necessary to guarantee stable sorting behavior
      */
     var rowToIndexMap = new Map();
-    rows.forEach(function (row, index) { return rowToIndexMap.set(row, index); });
+    if (Array.isArray(priorSortResult)) {
+        priorSortResult.forEach(function (row, index) { return rowToIndexMap.set(row, index); });
+    }
     var temp = rows.slice();
     var cols = columns.reduce(function (obj, col) {
         if (col.comparator && typeof col.comparator === 'function') {
@@ -21251,6 +21288,8 @@ function sortRows(rows, columns, dirs) {
             if (comparison !== 0)
                 return comparison;
         }
+        if (!(rowToIndexMap.has(rowA) && rowToIndexMap.has(rowB)))
+            return 0;
         /**
          * all else being equal, preserve original order of the rows (stable sort)
          */
