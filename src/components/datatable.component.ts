@@ -75,6 +75,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
         [rowClass]="rowClass"
         [selectCheck]="selectCheck"
         [displayCheck]="displayCheck"
+        [disableVirtualScroll]="disableVirtualScroll"
         (page)="onBodyPage($event)"
         (activate)="activate.emit($event)"
         (rowContextmenu)="onRowContextmenu($event)"
@@ -419,6 +420,15 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * @memberOf DatatableComponent
    */
   @Input() selectAllRowsOnPage = false;
+
+  /**
+   * A boolean to enable/disable virtual scrolling.
+   * Enabled virtual scroll will remove not visible rows from the DOM.
+   *
+   * @type {boolean}
+   * @memberOf DatatableComponent
+   */
+  @Input() disableVirtualScroll: boolean = false;
 
   /**
    * Body was scrolled typically in a `scrollbarV:true` scenario.

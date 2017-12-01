@@ -111,6 +111,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() groupExpansionDefault: boolean;
   @Input() innerWidth: number;
   @Input() groupRowsBy: string;
+  @Input() disableVirtualScroll: boolean;
 
   @Input() set pageSize(val: number) {
     this._pageSize = val;
@@ -134,7 +135,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() set columns(val: any[]) {
     this._columns = val;
     const colsByPin = columnsByPin(val);
-    this.columnGroupWidths = columnGroupWidths(colsByPin, val);    
+    this.columnGroupWidths = columnGroupWidths(colsByPin, val);
   }
 
   get columns(): any[] {
@@ -276,8 +277,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
           this.updateIndexes();
           this.updateRows();
           this.cd.markForCheck();
-        });              
-    }             
+        });
+    }
   }
 
   /**
@@ -350,49 +351,67 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * Updates the rows in the view port
    */
   updateRows(): void {
-    const { first, last } = this.indexes;
-    let rowIndex = first;
-    let idx = 0;
-    const temp: any[] = [];
+    if (this.disableVirtualScroll) {
+      if (this.rowCount > 1) {
+        this.rowIndexes.clear();
+        for (let i = 0; i < this.rowCount; i++) {
+          const row = this.rows[i];
 
-    this.rowIndexes.clear();
-
-    // if grouprowsby has been specified treat row paging 
-    // parameters as group paging parameters ie if limit 10 has been 
-    // specified treat it as 10 groups rather than 10 rows    
-    if(this.groupedRows) {
-      let maxRowsPerGroup = 3;
-      // if there is only one group set the maximum number of 
-      // rows per group the same as the total number of rows
-      if (this.groupedRows.length === 1) {
-        maxRowsPerGroup = this.groupedRows[0].value.length;
+          if (row) {
+            this.rowIndexes.set(row, i);
+          }
+        }
       }
 
-      while (rowIndex < last && rowIndex < this.groupedRows.length) {
-        // Add the groups into this page
-        const group = this.groupedRows[rowIndex];
-        temp[idx] = group;
-        idx++;
+      if (this.rows) {
+        this.temp = [...this.rows];
+        this.cd.detectChanges();
+      }
+    } else {
+      const { first, last } = this.indexes;
+      let rowIndex = first;
+      let idx = 0;
+      const temp: any[] = [];
 
-        // Group index in this context
-        rowIndex++; 
-      }      
-    } else {           
-      while (rowIndex < last && rowIndex < this.rowCount) {
-        const row = this.rows[rowIndex];
+      this.rowIndexes.clear();
 
-        if (row) {
-          this.rowIndexes.set(row, rowIndex);
-          temp[idx] = row;
+      // if grouprowsby has been specified treat row paging 
+      // parameters as group paging parameters ie if limit 10 has been 
+      // specified treat it as 10 groups rather than 10 rows    
+      if(this.groupedRows) {
+        let maxRowsPerGroup = 3;
+        // if there is only one group set the maximum number of 
+        // rows per group the same as the total number of rows
+        if (this.groupedRows.length === 1) {
+          maxRowsPerGroup = this.groupedRows[0].value.length;
         }
 
-        idx++;
-        rowIndex++;
-      }       
+        while (rowIndex < last && rowIndex < this.groupedRows.length) {
+          // Add the groups into this page
+          const group = this.groupedRows[rowIndex];
+          temp[idx] = group;
+          idx++;
+
+          // Group index in this context
+          rowIndex++;
+        }
+      } else {
+        while (rowIndex < last && rowIndex < this.rowCount) {
+          const row = this.rows[rowIndex];
+
+          if (row) {
+            this.rowIndexes.set(row, rowIndex);
+            temp[idx] = row;
+          }
+
+          idx++;
+          rowIndex++;
+        }
+      }
+
+      this.temp = temp;
+      this.cd.detectChanges();
     }
-    
-    this.temp = temp;
-    this.cd.detectChanges();
   }
 
   /**
@@ -400,7 +419,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   getRowHeight(row: any): number {
     let rowHeight = this.rowHeight;
-   
+
     // if its a function return it
     if (typeof this.rowHeight === 'function') {
       rowHeight = this.rowHeight(row);
@@ -417,9 +436,9 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
     if (group.value) {
       for (let index = 0; index < group.value.length; index++) {
-        rowHeight += this.getRowAndDetailHeight(group.value[index]);     
-      }          
-    }      
+        rowHeight += this.getRowAndDetailHeight(group.value[index]);
+      }
+    }
 
     return rowHeight;
   }
@@ -475,7 +494,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     if (this.groupedRows) {
       styles['width'] = this.columnGroupWidths.total;
     }
-      
+
     if (this.scrollbarV) {
       let idx = 0;
 
@@ -485,7 +504,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         idx = row ? this.getRowIndex(row) : 0;
       } else {
         idx = this.getRowIndex(rows);
-      }        
+      }
 
       // const pos = idx * rowHeight;
       // The position of this row would be the sum of all row heights
@@ -497,7 +516,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
     return styles;
   }
- 
+
   /**
    * Hides the loading indicator
    */
@@ -670,7 +689,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
     return styles;
   }
-  
+
   /**
    * Returns if the row was expanded and set default row expansion when row expansion is empty
    */
@@ -679,7 +698,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       for (const group of this.groupedRows) {
         this.rowExpansions.set(group, 1);
       }
-    }    
+    }
 
     const expanded = this.rowExpansions.get(row);
     return expanded === 1;
