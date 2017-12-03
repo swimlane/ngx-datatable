@@ -113,12 +113,11 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    */
   @Input() set rows(val: any) {
     this._rows = val;
-
+    this._internalRows = [...val];
+    
     // auto sort on new updates
     if (!this.externalSorting) {
-      this._internalRows = sortRows(val, this._internalColumns, this.sorts, []);
-    } else {
-      this._internalRows = [...val];
+      this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
     }
 
     // recalculate sizes/etc
@@ -664,7 +663,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    */
   ngAfterViewInit(): void {
     if (!this.externalSorting) {
-      this._internalRows = sortRows(this._rows, this._internalColumns, this.sorts, this._internalRows);
+      this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
     }
 
     // this has to be done to prevent the change detection
@@ -743,7 +742,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   ngDoCheck(): void {
     if (this.rowDiffer.diff(this.rows)) {
       if (!this.externalSorting) {
-        this._internalRows = sortRows(this._rows, this._internalColumns, this.sorts, this._internalRows);
+        this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
       } else {
         this._internalRows = [...this.rows];
       }
@@ -1005,7 +1004,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     // the rows again on the 'push' detection...
     if (this.externalSorting === false) {
       // don't use normal setter so we don't resort
-      this._internalRows = sortRows(this.rows, this._internalColumns, sorts, this._internalRows);
+      this._internalRows = sortRows(this._internalRows, this._internalColumns, sorts);
     }
 
     this.sorts = sorts;

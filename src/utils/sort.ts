@@ -54,7 +54,7 @@ export function orderByComparator(a: any, b: any): number {
  * creates a shallow copy of the `rows` input and returns the sorted copy. this function
  * does not sort the `rows` argument in place
  */
-export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[], priorSortResult: any[]): any[] {
+export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[] {
   if(!rows) return [];
   if(!dirs || !dirs.length || !columns) return [...rows];
 
@@ -63,9 +63,7 @@ export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[], prior
    * this is necessary to guarantee stable sorting behavior 
    */
   const rowToIndexMap = new Map<any, number>();
-  if (Array.isArray(priorSortResult)) {
-    priorSortResult.forEach((row, index) => rowToIndexMap.set(row, index));
-  }
+  rows.forEach((row, index) => rowToIndexMap.set(row, index));
   
   const temp = [...rows];
   const cols = columns.reduce((obj, col) => {
