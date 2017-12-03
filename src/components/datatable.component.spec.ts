@@ -191,6 +191,70 @@ describe('Datatable component', () => {
       expect(fixture.componentInstance._internalRows[9]).toBe(initialRows[6]);
       expect(fixture.componentInstance._internalRows[10]).toBe(initialRows[7]);
     });
+    
+    it('should sort correctly after push events', () => {
+      const fixture = TestBed.createComponent(DatatableComponent);
+      const initialRows = [
+        { name: 'sed',        state: 'CA' }, // 0
+        { name: 'dolor',      state: 'NY' }, // 1
+        { name: 'ipsum',      state: 'NY' }, // 2
+        { name: 'foo',        state: 'CA' }, // 3
+        { name: 'bar',        state: 'CA' }, // 4
+        { name: 'cat',        state: 'CA' }, // 5
+        { name: 'sit',        state: 'CA' }, // 6
+        { name: 'man',        state: 'CA' }, // 7
+        { name: 'lorem',      state: 'NY' }, // 8
+        { name: 'amet',       state: 'NY' }, // 9
+        { name: 'maecennas',  state: 'NY' }  // 10
+      ];
+      const additionalRows = [ ...initialRows ];
+      
+      const columns = [
+        {
+          prop: 'name',
+          comparator: (nameA: string, nameB: string) => {
+            return nameA.length - nameB.length;
+          }
+        },
+        {
+          prop: 'state'
+        }
+      ];
+
+      fixture.componentInstance.rows = initialRows;
+      fixture.componentInstance.columns = columns;
+
+      fixture.detectChanges();
+
+      fixture.componentInstance.onColumnSort({
+        sorts: [{prop: 'state', dir: 'desc'}]
+      });
+
+      fixture.componentInstance.onColumnSort({
+        sorts: [{prop: 'name', dir: 'asc'}]
+      });
+      
+      // mimic new `rows` data pushed to component
+      fixture.componentInstance.rows = additionalRows;
+      
+      fixture.detectChanges();
+      
+      fixture.componentInstance.onColumnSort({
+        sorts: [{prop: 'state', dir: 'desc'}]
+      });
+      
+      expect(fixture.componentInstance._internalRows[0]).toBe(initialRows[9]);
+      expect(fixture.componentInstance._internalRows[1]).toBe(initialRows[1]);
+      expect(fixture.componentInstance._internalRows[2]).toBe(initialRows[2]);
+      expect(fixture.componentInstance._internalRows[3]).toBe(initialRows[8]);
+      expect(fixture.componentInstance._internalRows[4]).toBe(initialRows[10]);
+      expect(fixture.componentInstance._internalRows[5]).toBe(initialRows[0]);
+      expect(fixture.componentInstance._internalRows[6]).toBe(initialRows[3]);
+      expect(fixture.componentInstance._internalRows[7]).toBe(initialRows[4]);
+      expect(fixture.componentInstance._internalRows[8]).toBe(initialRows[5]);
+      expect(fixture.componentInstance._internalRows[9]).toBe(initialRows[6]);
+      expect(fixture.componentInstance._internalRows[10]).toBe(initialRows[7]);
+    });
   });
 
   describe('When the column is sorted with a custom comparator', () => {
