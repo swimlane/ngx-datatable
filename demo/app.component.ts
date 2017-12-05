@@ -59,6 +59,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
             <h4>Tree</h4>
             <ul>
               <li><a href="#fullscreen-tree" (click)="state='fullscreen-tree'">Full screen Tree</a></li>
+              <li><a href="#client-tree" (click)="state='client-tree'">Client Side Tree</a></li>
             </ul>
           </li>
           <li>
@@ -147,6 +148,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
 
         <!-- Tree -->
         <full-screen-tree-demo *ngIf="state === 'fullscreen-tree'"></full-screen-tree-demo>
+        <client-side-tree-demo *ngIf="state === 'client-tree'"></client-side-tree-demo>
 
         <!-- Paging -->
         <row-grouping-demo *ngIf="state === 'row-grouping'"></row-grouping-demo>

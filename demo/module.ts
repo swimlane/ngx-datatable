@@ -46,6 +46,7 @@ import { TemplateRefTemplatesComponent } from './templates/template-obj.componen
 
 // -- Tree
 import { FullScreenTreeComponent } from './tree/fullscreen.component';
+import { ClientTreeComponent } from './tree/client-tree.component';
 
 // -- Selection
 import { CellSelectionComponent } from './selection/selection-cell.component';
@@ -108,7 +109,8 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     DynamicHeightComponent,
     FooterDemoComponent,
     RowGroupingComponent,
-    BootstrapThemeComponent
+    BootstrapThemeComponent,
+    ClientTreeComponent
   ],
   imports: [BrowserModule, NgxDatatableModule],
   bootstrap: [AppComponent]

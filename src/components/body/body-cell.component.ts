@@ -24,17 +24,17 @@ import { MouseEvent, KeyboardEvent } from '../../events';
           (click)="onCheckboxChange($event)"
         />
       </label>
-      <label
+      <label class="clickable"
         *ngIf="column.isTreeColumn"
         (click)="onTreeAction()">
         <span *ngIf="_treeStatus==='loading'">
-          ...
+          [=]
         </span>
         <span *ngIf="_treeStatus==='collapsed'">
-          +
+          [+]
         </span>
         <span *ngIf="_treeStatus==='expanded'">
-          -
+          [-]
         </span>
       </label>
 
@@ -49,7 +49,11 @@ import { MouseEvent, KeyboardEvent } from '../../events';
         [ngTemplateOutletContext]="cellContext">
       </ng-template>
     </div>
-  `
+  `,
+  styles: [
+    '.clickable {cursor: pointer; }',
+    '.disabled {color: #d1d1d1; }'
+  ]
 })
 export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   @Input() displayCheck: any;

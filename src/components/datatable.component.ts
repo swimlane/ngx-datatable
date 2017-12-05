@@ -1113,7 +1113,8 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   onTreeAction(event: any) {
     const row = event.row;
     // TODO: For duplicated items this will not work
-    const rowIndex = this._rows.findIndex(r => r.id === event.row.id);
+    const rowIndex = this._rows.findIndex(r =>
+      r[this.treeToRelation] === event.row[this.treeToRelation]);
     this.treeAction.emit({row, rowIndex});
   }
 }

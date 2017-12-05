@@ -36,7 +36,7 @@
  *
  */
 export function groupRowsByParents(rows: any[], from: string = '', to: string = ''): any[] {
-  if (from !== '' || to !== '') {
+  if (from !== '' && to !== '') {
     const childrenMap = {};
     for (let i = 0; i < rows.length; i++) {
       childrenMap[rows[i][to]] = {
@@ -44,7 +44,8 @@ export function groupRowsByParents(rows: any[], from: string = '', to: string = 
         checked: false
       };
     }
-    const allRootItems = rows.filter(row => row[from] === null);
+    const allRootItems = rows.filter(row => row[from] === null ||
+                                     typeof(row[from]) === 'undefined');
     let opArray = rearrange(allRootItems, childrenMap, 0, true, to);
 
     // Now add items to the list whose parent is not present
