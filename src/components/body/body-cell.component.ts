@@ -36,6 +36,9 @@ import { MouseEvent, KeyboardEvent } from '../../events';
         <span *ngIf="_treeStatus==='expanded'">
           [-]
         </span>
+        <span *ngIf="_treeStatus==='disabled'" class="disabled">
+          [-]
+        </span>
       </label>
 
       <span
@@ -145,7 +148,8 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   @Input() set treeStatus(status: string) {
     if (status !== 'collapsed' &&
         status !== 'expanded' &&
-        status !== 'loading') {
+        status !== 'loading' &&
+        status !== 'disabled') {
       this._treeStatus = 'collapsed';
     } else {
       this._treeStatus = status;
@@ -374,7 +378,9 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   }
 
   onTreeAction(row: any) {
-    this.treeActionClick.emit();
+    if (this._treeStatus !== 'disabled') {
+      this.treeActionClick.emit();
+    }
   }
 
 }

@@ -11,20 +11,20 @@
         "gender": "female",
         "company": "Sealoud",
         "age": 55,
-        "treeStatus": "collapsed"
+        "treeStatus": "disabled"
     },
     {
         "name": "Beryl Rice",
         "gender": "female",
         "company": "Velity",
         "age": 67,
-        "treeStatus": "collapsed"
+        "treeStatus": "disabled"
     },
     {
         "name": "Wilder Gonzales",
         "gender": "male",
         "company": "Geekko",
-        "treeStatus": "collapsed"
+        "treeStatus": "disabled"
     },
     {
         "name": "Georgina Schultz",
@@ -36,26 +36,26 @@
         "name": "Carroll Buchanan",
         "gender": "male",
         "company": "Ecosys",
-        "treeStatus": "collapsed"
+        "treeStatus": "disabled"
     },
     {
         "name": "Valarie Atkinson",
         "gender": "female",
         "company": "Hopeli",
-        "treeStatus": "collapsed"
+        "treeStatus": "disabled"
     },
     {
         "name": "Schroeder Mathews",
         "gender": "male",
         "company": "Polarium",
         "manager": "Ethel Price",
-        "treeStatus": "collapsed"
+        "treeStatus": "disabled"
     },
     {
         "name": "Lynda Mendoza",
         "gender": "female",
         "company": "Dogspa",
         "manager": "Georgina Schultz",
-        "treeStatus": "collapsed"
+        "treeStatus": "disabled"
     }
 ]
