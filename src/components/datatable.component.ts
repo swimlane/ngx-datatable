@@ -127,7 +127,11 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     }
 
     // auto group by parent on new update
-    this._internalRows = groupRowsByParents(this._internalRows);
+    this._internalRows = groupRowsByParents(
+      this._internalRows,
+      this.treeFromRelation,
+      this.treeToRelation
+    );
 
     // recalculate sizes/etc
     this.recalculate();
@@ -434,6 +438,16 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   @Input() virtualization: boolean = true;
 
   /**
+   * Tree from relation
+   */
+  @Input() treeFromRelation: string;
+
+  /**
+   * Tree to relation
+   */
+  @Input() treeToRelation: string;
+
+  /**
    * Body was scrolled typically in a `scrollbarV:true` scenario.
    */
   @Output() scroll: EventEmitter<any> = new EventEmitter();
@@ -691,7 +705,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     if (typeof requestAnimationFrame === 'undefined') {
       return;
     }
-    
+
     requestAnimationFrame(() => {
       this.recalculate();
 
@@ -772,7 +786,11 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       }
 
       // auto group by parent on new update
-      this._internalRows = groupRowsByParents(this._internalRows);
+      this._internalRows = groupRowsByParents(
+        this._internalRows,
+        this.treeFromRelation,
+        this.treeToRelation
+      );
 
       this.recalculatePages();
       this.cd.markForCheck();
@@ -1035,7 +1053,11 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     }
 
     // auto group by parent on new update
-    this._internalRows = groupRowsByParents(this._internalRows);
+    this._internalRows = groupRowsByParents(
+      this._internalRows,
+      this.treeFromRelation,
+      this.treeToRelation
+    );
 
     this.sorts = sorts;
     // Always go to first page when sorting to see the newly sorted data
