@@ -28,7 +28,7 @@ import { MouseEvent } from '../../events';
         [scrollbarV]="scrollbarV"
         [scrollbarH]="scrollbarH"
         [scrollHeight]="scrollHeight"
-        [scrollWidth]="columnGroupWidths.total"
+        [scrollWidth]="columnGroupWidths?.total"
         (scroll)="onBodyScroll($event)">
         <datatable-row-wrapper
           [groupedRows]="groupedRows"
@@ -79,7 +79,7 @@ import { MouseEvent } from '../../events';
       </datatable-scroller>
       <div
         class="empty-row"
-        *ngIf="!rows?.length"
+        *ngIf="!rows?.length && !loadingIndicator"
         [innerHTML]="emptyMessage">
       </div>
     </datatable-selection>
@@ -205,10 +205,12 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * based on the row heights cache for virtual scroll. Other scenarios
    * calculate scroll height automatically (as height will be undefined).
    */
-  get scrollHeight(): number {
+  get scrollHeight(): number | undefined {
     if (this.scrollbarV) {
       return this.rowHeightsCache.query(this.rowCount - 1);
     }
+    // avoid TS7030: Not all code paths return a value.
+    return undefined;
   }
 
   rowHeightsCache: RowHeightCache = new RowHeightCache();
@@ -234,7 +236,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   constructor(private cd: ChangeDetectorRef) {
     // declare fn here so we can get access to the `this` property
-    this.rowTrackingFn = function(index: number, row: any): any {
+    this.rowTrackingFn = function(this: any, index: number, row: any): any {
       const idx = this.getRowIndex(row);
       if (this.trackByProp) {
         return `${idx}-${this.trackByProp}`;
@@ -336,7 +338,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     if (direction === 'up') {
       offset = Math.ceil(offset);
     } else if (direction === 'down') {
-      offset = Math.ceil(offset);
+      offset = Math.floor(offset);
     }
 
     if (direction !== undefined && !isNaN(offset)) {
@@ -389,7 +391,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       }       
     }
     
-    this.temp = temp;   
+    this.temp = temp;
+    this.cd.detectChanges();
   }
 
   /**

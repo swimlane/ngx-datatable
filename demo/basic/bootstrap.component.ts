@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
       <h3>
         Bootstrap Theme
         <small>
-          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/bootstrap-theme.component.ts" target="_blank">
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/bootstrap.component.ts" target="_blank">
             Source
           </a>
         </small>

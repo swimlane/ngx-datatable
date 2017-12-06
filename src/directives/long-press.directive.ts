@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/takeUntil';
+import { takeUntil } from 'rxjs/operators';
 
 import { MouseEvent } from '../events';
 
@@ -62,7 +62,7 @@ export class LongPressDirective implements OnDestroy {
 
       this.subscription.add(
         Observable.fromEvent(document, 'mousemove')
-          .takeUntil(mouseup)
+          .pipe(takeUntil(mouseup))
           .subscribe((mouseEvent: MouseEvent) => this.onMouseMove(mouseEvent))
       );
 

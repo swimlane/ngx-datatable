@@ -1,8 +1,18 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var Observable_1 = require("rxjs/Observable");
-require("rxjs/add/operator/takeUntil");
+var events_1 = require("../events");
+var operators_1 = require("rxjs/operators");
 var ResizeableDirective = /** @class */ (function () {
     function ResizeableDirective(element, renderer) {
         this.renderer = renderer;
@@ -42,7 +52,7 @@ var ResizeableDirective = /** @class */ (function () {
             this.subscription = mouseup
                 .subscribe(function (ev) { return _this.onMouseup(); });
             var mouseMoveSub = Observable_1.Observable.fromEvent(document, 'mousemove')
-                .takeUntil(mouseup)
+                .pipe(operators_1.takeUntil(mouseup))
                 .subscribe(function (e) { return _this.move(e, initialWidth, mouseDownScreenX); });
             this.subscription.add(mouseMoveSub);
         }
@@ -62,26 +72,37 @@ var ResizeableDirective = /** @class */ (function () {
             this.subscription = undefined;
         }
     };
-    ResizeableDirective.decorators = [
-        { type: core_1.Directive, args: [{
-                    selector: '[resizeable]',
-                    host: {
-                        '[class.resizeable]': 'resizeEnabled'
-                    }
-                },] },
-    ];
-    /** @nocollapse */
-    ResizeableDirective.ctorParameters = function () { return [
-        { type: core_1.ElementRef, },
-        { type: core_1.Renderer2, },
-    ]; };
-    ResizeableDirective.propDecorators = {
-        'resizeEnabled': [{ type: core_1.Input },],
-        'minWidth': [{ type: core_1.Input },],
-        'maxWidth': [{ type: core_1.Input },],
-        'resize': [{ type: core_1.Output },],
-        'onMousedown': [{ type: core_1.HostListener, args: ['mousedown', ['$event'],] },],
-    };
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], ResizeableDirective.prototype, "resizeEnabled", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Number)
+    ], ResizeableDirective.prototype, "minWidth", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Number)
+    ], ResizeableDirective.prototype, "maxWidth", void 0);
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
+    ], ResizeableDirective.prototype, "resize", void 0);
+    __decorate([
+        core_1.HostListener('mousedown', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], ResizeableDirective.prototype, "onMousedown", null);
+    ResizeableDirective = __decorate([
+        core_1.Directive({
+            selector: '[resizeable]',
+            host: {
+                '[class.resizeable]': 'resizeEnabled'
+            }
+        }),
+        __metadata("design:paramtypes", [core_1.ElementRef, core_1.Renderer2])
+    ], ResizeableDirective);
     return ResizeableDirective;
 }());
 exports.ResizeableDirective = ResizeableDirective;

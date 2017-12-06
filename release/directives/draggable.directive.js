@@ -1,8 +1,17 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var Observable_1 = require("rxjs/Observable");
-require("rxjs/add/operator/takeUntil");
+var operators_1 = require("rxjs/operators");
 /**
  * Draggable Directive for Angular2
  *
@@ -55,7 +64,7 @@ var DraggableDirective = /** @class */ (function () {
             this.subscription = mouseup
                 .subscribe(function (ev) { return _this.onMouseup(ev); });
             var mouseMoveSub = Observable_1.Observable.fromEvent(document, 'mousemove')
-                .takeUntil(mouseup)
+                .pipe(operators_1.takeUntil(mouseup))
                 .subscribe(function (ev) { return _this.move(ev, mouseDownPos_1); });
             this.subscription.add(mouseMoveSub);
             this.dragStart.emit({
@@ -87,22 +96,38 @@ var DraggableDirective = /** @class */ (function () {
             this.subscription = undefined;
         }
     };
-    DraggableDirective.decorators = [
-        { type: core_1.Directive, args: [{ selector: '[draggable]' },] },
-    ];
-    /** @nocollapse */
-    DraggableDirective.ctorParameters = function () { return [
-        { type: core_1.ElementRef, },
-    ]; };
-    DraggableDirective.propDecorators = {
-        'dragEventTarget': [{ type: core_1.Input },],
-        'dragModel': [{ type: core_1.Input },],
-        'dragX': [{ type: core_1.Input },],
-        'dragY': [{ type: core_1.Input },],
-        'dragStart': [{ type: core_1.Output },],
-        'dragging': [{ type: core_1.Output },],
-        'dragEnd': [{ type: core_1.Output },],
-    };
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Object)
+    ], DraggableDirective.prototype, "dragEventTarget", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Object)
+    ], DraggableDirective.prototype, "dragModel", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], DraggableDirective.prototype, "dragX", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], DraggableDirective.prototype, "dragY", void 0);
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
+    ], DraggableDirective.prototype, "dragStart", void 0);
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
+    ], DraggableDirective.prototype, "dragging", void 0);
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
+    ], DraggableDirective.prototype, "dragEnd", void 0);
+    DraggableDirective = __decorate([
+        core_1.Directive({ selector: '[draggable]' }),
+        __metadata("design:paramtypes", [core_1.ElementRef])
+    ], DraggableDirective);
     return DraggableDirective;
 }());
 exports.DraggableDirective = DraggableDirective;

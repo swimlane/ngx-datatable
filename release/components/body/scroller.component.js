@@ -1,8 +1,18 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var ScrollerComponent = /** @class */ (function () {
-    function ScrollerComponent(element, renderer) {
+    function ScrollerComponent(ngZone, element, renderer) {
+        this.ngZone = ngZone;
         this.renderer = renderer;
         this.scrollbarV = false;
         this.scrollbarH = false;
@@ -14,16 +24,19 @@ var ScrollerComponent = /** @class */ (function () {
         this.element = element.nativeElement;
     }
     ScrollerComponent.prototype.ngOnInit = function () {
+        var _this = this;
         // manual bind so we don't always listen
         if (this.scrollbarV || this.scrollbarH) {
-            var renderer = this.renderer;
-            this.parentElement = renderer.parentNode(renderer.parentNode(this.element));
-            this.onScrollListener = renderer.listen(this.parentElement, 'scroll', this.onScrolled.bind(this));
+            var renderer_1 = this.renderer;
+            this.parentElement = renderer_1.parentNode(renderer_1.parentNode(this.element));
+            this.ngZone.runOutsideAngular(function () {
+                renderer_1.listen(_this.parentElement, 'scroll', _this.onScrolled.bind(_this));
+            });
         }
     };
     ScrollerComponent.prototype.ngOnDestroy = function () {
         if (this.scrollbarV || this.scrollbarH) {
-            this.onScrollListener();
+            this.parentElement.removeEventListener('scroll', this.onScrolled.bind(this));
         }
     };
     ScrollerComponent.prototype.setOffset = function (offsetY) {
@@ -32,10 +45,13 @@ var ScrollerComponent = /** @class */ (function () {
         }
     };
     ScrollerComponent.prototype.onScrolled = function (event) {
+        var _this = this;
         var dom = event.currentTarget;
-        this.scrollYPos = dom.scrollTop;
-        this.scrollXPos = dom.scrollLeft;
-        requestAnimationFrame(this.updateOffset.bind(this));
+        requestAnimationFrame(function () {
+            _this.scrollYPos = dom.scrollTop;
+            _this.scrollXPos = dom.scrollLeft;
+            _this.updateOffset();
+        });
     };
     ScrollerComponent.prototype.updateOffset = function () {
         var direction;
@@ -53,28 +69,39 @@ var ScrollerComponent = /** @class */ (function () {
         this.prevScrollYPos = this.scrollYPos;
         this.prevScrollXPos = this.scrollXPos;
     };
-    ScrollerComponent.decorators = [
-        { type: core_1.Component, args: [{
-                    selector: 'datatable-scroller',
-                    template: "\n    <ng-content></ng-content>\n  ",
-                    host: {
-                        class: 'datatable-scroll'
-                    },
-                    changeDetection: core_1.ChangeDetectionStrategy.OnPush
-                },] },
-    ];
-    /** @nocollapse */
-    ScrollerComponent.ctorParameters = function () { return [
-        { type: core_1.ElementRef, },
-        { type: core_1.Renderer2, },
-    ]; };
-    ScrollerComponent.propDecorators = {
-        'scrollbarV': [{ type: core_1.Input },],
-        'scrollbarH': [{ type: core_1.Input },],
-        'scrollHeight': [{ type: core_1.HostBinding, args: ['style.height.px',] }, { type: core_1.Input },],
-        'scrollWidth': [{ type: core_1.HostBinding, args: ['style.width.px',] }, { type: core_1.Input },],
-        'scroll': [{ type: core_1.Output },],
-    };
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], ScrollerComponent.prototype, "scrollbarV", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], ScrollerComponent.prototype, "scrollbarH", void 0);
+    __decorate([
+        core_1.HostBinding('style.height.px'),
+        core_1.Input(),
+        __metadata("design:type", Number)
+    ], ScrollerComponent.prototype, "scrollHeight", void 0);
+    __decorate([
+        core_1.HostBinding('style.width.px'),
+        core_1.Input(),
+        __metadata("design:type", Number)
+    ], ScrollerComponent.prototype, "scrollWidth", void 0);
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
+    ], ScrollerComponent.prototype, "scroll", void 0);
+    ScrollerComponent = __decorate([
+        core_1.Component({
+            selector: 'datatable-scroller',
+            template: "\n    <ng-content></ng-content>\n  ",
+            host: {
+                class: 'datatable-scroll'
+            },
+            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+        }),
+        __metadata("design:paramtypes", [core_1.NgZone, core_1.ElementRef, core_1.Renderer2])
+    ], ScrollerComponent);
     return ScrollerComponent;
 }());
 exports.ScrollerComponent = ScrollerComponent;

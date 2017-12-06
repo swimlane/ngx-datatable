@@ -24,6 +24,8 @@ function nextSortDir(sortType, current) {
         else if (current === types_1.SortDirection.desc) {
             return undefined;
         }
+        // avoid TS7030: Not all code paths return a value.
+        return undefined;
     }
 }
 exports.nextSortDir = nextSortDir;
@@ -64,13 +66,20 @@ function orderByComparator(a, b) {
 }
 exports.orderByComparator = orderByComparator;
 /**
- * Sorts the rows
+ * creates a shallow copy of the `rows` input and returns the sorted copy. this function
+ * does not sort the `rows` argument in place
  */
 function sortRows(rows, columns, dirs) {
     if (!rows)
         return [];
     if (!dirs || !dirs.length || !columns)
         return rows.slice();
+    /**
+     * record the row ordering of results from prior sort operations (if applicable)
+     * this is necessary to guarantee stable sorting behavior
+     */
+    var rowToIndexMap = new Map();
+    rows.forEach(function (row, index) { return rowToIndexMap.set(row, index); });
     var temp = rows.slice();
     var cols = columns.reduce(function (obj, col) {
         if (col.comparator && typeof col.comparator === 'function') {
@@ -111,8 +120,12 @@ function sortRows(rows, columns, dirs) {
             if (comparison !== 0)
                 return comparison;
         }
-        // equal each other
-        return 0;
+        if (!(rowToIndexMap.has(rowA) && rowToIndexMap.has(rowB)))
+            return 0;
+        /**
+         * all else being equal, preserve original order of the rows (stable sort)
+         */
+        return rowToIndexMap.get(rowA) < rowToIndexMap.get(rowB) ? -1 : 1;
     });
 }
 exports.sortRows = sortRows;

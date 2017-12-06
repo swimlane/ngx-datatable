@@ -1,5 +1,34 @@
 # Changelog
 
+## 11.1.5
+- Compat: Fix Angular 4.x Compat
+
+## 11.1.4
+- Bug: Fix column templates not updating with loops/ifs
+- Bug: Fix sorting on cross browser
+- Chore: Switch to lettable operators
+
+## 11.1.3
+- Bug: Angular SSR Event Undefined (#1144)
+
+## 11.1.2
+- Bug: Fix total undefined (#1140)
+
+## 11.1.1
+- Bug: Fix race case with rows
+
+## 11.1.0
+- Perf: Better performance on scrolling y and x
+- Feature: Select All on Current Page (#1132)
+- Bug: Don't show empty on loading (#1139)
+
+## 11.0.4
+- Bug: Fix Angular5 Aot Issue
+- Bug: Fix Vendor Prefix Error
+
+## 11.0.1, 11.0.2, 11.0.3
+- Bug: Angular 5 bugs
+
 ## 11.0.0
 - Chore: Upgrade to Angular5
 

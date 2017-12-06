@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/takeUntil';
+import { takeUntil } from 'rxjs/operators';
 import { MouseEvent } from '../events';
 
 /**
@@ -75,7 +75,7 @@ export class DraggableDirective implements OnDestroy, OnChanges {
         .subscribe((ev: MouseEvent) => this.onMouseup(ev));
 
       const mouseMoveSub = Observable.fromEvent(document, 'mousemove')
-        .takeUntil(mouseup)
+        .pipe(takeUntil(mouseup))
         .subscribe((ev: MouseEvent) => this.move(ev, mouseDownPos));
 
       this.subscription.add(mouseMoveSub);
