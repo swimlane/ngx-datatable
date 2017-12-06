@@ -8,6 +8,7 @@ import { Keys } from '../../utils';
 import { SortDirection } from '../../types';
 import { TableColumn } from '../../types/table-column.type';
 import { MouseEvent, KeyboardEvent } from '../../events';
+import { ContentChild } from '@angular/core/src/metadata/di';
 
 @Component({
   selector: 'datatable-body-cell',
@@ -27,18 +28,41 @@ import { MouseEvent, KeyboardEvent } from '../../events';
       <label class="clickable"
         *ngIf="column.isTreeColumn"
         (click)="onTreeAction()">
-        <span *ngIf="_treeStatus==='loading'">
+        <span *ngIf="_treeStatus==='loading' &&
+                !column.treeLoaderTemplate">
           [=]
         </span>
-        <span *ngIf="_treeStatus==='collapsed'">
+        <ng-template *ngIf="_treeStatus==='loading' &&
+                column.treeLoaderTemplate"
+          [ngTemplateOutlet]="column.treeLoaderTemplate">
+        </ng-template>
+
+        <span *ngIf="_treeStatus==='collapsed' &&
+                !column.treeExpanderTemplate">
           [+]
         </span>
-        <span *ngIf="_treeStatus==='expanded'">
+        <ng-template *ngIf="_treeStatus==='collapsed' &&
+                column.treeExpanderTemplate"
+          [ngTemplateOutlet]="column.treeExpanderTemplate">
+        </ng-template>
+
+        <span *ngIf="_treeStatus==='expanded' &&
+                     !column.treeCollapserTemplate">
           [-]
         </span>
-        <span *ngIf="_treeStatus==='disabled'" class="disabled">
+        <ng-template *ngIf="_treeStatus==='expanded' &&
+                            column.treeCollapserTemplate"
+          [ngTemplateOutlet]="column.treeCollapserTemplate">
+        </ng-template>
+
+        <span *ngIf="_treeStatus==='disabled' &&
+                     !column.treeDisableTemplate" class="disabled">
           [-]
         </span>
+        <ng-template *ngIf="_treeStatus==='disabled' &&
+                           column.treeDisableTemplate"
+          [ngTemplateOutlet]="column.treeDisableTemplate">
+        </ng-template>
       </label>
 
       <span
