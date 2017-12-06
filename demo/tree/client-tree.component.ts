@@ -26,6 +26,25 @@ import { Component } from '@angular/core';
           <ng-template let-value="value" ngx-datatable-cell-template>
             {{value}}
           </ng-template>
+
+          <ng-template ngx-datatable-cell-tree-expander>
+            <img
+              [ngClass]="['icon']"
+              src="https://png.icons8.com/android/540/expand-arrow.png" />
+          </ng-template>
+
+          <ng-template ngx-datatable-cell-tree-collapser>
+            <img
+              [ngClass]="['icon']"
+              src="https://png.icons8.com/android/540/collapse-arrow.png" />
+          </ng-template>
+
+          <ng-template ngx-datatable-cell-tree-disabled>
+            <img
+              [ngClass]="['icon', 'disabled']"
+              src="https://png.icons8.com/android/540/collapse-arrow.png" />
+          </ng-template>
+
         </ngx-datatable-column>
         <ngx-datatable-column name="Gender" [flexGrow]="1">
           <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
@@ -39,7 +58,12 @@ import { Component } from '@angular/core';
         </ngx-datatable-column>
       </ngx-datatable>
     </div>
-  `
+  `,
+  styles: [
+    '.icon {height: 10px; width: 10px; }',
+    '.disabled {opacity: 0.5; }'
+  ],
+
 })
 export class ClientTreeComponent {
 
