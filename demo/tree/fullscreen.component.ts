@@ -23,6 +23,8 @@ import { setTimeout } from 'timers';
         [scrollbarV]="true"
         [scrollbarH]="true"
         [rows]="rows"
+        [treeFromRelation]="'parentId'"
+        [treeToRelation]="'id'"
         (treeAction)="onTreeAction($event)">
         <ngx-datatable-column name="Id" [width]="80"></ngx-datatable-column>
         <ngx-datatable-column name="Name" [isTreeColumn]="true" [width]="300"></ngx-datatable-column>
