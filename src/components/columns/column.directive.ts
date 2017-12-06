@@ -1,6 +1,12 @@
 import { Directive, TemplateRef, ContentChild, Input } from '@angular/core';
 import { DataTableColumnHeaderDirective } from './column-header.directive';
 import { DataTableColumnCellDirective } from './column-cell.directive';
+import {
+  DataTableColumnCellTreeExpander,
+  DataTableColumnCellTreeCollapser,
+  DataTableColumnCellTreeLoader,
+  DataTableColumnCellTreeDisable
+} from './tree.directive';
 import { TableColumnProp } from '../../types';
 
 @Directive({ selector: 'ngx-datatable-column' })
@@ -34,4 +40,19 @@ export class DataTableColumnDirective {
   @ContentChild(DataTableColumnHeaderDirective, { read: TemplateRef })
   headerTemplate: TemplateRef<any>;
 
+  @Input()
+  @ContentChild(DataTableColumnCellTreeExpander, { read: TemplateRef })
+  treeExpanderTemplate: TemplateRef<any>;
+
+  @Input()
+  @ContentChild(DataTableColumnCellTreeCollapser, { read: TemplateRef })
+  treeCollapserTemplate: TemplateRef<any>;
+
+  @Input()
+  @ContentChild(DataTableColumnCellTreeLoader, { read: TemplateRef })
+  treeLoaderTemplate: TemplateRef<any>;
+
+  @Input()
+  @ContentChild(DataTableColumnCellTreeDisable, { read: TemplateRef })
+  treeDisableTemplate: TemplateRef<any>;
 }
