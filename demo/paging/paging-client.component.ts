@@ -15,7 +15,7 @@ import { Component } from '@angular/core';
       <ngx-datatable
         class="material"
         [rows]="rows"
-        [columns]="[{name:'Name'},{name:'Gender'},{name:'Company'}]"
+        [columns]="columns"
         [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
@@ -28,11 +28,21 @@ import { Component } from '@angular/core';
 export class ClientPagingComponent {
 
   rows = [];
+  columns = [];
 
   constructor() {
     this.fetch((data) => {
-      this.rows = data;
+      this.rows = [
+        {
+          "name": "Ethel Price",
+          "gender": "female",
+          "company": "Johnson, Johnson and Partners, LLC CMP DDC",
+          "age": 22
+        }
+      ];
     });
+    this.columns = [{prop:'name'},{prop:'gender'},{prop:'Company'}];
+    console.log(this.columns);
   }
 
   fetch(cb) {

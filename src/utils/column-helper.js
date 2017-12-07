@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var camel_case_1 = require("./camel-case");
 var id_1 = require("./id");
 var column_prop_getters_1 = require("./column-prop-getters");
@@ -47,10 +46,10 @@ function setColumnDefaults(columns) {
     }
 }
 exports.setColumnDefaults = setColumnDefaults;
-function isNullOrUndefined(value) {
+null | undefined;
+{
     return value === null || value === undefined;
 }
-exports.isNullOrUndefined = isNullOrUndefined;
 /**
  * Translates templates definitions to objects
  */
