@@ -9,6 +9,7 @@ export declare function nextSortDir(sortType: SortType, current: SortDirection):
  */
 export declare function orderByComparator(a: any, b: any): number;
 /**
- * Sorts the rows
+ * creates a shallow copy of the `rows` input and returns the sorted copy. this function
+ * does not sort the `rows` argument in place
  */
 export declare function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[];

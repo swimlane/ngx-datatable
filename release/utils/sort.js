@@ -66,7 +66,8 @@ function orderByComparator(a, b) {
 }
 exports.orderByComparator = orderByComparator;
 /**
- * Sorts the rows
+ * creates a shallow copy of the `rows` input and returns the sorted copy. this function
+ * does not sort the `rows` argument in place
  */
 function sortRows(rows, columns, dirs) {
     if (!rows)
@@ -74,7 +75,8 @@ function sortRows(rows, columns, dirs) {
     if (!dirs || !dirs.length || !columns)
         return rows.slice();
     /**
-     * create a mapping from each row to its row index prior to sorting
+     * record the row ordering of results from prior sort operations (if applicable)
+     * this is necessary to guarantee stable sorting behavior
      */
     var rowToIndexMap = new Map();
     rows.forEach(function (row, index) { return rowToIndexMap.set(row, index); });
@@ -118,6 +120,8 @@ function sortRows(rows, columns, dirs) {
             if (comparison !== 0)
                 return comparison;
         }
+        if (!(rowToIndexMap.has(rowA) && rowToIndexMap.has(rowB)))
+            return 0;
         /**
          * all else being equal, preserve original order of the rows (stable sort)
          */

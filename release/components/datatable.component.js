@@ -197,12 +197,10 @@ var DatatableComponent = /** @class */ (function () {
          */
         set: function (val) {
             this._rows = val;
+            this._internalRows = val.slice();
             // auto sort on new updates
             if (!this.externalSorting) {
-                this._internalRows = utils_1.sortRows(val, this._internalColumns, this.sorts);
-            }
-            else {
-                this._internalRows = val.slice();
+                this._internalRows = utils_1.sortRows(this._internalRows, this._internalColumns, this.sorts);
             }
             // recalculate sizes/etc
             this.recalculate();
@@ -466,7 +464,7 @@ var DatatableComponent = /** @class */ (function () {
     DatatableComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
         if (!this.externalSorting) {
-            this._internalRows = utils_1.sortRows(this._rows, this._internalColumns, this.sorts);
+            this._internalRows = utils_1.sortRows(this._internalRows, this._internalColumns, this.sorts);
         }
         // this has to be done to prevent the change detection
         // tree from freaking out because we are readjusting
@@ -539,7 +537,7 @@ var DatatableComponent = /** @class */ (function () {
     DatatableComponent.prototype.ngDoCheck = function () {
         if (this.rowDiffer.diff(this.rows)) {
             if (!this.externalSorting) {
-                this._internalRows = utils_1.sortRows(this._rows, this._internalColumns, this.sorts);
+                this._internalRows = utils_1.sortRows(this._internalRows, this._internalColumns, this.sorts);
             }
             else {
                 this._internalRows = this.rows.slice();
@@ -772,7 +770,7 @@ var DatatableComponent = /** @class */ (function () {
         // the rows again on the 'push' detection...
         if (this.externalSorting === false) {
             // don't use normal setter so we don't resort
-            this._internalRows = utils_1.sortRows(this.rows, this._internalColumns, sorts);
+            this._internalRows = utils_1.sortRows(this._internalRows, this._internalColumns, sorts);
         }
         this.sorts = sorts;
         // Always go to first page when sorting to see the newly sorted data

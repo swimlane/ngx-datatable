@@ -1,8 +1,8 @@
-import { TableColumn } from '../types';
-import { DataTableColumnDirective } from '../components/columns';
-import { camelCase, deCamelCase } from './camel-case';
-import { id } from './id';
-import { getterForProp } from './column-prop-getters';
+import {TableColumn} from "../types";
+import {DataTableColumnDirective} from "../components/columns";
+import {camelCase} from "./camel-case";
+import {id} from "./id";
+import {getterForProp} from "./column-prop-getters";
 
 /**
  * Sets the column defaults
@@ -27,7 +27,7 @@ export function setColumnDefaults(columns: TableColumn[]) {
 
     // format props if no name passed
     if(!isNullOrUndefined(column.prop) && isNullOrUndefined(column.name)) {
-      column.name = deCamelCase(String(column.prop));
+      column.name = String(column.prop);
     }
     
     if(isNullOrUndefined(column.prop) && isNullOrUndefined(column.name)) {

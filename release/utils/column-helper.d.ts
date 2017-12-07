@@ -1,5 +1,5 @@
-import { TableColumn } from '../types';
-import { DataTableColumnDirective } from '../components/columns';
+import { TableColumn } from "../types";
+import { DataTableColumnDirective } from "../components/columns";
 /**
  * Sets the column defaults
  */
