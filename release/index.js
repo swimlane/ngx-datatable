@@ -17641,7 +17641,7 @@ var DatatableComponent = /** @class */ (function () {
          * Returns if all rows are selected.
          */
         get: function () {
-            var allRowsSelected = (this.selected.length === this.rows.length);
+            var allRowsSelected = (this.rows && this.selected && this.selected.length === this.rows.length);
             if (this.selectAllRowsOnPage) {
                 var indexes = this.bodyComponent.indexes;
                 var rowsOnPage = indexes.last - indexes.first;

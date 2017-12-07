@@ -605,7 +605,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Returns if all rows are selected.
    */
   get allRowsSelected(): boolean {
-    let allRowsSelected = (this.selected.length === this.rows.length);
+    let allRowsSelected = (this.rows && this.selected && this.selected.length === this.rows.length);
 
     if (this.selectAllRowsOnPage) {
       const indexes = this.bodyComponent.indexes;
