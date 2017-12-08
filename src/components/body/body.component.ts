@@ -29,6 +29,7 @@ import { MouseEvent } from '../../events';
         [scrollbarH]="scrollbarH"
         [scrollHeight]="scrollHeight"
         [scrollWidth]="columnGroupWidths?.total"
+        style="transform-style: preserve-3d"
         (scroll)="onBodyScroll($event)">
         <datatable-row-wrapper
           [groupedRows]="groupedRows"
@@ -455,8 +456,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * manipulated.   As an example, if the height of row 0 is 30 px and row 1 is
    * 100 px then following styles are generated:
    *
-   * transform: translate3d(0px, 0px, 0px);    ->  row0
-   * transform: translate3d(0px, 30px, 0px);   ->  row1
+   * transform: translate3d(0px, 0px, 2px);    ->  row0
+   * transform: translate3d(0px, 30px, 1px);   ->  row1
    * transform: translate3d(0px, 130px, 0px);  ->  row2
    *
    * Row heights have to be calculated based on the row heights cache as we wont
@@ -471,7 +472,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   getRowsStyles(rows: any): any {
     const styles = {};
-
     // only add styles for the group if there is a group
     if (this.groupedRows) {
       styles['width'] = this.columnGroupWidths.total;
@@ -493,9 +493,10 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       // until the previous row position.
       const pos = this.rowHeightsCache.query(idx - 1);
 
-      translateXY(styles, 0, pos);
+      // Z position of translate3d
+      const zValue = this._rowCount - idx;
+      translateXY(styles, 0, pos, zValue);
     }
-
     return styles;
   }
 

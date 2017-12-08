@@ -9,13 +9,13 @@ const hasCSS3DTransforms = typeof window !== 'undefined' ? !!getVendorPrefixedNa
 const ua = typeof window !== 'undefined' ? window.navigator.userAgent : 'Chrome';
 const isSafari = (/Safari\//).test(ua) && !(/Chrome\//).test(ua);
 
-export function translateXY(styles: any, x: number, y: number) {
+export function translateXY(styles: any, x: number, y: number, z: number = 0) {
   if (typeof transform !== 'undefined' && hasCSSTransforms) {
     if (!isSafari && hasCSS3DTransforms) {
-      styles[transform] = `translate3d(${x}px, ${y}px, 0)`;
+      styles[transform] = `translate3d(${x}px, ${y}px, ${z}px)`;
       styles[backfaceVisibility] = 'hidden';
     } else {
-      styles[camelCase(transform)] = `translate(${x}px, ${y}px)`;
+      styles[camelCase(transform)] = `translate(${x}px, ${y}px, ${z}px)`;
     }
   } else {
     styles.top = `${y}px`;
