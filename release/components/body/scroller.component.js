@@ -27,10 +27,10 @@ var ScrollerComponent = /** @class */ (function () {
         var _this = this;
         // manual bind so we don't always listen
         if (this.scrollbarV || this.scrollbarH) {
-            var renderer_1 = this.renderer;
-            this.parentElement = renderer_1.parentNode(renderer_1.parentNode(this.element));
+            var renderer = this.renderer;
+            this.parentElement = renderer.parentNode(renderer.parentNode(this.element));
             this.ngZone.runOutsideAngular(function () {
-                renderer_1.listen(_this.parentElement, 'scroll', _this.onScrolled.bind(_this));
+                _this.parentElement.addEventListener('scroll', _this.onScrolled.bind(_this));
             });
         }
     };

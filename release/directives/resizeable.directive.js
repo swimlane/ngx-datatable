@@ -25,7 +25,6 @@ var ResizeableDirective = /** @class */ (function () {
         var renderer2 = this.renderer;
         if (this.resizeEnabled) {
             var node = renderer2.createElement('span');
-            // node.classList.add('resize-handle');
             renderer2.addClass(node, 'resize-handle');
             renderer2.appendChild(this.element, node);
         }
