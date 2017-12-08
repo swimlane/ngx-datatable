@@ -7,9 +7,6 @@ import { Inject, Injectable } from '@angular/core';
 @Injectable()
 export class DimensionsHelper {
 
-  // tslint:disable-next-line:no-empty
-  constructor() { }
-
   getDimensions(element: Element): ClientRect {
     return element.getBoundingClientRect();
   }

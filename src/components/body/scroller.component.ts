@@ -47,10 +47,8 @@ export class ScrollerComponent implements OnInit, OnDestroy {
       const renderer = this.renderer;
       this.parentElement = renderer.parentNode(renderer.parentNode(this.element));
       this.ngZone.runOutsideAngular(() => {
-      renderer.listen(
-        this.parentElement, 'scroll', this.onScrolled.bind(this));
-      });
-
+          this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
+        });
     }
   }
 
