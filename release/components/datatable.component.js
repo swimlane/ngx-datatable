@@ -16,9 +16,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var utils_1 = require("../utils");
@@ -32,9 +29,8 @@ var footer_1 = require("./footer");
 var header_1 = require("./header");
 var BehaviorSubject_1 = require("rxjs/BehaviorSubject");
 var DatatableComponent = /** @class */ (function () {
-    function DatatableComponent(scrollbarHelper, dimensionsHelper, cd, element, differs) {
+    function DatatableComponent(scrollbarHelper, cd, element, differs) {
         this.scrollbarHelper = scrollbarHelper;
-        this.dimensionsHelper = dimensionsHelper;
         this.cd = cd;
         /**
          * List of row objects that should be
@@ -201,10 +197,12 @@ var DatatableComponent = /** @class */ (function () {
          */
         set: function (val) {
             this._rows = val;
-            this._internalRows = val.slice();
             // auto sort on new updates
             if (!this.externalSorting) {
-                this._internalRows = utils_1.sortRows(this._internalRows, this._internalColumns, this.sorts);
+                this._internalRows = utils_1.sortRows(val, this._internalColumns, this.sorts);
+            }
+            else {
+                this._internalRows = val.slice();
             }
             // recalculate sizes/etc
             this.recalculate();
@@ -439,7 +437,7 @@ var DatatableComponent = /** @class */ (function () {
          * Returns if all rows are selected.
          */
         get: function () {
-            var allRowsSelected = (this.rows && this.selected && this.selected.length === this.rows.length);
+            var allRowsSelected = (this.selected.length === this.rows.length);
             if (this.selectAllRowsOnPage) {
                 var indexes = this.bodyComponent.indexes;
                 var rowsOnPage = indexes.last - indexes.first;
@@ -468,13 +466,10 @@ var DatatableComponent = /** @class */ (function () {
     DatatableComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
         if (!this.externalSorting) {
-            this._internalRows = utils_1.sortRows(this._internalRows, this._internalColumns, this.sorts);
+            this._internalRows = utils_1.sortRows(this._rows, this._internalColumns, this.sorts);
         }
         // this has to be done to prevent the change detection
         // tree from freaking out because we are readjusting
-        if (typeof requestAnimationFrame === 'undefined') {
-            return;
-        }
         requestAnimationFrame(function () {
             _this.recalculate();
             // emit page for virtual server-side kickoff
@@ -544,7 +539,7 @@ var DatatableComponent = /** @class */ (function () {
     DatatableComponent.prototype.ngDoCheck = function () {
         if (this.rowDiffer.diff(this.rows)) {
             if (!this.externalSorting) {
-                this._internalRows = utils_1.sortRows(this._internalRows, this._internalColumns, this.sorts);
+                this._internalRows = utils_1.sortRows(this._rows, this._internalColumns, this.sorts);
             }
             else {
                 this._internalRows = this.rows.slice();
@@ -602,8 +597,7 @@ var DatatableComponent = /** @class */ (function () {
      *
      */
     DatatableComponent.prototype.recalculateDims = function () {
-        // const dims = this.element.getBoundingClientRect();
-        var dims = this.dimensionsHelper.getDimensions(this.element);
+        var dims = this.element.getBoundingClientRect();
         this._innerWidth = Math.floor(dims.width);
         if (this.scrollbarV) {
             var height = dims.height;
@@ -778,7 +772,7 @@ var DatatableComponent = /** @class */ (function () {
         // the rows again on the 'push' detection...
         if (this.externalSorting === false) {
             // don't use normal setter so we don't resort
-            this._internalRows = utils_1.sortRows(this._internalRows, this._internalColumns, sorts);
+            this._internalRows = utils_1.sortRows(this.rows, this._internalColumns, sorts);
         }
         this.sorts = sorts;
         // Always go to first page when sorting to see the newly sorted data
@@ -1074,10 +1068,7 @@ var DatatableComponent = /** @class */ (function () {
                 class: 'ngx-datatable'
             }
         }),
-        __param(0, core_1.SkipSelf()),
-        __param(1, core_1.SkipSelf()),
         __metadata("design:paramtypes", [services_1.ScrollbarHelper,
-            services_1.DimensionsHelper,
             core_1.ChangeDetectorRef,
             core_1.ElementRef,
             core_1.KeyValueDiffers])

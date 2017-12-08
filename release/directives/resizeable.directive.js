@@ -14,19 +14,17 @@ var Observable_1 = require("rxjs/Observable");
 var events_1 = require("../events");
 var operators_1 = require("rxjs/operators");
 var ResizeableDirective = /** @class */ (function () {
-    function ResizeableDirective(element, renderer) {
-        this.renderer = renderer;
+    function ResizeableDirective(element) {
         this.resizeEnabled = true;
         this.resize = new core_1.EventEmitter();
         this.resizing = false;
         this.element = element.nativeElement;
     }
     ResizeableDirective.prototype.ngAfterViewInit = function () {
-        var renderer2 = this.renderer;
         if (this.resizeEnabled) {
-            var node = renderer2.createElement('span');
-            renderer2.addClass(node, 'resize-handle');
-            renderer2.appendChild(this.element, node);
+            var node = document.createElement('span');
+            node.classList.add('resize-handle');
+            this.element.appendChild(node);
         }
     };
     ResizeableDirective.prototype.ngOnDestroy = function () {
@@ -100,7 +98,7 @@ var ResizeableDirective = /** @class */ (function () {
                 '[class.resizeable]': 'resizeEnabled'
             }
         }),
-        __metadata("design:paramtypes", [core_1.ElementRef, core_1.Renderer2])
+        __metadata("design:paramtypes", [core_1.ElementRef])
     ], ResizeableDirective);
     return ResizeableDirective;
 }());

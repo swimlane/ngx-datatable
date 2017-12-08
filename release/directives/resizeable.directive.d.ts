@@ -1,7 +1,6 @@
-import { ElementRef, EventEmitter, OnDestroy, AfterViewInit, Renderer2 } from '@angular/core';
+import { ElementRef, EventEmitter, OnDestroy, AfterViewInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 export declare class ResizeableDirective implements OnDestroy, AfterViewInit {
-    private renderer;
     resizeEnabled: boolean;
     minWidth: number;
     maxWidth: number;
@@ -9,7 +8,7 @@ export declare class ResizeableDirective implements OnDestroy, AfterViewInit {
     element: HTMLElement;
     subscription: Subscription;
     resizing: boolean;
-    constructor(element: ElementRef, renderer: Renderer2);
+    constructor(element: ElementRef);
     ngAfterViewInit(): void;
     ngOnDestroy(): void;
     onMouseup(): void;

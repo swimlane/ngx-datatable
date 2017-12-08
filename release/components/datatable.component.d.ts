@@ -1,5 +1,5 @@
 import { ElementRef, EventEmitter, OnInit, QueryList, AfterViewInit, DoCheck, KeyValueDiffers, KeyValueDiffer, ChangeDetectorRef } from '@angular/core';
-import { ScrollbarHelper, DimensionsHelper } from '../services';
+import { ScrollbarHelper } from '../services';
 import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
@@ -10,7 +10,6 @@ import { DataTableHeaderComponent } from './header';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export declare class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     private scrollbarHelper;
-    private dimensionsHelper;
     private cd;
     /**
      * Gets the rows.
@@ -342,7 +341,7 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
     _internalColumns: TableColumn[];
     _columns: TableColumn[];
     _columnTemplates: QueryList<DataTableColumnDirective>;
-    constructor(scrollbarHelper: ScrollbarHelper, dimensionsHelper: DimensionsHelper, cd: ChangeDetectorRef, element: ElementRef, differs: KeyValueDiffers);
+    constructor(scrollbarHelper: ScrollbarHelper, cd: ChangeDetectorRef, element: ElementRef, differs: KeyValueDiffers);
     /**
      * Lifecycle hook that is called after data-bound
      * properties of a directive are initialized.
