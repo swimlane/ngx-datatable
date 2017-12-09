@@ -95,7 +95,6 @@ export class FullScreenTreeComponent {
   }
 
   onTreeAction(event: any) {
-    console.log('The event - ', event);
     const index = event.rowIndex;
     const row = event.row;
     if (this.rows[index].treeStatus === 'collapsed') {
