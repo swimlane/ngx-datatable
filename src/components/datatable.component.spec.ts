@@ -396,9 +396,8 @@ function setupTest() {
 function sortBy({ column }: { column: number }) {
   const columnIndex = column - 1;
   const headerCellDe = fixture.debugElement
-    .queryAll(By.directive(DataTableHeaderCellComponent))[columnIndex];
+    .queryAll(By.css('datatable-header-cell'))[columnIndex];
   const de = headerCellDe.query(By.css('span:last-child'));
-  
   de.triggerEventHandler('click', null);
 }
 
