@@ -55,6 +55,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
         [groupExpansionDefault]="groupExpansionDefault"
         [scrollbarV]="scrollbarV"
         [scrollbarH]="scrollbarH"
+        [virtualization]="virtualization"
         [loadingIndicator]="loadingIndicator"
         [externalPaging]="externalPaging"
         [rowHeight]="rowHeight"
@@ -114,7 +115,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   @Input() set rows(val: any) {
     this._rows = val;
     this._internalRows = [...val];
-    
+
     // auto sort on new updates
     if (!this.externalSorting) {
       this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
@@ -420,6 +421,11 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   @Input() selectAllRowsOnPage = false;
 
   /**
+   * A flag for row virtualization on / off
+   */
+  @Input() virtualization: boolean = true;
+
+  /**
    * Body was scrolled typically in a `scrollbarV:true` scenario.
    */
   @Output() scroll: EventEmitter<any> = new EventEmitter();
@@ -714,7 +720,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
   /**
    * Creates a map with the data grouped by the user choice of grouping index
-   * 
+   *
    * @param originalArray the original array passed via parameter
    * @param groupByIndex  the index of the column to group the data by
    */

@@ -43,8 +43,8 @@ import { MouseEvent } from '../../events';
           [expanded]="getRowExpanded(group)"
           [rowIndex]="getRowIndex(group[i])"
           (rowContextmenu)="rowContextmenu.emit($event)">
-          <datatable-body-row 
-            *ngIf="!groupedRows; else groupedRowsTemplate"        
+          <datatable-body-row
+            *ngIf="!groupedRows; else groupedRowsTemplate"
             tabindex="-1"
             [isSelected]="selector.getRowSelected(group)"
             [innerWidth]="innerWidth"
@@ -53,7 +53,7 @@ import { MouseEvent } from '../../events';
             [rowHeight]="getRowHeight(group)"
             [row]="group"
             [rowIndex]="getRowIndex(group)"
-            [expanded]="getRowExpanded(group)"            
+            [expanded]="getRowExpanded(group)"
             [rowClass]="rowClass"
             [displayCheck]="displayCheck"
             (activate)="selector.onActivate($event, indexes.first + i)">
@@ -111,6 +111,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() groupExpansionDefault: boolean;
   @Input() innerWidth: number;
   @Input() groupRowsBy: string;
+  @Input() virtualization: boolean;
 
   @Input() set pageSize(val: number) {
     this._pageSize = val;
@@ -134,7 +135,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() set columns(val: any[]) {
     this._columns = val;
     const colsByPin = columnsByPin(val);
-    this.columnGroupWidths = columnGroupWidths(colsByPin, val);    
+    this.columnGroupWidths = columnGroupWidths(colsByPin, val);
   }
 
   get columns(): any[] {
@@ -276,8 +277,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
           this.updateIndexes();
           this.updateRows();
           this.cd.markForCheck();
-        });              
-    }             
+        });
+    }
   }
 
   /**
@@ -357,12 +358,12 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
     this.rowIndexes.clear();
 
-    // if grouprowsby has been specified treat row paging 
-    // parameters as group paging parameters ie if limit 10 has been 
-    // specified treat it as 10 groups rather than 10 rows    
+    // if grouprowsby has been specified treat row paging
+    // parameters as group paging parameters ie if limit 10 has been
+    // specified treat it as 10 groups rather than 10 rows
     if(this.groupedRows) {
       let maxRowsPerGroup = 3;
-      // if there is only one group set the maximum number of 
+      // if there is only one group set the maximum number of
       // rows per group the same as the total number of rows
       if (this.groupedRows.length === 1) {
         maxRowsPerGroup = this.groupedRows[0].value.length;
@@ -375,9 +376,9 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         idx++;
 
         // Group index in this context
-        rowIndex++; 
-      }      
-    } else {           
+        rowIndex++;
+      }
+    } else {
       while (rowIndex < last && rowIndex < this.rowCount) {
         const row = this.rows[rowIndex];
 
@@ -388,9 +389,9 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
         idx++;
         rowIndex++;
-      }       
+      }
     }
-    
+
     this.temp = temp;
     this.cd.detectChanges();
   }
@@ -400,7 +401,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   getRowHeight(row: any): number {
     let rowHeight = this.rowHeight;
-   
+
     // if its a function return it
     if (typeof this.rowHeight === 'function') {
       rowHeight = this.rowHeight(row);
@@ -417,9 +418,9 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
     if (group.value) {
       for (let index = 0; index < group.value.length; index++) {
-        rowHeight += this.getRowAndDetailHeight(group.value[index]);     
-      }          
-    }      
+        rowHeight += this.getRowAndDetailHeight(group.value[index]);
+      }
+    }
 
     return rowHeight;
   }
@@ -462,7 +463,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * be able to determine which row is of what height before hand.  In the above
    * case the positionY of the translate3d for row2 would be the sum of all the
    * heights of the rows before it (i.e. row0 and row1).
-   * 
+   *
    * @param {*} rows The row that needs to be placed in the 2D space.
    * @returns {*} Returns the CSS3 style to be applied
    *
@@ -475,7 +476,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     if (this.groupedRows) {
       styles['width'] = this.columnGroupWidths.total;
     }
-      
+
     if (this.scrollbarV) {
       let idx = 0;
 
@@ -485,7 +486,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         idx = row ? this.getRowIndex(row) : 0;
       } else {
         idx = this.getRowIndex(rows);
-      }        
+      }
 
       // const pos = idx * rowHeight;
       // The position of this row would be the sum of all row heights
@@ -497,7 +498,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
     return styles;
   }
- 
+
   /**
    * Hides the loading indicator
    */
@@ -513,12 +514,19 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     let last = 0;
 
     if (this.scrollbarV) {
-      // Calculation of the first and last indexes will be based on where the
-      // scrollY position would be at.  The last index would be the one
-      // that shows up inside the view port the last.
-      const height = parseInt(this.bodyHeight, 0);
-      first = this.rowHeightsCache.getRowIndex(this.offsetY);
-      last = this.rowHeightsCache.getRowIndex(height + this.offsetY) + 1;
+      if (this.virtualization) {
+        // Calculation of the first and last indexes will be based on where the
+        // scrollY position would be at.  The last index would be the one
+        // that shows up inside the view port the last.
+        const height = parseInt(this.bodyHeight, 0);
+        first = this.rowHeightsCache.getRowIndex(this.offsetY);
+        last = this.rowHeightsCache.getRowIndex(height + this.offsetY) + 1;
+      } else {
+        // If virtual rows are not needed
+        // We render all in one go
+        first = 0;
+        last = this.rowCount - 1;
+      }
     } else {
       // The server is handling paging and will pass an array that begins with the
       // element at a specified offset.  first should always be 0 with external paging.
@@ -670,7 +678,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
     return styles;
   }
-  
+
   /**
    * Returns if the row was expanded and set default row expansion when row expansion is empty
    */
@@ -679,7 +687,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       for (const group of this.groupedRows) {
         this.rowExpansions.set(group, 1);
       }
-    }    
+    }
 
     const expanded = this.rowExpansions.get(row);
     return expanded === 1;
