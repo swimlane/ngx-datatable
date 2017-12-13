@@ -263,43 +263,60 @@ var DataTableBodyComponent = /** @class */ (function () {
      * Updates the rows in the view port
      */
     DataTableBodyComponent.prototype.updateRows = function () {
-        var _a = this.indexes, first = _a.first, last = _a.last;
-        var rowIndex = first;
-        var idx = 0;
-        var temp = [];
-        this.rowIndexes.clear();
-        // if grouprowsby has been specified treat row paging 
-        // parameters as group paging parameters ie if limit 10 has been 
-        // specified treat it as 10 groups rather than 10 rows    
-        if (this.groupedRows) {
-            var maxRowsPerGroup = 3;
-            // if there is only one group set the maximum number of 
-            // rows per group the same as the total number of rows
-            if (this.groupedRows.length === 1) {
-                maxRowsPerGroup = this.groupedRows[0].value.length;
+        if (this.disableVirtualScroll) {
+            if (this.rowCount > 1) {
+                this.rowIndexes.clear();
+                for (var i = 0; i < this.rowCount; i++) {
+                    var row = this.rows[i];
+                    if (row) {
+                        this.rowIndexes.set(row, i);
+                    }
+                }
             }
-            while (rowIndex < last && rowIndex < this.groupedRows.length) {
-                // Add the groups into this page
-                var group = this.groupedRows[rowIndex];
-                temp[idx] = group;
-                idx++;
-                // Group index in this context
-                rowIndex++;
+            if (this.rows) {
+                this.temp = this.rows.slice();
+                this.cd.detectChanges();
             }
         }
         else {
-            while (rowIndex < last && rowIndex < this.rowCount) {
-                var row = this.rows[rowIndex];
-                if (row) {
-                    this.rowIndexes.set(row, rowIndex);
-                    temp[idx] = row;
+            var _a = this.indexes, first = _a.first, last = _a.last;
+            var rowIndex = first;
+            var idx = 0;
+            var temp = [];
+            this.rowIndexes.clear();
+            // if grouprowsby has been specified treat row paging 
+            // parameters as group paging parameters ie if limit 10 has been 
+            // specified treat it as 10 groups rather than 10 rows    
+            if (this.groupedRows) {
+                var maxRowsPerGroup = 3;
+                // if there is only one group set the maximum number of 
+                // rows per group the same as the total number of rows
+                if (this.groupedRows.length === 1) {
+                    maxRowsPerGroup = this.groupedRows[0].value.length;
                 }
-                idx++;
-                rowIndex++;
+                while (rowIndex < last && rowIndex < this.groupedRows.length) {
+                    // Add the groups into this page
+                    var group = this.groupedRows[rowIndex];
+                    temp[idx] = group;
+                    idx++;
+                    // Group index in this context
+                    rowIndex++;
+                }
             }
+            else {
+                while (rowIndex < last && rowIndex < this.rowCount) {
+                    var row = this.rows[rowIndex];
+                    if (row) {
+                        this.rowIndexes.set(row, rowIndex);
+                        temp[idx] = row;
+                    }
+                    idx++;
+                    rowIndex++;
+                }
+            }
+            this.temp = temp;
+            this.cd.detectChanges();
         }
-        this.temp = temp;
-        this.cd.detectChanges();
     };
     /**
      * Get the row height
@@ -631,6 +648,10 @@ var DataTableBodyComponent = /** @class */ (function () {
         core_1.Input(),
         __metadata("design:type", String)
     ], DataTableBodyComponent.prototype, "groupRowsBy", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], DataTableBodyComponent.prototype, "disableVirtualScroll", void 0);
     __decorate([
         core_1.Input(),
         __metadata("design:type", Number),

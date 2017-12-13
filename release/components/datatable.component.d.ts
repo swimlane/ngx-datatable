@@ -207,6 +207,14 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     selectAllRowsOnPage: boolean;
     /**
+     * A boolean to enable/disable virtual scrolling.
+     * Enabled virtual scroll will remove not visible rows from the DOM.
+     *
+     * @type {boolean}
+     * @memberOf DatatableComponent
+     */
+    disableVirtualScroll: boolean;
+    /**
      * Body was scrolled typically in a `scrollbarV:true` scenario.
      */
     scroll: EventEmitter<any>;
