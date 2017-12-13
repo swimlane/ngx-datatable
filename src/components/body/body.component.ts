@@ -111,7 +111,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() groupExpansionDefault: boolean;
   @Input() innerWidth: number;
   @Input() groupRowsBy: string;
-  @Input() virtualRow: boolean;
+  @Input() virtualization: boolean;
 
   @Input() set pageSize(val: number) {
     this._pageSize = val;
@@ -514,7 +514,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     let last = 0;
 
     if (this.scrollbarV) {
-      if (this.virtualRow) {
+      if (this.virtualization) {
         // Calculation of the first and last indexes will be based on where the
         // scrollY position would be at.  The last index would be the one
         // that shows up inside the view port the last.

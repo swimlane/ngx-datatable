@@ -55,7 +55,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
         [groupExpansionDefault]="groupExpansionDefault"
         [scrollbarV]="scrollbarV"
         [scrollbarH]="scrollbarH"
-        [virtualRow]="virtualRow"
+        [virtualization]="virtualization"
         [loadingIndicator]="loadingIndicator"
         [externalPaging]="externalPaging"
         [rowHeight]="rowHeight"
@@ -423,7 +423,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   /**
    * A flag for row virtualization on / off
    */
-  @Input() virtualRow: boolean = true;
+  @Input() virtualization: boolean = true;
 
   /**
    * Body was scrolled typically in a `scrollbarV:true` scenario.
