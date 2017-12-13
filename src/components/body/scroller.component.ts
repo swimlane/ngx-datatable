@@ -1,5 +1,5 @@
 import {
-  Component, Input, ElementRef, Output, EventEmitter, NgZone,
+  Component, Input, ElementRef, Output, EventEmitter, Renderer2, NgZone,
   OnInit, OnDestroy, HostBinding, ChangeDetectionStrategy
 } from '@angular/core';
 
@@ -36,17 +36,19 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   parentElement: any;
   onScrollListener: any;
 
-  constructor(private ngZone: NgZone, element: ElementRef) {
+  constructor(private ngZone: NgZone, element: ElementRef, private renderer: Renderer2) {
+
     this.element = element.nativeElement;
   }
 
   ngOnInit(): void {
     // manual bind so we don't always listen
     if (this.scrollbarV || this.scrollbarH) {
-      this.parentElement = this.element.parentElement.parentElement;
+      const renderer = this.renderer;
+      this.parentElement = renderer.parentNode(renderer.parentNode(this.element));
       this.ngZone.runOutsideAngular(() => {
-        this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
-      });
+          this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
+        });
     }
   }
 

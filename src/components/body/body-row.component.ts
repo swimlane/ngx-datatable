@@ -1,13 +1,13 @@
 import {
   Component, Input, HostBinding, ElementRef, Output, KeyValueDiffers, KeyValueDiffer,
-  EventEmitter, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, DoCheck
+  EventEmitter, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, DoCheck, SkipSelf
 } from '@angular/core';
 
 import {
   allColumnsByPinArr, columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys
 } from '../../utils';
 import { ScrollbarHelper } from '../../services';
-import { MouseEvent, KeyboardEvent } from '../../events';
+import { MouseEvent, KeyboardEvent, Event } from '../../events';
 
 @Component({
   selector: 'datatable-body-row',
@@ -122,7 +122,7 @@ export class DataTableBodyRowComponent implements DoCheck {
 
   constructor(
       private differs: KeyValueDiffers,
-      private scrollbarHelper: ScrollbarHelper,
+      @SkipSelf() private scrollbarHelper: ScrollbarHelper,
       private cd: ChangeDetectorRef, 
       element: ElementRef) {
     this._element = element.nativeElement;

@@ -3,14 +3,14 @@ import {
   HostListener, ContentChildren, OnInit, QueryList, AfterViewInit,
   HostBinding, ContentChild, TemplateRef, IterableDiffer,
   DoCheck, KeyValueDiffers, KeyValueDiffer, ViewEncapsulation,
-  ChangeDetectionStrategy, ChangeDetectorRef
+  ChangeDetectionStrategy, ChangeDetectorRef, SkipSelf
 } from '@angular/core';
 
 import {
   forceFillColumnWidths, adjustColumnWidths, sortRows,
   setColumnDefaults, throttleable, translateTemplates
 } from '../utils';
-import { ScrollbarHelper } from '../services';
+import { ScrollbarHelper, DimensionsHelper } from '../services';
 import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
@@ -605,7 +605,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Returns if all rows are selected.
    */
   get allRowsSelected(): boolean {
-    let allRowsSelected = (this.selected.length === this.rows.length);
+    let allRowsSelected = (this.rows && this.selected && this.selected.length === this.rows.length);
 
     if (this.selectAllRowsOnPage) {
       const indexes = this.bodyComponent.indexes;
@@ -636,7 +636,8 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   _columnTemplates: QueryList<DataTableColumnDirective>;
 
   constructor(
-    private scrollbarHelper: ScrollbarHelper,
+    @SkipSelf() private scrollbarHelper: ScrollbarHelper,
+    @SkipSelf() private dimensionsHelper: DimensionsHelper,
     private cd: ChangeDetectorRef,
     element: ElementRef,
     differs: KeyValueDiffers) {
@@ -668,6 +669,10 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
     // this has to be done to prevent the change detection
     // tree from freaking out because we are readjusting
+    if (typeof requestAnimationFrame === 'undefined') {
+      return;
+    }
+    
     requestAnimationFrame(() => {
       this.recalculate();
 
@@ -808,7 +813,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    *
    */
   recalculateDims(): void {
-    const dims = this.element.getBoundingClientRect();
+    const dims = this.dimensionsHelper.getDimensions(this.element);
     this._innerWidth = Math.floor(dims.width);
 
     if (this.scrollbarV) {

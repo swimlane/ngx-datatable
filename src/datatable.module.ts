@@ -34,14 +34,18 @@ import {
   DraggableDirective
 } from './directives';
 
-import { ScrollbarHelper } from './services';
+import { 
+  ScrollbarHelper,
+  DimensionsHelper 
+} from './services';
 
 @NgModule({
   imports: [
     CommonModule
   ],
   providers: [
-    ScrollbarHelper
+    ScrollbarHelper,
+    DimensionsHelper
   ],
   declarations: [
     DataTableFooterTemplateDirective,
