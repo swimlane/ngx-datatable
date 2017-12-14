@@ -28,21 +28,15 @@ import { Component } from '@angular/core';
           </ng-template>
 
           <ng-template ngx-datatable-cell-tree-expander>
-            <img
-              [ngClass]="['icon']"
-              src="https://png.icons8.com/android/540/expand-arrow.png" />
+            <i class="icon datatable-icon-up"></i>
           </ng-template>
 
           <ng-template ngx-datatable-cell-tree-collapser>
-            <img
-              [ngClass]="['icon']"
-              src="https://png.icons8.com/android/540/collapse-arrow.png" />
+            <i class="icon datatable-icon-down"></i>
           </ng-template>
 
           <ng-template ngx-datatable-cell-tree-disabled>
-            <img
-              [ngClass]="['icon', 'disabled']"
-              src="https://png.icons8.com/android/540/collapse-arrow.png" />
+            <i class="disabled icon datatable-icon-down"></i>
           </ng-template>
 
         </ngx-datatable-column>

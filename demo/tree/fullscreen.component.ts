@@ -29,27 +29,19 @@ import { setTimeout } from 'timers';
         <ngx-datatable-column name="Id" [width]="80"></ngx-datatable-column>
         <ngx-datatable-column name="Name" [isTreeColumn]="true" [width]="300">
           <ng-template ngx-datatable-cell-tree-expander>
-            <img
-              [ngClass]="['icon']"
-              src="https://png.icons8.com/android/540/expand-arrow.png" />
+            <i class="icon datatable-icon-up"></i>
           </ng-template>
 
           <ng-template ngx-datatable-cell-tree-collapser>
-            <img
-              [ngClass]="['icon']"
-              src="https://png.icons8.com/android/540/collapse-arrow.png" />
+            <i class="icon datatable-icon-down"></i>
           </ng-template>
 
           <ng-template ngx-datatable-cell-tree-disabled>
-            <img
-              [ngClass]="['icon', 'disabled']"
-              src="https://png.icons8.com/android/540/collapse-arrow.png" />
+            <i class="disabled icon datatable-icon-down"></i>
           </ng-template>
 
           <ng-template ngx-datatable-cell-tree-loader>
-            <img
-              [ngClass]="['icon']"
-              src="http://webcast.messukeskus.com/pub/player/img/wait.gif" />
+            <i class="icon datatable-icon-collapse"></i>
           </ng-template>
 
         </ngx-datatable-column>
