@@ -1,5 +1,5 @@
 import {
-  Component, Input, HostBinding, ElementRef, Output, KeyValueDiffers, KeyValueDiffer,
+  Component, Input, HostBinding, ElementRef, Output, KeyValueDiffers, KeyValueDiffer, NgZone,
   EventEmitter, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, DoCheck, SkipSelf
 } from '@angular/core';
 
@@ -30,7 +30,7 @@ import { MouseEvent, KeyboardEvent, Event } from '../../events';
         [displayCheck]="displayCheck"
         (activate)="onActivate($event, ii)">
       </datatable-body-cell>
-    </div>      
+    </div>
   `
 })
 export class DataTableBodyRowComponent implements DoCheck {
@@ -47,12 +47,12 @@ export class DataTableBodyRowComponent implements DoCheck {
   @Input() set innerWidth(val: number) {
     if (this._columns) {
       const colByPin = columnsByPin(this._columns);
-      this._columnGroupWidths = columnGroupWidths(colByPin, colByPin);  
+      this._columnGroupWidths = columnGroupWidths(colByPin, colByPin);
     }
 
     this._innerWidth = val;
     this.recalculateColumns();
-    this.buildStylesByGroup();    
+    this.buildStylesByGroup();
   }
 
   get innerWidth(): number {
@@ -61,7 +61,12 @@ export class DataTableBodyRowComponent implements DoCheck {
 
   @Input() expanded: boolean;
   @Input() rowClass: any;
-  @Input() row: any;
+  public row: any;
+  @Input('row') set rowSetter(val: any) {
+    this.zone.run(() => {
+      this.row = val;
+    });
+  }
   @Input() group: any;
   @Input() isSelected: boolean;
   @Input() rowIndex: number;
@@ -123,8 +128,9 @@ export class DataTableBodyRowComponent implements DoCheck {
   constructor(
       private differs: KeyValueDiffers,
       @SkipSelf() private scrollbarHelper: ScrollbarHelper,
-      private cd: ChangeDetectorRef, 
-      element: ElementRef) {
+      private cd: ChangeDetectorRef,
+      element: ElementRef,
+      private zone: NgZone) {
     this._element = element.nativeElement;
     this._rowDiffer = differs.find({}).create();
   }
@@ -134,7 +140,7 @@ export class DataTableBodyRowComponent implements DoCheck {
       this.cd.markForCheck();
     }
   }
-  
+
   trackByGroups(index: number, colGroup: any): any {
     return colGroup.type;
   }
@@ -215,7 +221,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   recalculateColumns(val: any[] = this.columns): void {
     this._columns = val;
     const colsByPin = columnsByPin(this._columns);
-    this._columnsByPin = allColumnsByPinArr(this._columns);        
+    this._columnsByPin = allColumnsByPinArr(this._columns);
     this._columnGroupWidths = columnGroupWidths(colsByPin, this._columns);
   }
 
