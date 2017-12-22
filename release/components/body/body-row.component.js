@@ -8,6 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var utils_1 = require("../../utils");
@@ -252,6 +255,7 @@ var DataTableBodyRowComponent = /** @class */ (function () {
             changeDetection: core_1.ChangeDetectionStrategy.OnPush,
             template: "\n    <div\n      *ngFor=\"let colGroup of _columnsByPin; let i = index; trackBy: trackByGroups\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"_groupStyles[colGroup.type]\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [group]=\"group\"\n        [expanded]=\"expanded\"\n        [isSelected]=\"isSelected\"\n        [rowIndex]=\"rowIndex\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        [displayCheck]=\"displayCheck\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>      \n  "
         }),
+        __param(1, core_1.SkipSelf()),
         __metadata("design:paramtypes", [core_1.KeyValueDiffers,
             services_1.ScrollbarHelper,
             core_1.ChangeDetectorRef,

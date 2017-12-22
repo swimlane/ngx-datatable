@@ -1,5 +1,10 @@
 # Changelog
 
+## 11.1.6
+- Bug: Ignore rxjs/operators
+- Feat: Ability to disable virtualization #1191
+- Feat: Universal Support #1178
+
 ## 11.1.5
 - Compat: Fix Angular 4.x Compat
 

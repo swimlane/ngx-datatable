@@ -11,8 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var ScrollerComponent = /** @class */ (function () {
-    function ScrollerComponent(ngZone, element) {
+    function ScrollerComponent(ngZone, element, renderer) {
         this.ngZone = ngZone;
+        this.renderer = renderer;
         this.scrollbarV = false;
         this.scrollbarH = false;
         this.scroll = new core_1.EventEmitter();
@@ -26,7 +27,8 @@ var ScrollerComponent = /** @class */ (function () {
         var _this = this;
         // manual bind so we don't always listen
         if (this.scrollbarV || this.scrollbarH) {
-            this.parentElement = this.element.parentElement.parentElement;
+            var renderer = this.renderer;
+            this.parentElement = renderer.parentNode(renderer.parentNode(this.element));
             this.ngZone.runOutsideAngular(function () {
                 _this.parentElement.addEventListener('scroll', _this.onScrolled.bind(_this));
             });
@@ -98,7 +100,7 @@ var ScrollerComponent = /** @class */ (function () {
             },
             changeDetection: core_1.ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [core_1.NgZone, core_1.ElementRef])
+        __metadata("design:paramtypes", [core_1.NgZone, core_1.ElementRef, core_1.Renderer2])
     ], ScrollerComponent);
     return ScrollerComponent;
 }());

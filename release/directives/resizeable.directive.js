@@ -10,21 +10,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var Observable_1 = require("rxjs/Observable");
 var events_1 = require("../events");
 var operators_1 = require("rxjs/operators");
+var fromEvent_1 = require("rxjs/observable/fromEvent");
 var ResizeableDirective = /** @class */ (function () {
-    function ResizeableDirective(element) {
+    function ResizeableDirective(element, renderer) {
+        this.renderer = renderer;
         this.resizeEnabled = true;
         this.resize = new core_1.EventEmitter();
         this.resizing = false;
         this.element = element.nativeElement;
     }
     ResizeableDirective.prototype.ngAfterViewInit = function () {
+        var renderer2 = this.renderer;
         if (this.resizeEnabled) {
-            var node = document.createElement('span');
-            node.classList.add('resize-handle');
-            this.element.appendChild(node);
+            var node = renderer2.createElement('span');
+            renderer2.addClass(node, 'resize-handle');
+            renderer2.appendChild(this.element, node);
         }
     };
     ResizeableDirective.prototype.ngOnDestroy = function () {
@@ -45,10 +47,10 @@ var ResizeableDirective = /** @class */ (function () {
         if (isHandle) {
             event.stopPropagation();
             this.resizing = true;
-            var mouseup = Observable_1.Observable.fromEvent(document, 'mouseup');
+            var mouseup = fromEvent_1.fromEvent(document, 'mouseup');
             this.subscription = mouseup
                 .subscribe(function (ev) { return _this.onMouseup(); });
-            var mouseMoveSub = Observable_1.Observable.fromEvent(document, 'mousemove')
+            var mouseMoveSub = fromEvent_1.fromEvent(document, 'mousemove')
                 .pipe(operators_1.takeUntil(mouseup))
                 .subscribe(function (e) { return _this.move(e, initialWidth, mouseDownScreenX); });
             this.subscription.add(mouseMoveSub);
@@ -98,7 +100,7 @@ var ResizeableDirective = /** @class */ (function () {
                 '[class.resizeable]': 'resizeEnabled'
             }
         }),
-        __metadata("design:paramtypes", [core_1.ElementRef])
+        __metadata("design:paramtypes", [core_1.ElementRef, core_1.Renderer2])
     ], ResizeableDirective);
     return ResizeableDirective;
 }());
