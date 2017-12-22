@@ -1,5 +1,8 @@
 # Changelog
 
+## 11.1.7
+- Fix: Fix error w/ rows undefined on init
+
 ## 11.1.6
 - Bug: Ignore rxjs/operators
 - Feat: Ability to disable virtualization #1191

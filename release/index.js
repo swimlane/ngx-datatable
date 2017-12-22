@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"11.1.6" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"11.1.7" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -2657,7 +2657,9 @@ var DatatableComponent = /** @class */ (function () {
          */
         set: function (val) {
             this._rows = val;
-            this._internalRows = val.slice();
+            if (val) {
+                this._internalRows = val.slice();
+            }
             // auto sort on new updates
             if (!this.externalSorting) {
                 this._internalRows = utils_1.sortRows(this._internalRows, this._internalColumns, this.sorts);
