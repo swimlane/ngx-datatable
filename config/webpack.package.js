@@ -50,7 +50,11 @@ module.exports = function(env) {
       'core-js/es7/reflect': 'core-js/es7/reflect',
       'rxjs': 'rxjs',
       'rxjs/Rx': 'rxjs/Rx',
+      'rxjs/Observable': 'rxjs/Observable',
+      'rxjs/BehaviorSubject': 'rxjs/BehaviorSubject',
+      'rxjs/observable/fromEvent': 'rxjs/observable/fromEvent',
       'rxjs/Subscription': 'rxjs/Subscription',
+      'rxjs/operators': 'rxjs/operators',
       'zone.js/dist/zone': 'zone.js/dist/zone'
     },
     plugins: [
