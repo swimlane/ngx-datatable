@@ -28,6 +28,7 @@ See the [changelog](https://github.com/swimlane/ngx-datatable/blob/master/docs/c
 - Decoupled theme'ing with included Google Material theme
 - Light codebase / No external dependencies
 - AoT Compilation Support
+- Universal Support
 
 ## Installation
 To use ngx-datatable in your project install it via [npm](https://www.npmjs.com/package/@swimlane/ngx-datatable):
