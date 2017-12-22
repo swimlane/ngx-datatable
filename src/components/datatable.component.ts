@@ -114,7 +114,10 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    */
   @Input() set rows(val: any) {
     this._rows = val;
-    this._internalRows = [...val];
+
+    if (val) {
+      this._internalRows = [...val];
+    }
 
     // auto sort on new updates
     if (!this.externalSorting) {
