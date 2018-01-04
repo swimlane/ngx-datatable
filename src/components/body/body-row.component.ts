@@ -69,7 +69,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   @Input() rowIndex: number;
   @Input() displayCheck: any;
   // loading, expanded, collapsed
-  @Input() treeStatus: string;
+  @Input() treeStatus: 'loading' | 'expanded' | 'collapsed' = 'collapsed';
 
   @Input()
   set offsetX(val: number) {
