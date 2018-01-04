@@ -15,7 +15,7 @@ import { ContentChild } from '@angular/core/src/metadata/di';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="datatable-body-cell-label"
-      [style.margin-left.px]="column.isTreeColumn ? row.level * 50 : 0">
+      [style.margin-left.px]="calcLeftMargin(column, row)">
       <label
         *ngIf="column.checkboxable && (!displayCheck || displayCheck(row, column, value))"
         class="datatable-checkbox">
@@ -30,7 +30,7 @@ import { ContentChild } from '@angular/core/src/metadata/di';
         (click)="onTreeAction()">
         <span *ngIf="_treeStatus==='loading' &&
                 !column.treeLoaderTemplate">
-          [=]
+          <i class="icon datatable-icon-collapse"></i>
         </span>
         <ng-template *ngIf="_treeStatus==='loading' &&
                 column.treeLoaderTemplate"
@@ -39,7 +39,7 @@ import { ContentChild } from '@angular/core/src/metadata/di';
 
         <span *ngIf="_treeStatus==='collapsed' &&
                 !column.treeExpanderTemplate">
-          [+]
+          <i class="icon datatable-icon-up"></i>
         </span>
         <ng-template *ngIf="_treeStatus==='collapsed' &&
                 column.treeExpanderTemplate"
@@ -48,7 +48,7 @@ import { ContentChild } from '@angular/core/src/metadata/di';
 
         <span *ngIf="_treeStatus==='expanded' &&
                      !column.treeCollapserTemplate">
-          [-]
+          <i class="icon datatable-icon-down"></i>
         </span>
         <ng-template *ngIf="_treeStatus==='expanded' &&
                             column.treeCollapserTemplate"
@@ -57,7 +57,7 @@ import { ContentChild } from '@angular/core/src/metadata/di';
 
         <span *ngIf="_treeStatus==='disabled' &&
                      !column.treeDisableTemplate" class="disabled">
-          [-]
+          <i class="disabled icon datatable-icon-down"></i>
         </span>
         <ng-template *ngIf="_treeStatus==='disabled' &&
                            column.treeDisableTemplate"
@@ -405,6 +405,10 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     if (this._treeStatus !== 'disabled') {
       this.treeActionClick.emit();
     }
+  }
+
+  calcLeftMargin(column: any, row: any) {
+    return column.isTreeColumn ? row.level * 50 : 0;
   }
 
 }
