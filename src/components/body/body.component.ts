@@ -31,7 +31,7 @@ import { MouseEvent } from '../../events';
         [scrollWidth]="columnGroupWidths?.total"
         (scroll)="onBodyScroll($event)">
         <datatable-summary-row
-          *ngIf="summaryRow"
+          *ngIf="summaryRow && summaryPosition === 'top'"
           [getRowHeight]="getRowHeight"
           [offsetX]="offsetX"
           [innerWidth]="innerWidth"
@@ -84,6 +84,14 @@ import { MouseEvent } from '../../events';
             </datatable-body-row>
           </ng-template>
         </datatable-row-wrapper>
+        <datatable-summary-row
+          *ngIf="summaryRow && summaryPosition === 'bottom'"
+          [getRowHeight]="getRowHeight"
+          [offsetX]="offsetX"
+          [innerWidth]="innerWidth"
+          [rows]="rows"
+          [columns]="columns">
+        </datatable-summary-row>
       </datatable-scroller>
       <div
         class="empty-row"
@@ -121,6 +129,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() groupRowsBy: string;
   @Input() virtualization: boolean;
   @Input() summaryRow: boolean;
+  @Input() summaryPosition: string;
 
   @Input() set pageSize(val: number) {
     this._pageSize = val;

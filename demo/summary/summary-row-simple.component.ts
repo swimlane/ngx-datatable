@@ -11,9 +11,27 @@ import { Component } from '@angular/core';
         </a>
         </small>
       </h3>
+      <div class="controls">
+        <div>
+          <input
+            id="enable-summary"
+            type="checkbox"
+            [checked]="enableSummary"
+            (change)="enableSummary = !enableSummary">
+          <label for="enable-summary">Enable Summary Row</label>
+        </div>
+        <div>
+          <label for="position-select">Position</label>
+          <select id="position-select" (change)="summaryPosition = $event.target.value">
+            <option [value]="'top'">Top</option>
+            <option [value]="'bottom'">Bottom</option>
+          </select>
+        </div>
+      </div>
       <ngx-datatable
         class="material"
-        [summaryRow]="true"
+        [summaryRow]="enableSummary"
+        [summaryPosition]="summaryPosition"
         [columns]="columns"
         [columnMode]="'force'"
         [headerHeight]="50"
@@ -21,7 +39,8 @@ import { Component } from '@angular/core';
         [rows]="rows">
       </ngx-datatable>
     </div>
-  `
+  `,
+  styleUrls: [ './summary-row-simple.component.scss' ]
 })
 
 export class SummaryRowSimpleComponent {
@@ -32,6 +51,9 @@ export class SummaryRowSimpleComponent {
     { name: 'Gender', summaryFunc: (cells) => this.summaryForGender(cells) },
     { prop: 'age', summaryFunc: (cells) => this.avgAge(cells) },
   ];
+
+  enableSummary = true;
+  summaryPosition = 'top';
 
   constructor() {
     this.fetch((data) => {
@@ -48,6 +70,10 @@ export class SummaryRowSimpleComponent {
     };
 
     req.send();
+  }
+
+  onSummaryStateChange(a) {
+    console.log(a);
   }
 
   private summaryForGender(cells: string[]) {
