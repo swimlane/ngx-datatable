@@ -28,9 +28,9 @@ export class SummaryRowSimpleComponent {
   rows = [];
 
   columns = [
-    { prop: 'name' },
-    { name: 'Gender' },
-    { prop: 'age' },
+    { prop: 'name', summaryFunc: () => null },
+    { name: 'Gender', summaryFunc: (cells) => this.summaryForGender(cells) },
+    { prop: 'age', summaryFunc: (cells) => this.avgAge(cells) },
   ];
 
   constructor() {
@@ -48,5 +48,17 @@ export class SummaryRowSimpleComponent {
     };
 
     req.send();
+  }
+
+  private summaryForGender(cells: string[]) {
+    const males = cells.filter(cell => cell === 'male').length;
+    const females = cells.filter(cell => cell === 'female').length;
+
+    return `males: ${males}, females: ${females}`;
+  }
+
+  private avgAge(cells: number[]): number {
+    const filteredCells = cells.filter(cell => !!cell);
+    return filteredCells.reduce((sum, cell) => sum += cell, 0) / filteredCells.length;
   }
 }
