@@ -1,11 +1,11 @@
 import { Component, Input, OnChanges, PipeTransform, TemplateRef } from '@angular/core';
 
 export interface ISummaryColumn {
-  summaryFunc: (cells: any[]) => any;
-  summaryTemplate: TemplateRef<any>;
+  summaryFunc?: (cells: any[]) => any;
+  summaryTemplate?: TemplateRef<any>;
 
   prop: string;
-  pipe: PipeTransform;
+  pipe?: PipeTransform;
 }
 
 function defaultSumFunc(cells: any[]): any {
@@ -21,7 +21,7 @@ function defaultSumFunc(cells: any[]): any {
       tabindex="-1"
       [innerWidth]="innerWidth"
       [offsetX]="offsetX"
-      [columns]="columns"
+      [columns]="_internalColumns"
       [rowHeight]="getRowHeight(summaryRow)"
       [row]="summaryRow"
       [rowIndex]="-1">
@@ -40,15 +40,26 @@ export class DatatableSummaryRowComponent implements OnChanges {
   @Input() offsetX: number;
   @Input() innerWidth: number;
 
+  _internalColumns: ISummaryColumn[];
   summaryRow = {};
 
   ngOnChanges() {
-    if (!this.rows || !this.rows.length) { return; }
-
-    this.update();
+    if (this.columns && this.columns.length) {
+      this.updateInternalColumns();
+    }
+    if (this.rows && this.rows.length) {
+      this.updateValues();
+    }
   }
 
-  private update() {
+  private updateInternalColumns() {
+    this._internalColumns = this.columns.map(col => ({
+      ...col,
+      cellTemplate: col.summaryTemplate
+    }));
+  }
+
+  private updateValues() {
     this.summaryRow = {};
 
     this.columns.forEach(col => {

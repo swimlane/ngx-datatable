@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'summary-row-custom-template-demo',
@@ -20,24 +20,38 @@ import { Component } from '@angular/core';
         [rowHeight]="'auto'"
         [rows]="rows">
       </ngx-datatable>
+      <ng-template #nameSummaryCell let-row="row" let-value="value">
+        <div class="name-container">
+          <div class="chip" *ngFor="let name of getNames()">
+            <span class="chip-content">{{ name }}</span>
+          </div>
+        </div>
+      </ng-template>
     </div>
   `,
-  styleUrls: [ './summary-row-simple.component.scss' ]
+  styleUrls: [ './summary-row-custom-template.component.scss' ]
 })
 
-export class SummaryRowCustomTemplateComponent {
+export class SummaryRowCustomTemplateComponent implements OnInit {
   rows = [];
 
-  columns = [
-    { prop: 'name', summaryFunc: () => null },
-    { name: 'Gender', summaryFunc: (cells) => this.summaryForGender(cells) },
-    { prop: 'age', summaryFunc: (cells) => this.avgAge(cells) },
-  ];
+  @ViewChild('nameSummaryCell')
+  nameSummaryCell: TemplateRef<any>;
+
+  columns = [];
 
   constructor() {
     this.fetch((data) => {
       this.rows = data.splice(0, 5);
     });
+  }
+
+  ngOnInit() {
+    this.columns = [
+      { prop: 'name', summaryFunc: () => null, summaryTemplate: this.nameSummaryCell },
+      { name: 'Gender', summaryFunc: (cells) => this.summaryForGender(cells) },
+      { prop: 'age', summaryFunc: (cells) => this.avgAge(cells) },
+    ];
   }
 
   fetch(cb) {
@@ -49,6 +63,12 @@ export class SummaryRowCustomTemplateComponent {
     };
 
     req.send();
+  }
+
+  getNames(): string[] {
+    return this.rows
+      .map(row => row['name'])
+      .map(fullName => fullName.split(' ')[1]);
   }
 
   private summaryForGender(cells: string[]) {
