@@ -26,7 +26,10 @@ function defaultSumFunc(cells: any[]): any {
       [row]="summaryRow"
       [rowIndex]="-1">
     </datatable-body-row>
-  `
+  `,
+  host: {
+    class: 'datatable-summary-row'
+  }
 })
 
 export class DatatableSummaryRowComponent implements OnChanges {
