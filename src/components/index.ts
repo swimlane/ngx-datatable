@@ -6,3 +6,5 @@ export * from './footer';
 
 export * from './columns';
 export * from './row-detail';
+
+export * from './summary';

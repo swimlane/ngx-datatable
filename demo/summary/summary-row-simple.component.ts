@@ -13,6 +13,7 @@ import { Component } from '@angular/core';
       </h3>
       <ngx-datatable
         class="material"
+        [summaryRow]="true"
         [columns]="columns"
         [columnMode]="'force'"
         [headerHeight]="50"

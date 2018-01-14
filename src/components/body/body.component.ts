@@ -30,6 +30,11 @@ import { MouseEvent } from '../../events';
         [scrollHeight]="scrollHeight"
         [scrollWidth]="columnGroupWidths?.total"
         (scroll)="onBodyScroll($event)">
+        <datatable-summary-row
+          *ngIf="summaryRow"
+          [rows]="rows"
+          [columns]="columns">
+        </datatable-summary-row>
         <datatable-row-wrapper
           [groupedRows]="groupedRows"
           *ngFor="let group of temp; let i = index; trackBy: rowTrackingFn;"
@@ -112,6 +117,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() innerWidth: number;
   @Input() groupRowsBy: string;
   @Input() virtualization: boolean;
+  @Input() summaryRow: boolean;
 
   @Input() set pageSize(val: number) {
     this._pageSize = val;
