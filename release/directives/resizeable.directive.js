@@ -23,11 +23,14 @@ var ResizeableDirective = /** @class */ (function () {
     }
     ResizeableDirective.prototype.ngAfterViewInit = function () {
         var renderer2 = this.renderer;
+        var node = renderer2.createElement('span');
         if (this.resizeEnabled) {
-            var node = renderer2.createElement('span');
             renderer2.addClass(node, 'resize-handle');
-            renderer2.appendChild(this.element, node);
         }
+        else {
+            renderer2.addClass(node, 'resize-handle--not-resizable');
+        }
+        renderer2.appendChild(this.element, node);
     };
     ResizeableDirective.prototype.ngOnDestroy = function () {
         this._destroySubscription();
