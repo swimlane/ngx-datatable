@@ -114,9 +114,10 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
             </ul>
           </li>
           <li>
-            <h4>Summary row</h4>
+            <h4>Summary Row</h4>
             <ul>
-              <li><a href="#simple-summary" (click)="state='simple-summary'">Simple summary row</a></li>
+              <li><a href="#simple-summary" (click)="state='simple-summary'">Simple</a></li>
+              <li><a href="#custom-template-summary" (click)="state='custom-template-summary'">Custom Template</a></li>
             </ul>
           </li>
         </ul>
@@ -180,6 +181,8 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
 
         <!-- Summary row -->
         <summary-row-simple-demo *ngIf="state === 'simple-summary'"></summary-row-simple-demo>
+        <summary-row-custom-template-demo *ngIf="state === 'custom-template-summary'">
+        </summary-row-custom-template-demo>
       </content>
     </div>
   `
