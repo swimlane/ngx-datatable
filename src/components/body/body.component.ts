@@ -32,6 +32,9 @@ import { MouseEvent } from '../../events';
         (scroll)="onBodyScroll($event)">
         <datatable-summary-row
           *ngIf="summaryRow"
+          [getRowHeight]="getRowHeight"
+          [offsetX]="offsetX"
+          [innerWidth]="innerWidth"
           [rows]="rows"
           [columns]="columns">
         </datatable-summary-row>
