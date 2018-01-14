@@ -58,7 +58,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
           <li>
             <h4>Rows</h4>
             <ul>
-              <li><a href="#row-grouping" (click)="state='row-grouping'">Row Grouping</a></li>            
+              <li><a href="#row-grouping" (click)="state='row-grouping'">Row Grouping</a></li>
               <li><a href="#" (click)="state=''">Fluid Row Height</a></li>
               <li><a href="#basic-fixed" (click)="state='basic-fixed'">Fixed Row Height</a></li>
               <li><a href="#dynamic" (click)="state='dynamic'">Dynamic Row Height</a></li>
@@ -111,6 +111,12 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
               <li><a href="#fixed" (click)="state='fixed'">Fixed</a></li>
               <li><a href="#force" (click)="state='force'">Force</a></li>
               <li><a href="#pinning" (click)="state='pinning'">Pinning</a></li>
+            </ul>
+          </li>
+          <li>
+            <h4>Summary row</h4>
+            <ul>
+              <li><a href="#simple-summary" (click)="state='simple-summary'">Simple summary row</a></li>
             </ul>
           </li>
         </ul>
@@ -171,6 +177,9 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
         <column-standard-demo *ngIf="state === 'fixed'"></column-standard-demo>
         <column-force-demo *ngIf="state === 'force'"></column-force-demo>
         <column-pinning-demo *ngIf="state === 'pinning'"></column-pinning-demo>
+
+        <!-- Summary row -->
+        <summary-row-simple-demo *ngIf="state === 'simple-summary'"></summary-row-simple-demo>
       </content>
     </div>
   `

@@ -60,6 +60,9 @@ import { ColumnForceComponent } from './columns/column-force.component';
 import { ColumnFlexComponent } from './columns/column-flex.component';
 import { ColumnPinningComponent } from './columns/pinning.component';
 
+// -- Summary row
+import { SummaryRowSimpleComponent } from './summary/summary-row-simple.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -104,7 +107,8 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     DynamicHeightComponent,
     FooterDemoComponent,
     RowGroupingComponent,
-    BootstrapThemeComponent
+    BootstrapThemeComponent,
+    SummaryRowSimpleComponent,
   ],
   imports: [BrowserModule, NgxDatatableModule],
   bootstrap: [AppComponent]
