@@ -125,7 +125,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() set rows(val: any[]) {
     this._rows = val;
     this.rowExpansions.clear();
-    this._rowCount = this._rows.length;
     this.recalcLayout();
   }
 
@@ -208,7 +207,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * calculate scroll height automatically (as height will be undefined).
    */
   get scrollHeight(): number | undefined {
-    if (this.scrollbarV) {
+    if (this.scrollbarV && this.rowCount) {
       return this.rowHeightsCache.query(this.rowCount - 1);
     }
     // avoid TS7030: Not all code paths return a value.
