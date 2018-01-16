@@ -1,6 +1,6 @@
 import {
   Component, Input, HostBinding, ElementRef, Output, KeyValueDiffers, KeyValueDiffer,
-  EventEmitter, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, DoCheck, SkipSelf
+  EventEmitter, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, DoCheck, Inject
 } from '@angular/core';
 
 import {
@@ -121,10 +121,10 @@ export class DataTableBodyRowComponent implements DoCheck {
   private _rowDiffer: KeyValueDiffer<{}, {}>;
 
   constructor(
-      private differs: KeyValueDiffers,
-      @SkipSelf() private scrollbarHelper: ScrollbarHelper,
-      private cd: ChangeDetectorRef, 
-      element: ElementRef) {
+      @Inject(KeyValueDiffers) private differs: KeyValueDiffers,
+      @Inject(ScrollbarHelper) private scrollbarHelper: ScrollbarHelper,
+      @Inject(ChangeDetectorRef) private cd: ChangeDetectorRef, 
+      @Inject(ElementRef) element: ElementRef) {
     this._element = element.nativeElement;
     this._rowDiffer = differs.find({}).create();
   }

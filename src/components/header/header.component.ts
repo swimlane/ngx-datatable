@@ -1,5 +1,5 @@
 import {
-  Component, Output, EventEmitter, Input, HostBinding, ChangeDetectorRef, ChangeDetectionStrategy
+  Component, Output, EventEmitter, Input, HostBinding, ChangeDetectorRef, ChangeDetectionStrategy, Inject
 } from '@angular/core';
 import { SortType, SelectionType } from '../../types';
 import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY } from '../../utils';
@@ -132,7 +132,7 @@ export class DataTableHeaderComponent {
     right: {}
   };
 
-  constructor(private cd: ChangeDetectorRef) { }
+  constructor(@Inject(ChangeDetectorRef) private cd: ChangeDetectorRef) { }
 
   onLongPressStart({ event, model }: { event: any, model: any }) {
     model.dragging = true;
