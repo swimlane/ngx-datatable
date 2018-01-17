@@ -327,6 +327,10 @@
     .datatable-body-row {
       background-color: #ddd;
 
+      &:hover {
+	background-color: #ddd;
+      }
+
       .datatable-body-cell {
 	font-weight: bold;
       }
