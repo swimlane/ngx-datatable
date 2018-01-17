@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
-import {MockServerResultsService} from './mock-server-results-service';
-import {PagedData} from './model/paged-data';
-import {CorporateEmployee} from './model/corporate-employee';
-import {Page} from './model/page';
+import {MockServerResultsService} from '../paging/mock-server-results-service';
+import {PagedData} from '../paging/model/paged-data';
+import {CorporateEmployee} from '../paging/model/corporate-employee';
+import {Page} from '../paging/model/page';
 
 @Component({
-  selector: 'server-paging-demo',
+  selector: 'summary-row-server-paging-demo',
   providers: [
       MockServerResultsService
   ],
   template: `
     <div>
       <h3>
-        Server-side Paging
+        Server-side paging
         <small>
-          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/paging/paging-server.component.ts" target="_blank">
+          <a href="https://github.com/sirwojtek/ngx-datatable/blob/summary-row/demo/summary/summary-row-server-paging.component.ts">
             Source
           </a>
         </small>
@@ -22,9 +22,10 @@ import {Page} from './model/page';
       <ngx-datatable
         class="material"
         [rows]="rows"
-        [columns]="[{name:'Name'},{name:'Gender'},{name:'Company'}]"
+        [columns]="columns"
         [columnMode]="'force'"
         [headerHeight]="50"
+        [summaryRow]="true"
         [footerHeight]="50"
         [rowHeight]="'auto'"
         [externalPaging]="true"
@@ -36,10 +37,17 @@ import {Page} from './model/page';
     </div>
   `
 })
-export class ServerPagingComponent {
+export class SummaryRowServerPagingComponent{
 
   page = new Page();
   rows = new Array<CorporateEmployee>();
+
+  columns = [
+    // NOTE: cells for current page only !
+    { name: 'Name', summaryFunc: (cells) => `${cells.length} total` },
+    { name: 'Gender', summaryFunc: () => this.getGenderSummary() },
+    { name: 'Company', summaryFunc: () => null }
+  ];
 
   constructor(private serverResultsService: MockServerResultsService) {
     this.page.pageNumber = 0;
@@ -60,6 +68,11 @@ export class ServerPagingComponent {
       this.page = pagedData.page;
       this.rows = pagedData.data;
     });
+  }
+
+  getGenderSummary(): string {
+    // NOTE: there should be logic to get required informations from server
+    return '10 males, 10 females';
   }
 
 }

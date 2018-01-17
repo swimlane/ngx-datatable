@@ -118,6 +118,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
             <ul>
               <li><a href="#simple-summary" (click)="state='simple-summary'">Simple</a></li>
               <li><a href="#custom-template-summary" (click)="state='custom-template-summary'">Custom Template</a></li>
+              <li><a href="#paging-summary" (click)="state='paging-summary'">Server-side paging</a></li>
             </ul>
           </li>
         </ul>
@@ -183,6 +184,8 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
         <summary-row-simple-demo *ngIf="state === 'simple-summary'"></summary-row-simple-demo>
         <summary-row-custom-template-demo *ngIf="state === 'custom-template-summary'">
         </summary-row-custom-template-demo>
+        <summary-row-server-paging-demo *ngIf="state === 'paging-summary'">
+        </summary-row-server-paging-demo>
       </content>
     </div>
   `

@@ -63,6 +63,7 @@ import { ColumnPinningComponent } from './columns/pinning.component';
 // -- Summary row
 import { SummaryRowSimpleComponent } from './summary/summary-row-simple.component';
 import { SummaryRowCustomTemplateComponent } from './summary/summary-row-custom-template.component';
+import { SummaryRowServerPagingComponent } from './summary/summary-row-server-paging.component';
 
 @NgModule({
   declarations: [
@@ -111,6 +112,7 @@ import { SummaryRowCustomTemplateComponent } from './summary/summary-row-custom-
     BootstrapThemeComponent,
     SummaryRowSimpleComponent,
     SummaryRowCustomTemplateComponent,
+    SummaryRowServerPagingComponent,
   ],
   imports: [BrowserModule, NgxDatatableModule],
   bootstrap: [AppComponent]
