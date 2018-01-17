@@ -19,10 +19,7 @@ import {
   DataTableSelectionComponent,
   DataTableColumnHeaderDirective,
   DataTableColumnCellDirective,
-  DataTableColumnCellTreeExpander,
-  DataTableColumnCellTreeCollapser,
-  DataTableColumnCellTreeLoader,
-  DataTableColumnCellTreeDisable,
+  DataTableColumnCellTreeIcon,
   DatatableRowDetailTemplateDirective,
   DataTableFooterTemplateDirective,
   DatatableFooterDirective,
@@ -37,9 +34,9 @@ import {
   DraggableDirective
 } from './directives';
 
-import { 
+import {
   ScrollbarHelper,
-  DimensionsHelper 
+  DimensionsHelper
 } from './services';
 
 @NgModule({
@@ -75,10 +72,7 @@ import {
     DataTableSelectionComponent,
     DataTableColumnHeaderDirective,
     DataTableColumnCellDirective,
-    DataTableColumnCellTreeExpander,
-    DataTableColumnCellTreeCollapser,
-    DataTableColumnCellTreeLoader,
-    DataTableColumnCellTreeDisable,
+    DataTableColumnCellTreeIcon,
     DatatableFooterDirective,
     DatatableGroupHeaderTemplateDirective
   ],
@@ -90,10 +84,7 @@ import {
     DataTableColumnDirective,
     DataTableColumnHeaderDirective,
     DataTableColumnCellDirective,
-    DataTableColumnCellTreeExpander,
-    DataTableColumnCellTreeCollapser,
-    DataTableColumnCellTreeLoader,
-    DataTableColumnCellTreeDisable,
+    DataTableColumnCellTreeIcon,
     DataTableFooterTemplateDirective,
     DatatableFooterDirective,
     DataTablePagerComponent,
