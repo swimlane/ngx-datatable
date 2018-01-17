@@ -25,7 +25,8 @@ import { ContentChild } from '@angular/core/src/metadata/di';
           (click)="onCheckboxChange($event)"
         />
       </label>
-      <label class="clickable"
+      <button
+        [disabled]="_treeStatus==='disabled'"
         *ngIf="column.isTreeColumn"
         (click)="onTreeAction()">
         <span *ngIf="!column.treeIconTemplate">
@@ -33,16 +34,15 @@ import { ContentChild } from '@angular/core/src/metadata/di';
             class="icon datatable-icon-collapse"></i>
           <i *ngIf="_treeStatus==='collapsed'"
             class="icon datatable-icon-up"></i>
-          <i *ngIf="_treeStatus==='expanded'"
+          <i *ngIf="_treeStatus==='expanded' ||
+                    _treeStatus==='disabled'"
             class="icon datatable-icon-down"></i>
-          <i *ngIf="_treeStatus==='disabled'"
-            class="disabled icon datatable-icon-down"></i>
         </span>
         <ng-template *ngIf="column.treeIconTemplate"
           [ngTemplateOutlet]="column.treeIconTemplate"
           [ngTemplateOutletContext]="cellContext">
         </ng-template>
-      </label>
+      </button>
 
       <span
         *ngIf="!column.cellTemplate"
@@ -55,11 +55,7 @@ import { ContentChild } from '@angular/core/src/metadata/di';
         [ngTemplateOutletContext]="cellContext">
       </ng-template>
     </div>
-  `,
-  styles: [
-    '.clickable {cursor: pointer; }',
-    '.disabled {color: #d1d1d1; }'
-  ]
+  `
 })
 export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   @Input() displayCheck: any;
@@ -168,7 +164,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
 
-  @Output('treeAction') treeActionClick: EventEmitter<any> = new EventEmitter();
+  @Output('treeAction') treeClick: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('cellTemplate', { read: ViewContainerRef }) cellTemplate: ViewContainerRef;
 
@@ -382,9 +378,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   }
 
   onTreeAction(row: any) {
-    if (this.cellContext.treeStatus !== 'disabled') {
-      this.treeActionClick.emit();
-    }
+    this.treeClick.emit();
   }
 
   calcLeftMargin(column: any, row: any) {
