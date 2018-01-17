@@ -47,7 +47,7 @@ export class DatatableSummaryRowComponent implements OnChanges {
     if (this.columns && this.columns.length) {
       this.updateInternalColumns();
     }
-    if (this.rows && this.rows.length) {
+    if (this.rows && this.rows.length && this.columns) {
       this.updateValues();
     }
   }
