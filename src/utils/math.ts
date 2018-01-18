@@ -36,7 +36,7 @@ function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
     for(const column of colsByGroup[attr]) {
       if (!column.canAutoResize) {
         maxWidth -= column.width;
-        totalFlexGrow -= column.flexGrow;
+        totalFlexGrow -= column.flexGrow ? column.flexGrow : 0;
       } else {
         column.width = 0;
       }
