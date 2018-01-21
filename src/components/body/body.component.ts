@@ -525,7 +525,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         // If virtual rows are not needed
         // We render all in one go
         first = 0;
-        last = this.rowCount - 1;
+        last = this.rowCount;
       }
     } else {
       // The server is handling paging and will pass an array that begins with the
