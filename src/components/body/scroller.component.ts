@@ -69,7 +69,7 @@ export class ScrollerComponent implements OnInit, OnDestroy {
     requestAnimationFrame(() => {
       this.scrollYPos = dom.scrollTop;
       this.scrollXPos = dom.scrollLeft;
-      this.updateOffset();
+      this.ngZone.run(() => this.updateOffset());
     });
   }
 

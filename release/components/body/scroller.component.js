@@ -50,7 +50,7 @@ var ScrollerComponent = /** @class */ (function () {
         requestAnimationFrame(function () {
             _this.scrollYPos = dom.scrollTop;
             _this.scrollXPos = dom.scrollLeft;
-            _this.updateOffset();
+            _this.ngZone.run(function () { return _this.updateOffset(); });
         });
     };
     ScrollerComponent.prototype.updateOffset = function () {
