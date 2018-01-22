@@ -6,6 +6,7 @@ import {
   DataTableRowWrapperComponent,
   DataTableBodyCellComponent,
   DataTableSelectionComponent,
+  DataTableSummaryRowComponent,
   ProgressBarComponent,
   ScrollerComponent
 } from '.';
@@ -19,12 +20,13 @@ describe('DataTableBodyComponent', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ 
+      declarations: [
         DataTableBodyComponent,
         DataTableBodyRowComponent,
         DataTableRowWrapperComponent,
         DataTableBodyCellComponent,
         DataTableSelectionComponent,
+        DataTableSummaryRowComponent,
         ProgressBarComponent,
         ScrollerComponent
       ],
@@ -37,7 +39,7 @@ describe('DataTableBodyComponent', () => {
       fixture = TestBed.createComponent(DataTableBodyComponent);
       component = fixture.componentInstance;
       element = fixture.nativeElement;
-    });    
+    });
   }));
 
   describe('fixture', () => {
