@@ -32,7 +32,7 @@ import { MouseEvent } from '../../events';
         (scroll)="onBodyScroll($event)">
         <datatable-summary-row
           *ngIf="summaryRow && summaryPosition === 'top'"
-          [getRowHeight]="getRowHeight"
+          [rowHeight]="rowHeight"
           [offsetX]="offsetX"
           [innerWidth]="innerWidth"
           [rows]="rows"
@@ -86,7 +86,7 @@ import { MouseEvent } from '../../events';
         </datatable-row-wrapper>
         <datatable-summary-row
           *ngIf="summaryRow && summaryPosition === 'bottom'"
-          [getRowHeight]="getRowHeight"
+          [rowHeight]="rowHeight"
           [offsetX]="offsetX"
           [innerWidth]="innerWidth"
           [rows]="rows"

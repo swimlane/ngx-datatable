@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, PipeTransform, TemplateRef } from '@angular/core';
+import { Component, ChangeDetectorRef, Input, OnChanges, PipeTransform, TemplateRef } from '@angular/core';
 
 export interface ISummaryColumn {
   summaryFunc?: (cells: any[]) => any;
@@ -17,15 +17,16 @@ function defaultSumFunc(cells: any[]): any {
 @Component({
   selector: 'datatable-summary-row',
   template: `
-    <datatable-body-row
-      tabindex="-1"
-      [innerWidth]="innerWidth"
-      [offsetX]="offsetX"
-      [columns]="_internalColumns"
-      [rowHeight]="getRowHeight(summaryRow)"
-      [row]="summaryRow"
-      [rowIndex]="-1">
-    </datatable-body-row>
+  <datatable-body-row
+    *ngIf="summaryRow && _internalColumns"
+    tabindex="-1"
+    [innerWidth]="innerWidth"
+    [offsetX]="offsetX"
+    [columns]="_internalColumns"
+    [rowHeight]="rowHeight"
+    [row]="summaryRow"
+    [rowIndex]="-1">
+  </datatable-body-row>
   `,
   host: {
     class: 'datatable-summary-row'
@@ -36,20 +37,19 @@ export class DatatableSummaryRowComponent implements OnChanges {
   @Input() rows: any[];
   @Input() columns: ISummaryColumn[];
 
-  @Input() getRowHeight: (row: any[]) => number;
+  @Input() rowHeight: number;
   @Input() offsetX: number;
   @Input() innerWidth: number;
 
   _internalColumns: ISummaryColumn[];
   summaryRow = {};
 
+  constructor(private cd: ChangeDetectorRef) {}
+
   ngOnChanges() {
-    if (this.columns && this.columns.length) {
-      this.updateInternalColumns();
-    }
-    if (this.rows && this.rows.length && this.columns) {
-      this.updateValues();
-    }
+    if (!this.columns || !this.rows) { return; }
+    this.updateInternalColumns();
+    this.updateValues();
   }
 
   private updateInternalColumns() {
