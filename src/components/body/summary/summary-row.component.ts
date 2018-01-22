@@ -33,7 +33,7 @@ function defaultSumFunc(cells: any[]): any {
   }
 })
 
-export class DatatableSummaryRowComponent implements OnChanges {
+export class DataTableSummaryRowComponent implements OnChanges {
   @Input() rows: any[];
   @Input() columns: ISummaryColumn[];
 
