@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
     <div>
       <h3>Simple Summary Row
         <small>
-        <a href="https://github.com/sirwojtek/ngx-datatable/blob/summary-row/demo/summary/summary-row-simple.component.ts">
+        <a href="https://github.com/swimlane/ngx-datatable/blob/summary-row/demo/summary/summary-row-simple.component.ts">
           Source
         </a>
         </small>

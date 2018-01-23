@@ -14,7 +14,7 @@ import {Page} from '../paging/model/page';
       <h3>
         Server-side paging
         <small>
-          <a href="https://github.com/sirwojtek/ngx-datatable/blob/summary-row/demo/summary/summary-row-server-paging.component.ts">
+          <a href="https://github.com/swimlane/ngx-datatable/blob/summary-row/demo/summary/summary-row-server-paging.component.ts">
             Source
           </a>
         </small>

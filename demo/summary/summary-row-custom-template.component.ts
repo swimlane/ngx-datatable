@@ -6,7 +6,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
     <div>
       <h3>Summary Row with Custom Template
         <small>
-        <a href="https://github.com/sirwojtek/ngx-datatable/blob/summary-row/demo/summary/summary-row-custom-template.component.ts">
+        <a href="https://github.com/swimlane/ngx-datatable/blob/summary-row/demo/summary/summary-row-custom-template.component.ts">
           Source
         </a>
         </small>
