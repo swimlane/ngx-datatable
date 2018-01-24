@@ -226,7 +226,6 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
       const userPipe: PipeTransform = this.column.pipe;
 
       if (userPipe) {
-        debugger;
         let transformResult = userPipe.transform(val);
         if (transformResult instanceof Observable) {
           let observable: Observable<any> = transformResult;
