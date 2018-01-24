@@ -111,6 +111,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
               <li><a href="#fixed" (click)="state='fixed'">Fixed</a></li>
               <li><a href="#force" (click)="state='force'">Force</a></li>
               <li><a href="#pinning" (click)="state='pinning'">Pinning</a></li>
+              <li><a href="#asyncpipe" (click)="state='asyncpipe'">Async Pipe</a></li>
             </ul>
           </li>
         </ul>
@@ -171,6 +172,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
         <column-standard-demo *ngIf="state === 'fixed'"></column-standard-demo>
         <column-force-demo *ngIf="state === 'force'"></column-force-demo>
         <column-pinning-demo *ngIf="state === 'pinning'"></column-pinning-demo>
+        <column-async-pipe *ngIf="state == 'asyncpipe'"></column-async-pipe>
       </content>
     </div>
   `
