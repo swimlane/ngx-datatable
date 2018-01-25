@@ -987,9 +987,19 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       return { ...c };
     });
 
-    const prevCol = cols[newValue];
-    cols[newValue] = column;
-    cols[prevValue] = prevCol;
+    if (newValue > prevValue) {
+      const movedCol = cols[prevValue];
+      for (let i = prevValue; i < newValue; i++) {
+        cols[i] = cols[i + 1];
+      }
+      cols[newValue] = movedCol;
+    } else {
+      const movedCol = cols[prevValue];
+      for (let i = prevValue; i > newValue; i--) {
+        cols[i] = cols[i - 1];
+      }
+      cols[newValue] = movedCol;
+    }
 
     this._internalColumns = cols;
 

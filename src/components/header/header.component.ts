@@ -142,12 +142,7 @@ export class DataTableHeaderComponent {
 
   onLongPressEnd({ event, model }: { event: any, model: any }) {
     this.dragEventTarget = event;
-
-    // delay resetting so sort can be
-    // prevented if we were dragging
-    setTimeout(() => {
-      model.dragging = false;
-    }, 5);
+    model.dragging = false;
   }
 
   @HostBinding('style.width')
