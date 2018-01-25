@@ -142,7 +142,17 @@ export class DataTableHeaderComponent {
 
   onLongPressEnd({ event, model }: { event: any, model: any }) {
     this.dragEventTarget = event;
-    model.dragging = false;
+
+    // delay resetting so sort can be
+    // prevented if we were dragging
+    setTimeout(() => {   
+      // datatable component creates copies from columns on reorder
+      // set dragging to false on new objects
+      const column = this._columns.find(c => c.$$id === model.$$id);
+      if (column) {
+        column.dragging = false;
+      }
+    }, 5);
   }
 
   @HostBinding('style.width')
@@ -185,6 +195,7 @@ export class DataTableHeaderComponent {
   }
 
   onSort({ column, prevValue, newValue }: any): void {
+    debugger;
     // if we are dragging don't sort!
     if (column.dragging) return;
 
