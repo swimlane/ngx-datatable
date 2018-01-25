@@ -12,6 +12,7 @@ import { MouseEvent } from '../../events';
     <div
       orderable
       (reorder)="onColumnReordered($event)"
+      (targetChanged)="onTargetChanged($event)"
       [style.width.px]="_columnGroupWidths.total"
       class="datatable-header-inner">
       <div
@@ -34,6 +35,9 @@ import { MouseEvent } from '../../events';
           [dragModel]="column"
           [dragEventTarget]="dragEventTarget"
           [headerHeight]="headerHeight"
+          [isTarget]="column.isTarget"
+          [targetMarkerTemplate]="targetMarkerTemplate"
+          [targetMarkerContext]="column.targetMarkerContext"
           [column]="column"
           [sortType]="sortType"
           [sorts]="sorts"
@@ -59,6 +63,9 @@ export class DataTableHeaderComponent {
   @Input() sortDescendingIcon: any;
   @Input() scrollbarH: boolean;
   @Input() dealsWithGroup: boolean;
+  @Input() targetMarkerTemplate: any;
+  
+  targetMarkerContext: any;
 
   @Input() set innerWidth(val: number) {
     this._innerWidth = val;
@@ -187,6 +194,10 @@ export class DataTableHeaderComponent {
   }
 
   onColumnReordered({ prevIndex, newIndex, model }: any): void {
+    // TODO: ColGroups
+    const column = this._columnsByPin[1].columns[newIndex];
+    column.isTarget = false;
+    column.targetMarkerContext = undefined;
     this.reorder.emit({
       column: model,
       prevValue: prevIndex,
@@ -194,8 +205,26 @@ export class DataTableHeaderComponent {
     });
   }
 
+  onTargetChanged({ prevIndex, newIndex, initialIndex }: any): void {
+    // TODO: ColGroups
+    if (prevIndex || prevIndex === 0) {
+      const oldColumn = this._columnsByPin[1].columns[prevIndex];
+      oldColumn.isTarget = false;
+      oldColumn.targetMarkerContext = undefined;
+    }
+    if (newIndex || newIndex === 0) {
+      const newColumn = this._columnsByPin[1].columns[newIndex];
+      newColumn.isTarget = true;
+      
+      if (initialIndex !== newIndex) {
+        newColumn.targetMarkerContext = {class: 'targetMarker '.concat( 
+          initialIndex > newIndex ? 'dragFromRight' : 'dragFromLeft')};
+        console.log(`${newColumn.targetMarkerContext.class}`);
+      }
+    }
+  }
+
   onSort({ column, prevValue, newValue }: any): void {
-    debugger;
     // if we are dragging don't sort!
     if (column.dragging) return;
 

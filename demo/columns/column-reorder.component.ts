@@ -22,8 +22,13 @@ import { Component } from '@angular/core';
         [footerHeight]="50"
         [rowHeight]="'auto'"
         [reorderable]="reorderable"
-        [swapColumns]="swapColumns">
+        [swapColumns]="swapColumns"
+        [targetMarkerTemplate]="targetMarkerTemplate">
       </ngx-datatable>
+      <ng-template #targetMarkerTemplate let-class="class">
+        <div [ngClass]="class" style="background:green; width:2px;">
+        </div>
+      </ng-template>
     </div>
   `
 })

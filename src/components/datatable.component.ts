@@ -38,6 +38,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
         [columns]="_internalColumns"
         [headerHeight]="headerHeight"
         [reorderable]="reorderable"
+        [targetMarkerTemplate]="targetMarkerTemplate"
         [sortAscendingIcon]="cssClasses.sortAscending"
         [sortDescendingIcon]="cssClasses.sortDescending"
         [allRowsSelected]="allRowsSelected"
@@ -108,6 +109,11 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
   }
 })
 export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
+
+  /**
+   * Template for the target marker of drag target columns.
+   */
+  @Input() targetMarkerTemplate: any;
 
   /**
    * Rows that are displayed in the table.
