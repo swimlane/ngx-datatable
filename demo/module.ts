@@ -59,6 +59,7 @@ import { ColumnStandardComponent } from './columns/column-standard.component';
 import { ColumnForceComponent } from './columns/column-force.component';
 import { ColumnFlexComponent } from './columns/column-flex.component';
 import { ColumnPinningComponent } from './columns/pinning.component';
+import { ColumnReorderComponent } from './columns/column-reorder.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     ColumnStandardComponent,
     ColumnForceComponent,
     ColumnPinningComponent,
+    ColumnReorderComponent,
     FilterBarComponent,
     VirtualPagingComponent,
     DarkThemeComponent,

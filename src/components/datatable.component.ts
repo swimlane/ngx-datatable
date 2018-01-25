@@ -323,6 +323,12 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   @Input() reorderable: boolean = true;
 
   /**
+   * Swap columns on re-order columns or
+   * move them.
+   */
+  @Input() swapColumns: boolean = true;
+
+  /**
    * The type of sorting
    */
   @Input() sortType: SortType = SortType.single;
@@ -987,18 +993,24 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       return { ...c };
     });
 
-    if (newValue > prevValue) {
-      const movedCol = cols[prevValue];
-      for (let i = prevValue; i < newValue; i++) {
-        cols[i] = cols[i + 1];
-      }
-      cols[newValue] = movedCol;
+    if (this.swapColumns) {
+      const prevCol = cols[newValue];
+      cols[newValue] = column;
+      cols[prevValue] = prevCol;
     } else {
-      const movedCol = cols[prevValue];
-      for (let i = prevValue; i > newValue; i--) {
-        cols[i] = cols[i - 1];
+      if (newValue > prevValue) {
+        const movedCol = cols[prevValue];
+        for (let i = prevValue; i < newValue; i++) {
+          cols[i] = cols[i + 1];
+        }
+        cols[newValue] = movedCol;
+      } else {
+        const movedCol = cols[prevValue];
+        for (let i = prevValue; i > newValue; i--) {
+          cols[i] = cols[i - 1];
+        }
+        cols[newValue] = movedCol;
       }
-      cols[newValue] = movedCol;
     }
 
     this._internalColumns = cols;
