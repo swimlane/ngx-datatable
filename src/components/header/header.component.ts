@@ -194,8 +194,7 @@ export class DataTableHeaderComponent {
   }
 
   onColumnReordered({ prevIndex, newIndex, model }: any): void {
-    // TODO: ColGroups
-    const column = this._columnsByPin[1].columns[newIndex];
+    const column = this.getColumn(newIndex);
     column.isTarget = false;
     column.targetMarkerContext = undefined;
     this.reorder.emit({
@@ -206,22 +205,34 @@ export class DataTableHeaderComponent {
   }
 
   onTargetChanged({ prevIndex, newIndex, initialIndex }: any): void {
-    // TODO: ColGroups
     if (prevIndex || prevIndex === 0) {
-      const oldColumn = this._columnsByPin[1].columns[prevIndex];
+      const oldColumn = this.getColumn(prevIndex);
       oldColumn.isTarget = false;
       oldColumn.targetMarkerContext = undefined;
     }
     if (newIndex || newIndex === 0) {
-      const newColumn = this._columnsByPin[1].columns[newIndex];
+      const newColumn = this.getColumn(newIndex);
       newColumn.isTarget = true;
       
       if (initialIndex !== newIndex) {
         newColumn.targetMarkerContext = {class: 'targetMarker '.concat( 
           initialIndex > newIndex ? 'dragFromRight' : 'dragFromLeft')};
-        console.log(`${newColumn.targetMarkerContext.class}`);
       }
     }
+  }
+
+  getColumn(index: number): any {
+    const leftColumnCount = this._columnsByPin[0].columns.length;
+    if (index < leftColumnCount) {
+      return this._columnsByPin[0].columns[index];
+    }
+
+    const centerColumnCount = this._columnsByPin[1].columns.length;
+    if (index < leftColumnCount + centerColumnCount) {
+      return this._columnsByPin[1].columns[index - leftColumnCount];
+    }
+
+    return this._columnsByPin[2].columns[index - leftColumnCount - centerColumnCount];
   }
 
   onSort({ column, prevValue, newValue }: any): void {
