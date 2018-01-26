@@ -2,6 +2,20 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'column-reorder-demo',
+  styles: [ `
+    .icon {
+      position:absolute;
+    }
+    .datatable-icon-down {
+      top: 0px;
+    }
+    .datatable-icon-up {
+      top: 40px;
+    }
+    .dragFromLeft .icon {
+      left:-13px;
+    }
+  `],
   template: `
     <div>
       <h3>
@@ -26,7 +40,9 @@ import { Component } from '@angular/core';
         [targetMarkerTemplate]="targetMarkerTemplate">
       </ngx-datatable>
       <ng-template #targetMarkerTemplate let-class="class">
-        <div [ngClass]="class" style="background:green; width:2px;">
+        <div [ngClass]="class">
+          <div class="icon datatable-icon-down"></div>
+          <div class="icon datatable-icon-up"></div>
         </div>
       </ng-template>
     </div>
