@@ -182,6 +182,20 @@
           visibility: visible;
         }
       }
+
+      .targetMarker {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+
+        &.dragFromLeft {
+          right: 0;
+        }
+
+        &.dragFromRight {
+          left: 0;
+        }
+      }
     }
   }
 
