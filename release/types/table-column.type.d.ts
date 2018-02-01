@@ -179,4 +179,11 @@ export interface TableColumn {
      * @memberOf TableColumn
      */
     headerCheckboxable?: boolean;
+    /**
+     * Is tree displayed on this column
+     *
+     * @type {boolean}
+     * @memberOf TableColumn
+     */
+    isTreeColumn?: boolean;
 }

@@ -212,6 +212,14 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     virtualization: boolean;
     /**
+     * Tree from relation
+     */
+    treeFromRelation: string;
+    /**
+     * Tree to relation
+     */
+    treeToRelation: string;
+    /**
      * Body was scrolled typically in a `scrollbarV:true` scenario.
      */
     scroll: EventEmitter<any>;
@@ -249,6 +257,10 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
         type: ContextmenuType;
         content: any;
     }>;
+    /**
+     * A row was expanded ot collapsed for tree
+     */
+    treeAction: EventEmitter<any>;
     /**
      * CSS class applied if the header height if fixed height.
      */
@@ -456,4 +468,8 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      * A row was selected from body
      */
     onBodySelect(event: any): void;
+    /**
+     * A row was expanded ot collapsed for tree
+     */
+    onTreeAction(event: any): void;
 }

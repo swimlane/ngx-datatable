@@ -65,7 +65,7 @@ export function groupRowsByParents(rows: any[], from: string = '', to: string = 
       node.parent.children.push(node);
     }
 
-    let resolvedRows = [];
+    let resolvedRows: any[] = [];
     nodeById[0].flatten(function() {
       resolvedRows = [...resolvedRows, this.row];
     }, true);
@@ -93,7 +93,7 @@ class TreeNode {
     this.children = [];
   }
 
-  flatten(f, recursive)  {
+  flatten(f: any, recursive: boolean)  {
     if (this.row['treeStatus'] === 'expanded') {
       for (let i = 0, l = this.children.length; i < l; i++) {
         const child = this.children[i];
