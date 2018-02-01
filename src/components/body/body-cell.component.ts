@@ -10,6 +10,8 @@ import { TableColumn } from '../../types/table-column.type';
 import { MouseEvent, KeyboardEvent } from '../../events';
 import { ContentChild } from '@angular/core/src/metadata/di';
 
+export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
+
 @Component({
   selector: 'datatable-body-cell',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -144,7 +146,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     return this._sorts;
   }
 
-  @Input() set treeStatus(status: string) {
+  @Input() set treeStatus(status: TreeStatus) {
     if (status !== 'collapsed' &&
         status !== 'expanded' &&
         status !== 'loading' &&
@@ -158,7 +160,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     this.cd.markForCheck();
   }
 
-  get treeStatus(): string {
+  get treeStatus(): TreeStatus {
     return this._treeStatus;
   }
 
@@ -241,7 +243,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   private _rowIndex: number;
   private _expanded: boolean;
   private _element: any;
-  private _treeStatus: string;
+  private _treeStatus: TreeStatus;
 
   constructor(element: ElementRef, private cd: ChangeDetectorRef) {
     this._element = element.nativeElement;
