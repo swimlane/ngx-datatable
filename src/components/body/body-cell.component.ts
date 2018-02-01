@@ -25,45 +25,24 @@ import { ContentChild } from '@angular/core/src/metadata/di';
           (click)="onCheckboxChange($event)"
         />
       </label>
-      <label class="clickable"
+      <button
+        [disabled]="_treeStatus==='disabled'"
         *ngIf="column.isTreeColumn"
         (click)="onTreeAction()">
-        <span *ngIf="_treeStatus==='loading' &&
-                !column.treeLoaderTemplate">
-          <i class="icon datatable-icon-collapse"></i>
+        <span *ngIf="!column.treeIconTemplate">
+          <i *ngIf="_treeStatus==='loading'"
+            class="icon datatable-icon-collapse"></i>
+          <i *ngIf="_treeStatus==='collapsed'"
+            class="icon datatable-icon-up"></i>
+          <i *ngIf="_treeStatus==='expanded' ||
+                    _treeStatus==='disabled'"
+            class="icon datatable-icon-down"></i>
         </span>
-        <ng-template *ngIf="_treeStatus==='loading' &&
-                column.treeLoaderTemplate"
-          [ngTemplateOutlet]="column.treeLoaderTemplate">
+        <ng-template *ngIf="column.treeIconTemplate"
+          [ngTemplateOutlet]="column.treeIconTemplate"
+          [ngTemplateOutletContext]="cellContext">
         </ng-template>
-
-        <span *ngIf="_treeStatus==='collapsed' &&
-                !column.treeExpanderTemplate">
-          <i class="icon datatable-icon-up"></i>
-        </span>
-        <ng-template *ngIf="_treeStatus==='collapsed' &&
-                column.treeExpanderTemplate"
-          [ngTemplateOutlet]="column.treeExpanderTemplate">
-        </ng-template>
-
-        <span *ngIf="_treeStatus==='expanded' &&
-                     !column.treeCollapserTemplate">
-          <i class="icon datatable-icon-down"></i>
-        </span>
-        <ng-template *ngIf="_treeStatus==='expanded' &&
-                            column.treeCollapserTemplate"
-          [ngTemplateOutlet]="column.treeCollapserTemplate">
-        </ng-template>
-
-        <span *ngIf="_treeStatus==='disabled' &&
-                     !column.treeDisableTemplate" class="disabled">
-          <i class="disabled icon datatable-icon-down"></i>
-        </span>
-        <ng-template *ngIf="_treeStatus==='disabled' &&
-                           column.treeDisableTemplate"
-          [ngTemplateOutlet]="column.treeDisableTemplate">
-        </ng-template>
-      </label>
+      </button>
 
       <span
         *ngIf="!column.cellTemplate"
@@ -76,11 +55,7 @@ import { ContentChild } from '@angular/core/src/metadata/di';
         [ngTemplateOutletContext]="cellContext">
       </ng-template>
     </div>
-  `,
-  styles: [
-    '.clickable {cursor: pointer; }',
-    '.disabled {color: #d1d1d1; }'
-  ]
+  `
 })
 export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   @Input() displayCheck: any;
@@ -178,7 +153,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     } else {
       this._treeStatus = status;
     }
-
+    this.cellContext.treeStatus = this._treeStatus;
     this.checkValueUpdates();
     this.cd.markForCheck();
   }
@@ -189,7 +164,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
 
-  @Output('treeAction') treeActionClick: EventEmitter<any> = new EventEmitter();
+  @Output('treeAction') treeClick: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('cellTemplate', { read: ViewContainerRef }) cellTemplate: ViewContainerRef;
 
@@ -382,7 +357,8 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
       rowHeight: this.rowHeight,
       column: this.column,
       value: this.value,
-      cellElement: this._element
+      cellElement: this._element,
+      treeStatus: 'collapsed'
     });
   }
 
@@ -402,9 +378,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   }
 
   onTreeAction(row: any) {
-    if (this._treeStatus !== 'disabled') {
-      this.treeActionClick.emit();
-    }
+    this.treeClick.emit();
   }
 
   calcLeftMargin(column: any, row: any) {

@@ -26,19 +26,16 @@ import { Component } from '@angular/core';
           <ng-template let-value="value" ngx-datatable-cell-template>
             {{value}}
           </ng-template>
-
-          <ng-template ngx-datatable-cell-tree-expander>
-            <i class="icon datatable-icon-up"></i>
+          <ng-template ngx-datatable-tree-icon let-tree="treeStatus">
+            <i *ngIf="tree==='loading'"
+              class="icon datatable-icon-collapse"></i>
+            <i *ngIf="tree==='collapsed'"
+              class="icon datatable-icon-up"></i>
+            <i *ngIf="tree==='expanded'"
+              class="icon datatable-icon-down"></i>
+            <i *ngIf="tree==='disabled'"
+              class="disabled icon datatable-icon-down"></i>
           </ng-template>
-
-          <ng-template ngx-datatable-cell-tree-collapser>
-            <i class="icon datatable-icon-down"></i>
-          </ng-template>
-
-          <ng-template ngx-datatable-cell-tree-disabled>
-            <i class="disabled icon datatable-icon-down"></i>
-          </ng-template>
-
         </ngx-datatable-column>
         <ngx-datatable-column name="Gender" [flexGrow]="1">
           <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>

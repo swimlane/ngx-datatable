@@ -28,22 +28,16 @@ import { setTimeout } from 'timers';
         (treeAction)="onTreeAction($event)">
         <ngx-datatable-column name="Id" [width]="80"></ngx-datatable-column>
         <ngx-datatable-column name="Name" [isTreeColumn]="true" [width]="300">
-          <ng-template ngx-datatable-cell-tree-expander>
-            <i class="icon datatable-icon-up"></i>
+          <ng-template ngx-datatable-tree-icon let-tree="treeStatus">
+            <i *ngIf="tree==='loading'"
+              class="icon datatable-icon-collapse"></i>
+            <i *ngIf="tree==='collapsed'"
+              class="icon datatable-icon-up"></i>
+            <i *ngIf="tree==='expanded'"
+              class="icon datatable-icon-down"></i>
+            <i *ngIf="tree==='disabled'"
+              class="disabled icon datatable-icon-down"></i>
           </ng-template>
-
-          <ng-template ngx-datatable-cell-tree-collapser>
-            <i class="icon datatable-icon-down"></i>
-          </ng-template>
-
-          <ng-template ngx-datatable-cell-tree-disabled>
-            <i class="disabled icon datatable-icon-down"></i>
-          </ng-template>
-
-          <ng-template ngx-datatable-cell-tree-loader>
-            <i class="icon datatable-icon-collapse"></i>
-          </ng-template>
-
         </ngx-datatable-column>
         <ngx-datatable-column name="Gender"></ngx-datatable-column>
         <ngx-datatable-column name="Age"></ngx-datatable-column>
