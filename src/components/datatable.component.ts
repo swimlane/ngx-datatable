@@ -1108,7 +1108,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   }
 
   /**
-   * A row was expanded ot collapsed for tree
+   * A row was expanded or collapsed for tree
    */
   onTreeAction(event: any) {
     const row = event.row;
