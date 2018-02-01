@@ -82,8 +82,8 @@ export class FullScreenTreeComponent {
   onTreeAction(event: any) {
     const index = event.rowIndex;
     const row = event.row;
-    if (this.rows[index].treeStatus === 'collapsed') {
-      this.rows[index].treeStatus = 'loading';
+    if (row.treeStatus === 'collapsed') {
+      row.treeStatus = 'loading';
       this.fetch((data) => {
         data = data.slice(this.lastIndex, this.lastIndex + 3)
           .map((d) => {
@@ -92,12 +92,12 @@ export class FullScreenTreeComponent {
             return d;
           });
         this.lastIndex = this.lastIndex + 3;
-        this.rows[index].treeStatus = 'expanded';
+        row.treeStatus = 'expanded';
         this.rows = [...this.rows, ...data];
         this.cd.detectChanges();
       });
     } else {
-      this.rows[index].treeStatus = 'collapsed';
+      row.treeStatus = 'collapsed';
       this.rows = [...this.rows];
       this.cd.detectChanges();
     }
