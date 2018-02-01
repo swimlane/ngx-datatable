@@ -182,6 +182,14 @@ export interface TableColumn {
   headerTemplate?: any;
 
   /**
+   * Header template ref
+   *
+   * @type {*}
+   * @memberOf TableColumn
+   */
+  treeIconTemplate?: any;
+
+  /**
    * CSS Classes for the cell
    *
    *
