@@ -8,6 +8,7 @@ import {
 } from '../../utils';
 import { ScrollbarHelper } from '../../services';
 import { MouseEvent, KeyboardEvent, Event } from '../../events';
+import { TreeStatus } from '../../index';
 
 @Component({
   selector: 'datatable-body-row',
@@ -68,8 +69,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   @Input() isSelected: boolean;
   @Input() rowIndex: number;
   @Input() displayCheck: any;
-  // loading, expanded, collapsed
-  @Input() treeStatus: 'loading' | 'expanded' | 'collapsed' = 'collapsed';
+  @Input() treeStatus: TreeStatus = 'collapsed';
 
   @Input()
   set offsetX(val: number) {

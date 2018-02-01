@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { setTimeout } from 'timers';
+import { Component, ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'full-screen-tree-demo',
@@ -56,7 +55,7 @@ export class FullScreenTreeComponent {
   rows = [];
   lastIndex = 15;
 
-  constructor() {
+  constructor(private cd: ChangeDetectorRef) {
     this.fetch((data) => {
       data = data.slice(1, this.lastIndex);
       this.rows = data.map((d) => {
@@ -95,10 +94,12 @@ export class FullScreenTreeComponent {
         this.lastIndex = this.lastIndex + 3;
         this.rows[index].treeStatus = 'expanded';
         this.rows = [...this.rows, ...data];
+        this.cd.detectChanges();
       });
     } else {
       this.rows[index].treeStatus = 'collapsed';
       this.rows = [...this.rows];
+      this.cd.detectChanges();
     }
   }
 
