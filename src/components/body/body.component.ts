@@ -210,7 +210,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * calculate scroll height automatically (as height will be undefined).
    */
   get scrollHeight(): number | undefined {
-    if (this.scrollbarV) {
+    if (this.scrollbarV && this.rowCount) {
       return this.rowHeightsCache.query(this.rowCount - 1);
     }
     // avoid TS7030: Not all code paths return a value.
@@ -528,7 +528,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         // If virtual rows are not needed
         // We render all in one go
         first = 0;
-        last = this.rowCount - 1;
+        last = this.rowCount;
       }
     } else {
       // The server is handling paging and will pass an array that begins with the

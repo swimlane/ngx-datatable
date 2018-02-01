@@ -108,7 +108,7 @@
         vertical-align: middle;
         display: inline-block;
         cursor: pointer; }
-      .ngx-datatable .datatable-header .datatable-header-cell .resize-handle {
+      .ngx-datatable .datatable-header .datatable-header-cell .resize-handle, .ngx-datatable .datatable-header .datatable-header-cell .resize-handle--not-resizable {
         display: inline-block;
         position: absolute;
         right: 0;
@@ -116,9 +116,12 @@
         bottom: 0;
         width: 5px;
         padding: 0 4px;
-        visibility: hidden;
+        visibility: hidden; }
+      .ngx-datatable .datatable-header .datatable-header-cell .resize-handle {
         cursor: ew-resize; }
       .ngx-datatable .datatable-header .datatable-header-cell.resizeable:hover .resize-handle {
+        visibility: visible; }
+      .ngx-datatable .datatable-header .datatable-header-cell:hover .resize-handle--not-resizable {
         visibility: visible; }
   .ngx-datatable .datatable-body {
     position: relative;
