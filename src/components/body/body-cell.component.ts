@@ -166,7 +166,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
 
-  @Output('treeAction') treeClick: EventEmitter<any> = new EventEmitter();
+  @Output() treeAction: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('cellTemplate', { read: ViewContainerRef }) cellTemplate: ViewContainerRef;
 
@@ -380,7 +380,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   }
 
   onTreeAction(row: any) {
-    this.treeClick.emit();
+    this.treeAction.emit();
   }
 
   calcLeftMargin(column: any, row: any) {
