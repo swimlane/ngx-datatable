@@ -28,6 +28,9 @@ export class DataTableColumnDirective {
   @Input() headerClass: string | ((data: any) => string|any);
   @Input() cellClass: string | ((data: any) => string|any);
   @Input() isTreeColumn: boolean;
+  @Input() treeLevelIndent: number;
+
+
 
   @Input()
   @ContentChild(DataTableColumnCellDirective, { read: TemplateRef })

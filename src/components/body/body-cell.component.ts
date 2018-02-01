@@ -384,7 +384,8 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   }
 
   calcLeftMargin(column: any, row: any) {
-    return column.isTreeColumn ? row.level * 50 : 0;
+    const levelIndent = column.treeLevelIndent != null ? column.treeLevelIndent : 50;
+    return column.isTreeColumn ? row.level * levelIndent : 0;
   }
 
 }

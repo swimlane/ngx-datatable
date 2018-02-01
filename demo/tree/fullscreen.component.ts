@@ -26,7 +26,11 @@ import { Component, ChangeDetectorRef } from '@angular/core';
         [treeToRelation]="'id'"
         (treeAction)="onTreeAction($event)">
         <ngx-datatable-column name="Id" [width]="80"></ngx-datatable-column>
-        <ngx-datatable-column name="Name" [isTreeColumn]="true" [width]="300">
+        <ngx-datatable-column
+          name="Name"
+          [isTreeColumn]="true"
+          [width]="300"
+          [treeLevelIndent]="20">
           <ng-template ngx-datatable-tree-icon let-tree="treeStatus">
             <i *ngIf="tree==='loading'"
               class="icon datatable-icon-collapse"></i>
