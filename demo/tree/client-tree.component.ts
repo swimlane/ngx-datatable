@@ -80,10 +80,10 @@ export class ClientTreeComponent {
   onTreeAction(event: any) {
     const index = event.rowIndex;
     const row = event.row;
-    if (this.rows[index].treeStatus === 'collapsed') {
-      this.rows[index].treeStatus = 'expanded';
+    if (row.treeStatus === 'collapsed') {
+      row.treeStatus = 'expanded';
     } else {
-      this.rows[index].treeStatus = 'collapsed';
+      row.treeStatus = 'collapsed';
     }
     this.rows = [...this.rows];
   }

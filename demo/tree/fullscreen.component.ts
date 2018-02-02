@@ -26,7 +26,11 @@ import { Component, ChangeDetectorRef } from '@angular/core';
         [treeToRelation]="'id'"
         (treeAction)="onTreeAction($event)">
         <ngx-datatable-column name="Id" [width]="80"></ngx-datatable-column>
-        <ngx-datatable-column name="Name" [isTreeColumn]="true" [width]="300">
+        <ngx-datatable-column
+          name="Name"
+          [isTreeColumn]="true"
+          [width]="300"
+          [treeLevelIndent]="20">
           <ng-template ngx-datatable-tree-icon let-tree="treeStatus">
             <i *ngIf="tree==='loading'"
               class="icon datatable-icon-collapse"></i>
@@ -82,8 +86,8 @@ export class FullScreenTreeComponent {
   onTreeAction(event: any) {
     const index = event.rowIndex;
     const row = event.row;
-    if (this.rows[index].treeStatus === 'collapsed') {
-      this.rows[index].treeStatus = 'loading';
+    if (row.treeStatus === 'collapsed') {
+      row.treeStatus = 'loading';
       this.fetch((data) => {
         data = data.slice(this.lastIndex, this.lastIndex + 3)
           .map((d) => {
@@ -92,12 +96,12 @@ export class FullScreenTreeComponent {
             return d;
           });
         this.lastIndex = this.lastIndex + 3;
-        this.rows[index].treeStatus = 'expanded';
+        row.treeStatus = 'expanded';
         this.rows = [...this.rows, ...data];
         this.cd.detectChanges();
       });
     } else {
-      this.rows[index].treeStatus = 'collapsed';
+      row.treeStatus = 'collapsed';
       this.rows = [...this.rows];
       this.cd.detectChanges();
     }
