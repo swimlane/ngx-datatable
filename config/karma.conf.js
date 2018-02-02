@@ -25,6 +25,10 @@ module.exports =  function(config) {
       ChromeTravisCi: {
         base: 'Chrome',
         flags: ['--no-sandbox']
+      },
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox']
       }
     },
     coverageReporter: {
