@@ -1,10 +1,11 @@
 import {
-  Directive, ElementRef, HostListener, Input, Output, EventEmitter, OnDestroy, AfterViewInit
+  Directive, ElementRef, HostListener, Input, Output, EventEmitter, OnDestroy, AfterViewInit, Renderer2
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { MouseEvent } from '../events';
-import 'rxjs/add/operator/takeUntil';
+import { takeUntil } from 'rxjs/operators';
+import { fromEvent } from 'rxjs/observable/fromEvent';
 
 @Directive({
   selector: '[resizeable]',
@@ -24,16 +25,19 @@ export class ResizeableDirective implements OnDestroy, AfterViewInit {
   subscription: Subscription;
   resizing: boolean = false;
 
-  constructor(element: ElementRef) {
+  constructor(element: ElementRef, private renderer: Renderer2) {
     this.element = element.nativeElement;
   }
 
   ngAfterViewInit(): void {
+    const renderer2 = this.renderer;
+    const node = renderer2.createElement('span');
     if (this.resizeEnabled) {
-      const node = document.createElement('span');
-      node.classList.add('resize-handle');
-      this.element.appendChild(node);
+      renderer2.addClass(node, 'resize-handle');
+    } else {
+      renderer2.addClass(node, 'resize-handle--not-resizable');
     }
+    renderer2.appendChild(this.element, node);
   }
 
   ngOnDestroy(): void {
@@ -59,12 +63,12 @@ export class ResizeableDirective implements OnDestroy, AfterViewInit {
       event.stopPropagation();
       this.resizing = true;
 
-      const mouseup = Observable.fromEvent(document, 'mouseup');
+      const mouseup = fromEvent(document, 'mouseup');
       this.subscription = mouseup
         .subscribe((ev: MouseEvent) => this.onMouseup());
 
-      const mouseMoveSub = Observable.fromEvent(document, 'mousemove')
-        .takeUntil(mouseup)
+      const mouseMoveSub = fromEvent(document, 'mousemove')
+        .pipe(takeUntil(mouseup))
         .subscribe((e: MouseEvent) => this.move(e, initialWidth, mouseDownScreenX));
 
       this.subscription.add(mouseMoveSub);

@@ -1,13 +1,16 @@
 import { ElementRef, EventEmitter, OnInit, QueryList, AfterViewInit, DoCheck, KeyValueDiffers, KeyValueDiffer, ChangeDetectorRef } from '@angular/core';
-import { ScrollbarHelper } from '../services';
+import { ScrollbarHelper, DimensionsHelper } from '../services';
 import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
+import { DataTableHeaderComponent } from './header';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export declare class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     private scrollbarHelper;
+    private dimensionsHelper;
     private cd;
     /**
      * Gets the rows.
@@ -197,6 +200,18 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     trackByProp: string;
     /**
+     * Property to which you can use for determining select all
+     * rows on current page or not.
+     *
+     * @type {boolean}
+     * @memberOf DatatableComponent
+     */
+    selectAllRowsOnPage: boolean;
+    /**
+     * A flag for row virtualization on / off
+     */
+    virtualization: boolean;
+    /**
      * Body was scrolled typically in a `scrollbarV:true` scenario.
      */
     scroll: EventEmitter<any>;
@@ -303,16 +318,25 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     bodyComponent: DataTableBodyComponent;
     /**
+     * Reference to the header component for manually
+     * invoking functions on the header.
+     *
+     * @private
+     * @type {DataTableHeaderComponent}
+     * @memberOf DatatableComponent
+     */
+    headerComponent: DataTableHeaderComponent;
+    /**
      * Returns if all rows are selected.
      */
     readonly allRowsSelected: boolean;
     element: HTMLElement;
-    innerWidth: number;
+    _innerWidth: number;
     pageSize: number;
     bodyHeight: number;
     rowCount: number;
-    offsetX: number;
     rowDiffer: KeyValueDiffer<{}, {}>;
+    _offsetX: BehaviorSubject<number>;
     _limit: number | undefined;
     _count: number;
     _offset: number;
@@ -322,7 +346,7 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
     _internalColumns: TableColumn[];
     _columns: TableColumn[];
     _columnTemplates: QueryList<DataTableColumnDirective>;
-    constructor(scrollbarHelper: ScrollbarHelper, cd: ChangeDetectorRef, element: ElementRef, differs: KeyValueDiffers);
+    constructor(scrollbarHelper: ScrollbarHelper, dimensionsHelper: DimensionsHelper, cd: ChangeDetectorRef, element: ElementRef, differs: KeyValueDiffers);
     /**
      * Lifecycle hook that is called after data-bound
      * properties of a directive are initialized.
@@ -333,6 +357,15 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      * view has been fully initialized.
      */
     ngAfterViewInit(): void;
+    /**
+     * Lifecycle hook that is called after a component's
+     * content has been fully initialized.
+     */
+    ngAfterContentInit(): void;
+    /**
+     * Translates the templates to the column objects
+     */
+    translateColumns(val: any): void;
     /**
      * Creates a map with the data grouped by the user choice of grouping index
      *

@@ -4,7 +4,7 @@ import { SelectionType } from '../../types';
 import { MouseEvent, KeyboardEvent } from '../../events';
 
 export interface Model {
-  type: string;
+  type: string; 
   event: MouseEvent | KeyboardEvent;
   row: any;
   rowElement: any;

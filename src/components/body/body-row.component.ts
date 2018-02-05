@@ -1,22 +1,22 @@
 import {
   Component, Input, HostBinding, ElementRef, Output, KeyValueDiffers, KeyValueDiffer,
-  EventEmitter, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, DoCheck
+  EventEmitter, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, DoCheck, SkipSelf
 } from '@angular/core';
 
 import {
   allColumnsByPinArr, columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys
 } from '../../utils';
 import { ScrollbarHelper } from '../../services';
-import { MouseEvent, KeyboardEvent } from '../../events';
+import { MouseEvent, KeyboardEvent, Event } from '../../events';
 
 @Component({
   selector: 'datatable-body-row',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div
-      *ngFor="let colGroup of columnsByPin; let i = index; trackBy: trackByGroups"
+      *ngFor="let colGroup of _columnsByPin; let i = index; trackBy: trackByGroups"
       class="datatable-row-{{colGroup.type}} datatable-row-group"
-      [ngStyle]="stylesByGroup(colGroup.type)">
+      [ngStyle]="_groupStyles[colGroup.type]">
       <datatable-body-cell
         *ngFor="let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn"
         tabindex="-1"
@@ -47,11 +47,12 @@ export class DataTableBodyRowComponent implements DoCheck {
   @Input() set innerWidth(val: number) {
     if (this._columns) {
       const colByPin = columnsByPin(this._columns);
-      this.columnGroupWidths = columnGroupWidths(colByPin, colByPin);      
+      this._columnGroupWidths = columnGroupWidths(colByPin, colByPin);  
     }
 
     this._innerWidth = val;
     this.recalculateColumns();
+    this.buildStylesByGroup();    
   }
 
   get innerWidth(): number {
@@ -62,10 +63,16 @@ export class DataTableBodyRowComponent implements DoCheck {
   @Input() rowClass: any;
   @Input() row: any;
   @Input() group: any;
-  @Input() offsetX: number;
   @Input() isSelected: boolean;
   @Input() rowIndex: number;
   @Input() displayCheck: any;
+
+  @Input()
+  set offsetX(val: number) {
+    this._offsetX = val;
+    this.buildStylesByGroup();
+  }
+  get offsetX() { return this._offsetX; }
 
   @HostBinding('class')
   get cssClass() {
@@ -94,30 +101,36 @@ export class DataTableBodyRowComponent implements DoCheck {
 
   @HostBinding('style.width.px')
   get columnsTotalWidths(): string {
-    return this.columnGroupWidths.total;
+    return this._columnGroupWidths.total;
   }
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
 
-  element: any;
-  columnGroupWidths: any;
-  columnsByPin: any;
+  _element: any;
+  _columnGroupWidths: any;
+  _columnsByPin: any;
+  _offsetX: number;
   _columns: any[];
   _innerWidth: number;
+  _groupStyles = {
+    left: {},
+    center: {},
+    right: {}
+  };
 
-  private rowDiffer: KeyValueDiffer<{}, {}>;
+  private _rowDiffer: KeyValueDiffer<{}, {}>;
 
   constructor(
       private differs: KeyValueDiffers,
-      private scrollbarHelper: ScrollbarHelper,
+      @SkipSelf() private scrollbarHelper: ScrollbarHelper,
       private cd: ChangeDetectorRef, 
       element: ElementRef) {
-    this.element = element.nativeElement;
-    this.rowDiffer = differs.find({}).create();
+    this._element = element.nativeElement;
+    this._rowDiffer = differs.find({}).create();
   }
 
   ngDoCheck(): void {
-    if (this.rowDiffer.diff(this.row)) {
+    if (this._rowDiffer.diff(this.row)) {
       this.cd.markForCheck();
     }
   }
@@ -130,8 +143,15 @@ export class DataTableBodyRowComponent implements DoCheck {
     return column.$$id;
   }
 
-  stylesByGroup(group: string) {
-    const widths = this.columnGroupWidths;
+  buildStylesByGroup() {
+    this._groupStyles['left'] = this.calcStylesByGroup('left');
+    this._groupStyles['center'] = this.calcStylesByGroup('center');
+    this._groupStyles['right'] = this.calcStylesByGroup('right');
+    this.cd.markForCheck();
+  }
+
+  calcStylesByGroup(group: string) {
+    const widths = this._columnGroupWidths;
     const offsetX = this.offsetX;
 
     const styles = {
@@ -153,14 +173,14 @@ export class DataTableBodyRowComponent implements DoCheck {
 
   onActivate(event: any, index: number): void {
     event.cellIndex = index;
-    event.rowElement = this.element;
+    event.rowElement = this._element;
     this.activate.emit(event);
   }
 
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
     const keyCode = event.keyCode;
-    const isTargetRow = event.target === this.element;
+    const isTargetRow = event.target === this._element;
 
     const isAction =
       keyCode === Keys.return ||
@@ -177,26 +197,26 @@ export class DataTableBodyRowComponent implements DoCheck {
         type: 'keydown',
         event,
         row: this.row,
-        rowElement: this.element
+        rowElement: this._element
       });
     }
   }
 
   @HostListener('mouseenter', ['$event'])
-  onMouseenter(event: Event): void {
+  onMouseenter(event: any): void {
     this.activate.emit({
         type: 'mouseenter',
         event,
         row: this.row,
-        rowElement: this.element
+        rowElement: this._element
       });
   }
 
   recalculateColumns(val: any[] = this.columns): void {
     this._columns = val;
     const colsByPin = columnsByPin(this._columns);
-    this.columnsByPin = allColumnsByPinArr(this._columns);        
-    this.columnGroupWidths = columnGroupWidths(colsByPin, this._columns);
+    this._columnsByPin = allColumnsByPinArr(this._columns);        
+    this._columnGroupWidths = columnGroupWidths(colsByPin, this._columns);
   }
 
 }

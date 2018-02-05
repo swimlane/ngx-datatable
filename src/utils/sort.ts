@@ -51,12 +51,20 @@ export function orderByComparator(a: any, b: any): number {
 }
 
 /**
- * Sorts the rows
+ * creates a shallow copy of the `rows` input and returns the sorted copy. this function
+ * does not sort the `rows` argument in place
  */
 export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[] {
   if(!rows) return [];
   if(!dirs || !dirs.length || !columns) return [...rows];
 
+  /**
+   * record the row ordering of results from prior sort operations (if applicable)
+   * this is necessary to guarantee stable sorting behavior 
+   */
+  const rowToIndexMap = new Map<any, number>();
+  rows.forEach((row, index) => rowToIndexMap.set(row, index));
+  
   const temp = [...rows];
   const cols = columns.reduce((obj, col) => {
     if(col.comparator && typeof col.comparator === 'function') {
@@ -101,7 +109,11 @@ export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[
       if (comparison !== 0) return comparison;
     }
 
-    // equal each other
-    return 0;
+    if (!(rowToIndexMap.has(rowA) && rowToIndexMap.has(rowB))) return 0;
+    
+    /**
+     * all else being equal, preserve original order of the rows (stable sort)
+     */
+    return rowToIndexMap.get(rowA) < rowToIndexMap.get(rowB) ? -1 : 1;
   });
 }

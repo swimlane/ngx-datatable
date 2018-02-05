@@ -11,7 +11,7 @@ It was built for modern browsers using _TypeScript, CSS3 and HTML5_ and Angular 
 
 Check out the [documentation](https://swimlane.gitbooks.io/ngx-datatable/) & [demos](http://swimlane.github.io/ngx-datatable/) for more information!
 
-See the [changelog](https://github.com/swimlane/ngx-datatable/blob/master/docs/changelog.md) for recent changes. **11.0.0 supports Angular 5, if you need Angular 4 support use 10.4.0.**
+See the [changelog](https://github.com/swimlane/ngx-datatable/blob/master/docs/changelog.md) for recent changes.
 
 ## Features
 - Handle large data sets ( Virtual DOM )
@@ -28,6 +28,7 @@ See the [changelog](https://github.com/swimlane/ngx-datatable/blob/master/docs/c
 - Decoupled theme'ing with included Google Material theme
 - Light codebase / No external dependencies
 - AoT Compilation Support
+- Universal Support
 
 ## Installation
 To use ngx-datatable in your project install it via [npm](https://www.npmjs.com/package/@swimlane/ngx-datatable):

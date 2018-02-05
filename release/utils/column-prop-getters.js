@@ -1,7 +1,6 @@
 "use strict";
 // maybe rename this file to prop-getters.ts
 Object.defineProperty(exports, "__esModule", { value: true });
-var types_1 = require("../types");
 /**
  * Always returns the empty string ''
  * @returns {string}

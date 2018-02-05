@@ -1,5 +1,7 @@
-import { ElementRef, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { ElementRef, EventEmitter, Renderer2, NgZone, OnInit, OnDestroy } from '@angular/core';
 export declare class ScrollerComponent implements OnInit, OnDestroy {
+    private ngZone;
+    private renderer;
     scrollbarV: boolean;
     scrollbarH: boolean;
     scrollHeight: number;
@@ -12,7 +14,7 @@ export declare class ScrollerComponent implements OnInit, OnDestroy {
     element: any;
     parentElement: any;
     onScrollListener: any;
-    constructor(element: ElementRef);
+    constructor(ngZone: NgZone, element: ElementRef, renderer: Renderer2);
     ngOnInit(): void;
     ngOnDestroy(): void;
     setOffset(offsetY: number): void;

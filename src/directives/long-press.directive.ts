@@ -4,8 +4,8 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/takeUntil';
-
+import { takeUntil } from 'rxjs/operators';
+import { fromEvent } from 'rxjs/observable/fromEvent';
 import { MouseEvent } from '../events';
 
 @Directive({ selector: '[long-press]' })
@@ -50,7 +50,7 @@ export class LongPressDirective implements OnDestroy {
     this.pressing = true;
     this.isLongPressing = false;
 
-    const mouseup = Observable.fromEvent(document, 'mouseup');
+    const mouseup = fromEvent(document, 'mouseup');
     this.subscription = mouseup.subscribe((ev: MouseEvent) => this.onMouseup());
 
     this.timeout = setTimeout(() => {
@@ -61,8 +61,8 @@ export class LongPressDirective implements OnDestroy {
       });
 
       this.subscription.add(
-        Observable.fromEvent(document, 'mousemove')
-          .takeUntil(mouseup)
+        fromEvent(document, 'mousemove')
+          .pipe(takeUntil(mouseup))
           .subscribe((mouseEvent: MouseEvent) => this.onMouseMove(mouseEvent))
       );
 
