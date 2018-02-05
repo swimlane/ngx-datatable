@@ -2,6 +2,7 @@
 
 ## `columnMode`
 Method used for setting column widths
+
 | Value         | Description                 | Default |
 | ------------- | --------------------------  | ------- |
 | `standard`    | Distributes based on widths | x       |
@@ -131,6 +132,7 @@ Default value: `[]`
 
 ## `selectionType`
 Row selection mode
+
 | Value                  | Description                                            | Default |
 | :--------------------- | :----------------------------------------------------- | ------- |
 | `undefined|false|null` | Rows cannot be selected                                | x       |
