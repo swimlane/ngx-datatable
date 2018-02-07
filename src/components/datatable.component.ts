@@ -954,6 +954,8 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
       if (this.groupedRows) {
         return this.groupedRows.length;
+      } else if (this.treeFromRelation != null && this.treeToRelation != null) {
+        return this._internalRows.length;
       } else {
         return val.length;
       }
