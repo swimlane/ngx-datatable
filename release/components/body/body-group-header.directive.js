@@ -14,12 +14,11 @@ var body_group_header_template_directive_1 = require("./body-group-header-templa
 var DatatableGroupHeaderDirective = /** @class */ (function () {
     function DatatableGroupHeaderDirective() {
         /**
-         * The detail row height is required especially
-         * when virtual scroll is enabled.
+         * Row height is required when virtual scroll is enabled.
          */
         this.rowHeight = 0;
         /**
-         * Group visbility was toggled.
+         * Track toggling of group visibility
          */
         this.toggle = new core_1.EventEmitter();
     }
@@ -33,7 +32,7 @@ var DatatableGroupHeaderDirective = /** @class */ (function () {
         });
     };
     /**
-     * API method to expand all groups.
+     * Expand all groups
      */
     DatatableGroupHeaderDirective.prototype.expandAllGroups = function () {
         this.toggle.emit({
@@ -42,7 +41,7 @@ var DatatableGroupHeaderDirective = /** @class */ (function () {
         });
     };
     /**
-     * API method to collapse all groups.
+     * Collapse all groups
      */
     DatatableGroupHeaderDirective.prototype.collapseAllGroups = function () {
         this.toggle.emit({
