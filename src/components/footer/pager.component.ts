@@ -8,6 +8,8 @@ import {
     <ul class="pager">
       <li [class.disabled]="!canPrevious()">
         <a
+          role="button"
+          aria-label="go to first page"
           href="javascript:void(0)"
           (click)="selectPage(1)">
           <i class="{{pagerPreviousIcon}}"></i>
@@ -15,12 +17,16 @@ import {
       </li>
       <li [class.disabled]="!canPrevious()">
         <a
+          role="button"
+          aria-label="go to previous page"
           href="javascript:void(0)"
           (click)="prevPage()">
           <i class="{{pagerLeftArrowIcon}}"></i>
         </a>
       </li>
       <li
+        role="button"
+        [attr.aria-label]="'page ' + pg.number"
         class="pages"
         *ngFor="let pg of pages"
         [class.active]="pg.number === page">
@@ -32,6 +38,8 @@ import {
       </li>
       <li [class.disabled]="!canNext()">
         <a
+          role="button"
+          aria-label="go to next page"
           href="javascript:void(0)"
           (click)="nextPage()">
           <i class="{{pagerRightArrowIcon}}"></i>
@@ -39,6 +47,8 @@ import {
       </li>
       <li [class.disabled]="!canNext()">
         <a
+          role="button"
+          aria-label="go to last page"
           href="javascript:void(0)"
           (click)="selectPage(totalPages)">
           <i class="{{pagerNextIcon}}"></i>
