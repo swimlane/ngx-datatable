@@ -9,7 +9,7 @@ import { MouseEvent } from '../../events';
 @Component({
   selector: 'datatable-header-cell',
   template: `
-    <div>
+    <div class="datatable-header-cell-template-wrap">
       <label
         *ngIf="isCheckboxable"
         class="datatable-checkbox">
