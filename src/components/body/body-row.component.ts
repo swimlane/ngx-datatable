@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 
 import {
-  allColumnsByPinArr, columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys
+  columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys
 } from '../../utils';
 import { ScrollbarHelper } from '../../services';
 import { MouseEvent, KeyboardEvent, Event } from '../../events';
@@ -215,7 +215,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   recalculateColumns(val: any[] = this.columns): void {
     this._columns = val;
     const colsByPin = columnsByPin(this._columns);
-    this._columnsByPin = allColumnsByPinArr(this._columns);        
+    this._columnsByPin = columnsByPinArr(this._columns);        
     this._columnGroupWidths = columnGroupWidths(colsByPin, this._columns);
   }
 

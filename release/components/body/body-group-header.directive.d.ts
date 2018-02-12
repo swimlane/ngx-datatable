@@ -1,13 +1,12 @@
 import { EventEmitter, TemplateRef } from '@angular/core';
 export declare class DatatableGroupHeaderDirective {
     /**
-     * The detail row height is required especially
-     * when virtual scroll is enabled.
+     * Row height is required when virtual scroll is enabled.
      */
     rowHeight: (number | ((group?: any, index?: number) => number));
     template: TemplateRef<any>;
     /**
-     * Group visbility was toggled.
+     * Track toggling of group visibility
      */
     toggle: EventEmitter<any>;
     /**
@@ -15,11 +14,11 @@ export declare class DatatableGroupHeaderDirective {
      */
     toggleExpandGroup(group: any): void;
     /**
-     * API method to expand all groups.
+     * Expand all groups
      */
     expandAllGroups(): void;
     /**
-     * API method to collapse all groups.
+     * Collapse all groups
      */
     collapseAllGroups(): void;
 }

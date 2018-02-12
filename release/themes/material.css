@@ -18,8 +18,6 @@
 	 */ }
   .ngx-datatable.material.striped .datatable-row-odd {
     background: #eee; }
-  .ngx-datatable.material.striped-row-group .datatable-body-row:nth-child(odd) {
-  background: #eee; }
   .ngx-datatable.material.single-selection .datatable-body-row.active,
   .ngx-datatable.material.single-selection .datatable-body-row.active .datatable-row-group, .ngx-datatable.material.multi-selection .datatable-body-row.active,
   .ngx-datatable.material.multi-selection .datatable-body-row.active .datatable-row-group, .ngx-datatable.material.multi-click-selection .datatable-body-row.active,

@@ -121,7 +121,7 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      *
      *  - `single`
      *  - `multi`
-     *  - `chkbox`
+     *  - `checkbox`
      *  - `multiClick`
      *  - `cell`
      *
