@@ -73,6 +73,7 @@ var DataTableHeaderComponent = /** @class */ (function () {
             var colsByPin = utils_1.columnsByPin(val);
             this._columnsByPin = utils_1.columnsByPinArr(val);
             this._columnGroupWidths = utils_1.columnGroupWidths(colsByPin, val);
+            this.setStylesByGroup();
         },
         enumerable: true,
         configurable: true

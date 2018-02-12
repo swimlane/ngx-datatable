@@ -124,7 +124,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     if (val) {
       this._internalRows = [...val];
     }
-
+    
     // auto sort on new updates
     if (!this.externalSorting) {
       this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
@@ -313,7 +313,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    *
    *  - `single`
    *  - `multi`
-   *  - `chkbox`
+   *  - `checkbox`
    *  - `multiClick`
    *  - `cell`
    *

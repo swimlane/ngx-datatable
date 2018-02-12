@@ -50,4 +50,48 @@ describe('deepValueGetter', () => {
     expect(deepValueGetter(data, 'a.b.value')).toEqual(5);
   });
 
+  it('should get array-element two-level deep', () => {
+    let data = {
+      a: {
+        b: [
+          123
+        ]
+      }
+    };
+    expect(deepValueGetter(data, 'a.b.0')).toEqual(123);
+
+  });
+
+  it('should get value of object inside an array-element', () => {
+    let data = {
+      a: {
+        b: [
+          {c: 123}
+        ]
+      }
+    };
+    expect(deepValueGetter(data, 'a.b.0.c')).toEqual(123);
+  });
+   it('should get value of object inside a double array-element', () => {
+    let data = {
+      a: {
+        b: [
+          [
+            123
+          ]
+        ]
+      }
+    };
+    expect(deepValueGetter(data, 'a.b.0.0')).toEqual(123);
+  });
+  
+
+  it('should check for root-level fields with square brackets in name', () => {
+    let data = {
+      'a.b.1.value': 5
+    };
+    expect(deepValueGetter(data, 'a.b.1.value')).toEqual(5);
+  });
+
+
 });
