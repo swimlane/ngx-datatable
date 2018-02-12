@@ -627,6 +627,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   }
 
   element: HTMLElement;
+  bodyEl: HTMLElement;
   _innerWidth: number;
   pageSize: number;
   bodyHeight: number;
@@ -675,6 +676,9 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     if (!this.externalSorting) {
       this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
     }
+
+    // cache body element
+    this.bodyEl = this.element.querySelector('.datatable-body')
 
     // this has to be done to prevent the change detection
     // tree from freaking out because we are readjusting
@@ -896,20 +900,19 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     // This is because an expanded row is still considered to be a child of
     // the original row.  Hence calculation would use rowHeight only.
     if (this.scrollbarV) {
-        var height = this.bodyHeight;
-        if (this.scrollbarH) {
-          // Make sure height does not include horizontal scrollbar if visible
-          let bodyEl = this.element.querySelector('.datatable-body')
-          height = bodyEl.clientHeight;
-        }
-        // Page size should include only fully visible rows.
-        // If one row is not fitting fully in a given height, 
-        // it should be a first row on the next page.
-        var size = Math.floor(height / this.rowHeight);
-        
-        // Minimum page size is 1, in case when viewport is smaller than row's height. 
-        // To still make possible changing pages
-        return Math.max(size, 1);
+      var height = this.bodyHeight;
+      if (this.scrollbarH) {
+	// Make sure height does not include horizontal scrollbar if visible
+	height = this.bodyEl.clientHeight;
+      }
+      // Page size should include only fully visible rows.
+      // If one row is not fitting fully in a given height, 
+      // it should be a first row on the next page.
+      var size = Math.floor(height / this.rowHeight);
+      
+      // Minimum page size is 1, in case when viewport is smaller than row's height. 
+      // To still make possible changing pages
+      return Math.max(size, 1);
     }
 
     // if limit is passed, we are paging
