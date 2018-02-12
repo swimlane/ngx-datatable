@@ -64,6 +64,7 @@ import { ColumnPinningComponent } from './columns/pinning.component';
 import { SummaryRowSimpleComponent } from './summary/summary-row-simple.component';
 import { SummaryRowCustomTemplateComponent } from './summary/summary-row-custom-template.component';
 import { SummaryRowServerPagingComponent } from './summary/summary-row-server-paging.component';
+import { SummaryRowInlineHtmlComponent } from './summary/summary-row-inline-html.component';
 
 @NgModule({
   declarations: [
@@ -113,6 +114,7 @@ import { SummaryRowServerPagingComponent } from './summary/summary-row-server-pa
     SummaryRowSimpleComponent,
     SummaryRowCustomTemplateComponent,
     SummaryRowServerPagingComponent,
+    SummaryRowInlineHtmlComponent,
   ],
   imports: [BrowserModule, NgxDatatableModule],
   bootstrap: [AppComponent]

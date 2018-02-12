@@ -24,13 +24,14 @@ export class DataTableColumnDirective {
   @Input() headerCheckboxable: boolean;
   @Input() headerClass: string | ((data: any) => string|any);
   @Input() cellClass: string | ((data: any) => string|any);
+  @Input() summaryFunc: (cells: any[]) => any;
 
   @Input()
-  @ContentChild(DataTableColumnCellDirective, { read: TemplateRef }) 
+  @ContentChild(DataTableColumnCellDirective, { read: TemplateRef })
   cellTemplate: TemplateRef<any>;
 
   @Input()
-  @ContentChild(DataTableColumnHeaderDirective, { read: TemplateRef }) 
+  @ContentChild(DataTableColumnHeaderDirective, { read: TemplateRef })
   headerTemplate: TemplateRef<any>;
 
 }
