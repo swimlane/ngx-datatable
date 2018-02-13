@@ -33,6 +33,7 @@ import { ClientPagingComponent } from './paging/paging-client.component';
 import { ServerPagingComponent } from './paging/paging-server.component';
 import { ServerScrollingComponent } from './paging/scrolling-server.component';
 import { VirtualPagingComponent } from './paging/paging-virtual.component';
+import { PagingScrollingNoVirtualizationComponent } from './paging/paging-scrolling-novirtualization.component';
 
 // -- Sorting
 import { SortingComparatorComponent } from './sorting/sorting-comparator.component';
@@ -74,6 +75,7 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     ResponsiveComponent,
     ClientPagingComponent,
     ServerPagingComponent,
+    PagingScrollingNoVirtualizationComponent,
     ServerScrollingComponent,
     ClientSortingComponent,
     DefaultSortingComponent,

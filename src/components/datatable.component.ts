@@ -501,6 +501,15 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   }
 
   /**
+   * CSS class applied to root element if
+   * virtualization is enabled.
+   */
+  @HostBinding('class.virtualized')
+  get isVirtualized(): boolean {
+    return this.virtualization;
+  }
+
+  /**
    * CSS class applied to the root element
    * if the horziontal scrolling is enabled.
    */
@@ -847,6 +856,14 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Body triggered a page event.
    */
   onBodyPage({ offset }: any): void {
+
+    // Avoid pagination caming from body events like scroll when the table 
+    // has no virtualization and the external paging is enable. 
+    // This means, let's the developer handle pagination by my him(her) self
+    if(this.externalPaging && !this.virtualization) {
+      return;
+    }
+
     this.offset = offset;
 
     this.page.emit({
@@ -895,7 +912,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     // Keep the page size constant even if the row has been expanded.
     // This is because an expanded row is still considered to be a child of
     // the original row.  Hence calculation would use rowHeight only.
-    if (this.scrollbarV) {
+    if (this.scrollbarV && this.virtualization) {
       const size = Math.ceil(this.bodyHeight / this.rowHeight);
       return Math.max(size, 0);
     }

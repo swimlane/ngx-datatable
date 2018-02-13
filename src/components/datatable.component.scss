@@ -21,12 +21,16 @@
   &.scroll-vertical {
     .datatable-body {
       overflow-y:auto;
-      .datatable-row-wrapper {
-        position: absolute;
+    }
+    &.virtualized {
+      .datatable-body {
+       .datatable-row-wrapper {
+          position: absolute;
+        }
       }
-
     }
   }
+
 
   /**
    * Horizontal Scrolling Adjustments
@@ -37,6 +41,7 @@
       -webkit-overflow-scrolling: touch;
     }
   }
+
 
   /**
    * Fixed Header Height Adjustments
