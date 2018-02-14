@@ -4,12 +4,12 @@ import {
 } from '@angular/core';
 import { SortDirection, SortType, SelectionType, TableColumn } from '../../types';
 import { nextSortDir } from '../../utils';
-import { mouseEvent } from '../../events';
+import { MouseEvent } from '../../events';
 
 @Component({
   selector: 'datatable-header-cell',
   template: `
-    <div>
+    <div class="datatable-header-cell-template-wrap">
       <label
         *ngIf="isCheckboxable"
         class="datatable-checkbox">
@@ -50,7 +50,17 @@ export class DataTableHeaderCellComponent {
   @Input() sortType: SortType;
   @Input() sortAscendingIcon: string;
   @Input() sortDescendingIcon: string;
-  @Input() allRowsSelected: boolean;
+  
+  _allRowsSelected: boolean;
+  
+  @Input() set allRowsSelected(value) {
+    this._allRowsSelected = value;
+    this.cellContext.allRowsSelected = value;
+  }
+  get allRowsSelected() {
+    return this._allRowsSelected;
+  }
+  
   @Input() selectionType: SelectionType;
 
   @Input() set column(column: TableColumn) {
@@ -69,6 +79,7 @@ export class DataTableHeaderCellComponent {
   @Input() set sorts(val: any[]) {
     this._sorts = val;
     this.sortDir = this.calcSortDir(val);
+    this.cellContext.sortDir = this.sortDir;
     this.sortClass = this.calcSortClass(this.sortDir);
     this.cd.markForCheck();
   }

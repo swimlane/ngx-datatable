@@ -37,6 +37,8 @@ exports.getterForProp = getterForProp;
  * @returns {any} or '' if invalid index
  */
 function numericIndexGetter(row, index) {
+    if (row == null)
+        return '';
     // mimic behavior of deepValueGetter
     if (!row || index == null)
         return row;
@@ -54,6 +56,8 @@ exports.numericIndexGetter = numericIndexGetter;
  * @returns {any}
  */
 function shallowValueGetter(obj, fieldName) {
+    if (obj == null)
+        return '';
     if (!obj || !fieldName)
         return obj;
     var value = obj[fieldName];
@@ -68,6 +72,8 @@ exports.shallowValueGetter = shallowValueGetter;
  * @param {string} path
  */
 function deepValueGetter(obj, path) {
+    if (obj == null)
+        return '';
     if (!obj || !path)
         return obj;
     // check if path matches a root-level field

@@ -15,15 +15,21 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     selected: any[];
     rowIdentity: any;
     rowDetail: any;
+    groupHeader: any;
     selectCheck: any;
+    displayCheck: any;
     trackByProp: string;
     rowClass: any;
+    groupedRows: any;
+    groupExpansionDefault: boolean;
+    innerWidth: number;
+    groupRowsBy: string;
+    virtualization: boolean;
     pageSize: number;
     rows: any[];
     columns: any[];
     offset: number;
     rowCount: number;
-    innerWidth: number;
     readonly bodyWidth: string;
     bodyHeight: any;
     scroll: EventEmitter<any>;
@@ -45,12 +51,13 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      * based on the row heights cache for virtual scroll. Other scenarios
      * calculate scroll height automatically (as height will be undefined).
      */
-    readonly scrollHeight: number;
+    readonly scrollHeight: number | undefined;
     rowHeightsCache: RowHeightCache;
     temp: any[];
     offsetY: number;
     indexes: any;
     columnGroupWidths: any;
+    columnGroupWidthsWithoutGroup: any;
     rowTrackingFn: any;
     listener: any;
     rowIndexes: any;
@@ -95,6 +102,10 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      */
     getRowHeight(row: any): number;
     /**
+     * @param group the group with all rows
+     */
+    getGroupHeight(group: any): number;
+    /**
      * Calculate row height based on the expanded state of the row.
      */
     getRowAndDetailHeight(row: any): number;
@@ -116,8 +127,13 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      * be able to determine which row is of what height before hand.  In the above
      * case the positionY of the translate3d for row2 would be the sum of all the
      * heights of the rows before it (i.e. row0 and row1).
+     *
+     * @param {*} rows The row that needs to be placed in the 2D space.
+     * @returns {*} Returns the CSS3 style to be applied
+     *
+     * @memberOf DataTableBodyComponent
      */
-    getRowsStyles(row: any): any;
+    getRowsStyles(rows: any): any;
     /**
      * Hides the loading indicator
      */
@@ -151,11 +167,21 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      */
     recalcLayout(): void;
     /**
-     * Returns if the row was expanded
+     * Tracks the column
+     */
+    columnTrackingFn(index: number, column: any): any;
+    /**
+     * Gets the row pinning group styles
+     */
+    stylesByGroup(group: string): {
+        width: string;
+    };
+    /**
+     * Returns if the row was expanded and set default row expansion when row expansion is empty
      */
     getRowExpanded(row: any): boolean;
     /**
-     * Gets the row index of the item
+     * Gets the row index given a row
      */
     getRowIndex(row: any): number;
 }

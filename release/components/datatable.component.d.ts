@@ -1,12 +1,15 @@
 import { ElementRef, EventEmitter, OnInit, QueryList, AfterViewInit, DoCheck, KeyValueDiffers, KeyValueDiffer, ChangeDetectorRef } from '@angular/core';
-import { ScrollbarHelper } from '../services';
+import { ScrollbarHelper, DimensionsHelper } from '../services';
 import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types';
-import { DataTableBodyComponent } from './body';
+import { DataTableBodyComponent, DatatableGroupHeaderDirective } from './body';
 import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
+import { DataTableHeaderComponent } from './header';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export declare class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     private scrollbarHelper;
+    private dimensionsHelper;
     private cd;
     /**
      * Gets the rows.
@@ -15,6 +18,26 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      * Rows that are displayed in the table.
      */
     rows: any;
+    /**
+     * This attribute allows the user to set the name of the column to group the data with
+     */
+    groupRowsBy: string;
+    /**
+     * This attribute allows the user to set a grouped array in the following format:
+     *  [
+     *    {groupid=1} [
+     *      {id=1 name="test1"},
+     *      {id=2 name="test2"},
+     *      {id=3 name="test3"}
+     *    ]},
+     *    {groupid=2>[
+     *      {id=4 name="test4"},
+     *      {id=5 name="test5"},
+     *      {id=6 name="test6"}
+     *    ]}
+     *  ]
+     */
+    groupedRows: any[];
     /**
      * Get the columns.
      */
@@ -67,10 +90,13 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     externalSorting: boolean;
     /**
+     * Gets the limit.
+     */
+    /**
      * The page size to be shown.
      * Default value: `undefined`
      */
-    limit: number;
+    limit: number | undefined;
     /**
      * Gets the count.
      */
@@ -94,7 +120,7 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      *
      *  - `single`
      *  - `multi`
-     *  - `chkbox`
+     *  - `checkbox`
      *  - `multiClick`
      *  - `cell`
      *
@@ -153,10 +179,37 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     selectCheck: any;
     /**
+     * A function you can use to check whether you want
+     * to show the checkbox for a particular row based on a criteria. Example:
+     *
+     *    (row, column, value) => {
+     *      return row.name !== 'Ethel Price';
+     *    }
+     */
+    displayCheck: (row: any, column?: any, value?: any) => boolean;
+    /**
+     * A boolean you can use to set the detault behaviour of rows and groups
+     * whether they will start expanded or not. If ommited the default is NOT expanded.
+     *
+     */
+    groupExpansionDefault: boolean;
+    /**
      * Property to which you can use for custom tracking of rows.
      * Example: 'name'
      */
     trackByProp: string;
+    /**
+     * Property to which you can use for determining select all
+     * rows on current page or not.
+     *
+     * @type {boolean}
+     * @memberOf DatatableComponent
+     */
+    selectAllRowsOnPage: boolean;
+    /**
+     * A flag for row virtualization on / off
+     */
+    virtualization: boolean;
     /**
      * Body was scrolled typically in a `scrollbarV:true` scenario.
      */
@@ -251,6 +304,10 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     rowDetail: DatatableRowDetailDirective;
     /**
+     * Group Header templates gathered from the ContentChild
+     */
+    groupHeader: DatatableGroupHeaderDirective;
+    /**
      * Footer template gathered from the ContentChild
      */
     footer: DatatableFooterDirective;
@@ -260,23 +317,35 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     bodyComponent: DataTableBodyComponent;
     /**
+     * Reference to the header component for manually
+     * invoking functions on the header.
+     *
+     * @private
+     * @type {DataTableHeaderComponent}
+     * @memberOf DatatableComponent
+     */
+    headerComponent: DataTableHeaderComponent;
+    /**
      * Returns if all rows are selected.
      */
     readonly allRowsSelected: boolean;
     element: HTMLElement;
-    innerWidth: number;
+    _innerWidth: number;
     pageSize: number;
     bodyHeight: number;
     rowCount: number;
-    offsetX: number;
     rowDiffer: KeyValueDiffer<{}, {}>;
+    _offsetX: BehaviorSubject<number>;
+    _limit: number | undefined;
     _count: number;
+    _offset: number;
     _rows: any[];
+    _groupRowsBy: string;
     _internalRows: any[];
     _internalColumns: TableColumn[];
     _columns: TableColumn[];
     _columnTemplates: QueryList<DataTableColumnDirective>;
-    constructor(scrollbarHelper: ScrollbarHelper, cd: ChangeDetectorRef, element: ElementRef, differs: KeyValueDiffers);
+    constructor(scrollbarHelper: ScrollbarHelper, dimensionsHelper: DimensionsHelper, cd: ChangeDetectorRef, element: ElementRef, differs: KeyValueDiffers);
     /**
      * Lifecycle hook that is called after data-bound
      * properties of a directive are initialized.
@@ -288,8 +357,24 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     ngAfterViewInit(): void;
     /**
-     * Lifecycle hook that is called when Angular dirty checks a directive.
+     * Lifecycle hook that is called after a component's
+     * content has been fully initialized.
      */
+    ngAfterContentInit(): void;
+    /**
+     * Translates the templates to the column objects
+     */
+    translateColumns(val: any): void;
+    /**
+     * Creates a map with the data grouped by the user choice of grouping index
+     *
+     * @param originalArray the original array passed via parameter
+     * @param groupByIndex  the index of the column to group the data by
+     */
+    groupArrayBy(originalArray: any, groupBy: any): {
+        key: any;
+        value: any;
+    }[];
     ngDoCheck(): void;
     /**
      * Recalc's the sizes of the grid.
@@ -311,7 +396,7 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      * Recalulcates the column widths based on column width
      * distribution mode and scrollbar offsets.
      */
-    recalculateColumns(columns?: any[], forceIdx?: number, allowBleed?: boolean): any[];
+    recalculateColumns(columns?: any[], forceIdx?: number, allowBleed?: boolean): any[] | undefined;
     /**
      * Recalculates the dimensions of the table size.
      * Internally calls the page size and row count calcs too.

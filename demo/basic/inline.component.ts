@@ -31,7 +31,7 @@ import { Component } from '@angular/core';
             </span>
             <input
               autofocus
-              (blur)="updateValue($event, 'name', value, row)"
+              (blur)="updateValue($event, 'name', rowIndex)"
               *ngIf="editing[rowIndex+ '-name']"
               type="text"
               [value]="value"
@@ -48,6 +48,7 @@ import { Component } from '@angular/core';
             </span>
             <select
               *ngIf="editing[rowIndex + '-gender']"
+              (blur)="editing[rowIndex + '-gender'] = false"
               (change)="updateValue($event, 'gender', rowIndex)"
               [value]="value">
               <option value="male">Male</option>
@@ -87,6 +88,7 @@ export class InlineEditComponent {
   }
 
   updateValue(event, cell, rowIndex) {
+    console.log('inline editing rowIndex', rowIndex)
     this.editing[rowIndex + '-' + cell] = false;
     this.rows[rowIndex][cell] = event.target.value;
     this.rows = [...this.rows];

@@ -7,14 +7,14 @@ import { Component } from '@angular/core';
       <h3>
         Custom Checkbox Selection
         <small>
-          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/selection/selection-chkbox.component.ts" target="_blank">
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/selection/selection-chkbox-template.component.ts" target="_blank">
             Source
           </a>
         </small>
         <small>
-          <a href="#" (click)="add()">Add</a> |
-          <a href="#" (click)="update()">Update</a> |
-          <a href="#" (click)="remove()">Remove</a> 
+          <a href="javascript:void(0)" (click)="add()">Add</a> |
+          <a href="javascript:void(0)" (click)="update()">Update</a> |
+          <a href="javascript:void(0)" (click)="remove()">Remove</a> 
         </small>
       </h3>
       <div style='float:left;width:75%'>

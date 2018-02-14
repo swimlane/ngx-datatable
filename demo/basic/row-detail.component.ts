@@ -12,8 +12,8 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
           </a>
         </small>
         <small>
-          <a href="#" (click)="table.rowDetail.expandAllRows()">Expand All</a> | 
-          <a href="#" (click)="table.rowDetail.collapseAllRows()">Collapse All</a>
+          <a href="javascript:void(0)" (click)="table.rowDetail.expandAllRows()">Expand All</a> | 
+          <a href="javascript:void(0)" (click)="table.rowDetail.collapseAllRows()">Collapse All</a>
         </small>
       </h3>
       <ngx-datatable
@@ -23,7 +23,7 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="50"
-        [scrollbarV]="50"
+        [scrollbarV]="true"
         [rows]='rows'
         (page)="onPage($event)">
         <!-- Row Detail Template -->
@@ -45,7 +45,7 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
           [canAutoResize]="false">
           <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
             <a
-              href="#"
+              href="javascript:void(0)"
               [class.datatable-icon-right]="!expanded"
               [class.datatable-icon-down]="expanded"
               title="Expand/Collapse Row"

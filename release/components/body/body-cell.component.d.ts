@@ -3,6 +3,8 @@ import { SortDirection } from '../../types';
 import { TableColumn } from '../../types/table-column.type';
 export declare class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     private cd;
+    displayCheck: any;
+    group: any;
     rowHeight: number;
     isSelected: boolean;
     expanded: boolean;
@@ -26,6 +28,8 @@ export declare class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     private _sorts;
     private _column;
     private _row;
+    private _group;
+    private _rowHeight;
     private _rowIndex;
     private _expanded;
     private _element;
