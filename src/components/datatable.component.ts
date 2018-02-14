@@ -662,6 +662,9 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * properties of a directive are initialized.
    */
   ngOnInit(): void {
+    // cache body element
+    this.bodyEl = this.element.querySelector('.datatable-body')
+
     // need to call this immediatly to size
     // if the table is hidden the visibility
     // listener will invoke this itself upon show
@@ -676,9 +679,6 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     if (!this.externalSorting) {
       this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
     }
-
-    // cache body element
-    this.bodyEl = this.element.querySelector('.datatable-body')
 
     // this has to be done to prevent the change detection
     // tree from freaking out because we are readjusting
