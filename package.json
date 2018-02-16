@@ -113,6 +113,7 @@
     "postcss": "^5.2.11",
     "postcss-loader": "^1.2.2",
     "protractor": "^5.2.0",
+    "puppeteer": "^1.0.0",
     "replace": "^0.3.0",
     "rimraf": "^2.6.2",
     "rxjs": "^5.5.2",

@@ -1,4 +1,5 @@
 const testWebpackConfig = require('./webpack.test');
+process.env.CHROME_BIN = require('puppeteer').executablePath()
 
 module.exports =  function(config) {
   var configuration = {
@@ -23,6 +24,10 @@ module.exports =  function(config) {
     customLaunchers: {
       ChromeTravisCi: {
         base: 'Chrome',
+        flags: ['--no-sandbox']
+      },
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
         flags: ['--no-sandbox']
       }
     },
