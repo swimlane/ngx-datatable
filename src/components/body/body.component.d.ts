@@ -8,7 +8,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     scrollbarH: boolean;
     loadingIndicator: boolean;
     externalPaging: boolean;
-    rowHeight: number;
+    rowHeight: number | ((row: any) => number);
     offsetX: number;
     emptyMessage: string;
     selectionType: SelectionType;
@@ -24,6 +24,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     groupExpansionDefault: boolean;
     innerWidth: number;
     groupRowsBy: string;
+    virtualization: boolean;
     pageSize: number;
     rows: any[];
     columns: any[];

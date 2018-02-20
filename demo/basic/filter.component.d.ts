@@ -4,8 +4,10 @@ export declare class FilterBarComponent {
     temp: any[];
     columns: ({
         prop: string;
+        name?: undefined;
     } | {
         name: string;
+        prop?: undefined;
     })[];
     table: DatatableComponent;
     constructor();

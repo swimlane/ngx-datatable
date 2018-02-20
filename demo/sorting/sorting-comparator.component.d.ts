@@ -3,9 +3,11 @@ export declare class SortingComparatorComponent {
     columns: ({
         name: string;
         comparator: any;
+        sortable?: undefined;
     } | {
         name: string;
         sortable: boolean;
+        comparator?: undefined;
     })[];
     constructor();
     fetch(cb: any): void;

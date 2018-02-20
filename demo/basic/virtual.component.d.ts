@@ -1,5 +1,5 @@
 export declare class VirtualScrollComponent {
-    rows: any[];
+    rows: any;
     expanded: {};
     timeout: any;
     constructor();
