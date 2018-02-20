@@ -172,7 +172,7 @@ var DataTableBodyRowComponent = /** @class */ (function () {
         if (val === void 0) { val = this.columns; }
         this._columns = val;
         var colsByPin = utils_1.columnsByPin(this._columns);
-        this._columnsByPin = utils_1.allColumnsByPinArr(this._columns);
+        this._columnsByPin = utils_1.columnsByPinArr(this._columns);
         this._columnGroupWidths = utils_1.columnGroupWidths(colsByPin, this._columns);
     };
     __decorate([
