@@ -121,7 +121,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     
     // auto sort on new updates
     if (!this.externalSorting) {
-      this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
+      this.sortInternalRows();
     }
 
     // recalculate sizes/etc
@@ -673,7 +673,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    */
   ngAfterViewInit(): void {
     if (!this.externalSorting) {
-      this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
+      this.sortInternalRows();
     }
 
     // this has to be done to prevent the change detection
@@ -716,6 +716,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
         this._internalColumns = translateTemplates(arr);
         setColumnDefaults(this._internalColumns);
         this.recalculateColumns();
+        this.sortInternalRows();
         this.cd.markForCheck();
       }
     }
@@ -756,7 +757,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   ngDoCheck(): void {
     if (this.rowDiffer.diff(this.rows)) {
       if (!this.externalSorting) {
-        this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
+        this.sortInternalRows();
       } else {
         this._internalRows = [...this.rows];
       }
@@ -1012,16 +1013,15 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       });
     }
 
-    const { sorts } = event;
+    this.sorts = event.sorts;
 
     // this could be optimized better since it will resort
     // the rows again on the 'push' detection...
     if (this.externalSorting === false) {
       // don't use normal setter so we don't resort
-      this._internalRows = sortRows(this._internalRows, this._internalColumns, sorts);
+      this.sortInternalRows();
     }
 
-    this.sorts = sorts;
     // Always go to first page when sorting to see the newly sorted data
     this.offset = 0;
     this.bodyComponent.updateOffsetY(this.offset);
@@ -1067,5 +1067,9 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    */
   onBodySelect(event: any): void {
     this.select.emit(event);
+  }
+  
+  private sortInternalRows(): void {
+    this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
   }
 }
