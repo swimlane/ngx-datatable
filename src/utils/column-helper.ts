@@ -86,6 +86,10 @@ export function translateTemplates(templates: DataTableColumnDirective[]): any[]
       col.summaryFunc = temp.summaryFunc;
     }
 
+    if(temp.summaryTemplate) {
+      col.summaryTemplate = temp.summaryTemplate;
+    }
+
     result.push(col);
   }
 

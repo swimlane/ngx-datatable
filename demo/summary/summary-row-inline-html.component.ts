@@ -19,10 +19,17 @@ import { Component } from '@angular/core';
         [headerHeight]="50"
         [rowHeight]="'auto'"
         [rows]="rows">
-        <ngx-datatable-column prop="name" [summaryFunc]="summaryForName"></ngx-datatable-column>
+        <ngx-datatable-column prop="name" [summaryTemplate]="nameSummaryCell"></ngx-datatable-column>
         <ngx-datatable-column name="Gender" [summaryFunc]="summaryForGender"></ngx-datatable-column>
         <ngx-datatable-column prop="age" [summaryFunc]="avgAge"></ngx-datatable-column>
       </ngx-datatable>
+      <ng-template #nameSummaryCell>
+        <div class="name-container">
+          <div class="chip" *ngFor="let name of getNames()">
+            <span class="chip-content">{{ name }}</span>
+          </div>
+        </div>
+      </ng-template>
     </div>
   `,
 })
@@ -50,7 +57,11 @@ export class SummaryRowInlineHtmlComponent {
     req.send();
   }
 
-  summaryForName() { return null; }
+  getNames(): string[] {
+    return this.rows
+      .map(row => row['name'])
+      .map(fullName => fullName.split(' ')[1]);
+  }
 
   private summaryForGender(cells: string[]) {
     const males = cells.filter(cell => cell === 'male').length;

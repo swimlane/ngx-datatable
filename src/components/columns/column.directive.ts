@@ -25,6 +25,7 @@ export class DataTableColumnDirective {
   @Input() headerClass: string | ((data: any) => string|any);
   @Input() cellClass: string | ((data: any) => string|any);
   @Input() summaryFunc: (cells: any[]) => any;
+  @Input() summaryTemplate: TemplateRef<any>;
 
   @Input()
   @ContentChild(DataTableColumnCellDirective, { read: TemplateRef })
