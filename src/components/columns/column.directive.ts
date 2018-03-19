@@ -30,8 +30,6 @@ export class DataTableColumnDirective {
   @Input() isTreeColumn: boolean;
   @Input() treeLevelIndent: number;
 
-
-
   @Input()
   @ContentChild(DataTableColumnCellDirective, { read: TemplateRef })
   cellTemplate: TemplateRef<any>;

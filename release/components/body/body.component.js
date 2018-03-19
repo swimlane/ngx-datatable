@@ -306,12 +306,15 @@ var DataTableBodyComponent = /** @class */ (function () {
      * Get the row height
      */
     DataTableBodyComponent.prototype.getRowHeight = function (row) {
-        var rowHeight = this.rowHeight;
+        var height;
         // if its a function return it
         if (typeof this.rowHeight === 'function') {
-            rowHeight = this.rowHeight(row);
+            height = this.rowHeight(row);
         }
-        return rowHeight;
+        else {
+            height = this.rowHeight;
+        }
+        return height;
     };
     /**
      * @param group the group with all rows
@@ -581,7 +584,7 @@ var DataTableBodyComponent = /** @class */ (function () {
     ], DataTableBodyComponent.prototype, "externalPaging", void 0);
     __decorate([
         core_1.Input(),
-        __metadata("design:type", Number)
+        __metadata("design:type", Object)
     ], DataTableBodyComponent.prototype, "rowHeight", void 0);
     __decorate([
         core_1.Input(),

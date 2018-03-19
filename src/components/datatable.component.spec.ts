@@ -10,11 +10,11 @@ import {
 } from '.';
 import { NgxDatatableModule } from '../datatable.module';
 
-let fixture: ComponentFixture<TestFixtureComponent>;
-let component: TestFixtureComponent;
+let fixture: ComponentFixture<any>;
+let component: any;
 
 describe('DatatableComponent', () => {
-  beforeEach(async(setupTest));
+  beforeEach(async(() => setupTest(TestFixtureComponent)));
 
   it('should sort date values', () => {
     const initialRows = [
@@ -365,27 +365,75 @@ describe('DatatableComponent', () => {
   });
 });
 
+describe('DatatableComponent With Custom Templates', () => {
+  beforeEach(async(() => setupTest(TestFixtureComponentWithCustomTemplates)));
+  
+  it('should sort when the table is initially rendered if `sorts` are provided', () => {
+    const initialRows = [
+      { id: 5  },
+      { id: 20 },
+      { id: 12 }
+    ];
+    
+    const sorts = [
+      {
+        prop: 'id',
+        dir: 'asc'
+      }
+    ];
+
+    component.rows = initialRows;
+    component.sorts = sorts;
+    fixture.detectChanges();
+
+    expect(textContent({ row: 1, column: 1 })).toContain('5', 'Ascending');
+    expect(textContent({ row: 2, column: 1 })).toContain('12', 'Ascending');
+    expect(textContent({ row: 3, column: 1 })).toContain('20', 'Ascending');
+  });
+});
+
 @Component({
   template: `
     <ngx-datatable
       [columns]="columns"
-      [rows]="rows">
+      [rows]="rows"
+      [sorts]="sorts">
     </ngx-datatable>
   `
 })
 class TestFixtureComponent {
   columns: any[] = [];
   rows: any[] = [];
+  sorts: any[] = [];
 }
 
-function setupTest() {
+@Component({
+  template: `
+    <ngx-datatable [rows]="rows" [sorts]="sorts">
+      <ngx-datatable-column name="Id" prop="id">
+        <ng-template let-column="column" ngx-datatable-header-template>
+          {{ column.name }}
+        </ng-template>
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.id }}
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  `
+})
+class TestFixtureComponentWithCustomTemplates {
+  rows: any[] = [];
+  sorts: any[] = [];
+}
+
+function setupTest(componentClass) {
   return TestBed.configureTestingModule({
-    declarations: [ TestFixtureComponent ],
+    declarations: [ componentClass ],
     imports: [ NgxDatatableModule ]
   })
   .compileComponents()
   .then(() => {
-    fixture = TestBed.createComponent(TestFixtureComponent);
+    fixture = TestBed.createComponent(componentClass);
     component = fixture.componentInstance;
   });
 }
