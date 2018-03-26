@@ -60,7 +60,9 @@ export class DataTableSummaryRowComponent implements OnChanges {
   private updateValues() {
     this.summaryRow = {};
 
-    this.columns.forEach(col => {
+    this.columns
+      .filter(col => !col.summaryTemplate)
+      .forEach(col => {
       const cellsFromSingleColumn = this.rows.map(row => row[col.prop]);
       const sumFunc = col.summaryFunc || defaultSumFunc;
 
