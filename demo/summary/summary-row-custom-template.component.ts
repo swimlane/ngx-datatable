@@ -14,6 +14,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
      <ngx-datatable
         class="material"
         [summaryRow]="true"
+        [summaryHeight]="100"
         [columns]="columns"
         [columnMode]="'force'"
         [headerHeight]="50"

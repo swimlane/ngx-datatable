@@ -32,7 +32,7 @@ import { MouseEvent } from '../../events';
         (scroll)="onBodyScroll($event)">
         <datatable-summary-row
           *ngIf="summaryRow && summaryPosition === 'top'"
-          [rowHeight]="rowHeight"
+          [rowHeight]="summaryHeight"
           [offsetX]="offsetX"
           [innerWidth]="innerWidth"
           [rows]="rows"
@@ -86,7 +86,7 @@ import { MouseEvent } from '../../events';
         </datatable-row-wrapper>
         <datatable-summary-row
           *ngIf="summaryRow && summaryPosition === 'bottom'"
-          [rowHeight]="rowHeight"
+          [rowHeight]="summaryHeight"
           [offsetX]="offsetX"
           [innerWidth]="innerWidth"
           [rows]="rows"
@@ -130,6 +130,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() virtualization: boolean;
   @Input() summaryRow: boolean;
   @Input() summaryPosition: string;
+  @Input() summaryHeight: number;
 
   @Input() set pageSize(val: number) {
     this._pageSize = val;
