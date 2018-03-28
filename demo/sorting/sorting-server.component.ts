@@ -34,8 +34,6 @@ export class ServerSortingComponent {
   rows = [];
 
   columns = [
-    // we pass false to bypass the default
-    // comparator function and use the event to sort
     { name: 'Company', sortable: true },
     { name: 'Name', sortable: true },
     { name: 'Gender', sortable: true }
