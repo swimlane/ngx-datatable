@@ -1,6 +1,6 @@
 import {
   Component, Input, ElementRef, Output, EventEmitter, Renderer2, NgZone,
-  OnInit, OnDestroy, HostBinding, ChangeDetectionStrategy
+  OnInit, OnDestroy, HostBinding, ChangeDetectionStrategy, Inject
 } from '@angular/core';
 
 import { MouseEvent } from '../../events';
@@ -36,7 +36,11 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   parentElement: any;
   onScrollListener: any;
 
-  constructor(private ngZone: NgZone, element: ElementRef, private renderer: Renderer2) {
+  constructor(
+    @Inject(NgZone) private ngZone: NgZone,
+    @Inject(ElementRef) element: ElementRef,
+    @Inject(Renderer2) private renderer: Renderer2
+  ) {
 
     this.element = element.nativeElement;
   }

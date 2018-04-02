@@ -1,7 +1,7 @@
 import {
   Component, Input, PipeTransform, HostBinding, ViewChild, ChangeDetectorRef,
   Output, EventEmitter, HostListener, ElementRef, ViewContainerRef, OnDestroy, DoCheck,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy, Inject
 } from '@angular/core';
 
 import { Keys } from '../../utils';
@@ -201,7 +201,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   private _expanded: boolean;
   private _element: any;
 
-  constructor(element: ElementRef, private cd: ChangeDetectorRef) {
+  constructor(@Inject(ElementRef) element: ElementRef, @Inject(ChangeDetectorRef) private cd: ChangeDetectorRef) {
     this._element = element.nativeElement;
   }
   

@@ -1,6 +1,6 @@
 import {
   Component, Input, EventEmitter, Output, HostBinding, 
-  HostListener, ChangeDetectionStrategy, ChangeDetectorRef
+  HostListener, ChangeDetectionStrategy, ChangeDetectorRef, Inject
 } from '@angular/core';
 import { SortDirection, SortType, SelectionType, TableColumn } from '../../types';
 import { nextSortDir } from '../../utils';
@@ -168,7 +168,7 @@ export class DataTableHeaderCellComponent {
   private _column: TableColumn;
   private _sorts: any[];
 
-  constructor(private cd: ChangeDetectorRef) { }
+  constructor(@Inject(ChangeDetectorRef) private cd: ChangeDetectorRef) { }
 
   @HostListener('contextmenu', ['$event'])
   onContextmenu($event: MouseEvent): void {

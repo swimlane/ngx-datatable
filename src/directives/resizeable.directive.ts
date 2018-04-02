@@ -1,5 +1,5 @@
 import {
-  Directive, ElementRef, HostListener, Input, Output, EventEmitter, OnDestroy, AfterViewInit, Renderer2
+  Directive, ElementRef, HostListener, Input, Output, EventEmitter, OnDestroy, AfterViewInit, Renderer2, Inject
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -25,7 +25,7 @@ export class ResizeableDirective implements OnDestroy, AfterViewInit {
   subscription: Subscription;
   resizing: boolean = false;
 
-  constructor(element: ElementRef, private renderer: Renderer2) {
+  constructor(@Inject(ElementRef) element: ElementRef, @Inject(Renderer2) private renderer: Renderer2) {
     this.element = element.nativeElement;
   }
 

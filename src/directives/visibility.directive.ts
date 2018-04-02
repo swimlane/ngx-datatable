@@ -1,5 +1,5 @@
 import {
-  Directive, Output, EventEmitter, ElementRef, HostBinding, NgZone, OnInit, OnDestroy
+  Directive, Output, EventEmitter, ElementRef, HostBinding, NgZone, OnInit, OnDestroy, Inject
 } from '@angular/core';
 
 /**
@@ -23,7 +23,7 @@ export class VisibilityDirective implements OnInit, OnDestroy {
 
   timeout: any;
 
-  constructor(private element: ElementRef, private zone: NgZone) { }
+  constructor(@Inject(ElementRef) private element: ElementRef, @Inject(NgZone) private zone: NgZone) { }
 
   ngOnInit(): void {
     this.runCheck();

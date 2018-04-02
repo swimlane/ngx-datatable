@@ -1,6 +1,6 @@
 import {
   Component, Input, Output, EventEmitter, HostListener, DoCheck,
-  ChangeDetectionStrategy, KeyValueDiffer, ChangeDetectorRef, KeyValueDiffers
+  ChangeDetectionStrategy, KeyValueDiffer, ChangeDetectorRef, KeyValueDiffers, Inject
 } from '@angular/core';
 import { MouseEvent } from '../../events';
 
@@ -86,7 +86,7 @@ export class DataTableRowWrapperComponent implements DoCheck {
   private _expanded: boolean = false;
   private _rowIndex: number;
   
-  constructor(private cd: ChangeDetectorRef, private differs: KeyValueDiffers) {
+  constructor(@Inject(ChangeDetectorRef) private cd: ChangeDetectorRef, @Inject(KeyValueDiffers) private differs: KeyValueDiffers) {
     this.rowDiffer = differs.find({}).create();
   }
 
