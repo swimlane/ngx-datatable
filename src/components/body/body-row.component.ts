@@ -128,6 +128,12 @@ export class DataTableBodyRowComponent implements DoCheck {
       element: ElementRef) {
     this._element = element.nativeElement;
     this._rowDiffer = differs.find({}).create();
+       this.activate.emit({
+        type: 'keydown',
+        event: KeyboardEvent,
+        row: this.row[0],
+        rowElement: this._element
+      });
   }
 
   ngDoCheck(): void {
