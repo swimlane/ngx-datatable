@@ -1,5 +1,15 @@
 # Changelog
 
+## 11.2.0
+- Feat: Add resize handler for non-resizable columns #1225
+- Fix: Pager Component Accessibility #1259
+- Fix: Fix missing row with virtualization and scrollbarV #1235
+- Fix: Fall back to view mode when select field value doesn't change #1241
+- Fix: Fix virtual-paging #1229
+- Fix: Fix column scaling on resize #1236
+- Fix: Propagate sortDir changes to template #1243
+- Fix: Add setStylesByGroup() in set column prop #1244
+
 ## 11.1.7
 - Fix: Fix error w/ rows undefined on init
 

@@ -95,7 +95,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() scrollbarH: boolean;
   @Input() loadingIndicator: boolean;
   @Input() externalPaging: boolean;
-  @Input() rowHeight: number;
+  @Input() rowHeight: number | ((row: any) => number);
   @Input() offsetX: number;
   @Input() emptyMessage: string;
   @Input() selectionType: SelectionType;
@@ -207,7 +207,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * calculate scroll height automatically (as height will be undefined).
    */
   get scrollHeight(): number | undefined {
-    if (this.scrollbarV) {
+    if (this.scrollbarV && this.rowCount) {
       return this.rowHeightsCache.query(this.rowCount - 1);
     }
     // avoid TS7030: Not all code paths return a value.
@@ -400,14 +400,16 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * Get the row height
    */
   getRowHeight(row: any): number {
-    let rowHeight = this.rowHeight;
+    let height;
 
     // if its a function return it
     if (typeof this.rowHeight === 'function') {
-      rowHeight = this.rowHeight(row);
+      height = this.rowHeight(row);
+    } else {
+      height = this.rowHeight;
     }
 
-    return rowHeight;
+    return height;
   }
 
   /**
@@ -525,7 +527,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         // If virtual rows are not needed
         // We render all in one go
         first = 0;
-        last = this.rowCount - 1;
+        last = this.rowCount;
       }
     } else {
       // The server is handling paging and will pass an array that begins with the

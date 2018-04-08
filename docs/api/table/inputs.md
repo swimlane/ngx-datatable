@@ -1,13 +1,21 @@
 # Table Inputs
 
 ## `columnMode`
-The mode which the columns are distributed across the table. For example: `flex` will use flex-grow api, `force` will distribute proportionally and `standard` will just distrbute based on widths. Default value: `standard`
+Method used for setting column widths
+
+| Value         | Description                 | Default |
+| ------------- | --------------------------  | ------- |
+| `standard`    | Distributes based on widths | x       |
+| `flex`        | Uses flex-grow API          |         |
+| `force`       | Distributes proportionally  |         |
+
+
 
 ## `columns`
-Array of columns to display.
+Array of columns to display
 
 ## `count`
-The total count of all rows. Default value: `0`
+Total count of all rows. Default value: `0`
 
 ## `cssClasses`
 Custom CSS classes that can be defined to override the icons classes for up/down in sorts and
@@ -23,16 +31,16 @@ pagerNext: 'datatable-icon-skip'
 ```
 
 ## `externalPaging`
-Should the table use external paging vs client-side. Default value: `false`
+Use external paging instead of client-side paging. Default value: `false`
 
 ## `externalSorting`
-Should the table use external sorting vs client-side. Default value: `false`
+Use external sorting instead of client-side sorting. Default value: `false`
 
 ## `footerHeight`
 The height of the footer in pixels. Pass a `falsey` for no footer. Default value: `0`
 
 ## `headerHeight`
-The height of the header in pixels. Pass a `falsey` for no header. Default value: `30`
+The height of the header in pixels. Pass a falsy value for no header. Default value: `30`
 
 ## `messages`
 Static messages in the table you can override for localization.
@@ -49,79 +57,94 @@ Static messages in the table you can override for localization.
 ```
 
 ## `limit`
-The page size to be shown. Default value: `undefined`.
+Page size to show. Default value: `undefined`
 
 ## `loadingIndicator`
 Show the linear loading bar. Default value: `false`
 
 ## `offset`
-The current offset ( page - 1 ) shown. Default value: `0`
+Current offset ( page - 1 ) shown. Default value: `0`
 
 ## `reorderable`
 Column re-ordering enabled/disabled. Default value: `true`
 
 ## `rowHeight`: `Function|number|undefined`
-The height of the row. 
+The height of the row.
 
-Pass undefined for fluid heights, this is not possible in virtual scrolling.
+When virtual scrolling is not in use, you can pass `undefined` for fluid heights.
 
-If using virtual scrolling, you must pass a function or a number to caculate
+If using virtual scrolling, you must pass a function or a number to calculate
 the heights.
 
-Using a function, you can bind individual row heights such as:
+Using a function, you can set the height of individual rows:
 
-```javascript
-getRowHeight(row) {
+```
+(row) => {
   // set default
-  if(!row) return 50;
+  if (!row) return 50;
 
   // return my height
-  return row.height; 
+  return row.height;
 }
 ```
 
 ## `rowIdentity`
-This will be used when displaying or selecting rows.
-When tracking/comparing them, we'll use the value of this fn 
-`(fn(x) === fn(y)` instead of `(x === y)`.
+Function for uniquely identifying a row, used to track and compare when displaying and selecting rows. Example:
+```
+(row) => {
+  return row.guid;
+}
+```
 
 ## `rows`
 Array of rows to display.
 
 ## `scrollbarH`
-Enabled horizontal scrollbars. Default value: `false`
+Use horizontal scrollbar. Default value: `false`
 
 ## `scrollbarV`
-Enable vertical scrollbar for fixed height vs fluid. This is necessary for virtual scrolling. Default value: `false`
+Use vertical scrollbar for fixed height vs fluid. This is necessary for virtual scrolling. Default value: `false`
 
 ## `selectCheck`
-A boolean/function you can use to check whether you want
+A boolean or function you can use to check whether you want
 to select a particular row based on a criteria. Example:
 
 ```
-(row, column, value) => { return value !== 'Ethel Price'; }
+(row, column, value) => {
+  return value !== 'Ethel Price';
+}
 ```
 
 ## `displayCheck`
-A function you can use to check whether you want
-to show the checkbox for a particular row based on a criteria. Example:
+Function to determine whether to show a checkbox for a row. Example:
 
 ```
-(row, column, value) => { return row.name !== 'Ethel Price'; }
+(row, column, value) => {
+  return row.name !== 'Ethel Price';
+}
 ```
 
 ## `selected`
-List of row objects that should be represented as selected in the grid. It does object
-equality, for prop checking use the `selectCheck` function.
+List of row objects that should be represented as selected in the grid. Rows are compared using
+object equality. For custom comparisons, use the `selectCheck` function.
 
 Default value: `[]`
 
 ## `selectionType`
-Type of row selection. Options are `single`, `multi`, `multiClick` and `chkbox`. 
-For no selection pass a `falsey`. Default value: `undefined`
+Row selection mode
+
+| Value                  | Description                                            | Default |
+| :--------------------- | :----------------------------------------------------- | ------- |
+| `undefined|false|null` | Rows cannot be selected                                | x       |
+| `"single"`             | One row can be selected at a time                      |         |
+| `"cell"`               | One cell can be selected at a time                     |         |
+| `"multi"`              | Multiple rows can be selected using Ctrl or Shift key  |         |
+| `"multiClick"`         | Multiple rows can be selected by clicking              |         |
+| `"checkbox"`           | Multiple rows can be selected using checkboxes         |         |
+
 
 ## `sorts`
-Array of sorted columns by property and type. Default value: `[]`. Example:
+Ordered array of objects used to determine sorting by column. Objects contain the column name, `prop`, and sorting direction, `dir`. Default value: `[]`. Example:
 
 ```javascript
 [
@@ -137,23 +160,30 @@ Array of sorted columns by property and type. Default value: `[]`. Example:
 ```
 
 ## `sortType`
-Single vs Multi sorting. When in single mode, any click after the initial click
-will replace the current selection with the next selection. In multi selection mode,
-any incremental click will add to the current selection array.
+Sorting mode, whether `"single"` or `"multi"`. In `"single"` mode, clicking on a column name
+will reset the existing sorting before sorting by the new selection. In multi selection mode,
+additional clicks on column names will add sorting using multiple columns.
 
-Default value: `single`
+Default value: `"single"`
 
 ## `trackByProp`
-A property on the row object that uniquely identifies the row. Example: `name`
+A property on the row object that uniquely identifies the row. Example: `"name"`
 
 ## `rowClass`
-A function that will invoked with each row's properties. The result of the function
-can be a string or object with key/boolean like:
+Function used to populate a row's CSS classes. The function will take a row and
+return a string or object, as shown below:
 
-```javascript
-getRowClass(row) {
+```
+(row) => {
   return {
-    'is-age-10': row.age === 10
+    'old': row.age > 50,
+    'young': row.age <= 50,
+    'woman': row.gender === 'female',
+    'man': row.gender === 'male'
   }
 }
 ```
+
+## `virtualization`
+
+Use virtual scrolling. Default: `true`

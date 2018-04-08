@@ -76,14 +76,4 @@ function columnsByPinArr(val) {
     return colsByPinArr;
 }
 exports.columnsByPinArr = columnsByPinArr;
-function allColumnsByPinArr(val) {
-    var colsByPinArr = [];
-    var colsByPin = columnsByPin(val);
-    var colsTest = [];
-    colsByPinArr.push({ type: 'left', columns: colsByPin['left'] });
-    colsByPinArr.push({ type: 'center', columns: colsByPin['center'] });
-    colsByPinArr.push({ type: 'right', columns: colsByPin['right'] });
-    return colsByPinArr;
-}
-exports.allColumnsByPinArr = allColumnsByPinArr;
 //# sourceMappingURL=column.js.map

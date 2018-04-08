@@ -9,7 +9,7 @@ import { MouseEvent } from '../../events';
 @Component({
   selector: 'datatable-header-cell',
   template: `
-    <div>
+    <div class="datatable-header-cell-template-wrap">
       <label
         *ngIf="isCheckboxable"
         class="datatable-checkbox">
@@ -79,6 +79,7 @@ export class DataTableHeaderCellComponent {
   @Input() set sorts(val: any[]) {
     this._sorts = val;
     this.sortDir = this.calcSortDir(val);
+    this.cellContext.sortDir = this.sortDir;
     this.sortClass = this.calcSortClass(this.sortDir);
     this.cd.markForCheck();
   }

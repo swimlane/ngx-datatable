@@ -48,6 +48,7 @@ import { Component } from '@angular/core';
             </span>
             <select
               *ngIf="editing[rowIndex + '-gender']"
+              (blur)="editing[rowIndex + '-gender'] = false"
               (change)="updateValue($event, 'gender', rowIndex)"
               [value]="value">
               <option value="male">Male</option>

@@ -1,6 +1,6 @@
 {
   "name": "@swimlane/ngx-datatable",
-  "version": "11.1.7",
+  "version": "11.2.0",
   "description": "ngx-datatable is a Angular2+ table grid component for presenting large and complex data.",
   "main": "release/index.js",
   "typings": "release/index.d.ts",
@@ -113,6 +113,7 @@
     "postcss": "^5.2.11",
     "postcss-loader": "^1.2.2",
     "protractor": "^5.2.0",
+    "puppeteer": "^1.0.0",
     "replace": "^0.3.0",
     "rimraf": "^2.6.2",
     "rxjs": "^5.5.2",
