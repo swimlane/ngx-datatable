@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * https://github.com/mikolalysenko/fenwick-tree
  *
  */
-var RowHeightCache = (function () {
+var RowHeightCache = /** @class */ (function () {
     function RowHeightCache() {
         /**
          * Tree Array stores the cumulative information of the row heights to perform efficient

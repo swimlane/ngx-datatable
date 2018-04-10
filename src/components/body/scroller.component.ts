@@ -1,9 +1,9 @@
 import {
-  Component, Input, ElementRef, Output, EventEmitter, Renderer,
+  Component, Input, ElementRef, Output, EventEmitter, Renderer2, NgZone,
   OnInit, OnDestroy, HostBinding, ChangeDetectionStrategy
 } from '@angular/core';
 
-import { mouseEvent } from '../../events';
+import { MouseEvent } from '../../events';
 
 @Component({
   selector: 'datatable-scroller',
@@ -36,22 +36,25 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   parentElement: any;
   onScrollListener: any;
 
-  constructor(element: ElementRef, private renderer: Renderer) {
+  constructor(private ngZone: NgZone, element: ElementRef, private renderer: Renderer2) {
+
     this.element = element.nativeElement;
   }
 
   ngOnInit(): void {
     // manual bind so we don't always listen
     if (this.scrollbarV || this.scrollbarH) {
-      this.parentElement = this.element.parentElement.parentElement;
-      this.onScrollListener = this.renderer.listen(
-        this.parentElement, 'scroll', this.onScrolled.bind(this));
+      const renderer = this.renderer;
+      this.parentElement = renderer.parentNode(renderer.parentNode(this.element));
+      this.ngZone.runOutsideAngular(() => {
+          this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
+        });
     }
   }
 
   ngOnDestroy(): void {
     if (this.scrollbarV || this.scrollbarH) {
-      this.onScrollListener();
+      this.parentElement.removeEventListener('scroll', this.onScrolled.bind(this));
     }
   }
 
@@ -63,10 +66,11 @@ export class ScrollerComponent implements OnInit, OnDestroy {
 
   onScrolled(event: MouseEvent): void {
     const dom: Element = <Element>event.currentTarget;
-    this.scrollYPos = dom.scrollTop;
-    this.scrollXPos = dom.scrollLeft;
-
-    requestAnimationFrame(this.updateOffset.bind(this));
+    requestAnimationFrame(() => {
+      this.scrollYPos = dom.scrollTop;
+      this.scrollXPos = dom.scrollLeft;
+      this.updateOffset();
+    });
   }
 
   updateOffset(): void {

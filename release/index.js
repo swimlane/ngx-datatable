@@ -1,18 +1,18 @@
 /**
- * angular2-data-table v"10.3.0" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"11.2.0" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("@angular/common"), require("@angular/core"), require("@angular/platform-browser"));
+		module.exports = factory(require("@angular/common"), require("@angular/core"), require("@angular/platform-browser"), require("rxjs/BehaviorSubject"), require("rxjs/observable/fromEvent"), require("rxjs/operators"));
 	else if(typeof define === 'function' && define.amd)
-		define("ngxDatatable", ["@angular/common", "@angular/core", "@angular/platform-browser"], factory);
+		define("ngxDatatable", ["@angular/common", "@angular/core", "@angular/platform-browser", "rxjs/BehaviorSubject", "rxjs/observable/fromEvent", "rxjs/operators"], factory);
 	else if(typeof exports === 'object')
-		exports["ngxDatatable"] = factory(require("@angular/common"), require("@angular/core"), require("@angular/platform-browser"));
+		exports["ngxDatatable"] = factory(require("@angular/common"), require("@angular/core"), require("@angular/platform-browser"), require("rxjs/BehaviorSubject"), require("rxjs/observable/fromEvent"), require("rxjs/operators"));
 	else
-		root["ngxDatatable"] = factory(root["@angular/common"], root["@angular/core"], root["@angular/platform-browser"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE__angular_common__, __WEBPACK_EXTERNAL_MODULE__angular_core__, __WEBPACK_EXTERNAL_MODULE__angular_platform_browser__) {
+		root["ngxDatatable"] = factory(root["@angular/common"], root["@angular/core"], root["@angular/platform-browser"], root["rxjs/BehaviorSubject"], root["rxjs/observable/fromEvent"], root["rxjs/operators"]);
+})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE__angular_common__, __WEBPACK_EXTERNAL_MODULE__angular_core__, __WEBPACK_EXTERNAL_MODULE__angular_platform_browser__, __WEBPACK_EXTERNAL_MODULE_rxjs_BehaviorSubject__, __WEBPACK_EXTERNAL_MODULE_rxjs_observable_fromEvent__, __WEBPACK_EXTERNAL_MODULE_rxjs_operators__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -80,15 +80,15 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ({
 
-/***/ "./node_modules/css-loader/index.js!./node_modules/postcss-loader/index.js!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":true}!./src/components/datatable.component.scss":
+/***/ "./node_modules/css-loader/index.js!./node_modules/postcss-loader/index.js!./node_modules/sass-loader/lib/loader.js??ref--3-4!./src/components/datatable.component.scss":
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(undefined);
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(false);
 // imports
 
 
 // module
-exports.push([module.i, ".ngx-datatable {\n  display: block;\n  overflow: hidden;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  position: relative;\n  -webkit-transform: translate3d(0, 0, 0);\n  /**\n   * Vertical Scrolling Adjustments\n   */\n  /**\n   * Horizontal Scrolling Adjustments\n   */\n  /**\n   * Fixed Header Height Adjustments\n   */\n  /**\n   * Fixed row height adjustments\n   */\n  /**\n   * Shared Styles\n   */\n  /**\n   * Header Styles\n   */\n  /**\n   * Body Styles\n   */\n  /**\n   * Footer Styles\n   */ }\n  .ngx-datatable [hidden] {\n    display: none !important; }\n  .ngx-datatable *, .ngx-datatable *:before, .ngx-datatable *:after {\n    -webkit-box-sizing: border-box;\n    box-sizing: border-box; }\n  .ngx-datatable.scroll-vertical .datatable-body {\n    overflow-y: auto; }\n    .ngx-datatable.scroll-vertical .datatable-body .datatable-row-wrapper {\n      position: absolute; }\n  .ngx-datatable.scroll-horz .datatable-body {\n    overflow-x: auto;\n    -webkit-overflow-scrolling: touch; }\n  .ngx-datatable.fixed-header .datatable-header .datatable-header-inner {\n    white-space: nowrap; }\n    .ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell {\n      white-space: nowrap;\n      overflow: hidden;\n      text-overflow: ellipsis; }\n  .ngx-datatable.fixed-row .datatable-scroll {\n    white-space: nowrap; }\n    .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row {\n      white-space: nowrap; }\n      .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-cell {\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis; }\n      .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-group-cell {\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis; }\n  .ngx-datatable .datatable-body-row,\n  .ngx-datatable .datatable-header-inner {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -ms-flex-flow: row;\n    -o-flex-flow: row;\n    flex-flow: row; }\n  .ngx-datatable .datatable-body-cell,\n  .ngx-datatable .datatable-header-cell {\n    overflow-x: hidden;\n    vertical-align: top;\n    display: inline-block;\n    line-height: 1.625; }\n    .ngx-datatable .datatable-body-cell:focus,\n    .ngx-datatable .datatable-header-cell:focus {\n      outline: none; }\n  .ngx-datatable .datatable-row-left,\n  .ngx-datatable .datatable-row-right {\n    z-index: 9; }\n  .ngx-datatable .datatable-row-left,\n  .ngx-datatable .datatable-row-center,\n  .ngx-datatable .datatable-row-group,\n  .ngx-datatable .datatable-row-right {\n    position: relative; }\n  .ngx-datatable .datatable-header {\n    display: block;\n    overflow: hidden; }\n    .ngx-datatable .datatable-header .datatable-header-inner {\n      -webkit-box-align: stretch;\n          -ms-flex-align: stretch;\n              align-items: stretch;\n      -webkit-align-items: stretch; }\n    .ngx-datatable .datatable-header .datatable-header-cell {\n      position: relative;\n      display: inline-block; }\n      .ngx-datatable .datatable-header .datatable-header-cell.sortable .datatable-header-cell-wrapper {\n        cursor: pointer; }\n      .ngx-datatable .datatable-header .datatable-header-cell.longpress .datatable-header-cell-wrapper {\n        cursor: move; }\n      .ngx-datatable .datatable-header .datatable-header-cell .sort-btn {\n        line-height: 100%;\n        vertical-align: middle;\n        display: inline-block;\n        cursor: pointer; }\n      .ngx-datatable .datatable-header .datatable-header-cell .resize-handle {\n        display: inline-block;\n        position: absolute;\n        right: 0;\n        top: 0;\n        bottom: 0;\n        width: 5px;\n        padding: 0 4px;\n        visibility: hidden;\n        cursor: ew-resize; }\n      .ngx-datatable .datatable-header .datatable-header-cell.resizeable:hover .resize-handle {\n        visibility: visible; }\n  .ngx-datatable .datatable-body {\n    position: relative;\n    z-index: 10;\n    display: block; }\n    .ngx-datatable .datatable-body .datatable-scroll {\n      display: inline-block; }\n    .ngx-datatable .datatable-body .datatable-row-detail {\n      overflow-y: hidden; }\n    .ngx-datatable .datatable-body .datatable-row-wrapper {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n      flex-direction: column; }\n    .ngx-datatable .datatable-body .datatable-body-row {\n      outline: none; }\n      .ngx-datatable .datatable-body .datatable-body-row > div {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex; }\n  .ngx-datatable .datatable-footer {\n    display: block;\n    width: 100%; }\n    .ngx-datatable .datatable-footer .datatable-footer-inner {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-align: center;\n          -ms-flex-align: center;\n              align-items: center;\n      width: 100%; }\n    .ngx-datatable .datatable-footer .selected-count .page-count {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 40%;\n              flex: 1 1 40%; }\n    .ngx-datatable .datatable-footer .selected-count .datatable-pager {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 60%;\n              flex: 1 1 60%; }\n    .ngx-datatable .datatable-footer .page-count {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 20%;\n              flex: 1 1 20%; }\n    .ngx-datatable .datatable-footer .datatable-pager {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 80%;\n              flex: 1 1 80%;\n      text-align: right; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager,\n      .ngx-datatable .datatable-footer .datatable-pager .pager li {\n        padding: 0;\n        margin: 0;\n        display: inline-block;\n        list-style: none; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager li, .ngx-datatable .datatable-footer .datatable-pager .pager li a {\n        outline: none; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager li a {\n        cursor: pointer;\n        display: inline-block; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager li.disabled a {\n        cursor: not-allowed; }\n", ""]);
+exports.push([module.i, ".ngx-datatable {\n  display: block;\n  overflow: hidden;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  position: relative;\n  -webkit-transform: translate3d(0, 0, 0);\n  /**\n   * Vertical Scrolling Adjustments\n   */\n  /**\n   * Horizontal Scrolling Adjustments\n   */\n  /**\n   * Fixed Header Height Adjustments\n   */\n  /**\n   * Fixed row height adjustments\n   */\n  /**\n   * Shared Styles\n   */\n  /**\n   * Header Styles\n   */\n  /**\n   * Body Styles\n   */\n  /**\n   * Footer Styles\n   */ }\n  .ngx-datatable [hidden] {\n    display: none !important; }\n  .ngx-datatable *, .ngx-datatable *:before, .ngx-datatable *:after {\n    -webkit-box-sizing: border-box;\n    box-sizing: border-box; }\n  .ngx-datatable.scroll-vertical .datatable-body {\n    overflow-y: auto; }\n    .ngx-datatable.scroll-vertical .datatable-body .datatable-row-wrapper {\n      position: absolute; }\n  .ngx-datatable.scroll-horz .datatable-body {\n    overflow-x: auto;\n    -webkit-overflow-scrolling: touch; }\n  .ngx-datatable.fixed-header .datatable-header .datatable-header-inner {\n    white-space: nowrap; }\n    .ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell {\n      white-space: nowrap;\n      overflow: hidden;\n      text-overflow: ellipsis; }\n  .ngx-datatable.fixed-row .datatable-scroll {\n    white-space: nowrap; }\n    .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row {\n      white-space: nowrap; }\n      .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-cell {\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis; }\n      .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-group-cell {\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis; }\n  .ngx-datatable .datatable-body-row,\n  .ngx-datatable .datatable-row-center,\n  .ngx-datatable .datatable-header-inner {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -ms-flex-flow: row;\n    -o-flex-flow: row;\n    flex-flow: row; }\n  .ngx-datatable .datatable-body-cell,\n  .ngx-datatable .datatable-header-cell {\n    overflow-x: hidden;\n    vertical-align: top;\n    display: inline-block;\n    line-height: 1.625; }\n    .ngx-datatable .datatable-body-cell:focus,\n    .ngx-datatable .datatable-header-cell:focus {\n      outline: none; }\n  .ngx-datatable .datatable-row-left,\n  .ngx-datatable .datatable-row-right {\n    z-index: 9; }\n  .ngx-datatable .datatable-row-left,\n  .ngx-datatable .datatable-row-center,\n  .ngx-datatable .datatable-row-group,\n  .ngx-datatable .datatable-row-right {\n    position: relative; }\n  .ngx-datatable .datatable-header {\n    display: block;\n    overflow: hidden; }\n    .ngx-datatable .datatable-header .datatable-header-inner {\n      -webkit-box-align: stretch;\n          -ms-flex-align: stretch;\n              align-items: stretch;\n      -webkit-align-items: stretch; }\n    .ngx-datatable .datatable-header .datatable-header-cell {\n      position: relative;\n      display: inline-block; }\n      .ngx-datatable .datatable-header .datatable-header-cell.sortable .datatable-header-cell-wrapper {\n        cursor: pointer; }\n      .ngx-datatable .datatable-header .datatable-header-cell.longpress .datatable-header-cell-wrapper {\n        cursor: move; }\n      .ngx-datatable .datatable-header .datatable-header-cell .sort-btn {\n        line-height: 100%;\n        vertical-align: middle;\n        display: inline-block;\n        cursor: pointer; }\n      .ngx-datatable .datatable-header .datatable-header-cell .resize-handle, .ngx-datatable .datatable-header .datatable-header-cell .resize-handle--not-resizable {\n        display: inline-block;\n        position: absolute;\n        right: 0;\n        top: 0;\n        bottom: 0;\n        width: 5px;\n        padding: 0 4px;\n        visibility: hidden; }\n      .ngx-datatable .datatable-header .datatable-header-cell .resize-handle {\n        cursor: ew-resize; }\n      .ngx-datatable .datatable-header .datatable-header-cell.resizeable:hover .resize-handle {\n        visibility: visible; }\n      .ngx-datatable .datatable-header .datatable-header-cell:hover .resize-handle--not-resizable {\n        visibility: visible; }\n      .ngx-datatable .datatable-header .datatable-header-cell .datatable-header-cell-template-wrap {\n        height: inherit; }\n  .ngx-datatable .datatable-body {\n    position: relative;\n    z-index: 10;\n    display: block; }\n    .ngx-datatable .datatable-body .datatable-scroll {\n      display: inline-block; }\n    .ngx-datatable .datatable-body .datatable-row-detail {\n      overflow-y: hidden; }\n    .ngx-datatable .datatable-body .datatable-row-wrapper {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n      flex-direction: column; }\n    .ngx-datatable .datatable-body .datatable-body-row {\n      outline: none; }\n      .ngx-datatable .datatable-body .datatable-body-row > div {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex; }\n  .ngx-datatable .datatable-footer {\n    display: block;\n    width: 100%; }\n    .ngx-datatable .datatable-footer .datatable-footer-inner {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-align: center;\n          -ms-flex-align: center;\n              align-items: center;\n      width: 100%; }\n    .ngx-datatable .datatable-footer .selected-count .page-count {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 40%;\n              flex: 1 1 40%; }\n    .ngx-datatable .datatable-footer .selected-count .datatable-pager {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 60%;\n              flex: 1 1 60%; }\n    .ngx-datatable .datatable-footer .page-count {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 20%;\n              flex: 1 1 20%; }\n    .ngx-datatable .datatable-footer .datatable-pager {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 80%;\n              flex: 1 1 80%;\n      text-align: right; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager,\n      .ngx-datatable .datatable-footer .datatable-pager .pager li {\n        padding: 0;\n        margin: 0;\n        display: inline-block;\n        list-style: none; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager li, .ngx-datatable .datatable-footer .datatable-pager .pager li a {\n        outline: none; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager li a {\n        cursor: pointer;\n        display: inline-block; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager li.disabled a {\n        cursor: not-allowed; }\n", ""]);
 
 // exports
 
@@ -178,1461 +178,6 @@ function toComment(sourceMap) {
 
 /***/ }),
 
-/***/ "./node_modules/rxjs/InnerSubscriber.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var Subscriber_1 = __webpack_require__("./node_modules/rxjs/Subscriber.js");
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @ignore
- * @extends {Ignored}
- */
-var InnerSubscriber = (function (_super) {
-    __extends(InnerSubscriber, _super);
-    function InnerSubscriber(parent, outerValue, outerIndex) {
-        _super.call(this);
-        this.parent = parent;
-        this.outerValue = outerValue;
-        this.outerIndex = outerIndex;
-        this.index = 0;
-    }
-    InnerSubscriber.prototype._next = function (value) {
-        this.parent.notifyNext(this.outerValue, value, this.outerIndex, this.index++, this);
-    };
-    InnerSubscriber.prototype._error = function (error) {
-        this.parent.notifyError(error, this);
-        this.unsubscribe();
-    };
-    InnerSubscriber.prototype._complete = function () {
-        this.parent.notifyComplete(this);
-        this.unsubscribe();
-    };
-    return InnerSubscriber;
-}(Subscriber_1.Subscriber));
-exports.InnerSubscriber = InnerSubscriber;
-//# sourceMappingURL=InnerSubscriber.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/Observable.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var root_1 = __webpack_require__("./node_modules/rxjs/util/root.js");
-var toSubscriber_1 = __webpack_require__("./node_modules/rxjs/util/toSubscriber.js");
-var observable_1 = __webpack_require__("./node_modules/rxjs/symbol/observable.js");
-/**
- * A representation of any set of values over any amount of time. This the most basic building block
- * of RxJS.
- *
- * @class Observable<T>
- */
-var Observable = (function () {
-    /**
-     * @constructor
-     * @param {Function} subscribe the function that is  called when the Observable is
-     * initially subscribed to. This function is given a Subscriber, to which new values
-     * can be `next`ed, or an `error` method can be called to raise an error, or
-     * `complete` can be called to notify of a successful completion.
-     */
-    function Observable(subscribe) {
-        this._isScalar = false;
-        if (subscribe) {
-            this._subscribe = subscribe;
-        }
-    }
-    /**
-     * Creates a new Observable, with this Observable as the source, and the passed
-     * operator defined as the new observable's operator.
-     * @method lift
-     * @param {Operator} operator the operator defining the operation to take on the observable
-     * @return {Observable} a new observable with the Operator applied
-     */
-    Observable.prototype.lift = function (operator) {
-        var observable = new Observable();
-        observable.source = this;
-        observable.operator = operator;
-        return observable;
-    };
-    /**
-     * Invokes an execution of an Observable and registers Observer handlers for notifications it will emit.
-     *
-     * <span class="informal">Use it when you have all these Observables, but still nothing is happening.</span>
-     *
-     * `subscribe` is not a regular operator, but a method that calls Observables internal `subscribe` function. It
-     * might be for example a function that you passed to a {@link create} static factory, but most of the time it is
-     * a library implementation, which defines what and when will be emitted by an Observable. This means that calling
-     * `subscribe` is actually the moment when Observable starts its work, not when it is created, as it is often
-     * thought.
-     *
-     * Apart from starting the execution of an Observable, this method allows you to listen for values
-     * that an Observable emits, as well as for when it completes or errors. You can achieve this in two
-     * following ways.
-     *
-     * The first way is creating an object that implements {@link Observer} interface. It should have methods
-     * defined by that interface, but note that it should be just a regular JavaScript object, which you can create
-     * yourself in any way you want (ES6 class, classic function constructor, object literal etc.). In particular do
-     * not attempt to use any RxJS implementation details to create Observers - you don't need them. Remember also
-     * that your object does not have to implement all methods. If you find yourself creating a method that doesn't
-     * do anything, you can simply omit it. Note however, that if `error` method is not provided, all errors will
-     * be left uncaught.
-     *
-     * The second way is to give up on Observer object altogether and simply provide callback functions in place of its methods.
-     * This means you can provide three functions as arguments to `subscribe`, where first function is equivalent
-     * of a `next` method, second of an `error` method and third of a `complete` method. Just as in case of Observer,
-     * if you do not need to listen for something, you can omit a function, preferably by passing `undefined` or `null`,
-     * since `subscribe` recognizes these functions by where they were placed in function call. When it comes
-     * to `error` function, just as before, if not provided, errors emitted by an Observable will be thrown.
-     *
-     * Whatever style of calling `subscribe` you use, in both cases it returns a Subscription object.
-     * This object allows you to call `unsubscribe` on it, which in turn will stop work that an Observable does and will clean
-     * up all resources that an Observable used. Note that cancelling a subscription will not call `complete` callback
-     * provided to `subscribe` function, which is reserved for a regular completion signal that comes from an Observable.
-     *
-     * Remember that callbacks provided to `subscribe` are not guaranteed to be called asynchronously.
-     * It is an Observable itself that decides when these functions will be called. For example {@link of}
-     * by default emits all its values synchronously. Always check documentation for how given Observable
-     * will behave when subscribed and if its default behavior can be modified with a {@link Scheduler}.
-     *
-     * @example <caption>Subscribe with an Observer</caption>
-     * const sumObserver = {
-     *   sum: 0,
-     *   next(value) {
-     *     console.log('Adding: ' + value);
-     *     this.sum = this.sum + value;
-     *   },
-     *   error() { // We actually could just remote this method,
-     *   },        // since we do not really care about errors right now.
-     *   complete() {
-     *     console.log('Sum equals: ' + this.sum);
-     *   }
-     * };
-     *
-     * Rx.Observable.of(1, 2, 3) // Synchronously emits 1, 2, 3 and then completes.
-     * .subscribe(sumObserver);
-     *
-     * // Logs:
-     * // "Adding: 1"
-     * // "Adding: 2"
-     * // "Adding: 3"
-     * // "Sum equals: 6"
-     *
-     *
-     * @example <caption>Subscribe with functions</caption>
-     * let sum = 0;
-     *
-     * Rx.Observable.of(1, 2, 3)
-     * .subscribe(
-     *   function(value) {
-     *     console.log('Adding: ' + value);
-     *     sum = sum + value;
-     *   },
-     *   undefined,
-     *   function() {
-     *     console.log('Sum equals: ' + sum);
-     *   }
-     * );
-     *
-     * // Logs:
-     * // "Adding: 1"
-     * // "Adding: 2"
-     * // "Adding: 3"
-     * // "Sum equals: 6"
-     *
-     *
-     * @example <caption>Cancel a subscription</caption>
-     * const subscription = Rx.Observable.interval(1000).subscribe(
-     *   num => console.log(num),
-     *   undefined,
-     *   () => console.log('completed!') // Will not be called, even
-     * );                                // when cancelling subscription
-     *
-     *
-     * setTimeout(() => {
-     *   subscription.unsubscribe();
-     *   console.log('unsubscribed!');
-     * }, 2500);
-     *
-     * // Logs:
-     * // 0 after 1s
-     * // 1 after 2s
-     * // "unsubscribed!" after 2,5s
-     *
-     *
-     * @param {Observer|Function} observerOrNext (optional) Either an observer with methods to be called,
-     *  or the first of three possible handlers, which is the handler for each value emitted from the subscribed
-     *  Observable.
-     * @param {Function} error (optional) A handler for a terminal event resulting from an error. If no error handler is provided,
-     *  the error will be thrown as unhandled.
-     * @param {Function} complete (optional) A handler for a terminal event resulting from successful completion.
-     * @return {ISubscription} a subscription reference to the registered handlers
-     * @method subscribe
-     */
-    Observable.prototype.subscribe = function (observerOrNext, error, complete) {
-        var operator = this.operator;
-        var sink = toSubscriber_1.toSubscriber(observerOrNext, error, complete);
-        if (operator) {
-            operator.call(sink, this.source);
-        }
-        else {
-            sink.add(this.source ? this._subscribe(sink) : this._trySubscribe(sink));
-        }
-        if (sink.syncErrorThrowable) {
-            sink.syncErrorThrowable = false;
-            if (sink.syncErrorThrown) {
-                throw sink.syncErrorValue;
-            }
-        }
-        return sink;
-    };
-    Observable.prototype._trySubscribe = function (sink) {
-        try {
-            return this._subscribe(sink);
-        }
-        catch (err) {
-            sink.syncErrorThrown = true;
-            sink.syncErrorValue = err;
-            sink.error(err);
-        }
-    };
-    /**
-     * @method forEach
-     * @param {Function} next a handler for each value emitted by the observable
-     * @param {PromiseConstructor} [PromiseCtor] a constructor function used to instantiate the Promise
-     * @return {Promise} a promise that either resolves on observable completion or
-     *  rejects with the handled error
-     */
-    Observable.prototype.forEach = function (next, PromiseCtor) {
-        var _this = this;
-        if (!PromiseCtor) {
-            if (root_1.root.Rx && root_1.root.Rx.config && root_1.root.Rx.config.Promise) {
-                PromiseCtor = root_1.root.Rx.config.Promise;
-            }
-            else if (root_1.root.Promise) {
-                PromiseCtor = root_1.root.Promise;
-            }
-        }
-        if (!PromiseCtor) {
-            throw new Error('no Promise impl found');
-        }
-        return new PromiseCtor(function (resolve, reject) {
-            // Must be declared in a separate statement to avoid a RefernceError when
-            // accessing subscription below in the closure due to Temporal Dead Zone.
-            var subscription;
-            subscription = _this.subscribe(function (value) {
-                if (subscription) {
-                    // if there is a subscription, then we can surmise
-                    // the next handling is asynchronous. Any errors thrown
-                    // need to be rejected explicitly and unsubscribe must be
-                    // called manually
-                    try {
-                        next(value);
-                    }
-                    catch (err) {
-                        reject(err);
-                        subscription.unsubscribe();
-                    }
-                }
-                else {
-                    // if there is NO subscription, then we're getting a nexted
-                    // value synchronously during subscription. We can just call it.
-                    // If it errors, Observable's `subscribe` will ensure the
-                    // unsubscription logic is called, then synchronously rethrow the error.
-                    // After that, Promise will trap the error and send it
-                    // down the rejection path.
-                    next(value);
-                }
-            }, reject, resolve);
-        });
-    };
-    Observable.prototype._subscribe = function (subscriber) {
-        return this.source.subscribe(subscriber);
-    };
-    /**
-     * An interop point defined by the es7-observable spec https://github.com/zenparsing/es-observable
-     * @method Symbol.observable
-     * @return {Observable} this instance of the observable
-     */
-    Observable.prototype[observable_1.observable] = function () {
-        return this;
-    };
-    // HACK: Since TypeScript inherits static properties too, we have to
-    // fight against TypeScript here so Subject can have a different static create signature
-    /**
-     * Creates a new cold Observable by calling the Observable constructor
-     * @static true
-     * @owner Observable
-     * @method create
-     * @param {Function} subscribe? the subscriber function to be passed to the Observable constructor
-     * @return {Observable} a new cold observable
-     */
-    Observable.create = function (subscribe) {
-        return new Observable(subscribe);
-    };
-    return Observable;
-}());
-exports.Observable = Observable;
-//# sourceMappingURL=Observable.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/Observer.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-exports.empty = {
-    closed: true,
-    next: function (value) { },
-    error: function (err) { throw err; },
-    complete: function () { }
-};
-//# sourceMappingURL=Observer.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/OuterSubscriber.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var Subscriber_1 = __webpack_require__("./node_modules/rxjs/Subscriber.js");
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @ignore
- * @extends {Ignored}
- */
-var OuterSubscriber = (function (_super) {
-    __extends(OuterSubscriber, _super);
-    function OuterSubscriber() {
-        _super.apply(this, arguments);
-    }
-    OuterSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex, innerSub) {
-        this.destination.next(innerValue);
-    };
-    OuterSubscriber.prototype.notifyError = function (error, innerSub) {
-        this.destination.error(error);
-    };
-    OuterSubscriber.prototype.notifyComplete = function (innerSub) {
-        this.destination.complete();
-    };
-    return OuterSubscriber;
-}(Subscriber_1.Subscriber));
-exports.OuterSubscriber = OuterSubscriber;
-//# sourceMappingURL=OuterSubscriber.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/Subscriber.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var isFunction_1 = __webpack_require__("./node_modules/rxjs/util/isFunction.js");
-var Subscription_1 = __webpack_require__("./node_modules/rxjs/Subscription.js");
-var Observer_1 = __webpack_require__("./node_modules/rxjs/Observer.js");
-var rxSubscriber_1 = __webpack_require__("./node_modules/rxjs/symbol/rxSubscriber.js");
-/**
- * Implements the {@link Observer} interface and extends the
- * {@link Subscription} class. While the {@link Observer} is the public API for
- * consuming the values of an {@link Observable}, all Observers get converted to
- * a Subscriber, in order to provide Subscription-like capabilities such as
- * `unsubscribe`. Subscriber is a common type in RxJS, and crucial for
- * implementing operators, but it is rarely used as a public API.
- *
- * @class Subscriber<T>
- */
-var Subscriber = (function (_super) {
-    __extends(Subscriber, _super);
-    /**
-     * @param {Observer|function(value: T): void} [destinationOrNext] A partially
-     * defined Observer or a `next` callback function.
-     * @param {function(e: ?any): void} [error] The `error` callback of an
-     * Observer.
-     * @param {function(): void} [complete] The `complete` callback of an
-     * Observer.
-     */
-    function Subscriber(destinationOrNext, error, complete) {
-        _super.call(this);
-        this.syncErrorValue = null;
-        this.syncErrorThrown = false;
-        this.syncErrorThrowable = false;
-        this.isStopped = false;
-        switch (arguments.length) {
-            case 0:
-                this.destination = Observer_1.empty;
-                break;
-            case 1:
-                if (!destinationOrNext) {
-                    this.destination = Observer_1.empty;
-                    break;
-                }
-                if (typeof destinationOrNext === 'object') {
-                    if (destinationOrNext instanceof Subscriber) {
-                        this.destination = destinationOrNext;
-                        this.destination.add(this);
-                    }
-                    else {
-                        this.syncErrorThrowable = true;
-                        this.destination = new SafeSubscriber(this, destinationOrNext);
-                    }
-                    break;
-                }
-            default:
-                this.syncErrorThrowable = true;
-                this.destination = new SafeSubscriber(this, destinationOrNext, error, complete);
-                break;
-        }
-    }
-    Subscriber.prototype[rxSubscriber_1.rxSubscriber] = function () { return this; };
-    /**
-     * A static factory for a Subscriber, given a (potentially partial) definition
-     * of an Observer.
-     * @param {function(x: ?T): void} [next] The `next` callback of an Observer.
-     * @param {function(e: ?any): void} [error] The `error` callback of an
-     * Observer.
-     * @param {function(): void} [complete] The `complete` callback of an
-     * Observer.
-     * @return {Subscriber<T>} A Subscriber wrapping the (partially defined)
-     * Observer represented by the given arguments.
-     */
-    Subscriber.create = function (next, error, complete) {
-        var subscriber = new Subscriber(next, error, complete);
-        subscriber.syncErrorThrowable = false;
-        return subscriber;
-    };
-    /**
-     * The {@link Observer} callback to receive notifications of type `next` from
-     * the Observable, with a value. The Observable may call this method 0 or more
-     * times.
-     * @param {T} [value] The `next` value.
-     * @return {void}
-     */
-    Subscriber.prototype.next = function (value) {
-        if (!this.isStopped) {
-            this._next(value);
-        }
-    };
-    /**
-     * The {@link Observer} callback to receive notifications of type `error` from
-     * the Observable, with an attached {@link Error}. Notifies the Observer that
-     * the Observable has experienced an error condition.
-     * @param {any} [err] The `error` exception.
-     * @return {void}
-     */
-    Subscriber.prototype.error = function (err) {
-        if (!this.isStopped) {
-            this.isStopped = true;
-            this._error(err);
-        }
-    };
-    /**
-     * The {@link Observer} callback to receive a valueless notification of type
-     * `complete` from the Observable. Notifies the Observer that the Observable
-     * has finished sending push-based notifications.
-     * @return {void}
-     */
-    Subscriber.prototype.complete = function () {
-        if (!this.isStopped) {
-            this.isStopped = true;
-            this._complete();
-        }
-    };
-    Subscriber.prototype.unsubscribe = function () {
-        if (this.closed) {
-            return;
-        }
-        this.isStopped = true;
-        _super.prototype.unsubscribe.call(this);
-    };
-    Subscriber.prototype._next = function (value) {
-        this.destination.next(value);
-    };
-    Subscriber.prototype._error = function (err) {
-        this.destination.error(err);
-        this.unsubscribe();
-    };
-    Subscriber.prototype._complete = function () {
-        this.destination.complete();
-        this.unsubscribe();
-    };
-    Subscriber.prototype._unsubscribeAndRecycle = function () {
-        var _a = this, _parent = _a._parent, _parents = _a._parents;
-        this._parent = null;
-        this._parents = null;
-        this.unsubscribe();
-        this.closed = false;
-        this.isStopped = false;
-        this._parent = _parent;
-        this._parents = _parents;
-        return this;
-    };
-    return Subscriber;
-}(Subscription_1.Subscription));
-exports.Subscriber = Subscriber;
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @ignore
- * @extends {Ignored}
- */
-var SafeSubscriber = (function (_super) {
-    __extends(SafeSubscriber, _super);
-    function SafeSubscriber(_parentSubscriber, observerOrNext, error, complete) {
-        _super.call(this);
-        this._parentSubscriber = _parentSubscriber;
-        var next;
-        var context = this;
-        if (isFunction_1.isFunction(observerOrNext)) {
-            next = observerOrNext;
-        }
-        else if (observerOrNext) {
-            next = observerOrNext.next;
-            error = observerOrNext.error;
-            complete = observerOrNext.complete;
-            if (observerOrNext !== Observer_1.empty) {
-                context = Object.create(observerOrNext);
-                if (isFunction_1.isFunction(context.unsubscribe)) {
-                    this.add(context.unsubscribe.bind(context));
-                }
-                context.unsubscribe = this.unsubscribe.bind(this);
-            }
-        }
-        this._context = context;
-        this._next = next;
-        this._error = error;
-        this._complete = complete;
-    }
-    SafeSubscriber.prototype.next = function (value) {
-        if (!this.isStopped && this._next) {
-            var _parentSubscriber = this._parentSubscriber;
-            if (!_parentSubscriber.syncErrorThrowable) {
-                this.__tryOrUnsub(this._next, value);
-            }
-            else if (this.__tryOrSetError(_parentSubscriber, this._next, value)) {
-                this.unsubscribe();
-            }
-        }
-    };
-    SafeSubscriber.prototype.error = function (err) {
-        if (!this.isStopped) {
-            var _parentSubscriber = this._parentSubscriber;
-            if (this._error) {
-                if (!_parentSubscriber.syncErrorThrowable) {
-                    this.__tryOrUnsub(this._error, err);
-                    this.unsubscribe();
-                }
-                else {
-                    this.__tryOrSetError(_parentSubscriber, this._error, err);
-                    this.unsubscribe();
-                }
-            }
-            else if (!_parentSubscriber.syncErrorThrowable) {
-                this.unsubscribe();
-                throw err;
-            }
-            else {
-                _parentSubscriber.syncErrorValue = err;
-                _parentSubscriber.syncErrorThrown = true;
-                this.unsubscribe();
-            }
-        }
-    };
-    SafeSubscriber.prototype.complete = function () {
-        var _this = this;
-        if (!this.isStopped) {
-            var _parentSubscriber = this._parentSubscriber;
-            if (this._complete) {
-                var wrappedComplete = function () { return _this._complete.call(_this._context); };
-                if (!_parentSubscriber.syncErrorThrowable) {
-                    this.__tryOrUnsub(wrappedComplete);
-                    this.unsubscribe();
-                }
-                else {
-                    this.__tryOrSetError(_parentSubscriber, wrappedComplete);
-                    this.unsubscribe();
-                }
-            }
-            else {
-                this.unsubscribe();
-            }
-        }
-    };
-    SafeSubscriber.prototype.__tryOrUnsub = function (fn, value) {
-        try {
-            fn.call(this._context, value);
-        }
-        catch (err) {
-            this.unsubscribe();
-            throw err;
-        }
-    };
-    SafeSubscriber.prototype.__tryOrSetError = function (parent, fn, value) {
-        try {
-            fn.call(this._context, value);
-        }
-        catch (err) {
-            parent.syncErrorValue = err;
-            parent.syncErrorThrown = true;
-            return true;
-        }
-        return false;
-    };
-    SafeSubscriber.prototype._unsubscribe = function () {
-        var _parentSubscriber = this._parentSubscriber;
-        this._context = null;
-        this._parentSubscriber = null;
-        _parentSubscriber.unsubscribe();
-    };
-    return SafeSubscriber;
-}(Subscriber));
-//# sourceMappingURL=Subscriber.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/Subscription.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var isArray_1 = __webpack_require__("./node_modules/rxjs/util/isArray.js");
-var isObject_1 = __webpack_require__("./node_modules/rxjs/util/isObject.js");
-var isFunction_1 = __webpack_require__("./node_modules/rxjs/util/isFunction.js");
-var tryCatch_1 = __webpack_require__("./node_modules/rxjs/util/tryCatch.js");
-var errorObject_1 = __webpack_require__("./node_modules/rxjs/util/errorObject.js");
-var UnsubscriptionError_1 = __webpack_require__("./node_modules/rxjs/util/UnsubscriptionError.js");
-/**
- * Represents a disposable resource, such as the execution of an Observable. A
- * Subscription has one important method, `unsubscribe`, that takes no argument
- * and just disposes the resource held by the subscription.
- *
- * Additionally, subscriptions may be grouped together through the `add()`
- * method, which will attach a child Subscription to the current Subscription.
- * When a Subscription is unsubscribed, all its children (and its grandchildren)
- * will be unsubscribed as well.
- *
- * @class Subscription
- */
-var Subscription = (function () {
-    /**
-     * @param {function(): void} [unsubscribe] A function describing how to
-     * perform the disposal of resources when the `unsubscribe` method is called.
-     */
-    function Subscription(unsubscribe) {
-        /**
-         * A flag to indicate whether this Subscription has already been unsubscribed.
-         * @type {boolean}
-         */
-        this.closed = false;
-        this._parent = null;
-        this._parents = null;
-        this._subscriptions = null;
-        if (unsubscribe) {
-            this._unsubscribe = unsubscribe;
-        }
-    }
-    /**
-     * Disposes the resources held by the subscription. May, for instance, cancel
-     * an ongoing Observable execution or cancel any other type of work that
-     * started when the Subscription was created.
-     * @return {void}
-     */
-    Subscription.prototype.unsubscribe = function () {
-        var hasErrors = false;
-        var errors;
-        if (this.closed) {
-            return;
-        }
-        var _a = this, _parent = _a._parent, _parents = _a._parents, _unsubscribe = _a._unsubscribe, _subscriptions = _a._subscriptions;
-        this.closed = true;
-        this._parent = null;
-        this._parents = null;
-        // null out _subscriptions first so any child subscriptions that attempt
-        // to remove themselves from this subscription will noop
-        this._subscriptions = null;
-        var index = -1;
-        var len = _parents ? _parents.length : 0;
-        // if this._parent is null, then so is this._parents, and we
-        // don't have to remove ourselves from any parent subscriptions.
-        while (_parent) {
-            _parent.remove(this);
-            // if this._parents is null or index >= len,
-            // then _parent is set to null, and the loop exits
-            _parent = ++index < len && _parents[index] || null;
-        }
-        if (isFunction_1.isFunction(_unsubscribe)) {
-            var trial = tryCatch_1.tryCatch(_unsubscribe).call(this);
-            if (trial === errorObject_1.errorObject) {
-                hasErrors = true;
-                errors = errors || (errorObject_1.errorObject.e instanceof UnsubscriptionError_1.UnsubscriptionError ?
-                    flattenUnsubscriptionErrors(errorObject_1.errorObject.e.errors) : [errorObject_1.errorObject.e]);
-            }
-        }
-        if (isArray_1.isArray(_subscriptions)) {
-            index = -1;
-            len = _subscriptions.length;
-            while (++index < len) {
-                var sub = _subscriptions[index];
-                if (isObject_1.isObject(sub)) {
-                    var trial = tryCatch_1.tryCatch(sub.unsubscribe).call(sub);
-                    if (trial === errorObject_1.errorObject) {
-                        hasErrors = true;
-                        errors = errors || [];
-                        var err = errorObject_1.errorObject.e;
-                        if (err instanceof UnsubscriptionError_1.UnsubscriptionError) {
-                            errors = errors.concat(flattenUnsubscriptionErrors(err.errors));
-                        }
-                        else {
-                            errors.push(err);
-                        }
-                    }
-                }
-            }
-        }
-        if (hasErrors) {
-            throw new UnsubscriptionError_1.UnsubscriptionError(errors);
-        }
-    };
-    /**
-     * Adds a tear down to be called during the unsubscribe() of this
-     * Subscription.
-     *
-     * If the tear down being added is a subscription that is already
-     * unsubscribed, is the same reference `add` is being called on, or is
-     * `Subscription.EMPTY`, it will not be added.
-     *
-     * If this subscription is already in an `closed` state, the passed
-     * tear down logic will be executed immediately.
-     *
-     * @param {TeardownLogic} teardown The additional logic to execute on
-     * teardown.
-     * @return {Subscription} Returns the Subscription used or created to be
-     * added to the inner subscriptions list. This Subscription can be used with
-     * `remove()` to remove the passed teardown logic from the inner subscriptions
-     * list.
-     */
-    Subscription.prototype.add = function (teardown) {
-        if (!teardown || (teardown === Subscription.EMPTY)) {
-            return Subscription.EMPTY;
-        }
-        if (teardown === this) {
-            return this;
-        }
-        var subscription = teardown;
-        switch (typeof teardown) {
-            case 'function':
-                subscription = new Subscription(teardown);
-            case 'object':
-                if (subscription.closed || typeof subscription.unsubscribe !== 'function') {
-                    return subscription;
-                }
-                else if (this.closed) {
-                    subscription.unsubscribe();
-                    return subscription;
-                }
-                else if (typeof subscription._addParent !== 'function' /* quack quack */) {
-                    var tmp = subscription;
-                    subscription = new Subscription();
-                    subscription._subscriptions = [tmp];
-                }
-                break;
-            default:
-                throw new Error('unrecognized teardown ' + teardown + ' added to Subscription.');
-        }
-        var subscriptions = this._subscriptions || (this._subscriptions = []);
-        subscriptions.push(subscription);
-        subscription._addParent(this);
-        return subscription;
-    };
-    /**
-     * Removes a Subscription from the internal list of subscriptions that will
-     * unsubscribe during the unsubscribe process of this Subscription.
-     * @param {Subscription} subscription The subscription to remove.
-     * @return {void}
-     */
-    Subscription.prototype.remove = function (subscription) {
-        var subscriptions = this._subscriptions;
-        if (subscriptions) {
-            var subscriptionIndex = subscriptions.indexOf(subscription);
-            if (subscriptionIndex !== -1) {
-                subscriptions.splice(subscriptionIndex, 1);
-            }
-        }
-    };
-    Subscription.prototype._addParent = function (parent) {
-        var _a = this, _parent = _a._parent, _parents = _a._parents;
-        if (!_parent || _parent === parent) {
-            // If we don't have a parent, or the new parent is the same as the
-            // current parent, then set this._parent to the new parent.
-            this._parent = parent;
-        }
-        else if (!_parents) {
-            // If there's already one parent, but not multiple, allocate an Array to
-            // store the rest of the parent Subscriptions.
-            this._parents = [parent];
-        }
-        else if (_parents.indexOf(parent) === -1) {
-            // Only add the new parent to the _parents list if it's not already there.
-            _parents.push(parent);
-        }
-    };
-    Subscription.EMPTY = (function (empty) {
-        empty.closed = true;
-        return empty;
-    }(new Subscription()));
-    return Subscription;
-}());
-exports.Subscription = Subscription;
-function flattenUnsubscriptionErrors(errors) {
-    return errors.reduce(function (errs, err) { return errs.concat((err instanceof UnsubscriptionError_1.UnsubscriptionError) ? err.errors : err); }, []);
-}
-//# sourceMappingURL=Subscription.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/add/observable/fromEvent.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var Observable_1 = __webpack_require__("./node_modules/rxjs/Observable.js");
-var fromEvent_1 = __webpack_require__("./node_modules/rxjs/observable/fromEvent.js");
-Observable_1.Observable.fromEvent = fromEvent_1.fromEvent;
-//# sourceMappingURL=fromEvent.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/add/operator/takeUntil.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var Observable_1 = __webpack_require__("./node_modules/rxjs/Observable.js");
-var takeUntil_1 = __webpack_require__("./node_modules/rxjs/operator/takeUntil.js");
-Observable_1.Observable.prototype.takeUntil = takeUntil_1.takeUntil;
-//# sourceMappingURL=takeUntil.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/observable/FromEventObservable.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var Observable_1 = __webpack_require__("./node_modules/rxjs/Observable.js");
-var tryCatch_1 = __webpack_require__("./node_modules/rxjs/util/tryCatch.js");
-var isFunction_1 = __webpack_require__("./node_modules/rxjs/util/isFunction.js");
-var errorObject_1 = __webpack_require__("./node_modules/rxjs/util/errorObject.js");
-var Subscription_1 = __webpack_require__("./node_modules/rxjs/Subscription.js");
-var toString = Object.prototype.toString;
-function isNodeStyleEventEmitter(sourceObj) {
-    return !!sourceObj && typeof sourceObj.addListener === 'function' && typeof sourceObj.removeListener === 'function';
-}
-function isJQueryStyleEventEmitter(sourceObj) {
-    return !!sourceObj && typeof sourceObj.on === 'function' && typeof sourceObj.off === 'function';
-}
-function isNodeList(sourceObj) {
-    return !!sourceObj && toString.call(sourceObj) === '[object NodeList]';
-}
-function isHTMLCollection(sourceObj) {
-    return !!sourceObj && toString.call(sourceObj) === '[object HTMLCollection]';
-}
-function isEventTarget(sourceObj) {
-    return !!sourceObj && typeof sourceObj.addEventListener === 'function' && typeof sourceObj.removeEventListener === 'function';
-}
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @extends {Ignored}
- * @hide true
- */
-var FromEventObservable = (function (_super) {
-    __extends(FromEventObservable, _super);
-    function FromEventObservable(sourceObj, eventName, selector, options) {
-        _super.call(this);
-        this.sourceObj = sourceObj;
-        this.eventName = eventName;
-        this.selector = selector;
-        this.options = options;
-    }
-    /* tslint:enable:max-line-length */
-    /**
-     * Creates an Observable that emits events of a specific type coming from the
-     * given event target.
-     *
-     * <span class="informal">Creates an Observable from DOM events, or Node
-     * EventEmitter events or others.</span>
-     *
-     * <img src="./img/fromEvent.png" width="100%">
-     *
-     * Creates an Observable by attaching an event listener to an "event target",
-     * which may be an object with `addEventListener` and `removeEventListener`,
-     * a Node.js EventEmitter, a jQuery style EventEmitter, a NodeList from the
-     * DOM, or an HTMLCollection from the DOM. The event handler is attached when
-     * the output Observable is subscribed, and removed when the Subscription is
-     * unsubscribed.
-     *
-     * @example <caption>Emits clicks happening on the DOM document</caption>
-     * var clicks = Rx.Observable.fromEvent(document, 'click');
-     * clicks.subscribe(x => console.log(x));
-     *
-     * // Results in:
-     * // MouseEvent object logged to console everytime a click
-     * // occurs on the document.
-     *
-     * @see {@link from}
-     * @see {@link fromEventPattern}
-     *
-     * @param {EventTargetLike} target The DOMElement, event target, Node.js
-     * EventEmitter, NodeList or HTMLCollection to attach the event handler to.
-     * @param {string} eventName The event name of interest, being emitted by the
-     * `target`.
-     * @param {EventListenerOptions} [options] Options to pass through to addEventListener
-     * @param {SelectorMethodSignature<T>} [selector] An optional function to
-     * post-process results. It takes the arguments from the event handler and
-     * should return a single value.
-     * @return {Observable<T>}
-     * @static true
-     * @name fromEvent
-     * @owner Observable
-     */
-    FromEventObservable.create = function (target, eventName, options, selector) {
-        if (isFunction_1.isFunction(options)) {
-            selector = options;
-            options = undefined;
-        }
-        return new FromEventObservable(target, eventName, selector, options);
-    };
-    FromEventObservable.setupSubscription = function (sourceObj, eventName, handler, subscriber, options) {
-        var unsubscribe;
-        if (isNodeList(sourceObj) || isHTMLCollection(sourceObj)) {
-            for (var i = 0, len = sourceObj.length; i < len; i++) {
-                FromEventObservable.setupSubscription(sourceObj[i], eventName, handler, subscriber, options);
-            }
-        }
-        else if (isEventTarget(sourceObj)) {
-            var source_1 = sourceObj;
-            sourceObj.addEventListener(eventName, handler, options);
-            unsubscribe = function () { return source_1.removeEventListener(eventName, handler); };
-        }
-        else if (isJQueryStyleEventEmitter(sourceObj)) {
-            var source_2 = sourceObj;
-            sourceObj.on(eventName, handler);
-            unsubscribe = function () { return source_2.off(eventName, handler); };
-        }
-        else if (isNodeStyleEventEmitter(sourceObj)) {
-            var source_3 = sourceObj;
-            sourceObj.addListener(eventName, handler);
-            unsubscribe = function () { return source_3.removeListener(eventName, handler); };
-        }
-        else {
-            throw new TypeError('Invalid event target');
-        }
-        subscriber.add(new Subscription_1.Subscription(unsubscribe));
-    };
-    FromEventObservable.prototype._subscribe = function (subscriber) {
-        var sourceObj = this.sourceObj;
-        var eventName = this.eventName;
-        var options = this.options;
-        var selector = this.selector;
-        var handler = selector ? function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i - 0] = arguments[_i];
-            }
-            var result = tryCatch_1.tryCatch(selector).apply(void 0, args);
-            if (result === errorObject_1.errorObject) {
-                subscriber.error(errorObject_1.errorObject.e);
-            }
-            else {
-                subscriber.next(result);
-            }
-        } : function (e) { return subscriber.next(e); };
-        FromEventObservable.setupSubscription(sourceObj, eventName, handler, subscriber, options);
-    };
-    return FromEventObservable;
-}(Observable_1.Observable));
-exports.FromEventObservable = FromEventObservable;
-//# sourceMappingURL=FromEventObservable.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/observable/fromEvent.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var FromEventObservable_1 = __webpack_require__("./node_modules/rxjs/observable/FromEventObservable.js");
-exports.fromEvent = FromEventObservable_1.FromEventObservable.create;
-//# sourceMappingURL=fromEvent.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/operator/takeUntil.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var OuterSubscriber_1 = __webpack_require__("./node_modules/rxjs/OuterSubscriber.js");
-var subscribeToResult_1 = __webpack_require__("./node_modules/rxjs/util/subscribeToResult.js");
-/**
- * Emits the values emitted by the source Observable until a `notifier`
- * Observable emits a value.
- *
- * <span class="informal">Lets values pass until a second Observable,
- * `notifier`, emits something. Then, it completes.</span>
- *
- * <img src="./img/takeUntil.png" width="100%">
- *
- * `takeUntil` subscribes and begins mirroring the source Observable. It also
- * monitors a second Observable, `notifier` that you provide. If the `notifier`
- * emits a value or a complete notification, the output Observable stops
- * mirroring the source Observable and completes.
- *
- * @example <caption>Tick every second until the first click happens</caption>
- * var interval = Rx.Observable.interval(1000);
- * var clicks = Rx.Observable.fromEvent(document, 'click');
- * var result = interval.takeUntil(clicks);
- * result.subscribe(x => console.log(x));
- *
- * @see {@link take}
- * @see {@link takeLast}
- * @see {@link takeWhile}
- * @see {@link skip}
- *
- * @param {Observable} notifier The Observable whose first emitted value will
- * cause the output Observable of `takeUntil` to stop emitting values from the
- * source Observable.
- * @return {Observable<T>} An Observable that emits the values from the source
- * Observable until such time as `notifier` emits its first value.
- * @method takeUntil
- * @owner Observable
- */
-function takeUntil(notifier) {
-    return this.lift(new TakeUntilOperator(notifier));
-}
-exports.takeUntil = takeUntil;
-var TakeUntilOperator = (function () {
-    function TakeUntilOperator(notifier) {
-        this.notifier = notifier;
-    }
-    TakeUntilOperator.prototype.call = function (subscriber, source) {
-        return source.subscribe(new TakeUntilSubscriber(subscriber, this.notifier));
-    };
-    return TakeUntilOperator;
-}());
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @ignore
- * @extends {Ignored}
- */
-var TakeUntilSubscriber = (function (_super) {
-    __extends(TakeUntilSubscriber, _super);
-    function TakeUntilSubscriber(destination, notifier) {
-        _super.call(this, destination);
-        this.notifier = notifier;
-        this.add(subscribeToResult_1.subscribeToResult(this, notifier));
-    }
-    TakeUntilSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex, innerSub) {
-        this.complete();
-    };
-    TakeUntilSubscriber.prototype.notifyComplete = function () {
-        // noop
-    };
-    return TakeUntilSubscriber;
-}(OuterSubscriber_1.OuterSubscriber));
-//# sourceMappingURL=takeUntil.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/symbol/iterator.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var root_1 = __webpack_require__("./node_modules/rxjs/util/root.js");
-function symbolIteratorPonyfill(root) {
-    var Symbol = root.Symbol;
-    if (typeof Symbol === 'function') {
-        if (!Symbol.iterator) {
-            Symbol.iterator = Symbol('iterator polyfill');
-        }
-        return Symbol.iterator;
-    }
-    else {
-        // [for Mozilla Gecko 27-35:](https://mzl.la/2ewE1zC)
-        var Set_1 = root.Set;
-        if (Set_1 && typeof new Set_1()['@@iterator'] === 'function') {
-            return '@@iterator';
-        }
-        var Map_1 = root.Map;
-        // required for compatability with es6-shim
-        if (Map_1) {
-            var keys = Object.getOwnPropertyNames(Map_1.prototype);
-            for (var i = 0; i < keys.length; ++i) {
-                var key = keys[i];
-                // according to spec, Map.prototype[@@iterator] and Map.orototype.entries must be equal.
-                if (key !== 'entries' && key !== 'size' && Map_1.prototype[key] === Map_1.prototype['entries']) {
-                    return key;
-                }
-            }
-        }
-        return '@@iterator';
-    }
-}
-exports.symbolIteratorPonyfill = symbolIteratorPonyfill;
-exports.iterator = symbolIteratorPonyfill(root_1.root);
-/**
- * @deprecated use iterator instead
- */
-exports.$$iterator = exports.iterator;
-//# sourceMappingURL=iterator.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/symbol/observable.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var root_1 = __webpack_require__("./node_modules/rxjs/util/root.js");
-function getSymbolObservable(context) {
-    var $$observable;
-    var Symbol = context.Symbol;
-    if (typeof Symbol === 'function') {
-        if (Symbol.observable) {
-            $$observable = Symbol.observable;
-        }
-        else {
-            $$observable = Symbol('observable');
-            Symbol.observable = $$observable;
-        }
-    }
-    else {
-        $$observable = '@@observable';
-    }
-    return $$observable;
-}
-exports.getSymbolObservable = getSymbolObservable;
-exports.observable = getSymbolObservable(root_1.root);
-/**
- * @deprecated use observable instead
- */
-exports.$$observable = exports.observable;
-//# sourceMappingURL=observable.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/symbol/rxSubscriber.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var root_1 = __webpack_require__("./node_modules/rxjs/util/root.js");
-var Symbol = root_1.root.Symbol;
-exports.rxSubscriber = (typeof Symbol === 'function' && typeof Symbol.for === 'function') ?
-    Symbol.for('rxSubscriber') : '@@rxSubscriber';
-/**
- * @deprecated use rxSubscriber instead
- */
-exports.$$rxSubscriber = exports.rxSubscriber;
-//# sourceMappingURL=rxSubscriber.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/util/UnsubscriptionError.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-/**
- * An error thrown when one or more errors have occurred during the
- * `unsubscribe` of a {@link Subscription}.
- */
-var UnsubscriptionError = (function (_super) {
-    __extends(UnsubscriptionError, _super);
-    function UnsubscriptionError(errors) {
-        _super.call(this);
-        this.errors = errors;
-        var err = Error.call(this, errors ?
-            errors.length + " errors occurred during unsubscription:\n  " + errors.map(function (err, i) { return ((i + 1) + ") " + err.toString()); }).join('\n  ') : '');
-        this.name = err.name = 'UnsubscriptionError';
-        this.stack = err.stack;
-        this.message = err.message;
-    }
-    return UnsubscriptionError;
-}(Error));
-exports.UnsubscriptionError = UnsubscriptionError;
-//# sourceMappingURL=UnsubscriptionError.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/util/errorObject.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// typeof any so that it we don't have to cast when comparing a result to the error object
-exports.errorObject = { e: {} };
-//# sourceMappingURL=errorObject.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/util/isArray.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-exports.isArray = Array.isArray || (function (x) { return x && typeof x.length === 'number'; });
-//# sourceMappingURL=isArray.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/util/isArrayLike.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-exports.isArrayLike = (function (x) { return x && typeof x.length === 'number'; });
-//# sourceMappingURL=isArrayLike.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/util/isFunction.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-function isFunction(x) {
-    return typeof x === 'function';
-}
-exports.isFunction = isFunction;
-//# sourceMappingURL=isFunction.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/util/isObject.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-function isObject(x) {
-    return x != null && typeof x === 'object';
-}
-exports.isObject = isObject;
-//# sourceMappingURL=isObject.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/util/isPromise.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-function isPromise(value) {
-    return value && typeof value.subscribe !== 'function' && typeof value.then === 'function';
-}
-exports.isPromise = isPromise;
-//# sourceMappingURL=isPromise.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/util/root.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
-// CommonJS / Node have global context exposed as "global" variable.
-// We don't want to include the whole node.d.ts this this compilation unit so we'll just fake
-// the global "global" var for now.
-var __window = typeof window !== 'undefined' && window;
-var __self = typeof self !== 'undefined' && typeof WorkerGlobalScope !== 'undefined' &&
-    self instanceof WorkerGlobalScope && self;
-var __global = typeof global !== 'undefined' && global;
-var _root = __window || __global || __self;
-exports.root = _root;
-// Workaround Closure Compiler restriction: The body of a goog.module cannot use throw.
-// This is needed when used with angular/tsickle which inserts a goog.module statement.
-// Wrap in IIFE
-(function () {
-    if (!_root) {
-        throw new Error('RxJS could not find any global context (window, self, global)');
-    }
-})();
-//# sourceMappingURL=root.js.map
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/global.js")))
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/util/subscribeToResult.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var root_1 = __webpack_require__("./node_modules/rxjs/util/root.js");
-var isArrayLike_1 = __webpack_require__("./node_modules/rxjs/util/isArrayLike.js");
-var isPromise_1 = __webpack_require__("./node_modules/rxjs/util/isPromise.js");
-var isObject_1 = __webpack_require__("./node_modules/rxjs/util/isObject.js");
-var Observable_1 = __webpack_require__("./node_modules/rxjs/Observable.js");
-var iterator_1 = __webpack_require__("./node_modules/rxjs/symbol/iterator.js");
-var InnerSubscriber_1 = __webpack_require__("./node_modules/rxjs/InnerSubscriber.js");
-var observable_1 = __webpack_require__("./node_modules/rxjs/symbol/observable.js");
-function subscribeToResult(outerSubscriber, result, outerValue, outerIndex) {
-    var destination = new InnerSubscriber_1.InnerSubscriber(outerSubscriber, outerValue, outerIndex);
-    if (destination.closed) {
-        return null;
-    }
-    if (result instanceof Observable_1.Observable) {
-        if (result._isScalar) {
-            destination.next(result.value);
-            destination.complete();
-            return null;
-        }
-        else {
-            return result.subscribe(destination);
-        }
-    }
-    else if (isArrayLike_1.isArrayLike(result)) {
-        for (var i = 0, len = result.length; i < len && !destination.closed; i++) {
-            destination.next(result[i]);
-        }
-        if (!destination.closed) {
-            destination.complete();
-        }
-    }
-    else if (isPromise_1.isPromise(result)) {
-        result.then(function (value) {
-            if (!destination.closed) {
-                destination.next(value);
-                destination.complete();
-            }
-        }, function (err) { return destination.error(err); })
-            .then(null, function (err) {
-            // Escaping the Promise trap: globally throw unhandled errors
-            root_1.root.setTimeout(function () { throw err; });
-        });
-        return destination;
-    }
-    else if (result && typeof result[iterator_1.iterator] === 'function') {
-        var iterator = result[iterator_1.iterator]();
-        do {
-            var item = iterator.next();
-            if (item.done) {
-                destination.complete();
-                break;
-            }
-            destination.next(item.value);
-            if (destination.closed) {
-                break;
-            }
-        } while (true);
-    }
-    else if (result && typeof result[observable_1.observable] === 'function') {
-        var obs = result[observable_1.observable]();
-        if (typeof obs.subscribe !== 'function') {
-            destination.error(new TypeError('Provided object does not correctly implement Symbol.observable'));
-        }
-        else {
-            return obs.subscribe(new InnerSubscriber_1.InnerSubscriber(outerSubscriber, outerValue, outerIndex));
-        }
-    }
-    else {
-        var value = isObject_1.isObject(result) ? 'an invalid object' : "'" + result + "'";
-        var msg = ("You provided " + value + " where a stream was expected.")
-            + ' You can provide an Observable, Promise, Array, or Iterable.';
-        destination.error(new TypeError(msg));
-    }
-    return null;
-}
-exports.subscribeToResult = subscribeToResult;
-//# sourceMappingURL=subscribeToResult.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/util/toSubscriber.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var Subscriber_1 = __webpack_require__("./node_modules/rxjs/Subscriber.js");
-var rxSubscriber_1 = __webpack_require__("./node_modules/rxjs/symbol/rxSubscriber.js");
-var Observer_1 = __webpack_require__("./node_modules/rxjs/Observer.js");
-function toSubscriber(nextOrObserver, error, complete) {
-    if (nextOrObserver) {
-        if (nextOrObserver instanceof Subscriber_1.Subscriber) {
-            return nextOrObserver;
-        }
-        if (nextOrObserver[rxSubscriber_1.rxSubscriber]) {
-            return nextOrObserver[rxSubscriber_1.rxSubscriber]();
-        }
-    }
-    if (!nextOrObserver && !error && !complete) {
-        return new Subscriber_1.Subscriber(Observer_1.empty);
-    }
-    return new Subscriber_1.Subscriber(nextOrObserver, error, complete);
-}
-exports.toSubscriber = toSubscriber;
-//# sourceMappingURL=toSubscriber.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/util/tryCatch.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var errorObject_1 = __webpack_require__("./node_modules/rxjs/util/errorObject.js");
-var tryCatchTarget;
-function tryCatcher() {
-    try {
-        return tryCatchTarget.apply(this, arguments);
-    }
-    catch (e) {
-        errorObject_1.errorObject.e = e;
-        return errorObject_1.errorObject;
-    }
-}
-function tryCatch(fn) {
-    tryCatchTarget = fn;
-    return tryCatcher;
-}
-exports.tryCatch = tryCatch;
-;
-//# sourceMappingURL=tryCatch.js.map
-
-/***/ }),
-
 /***/ "./node_modules/webpack/buildin/global.js":
 /***/ (function(module, exports) {
 
@@ -1679,7 +224,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var utils_1 = __webpack_require__("./src/utils/index.ts");
 var types_1 = __webpack_require__("./src/types/index.ts");
-var DataTableBodyCellComponent = (function () {
+var events_1 = __webpack_require__("./src/events.ts");
+var DataTableBodyCellComponent = /** @class */ (function () {
     function DataTableBodyCellComponent(element, cd) {
         this.cd = cd;
         this.activate = new core_1.EventEmitter();
@@ -1969,6 +515,10 @@ var DataTableBodyCellComponent = (function () {
     };
     __decorate([
         core_1.Input(),
+        __metadata("design:type", Object)
+    ], DataTableBodyCellComponent.prototype, "displayCheck", void 0);
+    __decorate([
+        core_1.Input(),
         __metadata("design:type", Object),
         __metadata("design:paramtypes", [Object])
     ], DataTableBodyCellComponent.prototype, "group", null);
@@ -2045,26 +595,26 @@ var DataTableBodyCellComponent = (function () {
     __decorate([
         core_1.HostListener('click', ['$event']),
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", [MouseEvent]),
+        __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", void 0)
     ], DataTableBodyCellComponent.prototype, "onClick", null);
     __decorate([
         core_1.HostListener('dblclick', ['$event']),
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", [MouseEvent]),
+        __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", void 0)
     ], DataTableBodyCellComponent.prototype, "onDblClick", null);
     __decorate([
         core_1.HostListener('keydown', ['$event']),
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", [KeyboardEvent]),
+        __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", void 0)
     ], DataTableBodyCellComponent.prototype, "onKeyDown", null);
     DataTableBodyCellComponent = __decorate([
         core_1.Component({
             selector: 'datatable-body-cell',
             changeDetection: core_1.ChangeDetectionStrategy.OnPush,
-            template: "\n    <div class=\"datatable-body-cell-label\">\n      <label\n        *ngIf=\"column.checkboxable\"\n        class=\"datatable-checkbox\">\n        <input\n          type=\"checkbox\"\n          [checked]=\"isSelected\"\n          (click)=\"onCheckboxChange($event)\"\n        />\n      </label>\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [title]=\"sanitizedValue\"\n        [innerHTML]=\"value\">\n      </span>\n      <ng-template #cellTemplate\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngTemplateOutletContext]=\"cellContext\">\n      </ng-template>\n    </div>\n  "
+            template: "\n    <div class=\"datatable-body-cell-label\">\n      <label\n        *ngIf=\"column.checkboxable && (!displayCheck || displayCheck(row, column, value))\"\n        class=\"datatable-checkbox\">\n        <input\n          type=\"checkbox\"\n          [checked]=\"isSelected\"\n          (click)=\"onCheckboxChange($event)\"\n        />\n      </label>\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [title]=\"sanitizedValue\"\n        [innerHTML]=\"value\">\n      </span>\n      <ng-template #cellTemplate\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngTemplateOutletContext]=\"cellContext\">\n      </ng-template>\n    </div>\n  "
         }),
         __metadata("design:paramtypes", [core_1.ElementRef, core_1.ChangeDetectorRef])
     ], DataTableBodyCellComponent);
@@ -2091,7 +641,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
-var DatatableGroupHeaderTemplateDirective = (function () {
+var DatatableGroupHeaderTemplateDirective = /** @class */ (function () {
     function DatatableGroupHeaderTemplateDirective(template) {
         this.template = template;
     }
@@ -2125,15 +675,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var body_group_header_template_directive_1 = __webpack_require__("./src/components/body/body-group-header-template.directive.ts");
-var DatatableGroupHeaderDirective = (function () {
+var DatatableGroupHeaderDirective = /** @class */ (function () {
     function DatatableGroupHeaderDirective() {
         /**
-         * The detail row height is required especially
-         * when virtual scroll is enabled.
+         * Row height is required when virtual scroll is enabled.
          */
         this.rowHeight = 0;
         /**
-         * Group visbility was toggled.
+         * Track toggling of group visibility
          */
         this.toggle = new core_1.EventEmitter();
     }
@@ -2147,7 +696,7 @@ var DatatableGroupHeaderDirective = (function () {
         });
     };
     /**
-     * API method to expand all groups.
+     * Expand all groups
      */
     DatatableGroupHeaderDirective.prototype.expandAllGroups = function () {
         this.toggle.emit({
@@ -2156,7 +705,7 @@ var DatatableGroupHeaderDirective = (function () {
         });
     };
     /**
-     * API method to collapse all groups.
+     * Collapse all groups
      */
     DatatableGroupHeaderDirective.prototype.collapseAllGroups = function () {
         this.toggle.emit({
@@ -2203,7 +752,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
-var DataTableRowWrapperComponent = (function () {
+var events_1 = __webpack_require__("./src/events.ts");
+var DataTableRowWrapperComponent = /** @class */ (function () {
     function DataTableRowWrapperComponent(cd, differs) {
         this.cd = cd;
         this.differs = differs;
@@ -2309,7 +859,7 @@ var DataTableRowWrapperComponent = (function () {
     __decorate([
         core_1.HostListener('contextmenu', ['$event']),
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", [MouseEvent]),
+        __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", void 0)
     ], DataTableRowWrapperComponent.prototype, "onContextmenu", null);
     DataTableRowWrapperComponent = __decorate([
@@ -2344,18 +894,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var utils_1 = __webpack_require__("./src/utils/index.ts");
 var services_1 = __webpack_require__("./src/services/index.ts");
-var DataTableBodyRowComponent = (function () {
+var events_1 = __webpack_require__("./src/events.ts");
+var DataTableBodyRowComponent = /** @class */ (function () {
     function DataTableBodyRowComponent(differs, scrollbarHelper, cd, element) {
         this.differs = differs;
         this.scrollbarHelper = scrollbarHelper;
         this.cd = cd;
         this.activate = new core_1.EventEmitter();
-        this.element = element.nativeElement;
-        this.rowDiffer = differs.find({}).create();
+        this._groupStyles = {
+            left: {},
+            center: {},
+            right: {}
+        };
+        this._element = element.nativeElement;
+        this._rowDiffer = differs.find({}).create();
     }
     Object.defineProperty(DataTableBodyRowComponent.prototype, "columns", {
         get: function () {
@@ -2375,10 +934,20 @@ var DataTableBodyRowComponent = (function () {
         set: function (val) {
             if (this._columns) {
                 var colByPin = utils_1.columnsByPin(this._columns);
-                this.columnGroupWidths = utils_1.columnGroupWidths(colByPin, colByPin);
+                this._columnGroupWidths = utils_1.columnGroupWidths(colByPin, colByPin);
             }
             this._innerWidth = val;
             this.recalculateColumns();
+            this.buildStylesByGroup();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataTableBodyRowComponent.prototype, "offsetX", {
+        get: function () { return this._offsetX; },
+        set: function (val) {
+            this._offsetX = val;
+            this.buildStylesByGroup();
         },
         enumerable: true,
         configurable: true
@@ -2413,13 +982,13 @@ var DataTableBodyRowComponent = (function () {
     });
     Object.defineProperty(DataTableBodyRowComponent.prototype, "columnsTotalWidths", {
         get: function () {
-            return this.columnGroupWidths.total;
+            return this._columnGroupWidths.total;
         },
         enumerable: true,
         configurable: true
     });
     DataTableBodyRowComponent.prototype.ngDoCheck = function () {
-        if (this.rowDiffer.diff(this.row)) {
+        if (this._rowDiffer.diff(this.row)) {
             this.cd.markForCheck();
         }
     };
@@ -2429,8 +998,14 @@ var DataTableBodyRowComponent = (function () {
     DataTableBodyRowComponent.prototype.columnTrackingFn = function (index, column) {
         return column.$$id;
     };
-    DataTableBodyRowComponent.prototype.stylesByGroup = function (group) {
-        var widths = this.columnGroupWidths;
+    DataTableBodyRowComponent.prototype.buildStylesByGroup = function () {
+        this._groupStyles['left'] = this.calcStylesByGroup('left');
+        this._groupStyles['center'] = this.calcStylesByGroup('center');
+        this._groupStyles['right'] = this.calcStylesByGroup('right');
+        this.cd.markForCheck();
+    };
+    DataTableBodyRowComponent.prototype.calcStylesByGroup = function (group) {
+        var widths = this._columnGroupWidths;
         var offsetX = this.offsetX;
         var styles = {
             width: widths[group] + "px"
@@ -2449,12 +1024,12 @@ var DataTableBodyRowComponent = (function () {
     };
     DataTableBodyRowComponent.prototype.onActivate = function (event, index) {
         event.cellIndex = index;
-        event.rowElement = this.element;
+        event.rowElement = this._element;
         this.activate.emit(event);
     };
     DataTableBodyRowComponent.prototype.onKeyDown = function (event) {
         var keyCode = event.keyCode;
-        var isTargetRow = event.target === this.element;
+        var isTargetRow = event.target === this._element;
         var isAction = keyCode === utils_1.Keys.return ||
             keyCode === utils_1.Keys.down ||
             keyCode === utils_1.Keys.up ||
@@ -2467,7 +1042,7 @@ var DataTableBodyRowComponent = (function () {
                 type: 'keydown',
                 event: event,
                 row: this.row,
-                rowElement: this.element
+                rowElement: this._element
             });
         }
     };
@@ -2476,15 +1051,15 @@ var DataTableBodyRowComponent = (function () {
             type: 'mouseenter',
             event: event,
             row: this.row,
-            rowElement: this.element
+            rowElement: this._element
         });
     };
     DataTableBodyRowComponent.prototype.recalculateColumns = function (val) {
         if (val === void 0) { val = this.columns; }
         this._columns = val;
         var colsByPin = utils_1.columnsByPin(this._columns);
-        this.columnsByPin = utils_1.allColumnsByPinArr(this._columns);
-        this.columnGroupWidths = utils_1.columnGroupWidths(colsByPin, this._columns);
+        this._columnsByPin = utils_1.columnsByPinArr(this._columns);
+        this._columnGroupWidths = utils_1.columnGroupWidths(colsByPin, this._columns);
     };
     __decorate([
         core_1.Input(),
@@ -2514,16 +1089,21 @@ var DataTableBodyRowComponent = (function () {
     ], DataTableBodyRowComponent.prototype, "group", void 0);
     __decorate([
         core_1.Input(),
-        __metadata("design:type", Number)
-    ], DataTableBodyRowComponent.prototype, "offsetX", void 0);
-    __decorate([
-        core_1.Input(),
         __metadata("design:type", Boolean)
     ], DataTableBodyRowComponent.prototype, "isSelected", void 0);
     __decorate([
         core_1.Input(),
         __metadata("design:type", Number)
     ], DataTableBodyRowComponent.prototype, "rowIndex", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Object)
+    ], DataTableBodyRowComponent.prototype, "displayCheck", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
+    ], DataTableBodyRowComponent.prototype, "offsetX", null);
     __decorate([
         core_1.HostBinding('class'),
         __metadata("design:type", Object),
@@ -2546,21 +1126,22 @@ var DataTableBodyRowComponent = (function () {
     __decorate([
         core_1.HostListener('keydown', ['$event']),
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", [KeyboardEvent]),
+        __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", void 0)
     ], DataTableBodyRowComponent.prototype, "onKeyDown", null);
     __decorate([
         core_1.HostListener('mouseenter', ['$event']),
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", [Event]),
+        __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", void 0)
     ], DataTableBodyRowComponent.prototype, "onMouseenter", null);
     DataTableBodyRowComponent = __decorate([
         core_1.Component({
             selector: 'datatable-body-row',
             changeDetection: core_1.ChangeDetectionStrategy.OnPush,
-            template: "\n    <div\n      *ngFor=\"let colGroup of columnsByPin; let i = index; trackBy: trackByGroups\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"stylesByGroup(colGroup.type)\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [group]=\"group\"\n        [expanded]=\"expanded\"\n        [isSelected]=\"isSelected\"\n        [rowIndex]=\"rowIndex\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>      \n  "
+            template: "\n    <div\n      *ngFor=\"let colGroup of _columnsByPin; let i = index; trackBy: trackByGroups\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"_groupStyles[colGroup.type]\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [group]=\"group\"\n        [expanded]=\"expanded\"\n        [isSelected]=\"isSelected\"\n        [rowIndex]=\"rowIndex\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        [displayCheck]=\"displayCheck\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>      \n  "
         }),
+        __param(1, core_1.SkipSelf()),
         __metadata("design:paramtypes", [core_1.KeyValueDiffers,
             services_1.ScrollbarHelper,
             core_1.ChangeDetectorRef,
@@ -2592,7 +1173,7 @@ var core_1 = __webpack_require__("@angular/core");
 var utils_1 = __webpack_require__("./src/utils/index.ts");
 var types_1 = __webpack_require__("./src/types/index.ts");
 var scroller_component_1 = __webpack_require__("./src/components/body/scroller.component.ts");
-var DataTableBodyComponent = (function () {
+var DataTableBodyComponent = /** @class */ (function () {
     /**
      * Creates an instance of DataTableBodyComponent.
      */
@@ -2734,9 +1315,11 @@ var DataTableBodyComponent = (function () {
          * calculate scroll height automatically (as height will be undefined).
          */
         get: function () {
-            if (this.scrollbarV) {
+            if (this.scrollbarV && this.rowCount) {
                 return this.rowHeightsCache.query(this.rowCount - 1);
             }
+            // avoid TS7030: Not all code paths return a value.
+            return undefined;
         },
         enumerable: true,
         configurable: true
@@ -2830,7 +1413,7 @@ var DataTableBodyComponent = (function () {
             offset = Math.ceil(offset);
         }
         else if (direction === 'down') {
-            offset = Math.ceil(offset);
+            offset = Math.floor(offset);
         }
         if (direction !== undefined && !isNaN(offset)) {
             this.page.emit({ offset: offset });
@@ -2845,12 +1428,12 @@ var DataTableBodyComponent = (function () {
         var idx = 0;
         var temp = [];
         this.rowIndexes.clear();
-        // if grouprowsby has been specified treat row paging 
-        // parameters as group paging parameters ie if limit 10 has been 
-        // specified treat it as 10 groups rather than 10 rows    
+        // if grouprowsby has been specified treat row paging
+        // parameters as group paging parameters ie if limit 10 has been
+        // specified treat it as 10 groups rather than 10 rows
         if (this.groupedRows) {
             var maxRowsPerGroup = 3;
-            // if there is only one group set the maximum number of 
+            // if there is only one group set the maximum number of
             // rows per group the same as the total number of rows
             if (this.groupedRows.length === 1) {
                 maxRowsPerGroup = this.groupedRows[0].value.length;
@@ -2876,17 +1459,21 @@ var DataTableBodyComponent = (function () {
             }
         }
         this.temp = temp;
+        this.cd.detectChanges();
     };
     /**
      * Get the row height
      */
     DataTableBodyComponent.prototype.getRowHeight = function (row) {
-        var rowHeight = this.rowHeight;
+        var height;
         // if its a function return it
         if (typeof this.rowHeight === 'function') {
-            rowHeight = this.rowHeight(row);
+            height = this.rowHeight(row);
         }
-        return rowHeight;
+        else {
+            height = this.rowHeight;
+        }
+        return height;
     };
     /**
      * @param group the group with all rows
@@ -2970,12 +1557,20 @@ var DataTableBodyComponent = (function () {
         var first = 0;
         var last = 0;
         if (this.scrollbarV) {
-            // Calculation of the first and last indexes will be based on where the
-            // scrollY position would be at.  The last index would be the one
-            // that shows up inside the view port the last.
-            var height = parseInt(this.bodyHeight, 0);
-            first = this.rowHeightsCache.getRowIndex(this.offsetY);
-            last = this.rowHeightsCache.getRowIndex(height + this.offsetY) + 1;
+            if (this.virtualization) {
+                // Calculation of the first and last indexes will be based on where the
+                // scrollY position would be at.  The last index would be the one
+                // that shows up inside the view port the last.
+                var height = parseInt(this.bodyHeight, 0);
+                first = this.rowHeightsCache.getRowIndex(this.offsetY);
+                last = this.rowHeightsCache.getRowIndex(height + this.offsetY) + 1;
+            }
+            else {
+                // If virtual rows are not needed
+                // We render all in one go
+                first = 0;
+                last = this.rowCount;
+            }
         }
         else {
             // The server is handling paging and will pass an array that begins with the
@@ -3145,7 +1740,7 @@ var DataTableBodyComponent = (function () {
     ], DataTableBodyComponent.prototype, "externalPaging", void 0);
     __decorate([
         core_1.Input(),
-        __metadata("design:type", Number)
+        __metadata("design:type", Object)
     ], DataTableBodyComponent.prototype, "rowHeight", void 0);
     __decorate([
         core_1.Input(),
@@ -3181,6 +1776,10 @@ var DataTableBodyComponent = (function () {
     ], DataTableBodyComponent.prototype, "selectCheck", void 0);
     __decorate([
         core_1.Input(),
+        __metadata("design:type", Object)
+    ], DataTableBodyComponent.prototype, "displayCheck", void 0);
+    __decorate([
+        core_1.Input(),
         __metadata("design:type", String)
     ], DataTableBodyComponent.prototype, "trackByProp", void 0);
     __decorate([
@@ -3203,6 +1802,10 @@ var DataTableBodyComponent = (function () {
         core_1.Input(),
         __metadata("design:type", String)
     ], DataTableBodyComponent.prototype, "groupRowsBy", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], DataTableBodyComponent.prototype, "virtualization", void 0);
     __decorate([
         core_1.Input(),
         __metadata("design:type", Number),
@@ -3270,7 +1873,7 @@ var DataTableBodyComponent = (function () {
     DataTableBodyComponent = __decorate([
         core_1.Component({
             selector: 'datatable-body',
-            template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [rows]=\"rows\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-row-wrapper\n          [groupedRows]=\"groupedRows\"\n          *ngFor=\"let group of temp; let i = index; trackBy: rowTrackingFn;\"\n          [innerWidth]=\"innerWidth\"\n          [ngStyle]=\"getRowsStyles(group)\"\n          [rowDetail]=\"rowDetail\"\n          [groupHeader]=\"groupHeader\"\n          [offsetX]=\"offsetX\"\n          [detailRowHeight]=\"getDetailRowHeight(group[i],i)\"\n          [row]=\"group\"\n          [expanded]=\"getRowExpanded(group)\"\n          [rowIndex]=\"getRowIndex(group[i])\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-row \n            *ngIf=\"!groupedRows; else groupedRowsTemplate\"        \n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(group)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"getRowHeight(group)\"\n            [row]=\"group\"\n            [rowIndex]=\"getRowIndex(group)\"\n            [expanded]=\"getRowExpanded(group)\"            \n            [rowClass]=\"rowClass\"\n            (activate)=\"selector.onActivate($event, indexes.first + i)\">\n          </datatable-body-row>\n          <ng-template #groupedRowsTemplate>\n            <datatable-body-row\n              *ngFor=\"let row of group.value; let i = index; trackBy: rowTrackingFn;\"\n              tabindex=\"-1\"\n              [isSelected]=\"selector.getRowSelected(row)\"\n              [innerWidth]=\"innerWidth\"\n              [offsetX]=\"offsetX\"\n              [columns]=\"columns\"\n              [rowHeight]=\"getRowHeight(row)\"\n              [row]=\"row\"\n              [group]=\"group.value\"\n              [rowIndex]=\"getRowIndex(row)\"\n              [expanded]=\"getRowExpanded(row)\"\n              [rowClass]=\"rowClass\"\n              (activate)=\"selector.onActivate($event, i)\">\n            </datatable-body-row>\n          </ng-template>\n        </datatable-row-wrapper>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
+            template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [rows]=\"rows\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths?.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-row-wrapper\n          [groupedRows]=\"groupedRows\"\n          *ngFor=\"let group of temp; let i = index; trackBy: rowTrackingFn;\"\n          [innerWidth]=\"innerWidth\"\n          [ngStyle]=\"getRowsStyles(group)\"\n          [rowDetail]=\"rowDetail\"\n          [groupHeader]=\"groupHeader\"\n          [offsetX]=\"offsetX\"\n          [detailRowHeight]=\"getDetailRowHeight(group[i],i)\"\n          [row]=\"group\"\n          [expanded]=\"getRowExpanded(group)\"\n          [rowIndex]=\"getRowIndex(group[i])\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-row\n            *ngIf=\"!groupedRows; else groupedRowsTemplate\"\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(group)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"getRowHeight(group)\"\n            [row]=\"group\"\n            [rowIndex]=\"getRowIndex(group)\"\n            [expanded]=\"getRowExpanded(group)\"\n            [rowClass]=\"rowClass\"\n            [displayCheck]=\"displayCheck\"\n            (activate)=\"selector.onActivate($event, indexes.first + i)\">\n          </datatable-body-row>\n          <ng-template #groupedRowsTemplate>\n            <datatable-body-row\n              *ngFor=\"let row of group.value; let i = index; trackBy: rowTrackingFn;\"\n              tabindex=\"-1\"\n              [isSelected]=\"selector.getRowSelected(row)\"\n              [innerWidth]=\"innerWidth\"\n              [offsetX]=\"offsetX\"\n              [columns]=\"columns\"\n              [rowHeight]=\"getRowHeight(row)\"\n              [row]=\"row\"\n              [group]=\"group.value\"\n              [rowIndex]=\"getRowIndex(row)\"\n              [expanded]=\"getRowExpanded(row)\"\n              [rowClass]=\"rowClass\"\n              (activate)=\"selector.onActivate($event, i)\">\n            </datatable-body-row>\n          </ng-template>\n        </datatable-row-wrapper>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length && !loadingIndicator\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
             changeDetection: core_1.ChangeDetectionStrategy.OnPush,
             host: {
                 class: 'datatable-body'
@@ -3320,7 +1923,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
-var ProgressBarComponent = (function () {
+var ProgressBarComponent = /** @class */ (function () {
     function ProgressBarComponent() {
     }
     ProgressBarComponent = __decorate([
@@ -3353,8 +1956,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
-var ScrollerComponent = (function () {
-    function ScrollerComponent(element, renderer) {
+var ScrollerComponent = /** @class */ (function () {
+    function ScrollerComponent(ngZone, element, renderer) {
+        this.ngZone = ngZone;
         this.renderer = renderer;
         this.scrollbarV = false;
         this.scrollbarH = false;
@@ -3366,15 +1970,19 @@ var ScrollerComponent = (function () {
         this.element = element.nativeElement;
     }
     ScrollerComponent.prototype.ngOnInit = function () {
+        var _this = this;
         // manual bind so we don't always listen
         if (this.scrollbarV || this.scrollbarH) {
-            this.parentElement = this.element.parentElement.parentElement;
-            this.onScrollListener = this.renderer.listen(this.parentElement, 'scroll', this.onScrolled.bind(this));
+            var renderer = this.renderer;
+            this.parentElement = renderer.parentNode(renderer.parentNode(this.element));
+            this.ngZone.runOutsideAngular(function () {
+                _this.parentElement.addEventListener('scroll', _this.onScrolled.bind(_this));
+            });
         }
     };
     ScrollerComponent.prototype.ngOnDestroy = function () {
         if (this.scrollbarV || this.scrollbarH) {
-            this.onScrollListener();
+            this.parentElement.removeEventListener('scroll', this.onScrolled.bind(this));
         }
     };
     ScrollerComponent.prototype.setOffset = function (offsetY) {
@@ -3383,10 +1991,13 @@ var ScrollerComponent = (function () {
         }
     };
     ScrollerComponent.prototype.onScrolled = function (event) {
+        var _this = this;
         var dom = event.currentTarget;
-        this.scrollYPos = dom.scrollTop;
-        this.scrollXPos = dom.scrollLeft;
-        requestAnimationFrame(this.updateOffset.bind(this));
+        requestAnimationFrame(function () {
+            _this.scrollYPos = dom.scrollTop;
+            _this.scrollXPos = dom.scrollLeft;
+            _this.updateOffset();
+        });
     };
     ScrollerComponent.prototype.updateOffset = function () {
         var direction;
@@ -3435,7 +2046,7 @@ var ScrollerComponent = (function () {
             },
             changeDetection: core_1.ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [core_1.ElementRef, core_1.Renderer])
+        __metadata("design:paramtypes", [core_1.NgZone, core_1.ElementRef, core_1.Renderer2])
     ], ScrollerComponent);
     return ScrollerComponent;
 }());
@@ -3462,7 +2073,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var utils_1 = __webpack_require__("./src/utils/index.ts");
 var types_1 = __webpack_require__("./src/types/index.ts");
-var DataTableSelectionComponent = (function () {
+var DataTableSelectionComponent = /** @class */ (function () {
     function DataTableSelectionComponent() {
         this.activate = new core_1.EventEmitter();
         this.select = new core_1.EventEmitter();
@@ -3647,7 +2258,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
-var DataTableColumnCellDirective = (function () {
+var DataTableColumnCellDirective = /** @class */ (function () {
     function DataTableColumnCellDirective(template) {
         this.template = template;
     }
@@ -3678,7 +2289,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
-var DataTableColumnHeaderDirective = (function () {
+var DataTableColumnHeaderDirective = /** @class */ (function () {
     function DataTableColumnHeaderDirective(template) {
         this.template = template;
     }
@@ -3711,7 +2322,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var column_header_directive_1 = __webpack_require__("./src/components/columns/column-header.directive.ts");
 var column_cell_directive_1 = __webpack_require__("./src/components/columns/column-cell.directive.ts");
-var DataTableColumnDirective = (function () {
+var DataTableColumnDirective = /** @class */ (function () {
     function DataTableColumnDirective() {
     }
     __decorate([
@@ -3826,7 +2437,7 @@ __export(__webpack_require__("./src/components/columns/column-cell.directive.ts"
 /***/ (function(module, exports, __webpack_require__) {
 
 
-        var result = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/postcss-loader/index.js!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":true}!./src/components/datatable.component.scss");
+        var result = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/postcss-loader/index.js!./node_modules/sass-loader/lib/loader.js??ref--3-4!./src/components/datatable.component.scss");
 
         if (typeof result === "string") {
             module.exports = result;
@@ -3859,6 +2470,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var utils_1 = __webpack_require__("./src/utils/index.ts");
@@ -3869,9 +2483,12 @@ var body_group_header_directive_1 = __webpack_require__("./src/components/body/b
 var columns_1 = __webpack_require__("./src/components/columns/index.ts");
 var row_detail_1 = __webpack_require__("./src/components/row-detail/index.ts");
 var footer_1 = __webpack_require__("./src/components/footer/index.ts");
-var DatatableComponent = (function () {
-    function DatatableComponent(scrollbarHelper, cd, element, differs) {
+var header_1 = __webpack_require__("./src/components/header/index.ts");
+var BehaviorSubject_1 = __webpack_require__("rxjs/BehaviorSubject");
+var DatatableComponent = /** @class */ (function () {
+    function DatatableComponent(scrollbarHelper, dimensionsHelper, cd, element, differs) {
         this.scrollbarHelper = scrollbarHelper;
+        this.dimensionsHelper = dimensionsHelper;
         this.cd = cd;
         /**
          * List of row objects that should be
@@ -3977,6 +2594,18 @@ var DatatableComponent = (function () {
          */
         this.groupExpansionDefault = false;
         /**
+         * Property to which you can use for determining select all
+         * rows on current page or not.
+         *
+         * @type {boolean}
+         * @memberOf DatatableComponent
+         */
+        this.selectAllRowsOnPage = false;
+        /**
+         * A flag for row virtualization on / off
+         */
+        this.virtualization = true;
+        /**
          * Body was scrolled typically in a `scrollbarV:true` scenario.
          */
         this.scroll = new core_1.EventEmitter();
@@ -4011,7 +2640,7 @@ var DatatableComponent = (function () {
          */
         this.tableContextmenu = new core_1.EventEmitter(false);
         this.rowCount = 0;
-        this.offsetX = 0;
+        this._offsetX = new BehaviorSubject_1.BehaviorSubject(0);
         this._count = 0;
         this._offset = 0;
         // get ref to elm for measuring
@@ -4030,12 +2659,12 @@ var DatatableComponent = (function () {
          */
         set: function (val) {
             this._rows = val;
+            if (val) {
+                this._internalRows = val.slice();
+            }
             // auto sort on new updates
             if (!this.externalSorting) {
-                this._internalRows = utils_1.sortRows(val, this._internalColumns, this.sorts);
-            }
-            else {
-                this._internalRows = val.slice();
+                this._internalRows = utils_1.sortRows(this._internalRows, this._internalColumns, this.sorts);
             }
             // recalculate sizes/etc
             this.recalculate();
@@ -4260,16 +2889,7 @@ var DatatableComponent = (function () {
          */
         set: function (val) {
             this._columnTemplates = val;
-            if (val) {
-                // only set this if results were brought back
-                var arr = val.toArray();
-                if (arr.length) {
-                    // translate them to normal objects
-                    this._internalColumns = utils_1.translateTemplates(arr);
-                    utils_1.setColumnDefaults(this._internalColumns);
-                    this.recalculateColumns();
-                }
-            }
+            this.translateColumns(val);
         },
         enumerable: true,
         configurable: true
@@ -4279,10 +2899,14 @@ var DatatableComponent = (function () {
          * Returns if all rows are selected.
          */
         get: function () {
-            return this.selected &&
-                this.rows &&
-                this.rows.length !== 0 &&
-                this.selected.length === this.rows.length;
+            var allRowsSelected = (this.rows && this.selected && this.selected.length === this.rows.length);
+            if (this.selectAllRowsOnPage) {
+                var indexes = this.bodyComponent.indexes;
+                var rowsOnPage = indexes.last - indexes.first;
+                allRowsSelected = (this.selected.length === rowsOnPage);
+            }
+            return this.selected && this.rows &&
+                this.rows.length !== 0 && allRowsSelected;
         },
         enumerable: true,
         configurable: true
@@ -4304,10 +2928,13 @@ var DatatableComponent = (function () {
     DatatableComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
         if (!this.externalSorting) {
-            this._internalRows = utils_1.sortRows(this._rows, this._internalColumns, this.sorts);
+            this._internalRows = utils_1.sortRows(this._internalRows, this._internalColumns, this.sorts);
         }
         // this has to be done to prevent the change detection
         // tree from freaking out because we are readjusting
+        if (typeof requestAnimationFrame === 'undefined') {
+            return;
+        }
         requestAnimationFrame(function () {
             _this.recalculate();
             // emit page for virtual server-side kickoff
@@ -4320,6 +2947,30 @@ var DatatableComponent = (function () {
                 });
             }
         });
+    };
+    /**
+     * Lifecycle hook that is called after a component's
+     * content has been fully initialized.
+     */
+    DatatableComponent.prototype.ngAfterContentInit = function () {
+        var _this = this;
+        this.columnTemplates.changes.subscribe(function (v) {
+            return _this.translateColumns(v);
+        });
+    };
+    /**
+     * Translates the templates to the column objects
+     */
+    DatatableComponent.prototype.translateColumns = function (val) {
+        if (val) {
+            var arr = val.toArray();
+            if (arr.length) {
+                this._internalColumns = utils_1.translateTemplates(arr);
+                utils_1.setColumnDefaults(this._internalColumns);
+                this.recalculateColumns();
+                this.cd.markForCheck();
+            }
+        }
     };
     /**
      * Creates a map with the data grouped by the user choice of grouping index
@@ -4353,7 +3004,7 @@ var DatatableComponent = (function () {
     DatatableComponent.prototype.ngDoCheck = function () {
         if (this.rowDiffer.diff(this.rows)) {
             if (!this.externalSorting) {
-                this._internalRows = utils_1.sortRows(this._rows, this._internalColumns, this.sorts);
+                this._internalRows = utils_1.sortRows(this._internalRows, this._internalColumns, this.sorts);
             }
             else {
                 this._internalRows = this.rows.slice();
@@ -4392,8 +3043,8 @@ var DatatableComponent = (function () {
         if (forceIdx === void 0) { forceIdx = -1; }
         if (allowBleed === void 0) { allowBleed = this.scrollbarH; }
         if (!columns)
-            return;
-        var width = this.innerWidth;
+            return undefined;
+        var width = this._innerWidth;
         if (this.scrollbarV) {
             width = width - this.scrollbarHelper.width;
         }
@@ -4411,8 +3062,8 @@ var DatatableComponent = (function () {
      *
      */
     DatatableComponent.prototype.recalculateDims = function () {
-        var dims = this.element.getBoundingClientRect();
-        this.innerWidth = Math.floor(dims.width);
+        var dims = this.dimensionsHelper.getDimensions(this.element);
+        this._innerWidth = Math.floor(dims.width);
         if (this.scrollbarV) {
             var height = dims.height;
             if (this.headerHeight)
@@ -4447,8 +3098,9 @@ var DatatableComponent = (function () {
      * The body triggered a scroll event.
      */
     DatatableComponent.prototype.onBodyScroll = function (event) {
-        this.offsetX = event.offsetX;
+        this._offsetX.next(event.offsetX);
         this.scroll.emit(event);
+        this.cd.detectChanges();
     };
     /**
      * The footer triggered a page event.
@@ -4462,6 +3114,12 @@ var DatatableComponent = (function () {
             limit: this.limit,
             offset: this.offset
         });
+        if (this.selectAllRowsOnPage) {
+            this.selected = [];
+            this.select.emit({
+                selected: this.selected
+            });
+        }
     };
     /**
      * Recalculates the sizes of the page
@@ -4567,12 +3225,19 @@ var DatatableComponent = (function () {
      * The header triggered a column sort event.
      */
     DatatableComponent.prototype.onColumnSort = function (event) {
+        // clean selected rows
+        if (this.selectAllRowsOnPage) {
+            this.selected = [];
+            this.select.emit({
+                selected: this.selected
+            });
+        }
         var sorts = event.sorts;
         // this could be optimized better since it will resort
         // the rows again on the 'push' detection...
         if (this.externalSorting === false) {
             // don't use normal setter so we don't resort
-            this._internalRows = utils_1.sortRows(this.rows, this._internalColumns, sorts);
+            this._internalRows = utils_1.sortRows(this._internalRows, this._internalColumns, sorts);
         }
         this.sorts = sorts;
         // Always go to first page when sorting to see the newly sorted data
@@ -4584,18 +3249,32 @@ var DatatableComponent = (function () {
      * Toggle all row selection
      */
     DatatableComponent.prototype.onHeaderSelect = function (event) {
-        // before we splice, chk if we currently have all selected
-        var allSelected = this.selected.length === this.rows.length;
-        // remove all existing either way
-        this.selected = [];
-        // do the opposite here
-        if (!allSelected) {
-            (_a = this.selected).push.apply(_a, this.rows);
+        if (this.selectAllRowsOnPage) {
+            // before we splice, chk if we currently have all selected
+            var first = this.bodyComponent.indexes.first;
+            var last = this.bodyComponent.indexes.last;
+            var allSelected = this.selected.length === (last - first);
+            // remove all existing either way
+            this.selected = [];
+            // do the opposite here
+            if (!allSelected) {
+                (_a = this.selected).push.apply(_a, this._internalRows.slice(first, last));
+            }
+        }
+        else {
+            // before we splice, chk if we currently have all selected
+            var allSelected = this.selected.length === this.rows.length;
+            // remove all existing either way
+            this.selected = [];
+            // do the opposite here
+            if (!allSelected) {
+                (_b = this.selected).push.apply(_b, this.rows);
+            }
         }
         this.select.emit({
             selected: this.selected
         });
-        var _a;
+        var _a, _b;
     };
     /**
      * A row was selected from body
@@ -4660,8 +3339,8 @@ var DatatableComponent = (function () {
     ], DatatableComponent.prototype, "externalSorting", void 0);
     __decorate([
         core_1.Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
     ], DatatableComponent.prototype, "limit", null);
     __decorate([
         core_1.Input(),
@@ -4715,12 +3394,24 @@ var DatatableComponent = (function () {
     ], DatatableComponent.prototype, "selectCheck", void 0);
     __decorate([
         core_1.Input(),
+        __metadata("design:type", Function)
+    ], DatatableComponent.prototype, "displayCheck", void 0);
+    __decorate([
+        core_1.Input(),
         __metadata("design:type", Boolean)
     ], DatatableComponent.prototype, "groupExpansionDefault", void 0);
     __decorate([
         core_1.Input(),
         __metadata("design:type", String)
     ], DatatableComponent.prototype, "trackByProp", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Object)
+    ], DatatableComponent.prototype, "selectAllRowsOnPage", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], DatatableComponent.prototype, "virtualization", void 0);
     __decorate([
         core_1.Output(),
         __metadata("design:type", core_1.EventEmitter)
@@ -4825,6 +3516,10 @@ var DatatableComponent = (function () {
         __metadata("design:type", body_1.DataTableBodyComponent)
     ], DatatableComponent.prototype, "bodyComponent", void 0);
     __decorate([
+        core_1.ViewChild(header_1.DataTableHeaderComponent),
+        __metadata("design:type", header_1.DataTableHeaderComponent)
+    ], DatatableComponent.prototype, "headerComponent", void 0);
+    __decorate([
         core_1.HostListener('window:resize'),
         utils_1.throttleable(5),
         __metadata("design:type", Function),
@@ -4834,7 +3529,7 @@ var DatatableComponent = (function () {
     DatatableComponent = __decorate([
         core_1.Component({
             selector: 'ngx-datatable',
-            template: "\n    <div\n      visibilityObserver\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"innerWidth\"\n        [offsetX]=\"offsetX\"\n        [dealsWithGroup]=\"groupedRows\"\n        [columns]=\"_internalColumns\"\n        [headerHeight]=\"headerHeight\"\n        [reorderable]=\"reorderable\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        [selectionType]=\"selectionType\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\"\n        (columnContextmenu)=\"onColumnContextmenu($event)\">\n      </datatable-header>\n      <datatable-body\n        [groupRowsBy]=\"groupRowsBy\"\n        [groupedRows]=\"groupedRows\"\n        [rows]=\"_internalRows\"\n        [groupExpansionDefault]=\"groupExpansionDefault\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [externalPaging]=\"externalPaging\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"_internalColumns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"offsetX\"\n        [rowDetail]=\"rowDetail\"\n        [groupHeader]=\"groupHeader\"\n        [selected]=\"selected\"\n        [innerWidth]=\"innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [rowClass]=\"rowClass\"\n        [selectCheck]=\"selectCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"onRowContextmenu($event)\"\n        (select)=\"onBodySelect($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [footerTemplate]=\"footer\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [selectedCount]=\"selected.length\"\n        [selectedMessage]=\"!!selectionType && messages.selectedMessage\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
+            template: "\n    <div\n      visibilityObserver\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"_innerWidth\"\n        [offsetX]=\"_offsetX | async\"\n        [dealsWithGroup]=\"groupedRows\"\n        [columns]=\"_internalColumns\"\n        [headerHeight]=\"headerHeight\"\n        [reorderable]=\"reorderable\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        [selectionType]=\"selectionType\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\"\n        (columnContextmenu)=\"onColumnContextmenu($event)\">\n      </datatable-header>\n      <datatable-body\n        [groupRowsBy]=\"groupRowsBy\"\n        [groupedRows]=\"groupedRows\"\n        [rows]=\"_internalRows\"\n        [groupExpansionDefault]=\"groupExpansionDefault\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [virtualization]=\"virtualization\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [externalPaging]=\"externalPaging\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"_internalColumns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"_offsetX | async\"\n        [rowDetail]=\"rowDetail\"\n        [groupHeader]=\"groupHeader\"\n        [selected]=\"selected\"\n        [innerWidth]=\"_innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [rowClass]=\"rowClass\"\n        [selectCheck]=\"selectCheck\"\n        [displayCheck]=\"displayCheck\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"onRowContextmenu($event)\"\n        (select)=\"onBodySelect($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [footerTemplate]=\"footer\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [selectedCount]=\"selected.length\"\n        [selectedMessage]=\"!!selectionType && messages.selectedMessage\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
             changeDetection: core_1.ChangeDetectionStrategy.OnPush,
             encapsulation: core_1.ViewEncapsulation.None,
             styles: [__webpack_require__("./src/components/datatable.component.scss")],
@@ -4842,7 +3537,10 @@ var DatatableComponent = (function () {
                 class: 'ngx-datatable'
             }
         }),
+        __param(0, core_1.SkipSelf()),
+        __param(1, core_1.SkipSelf()),
         __metadata("design:paramtypes", [services_1.ScrollbarHelper,
+            services_1.DimensionsHelper,
             core_1.ChangeDetectorRef,
             core_1.ElementRef,
             core_1.KeyValueDiffers])
@@ -4870,7 +3568,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
-var DataTableFooterTemplateDirective = (function () {
+var DataTableFooterTemplateDirective = /** @class */ (function () {
     function DataTableFooterTemplateDirective(template) {
         this.template = template;
     }
@@ -4901,7 +3599,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
-var DataTableFooterComponent = (function () {
+var DataTableFooterComponent = /** @class */ (function () {
     function DataTableFooterComponent() {
         this.selectedCount = 0;
         this.page = new core_1.EventEmitter();
@@ -5006,7 +3704,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var footer_template_directive_1 = __webpack_require__("./src/components/footer/footer-template.directive.ts");
-var DatatableFooterDirective = (function () {
+var DatatableFooterDirective = /** @class */ (function () {
     function DatatableFooterDirective() {
     }
     __decorate([
@@ -5085,7 +3783,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
-var DataTablePagerComponent = (function () {
+var DataTablePagerComponent = /** @class */ (function () {
     function DataTablePagerComponent() {
         this.change = new core_1.EventEmitter();
         this._count = 0;
@@ -5218,7 +3916,7 @@ var DataTablePagerComponent = (function () {
     DataTablePagerComponent = __decorate([
         core_1.Component({
             selector: 'datatable-pager',
-            template: "\n    <ul class=\"pager\">\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(1)\">\n          <i class=\"{{pagerPreviousIcon}}\"></i>\n        </a>\n      </li>\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"prevPage()\">\n          <i class=\"{{pagerLeftArrowIcon}}\"></i>\n        </a>\n      </li>\n      <li\n        class=\"pages\"\n        *ngFor=\"let pg of pages\"\n        [class.active]=\"pg.number === page\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(pg.number)\">\n          {{pg.text}}\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"nextPage()\">\n          <i class=\"{{pagerRightArrowIcon}}\"></i>\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(totalPages)\">\n          <i class=\"{{pagerNextIcon}}\"></i>\n        </a>\n      </li>\n    </ul>\n  ",
+            template: "\n    <ul class=\"pager\">\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          role=\"button\"\n          aria-label=\"go to first page\"\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(1)\">\n          <i class=\"{{pagerPreviousIcon}}\"></i>\n        </a>\n      </li>\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          role=\"button\"\n          aria-label=\"go to previous page\"\n          href=\"javascript:void(0)\"\n          (click)=\"prevPage()\">\n          <i class=\"{{pagerLeftArrowIcon}}\"></i>\n        </a>\n      </li>\n      <li\n        role=\"button\"\n        [attr.aria-label]=\"'page ' + pg.number\"\n        class=\"pages\"\n        *ngFor=\"let pg of pages\"\n        [class.active]=\"pg.number === page\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(pg.number)\">\n          {{pg.text}}\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          role=\"button\"\n          aria-label=\"go to next page\"\n          href=\"javascript:void(0)\"\n          (click)=\"nextPage()\">\n          <i class=\"{{pagerRightArrowIcon}}\"></i>\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          role=\"button\"\n          aria-label=\"go to last page\"\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(totalPages)\">\n          <i class=\"{{pagerNextIcon}}\"></i>\n        </a>\n      </li>\n    </ul>\n  ",
             host: {
                 class: 'datatable-pager'
             },
@@ -5250,7 +3948,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var types_1 = __webpack_require__("./src/types/index.ts");
 var utils_1 = __webpack_require__("./src/utils/index.ts");
-var DataTableHeaderCellComponent = (function () {
+var events_1 = __webpack_require__("./src/events.ts");
+var DataTableHeaderCellComponent = /** @class */ (function () {
     function DataTableHeaderCellComponent(cd) {
         this.cd = cd;
         this.sort = new core_1.EventEmitter();
@@ -5296,6 +3995,7 @@ var DataTableHeaderCellComponent = (function () {
         set: function (val) {
             this._sorts = val;
             this.sortDir = this.calcSortDir(val);
+            this.cellContext.sortDir = this.sortDir;
             this.sortClass = this.calcSortClass(this.sortDir);
             this.cd.markForCheck();
         },
@@ -5487,13 +4187,13 @@ var DataTableHeaderCellComponent = (function () {
     __decorate([
         core_1.HostListener('contextmenu', ['$event']),
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", [MouseEvent]),
+        __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", void 0)
     ], DataTableHeaderCellComponent.prototype, "onContextmenu", null);
     DataTableHeaderCellComponent = __decorate([
         core_1.Component({
             selector: 'datatable-header-cell',
-            template: "\n    <div>\n      <label\n        *ngIf=\"isCheckboxable\"\n        class=\"datatable-checkbox\">\n        <input\n          type=\"checkbox\"\n          [checked]=\"allRowsSelected\"\n          (change)=\"select.emit(!allRowsSelected)\"\n        />\n      </label>\n      <span\n        *ngIf=\"!column.headerTemplate\"\n        class=\"datatable-header-cell-wrapper\">\n        <span\n          class=\"datatable-header-cell-label draggable\"\n          (click)=\"onSort()\"\n          [innerHTML]=\"name\">\n        </span>\n      </span>\n      <ng-template\n        *ngIf=\"column.headerTemplate\"\n        [ngTemplateOutlet]=\"column.headerTemplate\"\n        [ngTemplateOutletContext]=\"cellContext\">\n      </ng-template>\n      <span\n        (click)=\"onSort()\"\n        [class]=\"sortClass\">\n      </span>\n    </div>\n  ",
+            template: "\n    <div class=\"datatable-header-cell-template-wrap\">\n      <label\n        *ngIf=\"isCheckboxable\"\n        class=\"datatable-checkbox\">\n        <input\n          type=\"checkbox\"\n          [checked]=\"allRowsSelected\"\n          (change)=\"select.emit(!allRowsSelected)\"\n        />\n      </label>\n      <span\n        *ngIf=\"!column.headerTemplate\"\n        class=\"datatable-header-cell-wrapper\">\n        <span\n          class=\"datatable-header-cell-label draggable\"\n          (click)=\"onSort()\"\n          [innerHTML]=\"name\">\n        </span>\n      </span>\n      <ng-template\n        *ngIf=\"column.headerTemplate\"\n        [ngTemplateOutlet]=\"column.headerTemplate\"\n        [ngTemplateOutletContext]=\"cellContext\">\n      </ng-template>\n      <span\n        (click)=\"onSort()\"\n        [class]=\"sortClass\">\n      </span>\n    </div>\n  ",
             host: {
                 class: 'datatable-header-cell'
             },
@@ -5534,13 +4234,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var types_1 = __webpack_require__("./src/types/index.ts");
 var utils_1 = __webpack_require__("./src/utils/index.ts");
-var DataTableHeaderComponent = (function () {
-    function DataTableHeaderComponent() {
+var DataTableHeaderComponent = /** @class */ (function () {
+    function DataTableHeaderComponent(cd) {
+        this.cd = cd;
         this.sort = new core_1.EventEmitter();
         this.reorder = new core_1.EventEmitter();
         this.resize = new core_1.EventEmitter();
         this.select = new core_1.EventEmitter();
         this.columnContextmenu = new core_1.EventEmitter(false);
+        this._styleByGroup = {
+            left: {},
+            center: {},
+            right: {}
+        };
     }
     Object.defineProperty(DataTableHeaderComponent.prototype, "innerWidth", {
         get: function () {
@@ -5550,7 +4256,8 @@ var DataTableHeaderComponent = (function () {
             this._innerWidth = val;
             if (this._columns) {
                 var colByPin = utils_1.columnsByPin(this._columns);
-                this.columnGroupWidths = utils_1.columnGroupWidths(colByPin, this._columns);
+                this._columnGroupWidths = utils_1.columnGroupWidths(colByPin, this._columns);
+                this.setStylesByGroup();
             }
         },
         enumerable: true,
@@ -5578,8 +4285,18 @@ var DataTableHeaderComponent = (function () {
         set: function (val) {
             this._columns = val;
             var colsByPin = utils_1.columnsByPin(val);
-            this.columnsByPin = utils_1.columnsByPinArr(val);
-            this.columnGroupWidths = utils_1.columnGroupWidths(colsByPin, val);
+            this._columnsByPin = utils_1.columnsByPinArr(val);
+            this._columnGroupWidths = utils_1.columnGroupWidths(colsByPin, val);
+            this.setStylesByGroup();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataTableHeaderComponent.prototype, "offsetX", {
+        get: function () { return this._offsetX; },
+        set: function (val) {
+            this._offsetX = val;
+            this.setStylesByGroup();
         },
         enumerable: true,
         configurable: true
@@ -5673,8 +4390,14 @@ var DataTableHeaderComponent = (function () {
         }
         return sorts;
     };
-    DataTableHeaderComponent.prototype.stylesByGroup = function (group) {
-        var widths = this.columnGroupWidths;
+    DataTableHeaderComponent.prototype.setStylesByGroup = function () {
+        this._styleByGroup['left'] = this.calcStylesByGroup('left');
+        this._styleByGroup['center'] = this.calcStylesByGroup('center');
+        this._styleByGroup['right'] = this.calcStylesByGroup('right');
+        this.cd.detectChanges();
+    };
+    DataTableHeaderComponent.prototype.calcStylesByGroup = function (group) {
+        var widths = this._columnGroupWidths;
         var offsetX = this.offsetX;
         var styles = {
             width: widths[group] + "px"
@@ -5712,10 +4435,6 @@ var DataTableHeaderComponent = (function () {
     ], DataTableHeaderComponent.prototype, "innerWidth", null);
     __decorate([
         core_1.Input(),
-        __metadata("design:type", Number)
-    ], DataTableHeaderComponent.prototype, "offsetX", void 0);
-    __decorate([
-        core_1.Input(),
         __metadata("design:type", Array)
     ], DataTableHeaderComponent.prototype, "sorts", void 0);
     __decorate([
@@ -5746,6 +4465,11 @@ var DataTableHeaderComponent = (function () {
         __metadata("design:paramtypes", [Array])
     ], DataTableHeaderComponent.prototype, "columns", null);
     __decorate([
+        core_1.Input(),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
+    ], DataTableHeaderComponent.prototype, "offsetX", null);
+    __decorate([
         core_1.Output(),
         __metadata("design:type", core_1.EventEmitter)
     ], DataTableHeaderComponent.prototype, "sort", void 0);
@@ -5773,11 +4497,13 @@ var DataTableHeaderComponent = (function () {
     DataTableHeaderComponent = __decorate([
         core_1.Component({
             selector: 'datatable-header',
-            template: "\n    <div\n      orderable\n      (reorder)=\"onColumnReordered($event)\"\n      [style.width.px]=\"columnGroupWidths.total\"\n      class=\"datatable-header-inner\">\n     \n      <div\n        *ngFor=\"let colGroup of columnsByPin; trackBy: trackByGroups\"\n        [class]=\"'datatable-row-' + colGroup.type\"\n        [ngStyle]=\"stylesByGroup(colGroup.type)\">\n        <datatable-header-cell\n          *ngFor=\"let column of colGroup.columns; trackBy: columnTrackingFn\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (resize)=\"onColumnResized($event, column)\"\n          long-press\n          [pressModel]=\"column\"\n          [pressEnabled]=\"reorderable && column.draggable\"\n          (longPressStart)=\"onLongPressStart($event)\"\n          (longPressEnd)=\"onLongPressEnd($event)\"\n          draggable\n          [dragX]=\"reorderable && column.draggable && column.dragging\"\n          [dragY]=\"false\"\n          [dragModel]=\"column\"\n          [dragEventTarget]=\"dragEventTarget\"\n          [headerHeight]=\"headerHeight\"\n          [column]=\"column\"\n          [sortType]=\"sortType\"\n          [sorts]=\"sorts\"\n          [selectionType]=\"selectionType\"\n          [sortAscendingIcon]=\"sortAscendingIcon\"\n          [sortDescendingIcon]=\"sortDescendingIcon\"\n          [allRowsSelected]=\"allRowsSelected\"\n          (sort)=\"onSort($event)\"\n          (select)=\"select.emit($event)\"\n          (columnContextmenu)=\"columnContextmenu.emit($event)\">\n        </datatable-header-cell>\n      </div>\n    </div>\n  ",
+            template: "\n    <div\n      orderable\n      (reorder)=\"onColumnReordered($event)\"\n      [style.width.px]=\"_columnGroupWidths.total\"\n      class=\"datatable-header-inner\">\n      <div\n        *ngFor=\"let colGroup of _columnsByPin; trackBy: trackByGroups\"\n        [class]=\"'datatable-row-' + colGroup.type\"\n        [ngStyle]=\"_styleByGroup[colGroup.type]\">\n        <datatable-header-cell\n          *ngFor=\"let column of colGroup.columns; trackBy: columnTrackingFn\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (resize)=\"onColumnResized($event, column)\"\n          long-press\n          [pressModel]=\"column\"\n          [pressEnabled]=\"reorderable && column.draggable\"\n          (longPressStart)=\"onLongPressStart($event)\"\n          (longPressEnd)=\"onLongPressEnd($event)\"\n          draggable\n          [dragX]=\"reorderable && column.draggable && column.dragging\"\n          [dragY]=\"false\"\n          [dragModel]=\"column\"\n          [dragEventTarget]=\"dragEventTarget\"\n          [headerHeight]=\"headerHeight\"\n          [column]=\"column\"\n          [sortType]=\"sortType\"\n          [sorts]=\"sorts\"\n          [selectionType]=\"selectionType\"\n          [sortAscendingIcon]=\"sortAscendingIcon\"\n          [sortDescendingIcon]=\"sortDescendingIcon\"\n          [allRowsSelected]=\"allRowsSelected\"\n          (sort)=\"onSort($event)\"\n          (select)=\"select.emit($event)\"\n          (columnContextmenu)=\"columnContextmenu.emit($event)\">\n        </datatable-header-cell>\n      </div>\n    </div>\n  ",
             host: {
                 class: 'datatable-header'
-            }
-        })
+            },
+            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+        }),
+        __metadata("design:paramtypes", [core_1.ChangeDetectorRef])
     ], DataTableHeaderComponent);
     return DataTableHeaderComponent;
 }());
@@ -5851,7 +4577,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
-var DatatableRowDetailTemplateDirective = (function () {
+var DatatableRowDetailTemplateDirective = /** @class */ (function () {
     function DatatableRowDetailTemplateDirective(template) {
         this.template = template;
     }
@@ -5885,7 +4611,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var row_detail_template_directive_1 = __webpack_require__("./src/components/row-detail/row-detail-template.directive.ts");
-var DatatableRowDetailDirective = (function () {
+var DatatableRowDetailDirective = /** @class */ (function () {
     function DatatableRowDetailDirective() {
         /**
          * The detail row height is required especially
@@ -5961,11 +4687,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var common_1 = __webpack_require__("@angular/common");
-__webpack_require__("./node_modules/rxjs/add/observable/fromEvent.js");
 var components_1 = __webpack_require__("./src/components/index.ts");
 var directives_1 = __webpack_require__("./src/directives/index.ts");
 var services_1 = __webpack_require__("./src/services/index.ts");
-var NgxDatatableModule = (function () {
+var NgxDatatableModule = /** @class */ (function () {
     function NgxDatatableModule() {
     }
     NgxDatatableModule = __decorate([
@@ -5974,7 +4699,8 @@ var NgxDatatableModule = (function () {
                 common_1.CommonModule
             ],
             providers: [
-                services_1.ScrollbarHelper
+                services_1.ScrollbarHelper,
+                services_1.DimensionsHelper
             ],
             declarations: [
                 components_1.DataTableFooterTemplateDirective,
@@ -6042,8 +4768,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
-var Observable_1 = __webpack_require__("./node_modules/rxjs/Observable.js");
-__webpack_require__("./node_modules/rxjs/add/operator/takeUntil.js");
+var operators_1 = __webpack_require__("rxjs/operators");
+var fromEvent_1 = __webpack_require__("rxjs/observable/fromEvent");
 /**
  * Draggable Directive for Angular2
  *
@@ -6052,7 +4778,7 @@ __webpack_require__("./node_modules/rxjs/add/operator/takeUntil.js");
  *   http://stackoverflow.com/questions/35662530/how-to-implement-drag-and-drop-in-angular2
  *
  */
-var DraggableDirective = (function () {
+var DraggableDirective = /** @class */ (function () {
     function DraggableDirective(element) {
         this.dragX = true;
         this.dragY = true;
@@ -6092,11 +4818,11 @@ var DraggableDirective = (function () {
             event.preventDefault();
             this.isDragging = true;
             var mouseDownPos_1 = { x: event.clientX, y: event.clientY };
-            var mouseup = Observable_1.Observable.fromEvent(document, 'mouseup');
+            var mouseup = fromEvent_1.fromEvent(document, 'mouseup');
             this.subscription = mouseup
                 .subscribe(function (ev) { return _this.onMouseup(ev); });
-            var mouseMoveSub = Observable_1.Observable.fromEvent(document, 'mousemove')
-                .takeUntil(mouseup)
+            var mouseMoveSub = fromEvent_1.fromEvent(document, 'mousemove')
+                .pipe(operators_1.takeUntil(mouseup))
                 .subscribe(function (ev) { return _this.move(ev, mouseDownPos_1); });
             this.subscription.add(mouseMoveSub);
             this.dragStart.emit({
@@ -6201,9 +4927,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
-var Observable_1 = __webpack_require__("./node_modules/rxjs/Observable.js");
-__webpack_require__("./node_modules/rxjs/add/operator/takeUntil.js");
-var LongPressDirective = (function () {
+var operators_1 = __webpack_require__("rxjs/operators");
+var fromEvent_1 = __webpack_require__("rxjs/observable/fromEvent");
+var events_1 = __webpack_require__("./src/events.ts");
+var LongPressDirective = /** @class */ (function () {
     function LongPressDirective() {
         this.pressEnabled = true;
         this.duration = 500;
@@ -6238,7 +4965,7 @@ var LongPressDirective = (function () {
         this.mouseY = event.clientY;
         this.pressing = true;
         this.isLongPressing = false;
-        var mouseup = Observable_1.Observable.fromEvent(document, 'mouseup');
+        var mouseup = fromEvent_1.fromEvent(document, 'mouseup');
         this.subscription = mouseup.subscribe(function (ev) { return _this.onMouseup(); });
         this.timeout = setTimeout(function () {
             _this.isLongPressing = true;
@@ -6246,8 +4973,8 @@ var LongPressDirective = (function () {
                 event: event,
                 model: _this.pressModel
             });
-            _this.subscription.add(Observable_1.Observable.fromEvent(document, 'mousemove')
-                .takeUntil(mouseup)
+            _this.subscription.add(fromEvent_1.fromEvent(document, 'mousemove')
+                .pipe(operators_1.takeUntil(mouseup))
                 .subscribe(function (mouseEvent) { return _this.onMouseMove(mouseEvent); }));
             _this.loop(event);
         }, this.duration);
@@ -6332,7 +5059,7 @@ var LongPressDirective = (function () {
     __decorate([
         core_1.HostListener('mousedown', ['$event']),
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", [MouseEvent]),
+        __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", void 0)
     ], LongPressDirective.prototype, "onMouseDown", null);
     LongPressDirective = __decorate([
@@ -6366,7 +5093,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var draggable_directive_1 = __webpack_require__("./src/directives/draggable.directive.ts");
 var platform_browser_1 = __webpack_require__("@angular/platform-browser");
-var OrderableDirective = (function () {
+var OrderableDirective = /** @class */ (function () {
     function OrderableDirective(differs, document) {
         this.document = document;
         this.reorder = new core_1.EventEmitter();
@@ -6502,21 +5229,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
-var Observable_1 = __webpack_require__("./node_modules/rxjs/Observable.js");
-__webpack_require__("./node_modules/rxjs/add/operator/takeUntil.js");
-var ResizeableDirective = (function () {
-    function ResizeableDirective(element) {
+var events_1 = __webpack_require__("./src/events.ts");
+var operators_1 = __webpack_require__("rxjs/operators");
+var fromEvent_1 = __webpack_require__("rxjs/observable/fromEvent");
+var ResizeableDirective = /** @class */ (function () {
+    function ResizeableDirective(element, renderer) {
+        this.renderer = renderer;
         this.resizeEnabled = true;
         this.resize = new core_1.EventEmitter();
         this.resizing = false;
         this.element = element.nativeElement;
     }
     ResizeableDirective.prototype.ngAfterViewInit = function () {
+        var renderer2 = this.renderer;
+        var node = renderer2.createElement('span');
         if (this.resizeEnabled) {
-            var node = document.createElement('span');
-            node.classList.add('resize-handle');
-            this.element.appendChild(node);
+            renderer2.addClass(node, 'resize-handle');
         }
+        else {
+            renderer2.addClass(node, 'resize-handle--not-resizable');
+        }
+        renderer2.appendChild(this.element, node);
     };
     ResizeableDirective.prototype.ngOnDestroy = function () {
         this._destroySubscription();
@@ -6536,11 +5269,11 @@ var ResizeableDirective = (function () {
         if (isHandle) {
             event.stopPropagation();
             this.resizing = true;
-            var mouseup = Observable_1.Observable.fromEvent(document, 'mouseup');
+            var mouseup = fromEvent_1.fromEvent(document, 'mouseup');
             this.subscription = mouseup
                 .subscribe(function (ev) { return _this.onMouseup(); });
-            var mouseMoveSub = Observable_1.Observable.fromEvent(document, 'mousemove')
-                .takeUntil(mouseup)
+            var mouseMoveSub = fromEvent_1.fromEvent(document, 'mousemove')
+                .pipe(operators_1.takeUntil(mouseup))
                 .subscribe(function (e) { return _this.move(e, initialWidth, mouseDownScreenX); });
             this.subscription.add(mouseMoveSub);
         }
@@ -6579,7 +5312,7 @@ var ResizeableDirective = (function () {
     __decorate([
         core_1.HostListener('mousedown', ['$event']),
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", [MouseEvent]),
+        __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", void 0)
     ], ResizeableDirective.prototype, "onMousedown", null);
     ResizeableDirective = __decorate([
@@ -6589,7 +5322,7 @@ var ResizeableDirective = (function () {
                 '[class.resizeable]': 'resizeEnabled'
             }
         }),
-        __metadata("design:paramtypes", [core_1.ElementRef])
+        __metadata("design:paramtypes", [core_1.ElementRef, core_1.Renderer2])
     ], ResizeableDirective);
     return ResizeableDirective;
 }());
@@ -6625,7 +5358,7 @@ var core_1 = __webpack_require__("@angular/core");
  * 		</div>
  *
  */
-var VisibilityDirective = (function () {
+var VisibilityDirective = /** @class */ (function () {
     function VisibilityDirective(element, zone) {
         this.element = element;
         this.zone = zone;
@@ -6683,6 +5416,21 @@ exports.VisibilityDirective = VisibilityDirective;
 
 /***/ }),
 
+/***/ "./src/events.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+Object.defineProperty(exports, "__esModule", { value: true });
+/* tslint:disable:variable-name */
+exports.MouseEvent = global.MouseEvent;
+exports.KeyboardEvent = global.KeyboardEvent;
+exports.Event = global.Event;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
 /***/ "./src/index.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6695,6 +5443,40 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __export(__webpack_require__("./src/datatable.module.ts"));
 __export(__webpack_require__("./src/types/index.ts"));
 __export(__webpack_require__("./src/components/index.ts"));
+__export(__webpack_require__("./src/services/index.ts"));
+
+
+/***/ }),
+
+/***/ "./src/services/dimensions-helper.service.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("@angular/core");
+/**
+ * Gets the width of the scrollbar.  Nesc for windows
+ * http://stackoverflow.com/a/13382873/888165
+ */
+var DimensionsHelper = /** @class */ (function () {
+    function DimensionsHelper() {
+    }
+    DimensionsHelper.prototype.getDimensions = function (element) {
+        return element.getBoundingClientRect();
+    };
+    DimensionsHelper = __decorate([
+        core_1.Injectable()
+    ], DimensionsHelper);
+    return DimensionsHelper;
+}());
+exports.DimensionsHelper = DimensionsHelper;
 
 
 /***/ }),
@@ -6709,6 +5491,7 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(__webpack_require__("./src/services/scrollbar-helper.service.ts"));
+__export(__webpack_require__("./src/services/dimensions-helper.service.ts"));
 
 
 /***/ }),
@@ -6737,7 +5520,7 @@ var platform_browser_1 = __webpack_require__("@angular/platform-browser");
  * Gets the width of the scrollbar.  Nesc for windows
  * http://stackoverflow.com/a/13382873/888165
  */
-var ScrollbarHelper = (function () {
+var ScrollbarHelper = /** @class */ (function () {
     function ScrollbarHelper(document) {
         this.document = document;
         this.width = this.getWidth();
@@ -7191,16 +5974,6 @@ function columnsByPinArr(val) {
     return colsByPinArr;
 }
 exports.columnsByPinArr = columnsByPinArr;
-function allColumnsByPinArr(val) {
-    var colsByPinArr = [];
-    var colsByPin = columnsByPin(val);
-    var colsTest = [];
-    colsByPinArr.push({ type: 'left', columns: colsByPin['left'] });
-    colsByPinArr.push({ type: 'center', columns: colsByPin['center'] });
-    colsByPinArr.push({ type: 'right', columns: colsByPin['right'] });
-    return colsByPinArr;
-}
-exports.allColumnsByPinArr = allColumnsByPinArr;
 
 
 /***/ }),
@@ -7359,7 +6132,7 @@ function scaleColumns(colsByGroup, maxWidth, totalFlexGrow) {
             var column = _a[_i];
             if (!column.canAutoResize) {
                 maxWidth -= column.width;
-                totalFlexGrow -= column.flexGrow;
+                totalFlexGrow -= column.flexGrow ? column.flexGrow : 0;
             }
             else {
                 column.width = 0;
@@ -7498,8 +6271,9 @@ var testStyle = typeof document !== 'undefined' ? document.createElement('div').
 // http://davidwalsh.name/vendor-prefix
 var prefix = function () {
     var styles = typeof window !== 'undefined' ? window.getComputedStyle(document.documentElement, '') : undefined;
-    var pre = typeof styles !== 'undefined'
-        ? (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/))[1] : undefined;
+    var match = typeof styles !== 'undefined' ?
+        Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/) : null;
+    var pre = match !== null ? match[1] : undefined;
     var dom = typeof pre !== 'undefined' ? ('WebKit|Moz|MS|O').match(new RegExp('(' + pre + ')', 'i'))[1] : undefined;
     return dom ? {
         dom: dom,
@@ -7540,7 +6314,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * https://github.com/mikolalysenko/fenwick-tree
  *
  */
-var RowHeightCache = (function () {
+var RowHeightCache = /** @class */ (function () {
     function RowHeightCache() {
         /**
          * Tree Array stores the cumulative information of the row heights to perform efficient
@@ -7752,6 +6526,8 @@ function nextSortDir(sortType, current) {
         else if (current === types_1.SortDirection.desc) {
             return undefined;
         }
+        // avoid TS7030: Not all code paths return a value.
+        return undefined;
     }
 }
 exports.nextSortDir = nextSortDir;
@@ -7792,13 +6568,20 @@ function orderByComparator(a, b) {
 }
 exports.orderByComparator = orderByComparator;
 /**
- * Sorts the rows
+ * creates a shallow copy of the `rows` input and returns the sorted copy. this function
+ * does not sort the `rows` argument in place
  */
 function sortRows(rows, columns, dirs) {
     if (!rows)
         return [];
     if (!dirs || !dirs.length || !columns)
         return rows.slice();
+    /**
+     * record the row ordering of results from prior sort operations (if applicable)
+     * this is necessary to guarantee stable sorting behavior
+     */
+    var rowToIndexMap = new Map();
+    rows.forEach(function (row, index) { return rowToIndexMap.set(row, index); });
     var temp = rows.slice();
     var cols = columns.reduce(function (obj, col) {
         if (col.comparator && typeof col.comparator === 'function') {
@@ -7817,21 +6600,34 @@ function sortRows(rows, columns, dirs) {
             compareFn: cols[prop] || orderByComparator
         };
     });
-    return temp.sort(function (a, b) {
+    return temp.sort(function (rowA, rowB) {
         for (var _i = 0, cachedDirs_1 = cachedDirs; _i < cachedDirs_1.length; _i++) {
             var cachedDir = cachedDirs_1[_i];
+            // Get property and valuegetters for column to be sorted
             var prop = cachedDir.prop, valueGetter = cachedDir.valueGetter;
-            var propA = valueGetter(a, prop);
-            var propB = valueGetter(b, prop);
+            // Get A and B cell values from rows based on properties of the columns
+            var propA = valueGetter(rowA, prop);
+            var propB = valueGetter(rowB, prop);
+            // Compare function gets five parameters:
+            // Two cell values to be compared as propA and propB
+            // Two rows corresponding to the cells as rowA and rowB
+            // Direction of the sort for this column as SortDirection
+            // Compare can be a standard JS comparison function (a,b) => -1|0|1
+            // as additional parameters are silently ignored. The whole row and sort
+            // direction enable more complex sort logic.
             var comparison = cachedDir.dir !== types_1.SortDirection.desc ?
-                cachedDir.compareFn(propA, propB) :
-                -cachedDir.compareFn(propA, propB);
+                cachedDir.compareFn(propA, propB, rowA, rowB, cachedDir.dir) :
+                -cachedDir.compareFn(propA, propB, rowA, rowB, cachedDir.dir);
             // Don't return 0 yet in case of needing to sort by next property
             if (comparison !== 0)
                 return comparison;
         }
-        // equal each other
-        return 0;
+        if (!(rowToIndexMap.has(rowA) && rowToIndexMap.has(rowB)))
+            return 0;
+        /**
+         * all else being equal, preserve original order of the rows (stable sort)
+         */
+        return rowToIndexMap.get(rowA) < rowToIndexMap.get(rowB) ? -1 : 1;
     });
 }
 exports.sortRows = sortRows;
@@ -7963,6 +6759,27 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__angular_core__;
 /***/ (function(module, exports) {
 
 module.exports = __WEBPACK_EXTERNAL_MODULE__angular_platform_browser__;
+
+/***/ }),
+
+/***/ "rxjs/BehaviorSubject":
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_rxjs_BehaviorSubject__;
+
+/***/ }),
+
+/***/ "rxjs/observable/fromEvent":
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_rxjs_observable_fromEvent__;
+
+/***/ }),
+
+/***/ "rxjs/operators":
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_rxjs_operators__;
 
 /***/ })
 

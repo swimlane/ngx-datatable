@@ -1,5 +1,61 @@
 # Changelog
 
+## 11.2.0
+- Feat: Add resize handler for non-resizable columns #1225
+- Fix: Pager Component Accessibility #1259
+- Fix: Fix missing row with virtualization and scrollbarV #1235
+- Fix: Fall back to view mode when select field value doesn't change #1241
+- Fix: Fix virtual-paging #1229
+- Fix: Fix column scaling on resize #1236
+- Fix: Propagate sortDir changes to template #1243
+- Fix: Add setStylesByGroup() in set column prop #1244
+
+## 11.1.7
+- Fix: Fix error w/ rows undefined on init
+
+## 11.1.6
+- Bug: Ignore rxjs/operators
+- Feat: Ability to disable virtualization #1191
+- Feat: Universal Support #1178
+
+## 11.1.5
+- Compat: Fix Angular 4.x Compat
+
+## 11.1.4
+- Bug: Fix column templates not updating with loops/ifs
+- Bug: Fix sorting on cross browser
+- Chore: Switch to lettable operators
+
+## 11.1.3
+- Bug: Angular SSR Event Undefined (#1144)
+
+## 11.1.2
+- Bug: Fix total undefined (#1140)
+
+## 11.1.1
+- Bug: Fix race case with rows
+
+## 11.1.0
+- Perf: Better performance on scrolling y and x
+- Feature: Select All on Current Page (#1132)
+- Bug: Don't show empty on loading (#1139)
+
+## 11.0.4
+- Bug: Fix Angular5 Aot Issue
+- Bug: Fix Vendor Prefix Error
+
+## 11.0.1, 11.0.2, 11.0.3
+- Bug: Angular 5 bugs
+
+## 11.0.0
+- Chore: Upgrade to Angular5
+
+## 10.4.0
+- Feature: Ability to filter checkable rows (#1056)
+- Feature: Allow sorting based on whole row (#1074)
+- Bug: Fix protractor events (#1081)
+- Bug: Fix misalignment on smaller screens (#1081)
+
 ## 10.3.0
 - Feature: Bootstrap theme
 - Bug: Fix CSS for row grouping (#1053)

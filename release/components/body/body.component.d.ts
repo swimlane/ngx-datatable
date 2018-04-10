@@ -8,7 +8,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     scrollbarH: boolean;
     loadingIndicator: boolean;
     externalPaging: boolean;
-    rowHeight: number;
+    rowHeight: number | ((row: any) => number);
     offsetX: number;
     emptyMessage: string;
     selectionType: SelectionType;
@@ -17,12 +17,14 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     rowDetail: any;
     groupHeader: any;
     selectCheck: any;
+    displayCheck: any;
     trackByProp: string;
     rowClass: any;
     groupedRows: any;
     groupExpansionDefault: boolean;
     innerWidth: number;
     groupRowsBy: string;
+    virtualization: boolean;
     pageSize: number;
     rows: any[];
     columns: any[];
@@ -49,7 +51,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      * based on the row heights cache for virtual scroll. Other scenarios
      * calculate scroll height automatically (as height will be undefined).
      */
-    readonly scrollHeight: number;
+    readonly scrollHeight: number | undefined;
     rowHeightsCache: RowHeightCache;
     temp: any[];
     offsetY: number;

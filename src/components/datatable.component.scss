@@ -83,6 +83,7 @@
    * Shared Styles
    */
   .datatable-body-row,
+  .datatable-row-center,
   .datatable-header-inner {
     display: -webkit-box;
     display: -moz-box;
@@ -155,7 +156,7 @@
         cursor: pointer;
       }
 
-      .resize-handle{
+      .resize-handle, .resize-handle--not-resizable {
         display: inline-block;
         position: absolute;
         right: 0;
@@ -164,6 +165,9 @@
         width: 5px;
         padding: 0 4px;
         visibility: hidden;
+      }
+
+      .resize-handle {
         cursor: ew-resize;
       }
 
@@ -171,6 +175,16 @@
         .resize-handle{
           visibility: visible;
         }
+      }
+
+      &:hover {
+        .resize-handle--not-resizable {
+          visibility: visible;
+        }
+      }
+
+      .datatable-header-cell-template-wrap {
+        height: inherit;
       }
     }
   }
