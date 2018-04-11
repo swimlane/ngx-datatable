@@ -1,0 +1,666 @@
+From 3b76c12ac0a3ca768366c2a3dca71d70948837b5 Mon Sep 17 00:00:00 2001
+From: Manuel Berger 4SELLERS <manuel.berger@4sellers.de>
+Date: Thu, 25 Jan 2018 09:41:21 +0100
+Subject: [PATCH 1/7] reorder column and not swapping it on drag and drop
+
+---
+ src/components/datatable.component.ts     | 16 +++++++++++++---
+ src/components/header/header.component.ts |  7 +------
+ 2 files changed, 14 insertions(+), 9 deletions(-)
+
+diff --git a/src/components/datatable.component.ts b/src/components/datatable.component.ts
+index 30d4d23ea..f30dabf08 100644
+--- a/src/components/datatable.component.ts
++++ b/src/components/datatable.component.ts
+@@ -987,9 +987,19 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
+       return { ...c };
+     });
+ 
+-    const prevCol = cols[newValue];
+-    cols[newValue] = column;
+-    cols[prevValue] = prevCol;
++    if (newValue > prevValue) {
++      const movedCol = cols[prevValue];
++      for (let i = prevValue; i < newValue; i++) {
++        cols[i] = cols[i + 1];
++      }
++      cols[newValue] = movedCol;
++    } else {
++      const movedCol = cols[prevValue];
++      for (let i = prevValue; i > newValue; i--) {
++        cols[i] = cols[i - 1];
++      }
++      cols[newValue] = movedCol;
++    }
+ 
+     this._internalColumns = cols;
+ 
+diff --git a/src/components/header/header.component.ts b/src/components/header/header.component.ts
+index ab19151f8..dda1d8a24 100644
+--- a/src/components/header/header.component.ts
++++ b/src/components/header/header.component.ts
+@@ -142,12 +142,7 @@ export class DataTableHeaderComponent {
+ 
+   onLongPressEnd({ event, model }: { event: any, model: any }) {
+     this.dragEventTarget = event;
+-
+-    // delay resetting so sort can be
+-    // prevented if we were dragging
+-    setTimeout(() => {
+-      model.dragging = false;
+-    }, 5);
++    model.dragging = false;
+   }
+ 
+   @HostBinding('style.width')
+
+From e6cf73fc92f0223c0d0cb9c6ac6e5015b54f057e Mon Sep 17 00:00:00 2001
+From: Manuel Berger 4SELLERS <manuel.berger@4sellers.de>
+Date: Thu, 25 Jan 2018 13:38:29 +0100
+Subject: [PATCH 2/7] fix sorting
+
+---
+ src/components/header/header.component.ts | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/src/components/header/header.component.ts b/src/components/header/header.component.ts
+index dda1d8a24..26de80336 100644
+--- a/src/components/header/header.component.ts
++++ b/src/components/header/header.component.ts
+@@ -142,7 +142,17 @@ export class DataTableHeaderComponent {
+ 
+   onLongPressEnd({ event, model }: { event: any, model: any }) {
+     this.dragEventTarget = event;
+-    model.dragging = false;
++
++    // delay resetting so sort can be
++    // prevented if we were dragging
++    setTimeout(() => {   
++      // datatable component creates copies from columns on reorder
++      // set dragging to false on new objects
++      const column = this._columns.find(c => c.$$id === model.$$id);
++      if (column) {
++        column.dragging = false;
++      }
++    }, 5);
+   }
+ 
+   @HostBinding('style.width')
+@@ -185,6 +195,7 @@ export class DataTableHeaderComponent {
+   }
+ 
+   onSort({ column, prevValue, newValue }: any): void {
++    debugger;
+     // if we are dragging don't sort!
+     if (column.dragging) return;
+ 
+
+From 2a721be120ec82b6717aa798c8e28dc1af6e6bbc Mon Sep 17 00:00:00 2001
+From: Manuel Berger 4SELLERS <manuel.berger@4sellers.de>
+Date: Thu, 25 Jan 2018 13:50:36 +0100
+Subject: [PATCH 3/7] create demo for columns reordering and new input on
+ datatable
+
+---
+ demo/app.component.ts                    |  2 ++
+ demo/columns/column-reorder.component.ts | 61 ++++++++++++++++++++++++++++++++
+ demo/module.ts                           |  2 ++
+ src/components/datatable.component.ts    | 32 +++++++++++------
+ 4 files changed, 87 insertions(+), 10 deletions(-)
+ create mode 100644 demo/columns/column-reorder.component.ts
+
+diff --git a/demo/app.component.ts b/demo/app.component.ts
+index 85591e06f..d319bc168 100644
+--- a/demo/app.component.ts
++++ b/demo/app.component.ts
+@@ -111,6 +111,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
+               <li><a href="#fixed" (click)="state='fixed'">Fixed</a></li>
+               <li><a href="#force" (click)="state='force'">Force</a></li>
+               <li><a href="#pinning" (click)="state='pinning'">Pinning</a></li>
++              <li><a href="#reorder" (click)="state='reorder'">Reorder</a></li>
+             </ul>
+           </li>
+         </ul>
+@@ -171,6 +172,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
+         <column-standard-demo *ngIf="state === 'fixed'"></column-standard-demo>
+         <column-force-demo *ngIf="state === 'force'"></column-force-demo>
+         <column-pinning-demo *ngIf="state === 'pinning'"></column-pinning-demo>
++        <column-reorder-demo *ngIf="state === 'reorder'"></column-reorder-demo>
+       </content>
+     </div>
+   `
+diff --git a/demo/columns/column-reorder.component.ts b/demo/columns/column-reorder.component.ts
+new file mode 100644
+index 000000000..5b5134527
+--- /dev/null
++++ b/demo/columns/column-reorder.component.ts
+@@ -0,0 +1,61 @@
++import { Component } from '@angular/core';
++
++@Component({
++  selector: 'column-reorder-demo',
++  template: `
++    <div>
++      <h3>
++        Reorder Column
++        <small>
++          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/columns/column-reorder.component.ts" target="_blank">
++            Source
++          </a>
++        </small>
++      </h3>
++      <ngx-datatable
++        class="material"
++        [rows]="rows"
++        [loadingIndicator]="loadingIndicator"
++        [columns]="columns"
++        [columnMode]="'force'"
++        [headerHeight]="50"
++        [footerHeight]="50"
++        [rowHeight]="'auto'"
++        [reorderable]="reorderable"
++        [swapColumns]="swapColumns">
++      </ngx-datatable>
++    </div>
++  `
++})
++export class ColumnReorderComponent {
++
++  rows = [];
++  loadingIndicator: boolean = true;
++  reorderable: boolean = true;
++  swapColumns: boolean = false;
++
++  columns = [
++    { prop: 'name' },
++    { name: 'Gender' },
++    { name: 'Company', sortable: false }
++  ];
++
++  constructor() {
++    this.fetch((data) => {
++      this.rows = data;
++      setTimeout(() => { this.loadingIndicator = false; }, 1500);
++    });
++  }
++
++  fetch(cb) {
++    const req = new XMLHttpRequest();
++    req.open('GET', `assets/data/company.json`);
++
++    req.onload = () => {
++      cb(JSON.parse(req.response));
++    };
++
++    req.send();
++  }
++
++}
+diff --git a/demo/module.ts b/demo/module.ts
+index a62143d0c..8328bbb61 100644
+--- a/demo/module.ts
++++ b/demo/module.ts
+@@ -59,6 +59,7 @@ import { ColumnStandardComponent } from './columns/column-standard.component';
+ import { ColumnForceComponent } from './columns/column-force.component';
+ import { ColumnFlexComponent } from './columns/column-flex.component';
+ import { ColumnPinningComponent } from './columns/pinning.component';
++import { ColumnReorderComponent } from './columns/column-reorder.component';
+ 
+ @NgModule({
+   declarations: [
+@@ -88,6 +89,7 @@ import { ColumnPinningComponent } from './columns/pinning.component';
+     ColumnStandardComponent,
+     ColumnForceComponent,
+     ColumnPinningComponent,
++    ColumnReorderComponent,
+     FilterBarComponent,
+     VirtualPagingComponent,
+     DarkThemeComponent,
+diff --git a/src/components/datatable.component.ts b/src/components/datatable.component.ts
+index f30dabf08..60f07805e 100644
+--- a/src/components/datatable.component.ts
++++ b/src/components/datatable.component.ts
+@@ -322,6 +322,12 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
+    */
+   @Input() reorderable: boolean = true;
+ 
++  /**
++   * Swap columns on re-order columns or
++   * move them.
++   */
++  @Input() swapColumns: boolean = true;
++
+   /**
+    * The type of sorting
+    */
+@@ -987,18 +993,24 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
+       return { ...c };
+     });
+ 
+-    if (newValue > prevValue) {
+-      const movedCol = cols[prevValue];
+-      for (let i = prevValue; i < newValue; i++) {
+-        cols[i] = cols[i + 1];
+-      }
+-      cols[newValue] = movedCol;
++    if (this.swapColumns) {
++      const prevCol = cols[newValue];
++      cols[newValue] = column;
++      cols[prevValue] = prevCol;
+     } else {
+-      const movedCol = cols[prevValue];
+-      for (let i = prevValue; i > newValue; i--) {
+-        cols[i] = cols[i - 1];
++      if (newValue > prevValue) {
++        const movedCol = cols[prevValue];
++        for (let i = prevValue; i < newValue; i++) {
++          cols[i] = cols[i + 1];
++        }
++        cols[newValue] = movedCol;
++      } else {
++        const movedCol = cols[prevValue];
++        for (let i = prevValue; i > newValue; i--) {
++          cols[i] = cols[i - 1];
++        }
++        cols[newValue] = movedCol;
+       }
+-      cols[newValue] = movedCol;
+     }
+ 
+     this._internalColumns = cols;
+
+From 65360c5cb5ebe125ed4ee7f82b50fe91ca10fe5d Mon Sep 17 00:00:00 2001
+From: Manuel Berger 4SELLERS <manuel.berger@4sellers.de>
+Date: Thu, 25 Jan 2018 16:27:22 +0100
+Subject: [PATCH 4/7] add targetMarker
+
+---
+ demo/columns/column-reorder.component.ts       |  7 +++++-
+ src/components/datatable.component.scss        | 14 ++++++++++++
+ src/components/datatable.component.ts          |  6 +++++
+ src/components/header/header-cell.component.ts | 11 ++++++++-
+ src/components/header/header.component.ts      | 31 +++++++++++++++++++++++++-
+ src/directives/orderable.directive.ts          | 28 +++++++++++++++++++++++
+ 6 files changed, 94 insertions(+), 3 deletions(-)
+
+diff --git a/demo/columns/column-reorder.component.ts b/demo/columns/column-reorder.component.ts
+index 5b5134527..7932b4aab 100644
+--- a/demo/columns/column-reorder.component.ts
++++ b/demo/columns/column-reorder.component.ts
+@@ -22,8 +22,13 @@ import { Component } from '@angular/core';
+         [footerHeight]="50"
+         [rowHeight]="'auto'"
+         [reorderable]="reorderable"
+-        [swapColumns]="swapColumns">
++        [swapColumns]="swapColumns"
++        [targetMarkerTemplate]="targetMarkerTemplate">
+       </ngx-datatable>
++      <ng-template #targetMarkerTemplate let-class="class">
++        <div [ngClass]="class" style="background:green; width:2px;">
++        </div>
++      </ng-template>
+     </div>
+   `
+ })
+diff --git a/src/components/datatable.component.scss b/src/components/datatable.component.scss
+index 74fc4585f..b768a29b3 100644
+--- a/src/components/datatable.component.scss
++++ b/src/components/datatable.component.scss
+@@ -182,6 +182,20 @@
+           visibility: visible;
+         }
+       }
++
++      .targetMarker {
++        position: absolute;
++        top: 0;
++        bottom: 0;
++
++        &.dragFromLeft {
++          right: 0;
++        }
++
++        &.dragFromRight {
++          left: 0;
++        }
++      }
+     }
+   }
+ 
+diff --git a/src/components/datatable.component.ts b/src/components/datatable.component.ts
+index 60f07805e..373e689c2 100644
+--- a/src/components/datatable.component.ts
++++ b/src/components/datatable.component.ts
+@@ -38,6 +38,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+         [columns]="_internalColumns"
+         [headerHeight]="headerHeight"
+         [reorderable]="reorderable"
++        [targetMarkerTemplate]="targetMarkerTemplate"
+         [sortAscendingIcon]="cssClasses.sortAscending"
+         [sortDescendingIcon]="cssClasses.sortDescending"
+         [allRowsSelected]="allRowsSelected"
+@@ -109,6 +110,11 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+ })
+ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
+ 
++  /**
++   * Template for the target marker of drag target columns.
++   */
++  @Input() targetMarkerTemplate: any;
++
+   /**
+    * Rows that are displayed in the table.
+    */
+diff --git a/src/components/header/header-cell.component.ts b/src/components/header/header-cell.component.ts
+index 71349b0fc..1c33a893b 100644
+--- a/src/components/header/header-cell.component.ts
++++ b/src/components/header/header-cell.component.ts
+@@ -10,6 +10,11 @@ import { MouseEvent } from '../../events';
+   selector: 'datatable-header-cell',
+   template: `
+     <div>
++      <ng-template
++        *ngIf="isTarget"
++        [ngTemplateOutlet]="targetMarkerTemplate"
++        [ngTemplateOutletContext]="targetMarkerContext">
++      </ng-template>
+       <label
+         *ngIf="isCheckboxable"
+         class="datatable-checkbox">
+@@ -50,7 +55,11 @@ export class DataTableHeaderCellComponent {
+   @Input() sortType: SortType;
+   @Input() sortAscendingIcon: string;
+   @Input() sortDescendingIcon: string;
+-  
++
++  @Input() isTarget: boolean;
++  @Input() targetMarkerTemplate: any;
++  @Input() targetMarkerContext: any;
++
+   _allRowsSelected: boolean;
+   
+   @Input() set allRowsSelected(value) {
+diff --git a/src/components/header/header.component.ts b/src/components/header/header.component.ts
+index 26de80336..8086f648a 100644
+--- a/src/components/header/header.component.ts
++++ b/src/components/header/header.component.ts
+@@ -12,6 +12,7 @@ import { MouseEvent } from '../../events';
+     <div
+       orderable
+       (reorder)="onColumnReordered($event)"
++      (targetChanged)="onTargetChanged($event)"
+       [style.width.px]="_columnGroupWidths.total"
+       class="datatable-header-inner">
+       <div
+@@ -34,6 +35,9 @@ import { MouseEvent } from '../../events';
+           [dragModel]="column"
+           [dragEventTarget]="dragEventTarget"
+           [headerHeight]="headerHeight"
++          [isTarget]="column.isTarget"
++          [targetMarkerTemplate]="targetMarkerTemplate"
++          [targetMarkerContext]="column.targetMarkerContext"
+           [column]="column"
+           [sortType]="sortType"
+           [sorts]="sorts"
+@@ -59,6 +63,9 @@ export class DataTableHeaderComponent {
+   @Input() sortDescendingIcon: any;
+   @Input() scrollbarH: boolean;
+   @Input() dealsWithGroup: boolean;
++  @Input() targetMarkerTemplate: any;
++  
++  targetMarkerContext: any;
+ 
+   @Input() set innerWidth(val: number) {
+     this._innerWidth = val;
+@@ -187,6 +194,10 @@ export class DataTableHeaderComponent {
+   }
+ 
+   onColumnReordered({ prevIndex, newIndex, model }: any): void {
++    // TODO: ColGroups
++    const column = this._columnsByPin[1].columns[newIndex];
++    column.isTarget = false;
++    column.targetMarkerContext = undefined;
+     this.reorder.emit({
+       column: model,
+       prevValue: prevIndex,
+@@ -194,8 +205,26 @@ export class DataTableHeaderComponent {
+     });
+   }
+ 
++  onTargetChanged({ prevIndex, newIndex, initialIndex }: any): void {
++    // TODO: ColGroups
++    if (prevIndex || prevIndex === 0) {
++      const oldColumn = this._columnsByPin[1].columns[prevIndex];
++      oldColumn.isTarget = false;
++      oldColumn.targetMarkerContext = undefined;
++    }
++    if (newIndex || newIndex === 0) {
++      const newColumn = this._columnsByPin[1].columns[newIndex];
++      newColumn.isTarget = true;
++      
++      if (initialIndex !== newIndex) {
++        newColumn.targetMarkerContext = {class: 'targetMarker '.concat( 
++          initialIndex > newIndex ? 'dragFromRight' : 'dragFromLeft')};
++        console.log(`${newColumn.targetMarkerContext.class}`);
++      }
++    }
++  }
++
+   onSort({ column, prevValue, newValue }: any): void {
+-    debugger;
+     // if we are dragging don't sort!
+     if (column.dragging) return;
+ 
+diff --git a/src/directives/orderable.directive.ts b/src/directives/orderable.directive.ts
+index 85e283d08..45a3fb955 100644
+--- a/src/directives/orderable.directive.ts
++++ b/src/directives/orderable.directive.ts
+@@ -9,12 +9,14 @@ import { DOCUMENT } from '@angular/platform-browser';
+ export class OrderableDirective implements AfterContentInit, OnDestroy {
+ 
+   @Output() reorder: EventEmitter<any> = new EventEmitter();
++  @Output() targetChanged: EventEmitter<any> = new EventEmitter();
+ 
+   @ContentChildren(DraggableDirective, { descendants: true })
+   draggables: QueryList<DraggableDirective>;
+ 
+   positions: any;
+   differ: any;
++  lastDraggingIndex: number;
+ 
+   constructor(differs: KeyValueDiffers, @Inject(DOCUMENT) private document: any) {
+     this.differ = differs.find({}).create();
+@@ -30,6 +32,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
+   ngOnDestroy(): void {
+     this.draggables.forEach(d => {
+       d.dragStart.unsubscribe();
++      d.dragging.unsubscribe();
+       d.dragEnd.unsubscribe();
+     });
+   }
+@@ -43,6 +46,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
+ 
+         if (currentValue) {
+           currentValue.dragStart.subscribe(this.onDragStart.bind(this));
++          currentValue.dragging.subscribe(this.onDragging.bind(this));
+           currentValue.dragEnd.subscribe(this.onDragEnd.bind(this));
+         }
+       };
+@@ -50,6 +54,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
+       const unsubscribe = ({ previousValue }: any) => {
+         if (previousValue) {
+           previousValue.dragStart.unsubscribe();
++          previousValue.dragging.unsubscribe();
+           previousValue.dragEnd.unsubscribe();
+         }
+       };
+@@ -76,6 +81,28 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
+     }
+   }
+ 
++  onDragging({ element, model, event }: any): void {
++    const prevPos = this.positions[ model.prop ];    
++    const target = this.isTarget(model, event);
++
++    if (target) {
++      if (this.lastDraggingIndex !== target.i) {
++        this.targetChanged.emit({
++          prevIndex: this.lastDraggingIndex,
++          newIndex: target.i,
++          initialIndex: prevPos.index
++        });
++        this.lastDraggingIndex = target.i;
++      } 
++    } else if (this.lastDraggingIndex !== prevPos.index) {
++      this.targetChanged.emit({
++        prevIndex: this.lastDraggingIndex,
++        initialIndex: prevPos.index
++      });
++      this.lastDraggingIndex = prevPos.index;
++    }
++  }
++
+   onDragEnd({ element, model, event }: any): void {
+     const prevPos = this.positions[ model.prop ];
+ 
+@@ -88,6 +115,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
+       });
+     }
+ 
++    this.lastDraggingIndex = undefined;
+     element.style.left = 'auto';
+   }
+ 
+
+From a38f91f85b3428e6accd65bdeaafeabe80ea44fe Mon Sep 17 00:00:00 2001
+From: Manuel Berger 4SELLERS <manuel.berger@4sellers.de>
+Date: Fri, 26 Jan 2018 07:57:46 +0100
+Subject: [PATCH 5/7] handle pinned columns
+
+---
+ src/components/header/header.component.ts | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
+
+diff --git a/src/components/header/header.component.ts b/src/components/header/header.component.ts
+index 8086f648a..8356d3238 100644
+--- a/src/components/header/header.component.ts
++++ b/src/components/header/header.component.ts
+@@ -194,8 +194,7 @@ export class DataTableHeaderComponent {
+   }
+ 
+   onColumnReordered({ prevIndex, newIndex, model }: any): void {
+-    // TODO: ColGroups
+-    const column = this._columnsByPin[1].columns[newIndex];
++    const column = this.getColumn(newIndex);
+     column.isTarget = false;
+     column.targetMarkerContext = undefined;
+     this.reorder.emit({
+@@ -206,24 +205,36 @@ export class DataTableHeaderComponent {
+   }
+ 
+   onTargetChanged({ prevIndex, newIndex, initialIndex }: any): void {
+-    // TODO: ColGroups
+     if (prevIndex || prevIndex === 0) {
+-      const oldColumn = this._columnsByPin[1].columns[prevIndex];
++      const oldColumn = this.getColumn(prevIndex);
+       oldColumn.isTarget = false;
+       oldColumn.targetMarkerContext = undefined;
+     }
+     if (newIndex || newIndex === 0) {
+-      const newColumn = this._columnsByPin[1].columns[newIndex];
++      const newColumn = this.getColumn(newIndex);
+       newColumn.isTarget = true;
+       
+       if (initialIndex !== newIndex) {
+         newColumn.targetMarkerContext = {class: 'targetMarker '.concat( 
+           initialIndex > newIndex ? 'dragFromRight' : 'dragFromLeft')};
+-        console.log(`${newColumn.targetMarkerContext.class}`);
+       }
+     }
+   }
+ 
++  getColumn(index: number): any {
++    const leftColumnCount = this._columnsByPin[0].columns.length;
++    if (index < leftColumnCount) {
++      return this._columnsByPin[0].columns[index];
++    }
++
++    const centerColumnCount = this._columnsByPin[1].columns.length;
++    if (index < leftColumnCount + centerColumnCount) {
++      return this._columnsByPin[1].columns[index - leftColumnCount];
++    }
++
++    return this._columnsByPin[2].columns[index - leftColumnCount - centerColumnCount];
++  }
++
+   onSort({ column, prevValue, newValue }: any): void {
+     // if we are dragging don't sort!
+     if (column.dragging) return;
+
+From 9a8dd3292a6eefc4135d8b6cdf316233967bb8c6 Mon Sep 17 00:00:00 2001
+From: Manuel Berger 4SELLERS <manuel.berger@4sellers.de>
+Date: Fri, 26 Jan 2018 08:33:00 +0100
+Subject: [PATCH 6/7] show arrows on reorder demo
+
+---
+ demo/columns/column-reorder.component.ts | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/demo/columns/column-reorder.component.ts b/demo/columns/column-reorder.component.ts
+index 7932b4aab..3aadb4b6c 100644
+--- a/demo/columns/column-reorder.component.ts
++++ b/demo/columns/column-reorder.component.ts
+@@ -2,6 +2,20 @@ import { Component } from '@angular/core';
+ 
+ @Component({
+   selector: 'column-reorder-demo',
++  styles: [ `
++    .icon {
++      position:absolute;
++    }
++    .datatable-icon-down {
++      top: 0px;
++    }
++    .datatable-icon-up {
++      top: 40px;
++    }
++    .dragFromLeft .icon {
++      left:-13px;
++    }
++  `],
+   template: `
+     <div>
+       <h3>
+@@ -26,7 +40,9 @@ import { Component } from '@angular/core';
+         [targetMarkerTemplate]="targetMarkerTemplate">
+       </ngx-datatable>
+       <ng-template #targetMarkerTemplate let-class="class">
+-        <div [ngClass]="class" style="background:green; width:2px;">
++        <div [ngClass]="class">
++          <div class="icon datatable-icon-down"></div>
++          <div class="icon datatable-icon-up"></div>
+         </div>
+       </ng-template>
+     </div>
+
+From b6233578cdd55cc612059b638ab886c8a3c50503 Mon Sep 17 00:00:00 2001
+From: Manuel Berger 4SELLERS <manuel.berger@4sellers.de>
+Date: Mon, 12 Feb 2018 08:25:58 +0100
+Subject: [PATCH 7/7] fix invalid scss file
+
+---
+ src/components/datatable.component.scss | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/components/datatable.component.scss b/src/components/datatable.component.scss
+index b7c224c6c..1f73cc31b 100644
+--- a/src/components/datatable.component.scss
++++ b/src/components/datatable.component.scss
+@@ -195,6 +195,7 @@
+         &.dragFromRight {
+           left: 0;
+         }
++      }
+ 
+       .datatable-header-cell-template-wrap {
+         height: inherit;
