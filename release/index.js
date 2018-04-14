@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"11.3.1" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"11.3.2" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -5579,9 +5579,9 @@ exports.VisibilityDirective = VisibilityDirective;
 /* WEBPACK VAR INJECTION */(function(global) {
 Object.defineProperty(exports, "__esModule", { value: true });
 /* tslint:disable:variable-name */
-exports.MouseEvent = (global || window).MouseEvent;
-exports.KeyboardEvent = (global || window).KeyboardEvent;
-exports.Event = (global || window).Event;
+exports.MouseEvent = (window || global).MouseEvent;
+exports.KeyboardEvent = (window || global).KeyboardEvent;
+exports.Event = (window || global).Event;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/global.js")))
 
