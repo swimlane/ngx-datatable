@@ -38,6 +38,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
         [columns]="_internalColumns"
         [headerHeight]="headerHeight"
         [reorderable]="reorderable"
+        [targetMarkerTemplate]="targetMarkerTemplate"
         [sortAscendingIcon]="cssClasses.sortAscending"
         [sortDescendingIcon]="cssClasses.sortDescending"
         [allRowsSelected]="allRowsSelected"
@@ -111,6 +112,11 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
   }
 })
 export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
+
+  /**
+   * Template for the target marker of drag target columns.
+   */
+  @Input() targetMarkerTemplate: any;
 
   /**
    * Rows that are displayed in the table.
@@ -324,6 +330,12 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * by dragging them.
    */
   @Input() reorderable: boolean = true;
+
+  /**
+   * Swap columns on re-order columns or
+   * move them.
+   */
+  @Input() swapColumns: boolean = true;
 
   /**
    * The type of sorting
@@ -1006,9 +1018,25 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       return { ...c };
     });
 
-    const prevCol = cols[newValue];
-    cols[newValue] = column;
-    cols[prevValue] = prevCol;
+    if (this.swapColumns) {
+      const prevCol = cols[newValue];
+      cols[newValue] = column;
+      cols[prevValue] = prevCol;
+    } else {
+      if (newValue > prevValue) {
+        const movedCol = cols[prevValue];
+        for (let i = prevValue; i < newValue; i++) {
+          cols[i] = cols[i + 1];
+        }
+        cols[newValue] = movedCol;
+      } else {
+        const movedCol = cols[prevValue];
+        for (let i = prevValue; i > newValue; i--) {
+          cols[i] = cols[i - 1];
+        }
+        cols[newValue] = movedCol;
+      }
+    }
 
     this._internalColumns = cols;
 

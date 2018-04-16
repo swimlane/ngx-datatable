@@ -59,6 +59,7 @@ import { ColumnStandardComponent } from './columns/column-standard.component';
 import { ColumnForceComponent } from './columns/column-force.component';
 import { ColumnFlexComponent } from './columns/column-flex.component';
 import { ColumnPinningComponent } from './columns/pinning.component';
+import { ColumnReorderComponent } from './columns/column-reorder.component';
 
 // -- Summary row
 import { SummaryRowSimpleComponent } from './summary/summary-row-simple.component';
@@ -94,6 +95,7 @@ import { SummaryRowInlineHtmlComponent } from './summary/summary-row-inline-html
     ColumnStandardComponent,
     ColumnForceComponent,
     ColumnPinningComponent,
+    ColumnReorderComponent,
     FilterBarComponent,
     VirtualPagingComponent,
     DarkThemeComponent,
