@@ -220,6 +220,12 @@
         font-size: 20px;
         line-height: 20px;
         padding: 0 3px; }
+  .ngx-datatable.material .datatable-summary-row .datatable-body-row {
+    background-color: #ddd; }
+    .ngx-datatable.material .datatable-summary-row .datatable-body-row:hover {
+      background-color: #ddd; }
+    .ngx-datatable.material .datatable-summary-row .datatable-body-row .datatable-body-cell {
+      font-weight: bold; }
 
 /**
  * Checkboxes

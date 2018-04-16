@@ -12,4 +12,5 @@ __export(require("./body-row-wrapper.component"));
 __export(require("./selection.component"));
 __export(require("./body-group-header.directive"));
 __export(require("./body-group-header-template.directive"));
+__export(require("./summary"));
 //# sourceMappingURL=index.js.map

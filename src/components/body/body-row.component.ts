@@ -30,7 +30,7 @@ import { MouseEvent, KeyboardEvent, Event } from '../../events';
         [displayCheck]="displayCheck"
         (activate)="onActivate($event, ii)">
       </datatable-body-cell>
-    </div>      
+    </div>
   `
 })
 export class DataTableBodyRowComponent implements DoCheck {
@@ -38,6 +38,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   @Input() set columns(val: any[]) {
     this._columns = val;
     this.recalculateColumns(val);
+    this.buildStylesByGroup();
   }
 
   get columns(): any[] {
@@ -47,12 +48,12 @@ export class DataTableBodyRowComponent implements DoCheck {
   @Input() set innerWidth(val: number) {
     if (this._columns) {
       const colByPin = columnsByPin(this._columns);
-      this._columnGroupWidths = columnGroupWidths(colByPin, colByPin);  
+      this._columnGroupWidths = columnGroupWidths(colByPin, colByPin);
     }
 
     this._innerWidth = val;
     this.recalculateColumns();
-    this.buildStylesByGroup();    
+    this.buildStylesByGroup();
   }
 
   get innerWidth(): number {
@@ -123,7 +124,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   constructor(
       private differs: KeyValueDiffers,
       @SkipSelf() private scrollbarHelper: ScrollbarHelper,
-      private cd: ChangeDetectorRef, 
+      private cd: ChangeDetectorRef,
       element: ElementRef) {
     this._element = element.nativeElement;
     this._rowDiffer = differs.find({}).create();
@@ -134,7 +135,7 @@ export class DataTableBodyRowComponent implements DoCheck {
       this.cd.markForCheck();
     }
   }
-  
+
   trackByGroups(index: number, colGroup: any): any {
     return colGroup.type;
   }
@@ -215,7 +216,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   recalculateColumns(val: any[] = this.columns): void {
     this._columns = val;
     const colsByPin = columnsByPin(this._columns);
-    this._columnsByPin = columnsByPinArr(this._columns);        
+    this._columnsByPin = columnsByPinArr(this._columns);
     this._columnGroupWidths = columnGroupWidths(colsByPin, this._columns);
   }
 
