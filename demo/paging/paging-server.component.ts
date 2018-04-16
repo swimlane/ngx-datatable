@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import {MockServerResultsService} from "./mock-server-results-service";
-import {PagedData} from "./model/paged-data";
-import {CorporateEmployee} from "./model/corporate-employee";
-import {Page} from "./model/page";
+import {MockServerResultsService} from './mock-server-results-service';
+import {PagedData} from './model/paged-data';
+import {CorporateEmployee} from './model/corporate-employee';
+import {Page} from './model/page';
 
 @Component({
   selector: 'server-paging-demo',

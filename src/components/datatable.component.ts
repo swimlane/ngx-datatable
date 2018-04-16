@@ -76,6 +76,9 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
         [rowClass]="rowClass"
         [selectCheck]="selectCheck"
         [displayCheck]="displayCheck"
+        [summaryRow]="summaryRow"
+        [summaryHeight]="summaryHeight"
+        [summaryPosition]="summaryPosition"
         (page)="onBodyPage($event)"
         (activate)="activate.emit($event)"
         (rowContextmenu)="onRowContextmenu($event)"
@@ -429,6 +432,21 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   @Input() virtualization: boolean = true;
 
   /**
+   * A flag for switching summary row on / off
+   */
+  @Input() summaryRow: boolean = false;
+
+  /**
+   * A height of summary row
+   */
+  @Input() summaryHeight: number = this.rowHeight;
+
+  /**
+   * A property holds a summary row position: top/bottom
+   */
+  @Input() summaryPosition: string = 'top';
+
+  /**
    * Body was scrolled typically in a `scrollbarV:true` scenario.
    */
   @Output() scroll: EventEmitter<any> = new EventEmitter();
@@ -681,7 +699,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     if (typeof requestAnimationFrame === 'undefined') {
       return;
     }
-    
+
     requestAnimationFrame(() => {
       this.recalculate();
 
