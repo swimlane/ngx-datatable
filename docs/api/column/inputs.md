@@ -7,7 +7,7 @@ Column label. If none specified, it will use the prop value and decamelize it.
 The property to bind the row values to. If `undefined`, it will camelcase the name value.
 
 ### `flexGrow`: `number`
-The grow factor relative to other columns. Same as the [flex-grow API](http =//www.w3.org/TR/css3-flexbox/). 
+The grow factor relative to other columns. Same as the [flex-grow API](https://www.w3.org/TR/css3-flexbox/). 
 It will any available extra width and distribute it proportionally according to all columns' flexGrow values. Default value: `0`
 
 ### `minWidth`: `number`
