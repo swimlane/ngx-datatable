@@ -38,6 +38,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
               <li><a href="#full-screen" (click)="state='full-screen'">Full Screen</a></li>
               <li><a href="#inline-edit" (click)="state='inline-edit'">Inline Editing</a></li>
               <li><a href="#horz-vert-scrolling" (click)="state='horz-vert-scrolling'">Horz/Vert Scrolling</a></li>
+              <li><a href="#horz-buttons-scroll" (click)="state='horz-buttons-scroll'">Horz Buttons Scroll</a></li>
               <li><a href="#multiple-tables" (click)="state='multiple-tables'">Multiple Tables</a></li>
               <li><a href="#filter" (click)="state='filter'">Filtering</a></li>
               <li><a href="#hidden" (click)="state='hidden'">Hidden On Load</a></li>
@@ -133,6 +134,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
         <inline-edit-demo *ngIf="state === 'inline-edit'"></inline-edit-demo>
         <virtual-scroll-demo *ngIf="state === 'virtual-scroll'"></virtual-scroll-demo>
         <horz-vert-scrolling-demo *ngIf="state === 'horz-vert-scrolling'"></horz-vert-scrolling-demo>
+        <horz-buttons-scroll-demo *ngIf="state === 'horz-buttons-scroll'"></horz-buttons-scroll-demo>
         <multiple-tables-demo *ngIf="state === 'multiple-tables'"></multiple-tables-demo>
         <row-details-demo *ngIf="state === 'row-details'"></row-details-demo>
         <responsive-demo *ngIf="state === 'responsive'"></responsive-demo>

@@ -93,12 +93,18 @@ var DataTableHeaderComponent = /** @class */ (function () {
         this.dragEventTarget = event;
     };
     DataTableHeaderComponent.prototype.onLongPressEnd = function (_a) {
+        var _this = this;
         var event = _a.event, model = _a.model;
         this.dragEventTarget = event;
         // delay resetting so sort can be
         // prevented if we were dragging
         setTimeout(function () {
-            model.dragging = false;
+            // datatable component creates copies from columns on reorder
+            // set dragging to false on new objects
+            var column = _this._columns.find(function (c) { return c.$$id === model.$$id; });
+            if (column) {
+                column.dragging = false;
+            }
         }, 5);
     };
     Object.defineProperty(DataTableHeaderComponent.prototype, "headerWidth", {
@@ -132,11 +138,40 @@ var DataTableHeaderComponent = /** @class */ (function () {
     };
     DataTableHeaderComponent.prototype.onColumnReordered = function (_a) {
         var prevIndex = _a.prevIndex, newIndex = _a.newIndex, model = _a.model;
+        var column = this.getColumn(newIndex);
+        column.isTarget = false;
+        column.targetMarkerContext = undefined;
         this.reorder.emit({
             column: model,
             prevValue: prevIndex,
             newValue: newIndex
         });
+    };
+    DataTableHeaderComponent.prototype.onTargetChanged = function (_a) {
+        var prevIndex = _a.prevIndex, newIndex = _a.newIndex, initialIndex = _a.initialIndex;
+        if (prevIndex || prevIndex === 0) {
+            var oldColumn = this.getColumn(prevIndex);
+            oldColumn.isTarget = false;
+            oldColumn.targetMarkerContext = undefined;
+        }
+        if (newIndex || newIndex === 0) {
+            var newColumn = this.getColumn(newIndex);
+            newColumn.isTarget = true;
+            if (initialIndex !== newIndex) {
+                newColumn.targetMarkerContext = { class: 'targetMarker '.concat(initialIndex > newIndex ? 'dragFromRight' : 'dragFromLeft') };
+            }
+        }
+    };
+    DataTableHeaderComponent.prototype.getColumn = function (index) {
+        var leftColumnCount = this._columnsByPin[0].columns.length;
+        if (index < leftColumnCount) {
+            return this._columnsByPin[0].columns[index];
+        }
+        var centerColumnCount = this._columnsByPin[1].columns.length;
+        if (index < leftColumnCount + centerColumnCount) {
+            return this._columnsByPin[1].columns[index - leftColumnCount];
+        }
+        return this._columnsByPin[2].columns[index - leftColumnCount - centerColumnCount];
     };
     DataTableHeaderComponent.prototype.onSort = function (_a) {
         var column = _a.column, prevValue = _a.prevValue, newValue = _a.newValue;
@@ -216,6 +251,10 @@ var DataTableHeaderComponent = /** @class */ (function () {
     ], DataTableHeaderComponent.prototype, "dealsWithGroup", void 0);
     __decorate([
         core_1.Input(),
+        __metadata("design:type", Object)
+    ], DataTableHeaderComponent.prototype, "targetMarkerTemplate", void 0);
+    __decorate([
+        core_1.Input(),
         __metadata("design:type", Number),
         __metadata("design:paramtypes", [Number])
     ], DataTableHeaderComponent.prototype, "innerWidth", null);
@@ -283,7 +322,7 @@ var DataTableHeaderComponent = /** @class */ (function () {
     DataTableHeaderComponent = __decorate([
         core_1.Component({
             selector: 'datatable-header',
-            template: "\n    <div\n      orderable\n      (reorder)=\"onColumnReordered($event)\"\n      [style.width.px]=\"_columnGroupWidths.total\"\n      class=\"datatable-header-inner\">\n      <div\n        *ngFor=\"let colGroup of _columnsByPin; trackBy: trackByGroups\"\n        [class]=\"'datatable-row-' + colGroup.type\"\n        [ngStyle]=\"_styleByGroup[colGroup.type]\">\n        <datatable-header-cell\n          *ngFor=\"let column of colGroup.columns; trackBy: columnTrackingFn\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (resize)=\"onColumnResized($event, column)\"\n          long-press\n          [pressModel]=\"column\"\n          [pressEnabled]=\"reorderable && column.draggable\"\n          (longPressStart)=\"onLongPressStart($event)\"\n          (longPressEnd)=\"onLongPressEnd($event)\"\n          draggable\n          [dragX]=\"reorderable && column.draggable && column.dragging\"\n          [dragY]=\"false\"\n          [dragModel]=\"column\"\n          [dragEventTarget]=\"dragEventTarget\"\n          [headerHeight]=\"headerHeight\"\n          [column]=\"column\"\n          [sortType]=\"sortType\"\n          [sorts]=\"sorts\"\n          [selectionType]=\"selectionType\"\n          [sortAscendingIcon]=\"sortAscendingIcon\"\n          [sortDescendingIcon]=\"sortDescendingIcon\"\n          [allRowsSelected]=\"allRowsSelected\"\n          (sort)=\"onSort($event)\"\n          (select)=\"select.emit($event)\"\n          (columnContextmenu)=\"columnContextmenu.emit($event)\">\n        </datatable-header-cell>\n      </div>\n    </div>\n  ",
+            template: "\n    <div\n      orderable\n      (reorder)=\"onColumnReordered($event)\"\n      (targetChanged)=\"onTargetChanged($event)\"\n      [style.width.px]=\"_columnGroupWidths.total\"\n      class=\"datatable-header-inner\">\n      <div\n        *ngFor=\"let colGroup of _columnsByPin; trackBy: trackByGroups\"\n        [class]=\"'datatable-row-' + colGroup.type\"\n        [ngStyle]=\"_styleByGroup[colGroup.type]\">\n        <datatable-header-cell\n          *ngFor=\"let column of colGroup.columns; trackBy: columnTrackingFn\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (resize)=\"onColumnResized($event, column)\"\n          long-press\n          [pressModel]=\"column\"\n          [pressEnabled]=\"reorderable && column.draggable\"\n          (longPressStart)=\"onLongPressStart($event)\"\n          (longPressEnd)=\"onLongPressEnd($event)\"\n          draggable\n          [dragX]=\"reorderable && column.draggable && column.dragging\"\n          [dragY]=\"false\"\n          [dragModel]=\"column\"\n          [dragEventTarget]=\"dragEventTarget\"\n          [headerHeight]=\"headerHeight\"\n          [isTarget]=\"column.isTarget\"\n          [targetMarkerTemplate]=\"targetMarkerTemplate\"\n          [targetMarkerContext]=\"column.targetMarkerContext\"\n          [column]=\"column\"\n          [sortType]=\"sortType\"\n          [sorts]=\"sorts\"\n          [selectionType]=\"selectionType\"\n          [sortAscendingIcon]=\"sortAscendingIcon\"\n          [sortDescendingIcon]=\"sortDescendingIcon\"\n          [allRowsSelected]=\"allRowsSelected\"\n          (sort)=\"onSort($event)\"\n          (select)=\"select.emit($event)\"\n          (columnContextmenu)=\"columnContextmenu.emit($event)\">\n        </datatable-header-cell>\n      </div>\n    </div>\n  ",
             host: {
                 class: 'datatable-header'
             },

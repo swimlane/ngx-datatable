@@ -130,6 +130,14 @@
         visibility: visible; }
       .ngx-datatable .datatable-header .datatable-header-cell:hover .resize-handle--not-resizable {
         visibility: visible; }
+      .ngx-datatable .datatable-header .datatable-header-cell .targetMarker {
+        position: absolute;
+        top: 0;
+        bottom: 0; }
+        .ngx-datatable .datatable-header .datatable-header-cell .targetMarker.dragFromLeft {
+          right: 0; }
+        .ngx-datatable .datatable-header .datatable-header-cell .targetMarker.dragFromRight {
+          left: 0; }
       .ngx-datatable .datatable-header .datatable-header-cell .datatable-header-cell-template-wrap {
         height: inherit; }
   .ngx-datatable .datatable-body {
@@ -195,5 +203,44 @@
         display: inline-block; }
       .ngx-datatable .datatable-footer .datatable-pager .pager li.disabled a {
         cursor: not-allowed; }
+
+.datatable-scroll-arrow {
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  height: 100%;
+  width: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+  -webkit-transition: background .3s ease;
+  transition: background .3s ease; }
+  .datatable-scroll-arrow i.material-icons {
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    color: rgba(0, 0, 0, 0.5); }
+  .datatable-scroll-arrow.arrow-left {
+    left: 0;
+    background: -webkit-gradient(linear, right top, left top, from(transparent), to(rgba(0, 0, 0, 0.05)));
+    background: linear-gradient(to left, transparent, rgba(0, 0, 0, 0.05)); }
+  .datatable-scroll-arrow.arrow-right {
+    right: 0;
+    background: -webkit-gradient(linear, left top, right top, from(transparent), to(rgba(0, 0, 0, 0.05)));
+    background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.05)); }
+  .datatable-scroll-arrow:hover i.material-icons {
+    color: rgba(0, 0, 0, 0.85); }
+  .datatable-scroll-arrow:hover.arrow-left {
+    background: -webkit-gradient(linear, right top, left top, from(transparent), to(rgba(0, 0, 0, 0.125)));
+    background: linear-gradient(to left, transparent, rgba(0, 0, 0, 0.125)); }
+  .datatable-scroll-arrow:hover.arrow-right {
+    background: -webkit-gradient(linear, left top, right top, from(transparent), to(rgba(0, 0, 0, 0.125)));
+    background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.125)); }
 
 /*# sourceMappingURL=index.map*/

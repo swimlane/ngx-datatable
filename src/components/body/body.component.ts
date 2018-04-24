@@ -1,6 +1,6 @@
 import {
   Component, Output, EventEmitter, Input, HostBinding, ChangeDetectorRef,
-  ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy
+  ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy, ElementRef
 } from '@angular/core';
 import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '../../utils';
 import { SelectionType } from '../../types';
@@ -20,9 +20,11 @@ import { MouseEvent } from '../../events';
       [rowIdentity]="rowIdentity"
       (select)="select.emit($event)"
       (activate)="activate.emit($event)">
+      
       <datatable-progress
         *ngIf="loadingIndicator">
       </datatable-progress>
+      
       <datatable-scroller
         *ngIf="rows?.length"
         [scrollbarV]="scrollbarV"
@@ -30,6 +32,14 @@ import { MouseEvent } from '../../events';
         [scrollHeight]="scrollHeight"
         [scrollWidth]="columnGroupWidths?.total"
         (scroll)="onBodyScroll($event)">
+
+        <div class="datatable-scroll-arrow arrow-left"
+             #arrowPrevButton
+             [hidden]="offsetX === 0"
+             (click)="scrollBody('prev')">
+          <i class="material-icons">keyboard_arrow_left</i>
+        </div>
+
         <datatable-summary-row
           *ngIf="summaryRow && summaryPosition === 'top'"
           [rowHeight]="summaryHeight"
@@ -38,6 +48,7 @@ import { MouseEvent } from '../../events';
           [rows]="rows"
           [columns]="columns">
         </datatable-summary-row>
+        
         <datatable-row-wrapper
           [groupedRows]="groupedRows"
           *ngFor="let group of temp; let i = index; trackBy: rowTrackingFn;"
@@ -84,6 +95,7 @@ import { MouseEvent } from '../../events';
             </datatable-body-row>
           </ng-template>
         </datatable-row-wrapper>
+        
         <datatable-summary-row
           *ngIf="summaryRow && summaryPosition === 'bottom'"
           [rowHeight]="summaryHeight"
@@ -92,6 +104,13 @@ import { MouseEvent } from '../../events';
           [rows]="rows"
           [columns]="columns">
         </datatable-summary-row>
+
+        <div class="datatable-scroll-arrow arrow-right"
+             #arrowNextButton
+             [hidden]="isLastColumnVisible()"
+             (click)="scrollBody('next')">
+          <i class="material-icons">keyboard_arrow_right</i>
+        </div>
       </datatable-scroller>
       <div
         class="empty-row"
@@ -212,6 +231,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Output() rowContextmenu = new EventEmitter<{ event: MouseEvent, row: any }>(false);
 
   @ViewChild(ScrollerComponent) scroller: ScrollerComponent;
+  @ViewChild('arrowNextButton', { read: ElementRef }) nextButton: ElementRef;
+  @ViewChild('arrowPrevButton', { read: ElementRef }) prevButton: ElementRef;
 
   /**
    * Returns if selection is enabled.
@@ -243,6 +264,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   listener: any;
   rowIndexes: any = new Map();
   rowExpansions: any = new Map();
+  scrollStepMultiplier: number = 0.34;
 
   _rows: any[];
   _bodyHeight: any;
@@ -254,7 +276,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   /**
    * Creates an instance of DataTableBodyComponent.
    */
-  constructor(private cd: ChangeDetectorRef) {
+  constructor(private cd: ChangeDetectorRef, private elementRef: ElementRef) {
     // declare fn here so we can get access to the `this` property
     this.rowTrackingFn = function(this: any, index: number, row: any): any {
       const idx = this.getRowIndex(row);
@@ -344,6 +366,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     this.offsetY = scrollYPos;
     this.offsetX = scrollXPos;
 
+    this.updateArrowButtonsStyles();
     this.updateIndexes();
     this.updatePage(event.direction);
     this.updateRows();
@@ -717,4 +740,43 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     return this.rowIndexes.get(row) || 0;
   }
 
+  isLastColumnVisible() {
+    if (!this.columnGroupWidths || !this.innerWidth) {
+      return false;
+    }
+    return this.columnGroupWidths.total - this.innerWidth < this.offsetX + 5;
+  }
+
+  scrollBody(direction: string) {
+    const visibilityDiff = this.columnGroupWidths.total - this.innerWidth;
+    const constShift = Math.floor(visibilityDiff * this.scrollStepMultiplier);
+
+    if (direction === 'prev') {
+      if ((this.elementRef.nativeElement.scrollLeft - constShift) < 5) {
+        this.elementRef.nativeElement.scrollLeft = 0;
+      } else {
+        this.elementRef.nativeElement.scrollLeft -= constShift;
+      }
+    } else {
+      if ((this.elementRef.nativeElement.scrollLeft + constShift) < 5) {
+        this.elementRef.nativeElement.scrollLeft = visibilityDiff;
+      } else {
+        this.elementRef.nativeElement.scrollLeft += constShift;
+      }
+    }
+  }
+
+  private updateArrowButtonsStyles() {
+    const prevButton = this.prevButton.nativeElement;
+    const nextButton = this.nextButton.nativeElement;
+    const leftArrowOffset = this.columnGroupWidths.left;
+
+    if (this.offsetX) {
+      prevButton.style.transform = `translate3d(${leftArrowOffset + this.offsetX}px, 0, 0)`;
+      nextButton.style.transform = `translate3d(${this.offsetX}px, 0, 0)`;
+    } else {
+      prevButton.style.transform = `translate3d(${leftArrowOffset}px, 0, 0)`;
+      nextButton.style.transform = `translate3d(0, 0, 0)`;
+    }
+  }
 }
