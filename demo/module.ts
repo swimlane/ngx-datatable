@@ -10,6 +10,7 @@ import { BasicAutoComponent } from './basic/basic-auto.component';
 import { VirtualScrollComponent } from './basic/virtual.component';
 import { InlineEditComponent } from './basic/inline.component';
 import { HorzVertScrolling } from './basic/scrolling.component';
+import { HorzButtonsScroll } from './basic/horz-buttons-scroll.component';
 import { MultipleTablesComponent } from './basic/multiple.component';
 import { FullScreenComponent } from './basic/fullscreen.component';
 import { RowDetailsComponent } from './basic/row-detail.component';
@@ -76,6 +77,7 @@ import { SummaryRowInlineHtmlComponent } from './summary/summary-row-inline-html
     InlineEditComponent,
     VirtualScrollComponent,
     HorzVertScrolling,
+    HorzButtonsScroll,
     MultipleTablesComponent,
     RowDetailsComponent,
     ResponsiveComponent,

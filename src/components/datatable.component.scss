@@ -305,3 +305,45 @@
     }
   }
 }
+
+.datatable-scroll-arrow {
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  height: 100%;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background .3s ease;
+
+  i.material-icons {
+    transition: all .3s ease;
+    color: rgba(0,0,0,0.5);
+  }
+
+  &.arrow-left {
+    left: 0;
+    background: linear-gradient(to left, transparent, rgba(0, 0, 0, 0.05));
+  }
+
+  &.arrow-right {
+    right: 0;
+    background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.05));
+  }
+
+  &:hover {
+    i.material-icons {
+      color: rgba(0,0,0,0.85);
+    }
+
+    &.arrow-left {
+      background: linear-gradient(to left, transparent, rgba(0, 0, 0, 0.125));
+    }
+
+    &.arrow-right {
+      background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.125));
+    }
+  }
+}
