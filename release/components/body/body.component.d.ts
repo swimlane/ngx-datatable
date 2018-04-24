@@ -1,14 +1,15 @@
-import { EventEmitter, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
+import { EventEmitter, ChangeDetectorRef, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { RowHeightCache } from '../../utils';
 import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
 export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     private cd;
+    private elementRef;
     scrollbarV: boolean;
     scrollbarH: boolean;
     loadingIndicator: boolean;
     externalPaging: boolean;
-    rowHeight: number | ((row: any) => number);
+    rowHeight: number | ((row?: any) => number);
     offsetX: number;
     emptyMessage: string;
     selectionType: SelectionType;
@@ -45,6 +46,8 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
         row: any;
     }>;
     scroller: ScrollerComponent;
+    nextButton: ElementRef;
+    prevButton: ElementRef;
     /**
      * Returns if selection is enabled.
      */
@@ -65,6 +68,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     listener: any;
     rowIndexes: any;
     rowExpansions: any;
+    scrollStepMultiplier: number;
     _rows: any[];
     _bodyHeight: any;
     _columns: any[];
@@ -74,7 +78,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     /**
      * Creates an instance of DataTableBodyComponent.
      */
-    constructor(cd: ChangeDetectorRef);
+    constructor(cd: ChangeDetectorRef, elementRef: ElementRef);
     /**
      * Called after the constructor, initializing input properties
      */
@@ -187,4 +191,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      * Gets the row index given a row
      */
     getRowIndex(row: any): number;
+    isLastColumnVisible(): boolean;
+    scrollBody(direction: string): void;
+    private updateArrowButtonsStyles();
 }

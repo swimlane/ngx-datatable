@@ -17,9 +17,10 @@ var DataTableBodyComponent = /** @class */ (function () {
     /**
      * Creates an instance of DataTableBodyComponent.
      */
-    function DataTableBodyComponent(cd) {
+    function DataTableBodyComponent(cd, elementRef) {
         var _this = this;
         this.cd = cd;
+        this.elementRef = elementRef;
         this.selected = [];
         this.scroll = new core_1.EventEmitter();
         this.page = new core_1.EventEmitter();
@@ -33,6 +34,7 @@ var DataTableBodyComponent = /** @class */ (function () {
         this.indexes = {};
         this.rowIndexes = new Map();
         this.rowExpansions = new Map();
+        this.scrollStepMultiplier = 0.34;
         /**
          * Get the height of the detail row.
          */
@@ -240,6 +242,7 @@ var DataTableBodyComponent = /** @class */ (function () {
         }
         this.offsetY = scrollYPos;
         this.offsetX = scrollXPos;
+        this.updateArrowButtonsStyles();
         this.updateIndexes();
         this.updatePage(event.direction);
         this.updateRows();
@@ -305,15 +308,11 @@ var DataTableBodyComponent = /** @class */ (function () {
      * Get the row height
      */
     DataTableBodyComponent.prototype.getRowHeight = function (row) {
-        var height;
         // if its a function return it
         if (typeof this.rowHeight === 'function') {
-            height = this.rowHeight(row);
+            return this.rowHeight(row);
         }
-        else {
-            height = this.rowHeight;
-        }
-        return height;
+        return this.rowHeight;
     };
     /**
      * @param group the group with all rows
@@ -562,6 +561,45 @@ var DataTableBodyComponent = /** @class */ (function () {
     DataTableBodyComponent.prototype.getRowIndex = function (row) {
         return this.rowIndexes.get(row) || 0;
     };
+    DataTableBodyComponent.prototype.isLastColumnVisible = function () {
+        if (!this.columnGroupWidths || !this.innerWidth) {
+            return false;
+        }
+        return this.columnGroupWidths.total - this.innerWidth < this.offsetX + 5;
+    };
+    DataTableBodyComponent.prototype.scrollBody = function (direction) {
+        var visibilityDiff = this.columnGroupWidths.total - this.innerWidth;
+        var constShift = Math.floor(visibilityDiff * this.scrollStepMultiplier);
+        if (direction === 'prev') {
+            if ((this.elementRef.nativeElement.scrollLeft - constShift) < 5) {
+                this.elementRef.nativeElement.scrollLeft = 0;
+            }
+            else {
+                this.elementRef.nativeElement.scrollLeft -= constShift;
+            }
+        }
+        else {
+            if ((this.elementRef.nativeElement.scrollLeft + constShift) < 5) {
+                this.elementRef.nativeElement.scrollLeft = visibilityDiff;
+            }
+            else {
+                this.elementRef.nativeElement.scrollLeft += constShift;
+            }
+        }
+    };
+    DataTableBodyComponent.prototype.updateArrowButtonsStyles = function () {
+        var prevButton = this.prevButton.nativeElement;
+        var nextButton = this.nextButton.nativeElement;
+        var leftArrowOffset = this.columnGroupWidths.left;
+        if (this.offsetX) {
+            prevButton.style.transform = "translate3d(" + (leftArrowOffset + this.offsetX) + "px, 0, 0)";
+            nextButton.style.transform = "translate3d(" + this.offsetX + "px, 0, 0)";
+        }
+        else {
+            prevButton.style.transform = "translate3d(" + leftArrowOffset + "px, 0, 0)";
+            nextButton.style.transform = "translate3d(0, 0, 0)";
+        }
+    };
     __decorate([
         core_1.Input(),
         __metadata("design:type", Boolean)
@@ -722,16 +760,24 @@ var DataTableBodyComponent = /** @class */ (function () {
         core_1.ViewChild(scroller_component_1.ScrollerComponent),
         __metadata("design:type", scroller_component_1.ScrollerComponent)
     ], DataTableBodyComponent.prototype, "scroller", void 0);
+    __decorate([
+        core_1.ViewChild('arrowNextButton', { read: core_1.ElementRef }),
+        __metadata("design:type", core_1.ElementRef)
+    ], DataTableBodyComponent.prototype, "nextButton", void 0);
+    __decorate([
+        core_1.ViewChild('arrowPrevButton', { read: core_1.ElementRef }),
+        __metadata("design:type", core_1.ElementRef)
+    ], DataTableBodyComponent.prototype, "prevButton", void 0);
     DataTableBodyComponent = __decorate([
         core_1.Component({
             selector: 'datatable-body',
-            template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [rows]=\"rows\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths?.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-summary-row\n          *ngIf=\"summaryRow && summaryPosition === 'top'\"\n          [rowHeight]=\"summaryHeight\"\n          [offsetX]=\"offsetX\"\n          [innerWidth]=\"innerWidth\"\n          [rows]=\"rows\"\n          [columns]=\"columns\">\n        </datatable-summary-row>\n        <datatable-row-wrapper\n          [groupedRows]=\"groupedRows\"\n          *ngFor=\"let group of temp; let i = index; trackBy: rowTrackingFn;\"\n          [innerWidth]=\"innerWidth\"\n          [ngStyle]=\"getRowsStyles(group)\"\n          [rowDetail]=\"rowDetail\"\n          [groupHeader]=\"groupHeader\"\n          [offsetX]=\"offsetX\"\n          [detailRowHeight]=\"getDetailRowHeight(group[i],i)\"\n          [row]=\"group\"\n          [expanded]=\"getRowExpanded(group)\"\n          [rowIndex]=\"getRowIndex(group[i])\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-row\n            *ngIf=\"!groupedRows; else groupedRowsTemplate\"\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(group)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"getRowHeight(group)\"\n            [row]=\"group\"\n            [rowIndex]=\"getRowIndex(group)\"\n            [expanded]=\"getRowExpanded(group)\"\n            [rowClass]=\"rowClass\"\n            [displayCheck]=\"displayCheck\"\n            (activate)=\"selector.onActivate($event, indexes.first + i)\">\n          </datatable-body-row>\n          <ng-template #groupedRowsTemplate>\n            <datatable-body-row\n              *ngFor=\"let row of group.value; let i = index; trackBy: rowTrackingFn;\"\n              tabindex=\"-1\"\n              [isSelected]=\"selector.getRowSelected(row)\"\n              [innerWidth]=\"innerWidth\"\n              [offsetX]=\"offsetX\"\n              [columns]=\"columns\"\n              [rowHeight]=\"getRowHeight(row)\"\n              [row]=\"row\"\n              [group]=\"group.value\"\n              [rowIndex]=\"getRowIndex(row)\"\n              [expanded]=\"getRowExpanded(row)\"\n              [rowClass]=\"rowClass\"\n              (activate)=\"selector.onActivate($event, i)\">\n            </datatable-body-row>\n          </ng-template>\n        </datatable-row-wrapper>\n        <datatable-summary-row\n          *ngIf=\"summaryRow && summaryPosition === 'bottom'\"\n          [rowHeight]=\"summaryHeight\"\n          [offsetX]=\"offsetX\"\n          [innerWidth]=\"innerWidth\"\n          [rows]=\"rows\"\n          [columns]=\"columns\">\n        </datatable-summary-row>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length && !loadingIndicator\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
+            template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [rows]=\"rows\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      \n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      \n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths?.total\"\n        (scroll)=\"onBodyScroll($event)\">\n\n        <div class=\"datatable-scroll-arrow arrow-left\"\n             #arrowPrevButton\n             [hidden]=\"offsetX === 0\"\n             (click)=\"scrollBody('prev')\">\n          <i class=\"material-icons\">keyboard_arrow_left</i>\n        </div>\n\n        <datatable-summary-row\n          *ngIf=\"summaryRow && summaryPosition === 'top'\"\n          [rowHeight]=\"summaryHeight\"\n          [offsetX]=\"offsetX\"\n          [innerWidth]=\"innerWidth\"\n          [rows]=\"rows\"\n          [columns]=\"columns\">\n        </datatable-summary-row>\n        \n        <datatable-row-wrapper\n          [groupedRows]=\"groupedRows\"\n          *ngFor=\"let group of temp; let i = index; trackBy: rowTrackingFn;\"\n          [innerWidth]=\"innerWidth\"\n          [ngStyle]=\"getRowsStyles(group)\"\n          [rowDetail]=\"rowDetail\"\n          [groupHeader]=\"groupHeader\"\n          [offsetX]=\"offsetX\"\n          [detailRowHeight]=\"getDetailRowHeight(group[i],i)\"\n          [row]=\"group\"\n          [expanded]=\"getRowExpanded(group)\"\n          [rowIndex]=\"getRowIndex(group[i])\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-row\n            *ngIf=\"!groupedRows; else groupedRowsTemplate\"\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(group)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"getRowHeight(group)\"\n            [row]=\"group\"\n            [rowIndex]=\"getRowIndex(group)\"\n            [expanded]=\"getRowExpanded(group)\"\n            [rowClass]=\"rowClass\"\n            [displayCheck]=\"displayCheck\"\n            (activate)=\"selector.onActivate($event, indexes.first + i)\">\n          </datatable-body-row>\n          <ng-template #groupedRowsTemplate>\n            <datatable-body-row\n              *ngFor=\"let row of group.value; let i = index; trackBy: rowTrackingFn;\"\n              tabindex=\"-1\"\n              [isSelected]=\"selector.getRowSelected(row)\"\n              [innerWidth]=\"innerWidth\"\n              [offsetX]=\"offsetX\"\n              [columns]=\"columns\"\n              [rowHeight]=\"getRowHeight(row)\"\n              [row]=\"row\"\n              [group]=\"group.value\"\n              [rowIndex]=\"getRowIndex(row)\"\n              [expanded]=\"getRowExpanded(row)\"\n              [rowClass]=\"rowClass\"\n              (activate)=\"selector.onActivate($event, i)\">\n            </datatable-body-row>\n          </ng-template>\n        </datatable-row-wrapper>\n        \n        <datatable-summary-row\n          *ngIf=\"summaryRow && summaryPosition === 'bottom'\"\n          [rowHeight]=\"summaryHeight\"\n          [offsetX]=\"offsetX\"\n          [innerWidth]=\"innerWidth\"\n          [rows]=\"rows\"\n          [columns]=\"columns\">\n        </datatable-summary-row>\n\n        <div class=\"datatable-scroll-arrow arrow-right\"\n             #arrowNextButton\n             [hidden]=\"isLastColumnVisible()\"\n             (click)=\"scrollBody('next')\">\n          <i class=\"material-icons\">keyboard_arrow_right</i>\n        </div>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length && !loadingIndicator\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
             changeDetection: core_1.ChangeDetectionStrategy.OnPush,
             host: {
                 class: 'datatable-body'
             }
         }),
-        __metadata("design:paramtypes", [core_1.ChangeDetectorRef])
+        __metadata("design:paramtypes", [core_1.ChangeDetectorRef, core_1.ElementRef])
     ], DataTableBodyComponent);
     return DataTableBodyComponent;
 }());
