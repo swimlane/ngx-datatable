@@ -1017,9 +1017,16 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     const cols = this._internalColumns.map(c => {
       return { ...c };
     });
+    const prevCol = cols[newValue];
+
+    if (
+      (column.frozenLeft !== prevCol.frozenLeft) ||
+      (column.frozenRight !== prevCol.frozenRight)
+    ) {
+      return;
+    }
 
     if (this.swapColumns) {
-      const prevCol = cols[newValue];
       cols[newValue] = column;
       cols[prevValue] = prevCol;
     } else {
@@ -1036,13 +1043,6 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
         }
         cols[newValue] = movedCol;
       }
-    }
-
-    if (
-      (column.frozenLeft !== prevCol.frozenLeft) ||
-      (column.frozenRight !== prevCol.frozenRight)
-    ) {
-      return;
     }
 
     this._internalColumns = cols;
