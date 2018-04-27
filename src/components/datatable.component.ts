@@ -991,8 +991,6 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     cols[newValue] = column;
     cols[prevValue] = prevCol;
 
-    console.log(column.frozenLeft);
-    console.log(prevCol.frozenLeft);
     if (
       (column.frozenLeft !== prevCol.frozenLeft) ||
       (column.frozenRight !== prevCol.frozenRight)
