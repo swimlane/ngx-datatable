@@ -121,7 +121,7 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      *
      *  - `single`
      *  - `multi`
-     *  - `chkbox`
+     *  - `checkbox`
      *  - `multiClick`
      *  - `cell`
      *
@@ -211,6 +211,18 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      * A flag for row virtualization on / off
      */
     virtualization: boolean;
+    /**
+     * A flag for switching summary row on / off
+     */
+    summaryRow: boolean;
+    /**
+     * A height of summary row
+     */
+    summaryHeight: number;
+    /**
+     * A property holds a summary row position: top/bottom
+     */
+    summaryPosition: string;
     /**
      * Body was scrolled typically in a `scrollbarV:true` scenario.
      */
@@ -456,4 +468,5 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      * A row was selected from body
      */
     onBodySelect(event: any): void;
+    private sortInternalRows();
 }

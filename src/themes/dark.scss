@@ -103,4 +103,18 @@
 			}
 		}
   }
+
+  .datatable-summary-row {
+    .datatable-body-row {
+      background-color: #14171f;
+
+      &:hover {
+        background-color: #14171f;
+      }
+
+      .datatable-body-cell {
+	font-weight: bold;
+      }
+    }
+  }
 }

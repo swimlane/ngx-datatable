@@ -27,7 +27,3 @@ export declare function columnsByPinArr(val: any): {
     type: string;
     columns: any;
 }[];
-export declare function allColumnsByPinArr(val: any): {
-    type: string;
-    columns: any;
-}[];

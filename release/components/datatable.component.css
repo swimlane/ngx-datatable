@@ -123,6 +123,8 @@
         visibility: visible; }
       .ngx-datatable .datatable-header .datatable-header-cell:hover .resize-handle--not-resizable {
         visibility: visible; }
+      .ngx-datatable .datatable-header .datatable-header-cell .datatable-header-cell-template-wrap {
+        height: inherit; }
   .ngx-datatable .datatable-body {
     position: relative;
     z-index: 10;

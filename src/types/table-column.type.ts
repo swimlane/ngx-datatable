@@ -16,7 +16,7 @@ export interface TableColumn {
 
   /**
    * Internal unique id
-   * 
+   *
    * @type {string}
    * @memberOf TableColumn
    */
@@ -24,7 +24,7 @@ export interface TableColumn {
 
   /**
    * Internal for column width distributions
-   * 
+   *
    * @type {number}
    * @memberOf TableColumn
    */
@@ -32,7 +32,7 @@ export interface TableColumn {
 
   /**
    * Internal for setColumnDefaults
-   * 
+   *
    * @type {ValueGetter}
    * @memberOf TableColumn
    */
@@ -40,7 +40,7 @@ export interface TableColumn {
 
   /**
    * Determines if column is checkbox
-   * 
+   *
    * @type {boolean}
    * @memberOf TableColumn
    */
@@ -48,7 +48,7 @@ export interface TableColumn {
 
   /**
    * Determines if the column is frozen to the left
-   * 
+   *
    * @type {boolean}
    * @memberOf TableColumn
    */
@@ -56,7 +56,7 @@ export interface TableColumn {
 
   /**
    * Determines if the column is frozen to the right
-   * 
+   *
    * @type {boolean}
    * @memberOf TableColumn
    */
@@ -64,10 +64,10 @@ export interface TableColumn {
 
   /**
    * The grow factor relative to other columns. Same as the flex-grow
-   * API from http =//www.w3.org/TR/css3-flexbox/. Basically; 
+   * API from http =//www.w3.org/TR/css3-flexbox/. Basically;
    * take any available extra width and distribute it proportionally
    * according to all columns' flexGrow values.
-   * 
+   *
    * @type {number}
    * @memberOf TableColumn
    */
@@ -75,7 +75,7 @@ export interface TableColumn {
 
   /**
    * Min width of the column
-   * 
+   *
    * @type {number}
    * @memberOf TableColumn
    */
@@ -83,7 +83,7 @@ export interface TableColumn {
 
   /**
    * Max width of the column
-   * 
+   *
    * @type {number}
    * @memberOf TableColumn
    */
@@ -91,7 +91,7 @@ export interface TableColumn {
 
   /**
    * The default width of the column, in pixels
-   * 
+   *
    * @type {number}
    * @memberOf TableColumn
    */
@@ -99,7 +99,7 @@ export interface TableColumn {
 
   /**
    * Can the column be resized
-   * 
+   *
    * @type {boolean}
    * @memberOf TableColumn
    */
@@ -107,7 +107,7 @@ export interface TableColumn {
 
   /**
    * Custom sort comparator
-   * 
+   *
    * @type {*}
    * @memberOf TableColumn
    */
@@ -115,7 +115,7 @@ export interface TableColumn {
 
   /**
    * Custom pipe transforms
-   * 
+   *
    * @type {PipeTransform}
    * @memberOf TableColumn
    */
@@ -123,7 +123,7 @@ export interface TableColumn {
 
   /**
    * Can the column be sorted
-   * 
+   *
    * @type {boolean}
    * @memberOf TableColumn
    */
@@ -131,7 +131,7 @@ export interface TableColumn {
 
   /**
    * Can the column be re-arranged by dragging
-   * 
+   *
    * @type {boolean}
    * @memberOf TableColumn
    */
@@ -139,7 +139,7 @@ export interface TableColumn {
 
   /**
    * Whether the column can automatically resize to fill space in the table.
-   * 
+   *
    * @type {boolean}
    * @memberOf TableColumn
    */
@@ -147,7 +147,7 @@ export interface TableColumn {
 
   /**
    * Column name or label
-   * 
+   *
    * @type {string}
    * @memberOf TableColumn
    */
@@ -155,11 +155,11 @@ export interface TableColumn {
 
   /**
    * Property to bind to the row. Example:
-   * 
+   *
    * `someField` or `some.field.nested`, 0 (numeric)
-   * 
+   *
    * If left blank, will use the name as camel case conversion
-   * 
+   *
    * @type {TableColumnProp}
    * @memberOf TableColumn
    */
@@ -167,7 +167,7 @@ export interface TableColumn {
 
   /**
    * Cell template ref
-   * 
+   *
    * @type {*}
    * @memberOf TableColumn
    */
@@ -175,7 +175,7 @@ export interface TableColumn {
 
   /**
    * Header template ref
-   * 
+   *
    * @type {*}
    * @memberOf TableColumn
    */
@@ -183,26 +183,41 @@ export interface TableColumn {
 
   /**
    * CSS Classes for the cell
-   * 
-   * 
+   *
+   *
    * @memberOf TableColumn
    */
   cellClass?: string | ((data: any) => string|any);
 
   /**
    * CSS classes for the header
-   * 
-   * 
+   *
+   *
    * @memberOf TableColumn
    */
   headerClass?: string | ((data: any) => string|any);
 
   /**
    * Header checkbox enabled
-   * 
+   *
    * @type {boolean}
    * @memberOf TableColumn
    */
   headerCheckboxable?: boolean;
 
+  /**
+   * Summary function
+   *
+   * @type {(cells: any[]) => any}
+   * @memberOf TableColumn
+   */
+  summaryFunc?: (cells: any[]) => any;
+
+  /**
+   * Summary cell template ref
+   *
+   * @type {*}
+   * @memberOf TableColumn
+   */
+  summaryTemplate?: any;
 }

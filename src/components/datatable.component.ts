@@ -38,6 +38,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
         [columns]="_internalColumns"
         [headerHeight]="headerHeight"
         [reorderable]="reorderable"
+        [targetMarkerTemplate]="targetMarkerTemplate"
         [sortAscendingIcon]="cssClasses.sortAscending"
         [sortDescendingIcon]="cssClasses.sortDescending"
         [allRowsSelected]="allRowsSelected"
@@ -76,6 +77,9 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
         [rowClass]="rowClass"
         [selectCheck]="selectCheck"
         [displayCheck]="displayCheck"
+        [summaryRow]="summaryRow"
+        [summaryHeight]="summaryHeight"
+        [summaryPosition]="summaryPosition"
         (page)="onBodyPage($event)"
         (activate)="activate.emit($event)"
         (rowContextmenu)="onRowContextmenu($event)"
@@ -110,6 +114,11 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
   /**
+   * Template for the target marker of drag target columns.
+   */
+  @Input() targetMarkerTemplate: any;
+
+  /**
    * Rows that are displayed in the table.
    */
   @Input() set rows(val: any) {
@@ -118,10 +127,10 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     if (val) {
       this._internalRows = [...val];
     }
-
+    
     // auto sort on new updates
     if (!this.externalSorting) {
-      this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
+      this.sortInternalRows();
     }
 
     // recalculate sizes/etc
@@ -307,7 +316,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    *
    *  - `single`
    *  - `multi`
-   *  - `chkbox`
+   *  - `checkbox`
    *  - `multiClick`
    *  - `cell`
    *
@@ -321,6 +330,12 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * by dragging them.
    */
   @Input() reorderable: boolean = true;
+
+  /**
+   * Swap columns on re-order columns or
+   * move them.
+   */
+  @Input() swapColumns: boolean = true;
 
   /**
    * The type of sorting
@@ -427,6 +442,21 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * A flag for row virtualization on / off
    */
   @Input() virtualization: boolean = true;
+
+  /**
+   * A flag for switching summary row on / off
+   */
+  @Input() summaryRow: boolean = false;
+
+  /**
+   * A height of summary row
+   */
+  @Input() summaryHeight: number = this.rowHeight;
+
+  /**
+   * A property holds a summary row position: top/bottom
+   */
+  @Input() summaryPosition: string = 'top';
 
   /**
    * Body was scrolled typically in a `scrollbarV:true` scenario.
@@ -673,7 +703,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    */
   ngAfterViewInit(): void {
     if (!this.externalSorting) {
-      this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
+      this.sortInternalRows();
     }
 
     // this has to be done to prevent the change detection
@@ -681,7 +711,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     if (typeof requestAnimationFrame === 'undefined') {
       return;
     }
-    
+
     requestAnimationFrame(() => {
       this.recalculate();
 
@@ -716,6 +746,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
         this._internalColumns = translateTemplates(arr);
         setColumnDefaults(this._internalColumns);
         this.recalculateColumns();
+        this.sortInternalRows();
         this.cd.markForCheck();
       }
     }
@@ -756,7 +787,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   ngDoCheck(): void {
     if (this.rowDiffer.diff(this.rows)) {
       if (!this.externalSorting) {
-        this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
+        this.sortInternalRows();
       } else {
         this._internalRows = [...this.rows];
       }
@@ -987,9 +1018,25 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       return { ...c };
     });
 
-    const prevCol = cols[newValue];
-    cols[newValue] = column;
-    cols[prevValue] = prevCol;
+    if (this.swapColumns) {
+      const prevCol = cols[newValue];
+      cols[newValue] = column;
+      cols[prevValue] = prevCol;
+    } else {
+      if (newValue > prevValue) {
+        const movedCol = cols[prevValue];
+        for (let i = prevValue; i < newValue; i++) {
+          cols[i] = cols[i + 1];
+        }
+        cols[newValue] = movedCol;
+      } else {
+        const movedCol = cols[prevValue];
+        for (let i = prevValue; i > newValue; i--) {
+          cols[i] = cols[i - 1];
+        }
+        cols[newValue] = movedCol;
+      }
+    }
 
     if (
       (column.frozenLeft !== prevCol.frozenLeft) ||
@@ -1019,16 +1066,15 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       });
     }
 
-    const { sorts } = event;
+    this.sorts = event.sorts;
 
     // this could be optimized better since it will resort
     // the rows again on the 'push' detection...
     if (this.externalSorting === false) {
       // don't use normal setter so we don't resort
-      this._internalRows = sortRows(this._internalRows, this._internalColumns, sorts);
+      this.sortInternalRows();
     }
 
-    this.sorts = sorts;
     // Always go to first page when sorting to see the newly sorted data
     this.offset = 0;
     this.bodyComponent.updateOffsetY(this.offset);
@@ -1074,5 +1120,9 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    */
   onBodySelect(event: any): void {
     this.select.emit(event);
+  }
+  
+  private sortInternalRows(): void {
+    this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
   }
 }

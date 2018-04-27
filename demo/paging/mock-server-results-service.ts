@@ -1,8 +1,8 @@
-import {Injectable} from "@angular/core";
-import {Observable} from "rxjs";
-import {PagedData} from "./model/paged-data";
-import {CorporateEmployee} from "./model/corporate-employee";
-import {Page} from "./model/page";
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {PagedData} from './model/paged-data';
+import {CorporateEmployee} from './model/corporate-employee';
+import {Page} from './model/page';
 const companyData = require('../../assets/data/company.json');
 
 /**
@@ -26,14 +26,14 @@ export class MockServerResultsService {
      * @returns {PagedData<CorporateEmployee>} An array of the selected data and page
      */
     private getPagedData(page: Page): PagedData<CorporateEmployee> {
-        let pagedData = new PagedData<CorporateEmployee>();
+        const pagedData = new PagedData<CorporateEmployee>();
         page.totalElements = companyData.length;
         page.totalPages = page.totalElements / page.size;
-        let start = page.pageNumber * page.size;
-        let end = Math.min((start + page.size), page.totalElements);
+        const start = page.pageNumber * page.size;
+        const end = Math.min((start + page.size), page.totalElements);
         for (let i = start; i < end; i++){
-            let jsonObj = companyData[i];
-            let employee = new CorporateEmployee(jsonObj.name, jsonObj.gender, jsonObj.company, jsonObj.age);
+            const jsonObj = companyData[i];
+            const employee = new CorporateEmployee(jsonObj.name, jsonObj.gender, jsonObj.company, jsonObj.age);
             pagedData.data.push(employee);
         }
         pagedData.page = page;

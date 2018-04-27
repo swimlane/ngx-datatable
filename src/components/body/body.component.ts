@@ -30,6 +30,14 @@ import { MouseEvent } from '../../events';
         [scrollHeight]="scrollHeight"
         [scrollWidth]="columnGroupWidths?.total"
         (scroll)="onBodyScroll($event)">
+        <datatable-summary-row
+          *ngIf="summaryRow && summaryPosition === 'top'"
+          [rowHeight]="summaryHeight"
+          [offsetX]="offsetX"
+          [innerWidth]="innerWidth"
+          [rows]="rows"
+          [columns]="columns">
+        </datatable-summary-row>
         <datatable-row-wrapper
           [groupedRows]="groupedRows"
           *ngFor="let group of temp; let i = index; trackBy: rowTrackingFn;"
@@ -76,6 +84,14 @@ import { MouseEvent } from '../../events';
             </datatable-body-row>
           </ng-template>
         </datatable-row-wrapper>
+        <datatable-summary-row
+          *ngIf="summaryRow && summaryPosition === 'bottom'"
+          [rowHeight]="summaryHeight"
+          [offsetX]="offsetX"
+          [innerWidth]="innerWidth"
+          [rows]="rows"
+          [columns]="columns">
+        </datatable-summary-row>
       </datatable-scroller>
       <div
         class="empty-row"
@@ -95,7 +111,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() scrollbarH: boolean;
   @Input() loadingIndicator: boolean;
   @Input() externalPaging: boolean;
-  @Input() rowHeight: number;
+  @Input() rowHeight: number | ((row?: any) => number);
   @Input() offsetX: number;
   @Input() emptyMessage: string;
   @Input() selectionType: SelectionType;
@@ -112,6 +128,9 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() innerWidth: number;
   @Input() groupRowsBy: string;
   @Input() virtualization: boolean;
+  @Input() summaryRow: boolean;
+  @Input() summaryPosition: string;
+  @Input() summaryHeight: number;
 
   @Input() set pageSize(val: number) {
     this._pageSize = val;
@@ -207,7 +226,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * calculate scroll height automatically (as height will be undefined).
    */
   get scrollHeight(): number | undefined {
-    if (this.scrollbarV) {
+    if (this.scrollbarV && this.rowCount) {
       return this.rowHeightsCache.query(this.rowCount - 1);
     }
     // avoid TS7030: Not all code paths return a value.
@@ -400,14 +419,12 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * Get the row height
    */
   getRowHeight(row: any): number {
-    let rowHeight = this.rowHeight;
-
     // if its a function return it
     if (typeof this.rowHeight === 'function') {
-      rowHeight = this.rowHeight(row);
+      return this.rowHeight(row);
     }
 
-    return rowHeight;
+    return this.rowHeight;
   }
 
   /**
@@ -525,7 +542,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         // If virtual rows are not needed
         // We render all in one go
         first = 0;
-        last = this.rowCount - 1;
+        last = this.rowCount;
       }
     } else {
       // The server is handling paging and will pass an array that begins with the

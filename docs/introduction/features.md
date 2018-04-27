@@ -8,7 +8,7 @@ The current features include:
 - Expressive Header and Cell Templates
 - Horizontal & Vertical Scrolling
 - Column Reordering & Resizing
-- Client/Serve side Pagination & Sorting
+- Client/Server side Pagination & Sorting
 - Intelligent Column Width Algorithms ( Force-fill & Flex-grow )
 - Integrated Pager
 - Cell & Row Selection ( Single, Multi, Keyboard, Checkbox )

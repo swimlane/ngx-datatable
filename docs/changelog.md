@@ -1,5 +1,22 @@
 # Changelog
 
+## 11.3.0
+- Feat: Added summary row #1233
+- Fix: Fixed issue with misaligned body content #1326
+- Fix: Fixed Default Sort Behavior Of Table With Custom Templates #1308
+- Chore: Fixed link in column api docs #1343
+- Chore: Fixed typo in docs #1342
+
+## 11.2.0
+- Feat: Add resize handler for non-resizable columns #1225
+- Fix: Pager Component Accessibility #1259
+- Fix: Fix missing row with virtualization and scrollbarV #1235
+- Fix: Fall back to view mode when select field value doesn't change #1241
+- Fix: Fix virtual-paging #1229
+- Fix: Fix column scaling on resize #1236
+- Fix: Propagate sortDir changes to template #1243
+- Fix: Add setStylesByGroup() in set column prop #1244
+
 ## 11.1.7
 - Fix: Fix error w/ rows undefined on init
 
