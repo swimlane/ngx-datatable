@@ -1,6 +1,6 @@
 {
   "name": "@swimlane/ngx-datatable",
-  "version": "11.2.0",
+  "version": "11.3.2",
   "description": "ngx-datatable is a Angular2+ table grid component for presenting large and complex data.",
   "main": "release/index.js",
   "typings": "release/index.d.ts",
@@ -64,11 +64,11 @@
   },
   "homepage": "https://github.com/swimlane/ngx-datatable#readme",
   "peerDependencies": {
-    "@angular/common": ">=4.0.1 || >5.0.0",
-    "@angular/compiler": ">=4.0.1 || >5.0.0",
-    "@angular/core": ">=4.0.1 || >5.0.0",
-    "@angular/platform-browser": ">=4.0.1 || >5.0.0",
-    "@angular/platform-browser-dynamic": ">=4.0.1 || >5.0.0",
+    "@angular/common": ">=4.0.1 || >5.0.0 || <=6.0.0",
+    "@angular/compiler": ">=4.0.1 || >5.0.0 || <=6.0.0",
+    "@angular/core": ">=4.0.1 || >5.0.0 || <=6.0.0",
+    "@angular/platform-browser": ">=4.0.1 || >5.0.0 || <=6.0.0",
+    "@angular/platform-browser-dynamic": ">=4.0.1 || >5.0.0 || <=6.0.0",
     "core-js": "^2.4.0",
     "rxjs": "^5.0.0"
   },
@@ -81,7 +81,7 @@
     "@angular/platform-browser": "^4.0.1",
     "@angular/platform-browser-dynamic": "^4.0.1",
     "@angular/platform-server": "^4.0.1",
-    "@types/jasmine": "^2.8.2",
+    "@types/jasmine": "^2.8.4",
     "@types/node": "^8.0.53",
     "angular2-template-loader": "^0.6.2",
     "autoprefixer": "^7.1.6",

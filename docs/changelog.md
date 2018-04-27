@@ -1,5 +1,12 @@
 # Changelog
 
+## 11.3.0
+- Feat: Added summary row #1233
+- Fix: Fixed issue with misaligned body content #1326
+- Fix: Fixed Default Sort Behavior Of Table With Custom Templates #1308
+- Chore: Fixed link in column api docs #1343
+- Chore: Fixed typo in docs #1342
+
 ## 11.2.0
 - Feat: Add resize handler for non-resizable columns #1225
 - Fix: Pager Component Accessibility #1259
