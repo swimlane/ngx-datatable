@@ -127,7 +127,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     if (val) {
       this._internalRows = [...val];
     }
-    
+
     // auto sort on new updates
     if (!this.externalSorting) {
       this.sortInternalRows();
@@ -385,7 +385,15 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    *
    * (`fn(x) === fn(y)` instead of `x === y`)
    */
-  @Input() rowIdentity: (x: any) => any = ((x: any) => x);
+  @Input() rowIdentity: (x: any) => any = ((x: any) => {
+    if (this._groupRowsBy) {
+      // each group in groupedRows are stored as {key, value: [rows]},
+      // where key is the groupRowsBy index
+      return x.key;
+    } else {
+      return x;
+    }
+  });
 
   /**
    * Row specific classes.
@@ -1114,7 +1122,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   onBodySelect(event: any): void {
     this.select.emit(event);
   }
-  
+
   private sortInternalRows(): void {
     this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
   }
