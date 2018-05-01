@@ -7,6 +7,8 @@ export declare class DataTableHeaderComponent {
     sortDescendingIcon: any;
     scrollbarH: boolean;
     dealsWithGroup: boolean;
+    targetMarkerTemplate: any;
+    targetMarkerContext: any;
     innerWidth: number;
     sorts: any[];
     sortType: SortType;
@@ -50,6 +52,8 @@ export declare class DataTableHeaderComponent {
     columnTrackingFn(index: number, column: any): any;
     onColumnResized(width: number, column: DataTableColumnDirective): void;
     onColumnReordered({prevIndex, newIndex, model}: any): void;
+    onTargetChanged({prevIndex, newIndex, initialIndex}: any): void;
+    getColumn(index: number): any;
     onSort({column, prevValue, newValue}: any): void;
     calcNewSorts(column: any, prevValue: number, newValue: number): any[];
     setStylesByGroup(): void;

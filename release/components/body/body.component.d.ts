@@ -8,7 +8,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     scrollbarH: boolean;
     loadingIndicator: boolean;
     externalPaging: boolean;
-    rowHeight: number | ((row: any) => number);
+    rowHeight: number | ((row?: any) => number);
     offsetX: number;
     emptyMessage: string;
     selectionType: SelectionType;
@@ -64,7 +64,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     rowTrackingFn: any;
     listener: any;
     rowIndexes: any;
-    rowExpansions: any;
+    rowExpansions: any[];
     _rows: any[];
     _bodyHeight: any;
     _columns: any[];
@@ -183,6 +183,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      * Returns if the row was expanded and set default row expansion when row expansion is empty
      */
     getRowExpanded(row: any): boolean;
+    getRowExpandedIdx(row: any, expanded: any[]): number;
     /**
      * Gets the row index given a row
      */
