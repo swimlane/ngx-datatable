@@ -123,6 +123,14 @@
         visibility: visible; }
       .ngx-datatable .datatable-header .datatable-header-cell:hover .resize-handle--not-resizable {
         visibility: visible; }
+      .ngx-datatable .datatable-header .datatable-header-cell .targetMarker {
+        position: absolute;
+        top: 0;
+        bottom: 0; }
+        .ngx-datatable .datatable-header .datatable-header-cell .targetMarker.dragFromLeft {
+          right: 0; }
+        .ngx-datatable .datatable-header .datatable-header-cell .targetMarker.dragFromRight {
+          left: 0; }
       .ngx-datatable .datatable-header .datatable-header-cell .datatable-header-cell-template-wrap {
         height: inherit; }
   .ngx-datatable .datatable-body {

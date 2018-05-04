@@ -10,8 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var rxjs_1 = require("rxjs");
 var operators_1 = require("rxjs/operators");
-var fromEvent_1 = require("rxjs/observable/fromEvent");
 var events_1 = require("../events");
 var LongPressDirective = /** @class */ (function () {
     function LongPressDirective() {
@@ -48,7 +48,7 @@ var LongPressDirective = /** @class */ (function () {
         this.mouseY = event.clientY;
         this.pressing = true;
         this.isLongPressing = false;
-        var mouseup = fromEvent_1.fromEvent(document, 'mouseup');
+        var mouseup = rxjs_1.fromEvent(document, 'mouseup');
         this.subscription = mouseup.subscribe(function (ev) { return _this.onMouseup(); });
         this.timeout = setTimeout(function () {
             _this.isLongPressing = true;
@@ -56,7 +56,7 @@ var LongPressDirective = /** @class */ (function () {
                 event: event,
                 model: _this.pressModel
             });
-            _this.subscription.add(fromEvent_1.fromEvent(document, 'mousemove')
+            _this.subscription.add(rxjs_1.fromEvent(document, 'mousemove')
                 .pipe(operators_1.takeUntil(mouseup))
                 .subscribe(function (mouseEvent) { return _this.onMouseMove(mouseEvent); }));
             _this.loop(event);

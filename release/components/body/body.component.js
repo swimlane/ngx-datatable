@@ -305,15 +305,11 @@ var DataTableBodyComponent = /** @class */ (function () {
      * Get the row height
      */
     DataTableBodyComponent.prototype.getRowHeight = function (row) {
-        var height;
         // if its a function return it
         if (typeof this.rowHeight === 'function') {
-            height = this.rowHeight(row);
+            return this.rowHeight(row);
         }
-        else {
-            height = this.rowHeight;
-        }
-        return height;
+        return this.rowHeight;
     };
     /**
      * @param group the group with all rows
