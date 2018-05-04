@@ -1,6 +1,7 @@
 import { Component, ElementRef, Injectable } from '@angular/core';
-import { Observable } from "rxjs";
-import { CorporateEmployee } from "./model/corporate-employee";
+import { Observable, of } from 'rxjs';
+import { delay, map } from 'rxjs/operators';
+import { CorporateEmployee } from './model/corporate-employee';
 
 const companyData = require('../../assets/data/company.json');
 
@@ -15,9 +16,8 @@ class PagedData<T> {
 export class MockServerResultsService {
 
   public getResults(offset: number, limit: number): Observable<PagedData<CorporateEmployee>> {
-    return Observable.of(companyData.slice(offset, offset + limit))
-      .delay(new Date(Date.now() + 500))
-      .map(data => ({ data }));
+    return of(companyData.slice(offset, offset + limit))
+      .pipe(delay(new Date(Date.now() + 500)), map(data => ({ data })));
   }
 }
 
@@ -95,7 +95,7 @@ export class ServerScrollingComponent {
     // 1) it prevents the same page from being loaded twice
     // 2) it enables display of the loading indicator
     this.isLoading = true;
-
+    
     this.serverResultsService.getResults(this.rows.length, limit).subscribe(results => {
       this.rows.push(...results.data);
       this.isLoading = false;
