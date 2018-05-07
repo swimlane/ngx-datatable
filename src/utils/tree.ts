@@ -1,7 +1,7 @@
 import { ValueGetter, getterForProp } from ".";
 import { TableColumn, TableColumnProp } from "..";
 
-export type OptionalValueGetter = (any) => any | undefined;
+export type OptionalValueGetter = (row: any) => any | undefined;
 export function optionalGetterForProp(prop: TableColumnProp): OptionalValueGetter {
   return prop && ((row) => getterForProp(prop)(row, prop));
 }
