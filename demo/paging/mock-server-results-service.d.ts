@@ -1,7 +1,7 @@
-import { Observable } from "rxjs";
-import { PagedData } from "./model/paged-data";
-import { CorporateEmployee } from "./model/corporate-employee";
-import { Page } from "./model/page";
+import { Observable } from 'rxjs';
+import { PagedData } from './model/paged-data';
+import { CorporateEmployee } from './model/corporate-employee';
+import { Page } from './model/page';
 /**
  * A server used to mock a paged data result from a server
  */

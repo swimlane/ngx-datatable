@@ -1,7 +1,5 @@
-export declare class DarkThemeComponent {
+export declare class SummaryRowSimpleComponent {
     rows: any[];
-    loadingIndicator: boolean;
-    reorderable: boolean;
     columns: ({
         prop: string;
         summaryFunc: () => any;
@@ -11,11 +9,15 @@ export declare class DarkThemeComponent {
         summaryFunc: (cells: any) => string;
         prop?: undefined;
     } | {
-        name: string;
-        summaryFunc: () => any;
-        prop?: undefined;
+        prop: string;
+        summaryFunc: (cells: any) => number;
+        name?: undefined;
     })[];
+    enableSummary: boolean;
+    summaryPosition: string;
     constructor();
     fetch(cb: any): void;
+    onSummaryStateChange(a: any): void;
     private summaryForGender(cells);
+    private avgAge(cells);
 }

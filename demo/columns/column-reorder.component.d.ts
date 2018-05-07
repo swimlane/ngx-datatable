@@ -1,21 +1,21 @@
-export declare class DarkThemeComponent {
+export declare class ColumnReorderComponent {
     rows: any[];
     loadingIndicator: boolean;
     reorderable: boolean;
+    swapColumns: boolean;
     columns: ({
         prop: string;
-        summaryFunc: () => any;
         name?: undefined;
+        sortable?: undefined;
     } | {
         name: string;
-        summaryFunc: (cells: any) => string;
         prop?: undefined;
+        sortable?: undefined;
     } | {
         name: string;
-        summaryFunc: () => any;
+        sortable: boolean;
         prop?: undefined;
     })[];
     constructor();
     fetch(cb: any): void;
-    private summaryForGender(cells);
 }
