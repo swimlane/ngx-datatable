@@ -1,5 +1,8 @@
 # Changelog
 
+## 12.0.0
+- Chore: Upgrade to Angular 6
+
 ## 11.3.0
 - Feat: Added summary row #1233
 - Fix: Fixed issue with misaligned body content #1326
