@@ -208,6 +208,16 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     return this.column.width;
   }
 
+  @HostBinding('style.minWidth.px')
+  get minWidth(): number {
+    return this.column.minWidth;
+  }
+
+  @HostBinding('style.maxWidth.px')
+  get maxWidth(): number {
+    return this.column.maxWidth;
+  }
+
   @HostBinding('style.height')
   get height(): string | number {
     const height = this.rowHeight;

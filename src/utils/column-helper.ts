@@ -101,6 +101,14 @@ export function translateTemplates(templates: DataTableColumnDirective[]): any[]
       col.cellTemplate = temp.cellTemplate;
     }
 
+    if(temp.summaryFunc) {
+      col.summaryFunc = temp.summaryFunc;
+    }
+
+    if(temp.summaryTemplate) {
+      col.summaryTemplate = temp.summaryTemplate;
+    }
+
     result.push(col);
   }
 

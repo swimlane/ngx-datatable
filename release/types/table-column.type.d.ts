@@ -180,10 +180,17 @@ export interface TableColumn {
      */
     headerCheckboxable?: boolean;
     /**
-     * Is tree displayed on this column
+     * Summary function
      *
-     * @type {boolean}
+     * @type {(cells: any[]) => any}
      * @memberOf TableColumn
      */
-    isTreeColumn?: boolean;
+    summaryFunc?: (cells: any[]) => any;
+    /**
+     * Summary cell template ref
+     *
+     * @type {*}
+     * @memberOf TableColumn
+     */
+    summaryTemplate?: any;
 }

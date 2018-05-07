@@ -9,12 +9,14 @@ import { DOCUMENT } from '@angular/platform-browser';
 export class OrderableDirective implements AfterContentInit, OnDestroy {
 
   @Output() reorder: EventEmitter<any> = new EventEmitter();
+  @Output() targetChanged: EventEmitter<any> = new EventEmitter();
 
   @ContentChildren(DraggableDirective, { descendants: true })
   draggables: QueryList<DraggableDirective>;
 
   positions: any;
   differ: any;
+  lastDraggingIndex: number;
 
   constructor(differs: KeyValueDiffers, @Inject(DOCUMENT) private document: any) {
     this.differ = differs.find({}).create();
@@ -30,6 +32,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
   ngOnDestroy(): void {
     this.draggables.forEach(d => {
       d.dragStart.unsubscribe();
+      d.dragging.unsubscribe();
       d.dragEnd.unsubscribe();
     });
   }
@@ -43,6 +46,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
 
         if (currentValue) {
           currentValue.dragStart.subscribe(this.onDragStart.bind(this));
+          currentValue.dragging.subscribe(this.onDragging.bind(this));
           currentValue.dragEnd.subscribe(this.onDragEnd.bind(this));
         }
       };
@@ -50,6 +54,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
       const unsubscribe = ({ previousValue }: any) => {
         if (previousValue) {
           previousValue.dragStart.unsubscribe();
+          previousValue.dragging.unsubscribe();
           previousValue.dragEnd.unsubscribe();
         }
       };
@@ -76,6 +81,28 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
     }
   }
 
+  onDragging({ element, model, event }: any): void {
+    const prevPos = this.positions[ model.prop ];    
+    const target = this.isTarget(model, event);
+
+    if (target) {
+      if (this.lastDraggingIndex !== target.i) {
+        this.targetChanged.emit({
+          prevIndex: this.lastDraggingIndex,
+          newIndex: target.i,
+          initialIndex: prevPos.index
+        });
+        this.lastDraggingIndex = target.i;
+      } 
+    } else if (this.lastDraggingIndex !== prevPos.index) {
+      this.targetChanged.emit({
+        prevIndex: this.lastDraggingIndex,
+        initialIndex: prevPos.index
+      });
+      this.lastDraggingIndex = prevPos.index;
+    }
+  }
+
   onDragEnd({ element, model, event }: any): void {
     const prevPos = this.positions[ model.prop ];
 
@@ -88,6 +115,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
       });
     }
 
+    this.lastDraggingIndex = undefined;
     element.style.left = 'auto';
   }
 

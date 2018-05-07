@@ -24,8 +24,8 @@ body {
 
 .info {
   box-sizing: border-box;
-  padding: 0 1em; 
-  border: solid 1px #ccc; 
+  padding: 0 1em;
+  border: solid 1px #ccc;
   background: white;
   font-size: .8em;
   margin-bottom: 1em;
@@ -149,7 +149,6 @@ nav {
   z-index: 99;
   top:0;
   left:0;
-  height: 100%;
   width: 200px;
   position: absolute;
   min-height: 1900px;
@@ -251,7 +250,7 @@ select {
   margin: 0 .25em 0 0;
   padding: 0;
   vertical-align: top;
-  width: 16px;  
+  width: 16px;
 }
 
 .expectedpayment2 + label:before {
@@ -263,7 +262,7 @@ select {
   margin: 0 .25em 0 0;
   padding: 0;
   vertical-align: top;
-  width: 16px;  
+  width: 16px;
 }
 
 .expectedpayment3 + label:before {
@@ -275,7 +274,7 @@ select {
   margin: 0 .25em 0 0;
   padding: 0;
   vertical-align: top;
-  width: 16px;  
+  width: 16px;
 }
 
 .expectedpayment:checked + label:before{

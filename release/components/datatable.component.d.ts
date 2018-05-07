@@ -7,11 +7,15 @@ import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
 import { DataTableHeaderComponent } from './header';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 export declare class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     private scrollbarHelper;
     private dimensionsHelper;
     private cd;
+    /**
+     * Template for the target marker of drag target columns.
+     */
+    targetMarkerTemplate: any;
     /**
      * Gets the rows.
      */
@@ -135,6 +139,11 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     reorderable: boolean;
     /**
+     * Swap columns on re-order columns or
+     * move them.
+     */
+    swapColumns: boolean;
+    /**
      * The type of sorting
      */
     sortType: SortType;
@@ -212,13 +221,17 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     virtualization: boolean;
     /**
-     * Tree from relation
+     * A flag for switching summary row on / off
      */
-    treeFromRelation: string;
+    summaryRow: boolean;
     /**
-     * Tree to relation
+     * A height of summary row
      */
-    treeToRelation: string;
+    summaryHeight: number;
+    /**
+     * A property holds a summary row position: top/bottom
+     */
+    summaryPosition: string;
     /**
      * Body was scrolled typically in a `scrollbarV:true` scenario.
      */
@@ -468,8 +481,5 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      * A row was selected from body
      */
     onBodySelect(event: any): void;
-    /**
-     * A row was expanded ot collapsed for tree
-     */
-    onTreeAction(event: any): void;
+    private sortInternalRows();
 }

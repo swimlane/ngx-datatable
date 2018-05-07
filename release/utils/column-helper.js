@@ -89,6 +89,12 @@ function translateTemplates(templates) {
         if (temp.cellTemplate) {
             col.cellTemplate = temp.cellTemplate;
         }
+        if (temp.summaryFunc) {
+            col.summaryFunc = temp.summaryFunc;
+        }
+        if (temp.summaryTemplate) {
+            col.summaryTemplate = temp.summaryTemplate;
+        }
         result.push(col);
     }
     return result;

@@ -118,6 +118,16 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
               <li><a href="#fixed" (click)="state='fixed'">Fixed</a></li>
               <li><a href="#force" (click)="state='force'">Force</a></li>
               <li><a href="#pinning" (click)="state='pinning'">Pinning</a></li>
+              <li><a href="#reorder" (click)="state='reorder'">Reorder</a></li>
+            </ul>
+          </li>
+          <li>
+            <h4>Summary Row</h4>
+            <ul>
+              <li><a href="#simple-summary" (click)="state='simple-summary'">Simple</a></li>
+              <li><a href="#custom-template-summary" (click)="state='custom-template-summary'">Custom Template</a></li>
+              <li><a href="#paging-summary" (click)="state='paging-summary'">Server-side paging</a></li>
+              <li><a href="#inline-html-summary" (click)="state='inline-html-summary'">Inline HTML</a></li>
             </ul>
           </li>
         </ul>
@@ -182,6 +192,15 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
         <column-standard-demo *ngIf="state === 'fixed'"></column-standard-demo>
         <column-force-demo *ngIf="state === 'force'"></column-force-demo>
         <column-pinning-demo *ngIf="state === 'pinning'"></column-pinning-demo>
+        <column-reorder-demo *ngIf="state === 'reorder'"></column-reorder-demo>
+
+        <!-- Summary row -->
+        <summary-row-simple-demo *ngIf="state === 'simple-summary'"></summary-row-simple-demo>
+        <summary-row-custom-template-demo *ngIf="state === 'custom-template-summary'">
+        </summary-row-custom-template-demo>
+        <summary-row-server-paging-demo *ngIf="state === 'paging-summary'">
+        </summary-row-server-paging-demo>
+        <summary-row-inline-html *ngIf="state === 'inline-html-summary'"></summary-row-inline-html>
       </content>
     </div>
   `

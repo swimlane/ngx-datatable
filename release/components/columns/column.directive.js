@@ -90,8 +90,12 @@ var DataTableColumnDirective = /** @class */ (function () {
     ], DataTableColumnDirective.prototype, "cellClass", void 0);
     __decorate([
         core_1.Input(),
-        __metadata("design:type", Boolean)
-    ], DataTableColumnDirective.prototype, "isTreeColumn", void 0);
+        __metadata("design:type", Function)
+    ], DataTableColumnDirective.prototype, "summaryFunc", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", core_1.TemplateRef)
+    ], DataTableColumnDirective.prototype, "summaryTemplate", void 0);
     __decorate([
         core_1.Input(),
         core_1.ContentChild(column_cell_directive_1.DataTableColumnCellDirective, { read: core_1.TemplateRef }),

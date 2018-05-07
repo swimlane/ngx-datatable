@@ -30,6 +30,14 @@ import { MouseEvent } from '../../events';
         [scrollHeight]="scrollHeight"
         [scrollWidth]="columnGroupWidths?.total"
         (scroll)="onBodyScroll($event)">
+        <datatable-summary-row
+          *ngIf="summaryRow && summaryPosition === 'top'"
+          [rowHeight]="summaryHeight"
+          [offsetX]="offsetX"
+          [innerWidth]="innerWidth"
+          [rows]="rows"
+          [columns]="columns">
+        </datatable-summary-row>
         <datatable-row-wrapper
           [groupedRows]="groupedRows"
           *ngFor="let group of temp; let i = index; trackBy: rowTrackingFn;"
@@ -78,6 +86,14 @@ import { MouseEvent } from '../../events';
             </datatable-body-row>
           </ng-template>
         </datatable-row-wrapper>
+        <datatable-summary-row
+          *ngIf="summaryRow && summaryPosition === 'bottom'"
+          [rowHeight]="summaryHeight"
+          [offsetX]="offsetX"
+          [innerWidth]="innerWidth"
+          [rows]="rows"
+          [columns]="columns">
+        </datatable-summary-row>
       </datatable-scroller>
       <div
         class="empty-row"
@@ -97,7 +113,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() scrollbarH: boolean;
   @Input() loadingIndicator: boolean;
   @Input() externalPaging: boolean;
-  @Input() rowHeight: number | ((row: any) => number);
+  @Input() rowHeight: number | ((row?: any) => number);
   @Input() offsetX: number;
   @Input() emptyMessage: string;
   @Input() selectionType: SelectionType;
@@ -114,6 +130,9 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() innerWidth: number;
   @Input() groupRowsBy: string;
   @Input() virtualization: boolean;
+  @Input() summaryRow: boolean;
+  @Input() summaryPosition: string;
+  @Input() summaryHeight: number;
 
   @Input() set pageSize(val: number) {
     this._pageSize = val;
@@ -403,16 +422,12 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * Get the row height
    */
   getRowHeight(row: any): number {
-    let height;
-
     // if its a function return it
     if (typeof this.rowHeight === 'function') {
-      height = this.rowHeight(row);
-    } else {
-      height = this.rowHeight;
+      return this.rowHeight(row);
     }
 
-    return height;
+    return this.rowHeight;
   }
 
   /**

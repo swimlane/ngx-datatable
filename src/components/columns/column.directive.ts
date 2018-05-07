@@ -29,6 +29,8 @@ export class DataTableColumnDirective {
   @Input() cellClass: string | ((data: any) => string|any);
   @Input() isTreeColumn: boolean;
   @Input() treeLevelIndent: number;
+  @Input() summaryFunc: (cells: any[]) => any;
+  @Input() summaryTemplate: TemplateRef<any>;
 
   @Input()
   @ContentChild(DataTableColumnCellDirective, { read: TemplateRef })
