@@ -1,3 +1,11 @@
+import { ValueGetter, getterForProp } from ".";
+import { TableColumn, TableColumnProp } from "..";
+
+export type OptionalValueGetter = (any) => any | undefined;
+export function optionalGetterForProp(prop: TableColumnProp): OptionalValueGetter {
+  return prop && ((row) => getterForProp(prop)(row, prop));
+}
+
 /**
  * This functions rearrange items by their parents
  * Also sets the level value to each of the items
@@ -34,9 +42,8 @@
  * @param rows
  *
  */
-
-export function groupRowsByParents(rows: any[], from: string = '', to: string = ''): any[] {
-  if (from !== '' && to !== '') {
+export function groupRowsByParents(rows: any[], from?: OptionalValueGetter, to?: OptionalValueGetter): any[] {
+  if (from && to) {
     const nodeById = {};
     const l = rows.length;
     let node: TreeNode | null = null;
@@ -44,21 +51,23 @@ export function groupRowsByParents(rows: any[], from: string = '', to: string = 
     nodeById[0] = new TreeNode(); // that's the root node
 
     const uniqIDs = rows.reduce((arr, item) => {
-      if (arr.indexOf(item[to]) === -1) {
-        arr.push(item[to]);
+      const toValue = to(item);
+      if (arr.indexOf(toValue) === -1) {
+        arr.push(toValue);
       }
       return arr;
     }, []);
 
     for (let i = 0; i < l; i++) {  // make TreeNode objects for each item
-      nodeById[ rows[i][to] ] = new TreeNode(rows[i]);
+      nodeById[ to(rows[i]) ] = new TreeNode(rows[i]);
     }
 
     for (let i = 0; i < l; i++) {  // link all TreeNode objects
-      node = nodeById[ rows[i][to] ];
+      node = nodeById[ to(rows[i]) ];
       let parent = 0;
-      if (node.row.hasOwnProperty(from) && !!node.row[from] && (uniqIDs.indexOf(node.row[from]) > -1)) {
-        parent = node.row[from];
+      const fromValue = from(node.row);
+      if (!!fromValue && (uniqIDs.indexOf(fromValue) > -1)) {
+        parent = fromValue;
       }
       node.parent = nodeById[ parent ];
       node.row['level'] = node.parent.row['level'] + 1;

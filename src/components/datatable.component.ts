@@ -9,7 +9,7 @@ import {
 import {
   forceFillColumnWidths, adjustColumnWidths, sortRows,
   setColumnDefaults, throttleable, translateTemplates,
-  groupRowsByParents
+  groupRowsByParents, optionalGetterForProp
 } from '../utils';
 import { ScrollbarHelper, DimensionsHelper } from '../services';
 import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types';
@@ -138,9 +138,9 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     // auto group by parent on new update
     this._internalRows = groupRowsByParents(
       this._internalRows,
-      this.treeFromRelation,
-      this.treeToRelation
-    );
+      optionalGetterForProp(this.treeFromRelation),
+      optionalGetterForProp(this.treeToRelation)
+  );
 
     // recalculate sizes/etc
     this.recalculate();
@@ -819,8 +819,8 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       // auto group by parent on new update
       this._internalRows = groupRowsByParents(
         this._internalRows,
-        this.treeFromRelation,
-        this.treeToRelation
+        optionalGetterForProp(this.treeFromRelation),
+        optionalGetterForProp(this.treeToRelation)
       );
 
       this.recalculatePages();
@@ -1104,8 +1104,8 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     // auto group by parent on new update
     this._internalRows = groupRowsByParents(
       this._internalRows,
-      this.treeFromRelation,
-      this.treeToRelation
+      optionalGetterForProp(this.treeFromRelation),
+      optionalGetterForProp(this.treeToRelation)
     );
 
     // Always go to first page when sorting to see the newly sorted data
