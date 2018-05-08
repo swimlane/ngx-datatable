@@ -2,7 +2,7 @@ import { Directive, TemplateRef, ContentChild, Input } from '@angular/core';
 import { DataTableColumnHeaderDirective } from './column-header.directive';
 import { DataTableColumnCellDirective } from './column-cell.directive';
 import {
-  DataTableColumnCellTreeIcon
+  DataTableColumnCellTreeToggle
 } from './tree.directive';
 import { TableColumnProp } from '../../types';
 
@@ -41,6 +41,6 @@ export class DataTableColumnDirective {
   headerTemplate: TemplateRef<any>;
 
   @Input()
-  @ContentChild(DataTableColumnCellTreeIcon, { read: TemplateRef })
-  treeIconTemplate: TemplateRef<any>;
+  @ContentChild(DataTableColumnCellTreeToggle, { read: TemplateRef })
+  treeToggleTemplate: TemplateRef<any>;
 }

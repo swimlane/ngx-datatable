@@ -27,25 +27,26 @@ export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
           (click)="onCheckboxChange($event)"
         />
       </label>
-      <button
-        class="datatable-tree-button"
-        [disabled]="treeStatus==='disabled'"
-        *ngIf="column.isTreeColumn"
-        (click)="onTreeAction()">
-        <span *ngIf="!column.treeIconTemplate">
-          <i *ngIf="treeStatus==='loading'"
-            class="icon datatable-icon-collapse"></i>
-          <i *ngIf="treeStatus==='collapsed'"
-            class="icon datatable-icon-up"></i>
-          <i *ngIf="treeStatus==='expanded' ||
-                    treeStatus==='disabled'"
-            class="icon datatable-icon-down"></i>
-        </span>
-        <ng-template *ngIf="column.treeIconTemplate"
-          [ngTemplateOutlet]="column.treeIconTemplate"
-          [ngTemplateOutletContext]="cellContext">
+      <ng-container *ngIf="column.isTreeColumn">
+        <button *ngIf="!column.treeToggleTemplate"
+          class="datatable-tree-button"
+          [disabled]="treeStatus==='disabled'"
+          (click)="onTreeAction()">
+          <span>
+            <i *ngIf="treeStatus==='loading'"
+              class="icon datatable-icon-collapse"></i>
+            <i *ngIf="treeStatus==='collapsed'"
+              class="icon datatable-icon-up"></i>
+            <i *ngIf="treeStatus==='expanded' ||
+                      treeStatus==='disabled'"
+              class="icon datatable-icon-down"></i>
+          </span>
+        </button>
+        <ng-template *ngIf="column.treeToggleTemplate"
+          [ngTemplateOutlet]="column.treeToggleTemplate"
+          [ngTemplateOutletContext]="{ cellContext: cellContext }">
         </ng-template>
-      </button>
+      </ng-container>
 
       <span
         *ngIf="!column.cellTemplate"
@@ -242,7 +243,9 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     column: this.column,
     rowHeight: this.rowHeight,
     isSelected: this.isSelected,
-    rowIndex: this.rowIndex
+    rowIndex: this.rowIndex,
+    treeStatus: this.treeStatus,
+    onTreeAction: this.onTreeAction.bind(this),
   };
 
   private _isSelected: boolean;

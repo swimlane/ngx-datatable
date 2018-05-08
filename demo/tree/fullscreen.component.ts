@@ -31,15 +31,21 @@ import { Component, ChangeDetectorRef } from '@angular/core';
           [isTreeColumn]="true"
           [width]="300"
           [treeLevelIndent]="20">
-          <ng-template ngx-datatable-tree-icon let-tree="treeStatus">
-            <i *ngIf="tree==='loading'"
-              class="icon datatable-icon-collapse"></i>
-            <i *ngIf="tree==='collapsed'"
-              class="icon datatable-icon-up"></i>
-            <i *ngIf="tree==='expanded'"
-              class="icon datatable-icon-down"></i>
-            <i *ngIf="tree==='disabled'"
-              class="disabled icon datatable-icon-down"></i>
+          <ng-template ngx-datatable-tree-toggle let-tree="cellContext">
+            <button [disabled]="tree.treeStatus==='disabled'" (click)="tree.onTreeAction()">
+              <span *ngIf="tree.treeStatus==='loading'">
+                ...
+              </span>
+              <span *ngIf="tree.treeStatus==='collapsed'">
+                ↑
+              </span>
+              <span *ngIf="tree.treeStatus==='expanded'">
+                ↓
+              </span>
+              <span *ngIf="tree.treeStatus==='disabled'">
+                ⃠
+              </span>
+            </button>
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Gender"></ngx-datatable-column>
