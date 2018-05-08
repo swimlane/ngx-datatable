@@ -12,6 +12,7 @@ import { MouseEvent } from '../../events';
     <div
       orderable
       (reorder)="onColumnReordered($event)"
+      (targetChanged)="onTargetChanged($event)"
       [style.width.px]="_columnGroupWidths.total"
       class="datatable-header-inner">
       <div
@@ -34,6 +35,9 @@ import { MouseEvent } from '../../events';
           [dragModel]="column"
           [dragEventTarget]="dragEventTarget"
           [headerHeight]="headerHeight"
+          [isTarget]="column.isTarget"
+          [targetMarkerTemplate]="targetMarkerTemplate"
+          [targetMarkerContext]="column.targetMarkerContext"
           [column]="column"
           [sortType]="sortType"
           [sorts]="sorts"
@@ -59,6 +63,9 @@ export class DataTableHeaderComponent {
   @Input() sortDescendingIcon: any;
   @Input() scrollbarH: boolean;
   @Input() dealsWithGroup: boolean;
+  @Input() targetMarkerTemplate: any;
+  
+  targetMarkerContext: any;
 
   @Input() set innerWidth(val: number) {
     this._innerWidth = val;
@@ -145,8 +152,13 @@ export class DataTableHeaderComponent {
 
     // delay resetting so sort can be
     // prevented if we were dragging
-    setTimeout(() => {
-      model.dragging = false;
+    setTimeout(() => {   
+      // datatable component creates copies from columns on reorder
+      // set dragging to false on new objects
+      const column = this._columns.find(c => c.$$id === model.$$id);
+      if (column) {
+        column.dragging = false;
+      }
     }, 5);
   }
 
@@ -182,11 +194,45 @@ export class DataTableHeaderComponent {
   }
 
   onColumnReordered({ prevIndex, newIndex, model }: any): void {
+    const column = this.getColumn(newIndex);
+    column.isTarget = false;
+    column.targetMarkerContext = undefined;
     this.reorder.emit({
       column: model,
       prevValue: prevIndex,
       newValue: newIndex
     });
+  }
+
+  onTargetChanged({ prevIndex, newIndex, initialIndex }: any): void {
+    if (prevIndex || prevIndex === 0) {
+      const oldColumn = this.getColumn(prevIndex);
+      oldColumn.isTarget = false;
+      oldColumn.targetMarkerContext = undefined;
+    }
+    if (newIndex || newIndex === 0) {
+      const newColumn = this.getColumn(newIndex);
+      newColumn.isTarget = true;
+      
+      if (initialIndex !== newIndex) {
+        newColumn.targetMarkerContext = {class: 'targetMarker '.concat( 
+          initialIndex > newIndex ? 'dragFromRight' : 'dragFromLeft')};
+      }
+    }
+  }
+
+  getColumn(index: number): any {
+    const leftColumnCount = this._columnsByPin[0].columns.length;
+    if (index < leftColumnCount) {
+      return this._columnsByPin[0].columns[index];
+    }
+
+    const centerColumnCount = this._columnsByPin[1].columns.length;
+    if (index < leftColumnCount + centerColumnCount) {
+      return this._columnsByPin[1].columns[index - leftColumnCount];
+    }
+
+    return this._columnsByPin[2].columns[index - leftColumnCount - centerColumnCount];
   }
 
   onSort({ column, prevValue, newValue }: any): void {

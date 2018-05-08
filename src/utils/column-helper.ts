@@ -29,7 +29,7 @@ export function setColumnDefaults(columns: TableColumn[]) {
     if(!isNullOrUndefined(column.prop) && isNullOrUndefined(column.name)) {
       column.name = deCamelCase(String(column.prop));
     }
-    
+
     if(isNullOrUndefined(column.prop) && isNullOrUndefined(column.name)) {
       column.name = ''; // Fixes IE and Edge displaying `null`
     }
@@ -80,6 +80,14 @@ export function translateTemplates(templates: DataTableColumnDirective[]): any[]
 
     if(temp.cellTemplate) {
       col.cellTemplate = temp.cellTemplate;
+    }
+
+    if(temp.summaryFunc) {
+      col.summaryFunc = temp.summaryFunc;
+    }
+
+    if(temp.summaryTemplate) {
+      col.summaryTemplate = temp.summaryTemplate;
     }
 
     result.push(col);

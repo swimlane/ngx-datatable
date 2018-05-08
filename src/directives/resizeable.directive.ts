@@ -1,11 +1,9 @@
 import {
   Directive, ElementRef, HostListener, Input, Output, EventEmitter, OnDestroy, AfterViewInit, Renderer2
 } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable, Subscription, fromEvent } from 'rxjs';
 import { MouseEvent } from '../events';
 import { takeUntil } from 'rxjs/operators';
-import { fromEvent } from 'rxjs/observable/fromEvent';
 
 @Directive({
   selector: '[resizeable]',
