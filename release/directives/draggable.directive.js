@@ -10,8 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var rxjs_1 = require("rxjs");
 var operators_1 = require("rxjs/operators");
-var fromEvent_1 = require("rxjs/observable/fromEvent");
 /**
  * Draggable Directive for Angular2
  *
@@ -60,10 +60,10 @@ var DraggableDirective = /** @class */ (function () {
             event.preventDefault();
             this.isDragging = true;
             var mouseDownPos_1 = { x: event.clientX, y: event.clientY };
-            var mouseup = fromEvent_1.fromEvent(document, 'mouseup');
+            var mouseup = rxjs_1.fromEvent(document, 'mouseup');
             this.subscription = mouseup
                 .subscribe(function (ev) { return _this.onMouseup(ev); });
-            var mouseMoveSub = fromEvent_1.fromEvent(document, 'mousemove')
+            var mouseMoveSub = rxjs_1.fromEvent(document, 'mousemove')
                 .pipe(operators_1.takeUntil(mouseup))
                 .subscribe(function (ev) { return _this.move(ev, mouseDownPos_1); });
             this.subscription.add(mouseMoveSub);
