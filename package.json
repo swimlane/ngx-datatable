@@ -1,6 +1,6 @@
 {
   "name": "@swimlane/ngx-datatable",
-  "version": "11.3.2",
+  "version": "12.0.0",
   "description": "ngx-datatable is a Angular2+ table grid component for presenting large and complex data.",
   "main": "release/index.js",
   "typings": "release/index.d.ts",
@@ -64,23 +64,23 @@
   },
   "homepage": "https://github.com/swimlane/ngx-datatable#readme",
   "peerDependencies": {
-    "@angular/common": ">=4.0.1 || >5.0.0 || <=6.0.0",
-    "@angular/compiler": ">=4.0.1 || >5.0.0 || <=6.0.0",
-    "@angular/core": ">=4.0.1 || >5.0.0 || <=6.0.0",
-    "@angular/platform-browser": ">=4.0.1 || >5.0.0 || <=6.0.0",
-    "@angular/platform-browser-dynamic": ">=4.0.1 || >5.0.0 || <=6.0.0",
+    "@angular/common": "<=6.0.0",
+    "@angular/compiler": "<=6.0.0",
+    "@angular/core": "<=6.0.0",
+    "@angular/platform-browser": "<=6.0.0",
+    "@angular/platform-browser-dynamic": "<=6.0.0",
     "core-js": "^2.4.0",
-    "rxjs": "^5.0.0"
+    "rxjs": "^6.0.0"
   },
   "devDependencies": {
-    "@angular/animations": "^4.0.1",
-    "@angular/common": "^4.0.1",
-    "@angular/compiler": "^4.0.1",
-    "@angular/compiler-cli": "^4.0.1",
-    "@angular/core": "^4.0.1",
-    "@angular/platform-browser": "^4.0.1",
-    "@angular/platform-browser-dynamic": "^4.0.1",
-    "@angular/platform-server": "^4.0.1",
+    "@angular/animations": "^6.0.0",
+    "@angular/common": "^6.0.0",
+    "@angular/compiler": "^6.0.0",
+    "@angular/compiler-cli": "^6.0.0",
+    "@angular/core": "^6.0.0",
+    "@angular/platform-browser": "^6.0.0",
+    "@angular/platform-browser-dynamic": "^6.0.0",
+    "@angular/platform-server": "^6.0.0",
     "@types/jasmine": "^2.8.4",
     "@types/node": "^8.0.53",
     "angular2-template-loader": "^0.6.2",
@@ -116,7 +116,7 @@
     "puppeteer": "^1.0.0",
     "replace": "^0.3.0",
     "rimraf": "^2.6.2",
-    "rxjs": "^5.5.2",
+    "rxjs": "^6.1.0",
     "sass-loader": "^6.0.6",
     "source-map-loader": "^0.2.3",
     "style-loader": "^0.19.0",
@@ -126,7 +126,7 @@
     "tslint": "^5.8.0",
     "tslint-config-swimlane": "^3.0.3",
     "tslint-loader": "^3.5.3",
-    "typescript": "^2.6.1",
+    "typescript": "~2.7.2",
     "uglify-js": "^3.1.10",
     "url-loader": "^0.6.2",
     "webpack": "^3.8.1",
@@ -134,6 +134,6 @@
     "webpack-dev-server": "^2.9.2",
     "webpack-merge": "^4.1.1",
     "webpack-notifier": "^1.5.0",
-    "zone.js": "^0.8.18"
+    "zone.js": "^0.8.26"
   }
 }
