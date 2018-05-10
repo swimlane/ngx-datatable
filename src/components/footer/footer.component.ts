@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, ChangeDetectionStrategy, Input, TemplateRef } from '@angular/core';
-
+import { DatatableFooterDirective } from './footer.directive';
 @Component({
   selector: 'datatable-footer',
   template: `
@@ -9,7 +9,7 @@ import { Component, Output, EventEmitter, ChangeDetectionStrategy, Input, Templa
       [style.height.px]="footerHeight">
       <ng-template
         *ngIf="footerTemplate"
-        [ngTemplateOutlet]="footerTemplate"
+        [ngTemplateOutlet]="footerTemplate.template"
         [ngTemplateOutletContext]="{ 
           rowCount: rowCount, 
           pageSize: pageSize, 
@@ -53,7 +53,7 @@ export class DataTableFooterComponent {
   @Input() pagerPreviousIcon: string;
   @Input() pagerNextIcon: string;
   @Input() totalMessage: string;
-  @Input() footerTemplate: TemplateRef<any>;
+  @Input() footerTemplate: DatatableFooterDirective;
 
   @Input() selectedCount: number = 0;
   @Input() selectedMessage: string | boolean;
