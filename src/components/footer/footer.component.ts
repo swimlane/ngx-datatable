@@ -9,7 +9,7 @@ import { Component, Output, EventEmitter, ChangeDetectionStrategy, Input, Templa
       [style.height.px]="footerHeight">
       <ng-template
         *ngIf="footerTemplate"
-        [ngTemplateOutlet]="footerTemplate.template"
+        [ngTemplateOutlet]="footerTemplate"
         [ngTemplateOutletContext]="{ 
           rowCount: rowCount, 
           pageSize: pageSize, 
