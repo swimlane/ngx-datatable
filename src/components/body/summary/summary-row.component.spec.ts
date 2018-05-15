@@ -95,6 +95,18 @@ describe('DataTableSummaryRowComponent', () => {
       expect(component.summaryRow['col2']).toEqual(rows[0]['col2'] + rows[1]['col2']);
     });
 
+    it('should works with default function and empty row', () => {
+      component.rows = [
+        { col1: null, col2: undefined },
+        { col1: null, },
+      ];
+
+      triggerChange();
+
+      expect(component.summaryRow['col1']).toBeNull();
+      expect(component.summaryRow['col2']).toBeNull();
+    });
+
     it('should use provided summary function', () => {
       const sum1 = 22;
       const sum2 = 'test sum';

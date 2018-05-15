@@ -9,9 +9,11 @@ export interface ISummaryColumn {
 }
 
 function defaultSumFunc(cells: any[]): any {
-  return cells
-    .filter(cell => !!cell)
-    .reduce((res, cell) => res + cell);
+  const cellsWithValues = cells.filter(cell => !!cell);
+
+  return cellsWithValues.length ?
+    cellsWithValues.reduce((res, cell) => res + cell) :
+    null;
 }
 
 @Component({
