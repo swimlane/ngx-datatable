@@ -139,7 +139,8 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
           group: this.group, 
           column: this.column, 
           value: this.value ,
-          rowHeight: this.rowHeight
+          rowHeight: this.rowHeight,
+          expanded: this.expanded,
         });
 
         if (typeof res === 'string') {
