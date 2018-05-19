@@ -48,7 +48,7 @@ export class SummaryRowSimpleComponent {
   rows = [];
 
   columns = [
-    { prop: 'name', summaryFunc: () => null },
+    { prop: 'name', summaryFunc: null, },
     { name: 'Gender', summaryFunc: (cells) => this.summaryForGender(cells) },
     { prop: 'age', summaryFunc: (cells) => this.avgAge(cells) },
   ];
