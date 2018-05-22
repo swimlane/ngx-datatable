@@ -1,10 +1,6 @@
 export declare class SummaryRowSimpleComponent {
     rows: any[];
     columns: ({
-        prop: string;
-        summaryFunc: () => any;
-        name?: undefined;
-    } | {
         name: string;
         summaryFunc: (cells: any) => string;
         prop?: undefined;

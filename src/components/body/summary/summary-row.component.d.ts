@@ -16,4 +16,5 @@ export declare class DataTableSummaryRowComponent implements OnChanges {
     ngOnChanges(): void;
     private updateInternalColumns();
     private updateValues();
+    private getSummaryFunction(column);
 }

@@ -1,4 +1,5 @@
-import { EventEmitter, TemplateRef } from '@angular/core';
+import { EventEmitter } from '@angular/core';
+import { DatatableFooterDirective } from './footer.directive';
 export declare class DataTableFooterComponent {
     footerHeight: number;
     rowCount: number;
@@ -9,7 +10,7 @@ export declare class DataTableFooterComponent {
     pagerPreviousIcon: string;
     pagerNextIcon: string;
     totalMessage: string;
-    footerTemplate: TemplateRef<any>;
+    footerTemplate: DatatableFooterDirective;
     selectedCount: number;
     selectedMessage: string | boolean;
     page: EventEmitter<any>;
