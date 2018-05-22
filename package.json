@@ -7,7 +7,9 @@
   "scripts": {
     "check": "npm-check --skip-unused",
     "test": "karma start",
+    "test-linux": "karma start --browsers ChromeTravisCi",
     "watch:test": "npm run test -- --auto-watch --no-single-run",
+    "watch:test-linux": "npm run test-linux -- --auto-watch --no-single-run",
     "lint": "tslint ./src/**/*.ts ./test/**/*.ts",
     "version": "npm run release",
     "preversion": "npm test",
@@ -64,11 +66,11 @@
   },
   "homepage": "https://github.com/swimlane/ngx-datatable#readme",
   "peerDependencies": {
-    "@angular/common": "<=6.0.0",
-    "@angular/compiler": "<=6.0.0",
-    "@angular/core": "<=6.0.0",
-    "@angular/platform-browser": "<=6.0.0",
-    "@angular/platform-browser-dynamic": "<=6.0.0",
+    "@angular/common": "<7.0.0",
+    "@angular/compiler": "<7.0.0",
+    "@angular/core": "<7.0.0",
+    "@angular/platform-browser": "<7.0.0",
+    "@angular/platform-browser-dynamic": "<7.0.0",
     "core-js": "^2.4.0",
     "rxjs": "^6.0.0"
   },

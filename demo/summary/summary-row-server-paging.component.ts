@@ -14,7 +14,7 @@ import {Page} from '../paging/model/page';
       <h3>
         Server-side paging
         <small>
-          <a href="https://github.com/swimlane/ngx-datatable/blob/summary-row/demo/summary/summary-row-server-paging.component.ts">
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/summary/summary-row-server-paging.component.ts">
             Source
           </a>
         </small>
@@ -26,6 +26,7 @@ import {Page} from '../paging/model/page';
         [columnMode]="'force'"
         [headerHeight]="50"
         [summaryRow]="true"
+        [summaryHeight]="'auto'"
         [footerHeight]="50"
         [rowHeight]="'auto'"
         [externalPaging]="true"
