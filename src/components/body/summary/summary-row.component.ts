@@ -15,8 +15,6 @@ function defaultSumFunc(cells: any[]): any {
     return null;
   }
   if (cellsWithValues.some(cell => typeof cell !== 'number')) {
-    throw new Error('Default summary function supports only numbers.' +
-      ' For other column types use a custom function.');
     return null;
   }
 

@@ -108,13 +108,15 @@ describe('DataTableSummaryRowComponent', () => {
         expect(component.summaryRow['col2']).toBeNull();
       });
 
-      it('should throw if there are non-number cells', () => {
+      it('should not compute a result if there are non-number cells', () => {
         component.rows = [
           { col1: 'aaa', col2: 'xxx' },
           { col1: 'bbb', col2: 34 },
         ];
 
-        expect(() => triggerChange()).toThrow();
+        triggerChange();
+        expect(component.summaryRow['col1']).toEqual(null);
+        expect(component.summaryRow['col2']).toEqual(null);
       });
     });
 
