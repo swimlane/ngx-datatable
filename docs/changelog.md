@@ -1,5 +1,12 @@
 # Changelog
 
+## 13.0.0
+
+* Breaking: Fixes several issues related to the summary row feature #1418
+* Fix: DataTableColumnDirective Input Binding Changes #1384
+* Fix: angular version #1420
+* Fix: issues when running npm run build --prod #1410
+
 ## 12.0.0
 
 * Breaking: Upgraded to Angular 6 #1400
@@ -11,7 +18,8 @@
 ## 11.3.0
 
 * Feat: Added summary row #1233
-* Fix: Fixed issue with misaligned body content #1326
+* Fix: Fixed issue wi
+  th misaligned body content #1326
 * Fix: Fixed Default Sort Behavior Of Table With Custom Templates #1308
 * Chore: Fixed link in column api docs #1343
 * Chore: Fixed typo in docs #1342

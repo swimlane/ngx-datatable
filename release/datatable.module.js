@@ -21,7 +21,8 @@ var NgxDatatableModule = /** @class */ (function () {
             ],
             providers: [
                 services_1.ScrollbarHelper,
-                services_1.DimensionsHelper
+                services_1.DimensionsHelper,
+                services_1.ColumnChangesService
             ],
             declarations: [
                 components_1.DataTableFooterTemplateDirective,

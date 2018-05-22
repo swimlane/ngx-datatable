@@ -12,9 +12,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var column_header_directive_1 = require("./column-header.directive");
 var column_cell_directive_1 = require("./column-cell.directive");
+var column_changes_service_1 = require("../../services/column-changes.service");
 var DataTableColumnDirective = /** @class */ (function () {
-    function DataTableColumnDirective() {
+    function DataTableColumnDirective(columnChangesService) {
+        this.columnChangesService = columnChangesService;
+        this.isFirstChange = true;
     }
+    DataTableColumnDirective.prototype.ngOnChanges = function () {
+        if (this.isFirstChange) {
+            this.isFirstChange = false;
+        }
+        else {
+            this.columnChangesService.onInputChange();
+        }
+    };
     __decorate([
         core_1.Input(),
         __metadata("design:type", String)
@@ -106,7 +117,8 @@ var DataTableColumnDirective = /** @class */ (function () {
         __metadata("design:type", core_1.TemplateRef)
     ], DataTableColumnDirective.prototype, "headerTemplate", void 0);
     DataTableColumnDirective = __decorate([
-        core_1.Directive({ selector: 'ngx-datatable-column' })
+        core_1.Directive({ selector: 'ngx-datatable-column' }),
+        __metadata("design:paramtypes", [column_changes_service_1.ColumnChangesService])
     ], DataTableColumnDirective);
     return DataTableColumnDirective;
 }());
