@@ -7,7 +7,9 @@
   "scripts": {
     "check": "npm-check --skip-unused",
     "test": "karma start",
+    "test-linux": "karma start --browsers ChromeTravisCi",
     "watch:test": "npm run test -- --auto-watch --no-single-run",
+    "watch:test-linux": "npm run test-linux -- --auto-watch --no-single-run",
     "lint": "tslint ./src/**/*.ts ./test/**/*.ts",
     "version": "npm run release",
     "preversion": "npm test",
