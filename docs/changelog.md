@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.0.1
+
+* Fix: Run scroll event listeners inside angular zone (#1375)
+
 ## 13.0.0
 
 * Breaking: Fixes several issues related to the summary row feature #1418

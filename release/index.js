@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"13.0.0" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"13.0.1" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -1484,7 +1484,6 @@ var DataTableBodyComponent = /** @class */ (function () {
             }
         }
         this.temp = temp;
-        this.cd.detectChanges();
     };
     /**
      * Get the row height
@@ -2022,14 +2021,11 @@ var ScrollerComponent = /** @class */ (function () {
         this.element = element.nativeElement;
     }
     ScrollerComponent.prototype.ngOnInit = function () {
-        var _this = this;
         // manual bind so we don't always listen
         if (this.scrollbarV || this.scrollbarH) {
             var renderer = this.renderer;
             this.parentElement = renderer.parentNode(renderer.parentNode(this.element));
-            this.ngZone.runOutsideAngular(function () {
-                _this.parentElement.addEventListener('scroll', _this.onScrolled.bind(_this));
-            });
+            this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
         }
     };
     ScrollerComponent.prototype.ngOnDestroy = function () {
