@@ -652,7 +652,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
     if (this.selectAllRowsOnPage) {
       const indexes = this.bodyComponent.indexes;
-      let eligibleForSelection = this._internalRows.slice(indexes.last, indexes.last);
+      let eligibleForSelection = this._internalRows.slice(indexes.first, indexes.last);
       if (this.displayCheck)
         eligibleForSelection = eligibleForSelection.filter(this.displayCheck.bind(this));
       allRowsSelected = (this.selected.length === eligibleForSelection.length);
