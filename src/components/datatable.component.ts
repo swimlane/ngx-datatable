@@ -874,8 +874,8 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Recalculates the pages after a update.
    */
   recalculatePages(): void {
-    this.pageSize = this.calcPageSize();
     this.rowCount = this.calcRowCount();
+    this.pageSize = this.calcPageSize();
   }
 
   /**
@@ -931,8 +931,26 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     // This is because an expanded row is still considered to be a child of
     // the original row.  Hence calculation would use rowHeight only.
     if (this.scrollbarV) {
-      const size = Math.ceil(this.bodyHeight / this.rowHeight);
-      return Math.max(size, 0);
+      let height = this.bodyHeight;
+
+      // Make sure height does not include horizontal scrollbar if visible
+      if (this.scrollbarH) {
+        if (this._internalColumns) {
+          const columnsWidth = this._internalColumns.map(c=>c.width).reduce((p, c) => p+c);
+          if (columnsWidth > this._innerWidth) { // in this case scrollbarH should be visible
+            height -= this.scrollbarHelper.getWidth();
+          }
+        }
+      }
+
+      // Page size should include only fully visible rows.
+      // If one row is not fitting fully in a given height, 
+      // it should be a first row on the next page.
+      let size = Math.floor(height / this.rowHeight);
+      
+      // Minimum page size is 1, in case when viewport is smaller than row's height. 
+      // To still make possible changing pages
+      return Math.max(size, 1);
     }
 
     // if limit is passed, we are paging
