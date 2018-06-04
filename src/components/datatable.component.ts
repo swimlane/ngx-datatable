@@ -52,7 +52,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
       <datatable-body
         [groupRowsBy]="groupRowsBy"
         [groupedRows]="groupedRows"
-        [rows]="_internalRows"
+        [rows]="internalRows"
         [groupExpansionDefault]="groupExpansionDefault"
         [scrollbarV]="scrollbarV"
         [scrollbarH]="scrollbarH"
@@ -129,17 +129,10 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     }
 
     // auto sort on new updates
-    if (!this.externalSorting) {
-      this.sortInternalRows();
-    }
-
+    this.invalidateRows();
+    
     // recalculate sizes/etc
     this.recalculate();
-
-    if (this._rows && this._groupRowsBy) {
-      // If a column has been specified in _groupRowsBy created a new array with the data grouped by that row
-      this.groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
-    }
 
     this.cd.markForCheck();
   }
@@ -155,13 +148,10 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * This attribute allows the user to set the name of the column to group the data with
    */
   @Input() set groupRowsBy(val: string) {
-    if (val) {
-      this._groupRowsBy = val;
-      if (this._rows && this._groupRowsBy) {
-        // cretes a new array with the data grouped
-        this.groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
-      }
-    }
+    this._groupRowsBy = val;
+    
+    // auto group on updates
+    this.invalidateRows();
   }
 
   get groupRowsBy() {
@@ -183,7 +173,21 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    *    ]}
    *  ]
    */
-  @Input() groupedRows: any[];
+  @Input() set groupedRows(val: any[]) {
+    this._groupedRows = val;
+  }
+  
+  /**
+   * Get the value set with the groupedRows input, or if groupRowsBy is set
+   * get the grouping derived from the table's sorted rows. Use invalidateRows
+   * when changes are made to ensure that the rows and sorting are up-to-date.
+   */
+  get groupedRows() {
+    if (!this._groupedRows && this._groupRowsBy && this.internalRows) {
+      this._groupedRows = this.groupArrayBy(this.internalRows, this._groupRowsBy);
+    }
+    return this._groupedRows;
+  }
 
   /**
    * Columns to be displayed.
@@ -346,7 +350,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Array of sorted columns by property and type.
    * Default value: `[]`
    */
-  @Input() sorts: any[] = [];
+  @Input() set sorts(value: any[]) {
+    this._sorts = value;
+    this.invalidateRows();
+  }
+  get sorts() {
+    return this._sorts;
+  }
 
   /**
    * Css class overrides
@@ -668,9 +678,12 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   _count: number = 0;
   _offset: number = 0;
   _rows: any[];
+  _sorts: any[];
   _groupRowsBy: string;
   _internalRows: any[];
   _internalColumns: TableColumn[];
+  _groupedRows: any[];
+  _internalGroupedRows: any[];
   _columns: TableColumn[];
   _columnTemplates: QueryList<DataTableColumnDirective>;
   _subscriptions: Subscription[] = [];
@@ -686,6 +699,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     // get ref to elm for measuring
     this.element = element.nativeElement;
     this.rowDiffer = differs.find({}).create();
+    this.sorts = [];
   }
 
   /**
@@ -704,9 +718,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * view has been fully initialized.
    */
   ngAfterViewInit(): void {
-    if (!this.externalSorting) {
-      this.sortInternalRows();
-    }
+    this.invalidateRows();
 
     // this has to be done to prevent the change detection
     // tree from freaking out because we are readjusting
@@ -727,6 +739,38 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
         });
       }
     });
+  }
+  
+  /**
+   * Resets the sorted rows, for use when a change is made to the data, sorting,
+   * or grouping options. The next retrieval of internalRows will calculate the
+   * proper value.
+   */
+  invalidateRows() {
+    this._internalRows = null;
+    
+    if (this.groupRowsBy) {
+      this._groupedRows = null;
+    }
+  }
+  
+  /**
+   * Returns the sorted rows. Use invalidateRows when changes are made to ensure
+   * that the rows and sorting are up-to-date.
+   */
+  get internalRows() {
+    if (!this._internalRows) {
+      if (this._rows) {
+        if (!this.externalSorting) {
+          this._internalRows = sortRows(this._rows, this._internalColumns, this._sorts);
+        } else {
+          this._internalRows = [...this._rows];
+        }
+      } else {
+        this._internalRows = null;
+      }
+    }
+    return this._internalRows;
   }
 
   /**
@@ -790,12 +834,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   */
   ngDoCheck(): void {
     if (this.rowDiffer.diff(this.rows)) {
-      if (!this.externalSorting) {
-        this.sortInternalRows();
-      } else {
-        this._internalRows = [...this.rows];
-      }
-
+      this.invalidateRows();
       this.recalculatePages();
       this.cd.markForCheck();
     }
