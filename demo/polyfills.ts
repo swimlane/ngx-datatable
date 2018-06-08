@@ -9,4 +9,4 @@ import '@angular/platform-browser-dynamic';
 import '@angular/common';
 
 // RxJS
-import 'rxjs/Rx';
+import 'rxjs';

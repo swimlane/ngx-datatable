@@ -7,11 +7,11 @@ module.exports =  function(config) {
     singleRun: true,
     frameworks: ['jasmine'],
     exclude: [],
-    files: [ 
-      { pattern: './config/spec-bundle.js', watched: false } 
+    files: [
+      { pattern: './config/spec-bundle.js', watched: false }
     ],
-    preprocessors: { 
-      './config/spec-bundle.js': ['coverage', 'webpack', 'sourcemap'] 
+    preprocessors: {
+      './config/spec-bundle.js': ['coverage', 'webpack', 'sourcemap']
     },
     webpack: testWebpackConfig({ env: 'test' }),
     webpackMiddleware: { stats: 'errors-only'},

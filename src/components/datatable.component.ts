@@ -3,14 +3,14 @@ import {
   HostListener, ContentChildren, OnInit, QueryList, AfterViewInit,
   HostBinding, ContentChild, TemplateRef, IterableDiffer,
   DoCheck, KeyValueDiffers, KeyValueDiffer, ViewEncapsulation,
-  ChangeDetectionStrategy, ChangeDetectorRef, SkipSelf
+  ChangeDetectionStrategy, ChangeDetectorRef, SkipSelf, OnDestroy
 } from '@angular/core';
 
 import {
   forceFillColumnWidths, adjustColumnWidths, sortRows,
   setColumnDefaults, throttleable, translateTemplates
 } from '../utils';
-import { ScrollbarHelper, DimensionsHelper } from '../services';
+import { ScrollbarHelper, DimensionsHelper, ColumnChangesService } from '../services';
 import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
@@ -19,7 +19,7 @@ import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
 import { DataTableHeaderComponent } from './header';
 import { MouseEvent } from '../events';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'ngx-datatable',
@@ -77,6 +77,9 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
         [rowClass]="rowClass"
         [selectCheck]="selectCheck"
         [displayCheck]="displayCheck"
+        [summaryRow]="summaryRow"
+        [summaryHeight]="summaryHeight"
+        [summaryPosition]="summaryPosition"
         (page)="onBodyPage($event)"
         (activate)="activate.emit($event)"
         (rowContextmenu)="onRowContextmenu($event)"
@@ -124,7 +127,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     if (val) {
       this._internalRows = [...val];
     }
-    
+
     // auto sort on new updates
     if (!this.externalSorting) {
       this.sortInternalRows();
@@ -441,6 +444,21 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   @Input() virtualization: boolean = true;
 
   /**
+   * A flag for switching summary row on / off
+   */
+  @Input() summaryRow: boolean = false;
+
+  /**
+   * A height of summary row
+   */
+  @Input() summaryHeight: number = 30;
+
+  /**
+   * A property holds a summary row position: top/bottom
+   */
+  @Input() summaryPosition: string = 'top';
+
+  /**
    * Body was scrolled typically in a `scrollbarV:true` scenario.
    */
   @Output() scroll: EventEmitter<any> = new EventEmitter();
@@ -655,13 +673,15 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   _internalColumns: TableColumn[];
   _columns: TableColumn[];
   _columnTemplates: QueryList<DataTableColumnDirective>;
+  _subscriptions: Subscription[] = [];
 
   constructor(
     @SkipSelf() private scrollbarHelper: ScrollbarHelper,
     @SkipSelf() private dimensionsHelper: DimensionsHelper,
     private cd: ChangeDetectorRef,
     element: ElementRef,
-    differs: KeyValueDiffers) {
+    differs: KeyValueDiffers,
+    private columnChangesService: ColumnChangesService) {
 
     // get ref to elm for measuring
     this.element = element.nativeElement;
@@ -693,7 +713,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     if (typeof requestAnimationFrame === 'undefined') {
       return;
     }
-    
+
     requestAnimationFrame(() => {
       this.recalculate();
 
@@ -716,6 +736,8 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   ngAfterContentInit() {
     this.columnTemplates.changes.subscribe(v =>
       this.translateColumns(v));
+      
+    this.listenForColumnInputChanges();
   }
 
   /**
@@ -1096,7 +1118,25 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   onBodySelect(event: any): void {
     this.select.emit(event);
   }
+    
+  ngOnDestroy() {
+    this._subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
   
+  /**
+   * listen for changes to input bindings of all DataTableColumnDirective and
+   * trigger the columnTemplates.changes observable to emit
+   */
+  private listenForColumnInputChanges(): void {
+    this._subscriptions.push(this.columnChangesService
+      .columnInputChanges$
+      .subscribe(() => {
+        if (this.columnTemplates) {
+          this.columnTemplates.notifyOnChanges();
+        }
+      }));
+  }
+
   private sortInternalRows(): void {
     this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
   }

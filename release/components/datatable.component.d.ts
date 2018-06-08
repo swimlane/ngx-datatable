@@ -1,5 +1,5 @@
 import { ElementRef, EventEmitter, OnInit, QueryList, AfterViewInit, DoCheck, KeyValueDiffers, KeyValueDiffer, ChangeDetectorRef } from '@angular/core';
-import { ScrollbarHelper, DimensionsHelper } from '../services';
+import { ScrollbarHelper, DimensionsHelper, ColumnChangesService } from '../services';
 import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
@@ -7,11 +7,12 @@ import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
 import { DataTableHeaderComponent } from './header';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject, Subscription } from 'rxjs';
 export declare class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     private scrollbarHelper;
     private dimensionsHelper;
     private cd;
+    private columnChangesService;
     /**
      * Template for the target marker of drag target columns.
      */
@@ -221,6 +222,18 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     virtualization: boolean;
     /**
+     * A flag for switching summary row on / off
+     */
+    summaryRow: boolean;
+    /**
+     * A height of summary row
+     */
+    summaryHeight: number;
+    /**
+     * A property holds a summary row position: top/bottom
+     */
+    summaryPosition: string;
+    /**
      * Body was scrolled typically in a `scrollbarV:true` scenario.
      */
     scroll: EventEmitter<any>;
@@ -355,7 +368,8 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
     _internalColumns: TableColumn[];
     _columns: TableColumn[];
     _columnTemplates: QueryList<DataTableColumnDirective>;
-    constructor(scrollbarHelper: ScrollbarHelper, dimensionsHelper: DimensionsHelper, cd: ChangeDetectorRef, element: ElementRef, differs: KeyValueDiffers);
+    _subscriptions: Subscription[];
+    constructor(scrollbarHelper: ScrollbarHelper, dimensionsHelper: DimensionsHelper, cd: ChangeDetectorRef, element: ElementRef, differs: KeyValueDiffers, columnChangesService: ColumnChangesService);
     /**
      * Lifecycle hook that is called after data-bound
      * properties of a directive are initialized.
@@ -465,5 +479,11 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      * A row was selected from body
      */
     onBodySelect(event: any): void;
+    ngOnDestroy(): void;
+    /**
+     * listen for changes to input bindings of all DataTableColumnDirective and
+     * trigger the columnTemplates.changes observable to emit
+     */
+    private listenForColumnInputChanges();
     private sortInternalRows();
 }
