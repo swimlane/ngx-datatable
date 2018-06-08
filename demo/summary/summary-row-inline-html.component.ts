@@ -4,9 +4,9 @@ import { Component } from '@angular/core';
   selector: 'summary-row-inline-html',
   template: `
     <div>
-      <h3>Simple Summary Row
+      <h3>Inline HTML template
         <small>
-        <a href="https://github.com/swimlane/ngx-datatable/blob/summary-row/demo/summary/summary-row-inline-html.component.ts">
+        <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/summary/summary-row-inline-html.component.ts">
           Source
         </a>
         </small>
@@ -15,6 +15,7 @@ import { Component } from '@angular/core';
         class="material"
         [summaryRow]="enableSummary"
         [summaryPosition]="summaryPosition"
+        [summaryHeight]="'auto'"
         [columnMode]="'force'"
         [headerHeight]="50"
         [rowHeight]="'auto'"

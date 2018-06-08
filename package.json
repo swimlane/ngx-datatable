@@ -1,13 +1,16 @@
 {
   "name": "@swimlane/ngx-datatable",
-  "version": "11.3.2",
-  "description": "ngx-datatable is a Angular2+ table grid component for presenting large and complex data.",
+  "version": "13.0.1",
+  "description":
+    "ngx-datatable is a Angular2+ table grid component for presenting large and complex data.",
   "main": "release/index.js",
   "typings": "release/index.d.ts",
   "scripts": {
     "check": "npm-check --skip-unused",
     "test": "karma start",
+    "test-linux": "karma start --browsers ChromeTravisCi",
     "watch:test": "npm run test -- --auto-watch --no-single-run",
+    "watch:test-linux": "npm run test-linux -- --auto-watch --no-single-run",
     "lint": "tslint ./src/**/*.ts ./test/**/*.ts",
     "version": "npm run release",
     "preversion": "npm test",
@@ -29,12 +32,15 @@
     "start": "webpack-dev-server",
     "start:hmr": "webpack-dev-server --env.HMR",
     "release": "npm-run-all build:release",
-    "package": "npm-run-all -s clean copy:build build:sass package:replace-scss package:aot build:package package:minify copy:styles clean:build",
+    "package":
+      "npm-run-all -s clean copy:build build:sass package:replace-scss package:aot build:package package:minify copy:styles clean:build",
     "package:ts": "tsc --outDir release",
     "package:aot": "ngc -p tsconfig-aot.json",
     "package:replace-scss": "node ./config/replace-scss.js",
-    "package:css": "node-sass -o release/ src/themes && node-sass -o release/components src/components",
-    "package:minify": "uglifyjs release/index.js --source-map --compress --mangle --screw-ie8 --output release/index.min.js",
+    "package:css":
+      "node-sass -o release/ src/themes && node-sass -o release/components src/components",
+    "package:minify":
+      "uglifyjs release/index.js --source-map --compress --mangle --screw-ie8 --output release/index.min.js",
     "deploy": "node ./config/deploy.js",
     "pree2e:full": "npm run build:release",
     "e2e:full": "npm run e2e",
@@ -64,23 +70,23 @@
   },
   "homepage": "https://github.com/swimlane/ngx-datatable#readme",
   "peerDependencies": {
-    "@angular/common": ">=4.0.1 || >5.0.0 || <=6.0.0",
-    "@angular/compiler": ">=4.0.1 || >5.0.0 || <=6.0.0",
-    "@angular/core": ">=4.0.1 || >5.0.0 || <=6.0.0",
-    "@angular/platform-browser": ">=4.0.1 || >5.0.0 || <=6.0.0",
-    "@angular/platform-browser-dynamic": ">=4.0.1 || >5.0.0 || <=6.0.0",
+    "@angular/common": "<7.0.0",
+    "@angular/compiler": "<7.0.0",
+    "@angular/core": "<7.0.0",
+    "@angular/platform-browser": "<7.0.0",
+    "@angular/platform-browser-dynamic": "<7.0.0",
     "core-js": "^2.4.0",
-    "rxjs": "^5.0.0"
+    "rxjs": "^6.0.0"
   },
   "devDependencies": {
-    "@angular/animations": "^4.0.1",
-    "@angular/common": "^4.0.1",
-    "@angular/compiler": "^4.0.1",
-    "@angular/compiler-cli": "^4.0.1",
-    "@angular/core": "^4.0.1",
-    "@angular/platform-browser": "^4.0.1",
-    "@angular/platform-browser-dynamic": "^4.0.1",
-    "@angular/platform-server": "^4.0.1",
+    "@angular/animations": "^6.0.0",
+    "@angular/common": "^6.0.0",
+    "@angular/compiler": "^6.0.0",
+    "@angular/compiler-cli": "^6.0.0",
+    "@angular/core": "^6.0.0",
+    "@angular/platform-browser": "^6.0.0",
+    "@angular/platform-browser-dynamic": "^6.0.0",
+    "@angular/platform-server": "^6.0.0",
     "@types/jasmine": "^2.8.4",
     "@types/node": "^8.0.53",
     "angular2-template-loader": "^0.6.2",
@@ -116,7 +122,7 @@
     "puppeteer": "^1.0.0",
     "replace": "^0.3.0",
     "rimraf": "^2.6.2",
-    "rxjs": "^5.5.2",
+    "rxjs": "^6.1.0",
     "sass-loader": "^6.0.6",
     "source-map-loader": "^0.2.3",
     "style-loader": "^0.19.0",
@@ -126,7 +132,7 @@
     "tslint": "^5.8.0",
     "tslint-config-swimlane": "^3.0.3",
     "tslint-loader": "^3.5.3",
-    "typescript": "^2.6.1",
+    "typescript": "~2.7.2",
     "uglify-js": "^3.1.10",
     "url-loader": "^0.6.2",
     "webpack": "^3.8.1",
@@ -134,6 +140,6 @@
     "webpack-dev-server": "^2.9.2",
     "webpack-merge": "^4.1.1",
     "webpack-notifier": "^1.5.0",
-    "zone.js": "^0.8.18"
+    "zone.js": "^0.8.26"
   }
 }

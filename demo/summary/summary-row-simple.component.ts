@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
     <div>
       <h3>Simple Summary Row
         <small>
-        <a href="https://github.com/swimlane/ngx-datatable/blob/summary-row/demo/summary/summary-row-simple.component.ts">
+        <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/summary/summary-row-simple.component.ts">
           Source
         </a>
         </small>
@@ -32,6 +32,7 @@ import { Component } from '@angular/core';
         class="material"
         [summaryRow]="enableSummary"
         [summaryPosition]="summaryPosition"
+        [summaryHeight]="'auto'"
         [columns]="columns"
         [columnMode]="'force'"
         [headerHeight]="50"
@@ -47,7 +48,7 @@ export class SummaryRowSimpleComponent {
   rows = [];
 
   columns = [
-    { prop: 'name', summaryFunc: () => null },
+    { prop: 'name', summaryFunc: null, },
     { name: 'Gender', summaryFunc: (cells) => this.summaryForGender(cells) },
     { prop: 'age', summaryFunc: (cells) => this.avgAge(cells) },
   ];

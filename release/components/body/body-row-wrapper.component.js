@@ -65,7 +65,7 @@ var DataTableRowWrapperComponent = /** @class */ (function () {
     DataTableRowWrapperComponent.prototype.onContextmenu = function ($event) {
         this.rowContextmenu.emit({ event: $event, row: this.row });
     };
-    DataTableRowWrapperComponent.prototype.getGroupHeaderStyle = function (group) {
+    DataTableRowWrapperComponent.prototype.getGroupHeaderStyle = function () {
         var styles = {};
         styles['transform'] = 'translate3d(' + this.offsetX + 'px, 0px, 0px)';
         styles['backface-visibility'] = 'hidden';
