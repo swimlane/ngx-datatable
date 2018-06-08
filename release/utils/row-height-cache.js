@@ -55,8 +55,8 @@ var RowHeightCache = /** @class */ (function () {
             }
             // Add the detail row height to the already expanded rows.
             // This is useful for the table that goes through a filter or sort.
-            var expanded = rowExpansions.has(row);
-            if (row && expanded) {
+            var expanded = rowExpansions.get(row);
+            if (row && expanded === 1) {
                 if (isDetailFn) {
                     var index = rowIndexes.get(row);
                     currentRowHeight += detailRowHeight(row, index);

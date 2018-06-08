@@ -32,7 +32,7 @@ var DataTableBodyComponent = /** @class */ (function () {
         this.offsetY = 0;
         this.indexes = {};
         this.rowIndexes = new Map();
-        this.rowExpansions = [];
+        this.rowExpansions = new Map();
         /**
          * Get the height of the detail row.
          */
@@ -70,6 +70,7 @@ var DataTableBodyComponent = /** @class */ (function () {
         },
         set: function (val) {
             this._rows = val;
+            this.rowExpansions.clear();
             this.recalcLayout();
         },
         enumerable: true,
@@ -304,11 +305,15 @@ var DataTableBodyComponent = /** @class */ (function () {
      * Get the row height
      */
     DataTableBodyComponent.prototype.getRowHeight = function (row) {
+        var height;
         // if its a function return it
         if (typeof this.rowHeight === 'function') {
-            return this.rowHeight(row);
+            height = this.rowHeight(row);
         }
-        return this.rowHeight;
+        else {
+            height = this.rowHeight;
+        }
+        return height;
     };
     /**
      * @param group the group with all rows
@@ -327,9 +332,9 @@ var DataTableBodyComponent = /** @class */ (function () {
      */
     DataTableBodyComponent.prototype.getRowAndDetailHeight = function (row) {
         var rowHeight = this.getRowHeight(row);
-        var expanded = this.getRowExpanded(row);
+        var expanded = this.rowExpansions.get(row);
         // Adding detail row height if its expanded.
-        if (expanded) {
+        if (expanded === 1) {
             rowHeight += this.getDetailRowHeight(row);
         }
         return rowHeight;
@@ -430,13 +435,6 @@ var DataTableBodyComponent = /** @class */ (function () {
         this.rowHeightsCache.clearCache();
         // Initialize the tree only if there are rows inside the tree.
         if (this.rows && this.rows.length) {
-            var rowExpansions = new Set();
-            for (var _i = 0, _a = this.rows; _i < _a.length; _i++) {
-                var row = _a[_i];
-                if (this.getRowExpanded(row)) {
-                    rowExpansions.add(row);
-                }
-            }
             this.rowHeightsCache.initCache({
                 rows: this.rows,
                 rowHeight: this.rowHeight,
@@ -444,7 +442,7 @@ var DataTableBodyComponent = /** @class */ (function () {
                 externalVirtual: this.scrollbarV && this.externalPaging,
                 rowCount: this.rowCount,
                 rowIndexes: this.rowIndexes,
-                rowExpansions: rowExpansions
+                rowExpansions: this.rowExpansions
             });
         }
     };
@@ -471,8 +469,7 @@ var DataTableBodyComponent = /** @class */ (function () {
     DataTableBodyComponent.prototype.toggleRowExpansion = function (row) {
         // Capture the row index of the first row that is visible on the viewport.
         var viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
-        var rowExpandedIdx = this.getRowExpandedIdx(row, this.rowExpansions);
-        var expanded = rowExpandedIdx > -1;
+        var expanded = this.rowExpansions.get(row);
         // If the detailRowHeight is auto --> only in case of non-virtualized scroll
         if (this.scrollbarV) {
             var detailRowHeight = this.getDetailRowHeight(row) * (expanded ? -1 : 1);
@@ -481,12 +478,8 @@ var DataTableBodyComponent = /** @class */ (function () {
             this.rowHeightsCache.update(idx, detailRowHeight);
         }
         // Update the toggled row and update thive nevere heights in the cache.
-        if (expanded) {
-            this.rowExpansions.splice(rowExpandedIdx, 1);
-        }
-        else {
-            this.rowExpansions.push(row);
-        }
+        expanded = expanded ^= 1;
+        this.rowExpansions.set(row, expanded);
         this.detailToggle.emit({
             rows: [row],
             currentIndex: viewPortFirstRowIndex
@@ -497,14 +490,13 @@ var DataTableBodyComponent = /** @class */ (function () {
      */
     DataTableBodyComponent.prototype.toggleAllRows = function (expanded) {
         // clear prev expansions
-        this.rowExpansions = [];
+        this.rowExpansions.clear();
+        var rowExpanded = expanded ? 1 : 0;
         // Capture the row index of the first row that is visible on the viewport.
         var viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
-        if (expanded) {
-            for (var _i = 0, _a = this.rows; _i < _a.length; _i++) {
-                var row = _a[_i];
-                this.rowExpansions.push(row);
-            }
+        for (var _i = 0, _a = this.rows; _i < _a.length; _i++) {
+            var row = _a[_i];
+            this.rowExpansions.set(row, rowExpanded);
         }
         if (this.scrollbarV) {
             // Refresh the full row heights cache since every row was affected.
@@ -555,23 +547,14 @@ var DataTableBodyComponent = /** @class */ (function () {
      * Returns if the row was expanded and set default row expansion when row expansion is empty
      */
     DataTableBodyComponent.prototype.getRowExpanded = function (row) {
-        if (this.rowExpansions.length === 0 && this.groupExpansionDefault) {
+        if (this.rowExpansions.size === 0 && this.groupExpansionDefault) {
             for (var _i = 0, _a = this.groupedRows; _i < _a.length; _i++) {
                 var group = _a[_i];
-                this.rowExpansions.push(group);
+                this.rowExpansions.set(group, 1);
             }
         }
-        return this.getRowExpandedIdx(row, this.rowExpansions) > -1;
-    };
-    DataTableBodyComponent.prototype.getRowExpandedIdx = function (row, expanded) {
-        var _this = this;
-        if (!expanded || !expanded.length)
-            return -1;
-        var rowId = this.rowIdentity(row);
-        return expanded.findIndex(function (r) {
-            var id = _this.rowIdentity(r);
-            return id === rowId;
-        });
+        var expanded = this.rowExpansions.get(row);
+        return expanded === 1;
     };
     /**
      * Gets the row index given a row

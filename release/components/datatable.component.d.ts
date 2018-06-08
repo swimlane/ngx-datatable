@@ -13,10 +13,6 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
     private dimensionsHelper;
     private cd;
     /**
-     * Template for the target marker of drag target columns.
-     */
-    targetMarkerTemplate: any;
-    /**
      * Gets the rows.
      */
     /**
@@ -138,11 +134,6 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      * by dragging them.
      */
     reorderable: boolean;
-    /**
-     * Swap columns on re-order columns or
-     * move them.
-     */
-    swapColumns: boolean;
     /**
      * The type of sorting
      */

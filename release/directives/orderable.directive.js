@@ -19,7 +19,6 @@ var OrderableDirective = /** @class */ (function () {
     function OrderableDirective(differs, document) {
         this.document = document;
         this.reorder = new core_1.EventEmitter();
-        this.targetChanged = new core_1.EventEmitter();
         this.differ = differs.find({}).create();
     }
     OrderableDirective.prototype.ngAfterContentInit = function () {
@@ -30,7 +29,6 @@ var OrderableDirective = /** @class */ (function () {
     OrderableDirective.prototype.ngOnDestroy = function () {
         this.draggables.forEach(function (d) {
             d.dragStart.unsubscribe();
-            d.dragging.unsubscribe();
             d.dragEnd.unsubscribe();
         });
     };
@@ -43,7 +41,6 @@ var OrderableDirective = /** @class */ (function () {
                 unsubscribe_1({ previousValue: previousValue });
                 if (currentValue) {
                     currentValue.dragStart.subscribe(_this.onDragStart.bind(_this));
-                    currentValue.dragging.subscribe(_this.onDragging.bind(_this));
                     currentValue.dragEnd.subscribe(_this.onDragEnd.bind(_this));
                 }
             };
@@ -51,7 +48,6 @@ var OrderableDirective = /** @class */ (function () {
                 var previousValue = _a.previousValue;
                 if (previousValue) {
                     previousValue.dragStart.unsubscribe();
-                    previousValue.dragging.unsubscribe();
                     previousValue.dragEnd.unsubscribe();
                 }
             };
@@ -75,28 +71,6 @@ var OrderableDirective = /** @class */ (function () {
             };
         }
     };
-    OrderableDirective.prototype.onDragging = function (_a) {
-        var element = _a.element, model = _a.model, event = _a.event;
-        var prevPos = this.positions[model.prop];
-        var target = this.isTarget(model, event);
-        if (target) {
-            if (this.lastDraggingIndex !== target.i) {
-                this.targetChanged.emit({
-                    prevIndex: this.lastDraggingIndex,
-                    newIndex: target.i,
-                    initialIndex: prevPos.index
-                });
-                this.lastDraggingIndex = target.i;
-            }
-        }
-        else if (this.lastDraggingIndex !== prevPos.index) {
-            this.targetChanged.emit({
-                prevIndex: this.lastDraggingIndex,
-                initialIndex: prevPos.index
-            });
-            this.lastDraggingIndex = prevPos.index;
-        }
-    };
     OrderableDirective.prototype.onDragEnd = function (_a) {
         var element = _a.element, model = _a.model, event = _a.event;
         var prevPos = this.positions[model.prop];
@@ -108,7 +82,6 @@ var OrderableDirective = /** @class */ (function () {
                 model: model
             });
         }
-        this.lastDraggingIndex = undefined;
         element.style.left = 'auto';
     };
     OrderableDirective.prototype.isTarget = function (model, event) {
@@ -146,10 +119,6 @@ var OrderableDirective = /** @class */ (function () {
         core_1.Output(),
         __metadata("design:type", core_1.EventEmitter)
     ], OrderableDirective.prototype, "reorder", void 0);
-    __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
-    ], OrderableDirective.prototype, "targetChanged", void 0);
     __decorate([
         core_1.ContentChildren(draggable_directive_1.DraggableDirective, { descendants: true }),
         __metadata("design:type", core_1.QueryList)

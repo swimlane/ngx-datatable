@@ -16,8 +16,6 @@ export declare class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     cellTemplate: ViewContainerRef;
     readonly columnCssClasses: any;
     readonly width: number;
-    readonly minWidth: number;
-    readonly maxWidth: number;
     readonly height: string | number;
     sanitizedValue: any;
     value: any;
