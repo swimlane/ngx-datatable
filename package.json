@@ -1,8 +1,7 @@
 {
   "name": "@swimlane/ngx-datatable",
   "version": "13.0.1",
-  "description":
-    "ngx-datatable is a Angular2+ table grid component for presenting large and complex data.",
+  "description": "ngx-datatable is a Angular2+ table grid component for presenting large and complex data.",
   "main": "release/index.js",
   "typings": "release/index.d.ts",
   "scripts": {
@@ -32,15 +31,12 @@
     "start": "webpack-dev-server",
     "start:hmr": "webpack-dev-server --env.HMR",
     "release": "npm-run-all build:release",
-    "package":
-      "npm-run-all -s clean copy:build build:sass package:replace-scss package:aot build:package package:minify copy:styles clean:build",
+    "package": "npm-run-all -s clean copy:build build:sass package:replace-scss package:aot build:package package:minify copy:styles clean:build",
     "package:ts": "tsc --outDir release",
     "package:aot": "ngc -p tsconfig-aot.json",
     "package:replace-scss": "node ./config/replace-scss.js",
-    "package:css":
-      "node-sass -o release/ src/themes && node-sass -o release/components src/components",
-    "package:minify":
-      "uglifyjs release/index.js --source-map --compress --mangle --screw-ie8 --output release/index.min.js",
+    "package:css": "node-sass -o release/ src/themes && node-sass -o release/components src/components",
+    "package:minify": "uglifyjs release/index.js --source-map --compress --mangle --screw-ie8 --output release/index.min.js",
     "deploy": "node ./config/deploy.js",
     "pree2e:full": "npm run build:release",
     "e2e:full": "npm run e2e",
