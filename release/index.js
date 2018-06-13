@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"12.0.0" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"13.0.1" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -831,7 +831,7 @@ var DataTableRowWrapperComponent = /** @class */ (function () {
     DataTableRowWrapperComponent.prototype.onContextmenu = function ($event) {
         this.rowContextmenu.emit({ event: $event, row: this.row });
     };
-    DataTableRowWrapperComponent.prototype.getGroupHeaderStyle = function (group) {
+    DataTableRowWrapperComponent.prototype.getGroupHeaderStyle = function () {
         var styles = {};
         styles['transform'] = 'translate3d(' + this.offsetX + 'px, 0px, 0px)';
         styles['backface-visibility'] = 'hidden';
@@ -1484,7 +1484,6 @@ var DataTableBodyComponent = /** @class */ (function () {
             }
         }
         this.temp = temp;
-        this.cd.detectChanges();
     };
     /**
      * Get the row height
@@ -1562,6 +1561,24 @@ var DataTableBodyComponent = /** @class */ (function () {
             var pos = this.rowHeightsCache.query(idx - 1);
             utils_1.translateXY(styles, 0, pos);
         }
+        return styles;
+    };
+    /**
+     * Calculate bottom summary row offset for scrollbar mode.
+     * For more information about cache and offset calculation
+     * see description for `getRowsStyles` method
+     *
+     * @returns {*} Returns the CSS3 style to be applied
+     *
+     * @memberOf DataTableBodyComponent
+     */
+    DataTableBodyComponent.prototype.getBottomSummaryRowStyles = function () {
+        if (!this.scrollbarV || !this.rows || !this.rows.length) {
+            return null;
+        }
+        var styles = { position: 'absolute' };
+        var pos = this.rowHeightsCache.query(this.rows.length - 1);
+        utils_1.translateXY(styles, 0, pos);
         return styles;
     };
     /**
@@ -1906,7 +1923,7 @@ var DataTableBodyComponent = /** @class */ (function () {
     DataTableBodyComponent = __decorate([
         core_1.Component({
             selector: 'datatable-body',
-            template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [rows]=\"rows\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths?.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-summary-row\n          *ngIf=\"summaryRow && summaryPosition === 'top'\"\n          [rowHeight]=\"summaryHeight\"\n          [offsetX]=\"offsetX\"\n          [innerWidth]=\"innerWidth\"\n          [rows]=\"rows\"\n          [columns]=\"columns\">\n        </datatable-summary-row>\n        <datatable-row-wrapper\n          [groupedRows]=\"groupedRows\"\n          *ngFor=\"let group of temp; let i = index; trackBy: rowTrackingFn;\"\n          [innerWidth]=\"innerWidth\"\n          [ngStyle]=\"getRowsStyles(group)\"\n          [rowDetail]=\"rowDetail\"\n          [groupHeader]=\"groupHeader\"\n          [offsetX]=\"offsetX\"\n          [detailRowHeight]=\"getDetailRowHeight(group[i],i)\"\n          [row]=\"group\"\n          [expanded]=\"getRowExpanded(group)\"\n          [rowIndex]=\"getRowIndex(group[i])\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-row\n            *ngIf=\"!groupedRows; else groupedRowsTemplate\"\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(group)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"getRowHeight(group)\"\n            [row]=\"group\"\n            [rowIndex]=\"getRowIndex(group)\"\n            [expanded]=\"getRowExpanded(group)\"\n            [rowClass]=\"rowClass\"\n            [displayCheck]=\"displayCheck\"\n            (activate)=\"selector.onActivate($event, indexes.first + i)\">\n          </datatable-body-row>\n          <ng-template #groupedRowsTemplate>\n            <datatable-body-row\n              *ngFor=\"let row of group.value; let i = index; trackBy: rowTrackingFn;\"\n              tabindex=\"-1\"\n              [isSelected]=\"selector.getRowSelected(row)\"\n              [innerWidth]=\"innerWidth\"\n              [offsetX]=\"offsetX\"\n              [columns]=\"columns\"\n              [rowHeight]=\"getRowHeight(row)\"\n              [row]=\"row\"\n              [group]=\"group.value\"\n              [rowIndex]=\"getRowIndex(row)\"\n              [expanded]=\"getRowExpanded(row)\"\n              [rowClass]=\"rowClass\"\n              (activate)=\"selector.onActivate($event, i)\">\n            </datatable-body-row>\n          </ng-template>\n        </datatable-row-wrapper>\n        <datatable-summary-row\n          *ngIf=\"summaryRow && summaryPosition === 'bottom'\"\n          [rowHeight]=\"summaryHeight\"\n          [offsetX]=\"offsetX\"\n          [innerWidth]=\"innerWidth\"\n          [rows]=\"rows\"\n          [columns]=\"columns\">\n        </datatable-summary-row>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length && !loadingIndicator\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
+            template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [rows]=\"rows\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths?.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-summary-row\n          *ngIf=\"summaryRow && summaryPosition === 'top'\"\n          [rowHeight]=\"summaryHeight\"\n          [offsetX]=\"offsetX\"\n          [innerWidth]=\"innerWidth\"\n          [rows]=\"rows\"\n          [columns]=\"columns\">\n        </datatable-summary-row>\n        <datatable-row-wrapper\n          [groupedRows]=\"groupedRows\"\n          *ngFor=\"let group of temp; let i = index; trackBy: rowTrackingFn;\"\n          [innerWidth]=\"innerWidth\"\n          [ngStyle]=\"getRowsStyles(group)\"\n          [rowDetail]=\"rowDetail\"\n          [groupHeader]=\"groupHeader\"\n          [offsetX]=\"offsetX\"\n          [detailRowHeight]=\"getDetailRowHeight(group[i],i)\"\n          [row]=\"group\"\n          [expanded]=\"getRowExpanded(group)\"\n          [rowIndex]=\"getRowIndex(group[i])\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-row\n            *ngIf=\"!groupedRows; else groupedRowsTemplate\"\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(group)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"getRowHeight(group)\"\n            [row]=\"group\"\n            [rowIndex]=\"getRowIndex(group)\"\n            [expanded]=\"getRowExpanded(group)\"\n            [rowClass]=\"rowClass\"\n            [displayCheck]=\"displayCheck\"\n            (activate)=\"selector.onActivate($event, indexes.first + i)\">\n          </datatable-body-row>\n          <ng-template #groupedRowsTemplate>\n            <datatable-body-row\n              *ngFor=\"let row of group.value; let i = index; trackBy: rowTrackingFn;\"\n              tabindex=\"-1\"\n              [isSelected]=\"selector.getRowSelected(row)\"\n              [innerWidth]=\"innerWidth\"\n              [offsetX]=\"offsetX\"\n              [columns]=\"columns\"\n              [rowHeight]=\"getRowHeight(row)\"\n              [row]=\"row\"\n              [group]=\"group.value\"\n              [rowIndex]=\"getRowIndex(row)\"\n              [expanded]=\"getRowExpanded(row)\"\n              [rowClass]=\"rowClass\"\n              (activate)=\"selector.onActivate($event, i)\">\n            </datatable-body-row>\n          </ng-template>\n        </datatable-row-wrapper>\n        <datatable-summary-row\n          *ngIf=\"summaryRow && summaryPosition === 'bottom'\"\n          [ngStyle]=\"getBottomSummaryRowStyles()\"\n          [rowHeight]=\"summaryHeight\"\n          [offsetX]=\"offsetX\"\n          [innerWidth]=\"innerWidth\"\n          [rows]=\"rows\"\n          [columns]=\"columns\">\n        </datatable-summary-row>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length && !loadingIndicator\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
             changeDetection: core_1.ChangeDetectionStrategy.OnPush,
             host: {
                 class: 'datatable-body'
@@ -2004,14 +2021,11 @@ var ScrollerComponent = /** @class */ (function () {
         this.element = element.nativeElement;
     }
     ScrollerComponent.prototype.ngOnInit = function () {
-        var _this = this;
         // manual bind so we don't always listen
         if (this.scrollbarV || this.scrollbarH) {
             var renderer = this.renderer;
             this.parentElement = renderer.parentNode(renderer.parentNode(this.element));
-            this.ngZone.runOutsideAngular(function () {
-                _this.parentElement.addEventListener('scroll', _this.onScrolled.bind(_this));
-            });
+            this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
         }
     };
     ScrollerComponent.prototype.ngOnDestroy = function () {
@@ -2315,9 +2329,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 function defaultSumFunc(cells) {
-    return cells
-        .filter(function (cell) { return !!cell; })
-        .reduce(function (res, cell) { return res + cell; });
+    var cellsWithValues = cells.filter(function (cell) { return !!cell; });
+    if (!cellsWithValues.length) {
+        return null;
+    }
+    if (cellsWithValues.some(function (cell) { return typeof cell !== 'number'; })) {
+        return null;
+    }
+    return cellsWithValues.reduce(function (res, cell) { return res + cell; });
+}
+function noopSumFunc(cells) {
+    return null;
 }
 var DataTableSummaryRowComponent = /** @class */ (function () {
     function DataTableSummaryRowComponent() {
@@ -2340,11 +2362,22 @@ var DataTableSummaryRowComponent = /** @class */ (function () {
             .filter(function (col) { return !col.summaryTemplate; })
             .forEach(function (col) {
             var cellsFromSingleColumn = _this.rows.map(function (row) { return row[col.prop]; });
-            var sumFunc = col.summaryFunc || defaultSumFunc;
+            var sumFunc = _this.getSummaryFunction(col);
             _this.summaryRow[col.prop] = col.pipe ?
                 col.pipe.transform(sumFunc(cellsFromSingleColumn)) :
                 sumFunc(cellsFromSingleColumn);
         });
+    };
+    DataTableSummaryRowComponent.prototype.getSummaryFunction = function (column) {
+        if (column.summaryFunc === undefined) {
+            return defaultSumFunc;
+        }
+        else if (column.summaryFunc === null) {
+            return noopSumFunc;
+        }
+        else {
+            return column.summaryFunc;
+        }
     };
     __decorate([
         core_1.Input(),
@@ -2462,9 +2495,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var column_header_directive_1 = __webpack_require__("./src/components/columns/column-header.directive.ts");
 var column_cell_directive_1 = __webpack_require__("./src/components/columns/column-cell.directive.ts");
+var column_changes_service_1 = __webpack_require__("./src/services/column-changes.service.ts");
 var DataTableColumnDirective = /** @class */ (function () {
-    function DataTableColumnDirective() {
+    function DataTableColumnDirective(columnChangesService) {
+        this.columnChangesService = columnChangesService;
+        this.isFirstChange = true;
     }
+    DataTableColumnDirective.prototype.ngOnChanges = function () {
+        if (this.isFirstChange) {
+            this.isFirstChange = false;
+        }
+        else {
+            this.columnChangesService.onInputChange();
+        }
+    };
     __decorate([
         core_1.Input(),
         __metadata("design:type", String)
@@ -2556,7 +2600,8 @@ var DataTableColumnDirective = /** @class */ (function () {
         __metadata("design:type", core_1.TemplateRef)
     ], DataTableColumnDirective.prototype, "headerTemplate", void 0);
     DataTableColumnDirective = __decorate([
-        core_1.Directive({ selector: 'ngx-datatable-column' })
+        core_1.Directive({ selector: 'ngx-datatable-column' }),
+        __metadata("design:paramtypes", [column_changes_service_1.ColumnChangesService])
     ], DataTableColumnDirective);
     return DataTableColumnDirective;
 }());
@@ -2634,10 +2679,11 @@ var footer_1 = __webpack_require__("./src/components/footer/index.ts");
 var header_1 = __webpack_require__("./src/components/header/index.ts");
 var rxjs_1 = __webpack_require__("rxjs");
 var DatatableComponent = /** @class */ (function () {
-    function DatatableComponent(scrollbarHelper, dimensionsHelper, cd, element, differs) {
+    function DatatableComponent(scrollbarHelper, dimensionsHelper, cd, element, differs, columnChangesService) {
         this.scrollbarHelper = scrollbarHelper;
         this.dimensionsHelper = dimensionsHelper;
         this.cd = cd;
+        this.columnChangesService = columnChangesService;
         /**
          * List of row objects that should be
          * represented as selected in the grid.
@@ -2765,7 +2811,7 @@ var DatatableComponent = /** @class */ (function () {
         /**
          * A height of summary row
          */
-        this.summaryHeight = this.rowHeight;
+        this.summaryHeight = 30;
         /**
          * A property holds a summary row position: top/bottom
          */
@@ -2808,6 +2854,7 @@ var DatatableComponent = /** @class */ (function () {
         this._offsetX = new rxjs_1.BehaviorSubject(0);
         this._count = 0;
         this._offset = 0;
+        this._subscriptions = [];
         // get ref to elm for measuring
         this.element = element.nativeElement;
         this.rowDiffer = differs.find({}).create();
@@ -3122,6 +3169,7 @@ var DatatableComponent = /** @class */ (function () {
         this.columnTemplates.changes.subscribe(function (v) {
             return _this.translateColumns(v);
         });
+        this.listenForColumnInputChanges();
     };
     /**
      * Translates the templates to the column objects
@@ -3465,6 +3513,23 @@ var DatatableComponent = /** @class */ (function () {
     DatatableComponent.prototype.onBodySelect = function (event) {
         this.select.emit(event);
     };
+    DatatableComponent.prototype.ngOnDestroy = function () {
+        this._subscriptions.forEach(function (subscription) { return subscription.unsubscribe(); });
+    };
+    /**
+     * listen for changes to input bindings of all DataTableColumnDirective and
+     * trigger the columnTemplates.changes observable to emit
+     */
+    DatatableComponent.prototype.listenForColumnInputChanges = function () {
+        var _this = this;
+        this._subscriptions.push(this.columnChangesService
+            .columnInputChanges$
+            .subscribe(function () {
+            if (_this.columnTemplates) {
+                _this.columnTemplates.notifyOnChanges();
+            }
+        }));
+    };
     DatatableComponent.prototype.sortInternalRows = function () {
         this._internalRows = utils_1.sortRows(this._internalRows, this._internalColumns, this.sorts);
     };
@@ -3749,7 +3814,8 @@ var DatatableComponent = /** @class */ (function () {
             services_1.DimensionsHelper,
             core_1.ChangeDetectorRef,
             core_1.ElementRef,
-            core_1.KeyValueDiffers])
+            core_1.KeyValueDiffers,
+            services_1.ColumnChangesService])
     ], DatatableComponent);
     return DatatableComponent;
 }());
@@ -3805,6 +3871,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
+var footer_directive_1 = __webpack_require__("./src/components/footer/footer.directive.ts");
 var DataTableFooterComponent = /** @class */ (function () {
     function DataTableFooterComponent() {
         this.selectedCount = 0;
@@ -3862,7 +3929,7 @@ var DataTableFooterComponent = /** @class */ (function () {
     ], DataTableFooterComponent.prototype, "totalMessage", void 0);
     __decorate([
         core_1.Input(),
-        __metadata("design:type", core_1.TemplateRef)
+        __metadata("design:type", footer_directive_1.DatatableFooterDirective)
     ], DataTableFooterComponent.prototype, "footerTemplate", void 0);
     __decorate([
         core_1.Input(),
@@ -4957,7 +5024,8 @@ var NgxDatatableModule = /** @class */ (function () {
             ],
             providers: [
                 services_1.ScrollbarHelper,
-                services_1.DimensionsHelper
+                services_1.DimensionsHelper,
+                services_1.ColumnChangesService
             ],
             declarations: [
                 components_1.DataTableFooterTemplateDirective,
@@ -5737,6 +5805,48 @@ __export(__webpack_require__("./src/services/index.ts"));
 
 /***/ }),
 
+/***/ "./src/services/column-changes.service.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("@angular/core");
+var rxjs_1 = __webpack_require__("rxjs");
+/**
+ * service to make DatatableComponent aware of changes to
+ * input bindings of DataTableColumnDirective
+ */
+var ColumnChangesService = /** @class */ (function () {
+    function ColumnChangesService() {
+        this.columnInputChanges = new rxjs_1.Subject();
+    }
+    Object.defineProperty(ColumnChangesService.prototype, "columnInputChanges$", {
+        get: function () {
+            return this.columnInputChanges.asObservable();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ColumnChangesService.prototype.onInputChange = function () {
+        this.columnInputChanges.next();
+    };
+    ColumnChangesService = __decorate([
+        core_1.Injectable()
+    ], ColumnChangesService);
+    return ColumnChangesService;
+}());
+exports.ColumnChangesService = ColumnChangesService;
+
+
+/***/ }),
+
 /***/ "./src/services/dimensions-helper.service.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5781,6 +5891,7 @@ function __export(m) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(__webpack_require__("./src/services/scrollbar-helper.service.ts"));
 __export(__webpack_require__("./src/services/dimensions-helper.service.ts"));
+__export(__webpack_require__("./src/services/column-changes.service.ts"));
 
 
 /***/ }),

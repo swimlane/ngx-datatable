@@ -1,11 +1,12 @@
-import { Directive, TemplateRef, ContentChild, Input } from '@angular/core';
+import { Directive, TemplateRef, ContentChild, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { DataTableColumnHeaderDirective } from './column-header.directive';
 import { DataTableColumnCellDirective } from './column-cell.directive';
 import { TableColumnProp } from '../../types';
+import { ColumnChangesService } from '../../services/column-changes.service';
 
 @Directive({ selector: 'ngx-datatable-column' })
-export class DataTableColumnDirective {
-
+export class DataTableColumnDirective implements OnChanges {
+  
   @Input() name: string;
   @Input() prop: TableColumnProp;
   @Input() frozenLeft: any;
@@ -35,4 +36,15 @@ export class DataTableColumnDirective {
   @ContentChild(DataTableColumnHeaderDirective, { read: TemplateRef })
   headerTemplate: TemplateRef<any>;
 
+  private isFirstChange = true;
+  
+  constructor(private columnChangesService: ColumnChangesService) {}
+  
+  ngOnChanges() {
+    if (this.isFirstChange) {
+      this.isFirstChange = false;
+    } else {
+      this.columnChangesService.onInputChange();
+    }
+  }
 }

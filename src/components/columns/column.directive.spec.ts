@@ -3,18 +3,20 @@ import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { DataTableColumnDirective } from '.';
+import { ColumnChangesService } from '../../services/column-changes.service';
 
 @Component({
   selector: 'test-fixture-component',
   template: `
     <ngx-datatable-column id="t1"></ngx-datatable-column>
-    <ngx-datatable-column id="t2">
+    <ngx-datatable-column id="t2" [name]="columnName">
       <ng-template></ng-template>
       <ng-template></ng-template>
     </ngx-datatable-column>
   `
 })
 class TestFixtureComponent {
+  columnName: string;
 }
 
 describe('DataTableColumnDirective', () => {
@@ -28,6 +30,14 @@ describe('DataTableColumnDirective', () => {
       declarations: [ 
         DataTableColumnDirective,
         TestFixtureComponent
+      ],
+      providers: [
+        {
+          provide: ColumnChangesService,
+          useValue: {
+            onInputChange: jasmine.createSpy('onInputChange')
+          }
+        }
       ]
     });
   });
@@ -103,5 +113,23 @@ describe('DataTableColumnDirective', () => {
       expect(directive).toBeTruthy();
     });
 
+    it('should not notify of changes if its the first change', () => {
+      component.columnName = 'Column A';
+      fixture.detectChanges();
+      
+      expect(TestBed.get(ColumnChangesService).onInputChange).not.toHaveBeenCalled();
+    });
+
+    it('notifies of subsequent changes', () => {
+      component.columnName = 'Column A';
+      fixture.detectChanges();
+      
+      expect(TestBed.get(ColumnChangesService).onInputChange).not.toHaveBeenCalled();
+      
+      component.columnName = 'Column B';
+      fixture.detectChanges();
+      
+      expect(TestBed.get(ColumnChangesService).onInputChange).toHaveBeenCalled();
+    });
   });
 });

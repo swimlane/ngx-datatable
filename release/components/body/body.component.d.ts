@@ -138,6 +138,16 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      */
     getRowsStyles(rows: any): any;
     /**
+     * Calculate bottom summary row offset for scrollbar mode.
+     * For more information about cache and offset calculation
+     * see description for `getRowsStyles` method
+     *
+     * @returns {*} Returns the CSS3 style to be applied
+     *
+     * @memberOf DataTableBodyComponent
+     */
+    getBottomSummaryRowStyles(): any;
+    /**
      * Hides the loading indicator
      */
     hideIndicator(): void;

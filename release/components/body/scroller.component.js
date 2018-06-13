@@ -24,14 +24,11 @@ var ScrollerComponent = /** @class */ (function () {
         this.element = element.nativeElement;
     }
     ScrollerComponent.prototype.ngOnInit = function () {
-        var _this = this;
         // manual bind so we don't always listen
         if (this.scrollbarV || this.scrollbarH) {
             var renderer = this.renderer;
             this.parentElement = renderer.parentNode(renderer.parentNode(this.element));
-            this.ngZone.runOutsideAngular(function () {
-                _this.parentElement.addEventListener('scroll', _this.onScrolled.bind(_this));
-            });
+            this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
         }
     };
     ScrollerComponent.prototype.ngOnDestroy = function () {
