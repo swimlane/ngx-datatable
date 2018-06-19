@@ -154,8 +154,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   @Input() set columns(val: any[]) {
     this._columns = val;
-    const colsByPin = columnsByPin(val);
-    this.columnGroupWidths = columnGroupWidths(colsByPin, val);
+    this.recalculateColumnWidths();
   }
 
   get columns(): any[] {
@@ -739,4 +738,11 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     return this.rowIndexes.get(row) || 0;
   }
 
+  /**
+   * Recalculates the column groups widths
+   */
+  recalculateColumnWidths(): void {
+    const colsByPin = columnsByPin(this.columns);
+    this.columnGroupWidths = columnGroupWidths(colsByPin, this.columns);
+  }
 }
