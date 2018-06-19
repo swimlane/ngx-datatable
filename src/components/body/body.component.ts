@@ -135,8 +135,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() set innerWidth(val: number) {
     this._innerWidth = val;
     if (this.columns) {
-      const colByPin = columnsByPin(this._columns);
-      this._columnGroupWidths = columnGroupWidths(colByPin, this._columns);
+      this.recalculateColumnGroups();
     }
   }
 
@@ -165,7 +164,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   @Input() set columns(val: any[]) {
     this._columns = val;
-    this.recalcLayout();
+    this.recalculateColumnGroups();
   }
 
   get columns(): any[] {
@@ -423,6 +422,14 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     }
 
     this.temp = temp;
+  }
+
+  /**
+   * Updates the column group data
+   */
+  recalculateColumnGroups(): void {
+    const colByPin = columnsByPin(this._columns);
+    this._columnGroupWidths = columnGroupWidths(colByPin, this._columns);
   }
 
   /**
