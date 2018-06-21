@@ -19,6 +19,7 @@ import { Component } from '@angular/core';
         [columns]="columns"
         [columnMode]="'force'"
         [headerHeight]="40"
+        [summaryRow]="true"
         [footerHeight]="40"
         [limit]="10"
         [rowHeight]="'auto'"
@@ -34,9 +35,9 @@ export class DarkThemeComponent {
   reorderable: boolean = true;
 
   columns = [
-    { prop: 'name' },
-    { name: 'Gender' },
-    { name: 'Company' }
+    { prop: 'name', summaryFunc: () => null },
+    { name: 'Gender', summaryFunc: (cells) => this.summaryForGender(cells) },
+    { name: 'Company', summaryFunc: () => null }
   ];
 
   constructor() {
@@ -55,6 +56,13 @@ export class DarkThemeComponent {
     };
 
     req.send();
+  }
+
+  private summaryForGender(cells: string[]) {
+    const males = cells.filter(cell => cell === 'male').length;
+    const females = cells.filter(cell => cell === 'female').length;
+
+    return `males: ${males}, females: ${females}`;
   }
 
 }

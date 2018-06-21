@@ -60,6 +60,7 @@
         white-space: nowrap;
         text-overflow: ellipsis; }
   .ngx-datatable .datatable-body-row,
+  .ngx-datatable .datatable-row-center,
   .ngx-datatable .datatable-header-inner {
     display: -webkit-box;
     display: -moz-box;
@@ -74,6 +75,7 @@
     flex-flow: row; }
   .ngx-datatable .datatable-body-cell,
   .ngx-datatable .datatable-header-cell {
+    overflow-x: hidden;
     vertical-align: top;
     display: inline-block;
     line-height: 1.625; }
@@ -85,7 +87,7 @@
     z-index: 9; }
   .ngx-datatable .datatable-row-left,
   .ngx-datatable .datatable-row-center,
-  .ngx-datatable .datatable-row-grouping,
+  .ngx-datatable .datatable-row-group,
   .ngx-datatable .datatable-row-right {
     position: relative; }
   .ngx-datatable .datatable-header {
@@ -106,7 +108,7 @@
         vertical-align: middle;
         display: inline-block;
         cursor: pointer; }
-      .ngx-datatable .datatable-header .datatable-header-cell .resize-handle {
+      .ngx-datatable .datatable-header .datatable-header-cell .resize-handle, .ngx-datatable .datatable-header .datatable-header-cell .resize-handle--not-resizable {
         display: inline-block;
         position: absolute;
         right: 0;
@@ -114,10 +116,23 @@
         bottom: 0;
         width: 5px;
         padding: 0 4px;
-        visibility: hidden;
+        visibility: hidden; }
+      .ngx-datatable .datatable-header .datatable-header-cell .resize-handle {
         cursor: ew-resize; }
       .ngx-datatable .datatable-header .datatable-header-cell.resizeable:hover .resize-handle {
         visibility: visible; }
+      .ngx-datatable .datatable-header .datatable-header-cell:hover .resize-handle--not-resizable {
+        visibility: visible; }
+      .ngx-datatable .datatable-header .datatable-header-cell .targetMarker {
+        position: absolute;
+        top: 0;
+        bottom: 0; }
+        .ngx-datatable .datatable-header .datatable-header-cell .targetMarker.dragFromLeft {
+          right: 0; }
+        .ngx-datatable .datatable-header .datatable-header-cell .targetMarker.dragFromRight {
+          left: 0; }
+      .ngx-datatable .datatable-header .datatable-header-cell .datatable-header-cell-template-wrap {
+        height: inherit; }
   .ngx-datatable .datatable-body {
     position: relative;
     z-index: 10;

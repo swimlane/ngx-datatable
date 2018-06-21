@@ -1,4 +1,5 @@
 const testWebpackConfig = require('./webpack.test');
+process.env.CHROME_BIN = require('puppeteer').executablePath()
 
 module.exports =  function(config) {
   var configuration = {
@@ -6,11 +7,11 @@ module.exports =  function(config) {
     singleRun: true,
     frameworks: ['jasmine'],
     exclude: [],
-    files: [ 
-      { pattern: './config/spec-bundle.js', watched: false } 
+    files: [
+      { pattern: './config/spec-bundle.js', watched: false }
     ],
-    preprocessors: { 
-      './config/spec-bundle.js': ['coverage', 'webpack', 'sourcemap'] 
+    preprocessors: {
+      './config/spec-bundle.js': ['coverage', 'webpack', 'sourcemap']
     },
     webpack: testWebpackConfig({ env: 'test' }),
     webpackMiddleware: { stats: 'errors-only'},
@@ -23,6 +24,10 @@ module.exports =  function(config) {
     customLaunchers: {
       ChromeTravisCi: {
         base: 'Chrome',
+        flags: ['--no-sandbox']
+      },
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
         flags: ['--no-sandbox']
       }
     },

@@ -39,7 +39,7 @@ import { Component } from '@angular/core';
 })
 export class VirtualScrollComponent {
 
-  rows = [];
+  rows;
   expanded = {};
   timeout: any;
 

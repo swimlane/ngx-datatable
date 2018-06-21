@@ -21,9 +21,12 @@ import { RxDemoComponent } from './basic/rx.component';
 import { ContextMenuDemoComponent } from './basic/contextmenu.component';
 import { RowCssComponent } from './basic/css.component';
 import { DynamicHeightComponent } from './basic/dynamic-height.component';
-import { DarkThemeComponent } from './basic/dark-theme.component';
 import { FooterDemoComponent } from './basic/footer.component';
 import { RowGroupingComponent } from './basic/row-grouping.component';
+
+// -- Themes
+import { BootstrapThemeComponent } from './basic/bootstrap.component';
+import { DarkThemeComponent } from './basic/dark-theme.component';
 
 // -- Paging
 import { ClientPagingComponent } from './paging/paging-client.component';
@@ -56,6 +59,13 @@ import { ColumnStandardComponent } from './columns/column-standard.component';
 import { ColumnForceComponent } from './columns/column-force.component';
 import { ColumnFlexComponent } from './columns/column-flex.component';
 import { ColumnPinningComponent } from './columns/pinning.component';
+import { ColumnReorderComponent } from './columns/column-reorder.component';
+
+// -- Summary row
+import { SummaryRowSimpleComponent } from './summary/summary-row-simple.component';
+import { SummaryRowCustomTemplateComponent } from './summary/summary-row-custom-template.component';
+import { SummaryRowServerPagingComponent } from './summary/summary-row-server-paging.component';
+import { SummaryRowInlineHtmlComponent } from './summary/summary-row-inline-html.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +95,7 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     ColumnStandardComponent,
     ColumnForceComponent,
     ColumnPinningComponent,
+    ColumnReorderComponent,
     FilterBarComponent,
     VirtualPagingComponent,
     DarkThemeComponent,
@@ -100,7 +111,12 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     RowCssComponent,
     DynamicHeightComponent,
     FooterDemoComponent,
-    RowGroupingComponent
+    RowGroupingComponent,
+    BootstrapThemeComponent,
+    SummaryRowSimpleComponent,
+    SummaryRowCustomTemplateComponent,
+    SummaryRowServerPagingComponent,
+    SummaryRowInlineHtmlComponent,
   ],
   imports: [BrowserModule, NgxDatatableModule],
   bootstrap: [AppComponent]

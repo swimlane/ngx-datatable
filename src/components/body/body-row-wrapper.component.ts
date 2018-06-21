@@ -2,7 +2,7 @@ import {
   Component, Input, Output, EventEmitter, HostListener, DoCheck,
   ChangeDetectionStrategy, KeyValueDiffer, ChangeDetectorRef, KeyValueDiffers
 } from '@angular/core';
-import { mouseEvent } from '../../events';
+import { MouseEvent } from '../../events';
 
 @Component({
   selector: 'datatable-row-wrapper',
@@ -103,7 +103,7 @@ export class DataTableRowWrapperComponent implements DoCheck {
     this.rowContextmenu.emit({ event: $event, row: this.row });
   }
 
-  getGroupHeaderStyle(group: any): any {
+  getGroupHeaderStyle(): any {
     const styles = {};
 
     styles['transform'] = 'translate3d(' + this.offsetX + 'px, 0px, 0px)';

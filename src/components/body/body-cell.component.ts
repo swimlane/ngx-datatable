@@ -7,7 +7,7 @@ import {
 import { Keys } from '../../utils';
 import { SortDirection } from '../../types';
 import { TableColumn } from '../../types/table-column.type';
-import { mouseEvent, keyboardEvent } from '../../events';
+import { MouseEvent, KeyboardEvent } from '../../events';
 
 @Component({
   selector: 'datatable-body-cell',
@@ -15,7 +15,7 @@ import { mouseEvent, keyboardEvent } from '../../events';
   template: `
     <div class="datatable-body-cell-label">
       <label
-        *ngIf="column.checkboxable"
+        *ngIf="column.checkboxable && (!displayCheck || displayCheck(row, column, value))"
         class="datatable-checkbox">
         <input
           type="checkbox"
@@ -37,25 +37,27 @@ import { mouseEvent, keyboardEvent } from '../../events';
   `
 })
 export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
-  @Input() set group(group: any){
+  @Input() displayCheck: any;
+
+  @Input() set group(group: any) {
     this._group = group;
     this.cellContext.group = group;
     this.checkValueUpdates();
     this.cd.markForCheck();    
   }
 
-  get group(){
+  get group() {
     return this._group;
   }
 
-  @Input() set rowHeight(val: number){
+  @Input() set rowHeight(val: number) {
     this._rowHeight = val;
     this.cellContext.rowHeight = val;
     this.checkValueUpdates();
     this.cd.markForCheck();        
   }
 
-  get rowHeight(){
+  get rowHeight() {
     return this._rowHeight;
   }
 
@@ -161,6 +163,16 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   @HostBinding('style.width.px')
   get width(): number {
     return this.column.width;
+  }
+
+  @HostBinding('style.minWidth.px')
+  get minWidth(): number {
+    return this.column.minWidth;
+  }
+
+  @HostBinding('style.maxWidth.px')
+  get maxWidth(): number {
+    return this.column.maxWidth;
   }
 
   @HostBinding('style.height')

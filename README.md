@@ -28,6 +28,7 @@ See the [changelog](https://github.com/swimlane/ngx-datatable/blob/master/docs/c
 - Decoupled theme'ing with included Google Material theme
 - Light codebase / No external dependencies
 - AoT Compilation Support
+- Universal Support
 
 ## Installation
 To use ngx-datatable in your project install it via [npm](https://www.npmjs.com/package/@swimlane/ngx-datatable):
@@ -37,3 +38,5 @@ npm i @swimlane/ngx-datatable --save
 
 ## Credits
 `ngx-datatable` is a [Swimlane](http://swimlane.com) open-source project; we believe in giving back to the open-source community by sharing some of the projects we build for our application. Swimlane is an automated cyber security operations and incident response platform that enables cyber security teams to leverage threat intelligence, speed up incident response and automate security operations.
+
+[SecOps Hub](http://secopshub.com) is an open, product-agnostic, online community for security professionals to share ideas, use cases, best practices, and incident response strategies.

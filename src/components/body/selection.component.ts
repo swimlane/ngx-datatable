@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Keys, selectRows, selectRowsBetween } from '../../utils';
 import { SelectionType } from '../../types';
-import { mouseEvent, keyboardEvent } from '../../events';
+import { MouseEvent, KeyboardEvent } from '../../events';
 
 export interface Model {
-  type: string;
+  type: string; 
   event: MouseEvent | KeyboardEvent;
   row: any;
   rowElement: any;

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import 'rxjs/add/observable/fromEvent';
 
 import {
   DatatableComponent,
@@ -10,7 +9,7 @@ import {
   DataTableFooterComponent,
   DataTableHeaderCellComponent,
   DataTablePagerComponent,
-  DataTableBodyRowComponent,  
+  DataTableBodyRowComponent,
   DataTableRowWrapperComponent,
   ProgressBarComponent,
   DataTableBodyCellComponent,
@@ -23,7 +22,8 @@ import {
   DatatableRowDetailTemplateDirective,
   DataTableFooterTemplateDirective,
   DatatableFooterDirective,
-  DatatableGroupHeaderTemplateDirective
+  DatatableGroupHeaderTemplateDirective,
+  DataTableSummaryRowComponent
 } from './components';
 
 import {
@@ -34,14 +34,20 @@ import {
   DraggableDirective
 } from './directives';
 
-import { ScrollbarHelper } from './services';
+import {
+  ScrollbarHelper,
+  DimensionsHelper,
+  ColumnChangesService
+} from './services';
 
 @NgModule({
   imports: [
     CommonModule
   ],
   providers: [
-    ScrollbarHelper
+    ScrollbarHelper,
+    DimensionsHelper,
+    ColumnChangesService
   ],
   declarations: [
     DataTableFooterTemplateDirective,
@@ -58,7 +64,7 @@ import { ScrollbarHelper } from './services';
     DataTableBodyComponent,
     DataTableFooterComponent,
     DataTablePagerComponent,
-    ProgressBarComponent,    
+    ProgressBarComponent,
     DataTableBodyRowComponent,
     DataTableRowWrapperComponent,
     DatatableRowDetailDirective,
@@ -69,7 +75,8 @@ import { ScrollbarHelper } from './services';
     DataTableColumnHeaderDirective,
     DataTableColumnCellDirective,
     DatatableFooterDirective,
-    DatatableGroupHeaderTemplateDirective
+    DatatableGroupHeaderTemplateDirective,
+    DataTableSummaryRowComponent,
   ],
   exports: [
     DatatableComponent,
