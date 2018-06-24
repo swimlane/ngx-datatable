@@ -29,7 +29,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
       (visible)="recalculate()">
       <datatable-header
         *ngIf="headerHeight"
-        [sorts]="sorts"
+        [sorts]="_sorts"
         [sortType]="sortType"
         [scrollbarH]="scrollbarH"
         [innerWidth]="_innerWidth"
@@ -346,7 +346,14 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Array of sorted columns by property and type.
    * Default value: `[]`
    */
-  @Input() sorts: any[] = [];
+  @Input() _sorts: any[] = [];
+  @Input() set sorts(val: any[]) {
+    this._sorts = val;
+
+    if (!this.externalSorting) {
+      this.sortInternalRows();
+    }
+  }
 
   /**
    * Css class overrides
@@ -736,7 +743,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   ngAfterContentInit() {
     this.columnTemplates.changes.subscribe(v =>
       this.translateColumns(v));
-      
+
     this.listenForColumnInputChanges();
   }
 
@@ -1063,7 +1070,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       });
     }
 
-    this.sorts = event.sorts;
+    this._sorts = event._sorts;
 
     // this could be optimized better since it will resort
     // the rows again on the 'push' detection...
@@ -1118,11 +1125,11 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   onBodySelect(event: any): void {
     this.select.emit(event);
   }
-    
+
   ngOnDestroy() {
     this._subscriptions.forEach(subscription => subscription.unsubscribe());
   }
-  
+
   /**
    * listen for changes to input bindings of all DataTableColumnDirective and
    * trigger the columnTemplates.changes observable to emit
@@ -1138,6 +1145,6 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   }
 
   private sortInternalRows(): void {
-    this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
+    this._internalRows = sortRows(this._internalRows, this._internalColumns, this._sorts);
   }
 }
