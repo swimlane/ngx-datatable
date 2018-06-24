@@ -1070,7 +1070,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       });
     }
 
-    this._sorts = event._sorts;
+    this._sorts = event.sorts;
 
     // this could be optimized better since it will resort
     // the rows again on the 'push' detection...
