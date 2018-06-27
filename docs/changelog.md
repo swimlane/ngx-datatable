@@ -1,5 +1,10 @@
 # Changelog
 
+## 11.1.4
+- Bug: Fix column templates not updating with loops/ifs
+- Bug: Fix sorting on cross browser
+- Chore: Switch to lettable operators
+
 ## 11.1.3
 - Bug: Angular SSR Event Undefined (#1144)
 

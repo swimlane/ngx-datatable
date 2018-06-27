@@ -353,6 +353,15 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     ngAfterViewInit(): void;
     /**
+     * Lifecycle hook that is called after a component's
+     * content has been fully initialized.
+     */
+    ngAfterContentInit(): void;
+    /**
+     * Translates the templates to the column objects
+     */
+    translateColumns(val: any): void;
+    /**
      * Creates a map with the data grouped by the user choice of grouping index
      *
      * @param originalArray the original array passed via parameter

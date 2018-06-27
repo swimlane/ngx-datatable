@@ -427,16 +427,7 @@ var DatatableComponent = /** @class */ (function () {
          */
         set: function (val) {
             this._columnTemplates = val;
-            if (val) {
-                // only set this if results were brought back
-                var arr = val.toArray();
-                if (arr.length) {
-                    // translate them to normal objects
-                    this._internalColumns = utils_1.translateTemplates(arr);
-                    utils_1.setColumnDefaults(this._internalColumns);
-                    this.recalculateColumns();
-                }
-            }
+            this.translateColumns(val);
         },
         enumerable: true,
         configurable: true
@@ -491,6 +482,30 @@ var DatatableComponent = /** @class */ (function () {
                 });
             }
         });
+    };
+    /**
+     * Lifecycle hook that is called after a component's
+     * content has been fully initialized.
+     */
+    DatatableComponent.prototype.ngAfterContentInit = function () {
+        var _this = this;
+        this.columnTemplates.changes.subscribe(function (v) {
+            return _this.translateColumns(v);
+        });
+    };
+    /**
+     * Translates the templates to the column objects
+     */
+    DatatableComponent.prototype.translateColumns = function (val) {
+        if (val) {
+            var arr = val.toArray();
+            if (arr.length) {
+                this._internalColumns = utils_1.translateTemplates(arr);
+                utils_1.setColumnDefaults(this._internalColumns);
+                this.recalculateColumns();
+                this.cd.markForCheck();
+            }
+        }
     };
     /**
      * Creates a map with the data grouped by the user choice of grouping index

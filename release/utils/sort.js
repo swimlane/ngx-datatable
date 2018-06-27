@@ -73,6 +73,11 @@ function sortRows(rows, columns, dirs) {
         return [];
     if (!dirs || !dirs.length || !columns)
         return rows.slice();
+    /**
+     * create a mapping from each row to its row index prior to sorting
+     */
+    var rowToIndexMap = new Map();
+    rows.forEach(function (row, index) { return rowToIndexMap.set(row, index); });
     var temp = rows.slice();
     var cols = columns.reduce(function (obj, col) {
         if (col.comparator && typeof col.comparator === 'function') {
@@ -113,8 +118,10 @@ function sortRows(rows, columns, dirs) {
             if (comparison !== 0)
                 return comparison;
         }
-        // equal each other
-        return 0;
+        /**
+         * all else being equal, preserve original order of the rows (stable sort)
+         */
+        return rowToIndexMap.get(rowA) < rowToIndexMap.get(rowB) ? -1 : 1;
     });
 }
 exports.sortRows = sortRows;
