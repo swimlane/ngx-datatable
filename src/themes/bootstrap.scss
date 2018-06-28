@@ -11,6 +11,9 @@ bootstrap table theme
       vertical-align: bottom;
       padding: 0.75rem;
       border-bottom: 1px solid #d1d4d7;
+      .sort-index {
+        font-size: 11px;
+      }
       .datatable-header-cell-label {
         line-height: 24px;
       }

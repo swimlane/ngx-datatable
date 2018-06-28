@@ -38,6 +38,7 @@ import { MouseEvent } from '../../events';
         [ngTemplateOutlet]="column.headerTemplate"
         [ngTemplateOutletContext]="cellContext">
       </ng-template>
+      <span *ngIf="sortType === 'multi' && sortIndex" class="sort-index">{{ sortIndex }}</span>
       <span
         (click)="onSort()"
         [class]="sortClass">
@@ -88,6 +89,7 @@ export class DataTableHeaderCellComponent {
   @Input() set sorts(val: any[]) {
     this._sorts = val;
     this.sortDir = this.calcSortDir(val);
+    this.sortIndex = this.calcSortIndex(val);
     this.cellContext.sortDir = this.sortDir;
     this.sortClass = this.calcSortClass(this.sortDir);
     this.cd.markForCheck();
@@ -164,6 +166,7 @@ export class DataTableHeaderCellComponent {
   sortFn = this.onSort.bind(this);
   sortClass: string;
   sortDir: SortDirection;
+  sortIndex: number;
   selectFn = this.select.emit.bind(this.select);
 
   cellContext: any = {
@@ -182,6 +185,16 @@ export class DataTableHeaderCellComponent {
   @HostListener('contextmenu', ['$event'])
   onContextmenu($event: MouseEvent): void {
     this.columnContextmenu.emit({ event: $event, column: this.column });
+  }
+
+  calcSortIndex(sorts: any[]): number {
+    if (sorts && this.column) {
+      const index = sorts.findIndex((s: any) => {
+        return s.prop === this.column.prop;
+      });
+
+      if (index > -1) return index + 1;
+    }
   }
 
   calcSortDir(sorts: any[]): any {
