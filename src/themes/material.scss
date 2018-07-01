@@ -1,3 +1,6 @@
+
+$cell-padding: .9rem 1.2rem;
+
 .ngx-datatable.material {
 	background:#FFF;
   box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
@@ -130,7 +133,7 @@
 
     .datatable-header-cell {
       text-align: left;
-      padding: .9rem 1.2rem;
+      padding: $cell-padding;
       font-weight: 400;
       color: rgba(0,0,0,.54);
       vertical-align: bottom;
@@ -196,7 +199,7 @@
 	  .datatable-body-row {
 	    .datatable-body-cell {
 	      text-align: left;
-	      padding: .9rem 1.2rem;
+	      padding: $cell-padding;
 	      vertical-align: top;
 	      border-top: 0;
         color: rgba(0,0,0,.87);
@@ -211,7 +214,7 @@
 			}
 	    .datatable-body-group-cell {
 	      text-align: left;
-	      padding: .9rem 1.2rem;
+	      padding: $cell-padding;
 	      vertical-align: top;
 	      border-top: 0;
         color: rgba(0,0,0,.87);
@@ -323,16 +326,24 @@
 	}
 
   // Summary row styles
+
+  $summary-background-color: rgb(238, 238, 238);
+
   .datatable-summary-row {
-    .datatable-body-row {
-      background-color: #ddd;
+    div {
+      background-color: $summary-background-color;
 
-      &:hover {
-	background-color: #ddd;
-      }
+      .datatable-body-row {
+	background-color: $summary-background-color;
+	&:hover {
+	  background-color: $summary-background-color;
+	}
 
-      .datatable-body-cell {
-	font-weight: bold;
+	.datatable-body-cell {
+	  background-color: $summary-background-color;
+	  padding: $cell-padding;
+	  font-weight: bold;
+	}
       }
     }
   }

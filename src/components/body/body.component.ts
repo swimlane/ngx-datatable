@@ -30,14 +30,6 @@ import { MouseEvent } from '../../events';
         [scrollHeight]="scrollHeight"
         [scrollWidth]="columnGroupWidths?.total"
         (scroll)="onBodyScroll($event)">
-        <datatable-summary-row
-          *ngIf="summaryRow && summaryPosition === 'top'"
-          [rowHeight]="summaryHeight"
-          [offsetX]="offsetX"
-          [innerWidth]="innerWidth"
-          [rows]="rows"
-          [columns]="columns">
-        </datatable-summary-row>
         <datatable-row-wrapper
           [groupedRows]="groupedRows"
           *ngFor="let group of temp; let i = index; trackBy: rowTrackingFn;"

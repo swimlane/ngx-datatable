@@ -49,6 +49,14 @@ import { BehaviorSubject, Subscription } from 'rxjs';
         (select)="onHeaderSelect($event)"
         (columnContextmenu)="onColumnContextmenu($event)">
       </datatable-header>
+      <datatable-summary-row
+        *ngIf="summaryRow && summaryPosition === 'top'"
+        [rowHeight]="summaryHeight"
+        [offsetX]="offsetX"
+        [innerWidth]="_innerWidth"
+        [rows]="rows"
+        [columns]="_internalColumns">
+      </datatable-summary-row>
       <datatable-body
         [groupRowsBy]="groupRowsBy"
         [groupedRows]="groupedRows"
@@ -736,7 +744,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   ngAfterContentInit() {
     this.columnTemplates.changes.subscribe(v =>
       this.translateColumns(v));
-      
+
     this.listenForColumnInputChanges();
   }
 
@@ -1118,11 +1126,11 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   onBodySelect(event: any): void {
     this.select.emit(event);
   }
-    
+
   ngOnDestroy() {
     this._subscriptions.forEach(subscription => subscription.unsubscribe());
   }
-  
+
   /**
    * listen for changes to input bindings of all DataTableColumnDirective and
    * trigger the columnTemplates.changes observable to emit
