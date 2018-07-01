@@ -1,25 +1,17 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'summary-row-simple-demo',
+  selector: 'summary-row-with-scrollbar-demo',
   template: `
     <div>
-      <h3>Simple Summary Row
+      <h3>Summary Row With Scrollbar
         <small>
-        <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/summary/summary-row-simple.component.ts">
+        <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/summary/summary-row-with-scrollbar.component.ts">
           Source
         </a>
         </small>
       </h3>
       <div class="controls">
-        <div>
-          <input
-            id="enable-summary"
-            type="checkbox"
-            [checked]="enableSummary"
-            (change)="enableSummary = !enableSummary">
-          <label for="enable-summary">Enable Summary Row</label>
-        </div>
         <div>
           <label for="position-select">Position</label>
           <select id="position-select" (change)="summaryPosition = $event.target.value">
@@ -30,35 +22,35 @@ import { Component } from '@angular/core';
       </div>
       <ngx-datatable
         class="material"
-        [summaryRow]="enableSummary"
+        columnMode="force"
+        [rowHeight]="40"
+        [summaryRow]="true"
         [summaryPosition]="summaryPosition"
         [summaryHeight]="'auto'"
         [columns]="columns"
-        [columnMode]="'force'"
         [headerHeight]="50"
-        [rowHeight]="'auto'"
+        [scrollbarV]="true"
         [rows]="rows">
       </ngx-datatable>
     </div>
   `,
-  styleUrls: [ './summary-row-simple.component.scss' ]
+  styleUrls: [ './summary-row-with-scrollbar.component.scss' ]
 })
 
-export class SummaryRowSimpleComponent {
+export class SummaryRowWithScrollbarComponent {
   rows = [];
 
   columns = [
     { prop: 'name' },
     { name: 'Gender', summaryFunc: (cells) => this.summaryForGender(cells) },
-    { prop: 'age', summaryFunc: (cells) => this.avgAge(cells) },
+    { name: 'Company' },
   ];
 
-  enableSummary = true;
   summaryPosition = 'top';
 
   constructor() {
     this.fetch((data) => {
-      this.rows = data.splice(0, 5);
+      this.rows = data.splice(0, 50);
     });
   }
 

@@ -118,6 +118,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
             <h4>Summary Row</h4>
             <ul>
               <li><a href="#simple-summary" (click)="state='simple-summary'">Simple</a></li>
+              <li><a href="#with-scrollbar-summary" (click)="state='with-scrollbar-summary'">With Scrollbar</a></li>
               <li><a href="#custom-template-summary" (click)="state='custom-template-summary'">Custom Template</a></li>
               <li><a href="#paging-summary" (click)="state='paging-summary'">Server-side paging</a></li>
               <li><a href="#inline-html-summary" (click)="state='inline-html-summary'">Inline HTML</a></li>
@@ -185,6 +186,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
 
         <!-- Summary row -->
         <summary-row-simple-demo *ngIf="state === 'simple-summary'"></summary-row-simple-demo>
+        <summary-row-with-scrollbar-demo *ngIf="state === 'with-scrollbar-summary'"></summary-row-with-scrollbar-demo>
         <summary-row-custom-template-demo *ngIf="state === 'custom-template-summary'">
         </summary-row-custom-template-demo>
         <summary-row-server-paging-demo *ngIf="state === 'paging-summary'">
