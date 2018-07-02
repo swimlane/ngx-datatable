@@ -571,8 +571,10 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       // element at a specified offset.  first should always be 0 with external paging.
       if (!this.externalPaging) {
         first = Math.max(this.offset * this.pageSize, 0);
+        last = Math.min((first + this.pageSize), this.rowCount);
+      } else {
+        last = Math.min((first + this.pageSize), this.rowCount - this.offset * this.pageSize);
       }
-      last = Math.min((first + this.pageSize), this.rowCount);
     }
 
     this.indexes = { first, last };
