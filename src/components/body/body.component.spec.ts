@@ -90,7 +90,7 @@ describe('DataTableBodyComponent', () => {
       component.pageSize = 5;
       component.offset = 1;
       component.rowCount = 9;
-      const expectedIndexes = { first: 0, last: 5};
+      const expectedIndexes = { first: 0, last: 4 };
       component.updateIndexes();
       expect(component.indexes).toEqual(expectedIndexes);
     });
