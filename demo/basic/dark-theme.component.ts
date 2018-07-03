@@ -20,6 +20,7 @@ import { Component } from '@angular/core';
         [columnMode]="'force'"
         [headerHeight]="40"
         [summaryRow]="true"
+        [summaryHeight]="40"
         [footerHeight]="40"
         [limit]="10"
         [rowHeight]="'auto'"

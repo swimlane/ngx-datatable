@@ -19,6 +19,7 @@ import { Component } from '@angular/core';
         [columns]="columns"
         [columnMode]="'force'"
         [headerHeight]="40"
+        [summaryHeight]="50"
         [summaryRow]="true"
         [summaryPosition]="'bottom'"
         [footerHeight]="40"
