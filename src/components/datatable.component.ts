@@ -85,15 +85,20 @@ import { BehaviorSubject, Subscription } from 'rxjs';
         [rowClass]="rowClass"
         [selectCheck]="selectCheck"
         [displayCheck]="displayCheck"
-        [summaryRow]="summaryRow"
-        [summaryHeight]="summaryHeight"
-        [summaryPosition]="summaryPosition"
         (page)="onBodyPage($event)"
         (activate)="activate.emit($event)"
         (rowContextmenu)="onRowContextmenu($event)"
         (select)="onBodySelect($event)"
         (scroll)="onBodyScroll($event)">
       </datatable-body>
+      <datatable-summary-row
+        *ngIf="summaryRow && summaryPosition === 'bottom'"
+        [rowHeight]="summaryHeight"
+        [offsetX]="offsetX"
+        [innerWidth]="_innerWidth"
+        [rows]="rows"
+        [columns]="_internalColumns">
+      </datatable-summary-row>
       <datatable-footer
         *ngIf="footerHeight"
         [rowCount]="rowCount"

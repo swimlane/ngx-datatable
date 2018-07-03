@@ -327,7 +327,7 @@ $cell-padding: .9rem 1.2rem;
 
   // Summary row styles
 
-  $summary-background-color: rgb(238, 238, 238);
+  $summary-background-color: rgb(245, 245, 245);
 
   .datatable-summary-row {
     div {
@@ -343,6 +343,9 @@ $cell-padding: .9rem 1.2rem;
 	  background-color: $summary-background-color;
 	  padding: $cell-padding;
 	  font-weight: bold;
+	  .datatable-body-cell-label {
+	    background-color: $summary-background-color;
+	  }
 	}
       }
     }
