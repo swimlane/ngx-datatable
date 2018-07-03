@@ -26,7 +26,7 @@ import { Component } from '@angular/core';
         [rowHeight]="40"
         [summaryRow]="true"
         [summaryPosition]="summaryPosition"
-        [summaryHeight]="'auto'"
+        [summaryHeight]="90"
         [columns]="columns"
         [headerHeight]="50"
         [scrollbarV]="true"
