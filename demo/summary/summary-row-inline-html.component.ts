@@ -33,6 +33,7 @@ import { Component } from '@angular/core';
       </ng-template>
     </div>
   `,
+  styleUrls: [ './summary-row-inline-html.component.scss' ]
 })
 
 export class SummaryRowInlineHtmlComponent {
