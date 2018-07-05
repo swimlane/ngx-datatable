@@ -1,11 +1,9 @@
 import {
   Directive, ElementRef, Input, Output, EventEmitter, OnDestroy, OnChanges, SimpleChanges
 } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable, Subscription, fromEvent } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MouseEvent } from '../events';
-import { fromEvent } from 'rxjs/observable/fromEvent';
 
 /**
  * Draggable Directive for Angular2

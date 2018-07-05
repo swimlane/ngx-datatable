@@ -8,13 +8,14 @@ import {
   DataTableBodyRowComponent,
   DataTableBodyCellComponent
 } from '.';
+import { ColumnChangesService } from '../services/column-changes.service';
 import { NgxDatatableModule } from '../datatable.module';
 
-let fixture: ComponentFixture<TestFixtureComponent>;
-let component: TestFixtureComponent;
+let fixture: ComponentFixture<any>;
+let component: any;
 
 describe('DatatableComponent', () => {
-  beforeEach(async(setupTest));
+  beforeEach(async(() => setupTest(TestFixtureComponent)));
 
   it('should sort date values', () => {
     const initialRows = [
@@ -365,27 +366,114 @@ describe('DatatableComponent', () => {
   });
 });
 
+describe('DatatableComponent With Custom Templates', () => {
+  beforeEach(async(() => setupTest(TestFixtureComponentWithCustomTemplates)));
+  
+  it('should sort when the table is initially rendered if `sorts` are provided', () => {
+    const initialRows = [
+      { id: 5 },
+      { id: 20 },
+      { id: 12 }
+    ];
+    
+    const sorts = [
+      {
+        prop: 'id',
+        dir: 'asc'
+      }
+    ];
+
+    component.rows = initialRows;
+    component.sorts = sorts;
+    fixture.detectChanges();
+
+    expect(textContent({ row: 1, column: 1 })).toContain('5', 'Ascending');
+    expect(textContent({ row: 2, column: 1 })).toContain('12', 'Ascending');
+    expect(textContent({ row: 3, column: 1 })).toContain('20', 'Ascending');
+  });
+
+  it('should reflect changes to input bindings of `ngx-datatable-column`', () => {
+    const initialRows = [
+      { id: 5, user: 'Sam', age: 35  },
+      { id: 20, user: 'Bob', age: 50 },
+      { id: 12, user: 'Joe', age: 60 }
+    ];
+
+    /**
+     * initially display `user` column as the second column in the table
+     */
+    component.rows = initialRows;
+    component.columnTwoProp = 'user';
+    fixture.detectChanges();
+
+    expect(textContent({ row: 1, column: 2 })).toContain('Sam', 'Displays user');
+    expect(textContent({ row: 2, column: 2 })).toContain('Bob', 'Displays user');
+    expect(textContent({ row: 3, column: 2 })).toContain('Joe', 'Displays user');
+    
+    /**
+     * switch to displaying `age` column as the second column in the table
+     */
+    component.columnTwoProp = 'age';
+    fixture.detectChanges();
+
+    expect(textContent({ row: 1, column: 2 })).toContain('35', 'Displays age');
+    expect(textContent({ row: 2, column: 2 })).toContain('50', 'Displays age');
+    expect(textContent({ row: 3, column: 2 })).toContain('60', 'Displays age');
+  });
+});
+
 @Component({
   template: `
     <ngx-datatable
       [columns]="columns"
-      [rows]="rows">
+      [rows]="rows"
+      [sorts]="sorts">
     </ngx-datatable>
   `
 })
 class TestFixtureComponent {
   columns: any[] = [];
   rows: any[] = [];
+  sorts: any[] = [];
 }
 
-function setupTest() {
+@Component({
+  template: `
+    <ngx-datatable [rows]="rows" [sorts]="sorts">
+      <ngx-datatable-column name="Id" prop="id">
+        <ng-template let-column="column" ngx-datatable-header-template>
+          {{ column.name }}
+        </ng-template>
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.id }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column [prop]="columnTwoProp">
+        <ng-template let-column="column" ngx-datatable-header-template>
+          {{ column.name }}
+        </ng-template>
+        <ng-template let-row="row" let-column="column" ngx-datatable-cell-template>
+          {{ row[column.prop] }}
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  `
+})
+class TestFixtureComponentWithCustomTemplates {
+  rows: any[] = [];
+  sorts: any[] = [];
+  columnTwoProp: string;
+}
+
+function setupTest(componentClass) {
   return TestBed.configureTestingModule({
-    declarations: [ TestFixtureComponent ],
-    imports: [ NgxDatatableModule ]
+    declarations: [ componentClass ],
+    imports: [ NgxDatatableModule ],
+    providers: [ ColumnChangesService ]
   })
   .compileComponents()
   .then(() => {
-    fixture = TestBed.createComponent(TestFixtureComponent);
+    fixture = TestBed.createComponent(componentClass);
     component = fixture.componentInstance;
   });
 }

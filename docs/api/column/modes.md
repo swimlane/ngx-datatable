@@ -17,7 +17,7 @@ Flex is **not** suggested for when using `scrollH`.
 Force mode forces the widths of the columns to distribute equally but overflowing when
 the min-width of each column is reached. The rules are:
 
-- If combined withs are less than the total width of the grid,
+- If combined widths are less than the total width of the grid,
   proportion the widths given the min / max / normal widths to fill the width.
 
 - If the combined widths, exceed the total width of the grid, use the standard widths.

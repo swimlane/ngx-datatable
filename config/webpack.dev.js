@@ -9,7 +9,7 @@ const { ENV, dir } = require('./helpers');
 
 module.exports = function(options) {
   return webpackMerge(commonConfig({ env: ENV }), {
-    devtool: 'cheap-module-source-map',
+    devtool: 'inline-source-map',
     devServer: {
       port: 9999,
       hot: options.HMR,

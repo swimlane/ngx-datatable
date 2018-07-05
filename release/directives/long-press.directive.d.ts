@@ -1,5 +1,5 @@
 import { EventEmitter, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 export declare class LongPressDirective implements OnDestroy {
     pressEnabled: boolean;
     pressModel: any;
