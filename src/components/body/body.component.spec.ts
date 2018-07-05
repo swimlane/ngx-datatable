@@ -104,7 +104,6 @@ describe('DataTableBodyComponent', () => {
     });
 
     it('should return custom styles for a bottom summary row if a scrollbar mode is on', () => {
-    debugger;
       component.rowHeight = 50;
       component.scrollbarV = true;
       component.virtualization = true;
