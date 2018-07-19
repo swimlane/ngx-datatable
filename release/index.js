@@ -3179,6 +3179,7 @@ var DatatableComponent = /** @class */ (function () {
             var arr = val.toArray();
             if (arr.length) {
                 this._internalColumns = utils_1.translateTemplates(arr);
+                this._allColumns = this._internalColumns.slice();
                 utils_1.setColumnDefaults(this._internalColumns);
                 this.recalculateColumns();
                 this.sortInternalRows();

@@ -366,6 +366,7 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
     _groupRowsBy: string;
     _internalRows: any[];
     _internalColumns: TableColumn[];
+    _allColumns: TableColumn[];
     _columns: TableColumn[];
     _columnTemplates: QueryList<DataTableColumnDirective>;
     _subscriptions: Subscription[];
