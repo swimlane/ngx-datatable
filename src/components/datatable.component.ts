@@ -19,12 +19,12 @@ import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
 import { DataTableHeaderComponent } from './header';
 import { MouseEvent } from '../events';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, Observable } from 'rxjs';
 
 @Component({
   selector: 'ngx-datatable',
   template: `
-    <div
+    <div *ngIf="canShowDataTable | async"
       visibilityObserver
       (visible)="recalculate()">
       <datatable-header
@@ -656,6 +656,20 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       this.rows.length !== 0 && allRowsSelected;
   }
 
+  /**
+   * Returns if datatable is set to shown.
+   */
+  get canShowDataTable(): Observable<boolean> {
+    return this._canShowDataTable.asObservable();
+  }
+  /**
+   * Set if datatable can be shown.
+   */
+  setCanShowDataTable(val: boolean): void {
+    return this._canShowDataTable.next(val);
+  }
+  private _canShowDataTable = new BehaviorSubject<boolean>(true);
+
   element: HTMLElement;
   _innerWidth: number;
   pageSize: number;
@@ -671,6 +685,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   _groupRowsBy: string;
   _internalRows: any[];
   _internalColumns: TableColumn[];
+  _allColumns: TableColumn[];
   _columns: TableColumn[];
   _columnTemplates: QueryList<DataTableColumnDirective>;
   _subscriptions: Subscription[] = [];
@@ -748,6 +763,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       const arr = val.toArray();
       if (arr.length) {
         this._internalColumns = translateTemplates(arr);
+        this._allColumns = [...this._internalColumns];
         setColumnDefaults(this._internalColumns);
         this.recalculateColumns();
         this.sortInternalRows();
