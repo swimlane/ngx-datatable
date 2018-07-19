@@ -7,7 +7,7 @@ import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
 import { DataTableHeaderComponent } from './header';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, Observable } from 'rxjs';
 export declare class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     private scrollbarHelper;
     private dimensionsHelper;
@@ -352,6 +352,15 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      * Returns if all rows are selected.
      */
     readonly allRowsSelected: boolean;
+    /**
+     * Returns if datatable is set to shown.
+     */
+    readonly canShowDataTable: Observable<boolean>;
+    /**
+     * Set if datatable can be shown.
+     */
+    setCanShowDataTable(val: boolean): void;
+    private _canShowDataTable;
     element: HTMLElement;
     _innerWidth: number;
     pageSize: number;
