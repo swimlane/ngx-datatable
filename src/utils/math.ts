@@ -37,6 +37,9 @@ function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
       if (!column.canAutoResize) {
         maxWidth -= column.width;
         totalFlexGrow -= column.flexGrow ? column.flexGrow : 0;
+      } else if (column.$$oldWidth) { // when manuall resized
+        maxWidth -= column.$$oldWidth;
+        totalFlexGrow -= column.flexGrow ? column.flexGrow : 0;
       } else {
         column.width = 0;
       }
@@ -54,7 +57,7 @@ function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
     for(const attr in colsByGroup) {
       for(const column of colsByGroup[attr]) {
         // if the column can be resize and it hasn't reached its minimum width yet
-        if (column.canAutoResize && !hasMinWidth[column.prop]) {
+        if (column.canAutoResize && !hasMinWidth[column.prop] && !column.$$oldWidth) {
           const newWidth = column.width  + column.flexGrow * widthPerFlexPoint;
           if (column.minWidth !== undefined && newWidth < column.minWidth) {
             remainingWidth += newWidth - column.minWidth;
