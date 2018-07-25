@@ -7,7 +7,7 @@ import {
   columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys
 } from '../../utils';
 import { ScrollbarHelper } from '../../services';
-import { MouseEvent, KeyboardEvent, Event } from '../../events';
+import { KeyboardEvent } from '../../events';
 import { TreeStatus } from '../../index';
 
 @Component({

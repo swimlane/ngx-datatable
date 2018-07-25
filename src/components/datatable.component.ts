@@ -1,9 +1,8 @@
 import {
   Component, Input, Output, ElementRef, EventEmitter, ViewChild,
   HostListener, ContentChildren, OnInit, QueryList, AfterViewInit,
-  HostBinding, ContentChild, TemplateRef, IterableDiffer,
-  DoCheck, KeyValueDiffers, KeyValueDiffer, ViewEncapsulation,
-  ChangeDetectionStrategy, ChangeDetectorRef, SkipSelf, OnDestroy
+  HostBinding, ContentChild, DoCheck, KeyValueDiffers, KeyValueDiffer,
+  ViewEncapsulation, ChangeDetectionStrategy, ChangeDetectorRef, SkipSelf
 } from '@angular/core';
 
 import {
@@ -19,7 +18,6 @@ import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
 import { DataTableHeaderComponent } from './header';
-import { MouseEvent } from '../events';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
@@ -938,6 +936,15 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       limit: this.limit,
       offset: this.offset
     });
+  }
+
+  /**
+   * The header triggered a scroll event. Header never directly handles scroll events. Must pass it to scroller instead.
+   */
+  onHeaderScroll(event: MouseEvent): void {
+    if (this.bodyComponent) {
+      this.bodyComponent.scroller.setOffset(event.offsetX, this.bodyComponent.scroller.scrollYPos);
+    }
   }
 
   /**

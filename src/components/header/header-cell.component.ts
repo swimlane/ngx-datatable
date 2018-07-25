@@ -61,6 +61,8 @@ export class DataTableHeaderCellComponent {
   @Input() targetMarkerContext: any;
 
   _allRowsSelected: boolean;
+  _tabIndex: number;
+  _containerClass: string;
   
   @Input() set allRowsSelected(value) {
     this._allRowsSelected = value;
@@ -100,6 +102,7 @@ export class DataTableHeaderCellComponent {
   @Output() sort: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
   @Output() columnContextmenu = new EventEmitter<{ event: MouseEvent, column: any }>(false);
+  @Output() scroll: EventEmitter<any> = new EventEmitter();
 
   @HostBinding('class')
   get columnCssClasses(): any {

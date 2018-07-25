@@ -47,7 +47,8 @@ import { MouseEvent } from '../../events';
           [allRowsSelected]="allRowsSelected"
           (sort)="onSort($event)"
           (select)="select.emit($event)"
-          (columnContextmenu)="columnContextmenu.emit($event)">
+          (columnContextmenu)="columnContextmenu.emit($event)"
+          (scroll)="scroll.emit($event)">
         </datatable-header-cell>
       </div>
     </div>
@@ -127,6 +128,7 @@ export class DataTableHeaderComponent {
   @Output() resize: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
   @Output() columnContextmenu = new EventEmitter<{ event: MouseEvent, column: any }>(false);
+  @Output() scroll: EventEmitter<any> = new EventEmitter();
 
   _columnsByPin: any;
   _columnGroupWidths: any;

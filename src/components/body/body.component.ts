@@ -327,7 +327,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       offset = 0;
     }
 
-    this.scroller.setOffset(offset || 0);
+    this.scroller.setOffset(this.scroller.scrollXPos, offset || 0);
   }
 
   /**
