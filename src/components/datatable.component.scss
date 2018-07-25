@@ -129,6 +129,10 @@
     position:relative;
   }
 
+  .datatable-checkbox input:focus {
+    outline: black auto 5px;
+  }
+
   /**
    * Header Styles
    */
@@ -308,6 +312,10 @@
           a {
             cursor: pointer;
             display: inline-block;
+          }
+
+          a:focus {
+            outline: 5px auto black;
           }
 
           &.disabled a {

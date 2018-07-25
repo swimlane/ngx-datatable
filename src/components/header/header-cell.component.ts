@@ -208,7 +208,49 @@ export class DataTableHeaderCellComponent {
     });
   }
 
-  calcSortClass(sortDir: SortDirection): string {
+  onKeyPress(event: KeyboardEvent): void {
+    if (event.keyCode === 13 || event.keyCode === 32) { // enter or space
+      this.onSort();
+    }
+  }
+
+  onSortExpected(event: Event): void {
+    if (!this.column.sortable) return;
+    
+    if (event.type === 'focus') {
+      const offsetX: number = this.calcOffsetX();
+
+      if (offsetX !== null) {
+        console.log(offsetX);
+        this.scroll.emit({offsetX});
+      }
+    }
+
+    const sortExpected = event.type === 'focus' || event.type === 'mouseenter';
+    this.sortClass = this.calcSortClass(this.sortDir, sortExpected);
+  }
+
+  calcOffsetX(): number {
+    const target = (<HTMLElement>event.target).parentElement;
+    let headerElement: HTMLElement = target.parentElement;
+    while (!headerElement.classList.contains('datatable-header')) {
+      headerElement = headerElement.parentElement;
+    }
+
+    const targetRect: ClientRect = target.getBoundingClientRect();
+    const targetParentRect: ClientRect = target.parentElement.getBoundingClientRect();
+    const headerRect: ClientRect = headerElement.getBoundingClientRect();
+
+    if (targetRect.left < headerRect.left || targetRect.width > headerRect.width) {
+      return targetRect.left - targetParentRect.left;
+    } else if (targetRect.right > headerRect.right) {
+      return targetRect.right - headerRect.right + this.offsetX;
+    }
+    
+    return null;
+  }
+
+  calcSortClass(sortDir: SortDirection, sortExpected: boolean = false): string {
     if (sortDir === SortDirection.asc) {
       return `sort-btn sort-asc ${this.sortAscendingIcon}`;
     } else if (sortDir === SortDirection.desc) {
