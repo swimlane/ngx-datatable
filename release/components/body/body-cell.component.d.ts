@@ -12,9 +12,7 @@ export declare class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     column: TableColumn;
     row: any;
     sorts: any[];
-    treeStatus: string;
     activate: EventEmitter<any>;
-    treeActionClick: EventEmitter<any>;
     cellTemplate: ViewContainerRef;
     readonly columnCssClasses: any;
     readonly width: number;
@@ -37,7 +35,6 @@ export declare class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     private _rowIndex;
     private _expanded;
     private _element;
-    private _treeStatus;
     constructor(element: ElementRef, cd: ChangeDetectorRef);
     ngDoCheck(): void;
     ngOnDestroy(): void;
@@ -50,6 +47,4 @@ export declare class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     onCheckboxChange(event: any): void;
     calcSortDir(sorts: any[]): any;
     stripHtml(html: string): string;
-    onTreeAction(row: any): void;
-    calcLeftMargin(column: any, row: any): number;
 }

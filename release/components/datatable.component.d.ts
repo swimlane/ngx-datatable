@@ -272,10 +272,6 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
         content: any;
     }>;
     /**
-     * A row was expanded ot collapsed for tree
-     */
-    treeAction: EventEmitter<any>;
-    /**
      * CSS class applied if the header height if fixed height.
      */
     readonly isFixedHeader: boolean;

@@ -203,10 +203,6 @@ var DatatableComponent = /** @class */ (function () {
          * content contains either the column or the row that was clicked.
          */
         this.tableContextmenu = new core_1.EventEmitter(false);
-        /**
-         * A row was expanded ot collapsed for tree
-         */
-        this.treeAction = new core_1.EventEmitter();
         this.rowCount = 0;
         this._offsetX = new rxjs_1.BehaviorSubject(0);
         this._count = 0;
@@ -235,8 +231,6 @@ var DatatableComponent = /** @class */ (function () {
             if (!this.externalSorting) {
                 this.sortInternalRows();
             }
-            // auto group by parent on new update
-            this._internalRows = utils_1.groupRowsByParents(this._internalRows, this.treeFromRelation, this.treeToRelation);
             // recalculate sizes/etc
             this.recalculate();
             if (this._rows && this._groupRowsBy) {
@@ -582,8 +576,6 @@ var DatatableComponent = /** @class */ (function () {
             else {
                 this._internalRows = this.rows.slice();
             }
-            // auto group by parent on new update
-            this._internalRows = utils_1.groupRowsByParents(this._internalRows, this.treeFromRelation, this.treeToRelation);
             this.recalculatePages();
             this.cd.markForCheck();
         }
@@ -1076,10 +1068,6 @@ var DatatableComponent = /** @class */ (function () {
         core_1.Output(),
         __metadata("design:type", Object)
     ], DatatableComponent.prototype, "tableContextmenu", void 0);
-    __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
-    ], DatatableComponent.prototype, "treeAction", void 0);
     __decorate([
         core_1.HostBinding('class.fixed-header'),
         __metadata("design:type", Boolean),

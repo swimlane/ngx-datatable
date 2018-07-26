@@ -6,5 +6,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./column.directive"));
 __export(require("./column-header.directive"));
 __export(require("./column-cell.directive"));
-__export(require("./tree.directive"));
 //# sourceMappingURL=index.js.map

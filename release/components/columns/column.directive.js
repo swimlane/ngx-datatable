@@ -116,26 +116,6 @@ var DataTableColumnDirective = /** @class */ (function () {
         core_1.ContentChild(column_header_directive_1.DataTableColumnHeaderDirective, { read: core_1.TemplateRef }),
         __metadata("design:type", core_1.TemplateRef)
     ], DataTableColumnDirective.prototype, "headerTemplate", void 0);
-    __decorate([
-        core_1.Input(),
-        core_1.ContentChild(tree_directive_1.DataTableColumnCellTreeExpander, { read: core_1.TemplateRef }),
-        __metadata("design:type", core_1.TemplateRef)
-    ], DataTableColumnDirective.prototype, "treeExpanderTemplate", void 0);
-    __decorate([
-        core_1.Input(),
-        core_1.ContentChild(tree_directive_1.DataTableColumnCellTreeCollapser, { read: core_1.TemplateRef }),
-        __metadata("design:type", core_1.TemplateRef)
-    ], DataTableColumnDirective.prototype, "treeCollapserTemplate", void 0);
-    __decorate([
-        core_1.Input(),
-        core_1.ContentChild(tree_directive_1.DataTableColumnCellTreeLoader, { read: core_1.TemplateRef }),
-        __metadata("design:type", core_1.TemplateRef)
-    ], DataTableColumnDirective.prototype, "treeLoaderTemplate", void 0);
-    __decorate([
-        core_1.Input(),
-        core_1.ContentChild(tree_directive_1.DataTableColumnCellTreeDisable, { read: core_1.TemplateRef }),
-        __metadata("design:type", core_1.TemplateRef)
-    ], DataTableColumnDirective.prototype, "treeDisableTemplate", void 0);
     DataTableColumnDirective = __decorate([
         core_1.Directive({ selector: 'ngx-datatable-column' }),
         __metadata("design:paramtypes", [column_changes_service_1.ColumnChangesService])

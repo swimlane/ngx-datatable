@@ -27,7 +27,6 @@ var DataTableBodyComponent = /** @class */ (function () {
         this.select = new core_1.EventEmitter();
         this.detailToggle = new core_1.EventEmitter();
         this.rowContextmenu = new core_1.EventEmitter(false);
-        this.treeAction = new core_1.EventEmitter();
         this.rowHeightsCache = new utils_1.RowHeightCache();
         this.temp = [];
         this.offsetY = 0;
@@ -576,9 +575,6 @@ var DataTableBodyComponent = /** @class */ (function () {
     DataTableBodyComponent.prototype.getRowIndex = function (row) {
         return this.rowIndexes.get(row) || 0;
     };
-    DataTableBodyComponent.prototype.onTreeAction = function (row) {
-        this.treeAction.emit({ row: row });
-    };
     __decorate([
         core_1.Input(),
         __metadata("design:type", Boolean)
@@ -735,10 +731,6 @@ var DataTableBodyComponent = /** @class */ (function () {
         core_1.Output(),
         __metadata("design:type", Object)
     ], DataTableBodyComponent.prototype, "rowContextmenu", void 0);
-    __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
-    ], DataTableBodyComponent.prototype, "treeAction", void 0);
     __decorate([
         core_1.ViewChild(scroller_component_1.ScrollerComponent),
         __metadata("design:type", scroller_component_1.ScrollerComponent)

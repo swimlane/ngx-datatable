@@ -12,4 +12,3 @@ export * from './sort';
 export * from './row-height-cache';
 export * from './column-helper';
 export * from './elm-from-point';
-export * from './tree';

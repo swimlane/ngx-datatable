@@ -13,13 +13,11 @@ export declare class DataTableBodyRowComponent implements DoCheck {
     isSelected: boolean;
     rowIndex: number;
     displayCheck: any;
-    treeStatus: 'loading' | 'expanded' | 'collapsed';
     offsetX: number;
     readonly cssClass: string;
     rowHeight: number;
     readonly columnsTotalWidths: string;
     activate: EventEmitter<any>;
-    treeAction: EventEmitter<any>;
     _element: any;
     _columnGroupWidths: any;
     _columnsByPin: any;
@@ -44,5 +42,4 @@ export declare class DataTableBodyRowComponent implements DoCheck {
     onKeyDown(event: KeyboardEvent): void;
     onMouseenter(event: any): void;
     recalculateColumns(val?: any[]): void;
-    onTreeAction(): void;
 }

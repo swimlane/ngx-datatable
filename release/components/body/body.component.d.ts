@@ -44,7 +44,6 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
         event: MouseEvent;
         row: any;
     }>;
-    treeAction: EventEmitter<any>;
     scroller: ScrollerComponent;
     /**
      * Returns if selection is enabled.
@@ -198,5 +197,4 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      * Gets the row index given a row
      */
     getRowIndex(row: any): number;
-    onTreeAction(row: any): void;
 }
