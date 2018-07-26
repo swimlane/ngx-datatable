@@ -1,6 +1,8 @@
-import { TemplateRef } from '@angular/core';
+import { TemplateRef, OnChanges } from '@angular/core';
 import { TableColumnProp } from '../../types';
-export declare class DataTableColumnDirective {
+import { ColumnChangesService } from '../../services/column-changes.service';
+export declare class DataTableColumnDirective implements OnChanges {
+    private columnChangesService;
     name: string;
     prop: TableColumnProp;
     frozenLeft: any;
@@ -23,8 +25,7 @@ export declare class DataTableColumnDirective {
     summaryTemplate: TemplateRef<any>;
     cellTemplate: TemplateRef<any>;
     headerTemplate: TemplateRef<any>;
-    treeExpanderTemplate: TemplateRef<any>;
-    treeCollapserTemplate: TemplateRef<any>;
-    treeLoaderTemplate: TemplateRef<any>;
-    treeDisableTemplate: TemplateRef<any>;
+    private isFirstChange;
+    constructor(columnChangesService: ColumnChangesService);
+    ngOnChanges(): void;
 }

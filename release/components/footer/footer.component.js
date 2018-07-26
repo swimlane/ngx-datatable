@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var footer_directive_1 = require("./footer.directive");
 var DataTableFooterComponent = /** @class */ (function () {
     function DataTableFooterComponent() {
         this.selectedCount = 0;
@@ -67,7 +68,7 @@ var DataTableFooterComponent = /** @class */ (function () {
     ], DataTableFooterComponent.prototype, "totalMessage", void 0);
     __decorate([
         core_1.Input(),
-        __metadata("design:type", core_1.TemplateRef)
+        __metadata("design:type", footer_directive_1.DatatableFooterDirective)
     ], DataTableFooterComponent.prototype, "footerTemplate", void 0);
     __decorate([
         core_1.Input(),
