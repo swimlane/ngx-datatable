@@ -20,17 +20,17 @@ import { TreeStatus } from '../../index';
       [ngStyle]="_groupStyles[colGroup.type]">
       <datatable-body-cell
         *ngFor="let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn"
-        tabindex="-1"
+        [tabindex]="_cellTabIndex"
         [row]="row"
         [group]="group"
         [expanded]="expanded"
-        [isSelected]="isSelected"
+        [isSelected]="isCellSelected(column.name)"
         [rowIndex]="rowIndex"
         [column]="column"
         [rowHeight]="rowHeight"
         [displayCheck]="displayCheck"
         [treeStatus]="treeStatus"
-        (activate)="onActivate($event, ii)"
+        (activate)="onActivate($event, column.name, ii)"
         (treeAction)="onTreeAction()">
       </datatable-body-cell>
     </div>
@@ -63,11 +63,21 @@ export class DataTableBodyRowComponent implements DoCheck {
     return this._innerWidth;
   }
 
+  @Input() set selectionType(type: SelectionType) {
+    this._selectionType = type;
+    this._cellTabIndex = type === SelectionType.cell ? '0' : '-1';
+  }
+
+  get selectionType(): SelectionType {
+    return this._selectionType;
+  }
+
   @Input() expanded: boolean;
   @Input() rowClass: any;
   @Input() row: any;
   @Input() group: any;
   @Input() isSelected: boolean;
+  @Input() selectedCellName: string;
   @Input() rowIndex: number;
   @Input() displayCheck: any;
   @Input() treeStatus: TreeStatus = 'collapsed';
@@ -118,6 +128,8 @@ export class DataTableBodyRowComponent implements DoCheck {
   _offsetX: number;
   _columns: any[];
   _innerWidth: number;
+  _selectionType: SelectionType;
+  _cellTabIndex: string = '-1';
   _groupStyles = {
     left: {},
     center: {},
@@ -177,8 +189,13 @@ export class DataTableBodyRowComponent implements DoCheck {
     return styles;
   }
 
-  onActivate(event: any, index: number): void {
+  isCellSelected(cellName) {
+    return this.isSelected && cellName === this.selectedCellName;
+  }
+
+  onActivate(event: any, cellName: string, index: number): void {
     event.cellIndex = index;
+    event.cellName = cellName;
     event.rowElement = this._element;
     this.activate.emit(event);
   }
@@ -193,11 +210,14 @@ export class DataTableBodyRowComponent implements DoCheck {
       keyCode === Keys.down ||
       keyCode === Keys.up ||
       keyCode === Keys.left ||
-      keyCode === Keys.right;
+      keyCode === Keys.right ||
+      keyCode === Keys.tab;
 
     if (isAction && isTargetRow) {
-      event.preventDefault();
-      event.stopPropagation();
+      if (keyCode !== Keys.tab) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
 
       this.activate.emit({
         type: 'keydown',

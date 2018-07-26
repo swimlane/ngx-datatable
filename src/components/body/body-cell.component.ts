@@ -198,7 +198,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
       }
     }
     if (!this.sortDir) cls += ' sort-active';
-    if (this.isFocused) cls += ' active';
+    if (this.isSelected) cls += ' active';
     if (this.sortDir === SortDirection.asc) cls += ' sort-asc';
     if (this.sortDir === SortDirection.desc) cls += ' sort-desc';
 
@@ -230,7 +230,6 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   sanitizedValue: any;
   value: any;
   sortDir: SortDirection;
-  isFocused: boolean = false;
   onCheckboxChangeFn = this.onCheckboxChange.bind(this);
   activateFn = this.activate.emit.bind(this.activate);
 
@@ -297,16 +296,6 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     }
   }
 
-  @HostListener('focus')
-  onFocus(): void {
-    this.isFocused = true;
-  }
-
-  @HostListener('blur')
-  onBlur(): void {
-    this.isFocused = false;
-  }
-
   @HostListener('click', ['$event'])
   onClick(event: MouseEvent): void {
     this.activate.emit({
@@ -345,11 +334,14 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
       keyCode === Keys.down ||
       keyCode === Keys.up ||
       keyCode === Keys.left ||
-      keyCode === Keys.right;
+      keyCode === Keys.right ||
+      keyCode === Keys.tab;
 
     if (isAction && isTargetCell) {
-      event.preventDefault();
-      event.stopPropagation();
+      if (keyCode !== Keys.tab) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
 
       this.activate.emit({
         type: 'keydown',

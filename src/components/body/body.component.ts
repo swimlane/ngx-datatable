@@ -53,8 +53,10 @@ import { MouseEvent } from '../../events';
           (rowContextmenu)="rowContextmenu.emit($event)">
           <datatable-body-row
             *ngIf="!groupedRows; else groupedRowsTemplate"
-            tabindex="-1"
+            [tabindex]="rowTabIndex"
+            [selectionType]="selectionType"
             [isSelected]="selector.getRowSelected(group)"
+            [selectedCellName]="selector.selectedCellName"
             [innerWidth]="innerWidth"
             [offsetX]="offsetX"
             [columns]="columns"
@@ -71,8 +73,10 @@ import { MouseEvent } from '../../events';
           <ng-template #groupedRowsTemplate>
             <datatable-body-row
               *ngFor="let row of group.value; let i = index; trackBy: rowTrackingFn;"
-              tabindex="-1"
+              [tabindex]="rowTabIndex"
+              [selectionType]="selectionType"
               [isSelected]="selector.getRowSelected(row)"
+              [selectedCellName]="selector.selectedCellName"
               [innerWidth]="innerWidth"
               [offsetX]="offsetX"
               [columns]="columns"
@@ -117,7 +121,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() rowHeight: number | ((row?: any) => number);
   @Input() offsetX: number;
   @Input() emptyMessage: string;
-  @Input() selectionType: SelectionType;
   @Input() selected: any[] = [];
   @Input() rowIdentity: any;
   @Input() rowDetail: any;
@@ -134,6 +137,20 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() summaryRow: boolean;
   @Input() summaryPosition: string;
   @Input() summaryHeight: number;
+
+  @Input() set selectionType(type: SelectionType) {
+    this._selectionType = type;
+    this.rowTabIndex = (
+      type === SelectionType.multi
+      || type === SelectionType.multiClick
+      || type === SelectionType.single
+      ? '0' : '-1'
+    );
+  }
+
+  get selectionType(): SelectionType {
+    return this._selectionType;
+  }
 
   @Input() set pageSize(val: number) {
     this._pageSize = val;
@@ -247,6 +264,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   listener: any;
   rowIndexes: any = new Map();
   rowExpansions: any = new Map();
+  rowTabIndex: string = '-1';
 
   _rows: any[];
   _bodyHeight: any;
@@ -254,6 +272,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   _rowCount: number;
   _offset: number;
   _pageSize: number;
+  _selectionType: SelectionType;
 
   /**
    * Creates an instance of DataTableBodyComponent.

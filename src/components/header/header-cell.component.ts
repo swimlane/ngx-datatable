@@ -1,5 +1,6 @@
+import { Keys } from './../../utils/keys';
 import {
-  Component, Input, EventEmitter, Output, HostBinding, 
+  Component, Input, EventEmitter, Output, HostBinding, ElementRef,
   HostListener, ChangeDetectionStrategy, ChangeDetectorRef
 } from '@angular/core';
 import { SortDirection, SortType, SelectionType, TableColumn } from '../../types';
@@ -180,7 +181,7 @@ export class DataTableHeaderCellComponent {
   private _column: TableColumn;
   private _sorts: any[];
 
-  constructor(private cd: ChangeDetectorRef) { }
+  constructor(private cd: ChangeDetectorRef, public elementRef: ElementRef) { }
 
   @HostListener('contextmenu', ['$event'])
   onContextmenu($event: MouseEvent): void {
@@ -209,19 +210,23 @@ export class DataTableHeaderCellComponent {
   }
 
   onKeyPress(event: KeyboardEvent): void {
-    if (event.keyCode === 13 || event.keyCode === 32) { // enter or space
+    if (event.keyCode === Keys.return || event.keyCode === Keys.space) {
       this.onSort();
     }
   }
 
+  /**
+   * Handles focus, blur, mouseenter, and mouseleave events in header cells to
+   * show a sort expectation indicator (mainly for accessibility purposes).
+   */
   onSortExpected(event: Event): void {
     if (!this.column.sortable) return;
     
+    // On focus change, ensure that we generate a scroll event if we focus header cell out of bounds.
     if (event.type === 'focus') {
       const offsetX: number = this.calcOffsetX();
 
       if (offsetX !== null) {
-        console.log(offsetX);
         this.scroll.emit({offsetX});
       }
     }
@@ -230,6 +235,9 @@ export class DataTableHeaderCellComponent {
     this.sortClass = this.calcSortClass(this.sortDir, sortExpected);
   }
 
+  /**
+   * Calculate the (horizontal table scroll) x-offset so that a scroll output event can be generated.
+   */
   calcOffsetX(): number {
     const target = (<HTMLElement>event.target).parentElement;
     let headerElement: HTMLElement = target.parentElement;

@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Keys, selectRows, selectRowsBetween } from '../../utils';
 import { SelectionType } from '../../types';
-import { MouseEvent, KeyboardEvent } from '../../events';
 
 export interface Model {
   type: string; 
@@ -10,6 +9,7 @@ export interface Model {
   rowElement: any;
   cellElement: any;
   cellIndex: number;
+  cellName: string;
 }
 
 @Component({
@@ -23,6 +23,7 @@ export class DataTableSelectionComponent {
 
   @Input() rows: any[];
   @Input() selected: any[];
+  @Input() selectedCellName: string;
   @Input() selectEnabled: boolean;
   @Input() selectionType: SelectionType;
   @Input() rowIdentity: any;
@@ -30,16 +31,19 @@ export class DataTableSelectionComponent {
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
+  @Output() cellSelect: EventEmitter<any> = new EventEmitter();
 
   prevIndex: number;
 
-  selectRow(event: KeyboardEvent | MouseEvent, index: number, row: any): void {
+  selectRow(event: KeyboardEvent | MouseEvent, index: number, row: any, cellName: string): void {
     if (!this.selectEnabled) return;
 
+    const cell = this.selectionType === SelectionType.cell;
     const chkbox = this.selectionType === SelectionType.checkbox;
     const multi = this.selectionType === SelectionType.multi;
     const multiClick = this.selectionType === SelectionType.multiClick;
     let selected: any[] = [];
+    let selectedCellName: string = null;
 
     if (multi || chkbox || multiClick) {
       if (event.shiftKey) {
@@ -56,6 +60,9 @@ export class DataTableSelectionComponent {
       }
     } else {
       selected = selectRows([], row, this.getRowSelectedIdx.bind(this));
+      if (cell) {
+        selectedCellName = cellName;
+      }
     }
 
     if (typeof this.selectCheck === 'function') {
@@ -64,11 +71,13 @@ export class DataTableSelectionComponent {
 
     this.selected.splice(0, this.selected.length);
     this.selected.push(...selected);
+    this.selectedCellName = selectedCellName;
 
     this.prevIndex = index;
 
     this.select.emit({
-      selected
+      selected,
+      selectedCellName
     });
   }
 
@@ -79,10 +88,10 @@ export class DataTableSelectionComponent {
       (chkbox && type === 'checkbox');
 
     if (select) {
-      this.selectRow(event, index, row);
+      this.selectRow(event, index, row, model.cellName);
     } else if (type === 'keydown') {
       if ((<KeyboardEvent>event).keyCode === Keys.return) {
-        this.selectRow(event, index, row);
+        this.selectRow(event, index, row, model.cellName);
       } else {
         this.onKeyboardFocus(model);
       }

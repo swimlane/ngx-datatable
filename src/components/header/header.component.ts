@@ -1,10 +1,11 @@
 import {
-  Component, Output, EventEmitter, Input, HostBinding, ChangeDetectorRef, ChangeDetectionStrategy
+  Component, Output, EventEmitter, Input, HostBinding, ChangeDetectorRef,
+  ChangeDetectionStrategy, AfterViewInit, ElementRef, ViewChildren, QueryList
 } from '@angular/core';
 import { SortType, SelectionType } from '../../types';
 import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY } from '../../utils';
 import { DataTableColumnDirective } from '../columns';
-import { MouseEvent } from '../../events';
+import { DataTableHeaderCellComponent } from '.';
 
 @Component({
   selector: 'datatable-header',
@@ -20,6 +21,7 @@ import { MouseEvent } from '../../events';
         [class]="'datatable-row-' + colGroup.type"
         [ngStyle]="_styleByGroup[colGroup.type]">
         <datatable-header-cell
+          #headerCells
           *ngFor="let column of colGroup.columns; trackBy: columnTrackingFn"
           resizeable
           [resizeEnabled]="column.resizeable"
@@ -58,7 +60,7 @@ import { MouseEvent } from '../../events';
   },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DataTableHeaderComponent {
+export class DataTableHeaderComponent implements AfterViewInit {
 
   @Input() sortAscendingIcon: any;
   @Input() sortDescendingIcon: any;
@@ -130,6 +132,8 @@ export class DataTableHeaderComponent {
   @Output() columnContextmenu = new EventEmitter<{ event: MouseEvent, column: any }>(false);
   @Output() scroll: EventEmitter<any> = new EventEmitter();
 
+  @ViewChildren('headerCells') headerCells: QueryList<DataTableHeaderCellComponent>;
+
   _columnsByPin: any;
   _columnGroupWidths: any;
   _innerWidth: number;
@@ -142,7 +146,18 @@ export class DataTableHeaderComponent {
     right: {}
   };
 
-  constructor(private cd: ChangeDetectorRef) { }
+  constructor(private cd: ChangeDetectorRef, private elementRef: ElementRef) { }
+
+  ngAfterViewInit() {
+    const nativeElem = <HTMLElement>this.elementRef.nativeElement;
+
+    // Account for contents having style position: fixed (for scroll prevention). Calculate height necessary for cells.
+    if (this.headerHeight && nativeElem.clientHeight === 0) {
+      const headerCellElem = <HTMLElement>this.headerCells.first.elementRef.nativeElement;
+      this.headerHeight = headerCellElem.clientHeight;
+      nativeElem.style.minHeight = (headerCellElem.clientHeight + 'px');
+    }
+  }
 
   onLongPressStart({ event, model }: { event: any, model: any }) {
     model.dragging = true;
