@@ -27,7 +27,7 @@ describe('DataTableColumnDirective', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ 
+      declarations: [
         DataTableColumnDirective,
         TestFixtureComponent
       ],
@@ -52,7 +52,7 @@ describe('DataTableColumnDirective', () => {
 
   describe('fixture', () => {
     let directive: DataTableColumnDirective;
-    
+
     beforeEach(() => {
       directive = fixture.debugElement
         .query(By.directive(DataTableColumnDirective))
@@ -70,7 +70,7 @@ describe('DataTableColumnDirective', () => {
 
   describe('directive #1', () => {
     let directive: DataTableColumnDirective;
-    
+
     beforeEach(() => {
       directive = fixture.debugElement
         .query(By.css('#t1'))
@@ -85,6 +85,7 @@ describe('DataTableColumnDirective', () => {
       fixture.detectChanges();
       expect(directive.name).toBeUndefined();
       expect(directive.prop).toBeUndefined();
+      expect(directive.uid).toBeUndefined();
       expect(directive.frozenRight).toBeUndefined();
       expect(directive.frozenLeft).toBeUndefined();
       expect(directive.flexGrow).toBeUndefined();
@@ -103,7 +104,7 @@ describe('DataTableColumnDirective', () => {
 
   describe('directive #2', () => {
     let directive: DataTableColumnDirective;
-    
+
     beforeEach(() => {
       directive = fixture.debugElement
         .query(By.css('#t2'))
@@ -117,19 +118,19 @@ describe('DataTableColumnDirective', () => {
     it('should not notify of changes if its the first change', () => {
       component.columnName = 'Column A';
       fixture.detectChanges();
-      
+
       expect(TestBed.get(ColumnChangesService).onInputChange).not.toHaveBeenCalled();
     });
 
     it('notifies of subsequent changes', () => {
       component.columnName = 'Column A';
       fixture.detectChanges();
-      
+
       expect(TestBed.get(ColumnChangesService).onInputChange).not.toHaveBeenCalled();
-      
+
       component.columnName = 'Column B';
       fixture.detectChanges();
-      
+
       expect(TestBed.get(ColumnChangesService).onInputChange).toHaveBeenCalled();
     });
   });
