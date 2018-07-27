@@ -1,6 +1,9 @@
 import { Directive, TemplateRef, ContentChild, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { DataTableColumnHeaderDirective } from './column-header.directive';
 import { DataTableColumnCellDirective } from './column-cell.directive';
+import {
+  DataTableColumnCellTreeToggle
+} from './tree.directive';
 import { TableColumnProp } from '../../types';
 import { ColumnChangesService } from '../../services/column-changes.service';
 
@@ -25,6 +28,8 @@ export class DataTableColumnDirective implements OnChanges {
   @Input() headerCheckboxable: boolean;
   @Input() headerClass: string | ((data: any) => string|any);
   @Input() cellClass: string | ((data: any) => string|any);
+  @Input() isTreeColumn: boolean;
+  @Input() treeLevelIndent: number;
   @Input() summaryFunc: (cells: any[]) => any;
   @Input() summaryTemplate: TemplateRef<any>;
 
@@ -36,6 +41,9 @@ export class DataTableColumnDirective implements OnChanges {
   @ContentChild(DataTableColumnHeaderDirective, { read: TemplateRef })
   headerTemplate: TemplateRef<any>;
 
+  @Input()
+  @ContentChild(DataTableColumnCellTreeToggle, { read: TemplateRef })
+  treeToggleTemplate: TemplateRef<any>;
   private isFirstChange = true;
   
   constructor(private columnChangesService: ColumnChangesService) {}

@@ -44,6 +44,10 @@ import { ClientSortingComponent } from './sorting/sorting-client.component';
 import { InlineTemplatesComponent } from './templates/template-dom.component';
 import { TemplateRefTemplatesComponent } from './templates/template-obj.component';
 
+// -- Tree
+import { FullScreenTreeComponent } from './tree/fullscreen.component';
+import { ClientTreeComponent } from './tree/client-tree.component';
+
 // -- Selection
 import { CellSelectionComponent } from './selection/selection-cell.component';
 import { MultiSelectionComponent } from './selection/selection-multi.component';
@@ -73,6 +77,7 @@ import { SummaryRowInlineHtmlComponent } from './summary/summary-row-inline-html
     BasicAutoComponent,
     BasicFixedComponent,
     FullScreenComponent,
+    FullScreenTreeComponent,
     InlineEditComponent,
     VirtualScrollComponent,
     HorzVertScrolling,
@@ -113,6 +118,7 @@ import { SummaryRowInlineHtmlComponent } from './summary/summary-row-inline-html
     FooterDemoComponent,
     RowGroupingComponent,
     BootstrapThemeComponent,
+    ClientTreeComponent,
     SummaryRowSimpleComponent,
     SummaryRowCustomTemplateComponent,
     SummaryRowServerPagingComponent,
