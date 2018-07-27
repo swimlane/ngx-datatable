@@ -136,7 +136,7 @@ export class DataTableSelectionComponent {
         focusElement = <HTMLElement>parentElement.previousElementSibling;
 
         if (focusElement) {
-          for (let i = focusElement.children.length - 1; i >= 0; i++) {
+          for (let i = focusElement.children.length - 1; i >= 0; i--) {
             if (focusElement.children[i].tagName.toLowerCase() === 'datatable-body-row') {
               return focusElement.children[i];
             }
