@@ -20,9 +20,9 @@ import { DatatableFooterDirective } from './footer.directive';
       </ng-template>
       <div class="page-count" *ngIf="!footerTemplate">
         <span *ngIf="selectedMessage">
-          {{selectedCount.toLocaleString()}} {{selectedMessage}} / 
+          {{selectedCount?.toLocaleString()}} {{selectedMessage}} / 
         </span>
-        {{rowCount.toLocaleString()}} {{totalMessage}}
+        {{rowCount?.toLocaleString()}} {{totalMessage}}
       </div>
       <datatable-pager *ngIf="!footerTemplate"
         [pagerLeftArrowIcon]="pagerLeftArrowIcon"
