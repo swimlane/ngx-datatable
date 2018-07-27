@@ -36,7 +36,8 @@ import { MouseEvent } from '../../events';
           [offsetX]="offsetX"
           [innerWidth]="innerWidth"
           [rows]="rows"
-          [columns]="columns">
+          [columns]="columns"
+          role="row">
         </datatable-summary-row>
         <datatable-row-wrapper
           [groupedRows]="groupedRows"
@@ -68,7 +69,8 @@ import { MouseEvent } from '../../events';
             [displayCheck]="displayCheck"
             [treeStatus]="group.treeStatus"
             (treeAction)="onTreeAction(group)"
-            (activate)="selector.onActivate($event, indexes.first + i)">
+            (activate)="selector.onActivate($event, indexes.first + i)"
+            role="row">
           </datatable-body-row>
           <ng-template #groupedRowsTemplate>
             <datatable-body-row
@@ -86,7 +88,8 @@ import { MouseEvent } from '../../events';
               [rowIndex]="getRowIndex(row)"
               [expanded]="getRowExpanded(row)"
               [rowClass]="rowClass"
-              (activate)="selector.onActivate($event, i)">
+              (activate)="selector.onActivate($event, i)"
+              role="row">
             </datatable-body-row>
           </ng-template>
         </datatable-row-wrapper>
@@ -97,7 +100,8 @@ import { MouseEvent } from '../../events';
           [offsetX]="offsetX"
           [innerWidth]="innerWidth"
           [rows]="rows"
-          [columns]="columns">
+          [columns]="columns"
+          role="row">
         </datatable-summary-row>
       </datatable-scroller>
       <div

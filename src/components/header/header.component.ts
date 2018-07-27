@@ -15,6 +15,7 @@ import { DataTableHeaderCellComponent } from '.';
       (reorder)="onColumnReordered($event)"
       (targetChanged)="onTargetChanged($event)"
       [style.width.px]="_columnGroupWidths.total"
+      role="row"
       class="datatable-header-inner">
       <div
         *ngFor="let colGroup of _columnsByPin; trackBy: trackByGroups"

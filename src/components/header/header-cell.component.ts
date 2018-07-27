@@ -10,7 +10,16 @@ import { MouseEvent } from '../../events';
 @Component({
   selector: 'datatable-header-cell',
   template: `
-    <div class="datatable-header-cell-template-wrap">
+    <div
+      [class]="_containerClass"
+      (click)="onSort()"
+      (keypress)="onKeyPress($event)"
+      (focus)="onSortExpected($event)"
+      (blur)="onSortExpected($event)"
+      (mouseenter)="onSortExpected($event)"
+      (mouseleave)="onSortExpected($event)"
+      [tabindex]="_tabIndex"
+      role="columnheader">
       <ng-template
         *ngIf="isTarget"
         [ngTemplateOutlet]="targetMarkerTemplate"
