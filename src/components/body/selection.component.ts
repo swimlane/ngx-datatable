@@ -124,39 +124,86 @@ export class DataTableSelectionComponent {
     if (nextRowElement) nextRowElement.focus();
   }
 
-  getPrevNextRow(rowElement: any, keyCode: number): any {
+  getPrevNextRow(rowElement: HTMLElement, keyCode: number): any {
     const parentElement = rowElement.parentElement;
+    let focusElement: HTMLElement;
 
-    if (parentElement) {
-      let focusElement: HTMLElement;
-      if (keyCode === Keys.up) {
-        focusElement = parentElement.previousElementSibling;
-      } else if (keyCode === Keys.down) {
-        focusElement = parentElement.nextElementSibling;
+    if (keyCode === Keys.up) {
+      const prevElementSibling = <HTMLElement>rowElement.previousElementSibling;
+      if (prevElementSibling && prevElementSibling.tagName.toLowerCase() === 'datatable-body-row') {
+        return prevElementSibling;
+      } else if (parentElement) {
+        focusElement = <HTMLElement>parentElement.previousElementSibling;
+
+        if (focusElement) {
+          for (let i = focusElement.children.length - 1; i >= 0; i++) {
+            if (focusElement.children[i].tagName.toLowerCase() === 'datatable-body-row') {
+              return focusElement.children[i];
+            }
+          }
+        }
       }
+    } else if (keyCode === Keys.down) {
+      const nextElementSibling = <HTMLElement>rowElement.nextElementSibling;
+      if (nextElementSibling && nextElementSibling.tagName.toLowerCase() === 'datatable-body-row') {
+        return nextElementSibling;
+      } else if (parentElement) {
+        focusElement = <HTMLElement>parentElement.nextElementSibling;
 
-      if (focusElement && focusElement.children.length) {
-        return focusElement.children[0];
+        if (focusElement) {
+          for (let i = 0; i < focusElement.children.length; i++) {
+            if (focusElement.children[i].tagName.toLowerCase() === 'datatable-body-row') {
+              return focusElement.children[i];
+            }
+          }
+        }
       }
     }
+
+    return null;
   }
 
-  focusCell(cellElement: any, rowElement: any, keyCode: number, cellIndex: number): void {
+  focusCell(cellElement: HTMLElement, rowElement: any, keyCode: number, cellIndex: number): void {
     let nextCellElement: HTMLElement;
 
     if (keyCode === Keys.left) {
-      nextCellElement = cellElement.previousElementSibling;
+      nextCellElement = <HTMLElement>cellElement.previousElementSibling;
+      if (!nextCellElement || nextCellElement.tagName.toLowerCase() !== 'datatable-body-cell') {
+        const cellParent: HTMLElement = cellElement.parentElement;
+        const prevParent = <HTMLElement>cellParent.previousElementSibling;
+        if (prevParent) {
+          const children = prevParent.getElementsByClassName('datatable-body-cell');
+          if (children.length && children[0].tagName.toLowerCase() === 'datatable-body-cell') {
+            nextCellElement = <HTMLElement>children[children.length - 1];
+          }
+        }
+      }
     } else if (keyCode === Keys.right) {
-      nextCellElement = cellElement.nextElementSibling;
+      nextCellElement = <HTMLElement>cellElement.nextElementSibling;
+      if (!nextCellElement || nextCellElement.tagName.toLowerCase() !== 'datatable-body-cell') {
+        const cellParent: HTMLElement = cellElement.parentElement;
+        const nextParent = <HTMLElement>cellParent.nextElementSibling;
+        if (nextParent) {
+          const children = nextParent.getElementsByClassName('datatable-body-cell');
+          if (children.length && children[0].tagName.toLowerCase() === 'datatable-body-cell') {
+            nextCellElement = <HTMLElement>children[0];
+          }
+        }
+      }
     } else if (keyCode === Keys.up || keyCode === Keys.down) {
-      const nextRowElement = this.getPrevNextRow(rowElement, keyCode);
+      const nextRowElement: HTMLElement = this.getPrevNextRow(rowElement, keyCode);
       if (nextRowElement) {
-        const children = nextRowElement.getElementsByClassName('datatable-body-cell');
-        if (children.length) nextCellElement = children[cellIndex];
+        const rowGroup = <HTMLElement>nextRowElement.getElementsByClassName(cellElement.parentElement.className)[0];
+        const children = rowGroup.getElementsByClassName('datatable-body-cell');
+        if (children.length) nextCellElement = <HTMLElement>children[cellIndex];
       }
     }
-
-    if (nextCellElement) nextCellElement.focus();
+    
+    if (nextCellElement) {
+      nextCellElement.focus();
+      cellElement.tabIndex = -1;
+      nextCellElement.tabIndex = 0;
+    }
   }
 
   getRowSelected(row: any): boolean {
