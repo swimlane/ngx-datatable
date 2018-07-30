@@ -33,6 +33,7 @@ import { MouseEvent } from '../../events';
           type="checkbox"
           [checked]="allRowsSelected"
           (change)="select.emit(!allRowsSelected)"
+          tabindex="-1"
         />
       </label>
       <span
@@ -224,7 +225,13 @@ export class DataTableHeaderCellComponent {
 
   onKeyPress(event: KeyboardEvent): void {
     if (event.keyCode === Keys.return || event.keyCode === Keys.space) {
-      this.onSort();
+      if (this.isCheckboxable) {
+        const target = <HTMLElement>event.target;
+        const checkbox = <HTMLInputElement>target.getElementsByClassName('datatable-checkbox').item(0).children[0];
+        checkbox.click();
+      } else {
+        this.onSort();
+      }
     }
   }
 

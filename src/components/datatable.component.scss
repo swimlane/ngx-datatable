@@ -129,10 +129,6 @@
     position:relative;
   }
 
-  .datatable-checkbox input:focus {
-    outline: black auto 5px;
-  }
-
   /**
    * Header Styles
    */
@@ -216,6 +212,11 @@
 
       .datatable-header-cell-template-wrap {
         height: inherit;
+        outline: none;
+
+        &:focus .datatable-checkbox input {
+          outline: black auto 5px;
+        }
       }
     }
   }
