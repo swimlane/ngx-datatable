@@ -11,7 +11,8 @@ import {
           role="button"
           aria-label="go to first page"
           href="javascript:void(0)"
-          (click)="selectPage(1)">
+          (click)="selectPage(1)"
+          [tabindex]="(canPrevious() ? '0' : '-1')">
           <i class="{{pagerPreviousIcon}}"></i>
         </a>
       </li>
@@ -20,7 +21,8 @@ import {
           role="button"
           aria-label="go to previous page"
           href="javascript:void(0)"
-          (click)="prevPage()">
+          (click)="prevPage()"
+          [tabindex]="(canPrevious() ? '0' : '-1')">
           <i class="{{pagerLeftArrowIcon}}"></i>
         </a>
       </li>
@@ -41,7 +43,8 @@ import {
           role="button"
           aria-label="go to next page"
           href="javascript:void(0)"
-          (click)="nextPage()">
+          (click)="nextPage()"
+          [tabindex]="(canNext() ? '0' : '-1')">
           <i class="{{pagerRightArrowIcon}}"></i>
         </a>
       </li>
@@ -50,7 +53,8 @@ import {
           role="button"
           aria-label="go to last page"
           href="javascript:void(0)"
-          (click)="selectPage(totalPages)">
+          (click)="selectPage(totalPages)"
+          [tabindex]="(canNext() ? '0' : '-1')">
           <i class="{{pagerNextIcon}}"></i>
         </a>
       </li>

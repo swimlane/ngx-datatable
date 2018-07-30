@@ -1,9 +1,9 @@
 import {
   Component, Output, EventEmitter, Input, HostBinding, ChangeDetectorRef,
-  ChangeDetectionStrategy, AfterViewInit, ElementRef, ViewChildren, QueryList
+  ChangeDetectionStrategy, AfterViewInit, ElementRef, ViewChildren, QueryList, HostListener
 } from '@angular/core';
 import { SortType, SelectionType } from '../../types';
-import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY } from '../../utils';
+import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys } from '../../utils';
 import { DataTableColumnDirective } from '../columns';
 import { DataTableHeaderCellComponent } from '.';
 
@@ -15,8 +15,8 @@ import { DataTableHeaderCellComponent } from '.';
       (reorder)="onColumnReordered($event)"
       (targetChanged)="onTargetChanged($event)"
       [style.width.px]="_columnGroupWidths.total"
-      role="row"
-      class="datatable-header-inner">
+      class="datatable-header-inner"
+      role="row">
       <div
         *ngFor="let colGroup of _columnsByPin; trackBy: trackByGroups"
         [class]="'datatable-row-' + colGroup.type"
@@ -48,6 +48,8 @@ import { DataTableHeaderCellComponent } from '.';
           [sortAscendingIcon]="sortAscendingIcon"
           [sortDescendingIcon]="sortDescendingIcon"
           [allRowsSelected]="allRowsSelected"
+          [offsetX]="offsetX"
+          [tabFocusable]="tabFocusColumnName === column.name"
           (sort)="onSort($event)"
           (select)="select.emit($event)"
           (columnContextmenu)="columnContextmenu.emit($event)"
@@ -70,6 +72,7 @@ export class DataTableHeaderComponent implements AfterViewInit {
   @Input() targetMarkerTemplate: any;
   
   targetMarkerContext: any;
+  tabFocusColumnName: string;
 
   @Input() set innerWidth(val: number) {
     this._innerWidth = val;
@@ -107,7 +110,8 @@ export class DataTableHeaderComponent implements AfterViewInit {
   }
 
   @Input() set columns(val: any[]) {
-    this._columns = val;    
+    this._columns = val;
+    this.tabFocusColumnName = val[0].name;
 
     const colsByPin = columnsByPin(val);
     this._columnsByPin = columnsByPinArr(val);
@@ -187,6 +191,48 @@ export class DataTableHeaderComponent implements AfterViewInit {
     }
 
     return '100%';
+  }
+
+  @HostListener('click', ['$event'])
+  onclick(event: MouseEvent): void {
+    this.tabFocusColumnName = (<HTMLElement>event.target).innerText;
+  }
+
+  @HostListener('keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent): void {
+    const targetHeader = (<HTMLElement>event.target).parentElement;
+
+    if (event.keyCode === Keys.left) {
+      let prevHeader = <HTMLElement>targetHeader.previousElementSibling;
+
+      // Try previous column group.
+      if (!prevHeader) {
+        const prevHeaderGroup = <HTMLElement>targetHeader.parentElement.previousElementSibling;
+        if (prevHeaderGroup && prevHeaderGroup.children.length > 0) {
+          prevHeader = <HTMLElement>prevHeaderGroup.children[prevHeaderGroup.children.length - 1];
+        }
+      }
+      
+      if (prevHeader) {
+        (<HTMLElement>prevHeader.firstElementChild).focus();
+        this.tabFocusColumnName = prevHeader.innerText.trim();
+      }
+    } else if (event.keyCode === Keys.right) {
+      let nextHeader = <HTMLElement>targetHeader.nextElementSibling;
+
+      // Try next column group.
+      if (!nextHeader) {
+        const nextHeaderGroup = <HTMLElement>targetHeader.parentElement.nextElementSibling;
+        if (nextHeaderGroup && nextHeaderGroup.children.length > 0) {
+          nextHeader = <HTMLElement>nextHeaderGroup.children[0];
+        }
+      }
+
+      if (nextHeader) {
+        (<HTMLElement>nextHeader.firstElementChild).focus();
+        this.tabFocusColumnName = nextHeader.innerText.trim();
+      }
+    }
   }
 
   trackByGroups(index: number, colGroup: any): any {    

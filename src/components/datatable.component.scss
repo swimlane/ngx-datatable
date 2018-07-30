@@ -304,7 +304,7 @@
       }
 
       .pager {
-        li, li a{
+        li {
           outline: none;
         }
 
@@ -314,12 +314,9 @@
             display: inline-block;
           }
 
-          a:focus {
-            outline: 5px auto black;
-          }
-
           &.disabled a {
             cursor: not-allowed;
+            outline: none;
           }
         }
       }

@@ -11,15 +11,16 @@ import { MouseEvent } from '../../events';
   selector: 'datatable-header-cell',
   template: `
     <div
-      [class]="_containerClass"
+      [class]="containerClass"
       (click)="onSort()"
       (keypress)="onKeyPress($event)"
       (focus)="onSortExpected($event)"
       (blur)="onSortExpected($event)"
       (mouseenter)="onSortExpected($event)"
       (mouseleave)="onSortExpected($event)"
-      [tabindex]="_tabIndex"
-      role="columnheader">
+      [tabindex]="(tabFocusable ? '0' : '-1')"
+      role="columnheader"
+      [attr.aria-sort]="ariaSort">
       <ng-template
         *ngIf="isTarget"
         [ngTemplateOutlet]="targetMarkerTemplate"
@@ -48,10 +49,7 @@ import { MouseEvent } from '../../events';
         [ngTemplateOutlet]="column.headerTemplate"
         [ngTemplateOutletContext]="cellContext">
       </ng-template>
-      <span
-        (click)="onSort()"
-        [class]="sortClass">
-      </span>
+      <span [class]="sortClass"></span>
     </div>
   `,
   host: {
@@ -83,11 +81,14 @@ export class DataTableHeaderCellComponent {
   }
   
   @Input() selectionType: SelectionType;
+  @Input() offsetX: number;
+  @Input() tabFocusable: boolean;
 
   @Input() set column(column: TableColumn) {
     this._column = column;
     this.cellContext.column = column;
     this.cd.markForCheck();
+    this.containerClass = 'datatable-header-cell-template-wrap' + (this.column.sortable ? ' header-sort-btn' : '');
   }
 
   get column(): TableColumn {
@@ -102,6 +103,7 @@ export class DataTableHeaderCellComponent {
     this.sortDir = this.calcSortDir(val);
     this.cellContext.sortDir = this.sortDir;
     this.sortClass = this.calcSortClass(this.sortDir);
+    this.ariaSort = this.calcAriaSort(this.sortDir);
     this.cd.markForCheck();
   }
 
@@ -174,9 +176,11 @@ export class DataTableHeaderCellComponent {
       this.selectionType === SelectionType.checkbox;
   }
 
+  containerClass: string;
   sortFn = this.onSort.bind(this);
   sortClass: string;
   sortDir: SortDirection;
+  ariaSort: string;
   selectFn = this.select.emit.bind(this.select);
 
   cellContext: any = {
@@ -272,9 +276,21 @@ export class DataTableHeaderCellComponent {
       return `sort-btn sort-asc ${this.sortAscendingIcon}`;
     } else if (sortDir === SortDirection.desc) {
       return `sort-btn sort-desc ${this.sortDescendingIcon}`;
-    } else {
-      return `sort-btn`;
+    } else if (sortExpected) {
+      return `sort-btn sort-asc sort-faint ${this.sortAscendingIcon}`;
     }
+    return `sort-btn`;
+  }
+
+  calcAriaSort(sortDir: SortDirection): string {
+    if (sortDir === SortDirection.asc) {
+      return 'ascending';
+    } else if (sortDir === SortDirection.desc) {
+      return 'descending';
+    } else if (this.column.sortable) {
+      return 'none';
+    }
+    return undefined;
   }
 
 }
