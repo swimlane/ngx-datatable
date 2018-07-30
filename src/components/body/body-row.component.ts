@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 
 import {
-  columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys
+  columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys, camelCase
 } from '../../utils';
 import { ScrollbarHelper } from '../../services';
 import { KeyboardEvent } from '../../events';
@@ -20,11 +20,12 @@ import { TreeStatus } from '../../index';
       [ngStyle]="_groupStyles[colGroup.type]">
       <datatable-body-cell
         *ngFor="let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn"
-        [tabindex]="_cellTabIndex"
         [row]="row"
         [group]="group"
         [expanded]="expanded"
-        [isSelected]="isCellSelected(column.name)"
+        [isCellSelected]="isCellSelected(column.name)"
+        [isSelected]="isSelected"
+        tabindex="-1"
         [rowIndex]="rowIndex"
         [column]="column"
         [rowHeight]="rowHeight"
@@ -63,19 +64,11 @@ export class DataTableBodyRowComponent implements DoCheck {
     return this._innerWidth;
   }
 
-  @Input() set selectionType(type: SelectionType) {
-    this._selectionType = type;
-    this._cellTabIndex = type === SelectionType.cell ? '0' : '-1';
-  }
-
-  get selectionType(): SelectionType {
-    return this._selectionType;
-  }
-
   @Input() expanded: boolean;
   @Input() rowClass: any;
   @Input() row: any;
   @Input() group: any;
+  @Input() selectionType: SelectionType;
   @Input() isSelected: boolean;
   @Input() selectedCellName: string;
   @Input() rowIndex: number;
@@ -128,8 +121,6 @@ export class DataTableBodyRowComponent implements DoCheck {
   _offsetX: number;
   _columns: any[];
   _innerWidth: number;
-  _selectionType: SelectionType;
-  _cellTabIndex: string = '-1';
   _groupStyles = {
     left: {},
     center: {},
@@ -190,7 +181,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   }
 
   isCellSelected(cellName) {
-    return this.isSelected && cellName === this.selectedCellName;
+    return this.isSelected && camelCase(cellName) === this.selectedCellName;
   }
 
   onActivate(event: any, cellName: string, index: number): void {
@@ -210,14 +201,11 @@ export class DataTableBodyRowComponent implements DoCheck {
       keyCode === Keys.down ||
       keyCode === Keys.up ||
       keyCode === Keys.left ||
-      keyCode === Keys.right ||
-      keyCode === Keys.tab;
+      keyCode === Keys.right;
 
     if (isAction && isTargetRow) {
-      if (keyCode !== Keys.tab) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
+      event.preventDefault();
+      event.stopPropagation();
 
       this.activate.emit({
         type: 'keydown',

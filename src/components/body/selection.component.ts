@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { Keys, selectRows, selectRowsBetween } from '../../utils';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ElementRef } from '@angular/core';
+import { Keys, selectRows, selectRowsBetween, camelCase } from '../../utils';
 import { SelectionType } from '../../types';
 
 export interface Model {
@@ -34,6 +34,9 @@ export class DataTableSelectionComponent {
   @Output() cellSelect: EventEmitter<any> = new EventEmitter();
 
   prevIndex: number;
+  tabFocusCellElement: HTMLElement;
+
+  constructor(private elementRef: ElementRef) {}
 
   selectRow(event: KeyboardEvent | MouseEvent, index: number, row: any, cellName: string): void {
     if (!this.selectEnabled) return;
@@ -61,7 +64,7 @@ export class DataTableSelectionComponent {
     } else {
       selected = selectRows([], row, this.getRowSelectedIdx.bind(this));
       if (cell) {
-        selectedCellName = cellName;
+        selectedCellName = camelCase(cellName);
       }
     }
 
@@ -88,6 +91,7 @@ export class DataTableSelectionComponent {
       (chkbox && type === 'checkbox');
 
     if (select) {
+      this.transferTabFocus(<HTMLElement>model.cellElement);
       this.selectRow(event, index, row, model.cellName);
     } else if (type === 'keydown') {
       if ((<KeyboardEvent>event).keyCode === Keys.return) {
@@ -108,20 +112,8 @@ export class DataTableSelectionComponent {
       keyCode === Keys.left;
 
     if (shouldFocus) {
-      const isCellSelection =
-        this.selectionType === SelectionType.cell;
-
-      if (!model.cellElement || !isCellSelection) {
-        this.focusRow(model.rowElement, keyCode);
-      } else if (isCellSelection) {
-        this.focusCell(model.cellElement, model.rowElement, keyCode, model.cellIndex);
-      }
+      this.focusCell(model.cellElement, model.rowElement, keyCode, model.cellIndex);
     }
-  }
-
-  focusRow(rowElement: any, keyCode: number): void {
-    const nextRowElement = this.getPrevNextRow(rowElement, keyCode);
-    if (nextRowElement) nextRowElement.focus();
   }
 
   getPrevNextRow(rowElement: HTMLElement, keyCode: number): any {
@@ -163,6 +155,23 @@ export class DataTableSelectionComponent {
     return null;
   }
 
+  setTabFocusCellToFirst(): void {
+    const selectionElem: HTMLElement = this.elementRef.nativeElement;
+    const firstCell = <HTMLElement>selectionElem.getElementsByClassName('datatable-body-cell').item(0);
+    if (firstCell) {
+      console.log('operation');
+      this.transferTabFocus(firstCell);
+    }
+  }
+
+  transferTabFocus(to: HTMLElement): void {
+    if (this.tabFocusCellElement) {
+      this.tabFocusCellElement.tabIndex = -1;
+    }
+    this.tabFocusCellElement = to;
+    to.tabIndex = 0;
+  }
+
   focusCell(cellElement: HTMLElement, rowElement: any, keyCode: number, cellIndex: number): void {
     let nextCellElement: HTMLElement;
 
@@ -200,9 +209,8 @@ export class DataTableSelectionComponent {
     }
     
     if (nextCellElement) {
+      this.transferTabFocus(nextCellElement);
       nextCellElement.focus();
-      cellElement.tabIndex = -1;
-      nextCellElement.tabIndex = 0;
     }
   }
 

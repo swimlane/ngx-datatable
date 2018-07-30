@@ -1,11 +1,11 @@
 import {
   Component, Output, EventEmitter, Input, HostBinding, ChangeDetectorRef,
-  ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy
+  ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy, ElementRef
 } from '@angular/core';
 import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '../../utils';
 import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
-import { MouseEvent } from '../../events';
+import { DataTableSelectionComponent } from './selection.component';
 
 @Component({
   selector: 'datatable-body',
@@ -54,7 +54,6 @@ import { MouseEvent } from '../../events';
           (rowContextmenu)="rowContextmenu.emit($event)">
           <datatable-body-row
             *ngIf="!groupedRows; else groupedRowsTemplate"
-            [tabindex]="rowTabIndex"
             [selectionType]="selectionType"
             [isSelected]="selector.getRowSelected(group)"
             [selectedCellName]="selector.selectedCellName"
@@ -74,8 +73,7 @@ import { MouseEvent } from '../../events';
           </datatable-body-row>
           <ng-template #groupedRowsTemplate>
             <datatable-body-row
-              *ngFor="let row of group.value; let i = index; trackBy: rowTrackingFn;"
-              [tabindex]="rowTabIndex"
+              *ngFor="let row of group.value; let ii = index; trackBy: rowTrackingFn;"
               [selectionType]="selectionType"
               [isSelected]="selector.getRowSelected(row)"
               [selectedCellName]="selector.selectedCellName"
@@ -88,7 +86,7 @@ import { MouseEvent } from '../../events';
               [rowIndex]="getRowIndex(row)"
               [expanded]="getRowExpanded(row)"
               [rowClass]="rowClass"
-              (activate)="selector.onActivate($event, i)"
+              (activate)="selector.onActivate($event, ii)"
               role="row">
             </datatable-body-row>
           </ng-template>
@@ -130,6 +128,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() rowDetail: any;
   @Input() groupHeader: any;
   @Input() selectCheck: any;
+  @Input() selectionType: SelectionType;
   @Input() displayCheck: any;
   @Input() trackByProp: string;
   @Input() rowClass: any;
@@ -141,20 +140,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() summaryRow: boolean;
   @Input() summaryPosition: string;
   @Input() summaryHeight: number;
-
-  @Input() set selectionType(type: SelectionType) {
-    this._selectionType = type;
-    this.rowTabIndex = (
-      type === SelectionType.multi
-      || type === SelectionType.multiClick
-      || type === SelectionType.single
-      ? '0' : '-1'
-    );
-  }
-
-  get selectionType(): SelectionType {
-    return this._selectionType;
-  }
 
   @Input() set pageSize(val: number) {
     this._pageSize = val;
@@ -237,6 +222,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Output() treeAction: EventEmitter<any> = new EventEmitter();
 
   @ViewChild(ScrollerComponent) scroller: ScrollerComponent;
+  @ViewChild('selector') selector: DataTableSelectionComponent;
 
   /**
    * Returns if selection is enabled.
@@ -268,7 +254,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   listener: any;
   rowIndexes: any = new Map();
   rowExpansions: any = new Map();
-  rowTabIndex: string = '-1';
+  tabFocusCellElement: HTMLElement;
 
   _rows: any[];
   _bodyHeight: any;
@@ -276,12 +262,11 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   _rowCount: number;
   _offset: number;
   _pageSize: number;
-  _selectionType: SelectionType;
 
   /**
    * Creates an instance of DataTableBodyComponent.
    */
-  constructor(private cd: ChangeDetectorRef) {
+  constructor(private cd: ChangeDetectorRef, private elementRef: ElementRef) {
     // declare fn here so we can get access to the `this` property
     this.rowTrackingFn = function(this: any, index: number, row: any): any {
       const idx = this.getRowIndex(row);
@@ -441,6 +426,9 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     }
 
     this.temp = temp;
+    if (!this.virtualization) {
+      setTimeout(() => this.selector.setTabFocusCellToFirst());
+    }
   }
 
   /**

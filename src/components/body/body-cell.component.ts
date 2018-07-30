@@ -26,6 +26,7 @@ export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
           type="checkbox"
           [checked]="isSelected"
           (click)="onCheckboxChange($event)"
+          tabindex="-1"
         />
       </label>
       <ng-container *ngIf="column.isTreeColumn">
@@ -86,6 +87,8 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   get rowHeight() {
     return this._rowHeight;
   }
+
+  @Input() isCellSelected: boolean;
 
   @Input() set isSelected(val: boolean) {
     this._isSelected = val;
@@ -199,7 +202,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
       }
     }
     if (!this.sortDir) cls += ' sort-active';
-    if (this.isSelected) cls += ' active';
+    if (this.isCellSelected) cls += ' active';
     if (this.sortDir === SortDirection.asc) cls += ' sort-asc';
     if (this.sortDir === SortDirection.desc) cls += ' sort-desc';
 
