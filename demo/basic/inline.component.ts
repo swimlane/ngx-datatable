@@ -25,6 +25,7 @@ import { Component } from '@angular/core';
           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
             <span
               title="Double click to edit"
+              class="dbl-click"
               (dblclick)="editing[rowIndex + '-name'] = true"
               *ngIf="!editing[rowIndex + '-name']">
               {{value}}
@@ -42,6 +43,7 @@ import { Component } from '@angular/core';
           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
              <span
               title="Double click to edit"
+              class="dbl-click"
               (dblclick)="editing[rowIndex + '-gender'] = true"
               *ngIf="!editing[rowIndex + '-gender']">
               {{value}}

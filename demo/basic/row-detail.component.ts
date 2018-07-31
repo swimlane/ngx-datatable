@@ -48,6 +48,7 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
               href="javascript:void(0)"
               [class.datatable-icon-right]="!expanded"
               [class.datatable-icon-down]="expanded"
+              class="click"
               title="Expand/Collapse Row"
               (click)="toggleExpandRow(row)"
               tabindex="-1">

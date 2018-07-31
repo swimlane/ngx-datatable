@@ -24,6 +24,7 @@ export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
         class="datatable-checkbox">
         <input
           type="checkbox"
+          class="click"
           [checked]="isSelected"
           (click)="onCheckboxChange($event)"
           tabindex="-1"
@@ -367,33 +368,16 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   onReturnKeyDown(event: KeyboardEvent): void {
     let target: HTMLElement = (<HTMLElement>event.target);
     const clickTargets: NodeListOf<Element> = target.getElementsByClassName('click');
-    const dblClickTargets: NodeListOf<Element> = target.getElementsByClassName('dblclick');
-    let dispatchClick = false;
-    let dispatchDblClick = false;
+    const dblClickTargets: NodeListOf<Element> = target.getElementsByClassName('dbl-click');
+    const mouseEvent: MouseEvent = document.createEvent('MouseEvents');
 
     // See if we have any class designated click or double click targets
     if (clickTargets && clickTargets.length > 0) {
       target = <HTMLElement>clickTargets.item(0);
-      dispatchClick = true;
-    } else if (dblClickTargets && dblClickTargets.length > 0) {
-      target = <HTMLElement>dblClickTargets.item(0);
-      dispatchDblClick = true;
-    } else {
-      // No class designated targets, so look at last child element
-      while (target.lastElementChild) {
-        target = <HTMLElement>target.lastElementChild;
-      }
-
-      const tagName: string = target.tagName.toLowerCase();
-      dispatchClick = (tagName === 'a');
-      dispatchDblClick = (tagName === 'span');
-    }
-
-    const mouseEvent: MouseEvent = document.createEvent('MouseEvents');
-    if (dispatchClick) {
       mouseEvent.initEvent('click', true, true);
       target.dispatchEvent(mouseEvent);
-    } else if (dispatchDblClick) {
+    } else if (dblClickTargets && dblClickTargets.length > 0) {
+      target = <HTMLElement>dblClickTargets.item(0);
       mouseEvent.initEvent('dblclick', true, true);
       target.dispatchEvent(mouseEvent);
     }
