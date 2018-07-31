@@ -7,7 +7,8 @@ import {
   columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, camelCase
 } from '../../utils';
 import { ScrollbarHelper } from '../../services';
-import { TreeStatus, SelectionType } from '../../index';
+import { TreeStatus } from './body-cell.component';
+import { SelectionType } from '../../types/selection.type';
 
 @Component({
   selector: 'datatable-body-row',
