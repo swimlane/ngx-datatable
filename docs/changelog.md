@@ -1,5 +1,12 @@
 # Changelog
 
+## 13.1.0
+
+* Feature: Added support for tree grid (#1273)
+* Fix: Improve virtualization as a flag (#1297)
+* Fix: Fix issue when count is undefined #838 (#1499)
+* Fix: Fix usage withing prerendered SPA (#1438)
+
 ## 13.0.1
 
 * Fix: Run scroll event listeners inside angular zone (#1375)
