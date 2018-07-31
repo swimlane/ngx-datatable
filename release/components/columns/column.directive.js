@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var column_header_directive_1 = require("./column-header.directive");
 var column_cell_directive_1 = require("./column-cell.directive");
+var tree_directive_1 = require("./tree.directive");
 var column_changes_service_1 = require("../../services/column-changes.service");
 var DataTableColumnDirective = /** @class */ (function () {
     function DataTableColumnDirective(columnChangesService) {
@@ -100,6 +101,14 @@ var DataTableColumnDirective = /** @class */ (function () {
     ], DataTableColumnDirective.prototype, "cellClass", void 0);
     __decorate([
         core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], DataTableColumnDirective.prototype, "isTreeColumn", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Number)
+    ], DataTableColumnDirective.prototype, "treeLevelIndent", void 0);
+    __decorate([
+        core_1.Input(),
         __metadata("design:type", Function)
     ], DataTableColumnDirective.prototype, "summaryFunc", void 0);
     __decorate([
@@ -116,6 +125,11 @@ var DataTableColumnDirective = /** @class */ (function () {
         core_1.ContentChild(column_header_directive_1.DataTableColumnHeaderDirective, { read: core_1.TemplateRef }),
         __metadata("design:type", core_1.TemplateRef)
     ], DataTableColumnDirective.prototype, "headerTemplate", void 0);
+    __decorate([
+        core_1.Input(),
+        core_1.ContentChild(tree_directive_1.DataTableColumnCellTreeToggle, { read: core_1.TemplateRef }),
+        __metadata("design:type", core_1.TemplateRef)
+    ], DataTableColumnDirective.prototype, "treeToggleTemplate", void 0);
     DataTableColumnDirective = __decorate([
         core_1.Directive({ selector: 'ngx-datatable-column' }),
         __metadata("design:paramtypes", [column_changes_service_1.ColumnChangesService])

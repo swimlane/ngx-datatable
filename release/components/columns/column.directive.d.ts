@@ -21,10 +21,13 @@ export declare class DataTableColumnDirective implements OnChanges {
     headerCheckboxable: boolean;
     headerClass: string | ((data: any) => string | any);
     cellClass: string | ((data: any) => string | any);
+    isTreeColumn: boolean;
+    treeLevelIndent: number;
     summaryFunc: (cells: any[]) => any;
     summaryTemplate: TemplateRef<any>;
     cellTemplate: TemplateRef<any>;
     headerTemplate: TemplateRef<any>;
+    treeToggleTemplate: TemplateRef<any>;
     private isFirstChange;
     constructor(columnChangesService: ColumnChangesService);
     ngOnChanges(): void;

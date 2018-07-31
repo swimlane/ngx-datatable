@@ -1,9 +1,10 @@
 import { ChangeDetectorRef, EventEmitter, ElementRef, ViewContainerRef, OnDestroy, DoCheck } from '@angular/core';
 import { SortDirection } from '../../types';
 import { TableColumn } from '../../types/table-column.type';
+export declare type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
 export declare class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     private cd;
-    displayCheck: any;
+    displayCheck: (row: any, column?: TableColumn, value?: any) => boolean;
     group: any;
     rowHeight: number;
     isSelected: boolean;
@@ -12,7 +13,9 @@ export declare class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     column: TableColumn;
     row: any;
     sorts: any[];
+    treeStatus: TreeStatus;
     activate: EventEmitter<any>;
+    treeAction: EventEmitter<any>;
     cellTemplate: ViewContainerRef;
     readonly columnCssClasses: any;
     readonly width: number;
@@ -35,6 +38,7 @@ export declare class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     private _rowIndex;
     private _expanded;
     private _element;
+    private _treeStatus;
     constructor(element: ElementRef, cd: ChangeDetectorRef);
     ngDoCheck(): void;
     ngOnDestroy(): void;
@@ -47,4 +51,6 @@ export declare class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     onCheckboxChange(event: any): void;
     calcSortDir(sorts: any[]): any;
     stripHtml(html: string): string;
+    onTreeAction(row: any): void;
+    calcLeftMargin(column: any, row: any): number;
 }

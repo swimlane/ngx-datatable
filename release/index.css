@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"13.0.1" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"13.1.0" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -42,8 +42,8 @@
     box-sizing: border-box; }
   .ngx-datatable.scroll-vertical .datatable-body {
     overflow-y: auto; }
-    .ngx-datatable.scroll-vertical .datatable-body .datatable-row-wrapper {
-      position: absolute; }
+  .ngx-datatable.scroll-vertical.virtualized .datatable-body .datatable-row-wrapper {
+    position: absolute; }
   .ngx-datatable.scroll-horz .datatable-body {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch; }

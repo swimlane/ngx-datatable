@@ -24,6 +24,10 @@ bootstrap table theme
       padding: 0.75rem;
       text-align: left;
       vertical-align: top; }
+  .ngx-datatable.bootstrap .datatable-body .empty-row {
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0; }
   .ngx-datatable.bootstrap .datatable-footer {
     background: #424242;
     color: #ededed;
