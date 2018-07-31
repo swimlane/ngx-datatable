@@ -4,11 +4,10 @@ import {
 } from '@angular/core';
 
 import {
-  columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys, camelCase
+  columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, camelCase
 } from '../../utils';
 import { ScrollbarHelper } from '../../services';
-import { KeyboardEvent } from '../../events';
-import { TreeStatus } from '../../index';
+import { TreeStatus, SelectionType } from '../../index';
 
 @Component({
   selector: 'datatable-body-row',
@@ -180,7 +179,7 @@ export class DataTableBodyRowComponent implements DoCheck {
     return styles;
   }
 
-  isCellSelected(cellName) {
+  isCellSelected(cellName: string) {
     return this.isSelected && camelCase(cellName) === this.selectedCellName;
   }
 

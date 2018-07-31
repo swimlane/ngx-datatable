@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var utils_1 = require("../../utils");
 var DataTablePagerComponent = /** @class */ (function () {
     function DataTablePagerComponent() {
         this.change = new core_1.EventEmitter();
@@ -78,6 +79,11 @@ var DataTablePagerComponent = /** @class */ (function () {
             });
         }
     };
+    DataTablePagerComponent.prototype.onKeyPress = function (event, pagerButton) {
+        if (event.keyCode === utils_1.Keys.return) {
+            pagerButton.click();
+        }
+    };
     DataTablePagerComponent.prototype.calcPages = function (page) {
         var pages = [];
         var startPage = 1;
@@ -143,7 +149,7 @@ var DataTablePagerComponent = /** @class */ (function () {
     DataTablePagerComponent = __decorate([
         core_1.Component({
             selector: 'datatable-pager',
-            template: "\n    <ul class=\"pager\">\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          role=\"button\"\n          aria-label=\"go to first page\"\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(1)\">\n          <i class=\"{{pagerPreviousIcon}}\"></i>\n        </a>\n      </li>\n      <li [class.disabled]=\"!canPrevious()\">\n        <a\n          role=\"button\"\n          aria-label=\"go to previous page\"\n          href=\"javascript:void(0)\"\n          (click)=\"prevPage()\">\n          <i class=\"{{pagerLeftArrowIcon}}\"></i>\n        </a>\n      </li>\n      <li\n        role=\"button\"\n        [attr.aria-label]=\"'page ' + pg.number\"\n        class=\"pages\"\n        *ngFor=\"let pg of pages\"\n        [class.active]=\"pg.number === page\">\n        <a\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(pg.number)\">\n          {{pg.text}}\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          role=\"button\"\n          aria-label=\"go to next page\"\n          href=\"javascript:void(0)\"\n          (click)=\"nextPage()\">\n          <i class=\"{{pagerRightArrowIcon}}\"></i>\n        </a>\n      </li>\n      <li [class.disabled]=\"!canNext()\">\n        <a\n          role=\"button\"\n          aria-label=\"go to last page\"\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(totalPages)\">\n          <i class=\"{{pagerNextIcon}}\"></i>\n        </a>\n      </li>\n    </ul>\n  ",
+            template: "\n    <ul class=\"pager\">\n      <li\n        [class.disabled]=\"!canPrevious()\"\n        (keypress)=\"onKeyPress($event, firstPageButton)\"\n        [tabindex]=\"(canPrevious() ? '0' : '-1')\">\n        <a #firstPageButton\n          role=\"button\"\n          aria-label=\"go to first page\"\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(1)\"\n          tabindex=\"-1\">\n          <i class=\"{{pagerPreviousIcon}}\"></i>\n        </a>\n      </li>\n      <li\n        [class.disabled]=\"!canPrevious()\"\n        (keypress)=\"onKeyPress($event, pageBackButton)\"\n        [tabindex]=\"(canPrevious() ? '0' : '-1')\">\n        <a #pageBackButton\n          role=\"button\"\n          aria-label=\"go to previous page\"\n          href=\"javascript:void(0)\"\n          (click)=\"prevPage()\"\n          tabindex=\"-1\">\n          <i class=\"{{pagerLeftArrowIcon}}\"></i>\n        </a>\n      </li>\n      <li\n        role=\"button\"\n        [attr.aria-label]=\"'page ' + pg.number\"\n        class=\"pages\"\n        *ngFor=\"let pg of pages\"\n        [class.active]=\"pg.number === page\"\n        (keypress)=\"onKeyPress($event, pageNumButton)\"\n        tabindex=\"0\">\n        <a #pageNumButton\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(pg.number)\"\n          tabindex=\"-1\">\n          {{pg.text}}\n        </a>\n      </li>\n      <li\n        [class.disabled]=\"!canNext()\"\n        (keypress)=\"onKeyPress($event, pageForwardButton)\"\n        [tabindex]=\"(canNext() ? '0' : '-1')\">\n        <a #pageForwardButton\n          role=\"button\"\n          aria-label=\"go to next page\"\n          href=\"javascript:void(0)\"\n          (click)=\"nextPage()\"\n          tabindex=\"-1\">\n          <i class=\"{{pagerRightArrowIcon}}\"></i>\n        </a>\n      </li>\n      <li\n        [class.disabled]=\"!canNext()\"\n        (keypress)=\"onKeyPress($event, lastPageButton)\"\n        [tabindex]=\"(canNext() ? '0' : '-1')\">\n        <a #lastPageButton\n          role=\"button\"\n          aria-label=\"go to last page\"\n          href=\"javascript:void(0)\"\n          (click)=\"selectPage(totalPages)\"\n          tabindex=\"-1\">\n          <i class=\"{{pagerNextIcon}}\"></i>\n        </a>\n      </li>\n    </ul>\n  ",
             host: {
                 class: 'datatable-pager'
             },

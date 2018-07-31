@@ -21,6 +21,9 @@
         text-align: left;
         padding: .5rem 1.2rem;
         vertical-align: top; }
+      .ngx-datatable.dark .datatable-body .datatable-body-row:not(.active) .datatable-body-cell:focus,
+      .ngx-datatable.dark .datatable-body .datatable-body-row:not(.active) .datatable-body-cell:focus .datatable-row-group {
+        background-color: #232837; }
       .ngx-datatable.dark .datatable-body .datatable-body-row:hover {
         background: #171b24;
         transition-property: background;
@@ -43,7 +46,7 @@
       margin: 0 10px;
       vertical-align: top; }
       .ngx-datatable.dark .datatable-footer .datatable-pager ul li {
-        margin: 10px 0px; }
+        margin: 10px 3px; }
         .ngx-datatable.dark .datatable-footer .datatable-pager ul li:not(.disabled).active a,
         .ngx-datatable.dark .datatable-footer .datatable-pager ul li:not(.disabled):hover a {
           background-color: #455066;

@@ -453,6 +453,10 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     onBodyPage({offset}: any): void;
     /**
+     * The header triggered a scroll event. Header never directly handles scroll events. Must pass it to scroller instead.
+     */
+    onHeaderScroll(event: MouseEvent): void;
+    /**
      * The body triggered a scroll event.
      */
     onBodyScroll(event: MouseEvent): void;

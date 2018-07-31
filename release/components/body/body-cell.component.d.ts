@@ -7,6 +7,7 @@ export declare class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     displayCheck: (row: any, column?: TableColumn, value?: any) => boolean;
     group: any;
     rowHeight: number;
+    isCellSelected: boolean;
     isSelected: boolean;
     expanded: boolean;
     rowIndex: number;
@@ -25,7 +26,6 @@ export declare class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     sanitizedValue: any;
     value: any;
     sortDir: SortDirection;
-    isFocused: boolean;
     onCheckboxChangeFn: any;
     activateFn: any;
     cellContext: any;
@@ -43,11 +43,13 @@ export declare class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     ngDoCheck(): void;
     ngOnDestroy(): void;
     checkValueUpdates(): void;
-    onFocus(): void;
-    onBlur(): void;
     onClick(event: MouseEvent): void;
     onDblClick(event: MouseEvent): void;
     onKeyDown(event: KeyboardEvent): void;
+    /**
+     * Send mouse event down on enter in case cell is clickable/editable.
+     */
+    onReturnKeyDown(event: KeyboardEvent): void;
     onCheckboxChange(event: any): void;
     calcSortDir(sorts: any[]): any;
     stripHtml(html: string): string;

@@ -5,4 +5,6 @@ export declare enum Keys {
     escape = 27,
     left = 37,
     right = 39,
+    space = 32,
+    tab = 9,
 }

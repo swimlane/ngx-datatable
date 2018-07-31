@@ -1,4 +1,4 @@
-import { OnChanges, PipeTransform, TemplateRef } from '@angular/core';
+import { OnChanges, PipeTransform, TemplateRef, EventEmitter } from '@angular/core';
 export interface ISummaryColumn {
     summaryFunc?: (cells: any[]) => any;
     summaryTemplate?: TemplateRef<any>;
@@ -11,6 +11,7 @@ export declare class DataTableSummaryRowComponent implements OnChanges {
     rowHeight: number;
     offsetX: number;
     innerWidth: number;
+    keyboardFocus: EventEmitter<any>;
     _internalColumns: ISummaryColumn[];
     summaryRow: {};
     ngOnChanges(): void;

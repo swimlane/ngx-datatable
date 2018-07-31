@@ -11,8 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var ScrollerComponent = /** @class */ (function () {
-    function ScrollerComponent(ngZone, element, renderer) {
-        this.ngZone = ngZone;
+    function ScrollerComponent(element, renderer) {
         this.renderer = renderer;
         this.scrollbarV = false;
         this.scrollbarH = false;
@@ -36,8 +35,9 @@ var ScrollerComponent = /** @class */ (function () {
             this.parentElement.removeEventListener('scroll', this.onScrolled.bind(this));
         }
     };
-    ScrollerComponent.prototype.setOffset = function (offsetY) {
+    ScrollerComponent.prototype.setOffset = function (offsetX, offsetY) {
         if (this.parentElement) {
+            this.parentElement.scrollLeft = offsetX;
             this.parentElement.scrollTop = offsetY;
         }
     };
@@ -97,7 +97,7 @@ var ScrollerComponent = /** @class */ (function () {
             },
             changeDetection: core_1.ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [core_1.NgZone, core_1.ElementRef, core_1.Renderer2])
+        __metadata("design:paramtypes", [core_1.ElementRef, core_1.Renderer2])
     ], ScrollerComponent);
     return ScrollerComponent;
 }());

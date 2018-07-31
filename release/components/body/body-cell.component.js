@@ -18,7 +18,6 @@ var DataTableBodyCellComponent = /** @class */ (function () {
         this.cd = cd;
         this.activate = new core_1.EventEmitter();
         this.treeAction = new core_1.EventEmitter();
-        this.isFocused = false;
         this.onCheckboxChangeFn = this.onCheckboxChange.bind(this);
         this.activateFn = this.activate.emit.bind(this.activate);
         this.cellContext = {
@@ -187,7 +186,7 @@ var DataTableBodyCellComponent = /** @class */ (function () {
             }
             if (!this.sortDir)
                 cls += ' sort-active';
-            if (this.isFocused)
+            if (this.isCellSelected)
                 cls += ' active';
             if (this.sortDir === types_1.SortDirection.asc)
                 cls += ' sort-asc';
@@ -259,12 +258,6 @@ var DataTableBodyCellComponent = /** @class */ (function () {
             this.cd.markForCheck();
         }
     };
-    DataTableBodyCellComponent.prototype.onFocus = function () {
-        this.isFocused = true;
-    };
-    DataTableBodyCellComponent.prototype.onBlur = function () {
-        this.isFocused = false;
-    };
     DataTableBodyCellComponent.prototype.onClick = function (event) {
         this.activate.emit({
             type: 'click',
@@ -310,6 +303,29 @@ var DataTableBodyCellComponent = /** @class */ (function () {
                 value: this.value,
                 cellElement: this._element
             });
+            if (keyCode === utils_1.Keys.return) {
+                this.onReturnKeyDown(event);
+            }
+        }
+    };
+    /**
+     * Send mouse event down on enter in case cell is clickable/editable.
+     */
+    DataTableBodyCellComponent.prototype.onReturnKeyDown = function (event) {
+        var target = event.target;
+        var clickTargets = target.getElementsByClassName('click');
+        var dblClickTargets = target.getElementsByClassName('dbl-click');
+        var mouseEvent = document.createEvent('MouseEvents');
+        // See if we have any class designated click or double click targets
+        if (clickTargets && clickTargets.length > 0) {
+            target = clickTargets.item(0);
+            mouseEvent.initEvent('click', true, true);
+            target.dispatchEvent(mouseEvent);
+        }
+        else if (dblClickTargets && dblClickTargets.length > 0) {
+            target = dblClickTargets.item(0);
+            mouseEvent.initEvent('dblclick', true, true);
+            target.dispatchEvent(mouseEvent);
         }
     };
     DataTableBodyCellComponent.prototype.onCheckboxChange = function (event) {
@@ -361,6 +377,10 @@ var DataTableBodyCellComponent = /** @class */ (function () {
         __metadata("design:type", Number),
         __metadata("design:paramtypes", [Number])
     ], DataTableBodyCellComponent.prototype, "rowHeight", null);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], DataTableBodyCellComponent.prototype, "isCellSelected", void 0);
     __decorate([
         core_1.Input(),
         __metadata("design:type", Boolean),
@@ -434,18 +454,6 @@ var DataTableBodyCellComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], DataTableBodyCellComponent.prototype, "height", null);
     __decorate([
-        core_1.HostListener('focus'),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
-        __metadata("design:returntype", void 0)
-    ], DataTableBodyCellComponent.prototype, "onFocus", null);
-    __decorate([
-        core_1.HostListener('blur'),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
-        __metadata("design:returntype", void 0)
-    ], DataTableBodyCellComponent.prototype, "onBlur", null);
-    __decorate([
         core_1.HostListener('click', ['$event']),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object]),
@@ -467,7 +475,7 @@ var DataTableBodyCellComponent = /** @class */ (function () {
         core_1.Component({
             selector: 'datatable-body-cell',
             changeDetection: core_1.ChangeDetectionStrategy.OnPush,
-            template: "\n    <div class=\"datatable-body-cell-label\"\n      [style.margin-left.px]=\"calcLeftMargin(column, row)\">\n      <label\n        *ngIf=\"column.checkboxable && (!displayCheck || displayCheck(row, column, value))\"\n        class=\"datatable-checkbox\">\n        <input\n          type=\"checkbox\"\n          [checked]=\"isSelected\"\n          (click)=\"onCheckboxChange($event)\"\n        />\n      </label>\n      <ng-container *ngIf=\"column.isTreeColumn\">\n        <button *ngIf=\"!column.treeToggleTemplate\"\n          class=\"datatable-tree-button\"\n          [disabled]=\"treeStatus==='disabled'\"\n          (click)=\"onTreeAction()\">\n          <span>\n            <i *ngIf=\"treeStatus==='loading'\"\n              class=\"icon datatable-icon-collapse\"></i>\n            <i *ngIf=\"treeStatus==='collapsed'\"\n              class=\"icon datatable-icon-up\"></i>\n            <i *ngIf=\"treeStatus==='expanded' ||\n                      treeStatus==='disabled'\"\n              class=\"icon datatable-icon-down\"></i>\n          </span>\n        </button>\n        <ng-template *ngIf=\"column.treeToggleTemplate\"\n          [ngTemplateOutlet]=\"column.treeToggleTemplate\"\n          [ngTemplateOutletContext]=\"{ cellContext: cellContext }\">\n        </ng-template>\n      </ng-container>\n\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [title]=\"sanitizedValue\"\n        [innerHTML]=\"value\">\n      </span>\n      <ng-template #cellTemplate\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngTemplateOutletContext]=\"cellContext\">\n      </ng-template>\n    </div>\n  "
+            template: "\n    <div class=\"datatable-body-cell-label\"\n      role=\"gridcell\"\n      [style.margin-left.px]=\"calcLeftMargin(column, row)\">\n      <label\n        *ngIf=\"column.checkboxable && (!displayCheck || displayCheck(row, column, value))\"\n        class=\"datatable-checkbox\">\n        <input\n          type=\"checkbox\"\n          class=\"click\"\n          [checked]=\"isSelected\"\n          (click)=\"onCheckboxChange($event)\"\n          tabindex=\"-1\"\n        />\n      </label>\n      <ng-container *ngIf=\"column.isTreeColumn\">\n        <button *ngIf=\"!column.treeToggleTemplate\"\n          class=\"datatable-tree-button\"\n          [disabled]=\"treeStatus==='disabled'\"\n          (click)=\"onTreeAction()\">\n          <span>\n            <i *ngIf=\"treeStatus==='loading'\"\n              class=\"icon datatable-icon-collapse\"></i>\n            <i *ngIf=\"treeStatus==='collapsed'\"\n              class=\"icon datatable-icon-up\"></i>\n            <i *ngIf=\"treeStatus==='expanded' ||\n                      treeStatus==='disabled'\"\n              class=\"icon datatable-icon-down\"></i>\n          </span>\n        </button>\n        <ng-template *ngIf=\"column.treeToggleTemplate\"\n          [ngTemplateOutlet]=\"column.treeToggleTemplate\"\n          [ngTemplateOutletContext]=\"{ cellContext: cellContext }\">\n        </ng-template>\n      </ng-container>\n\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [title]=\"sanitizedValue\"\n        [innerHTML]=\"value\">\n      </span>\n      <ng-template #cellTemplate\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngTemplateOutletContext]=\"cellContext\">\n      </ng-template>\n    </div>\n  "
         }),
         __metadata("design:paramtypes", [core_1.ElementRef, core_1.ChangeDetectorRef])
     ], DataTableBodyCellComponent);

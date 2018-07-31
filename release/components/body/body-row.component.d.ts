@@ -1,6 +1,6 @@
 import { ElementRef, KeyValueDiffers, EventEmitter, ChangeDetectorRef, DoCheck } from '@angular/core';
 import { ScrollbarHelper } from '../../services';
-import { TreeStatus } from '../../index';
+import { TreeStatus, SelectionType } from '../../index';
 export declare class DataTableBodyRowComponent implements DoCheck {
     private differs;
     private scrollbarHelper;
@@ -11,7 +11,9 @@ export declare class DataTableBodyRowComponent implements DoCheck {
     rowClass: any;
     row: any;
     group: any;
+    selectionType: SelectionType;
     isSelected: boolean;
+    selectedCellName: string;
     rowIndex: number;
     displayCheck: any;
     treeStatus: TreeStatus;
@@ -41,8 +43,8 @@ export declare class DataTableBodyRowComponent implements DoCheck {
     calcStylesByGroup(group: string): {
         width: string;
     };
-    onActivate(event: any, index: number): void;
-    onKeyDown(event: KeyboardEvent): void;
+    isCellSelected(cellName: string): boolean;
+    onActivate(event: any, cellName: string, index: number): void;
     onMouseenter(event: any): void;
     recalculateColumns(val?: any[]): void;
     onTreeAction(): void;

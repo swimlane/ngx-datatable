@@ -22,19 +22,58 @@
   .ngx-datatable.material.single-selection .datatable-body-row.active .datatable-row-group, .ngx-datatable.material.multi-selection .datatable-body-row.active,
   .ngx-datatable.material.multi-selection .datatable-body-row.active .datatable-row-group, .ngx-datatable.material.multi-click-selection .datatable-body-row.active,
   .ngx-datatable.material.multi-click-selection .datatable-body-row.active .datatable-row-group {
-    background-color: #304FFE;
-    color: #FFF; }
+    background-color: #304FFE; }
+    .ngx-datatable.material.single-selection .datatable-body-row.active .datatable-body-cell,
+    .ngx-datatable.material.single-selection .datatable-body-row.active .datatable-row-group .datatable-body-cell, .ngx-datatable.material.multi-selection .datatable-body-row.active .datatable-body-cell,
+    .ngx-datatable.material.multi-selection .datatable-body-row.active .datatable-row-group .datatable-body-cell, .ngx-datatable.material.multi-click-selection .datatable-body-row.active .datatable-body-cell,
+    .ngx-datatable.material.multi-click-selection .datatable-body-row.active .datatable-row-group .datatable-body-cell {
+      color: #FFF; }
+    .ngx-datatable.material.single-selection .datatable-body-row.active .datatable-body-cell:focus,
+    .ngx-datatable.material.single-selection .datatable-body-row.active .datatable-row-group .datatable-body-cell:focus, .ngx-datatable.material.multi-selection .datatable-body-row.active .datatable-body-cell:focus,
+    .ngx-datatable.material.multi-selection .datatable-body-row.active .datatable-row-group .datatable-body-cell:focus, .ngx-datatable.material.multi-click-selection .datatable-body-row.active .datatable-body-cell:focus,
+    .ngx-datatable.material.multi-click-selection .datatable-body-row.active .datatable-row-group .datatable-body-cell:focus {
+      background-color: #2041EF; }
+  .ngx-datatable.material.single-selection .datatable-body-row:not(.active) .datatable-body-cell:focus,
+  .ngx-datatable.material.single-selection .datatable-body-row:not(.active) .datatable-body-cell:focus .datatable-row-group, .ngx-datatable.material.multi-selection .datatable-body-row:not(.active) .datatable-body-cell:focus,
+  .ngx-datatable.material.multi-selection .datatable-body-row:not(.active) .datatable-body-cell:focus .datatable-row-group, .ngx-datatable.material.multi-click-selection .datatable-body-row:not(.active) .datatable-body-cell:focus,
+  .ngx-datatable.material.multi-click-selection .datatable-body-row:not(.active) .datatable-body-cell:focus .datatable-row-group {
+    background-color: #ddd; }
   .ngx-datatable.material.single-selection .datatable-body-row.active:hover,
   .ngx-datatable.material.single-selection .datatable-body-row.active:hover .datatable-row-group, .ngx-datatable.material.multi-selection .datatable-body-row.active:hover,
   .ngx-datatable.material.multi-selection .datatable-body-row.active:hover .datatable-row-group, .ngx-datatable.material.multi-click-selection .datatable-body-row.active:hover,
   .ngx-datatable.material.multi-click-selection .datatable-body-row.active:hover .datatable-row-group {
-    background-color: #193AE4;
-    color: #FFF; }
+    background-color: #193AE4; }
+    .ngx-datatable.material.single-selection .datatable-body-row.active:hover .datatable-body-cell,
+    .ngx-datatable.material.single-selection .datatable-body-row.active:hover .datatable-row-group .datatable-body-cell, .ngx-datatable.material.multi-selection .datatable-body-row.active:hover .datatable-body-cell,
+    .ngx-datatable.material.multi-selection .datatable-body-row.active:hover .datatable-row-group .datatable-body-cell, .ngx-datatable.material.multi-click-selection .datatable-body-row.active:hover .datatable-body-cell,
+    .ngx-datatable.material.multi-click-selection .datatable-body-row.active:hover .datatable-row-group .datatable-body-cell {
+      color: #FFF; }
   .ngx-datatable.material.single-selection .datatable-body-row.active:focus,
   .ngx-datatable.material.single-selection .datatable-body-row.active:focus .datatable-row-group, .ngx-datatable.material.multi-selection .datatable-body-row.active:focus,
   .ngx-datatable.material.multi-selection .datatable-body-row.active:focus .datatable-row-group, .ngx-datatable.material.multi-click-selection .datatable-body-row.active:focus,
   .ngx-datatable.material.multi-click-selection .datatable-body-row.active:focus .datatable-row-group {
-    background-color: #2041EF;
+    background-color: #2041EF; }
+    .ngx-datatable.material.single-selection .datatable-body-row.active:focus .datatable-body-cell,
+    .ngx-datatable.material.single-selection .datatable-body-row.active:focus .datatable-row-group .datatable-body-cell, .ngx-datatable.material.multi-selection .datatable-body-row.active:focus .datatable-body-cell,
+    .ngx-datatable.material.multi-selection .datatable-body-row.active:focus .datatable-row-group .datatable-body-cell, .ngx-datatable.material.multi-click-selection .datatable-body-row.active:focus .datatable-body-cell,
+    .ngx-datatable.material.multi-click-selection .datatable-body-row.active:focus .datatable-row-group .datatable-body-cell {
+      color: #FFF; }
+  .ngx-datatable.material.cell-selection .datatable-body-cell:hover,
+  .ngx-datatable.material.cell-selection .datatable-body-cell:hover .datatable-row-group {
+    background-color: #eee;
+    transition-property: background;
+    transition-duration: .3s;
+    transition-timing-function: linear; }
+  .ngx-datatable.material.cell-selection .datatable-body-cell.active,
+  .ngx-datatable.material.cell-selection .datatable-body-cell.active .datatable-row-group {
+    background-color: #304FFE;
+    color: #FFF; }
+  .ngx-datatable.material.cell-selection .datatable-body-cell:not(.active):focus,
+  .ngx-datatable.material.cell-selection .datatable-body-cell:not(.active):focus .datatable-row-group {
+    background-color: #ddd; }
+  .ngx-datatable.material.cell-selection .datatable-body-cell.active:hover,
+  .ngx-datatable.material.cell-selection .datatable-body-cell.active:hover .datatable-row-group {
+    background-color: #193AE4;
     color: #FFF; }
   .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover,
   .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover .datatable-row-group {
@@ -45,27 +84,11 @@
   .ngx-datatable.material:not(.cell-selection) .datatable-body-row:focus,
   .ngx-datatable.material:not(.cell-selection) .datatable-body-row:focus .datatable-row-group {
     background-color: #ddd; }
-  .ngx-datatable.material.cell-selection .datatable-body-cell:hover,
-  .ngx-datatable.material.cell-selection .datatable-body-cell:hover .datatable-row-group {
-    background-color: #eee;
-    transition-property: background;
-    transition-duration: .3s;
-    transition-timing-function: linear; }
-  .ngx-datatable.material.cell-selection .datatable-body-cell:focus,
-  .ngx-datatable.material.cell-selection .datatable-body-cell:focus .datatable-row-group {
+  .ngx-datatable.material:not(.single-selection) .datatable-body-cell:focus,
+  .ngx-datatable.material:not(.single-selection) .datatable-body-cell:focus .datatable-row-group, .ngx-datatable.material:not(.multi-selection) .datatable-body-cell:focus,
+  .ngx-datatable.material:not(.multi-selection) .datatable-body-cell:focus .datatable-row-group, .ngx-datatable.material:not(.multi-click-selection) .datatable-body-cell:focus,
+  .ngx-datatable.material:not(.multi-click-selection) .datatable-body-cell:focus .datatable-row-group {
     background-color: #ddd; }
-  .ngx-datatable.material.cell-selection .datatable-body-cell.active,
-  .ngx-datatable.material.cell-selection .datatable-body-cell.active .datatable-row-group {
-    background-color: #304FFE;
-    color: #FFF; }
-  .ngx-datatable.material.cell-selection .datatable-body-cell.active:hover,
-  .ngx-datatable.material.cell-selection .datatable-body-cell.active:hover .datatable-row-group {
-    background-color: #193AE4;
-    color: #FFF; }
-  .ngx-datatable.material.cell-selection .datatable-body-cell.active:focus,
-  .ngx-datatable.material.cell-selection .datatable-body-cell.active:focus .datatable-row-group {
-    background-color: #2041EF;
-    color: #FFF; }
   .ngx-datatable.material .empty-row {
     height: 50px;
     text-align: left;

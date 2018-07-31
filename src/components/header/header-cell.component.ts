@@ -69,8 +69,6 @@ export class DataTableHeaderCellComponent {
   @Input() targetMarkerContext: any;
 
   _allRowsSelected: boolean;
-  _tabIndex: number;
-  _containerClass: string;
   
   @Input() set allRowsSelected(value) {
     this._allRowsSelected = value;

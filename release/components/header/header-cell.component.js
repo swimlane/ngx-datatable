@@ -9,16 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var keys_1 = require("./../../utils/keys");
 var core_1 = require("@angular/core");
 var types_1 = require("../../types");
 var utils_1 = require("../../utils");
 var events_1 = require("../../events");
 var DataTableHeaderCellComponent = /** @class */ (function () {
-    function DataTableHeaderCellComponent(cd) {
+    function DataTableHeaderCellComponent(cd, elementRef) {
         this.cd = cd;
+        this.elementRef = elementRef;
         this.sort = new core_1.EventEmitter();
         this.select = new core_1.EventEmitter();
         this.columnContextmenu = new core_1.EventEmitter(false);
+        this.scroll = new core_1.EventEmitter();
         this.sortFn = this.onSort.bind(this);
         this.selectFn = this.select.emit.bind(this.select);
         this.cellContext = {
@@ -48,6 +51,7 @@ var DataTableHeaderCellComponent = /** @class */ (function () {
             this._column = column;
             this.cellContext.column = column;
             this.cd.markForCheck();
+            this.containerClass = 'datatable-header-cell-template-wrap' + (this.column.sortable ? ' header-sort-btn' : '');
         },
         enumerable: true,
         configurable: true
@@ -61,6 +65,7 @@ var DataTableHeaderCellComponent = /** @class */ (function () {
             this.sortDir = this.calcSortDir(val);
             this.cellContext.sortDir = this.sortDir;
             this.sortClass = this.calcSortClass(this.sortDir);
+            this.ariaSort = this.calcAriaSort(this.sortDir);
             this.cd.markForCheck();
         },
         enumerable: true,
@@ -86,8 +91,8 @@ var DataTableHeaderCellComponent = /** @class */ (function () {
                     }
                     else if (typeof res === 'object') {
                         var keys = Object.keys(res);
-                        for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
-                            var k = keys_1[_i];
+                        for (var _i = 0, keys_2 = keys; _i < keys_2.length; _i++) {
+                            var k = keys_2[_i];
                             if (res[k] === true)
                                 cls += " " + k;
                         }
@@ -164,16 +169,81 @@ var DataTableHeaderCellComponent = /** @class */ (function () {
             newValue: newValue
         });
     };
-    DataTableHeaderCellComponent.prototype.calcSortClass = function (sortDir) {
+    DataTableHeaderCellComponent.prototype.onKeyPress = function (event) {
+        if (event.keyCode === keys_1.Keys.return || event.keyCode === keys_1.Keys.space) {
+            if (this.isCheckboxable) {
+                var target = event.target;
+                var checkbox = target.getElementsByClassName('datatable-checkbox').item(0);
+                if (checkbox) {
+                    checkbox.children[0].click();
+                }
+            }
+            else {
+                this.onSort();
+            }
+        }
+    };
+    /**
+     * Handles focus, blur, mouseenter, and mouseleave events in header cells to
+     * show a sort expectation indicator (mainly for accessibility purposes).
+     */
+    DataTableHeaderCellComponent.prototype.onSortExpected = function (event) {
+        if (!this.column.sortable)
+            return;
+        // On focus change, ensure that we generate a scroll event if we focus header cell out of bounds.
+        if (event.type === 'focus') {
+            var offsetX = this.calcOffsetX();
+            if (offsetX !== null) {
+                this.scroll.emit({ offsetX: offsetX });
+            }
+        }
+        var sortExpected = event.type === 'focus' || event.type === 'mouseenter';
+        this.sortClass = this.calcSortClass(this.sortDir, sortExpected);
+    };
+    /**
+     * Calculate the (horizontal table scroll) x-offset so that a scroll output event can be generated.
+     */
+    DataTableHeaderCellComponent.prototype.calcOffsetX = function () {
+        var target = event.target.parentElement;
+        var headerElement = target.parentElement;
+        while (!headerElement.classList.contains('datatable-header')) {
+            headerElement = headerElement.parentElement;
+        }
+        var targetRect = target.getBoundingClientRect();
+        var targetParentRect = target.parentElement.getBoundingClientRect();
+        var headerRect = headerElement.getBoundingClientRect();
+        if (targetRect.left < headerRect.left || targetRect.width > headerRect.width) {
+            return targetRect.left - targetParentRect.left;
+        }
+        else if (targetRect.right > headerRect.right) {
+            return targetRect.right - headerRect.right + this.offsetX;
+        }
+        return null;
+    };
+    DataTableHeaderCellComponent.prototype.calcSortClass = function (sortDir, sortExpected) {
+        if (sortExpected === void 0) { sortExpected = false; }
         if (sortDir === types_1.SortDirection.asc) {
             return "sort-btn sort-asc " + this.sortAscendingIcon;
         }
         else if (sortDir === types_1.SortDirection.desc) {
             return "sort-btn sort-desc " + this.sortDescendingIcon;
         }
-        else {
-            return "sort-btn";
+        else if (sortExpected) {
+            return "sort-btn sort-asc sort-faint " + this.sortAscendingIcon;
         }
+        return "sort-btn";
+    };
+    DataTableHeaderCellComponent.prototype.calcAriaSort = function (sortDir) {
+        if (sortDir === types_1.SortDirection.asc) {
+            return 'ascending';
+        }
+        else if (sortDir === types_1.SortDirection.desc) {
+            return 'descending';
+        }
+        else if (this.column.sortable) {
+            return 'none';
+        }
+        return undefined;
     };
     __decorate([
         core_1.Input(),
@@ -210,6 +280,14 @@ var DataTableHeaderCellComponent = /** @class */ (function () {
     ], DataTableHeaderCellComponent.prototype, "selectionType", void 0);
     __decorate([
         core_1.Input(),
+        __metadata("design:type", Number)
+    ], DataTableHeaderCellComponent.prototype, "offsetX", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], DataTableHeaderCellComponent.prototype, "tabFocusable", void 0);
+    __decorate([
+        core_1.Input(),
         __metadata("design:type", Object),
         __metadata("design:paramtypes", [Object])
     ], DataTableHeaderCellComponent.prototype, "column", null);
@@ -235,6 +313,10 @@ var DataTableHeaderCellComponent = /** @class */ (function () {
         core_1.Output(),
         __metadata("design:type", Object)
     ], DataTableHeaderCellComponent.prototype, "columnContextmenu", void 0);
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
+    ], DataTableHeaderCellComponent.prototype, "scroll", void 0);
     __decorate([
         core_1.HostBinding('class'),
         __metadata("design:type", Object),
@@ -269,13 +351,13 @@ var DataTableHeaderCellComponent = /** @class */ (function () {
     DataTableHeaderCellComponent = __decorate([
         core_1.Component({
             selector: 'datatable-header-cell',
-            template: "\n    <div class=\"datatable-header-cell-template-wrap\">\n      <ng-template\n        *ngIf=\"isTarget\"\n        [ngTemplateOutlet]=\"targetMarkerTemplate\"\n        [ngTemplateOutletContext]=\"targetMarkerContext\">\n      </ng-template>\n      <label\n        *ngIf=\"isCheckboxable\"\n        class=\"datatable-checkbox\">\n        <input\n          type=\"checkbox\"\n          [checked]=\"allRowsSelected\"\n          (change)=\"select.emit(!allRowsSelected)\"\n        />\n      </label>\n      <span\n        *ngIf=\"!column.headerTemplate\"\n        class=\"datatable-header-cell-wrapper\">\n        <span\n          class=\"datatable-header-cell-label draggable\"\n          (click)=\"onSort()\"\n          [innerHTML]=\"name\">\n        </span>\n      </span>\n      <ng-template\n        *ngIf=\"column.headerTemplate\"\n        [ngTemplateOutlet]=\"column.headerTemplate\"\n        [ngTemplateOutletContext]=\"cellContext\">\n      </ng-template>\n      <span\n        (click)=\"onSort()\"\n        [class]=\"sortClass\">\n      </span>\n    </div>\n  ",
+            template: "\n    <div\n      [class]=\"containerClass\"\n      (click)=\"onSort()\"\n      (keypress)=\"onKeyPress($event)\"\n      (focus)=\"onSortExpected($event)\"\n      (blur)=\"onSortExpected($event)\"\n      (mouseenter)=\"onSortExpected($event)\"\n      (mouseleave)=\"onSortExpected($event)\"\n      [tabindex]=\"(tabFocusable ? '0' : '-1')\"\n      role=\"columnheader\"\n      [attr.aria-sort]=\"ariaSort\">\n      <div\n        class=\"no-outline\"\n        tabindex=\"-1\">\n        <ng-template\n          *ngIf=\"isTarget\"\n          [ngTemplateOutlet]=\"targetMarkerTemplate\"\n          [ngTemplateOutletContext]=\"targetMarkerContext\">\n        </ng-template>\n        <label\n          *ngIf=\"isCheckboxable\"\n          class=\"datatable-checkbox\">\n          <input\n            type=\"checkbox\"\n            [checked]=\"allRowsSelected\"\n            (change)=\"select.emit(!allRowsSelected)\"\n            tabindex=\"-1\"\n          />\n        </label>\n        <span\n          class=\"datatable-header-cell-label draggable\"\n          [innerHTML]=\"name\">\n        </span>\n        <ng-template\n          *ngIf=\"column.headerTemplate\"\n          [ngTemplateOutlet]=\"column.headerTemplate\"\n          [ngTemplateOutletContext]=\"cellContext\">\n        </ng-template>\n        <span [class]=\"sortClass\"></span>\n      </div>\n    </div>\n  ",
             host: {
                 class: 'datatable-header-cell'
             },
             changeDetection: core_1.ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [core_1.ChangeDetectorRef])
+        __metadata("design:paramtypes", [core_1.ChangeDetectorRef, core_1.ElementRef])
     ], DataTableHeaderCellComponent);
     return DataTableHeaderCellComponent;
 }());

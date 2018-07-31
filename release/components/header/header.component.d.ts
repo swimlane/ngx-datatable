@@ -1,14 +1,17 @@
-import { EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { EventEmitter, ChangeDetectorRef, AfterViewInit, ElementRef, QueryList } from '@angular/core';
 import { SortType, SelectionType } from '../../types';
 import { DataTableColumnDirective } from '../columns';
-export declare class DataTableHeaderComponent {
+import { DataTableHeaderCellComponent } from '.';
+export declare class DataTableHeaderComponent implements AfterViewInit {
     private cd;
+    private elementRef;
     sortAscendingIcon: any;
     sortDescendingIcon: any;
     scrollbarH: boolean;
     dealsWithGroup: boolean;
     targetMarkerTemplate: any;
     targetMarkerContext: any;
+    tabFocusColumnName: string;
     innerWidth: number;
     sorts: any[];
     sortType: SortType;
@@ -27,6 +30,8 @@ export declare class DataTableHeaderComponent {
         event: MouseEvent;
         column: any;
     }>;
+    scroll: EventEmitter<any>;
+    headerCells: QueryList<DataTableHeaderCellComponent>;
     _columnsByPin: any;
     _columnGroupWidths: any;
     _innerWidth: number;
@@ -38,7 +43,8 @@ export declare class DataTableHeaderComponent {
         center: {};
         right: {};
     };
-    constructor(cd: ChangeDetectorRef);
+    constructor(cd: ChangeDetectorRef, elementRef: ElementRef);
+    ngAfterViewInit(): void;
     onLongPressStart({event, model}: {
         event: any;
         model: any;
@@ -48,6 +54,8 @@ export declare class DataTableHeaderComponent {
         model: any;
     }): void;
     readonly headerWidth: string;
+    onclick(event: MouseEvent): void;
+    onKeyDown(event: KeyboardEvent): void;
     trackByGroups(index: number, colGroup: any): any;
     columnTrackingFn(index: number, column: any): any;
     onColumnResized(width: number, column: DataTableColumnDirective): void;
