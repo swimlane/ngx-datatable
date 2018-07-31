@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, PipeTransform, TemplateRef } from '@angular/core';
+import { Component, Input, OnChanges, PipeTransform, TemplateRef, Output, EventEmitter } from '@angular/core';
 
 export interface ISummaryColumn {
   summaryFunc?: (cells: any[]) => any;
@@ -36,7 +36,8 @@ function noopSumFunc(cells: any[]): void {
     [columns]="_internalColumns"
     [rowHeight]="rowHeight"
     [row]="summaryRow"
-    [rowIndex]="-1">
+    [rowIndex]="-1"
+    (activate)="keyboardFocus.emit($event)">
   </datatable-body-row>
   `,
   host: {
@@ -51,6 +52,8 @@ export class DataTableSummaryRowComponent implements OnChanges {
   @Input() rowHeight: number;
   @Input() offsetX: number;
   @Input() innerWidth: number;
+
+  @Output() keyboardFocus: EventEmitter<any> = new EventEmitter();
 
   _internalColumns: ISummaryColumn[];
   summaryRow = {};

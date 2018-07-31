@@ -21,36 +21,35 @@ import { MouseEvent } from '../../events';
       [tabindex]="(tabFocusable ? '0' : '-1')"
       role="columnheader"
       [attr.aria-sort]="ariaSort">
-      <ng-template
-        *ngIf="isTarget"
-        [ngTemplateOutlet]="targetMarkerTemplate"
-        [ngTemplateOutletContext]="targetMarkerContext">
-      </ng-template>
-      <label
-        *ngIf="isCheckboxable"
-        class="datatable-checkbox">
-        <input
-          type="checkbox"
-          [checked]="allRowsSelected"
-          (change)="select.emit(!allRowsSelected)"
-          tabindex="-1"
-        />
-      </label>
-      <span
-        *ngIf="!column.headerTemplate"
-        class="datatable-header-cell-wrapper">
+      <div
+        class="no-outline"
+        tabindex="-1">
+        <ng-template
+          *ngIf="isTarget"
+          [ngTemplateOutlet]="targetMarkerTemplate"
+          [ngTemplateOutletContext]="targetMarkerContext">
+        </ng-template>
+        <label
+          *ngIf="isCheckboxable"
+          class="datatable-checkbox">
+          <input
+            type="checkbox"
+            [checked]="allRowsSelected"
+            (change)="select.emit(!allRowsSelected)"
+            tabindex="-1"
+          />
+        </label>
         <span
           class="datatable-header-cell-label draggable"
-          (click)="onSort()"
           [innerHTML]="name">
         </span>
-      </span>
-      <ng-template
-        *ngIf="column.headerTemplate"
-        [ngTemplateOutlet]="column.headerTemplate"
-        [ngTemplateOutletContext]="cellContext">
-      </ng-template>
-      <span [class]="sortClass"></span>
+        <ng-template
+          *ngIf="column.headerTemplate"
+          [ngTemplateOutlet]="column.headerTemplate"
+          [ngTemplateOutletContext]="cellContext">
+        </ng-template>
+        <span [class]="sortClass"></span>
+      </div>
     </div>
   `,
   host: {
@@ -227,8 +226,10 @@ export class DataTableHeaderCellComponent {
     if (event.keyCode === Keys.return || event.keyCode === Keys.space) {
       if (this.isCheckboxable) {
         const target = <HTMLElement>event.target;
-        const checkbox = <HTMLInputElement>target.getElementsByClassName('datatable-checkbox').item(0).children[0];
-        checkbox.click();
+        const checkbox = <HTMLElement>target.getElementsByClassName('datatable-checkbox').item(0);
+        if (checkbox) {
+          (<HTMLInputElement>checkbox.children[0]).click();
+        }
       } else {
         this.onSort();
       }

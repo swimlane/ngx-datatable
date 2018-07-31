@@ -191,31 +191,6 @@ export class DataTableBodyRowComponent implements DoCheck {
     this.activate.emit(event);
   }
 
-  @HostListener('keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent): void {
-    const keyCode = event.keyCode;
-    const isTargetRow = event.target === this._element;
-
-    const isAction =
-      keyCode === Keys.return ||
-      keyCode === Keys.down ||
-      keyCode === Keys.up ||
-      keyCode === Keys.left ||
-      keyCode === Keys.right;
-
-    if (isAction && isTargetRow) {
-      event.preventDefault();
-      event.stopPropagation();
-
-      this.activate.emit({
-        type: 'keydown',
-        event,
-        row: this.row,
-        rowElement: this._element
-      });
-    }
-  }
-
   @HostListener('mouseenter', ['$event'])
   onMouseenter(event: any): void {
     this.activate.emit({

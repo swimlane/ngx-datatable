@@ -200,37 +200,42 @@ export class DataTableHeaderComponent implements AfterViewInit {
 
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
-    const targetHeader = (<HTMLElement>event.target).parentElement;
+    let targetHeader = (<HTMLElement>event.target).parentElement;
+    while (targetHeader && targetHeader.tagName.toLowerCase() !== 'datatable-header-cell') {
+      targetHeader = targetHeader.parentElement;
+    }
 
-    if (event.keyCode === Keys.left) {
-      let prevHeader = <HTMLElement>targetHeader.previousElementSibling;
-
-      // Try previous column group.
-      if (!prevHeader) {
-        const prevHeaderGroup = <HTMLElement>targetHeader.parentElement.previousElementSibling;
-        if (prevHeaderGroup && prevHeaderGroup.children.length > 0) {
-          prevHeader = <HTMLElement>prevHeaderGroup.children[prevHeaderGroup.children.length - 1];
+    if (targetHeader) {
+      if (event.keyCode === Keys.left) {
+        let prevHeader = <HTMLElement>targetHeader.previousElementSibling;
+  
+        // Try previous column group.
+        if (!prevHeader) {
+          const prevHeaderGroup = <HTMLElement>targetHeader.parentElement.previousElementSibling;
+          if (prevHeaderGroup && prevHeaderGroup.children.length > 0) {
+            prevHeader = <HTMLElement>prevHeaderGroup.children[prevHeaderGroup.children.length - 1];
+          }
         }
-      }
-      
-      if (prevHeader) {
-        (<HTMLElement>prevHeader.firstElementChild).focus();
-        this.tabFocusColumnName = prevHeader.innerText.trim();
-      }
-    } else if (event.keyCode === Keys.right) {
-      let nextHeader = <HTMLElement>targetHeader.nextElementSibling;
-
-      // Try next column group.
-      if (!nextHeader) {
-        const nextHeaderGroup = <HTMLElement>targetHeader.parentElement.nextElementSibling;
-        if (nextHeaderGroup && nextHeaderGroup.children.length > 0) {
-          nextHeader = <HTMLElement>nextHeaderGroup.children[0];
+        
+        if (prevHeader && prevHeader.firstElementChild) {
+          (<HTMLElement>prevHeader.firstElementChild).focus();
+          this.tabFocusColumnName = prevHeader.innerText.trim();
         }
-      }
-
-      if (nextHeader) {
-        (<HTMLElement>nextHeader.firstElementChild).focus();
-        this.tabFocusColumnName = nextHeader.innerText.trim();
+      } else if (event.keyCode === Keys.right) {
+        let nextHeader = <HTMLElement>targetHeader.nextElementSibling;
+  
+        // Try next column group.
+        if (!nextHeader) {
+          const nextHeaderGroup = <HTMLElement>targetHeader.parentElement.nextElementSibling;
+          if (nextHeaderGroup && nextHeaderGroup.children.length > 0) {
+            nextHeader = <HTMLElement>nextHeaderGroup.children[0];
+          }
+        }
+  
+        if (nextHeader && nextHeader.firstElementChild) {
+          (<HTMLElement>nextHeader.firstElementChild).focus();
+          this.tabFocusColumnName = nextHeader.innerText.trim();
+        }
       }
     }
   }

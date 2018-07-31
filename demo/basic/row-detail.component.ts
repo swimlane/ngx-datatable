@@ -49,7 +49,8 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
               [class.datatable-icon-right]="!expanded"
               [class.datatable-icon-down]="expanded"
               title="Expand/Collapse Row"
-              (click)="toggleExpandRow(row)">
+              (click)="toggleExpandRow(row)"
+              tabindex="-1">
             </a>
           </ng-template>
         </ngx-datatable-column>

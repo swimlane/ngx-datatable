@@ -212,7 +212,10 @@
 
       .datatable-header-cell-template-wrap {
         height: inherit;
-        outline: none;
+
+        .no-outline {
+          outline: none;
+        }
 
         &:focus .datatable-checkbox input {
           outline: black auto 5px;
@@ -306,18 +309,22 @@
 
       .pager {
         li {
-          outline: none;
-        }
+          margin: 0px 3px;
 
-        li {
           a {
+            padding: 0px;
+            margin: 0px;
             cursor: pointer;
             display: inline-block;
+            outline: none;
           }
 
-          &.disabled a {
-            cursor: not-allowed;
+          &.disabled {
             outline: none;
+
+            a {
+              cursor: not-allowed;
+            }
           }
         }
       }

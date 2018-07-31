@@ -338,14 +338,11 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
       keyCode === Keys.down ||
       keyCode === Keys.up ||
       keyCode === Keys.left ||
-      keyCode === Keys.right ||
-      keyCode === Keys.tab;
+      keyCode === Keys.right;
 
     if (isAction && isTargetCell) {
-      if (keyCode !== Keys.tab) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
+      event.preventDefault();
+      event.stopPropagation();
 
       this.activate.emit({
         type: 'keydown',

@@ -36,6 +36,8 @@ export class DataTableSelectionComponent {
   prevIndex: number;
   tabFocusCellElement: HTMLElement;
 
+  private _focusResetTimeout: any;
+
   constructor(private elementRef: ElementRef) {}
 
   selectRow(event: KeyboardEvent | MouseEvent, index: number, row: any, cellName: string): void {
@@ -91,7 +93,7 @@ export class DataTableSelectionComponent {
       (chkbox && type === 'checkbox');
 
     if (select) {
-      this.transferTabFocus(<HTMLElement>model.cellElement);
+      this.transferCellTabFocus(<HTMLElement>model.cellElement);
       this.selectRow(event, index, row, model.cellName);
     } else if (type === 'keydown') {
       if ((<KeyboardEvent>event).keyCode === Keys.return) {
@@ -117,35 +119,43 @@ export class DataTableSelectionComponent {
   }
 
   getPrevNextRow(rowElement: HTMLElement, keyCode: number): any {
-    const parentElement = rowElement.parentElement;
-    let focusElement: HTMLElement;
+    let prevNextRow: any = null;
 
     if (keyCode === Keys.up) {
-      const prevElementSibling = <HTMLElement>rowElement.previousElementSibling;
-      if (prevElementSibling && prevElementSibling.tagName.toLowerCase() === 'datatable-body-row') {
-        return prevElementSibling;
-      } else if (parentElement) {
-        focusElement = <HTMLElement>parentElement.previousElementSibling;
-
-        if (focusElement) {
-          for (let i = focusElement.children.length - 1; i >= 0; i--) {
-            if (focusElement.children[i].tagName.toLowerCase() === 'datatable-body-row') {
-              return focusElement.children[i];
-            }
-          }
-        }
+      prevNextRow = this.getPrevRow(rowElement);
+      if (!prevNextRow) {
+        this.scrollTableBody(rowElement, keyCode);
+      } else if (!this.getPrevRow(prevNextRow)) {
+        this.scrollTableBody(prevNextRow, keyCode);
       }
     } else if (keyCode === Keys.down) {
-      const nextElementSibling = <HTMLElement>rowElement.nextElementSibling;
-      if (nextElementSibling && nextElementSibling.tagName.toLowerCase() === 'datatable-body-row') {
-        return nextElementSibling;
-      } else if (parentElement) {
-        focusElement = <HTMLElement>parentElement.nextElementSibling;
+      prevNextRow = this.getNextRow(rowElement);
+      if (!prevNextRow) {
+        this.scrollTableBody(rowElement, keyCode);
+      } else if (!this.getNextRow(prevNextRow)) {
+        this.scrollTableBody(prevNextRow, keyCode);
+      }
+    }
 
-        if (focusElement) {
-          for (let i = 0; i < focusElement.children.length; i++) {
-            if (focusElement.children[i].tagName.toLowerCase() === 'datatable-body-row') {
-              return focusElement.children[i];
+    return prevNextRow;
+  }
+
+  getPrevRow(rowElement: HTMLElement): any {
+    const prevRow = <HTMLElement>rowElement.previousElementSibling;
+    const parentElement = rowElement.parentElement;
+
+    if (prevRow && prevRow.tagName.toLowerCase() === 'datatable-body-row') {
+      return prevRow;
+    } else if (parentElement) {
+      // Cannot find next row in current row wrapper, so look at each prev row wrapper to find one with row contents.
+      let prevRowWrapper = <HTMLElement>parentElement;
+
+      while (prevRowWrapper) {
+        prevRowWrapper = <HTMLElement>prevRowWrapper.previousElementSibling;
+        if (prevRowWrapper) {
+          for (let i = prevRowWrapper.children.length - 1; i >= 0; i--) {
+            if (prevRowWrapper.children[i].tagName.toLowerCase() === 'datatable-body-row') {
+              return prevRowWrapper.children[i];
             }
           }
         }
@@ -155,16 +165,92 @@ export class DataTableSelectionComponent {
     return null;
   }
 
-  setTabFocusCellToFirst(): void {
-    const selectionElem: HTMLElement = this.elementRef.nativeElement;
-    const firstCell = <HTMLElement>selectionElem.getElementsByClassName('datatable-body-cell').item(0);
-    if (firstCell) {
-      console.log('operation');
-      this.transferTabFocus(firstCell);
+  getNextRow(rowElement: HTMLElement): any {
+    const nextRow = <HTMLElement>rowElement.nextElementSibling;
+    const parentElement = rowElement.parentElement;
+
+    if (nextRow && nextRow.tagName.toLowerCase() === 'datatable-body-row') {
+      return nextRow;
+    } else if (parentElement) {
+      // Cannot find next row in current row wrapper, so look at each next row wrapper to find one with row contents.
+      let nextRowWrapper = <HTMLElement>parentElement;
+      while (nextRowWrapper) {
+        nextRowWrapper = <HTMLElement>nextRowWrapper.nextElementSibling;
+
+        if (nextRowWrapper) {
+          for (let i = 0; i < nextRowWrapper.children.length; i++) {
+            if (nextRowWrapper.children[i].tagName.toLowerCase() === 'datatable-body-row') {
+              return nextRowWrapper.children[i];
+            }
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * If it is found that the 2nd last element has been focused (either at top or bottom of table body viewport),
+   * then scroll the table viewport so that more elements will be visible and available for focus.
+   */
+  scrollTableBody(lastRow: HTMLElement, keyCode: number): void {
+    let lastRowWrap: HTMLElement = lastRow.parentElement;
+    while (lastRowWrap && lastRowWrap.tagName.toLowerCase() !== 'datatable-row-wrapper') {
+      lastRowWrap = lastRowWrap.parentElement;
+    }
+
+    if (lastRowWrap) {
+      let tableBodyElem: HTMLElement = lastRowWrap.parentElement;
+      while (tableBodyElem && tableBodyElem.tagName.toLowerCase() !== 'datatable-body') {
+        tableBodyElem = tableBodyElem.parentElement;
+      }
+
+      if (tableBodyElem) {
+        const lastWrapRect: ClientRect = lastRowWrap.getBoundingClientRect();
+        const directionMult: number = (keyCode === Keys.down ? 1 : -1);
+        tableBodyElem.scrollBy(0, directionMult * lastWrapRect.height);
+      }
     }
   }
 
-  transferTabFocus(to: HTMLElement): void {
+  /**
+   * Resets the tab focus for body cells if paging or scrolling occured that caused focus cell to fall out
+   * of bounds. Will automatically set a timeout period that acts like a debunce time to prevent useless
+   * operations from occuring while scrolling.
+   */
+  resetTabFocusIfLost(): void {
+    clearTimeout(this._focusResetTimeout);
+    this._focusResetTimeout = setTimeout(() => {
+      let curTabFocusCellRect: ClientRect;
+      let tableBodyRect: ClientRect;
+
+      // Get bounding rectangles of both table body and current tab focus cell.
+      if (this.tabFocusCellElement) {
+        curTabFocusCellRect = this.tabFocusCellElement.getBoundingClientRect();
+        let tableBodyElem: HTMLElement = this.tabFocusCellElement.parentElement;
+        while(tableBodyElem && tableBodyElem.tagName.toLowerCase() !== 'datatable-body') {
+          tableBodyElem = tableBodyElem.parentElement;
+        }
+        if (tableBodyElem) {
+          tableBodyRect = tableBodyElem.getBoundingClientRect();
+        }
+      }
+
+      // Check to see if tab focus cell is outside the boundary of the body.
+      if (!this.tabFocusCellElement || !tableBodyRect
+      || curTabFocusCellRect.top >= tableBodyRect.bottom
+      || curTabFocusCellRect.bottom <= tableBodyRect.top) {
+        const selectionElem: HTMLElement = this.elementRef.nativeElement;
+        const firstCell = <HTMLElement>selectionElem.getElementsByClassName('datatable-body-cell').item(0);
+        if (firstCell) {
+          this.transferCellTabFocus(firstCell);
+        }
+      }
+    }, 100);
+  }
+
+  transferCellTabFocus(to: HTMLElement): void {
     if (this.tabFocusCellElement) {
       this.tabFocusCellElement.tabIndex = -1;
     }
@@ -209,7 +295,7 @@ export class DataTableSelectionComponent {
     }
     
     if (nextCellElement) {
-      this.transferTabFocus(nextCellElement);
+      this.transferCellTabFocus(nextCellElement);
       nextCellElement.focus();
     }
   }

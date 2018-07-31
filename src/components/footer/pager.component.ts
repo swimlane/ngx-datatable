@@ -1,28 +1,35 @@
 import {
   Component, Input, Output, EventEmitter, ChangeDetectionStrategy
 } from '@angular/core';
+import { Keys } from '../../utils';
 
 @Component({
   selector: 'datatable-pager',
   template: `
     <ul class="pager">
-      <li [class.disabled]="!canPrevious()">
-        <a
+      <li
+        [class.disabled]="!canPrevious()"
+        (keypress)="onKeyPress($event, firstPageButton)"
+        [tabindex]="(canPrevious() ? '0' : '-1')">
+        <a #firstPageButton
           role="button"
           aria-label="go to first page"
           href="javascript:void(0)"
           (click)="selectPage(1)"
-          [tabindex]="(canPrevious() ? '0' : '-1')">
+          tabindex="-1">
           <i class="{{pagerPreviousIcon}}"></i>
         </a>
       </li>
-      <li [class.disabled]="!canPrevious()">
-        <a
+      <li
+        [class.disabled]="!canPrevious()"
+        (keypress)="onKeyPress($event, pageBackButton)"
+        [tabindex]="(canPrevious() ? '0' : '-1')">
+        <a #pageBackButton
           role="button"
           aria-label="go to previous page"
           href="javascript:void(0)"
           (click)="prevPage()"
-          [tabindex]="(canPrevious() ? '0' : '-1')">
+          tabindex="-1">
           <i class="{{pagerLeftArrowIcon}}"></i>
         </a>
       </li>
@@ -31,30 +38,39 @@ import {
         [attr.aria-label]="'page ' + pg.number"
         class="pages"
         *ngFor="let pg of pages"
-        [class.active]="pg.number === page">
-        <a
+        [class.active]="pg.number === page"
+        (keypress)="onKeyPress($event, pageNumButton)"
+        tabindex="0">
+        <a #pageNumButton
           href="javascript:void(0)"
-          (click)="selectPage(pg.number)">
+          (click)="selectPage(pg.number)"
+          tabindex="-1">
           {{pg.text}}
         </a>
       </li>
-      <li [class.disabled]="!canNext()">
-        <a
+      <li
+        [class.disabled]="!canNext()"
+        (keypress)="onKeyPress($event, pageForwardButton)"
+        [tabindex]="(canNext() ? '0' : '-1')">
+        <a #pageForwardButton
           role="button"
           aria-label="go to next page"
           href="javascript:void(0)"
           (click)="nextPage()"
-          [tabindex]="(canNext() ? '0' : '-1')">
+          tabindex="-1">
           <i class="{{pagerRightArrowIcon}}"></i>
         </a>
       </li>
-      <li [class.disabled]="!canNext()">
-        <a
+      <li
+        [class.disabled]="!canNext()"
+        (keypress)="onKeyPress($event, lastPageButton)"
+        [tabindex]="(canNext() ? '0' : '-1')">
+        <a #lastPageButton
           role="button"
           aria-label="go to last page"
           href="javascript:void(0)"
           (click)="selectPage(totalPages)"
-          [tabindex]="(canNext() ? '0' : '-1')">
+          tabindex="-1">
           <i class="{{pagerNextIcon}}"></i>
         </a>
       </li>
@@ -137,6 +153,12 @@ export class DataTablePagerComponent {
       this.change.emit({
         page
       });
+    }
+  }
+
+  onKeyPress(event: KeyboardEvent, pagerButton: HTMLElement): void {
+    if (event.keyCode === Keys.return) {
+      pagerButton.click();
     }
   }
 

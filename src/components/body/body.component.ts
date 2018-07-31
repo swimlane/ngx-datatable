@@ -37,6 +37,7 @@ import { DataTableSelectionComponent } from './selection.component';
           [innerWidth]="innerWidth"
           [rows]="rows"
           [columns]="columns"
+          (keyboardFocus)="selector.onKeyboardFocus($event)"
           role="row">
         </datatable-summary-row>
         <datatable-row-wrapper
@@ -99,6 +100,7 @@ import { DataTableSelectionComponent } from './selection.component';
           [innerWidth]="innerWidth"
           [rows]="rows"
           [columns]="columns"
+          (keyboardFocus)="selector.onKeyboardFocus($event)"
           role="row">
         </datatable-summary-row>
       </datatable-scroller>
@@ -254,7 +256,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   listener: any;
   rowIndexes: any = new Map();
   rowExpansions: any = new Map();
-  tabFocusCellElement: HTMLElement;
 
   _rows: any[];
   _bodyHeight: any;
@@ -426,9 +427,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     }
 
     this.temp = temp;
-    if (!this.virtualization) {
-      setTimeout(() => this.selector.setTabFocusCellToFirst());
-    }
+    this.selector.resetTabFocusIfLost();
   }
 
   /**
