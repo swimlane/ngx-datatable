@@ -92,7 +92,8 @@ import {
     DataTableFooterTemplateDirective,
     DatatableFooterDirective,
     DataTablePagerComponent,
-    DatatableGroupHeaderTemplateDirective
+    DatatableGroupHeaderTemplateDirective,
+    DataTableBodyRowComponent
   ]
 })
 export class NgxDatatableModule { }
