@@ -65,7 +65,9 @@ export class DataTableSelectionComponent {
     this.selected.splice(0, this.selected.length);
     this.selected.push(...selected);
 
-    this.prevIndex = index;
+    if (multi && !event.shiftKey) {
+        this.prevIndex = index;
+    }
 
     this.select.emit({
       selected
