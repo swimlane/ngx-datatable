@@ -14,6 +14,9 @@ bootstrap table theme
       .datatable-header-cell-label {
         line-height: 24px;
       }
+      .resize-handle {
+        border-right: solid 1px #d1d4d7;
+      }
     }
   }
   .datatable-body {
