@@ -393,8 +393,8 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     return html.replace(/<\/?[^>]+(>|$)/g, '');
   }
 
-  onTreeAction(row: any) {
-    this.treeAction.emit();
+  onTreeAction() {
+    this.treeAction.emit(this.row);
   }
 
   calcLeftMargin(column: any, row: any) {
