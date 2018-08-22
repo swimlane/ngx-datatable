@@ -863,7 +863,6 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   @HostListener('window:resize')
   @throttleable(5)
   onWindowResize(): void {
-    console.log('resized');
     this.recalculate();
   }
 
