@@ -863,6 +863,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   @HostListener('window:resize')
   @throttleable(5)
   onWindowResize(): void {
+    console.log('resized');
     this.recalculate();
   }
 
@@ -897,11 +898,10 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    *
    */
   recalculateDims(): void {
-    const dims = this.dimensionsHelper.getDimensions(this.element);
-    this._innerWidth = Math.floor(dims.width);
+    this._innerWidth = this.element.clientWidth;
 
     if (this.scrollbarV) {
-      let height = dims.height;
+      let height = this.element.clientHeight;
       if (this.headerHeight) height = height - this.headerHeight;
       if (this.footerHeight) height = height - this.footerHeight;
       this.bodyHeight = height;
