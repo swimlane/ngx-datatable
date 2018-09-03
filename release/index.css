@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"11.1.7" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"3.0.0" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -42,8 +42,8 @@
     box-sizing: border-box; }
   .ngx-datatable.scroll-vertical .datatable-body {
     overflow-y: auto; }
-    .ngx-datatable.scroll-vertical .datatable-body .datatable-row-wrapper {
-      position: absolute; }
+  .ngx-datatable.scroll-vertical.virtualized .datatable-body .datatable-row-wrapper {
+    position: absolute; }
   .ngx-datatable.scroll-horz .datatable-body {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch; }
@@ -61,7 +61,12 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis; }
+      .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-group-cell {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
   .ngx-datatable .datatable-body-row,
+  .ngx-datatable .datatable-row-center,
   .ngx-datatable .datatable-header-inner {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -75,6 +80,7 @@
     flex-flow: row; }
   .ngx-datatable .datatable-body-cell,
   .ngx-datatable .datatable-header-cell {
+    overflow-x: hidden;
     vertical-align: top;
     display: inline-block;
     line-height: 1.625; }
@@ -86,6 +92,7 @@
     z-index: 9; }
   .ngx-datatable .datatable-row-left,
   .ngx-datatable .datatable-row-center,
+  .ngx-datatable .datatable-row-group,
   .ngx-datatable .datatable-row-right {
     position: relative; }
   .ngx-datatable .datatable-header {
@@ -108,7 +115,7 @@
         vertical-align: middle;
         display: inline-block;
         cursor: pointer; }
-      .ngx-datatable .datatable-header .datatable-header-cell .resize-handle {
+      .ngx-datatable .datatable-header .datatable-header-cell .resize-handle, .ngx-datatable .datatable-header .datatable-header-cell .resize-handle--not-resizable {
         display: inline-block;
         position: absolute;
         right: 0;
@@ -116,10 +123,24 @@
         bottom: 0;
         width: 5px;
         padding: 0 4px;
-        visibility: visible;
-        cursor: ew-resize; }
+        visibility: hidden; }
+      .ngx-datatable .datatable-header .datatable-header-cell .resize-handle {
+        cursor: ew-resize;
+        visibility: visible; }
       .ngx-datatable .datatable-header .datatable-header-cell.resizeable:hover .resize-handle {
         visibility: visible; }
+      .ngx-datatable .datatable-header .datatable-header-cell:hover .resize-handle--not-resizable {
+        visibility: visible; }
+      .ngx-datatable .datatable-header .datatable-header-cell .targetMarker {
+        position: absolute;
+        top: 0;
+        bottom: 0; }
+        .ngx-datatable .datatable-header .datatable-header-cell .targetMarker.dragFromLeft {
+          right: 0; }
+        .ngx-datatable .datatable-header .datatable-header-cell .targetMarker.dragFromRight {
+          left: 0; }
+      .ngx-datatable .datatable-header .datatable-header-cell .datatable-header-cell-template-wrap {
+        height: inherit; }
   .ngx-datatable .datatable-body {
     position: relative;
     z-index: 10;

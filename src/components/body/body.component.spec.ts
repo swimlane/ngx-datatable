@@ -1,4 +1,5 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
+import {} from 'jasmine';
 
 import {
   DataTableBodyComponent,
@@ -6,6 +7,7 @@ import {
   DataTableRowWrapperComponent,
   DataTableBodyCellComponent,
   DataTableSelectionComponent,
+  DataTableSummaryRowComponent,
   ProgressBarComponent,
   ScrollerComponent
 } from '.';
@@ -19,12 +21,13 @@ describe('DataTableBodyComponent', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ 
+      declarations: [
         DataTableBodyComponent,
         DataTableBodyRowComponent,
         DataTableRowWrapperComponent,
         DataTableBodyCellComponent,
         DataTableSelectionComponent,
+        DataTableSummaryRowComponent,
         ProgressBarComponent,
         ScrollerComponent
       ],
@@ -37,7 +40,7 @@ describe('DataTableBodyComponent', () => {
       fixture = TestBed.createComponent(DataTableBodyComponent);
       component = fixture.componentInstance;
       element = fixture.nativeElement;
-    });    
+    });
   }));
 
   describe('fixture', () => {
@@ -45,7 +48,6 @@ describe('DataTableBodyComponent', () => {
       expect(component).toBeTruthy();
     });
   });
-
 
   describe('Paging', () => {
 
@@ -55,7 +57,7 @@ describe('DataTableBodyComponent', () => {
       component.pageSize = 10;
       component.offset = 1;
       component.rowCount = 20;
-      let expectedIndexes = { first: 10, last: 20};
+      const expectedIndexes = { first: 10, last: 20};
       component.updateIndexes();
       expect(component.indexes).toEqual(expectedIndexes);
     });
@@ -66,7 +68,7 @@ describe('DataTableBodyComponent', () => {
       component.pageSize = 5;
       component.offset = 1;
       component.rowCount = 9;
-      let expectedIndexes = { first: 5, last: 9};
+      const expectedIndexes = { first: 5, last: 9};
       component.updateIndexes();
       expect(component.indexes).toEqual(expectedIndexes);
     });
@@ -77,7 +79,7 @@ describe('DataTableBodyComponent', () => {
       component.pageSize = 10;
       component.offset = 1;
       component.rowCount = 20;
-      let expectedIndexes = { first: 0, last: 10};
+      const expectedIndexes = { first: 0, last: 10};
       component.updateIndexes();
       expect(component.indexes).toEqual(expectedIndexes);
     });
@@ -88,10 +90,26 @@ describe('DataTableBodyComponent', () => {
       component.pageSize = 5;
       component.offset = 1;
       component.rowCount = 9;
-      let expectedIndexes = { first: 0, last: 5};
+      const expectedIndexes = { first: 0, last: 5};
       component.updateIndexes();
       expect(component.indexes).toEqual(expectedIndexes);
     });
 
+  });
+
+  describe('Summary row', () => {
+    it('should not return custom styles for a bottom summary row if a scrollbar mode is off', () => {
+      const styles = component.getBottomSummaryRowStyles();
+      expect(styles).toBeFalsy();
+    });
+
+    it('should return custom styles for a bottom summary row if a scrollbar mode is on', () => {
+      component.rowHeight = 50;
+      component.scrollbarV = true;
+      component.virtualization = true;
+      component.rows = [ {num: 1}, {num: 2}, {num: 3}, {num: 4} ];
+      const styles = component.getBottomSummaryRowStyles();
+      expect(styles).toBeDefined();
+    });
   });
 });

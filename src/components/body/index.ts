@@ -7,3 +7,4 @@ export * from './body-row-wrapper.component';
 export * from './selection.component';
 export * from './body-group-header.directive';
 export * from './body-group-header-template.directive';
+export * from './summary';

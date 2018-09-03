@@ -9,7 +9,7 @@ import {
   DataTableFooterComponent,
   DataTableHeaderCellComponent,
   DataTablePagerComponent,
-  DataTableBodyRowComponent,  
+  DataTableBodyRowComponent,
   DataTableRowWrapperComponent,
   ProgressBarComponent,
   DataTableBodyCellComponent,
@@ -19,10 +19,12 @@ import {
   DataTableSelectionComponent,
   DataTableColumnHeaderDirective,
   DataTableColumnCellDirective,
+  DataTableColumnCellTreeToggle,
   DatatableRowDetailTemplateDirective,
   DataTableFooterTemplateDirective,
   DatatableFooterDirective,
-  DatatableGroupHeaderTemplateDirective
+  DatatableGroupHeaderTemplateDirective,
+  DataTableSummaryRowComponent
 } from './components';
 
 import {
@@ -33,9 +35,10 @@ import {
   DraggableDirective
 } from './directives';
 
-import { 
+import {
   ScrollbarHelper,
-  DimensionsHelper 
+  DimensionsHelper,
+  ColumnChangesService
 } from './services';
 
 @NgModule({
@@ -44,7 +47,8 @@ import {
   ],
   providers: [
     ScrollbarHelper,
-    DimensionsHelper
+    DimensionsHelper,
+    ColumnChangesService
   ],
   declarations: [
     DataTableFooterTemplateDirective,
@@ -61,7 +65,7 @@ import {
     DataTableBodyComponent,
     DataTableFooterComponent,
     DataTablePagerComponent,
-    ProgressBarComponent,    
+    ProgressBarComponent,
     DataTableBodyRowComponent,
     DataTableRowWrapperComponent,
     DatatableRowDetailDirective,
@@ -71,8 +75,10 @@ import {
     DataTableSelectionComponent,
     DataTableColumnHeaderDirective,
     DataTableColumnCellDirective,
+    DataTableColumnCellTreeToggle,
     DatatableFooterDirective,
-    DatatableGroupHeaderTemplateDirective
+    DatatableGroupHeaderTemplateDirective,
+    DataTableSummaryRowComponent,
   ],
   exports: [
     DatatableComponent,
@@ -82,6 +88,7 @@ import {
     DataTableColumnDirective,
     DataTableColumnHeaderDirective,
     DataTableColumnCellDirective,
+    DataTableColumnCellTreeToggle,
     DataTableFooterTemplateDirective,
     DatatableFooterDirective,
     DataTablePagerComponent,
