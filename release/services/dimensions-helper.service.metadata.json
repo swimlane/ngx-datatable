@@ -1,0 +1,1 @@
+[{"__symbolic":"module","version":4,"metadata":{"DimensionsHelper":{"__symbolic":"class","decorators":[{"__symbolic":"call","expression":{"__symbolic":"reference","module":"@angular/core","name":"Injectable","line":6,"character":1}}],"members":{"getDimensions":[{"__symbolic":"method"}]}}}}]

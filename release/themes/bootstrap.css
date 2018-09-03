@@ -1,0 +1,67 @@
+/*
+bootstrap table theme
+*/
+.ngx-datatable.bootstrap {
+  box-shadow: none;
+  font-size: 13px; }
+  .ngx-datatable.bootstrap .datatable-header {
+    height: unset !important; }
+    .ngx-datatable.bootstrap .datatable-header .datatable-header-cell {
+      vertical-align: bottom;
+      padding: 0.75rem;
+      border-bottom: 1px solid #d1d4d7; }
+      .ngx-datatable.bootstrap .datatable-header .datatable-header-cell .datatable-header-cell-label {
+        line-height: 24px; }
+  .ngx-datatable.bootstrap .datatable-body .datatable-body-row {
+    vertical-align: top;
+    border-top: 1px solid #d1d4d7; }
+    .ngx-datatable.bootstrap .datatable-body .datatable-body-row.datatable-row-even {
+      background-color: rgba(0, 0, 0, 0.05); }
+    .ngx-datatable.bootstrap .datatable-body .datatable-body-row.active {
+      background-color: #1483ff;
+      color: #FFF; }
+    .ngx-datatable.bootstrap .datatable-body .datatable-body-row .datatable-body-cell {
+      padding: 0.75rem;
+      text-align: left;
+      vertical-align: top; }
+  .ngx-datatable.bootstrap .datatable-body .empty-row {
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0; }
+  .ngx-datatable.bootstrap .datatable-footer {
+    background: #424242;
+    color: #ededed;
+    margin-top: -1px; }
+    .ngx-datatable.bootstrap .datatable-footer .page-count {
+      line-height: 50px;
+      height: 50px;
+      padding: 0 1.2rem; }
+    .ngx-datatable.bootstrap .datatable-footer .datatable-pager {
+      margin: 0 10px;
+      vertical-align: top; }
+      .ngx-datatable.bootstrap .datatable-footer .datatable-pager ul li {
+        margin: 10px 0px; }
+        .ngx-datatable.bootstrap .datatable-footer .datatable-pager ul li:not(.disabled).active a, .ngx-datatable.bootstrap .datatable-footer .datatable-pager ul li:not(.disabled):hover a {
+          background-color: #545454;
+          font-weight: bold; }
+      .ngx-datatable.bootstrap .datatable-footer .datatable-pager a {
+        height: 22px;
+        min-width: 24px;
+        line-height: 22px;
+        padding: 0;
+        border-radius: 3px;
+        margin: 0 3px;
+        text-align: center;
+        vertical-align: top;
+        text-decoration: none;
+        vertical-align: bottom;
+        color: #ededed; }
+      .ngx-datatable.bootstrap .datatable-footer .datatable-pager .datatable-icon-left,
+      .ngx-datatable.bootstrap .datatable-footer .datatable-pager .datatable-icon-skip,
+      .ngx-datatable.bootstrap .datatable-footer .datatable-pager .datatable-icon-right,
+      .ngx-datatable.bootstrap .datatable-footer .datatable-pager .datatable-icon-prev {
+        font-size: 18px;
+        line-height: 27px;
+        padding: 0 3px; }
+  .ngx-datatable.bootstrap .datatable-summary-row .datatable-body-row .datatable-body-cell {
+    font-weight: bold; }
