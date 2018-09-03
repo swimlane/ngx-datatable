@@ -149,7 +149,7 @@
     transition: width 0.3s ease;
     font-size: 14px;
     font-weight: 400; }
-  .ngx-datatable.material .progress-linear {
+  .ngx-datatable.material .datatable-body .progress-linear {
     display: block;
     position: relative;
     width: 100%;
@@ -157,7 +157,7 @@
     padding: 0;
     margin: 0;
     position: absolute; }
-    .ngx-datatable.material .progress-linear .container {
+    .ngx-datatable.material .datatable-body .progress-linear .container {
       display: block;
       position: relative;
       overflow: hidden;
@@ -166,7 +166,7 @@
       -webkit-transform: translate(0, 0) scale(1, 1);
       transform: translate(0, 0) scale(1, 1);
       background-color: #aad1f9; }
-      .ngx-datatable.material .progress-linear .container .bar {
+      .ngx-datatable.material .datatable-body .progress-linear .container .bar {
         transition: all .2s linear;
         -webkit-animation: query 0.8s infinite cubic-bezier(0.39, 0.575, 0.565, 1);
         animation: query 0.8s infinite cubic-bezier(0.39, 0.575, 0.565, 1);
@@ -220,6 +220,12 @@
         font-size: 20px;
         line-height: 20px;
         padding: 0 3px; }
+  .ngx-datatable.material .datatable-summary-row .datatable-body-row {
+    background-color: #ddd; }
+    .ngx-datatable.material .datatable-summary-row .datatable-body-row:hover {
+      background-color: #ddd; }
+    .ngx-datatable.material .datatable-summary-row .datatable-body-row .datatable-body-cell {
+      font-weight: bold; }
 
 /**
  * Checkboxes

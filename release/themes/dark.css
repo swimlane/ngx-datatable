@@ -67,3 +67,9 @@
         font-size: 18px;
         line-height: 27px;
         padding: 0 3px; }
+  .ngx-datatable.dark .datatable-summary-row .datatable-body-row {
+    background-color: #14171f; }
+    .ngx-datatable.dark .datatable-summary-row .datatable-body-row:hover {
+      background-color: #14171f; }
+    .ngx-datatable.dark .datatable-summary-row .datatable-body-row .datatable-body-cell {
+      font-weight: bold; }

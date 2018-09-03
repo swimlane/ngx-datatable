@@ -2,10 +2,8 @@ import {
   Directive, Input, Output, EventEmitter, HostBinding,
   HostListener, OnDestroy
 } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable, Subscription, fromEvent } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { fromEvent } from 'rxjs/observable/fromEvent';
 import { MouseEvent } from '../events';
 
 @Directive({ selector: '[long-press]' })

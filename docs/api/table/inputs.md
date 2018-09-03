@@ -52,7 +52,10 @@ Static messages in the table you can override for localization.
   emptyMessage: 'No data to display',
 
   // Footer total message
-  totalMessage: 'total'
+  totalMessage: 'total',
+
+  // Footer selected message
+  selectedMessage: 'selected'
 }
 ```
 

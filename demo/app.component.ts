@@ -56,9 +56,16 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
             </ul>
           </li>
           <li>
+            <h4>Tree</h4>
+            <ul>
+              <li><a href="#fullscreen-tree" (click)="state='fullscreen-tree'">Full screen Tree</a></li>
+              <li><a href="#client-tree" (click)="state='client-tree'">Client Side Tree</a></li>
+            </ul>
+          </li>
+          <li>
             <h4>Rows</h4>
             <ul>
-              <li><a href="#row-grouping" (click)="state='row-grouping'">Row Grouping</a></li>            
+              <li><a href="#row-grouping" (click)="state='row-grouping'">Row Grouping</a></li>
               <li><a href="#" (click)="state=''">Fluid Row Height</a></li>
               <li><a href="#basic-fixed" (click)="state='basic-fixed'">Fixed Row Height</a></li>
               <li><a href="#dynamic" (click)="state='dynamic'">Dynamic Row Height</a></li>
@@ -71,6 +78,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
             <ul>
               <li><a href="#client-paging" (click)="state='client-paging'">Client-side</a></li>
               <li><a href="#server-paging" (click)="state='server-paging'">Server-side</a></li>
+              <li><a href="#paging-scrolling-novirtualization" (click)="state='paging-scrolling-novirtualization'">Scrolling no virtual</a></li>
               <li><a href="#server-scrolling" (click)="state='server-scrolling'">Scrolling server-side</a></li>
               <li><a href="#virtual-paging" (click)="state='virtual-paging'">Virtual server-side</a></li>
             </ul>
@@ -111,6 +119,16 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
               <li><a href="#fixed" (click)="state='fixed'">Fixed</a></li>
               <li><a href="#force" (click)="state='force'">Force</a></li>
               <li><a href="#pinning" (click)="state='pinning'">Pinning</a></li>
+              <li><a href="#reorder" (click)="state='reorder'">Reorder</a></li>
+            </ul>
+          </li>
+          <li>
+            <h4>Summary Row</h4>
+            <ul>
+              <li><a href="#simple-summary" (click)="state='simple-summary'">Simple</a></li>
+              <li><a href="#custom-template-summary" (click)="state='custom-template-summary'">Custom Template</a></li>
+              <li><a href="#paging-summary" (click)="state='paging-summary'">Server-side paging</a></li>
+              <li><a href="#inline-html-summary" (click)="state='inline-html-summary'">Inline HTML</a></li>
             </ul>
           </li>
         </ul>
@@ -139,10 +157,15 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
         <basic-dark-theme-demo *ngIf="state === 'dark'"></basic-dark-theme-demo>
         <basic-bootstrap-theme-demo  *ngIf="state === 'bootstrap'"></basic-bootstrap-theme-demo>
 
+        <!-- Tree -->
+        <full-screen-tree-demo *ngIf="state === 'fullscreen-tree'"></full-screen-tree-demo>
+        <client-side-tree-demo *ngIf="state === 'client-tree'"></client-side-tree-demo>
+
         <!-- Paging -->
         <row-grouping-demo *ngIf="state === 'row-grouping'"></row-grouping-demo>
         <client-paging-demo *ngIf="state === 'client-paging'"></client-paging-demo>
         <server-paging-demo *ngIf="state === 'server-paging'"></server-paging-demo>
+        <paging-scrolling-novirtualization-demo *ngIf="state === 'paging-scrolling-novirtualization'"></paging-scrolling-novirtualization-demo>
         <server-scrolling-demo *ngIf="state === 'server-scrolling'"></server-scrolling-demo>
         <virtual-paging-demo *ngIf="state === 'virtual-paging'"></virtual-paging-demo>
 
@@ -171,6 +194,15 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
         <column-standard-demo *ngIf="state === 'fixed'"></column-standard-demo>
         <column-force-demo *ngIf="state === 'force'"></column-force-demo>
         <column-pinning-demo *ngIf="state === 'pinning'"></column-pinning-demo>
+        <column-reorder-demo *ngIf="state === 'reorder'"></column-reorder-demo>
+
+        <!-- Summary row -->
+        <summary-row-simple-demo *ngIf="state === 'simple-summary'"></summary-row-simple-demo>
+        <summary-row-custom-template-demo *ngIf="state === 'custom-template-summary'">
+        </summary-row-custom-template-demo>
+        <summary-row-server-paging-demo *ngIf="state === 'paging-summary'">
+        </summary-row-server-paging-demo>
+        <summary-row-inline-html *ngIf="state === 'inline-html-summary'"></summary-row-inline-html>
       </content>
     </div>
   `

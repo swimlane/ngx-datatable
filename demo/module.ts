@@ -33,6 +33,7 @@ import { ClientPagingComponent } from './paging/paging-client.component';
 import { ServerPagingComponent } from './paging/paging-server.component';
 import { ServerScrollingComponent } from './paging/scrolling-server.component';
 import { VirtualPagingComponent } from './paging/paging-virtual.component';
+import { PagingScrollingNoVirtualizationComponent } from './paging/paging-scrolling-novirtualization.component';
 
 // -- Sorting
 import { SortingComparatorComponent } from './sorting/sorting-comparator.component';
@@ -43,6 +44,10 @@ import { ClientSortingComponent } from './sorting/sorting-client.component';
 // -- Templates
 import { InlineTemplatesComponent } from './templates/template-dom.component';
 import { TemplateRefTemplatesComponent } from './templates/template-obj.component';
+
+// -- Tree
+import { FullScreenTreeComponent } from './tree/fullscreen.component';
+import { ClientTreeComponent } from './tree/client-tree.component';
 
 // -- Selection
 import { CellSelectionComponent } from './selection/selection-cell.component';
@@ -59,6 +64,13 @@ import { ColumnStandardComponent } from './columns/column-standard.component';
 import { ColumnForceComponent } from './columns/column-force.component';
 import { ColumnFlexComponent } from './columns/column-flex.component';
 import { ColumnPinningComponent } from './columns/pinning.component';
+import { ColumnReorderComponent } from './columns/column-reorder.component';
+
+// -- Summary row
+import { SummaryRowSimpleComponent } from './summary/summary-row-simple.component';
+import { SummaryRowCustomTemplateComponent } from './summary/summary-row-custom-template.component';
+import { SummaryRowServerPagingComponent } from './summary/summary-row-server-paging.component';
+import { SummaryRowInlineHtmlComponent } from './summary/summary-row-inline-html.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +78,7 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     BasicAutoComponent,
     BasicFixedComponent,
     FullScreenComponent,
+    FullScreenTreeComponent,
     InlineEditComponent,
     VirtualScrollComponent,
     HorzVertScrolling,
@@ -74,6 +87,7 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     ResponsiveComponent,
     ClientPagingComponent,
     ServerPagingComponent,
+    PagingScrollingNoVirtualizationComponent,
     ServerScrollingComponent,
     ClientSortingComponent,
     DefaultSortingComponent,
@@ -88,6 +102,7 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     ColumnStandardComponent,
     ColumnForceComponent,
     ColumnPinningComponent,
+    ColumnReorderComponent,
     FilterBarComponent,
     VirtualPagingComponent,
     DarkThemeComponent,
@@ -104,7 +119,12 @@ import { ColumnPinningComponent } from './columns/pinning.component';
     DynamicHeightComponent,
     FooterDemoComponent,
     RowGroupingComponent,
-    BootstrapThemeComponent
+    BootstrapThemeComponent,
+    ClientTreeComponent,
+    SummaryRowSimpleComponent,
+    SummaryRowCustomTemplateComponent,
+    SummaryRowServerPagingComponent,
+    SummaryRowInlineHtmlComponent,
   ],
   imports: [BrowserModule, NgxDatatableModule],
   bootstrap: [AppComponent]

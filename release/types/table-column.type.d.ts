@@ -159,6 +159,13 @@ export interface TableColumn {
      */
     headerTemplate?: any;
     /**
+     * Tree toggle template ref
+     *
+     * @type {*}
+     * @memberOf TableColumn
+     */
+    treeToggleTemplate?: any;
+    /**
      * CSS Classes for the cell
      *
      *
@@ -179,4 +186,32 @@ export interface TableColumn {
      * @memberOf TableColumn
      */
     headerCheckboxable?: boolean;
+    /**
+     * Is tree displayed on this column
+     *
+     * @type {boolean}
+     * @memberOf TableColumn
+     */
+    isTreeColumn?: boolean;
+    /**
+     * Width of the tree level indent
+     *
+     * @type {number}
+     * @memberOf TableColumn
+     */
+    treeLevelIndent?: number;
+    /**
+     * Summary function
+     *
+     * @type {(cells: any[]) => any}
+     * @memberOf TableColumn
+     */
+    summaryFunc?: (cells: any[]) => any;
+    /**
+     * Summary cell template ref
+     *
+     * @type {*}
+     * @memberOf TableColumn
+     */
+    summaryTemplate?: any;
 }

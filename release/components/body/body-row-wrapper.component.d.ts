@@ -23,5 +23,5 @@ export declare class DataTableRowWrapperComponent implements DoCheck {
     constructor(cd: ChangeDetectorRef, differs: KeyValueDiffers);
     ngDoCheck(): void;
     onContextmenu($event: MouseEvent): void;
-    getGroupHeaderStyle(group: any): any;
+    getGroupHeaderStyle(): any;
 }
