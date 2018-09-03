@@ -50,6 +50,9 @@ import { BehaviorSubject, Subscription } from 'rxjs';
         (select)="onHeaderSelect($event)"
         (columnContextmenu)="onColumnContextmenu($event)">
       </datatable-header>
+      <datatable-progress
+        *ngIf="loadingIndicator">
+      </datatable-progress>
       <datatable-body
         [groupRowsBy]="groupRowsBy"
         [groupedRows]="groupedRows"
@@ -58,7 +61,6 @@ import { BehaviorSubject, Subscription } from 'rxjs';
         [scrollbarV]="scrollbarV"
         [scrollbarH]="scrollbarH"
         [virtualization]="virtualization"
-        [loadingIndicator]="loadingIndicator"
         [externalPaging]="externalPaging"
         [rowHeight]="rowHeight"
         [rowCount]="rowCount"
@@ -1068,31 +1070,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * The header triggered a column re-order event.
    */
   onColumnReorder({ column, newValue, prevValue }: any): void {
-    const cols = this._internalColumns.map(c => {
-      return { ...c };
-    });
-
-    if (this.swapColumns) {
-      const prevCol = cols[newValue];
-      cols[newValue] = column;
-      cols[prevValue] = prevCol;
-    } else {
-      if (newValue > prevValue) {
-        const movedCol = cols[prevValue];
-        for (let i = prevValue; i < newValue; i++) {
-          cols[i] = cols[i + 1];
-        }
-        cols[newValue] = movedCol;
-      } else {
-        const movedCol = cols[prevValue];
-        for (let i = prevValue; i > newValue; i--) {
-          cols[i] = cols[i - 1];
-        }
-        cols[newValue] = movedCol;
-      }
-    }
-
-    this._internalColumns = cols;
+    this._internalColumns = this.moveColumns(this._internalColumns, prevValue, newValue);
 
     this.reorder.emit({
       column,
@@ -1207,5 +1185,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
   private sortInternalRows(): void {
     this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
+  }
+
+  /**
+   * Method to move columns
+   */
+  private moveColumns(array: any[], from: number, to: number) {
+    array.splice(to, 0, array.splice(from, 1)[0]);
+    return array.slice();
   }
 }
