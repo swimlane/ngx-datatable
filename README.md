@@ -12,3 +12,9 @@ To use ngx-datatable-with-ie-fix in your project install it via [npm](https://ww
 ```
 npm i ngx-datatable-with-ie-fix --save
 ```
+
+## Versioning
+_Note:_ Use the following versions of the library:
+* For Angular 6.x and RxJS > 5.5 — use 3.x (the latest)
+* For Angular 5.x and RxJS < 5.5 — use 2.x
+
