@@ -6,3 +6,4 @@ export * from './click.type';
 export * from './table-column.type';
 export * from './sort-prop-dir.type';
 export * from './contextmenu.type';
+export * from './activate-event.type';

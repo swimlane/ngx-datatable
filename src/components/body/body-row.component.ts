@@ -8,7 +8,7 @@ import {
 } from '../../utils';
 import { ScrollbarHelper } from '../../services';
 import { MouseEvent, KeyboardEvent, Event } from '../../events';
-import { TreeStatus } from '../../index';
+import { TableActivateEvent, TreeStatus } from '../../index';
 
 @Component({
   selector: 'datatable-body-row',
@@ -109,7 +109,7 @@ export class DataTableBodyRowComponent implements DoCheck {
     return this._columnGroupWidths.total;
   }
 
-  @Output() activate: EventEmitter<any> = new EventEmitter();
+  @Output() activate: EventEmitter<TableActivateEvent> = new EventEmitter();
   @Output() treeAction: EventEmitter<any> = new EventEmitter();
 
   _element: any;
@@ -177,7 +177,7 @@ export class DataTableBodyRowComponent implements DoCheck {
     return styles;
   }
 
-  onActivate(event: any, index: number): void {
+  onActivate(event: TableActivateEvent, index: number): void {
     event.cellIndex = index;
     event.rowElement = this._element;
     this.activate.emit(event);
@@ -209,7 +209,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   }
 
   @HostListener('mouseenter', ['$event'])
-  onMouseenter(event: any): void {
+  onMouseenter(event: MouseEvent): void {
     this.activate.emit({
         type: 'mouseenter',
         event,

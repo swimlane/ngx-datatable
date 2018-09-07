@@ -5,9 +5,9 @@ import {
 } from '@angular/core';
 
 import { Keys } from '../../utils';
-import { SortDirection } from '../../types';
+import { SortDirection, TableActivateEvent } from '../../types';
 import { TableColumn } from '../../types/table-column.type';
-import { MouseEvent, KeyboardEvent } from '../../events';
+import { MouseEvent, KeyboardEvent, Event } from '../../events';
 import { ContentChild } from '@angular/core/src/metadata/di';
 
 export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
@@ -166,7 +166,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     return this._treeStatus;
   }
 
-  @Output() activate: EventEmitter<any> = new EventEmitter();
+  @Output() activate: EventEmitter<TableActivateEvent> = new EventEmitter();
 
   @Output() treeAction: EventEmitter<any> = new EventEmitter();
 
@@ -364,7 +364,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     }
   }
 
-  onCheckboxChange(event: any): void {
+  onCheckboxChange(event: Event): void {
     this.activate.emit({
       type: 'checkbox',
       event,
