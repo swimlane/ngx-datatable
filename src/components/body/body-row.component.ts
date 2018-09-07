@@ -1,14 +1,13 @@
 import {
   Component, Input, HostBinding, ElementRef, Output, KeyValueDiffers, KeyValueDiffer,
-  EventEmitter, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, DoCheck, SkipSelf
+  EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef, DoCheck, SkipSelf, Renderer2, OnDestroy
 } from '@angular/core';
 
 import {
   columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys
 } from '../../utils';
-import { ScrollbarHelper } from '../../services';
-import { MouseEvent, KeyboardEvent, Event } from '../../events';
-import { TableActivateEvent, TreeStatus } from '../../index';
+import { ActivateHelperService, ScrollbarHelper } from '../../services';
+import { TableActivateEvent, TableActivateEventType, TreeStatus } from '../../index';
 
 @Component({
   selector: 'datatable-body-row',
@@ -36,7 +35,7 @@ import { TableActivateEvent, TreeStatus } from '../../index';
     </div>
   `
 })
-export class DataTableBodyRowComponent implements DoCheck {
+export class DataTableBodyRowComponent implements DoCheck, OnDestroy {
 
   @Input() set columns(val: any[]) {
     this._columns = val;
@@ -125,20 +124,28 @@ export class DataTableBodyRowComponent implements DoCheck {
   };
 
   private _rowDiffer: KeyValueDiffer<{}, {}>;
+  private _listeners: Array<() => void> = [];
 
   constructor(
       private differs: KeyValueDiffers,
       @SkipSelf() private scrollbarHelper: ScrollbarHelper,
       private cd: ChangeDetectorRef,
-      element: ElementRef) {
+      element: ElementRef,
+      private activateEventHelper: ActivateHelperService,
+      private renderer: Renderer2) {
     this._element = element.nativeElement;
     this._rowDiffer = differs.find({}).create();
+    this.registerEvents();
   }
 
   ngDoCheck(): void {
     if (this._rowDiffer.diff(this.row)) {
       this.cd.markForCheck();
     }
+  }
+
+  ngOnDestroy() {
+    this._listeners.forEach(l => l());
   }
 
   trackByGroups(index: number, colGroup: any): any {
@@ -183,41 +190,6 @@ export class DataTableBodyRowComponent implements DoCheck {
     this.activate.emit(event);
   }
 
-  @HostListener('keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent): void {
-    const keyCode = event.keyCode;
-    const isTargetRow = event.target === this._element;
-
-    const isAction =
-      keyCode === Keys.return ||
-      keyCode === Keys.down ||
-      keyCode === Keys.up ||
-      keyCode === Keys.left ||
-      keyCode === Keys.right;
-
-    if (isAction && isTargetRow) {
-      event.preventDefault();
-      event.stopPropagation();
-
-      this.activate.emit({
-        type: 'keydown',
-        event,
-        row: this.row,
-        rowElement: this._element
-      });
-    }
-  }
-
-  @HostListener('mouseenter', ['$event'])
-  onMouseenter(event: MouseEvent): void {
-    this.activate.emit({
-        type: 'mouseenter',
-        event,
-        row: this.row,
-        rowElement: this._element
-      });
-  }
-
   recalculateColumns(val: any[] = this.columns): void {
     this._columns = val;
     const colsByPin = columnsByPin(this._columns);
@@ -227,5 +199,49 @@ export class DataTableBodyRowComponent implements DoCheck {
 
   onTreeAction() {
     this.treeAction.emit();
+  }
+
+  private registerEvents(): void {
+    const events: TableActivateEventType[] = ['mouseenter', 'keydown'];
+
+    for (const type of events) {
+      if (!this.activateEventHelper.isAllowed(type)) {
+        continue;
+      }
+
+      this._listeners.push(this.renderer.listen(this._element, type, event => {
+        let emit = true;
+
+        if (type === 'keydown') {
+          const keyCode = event.keyCode;
+          const isTargetCell = event.target === this._element;
+
+          const isAction =
+            keyCode === Keys.return ||
+            keyCode === Keys.down ||
+            keyCode === Keys.up ||
+            keyCode === Keys.left ||
+            keyCode === Keys.right;
+
+          emit = isAction && isTargetCell;
+          if (emit) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+        }
+
+        if (!emit) {
+          return;
+        }
+
+        this.activate.emit({
+          type,
+          event,
+          row: this.row,
+          rowElement: this._element
+        });
+
+      }));
+    }
   }
 }

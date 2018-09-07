@@ -39,7 +39,7 @@ describe('DataTableBodyCellComponent', () => {
     it('should get value from zero-index prop', () => {
       component.row = ['Hello'];
       const columns: TableColumn[] = [
-        { name: "First Column", prop: 0 }
+        { name: 'First Column', prop: 0 }
       ];
       // users should never set columns on DataTableBodyCellComponent directly
       // setColumnDefaults will be run on columns before they are set on BodyCellComponent
