@@ -1,5 +1,7 @@
 import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MatTabsModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NgxDatatableModule } from '../src';
 import { AppComponent } from './app.component';
@@ -72,6 +74,9 @@ import { SummaryRowCustomTemplateComponent } from './summary/summary-row-custom-
 import { SummaryRowServerPagingComponent } from './summary/summary-row-server-paging.component';
 import { SummaryRowInlineHtmlComponent } from './summary/summary-row-inline-html.component';
 
+// -- Material
+import { MaterialTabsComponent } from './material/material-tabs.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -125,8 +130,9 @@ import { SummaryRowInlineHtmlComponent } from './summary/summary-row-inline-html
     SummaryRowCustomTemplateComponent,
     SummaryRowServerPagingComponent,
     SummaryRowInlineHtmlComponent,
+    MaterialTabsComponent,
   ],
-  imports: [BrowserModule, NgxDatatableModule],
+  imports: [BrowserModule, NgxDatatableModule, BrowserAnimationsModule, MatTabsModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,8 @@
 import {
   Directive, Output, EventEmitter, ElementRef, HostBinding, NgZone, OnInit, OnDestroy
 } from '@angular/core';
+import { VisibilityService } from '../services';
+import { Subscription } from 'rxjs';
 
 /**
  * Visibility Observer Directive
@@ -20,44 +22,27 @@ export class VisibilityDirective implements OnInit, OnDestroy {
   isVisible: boolean = false;
 
   @Output() visible: EventEmitter<any> = new EventEmitter();
-
-  timeout: any;
-
-  constructor(private element: ElementRef, private zone: NgZone) { }
+  visibleSubscription: Subscription;
+  constructor(private element: ElementRef,
+              private zone: NgZone,
+              private readonly visibilityService: VisibilityService) { }
 
   ngOnInit(): void {
-    this.runCheck();
-  }
-
-  ngOnDestroy(): void {
-    clearTimeout(this.timeout);
-  }
-
-  onVisibilityChange(): void {
-    // trigger zone recalc for columns
-    this.zone.run(() => {
-      this.isVisible = true;
-      this.visible.emit(true);
+    this.visibleSubscription = this.visibilityService.observe(this.element.nativeElement)
+    .subscribe((visible: boolean) => {
+      this.zone.run(() => {
+        this.isVisible = visible;
+        if (this.isVisible) {
+          this.visible.emit(true);
+        }
+      });
     });
   }
 
-  runCheck(): void {
-    const check = () => {
-      // https://davidwalsh.name/offsetheight-visibility
-      const { offsetHeight, offsetWidth } = this.element.nativeElement;
-
-      if (offsetHeight && offsetWidth) {
-        clearTimeout(this.timeout);
-        this.onVisibilityChange();
-      } else {
-        clearTimeout(this.timeout);
-        this.zone.runOutsideAngular(() => {
-          this.timeout = setTimeout(() => check(), 50);
-        });
-      }
-    };
-
-    this.timeout = setTimeout(() => check());
+  ngOnDestroy(): void {
+    this.visibilityService.unobserve(this.element.nativeElement);
+    if (this.visibleSubscription) {
+      this.visibleSubscription.unsubscribe();
+    }
   }
-
 }

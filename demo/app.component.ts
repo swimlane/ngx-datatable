@@ -6,7 +6,8 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
   styleUrls: [
     '../src/themes/material.scss',
     '../src/themes/dark.scss',
-    '../src/themes/bootstrap.scss'
+    '../src/themes/bootstrap.scss',
+    './app.component.scss',
   ],
   encapsulation: ViewEncapsulation.None,
   providers: [
@@ -131,6 +132,12 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
               <li><a href="#inline-html-summary" (click)="state='inline-html-summary'">Inline HTML</a></li>
             </ul>
           </li>
+          <li>
+            <h4>Material</h4>
+            <ul>
+              <li><a href="#material-tabs" (click)="state='material-tabs'">Tabs</a></li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <content>
@@ -203,6 +210,9 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
         <summary-row-server-paging-demo *ngIf="state === 'paging-summary'">
         </summary-row-server-paging-demo>
         <summary-row-inline-html *ngIf="state === 'inline-html-summary'"></summary-row-inline-html>
+
+        <!-- Material -->
+        <material-tabs-demo *ngIf="state === 'material-tabs'"></material-tabs-demo>
       </content>
     </div>
   `
