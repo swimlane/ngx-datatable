@@ -3,6 +3,7 @@ import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { VisibilityDirective } from '.';
+import { VisibilityService } from '../services';
 
 @Component({
   selector: 'test-fixture-component',
@@ -30,7 +31,10 @@ describe('VisibilityDirective', () => {
       declarations: [ 
         VisibilityDirective,
         TestFixtureComponent
-      ]
+      ],
+      providers: [
+        VisibilityService
+      ],
     });
   });
 
