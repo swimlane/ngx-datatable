@@ -1,95 +1,125 @@
 import {
-  Directive, ElementRef, HostListener, Input, Output, EventEmitter, OnDestroy, AfterViewInit, Renderer2
+  Directive, ElementRef, Input, Output, EventEmitter, OnDestroy, OnChanges, SimpleChanges
 } from '@angular/core';
-import { Observable, Subscription, fromEvent } from 'rxjs';
-import { MouseEvent } from '../events';
+import { Observable, Subscription, fromEvent, merge } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { MouseEvent, TouchEvent } from '../events';
 
-@Directive({
-  selector: '[resizeable]',
-  host: {
-    '[class.resizeable]': 'resizeEnabled'
-  }
-})
-export class ResizeableDirective implements OnDestroy, AfterViewInit {
+/**
+ * Draggable Directive for Angular2
+ *
+ * Inspiration:
+ *   https://github.com/AngularClass/angular2-examples/blob/master/rx-draggable/directives/draggable.ts
+ *   http://stackoverflow.com/questions/35662530/how-to-implement-drag-and-drop-in-angular2
+ *
+ */
+@Directive({ selector: '[draggable]' })
+export class DraggableDirective implements OnDestroy, OnChanges {
 
-  @Input() resizeEnabled: boolean = true;
-  @Input() minWidth: number;
-  @Input() maxWidth: number;
+  @Input() dragEventTarget: any;
+  @Input() dragModel: any;
+  @Input() dragX: boolean = true;
+  @Input() dragY: boolean = true;
 
-  @Output() resize: EventEmitter<any> = new EventEmitter();
+  @Output() dragStart: EventEmitter<any> = new EventEmitter();
+  @Output() dragging: EventEmitter<any> = new EventEmitter();
+  @Output() dragEnd: EventEmitter<any> = new EventEmitter();
 
   element: HTMLElement;
+  isDragging: boolean = false;
   subscription: Subscription;
-  resizing: boolean = false;
 
-  constructor(element: ElementRef, private renderer: Renderer2) {
+  constructor(element: ElementRef) {
     this.element = element.nativeElement;
   }
 
-  ngAfterViewInit(): void {
-    const renderer2 = this.renderer;
-    const node = renderer2.createElement('span');
-    if (this.resizeEnabled) {
-      renderer2.addClass(node, 'resize-handle');
-    } else {
-      renderer2.addClass(node, 'resize-handle--not-resizable');
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['dragEventTarget'] && changes['dragEventTarget'].currentValue && this.dragModel.dragging) {
+      this.onMousedown(changes['dragEventTarget'].currentValue);
     }
-    renderer2.appendChild(this.element, node);
   }
 
   ngOnDestroy(): void {
     this._destroySubscription();
   }
 
-  onMouseup(): void {
-    this.resizing = false;
+  onMouseup(event: MouseEvent | TouchEvent): void {
+    if (!this.isDragging) return;
 
-    if (this.subscription && !this.subscription.closed) {
+    this.isDragging = false;
+    this.element.classList.remove('dragging');
+
+    if (this.subscription) {
       this._destroySubscription();
-      this.resize.emit(this.element.clientWidth);
+      this.dragEnd.emit({
+        event,
+        element: this.element,
+        model: this.dragModel
+      });
     }
   }
 
-  @HostListener('mousedown', ['$event'])
-  onMousedown(event: MouseEvent): void {
-    const isHandle = (<HTMLElement>(event.target)).classList.contains('resize-handle');
-    const initialWidth = this.element.clientWidth;
-    const mouseDownScreenX = event.screenX;
+  onMousedown(event: MouseEvent | TouchEvent): void {
+    // we only want to drag the inner header text
+    const isDragElm = (<HTMLElement>event.target).classList.contains('draggable');
 
-    if (isHandle) {
-      event.stopPropagation();
-      this.resizing = true;
+    if (isDragElm && (this.dragX || this.dragY)) {
+      event.preventDefault();
+      this.isDragging = true;
+      const clientX = (<MouseEvent>event).clientX ||
+        ((<TouchEvent>event).targetTouches && (<TouchEvent>event).targetTouches[0].clientX);
+      const clientY = (<MouseEvent>event).clientY ||
+        ((<TouchEvent>event).targetTouches && (<TouchEvent>event).targetTouches[0].clientY);
+      const mouseDownPos = { x: clientX, y: clientY };
 
-      const mouseup = fromEvent(document, 'mouseup');
+      const mouseup = merge(
+        fromEvent(document, 'mouseup'),
+        fromEvent(document, 'touchend'));
       this.subscription = mouseup
-        .subscribe((ev: MouseEvent) => this.onMouseup());
+        .subscribe((ev: MouseEvent | TouchEvent) => this.onMouseup(ev));
 
-      const mouseMoveSub = fromEvent(document, 'mousemove')
+      const mouseMoveSub = merge(
+        fromEvent(document, 'mousemove'),
+        fromEvent(document, 'touchmove'))
         .pipe(takeUntil(mouseup))
-        .subscribe((e: MouseEvent) => this.move(e, initialWidth, mouseDownScreenX));
+        .subscribe((ev: MouseEvent | TouchEvent) => this.move(ev, mouseDownPos));
 
       this.subscription.add(mouseMoveSub);
+
+      this.dragStart.emit({
+        event,
+        element: this.element,
+        model: this.dragModel
+      });
     }
   }
 
-  move(event: MouseEvent, initialWidth: number, mouseDownScreenX: number): void {
-    const movementX = event.screenX - mouseDownScreenX;
-    const newWidth = initialWidth + movementX;
+  move(event: MouseEvent | TouchEvent, mouseDownPos: { x: number, y: number }): void {
+    if (!this.isDragging) return;
 
-    const overMinWidth = !this.minWidth || newWidth >= this.minWidth;
-    const underMaxWidth = !this.maxWidth || newWidth <= this.maxWidth;
+    const clientX = (<MouseEvent>event).clientX ||
+      ((<TouchEvent>event).targetTouches && (<TouchEvent>event).targetTouches[0].clientX);
+    const clientY = (<MouseEvent>event).clientY ||
+      ((<TouchEvent>event).targetTouches && (<TouchEvent>event).targetTouches[0].clientY);
+    const x = clientX - mouseDownPos.x;
+    const y = clientY - mouseDownPos.y;
 
-    if (overMinWidth && underMaxWidth) {
-      this.element.style.width = `${newWidth}px`;
-    }
+    if (this.dragX) this.element.style.left = `${x}px`;
+    if (this.dragY) this.element.style.top = `${y}px`;
+
+    this.element.classList.add('dragging');
+
+    this.dragging.emit({
+      event,
+      element: this.element,
+      model: this.dragModel
+    });
   }
 
-  private _destroySubscription() {
+  private _destroySubscription(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
       this.subscription = undefined;
     }
   }
-
 }
