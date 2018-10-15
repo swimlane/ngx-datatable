@@ -2,9 +2,9 @@ import {
   Directive, Input, Output, EventEmitter, HostBinding,
   HostListener, OnDestroy
 } from '@angular/core';
-import { Observable, Subscription, fromEvent } from 'rxjs';
+import { Observable, Subscription, fromEvent, merge } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { MouseEvent } from '../events';
+import { MouseEvent, TouchEvent } from '../events';
 
 @Directive({ selector: '[long-press]' })
 export class LongPressDirective implements OnDestroy {
@@ -34,22 +34,29 @@ export class LongPressDirective implements OnDestroy {
   }
 
   @HostListener('mousedown', ['$event'])
-  onMouseDown(event: MouseEvent): void {
+  @HostListener('touchstart', ['$event'])
+  onMouseDown(event: MouseEvent | TouchEvent): void {
     // don't do right/middle clicks
-    if (event.which !== 1 || !this.pressEnabled) return;
+    if ((event.which !== 1 || !this.pressEnabled) && event.type !== 'touchstart') return;
 
     // don't start drag if its on resize handle
     const target = (<HTMLElement>event.target);
+    const clientX = (<MouseEvent>event).clientX ||
+      ((<TouchEvent>event).targetTouches && (<TouchEvent>event).targetTouches[0].clientX);
+    const clientY = (<MouseEvent>event).clientY ||
+      ((<TouchEvent>event).targetTouches && (<TouchEvent>event).targetTouches[0].clientY);
     if (target.classList.contains('resize-handle')) return;
 
-    this.mouseX = event.clientX;
-    this.mouseY = event.clientY;
+    this.mouseX = clientX;
+    this.mouseY = clientY;
 
     this.pressing = true;
     this.isLongPressing = false;
 
-    const mouseup = fromEvent(document, 'mouseup');
-    this.subscription = mouseup.subscribe((ev: MouseEvent) => this.onMouseup());
+    const mouseup = merge(
+      fromEvent(document, 'mouseup'),
+      fromEvent(document, 'touchend'));
+    this.subscription = mouseup.subscribe((ev: MouseEvent | TouchEvent) => this.onMouseup());
 
     this.timeout = setTimeout(() => {
       this.isLongPressing = true;
@@ -61,7 +68,7 @@ export class LongPressDirective implements OnDestroy {
       this.subscription.add(
         fromEvent(document, 'mousemove')
           .pipe(takeUntil(mouseup))
-          .subscribe((mouseEvent: MouseEvent) => this.onMouseMove(mouseEvent))
+          .subscribe((mouseEvent: MouseEvent | TouchEvent) => this.onMouseMove(mouseEvent))
       );
 
       this.loop(event);
@@ -70,10 +77,14 @@ export class LongPressDirective implements OnDestroy {
     this.loop(event);
   }
 
-  onMouseMove(event: MouseEvent): void {
+  onMouseMove(event: MouseEvent | TouchEvent): void {
     if (this.pressing && !this.isLongPressing) {
-      const xThres = Math.abs(event.clientX - this.mouseX) > 10;
-      const yThres = Math.abs(event.clientY - this.mouseY) > 10;
+      const clientX = (<MouseEvent>event).clientX ||
+        ((<TouchEvent>event).targetTouches && (<TouchEvent>event).targetTouches[0].clientX);
+      const clientY = (<MouseEvent>event).clientY ||
+        ((<TouchEvent>event).targetTouches && (<TouchEvent>event).targetTouches[0].clientY);
+      const xThres = Math.abs(clientX - this.mouseX) > 10;
+      const yThres = Math.abs(clientY - this.mouseY) > 10;
 
       if (xThres || yThres) {
         this.endPress();
@@ -81,7 +92,7 @@ export class LongPressDirective implements OnDestroy {
     }
   }
 
-  loop(event: MouseEvent): void {
+  loop(event: MouseEvent | TouchEvent): void {
     if (this.isLongPressing) {
       this.timeout = setTimeout(() => {
         this.longPressing.emit({
