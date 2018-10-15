@@ -121,8 +121,8 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
 
   isTarget(model: any, event: any): any {
     let i = 0;
-    const x = event.x || event.clientX || event.changedTouches[0].clientX;
-    const y = event.y || event.clientY || event.changedTouches[0].clientY;
+    const x = event.x || event.clientX || (event.changedTouches && event.changedTouches[0].clientX);
+    const y = event.y || event.clientY || (event.changedTouches && event.changedTouches[0].clientY);
     const targets = this.document.elementsFromPoint(x, y);
 
     for (const prop in this.positions) {

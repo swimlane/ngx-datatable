@@ -66,8 +66,10 @@ export class DraggableDirective implements OnDestroy, OnChanges {
     if (isDragElm && (this.dragX || this.dragY)) {
       event.preventDefault();
       this.isDragging = true;
-      const clientX = (<MouseEvent>event).clientX || (<TouchEvent>event).targetTouches[0].clientX;
-      const clientY = (<MouseEvent>event).clientY || (<TouchEvent>event).targetTouches[0].clientY;
+      const clientX = (<MouseEvent>event).clientX ||
+        ((<TouchEvent>event).targetTouches && (<TouchEvent>event).targetTouches[0].clientX);
+      const clientY = (<MouseEvent>event).clientY ||
+        ((<TouchEvent>event).targetTouches && (<TouchEvent>event).targetTouches[0].clientY);
       const mouseDownPos = { x: clientX, y: clientY };
 
       const mouseup = merge(
@@ -95,8 +97,10 @@ export class DraggableDirective implements OnDestroy, OnChanges {
   move(event: MouseEvent | TouchEvent, mouseDownPos: { x: number, y: number }): void {
     if (!this.isDragging) return;
 
-    const clientX = (<MouseEvent>event).clientX || (<TouchEvent>event).targetTouches[0].clientX;
-    const clientY = (<MouseEvent>event).clientY || (<TouchEvent>event).targetTouches[0].clientY;
+    const clientX = (<MouseEvent>event).clientX ||
+      ((<TouchEvent>event).targetTouches && (<TouchEvent>event).targetTouches[0].clientX);
+    const clientY = (<MouseEvent>event).clientY ||
+      ((<TouchEvent>event).targetTouches && (<TouchEvent>event).targetTouches[0].clientY);
     const x = clientX - mouseDownPos.x;
     const y = clientY - mouseDownPos.y;
 

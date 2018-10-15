@@ -41,8 +41,10 @@ export class LongPressDirective implements OnDestroy {
 
     // don't start drag if its on resize handle
     const target = (<HTMLElement>event.target);
-    const clientX = (<MouseEvent>event).clientX || (<TouchEvent>event).targetTouches[0].clientX;
-    const clientY = (<MouseEvent>event).clientY || (<TouchEvent>event).targetTouches[0].clientY;
+    const clientX = (<MouseEvent>event).clientX ||
+      ((<TouchEvent>event).targetTouches && (<TouchEvent>event).targetTouches[0].clientX);
+    const clientY = (<MouseEvent>event).clientY ||
+      ((<TouchEvent>event).targetTouches && (<TouchEvent>event).targetTouches[0].clientY);
     if (target.classList.contains('resize-handle')) return;
 
     this.mouseX = clientX;
@@ -77,8 +79,10 @@ export class LongPressDirective implements OnDestroy {
 
   onMouseMove(event: MouseEvent | TouchEvent): void {
     if (this.pressing && !this.isLongPressing) {
-      const clientX = (<MouseEvent>event).clientX || (<TouchEvent>event).targetTouches[0].clientX;
-      const clientY = (<MouseEvent>event).clientY || (<TouchEvent>event).targetTouches[0].clientY;
+      const clientX = (<MouseEvent>event).clientX ||
+        ((<TouchEvent>event).targetTouches && (<TouchEvent>event).targetTouches[0].clientX);
+      const clientY = (<MouseEvent>event).clientY ||
+        ((<TouchEvent>event).targetTouches && (<TouchEvent>event).targetTouches[0].clientY);
       const xThres = Math.abs(clientX - this.mouseX) > 10;
       const yThres = Math.abs(clientY - this.mouseY) > 10;
 
