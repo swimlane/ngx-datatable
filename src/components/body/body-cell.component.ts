@@ -394,7 +394,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   }
 
   onTreeAction() {
-    this.treeAction.emit();
+    this.treeAction.emit(this.row);
   }
 
   calcLeftMargin(column: any, row: any) {
