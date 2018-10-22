@@ -50,8 +50,8 @@ export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
 
       <span
         *ngIf="!column.cellTemplate"
-        [title]="sanitizedValue"
-        [innerHTML]="value">
+        [title]="sanitizedValue">
+        {{ value }}
       </span>
       <ng-template #cellTemplate
         *ngIf="column.cellTemplate"
