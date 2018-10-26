@@ -83,6 +83,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
         [summaryPosition]="summaryPosition"
         (page)="onBodyPage($event)"
         (activate)="activate.emit($event)"
+        (deactivate)="deactivate.emit($event)"
         (rowContextmenu)="onRowContextmenu($event)"
         (select)="onBodySelect($event)"
         (scroll)="onBodyScroll($event)"
@@ -486,6 +487,11 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * A cell or row was focused via keyboard or mouse click.
    */
   @Output() activate: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * A row was left with the mouse cursor.
+   */
+  @Output() deactivate: EventEmitter<any> = new EventEmitter();
 
   /**
    * A cell or row was selected.

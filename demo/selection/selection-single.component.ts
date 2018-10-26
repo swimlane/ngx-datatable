@@ -28,7 +28,7 @@ import { Component } from '@angular/core';
           [limit]="5"
           [selected]="selected"
           [selectionType]="'single'"
-          (activate)="onActivate($event)"
+          (deactivate)="onDeactivate($event)"
           (select)='onSelect($event)'>
         </ngx-datatable>
       </div>
@@ -81,6 +81,10 @@ export class SingleSelectionComponent {
 
   onActivate(event) {
     console.log('Activate Event', event);
+  }
+
+  onDeactivate(event) {
+    console.log('Deactivate Event', event);
   }
 
 }
