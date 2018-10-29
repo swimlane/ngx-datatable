@@ -340,8 +340,8 @@ var DataTableBodyCellComponent = /** @class */ (function () {
             return html;
         return html.replace(/<\/?[^>]+(>|$)/g, '');
     };
-    DataTableBodyCellComponent.prototype.onTreeAction = function (row) {
-        this.treeAction.emit();
+    DataTableBodyCellComponent.prototype.onTreeAction = function () {
+        this.treeAction.emit(this.row);
     };
     DataTableBodyCellComponent.prototype.calcLeftMargin = function (column, row) {
         var levelIndent = column.treeLevelIndent != null ? column.treeLevelIndent : 50;
