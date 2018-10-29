@@ -66,11 +66,11 @@
   },
   "homepage": "https://github.com/swimlane/ngx-datatable#readme",
   "peerDependencies": {
-    "@angular/common": "<7.0.0",
-    "@angular/compiler": "<7.0.0",
-    "@angular/core": "<7.0.0",
-    "@angular/platform-browser": "<7.0.0",
-    "@angular/platform-browser-dynamic": "<7.0.0",
+    "@angular/common": "<8.0.0",
+    "@angular/compiler": "<8.0.0",
+    "@angular/core": "<8.0.0",
+    "@angular/platform-browser": "<8.0.0",
+    "@angular/platform-browser-dynamic": "<8.0.0",
     "core-js": "^2.4.0",
     "rxjs": "^6.0.0"
   },
