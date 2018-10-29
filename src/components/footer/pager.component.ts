@@ -7,22 +7,20 @@ import {
   template: `
     <ul class="pager">
       <li [class.disabled]="!canPrevious()">
-        <a
+        <span
           role="button"
           aria-label="go to first page"
-          href="javascript:void(0)"
           (click)="selectPage(1)">
           <i class="{{pagerPreviousIcon}}"></i>
-        </a>
+        </span>
       </li>
       <li [class.disabled]="!canPrevious()">
-        <a
+        <span
           role="button"
           aria-label="go to previous page"
-          href="javascript:void(0)"
           (click)="prevPage()">
           <i class="{{pagerLeftArrowIcon}}"></i>
-        </a>
+        </span>
       </li>
       <li
         role="button"
@@ -30,29 +28,26 @@ import {
         class="pages"
         *ngFor="let pg of pages"
         [class.active]="pg.number === page">
-        <a
-          href="javascript:void(0)"
+        <span
           (click)="selectPage(pg.number)">
           {{pg.text}}
-        </a>
+        </span>
       </li>
       <li [class.disabled]="!canNext()">
-        <a
+        <span
           role="button"
           aria-label="go to next page"
-          href="javascript:void(0)"
           (click)="nextPage()">
           <i class="{{pagerRightArrowIcon}}"></i>
-        </a>
+        </span>
       </li>
       <li [class.disabled]="!canNext()">
-        <a
+        <span
           role="button"
           aria-label="go to last page"
-          href="javascript:void(0)"
           (click)="selectPage(totalPages)">
           <i class="{{pagerNextIcon}}"></i>
-        </a>
+        </span>
       </li>
     </ul>
   `,

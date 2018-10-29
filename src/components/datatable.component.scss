@@ -292,17 +292,17 @@
       }
 
       .pager {
-        li, li a{
+        li, li span {
           outline: none;
         }
 
         li {
-          a {
+          span {
             cursor: pointer;
             display: inline-block;
           }
 
-          &.disabled a {
+          &.disabled span {
             cursor: not-allowed;
           }
         }
