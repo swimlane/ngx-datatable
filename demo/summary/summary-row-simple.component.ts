@@ -1,4 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, PipeTransform } from '@angular/core';
+
+export class AgePipe implements PipeTransform {
+  transform(age: number): string | number {
+    if (!age) {
+      return age;
+    }
+    return `${age} years`;
+  }
+}
 
 @Component({
   selector: 'summary-row-simple-demo',
@@ -50,7 +59,7 @@ export class SummaryRowSimpleComponent {
   columns = [
     { prop: 'name', summaryFunc: null, },
     { name: 'Gender', summaryFunc: (cells) => this.summaryForGender(cells) },
-    { prop: 'age', summaryFunc: (cells) => this.avgAge(cells) },
+    { prop: 'age', summaryFunc: (cells) => this.avgAge(cells), pipe: new AgePipe() },
   ];
 
   enableSummary = true;
