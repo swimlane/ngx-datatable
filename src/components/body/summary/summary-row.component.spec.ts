@@ -22,8 +22,8 @@ describe('DataTableSummaryRowComponent', () => {
 
   beforeEach(() => {
     rows = [
-      { col1: 'test', col2: 20 },
-      { col1: 'test1', col2: 30 },
+      { col1: 10, col2: 20 },
+      { col1: 1, col2: 30 },
     ];
     columns = [
       { prop: 'col1' }, { prop: 'col2' }
@@ -90,9 +90,42 @@ describe('DataTableSummaryRowComponent', () => {
       triggerChange();
     });
 
-    it('should use default sum function when no other provided', () => {
-      expect(component.summaryRow['col1']).toEqual(rows[0]['col1'] + rows[1]['col1']);
-      expect(component.summaryRow['col2']).toEqual(rows[0]['col2'] + rows[1]['col2']);
+    describe('Default Summary Function', () => {
+      it('should be used when no other provided', () => {
+        expect(component.summaryRow['col1']).toEqual(rows[0]['col1'] + rows[1]['col1']);
+        expect(component.summaryRow['col2']).toEqual(rows[0]['col2'] + rows[1]['col2']);
+      });
+
+      it('should works with empty row', () => {
+        component.rows = [
+          { col1: null, col2: undefined },
+          { col1: null, },
+        ];
+
+        triggerChange();
+
+        expect(component.summaryRow['col1']).toBeNull();
+        expect(component.summaryRow['col2']).toBeNull();
+      });
+
+      it('should not compute a result if there are non-number cells', () => {
+        component.rows = [
+          { col1: 'aaa', col2: 'xxx' },
+          { col1: 'bbb', col2: 34 },
+        ];
+
+        triggerChange();
+        expect(component.summaryRow['col1']).toEqual(null);
+        expect(component.summaryRow['col2']).toEqual(null);
+      });
+    });
+
+    it('should not compute if null is set as a summary function', () => {
+      columns[0].summaryFunc = null;
+
+      triggerChange();
+
+      expect(component.summaryRow['col1']).toEqual(null);
     });
 
     it('should use provided summary function', () => {

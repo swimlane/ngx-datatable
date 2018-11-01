@@ -1,11 +1,14 @@
 "use strict";
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
 };
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -19,9 +22,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 function defaultSumFunc(cells) {
-    return cells
-        .filter(function (cell) { return !!cell; })
-        .reduce(function (res, cell) { return res + cell; });
+    var cellsWithValues = cells.filter(function (cell) { return !!cell; });
+    if (!cellsWithValues.length) {
+        return null;
+    }
+    if (cellsWithValues.some(function (cell) { return typeof cell !== 'number'; })) {
+        return null;
+    }
+    return cellsWithValues.reduce(function (res, cell) { return res + cell; });
+}
+function noopSumFunc(cells) {
+    return null;
 }
 var DataTableSummaryRowComponent = /** @class */ (function () {
     function DataTableSummaryRowComponent() {
@@ -44,11 +55,22 @@ var DataTableSummaryRowComponent = /** @class */ (function () {
             .filter(function (col) { return !col.summaryTemplate; })
             .forEach(function (col) {
             var cellsFromSingleColumn = _this.rows.map(function (row) { return row[col.prop]; });
-            var sumFunc = col.summaryFunc || defaultSumFunc;
+            var sumFunc = _this.getSummaryFunction(col);
             _this.summaryRow[col.prop] = col.pipe ?
                 col.pipe.transform(sumFunc(cellsFromSingleColumn)) :
                 sumFunc(cellsFromSingleColumn);
         });
+    };
+    DataTableSummaryRowComponent.prototype.getSummaryFunction = function (column) {
+        if (column.summaryFunc === undefined) {
+            return defaultSumFunc;
+        }
+        else if (column.summaryFunc === null) {
+            return noopSumFunc;
+        }
+        else {
+            return column.summaryFunc;
+        }
     };
     __decorate([
         core_1.Input(),

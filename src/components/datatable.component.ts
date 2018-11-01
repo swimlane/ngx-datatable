@@ -3,14 +3,15 @@ import {
   HostListener, ContentChildren, OnInit, QueryList, AfterViewInit,
   HostBinding, ContentChild, TemplateRef, IterableDiffer,
   DoCheck, KeyValueDiffers, KeyValueDiffer, ViewEncapsulation,
-  ChangeDetectionStrategy, ChangeDetectorRef, SkipSelf
+  ChangeDetectionStrategy, ChangeDetectorRef, SkipSelf, OnDestroy
 } from '@angular/core';
 
 import {
   forceFillColumnWidths, adjustColumnWidths, sortRows,
-  setColumnDefaults, throttleable, translateTemplates
+  setColumnDefaults, throttleable, translateTemplates,
+  groupRowsByParents, optionalGetterForProp
 } from '../utils';
-import { ScrollbarHelper, DimensionsHelper } from '../services';
+import { ScrollbarHelper, DimensionsHelper, ColumnChangesService } from '../services';
 import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types';
 import { DataTableBodyComponent } from './body';
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
@@ -19,7 +20,7 @@ import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
 import { DataTableHeaderComponent } from './header';
 import { MouseEvent } from '../events';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'ngx-datatable',
@@ -84,7 +85,8 @@ import { BehaviorSubject } from 'rxjs';
         (activate)="activate.emit($event)"
         (rowContextmenu)="onRowContextmenu($event)"
         (select)="onBodySelect($event)"
-        (scroll)="onBodyScroll($event)">
+        (scroll)="onBodyScroll($event)"
+        (treeAction)="onTreeAction($event)">
       </datatable-body>
       <datatable-footer
         *ngIf="footerHeight"
@@ -127,11 +129,18 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     if (val) {
       this._internalRows = [...val];
     }
-    
+
     // auto sort on new updates
     if (!this.externalSorting) {
       this.sortInternalRows();
     }
+
+    // auto group by parent on new update
+    this._internalRows = groupRowsByParents(
+      this._internalRows,
+      optionalGetterForProp(this.treeFromRelation),
+      optionalGetterForProp(this.treeToRelation)
+  );
 
     // recalculate sizes/etc
     this.recalculate();
@@ -444,6 +453,16 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   @Input() virtualization: boolean = true;
 
   /**
+   * Tree from relation
+   */
+  @Input() treeFromRelation: string;
+
+  /**
+   * Tree to relation
+   */
+  @Input() treeToRelation: string;
+
+  /**
    * A flag for switching summary row on / off
    */
   @Input() summaryRow: boolean = false;
@@ -451,7 +470,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   /**
    * A height of summary row
    */
-  @Input() summaryHeight: number = this.rowHeight;
+  @Input() summaryHeight: number = 30;
 
   /**
    * A property holds a summary row position: top/bottom
@@ -501,6 +520,11 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   @Output() tableContextmenu = new EventEmitter<{ event: MouseEvent, type: ContextmenuType, content: any }>(false);
 
   /**
+   * A row was expanded ot collapsed for tree
+   */
+  @Output() treeAction: EventEmitter<any> = new EventEmitter();
+
+  /**
    * CSS class applied if the header height if fixed height.
    */
   @HostBinding('class.fixed-header')
@@ -528,6 +552,15 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   @HostBinding('class.scroll-vertical')
   get isVertScroll(): boolean {
     return this.scrollbarV;
+  }
+
+  /**
+   * CSS class applied to root element if
+   * virtualization is enabled.
+   */
+  @HostBinding('class.virtualized')
+  get isVirtualized(): boolean {
+    return this.virtualization;
   }
 
   /**
@@ -673,13 +706,15 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   _internalColumns: TableColumn[];
   _columns: TableColumn[];
   _columnTemplates: QueryList<DataTableColumnDirective>;
+  _subscriptions: Subscription[] = [];
 
   constructor(
     @SkipSelf() private scrollbarHelper: ScrollbarHelper,
     @SkipSelf() private dimensionsHelper: DimensionsHelper,
     private cd: ChangeDetectorRef,
     element: ElementRef,
-    differs: KeyValueDiffers) {
+    differs: KeyValueDiffers,
+    private columnChangesService: ColumnChangesService) {
 
     // get ref to elm for measuring
     this.element = element.nativeElement;
@@ -734,6 +769,8 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   ngAfterContentInit() {
     this.columnTemplates.changes.subscribe(v =>
       this.translateColumns(v));
+      
+    this.listenForColumnInputChanges();
   }
 
   /**
@@ -791,6 +828,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       } else {
         this._internalRows = [...this.rows];
       }
+
+      // auto group by parent on new update
+      this._internalRows = groupRowsByParents(
+        this._internalRows,
+        optionalGetterForProp(this.treeFromRelation),
+        optionalGetterForProp(this.treeToRelation)
+      );
 
       this.recalculatePages();
       this.cd.markForCheck();
@@ -878,6 +922,14 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Body triggered a page event.
    */
   onBodyPage({ offset }: any): void {
+
+    // Avoid pagination caming from body events like scroll when the table 
+    // has no virtualization and the external paging is enable. 
+    // This means, let's the developer handle pagination by my him(her) self
+    if(this.externalPaging && !this.virtualization) {
+      return;
+    }
+
     this.offset = offset;
 
     this.page.emit({
@@ -926,7 +978,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     // Keep the page size constant even if the row has been expanded.
     // This is because an expanded row is still considered to be a child of
     // the original row.  Hence calculation would use rowHeight only.
-    if (this.scrollbarV) {
+    if (this.scrollbarV && this.virtualization) {
       const size = Math.ceil(this.bodyHeight / this.rowHeight);
       return Math.max(size, 0);
     }
@@ -954,6 +1006,8 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
       if (this.groupedRows) {
         return this.groupedRows.length;
+      } else if (this.treeFromRelation != null && this.treeToRelation != null) {
+        return this._internalRows.length;
       } else {
         return val.length;
       }
@@ -1068,6 +1122,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       this.sortInternalRows();
     }
 
+    // auto group by parent on new update
+    this._internalRows = groupRowsByParents(
+      this._internalRows,
+      optionalGetterForProp(this.treeFromRelation),
+      optionalGetterForProp(this.treeToRelation)
+    );
+
     // Always go to first page when sorting to see the newly sorted data
     this.offset = 0;
     this.bodyComponent.updateOffsetY(this.offset);
@@ -1114,7 +1175,36 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   onBodySelect(event: any): void {
     this.select.emit(event);
   }
+
+  /**
+   * A row was expanded or collapsed for tree
+   */
+  onTreeAction(event: any) {
+    const row = event.row;
+    // TODO: For duplicated items this will not work
+    const rowIndex = this._rows.findIndex(r =>
+      r[this.treeToRelation] === event.row[this.treeToRelation]);
+    this.treeAction.emit({row, rowIndex});
+  }
+    
+  ngOnDestroy() {
+    this._subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
   
+  /**
+   * listen for changes to input bindings of all DataTableColumnDirective and
+   * trigger the columnTemplates.changes observable to emit
+   */
+  private listenForColumnInputChanges(): void {
+    this._subscriptions.push(this.columnChangesService
+      .columnInputChanges$
+      .subscribe(() => {
+        if (this.columnTemplates) {
+          this.columnTemplates.notifyOnChanges();
+        }
+      }));
+  }
+
   private sortInternalRows(): void {
     this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
   }

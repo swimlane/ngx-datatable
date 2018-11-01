@@ -1,6 +1,8 @@
-import { TemplateRef } from '@angular/core';
+import { TemplateRef, OnChanges } from '@angular/core';
 import { TableColumnProp } from '../../types';
-export declare class DataTableColumnDirective {
+import { ColumnChangesService } from '../../services/column-changes.service';
+export declare class DataTableColumnDirective implements OnChanges {
+    private columnChangesService;
     name: string;
     prop: TableColumnProp;
     frozenLeft: any;
@@ -19,8 +21,14 @@ export declare class DataTableColumnDirective {
     headerCheckboxable: boolean;
     headerClass: string | ((data: any) => string | any);
     cellClass: string | ((data: any) => string | any);
+    isTreeColumn: boolean;
+    treeLevelIndent: number;
     summaryFunc: (cells: any[]) => any;
     summaryTemplate: TemplateRef<any>;
     cellTemplate: TemplateRef<any>;
     headerTemplate: TemplateRef<any>;
+    treeToggleTemplate: TemplateRef<any>;
+    private isFirstChange;
+    constructor(columnChangesService: ColumnChangesService);
+    ngOnChanges(): void;
 }

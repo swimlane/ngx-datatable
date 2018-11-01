@@ -9,9 +9,20 @@ export interface ISummaryColumn {
 }
 
 function defaultSumFunc(cells: any[]): any {
-  return cells
-    .filter(cell => !!cell)
-    .reduce((res, cell) => res + cell);
+  const cellsWithValues = cells.filter(cell => !!cell);
+
+  if (!cellsWithValues.length) {
+    return null;
+  }
+  if (cellsWithValues.some(cell => typeof cell !== 'number')) {
+    return null;
+  }
+
+  return cellsWithValues.reduce((res, cell) => res + cell);
+}
+
+function noopSumFunc(cells: any[]): void {
+  return null;
 }
 
 @Component({
@@ -64,11 +75,21 @@ export class DataTableSummaryRowComponent implements OnChanges {
       .filter(col => !col.summaryTemplate)
       .forEach(col => {
       const cellsFromSingleColumn = this.rows.map(row => row[col.prop]);
-      const sumFunc = col.summaryFunc || defaultSumFunc;
+      const sumFunc = this.getSummaryFunction(col);
 
       this.summaryRow[col.prop] = col.pipe ?
         col.pipe.transform(sumFunc(cellsFromSingleColumn)) :
         sumFunc(cellsFromSingleColumn);
     });
+  }
+
+  private getSummaryFunction(column: ISummaryColumn): (a: any[]) => any {
+    if (column.summaryFunc === undefined) {
+      return defaultSumFunc;
+    } else if (column.summaryFunc === null) {
+      return noopSumFunc;
+    } else {
+      return column.summaryFunc;
+    }
   }
 }

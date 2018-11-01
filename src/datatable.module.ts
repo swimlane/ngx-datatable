@@ -19,6 +19,7 @@ import {
   DataTableSelectionComponent,
   DataTableColumnHeaderDirective,
   DataTableColumnCellDirective,
+  DataTableColumnCellTreeToggle,
   DatatableRowDetailTemplateDirective,
   DataTableFooterTemplateDirective,
   DatatableFooterDirective,
@@ -36,7 +37,8 @@ import {
 
 import {
   ScrollbarHelper,
-  DimensionsHelper
+  DimensionsHelper,
+  ColumnChangesService
 } from './services';
 
 @NgModule({
@@ -45,7 +47,8 @@ import {
   ],
   providers: [
     ScrollbarHelper,
-    DimensionsHelper
+    DimensionsHelper,
+    ColumnChangesService
   ],
   declarations: [
     DataTableFooterTemplateDirective,
@@ -72,6 +75,7 @@ import {
     DataTableSelectionComponent,
     DataTableColumnHeaderDirective,
     DataTableColumnCellDirective,
+    DataTableColumnCellTreeToggle,
     DatatableFooterDirective,
     DatatableGroupHeaderTemplateDirective,
     DataTableSummaryRowComponent,
@@ -84,6 +88,7 @@ import {
     DataTableColumnDirective,
     DataTableColumnHeaderDirective,
     DataTableColumnCellDirective,
+    DataTableColumnCellTreeToggle,
     DataTableFooterTemplateDirective,
     DatatableFooterDirective,
     DataTablePagerComponent,

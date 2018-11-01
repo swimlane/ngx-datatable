@@ -33,6 +33,13 @@ bootstrap table theme
         vertical-align: top;
       }
     }
+    .empty-row {
+      $alert-padding-y: 0.75rem !default;
+      $alert-padding-x: 1.25rem !default;
+      position: relative;
+      padding: $alert-padding-y $alert-padding-x;
+      margin-bottom: 0;
+    }
   }
   .datatable-footer {
     background: #424242;
@@ -83,7 +90,6 @@ bootstrap table theme
       }
     }
   }
-
   // Summary row styles
   .datatable-summary-row {
     .datatable-body-row {

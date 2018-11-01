@@ -1,9 +1,9 @@
-import { Component, ElementRef, Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
-import { CorporateEmployee } from './model/corporate-employee';
+import { Component, ElementRef, Injectable } from "@angular/core";
+import { Observable, of } from "rxjs";
+import { delay, map } from "rxjs/operators";
+import { CorporateEmployee } from "./model/corporate-employee";
 
-const companyData = require('../../assets/data/company.json');
+const companyData = require("../../assets/data/company.json");
 
 class PagedData<T> {
   data: T[];
@@ -14,18 +14,20 @@ class PagedData<T> {
  */
 @Injectable()
 export class MockServerResultsService {
-
-  public getResults(offset: number, limit: number): Observable<PagedData<CorporateEmployee>> {
-    return of(companyData.slice(offset, offset + limit))
-      .pipe(delay(new Date(Date.now() + 500)), map(data => ({ data })));
+  public getResults(
+    offset: number,
+    limit: number
+  ): Observable<PagedData<CorporateEmployee>> {
+    return of(companyData.slice(offset, offset + limit)).pipe(
+      delay(new Date(Date.now() + 500)),
+      map(data => ({ data }))
+    );
   }
 }
 
 @Component({
-  selector: 'server-scrolling-demo',
-  providers: [
-      MockServerResultsService
-  ],
+  selector: "server-scrolling-demo",
+  providers: [MockServerResultsService],
   template: `
     <div>
       <h3>
@@ -49,10 +51,9 @@ export class MockServerResultsService {
       ></ngx-datatable>
     </div>
   `,
-  styleUrls: ['./scrolling-server.component.css'],
+  styleUrls: ["./scrolling-server.component.css"]
 })
 export class ServerScrollingComponent {
-
   readonly headerHeight = 50;
   readonly rowHeight = 50;
   readonly pageLimit = 10;
@@ -60,7 +61,10 @@ export class ServerScrollingComponent {
   rows: CorporateEmployee[] = [];
   isLoading: boolean;
 
-  constructor(private serverResultsService: MockServerResultsService, private el: ElementRef) { }
+  constructor(
+    private serverResultsService: MockServerResultsService,
+    private el: ElementRef
+  ) {}
 
   ngOnInit() {
     this.onScroll(0);
@@ -68,17 +72,19 @@ export class ServerScrollingComponent {
 
   onScroll(offsetY: number) {
     // total height of all rows in the viewport
-    const viewHeight = this.el.nativeElement.getBoundingClientRect().height - this.headerHeight;
+    const viewHeight =
+      this.el.nativeElement.getBoundingClientRect().height - this.headerHeight;
 
     // check if we scrolled to the end of the viewport
-    if (!this.isLoading && offsetY + viewHeight >= this.rows.length * this.rowHeight) {
-
+    if (
+      !this.isLoading &&
+      offsetY + viewHeight >= this.rows.length * this.rowHeight
+    ) {
       // total number of results to load
       let limit = this.pageLimit;
 
       // check if we haven't fetched any results yet
       if (this.rows.length === 0) {
-
         // calculate the number of rows that fit within viewport
         const pageSize = Math.ceil(viewHeight / this.rowHeight);
 
@@ -95,9 +101,10 @@ export class ServerScrollingComponent {
     // 1) it prevents the same page from being loaded twice
     // 2) it enables display of the loading indicator
     this.isLoading = true;
-    
+
     this.serverResultsService.getResults(this.rows.length, limit).subscribe(results => {
-      this.rows.push(...results.data);
+      let rows = [...this.rows, ...results.data];
+       this.rows = rows;
       this.isLoading = false;
     });
   }

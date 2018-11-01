@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v"12.0.0" (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v"14.0.0" (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -88,7 +88,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, ".ngx-datatable {\n  display: block;\n  overflow: hidden;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  position: relative;\n  -webkit-transform: translate3d(0, 0, 0);\n  /**\n   * Vertical Scrolling Adjustments\n   */\n  /**\n   * Horizontal Scrolling Adjustments\n   */\n  /**\n   * Fixed Header Height Adjustments\n   */\n  /**\n   * Fixed row height adjustments\n   */\n  /**\n   * Shared Styles\n   */\n  /**\n   * Header Styles\n   */\n  /**\n   * Body Styles\n   */\n  /**\n   * Footer Styles\n   */ }\n  .ngx-datatable [hidden] {\n    display: none !important; }\n  .ngx-datatable *, .ngx-datatable *:before, .ngx-datatable *:after {\n    -webkit-box-sizing: border-box;\n    box-sizing: border-box; }\n  .ngx-datatable.scroll-vertical .datatable-body {\n    overflow-y: auto; }\n    .ngx-datatable.scroll-vertical .datatable-body .datatable-row-wrapper {\n      position: absolute; }\n  .ngx-datatable.scroll-horz .datatable-body {\n    overflow-x: auto;\n    -webkit-overflow-scrolling: touch; }\n  .ngx-datatable.fixed-header .datatable-header .datatable-header-inner {\n    white-space: nowrap; }\n    .ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell {\n      white-space: nowrap;\n      overflow: hidden;\n      text-overflow: ellipsis; }\n  .ngx-datatable.fixed-row .datatable-scroll {\n    white-space: nowrap; }\n    .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row {\n      white-space: nowrap; }\n      .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-cell {\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis; }\n      .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-group-cell {\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis; }\n  .ngx-datatable .datatable-body-row,\n  .ngx-datatable .datatable-row-center,\n  .ngx-datatable .datatable-header-inner {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -ms-flex-flow: row;\n    -o-flex-flow: row;\n    flex-flow: row; }\n  .ngx-datatable .datatable-body-cell,\n  .ngx-datatable .datatable-header-cell {\n    overflow-x: hidden;\n    vertical-align: top;\n    display: inline-block;\n    line-height: 1.625; }\n    .ngx-datatable .datatable-body-cell:focus,\n    .ngx-datatable .datatable-header-cell:focus {\n      outline: none; }\n  .ngx-datatable .datatable-row-left,\n  .ngx-datatable .datatable-row-right {\n    z-index: 9; }\n  .ngx-datatable .datatable-row-left,\n  .ngx-datatable .datatable-row-center,\n  .ngx-datatable .datatable-row-group,\n  .ngx-datatable .datatable-row-right {\n    position: relative; }\n  .ngx-datatable .datatable-header {\n    display: block;\n    overflow: hidden; }\n    .ngx-datatable .datatable-header .datatable-header-inner {\n      -webkit-box-align: stretch;\n          -ms-flex-align: stretch;\n              align-items: stretch;\n      -webkit-align-items: stretch; }\n    .ngx-datatable .datatable-header .datatable-header-cell {\n      position: relative;\n      display: inline-block; }\n      .ngx-datatable .datatable-header .datatable-header-cell.sortable .datatable-header-cell-wrapper {\n        cursor: pointer; }\n      .ngx-datatable .datatable-header .datatable-header-cell.longpress .datatable-header-cell-wrapper {\n        cursor: move; }\n      .ngx-datatable .datatable-header .datatable-header-cell .sort-btn {\n        line-height: 100%;\n        vertical-align: middle;\n        display: inline-block;\n        cursor: pointer; }\n      .ngx-datatable .datatable-header .datatable-header-cell .resize-handle, .ngx-datatable .datatable-header .datatable-header-cell .resize-handle--not-resizable {\n        display: inline-block;\n        position: absolute;\n        right: 0;\n        top: 0;\n        bottom: 0;\n        width: 5px;\n        padding: 0 4px;\n        visibility: hidden; }\n      .ngx-datatable .datatable-header .datatable-header-cell .resize-handle {\n        cursor: ew-resize; }\n      .ngx-datatable .datatable-header .datatable-header-cell.resizeable:hover .resize-handle {\n        visibility: visible; }\n      .ngx-datatable .datatable-header .datatable-header-cell:hover .resize-handle--not-resizable {\n        visibility: visible; }\n      .ngx-datatable .datatable-header .datatable-header-cell .targetMarker {\n        position: absolute;\n        top: 0;\n        bottom: 0; }\n        .ngx-datatable .datatable-header .datatable-header-cell .targetMarker.dragFromLeft {\n          right: 0; }\n        .ngx-datatable .datatable-header .datatable-header-cell .targetMarker.dragFromRight {\n          left: 0; }\n      .ngx-datatable .datatable-header .datatable-header-cell .datatable-header-cell-template-wrap {\n        height: inherit; }\n  .ngx-datatable .datatable-body {\n    position: relative;\n    z-index: 10;\n    display: block; }\n    .ngx-datatable .datatable-body .datatable-scroll {\n      display: inline-block; }\n    .ngx-datatable .datatable-body .datatable-row-detail {\n      overflow-y: hidden; }\n    .ngx-datatable .datatable-body .datatable-row-wrapper {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n      flex-direction: column; }\n    .ngx-datatable .datatable-body .datatable-body-row {\n      outline: none; }\n      .ngx-datatable .datatable-body .datatable-body-row > div {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex; }\n  .ngx-datatable .datatable-footer {\n    display: block;\n    width: 100%; }\n    .ngx-datatable .datatable-footer .datatable-footer-inner {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-align: center;\n          -ms-flex-align: center;\n              align-items: center;\n      width: 100%; }\n    .ngx-datatable .datatable-footer .selected-count .page-count {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 40%;\n              flex: 1 1 40%; }\n    .ngx-datatable .datatable-footer .selected-count .datatable-pager {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 60%;\n              flex: 1 1 60%; }\n    .ngx-datatable .datatable-footer .page-count {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 20%;\n              flex: 1 1 20%; }\n    .ngx-datatable .datatable-footer .datatable-pager {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 80%;\n              flex: 1 1 80%;\n      text-align: right; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager,\n      .ngx-datatable .datatable-footer .datatable-pager .pager li {\n        padding: 0;\n        margin: 0;\n        display: inline-block;\n        list-style: none; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager li, .ngx-datatable .datatable-footer .datatable-pager .pager li a {\n        outline: none; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager li a {\n        cursor: pointer;\n        display: inline-block; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager li.disabled a {\n        cursor: not-allowed; }\n", ""]);
+exports.push([module.i, ".ngx-datatable {\n  display: block;\n  overflow: hidden;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  position: relative;\n  -webkit-transform: translate3d(0, 0, 0);\n  /**\n   * Vertical Scrolling Adjustments\n   */\n  /**\n   * Horizontal Scrolling Adjustments\n   */\n  /**\n   * Fixed Header Height Adjustments\n   */\n  /**\n   * Fixed row height adjustments\n   */\n  /**\n   * Shared Styles\n   */\n  /**\n   * Header Styles\n   */\n  /**\n   * Body Styles\n   */\n  /**\n   * Footer Styles\n   */ }\n  .ngx-datatable [hidden] {\n    display: none !important; }\n  .ngx-datatable *, .ngx-datatable *:before, .ngx-datatable *:after {\n    -webkit-box-sizing: border-box;\n    box-sizing: border-box; }\n  .ngx-datatable.scroll-vertical .datatable-body {\n    overflow-y: auto; }\n  .ngx-datatable.scroll-vertical.virtualized .datatable-body .datatable-row-wrapper {\n    position: absolute; }\n  .ngx-datatable.scroll-horz .datatable-body {\n    overflow-x: auto;\n    -webkit-overflow-scrolling: touch; }\n  .ngx-datatable.fixed-header .datatable-header .datatable-header-inner {\n    white-space: nowrap; }\n    .ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell {\n      white-space: nowrap;\n      overflow: hidden;\n      text-overflow: ellipsis; }\n  .ngx-datatable.fixed-row .datatable-scroll {\n    white-space: nowrap; }\n    .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row {\n      white-space: nowrap; }\n      .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-cell {\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis; }\n      .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-group-cell {\n        overflow: hidden;\n        white-space: nowrap;\n        text-overflow: ellipsis; }\n  .ngx-datatable .datatable-body-row,\n  .ngx-datatable .datatable-row-center,\n  .ngx-datatable .datatable-header-inner {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -ms-flex-flow: row;\n    -o-flex-flow: row;\n    flex-flow: row; }\n  .ngx-datatable .datatable-body-cell,\n  .ngx-datatable .datatable-header-cell {\n    overflow-x: hidden;\n    vertical-align: top;\n    display: inline-block;\n    line-height: 1.625; }\n    .ngx-datatable .datatable-body-cell:focus,\n    .ngx-datatable .datatable-header-cell:focus {\n      outline: none; }\n  .ngx-datatable .datatable-row-left,\n  .ngx-datatable .datatable-row-right {\n    z-index: 9; }\n  .ngx-datatable .datatable-row-left,\n  .ngx-datatable .datatable-row-center,\n  .ngx-datatable .datatable-row-group,\n  .ngx-datatable .datatable-row-right {\n    position: relative; }\n  .ngx-datatable .datatable-header {\n    display: block;\n    overflow: hidden; }\n    .ngx-datatable .datatable-header .datatable-header-inner {\n      -webkit-box-align: stretch;\n          -ms-flex-align: stretch;\n              align-items: stretch;\n      -webkit-align-items: stretch; }\n    .ngx-datatable .datatable-header .datatable-header-cell {\n      position: relative;\n      display: inline-block; }\n      .ngx-datatable .datatable-header .datatable-header-cell.sortable .datatable-header-cell-wrapper {\n        cursor: pointer; }\n      .ngx-datatable .datatable-header .datatable-header-cell.longpress .datatable-header-cell-wrapper {\n        cursor: move; }\n      .ngx-datatable .datatable-header .datatable-header-cell .sort-btn {\n        line-height: 100%;\n        vertical-align: middle;\n        display: inline-block;\n        cursor: pointer; }\n      .ngx-datatable .datatable-header .datatable-header-cell .resize-handle, .ngx-datatable .datatable-header .datatable-header-cell .resize-handle--not-resizable {\n        display: inline-block;\n        position: absolute;\n        right: 0;\n        top: 0;\n        bottom: 0;\n        width: 5px;\n        padding: 0 4px;\n        visibility: hidden; }\n      .ngx-datatable .datatable-header .datatable-header-cell .resize-handle {\n        cursor: ew-resize; }\n      .ngx-datatable .datatable-header .datatable-header-cell.resizeable:hover .resize-handle {\n        visibility: visible; }\n      .ngx-datatable .datatable-header .datatable-header-cell:hover .resize-handle--not-resizable {\n        visibility: visible; }\n      .ngx-datatable .datatable-header .datatable-header-cell .targetMarker {\n        position: absolute;\n        top: 0;\n        bottom: 0; }\n        .ngx-datatable .datatable-header .datatable-header-cell .targetMarker.dragFromLeft {\n          right: 0; }\n        .ngx-datatable .datatable-header .datatable-header-cell .targetMarker.dragFromRight {\n          left: 0; }\n      .ngx-datatable .datatable-header .datatable-header-cell .datatable-header-cell-template-wrap {\n        height: inherit; }\n  .ngx-datatable .datatable-body {\n    position: relative;\n    z-index: 10;\n    display: block; }\n    .ngx-datatable .datatable-body .datatable-scroll {\n      display: inline-block; }\n    .ngx-datatable .datatable-body .datatable-row-detail {\n      overflow-y: hidden; }\n    .ngx-datatable .datatable-body .datatable-row-wrapper {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n      flex-direction: column; }\n    .ngx-datatable .datatable-body .datatable-body-row {\n      outline: none; }\n      .ngx-datatable .datatable-body .datatable-body-row > div {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex; }\n  .ngx-datatable .datatable-footer {\n    display: block;\n    width: 100%; }\n    .ngx-datatable .datatable-footer .datatable-footer-inner {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-align: center;\n          -ms-flex-align: center;\n              align-items: center;\n      width: 100%; }\n    .ngx-datatable .datatable-footer .selected-count .page-count {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 40%;\n              flex: 1 1 40%; }\n    .ngx-datatable .datatable-footer .selected-count .datatable-pager {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 60%;\n              flex: 1 1 60%; }\n    .ngx-datatable .datatable-footer .page-count {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 20%;\n              flex: 1 1 20%; }\n    .ngx-datatable .datatable-footer .datatable-pager {\n      -webkit-box-flex: 1;\n          -ms-flex: 1 1 80%;\n              flex: 1 1 80%;\n      text-align: right; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager,\n      .ngx-datatable .datatable-footer .datatable-pager .pager li {\n        padding: 0;\n        margin: 0;\n        display: inline-block;\n        list-style: none; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager li, .ngx-datatable .datatable-footer .datatable-pager .pager li a {\n        outline: none; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager li a {\n        cursor: pointer;\n        display: inline-block; }\n      .ngx-datatable .datatable-footer .datatable-pager .pager li.disabled a {\n        cursor: not-allowed; }\n", ""]);
 
 // exports
 
@@ -229,6 +229,7 @@ var DataTableBodyCellComponent = /** @class */ (function () {
     function DataTableBodyCellComponent(element, cd) {
         this.cd = cd;
         this.activate = new core_1.EventEmitter();
+        this.treeAction = new core_1.EventEmitter();
         this.isFocused = false;
         this.onCheckboxChangeFn = this.onCheckboxChange.bind(this);
         this.activateFn = this.activate.emit.bind(this.activate);
@@ -241,7 +242,9 @@ var DataTableBodyCellComponent = /** @class */ (function () {
             column: this.column,
             rowHeight: this.rowHeight,
             isSelected: this.isSelected,
-            rowIndex: this.rowIndex
+            rowIndex: this.rowIndex,
+            treeStatus: this.treeStatus,
+            onTreeAction: this.onTreeAction.bind(this),
         };
         this._element = element.nativeElement;
     }
@@ -341,6 +344,27 @@ var DataTableBodyCellComponent = /** @class */ (function () {
         set: function (val) {
             this._sorts = val;
             this.calcSortDir = this.calcSortDir(val);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataTableBodyCellComponent.prototype, "treeStatus", {
+        get: function () {
+            return this._treeStatus;
+        },
+        set: function (status) {
+            if (status !== 'collapsed' &&
+                status !== 'expanded' &&
+                status !== 'loading' &&
+                status !== 'disabled') {
+                this._treeStatus = 'collapsed';
+            }
+            else {
+                this._treeStatus = status;
+            }
+            this.cellContext.treeStatus = this._treeStatus;
+            this.checkValueUpdates();
+            this.cd.markForCheck();
         },
         enumerable: true,
         configurable: true
@@ -509,7 +533,8 @@ var DataTableBodyCellComponent = /** @class */ (function () {
             rowHeight: this.rowHeight,
             column: this.column,
             value: this.value,
-            cellElement: this._element
+            cellElement: this._element,
+            treeStatus: 'collapsed'
         });
     };
     DataTableBodyCellComponent.prototype.calcSortDir = function (sorts) {
@@ -527,9 +552,16 @@ var DataTableBodyCellComponent = /** @class */ (function () {
             return html;
         return html.replace(/<\/?[^>]+(>|$)/g, '');
     };
+    DataTableBodyCellComponent.prototype.onTreeAction = function () {
+        this.treeAction.emit(this.row);
+    };
+    DataTableBodyCellComponent.prototype.calcLeftMargin = function (column, row) {
+        var levelIndent = column.treeLevelIndent != null ? column.treeLevelIndent : 50;
+        return column.isTreeColumn ? row.level * levelIndent : 0;
+    };
     __decorate([
         core_1.Input(),
-        __metadata("design:type", Object)
+        __metadata("design:type", Function)
     ], DataTableBodyCellComponent.prototype, "displayCheck", void 0);
     __decorate([
         core_1.Input(),
@@ -572,9 +604,18 @@ var DataTableBodyCellComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [Array])
     ], DataTableBodyCellComponent.prototype, "sorts", null);
     __decorate([
+        core_1.Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], DataTableBodyCellComponent.prototype, "treeStatus", null);
+    __decorate([
         core_1.Output(),
         __metadata("design:type", core_1.EventEmitter)
     ], DataTableBodyCellComponent.prototype, "activate", void 0);
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
+    ], DataTableBodyCellComponent.prototype, "treeAction", void 0);
     __decorate([
         core_1.ViewChild('cellTemplate', { read: core_1.ViewContainerRef }),
         __metadata("design:type", core_1.ViewContainerRef)
@@ -638,7 +679,7 @@ var DataTableBodyCellComponent = /** @class */ (function () {
         core_1.Component({
             selector: 'datatable-body-cell',
             changeDetection: core_1.ChangeDetectionStrategy.OnPush,
-            template: "\n    <div class=\"datatable-body-cell-label\">\n      <label\n        *ngIf=\"column.checkboxable && (!displayCheck || displayCheck(row, column, value))\"\n        class=\"datatable-checkbox\">\n        <input\n          type=\"checkbox\"\n          [checked]=\"isSelected\"\n          (click)=\"onCheckboxChange($event)\"\n        />\n      </label>\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [title]=\"sanitizedValue\"\n        [innerHTML]=\"value\">\n      </span>\n      <ng-template #cellTemplate\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngTemplateOutletContext]=\"cellContext\">\n      </ng-template>\n    </div>\n  "
+            template: "\n    <div class=\"datatable-body-cell-label\"\n      [style.margin-left.px]=\"calcLeftMargin(column, row)\">\n      <label\n        *ngIf=\"column.checkboxable && (!displayCheck || displayCheck(row, column, value))\"\n        class=\"datatable-checkbox\">\n        <input\n          type=\"checkbox\"\n          [checked]=\"isSelected\"\n          (click)=\"onCheckboxChange($event)\"\n        />\n      </label>\n      <ng-container *ngIf=\"column.isTreeColumn\">\n        <button *ngIf=\"!column.treeToggleTemplate\"\n          class=\"datatable-tree-button\"\n          [disabled]=\"treeStatus==='disabled'\"\n          (click)=\"onTreeAction()\">\n          <span>\n            <i *ngIf=\"treeStatus==='loading'\"\n              class=\"icon datatable-icon-collapse\"></i>\n            <i *ngIf=\"treeStatus==='collapsed'\"\n              class=\"icon datatable-icon-up\"></i>\n            <i *ngIf=\"treeStatus==='expanded' ||\n                      treeStatus==='disabled'\"\n              class=\"icon datatable-icon-down\"></i>\n          </span>\n        </button>\n        <ng-template *ngIf=\"column.treeToggleTemplate\"\n          [ngTemplateOutlet]=\"column.treeToggleTemplate\"\n          [ngTemplateOutletContext]=\"{ cellContext: cellContext }\">\n        </ng-template>\n      </ng-container>\n\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [title]=\"sanitizedValue\"\n        [innerHTML]=\"value\">\n      </span>\n      <ng-template #cellTemplate\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngTemplateOutletContext]=\"cellContext\">\n      </ng-template>\n    </div>\n  "
         }),
         __metadata("design:paramtypes", [core_1.ElementRef, core_1.ChangeDetectorRef])
     ], DataTableBodyCellComponent);
@@ -831,7 +872,7 @@ var DataTableRowWrapperComponent = /** @class */ (function () {
     DataTableRowWrapperComponent.prototype.onContextmenu = function ($event) {
         this.rowContextmenu.emit({ event: $event, row: this.row });
     };
-    DataTableRowWrapperComponent.prototype.getGroupHeaderStyle = function (group) {
+    DataTableRowWrapperComponent.prototype.getGroupHeaderStyle = function () {
         var styles = {};
         styles['transform'] = 'translate3d(' + this.offsetX + 'px, 0px, 0px)';
         styles['backface-visibility'] = 'hidden';
@@ -931,7 +972,9 @@ var DataTableBodyRowComponent = /** @class */ (function () {
         this.differs = differs;
         this.scrollbarHelper = scrollbarHelper;
         this.cd = cd;
+        this.treeStatus = 'collapsed';
         this.activate = new core_1.EventEmitter();
+        this.treeAction = new core_1.EventEmitter();
         this._groupStyles = {
             left: {},
             center: {},
@@ -1086,6 +1129,9 @@ var DataTableBodyRowComponent = /** @class */ (function () {
         this._columnsByPin = utils_1.columnsByPinArr(this._columns);
         this._columnGroupWidths = utils_1.columnGroupWidths(colsByPin, this._columns);
     };
+    DataTableBodyRowComponent.prototype.onTreeAction = function () {
+        this.treeAction.emit();
+    };
     __decorate([
         core_1.Input(),
         __metadata("design:type", Array),
@@ -1126,6 +1172,10 @@ var DataTableBodyRowComponent = /** @class */ (function () {
     ], DataTableBodyRowComponent.prototype, "displayCheck", void 0);
     __decorate([
         core_1.Input(),
+        __metadata("design:type", String)
+    ], DataTableBodyRowComponent.prototype, "treeStatus", void 0);
+    __decorate([
+        core_1.Input(),
         __metadata("design:type", Number),
         __metadata("design:paramtypes", [Number])
     ], DataTableBodyRowComponent.prototype, "offsetX", null);
@@ -1149,6 +1199,10 @@ var DataTableBodyRowComponent = /** @class */ (function () {
         __metadata("design:type", core_1.EventEmitter)
     ], DataTableBodyRowComponent.prototype, "activate", void 0);
     __decorate([
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
+    ], DataTableBodyRowComponent.prototype, "treeAction", void 0);
+    __decorate([
         core_1.HostListener('keydown', ['$event']),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object]),
@@ -1164,7 +1218,7 @@ var DataTableBodyRowComponent = /** @class */ (function () {
         core_1.Component({
             selector: 'datatable-body-row',
             changeDetection: core_1.ChangeDetectionStrategy.OnPush,
-            template: "\n    <div\n      *ngFor=\"let colGroup of _columnsByPin; let i = index; trackBy: trackByGroups\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"_groupStyles[colGroup.type]\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [group]=\"group\"\n        [expanded]=\"expanded\"\n        [isSelected]=\"isSelected\"\n        [rowIndex]=\"rowIndex\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        [displayCheck]=\"displayCheck\"\n        (activate)=\"onActivate($event, ii)\">\n      </datatable-body-cell>\n    </div>\n  "
+            template: "\n    <div\n      *ngFor=\"let colGroup of _columnsByPin; let i = index; trackBy: trackByGroups\"\n      class=\"datatable-row-{{colGroup.type}} datatable-row-group\"\n      [ngStyle]=\"_groupStyles[colGroup.type]\">\n      <datatable-body-cell\n        *ngFor=\"let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn\"\n        tabindex=\"-1\"\n        [row]=\"row\"\n        [group]=\"group\"\n        [expanded]=\"expanded\"\n        [isSelected]=\"isSelected\"\n        [rowIndex]=\"rowIndex\"\n        [column]=\"column\"\n        [rowHeight]=\"rowHeight\"\n        [displayCheck]=\"displayCheck\"\n        [treeStatus]=\"treeStatus\"\n        (activate)=\"onActivate($event, ii)\"\n        (treeAction)=\"onTreeAction()\">\n      </datatable-body-cell>\n    </div>\n  "
         }),
         __param(1, core_1.SkipSelf()),
         __metadata("design:paramtypes", [core_1.KeyValueDiffers,
@@ -1212,6 +1266,7 @@ var DataTableBodyComponent = /** @class */ (function () {
         this.select = new core_1.EventEmitter();
         this.detailToggle = new core_1.EventEmitter();
         this.rowContextmenu = new core_1.EventEmitter(false);
+        this.treeAction = new core_1.EventEmitter();
         this.rowHeightsCache = new utils_1.RowHeightCache();
         this.temp = [];
         this.offsetY = 0;
@@ -1336,11 +1391,11 @@ var DataTableBodyComponent = /** @class */ (function () {
     Object.defineProperty(DataTableBodyComponent.prototype, "scrollHeight", {
         /**
          * Property that would calculate the height of scroll bar
-         * based on the row heights cache for virtual scroll. Other scenarios
+         * based on the row heights cache for virtual scroll and virtualization. Other scenarios
          * calculate scroll height automatically (as height will be undefined).
          */
         get: function () {
-            if (this.scrollbarV && this.rowCount) {
+            if (this.scrollbarV && this.virtualization && this.rowCount) {
                 return this.rowHeightsCache.query(this.rowCount - 1);
             }
             // avoid TS7030: Not all code paths return a value.
@@ -1401,10 +1456,13 @@ var DataTableBodyComponent = /** @class */ (function () {
         // scroller is missing on empty table
         if (!this.scroller)
             return;
-        if (this.scrollbarV && offset) {
+        if (this.scrollbarV && this.virtualization && offset) {
             // First get the row Index that we need to move to.
             var rowIndex = this.pageSize * offset;
             offset = this.rowHeightsCache.query(rowIndex - 1);
+        }
+        else if (this.scrollbarV && !this.virtualization) {
+            offset = 0;
         }
         this.scroller.setOffset(offset || 0);
     };
@@ -1484,7 +1542,6 @@ var DataTableBodyComponent = /** @class */ (function () {
             }
         }
         this.temp = temp;
-        this.cd.detectChanges();
     };
     /**
      * Get the row height
@@ -1546,7 +1603,7 @@ var DataTableBodyComponent = /** @class */ (function () {
         if (this.groupedRows) {
             styles['width'] = this.columnGroupWidths.total;
         }
-        if (this.scrollbarV) {
+        if (this.scrollbarV && this.virtualization) {
             var idx = 0;
             if (this.groupedRows) {
                 // Get the latest row rowindex in a group
@@ -1562,6 +1619,24 @@ var DataTableBodyComponent = /** @class */ (function () {
             var pos = this.rowHeightsCache.query(idx - 1);
             utils_1.translateXY(styles, 0, pos);
         }
+        return styles;
+    };
+    /**
+     * Calculate bottom summary row offset for scrollbar mode.
+     * For more information about cache and offset calculation
+     * see description for `getRowsStyles` method
+     *
+     * @returns {*} Returns the CSS3 style to be applied
+     *
+     * @memberOf DataTableBodyComponent
+     */
+    DataTableBodyComponent.prototype.getBottomSummaryRowStyles = function () {
+        if (!this.scrollbarV || !this.rows || !this.rows.length) {
+            return null;
+        }
+        var styles = { position: 'absolute' };
+        var pos = this.rowHeightsCache.query(this.rows.length - 1);
+        utils_1.translateXY(styles, 0, pos);
         return styles;
     };
     /**
@@ -1608,7 +1683,7 @@ var DataTableBodyComponent = /** @class */ (function () {
      * when the entire row array state has changed.
      */
     DataTableBodyComponent.prototype.refreshRowHeightCache = function () {
-        if (!this.scrollbarV)
+        if (!this.scrollbarV || (this.scrollbarV && !this.virtualization))
             return;
         // clear the previous row height cache if already present.
         // this is useful during sorts, filters where the state of the
@@ -1635,7 +1710,7 @@ var DataTableBodyComponent = /** @class */ (function () {
         // If the scroll bar is just below the row which is highlighted then make that as the
         // first index.
         var viewPortFirstRowIndex = this.indexes.first;
-        if (this.scrollbarV) {
+        if (this.scrollbarV && this.virtualization) {
             var offsetScroll = this.rowHeightsCache.query(viewPortFirstRowIndex - 1);
             return offsetScroll <= this.offsetY ? viewPortFirstRowIndex - 1 : viewPortFirstRowIndex;
         }
@@ -1652,7 +1727,7 @@ var DataTableBodyComponent = /** @class */ (function () {
         var viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
         var expanded = this.rowExpansions.get(row);
         // If the detailRowHeight is auto --> only in case of non-virtualized scroll
-        if (this.scrollbarV) {
+        if (this.scrollbarV && this.virtualization) {
             var detailRowHeight = this.getDetailRowHeight(row) * (expanded ? -1 : 1);
             // const idx = this.rowIndexes.get(row) || 0;
             var idx = this.getRowIndex(row);
@@ -1742,6 +1817,9 @@ var DataTableBodyComponent = /** @class */ (function () {
      */
     DataTableBodyComponent.prototype.getRowIndex = function (row) {
         return this.rowIndexes.get(row) || 0;
+    };
+    DataTableBodyComponent.prototype.onTreeAction = function (row) {
+        this.treeAction.emit({ row: row });
     };
     __decorate([
         core_1.Input(),
@@ -1900,13 +1978,17 @@ var DataTableBodyComponent = /** @class */ (function () {
         __metadata("design:type", Object)
     ], DataTableBodyComponent.prototype, "rowContextmenu", void 0);
     __decorate([
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
+    ], DataTableBodyComponent.prototype, "treeAction", void 0);
+    __decorate([
         core_1.ViewChild(scroller_component_1.ScrollerComponent),
         __metadata("design:type", scroller_component_1.ScrollerComponent)
     ], DataTableBodyComponent.prototype, "scroller", void 0);
     DataTableBodyComponent = __decorate([
         core_1.Component({
             selector: 'datatable-body',
-            template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [rows]=\"rows\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths?.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-summary-row\n          *ngIf=\"summaryRow && summaryPosition === 'top'\"\n          [rowHeight]=\"summaryHeight\"\n          [offsetX]=\"offsetX\"\n          [innerWidth]=\"innerWidth\"\n          [rows]=\"rows\"\n          [columns]=\"columns\">\n        </datatable-summary-row>\n        <datatable-row-wrapper\n          [groupedRows]=\"groupedRows\"\n          *ngFor=\"let group of temp; let i = index; trackBy: rowTrackingFn;\"\n          [innerWidth]=\"innerWidth\"\n          [ngStyle]=\"getRowsStyles(group)\"\n          [rowDetail]=\"rowDetail\"\n          [groupHeader]=\"groupHeader\"\n          [offsetX]=\"offsetX\"\n          [detailRowHeight]=\"getDetailRowHeight(group[i],i)\"\n          [row]=\"group\"\n          [expanded]=\"getRowExpanded(group)\"\n          [rowIndex]=\"getRowIndex(group[i])\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-row\n            *ngIf=\"!groupedRows; else groupedRowsTemplate\"\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(group)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"getRowHeight(group)\"\n            [row]=\"group\"\n            [rowIndex]=\"getRowIndex(group)\"\n            [expanded]=\"getRowExpanded(group)\"\n            [rowClass]=\"rowClass\"\n            [displayCheck]=\"displayCheck\"\n            (activate)=\"selector.onActivate($event, indexes.first + i)\">\n          </datatable-body-row>\n          <ng-template #groupedRowsTemplate>\n            <datatable-body-row\n              *ngFor=\"let row of group.value; let i = index; trackBy: rowTrackingFn;\"\n              tabindex=\"-1\"\n              [isSelected]=\"selector.getRowSelected(row)\"\n              [innerWidth]=\"innerWidth\"\n              [offsetX]=\"offsetX\"\n              [columns]=\"columns\"\n              [rowHeight]=\"getRowHeight(row)\"\n              [row]=\"row\"\n              [group]=\"group.value\"\n              [rowIndex]=\"getRowIndex(row)\"\n              [expanded]=\"getRowExpanded(row)\"\n              [rowClass]=\"rowClass\"\n              (activate)=\"selector.onActivate($event, i)\">\n            </datatable-body-row>\n          </ng-template>\n        </datatable-row-wrapper>\n        <datatable-summary-row\n          *ngIf=\"summaryRow && summaryPosition === 'bottom'\"\n          [rowHeight]=\"summaryHeight\"\n          [offsetX]=\"offsetX\"\n          [innerWidth]=\"innerWidth\"\n          [rows]=\"rows\"\n          [columns]=\"columns\">\n        </datatable-summary-row>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length && !loadingIndicator\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
+            template: "\n    <datatable-selection\n      #selector\n      [selected]=\"selected\"\n      [rows]=\"rows\"\n      [selectCheck]=\"selectCheck\"\n      [selectEnabled]=\"selectEnabled\"\n      [selectionType]=\"selectionType\"\n      [rowIdentity]=\"rowIdentity\"\n      (select)=\"select.emit($event)\"\n      (activate)=\"activate.emit($event)\">\n      <datatable-progress\n        *ngIf=\"loadingIndicator\">\n      </datatable-progress>\n      <datatable-scroller\n        *ngIf=\"rows?.length\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [scrollHeight]=\"scrollHeight\"\n        [scrollWidth]=\"columnGroupWidths?.total\"\n        (scroll)=\"onBodyScroll($event)\">\n        <datatable-summary-row\n          *ngIf=\"summaryRow && summaryPosition === 'top'\"\n          [rowHeight]=\"summaryHeight\"\n          [offsetX]=\"offsetX\"\n          [innerWidth]=\"innerWidth\"\n          [rows]=\"rows\"\n          [columns]=\"columns\">\n        </datatable-summary-row>\n        <datatable-row-wrapper\n          [groupedRows]=\"groupedRows\"\n          *ngFor=\"let group of temp; let i = index; trackBy: rowTrackingFn;\"\n          [innerWidth]=\"innerWidth\"\n          [ngStyle]=\"getRowsStyles(group)\"\n          [rowDetail]=\"rowDetail\"\n          [groupHeader]=\"groupHeader\"\n          [offsetX]=\"offsetX\"\n          [detailRowHeight]=\"getDetailRowHeight(group[i],i)\"\n          [row]=\"group\"\n          [expanded]=\"getRowExpanded(group)\"\n          [rowIndex]=\"getRowIndex(group[i])\"\n          (rowContextmenu)=\"rowContextmenu.emit($event)\">\n          <datatable-body-row\n            *ngIf=\"!groupedRows; else groupedRowsTemplate\"\n            tabindex=\"-1\"\n            [isSelected]=\"selector.getRowSelected(group)\"\n            [innerWidth]=\"innerWidth\"\n            [offsetX]=\"offsetX\"\n            [columns]=\"columns\"\n            [rowHeight]=\"getRowHeight(group)\"\n            [row]=\"group\"\n            [rowIndex]=\"getRowIndex(group)\"\n            [expanded]=\"getRowExpanded(group)\"\n            [rowClass]=\"rowClass\"\n            [displayCheck]=\"displayCheck\"\n            [treeStatus]=\"group.treeStatus\"\n            (treeAction)=\"onTreeAction(group)\"\n            (activate)=\"selector.onActivate($event, indexes.first + i)\">\n          </datatable-body-row>\n          <ng-template #groupedRowsTemplate>\n            <datatable-body-row\n              *ngFor=\"let row of group.value; let i = index; trackBy: rowTrackingFn;\"\n              tabindex=\"-1\"\n              [isSelected]=\"selector.getRowSelected(row)\"\n              [innerWidth]=\"innerWidth\"\n              [offsetX]=\"offsetX\"\n              [columns]=\"columns\"\n              [rowHeight]=\"getRowHeight(row)\"\n              [row]=\"row\"\n              [group]=\"group.value\"\n              [rowIndex]=\"getRowIndex(row)\"\n              [expanded]=\"getRowExpanded(row)\"\n              [rowClass]=\"rowClass\"\n              (activate)=\"selector.onActivate($event, i)\">\n            </datatable-body-row>\n          </ng-template>\n        </datatable-row-wrapper>\n        <datatable-summary-row\n          *ngIf=\"summaryRow && summaryPosition === 'bottom'\"\n          [ngStyle]=\"getBottomSummaryRowStyles()\"\n          [rowHeight]=\"summaryHeight\"\n          [offsetX]=\"offsetX\"\n          [innerWidth]=\"innerWidth\"\n          [rows]=\"rows\"\n          [columns]=\"columns\">\n        </datatable-summary-row>\n      </datatable-scroller>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows?.length && !loadingIndicator\"\n        [innerHTML]=\"emptyMessage\">\n      </div>\n    </datatable-selection>\n  ",
             changeDetection: core_1.ChangeDetectionStrategy.OnPush,
             host: {
                 class: 'datatable-body'
@@ -2004,14 +2086,11 @@ var ScrollerComponent = /** @class */ (function () {
         this.element = element.nativeElement;
     }
     ScrollerComponent.prototype.ngOnInit = function () {
-        var _this = this;
         // manual bind so we don't always listen
         if (this.scrollbarV || this.scrollbarH) {
             var renderer = this.renderer;
             this.parentElement = renderer.parentNode(renderer.parentNode(this.element));
-            this.ngZone.runOutsideAngular(function () {
-                _this.parentElement.addEventListener('scroll', _this.onScrolled.bind(_this));
-            });
+            this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
         }
     };
     ScrollerComponent.prototype.ngOnDestroy = function () {
@@ -2113,6 +2192,7 @@ var DataTableSelectionComponent = /** @class */ (function () {
         this.select = new core_1.EventEmitter();
     }
     DataTableSelectionComponent.prototype.selectRow = function (event, index, row) {
+        var _a;
         if (!this.selectEnabled)
             return;
         var chkbox = this.selectionType === types_1.SelectionType.checkbox;
@@ -2142,7 +2222,6 @@ var DataTableSelectionComponent = /** @class */ (function () {
         this.select.emit({
             selected: selected
         });
-        var _a;
     };
     DataTableSelectionComponent.prototype.onActivate = function (model, index) {
         var type = model.type, event = model.event, row = model.row;
@@ -2295,13 +2374,16 @@ __export(__webpack_require__("./src/components/body/summary/summary-row.componen
 
 "use strict";
 
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
 };
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2315,9 +2397,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 function defaultSumFunc(cells) {
-    return cells
-        .filter(function (cell) { return !!cell; })
-        .reduce(function (res, cell) { return res + cell; });
+    var cellsWithValues = cells.filter(function (cell) { return !!cell; });
+    if (!cellsWithValues.length) {
+        return null;
+    }
+    if (cellsWithValues.some(function (cell) { return typeof cell !== 'number'; })) {
+        return null;
+    }
+    return cellsWithValues.reduce(function (res, cell) { return res + cell; });
+}
+function noopSumFunc(cells) {
+    return null;
 }
 var DataTableSummaryRowComponent = /** @class */ (function () {
     function DataTableSummaryRowComponent() {
@@ -2340,11 +2430,22 @@ var DataTableSummaryRowComponent = /** @class */ (function () {
             .filter(function (col) { return !col.summaryTemplate; })
             .forEach(function (col) {
             var cellsFromSingleColumn = _this.rows.map(function (row) { return row[col.prop]; });
-            var sumFunc = col.summaryFunc || defaultSumFunc;
+            var sumFunc = _this.getSummaryFunction(col);
             _this.summaryRow[col.prop] = col.pipe ?
                 col.pipe.transform(sumFunc(cellsFromSingleColumn)) :
                 sumFunc(cellsFromSingleColumn);
         });
+    };
+    DataTableSummaryRowComponent.prototype.getSummaryFunction = function (column) {
+        if (column.summaryFunc === undefined) {
+            return defaultSumFunc;
+        }
+        else if (column.summaryFunc === null) {
+            return noopSumFunc;
+        }
+        else {
+            return column.summaryFunc;
+        }
     };
     __decorate([
         core_1.Input(),
@@ -2462,9 +2563,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var column_header_directive_1 = __webpack_require__("./src/components/columns/column-header.directive.ts");
 var column_cell_directive_1 = __webpack_require__("./src/components/columns/column-cell.directive.ts");
+var tree_directive_1 = __webpack_require__("./src/components/columns/tree.directive.ts");
+var column_changes_service_1 = __webpack_require__("./src/services/column-changes.service.ts");
 var DataTableColumnDirective = /** @class */ (function () {
-    function DataTableColumnDirective() {
+    function DataTableColumnDirective(columnChangesService) {
+        this.columnChangesService = columnChangesService;
+        this.isFirstChange = true;
     }
+    DataTableColumnDirective.prototype.ngOnChanges = function () {
+        if (this.isFirstChange) {
+            this.isFirstChange = false;
+        }
+        else {
+            this.columnChangesService.onInputChange();
+        }
+    };
     __decorate([
         core_1.Input(),
         __metadata("design:type", String)
@@ -2539,6 +2652,14 @@ var DataTableColumnDirective = /** @class */ (function () {
     ], DataTableColumnDirective.prototype, "cellClass", void 0);
     __decorate([
         core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], DataTableColumnDirective.prototype, "isTreeColumn", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Number)
+    ], DataTableColumnDirective.prototype, "treeLevelIndent", void 0);
+    __decorate([
+        core_1.Input(),
         __metadata("design:type", Function)
     ], DataTableColumnDirective.prototype, "summaryFunc", void 0);
     __decorate([
@@ -2555,8 +2676,14 @@ var DataTableColumnDirective = /** @class */ (function () {
         core_1.ContentChild(column_header_directive_1.DataTableColumnHeaderDirective, { read: core_1.TemplateRef }),
         __metadata("design:type", core_1.TemplateRef)
     ], DataTableColumnDirective.prototype, "headerTemplate", void 0);
+    __decorate([
+        core_1.Input(),
+        core_1.ContentChild(tree_directive_1.DataTableColumnCellTreeToggle, { read: core_1.TemplateRef }),
+        __metadata("design:type", core_1.TemplateRef)
+    ], DataTableColumnDirective.prototype, "treeToggleTemplate", void 0);
     DataTableColumnDirective = __decorate([
-        core_1.Directive({ selector: 'ngx-datatable-column' })
+        core_1.Directive({ selector: 'ngx-datatable-column' }),
+        __metadata("design:paramtypes", [column_changes_service_1.ColumnChangesService])
     ], DataTableColumnDirective);
     return DataTableColumnDirective;
 }());
@@ -2577,6 +2704,38 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __export(__webpack_require__("./src/components/columns/column.directive.ts"));
 __export(__webpack_require__("./src/components/columns/column-header.directive.ts"));
 __export(__webpack_require__("./src/components/columns/column-cell.directive.ts"));
+__export(__webpack_require__("./src/components/columns/tree.directive.ts"));
+
+
+/***/ }),
+
+/***/ "./src/components/columns/tree.directive.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("@angular/core");
+var DataTableColumnCellTreeToggle = /** @class */ (function () {
+    function DataTableColumnCellTreeToggle(template) {
+        this.template = template;
+    }
+    DataTableColumnCellTreeToggle = __decorate([
+        core_1.Directive({ selector: '[ngx-datatable-tree-toggle]' }),
+        __metadata("design:paramtypes", [core_1.TemplateRef])
+    ], DataTableColumnCellTreeToggle);
+    return DataTableColumnCellTreeToggle;
+}());
+exports.DataTableColumnCellTreeToggle = DataTableColumnCellTreeToggle;
 
 
 /***/ }),
@@ -2601,13 +2760,16 @@ __export(__webpack_require__("./src/components/columns/column-cell.directive.ts"
 
 "use strict";
 
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
 };
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2634,10 +2796,11 @@ var footer_1 = __webpack_require__("./src/components/footer/index.ts");
 var header_1 = __webpack_require__("./src/components/header/index.ts");
 var rxjs_1 = __webpack_require__("rxjs");
 var DatatableComponent = /** @class */ (function () {
-    function DatatableComponent(scrollbarHelper, dimensionsHelper, cd, element, differs) {
+    function DatatableComponent(scrollbarHelper, dimensionsHelper, cd, element, differs, columnChangesService) {
         this.scrollbarHelper = scrollbarHelper;
         this.dimensionsHelper = dimensionsHelper;
         this.cd = cd;
+        this.columnChangesService = columnChangesService;
         /**
          * List of row objects that should be
          * represented as selected in the grid.
@@ -2765,7 +2928,7 @@ var DatatableComponent = /** @class */ (function () {
         /**
          * A height of summary row
          */
-        this.summaryHeight = this.rowHeight;
+        this.summaryHeight = 30;
         /**
          * A property holds a summary row position: top/bottom
          */
@@ -2804,10 +2967,15 @@ var DatatableComponent = /** @class */ (function () {
          * content contains either the column or the row that was clicked.
          */
         this.tableContextmenu = new core_1.EventEmitter(false);
+        /**
+         * A row was expanded ot collapsed for tree
+         */
+        this.treeAction = new core_1.EventEmitter();
         this.rowCount = 0;
         this._offsetX = new rxjs_1.BehaviorSubject(0);
         this._count = 0;
         this._offset = 0;
+        this._subscriptions = [];
         // get ref to elm for measuring
         this.element = element.nativeElement;
         this.rowDiffer = differs.find({}).create();
@@ -2831,6 +2999,8 @@ var DatatableComponent = /** @class */ (function () {
             if (!this.externalSorting) {
                 this.sortInternalRows();
             }
+            // auto group by parent on new update
+            this._internalRows = utils_1.groupRowsByParents(this._internalRows, utils_1.optionalGetterForProp(this.treeFromRelation), utils_1.optionalGetterForProp(this.treeToRelation));
             // recalculate sizes/etc
             this.recalculate();
             if (this._rows && this._groupRowsBy) {
@@ -2966,6 +3136,17 @@ var DatatableComponent = /** @class */ (function () {
          */
         get: function () {
             return this.scrollbarV;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DatatableComponent.prototype, "isVirtualized", {
+        /**
+         * CSS class applied to root element if
+         * virtualization is enabled.
+         */
+        get: function () {
+            return this.virtualization;
         },
         enumerable: true,
         configurable: true
@@ -3122,6 +3303,7 @@ var DatatableComponent = /** @class */ (function () {
         this.columnTemplates.changes.subscribe(function (v) {
             return _this.translateColumns(v);
         });
+        this.listenForColumnInputChanges();
     };
     /**
      * Translates the templates to the column objects
@@ -3175,6 +3357,8 @@ var DatatableComponent = /** @class */ (function () {
             else {
                 this._internalRows = this.rows.slice();
             }
+            // auto group by parent on new update
+            this._internalRows = utils_1.groupRowsByParents(this._internalRows, utils_1.optionalGetterForProp(this.treeFromRelation), utils_1.optionalGetterForProp(this.treeToRelation));
             this.recalculatePages();
             this.cd.markForCheck();
         }
@@ -3252,6 +3436,12 @@ var DatatableComponent = /** @class */ (function () {
      */
     DatatableComponent.prototype.onBodyPage = function (_a) {
         var offset = _a.offset;
+        // Avoid pagination caming from body events like scroll when the table 
+        // has no virtualization and the external paging is enable. 
+        // This means, let's the developer handle pagination by my him(her) self
+        if (this.externalPaging && !this.virtualization) {
+            return;
+        }
         this.offset = offset;
         this.page.emit({
             count: this.count,
@@ -3295,7 +3485,7 @@ var DatatableComponent = /** @class */ (function () {
         // Keep the page size constant even if the row has been expanded.
         // This is because an expanded row is still considered to be a child of
         // the original row.  Hence calculation would use rowHeight only.
-        if (this.scrollbarV) {
+        if (this.scrollbarV && this.virtualization) {
             var size = Math.ceil(this.bodyHeight / this.rowHeight);
             return Math.max(size, 0);
         }
@@ -3320,6 +3510,9 @@ var DatatableComponent = /** @class */ (function () {
                 return 0;
             if (this.groupedRows) {
                 return this.groupedRows.length;
+            }
+            else if (this.treeFromRelation != null && this.treeToRelation != null) {
+                return this._internalRows.length;
             }
             else {
                 return val.length;
@@ -3423,6 +3616,8 @@ var DatatableComponent = /** @class */ (function () {
             // don't use normal setter so we don't resort
             this.sortInternalRows();
         }
+        // auto group by parent on new update
+        this._internalRows = utils_1.groupRowsByParents(this._internalRows, utils_1.optionalGetterForProp(this.treeFromRelation), utils_1.optionalGetterForProp(this.treeToRelation));
         // Always go to first page when sorting to see the newly sorted data
         this.offset = 0;
         this.bodyComponent.updateOffsetY(this.offset);
@@ -3432,6 +3627,7 @@ var DatatableComponent = /** @class */ (function () {
      * Toggle all row selection
      */
     DatatableComponent.prototype.onHeaderSelect = function (event) {
+        var _a, _b;
         if (this.selectAllRowsOnPage) {
             // before we splice, chk if we currently have all selected
             var first = this.bodyComponent.indexes.first;
@@ -3457,13 +3653,41 @@ var DatatableComponent = /** @class */ (function () {
         this.select.emit({
             selected: this.selected
         });
-        var _a, _b;
     };
     /**
      * A row was selected from body
      */
     DatatableComponent.prototype.onBodySelect = function (event) {
         this.select.emit(event);
+    };
+    /**
+     * A row was expanded or collapsed for tree
+     */
+    DatatableComponent.prototype.onTreeAction = function (event) {
+        var _this = this;
+        var row = event.row;
+        // TODO: For duplicated items this will not work
+        var rowIndex = this._rows.findIndex(function (r) {
+            return r[_this.treeToRelation] === event.row[_this.treeToRelation];
+        });
+        this.treeAction.emit({ row: row, rowIndex: rowIndex });
+    };
+    DatatableComponent.prototype.ngOnDestroy = function () {
+        this._subscriptions.forEach(function (subscription) { return subscription.unsubscribe(); });
+    };
+    /**
+     * listen for changes to input bindings of all DataTableColumnDirective and
+     * trigger the columnTemplates.changes observable to emit
+     */
+    DatatableComponent.prototype.listenForColumnInputChanges = function () {
+        var _this = this;
+        this._subscriptions.push(this.columnChangesService
+            .columnInputChanges$
+            .subscribe(function () {
+            if (_this.columnTemplates) {
+                _this.columnTemplates.notifyOnChanges();
+            }
+        }));
     };
     DatatableComponent.prototype.sortInternalRows = function () {
         this._internalRows = utils_1.sortRows(this._internalRows, this._internalColumns, this.sorts);
@@ -3608,6 +3832,14 @@ var DatatableComponent = /** @class */ (function () {
     ], DatatableComponent.prototype, "virtualization", void 0);
     __decorate([
         core_1.Input(),
+        __metadata("design:type", String)
+    ], DatatableComponent.prototype, "treeFromRelation", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", String)
+    ], DatatableComponent.prototype, "treeToRelation", void 0);
+    __decorate([
+        core_1.Input(),
         __metadata("design:type", Boolean)
     ], DatatableComponent.prototype, "summaryRow", void 0);
     __decorate([
@@ -3651,6 +3883,10 @@ var DatatableComponent = /** @class */ (function () {
         __metadata("design:type", Object)
     ], DatatableComponent.prototype, "tableContextmenu", void 0);
     __decorate([
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
+    ], DatatableComponent.prototype, "treeAction", void 0);
+    __decorate([
         core_1.HostBinding('class.fixed-header'),
         __metadata("design:type", Boolean),
         __metadata("design:paramtypes", [])
@@ -3665,6 +3901,11 @@ var DatatableComponent = /** @class */ (function () {
         __metadata("design:type", Boolean),
         __metadata("design:paramtypes", [])
     ], DatatableComponent.prototype, "isVertScroll", null);
+    __decorate([
+        core_1.HostBinding('class.virtualized'),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], DatatableComponent.prototype, "isVirtualized", null);
     __decorate([
         core_1.HostBinding('class.scroll-horz'),
         __metadata("design:type", Boolean),
@@ -3735,7 +3976,7 @@ var DatatableComponent = /** @class */ (function () {
     DatatableComponent = __decorate([
         core_1.Component({
             selector: 'ngx-datatable',
-            template: "\n    <div\n      visibilityObserver\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"_innerWidth\"\n        [offsetX]=\"_offsetX | async\"\n        [dealsWithGroup]=\"groupedRows\"\n        [columns]=\"_internalColumns\"\n        [headerHeight]=\"headerHeight\"\n        [reorderable]=\"reorderable\"\n        [targetMarkerTemplate]=\"targetMarkerTemplate\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        [selectionType]=\"selectionType\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\"\n        (columnContextmenu)=\"onColumnContextmenu($event)\">\n      </datatable-header>\n      <datatable-body\n        [groupRowsBy]=\"groupRowsBy\"\n        [groupedRows]=\"groupedRows\"\n        [rows]=\"_internalRows\"\n        [groupExpansionDefault]=\"groupExpansionDefault\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [virtualization]=\"virtualization\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [externalPaging]=\"externalPaging\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"_internalColumns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"_offsetX | async\"\n        [rowDetail]=\"rowDetail\"\n        [groupHeader]=\"groupHeader\"\n        [selected]=\"selected\"\n        [innerWidth]=\"_innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [rowClass]=\"rowClass\"\n        [selectCheck]=\"selectCheck\"\n        [displayCheck]=\"displayCheck\"\n        [summaryRow]=\"summaryRow\"\n        [summaryHeight]=\"summaryHeight\"\n        [summaryPosition]=\"summaryPosition\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"onRowContextmenu($event)\"\n        (select)=\"onBodySelect($event)\"\n        (scroll)=\"onBodyScroll($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [footerTemplate]=\"footer\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [selectedCount]=\"selected.length\"\n        [selectedMessage]=\"!!selectionType && messages.selectedMessage\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
+            template: "\n    <div\n      visibilityObserver\n      (visible)=\"recalculate()\">\n      <datatable-header\n        *ngIf=\"headerHeight\"\n        [sorts]=\"sorts\"\n        [sortType]=\"sortType\"\n        [scrollbarH]=\"scrollbarH\"\n        [innerWidth]=\"_innerWidth\"\n        [offsetX]=\"_offsetX | async\"\n        [dealsWithGroup]=\"groupedRows\"\n        [columns]=\"_internalColumns\"\n        [headerHeight]=\"headerHeight\"\n        [reorderable]=\"reorderable\"\n        [targetMarkerTemplate]=\"targetMarkerTemplate\"\n        [sortAscendingIcon]=\"cssClasses.sortAscending\"\n        [sortDescendingIcon]=\"cssClasses.sortDescending\"\n        [allRowsSelected]=\"allRowsSelected\"\n        [selectionType]=\"selectionType\"\n        (sort)=\"onColumnSort($event)\"\n        (resize)=\"onColumnResize($event)\"\n        (reorder)=\"onColumnReorder($event)\"\n        (select)=\"onHeaderSelect($event)\"\n        (columnContextmenu)=\"onColumnContextmenu($event)\">\n      </datatable-header>\n      <datatable-body\n        [groupRowsBy]=\"groupRowsBy\"\n        [groupedRows]=\"groupedRows\"\n        [rows]=\"_internalRows\"\n        [groupExpansionDefault]=\"groupExpansionDefault\"\n        [scrollbarV]=\"scrollbarV\"\n        [scrollbarH]=\"scrollbarH\"\n        [virtualization]=\"virtualization\"\n        [loadingIndicator]=\"loadingIndicator\"\n        [externalPaging]=\"externalPaging\"\n        [rowHeight]=\"rowHeight\"\n        [rowCount]=\"rowCount\"\n        [offset]=\"offset\"\n        [trackByProp]=\"trackByProp\"\n        [columns]=\"_internalColumns\"\n        [pageSize]=\"pageSize\"\n        [offsetX]=\"_offsetX | async\"\n        [rowDetail]=\"rowDetail\"\n        [groupHeader]=\"groupHeader\"\n        [selected]=\"selected\"\n        [innerWidth]=\"_innerWidth\"\n        [bodyHeight]=\"bodyHeight\"\n        [selectionType]=\"selectionType\"\n        [emptyMessage]=\"messages.emptyMessage\"\n        [rowIdentity]=\"rowIdentity\"\n        [rowClass]=\"rowClass\"\n        [selectCheck]=\"selectCheck\"\n        [displayCheck]=\"displayCheck\"\n        [summaryRow]=\"summaryRow\"\n        [summaryHeight]=\"summaryHeight\"\n        [summaryPosition]=\"summaryPosition\"\n        (page)=\"onBodyPage($event)\"\n        (activate)=\"activate.emit($event)\"\n        (rowContextmenu)=\"onRowContextmenu($event)\"\n        (select)=\"onBodySelect($event)\"\n        (scroll)=\"onBodyScroll($event)\"\n        (treeAction)=\"onTreeAction($event)\">\n      </datatable-body>\n      <datatable-footer\n        *ngIf=\"footerHeight\"\n        [rowCount]=\"rowCount\"\n        [pageSize]=\"pageSize\"\n        [offset]=\"offset\"\n        [footerHeight]=\"footerHeight\"\n        [footerTemplate]=\"footer\"\n        [totalMessage]=\"messages.totalMessage\"\n        [pagerLeftArrowIcon]=\"cssClasses.pagerLeftArrow\"\n        [pagerRightArrowIcon]=\"cssClasses.pagerRightArrow\"\n        [pagerPreviousIcon]=\"cssClasses.pagerPrevious\"\n        [selectedCount]=\"selected.length\"\n        [selectedMessage]=\"!!selectionType && messages.selectedMessage\"\n        [pagerNextIcon]=\"cssClasses.pagerNext\"\n        (page)=\"onFooterPage($event)\">\n      </datatable-footer>\n    </div>\n  ",
             changeDetection: core_1.ChangeDetectionStrategy.OnPush,
             encapsulation: core_1.ViewEncapsulation.None,
             styles: [__webpack_require__("./src/components/datatable.component.scss")],
@@ -3749,7 +3990,8 @@ var DatatableComponent = /** @class */ (function () {
             services_1.DimensionsHelper,
             core_1.ChangeDetectorRef,
             core_1.ElementRef,
-            core_1.KeyValueDiffers])
+            core_1.KeyValueDiffers,
+            services_1.ColumnChangesService])
     ], DatatableComponent);
     return DatatableComponent;
 }());
@@ -3805,6 +4047,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
+var footer_directive_1 = __webpack_require__("./src/components/footer/footer.directive.ts");
 var DataTableFooterComponent = /** @class */ (function () {
     function DataTableFooterComponent() {
         this.selectedCount = 0;
@@ -3862,7 +4105,7 @@ var DataTableFooterComponent = /** @class */ (function () {
     ], DataTableFooterComponent.prototype, "totalMessage", void 0);
     __decorate([
         core_1.Input(),
-        __metadata("design:type", core_1.TemplateRef)
+        __metadata("design:type", footer_directive_1.DatatableFooterDirective)
     ], DataTableFooterComponent.prototype, "footerTemplate", void 0);
     __decorate([
         core_1.Input(),
@@ -3879,7 +4122,7 @@ var DataTableFooterComponent = /** @class */ (function () {
     DataTableFooterComponent = __decorate([
         core_1.Component({
             selector: 'datatable-footer',
-            template: "\n    <div\n      class=\"datatable-footer-inner\"\n      [ngClass]=\"{'selected-count': selectedMessage}\"\n      [style.height.px]=\"footerHeight\">\n      <ng-template\n        *ngIf=\"footerTemplate\"\n        [ngTemplateOutlet]=\"footerTemplate.template\"\n        [ngTemplateOutletContext]=\"{ \n          rowCount: rowCount, \n          pageSize: pageSize, \n          selectedCount: selectedCount,\n          curPage: curPage,\n          offset: offset\n        }\">\n      </ng-template>\n      <div class=\"page-count\" *ngIf=\"!footerTemplate\">\n        <span *ngIf=\"selectedMessage\">\n          {{selectedCount.toLocaleString()}} {{selectedMessage}} / \n        </span>\n        {{rowCount.toLocaleString()}} {{totalMessage}}\n      </div>\n      <datatable-pager *ngIf=\"!footerTemplate\"\n        [pagerLeftArrowIcon]=\"pagerLeftArrowIcon\"\n        [pagerRightArrowIcon]=\"pagerRightArrowIcon\"\n        [pagerPreviousIcon]=\"pagerPreviousIcon\"\n        [pagerNextIcon]=\"pagerNextIcon\"\n        [page]=\"curPage\"\n        [size]=\"pageSize\"\n        [count]=\"rowCount\"\n        [hidden]=\"!isVisible\"\n        (change)=\"page.emit($event)\">\n      </datatable-pager>\n    </div>\n  ",
+            template: "\n    <div\n      class=\"datatable-footer-inner\"\n      [ngClass]=\"{'selected-count': selectedMessage}\"\n      [style.height.px]=\"footerHeight\">\n      <ng-template\n        *ngIf=\"footerTemplate\"\n        [ngTemplateOutlet]=\"footerTemplate.template\"\n        [ngTemplateOutletContext]=\"{ \n          rowCount: rowCount, \n          pageSize: pageSize, \n          selectedCount: selectedCount,\n          curPage: curPage,\n          offset: offset\n        }\">\n      </ng-template>\n      <div class=\"page-count\" *ngIf=\"!footerTemplate\">\n        <span *ngIf=\"selectedMessage\">\n          {{selectedCount?.toLocaleString()}} {{selectedMessage}} / \n        </span>\n        {{rowCount?.toLocaleString()}} {{totalMessage}}\n      </div>\n      <datatable-pager *ngIf=\"!footerTemplate\"\n        [pagerLeftArrowIcon]=\"pagerLeftArrowIcon\"\n        [pagerRightArrowIcon]=\"pagerRightArrowIcon\"\n        [pagerPreviousIcon]=\"pagerPreviousIcon\"\n        [pagerNextIcon]=\"pagerNextIcon\"\n        [page]=\"curPage\"\n        [size]=\"pageSize\"\n        [count]=\"rowCount\"\n        [hidden]=\"!isVisible\"\n        (change)=\"page.emit($event)\">\n      </datatable-pager>\n    </div>\n  ",
             host: {
                 class: 'datatable-footer'
             },
@@ -4431,13 +4674,16 @@ exports.DataTableHeaderCellComponent = DataTableHeaderCellComponent;
 
 "use strict";
 
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
 };
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4957,7 +5203,8 @@ var NgxDatatableModule = /** @class */ (function () {
             ],
             providers: [
                 services_1.ScrollbarHelper,
-                services_1.DimensionsHelper
+                services_1.DimensionsHelper,
+                services_1.ColumnChangesService
             ],
             declarations: [
                 components_1.DataTableFooterTemplateDirective,
@@ -4984,6 +5231,7 @@ var NgxDatatableModule = /** @class */ (function () {
                 components_1.DataTableSelectionComponent,
                 components_1.DataTableColumnHeaderDirective,
                 components_1.DataTableColumnCellDirective,
+                components_1.DataTableColumnCellTreeToggle,
                 components_1.DatatableFooterDirective,
                 components_1.DatatableGroupHeaderTemplateDirective,
                 components_1.DataTableSummaryRowComponent,
@@ -4996,6 +5244,7 @@ var NgxDatatableModule = /** @class */ (function () {
                 components_1.DataTableColumnDirective,
                 components_1.DataTableColumnHeaderDirective,
                 components_1.DataTableColumnCellDirective,
+                components_1.DataTableColumnCellTreeToggle,
                 components_1.DataTableFooterTemplateDirective,
                 components_1.DatatableFooterDirective,
                 components_1.DataTablePagerComponent,
@@ -5711,10 +5960,10 @@ exports.VisibilityDirective = VisibilityDirective;
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global) {
 Object.defineProperty(exports, "__esModule", { value: true });
-/* tslint:disable:variable-name */
-exports.MouseEvent = (window || global).MouseEvent;
-exports.KeyboardEvent = (window || global).KeyboardEvent;
-exports.Event = (window || global).Event;
+/* tslint:disable */
+exports.MouseEvent = ((typeof window !== 'undefined' && window) || global).MouseEvent;
+exports.KeyboardEvent = ((typeof window !== 'undefined' && window) || global).KeyboardEvent;
+exports.Event = ((typeof window !== 'undefined' && window) || global).Event;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/global.js")))
 
@@ -5733,6 +5982,48 @@ __export(__webpack_require__("./src/datatable.module.ts"));
 __export(__webpack_require__("./src/types/index.ts"));
 __export(__webpack_require__("./src/components/index.ts"));
 __export(__webpack_require__("./src/services/index.ts"));
+
+
+/***/ }),
+
+/***/ "./src/services/column-changes.service.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("@angular/core");
+var rxjs_1 = __webpack_require__("rxjs");
+/**
+ * service to make DatatableComponent aware of changes to
+ * input bindings of DataTableColumnDirective
+ */
+var ColumnChangesService = /** @class */ (function () {
+    function ColumnChangesService() {
+        this.columnInputChanges = new rxjs_1.Subject();
+    }
+    Object.defineProperty(ColumnChangesService.prototype, "columnInputChanges$", {
+        get: function () {
+            return this.columnInputChanges.asObservable();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ColumnChangesService.prototype.onInputChange = function () {
+        this.columnInputChanges.next();
+    };
+    ColumnChangesService = __decorate([
+        core_1.Injectable()
+    ], ColumnChangesService);
+    return ColumnChangesService;
+}());
+exports.ColumnChangesService = ColumnChangesService;
 
 
 /***/ }),
@@ -5781,6 +6072,7 @@ function __export(m) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(__webpack_require__("./src/services/scrollbar-helper.service.ts"));
 __export(__webpack_require__("./src/services/dimensions-helper.service.ts"));
+__export(__webpack_require__("./src/services/column-changes.service.ts"));
 
 
 /***/ }),
@@ -6007,6 +6299,10 @@ var column_prop_getters_1 = __webpack_require__("./src/utils/column-prop-getters
 function setColumnDefaults(columns) {
     if (!columns)
         return;
+    // Only one column should hold the tree view
+    // Thus if multiple columns are provided with
+    // isTreeColumn as true we take only the first one
+    var treeColumnFound = false;
     for (var _i = 0, columns_1 = columns; _i < columns_1.length; _i++) {
         var column = columns_1[_i];
         if (!column.$$id) {
@@ -6041,6 +6337,21 @@ function setColumnDefaults(columns) {
         }
         if (!column.hasOwnProperty('width')) {
             column.width = 150;
+        }
+        if (!column.hasOwnProperty('isTreeColumn')) {
+            column.isTreeColumn = false;
+        }
+        else {
+            if (column.isTreeColumn && !treeColumnFound) {
+                // If the first column with isTreeColumn is true found
+                // we mark that treeCoulmn is found
+                treeColumnFound = true;
+            }
+            else {
+                // After that isTreeColumn property for any other column
+                // will be set as false
+                column.isTreeColumn = false;
+            }
         }
     }
 }
@@ -6362,6 +6673,7 @@ __export(__webpack_require__("./src/utils/sort.ts"));
 __export(__webpack_require__("./src/utils/row-height-cache.ts"));
 __export(__webpack_require__("./src/utils/column-helper.ts"));
 __export(__webpack_require__("./src/utils/elm-from-point.ts"));
+__export(__webpack_require__("./src/utils/tree.ts"));
 
 
 /***/ }),
@@ -7032,6 +7344,120 @@ function translateXY(styles, x, y) {
     }
 }
 exports.translateXY = translateXY;
+
+
+/***/ }),
+
+/***/ "./src/utils/tree.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var _1 = __webpack_require__("./src/utils/index.ts");
+function optionalGetterForProp(prop) {
+    return prop && (function (row) { return _1.getterForProp(prop)(row, prop); });
+}
+exports.optionalGetterForProp = optionalGetterForProp;
+/**
+ * This functions rearrange items by their parents
+ * Also sets the level value to each of the items
+ *
+ * Note: Expecting each item has a property called parentId
+ * Note: This algorithm will fail if a list has two or more items with same ID
+ * NOTE: This algorithm will fail if there is a deadlock of relationship
+ *
+ * For example,
+ *
+ * Input
+ *
+ * id -> parent
+ * 1  -> 0
+ * 2  -> 0
+ * 3  -> 1
+ * 4  -> 1
+ * 5  -> 2
+ * 7  -> 8
+ * 6  -> 3
+ *
+ *
+ * Output
+ * id -> level
+ * 1      -> 0
+ * --3    -> 1
+ * ----6  -> 2
+ * --4    -> 1
+ * 2      -> 0
+ * --5    -> 1
+ * 7     -> 8
+ *
+ *
+ * @param rows
+ *
+ */
+function groupRowsByParents(rows, from, to) {
+    if (from && to) {
+        var nodeById = {};
+        var l = rows.length;
+        var node = null;
+        nodeById[0] = new TreeNode(); // that's the root node
+        var uniqIDs = rows.reduce(function (arr, item) {
+            var toValue = to(item);
+            if (arr.indexOf(toValue) === -1) {
+                arr.push(toValue);
+            }
+            return arr;
+        }, []);
+        for (var i = 0; i < l; i++) { // make TreeNode objects for each item
+            nodeById[to(rows[i])] = new TreeNode(rows[i]);
+        }
+        for (var i = 0; i < l; i++) { // link all TreeNode objects
+            node = nodeById[to(rows[i])];
+            var parent_1 = 0;
+            var fromValue = from(node.row);
+            if (!!fromValue && (uniqIDs.indexOf(fromValue) > -1)) {
+                parent_1 = fromValue;
+            }
+            node.parent = nodeById[parent_1];
+            node.row['level'] = node.parent.row['level'] + 1;
+            node.parent.children.push(node);
+        }
+        var resolvedRows_1 = [];
+        nodeById[0].flatten(function () {
+            resolvedRows_1 = resolvedRows_1.concat([this.row]);
+        }, true);
+        return resolvedRows_1;
+    }
+    else {
+        return rows;
+    }
+}
+exports.groupRowsByParents = groupRowsByParents;
+var TreeNode = /** @class */ (function () {
+    function TreeNode(row) {
+        if (row === void 0) { row = null; }
+        if (!row) {
+            row = {
+                level: -1,
+                treeStatus: 'expanded'
+            };
+        }
+        this.row = row;
+        this.parent = null;
+        this.children = [];
+    }
+    TreeNode.prototype.flatten = function (f, recursive) {
+        if (this.row['treeStatus'] === 'expanded') {
+            for (var i = 0, l = this.children.length; i < l; i++) {
+                var child = this.children[i];
+                f.apply(child, Array.prototype.slice.call(arguments, 2));
+                if (recursive)
+                    child.flatten.apply(child, arguments);
+            }
+        }
+    };
+    return TreeNode;
+}());
 
 
 /***/ }),

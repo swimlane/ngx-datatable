@@ -21,7 +21,8 @@ var NgxDatatableModule = /** @class */ (function () {
             ],
             providers: [
                 services_1.ScrollbarHelper,
-                services_1.DimensionsHelper
+                services_1.DimensionsHelper,
+                services_1.ColumnChangesService
             ],
             declarations: [
                 components_1.DataTableFooterTemplateDirective,
@@ -48,6 +49,7 @@ var NgxDatatableModule = /** @class */ (function () {
                 components_1.DataTableSelectionComponent,
                 components_1.DataTableColumnHeaderDirective,
                 components_1.DataTableColumnCellDirective,
+                components_1.DataTableColumnCellTreeToggle,
                 components_1.DatatableFooterDirective,
                 components_1.DatatableGroupHeaderTemplateDirective,
                 components_1.DataTableSummaryRowComponent,
@@ -60,6 +62,7 @@ var NgxDatatableModule = /** @class */ (function () {
                 components_1.DataTableColumnDirective,
                 components_1.DataTableColumnHeaderDirective,
                 components_1.DataTableColumnCellDirective,
+                components_1.DataTableColumnCellTreeToggle,
                 components_1.DataTableFooterTemplateDirective,
                 components_1.DatatableFooterDirective,
                 components_1.DataTablePagerComponent,

@@ -56,6 +56,13 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
             </ul>
           </li>
           <li>
+            <h4>Tree</h4>
+            <ul>
+              <li><a href="#fullscreen-tree" (click)="state='fullscreen-tree'">Full screen Tree</a></li>
+              <li><a href="#client-tree" (click)="state='client-tree'">Client Side Tree</a></li>
+            </ul>
+          </li>
+          <li>
             <h4>Rows</h4>
             <ul>
               <li><a href="#row-grouping" (click)="state='row-grouping'">Row Grouping</a></li>
@@ -71,6 +78,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
             <ul>
               <li><a href="#client-paging" (click)="state='client-paging'">Client-side</a></li>
               <li><a href="#server-paging" (click)="state='server-paging'">Server-side</a></li>
+              <li><a href="#paging-scrolling-novirtualization" (click)="state='paging-scrolling-novirtualization'">Scrolling no virtual</a></li>
               <li><a href="#server-scrolling" (click)="state='server-scrolling'">Scrolling server-side</a></li>
               <li><a href="#virtual-paging" (click)="state='virtual-paging'">Virtual server-side</a></li>
             </ul>
@@ -149,10 +157,15 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
         <basic-dark-theme-demo *ngIf="state === 'dark'"></basic-dark-theme-demo>
         <basic-bootstrap-theme-demo  *ngIf="state === 'bootstrap'"></basic-bootstrap-theme-demo>
 
+        <!-- Tree -->
+        <full-screen-tree-demo *ngIf="state === 'fullscreen-tree'"></full-screen-tree-demo>
+        <client-side-tree-demo *ngIf="state === 'client-tree'"></client-side-tree-demo>
+
         <!-- Paging -->
         <row-grouping-demo *ngIf="state === 'row-grouping'"></row-grouping-demo>
         <client-paging-demo *ngIf="state === 'client-paging'"></client-paging-demo>
         <server-paging-demo *ngIf="state === 'server-paging'"></server-paging-demo>
+        <paging-scrolling-novirtualization-demo *ngIf="state === 'paging-scrolling-novirtualization'"></paging-scrolling-novirtualization-demo>
         <server-scrolling-demo *ngIf="state === 'server-scrolling'"></server-scrolling-demo>
         <virtual-paging-demo *ngIf="state === 'virtual-paging'"></virtual-paging-demo>
 
