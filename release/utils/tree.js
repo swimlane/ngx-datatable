@@ -54,10 +54,10 @@ function groupRowsByParents(rows, from, to) {
             }
             return arr;
         }, []);
-        for (var i = 0; i < l; i++) {
+        for (var i = 0; i < l; i++) { // make TreeNode objects for each item
             nodeById[to(rows[i])] = new TreeNode(rows[i]);
         }
-        for (var i = 0; i < l; i++) {
+        for (var i = 0; i < l; i++) { // link all TreeNode objects
             node = nodeById[to(rows[i])];
             var parent_1 = 0;
             var fromValue = from(node.row);

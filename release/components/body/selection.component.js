@@ -18,6 +18,7 @@ var DataTableSelectionComponent = /** @class */ (function () {
         this.select = new core_1.EventEmitter();
     }
     DataTableSelectionComponent.prototype.selectRow = function (event, index, row) {
+        var _a;
         if (!this.selectEnabled)
             return;
         var chkbox = this.selectionType === types_1.SelectionType.checkbox;
@@ -47,7 +48,6 @@ var DataTableSelectionComponent = /** @class */ (function () {
         this.select.emit({
             selected: selected
         });
-        var _a;
     };
     DataTableSelectionComponent.prototype.onActivate = function (model, index) {
         var type = model.type, event = model.event, row = model.row;
