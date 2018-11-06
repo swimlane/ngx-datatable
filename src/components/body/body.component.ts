@@ -49,7 +49,7 @@ import { MouseEvent } from '../../events';
           [detailRowHeight]="getDetailRowHeight(group[i],i)"
           [row]="group"
           [expanded]="getRowExpanded(group)"
-          [rowIndex]="getRowIndex(group[i])"
+          [rowIndex]="getRowIndex(group)"
           (rowContextmenu)="rowContextmenu.emit($event)">
           <datatable-body-row
             *ngIf="!groupedRows; else groupedRowsTemplate"
