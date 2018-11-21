@@ -113,7 +113,7 @@ describe('DataTableBodyComponent', () => {
     });
   });
 
-  fdescribe('Row grouping', () => {
+  describe('Row grouping', () => {
 
     var groupExpansionDefaultTestCases = [
       { value: true },
