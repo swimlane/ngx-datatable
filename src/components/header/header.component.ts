@@ -111,7 +111,7 @@ export class DataTableHeaderComponent implements AfterViewInit {
 
   @Input() set columns(val: any[]) {
     this._columns = val;
-    this.tabFocusColumnName = val[0].name;
+    this.tabFocusColumnName = val[0] && val[0].name;
 
     const colsByPin = columnsByPin(val);
     this._columnsByPin = columnsByPinArr(val);
@@ -158,9 +158,14 @@ export class DataTableHeaderComponent implements AfterViewInit {
 
     // Account for contents having style position: fixed (for scroll prevention). Calculate height necessary for cells.
     if (this.headerHeight && nativeElem.clientHeight === 0) {
-      const headerCellElem = <HTMLElement>this.headerCells.first.elementRef.nativeElement;
-      this.headerHeight = headerCellElem.clientHeight;
-      nativeElem.style.minHeight = (headerCellElem.clientHeight + 'px');
+      const headerCellElem = <HTMLElement>(
+        (this.headerCells.first &&
+          this.headerCells.first.elementRef.nativeElement)
+      );
+      if (headerCellElem && headerCellElem.clientHeight) {
+        this.headerHeight = headerCellElem.clientHeight;
+        nativeElem.style.minHeight = headerCellElem.clientHeight + 'px';
+      }
     }
   }
 
