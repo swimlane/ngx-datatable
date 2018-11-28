@@ -48,5 +48,5 @@ export declare class RowHeightCache {
      * Given the ScrollY position i.e. sum, provide the rowIndex
      * that is present in the current view port.
      */
-    private calcRowIndex(sum);
+    private calcRowIndex;
 }

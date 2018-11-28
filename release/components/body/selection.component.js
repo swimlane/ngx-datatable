@@ -19,7 +19,12 @@ var DataTableSelectionComponent = /** @class */ (function () {
         this.select = new core_1.EventEmitter();
         this.cellSelect = new core_1.EventEmitter();
     }
+<<<<<<< HEAD
     DataTableSelectionComponent.prototype.selectRow = function (event, index, row, cellName) {
+=======
+    DataTableSelectionComponent.prototype.selectRow = function (event, index, row) {
+        var _a;
+>>>>>>> upstream
         if (!this.selectEnabled)
             return;
         var cell = this.selectionType === types_1.SelectionType.cell;
@@ -56,7 +61,6 @@ var DataTableSelectionComponent = /** @class */ (function () {
             selected: selected,
             selectedCellName: selectedCellName
         });
-        var _a;
     };
     DataTableSelectionComponent.prototype.onActivate = function (model, index) {
         var type = model.type, event = model.event, row = model.row;

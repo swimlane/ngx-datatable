@@ -53,6 +53,6 @@ export declare class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     onCheckboxChange(event: any): void;
     calcSortDir(sorts: any[]): any;
     stripHtml(html: string): string;
-    onTreeAction(row: any): void;
+    onTreeAction(): void;
     calcLeftMargin(column: any, row: any): number;
 }

@@ -145,7 +145,7 @@ export class DataTableHeaderComponent implements AfterViewInit {
   _offsetX: number;
   _columns: any[];
   _headerHeight: string;
-  _styleByGroup = {
+  _styleByGroup: {[prop: string]: {}} = {
     left: {},
     center: {},
     right: {}
@@ -351,9 +351,9 @@ export class DataTableHeaderComponent implements AfterViewInit {
   }
 
   setStylesByGroup() {
-    this._styleByGroup['left'] = this.calcStylesByGroup('left');
-    this._styleByGroup['center'] = this.calcStylesByGroup('center');
-    this._styleByGroup['right'] = this.calcStylesByGroup('right');
+    this._styleByGroup.left = this.calcStylesByGroup('left');
+    this._styleByGroup.center = this.calcStylesByGroup('center');
+    this._styleByGroup.right = this.calcStylesByGroup('right');
     this.cd.detectChanges();
   }
 
