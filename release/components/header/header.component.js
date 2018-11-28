@@ -24,15 +24,13 @@ var core_1 = require("@angular/core");
 var types_1 = require("../../types");
 var utils_1 = require("../../utils");
 var DataTableHeaderComponent = /** @class */ (function () {
-    function DataTableHeaderComponent(cd, elementRef) {
+    function DataTableHeaderComponent(cd) {
         this.cd = cd;
-        this.elementRef = elementRef;
         this.sort = new core_1.EventEmitter();
         this.reorder = new core_1.EventEmitter();
         this.resize = new core_1.EventEmitter();
         this.select = new core_1.EventEmitter();
         this.columnContextmenu = new core_1.EventEmitter(false);
-        this.scroll = new core_1.EventEmitter();
         this._styleByGroup = {
             left: {},
             center: {},
@@ -75,7 +73,6 @@ var DataTableHeaderComponent = /** @class */ (function () {
         },
         set: function (val) {
             this._columns = val;
-            this.tabFocusColumnName = val[0].name;
             var colsByPin = utils_1.columnsByPin(val);
             this._columnsByPin = utils_1.columnsByPinArr(val);
             this._columnGroupWidths = utils_1.columnGroupWidths(colsByPin, val);
@@ -93,15 +90,6 @@ var DataTableHeaderComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    DataTableHeaderComponent.prototype.ngAfterViewInit = function () {
-        var nativeElem = this.elementRef.nativeElement;
-        // Account for contents having style position: fixed (for scroll prevention). Calculate height necessary for cells.
-        if (this.headerHeight && nativeElem.clientHeight === 0) {
-            var headerCellElem = this.headerCells.first.elementRef.nativeElement;
-            this.headerHeight = headerCellElem.clientHeight;
-            nativeElem.style.minHeight = (headerCellElem.clientHeight + 'px');
-        }
-    };
     DataTableHeaderComponent.prototype.onLongPressStart = function (_a) {
         var event = _a.event, model = _a.model;
         model.dragging = true;
@@ -132,45 +120,6 @@ var DataTableHeaderComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    DataTableHeaderComponent.prototype.onclick = function (event) {
-        this.tabFocusColumnName = event.target.innerText;
-    };
-    DataTableHeaderComponent.prototype.onKeyDown = function (event) {
-        var targetHeader = event.target.parentElement;
-        while (targetHeader && targetHeader.tagName.toLowerCase() !== 'datatable-header-cell') {
-            targetHeader = targetHeader.parentElement;
-        }
-        if (targetHeader) {
-            if (event.keyCode === utils_1.Keys.left) {
-                var prevHeader = targetHeader.previousElementSibling;
-                // Try previous column group.
-                if (!prevHeader) {
-                    var prevHeaderGroup = targetHeader.parentElement.previousElementSibling;
-                    if (prevHeaderGroup && prevHeaderGroup.children.length > 0) {
-                        prevHeader = prevHeaderGroup.children[prevHeaderGroup.children.length - 1];
-                    }
-                }
-                if (prevHeader && prevHeader.firstElementChild) {
-                    prevHeader.firstElementChild.focus();
-                    this.tabFocusColumnName = prevHeader.innerText.trim();
-                }
-            }
-            else if (event.keyCode === utils_1.Keys.right) {
-                var nextHeader = targetHeader.nextElementSibling;
-                // Try next column group.
-                if (!nextHeader) {
-                    var nextHeaderGroup = targetHeader.parentElement.nextElementSibling;
-                    if (nextHeaderGroup && nextHeaderGroup.children.length > 0) {
-                        nextHeader = nextHeaderGroup.children[0];
-                    }
-                }
-                if (nextHeader && nextHeader.firstElementChild) {
-                    nextHeader.firstElementChild.focus();
-                    this.tabFocusColumnName = nextHeader.innerText.trim();
-                }
-            }
-        }
-    };
     DataTableHeaderComponent.prototype.trackByGroups = function (index, colGroup) {
         return colGroup.type;
     };
@@ -369,40 +318,20 @@ var DataTableHeaderComponent = /** @class */ (function () {
         __metadata("design:type", Object)
     ], DataTableHeaderComponent.prototype, "columnContextmenu", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
-    ], DataTableHeaderComponent.prototype, "scroll", void 0);
-    __decorate([
-        core_1.ViewChildren('headerCells'),
-        __metadata("design:type", core_1.QueryList)
-    ], DataTableHeaderComponent.prototype, "headerCells", void 0);
-    __decorate([
         core_1.HostBinding('style.width'),
         __metadata("design:type", String),
         __metadata("design:paramtypes", [])
     ], DataTableHeaderComponent.prototype, "headerWidth", null);
-    __decorate([
-        core_1.HostListener('click', ['$event']),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", [MouseEvent]),
-        __metadata("design:returntype", void 0)
-    ], DataTableHeaderComponent.prototype, "onclick", null);
-    __decorate([
-        core_1.HostListener('keydown', ['$event']),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", [KeyboardEvent]),
-        __metadata("design:returntype", void 0)
-    ], DataTableHeaderComponent.prototype, "onKeyDown", null);
     DataTableHeaderComponent = __decorate([
         core_1.Component({
             selector: 'datatable-header',
-            template: "\n    <div\n      orderable\n      (reorder)=\"onColumnReordered($event)\"\n      (targetChanged)=\"onTargetChanged($event)\"\n      [style.width.px]=\"_columnGroupWidths.total\"\n      class=\"datatable-header-inner\"\n      role=\"row\">\n      <div\n        *ngFor=\"let colGroup of _columnsByPin; trackBy: trackByGroups\"\n        [class]=\"'datatable-row-' + colGroup.type\"\n        [ngStyle]=\"_styleByGroup[colGroup.type]\">\n        <datatable-header-cell\n          #headerCells\n          *ngFor=\"let column of colGroup.columns; trackBy: columnTrackingFn\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (resize)=\"onColumnResized($event, column)\"\n          long-press\n          [pressModel]=\"column\"\n          [pressEnabled]=\"reorderable && column.draggable\"\n          (longPressStart)=\"onLongPressStart($event)\"\n          (longPressEnd)=\"onLongPressEnd($event)\"\n          draggable\n          [dragX]=\"reorderable && column.draggable && column.dragging\"\n          [dragY]=\"false\"\n          [dragModel]=\"column\"\n          [dragEventTarget]=\"dragEventTarget\"\n          [headerHeight]=\"headerHeight\"\n          [isTarget]=\"column.isTarget\"\n          [targetMarkerTemplate]=\"targetMarkerTemplate\"\n          [targetMarkerContext]=\"column.targetMarkerContext\"\n          [column]=\"column\"\n          [sortType]=\"sortType\"\n          [sorts]=\"sorts\"\n          [selectionType]=\"selectionType\"\n          [sortAscendingIcon]=\"sortAscendingIcon\"\n          [sortDescendingIcon]=\"sortDescendingIcon\"\n          [allRowsSelected]=\"allRowsSelected\"\n          [offsetX]=\"offsetX\"\n          [tabFocusable]=\"tabFocusColumnName === column.name\"\n          (sort)=\"onSort($event)\"\n          (select)=\"select.emit($event)\"\n          (columnContextmenu)=\"columnContextmenu.emit($event)\"\n          (scroll)=\"scroll.emit($event)\">\n        </datatable-header-cell>\n      </div>\n    </div>\n  ",
+            template: "\n    <div\n      orderable\n      (reorder)=\"onColumnReordered($event)\"\n      (targetChanged)=\"onTargetChanged($event)\"\n      [style.width.px]=\"_columnGroupWidths.total\"\n      class=\"datatable-header-inner\">\n      <div\n        *ngFor=\"let colGroup of _columnsByPin; trackBy: trackByGroups\"\n        [class]=\"'datatable-row-' + colGroup.type\"\n        [ngStyle]=\"_styleByGroup[colGroup.type]\">\n        <datatable-header-cell\n          *ngFor=\"let column of colGroup.columns; trackBy: columnTrackingFn\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (resize)=\"onColumnResized($event, column)\"\n          long-press\n          [pressModel]=\"column\"\n          [pressEnabled]=\"reorderable && column.draggable\"\n          (longPressStart)=\"onLongPressStart($event)\"\n          (longPressEnd)=\"onLongPressEnd($event)\"\n          draggable\n          [dragX]=\"reorderable && column.draggable && column.dragging\"\n          [dragY]=\"false\"\n          [dragModel]=\"column\"\n          [dragEventTarget]=\"dragEventTarget\"\n          [headerHeight]=\"headerHeight\"\n          [isTarget]=\"column.isTarget\"\n          [targetMarkerTemplate]=\"targetMarkerTemplate\"\n          [targetMarkerContext]=\"column.targetMarkerContext\"\n          [column]=\"column\"\n          [sortType]=\"sortType\"\n          [sorts]=\"sorts\"\n          [selectionType]=\"selectionType\"\n          [sortAscendingIcon]=\"sortAscendingIcon\"\n          [sortDescendingIcon]=\"sortDescendingIcon\"\n          [allRowsSelected]=\"allRowsSelected\"\n          (sort)=\"onSort($event)\"\n          (select)=\"select.emit($event)\"\n          (columnContextmenu)=\"columnContextmenu.emit($event)\">\n        </datatable-header-cell>\n      </div>\n    </div>\n  ",
             host: {
                 class: 'datatable-header'
             },
             changeDetection: core_1.ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [core_1.ChangeDetectorRef, core_1.ElementRef])
+        __metadata("design:paramtypes", [core_1.ChangeDetectorRef])
     ], DataTableHeaderComponent);
     return DataTableHeaderComponent;
 }());

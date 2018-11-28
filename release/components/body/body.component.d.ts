@@ -1,11 +1,9 @@
-import { EventEmitter, ChangeDetectorRef, OnInit, OnDestroy, ElementRef } from '@angular/core';
+import { EventEmitter, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { RowHeightCache } from '../../utils';
 import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
-import { DataTableSelectionComponent } from './selection.component';
 export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     private cd;
-    private elementRef;
     scrollbarV: boolean;
     scrollbarH: boolean;
     loadingIndicator: boolean;
@@ -13,12 +11,12 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     rowHeight: number | ((row?: any) => number);
     offsetX: number;
     emptyMessage: string;
+    selectionType: SelectionType;
     selected: any[];
     rowIdentity: any;
     rowDetail: any;
     groupHeader: any;
     selectCheck: any;
-    selectionType: SelectionType;
     displayCheck: any;
     trackByProp: string;
     rowClass: any;
@@ -48,7 +46,6 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     }>;
     treeAction: EventEmitter<any>;
     scroller: ScrollerComponent;
-    selector: DataTableSelectionComponent;
     /**
      * Returns if selection is enabled.
      */
@@ -78,7 +75,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     /**
      * Creates an instance of DataTableBodyComponent.
      */
-    constructor(cd: ChangeDetectorRef, elementRef: ElementRef);
+    constructor(cd: ChangeDetectorRef);
     /**
      * Called after the constructor, initializing input properties
      */

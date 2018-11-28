@@ -18,6 +18,5 @@ export declare class DataTablePagerComponent {
     prevPage(): void;
     nextPage(): void;
     selectPage(page: number): void;
-    onKeyPress(event: KeyboardEvent, pagerButton: HTMLElement): void;
     calcPages(page?: number): any[];
 }
