@@ -111,7 +111,7 @@ export class DataTableHeaderComponent implements AfterViewInit {
 
   @Input() set columns(val: any[]) {
     this._columns = val;
-    this.tabFocusColumnName = val[0].name;
+    this.tabFocusColumnName = val[0] && val[0].name;
 
     const colsByPin = columnsByPin(val);
     this._columnsByPin = columnsByPinArr(val);
@@ -145,7 +145,7 @@ export class DataTableHeaderComponent implements AfterViewInit {
   _offsetX: number;
   _columns: any[];
   _headerHeight: string;
-  _styleByGroup = {
+  _styleByGroup: {[prop: string]: {}} = {
     left: {},
     center: {},
     right: {}
@@ -158,9 +158,14 @@ export class DataTableHeaderComponent implements AfterViewInit {
 
     // Account for contents having style position: fixed (for scroll prevention). Calculate height necessary for cells.
     if (this.headerHeight && nativeElem.clientHeight === 0) {
-      const headerCellElem = <HTMLElement>this.headerCells.first.elementRef.nativeElement;
-      this.headerHeight = headerCellElem.clientHeight;
-      nativeElem.style.minHeight = (headerCellElem.clientHeight + 'px');
+      const headerCellElem = <HTMLElement>(
+        (this.headerCells.first &&
+          this.headerCells.first.elementRef.nativeElement)
+      );
+      if (headerCellElem && headerCellElem.clientHeight) {
+        this.headerHeight = headerCellElem.clientHeight;
+        nativeElem.style.minHeight = headerCellElem.clientHeight + 'px';
+      }
     }
   }
 
@@ -346,9 +351,9 @@ export class DataTableHeaderComponent implements AfterViewInit {
   }
 
   setStylesByGroup() {
-    this._styleByGroup['left'] = this.calcStylesByGroup('left');
-    this._styleByGroup['center'] = this.calcStylesByGroup('center');
-    this._styleByGroup['right'] = this.calcStylesByGroup('right');
+    this._styleByGroup.left = this.calcStylesByGroup('left');
+    this._styleByGroup.center = this.calcStylesByGroup('center');
+    this._styleByGroup.right = this.calcStylesByGroup('right');
     this.cd.detectChanges();
   }
 

@@ -1,17 +1,14 @@
-import { EventEmitter, ChangeDetectorRef, AfterViewInit, ElementRef, QueryList } from '@angular/core';
+import { EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { SortType, SelectionType } from '../../types';
 import { DataTableColumnDirective } from '../columns';
-import { DataTableHeaderCellComponent } from '.';
-export declare class DataTableHeaderComponent implements AfterViewInit {
+export declare class DataTableHeaderComponent {
     private cd;
-    private elementRef;
     sortAscendingIcon: any;
     sortDescendingIcon: any;
     scrollbarH: boolean;
     dealsWithGroup: boolean;
     targetMarkerTemplate: any;
     targetMarkerContext: any;
-    tabFocusColumnName: string;
     innerWidth: number;
     sorts: any[];
     sortType: SortType;
@@ -30,8 +27,6 @@ export declare class DataTableHeaderComponent implements AfterViewInit {
         event: MouseEvent;
         column: any;
     }>;
-    scroll: EventEmitter<any>;
-    headerCells: QueryList<DataTableHeaderCellComponent>;
     _columnsByPin: any;
     _columnGroupWidths: any;
     _innerWidth: number;
@@ -43,26 +38,23 @@ export declare class DataTableHeaderComponent implements AfterViewInit {
         center: {};
         right: {};
     };
-    constructor(cd: ChangeDetectorRef, elementRef: ElementRef);
-    ngAfterViewInit(): void;
-    onLongPressStart({event, model}: {
+    constructor(cd: ChangeDetectorRef);
+    onLongPressStart({ event, model }: {
         event: any;
         model: any;
     }): void;
-    onLongPressEnd({event, model}: {
+    onLongPressEnd({ event, model }: {
         event: any;
         model: any;
     }): void;
     readonly headerWidth: string;
-    onclick(event: MouseEvent): void;
-    onKeyDown(event: KeyboardEvent): void;
     trackByGroups(index: number, colGroup: any): any;
     columnTrackingFn(index: number, column: any): any;
     onColumnResized(width: number, column: DataTableColumnDirective): void;
-    onColumnReordered({prevIndex, newIndex, model}: any): void;
-    onTargetChanged({prevIndex, newIndex, initialIndex}: any): void;
+    onColumnReordered({ prevIndex, newIndex, model }: any): void;
+    onTargetChanged({ prevIndex, newIndex, initialIndex }: any): void;
     getColumn(index: number): any;
-    onSort({column, prevValue, newValue}: any): void;
+    onSort({ column, prevValue, newValue }: any): void;
     calcNewSorts(column: any, prevValue: number, newValue: number): any[];
     setStylesByGroup(): void;
     calcStylesByGroup(group: string): any;

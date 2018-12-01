@@ -1,11 +1,14 @@
 "use strict";
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
 };
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -33,7 +36,6 @@ function noopSumFunc(cells) {
 }
 var DataTableSummaryRowComponent = /** @class */ (function () {
     function DataTableSummaryRowComponent() {
-        this.keyboardFocus = new core_1.EventEmitter();
         this.summaryRow = {};
     }
     DataTableSummaryRowComponent.prototype.ngOnChanges = function () {
@@ -90,14 +92,10 @@ var DataTableSummaryRowComponent = /** @class */ (function () {
         core_1.Input(),
         __metadata("design:type", Number)
     ], DataTableSummaryRowComponent.prototype, "innerWidth", void 0);
-    __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
-    ], DataTableSummaryRowComponent.prototype, "keyboardFocus", void 0);
     DataTableSummaryRowComponent = __decorate([
         core_1.Component({
             selector: 'datatable-summary-row',
-            template: "\n  <datatable-body-row\n    *ngIf=\"summaryRow && _internalColumns\"\n    tabindex=\"-1\"\n    [innerWidth]=\"innerWidth\"\n    [offsetX]=\"offsetX\"\n    [columns]=\"_internalColumns\"\n    [rowHeight]=\"rowHeight\"\n    [row]=\"summaryRow\"\n    [rowIndex]=\"-1\"\n    (activate)=\"keyboardFocus.emit($event)\">\n  </datatable-body-row>\n  ",
+            template: "\n  <datatable-body-row\n    *ngIf=\"summaryRow && _internalColumns\"\n    tabindex=\"-1\"\n    [innerWidth]=\"innerWidth\"\n    [offsetX]=\"offsetX\"\n    [columns]=\"_internalColumns\"\n    [rowHeight]=\"rowHeight\"\n    [row]=\"summaryRow\"\n    [rowIndex]=\"-1\">\n  </datatable-body-row>\n  ",
             host: {
                 class: 'datatable-summary-row'
             }
