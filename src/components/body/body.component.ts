@@ -5,8 +5,8 @@ import {
 import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '../../utils';
 import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
-import { MouseEvent } from '../../events';
 import { DataTableSelectionComponent } from './selection.component';
+import { MouseEvent } from '../../events';
 
 @Component({
   selector: 'datatable-body',
@@ -110,11 +110,6 @@ import { DataTableSelectionComponent } from './selection.component';
   }
 })
 export class DataTableBodyComponent implements OnInit, OnDestroy {
-
-  @ViewChild(DataTableSelectionComponent) _selector: DataTableSelectionComponent;
-  get selector() {
-    return this._selector;
-  }
 
   @Input() scrollbarV: boolean;
   @Input() scrollbarH: boolean;
@@ -222,6 +217,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Output() treeAction: EventEmitter<any> = new EventEmitter();
 
   @ViewChild(ScrollerComponent) scroller: ScrollerComponent;
+  @ViewChild(DataTableSelectionComponent) selector: DataTableSelectionComponent;
 
   /**
    * Returns if selection is enabled.
