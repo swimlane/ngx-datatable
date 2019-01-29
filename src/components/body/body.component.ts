@@ -6,6 +6,7 @@ import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '..
 import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
 import { MouseEvent } from '../../events';
+import { DataTableSelectionComponent } from './selection.component';
 
 @Component({
   selector: 'datatable-body',
@@ -109,6 +110,8 @@ import { MouseEvent } from '../../events';
   }
 })
 export class DataTableBodyComponent implements OnInit, OnDestroy {
+
+  @ViewChild(DataTableSelectionComponent) selector: DataTableSelectionComponent;
 
   @Input() scrollbarV: boolean;
   @Input() scrollbarH: boolean;
