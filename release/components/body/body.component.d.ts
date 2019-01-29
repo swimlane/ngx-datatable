@@ -2,6 +2,7 @@ import { EventEmitter, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/cor
 import { RowHeightCache } from '../../utils';
 import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
+import { DataTableSelectionComponent } from './selection.component';
 export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     private cd;
     scrollbarV: boolean;
@@ -46,6 +47,7 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
     }>;
     treeAction: EventEmitter<any>;
     scroller: ScrollerComponent;
+    selector: DataTableSelectionComponent;
     /**
      * Returns if selection is enabled.
      */

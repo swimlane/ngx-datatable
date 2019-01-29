@@ -13,6 +13,7 @@ var core_1 = require("@angular/core");
 var utils_1 = require("../../utils");
 var types_1 = require("../../types");
 var scroller_component_1 = require("./scroller.component");
+var selection_component_1 = require("./selection.component");
 var DataTableBodyComponent = /** @class */ (function () {
     /**
      * Creates an instance of DataTableBodyComponent.
@@ -746,6 +747,10 @@ var DataTableBodyComponent = /** @class */ (function () {
         core_1.ViewChild(scroller_component_1.ScrollerComponent),
         __metadata("design:type", scroller_component_1.ScrollerComponent)
     ], DataTableBodyComponent.prototype, "scroller", void 0);
+    __decorate([
+        core_1.ViewChild(selection_component_1.DataTableSelectionComponent),
+        __metadata("design:type", selection_component_1.DataTableSelectionComponent)
+    ], DataTableBodyComponent.prototype, "selector", void 0);
     DataTableBodyComponent = __decorate([
         core_1.Component({
             selector: 'datatable-body',
