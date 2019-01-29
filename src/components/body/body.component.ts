@@ -111,7 +111,10 @@ import { DataTableSelectionComponent } from './selection.component';
 })
 export class DataTableBodyComponent implements OnInit, OnDestroy {
 
-  @ViewChild(DataTableSelectionComponent) selector: DataTableSelectionComponent;
+  @ViewChild(DataTableSelectionComponent) _selector: DataTableSelectionComponent;
+  get selector() {
+    return this._selector;
+  }
 
   @Input() scrollbarV: boolean;
   @Input() scrollbarH: boolean;
