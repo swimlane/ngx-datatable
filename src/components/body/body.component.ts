@@ -5,6 +5,7 @@ import {
 import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '../../utils';
 import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
+import { DataTableSelectionComponent } from './selection.component';
 import { MouseEvent } from '../../events';
 
 @Component({
@@ -216,6 +217,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Output() treeAction: EventEmitter<any> = new EventEmitter();
 
   @ViewChild(ScrollerComponent) scroller: ScrollerComponent;
+  @ViewChild(DataTableSelectionComponent) selector: DataTableSelectionComponent;
 
   /**
    * Returns if selection is enabled.
