@@ -1,10 +1,59 @@
+// common datatable colors
+$ngx-datatable-background: #fff !default;
+$ngx-datatable-box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12) !default;
+$ngx-datatable-row-odd-background: #eee !default;
+
+// default row and cell background colors
+$ngx-datatable-default-background: #fff !default;
+$ngx-datatable-default-background-hover: #eee !default;
+$ngx-datatable-default-background-focus: #ddd !default;
+
+// default background colors for cell selection style
+$ngx-datatable-cellselection-background-hover: #eee !default;
+$ngx-datatable-cellselection-background-focus: #ddd !default;
+
+// background and text colors for selected cell / row
+$ngx-datatable-selected-active-background: #304FFE !default;
+$ngx-datatable-selected-active-color: #FFF !default;
+$ngx-datatable-selected-active-background-hover: #193AE4 !default;
+$ngx-datatable-selected-active-color-hover: #FFF !default;
+$ngx-datatable-selected-active-background-focus: #2041EF !default;
+$ngx-datatable-selected-active-color-focus: #FFF !default;
+
+// colors for header elements
+$datatable-header-cell-background: #fff !default;
+$datatable-header-cell-color: rgba(0,0,0,.54) !default;
+$datatable-header-border-bottom-color: rgba(0, 0, 0, 0.12) !default;
+$datatable-header-resize-handle-color: #eee !default;
+
+// colors for table body elements
+$datatable-row-detail-background: #f5f5f5 !default;
+$datatable-body-cell-color: rgba(0,0,0,.87) !default;
+$datatable-group-header-background: #f5f5f5 !default;
+$datatable-group-header-border-top-color: #D9D8D9 !default;
+$datatable-group-header-border-bottom-color: #D9D8D9 !default;
+
+// colors for footer elements
+$datatable-footer-cell-color: rgba(0,0,0,.54) !default;
+$datatable-footer-border-top-color: rgba(0, 0, 0, 0.12) !default;
+$datatable-pager-color: rgba(0,0,0,.54) !default;
+$datatable-pager-color-hover: rgba(0,0,0,.75) !default;
+$datatable-pager-background-hover: rgba(158,158,158,0.2) !default;
+$datatable-pager-disabled-color: rgba(0, 0, 0, 0.26) !default;
+$datatable-pager-disabled-background: transparent !default;
+$datatable-pager-active-background: rgba(158,158,158,0.2) !default;
+
+// colors for summary row elements
+$datatable-summary-row-background: #ddd !default;
+$datatable-summary-row-background-hover: #ddd !default;
+
 .ngx-datatable.material {
-	background:#FFF;
-  box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+	background: $ngx-datatable-background;
+  box-shadow: $ngx-datatable-box-shadow;
 
 	&.striped {
 		.datatable-row-odd {
-			background: #eee;
+			background: $ngx-datatable-row-odd-background;
 		}
 	}
 
@@ -14,20 +63,20 @@
     .datatable-body-row {
 			&.active,
 			&.active .datatable-row-group {
-				background-color: #304FFE;
-        color: #FFF;
+				background-color: $ngx-datatable-selected-active-background;
+        color: $ngx-datatable-selected-active-color;
 			}
 
 			&.active:hover,
 			&.active:hover .datatable-row-group {
-				background-color: #193AE4;
-        color: #FFF;
+				background-color: $ngx-datatable-selected-active-background-hover;
+        color: $ngx-datatable-selected-active-color-hover;
 			}
 
 			&.active:focus,
 			&.active:focus .datatable-row-group {
-				background-color: #2041EF;
-        color: #FFF;
+				background-color: $ngx-datatable-selected-active-background-focus;
+        color: $ngx-datatable-selected-active-color-focus;
 			}
     }
   }
@@ -36,7 +85,7 @@
     .datatable-body-row {
       &:hover,
 			&:hover .datatable-row-group {
-	      background-color: #eee;
+	      background-color: $ngx-datatable-default-background-hover;
 	      transition-property: background;
 	      transition-duration: .3s;
 	      transition-timing-function: linear;
@@ -44,7 +93,7 @@
 
 			&:focus,
 			&:focus .datatable-row-group {
-				background-color: #ddd;
+				background-color: $ngx-datatable-default-background-focus;
 			}
     }
   }
@@ -53,7 +102,7 @@
     .datatable-body-cell {
       &:hover,
 			&:hover .datatable-row-group {
-	      background-color: #eee;
+	      background-color: $ngx-datatable-cellselection-background-hover;
 	      transition-property: background;
 	      transition-duration: .3s;
 	      transition-timing-function: linear;
@@ -61,25 +110,25 @@
 
 			&:focus,
 			&:focus .datatable-row-group {
-				background-color: #ddd;
+				background-color: $ngx-datatable-cellselection-background-focus;
 			}
 
 			&.active,
 			&.active .datatable-row-group {
-				background-color: #304FFE;
-        color: #FFF;
+				background-color: $ngx-datatable-selected-active-background;
+        color: $ngx-datatable-selected-active-color;
 			}
 
 			&.active:hover,
 			&.active:hover .datatable-row-group {
-				background-color: #193AE4;
-        color: #FFF;
+				background-color: $ngx-datatable-selected-active-background-hover;
+        color: $ngx-datatable-selected-active-color-hover;
 			}
 
 			&.active:focus,
 			&.active:focus .datatable-row-group {
-				background-color: #2041EF;
-        color: #FFF;
+				background-color: $ngx-datatable-selected-active-background-focus;
+        color: $ngx-datatable-selected-active-color-focus;
 			}
     }
   }
@@ -108,7 +157,7 @@
 	 .datatable-header,
 	 .datatable-body {
 		 .datatable-row-left {
-			background-color: #FFF;
+			background-color: $ngx-datatable-background;
 			background-position: 100% 0;
 			background-repeat: repeat-y;
 			background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQIHWPSkNeSBmJhTQVtbiDNCgASagIIuJX8OgAAAABJRU5ErkJggg==);
@@ -116,7 +165,7 @@
 
 		.datatable-row-right {
 			background-position: 0 0;
-	    background-color: #fff;
+	    background-color: $ngx-datatable-background;
 	    background-repeat: repeat-y;
 	    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQI12PQkNdi1VTQ5gbSwkAsDQARLAIGtOSFUAAAAABJRU5ErkJggg==);
 		}
@@ -126,13 +175,14 @@
 	 * Header Styles
 	 */
 	.datatable-header {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    border-bottom: 1px solid $datatable-header-border-bottom-color;
 
     .datatable-header-cell {
       text-align: left;
       padding: .9rem 1.2rem;
       font-weight: 400;
-      color: rgba(0,0,0,.54);
+      background-color: $datatable-header-cell-background;
+      color: $datatable-header-cell-color;
       vertical-align: bottom;
       font-size: 12px;
       font-weight: 500;
@@ -174,7 +224,7 @@
     }
 
     .resize-handle {
-      border-right:solid 1px #eee;
+      border-right:solid 1px $datatable-header-resize-handle-color;
     }
   }
 
@@ -183,14 +233,14 @@
 	 */
 	.datatable-body {
 		.datatable-row-detail {
-			background: #f5f5f5;
+			background: $datatable-row-detail-background;
 			padding: 10px;
     }
 
     .datatable-group-header {
-      background: #f5f5f5;
-      border-bottom: solid 1px #D9D8D9;
-      border-top: solid 1px #D9D8D9;
+      background: $datatable-group-header-background;
+      border-bottom: solid 1px $datatable-group-header-border-bottom-color;
+      border-top: solid 1px $datatable-group-header-border-top-color;
     }
 
 	  .datatable-body-row {
@@ -199,7 +249,7 @@
 	      padding: .9rem 1.2rem;
 	      vertical-align: top;
 	      border-top: 0;
-        color: rgba(0,0,0,.87);
+        color: $datatable-body-cell-color;
 	      transition: width 0.3s ease;
         font-size: 14px;
         font-weight: 400;
@@ -214,7 +264,7 @@
 	      padding: .9rem 1.2rem;
 	      vertical-align: top;
 	      border-top: 0;
-        color: rgba(0,0,0,.87);
+        color: $datatable-body-cell-color;
 	      transition: width 0.3s ease;
         font-size: 14px;
         font-weight: 400;
@@ -264,10 +314,10 @@
 	 * Footer Styles
 	 */
 	.datatable-footer {
-		border-top: 1px solid rgba(0, 0, 0, 0.12);
+		border-top: 1px solid $datatable-footer-border-top-color;
 		font-size: 12px;
     font-weight: 400;
-    color: rgba(0,0,0,.54);
+    color: $datatable-footer-cell-color;
 
 		.page-count{
 			line-height: 50px;
@@ -282,12 +332,12 @@
 	    	vertical-align: middle;
 
 				&.disabled a {
-					color:rgba(0, 0, 0, 0.26) !important;
-					background-color: transparent !important;
+					color: $datatable-pager-disabled-color !important;
+					background-color: $datatable-pager-disabled-background !important;
 				}
 
 				&.active a {
-					background-color: rgba(158,158,158,0.2);
+					background-color: $datatable-pager-active-background;
 					font-weight: bold;
 				}
 			}
@@ -301,13 +351,13 @@
 				margin: 6px 3px;
 				text-align: center;
 				vertical-align: top;
-				color: rgba(0,0,0,.54);
+				color: $datatable-pager-color;
 				text-decoration: none;
 		    vertical-align: bottom;
 
 				&:hover {
-					color: rgba(0,0,0,.75);
-					background-color: rgba(158,158,158,0.2);
+					color: $datatable-pager-color-hover;
+					background-color: $datatable-pager-background-hover;
 				}
 			}
 
@@ -325,10 +375,10 @@
   // Summary row styles
   .datatable-summary-row {
     .datatable-body-row {
-      background-color: #ddd;
+      background-color: $datatable-summary-row-background;
 
       &:hover {
-	background-color: #ddd;
+	background-color: $datatable-summary-row-background-hover;
       }
 
       .datatable-body-cell {
