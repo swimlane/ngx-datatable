@@ -1,3 +1,21 @@
+/*
+  This stylesheet uses scss valiables for most of the colors / background-colors of the table
+  to enable the customization of the displayed table without cloning the stylesheet into the
+  own application.
+
+  To modify table colors, add the following lines to the scss file of your application
+  (this example modifies the color of the selected row - selectionType = single, multi or multiClick):
+
+  $ngx-datatable-selected-active-background: yellow;
+  $ngx-datatable-selected-active-background-hover: rgba(yellow, 0.2);
+
+  @import '~@swimlane/ngx-datatable/release/index.css';
+  @import './themes/material.scss';
+  @import '~@swimlane/ngx-datatable/release/assets/icons.css';
+
+That's all.
+*/
+
 // common datatable colors
 $ngx-datatable-background: #fff !default;
 $ngx-datatable-box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12) !default;
