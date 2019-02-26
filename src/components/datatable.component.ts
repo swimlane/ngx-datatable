@@ -81,6 +81,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
         [summaryRow]="summaryRow"
         [summaryHeight]="summaryHeight"
         [summaryPosition]="summaryPosition"
+        [isEqualSelectionLimit]="isEqualSelectionLimit"
         (page)="onBodyPage($event)"
         (activate)="activate.emit($event)"
         (rowContextmenu)="onRowContextmenu($event)"
@@ -140,7 +141,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       this._internalRows,
       optionalGetterForProp(this.treeFromRelation),
       optionalGetterForProp(this.treeToRelation)
-  );
+    );
 
     // recalculate sizes/etc
     this.recalculate();
@@ -283,6 +284,24 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    */
   get limit(): number | undefined {
     return this._limit;
+  }
+
+  /**
+   * The maximum size for selecting checkbox.
+   * Default value: `undefined`
+   */
+  @Input() set selectionLimit(val: number | undefined) {
+    this._selectionLimit = val;
+
+    // recalculate sizes/etc
+    this.recalculate();
+  }
+
+  /**
+   * Gets the Selection Limit.
+   */
+  get selectionLimit(): number | undefined {
+    return this._selectionLimit;
   }
 
   /**
@@ -683,6 +702,14 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       const indexes = this.bodyComponent.indexes;
       const rowsOnPage = indexes.last - indexes.first;
       allRowsSelected = (this.selected.length === rowsOnPage);
+
+      if (this.selectionLimit !== undefined && this.selectionLimit < rowsOnPage) {
+        allRowsSelected = this.selected.length === this.selectionLimit;
+      }
+    } else {
+      if (this.selectionLimit !== undefined) {
+        allRowsSelected = this.selected.length === this.selectionLimit;
+      }
     }
 
     return this.selected && this.rows &&
@@ -693,11 +720,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   _innerWidth: number;
   pageSize: number;
   bodyHeight: number;
+  isEqualSelectionLimit: boolean;
   rowCount: number = 0;
   rowDiffer: KeyValueDiffer<{}, {}>;
 
   _offsetX = new BehaviorSubject(0);
   _limit: number | undefined;
+  _selectionLimit: number | undefined;
   _count: number = 0;
   _offset: number = 0;
   _rows: any[];
@@ -1140,29 +1169,26 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    */
   onHeaderSelect(event: any): void {
 
-    if (this.selectAllRowsOnPage) {
-      // before we splice, chk if we currently have all selected
-      const first = this.bodyComponent.indexes.first;
-      const last = this.bodyComponent.indexes.last;
-      const allSelected = this.selected.length === (last - first);
+    // before we splice, chk if we currently have all selected
+    const first = this.selectAllRowsOnPage ? this.bodyComponent.indexes.first : 0;
+    let last = this.selectAllRowsOnPage ? this.bodyComponent.indexes.last : this.rows.length;
 
-      // remove all existing either way
-      this.selected = [];
-
-      // do the opposite here
-      if (!allSelected) {
-        this.selected.push(...this._internalRows.slice(first, last));
-      }
-    } else {
-      // before we splice, chk if we currently have all selected
-      const allSelected = this.selected.length === this.rows.length;
-      // remove all existing either way
-      this.selected = [];
-      // do the opposite here
-      if (!allSelected) {
-        this.selected.push(...this.rows);
-      }
+    if (this.selectionLimit !== undefined && this.selectionLimit < (last - first)) {
+      last = first + this.selectionLimit;
     }
+
+    const allSelected = this.selected.length === (last - first);
+
+    // remove all existing either way
+    this.selected = [];
+
+    // do the opposite here
+    if (!allSelected) {
+      this.selected.push(...this._internalRows.slice(first, last));
+    }
+
+    this.isEqualSelectionLimit = this.selectionLimit !== undefined &&
+      this.selected.length === this.selectionLimit;
 
     this.select.emit({
       selected: this.selected
@@ -1173,6 +1199,9 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * A row was selected from body
    */
   onBodySelect(event: any): void {
+    this.isEqualSelectionLimit = this.selectionLimit !== undefined &&
+      this.selected.length === this.selectionLimit;
+
     this.select.emit(event);
   }
 

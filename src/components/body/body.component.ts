@@ -65,6 +65,7 @@ import { MouseEvent } from '../../events';
             [rowClass]="rowClass"
             [displayCheck]="displayCheck"
             [treeStatus]="group.treeStatus"
+            [isEqualSelectionLimit]="isEqualSelectionLimit"
             (treeAction)="onTreeAction(group)"
             (activate)="selector.onActivate($event, indexes.first + i)">
           </datatable-body-row>
@@ -82,6 +83,7 @@ import { MouseEvent } from '../../events';
               [rowIndex]="getRowIndex(row)"
               [expanded]="getRowExpanded(row)"
               [rowClass]="rowClass"
+              [isEqualSelectionLimit]="isEqualSelectionLimit"
               (activate)="selector.onActivate($event, i)">
             </datatable-body-row>
           </ng-template>
@@ -134,6 +136,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() summaryRow: boolean;
   @Input() summaryPosition: string;
   @Input() summaryHeight: number;
+  @Input() isEqualSelectionLimit: boolean;
 
   @Input() set pageSize(val: number) {
     this._pageSize = val;

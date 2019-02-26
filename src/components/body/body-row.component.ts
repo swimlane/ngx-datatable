@@ -30,6 +30,7 @@ import { TreeStatus } from '../../index';
         [rowHeight]="rowHeight"
         [displayCheck]="displayCheck"
         [treeStatus]="treeStatus"
+        [isEqualSelectionLimit]="isEqualSelectionLimit"
         (activate)="onActivate($event, ii)"
         (treeAction)="onTreeAction()">
       </datatable-body-cell>
@@ -71,6 +72,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   @Input() rowIndex: number;
   @Input() displayCheck: any;
   @Input() treeStatus: TreeStatus = 'collapsed';
+  @Input() isEqualSelectionLimit: boolean;
 
   @Input()
   set offsetX(val: number) {
