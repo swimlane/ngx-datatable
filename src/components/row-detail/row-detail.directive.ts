@@ -10,9 +10,15 @@ export class DatatableRowDetailDirective {
    */
   @Input() rowHeight: (number | ((row?: any, index?: number) => number)) = 0;
 
-  @Input()
-  @ContentChild(DatatableRowDetailTemplateDirective, { read: TemplateRef }) 
-  template: TemplateRef<any>;
+  @Input('template')
+  _templateInput: TemplateRef<any>;
+
+  @ContentChild(DatatableRowDetailTemplateDirective, { read: TemplateRef })
+  _templateQuery: TemplateRef<any>;
+
+  get template(): TemplateRef<any> {
+    return this._templateInput || this._templateQuery;
+  }
 
   /**
    * Row detail row visbility was toggled.

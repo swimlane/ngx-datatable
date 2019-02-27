@@ -12,8 +12,14 @@ export class DatatableFooterDirective {
   @Input() pagerPreviousIcon: string;
   @Input() pagerNextIcon: string;
 
-  @Input()
-  @ContentChild(DataTableFooterTemplateDirective, { read: TemplateRef }) 
-  template: TemplateRef<any>;
+  @Input('template')
+  _templateInput: TemplateRef<any>;
+
+  @ContentChild(DataTableFooterTemplateDirective, { read: TemplateRef })
+  _templateQuery: TemplateRef<any>;
+
+  get template(): TemplateRef<any> {
+    return this._templateInput || this._templateQuery;
+  }
 
 }

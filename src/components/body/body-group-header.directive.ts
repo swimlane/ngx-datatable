@@ -9,9 +9,15 @@ export class DatatableGroupHeaderDirective {
    */
   @Input() rowHeight: (number | ((group?: any, index?: number) => number)) = 0;
 
-  @Input()
+  @Input('template')
+  _templateInput: TemplateRef<any>;
+
   @ContentChild(DatatableGroupHeaderTemplateDirective, { read: TemplateRef })
-  template: TemplateRef<any>;
+  _templateQuery: TemplateRef<any>;
+
+  get template(): TemplateRef<any> {
+    return this._templateInput || this._templateQuery;
+  }
 
   /**
    * Track toggling of group visibility

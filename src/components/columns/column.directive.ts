@@ -33,17 +33,36 @@ export class DataTableColumnDirective implements OnChanges {
   @Input() summaryFunc: (cells: any[]) => any;
   @Input() summaryTemplate: TemplateRef<any>;
 
-  @Input()
+  @Input('cellTemplate')
+  _cellTemplateInput: TemplateRef<any>;
+
   @ContentChild(DataTableColumnCellDirective, { read: TemplateRef })
-  cellTemplate: TemplateRef<any>;
+  _cellTemplateQuery: TemplateRef<any>;
 
-  @Input()
+  get cellTemplate(): TemplateRef<any> {
+    return this._cellTemplateInput || this._cellTemplateQuery;
+  }
+
+  @Input('headerTemplate')
+  _headerTemplateInput: TemplateRef<any>;
+
   @ContentChild(DataTableColumnHeaderDirective, { read: TemplateRef })
-  headerTemplate: TemplateRef<any>;
+  _headerTemplateQuery: TemplateRef<any>;
 
-  @Input()
+  get headerTemplate(): TemplateRef<any> {
+    return this._headerTemplateInput || this._headerTemplateQuery;
+  }
+
+  @Input('treeToggleTemplate')
+  _treeToggleTemplateInput: TemplateRef<any>;
+
   @ContentChild(DataTableColumnCellTreeToggle, { read: TemplateRef })
-  treeToggleTemplate: TemplateRef<any>;
+  _treeToggleTemplateQuery: TemplateRef<any>;
+
+  get treeToggleTemplate(): TemplateRef<any> {
+    return this._treeToggleTemplateInput || this._treeToggleTemplateQuery;
+  }
+
   private isFirstChange = true;
   
   constructor(private columnChangesService: ColumnChangesService) {}
