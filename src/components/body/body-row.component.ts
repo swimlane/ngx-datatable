@@ -159,9 +159,11 @@ export class DataTableBodyRowComponent implements DoCheck {
   calcStylesByGroup(group: string) {
     const widths = this._columnGroupWidths;
     const offsetX = this.offsetX;
+    const scrollbarOffset = 17; // default scrollbar width
+    const maskOffset = 13; // space for masking content near pinned columns
 
     const styles = {
-      width: `${widths[group]}px`
+      width: `${widths[group]}px;`
     };
 
     if (group === 'left') {
@@ -170,11 +172,18 @@ export class DataTableBodyRowComponent implements DoCheck {
       const bodyWidth = parseInt(this.innerWidth + '', 0);
       const totalDiff = widths.total - bodyWidth;
       const offsetDiff = totalDiff - offsetX;
-      const offset = (offsetDiff + this.scrollbarHelper.width) * -1;
+      let offset = 0;
+
+      if (totalDiff > 0) {
+        offset = (offsetDiff - maskOffset) * -1;
+      } else {
+        offset = (offsetDiff + scrollbarOffset) * -1;
+      }
+
       translateXY(styles, offset, 0);
     }
 
-    return styles;
+  return styles;
   }
 
   onActivate(event: any, index: number): void {
