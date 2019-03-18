@@ -151,6 +151,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     }
 
     this.cd.markForCheck();
+    
+    let counter = 0;
+    const timer = setInterval(() => {
+      ++counter >= 2 && clearInterval(timer);
+      document.getElementsByTagName('datatable-body')[0].scrollTop++;
+      document.getElementsByTagName('datatable-body')[0].scrollTop--;
+    }, 100);
   }
 
   /**
