@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * This object contains the cache of the various row heights that are present inside
  * the data table.   Its based on Fenwick tree data structure that helps with
@@ -135,5 +133,5 @@ var RowHeightCache = /** @class */ (function () {
     };
     return RowHeightCache;
 }());
-exports.RowHeightCache = RowHeightCache;
+export { RowHeightCache };
 //# sourceMappingURL=row-height-cache.js.map

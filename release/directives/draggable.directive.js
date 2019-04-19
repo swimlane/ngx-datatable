@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,10 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var rxjs_1 = require("rxjs");
-var operators_1 = require("rxjs/operators");
+import { Directive, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { fromEvent } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 /**
  * Draggable Directive for Angular2
  *
@@ -24,9 +22,9 @@ var DraggableDirective = /** @class */ (function () {
     function DraggableDirective(element) {
         this.dragX = true;
         this.dragY = true;
-        this.dragStart = new core_1.EventEmitter();
-        this.dragging = new core_1.EventEmitter();
-        this.dragEnd = new core_1.EventEmitter();
+        this.dragStart = new EventEmitter();
+        this.dragging = new EventEmitter();
+        this.dragEnd = new EventEmitter();
         this.isDragging = false;
         this.element = element.nativeElement;
     }
@@ -60,11 +58,11 @@ var DraggableDirective = /** @class */ (function () {
             event.preventDefault();
             this.isDragging = true;
             var mouseDownPos_1 = { x: event.clientX, y: event.clientY };
-            var mouseup = rxjs_1.fromEvent(document, 'mouseup');
+            var mouseup = fromEvent(document, 'mouseup');
             this.subscription = mouseup
                 .subscribe(function (ev) { return _this.onMouseup(ev); });
-            var mouseMoveSub = rxjs_1.fromEvent(document, 'mousemove')
-                .pipe(operators_1.takeUntil(mouseup))
+            var mouseMoveSub = fromEvent(document, 'mousemove')
+                .pipe(takeUntil(mouseup))
                 .subscribe(function (ev) { return _this.move(ev, mouseDownPos_1); });
             this.subscription.add(mouseMoveSub);
             this.dragStart.emit({
@@ -97,38 +95,38 @@ var DraggableDirective = /** @class */ (function () {
         }
     };
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], DraggableDirective.prototype, "dragEventTarget", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], DraggableDirective.prototype, "dragModel", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Boolean)
     ], DraggableDirective.prototype, "dragX", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Boolean)
     ], DraggableDirective.prototype, "dragY", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], DraggableDirective.prototype, "dragStart", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], DraggableDirective.prototype, "dragging", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], DraggableDirective.prototype, "dragEnd", void 0);
     DraggableDirective = __decorate([
-        core_1.Directive({ selector: '[draggable]' }),
-        __metadata("design:paramtypes", [core_1.ElementRef])
+        Directive({ selector: '[draggable]' }),
+        __metadata("design:paramtypes", [ElementRef])
     ], DraggableDirective);
     return DraggableDirective;
 }());
-exports.DraggableDirective = DraggableDirective;
+export { DraggableDirective };
 //# sourceMappingURL=draggable.directive.js.map

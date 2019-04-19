@@ -1,10 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var _1 = require(".");
-function optionalGetterForProp(prop) {
-    return prop && (function (row) { return _1.getterForProp(prop)(row, prop); });
+import { getterForProp } from '.';
+export function optionalGetterForProp(prop) {
+    return prop && (function (row) { return getterForProp(prop)(row, prop); });
 }
-exports.optionalGetterForProp = optionalGetterForProp;
 /**
  * This functions rearrange items by their parents
  * Also sets the level value to each of the items
@@ -41,7 +38,7 @@ exports.optionalGetterForProp = optionalGetterForProp;
  * @param rows
  *
  */
-function groupRowsByParents(rows, from, to) {
+export function groupRowsByParents(rows, from, to) {
     if (from && to) {
         var nodeById = {};
         var l = rows.length;
@@ -78,7 +75,6 @@ function groupRowsByParents(rows, from, to) {
         return rows;
     }
 }
-exports.groupRowsByParents = groupRowsByParents;
 var TreeNode = /** @class */ (function () {
     function TreeNode(row) {
         if (row === void 0) { row = null; }

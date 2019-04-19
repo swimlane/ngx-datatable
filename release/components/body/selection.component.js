@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,36 +7,35 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var utils_1 = require("../../utils");
-var types_1 = require("../../types");
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Keys, selectRows, selectRowsBetween } from '../../utils';
+import { SelectionType } from '../../types';
 var DataTableSelectionComponent = /** @class */ (function () {
     function DataTableSelectionComponent() {
-        this.activate = new core_1.EventEmitter();
-        this.select = new core_1.EventEmitter();
+        this.activate = new EventEmitter();
+        this.select = new EventEmitter();
     }
     DataTableSelectionComponent.prototype.selectRow = function (event, index, row) {
         var _a;
         if (!this.selectEnabled)
             return;
-        var chkbox = this.selectionType === types_1.SelectionType.checkbox;
-        var multi = this.selectionType === types_1.SelectionType.multi;
-        var multiClick = this.selectionType === types_1.SelectionType.multiClick;
+        var chkbox = this.selectionType === SelectionType.checkbox;
+        var multi = this.selectionType === SelectionType.multi;
+        var multiClick = this.selectionType === SelectionType.multiClick;
         var selected = [];
         if (multi || chkbox || multiClick) {
             if (event.shiftKey) {
-                selected = utils_1.selectRowsBetween([], this.rows, index, this.prevIndex, this.getRowSelectedIdx.bind(this));
+                selected = selectRowsBetween([], this.rows, index, this.prevIndex, this.getRowSelectedIdx.bind(this));
             }
             else if (event.ctrlKey || event.metaKey || multiClick || chkbox) {
-                selected = utils_1.selectRows(this.selected.slice(), row, this.getRowSelectedIdx.bind(this));
+                selected = selectRows(this.selected.slice(), row, this.getRowSelectedIdx.bind(this));
             }
             else {
-                selected = utils_1.selectRows([], row, this.getRowSelectedIdx.bind(this));
+                selected = selectRows([], row, this.getRowSelectedIdx.bind(this));
             }
         }
         else {
-            selected = utils_1.selectRows([], row, this.getRowSelectedIdx.bind(this));
+            selected = selectRows([], row, this.getRowSelectedIdx.bind(this));
         }
         if (typeof this.selectCheck === 'function') {
             selected = selected.filter(this.selectCheck.bind(this));
@@ -51,14 +49,14 @@ var DataTableSelectionComponent = /** @class */ (function () {
     };
     DataTableSelectionComponent.prototype.onActivate = function (model, index) {
         var type = model.type, event = model.event, row = model.row;
-        var chkbox = this.selectionType === types_1.SelectionType.checkbox;
+        var chkbox = this.selectionType === SelectionType.checkbox;
         var select = (!chkbox && (type === 'click' || type === 'dblclick')) ||
             (chkbox && type === 'checkbox');
         if (select) {
             this.selectRow(event, index, row);
         }
         else if (type === 'keydown') {
-            if (event.keyCode === utils_1.Keys.return) {
+            if (event.keyCode === Keys.return) {
                 this.selectRow(event, index, row);
             }
             else {
@@ -69,12 +67,12 @@ var DataTableSelectionComponent = /** @class */ (function () {
     };
     DataTableSelectionComponent.prototype.onKeyboardFocus = function (model) {
         var keyCode = model.event.keyCode;
-        var shouldFocus = keyCode === utils_1.Keys.up ||
-            keyCode === utils_1.Keys.down ||
-            keyCode === utils_1.Keys.right ||
-            keyCode === utils_1.Keys.left;
+        var shouldFocus = keyCode === Keys.up ||
+            keyCode === Keys.down ||
+            keyCode === Keys.right ||
+            keyCode === Keys.left;
         if (shouldFocus) {
-            var isCellSelection = this.selectionType === types_1.SelectionType.cell;
+            var isCellSelection = this.selectionType === SelectionType.cell;
             if (!model.cellElement || !isCellSelection) {
                 this.focusRow(model.rowElement, keyCode);
             }
@@ -92,10 +90,10 @@ var DataTableSelectionComponent = /** @class */ (function () {
         var parentElement = rowElement.parentElement;
         if (parentElement) {
             var focusElement = void 0;
-            if (keyCode === utils_1.Keys.up) {
+            if (keyCode === Keys.up) {
                 focusElement = parentElement.previousElementSibling;
             }
-            else if (keyCode === utils_1.Keys.down) {
+            else if (keyCode === Keys.down) {
                 focusElement = parentElement.nextElementSibling;
             }
             if (focusElement && focusElement.children.length) {
@@ -105,13 +103,13 @@ var DataTableSelectionComponent = /** @class */ (function () {
     };
     DataTableSelectionComponent.prototype.focusCell = function (cellElement, rowElement, keyCode, cellIndex) {
         var nextCellElement;
-        if (keyCode === utils_1.Keys.left) {
+        if (keyCode === Keys.left) {
             nextCellElement = cellElement.previousElementSibling;
         }
-        else if (keyCode === utils_1.Keys.right) {
+        else if (keyCode === Keys.right) {
             nextCellElement = cellElement.nextElementSibling;
         }
-        else if (keyCode === utils_1.Keys.up || keyCode === utils_1.Keys.down) {
+        else if (keyCode === Keys.up || keyCode === Keys.down) {
             var nextRowElement = this.getPrevNextRow(rowElement, keyCode);
             if (nextRowElement) {
                 var children = nextRowElement.getElementsByClassName('datatable-body-cell');
@@ -136,45 +134,45 @@ var DataTableSelectionComponent = /** @class */ (function () {
         });
     };
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Array)
     ], DataTableSelectionComponent.prototype, "rows", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Array)
     ], DataTableSelectionComponent.prototype, "selected", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Boolean)
     ], DataTableSelectionComponent.prototype, "selectEnabled", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], DataTableSelectionComponent.prototype, "selectionType", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], DataTableSelectionComponent.prototype, "rowIdentity", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], DataTableSelectionComponent.prototype, "selectCheck", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], DataTableSelectionComponent.prototype, "activate", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], DataTableSelectionComponent.prototype, "select", void 0);
     DataTableSelectionComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'datatable-selection',
             template: "\n    <ng-content></ng-content>\n  ",
-            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+            changeDetection: ChangeDetectionStrategy.OnPush
         })
     ], DataTableSelectionComponent);
     return DataTableSelectionComponent;
 }());
-exports.DataTableSelectionComponent = DataTableSelectionComponent;
+export { DataTableSelectionComponent };
 //# sourceMappingURL=selection.component.js.map

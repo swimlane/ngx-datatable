@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,17 +7,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
+import { Directive, TemplateRef } from '@angular/core';
 var DataTableFooterTemplateDirective = /** @class */ (function () {
     function DataTableFooterTemplateDirective(template) {
         this.template = template;
     }
     DataTableFooterTemplateDirective = __decorate([
-        core_1.Directive({ selector: '[ngx-datatable-footer-template]' }),
-        __metadata("design:paramtypes", [core_1.TemplateRef])
+        Directive({ selector: '[ngx-datatable-footer-template]' }),
+        __metadata("design:paramtypes", [TemplateRef])
     ], DataTableFooterTemplateDirective);
     return DataTableFooterTemplateDirective;
 }());
-exports.DataTableFooterTemplateDirective = DataTableFooterTemplateDirective;
+export { DataTableFooterTemplateDirective };
 //# sourceMappingURL=footer-template.directive.js.map

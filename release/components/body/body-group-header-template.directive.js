@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,19 +7,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
+import { Directive, TemplateRef } from '@angular/core';
 var DatatableGroupHeaderTemplateDirective = /** @class */ (function () {
     function DatatableGroupHeaderTemplateDirective(template) {
         this.template = template;
     }
     DatatableGroupHeaderTemplateDirective = __decorate([
-        core_1.Directive({
+        Directive({
             selector: '[ngx-datatable-group-header-template]'
         }),
-        __metadata("design:paramtypes", [core_1.TemplateRef])
+        __metadata("design:paramtypes", [TemplateRef])
     ], DatatableGroupHeaderTemplateDirective);
     return DatatableGroupHeaderTemplateDirective;
 }());
-exports.DatatableGroupHeaderTemplateDirective = DatatableGroupHeaderTemplateDirective;
+export { DatatableGroupHeaderTemplateDirective };
 //# sourceMappingURL=body-group-header-template.directive.js.map

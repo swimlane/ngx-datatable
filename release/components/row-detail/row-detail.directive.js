@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,9 +7,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var row_detail_template_directive_1 = require("./row-detail-template.directive");
+import { Input, Output, EventEmitter, Directive, TemplateRef, ContentChild } from '@angular/core';
+import { DatatableRowDetailTemplateDirective } from './row-detail-template.directive';
 var DatatableRowDetailDirective = /** @class */ (function () {
     function DatatableRowDetailDirective() {
         /**
@@ -21,7 +19,7 @@ var DatatableRowDetailDirective = /** @class */ (function () {
         /**
          * Row detail row visbility was toggled.
          */
-        this.toggle = new core_1.EventEmitter();
+        this.toggle = new EventEmitter();
     }
     /**
      * Toggle the expansion of the row
@@ -51,22 +49,22 @@ var DatatableRowDetailDirective = /** @class */ (function () {
         });
     };
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], DatatableRowDetailDirective.prototype, "rowHeight", void 0);
     __decorate([
-        core_1.Input(),
-        core_1.ContentChild(row_detail_template_directive_1.DatatableRowDetailTemplateDirective, { read: core_1.TemplateRef }),
-        __metadata("design:type", core_1.TemplateRef)
+        Input(),
+        ContentChild(DatatableRowDetailTemplateDirective, { read: TemplateRef }),
+        __metadata("design:type", TemplateRef)
     ], DatatableRowDetailDirective.prototype, "template", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], DatatableRowDetailDirective.prototype, "toggle", void 0);
     DatatableRowDetailDirective = __decorate([
-        core_1.Directive({ selector: 'ngx-datatable-row-detail' })
+        Directive({ selector: 'ngx-datatable-row-detail' })
     ], DatatableRowDetailDirective);
     return DatatableRowDetailDirective;
 }());
-exports.DatatableRowDetailDirective = DatatableRowDetailDirective;
+export { DatatableRowDetailDirective };
 //# sourceMappingURL=row-detail.directive.js.map

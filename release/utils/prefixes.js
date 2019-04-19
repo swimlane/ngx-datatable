@@ -1,6 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var camel_case_1 = require("./camel-case");
+import { camelCase } from './camel-case';
 var cache = {};
 var testStyle = typeof document !== 'undefined' ? document.createElement('div').style : undefined;
 var ɵ0 = function () {
@@ -16,12 +14,11 @@ var ɵ0 = function () {
         js: pre[0].toUpperCase() + pre.substr(1)
     } : undefined;
 };
-exports.ɵ0 = ɵ0;
 // Get Prefix
 // http://davidwalsh.name/vendor-prefix
 var prefix = ɵ0();
-function getVendorPrefixedName(property) {
-    var name = camel_case_1.camelCase(property);
+export function getVendorPrefixedName(property) {
+    var name = camelCase(property);
     if (!cache[name]) {
         if (prefix !== undefined && testStyle[prefix.css + property] !== undefined) {
             cache[name] = prefix.css + property;
@@ -32,5 +29,5 @@ function getVendorPrefixedName(property) {
     }
     return cache[name];
 }
-exports.getVendorPrefixedName = getVendorPrefixedName;
+export { ɵ0 };
 //# sourceMappingURL=prefixes.js.map

@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,49 +7,48 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var footer_template_directive_1 = require("./footer-template.directive");
+import { Input, Directive, TemplateRef, ContentChild } from '@angular/core';
+import { DataTableFooterTemplateDirective } from './footer-template.directive';
 var DatatableFooterDirective = /** @class */ (function () {
     function DatatableFooterDirective() {
     }
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Number)
     ], DatatableFooterDirective.prototype, "footerHeight", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], DatatableFooterDirective.prototype, "totalMessage", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], DatatableFooterDirective.prototype, "selectedMessage", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], DatatableFooterDirective.prototype, "pagerLeftArrowIcon", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], DatatableFooterDirective.prototype, "pagerRightArrowIcon", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], DatatableFooterDirective.prototype, "pagerPreviousIcon", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], DatatableFooterDirective.prototype, "pagerNextIcon", void 0);
     __decorate([
-        core_1.Input(),
-        core_1.ContentChild(footer_template_directive_1.DataTableFooterTemplateDirective, { read: core_1.TemplateRef }),
-        __metadata("design:type", core_1.TemplateRef)
+        Input(),
+        ContentChild(DataTableFooterTemplateDirective, { read: TemplateRef }),
+        __metadata("design:type", TemplateRef)
     ], DatatableFooterDirective.prototype, "template", void 0);
     DatatableFooterDirective = __decorate([
-        core_1.Directive({ selector: 'ngx-datatable-footer' })
+        Directive({ selector: 'ngx-datatable-footer' })
     ], DatatableFooterDirective);
     return DatatableFooterDirective;
 }());
-exports.DatatableFooterDirective = DatatableFooterDirective;
+export { DatatableFooterDirective };
 //# sourceMappingURL=footer.directive.js.map

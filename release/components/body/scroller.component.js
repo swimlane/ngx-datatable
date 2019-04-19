@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,15 +7,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
+import { Component, Input, ElementRef, Output, EventEmitter, Renderer2, NgZone, HostBinding, ChangeDetectionStrategy } from '@angular/core';
 var ScrollerComponent = /** @class */ (function () {
     function ScrollerComponent(ngZone, element, renderer) {
         this.ngZone = ngZone;
         this.renderer = renderer;
         this.scrollbarV = false;
         this.scrollbarH = false;
-        this.scroll = new core_1.EventEmitter();
+        this.scroll = new EventEmitter();
         this.scrollYPos = 0;
         this.scrollXPos = 0;
         this.prevScrollYPos = 0;
@@ -67,39 +65,39 @@ var ScrollerComponent = /** @class */ (function () {
         this.prevScrollXPos = this.scrollXPos;
     };
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Boolean)
     ], ScrollerComponent.prototype, "scrollbarV", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Boolean)
     ], ScrollerComponent.prototype, "scrollbarH", void 0);
     __decorate([
-        core_1.HostBinding('style.height.px'),
-        core_1.Input(),
+        HostBinding('style.height.px'),
+        Input(),
         __metadata("design:type", Number)
     ], ScrollerComponent.prototype, "scrollHeight", void 0);
     __decorate([
-        core_1.HostBinding('style.width.px'),
-        core_1.Input(),
+        HostBinding('style.width.px'),
+        Input(),
         __metadata("design:type", Number)
     ], ScrollerComponent.prototype, "scrollWidth", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], ScrollerComponent.prototype, "scroll", void 0);
     ScrollerComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'datatable-scroller',
             template: "\n    <ng-content></ng-content>\n  ",
             host: {
                 class: 'datatable-scroll'
             },
-            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+            changeDetection: ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [core_1.NgZone, core_1.ElementRef, core_1.Renderer2])
+        __metadata("design:paramtypes", [NgZone, ElementRef, Renderer2])
     ], ScrollerComponent);
     return ScrollerComponent;
 }());
-exports.ScrollerComponent = ScrollerComponent;
+export { ScrollerComponent };
 //# sourceMappingURL=scroller.component.js.map

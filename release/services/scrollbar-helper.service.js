@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,9 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var platform_browser_1 = require("@angular/platform-browser");
+import { Inject, Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/platform-browser';
 /**
  * Gets the width of the scrollbar.  Nesc for windows
  * http://stackoverflow.com/a/13382873/888165
@@ -39,11 +37,11 @@ var ScrollbarHelper = /** @class */ (function () {
         return widthNoScroll - widthWithScroll;
     };
     ScrollbarHelper = __decorate([
-        core_1.Injectable(),
-        __param(0, core_1.Inject(platform_browser_1.DOCUMENT)),
+        Injectable(),
+        __param(0, Inject(DOCUMENT)),
         __metadata("design:paramtypes", [Object])
     ], ScrollbarHelper);
     return ScrollbarHelper;
 }());
-exports.ScrollbarHelper = ScrollbarHelper;
+export { ScrollbarHelper };
 //# sourceMappingURL=scrollbar-helper.service.js.map
