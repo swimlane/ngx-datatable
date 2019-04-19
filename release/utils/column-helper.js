@@ -1,10 +1,12 @@
-import { camelCase, deCamelCase } from './camel-case';
-import { id } from './id';
-import { getterForProp } from './column-prop-getters';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var camel_case_1 = require("./camel-case");
+var id_1 = require("./id");
+var column_prop_getters_1 = require("./column-prop-getters");
 /**
  * Sets the column defaults
  */
-export function setColumnDefaults(columns) {
+function setColumnDefaults(columns) {
     if (!columns)
         return;
     // Only one column should hold the tree view
@@ -14,19 +16,19 @@ export function setColumnDefaults(columns) {
     for (var _i = 0, columns_1 = columns; _i < columns_1.length; _i++) {
         var column = columns_1[_i];
         if (!column.$$id) {
-            column.$$id = id();
+            column.$$id = id_1.id();
         }
         // prop can be numeric; zero is valid not a missing prop
         // translate name => prop
         if (isNullOrUndefined(column.prop) && column.name) {
-            column.prop = camelCase(column.name);
+            column.prop = camel_case_1.camelCase(column.name);
         }
         if (!column.$$valueGetter) {
-            column.$$valueGetter = getterForProp(column.prop);
+            column.$$valueGetter = column_prop_getters_1.getterForProp(column.prop);
         }
         // format props if no name passed
         if (!isNullOrUndefined(column.prop) && isNullOrUndefined(column.name)) {
-            column.name = deCamelCase(String(column.prop));
+            column.name = camel_case_1.deCamelCase(String(column.prop));
         }
         if (isNullOrUndefined(column.prop) && isNullOrUndefined(column.name)) {
             column.name = ''; // Fixes IE and Edge displaying `null`
@@ -63,13 +65,15 @@ export function setColumnDefaults(columns) {
         }
     }
 }
-export function isNullOrUndefined(value) {
+exports.setColumnDefaults = setColumnDefaults;
+function isNullOrUndefined(value) {
     return value === null || value === undefined;
 }
+exports.isNullOrUndefined = isNullOrUndefined;
 /**
  * Translates templates definitions to objects
  */
-export function translateTemplates(templates) {
+function translateTemplates(templates) {
     var result = [];
     for (var _i = 0, templates_1 = templates; _i < templates_1.length; _i++) {
         var temp = templates_1[_i];
@@ -95,4 +99,5 @@ export function translateTemplates(templates) {
     }
     return result;
 }
+exports.translateTemplates = translateTemplates;
 //# sourceMappingURL=column-helper.js.map

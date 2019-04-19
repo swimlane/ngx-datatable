@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,14 +11,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { Directive, Output, EventEmitter, ContentChildren, QueryList, KeyValueDiffers, Inject } from '@angular/core';
-import { DraggableDirective } from './draggable.directive';
-import { DOCUMENT } from '@angular/platform-browser';
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var draggable_directive_1 = require("./draggable.directive");
+var platform_browser_1 = require("@angular/platform-browser");
 var OrderableDirective = /** @class */ (function () {
     function OrderableDirective(differs, document) {
         this.document = document;
-        this.reorder = new EventEmitter();
-        this.targetChanged = new EventEmitter();
+        this.reorder = new core_1.EventEmitter();
+        this.targetChanged = new core_1.EventEmitter();
         this.differ = differs.find({}).create();
     }
     OrderableDirective.prototype.ngAfterContentInit = function () {
@@ -141,23 +143,23 @@ var OrderableDirective = /** @class */ (function () {
         }, {});
     };
     __decorate([
-        Output(),
-        __metadata("design:type", EventEmitter)
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
     ], OrderableDirective.prototype, "reorder", void 0);
     __decorate([
-        Output(),
-        __metadata("design:type", EventEmitter)
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
     ], OrderableDirective.prototype, "targetChanged", void 0);
     __decorate([
-        ContentChildren(DraggableDirective, { descendants: true }),
-        __metadata("design:type", QueryList)
+        core_1.ContentChildren(draggable_directive_1.DraggableDirective, { descendants: true }),
+        __metadata("design:type", core_1.QueryList)
     ], OrderableDirective.prototype, "draggables", void 0);
     OrderableDirective = __decorate([
-        Directive({ selector: '[orderable]' }),
-        __param(1, Inject(DOCUMENT)),
-        __metadata("design:paramtypes", [KeyValueDiffers, Object])
+        core_1.Directive({ selector: '[orderable]' }),
+        __param(1, core_1.Inject(platform_browser_1.DOCUMENT)),
+        __metadata("design:paramtypes", [core_1.KeyValueDiffers, Object])
     ], OrderableDirective);
     return OrderableDirective;
 }());
-export { OrderableDirective };
+exports.OrderableDirective = OrderableDirective;
 //# sourceMappingURL=orderable.directive.js.map

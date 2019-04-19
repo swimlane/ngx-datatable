@@ -28,7 +28,9 @@ export declare class DataTableBodyRowComponent implements DoCheck {
     _columns: any[];
     _innerWidth: number;
     _groupStyles: {
-        [prop: string]: {};
+        left: {};
+        center: {};
+        right: {};
     };
     private _rowDiffer;
     constructor(differs: KeyValueDiffers, scrollbarHelper: ScrollbarHelper, cd: ChangeDetectorRef, element: ElementRef);

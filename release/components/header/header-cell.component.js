@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,16 +8,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input, EventEmitter, Output, HostBinding, HostListener, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { SortDirection, SortType, SelectionType } from '../../types';
-import { nextSortDir } from '../../utils';
-import { MouseEvent } from '../../events';
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var types_1 = require("../../types");
+var utils_1 = require("../../utils");
+var events_1 = require("../../events");
 var DataTableHeaderCellComponent = /** @class */ (function () {
     function DataTableHeaderCellComponent(cd) {
         this.cd = cd;
-        this.sort = new EventEmitter();
-        this.select = new EventEmitter();
-        this.columnContextmenu = new EventEmitter(false);
+        this.sort = new core_1.EventEmitter();
+        this.select = new core_1.EventEmitter();
+        this.columnContextmenu = new core_1.EventEmitter(false);
         this.sortFn = this.onSort.bind(this);
         this.selectFn = this.select.emit.bind(this.select);
         this.cellContext = {
@@ -134,7 +136,7 @@ var DataTableHeaderCellComponent = /** @class */ (function () {
         get: function () {
             return this.column.checkboxable &&
                 this.column.headerCheckboxable &&
-                this.selectionType === SelectionType.checkbox;
+                this.selectionType === types_1.SelectionType.checkbox;
         },
         enumerable: true,
         configurable: true
@@ -155,7 +157,7 @@ var DataTableHeaderCellComponent = /** @class */ (function () {
     DataTableHeaderCellComponent.prototype.onSort = function () {
         if (!this.column.sortable)
             return;
-        var newValue = nextSortDir(this.sortType, this.sortDir);
+        var newValue = utils_1.nextSortDir(this.sortType, this.sortDir);
         this.sort.emit({
             column: this.column,
             prevValue: this.sortDir,
@@ -163,10 +165,10 @@ var DataTableHeaderCellComponent = /** @class */ (function () {
         });
     };
     DataTableHeaderCellComponent.prototype.calcSortClass = function (sortDir) {
-        if (sortDir === SortDirection.asc) {
+        if (sortDir === types_1.SortDirection.asc) {
             return "sort-btn sort-asc " + this.sortAscendingIcon;
         }
-        else if (sortDir === SortDirection.desc) {
+        else if (sortDir === types_1.SortDirection.desc) {
             return "sort-btn sort-desc " + this.sortDescendingIcon;
         }
         else {
@@ -174,108 +176,108 @@ var DataTableHeaderCellComponent = /** @class */ (function () {
         }
     };
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", String)
     ], DataTableHeaderCellComponent.prototype, "sortType", void 0);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", String)
     ], DataTableHeaderCellComponent.prototype, "sortAscendingIcon", void 0);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", String)
     ], DataTableHeaderCellComponent.prototype, "sortDescendingIcon", void 0);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Boolean)
     ], DataTableHeaderCellComponent.prototype, "isTarget", void 0);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], DataTableHeaderCellComponent.prototype, "targetMarkerTemplate", void 0);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], DataTableHeaderCellComponent.prototype, "targetMarkerContext", void 0);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Object),
         __metadata("design:paramtypes", [Object])
     ], DataTableHeaderCellComponent.prototype, "allRowsSelected", null);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", String)
     ], DataTableHeaderCellComponent.prototype, "selectionType", void 0);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Object),
         __metadata("design:paramtypes", [Object])
     ], DataTableHeaderCellComponent.prototype, "column", null);
     __decorate([
-        HostBinding('style.height.px'),
-        Input(),
+        core_1.HostBinding('style.height.px'),
+        core_1.Input(),
         __metadata("design:type", Number)
     ], DataTableHeaderCellComponent.prototype, "headerHeight", void 0);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Array),
         __metadata("design:paramtypes", [Array])
     ], DataTableHeaderCellComponent.prototype, "sorts", null);
     __decorate([
-        Output(),
-        __metadata("design:type", EventEmitter)
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
     ], DataTableHeaderCellComponent.prototype, "sort", void 0);
     __decorate([
-        Output(),
-        __metadata("design:type", EventEmitter)
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
     ], DataTableHeaderCellComponent.prototype, "select", void 0);
     __decorate([
-        Output(),
+        core_1.Output(),
         __metadata("design:type", Object)
     ], DataTableHeaderCellComponent.prototype, "columnContextmenu", void 0);
     __decorate([
-        HostBinding('class'),
+        core_1.HostBinding('class'),
         __metadata("design:type", Object),
         __metadata("design:paramtypes", [])
     ], DataTableHeaderCellComponent.prototype, "columnCssClasses", null);
     __decorate([
-        HostBinding('attr.title'),
+        core_1.HostBinding('attr.title'),
         __metadata("design:type", String),
         __metadata("design:paramtypes", [])
     ], DataTableHeaderCellComponent.prototype, "name", null);
     __decorate([
-        HostBinding('style.minWidth.px'),
+        core_1.HostBinding('style.minWidth.px'),
         __metadata("design:type", Number),
         __metadata("design:paramtypes", [])
     ], DataTableHeaderCellComponent.prototype, "minWidth", null);
     __decorate([
-        HostBinding('style.maxWidth.px'),
+        core_1.HostBinding('style.maxWidth.px'),
         __metadata("design:type", Number),
         __metadata("design:paramtypes", [])
     ], DataTableHeaderCellComponent.prototype, "maxWidth", null);
     __decorate([
-        HostBinding('style.width.px'),
+        core_1.HostBinding('style.width.px'),
         __metadata("design:type", Number),
         __metadata("design:paramtypes", [])
     ], DataTableHeaderCellComponent.prototype, "width", null);
     __decorate([
-        HostListener('contextmenu', ['$event']),
+        core_1.HostListener('contextmenu', ['$event']),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", void 0)
     ], DataTableHeaderCellComponent.prototype, "onContextmenu", null);
     DataTableHeaderCellComponent = __decorate([
-        Component({
+        core_1.Component({
             selector: 'datatable-header-cell',
             template: "\n    <div class=\"datatable-header-cell-template-wrap\">\n      <ng-template\n        *ngIf=\"isTarget\"\n        [ngTemplateOutlet]=\"targetMarkerTemplate\"\n        [ngTemplateOutletContext]=\"targetMarkerContext\">\n      </ng-template>\n      <label\n        *ngIf=\"isCheckboxable\"\n        class=\"datatable-checkbox\">\n        <input\n          type=\"checkbox\"\n          [checked]=\"allRowsSelected\"\n          (change)=\"select.emit(!allRowsSelected)\"\n        />\n      </label>\n      <span\n        *ngIf=\"!column.headerTemplate\"\n        class=\"datatable-header-cell-wrapper\">\n        <span\n          class=\"datatable-header-cell-label draggable\"\n          (click)=\"onSort()\"\n          [innerHTML]=\"name\">\n        </span>\n      </span>\n      <ng-template\n        *ngIf=\"column.headerTemplate\"\n        [ngTemplateOutlet]=\"column.headerTemplate\"\n        [ngTemplateOutletContext]=\"cellContext\">\n      </ng-template>\n      <span\n        (click)=\"onSort()\"\n        [class]=\"sortClass\">\n      </span>\n    </div>\n  ",
             host: {
                 class: 'datatable-header-cell'
             },
-            changeDetection: ChangeDetectionStrategy.OnPush
+            changeDetection: core_1.ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [ChangeDetectorRef])
+        __metadata("design:paramtypes", [core_1.ChangeDetectorRef])
     ], DataTableHeaderCellComponent);
     return DataTableHeaderCellComponent;
 }());
-export { DataTableHeaderCellComponent };
+exports.DataTableHeaderCellComponent = DataTableHeaderCellComponent;
 //# sourceMappingURL=header-cell.component.js.map

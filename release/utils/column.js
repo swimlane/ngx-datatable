@@ -1,7 +1,9 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Returns the columns by pin.
  */
-export function columnsByPin(cols) {
+function columnsByPin(cols) {
     var ret = {
         left: [],
         center: [],
@@ -23,10 +25,11 @@ export function columnsByPin(cols) {
     }
     return ret;
 }
+exports.columnsByPin = columnsByPin;
 /**
  * Returns the widths of all group sets of a column
  */
-export function columnGroupWidths(groups, all) {
+function columnGroupWidths(groups, all) {
     return {
         left: columnTotalWidth(groups.left),
         center: columnTotalWidth(groups.center),
@@ -34,10 +37,11 @@ export function columnGroupWidths(groups, all) {
         total: Math.floor(columnTotalWidth(all))
     };
 }
+exports.columnGroupWidths = columnGroupWidths;
 /**
  * Calculates the total width of all columns and their groups
  */
-export function columnTotalWidth(columns, prop) {
+function columnTotalWidth(columns, prop) {
     var totalWidth = 0;
     if (columns) {
         for (var _i = 0, columns_1 = columns; _i < columns_1.length; _i++) {
@@ -49,10 +53,11 @@ export function columnTotalWidth(columns, prop) {
     }
     return totalWidth;
 }
+exports.columnTotalWidth = columnTotalWidth;
 /**
  * Calculates the total width of all columns and their groups
  */
-export function columnsTotalWidth(columns, prop) {
+function columnsTotalWidth(columns, prop) {
     var totalWidth = 0;
     for (var _i = 0, columns_2 = columns; _i < columns_2.length; _i++) {
         var column = columns_2[_i];
@@ -61,7 +66,8 @@ export function columnsTotalWidth(columns, prop) {
     }
     return totalWidth;
 }
-export function columnsByPinArr(val) {
+exports.columnsTotalWidth = columnsTotalWidth;
+function columnsByPinArr(val) {
     var colsByPinArr = [];
     var colsByPin = columnsByPin(val);
     colsByPinArr.push({ type: 'left', columns: colsByPin['left'] });
@@ -69,4 +75,5 @@ export function columnsByPinArr(val) {
     colsByPinArr.push({ type: 'right', columns: colsByPin['right'] });
     return colsByPinArr;
 }
+exports.columnsByPinArr = columnsByPinArr;
 //# sourceMappingURL=column.js.map

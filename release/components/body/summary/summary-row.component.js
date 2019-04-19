@@ -1,3 +1,4 @@
+"use strict";
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -18,7 +19,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input } from '@angular/core';
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
 function defaultSumFunc(cells) {
     var cellsWithValues = cells.filter(function (cell) { return !!cell; });
     if (!cellsWithValues.length) {
@@ -71,27 +73,27 @@ var DataTableSummaryRowComponent = /** @class */ (function () {
         }
     };
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Array)
     ], DataTableSummaryRowComponent.prototype, "rows", void 0);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Array)
     ], DataTableSummaryRowComponent.prototype, "columns", void 0);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Number)
     ], DataTableSummaryRowComponent.prototype, "rowHeight", void 0);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Number)
     ], DataTableSummaryRowComponent.prototype, "offsetX", void 0);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Number)
     ], DataTableSummaryRowComponent.prototype, "innerWidth", void 0);
     DataTableSummaryRowComponent = __decorate([
-        Component({
+        core_1.Component({
             selector: 'datatable-summary-row',
             template: "\n  <datatable-body-row\n    *ngIf=\"summaryRow && _internalColumns\"\n    tabindex=\"-1\"\n    [innerWidth]=\"innerWidth\"\n    [offsetX]=\"offsetX\"\n    [columns]=\"_internalColumns\"\n    [rowHeight]=\"rowHeight\"\n    [row]=\"summaryRow\"\n    [rowIndex]=\"-1\">\n  </datatable-body-row>\n  ",
             host: {
@@ -101,5 +103,5 @@ var DataTableSummaryRowComponent = /** @class */ (function () {
     ], DataTableSummaryRowComponent);
     return DataTableSummaryRowComponent;
 }());
-export { DataTableSummaryRowComponent };
+exports.DataTableSummaryRowComponent = DataTableSummaryRowComponent;
 //# sourceMappingURL=summary-row.component.js.map

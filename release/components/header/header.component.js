@@ -1,3 +1,4 @@
+"use strict";
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -18,17 +19,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Output, EventEmitter, Input, HostBinding, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
-import { SortType, SelectionType } from '../../types';
-import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY } from '../../utils';
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var types_1 = require("../../types");
+var utils_1 = require("../../utils");
 var DataTableHeaderComponent = /** @class */ (function () {
     function DataTableHeaderComponent(cd) {
         this.cd = cd;
-        this.sort = new EventEmitter();
-        this.reorder = new EventEmitter();
-        this.resize = new EventEmitter();
-        this.select = new EventEmitter();
-        this.columnContextmenu = new EventEmitter(false);
+        this.sort = new core_1.EventEmitter();
+        this.reorder = new core_1.EventEmitter();
+        this.resize = new core_1.EventEmitter();
+        this.select = new core_1.EventEmitter();
+        this.columnContextmenu = new core_1.EventEmitter(false);
         this._styleByGroup = {
             left: {},
             center: {},
@@ -42,8 +44,8 @@ var DataTableHeaderComponent = /** @class */ (function () {
         set: function (val) {
             this._innerWidth = val;
             if (this._columns) {
-                var colByPin = columnsByPin(this._columns);
-                this._columnGroupWidths = columnGroupWidths(colByPin, this._columns);
+                var colByPin = utils_1.columnsByPin(this._columns);
+                this._columnGroupWidths = utils_1.columnGroupWidths(colByPin, this._columns);
                 this.setStylesByGroup();
             }
         },
@@ -71,9 +73,9 @@ var DataTableHeaderComponent = /** @class */ (function () {
         },
         set: function (val) {
             this._columns = val;
-            var colsByPin = columnsByPin(val);
-            this._columnsByPin = columnsByPinArr(val);
-            this._columnGroupWidths = columnGroupWidths(colsByPin, val);
+            var colsByPin = utils_1.columnsByPin(val);
+            this._columnsByPin = utils_1.columnsByPinArr(val);
+            this._columnGroupWidths = utils_1.columnGroupWidths(colsByPin, val);
             this.setStylesByGroup();
         },
         enumerable: true,
@@ -205,7 +207,7 @@ var DataTableHeaderComponent = /** @class */ (function () {
             sorts[idx].dir = newValue;
         }
         else {
-            if (this.sortType === SortType.single) {
+            if (this.sortType === types_1.SortType.single) {
                 sorts.splice(0, this.sorts.length);
             }
             sorts.push({ dir: newValue, prop: column.prop });
@@ -213,9 +215,9 @@ var DataTableHeaderComponent = /** @class */ (function () {
         return sorts;
     };
     DataTableHeaderComponent.prototype.setStylesByGroup = function () {
-        this._styleByGroup.left = this.calcStylesByGroup('left');
-        this._styleByGroup.center = this.calcStylesByGroup('center');
-        this._styleByGroup.right = this.calcStylesByGroup('right');
+        this._styleByGroup['left'] = this.calcStylesByGroup('left');
+        this._styleByGroup['center'] = this.calcStylesByGroup('center');
+        this._styleByGroup['right'] = this.calcStylesByGroup('right');
         this.cd.detectChanges();
     };
     DataTableHeaderComponent.prototype.calcStylesByGroup = function (group) {
@@ -225,113 +227,113 @@ var DataTableHeaderComponent = /** @class */ (function () {
             width: widths[group] + "px"
         };
         if (group === 'center') {
-            translateXY(styles, offsetX * -1, 0);
+            utils_1.translateXY(styles, offsetX * -1, 0);
         }
         else if (group === 'right') {
             var totalDiff = widths.total - this.innerWidth;
             var offset = totalDiff * -1;
-            translateXY(styles, offset, 0);
+            utils_1.translateXY(styles, offset, 0);
         }
         return styles;
     };
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], DataTableHeaderComponent.prototype, "sortAscendingIcon", void 0);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], DataTableHeaderComponent.prototype, "sortDescendingIcon", void 0);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Boolean)
     ], DataTableHeaderComponent.prototype, "scrollbarH", void 0);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Boolean)
     ], DataTableHeaderComponent.prototype, "dealsWithGroup", void 0);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], DataTableHeaderComponent.prototype, "targetMarkerTemplate", void 0);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Number),
         __metadata("design:paramtypes", [Number])
     ], DataTableHeaderComponent.prototype, "innerWidth", null);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Array)
     ], DataTableHeaderComponent.prototype, "sorts", void 0);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", String)
     ], DataTableHeaderComponent.prototype, "sortType", void 0);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Boolean)
     ], DataTableHeaderComponent.prototype, "allRowsSelected", void 0);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", String)
     ], DataTableHeaderComponent.prototype, "selectionType", void 0);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Boolean)
     ], DataTableHeaderComponent.prototype, "reorderable", void 0);
     __decorate([
-        HostBinding('style.height'),
-        Input(),
+        core_1.HostBinding('style.height'),
+        core_1.Input(),
         __metadata("design:type", Object),
         __metadata("design:paramtypes", [Object])
     ], DataTableHeaderComponent.prototype, "headerHeight", null);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Array),
         __metadata("design:paramtypes", [Array])
     ], DataTableHeaderComponent.prototype, "columns", null);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Number),
         __metadata("design:paramtypes", [Number])
     ], DataTableHeaderComponent.prototype, "offsetX", null);
     __decorate([
-        Output(),
-        __metadata("design:type", EventEmitter)
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
     ], DataTableHeaderComponent.prototype, "sort", void 0);
     __decorate([
-        Output(),
-        __metadata("design:type", EventEmitter)
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
     ], DataTableHeaderComponent.prototype, "reorder", void 0);
     __decorate([
-        Output(),
-        __metadata("design:type", EventEmitter)
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
     ], DataTableHeaderComponent.prototype, "resize", void 0);
     __decorate([
-        Output(),
-        __metadata("design:type", EventEmitter)
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
     ], DataTableHeaderComponent.prototype, "select", void 0);
     __decorate([
-        Output(),
+        core_1.Output(),
         __metadata("design:type", Object)
     ], DataTableHeaderComponent.prototype, "columnContextmenu", void 0);
     __decorate([
-        HostBinding('style.width'),
+        core_1.HostBinding('style.width'),
         __metadata("design:type", String),
         __metadata("design:paramtypes", [])
     ], DataTableHeaderComponent.prototype, "headerWidth", null);
     DataTableHeaderComponent = __decorate([
-        Component({
+        core_1.Component({
             selector: 'datatable-header',
             template: "\n    <div\n      orderable\n      (reorder)=\"onColumnReordered($event)\"\n      (targetChanged)=\"onTargetChanged($event)\"\n      [style.width.px]=\"_columnGroupWidths.total\"\n      class=\"datatable-header-inner\">\n      <div\n        *ngFor=\"let colGroup of _columnsByPin; trackBy: trackByGroups\"\n        [class]=\"'datatable-row-' + colGroup.type\"\n        [ngStyle]=\"_styleByGroup[colGroup.type]\">\n        <datatable-header-cell\n          *ngFor=\"let column of colGroup.columns; trackBy: columnTrackingFn\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (resize)=\"onColumnResized($event, column)\"\n          long-press\n          [pressModel]=\"column\"\n          [pressEnabled]=\"reorderable && column.draggable\"\n          (longPressStart)=\"onLongPressStart($event)\"\n          (longPressEnd)=\"onLongPressEnd($event)\"\n          draggable\n          [dragX]=\"reorderable && column.draggable && column.dragging\"\n          [dragY]=\"false\"\n          [dragModel]=\"column\"\n          [dragEventTarget]=\"dragEventTarget\"\n          [headerHeight]=\"headerHeight\"\n          [isTarget]=\"column.isTarget\"\n          [targetMarkerTemplate]=\"targetMarkerTemplate\"\n          [targetMarkerContext]=\"column.targetMarkerContext\"\n          [column]=\"column\"\n          [sortType]=\"sortType\"\n          [sorts]=\"sorts\"\n          [selectionType]=\"selectionType\"\n          [sortAscendingIcon]=\"sortAscendingIcon\"\n          [sortDescendingIcon]=\"sortDescendingIcon\"\n          [allRowsSelected]=\"allRowsSelected\"\n          (sort)=\"onSort($event)\"\n          (select)=\"select.emit($event)\"\n          (columnContextmenu)=\"columnContextmenu.emit($event)\">\n        </datatable-header-cell>\n      </div>\n    </div>\n  ",
             host: {
                 class: 'datatable-header'
             },
-            changeDetection: ChangeDetectionStrategy.OnPush
+            changeDetection: core_1.ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [ChangeDetectorRef])
+        __metadata("design:paramtypes", [core_1.ChangeDetectorRef])
     ], DataTableHeaderComponent);
     return DataTableHeaderComponent;
 }());
-export { DataTableHeaderComponent };
+exports.DataTableHeaderComponent = DataTableHeaderComponent;
 //# sourceMappingURL=header.component.js.map

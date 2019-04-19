@@ -1,36 +1,39 @@
-import { SortType, SortDirection } from '../types';
-import { getterForProp } from './column-prop-getters';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var types_1 = require("../types");
+var column_prop_getters_1 = require("./column-prop-getters");
 /**
  * Gets the next sort direction
  */
-export function nextSortDir(sortType, current) {
-    if (sortType === SortType.single) {
-        if (current === SortDirection.asc) {
-            return SortDirection.desc;
+function nextSortDir(sortType, current) {
+    if (sortType === types_1.SortType.single) {
+        if (current === types_1.SortDirection.asc) {
+            return types_1.SortDirection.desc;
         }
         else {
-            return SortDirection.asc;
+            return types_1.SortDirection.asc;
         }
     }
     else {
         if (!current) {
-            return SortDirection.asc;
+            return types_1.SortDirection.asc;
         }
-        else if (current === SortDirection.asc) {
-            return SortDirection.desc;
+        else if (current === types_1.SortDirection.asc) {
+            return types_1.SortDirection.desc;
         }
-        else if (current === SortDirection.desc) {
+        else if (current === types_1.SortDirection.desc) {
             return undefined;
         }
         // avoid TS7030: Not all code paths return a value.
         return undefined;
     }
 }
+exports.nextSortDir = nextSortDir;
 /**
  * Adapted from fueld-ui on 6/216
  * https://github.com/FuelInteractive/fuel-ui/tree/master/src/pipes/OrderBy
  */
-export function orderByComparator(a, b) {
+function orderByComparator(a, b) {
     if (a === null || typeof a === 'undefined')
         a = 0;
     if (b === null || typeof b === 'undefined')
@@ -61,11 +64,12 @@ export function orderByComparator(a, b) {
     // equal each other
     return 0;
 }
+exports.orderByComparator = orderByComparator;
 /**
  * creates a shallow copy of the `rows` input and returns the sorted copy. this function
  * does not sort the `rows` argument in place
  */
-export function sortRows(rows, columns, dirs) {
+function sortRows(rows, columns, dirs) {
     if (!rows)
         return [];
     if (!dirs || !dirs.length || !columns)
@@ -90,7 +94,7 @@ export function sortRows(rows, columns, dirs) {
         return {
             prop: prop,
             dir: dir.dir,
-            valueGetter: getterForProp(prop),
+            valueGetter: column_prop_getters_1.getterForProp(prop),
             compareFn: cols[prop] || orderByComparator
         };
     });
@@ -109,7 +113,7 @@ export function sortRows(rows, columns, dirs) {
             // Compare can be a standard JS comparison function (a,b) => -1|0|1
             // as additional parameters are silently ignored. The whole row and sort
             // direction enable more complex sort logic.
-            var comparison = cachedDir.dir !== SortDirection.desc ?
+            var comparison = cachedDir.dir !== types_1.SortDirection.desc ?
                 cachedDir.compareFn(propA, propB, rowA, rowB, cachedDir.dir) :
                 -cachedDir.compareFn(propA, propB, rowA, rowB, cachedDir.dir);
             // Don't return 0 yet in case of needing to sort by next property
@@ -124,4 +128,5 @@ export function sortRows(rows, columns, dirs) {
         return rowToIndexMap.get(rowA) < rowToIndexMap.get(rowB) ? -1 : 1;
     });
 }
+exports.sortRows = sortRows;
 //# sourceMappingURL=sort.js.map

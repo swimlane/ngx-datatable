@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 if (typeof document !== 'undefined' && !document.elementsFromPoint) {
     document.elementsFromPoint = elementsFromPoint;
 }
@@ -9,7 +11,7 @@ if (typeof document !== 'undefined' && !document.elementsFromPoint) {
  * https://gist.github.com/iddan/54d5d9e58311b0495a91bf06de661380
  * https://gist.github.com/oslego/7265412
  */
-export function elementsFromPoint(x, y) {
+function elementsFromPoint(x, y) {
     var elements = [];
     var previousPointerEvents = [];
     var current; // TODO: window.getComputedStyle should be used with inferred type (Element)
@@ -34,5 +36,6 @@ export function elementsFromPoint(x, y) {
     // return our results
     return elements;
 }
+exports.elementsFromPoint = elementsFromPoint;
 /*tslint:enable*/
 //# sourceMappingURL=elm-from-point.js.map

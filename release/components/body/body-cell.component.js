@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,15 +8,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input, HostBinding, ViewChild, ChangeDetectorRef, Output, EventEmitter, HostListener, ElementRef, ViewContainerRef, ChangeDetectionStrategy } from '@angular/core';
-import { Keys } from '../../utils';
-import { SortDirection } from '../../types';
-import { MouseEvent, KeyboardEvent } from '../../events';
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var utils_1 = require("../../utils");
+var types_1 = require("../../types");
+var events_1 = require("../../events");
 var DataTableBodyCellComponent = /** @class */ (function () {
     function DataTableBodyCellComponent(element, cd) {
         this.cd = cd;
-        this.activate = new EventEmitter();
-        this.treeAction = new EventEmitter();
+        this.activate = new core_1.EventEmitter();
+        this.treeAction = new core_1.EventEmitter();
         this.isFocused = false;
         this.onCheckboxChangeFn = this.onCheckboxChange.bind(this);
         this.activateFn = this.activate.emit.bind(this.activate);
@@ -187,9 +189,9 @@ var DataTableBodyCellComponent = /** @class */ (function () {
                 cls += ' sort-active';
             if (this.isFocused)
                 cls += ' active';
-            if (this.sortDir === SortDirection.asc)
+            if (this.sortDir === types_1.SortDirection.asc)
                 cls += ' sort-asc';
-            if (this.sortDir === SortDirection.desc)
+            if (this.sortDir === types_1.SortDirection.desc)
                 cls += ' sort-desc';
             return cls;
         },
@@ -290,11 +292,11 @@ var DataTableBodyCellComponent = /** @class */ (function () {
     DataTableBodyCellComponent.prototype.onKeyDown = function (event) {
         var keyCode = event.keyCode;
         var isTargetCell = event.target === this._element;
-        var isAction = keyCode === Keys.return ||
-            keyCode === Keys.down ||
-            keyCode === Keys.up ||
-            keyCode === Keys.left ||
-            keyCode === Keys.right;
+        var isAction = keyCode === utils_1.Keys.return ||
+            keyCode === utils_1.Keys.down ||
+            keyCode === utils_1.Keys.up ||
+            keyCode === utils_1.Keys.left ||
+            keyCode === utils_1.Keys.right;
         if (isAction && isTargetCell) {
             event.preventDefault();
             event.stopPropagation();
@@ -346,130 +348,130 @@ var DataTableBodyCellComponent = /** @class */ (function () {
         return column.isTreeColumn ? row.level * levelIndent : 0;
     };
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Function)
     ], DataTableBodyCellComponent.prototype, "displayCheck", void 0);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Object),
         __metadata("design:paramtypes", [Object])
     ], DataTableBodyCellComponent.prototype, "group", null);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Number),
         __metadata("design:paramtypes", [Number])
     ], DataTableBodyCellComponent.prototype, "rowHeight", null);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Boolean),
         __metadata("design:paramtypes", [Boolean])
     ], DataTableBodyCellComponent.prototype, "isSelected", null);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Boolean),
         __metadata("design:paramtypes", [Boolean])
     ], DataTableBodyCellComponent.prototype, "expanded", null);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Number),
         __metadata("design:paramtypes", [Number])
     ], DataTableBodyCellComponent.prototype, "rowIndex", null);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Object),
         __metadata("design:paramtypes", [Object])
     ], DataTableBodyCellComponent.prototype, "column", null);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Object),
         __metadata("design:paramtypes", [Object])
     ], DataTableBodyCellComponent.prototype, "row", null);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", Array),
         __metadata("design:paramtypes", [Array])
     ], DataTableBodyCellComponent.prototype, "sorts", null);
     __decorate([
-        Input(),
+        core_1.Input(),
         __metadata("design:type", String),
         __metadata("design:paramtypes", [String])
     ], DataTableBodyCellComponent.prototype, "treeStatus", null);
     __decorate([
-        Output(),
-        __metadata("design:type", EventEmitter)
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
     ], DataTableBodyCellComponent.prototype, "activate", void 0);
     __decorate([
-        Output(),
-        __metadata("design:type", EventEmitter)
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
     ], DataTableBodyCellComponent.prototype, "treeAction", void 0);
     __decorate([
-        ViewChild('cellTemplate', { read: ViewContainerRef }),
-        __metadata("design:type", ViewContainerRef)
+        core_1.ViewChild('cellTemplate', { read: core_1.ViewContainerRef }),
+        __metadata("design:type", core_1.ViewContainerRef)
     ], DataTableBodyCellComponent.prototype, "cellTemplate", void 0);
     __decorate([
-        HostBinding('class'),
+        core_1.HostBinding('class'),
         __metadata("design:type", Object),
         __metadata("design:paramtypes", [])
     ], DataTableBodyCellComponent.prototype, "columnCssClasses", null);
     __decorate([
-        HostBinding('style.width.px'),
+        core_1.HostBinding('style.width.px'),
         __metadata("design:type", Number),
         __metadata("design:paramtypes", [])
     ], DataTableBodyCellComponent.prototype, "width", null);
     __decorate([
-        HostBinding('style.minWidth.px'),
+        core_1.HostBinding('style.minWidth.px'),
         __metadata("design:type", Number),
         __metadata("design:paramtypes", [])
     ], DataTableBodyCellComponent.prototype, "minWidth", null);
     __decorate([
-        HostBinding('style.maxWidth.px'),
+        core_1.HostBinding('style.maxWidth.px'),
         __metadata("design:type", Number),
         __metadata("design:paramtypes", [])
     ], DataTableBodyCellComponent.prototype, "maxWidth", null);
     __decorate([
-        HostBinding('style.height'),
+        core_1.HostBinding('style.height'),
         __metadata("design:type", Object),
         __metadata("design:paramtypes", [])
     ], DataTableBodyCellComponent.prototype, "height", null);
     __decorate([
-        HostListener('focus'),
+        core_1.HostListener('focus'),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", void 0)
     ], DataTableBodyCellComponent.prototype, "onFocus", null);
     __decorate([
-        HostListener('blur'),
+        core_1.HostListener('blur'),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", void 0)
     ], DataTableBodyCellComponent.prototype, "onBlur", null);
     __decorate([
-        HostListener('click', ['$event']),
+        core_1.HostListener('click', ['$event']),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", void 0)
     ], DataTableBodyCellComponent.prototype, "onClick", null);
     __decorate([
-        HostListener('dblclick', ['$event']),
+        core_1.HostListener('dblclick', ['$event']),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", void 0)
     ], DataTableBodyCellComponent.prototype, "onDblClick", null);
     __decorate([
-        HostListener('keydown', ['$event']),
+        core_1.HostListener('keydown', ['$event']),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", void 0)
     ], DataTableBodyCellComponent.prototype, "onKeyDown", null);
     DataTableBodyCellComponent = __decorate([
-        Component({
+        core_1.Component({
             selector: 'datatable-body-cell',
-            changeDetection: ChangeDetectionStrategy.OnPush,
+            changeDetection: core_1.ChangeDetectionStrategy.OnPush,
             template: "\n    <div class=\"datatable-body-cell-label\"\n      [style.margin-left.px]=\"calcLeftMargin(column, row)\">\n      <label\n        *ngIf=\"column.checkboxable && (!displayCheck || displayCheck(row, column, value))\"\n        class=\"datatable-checkbox\">\n        <input\n          type=\"checkbox\"\n          [checked]=\"isSelected\"\n          (click)=\"onCheckboxChange($event)\"\n        />\n      </label>\n      <ng-container *ngIf=\"column.isTreeColumn\">\n        <button *ngIf=\"!column.treeToggleTemplate\"\n          class=\"datatable-tree-button\"\n          [disabled]=\"treeStatus==='disabled'\"\n          (click)=\"onTreeAction()\">\n          <span>\n            <i *ngIf=\"treeStatus==='loading'\"\n              class=\"icon datatable-icon-collapse\"></i>\n            <i *ngIf=\"treeStatus==='collapsed'\"\n              class=\"icon datatable-icon-up\"></i>\n            <i *ngIf=\"treeStatus==='expanded' ||\n                      treeStatus==='disabled'\"\n              class=\"icon datatable-icon-down\"></i>\n          </span>\n        </button>\n        <ng-template *ngIf=\"column.treeToggleTemplate\"\n          [ngTemplateOutlet]=\"column.treeToggleTemplate\"\n          [ngTemplateOutletContext]=\"{ cellContext: cellContext }\">\n        </ng-template>\n      </ng-container>\n\n      <span\n        *ngIf=\"!column.cellTemplate\"\n        [title]=\"sanitizedValue\"\n        [innerHTML]=\"value\">\n      </span>\n      <ng-template #cellTemplate\n        *ngIf=\"column.cellTemplate\"\n        [ngTemplateOutlet]=\"column.cellTemplate\"\n        [ngTemplateOutletContext]=\"cellContext\">\n      </ng-template>\n    </div>\n  "
         }),
-        __metadata("design:paramtypes", [ElementRef, ChangeDetectorRef])
+        __metadata("design:paramtypes", [core_1.ElementRef, core_1.ChangeDetectorRef])
     ], DataTableBodyCellComponent);
     return DataTableBodyCellComponent;
 }());
-export { DataTableBodyCellComponent };
+exports.DataTableBodyCellComponent = DataTableBodyCellComponent;
 //# sourceMappingURL=body-cell.component.js.map

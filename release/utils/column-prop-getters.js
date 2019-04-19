@@ -1,16 +1,19 @@
+"use strict";
 // maybe rename this file to prop-getters.ts
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Always returns the empty string ''
  * @returns {string}
  */
-export function emptyStringGetter() {
+function emptyStringGetter() {
     return '';
 }
+exports.emptyStringGetter = emptyStringGetter;
 /**
  * Returns the appropriate getter function for this kind of prop.
  * If prop == null, returns the emptyStringGetter.
  */
-export function getterForProp(prop) {
+function getterForProp(prop) {
     if (prop == null)
         return emptyStringGetter;
     if (typeof prop === 'number') {
@@ -26,13 +29,14 @@ export function getterForProp(prop) {
         }
     }
 }
+exports.getterForProp = getterForProp;
 /**
  * Returns the value at this numeric index.
  * @param row array of values
  * @param index numeric index
  * @returns {any} or '' if invalid index
  */
-export function numericIndexGetter(row, index) {
+function numericIndexGetter(row, index) {
     if (row == null)
         return '';
     // mimic behavior of deepValueGetter
@@ -43,6 +47,7 @@ export function numericIndexGetter(row, index) {
         return '';
     return value;
 }
+exports.numericIndexGetter = numericIndexGetter;
 /**
  * Returns the value of a field.
  * (more efficient than deepValueGetter)
@@ -50,7 +55,7 @@ export function numericIndexGetter(row, index) {
  * @param fieldName field name string
  * @returns {any}
  */
-export function shallowValueGetter(obj, fieldName) {
+function shallowValueGetter(obj, fieldName) {
     if (obj == null)
         return '';
     if (!obj || !fieldName)
@@ -60,12 +65,13 @@ export function shallowValueGetter(obj, fieldName) {
         return '';
     return value;
 }
+exports.shallowValueGetter = shallowValueGetter;
 /**
  * Returns a deep object given a string. zoo['animal.type']
  * @param {object} obj
  * @param {string} path
  */
-export function deepValueGetter(obj, path) {
+function deepValueGetter(obj, path) {
     if (obj == null)
         return '';
     if (!obj || !path)
@@ -87,4 +93,5 @@ export function deepValueGetter(obj, path) {
     }
     return current;
 }
+exports.deepValueGetter = deepValueGetter;
 //# sourceMappingURL=column-prop-getters.js.map

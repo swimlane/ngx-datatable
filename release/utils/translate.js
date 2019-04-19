@@ -1,20 +1,22 @@
-import { getVendorPrefixedName } from './prefixes';
-import { camelCase } from './camel-case';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var prefixes_1 = require("./prefixes");
+var camel_case_1 = require("./camel-case");
 // browser detection and prefixing tools
-var transform = typeof window !== 'undefined' ? getVendorPrefixedName('transform') : undefined;
-var backfaceVisibility = typeof window !== 'undefined' ? getVendorPrefixedName('backfaceVisibility') : undefined;
-var hasCSSTransforms = typeof window !== 'undefined' ? !!getVendorPrefixedName('transform') : undefined;
-var hasCSS3DTransforms = typeof window !== 'undefined' ? !!getVendorPrefixedName('perspective') : undefined;
+var transform = typeof window !== 'undefined' ? prefixes_1.getVendorPrefixedName('transform') : undefined;
+var backfaceVisibility = typeof window !== 'undefined' ? prefixes_1.getVendorPrefixedName('backfaceVisibility') : undefined;
+var hasCSSTransforms = typeof window !== 'undefined' ? !!prefixes_1.getVendorPrefixedName('transform') : undefined;
+var hasCSS3DTransforms = typeof window !== 'undefined' ? !!prefixes_1.getVendorPrefixedName('perspective') : undefined;
 var ua = typeof window !== 'undefined' ? window.navigator.userAgent : 'Chrome';
 var isSafari = (/Safari\//).test(ua) && !(/Chrome\//).test(ua);
-export function translateXY(styles, x, y) {
+function translateXY(styles, x, y) {
     if (typeof transform !== 'undefined' && hasCSSTransforms) {
         if (!isSafari && hasCSS3DTransforms) {
             styles[transform] = "translate3d(" + x + "px, " + y + "px, 0)";
             styles[backfaceVisibility] = 'hidden';
         }
         else {
-            styles[camelCase(transform)] = "translate(" + x + "px, " + y + "px)";
+            styles[camel_case_1.camelCase(transform)] = "translate(" + x + "px, " + y + "px)";
         }
     }
     else {
@@ -22,4 +24,5 @@ export function translateXY(styles, x, y) {
         styles.left = x + "px";
     }
 }
+exports.translateXY = translateXY;
 //# sourceMappingURL=translate.js.map

@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,16 +8,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Directive, TemplateRef } from '@angular/core';
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
 var DataTableColumnHeaderDirective = /** @class */ (function () {
     function DataTableColumnHeaderDirective(template) {
         this.template = template;
     }
     DataTableColumnHeaderDirective = __decorate([
-        Directive({ selector: '[ngx-datatable-header-template]' }),
-        __metadata("design:paramtypes", [TemplateRef])
+        core_1.Directive({ selector: '[ngx-datatable-header-template]' }),
+        __metadata("design:paramtypes", [core_1.TemplateRef])
     ], DataTableColumnHeaderDirective);
     return DataTableColumnHeaderDirective;
 }());
-export { DataTableColumnHeaderDirective };
+exports.DataTableColumnHeaderDirective = DataTableColumnHeaderDirective;
 //# sourceMappingURL=column-header.directive.js.map
