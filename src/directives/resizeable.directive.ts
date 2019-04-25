@@ -40,7 +40,11 @@ export class ResizeableDirective implements OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    this.renderer.destroyNode(this.createdNode);
+    if (this.renderer.destroyNode) {
+      this.renderer.destroyNode(this.createdNode);
+    } else {
+      this.renderer.removeChild(this.renderer.parentNode(this.createdNode), this.createdNode);
+    }
     this._destroySubscription();
   }
 
