@@ -263,7 +263,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     this.rowTrackingFn = function(this: any, index: number, row: any): any {
       const idx = this.getRowIndex(row);
       if (this.trackByProp) {
-        return `${idx}-${this.trackByProp}`;
+        return row[this.trackByProp];
+        // return `${idx}-${this.trackByProp}`;
       } else {
         return idx;
       }
