@@ -24,6 +24,7 @@ export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
         <input
           type="checkbox"
           [checked]="isSelected"
+          [disabled]="isEqualSelectionLimit && !isSelected"
           (click)="onCheckboxChange($event)"
         />
       </label>
@@ -165,6 +166,8 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   get treeStatus(): TreeStatus {
     return this._treeStatus;
   }
+
+  @Input() isEqualSelectionLimit: boolean;
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
 
