@@ -1067,9 +1067,9 @@ var DataTableBodyRowComponent = /** @class */ (function () {
         return column.$$id;
     };
     DataTableBodyRowComponent.prototype.buildStylesByGroup = function () {
-        this._groupStyles['left'] = this.calcStylesByGroup('left');
-        this._groupStyles['center'] = this.calcStylesByGroup('center');
-        this._groupStyles['right'] = this.calcStylesByGroup('right');
+        this._groupStyles.left = this.calcStylesByGroup('left');
+        this._groupStyles.center = this.calcStylesByGroup('center');
+        this._groupStyles.right = this.calcStylesByGroup('right');
         this.cd.markForCheck();
     };
     DataTableBodyRowComponent.prototype.calcStylesByGroup = function (group) {
@@ -4890,9 +4890,9 @@ var DataTableHeaderComponent = /** @class */ (function () {
         return sorts;
     };
     DataTableHeaderComponent.prototype.setStylesByGroup = function () {
-        this._styleByGroup['left'] = this.calcStylesByGroup('left');
-        this._styleByGroup['center'] = this.calcStylesByGroup('center');
-        this._styleByGroup['right'] = this.calcStylesByGroup('right');
+        this._styleByGroup.left = this.calcStylesByGroup('left');
+        this._styleByGroup.center = this.calcStylesByGroup('center');
+        this._styleByGroup.right = this.calcStylesByGroup('right');
         this.cd.detectChanges();
     };
     DataTableHeaderComponent.prototype.calcStylesByGroup = function (group) {
@@ -7354,9 +7354,9 @@ exports.translateXY = translateXY;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var _1 = __webpack_require__("./src/utils/index.ts");
+var column_prop_getters_1 = __webpack_require__("./src/utils/column-prop-getters.ts");
 function optionalGetterForProp(prop) {
-    return prop && (function (row) { return _1.getterForProp(prop)(row, prop); });
+    return prop && (function (row) { return column_prop_getters_1.getterForProp(prop)(row, prop); });
 }
 exports.optionalGetterForProp = optionalGetterForProp;
 /**
