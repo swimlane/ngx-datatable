@@ -1,0 +1,86 @@
+import {Component} from '@angular/core';
+import {MockServerResultsService} from '../paging/mock-server-results-service';
+import {CorporateEmployee} from '../paging/model/corporate-employee';
+import {Page} from '../paging/model/page';
+
+@Component({
+  selector: 'chkbox-paging-server-selection-demo',
+  providers: [
+      MockServerResultsService
+  ],
+  template: `
+    <div>
+      <h3>
+        Server-side Paging
+        <small>
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/selection/selection-chkbox-paging-server.component.ts" target="_blank">
+            Source
+          </a>
+        </small>
+      </h3>
+      <ngx-datatable
+        class="material"
+        [rows]="rows"
+        [columns]="[{name:'Name'},{name:'Gender'},{name:'Company'}]"
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [rowHeight]="'auto'"
+        [externalPaging]="true"
+        [count]="page.totalElements"
+        [offset]="page.pageNumber"
+        [limit]="page.size"
+        (page)='setPage($event)'
+        [selected]="selected"
+        [selectionType]="'checkbox'"
+        [selectAllRowsOnPage]="true"
+        (select)='onSelect($event)'>
+          <ngx-datatable-column
+            [width]="30"
+            [sortable]="false"
+            [canAutoResize]="false"
+            [draggable]="false"
+            [resizeable]="false"
+            [headerCheckboxable]="true"
+            [checkboxable]="true">
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Name"></ngx-datatable-column>
+          <ngx-datatable-column name="Gender"></ngx-datatable-column>
+          <ngx-datatable-column name="Company"></ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  `
+})
+export class CheckboxPagingServerSelectionComponent {
+  page = new Page();
+  rows = new Array<CorporateEmployee>();
+  selected = [];
+
+  constructor(private serverResultsService: MockServerResultsService) {
+    this.page.pageNumber = 0;
+    this.page.size = 15;
+  }
+
+  ngOnInit() {
+    this.setPage({ offset: 0 });
+  }
+
+  onSelect({ selected }) {
+    console.log('Select Event', selected, this.selected);
+
+    this.selected.splice(0, this.selected.length);
+    this.selected.push(...selected);
+  }
+
+  /**
+   * Populate the table with new data based on the page number
+   * @param page The page to select
+   */
+  setPage(pageInfo){
+    this.page.pageNumber = pageInfo.offset;
+    this.serverResultsService.getResults(this.page).subscribe(pagedData => {
+      this.page = pagedData.page;
+      this.rows = pagedData.data;
+    });
+  }
+}

@@ -57,6 +57,7 @@ import { MultiDisableSelectionComponent } from './selection/selection-disabled.c
 import { CheckboxSelectionComponent } from './selection/selection-chkbox.component';
 import { MultiClickSelectionComponent } from './selection/selection-multi-click.component';
 import { CustomCheckboxSelectionComponent } from './selection/selection-chkbox-template.component';
+import { CheckboxPagingServerSelectionComponent } from './selection/selection-chkbox-paging-server.component';
 
 // -- Columns
 import { ColumnToggleComponent } from './columns/column-toggle.component';
@@ -114,6 +115,7 @@ import { SummaryRowInlineHtmlComponent } from './summary/summary-row-inline-html
     ContextMenuDemoComponent,
     CheckboxSelectionComponent,
     CustomCheckboxSelectionComponent,
+    CheckboxPagingServerSelectionComponent,
     MultiClickSelectionComponent,
     RowCssComponent,
     DynamicHeightComponent,
