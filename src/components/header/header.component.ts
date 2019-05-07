@@ -1,10 +1,11 @@
 import {
-  Component, Output, EventEmitter, Input, HostBinding, ChangeDetectorRef, ChangeDetectionStrategy
+  Component, Output, EventEmitter, Input, HostBinding, ChangeDetectorRef,
+  ChangeDetectionStrategy, AfterViewInit, ElementRef, ViewChildren, QueryList, HostListener
 } from '@angular/core';
 import { SortType, SelectionType } from '../../types';
-import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY } from '../../utils';
+import { columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys } from '../../utils';
 import { DataTableColumnDirective } from '../columns';
-import { MouseEvent } from '../../events';
+import { DataTableHeaderCellComponent } from '.';
 
 @Component({
   selector: 'datatable-header',
@@ -14,12 +15,14 @@ import { MouseEvent } from '../../events';
       (reorder)="onColumnReordered($event)"
       (targetChanged)="onTargetChanged($event)"
       [style.width.px]="_columnGroupWidths.total"
-      class="datatable-header-inner">
+      class="datatable-header-inner"
+      role="row">
       <div
         *ngFor="let colGroup of _columnsByPin; trackBy: trackByGroups"
         [class]="'datatable-row-' + colGroup.type"
         [ngStyle]="_styleByGroup[colGroup.type]">
         <datatable-header-cell
+          #headerCells
           *ngFor="let column of colGroup.columns; trackBy: columnTrackingFn"
           resizeable
           [resizeEnabled]="column.resizeable"
@@ -45,9 +48,12 @@ import { MouseEvent } from '../../events';
           [sortAscendingIcon]="sortAscendingIcon"
           [sortDescendingIcon]="sortDescendingIcon"
           [allRowsSelected]="allRowsSelected"
+          [offsetX]="offsetX"
+          [tabFocusable]="tabFocusColumnName === column.name"
           (sort)="onSort($event)"
           (select)="select.emit($event)"
-          (columnContextmenu)="columnContextmenu.emit($event)">
+          (columnContextmenu)="columnContextmenu.emit($event)"
+          (scroll)="scroll.emit($event)">
         </datatable-header-cell>
       </div>
     </div>
@@ -57,7 +63,7 @@ import { MouseEvent } from '../../events';
   },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DataTableHeaderComponent {
+export class DataTableHeaderComponent implements AfterViewInit {
 
   @Input() sortAscendingIcon: any;
   @Input() sortDescendingIcon: any;
@@ -66,6 +72,7 @@ export class DataTableHeaderComponent {
   @Input() targetMarkerTemplate: any;
   
   targetMarkerContext: any;
+  tabFocusColumnName: string;
 
   @Input() set innerWidth(val: number) {
     this._innerWidth = val;
@@ -103,7 +110,8 @@ export class DataTableHeaderComponent {
   }
 
   @Input() set columns(val: any[]) {
-    this._columns = val;    
+    this._columns = val;
+    this.tabFocusColumnName = val[0] && val[0].name;
 
     const colsByPin = columnsByPin(val);
     this._columnsByPin = columnsByPinArr(val);
@@ -127,6 +135,9 @@ export class DataTableHeaderComponent {
   @Output() resize: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
   @Output() columnContextmenu = new EventEmitter<{ event: MouseEvent, column: any }>(false);
+  @Output() scroll: EventEmitter<any> = new EventEmitter();
+
+  @ViewChildren('headerCells') headerCells: QueryList<DataTableHeaderCellComponent>;
 
   _columnsByPin: any;
   _columnGroupWidths: any;
@@ -140,7 +151,23 @@ export class DataTableHeaderComponent {
     right: {}
   };
 
-  constructor(private cd: ChangeDetectorRef) { }
+  constructor(private cd: ChangeDetectorRef, private elementRef: ElementRef) { }
+
+  ngAfterViewInit() {
+    const nativeElem = <HTMLElement>this.elementRef.nativeElement;
+
+    // Account for contents having style position: fixed (for scroll prevention). Calculate height necessary for cells.
+    if (this.headerHeight && nativeElem.clientHeight === 0) {
+      const headerCellElem = <HTMLElement>(
+        (this.headerCells.first &&
+          this.headerCells.first.elementRef.nativeElement)
+      );
+      if (headerCellElem && headerCellElem.clientHeight) {
+        this.headerHeight = headerCellElem.clientHeight;
+        nativeElem.style.minHeight = headerCellElem.clientHeight + 'px';
+      }
+    }
+  }
 
   onLongPressStart({ event, model }: { event: any, model: any }) {
     model.dragging = true;
@@ -169,6 +196,53 @@ export class DataTableHeaderComponent {
     }
 
     return '100%';
+  }
+
+  @HostListener('click', ['$event'])
+  onclick(event: MouseEvent): void {
+    this.tabFocusColumnName = (<HTMLElement>event.target).innerText;
+  }
+
+  @HostListener('keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent): void {
+    let targetHeader = (<HTMLElement>event.target).parentElement;
+    while (targetHeader && targetHeader.tagName.toLowerCase() !== 'datatable-header-cell') {
+      targetHeader = targetHeader.parentElement;
+    }
+
+    if (targetHeader) {
+      if (event.keyCode === Keys.left) {
+        let prevHeader = <HTMLElement>targetHeader.previousElementSibling;
+  
+        // Try previous column group.
+        if (!prevHeader) {
+          const prevHeaderGroup = <HTMLElement>targetHeader.parentElement.previousElementSibling;
+          if (prevHeaderGroup && prevHeaderGroup.children.length > 0) {
+            prevHeader = <HTMLElement>prevHeaderGroup.children[prevHeaderGroup.children.length - 1];
+          }
+        }
+        
+        if (prevHeader && prevHeader.firstElementChild) {
+          (<HTMLElement>prevHeader.firstElementChild).focus();
+          this.tabFocusColumnName = prevHeader.innerText.trim();
+        }
+      } else if (event.keyCode === Keys.right) {
+        let nextHeader = <HTMLElement>targetHeader.nextElementSibling;
+  
+        // Try next column group.
+        if (!nextHeader) {
+          const nextHeaderGroup = <HTMLElement>targetHeader.parentElement.nextElementSibling;
+          if (nextHeaderGroup && nextHeaderGroup.children.length > 0) {
+            nextHeader = <HTMLElement>nextHeaderGroup.children[0];
+          }
+        }
+  
+        if (nextHeader && nextHeader.firstElementChild) {
+          (<HTMLElement>nextHeader.firstElementChild).focus();
+          this.tabFocusColumnName = nextHeader.innerText.trim();
+        }
+      }
+    }
   }
 
   trackByGroups(index: number, colGroup: any): any {    

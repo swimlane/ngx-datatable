@@ -32,6 +32,15 @@
         vertical-align: top;
       }
 
+      &:not(.active), {
+				.datatable-body-cell {
+					&:focus,
+					&:focus .datatable-row-group {
+						background-color: #232837;
+					}
+				}
+			}
+
       &:hover {
         background: #171b24;
         transition-property: background;
@@ -67,7 +76,7 @@
 
       ul {
         li {
-          margin: 10px 0px;
+          margin: 10px 3px;
 
           &:not(.disabled) {
             &.active a,

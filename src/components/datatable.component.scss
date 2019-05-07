@@ -49,6 +49,7 @@
   &.fixed-header {
     .datatable-header {
       .datatable-header-inner{
+        position: fixed;
         white-space: nowrap;
         .datatable-header-cell{
           white-space: nowrap;
@@ -110,10 +111,6 @@
     vertical-align: top;
     display: inline-block;
     line-height: 1.625;
-
-    &:focus {
-      outline: none;
-    }
   }
 
   .datatable-row-left,
@@ -154,11 +151,18 @@
         cursor: move;
       }
 
+      .header-sort-btn {
+        cursor: pointer;
+      }
+
       .sort-btn {
         line-height: 100%;
         vertical-align: middle;
         display: inline-block;
-        cursor: pointer;
+      }
+
+      .sort-faint {
+        opacity: 0.5;
       }
 
       .resize-handle, .resize-handle--not-resizable {
@@ -204,6 +208,14 @@
 
       .datatable-header-cell-template-wrap {
         height: inherit;
+
+        .no-outline {
+          outline: none;
+        }
+
+        &:focus .datatable-checkbox input {
+          outline: black auto 5px;
+        }
       }
     }
   }
@@ -292,18 +304,23 @@
       }
 
       .pager {
-        li, li a{
-          outline: none;
-        }
-
         li {
+          margin: 0px 3px;
+
           a {
+            padding: 0px;
+            margin: 0px;
             cursor: pointer;
             display: inline-block;
+            outline: none;
           }
 
-          &.disabled a {
-            cursor: not-allowed;
+          &.disabled {
+            outline: none;
+
+            a {
+              cursor: not-allowed;
+            }
           }
         }
       }

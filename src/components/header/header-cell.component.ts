@@ -1,5 +1,6 @@
+import { Keys } from './../../utils/keys';
 import {
-  Component, Input, EventEmitter, Output, HostBinding, 
+  Component, Input, EventEmitter, Output, HostBinding, ElementRef,
   HostListener, ChangeDetectionStrategy, ChangeDetectorRef
 } from '@angular/core';
 import { SortDirection, SortType, SelectionType, TableColumn } from '../../types';
@@ -9,39 +10,46 @@ import { MouseEvent } from '../../events';
 @Component({
   selector: 'datatable-header-cell',
   template: `
-    <div class="datatable-header-cell-template-wrap">
-      <ng-template
-        *ngIf="isTarget"
-        [ngTemplateOutlet]="targetMarkerTemplate"
-        [ngTemplateOutletContext]="targetMarkerContext">
-      </ng-template>
-      <label
-        *ngIf="isCheckboxable"
-        class="datatable-checkbox">
-        <input
-          type="checkbox"
-          [checked]="allRowsSelected"
-          (change)="select.emit(!allRowsSelected)"
-        />
-      </label>
-      <span
-        *ngIf="!column.headerTemplate"
-        class="datatable-header-cell-wrapper">
+    <div
+      [class]="containerClass"
+      (click)="onSort()"
+      (keypress)="onKeyPress($event)"
+      (focus)="onSortExpected($event)"
+      (blur)="onSortExpected($event)"
+      (mouseenter)="onSortExpected($event)"
+      (mouseleave)="onSortExpected($event)"
+      [tabindex]="(tabFocusable ? '0' : '-1')"
+      role="columnheader"
+      [attr.aria-sort]="ariaSort">
+      <div
+        class="no-outline"
+        tabindex="-1">
+        <ng-template
+          *ngIf="isTarget"
+          [ngTemplateOutlet]="targetMarkerTemplate"
+          [ngTemplateOutletContext]="targetMarkerContext">
+        </ng-template>
+        <label
+          *ngIf="isCheckboxable"
+          class="datatable-checkbox">
+          <input
+            type="checkbox"
+            [checked]="allRowsSelected"
+            (change)="select.emit(!allRowsSelected)"
+            tabindex="-1"
+          />
+        </label>
         <span
           class="datatable-header-cell-label draggable"
-          (click)="onSort()"
           [innerHTML]="name">
         </span>
-      </span>
-      <ng-template
-        *ngIf="column.headerTemplate"
-        [ngTemplateOutlet]="column.headerTemplate"
-        [ngTemplateOutletContext]="cellContext">
-      </ng-template>
-      <span
-        (click)="onSort()"
-        [class]="sortClass">
-      </span>
+        <ng-template
+          *ngIf="column.headerTemplate"
+          [ngTemplateOutlet]="column.headerTemplate"
+          [ngTemplateOutletContext]="cellContext">
+        </ng-template>
+        <span [class]="sortClass"></span>
+      </div>
     </div>
   `,
   host: {
@@ -71,11 +79,14 @@ export class DataTableHeaderCellComponent {
   }
   
   @Input() selectionType: SelectionType;
+  @Input() offsetX: number;
+  @Input() tabFocusable: boolean;
 
   @Input() set column(column: TableColumn) {
     this._column = column;
     this.cellContext.column = column;
     this.cd.markForCheck();
+    this.containerClass = 'datatable-header-cell-template-wrap' + (this.column.sortable ? ' header-sort-btn' : '');
   }
 
   get column(): TableColumn {
@@ -90,6 +101,7 @@ export class DataTableHeaderCellComponent {
     this.sortDir = this.calcSortDir(val);
     this.cellContext.sortDir = this.sortDir;
     this.sortClass = this.calcSortClass(this.sortDir);
+    this.ariaSort = this.calcAriaSort(this.sortDir);
     this.cd.markForCheck();
   }
 
@@ -100,6 +112,7 @@ export class DataTableHeaderCellComponent {
   @Output() sort: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
   @Output() columnContextmenu = new EventEmitter<{ event: MouseEvent, column: any }>(false);
+  @Output() scroll: EventEmitter<any> = new EventEmitter();
 
   @HostBinding('class')
   get columnCssClasses(): any {
@@ -161,9 +174,11 @@ export class DataTableHeaderCellComponent {
       this.selectionType === SelectionType.checkbox;
   }
 
+  containerClass: string;
   sortFn = this.onSort.bind(this);
   sortClass: string;
   sortDir: SortDirection;
+  ariaSort: string;
   selectFn = this.select.emit.bind(this.select);
 
   cellContext: any = {
@@ -177,7 +192,7 @@ export class DataTableHeaderCellComponent {
   private _column: TableColumn;
   private _sorts: any[];
 
-  constructor(private cd: ChangeDetectorRef) { }
+  constructor(private cd: ChangeDetectorRef, public elementRef: ElementRef) { }
 
   @HostListener('contextmenu', ['$event'])
   onContextmenu($event: MouseEvent): void {
@@ -205,14 +220,83 @@ export class DataTableHeaderCellComponent {
     });
   }
 
-  calcSortClass(sortDir: SortDirection): string {
+  onKeyPress(event: KeyboardEvent): void {
+    if (event.keyCode === Keys.return || event.keyCode === Keys.space) {
+      if (this.isCheckboxable) {
+        const target = <HTMLElement>event.target;
+        const checkbox = <HTMLElement>target.getElementsByClassName('datatable-checkbox').item(0);
+        if (checkbox) {
+          (<HTMLInputElement>checkbox.children[0]).click();
+        }
+      } else {
+        this.onSort();
+      }
+    }
+  }
+
+  /**
+   * Handles focus, blur, mouseenter, and mouseleave events in header cells to
+   * show a sort expectation indicator (mainly for accessibility purposes).
+   */
+  onSortExpected(event: Event): void {
+    if (!this.column.sortable) return;
+    
+    // On focus change, ensure that we generate a scroll event if we focus header cell out of bounds.
+    if (event.type === 'focus') {
+      const offsetX: number = this.calcOffsetX();
+
+      if (offsetX !== null) {
+        this.scroll.emit({offsetX});
+      }
+    }
+
+    const sortExpected = event.type === 'focus' || event.type === 'mouseenter';
+    this.sortClass = this.calcSortClass(this.sortDir, sortExpected);
+  }
+
+  /**
+   * Calculate the (horizontal table scroll) x-offset so that a scroll output event can be generated.
+   */
+  calcOffsetX(): number {
+    const target = (<HTMLElement>event.target).parentElement;
+    let headerElement: HTMLElement = target.parentElement;
+    while (!headerElement.classList.contains('datatable-header')) {
+      headerElement = headerElement.parentElement;
+    }
+
+    const targetRect: ClientRect = target.getBoundingClientRect();
+    const targetParentRect: ClientRect = target.parentElement.getBoundingClientRect();
+    const headerRect: ClientRect = headerElement.getBoundingClientRect();
+
+    if (targetRect.left < headerRect.left || targetRect.width > headerRect.width) {
+      return targetRect.left - targetParentRect.left;
+    } else if (targetRect.right > headerRect.right) {
+      return targetRect.right - headerRect.right + this.offsetX;
+    }
+    
+    return null;
+  }
+
+  calcSortClass(sortDir: SortDirection, sortExpected: boolean = false): string {
     if (sortDir === SortDirection.asc) {
       return `sort-btn sort-asc ${this.sortAscendingIcon}`;
     } else if (sortDir === SortDirection.desc) {
       return `sort-btn sort-desc ${this.sortDescendingIcon}`;
-    } else {
-      return `sort-btn`;
+    } else if (sortExpected) {
+      return `sort-btn sort-asc sort-faint ${this.sortAscendingIcon}`;
     }
+    return `sort-btn`;
+  }
+
+  calcAriaSort(sortDir: SortDirection): string {
+    if (sortDir === SortDirection.asc) {
+      return 'ascending';
+    } else if (sortDir === SortDirection.desc) {
+      return 'descending';
+    } else if (this.column.sortable) {
+      return 'none';
+    }
+    return undefined;
   }
 
 }

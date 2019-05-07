@@ -1,9 +1,8 @@
 import {
   Component, Input, Output, ElementRef, EventEmitter, ViewChild,
   HostListener, ContentChildren, OnInit, QueryList, AfterViewInit,
-  HostBinding, ContentChild, TemplateRef, IterableDiffer,
-  DoCheck, KeyValueDiffers, KeyValueDiffer, ViewEncapsulation,
-  ChangeDetectionStrategy, ChangeDetectorRef, SkipSelf, OnDestroy
+  HostBinding, ContentChild, DoCheck, KeyValueDiffers, KeyValueDiffer,
+  ViewEncapsulation, ChangeDetectionStrategy, ChangeDetectorRef, SkipSelf
 } from '@angular/core';
 
 import {
@@ -19,7 +18,6 @@ import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
 import { DataTableHeaderComponent } from './header';
-import { MouseEvent } from '../events';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
@@ -27,7 +25,8 @@ import { BehaviorSubject, Subscription } from 'rxjs';
   template: `
     <div
       visibilityObserver
-      (visible)="recalculate()">
+      (visible)="recalculate()"
+      role="grid">
       <datatable-header
         *ngIf="headerHeight"
         [sorts]="sorts"
@@ -48,7 +47,9 @@ import { BehaviorSubject, Subscription } from 'rxjs';
         (resize)="onColumnResize($event)"
         (reorder)="onColumnReorder($event)"
         (select)="onHeaderSelect($event)"
-        (columnContextmenu)="onColumnContextmenu($event)">
+        (columnContextmenu)="onColumnContextmenu($event)"
+        (scroll)="onHeaderScroll($event)"
+        role="rowgroup">
       </datatable-header>
       <datatable-body
         [groupRowsBy]="groupRowsBy"
@@ -86,7 +87,8 @@ import { BehaviorSubject, Subscription } from 'rxjs';
         (rowContextmenu)="onRowContextmenu($event)"
         (select)="onBodySelect($event)"
         (scroll)="onBodyScroll($event)"
-        (treeAction)="onTreeAction($event)">
+        (treeAction)="onTreeAction($event)"
+        role="rowgroup">
       </datatable-body>
       <datatable-footer
         *ngIf="footerHeight"
@@ -102,7 +104,8 @@ import { BehaviorSubject, Subscription } from 'rxjs';
         [selectedCount]="selected.length"
         [selectedMessage]="!!selectionType && messages.selectedMessage"
         [pagerNextIcon]="cssClasses.pagerNext"
-        (page)="onFooterPage($event)">
+        (page)="onFooterPage($event)"
+        role="rowgroup">
       </datatable-footer>
     </div>
   `,
@@ -938,6 +941,15 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       limit: this.limit,
       offset: this.offset
     });
+  }
+
+  /**
+   * The header triggered a scroll event. Header never directly handles scroll events. Must pass it to scroller instead.
+   */
+  onHeaderScroll(event: MouseEvent): void {
+    if (this.bodyComponent) {
+      this.bodyComponent.scroller.setOffset(event.offsetX, this.bodyComponent.scroller.scrollYPos);
+    }
   }
 
   /**

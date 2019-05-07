@@ -25,7 +25,8 @@ import { MouseEvent } from '../../events';
     <div
       *ngIf="rowDetail && rowDetail.template && expanded"
       [style.height.px]="detailRowHeight"
-      class="datatable-row-detail">
+      class="datatable-row-detail"
+      role="row">
       <ng-template
         *ngIf="rowDetail && rowDetail.template"
         [ngTemplateOutlet]="rowDetail.template"

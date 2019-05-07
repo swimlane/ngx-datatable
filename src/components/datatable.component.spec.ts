@@ -1,10 +1,9 @@
-import { Component, DebugElement } from '@angular/core';
+import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import {
   DatatableComponent,
-  DataTableHeaderCellComponent,
   DataTableBodyRowComponent,
   DataTableBodyCellComponent
 } from '.';
@@ -484,9 +483,8 @@ function setupTest(componentClass) {
 function sortBy({ column }: { column: number }) {
   const columnIndex = column - 1;
   const headerCellDe = fixture.debugElement
-    .queryAll(By.css('datatable-header-cell'))[columnIndex];
-  const de = headerCellDe.query(By.css('span:last-child'));
-  de.triggerEventHandler('click', null);
+    .queryAll(By.css('.datatable-header-cell-template-wrap'))[columnIndex];
+  headerCellDe.triggerEventHandler('click', null);
 }
 
 /**

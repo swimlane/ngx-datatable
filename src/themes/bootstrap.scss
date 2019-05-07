@@ -23,6 +23,14 @@ bootstrap table theme
       &.datatable-row-even {
         background-color: rgba(0, 0, 0, 0.05);
       }
+      &:not(.active), {
+				.datatable-body-cell {
+					&:focus,
+					&:focus .datatable-row-group {
+						background-color: #dbdee0;
+					}
+				}
+			}
       &.active {
         background-color: #1483ff;
         color: #FFF;
@@ -55,7 +63,7 @@ bootstrap table theme
       vertical-align: top;
       ul {
         li {
-          margin: 10px 0px;
+          margin: 10px 3px;
           &:not(.disabled) {
             &.active,
             &:hover {

@@ -1,11 +1,11 @@
 import {
   Component, Output, EventEmitter, Input, HostBinding, ChangeDetectorRef,
-  ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy
+  ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy, ElementRef
 } from '@angular/core';
 import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '../../utils';
 import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
-import { MouseEvent } from '../../events';
+import { DataTableSelectionComponent } from './selection.component';
 
 @Component({
   selector: 'datatable-body',
@@ -36,7 +36,9 @@ import { MouseEvent } from '../../events';
           [offsetX]="offsetX"
           [innerWidth]="innerWidth"
           [rows]="rows"
-          [columns]="columns">
+          [columns]="columns"
+          (keyboardFocus)="selector.onKeyboardFocus($event)"
+          role="row">
         </datatable-summary-row>
         <datatable-row-wrapper
           [groupedRows]="groupedRows"
@@ -53,8 +55,9 @@ import { MouseEvent } from '../../events';
           (rowContextmenu)="rowContextmenu.emit($event)">
           <datatable-body-row
             *ngIf="!groupedRows; else groupedRowsTemplate"
-            tabindex="-1"
+            [selectionType]="selectionType"
             [isSelected]="selector.getRowSelected(group)"
+            [selectedCellName]="selector.selectedCellName"
             [innerWidth]="innerWidth"
             [offsetX]="offsetX"
             [columns]="columns"
@@ -66,13 +69,15 @@ import { MouseEvent } from '../../events';
             [displayCheck]="displayCheck"
             [treeStatus]="group.treeStatus"
             (treeAction)="onTreeAction(group)"
-            (activate)="selector.onActivate($event, indexes.first + i)">
+            (activate)="selector.onActivate($event, indexes.first + i)"
+            role="row">
           </datatable-body-row>
           <ng-template #groupedRowsTemplate>
             <datatable-body-row
-              *ngFor="let row of group.value; let i = index; trackBy: rowTrackingFn;"
-              tabindex="-1"
+              *ngFor="let row of group.value; let ii = index; trackBy: rowTrackingFn;"
+              [selectionType]="selectionType"
               [isSelected]="selector.getRowSelected(row)"
+              [selectedCellName]="selector.selectedCellName"
               [innerWidth]="innerWidth"
               [offsetX]="offsetX"
               [columns]="columns"
@@ -82,7 +87,8 @@ import { MouseEvent } from '../../events';
               [rowIndex]="getRowIndex(row)"
               [expanded]="getRowExpanded(row)"
               [rowClass]="rowClass"
-              (activate)="selector.onActivate($event, i)">
+              (activate)="selector.onActivate($event, ii)"
+              role="row">
             </datatable-body-row>
           </ng-template>
         </datatable-row-wrapper>
@@ -93,7 +99,9 @@ import { MouseEvent } from '../../events';
           [offsetX]="offsetX"
           [innerWidth]="innerWidth"
           [rows]="rows"
-          [columns]="columns">
+          [columns]="columns"
+          (keyboardFocus)="selector.onKeyboardFocus($event)"
+          role="row">
         </datatable-summary-row>
       </datatable-scroller>
       <div
@@ -117,12 +125,12 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() rowHeight: number | ((row?: any) => number);
   @Input() offsetX: number;
   @Input() emptyMessage: string;
-  @Input() selectionType: SelectionType;
   @Input() selected: any[] = [];
   @Input() rowIdentity: any;
   @Input() rowDetail: any;
   @Input() groupHeader: any;
   @Input() selectCheck: any;
+  @Input() selectionType: SelectionType;
   @Input() displayCheck: any;
   @Input() trackByProp: string;
   @Input() rowClass: any;
@@ -216,6 +224,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Output() treeAction: EventEmitter<any> = new EventEmitter();
 
   @ViewChild(ScrollerComponent) scroller: ScrollerComponent;
+  @ViewChild('selector') selector: DataTableSelectionComponent;
 
   /**
    * Returns if selection is enabled.
@@ -258,7 +267,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   /**
    * Creates an instance of DataTableBodyComponent.
    */
-  constructor(private cd: ChangeDetectorRef) {
+  constructor(private cd: ChangeDetectorRef, private elementRef: ElementRef) {
     // declare fn here so we can get access to the `this` property
     this.rowTrackingFn = function(this: any, index: number, row: any): any {
       const idx = this.getRowIndex(row);
@@ -328,7 +337,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       offset = 0;
     }
 
-    this.scroller.setOffset(offset || 0);
+    this.scroller.setOffset(this.scroller.scrollXPos, offset || 0);
   }
 
   /**
@@ -419,6 +428,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     }
 
     this.temp = temp;
+    this.selector.resetTabFocusIfLost();
   }
 
   /**

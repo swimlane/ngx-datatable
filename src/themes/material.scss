@@ -15,7 +15,62 @@
 			&.active,
 			&.active .datatable-row-group {
 				background-color: #304FFE;
+        .datatable-body-cell {
+					color: #FFF;
+				}
+				.datatable-body-cell:focus {
+					background-color: #2041EF;
+				}
+			}
+
+			&:not(.active), {
+				.datatable-body-cell {
+					&:focus,
+					&:focus .datatable-row-group {
+						background-color: #ddd;
+					}
+				}
+			}
+
+			&.active:hover,
+			&.active:hover .datatable-row-group {
+				background-color: #193AE4;
+        .datatable-body-cell {
+					color: #FFF;
+				}
+			}
+
+			&.active:focus,
+			&.active:focus .datatable-row-group {
+				background-color: #2041EF;
+				.datatable-body-cell {
+					color: #FFF;
+				}
+			}
+		}
+  }
+
+  &.cell-selection {
+    .datatable-body-cell {
+      &:hover,
+			&:hover .datatable-row-group {
+	      background-color: #eee;
+	      transition-property: background;
+	      transition-duration: .3s;
+	      transition-timing-function: linear;
+	    }
+
+			&.active,
+			&.active .datatable-row-group {
+				background-color: #304FFE;
         color: #FFF;
+			}
+
+			&:not(.active) {
+				&:focus,
+				&:focus .datatable-row-group {
+					background-color: #ddd;
+				}
 			}
 
 			&.active:hover,
@@ -23,16 +78,10 @@
 				background-color: #193AE4;
         color: #FFF;
 			}
-
-			&.active:focus,
-			&.active:focus .datatable-row-group {
-				background-color: #2041EF;
-        color: #FFF;
-			}
     }
-  }
+	}
 
-  &:not(.cell-selection) {
+	&:not(.cell-selection) {
     .datatable-body-row {
       &:hover,
 			&:hover .datatable-row-group {
@@ -46,43 +95,19 @@
 			&:focus .datatable-row-group {
 				background-color: #ddd;
 			}
-    }
+		}
   }
 
-  &.cell-selection {
-    .datatable-body-cell {
-      &:hover,
-			&:hover .datatable-row-group {
-	      background-color: #eee;
-	      transition-property: background;
-	      transition-duration: .3s;
-	      transition-timing-function: linear;
-	    }
-
+	&:not(.single-selection),
+  &:not(.multi-selection),
+  &:not(.multi-click-selection) {
+		.datatable-body-cell {
 			&:focus,
 			&:focus .datatable-row-group {
 				background-color: #ddd;
 			}
-
-			&.active,
-			&.active .datatable-row-group {
-				background-color: #304FFE;
-        color: #FFF;
-			}
-
-			&.active:hover,
-			&.active:hover .datatable-row-group {
-				background-color: #193AE4;
-        color: #FFF;
-			}
-
-			&.active:focus,
-			&.active:focus .datatable-row-group {
-				background-color: #2041EF;
-        color: #FFF;
-			}
-    }
-  }
+		}
+	}
 
 	/**
 	 * Shared Styles

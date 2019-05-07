@@ -4,11 +4,11 @@ import {
 } from '@angular/core';
 
 import {
-  columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, Keys
+  columnsByPin, columnGroupWidths, columnsByPinArr, translateXY, camelCase
 } from '../../utils';
 import { ScrollbarHelper } from '../../services';
-import { MouseEvent, KeyboardEvent, Event } from '../../events';
-import { TreeStatus } from '../../index';
+import { TreeStatus } from './body-cell.component';
+import { SelectionType } from '../../types/selection.type';
 
 @Component({
   selector: 'datatable-body-row',
@@ -20,17 +20,18 @@ import { TreeStatus } from '../../index';
       [ngStyle]="_groupStyles[colGroup.type]">
       <datatable-body-cell
         *ngFor="let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn"
-        tabindex="-1"
         [row]="row"
         [group]="group"
         [expanded]="expanded"
+        [isCellSelected]="isCellSelected(column.name)"
         [isSelected]="isSelected"
+        tabindex="-1"
         [rowIndex]="rowIndex"
         [column]="column"
         [rowHeight]="rowHeight"
         [displayCheck]="displayCheck"
         [treeStatus]="treeStatus"
-        (activate)="onActivate($event, ii)"
+        (activate)="onActivate($event, column.name, ii)"
         (treeAction)="onTreeAction()">
       </datatable-body-cell>
     </div>
@@ -67,7 +68,9 @@ export class DataTableBodyRowComponent implements DoCheck {
   @Input() rowClass: any;
   @Input() row: any;
   @Input() group: any;
+  @Input() selectionType: SelectionType;
   @Input() isSelected: boolean;
+  @Input() selectedCellName: string;
   @Input() rowIndex: number;
   @Input() displayCheck: any;
   @Input() treeStatus: TreeStatus = 'collapsed';
@@ -177,35 +180,15 @@ export class DataTableBodyRowComponent implements DoCheck {
     return styles;
   }
 
-  onActivate(event: any, index: number): void {
-    event.cellIndex = index;
-    event.rowElement = this._element;
-    this.activate.emit(event);
+  isCellSelected(cellName: string) {
+    return this.isSelected && camelCase(cellName) === this.selectedCellName;
   }
 
-  @HostListener('keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent): void {
-    const keyCode = event.keyCode;
-    const isTargetRow = event.target === this._element;
-
-    const isAction =
-      keyCode === Keys.return ||
-      keyCode === Keys.down ||
-      keyCode === Keys.up ||
-      keyCode === Keys.left ||
-      keyCode === Keys.right;
-
-    if (isAction && isTargetRow) {
-      event.preventDefault();
-      event.stopPropagation();
-
-      this.activate.emit({
-        type: 'keydown',
-        event,
-        row: this.row,
-        rowElement: this._element
-      });
-    }
+  onActivate(event: any, cellName: string, index: number): void {
+    event.cellIndex = index;
+    event.cellName = cellName;
+    event.rowElement = this._element;
+    this.activate.emit(event);
   }
 
   @HostListener('mouseenter', ['$event'])

@@ -36,7 +36,7 @@ import { Component } from '@angular/core';
                 <input type="checkbox" [checked]="allRowsSelected" (change)="selectFn(!allRowsSelected)"/>
               </ng-template>
               <ng-template ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
-                <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)"/>
+                <input type="checkbox" class="click" tabindex="-1" [checked]="isSelected" (change)="onCheckboxChangeFn($event)"/>
               </ng-template>
           </ngx-datatable-column>
           <ngx-datatable-column name="Name"></ngx-datatable-column>

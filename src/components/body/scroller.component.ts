@@ -1,9 +1,7 @@
 import {
-  Component, Input, ElementRef, Output, EventEmitter, Renderer2, NgZone,
+  Component, Input, ElementRef, Output, EventEmitter, Renderer2,
   OnInit, OnDestroy, HostBinding, ChangeDetectionStrategy
 } from '@angular/core';
-
-import { MouseEvent } from '../../events';
 
 @Component({
   selector: 'datatable-scroller',
@@ -36,8 +34,7 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   parentElement: any;
   onScrollListener: any;
 
-  constructor(private ngZone: NgZone, element: ElementRef, private renderer: Renderer2) {
-
+  constructor(element: ElementRef, private renderer: Renderer2) {
     this.element = element.nativeElement;
   }
 
@@ -56,8 +53,9 @@ export class ScrollerComponent implements OnInit, OnDestroy {
     }
   }
 
-  setOffset(offsetY: number): void {
+  setOffset(offsetX: number, offsetY: number): void {
     if (this.parentElement) {
+      this.parentElement.scrollLeft = offsetX;
       this.parentElement.scrollTop = offsetY;
     }
   }

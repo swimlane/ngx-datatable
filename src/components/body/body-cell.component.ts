@@ -17,14 +17,17 @@ export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="datatable-body-cell-label"
+      role="gridcell"
       [style.margin-left.px]="calcLeftMargin(column, row)">
       <label
         *ngIf="column.checkboxable && (!displayCheck || displayCheck(row, column, value))"
         class="datatable-checkbox">
         <input
           type="checkbox"
+          class="click"
           [checked]="isSelected"
           (click)="onCheckboxChange($event)"
+          tabindex="-1"
         />
       </label>
       <ng-container *ngIf="column.isTreeColumn">
@@ -85,6 +88,8 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   get rowHeight() {
     return this._rowHeight;
   }
+
+  @Input() isCellSelected: boolean;
 
   @Input() set isSelected(val: boolean) {
     this._isSelected = val;
@@ -198,7 +203,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
       }
     }
     if (!this.sortDir) cls += ' sort-active';
-    if (this.isFocused) cls += ' active';
+    if (this.isCellSelected) cls += ' active';
     if (this.sortDir === SortDirection.asc) cls += ' sort-asc';
     if (this.sortDir === SortDirection.desc) cls += ' sort-desc';
 
@@ -230,7 +235,6 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   sanitizedValue: any;
   value: any;
   sortDir: SortDirection;
-  isFocused: boolean = false;
   onCheckboxChangeFn = this.onCheckboxChange.bind(this);
   activateFn = this.activate.emit.bind(this.activate);
 
@@ -297,16 +301,6 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     }
   }
 
-  @HostListener('focus')
-  onFocus(): void {
-    this.isFocused = true;
-  }
-
-  @HostListener('blur')
-  onBlur(): void {
-    this.isFocused = false;
-  }
-
   @HostListener('click', ['$event'])
   onClick(event: MouseEvent): void {
     this.activate.emit({
@@ -361,6 +355,31 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
         value: this.value,
         cellElement: this._element
       });
+
+      if (keyCode === Keys.return) {
+        this.onReturnKeyDown(event);
+      }
+    }
+  }
+
+  /**
+   * Send mouse event down on enter in case cell is clickable/editable.
+   */
+  onReturnKeyDown(event: KeyboardEvent): void {
+    let target: HTMLElement = (<HTMLElement>event.target);
+    const clickTargets: NodeListOf<Element> = target.getElementsByClassName('click');
+    const dblClickTargets: NodeListOf<Element> = target.getElementsByClassName('dbl-click');
+    const mouseEvent: MouseEvent = document.createEvent('MouseEvents');
+
+    // See if we have any class designated click or double click targets
+    if (clickTargets && clickTargets.length > 0) {
+      target = <HTMLElement>clickTargets.item(0);
+      mouseEvent.initEvent('click', true, true);
+      target.dispatchEvent(mouseEvent);
+    } else if (dblClickTargets && dblClickTargets.length > 0) {
+      target = <HTMLElement>dblClickTargets.item(0);
+      mouseEvent.initEvent('dblclick', true, true);
+      target.dispatchEvent(mouseEvent);
     }
   }
 

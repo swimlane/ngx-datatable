@@ -4,5 +4,7 @@ export enum Keys {
   return = 13,
   escape = 27,
   left = 37,
-  right = 39
+  right = 39,
+  space = 32,
+  tab = 9
 }
