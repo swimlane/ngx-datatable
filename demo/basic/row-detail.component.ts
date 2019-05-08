@@ -27,8 +27,12 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
         [rows]='rows'
         (page)="onPage($event)">
         <!-- Row Detail Template -->
-        <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow (toggle)="onDetailToggle($event)">
-          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+        <ngx-datatable-row-detail [rowHeight]="150" #myDetailRow (toggle)="onDetailToggle($event)">
+          <ng-template let-row="row" let-rowIndex="rowIndex" let-expanded="expanded" ngx-datatable-row-detail-template>
+          <div style="padding-left:35px;">
+              <div><strong>Index</strong></div>
+              <div>{{rowIndex}}</div>
+            </div>
             <div style="padding-left:35px;">
               <div><strong>Address</strong></div>
               <div>{{row.address.city}}, {{row.address.state}}</div>
@@ -81,7 +85,7 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 
 })
 export class RowDetailsComponent {
-
+  
   @ViewChild('myTable') table: any;
 
   rows: any[] = [];
@@ -120,5 +124,5 @@ export class RowDetailsComponent {
   onDetailToggle(event) {
     console.log('Detail Toggled', event);
   }
-
+  
 }
