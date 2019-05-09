@@ -21,6 +21,7 @@ import { Component } from '@angular/core';
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="'auto'"
+        [scrollbarH]="true"
         [reorderable]="reorderable">
       </ngx-datatable>
     </div>

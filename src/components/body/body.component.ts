@@ -101,6 +101,11 @@ import { MouseEvent } from '../../events';
         *ngIf="!rows?.length && !loadingIndicator"
         [innerHTML]="emptyMessage">
       </div>
+      <div
+        class="empty-row"
+        *ngIf="!rows?.length && loadingIndicator"
+        [innerHTML]="">
+      </div>
     </datatable-selection>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
