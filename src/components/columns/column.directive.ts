@@ -9,9 +9,10 @@ import { ColumnChangesService } from '../../services/column-changes.service';
 
 @Directive({ selector: 'ngx-datatable-column' })
 export class DataTableColumnDirective implements OnChanges {
-  
+
   @Input() name: string;
   @Input() prop: TableColumnProp;
+  @Input() uid: string;
   @Input() frozenLeft: any;
   @Input() frozenRight: any;
   @Input() flexGrow: number;
@@ -45,9 +46,9 @@ export class DataTableColumnDirective implements OnChanges {
   @ContentChild(DataTableColumnCellTreeToggle, { read: TemplateRef })
   treeToggleTemplate: TemplateRef<any>;
   private isFirstChange = true;
-  
+
   constructor(private columnChangesService: ColumnChangesService) {}
-  
+
   ngOnChanges() {
     if (this.isFirstChange) {
       this.isFirstChange = false;

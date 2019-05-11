@@ -166,6 +166,14 @@ export interface TableColumn {
   prop?: TableColumnProp;
 
   /**
+   * Column uid or label
+   *
+   * @type {string}
+   * @memberOf TableColumn
+   */
+  uid?: string;
+
+  /**
    * Cell template ref
    *
    * @type {*}
