@@ -5,14 +5,14 @@
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("@angular/common"), require("@angular/core"), require("@angular/platform-browser"), require("rxjs"), require("rxjs/operators"));
+		module.exports = factory(require("@angular/common"), require("@angular/core"), require("rxjs"), require("rxjs/operators"));
 	else if(typeof define === 'function' && define.amd)
-		define("ngxDatatable", ["@angular/common", "@angular/core", "@angular/platform-browser", "rxjs", "rxjs/operators"], factory);
+		define("ngxDatatable", ["@angular/common", "@angular/core", "rxjs", "rxjs/operators"], factory);
 	else if(typeof exports === 'object')
-		exports["ngxDatatable"] = factory(require("@angular/common"), require("@angular/core"), require("@angular/platform-browser"), require("rxjs"), require("rxjs/operators"));
+		exports["ngxDatatable"] = factory(require("@angular/common"), require("@angular/core"), require("rxjs"), require("rxjs/operators"));
 	else
-		root["ngxDatatable"] = factory(root["@angular/common"], root["@angular/core"], root["@angular/platform-browser"], root["rxjs"], root["rxjs/operators"]);
-})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE__angular_common__, __WEBPACK_EXTERNAL_MODULE__angular_core__, __WEBPACK_EXTERNAL_MODULE__angular_platform_browser__, __WEBPACK_EXTERNAL_MODULE_rxjs__, __WEBPACK_EXTERNAL_MODULE_rxjs_operators__) {
+		root["ngxDatatable"] = factory(root["@angular/common"], root["@angular/core"], root["rxjs"], root["rxjs/operators"]);
+})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE__angular_common__, __WEBPACK_EXTERNAL_MODULE__angular_core__, __WEBPACK_EXTERNAL_MODULE_rxjs__, __WEBPACK_EXTERNAL_MODULE_rxjs_operators__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -1286,7 +1286,8 @@ var DataTableBodyComponent = /** @class */ (function () {
         this.rowTrackingFn = function (index, row) {
             var idx = this.getRowIndex(row);
             if (this.trackByProp) {
-                return idx + "-" + this.trackByProp;
+                return row[this.trackByProp];
+                // return `${idx}-${this.trackByProp}`;
             }
             else {
                 return idx;
@@ -5599,7 +5600,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
 var draggable_directive_1 = __webpack_require__("./src/directives/draggable.directive.ts");
-var platform_browser_1 = __webpack_require__("@angular/platform-browser");
+var common_1 = __webpack_require__("@angular/common");
 var OrderableDirective = /** @class */ (function () {
     function OrderableDirective(differs, document) {
         this.document = document;
@@ -5741,7 +5742,7 @@ var OrderableDirective = /** @class */ (function () {
     ], OrderableDirective.prototype, "draggables", void 0);
     OrderableDirective = __decorate([
         core_1.Directive({ selector: '[orderable]' }),
-        __param(1, core_1.Inject(platform_browser_1.DOCUMENT)),
+        __param(1, core_1.Inject(common_1.DOCUMENT)),
         __metadata("design:paramtypes", [core_1.KeyValueDiffers, Object])
     ], OrderableDirective);
     return OrderableDirective;
@@ -6096,7 +6097,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("@angular/core");
-var platform_browser_1 = __webpack_require__("@angular/platform-browser");
+var common_1 = __webpack_require__("@angular/common");
 /**
  * Gets the width of the scrollbar.  Nesc for windows
  * http://stackoverflow.com/a/13382873/888165
@@ -6123,7 +6124,7 @@ var ScrollbarHelper = /** @class */ (function () {
     };
     ScrollbarHelper = __decorate([
         core_1.Injectable(),
-        __param(0, core_1.Inject(platform_browser_1.DOCUMENT)),
+        __param(0, core_1.Inject(common_1.DOCUMENT)),
         __metadata("design:paramtypes", [Object])
     ], ScrollbarHelper);
     return ScrollbarHelper;
@@ -7473,13 +7474,6 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__angular_common__;
 /***/ (function(module, exports) {
 
 module.exports = __WEBPACK_EXTERNAL_MODULE__angular_core__;
-
-/***/ }),
-
-/***/ "@angular/platform-browser":
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE__angular_platform_browser__;
 
 /***/ }),
 

@@ -3,7 +3,7 @@ import {
   QueryList, KeyValueDiffers, AfterContentInit, OnDestroy, Inject
 } from '@angular/core';
 import { DraggableDirective } from './draggable.directive';
-import { DOCUMENT } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
 
 @Directive({ selector: '[orderable]' })
 export class OrderableDirective implements AfterContentInit, OnDestroy {
@@ -82,7 +82,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
   }
 
   onDragging({ element, model, event }: any): void {
-    const prevPos = this.positions[ model.prop ];    
+    const prevPos = this.positions[ model.prop ];
     const target = this.isTarget(model, event);
 
     if (target) {
@@ -93,7 +93,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
           initialIndex: prevPos.index
         });
         this.lastDraggingIndex = target.i;
-      } 
+      }
     } else if (this.lastDraggingIndex !== prevPos.index) {
       this.targetChanged.emit({
         prevIndex: this.lastDraggingIndex,

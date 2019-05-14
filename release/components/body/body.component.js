@@ -47,7 +47,8 @@ var DataTableBodyComponent = /** @class */ (function () {
         this.rowTrackingFn = function (index, row) {
             var idx = this.getRowIndex(row);
             if (this.trackByProp) {
-                return idx + "-" + this.trackByProp;
+                return row[this.trackByProp];
+                // return `${idx}-${this.trackByProp}`;
             }
             else {
                 return idx;

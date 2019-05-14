@@ -8,7 +8,6 @@ import { Keys } from '../../utils';
 import { SortDirection } from '../../types';
 import { TableColumn } from '../../types/table-column.type';
 import { MouseEvent, KeyboardEvent } from '../../events';
-import { ContentChild } from '@angular/core/src/metadata/di';
 
 export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
 
