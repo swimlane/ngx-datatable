@@ -59,7 +59,7 @@ bootstrap table theme
           &:not(.disabled) {
             &.active,
             &:hover {
-              a {
+              span {
                 background-color: #545454;
                 font-weight: bold;
               }
@@ -67,7 +67,7 @@ bootstrap table theme
           }
         }
       }
-      a {
+      span {
         height: 22px;
         min-width: 24px;
         line-height: 22px;

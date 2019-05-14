@@ -70,8 +70,8 @@
           margin: 10px 0px;
 
           &:not(.disabled) {
-            &.active a,
-            &:hover a {
+            &.active span,
+            &:hover span {
               background-color: #455066;
               font-weight: bold;
             }
@@ -79,7 +79,7 @@
         }
 			}
 
-			a {
+			span {
 				height: 22px;
 				min-width: 24px;
 				line-height: 22px;

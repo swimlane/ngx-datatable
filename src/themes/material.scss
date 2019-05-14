@@ -281,18 +281,18 @@
 			li {
 	    	vertical-align: middle;
 
-				&.disabled a {
+				&.disabled span {
 					color:rgba(0, 0, 0, 0.26) !important;
 					background-color: transparent !important;
 				}
 
-				&.active a {
+				&.active span {
 					background-color: rgba(158,158,158,0.2);
 					font-weight: bold;
 				}
 			}
 
-			a {
+			span {
 				height: 22px;
 				min-width: 24px;
 				line-height: 22px;
