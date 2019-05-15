@@ -29,6 +29,7 @@ export class DataTableSelectionComponent {
   @Input() selectCheck: any;
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
+  @Output() deactivate: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
 
   prevIndex: number;
@@ -88,6 +89,10 @@ export class DataTableSelectionComponent {
       }
     }
     this.activate.emit(model);
+  }
+
+  onDeactivate(model: Model): void {
+    this.deactivate.emit(model);
   }
 
   onKeyboardFocus(model: Model): void {

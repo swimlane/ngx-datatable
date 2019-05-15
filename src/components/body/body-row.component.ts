@@ -110,6 +110,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   }
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
+  @Output() deactivate: EventEmitter<any> = new EventEmitter();
   @Output() treeAction: EventEmitter<any> = new EventEmitter();
 
   _element: any;
@@ -183,6 +184,12 @@ export class DataTableBodyRowComponent implements DoCheck {
     this.activate.emit(event);
   }
 
+  onDeactivate(event: any, index: number): void {
+    event.cellIndex = index;
+    event.rowElement = this._element;
+    this.deactivate.emit(event);
+  }
+
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
     const keyCode = event.keyCode;
@@ -216,6 +223,15 @@ export class DataTableBodyRowComponent implements DoCheck {
         row: this.row,
         rowElement: this._element
       });
+  }
+  @HostListener('mouseleave', ['$event'])
+  onMouseleave(event: any): void {
+    this.deactivate.emit({
+      type: 'mouseleave',
+      event,
+      row: this.row,
+      rowElement: this._element
+    });
   }
 
   recalculateColumns(val: any[] = this.columns): void {

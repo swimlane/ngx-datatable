@@ -19,7 +19,8 @@ import { MouseEvent } from '../../events';
       [selectionType]="selectionType"
       [rowIdentity]="rowIdentity"
       (select)="select.emit($event)"
-      (activate)="activate.emit($event)">
+      (activate)="activate.emit($event)"
+      (deactivate)="deactivate.emit($event)">
       <datatable-progress
         *ngIf="loadingIndicator">
       </datatable-progress>
@@ -66,7 +67,8 @@ import { MouseEvent } from '../../events';
             [displayCheck]="displayCheck"
             [treeStatus]="group.treeStatus"
             (treeAction)="onTreeAction(group)"
-            (activate)="selector.onActivate($event, indexes.first + i)">
+            (activate)="selector.onActivate($event, indexes.first + i)"
+            (deactivate)="selector.onDeactivate($event, indexes.first + i)">
           </datatable-body-row>
           <ng-template #groupedRowsTemplate>
             <datatable-body-row
@@ -82,7 +84,8 @@ import { MouseEvent } from '../../events';
               [rowIndex]="getRowIndex(row)"
               [expanded]="getRowExpanded(row)"
               [rowClass]="rowClass"
-              (activate)="selector.onActivate($event, i)">
+              (activate)="selector.onActivate($event, i)"
+              (deactivate)="selector.onDeactivate($event, i)">
             </datatable-body-row>
           </ng-template>
         </datatable-row-wrapper>
@@ -210,6 +213,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Output() scroll: EventEmitter<any> = new EventEmitter();
   @Output() page: EventEmitter<any> = new EventEmitter();
   @Output() activate: EventEmitter<any> = new EventEmitter();
+  @Output() deactivate: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
   @Output() detailToggle: EventEmitter<any> = new EventEmitter();
   @Output() rowContextmenu = new EventEmitter<{ event: MouseEvent, row: any }>(false);
