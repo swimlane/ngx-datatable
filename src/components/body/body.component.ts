@@ -283,15 +283,14 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   constructor(private cd: ChangeDetectorRef) {
     // declare fn here so we can get access to the `this` property
-    this.rowTrackingFn = function(this: any, index: number, row: any): any {
+    this.rowTrackingFn = (index: number, row: any): any => {
       const idx = this.getRowIndex(row);
       if (this.trackByProp) {
         return row[this.trackByProp];
-        // return `${idx}-${this.trackByProp}`;
       } else {
         return idx;
       }
-    }.bind(this);
+    };
   }
 
   /**
