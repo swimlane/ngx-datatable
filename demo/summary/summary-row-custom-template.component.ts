@@ -4,14 +4,17 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
   selector: 'summary-row-custom-template-demo',
   template: `
     <div>
-      <h3>Summary Row with Custom Template
+      <h3>
+        Summary Row with Custom Template
         <small>
-        <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/summary/summary-row-custom-template.component.ts">
-          Source
-        </a>
+          <a
+            href="https://github.com/swimlane/ngx-datatable/blob/master/demo/summary/summary-row-custom-template.component.ts"
+          >
+            Source
+          </a>
         </small>
       </h3>
-     <ngx-datatable
+      <ngx-datatable
         class="material"
         [summaryRow]="true"
         [summaryHeight]="'auto'"
@@ -19,7 +22,8 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
         [columnMode]="'force'"
         [headerHeight]="50"
         [rowHeight]="'auto'"
-        [rows]="rows">
+        [rows]="rows"
+      >
       </ngx-datatable>
       <ng-template #nameSummaryCell let-row="row" let-value="value">
         <div class="name-container">
@@ -30,28 +34,31 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
       </ng-template>
     </div>
   `,
-  styleUrls: [ './summary-row-custom-template.component.scss' ]
+  styleUrls: ['./summary-row-custom-template.component.scss']
 })
-
 export class SummaryRowCustomTemplateComponent implements OnInit {
   rows = [];
 
-  @ViewChild('nameSummaryCell')
+  @ViewChild('nameSummaryCell', { static: false })
   nameSummaryCell: TemplateRef<any>;
 
   columns = [];
 
   constructor() {
-    this.fetch((data) => {
+    this.fetch(data => {
       this.rows = data.splice(0, 5);
     });
   }
 
   ngOnInit() {
     this.columns = [
-      { prop: 'name', summaryFunc: () => null, summaryTemplate: this.nameSummaryCell },
-      { name: 'Gender', summaryFunc: (cells) => this.summaryForGender(cells) },
-      { prop: 'age', summaryFunc: (cells) => this.avgAge(cells) },
+      {
+        prop: 'name',
+        summaryFunc: () => null,
+        summaryTemplate: this.nameSummaryCell
+      },
+      { name: 'Gender', summaryFunc: cells => this.summaryForGender(cells) },
+      { prop: 'age', summaryFunc: cells => this.avgAge(cells) }
     ];
   }
 
@@ -81,6 +88,9 @@ export class SummaryRowCustomTemplateComponent implements OnInit {
 
   private avgAge(cells: number[]): number {
     const filteredCells = cells.filter(cell => !!cell);
-    return filteredCells.reduce((sum, cell) => sum += cell, 0) / filteredCells.length;
+    return (
+      filteredCells.reduce((sum, cell) => (sum += cell), 0) /
+      filteredCells.length
+    );
   }
 }
