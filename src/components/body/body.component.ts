@@ -238,7 +238,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   );
   @Output() treeAction: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild(ScrollerComponent, { static: false }) scroller: ScrollerComponent;
+  @ViewChild(ScrollerComponent, { static: true }) scroller: ScrollerComponent;
 
   /**
    * Returns if selection is enabled.

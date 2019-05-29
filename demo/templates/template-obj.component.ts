@@ -46,8 +46,8 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
   `
 })
 export class TemplateRefTemplatesComponent {
-  @ViewChild('editTmpl', { static: false }) editTmpl: TemplateRef<any>;
-  @ViewChild('hdrTpl', { static: false }) hdrTpl: TemplateRef<any>;
+  @ViewChild('editTmpl', { static: true }) editTmpl: TemplateRef<any>;
+  @ViewChild('hdrTpl', { static: true }) hdrTpl: TemplateRef<any>;
 
   rows = [];
   columns = [];

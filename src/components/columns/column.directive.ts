@@ -40,21 +40,21 @@ export class DataTableColumnDirective implements OnChanges {
   @Input()
   @ContentChild(DataTableColumnCellDirective, {
     read: TemplateRef,
-    static: false
+    static: true
   })
   cellTemplate: TemplateRef<any>;
 
   @Input()
   @ContentChild(DataTableColumnHeaderDirective, {
     read: TemplateRef,
-    static: false
+    static: true
   })
   headerTemplate: TemplateRef<any>;
 
   @Input()
   @ContentChild(DataTableColumnCellTreeToggle, {
     read: TemplateRef,
-    static: false
+    static: true
   })
   treeToggleTemplate: TemplateRef<any>;
   private isFirstChange = true;
