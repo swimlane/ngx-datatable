@@ -640,26 +640,26 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   /**
    * Row Detail templates gathered from the ContentChild
    */
-  @ContentChild(DatatableRowDetailDirective, { static: true })
+  @ContentChild(DatatableRowDetailDirective, { static: false })
   rowDetail: DatatableRowDetailDirective;
 
   /**
    * Group Header templates gathered from the ContentChild
    */
-  @ContentChild(DatatableGroupHeaderDirective, { static: true })
+  @ContentChild(DatatableGroupHeaderDirective, { static: false })
   groupHeader: DatatableGroupHeaderDirective;
 
   /**
    * Footer template gathered from the ContentChild
    */
-  @ContentChild(DatatableFooterDirective, { static: true })
+  @ContentChild(DatatableFooterDirective, { static: false })
   footer: DatatableFooterDirective;
 
   /**
    * Reference to the body component for manually
    * invoking functions on the body.
    */
-  @ViewChild(DataTableBodyComponent, { static: true })
+  @ViewChild(DataTableBodyComponent, { static: false })
   bodyComponent: DataTableBodyComponent;
 
   /**
@@ -670,7 +670,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * @type {DataTableHeaderComponent}
    * @memberOf DatatableComponent
    */
-  @ViewChild(DataTableHeaderComponent, { static: true })
+  @ViewChild(DataTableHeaderComponent, { static: false })
   headerComponent: DataTableHeaderComponent;
 
   /**
