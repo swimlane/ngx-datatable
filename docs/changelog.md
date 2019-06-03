@@ -1,5 +1,9 @@
 # Changelog
 
+## 15.0.1
+
+- Fix: Fixes issue where using conditional templates would not render them (#1701)
+
 ## 15.0.0
 
 - Breaking: Upgrade to angular 8 (#1697)

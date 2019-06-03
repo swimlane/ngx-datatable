@@ -1186,23 +1186,23 @@ var DatatableComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [core_1.QueryList])
     ], DatatableComponent.prototype, "columnTemplates", null);
     __decorate([
-        core_1.ContentChild(row_detail_1.DatatableRowDetailDirective, { static: true }),
+        core_1.ContentChild(row_detail_1.DatatableRowDetailDirective, { static: false }),
         __metadata("design:type", row_detail_1.DatatableRowDetailDirective)
     ], DatatableComponent.prototype, "rowDetail", void 0);
     __decorate([
-        core_1.ContentChild(body_group_header_directive_1.DatatableGroupHeaderDirective, { static: true }),
+        core_1.ContentChild(body_group_header_directive_1.DatatableGroupHeaderDirective, { static: false }),
         __metadata("design:type", body_group_header_directive_1.DatatableGroupHeaderDirective)
     ], DatatableComponent.prototype, "groupHeader", void 0);
     __decorate([
-        core_1.ContentChild(footer_1.DatatableFooterDirective, { static: true }),
+        core_1.ContentChild(footer_1.DatatableFooterDirective, { static: false }),
         __metadata("design:type", footer_1.DatatableFooterDirective)
     ], DatatableComponent.prototype, "footer", void 0);
     __decorate([
-        core_1.ViewChild(body_1.DataTableBodyComponent, { static: true }),
+        core_1.ViewChild(body_1.DataTableBodyComponent, { static: false }),
         __metadata("design:type", body_1.DataTableBodyComponent)
     ], DatatableComponent.prototype, "bodyComponent", void 0);
     __decorate([
-        core_1.ViewChild(header_1.DataTableHeaderComponent, { static: true }),
+        core_1.ViewChild(header_1.DataTableHeaderComponent, { static: false }),
         __metadata("design:type", header_1.DataTableHeaderComponent)
     ], DatatableComponent.prototype, "headerComponent", void 0);
     __decorate([
