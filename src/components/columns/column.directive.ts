@@ -1,15 +1,19 @@
-import { Directive, TemplateRef, ContentChild, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Directive,
+  TemplateRef,
+  ContentChild,
+  Input,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
 import { DataTableColumnHeaderDirective } from './column-header.directive';
 import { DataTableColumnCellDirective } from './column-cell.directive';
-import {
-  DataTableColumnCellTreeToggle
-} from './tree.directive';
+import { DataTableColumnCellTreeToggle } from './tree.directive';
 import { TableColumnProp } from '../../types';
 import { ColumnChangesService } from '../../services/column-changes.service';
 
 @Directive({ selector: 'ngx-datatable-column' })
 export class DataTableColumnDirective implements OnChanges {
-  
   @Input() name: string;
   @Input() prop: TableColumnProp;
   @Input() frozenLeft: any;
@@ -26,8 +30,8 @@ export class DataTableColumnDirective implements OnChanges {
   @Input() maxWidth: number;
   @Input() checkboxable: boolean;
   @Input() headerCheckboxable: boolean;
-  @Input() headerClass: string | ((data: any) => string|any);
-  @Input() cellClass: string | ((data: any) => string|any);
+  @Input() headerClass: string | ((data: any) => string | any);
+  @Input() cellClass: string | ((data: any) => string | any);
   @Input() isTreeColumn: boolean;
   @Input() treeLevelIndent: number;
   @Input() summaryFunc: (cells: any[]) => any;
@@ -36,7 +40,7 @@ export class DataTableColumnDirective implements OnChanges {
   @Input('cellTemplate')
   _cellTemplateInput: TemplateRef<any>;
 
-  @ContentChild(DataTableColumnCellDirective, { read: TemplateRef })
+  @ContentChild(DataTableColumnCellDirective, { read: TemplateRef, static: true })
   _cellTemplateQuery: TemplateRef<any>;
 
   get cellTemplate(): TemplateRef<any> {
@@ -46,7 +50,7 @@ export class DataTableColumnDirective implements OnChanges {
   @Input('headerTemplate')
   _headerTemplateInput: TemplateRef<any>;
 
-  @ContentChild(DataTableColumnHeaderDirective, { read: TemplateRef })
+  @ContentChild(DataTableColumnHeaderDirective, { read: TemplateRef, static: true })
   _headerTemplateQuery: TemplateRef<any>;
 
   get headerTemplate(): TemplateRef<any> {
@@ -56,7 +60,7 @@ export class DataTableColumnDirective implements OnChanges {
   @Input('treeToggleTemplate')
   _treeToggleTemplateInput: TemplateRef<any>;
 
-  @ContentChild(DataTableColumnCellTreeToggle, { read: TemplateRef })
+  @ContentChild(DataTableColumnCellTreeToggle, { read: TemplateRef, static: true })
   _treeToggleTemplateQuery: TemplateRef<any>;
 
   get treeToggleTemplate(): TemplateRef<any> {
@@ -64,9 +68,9 @@ export class DataTableColumnDirective implements OnChanges {
   }
 
   private isFirstChange = true;
-  
+
   constructor(private columnChangesService: ColumnChangesService) {}
-  
+
   ngOnChanges() {
     if (this.isFirstChange) {
       this.isFirstChange = false;

@@ -1,18 +1,24 @@
-import { Input, Output, EventEmitter, Directive, TemplateRef, ContentChild } from '@angular/core';
+import {
+  Input,
+  Output,
+  EventEmitter,
+  Directive,
+  TemplateRef,
+  ContentChild
+} from '@angular/core';
 import { DatatableGroupHeaderTemplateDirective } from './body-group-header-template.directive';
 
 @Directive({ selector: 'ngx-datatable-group-header' })
 export class DatatableGroupHeaderDirective {
-
   /**
    * Row height is required when virtual scroll is enabled.
    */
-  @Input() rowHeight: (number | ((group?: any, index?: number) => number)) = 0;
+  @Input() rowHeight: number | ((group?: any, index?: number) => number) = 0;
 
   @Input('template')
   _templateInput: TemplateRef<any>;
 
-  @ContentChild(DatatableGroupHeaderTemplateDirective, { read: TemplateRef })
+  @ContentChild(DatatableGroupHeaderTemplateDirective, { read: TemplateRef, static: true })
   _templateQuery: TemplateRef<any>;
 
   get template(): TemplateRef<any> {
@@ -53,5 +59,4 @@ export class DatatableGroupHeaderDirective {
       value: false
     });
   }
-
 }
