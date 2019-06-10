@@ -15,12 +15,15 @@ export class DatatableGroupHeaderDirective {
    */
   @Input() rowHeight: number | ((group?: any, index?: number) => number) = 0;
 
-  @Input()
-  @ContentChild(DatatableGroupHeaderTemplateDirective, {
-    read: TemplateRef,
-    static: true
-  })
-  template: TemplateRef<any>;
+  @Input('template')
+  _templateInput: TemplateRef<any>;
+
+  @ContentChild(DatatableGroupHeaderTemplateDirective, { read: TemplateRef, static: true })
+  _templateQuery: TemplateRef<any>;
+
+  get template(): TemplateRef<any> {
+    return this._templateInput || this._templateQuery;
+  }
 
   /**
    * Track toggling of group visibility
