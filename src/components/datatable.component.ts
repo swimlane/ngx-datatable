@@ -3,7 +3,7 @@ import {
   HostListener, ContentChildren, OnInit, QueryList, AfterViewInit,
   HostBinding, ContentChild, TemplateRef, IterableDiffer,
   DoCheck, KeyValueDiffers, KeyValueDiffer, ViewEncapsulation,
-  ChangeDetectionStrategy, ChangeDetectorRef, SkipSelf, OnDestroy
+  ChangeDetectionStrategy, ChangeDetectorRef, SkipSelf, OnDestroy, Optional, Inject
 } from '@angular/core';
 
 import {
@@ -21,6 +21,7 @@ import { DatatableFooterDirective } from './footer';
 import { DataTableHeaderComponent } from './header';
 import { MouseEvent } from '../events';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import {INgxDatatableConfig} from "../datatable.module";
 
 @Component({
   selector: 'ngx-datatable',
@@ -714,11 +715,17 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     private cd: ChangeDetectorRef,
     element: ElementRef,
     differs: KeyValueDiffers,
-    private columnChangesService: ColumnChangesService) {
+    private columnChangesService: ColumnChangesService,
+    @Optional() @Inject('configuration') private configuration: INgxDatatableConfig) {
 
     // get ref to elm for measuring
     this.element = element.nativeElement;
     this.rowDiffer = differs.find({}).create();
+
+    // apply global settings from Module.forRoot
+    if (this.configuration && this.configuration.messages) {
+      this.messages = {...this.configuration.messages};
+    }
   }
 
   /**
