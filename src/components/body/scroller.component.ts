@@ -36,6 +36,8 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   parentElement: any;
   onScrollListener: any;
 
+  private _scrollEventListener: any = null;
+  
   constructor(private ngZone: NgZone, element: ElementRef, private renderer: Renderer2) {
 
     this.element = element.nativeElement;
@@ -46,13 +48,15 @@ export class ScrollerComponent implements OnInit, OnDestroy {
     if (this.scrollbarV || this.scrollbarH) {
       const renderer = this.renderer;
       this.parentElement = renderer.parentNode(renderer.parentNode(this.element));
-      this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
+      this._scrollEventListener = this.onScrolled.bind(this);
+      this.parentElement.addEventListener('scroll', this._scrollEventListener);
     }
   }
 
   ngOnDestroy(): void {
-    if (this.scrollbarV || this.scrollbarH) {
-      this.parentElement.removeEventListener('scroll', this.onScrolled.bind(this));
+    if (this._scrollEventListener) {
+      this.parentElement.removeEventListener('scroll', this._scrollEventListener);
+      this._scrollEventListener = null;
     }
   }
 
