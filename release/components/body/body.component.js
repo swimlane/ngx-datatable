@@ -743,7 +743,7 @@ var DataTableBodyComponent = /** @class */ (function () {
         __metadata("design:type", core_1.EventEmitter)
     ], DataTableBodyComponent.prototype, "treeAction", void 0);
     __decorate([
-        core_1.ViewChild(scroller_component_1.ScrollerComponent, { static: true }),
+        core_1.ViewChild(scroller_component_1.ScrollerComponent, { static: false }),
         __metadata("design:type", scroller_component_1.ScrollerComponent)
     ], DataTableBodyComponent.prototype, "scroller", void 0);
     DataTableBodyComponent = __decorate([

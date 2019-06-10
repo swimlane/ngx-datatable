@@ -1,6 +1,6 @@
 /**
- * angular2-data-table v"15.0.1" (https://github.com/swimlane/angular2-data-table)
- * Copyright 2016
+ * ngx-datatable v"15.0.2" (https://github.com/swimlane/ngx-datatable)
+ * Copyright 2019
  * Licensed under MIT
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1986,7 +1986,7 @@ var DataTableBodyComponent = /** @class */ (function () {
         __metadata("design:type", core_1.EventEmitter)
     ], DataTableBodyComponent.prototype, "treeAction", void 0);
     __decorate([
-        core_1.ViewChild(scroller_component_1.ScrollerComponent, { static: true }),
+        core_1.ViewChild(scroller_component_1.ScrollerComponent, { static: false }),
         __metadata("design:type", scroller_component_1.ScrollerComponent)
     ], DataTableBodyComponent.prototype, "scroller", void 0);
     DataTableBodyComponent = __decorate([

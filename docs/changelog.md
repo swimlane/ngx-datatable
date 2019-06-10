@@ -1,5 +1,9 @@
 # Changelog
 
+## 15.0.2
+
+- Fix: Fixes issue where footer pagination does not work when virtual scrolling is enabled (#1704)
+
 ## 15.0.1
 
 - Fix: Fixes issue where using conditional templates would not render them (#1701)
