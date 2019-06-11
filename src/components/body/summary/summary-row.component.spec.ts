@@ -149,7 +149,9 @@ describe('DataTableSummaryRowComponent', () => {
     });
 
     describe('Pipe', () => {
-      it('should use provided pipe', () => {
+      // NOTE: body cell is responsible for applying the pipe
+      it('should not use provided pipe', () => {
+        const sum1 = 11;
         const transformed = '$22';
         const transformSpy = jasmine.createSpy('transform').and.returnValue(transformed);
 
@@ -157,7 +159,7 @@ describe('DataTableSummaryRowComponent', () => {
         triggerChange();
 
         expect(transformSpy.calls.any()).toBeTruthy();
-        expect(component.summaryRow['col1']).toEqual(transformed);
+        expect(component.summaryRow['col1']).toEqual(sum1);
       });
     });
   });

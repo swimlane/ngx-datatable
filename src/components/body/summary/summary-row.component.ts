@@ -77,9 +77,7 @@ export class DataTableSummaryRowComponent implements OnChanges {
       const cellsFromSingleColumn = this.rows.map(row => row[col.prop]);
       const sumFunc = this.getSummaryFunction(col);
 
-      this.summaryRow[col.prop] = col.pipe ?
-        col.pipe.transform(sumFunc(cellsFromSingleColumn)) :
-        sumFunc(cellsFromSingleColumn);
+      this.summaryRow[col.prop] = sumFunc(cellsFromSingleColumn);
     });
   }
 
