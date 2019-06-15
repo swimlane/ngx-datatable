@@ -758,7 +758,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       this.recalculate();
 
       // emit page for virtual server-side kickoff
-      if (this.externalPaging && this.scrollbarV) {
+      if (this.externalPaging && this.scrollbarV && this.virtualization) {
         this.page.emit({
           count: this.count,
           pageSize: this.pageSize,
