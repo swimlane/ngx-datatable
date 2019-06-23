@@ -705,6 +705,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   _groupRowsBy: string;
   _internalRows: any[];
   _internalColumns: TableColumn[];
+  _allColumns: TableColumn[];
   _columns: TableColumn[];
   _columnTemplates: QueryList<DataTableColumnDirective>;
   _subscriptions: Subscription[] = [];
@@ -788,6 +789,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       const arr = val.toArray();
       if (arr.length) {
         this._internalColumns = translateTemplates(arr);
+        this._allColumns = [...this._internalColumns];
         setColumnDefaults(this._internalColumns);
         this.recalculateColumns();
         this.sortInternalRows();
