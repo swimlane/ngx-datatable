@@ -151,7 +151,9 @@ export function forceFillColumnWidths(
 function removeProcessedColumns(columnsToResize: any[], columnsProcessed: any[]) {
   for(const column of columnsProcessed) {
     const index = columnsToResize.indexOf(column);
-    columnsToResize.splice(index, 1);
+    if (index !== -1) {
+      columnsToResize.splice(index, 1);
+    }
   }
 }
 
