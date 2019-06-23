@@ -62,7 +62,7 @@ export class RowHeightCache {
 
       // Add the detail row height to the already expanded rows.
       // This is useful for the table that goes through a filter or sort.
-      const expanded = rowExpansions.get(row);
+      const expanded = rowExpansions.get(row.key);
       if(row && expanded === 1) {
         if(isDetailFn) {
           const index = rowIndexes.get(row);

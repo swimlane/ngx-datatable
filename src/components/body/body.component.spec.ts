@@ -112,4 +112,210 @@ describe('DataTableBodyComponent', () => {
       expect(styles).toBeDefined();
     });
   });
+
+  describe('Row grouping', () => {
+
+    var groupExpansionDefaultTestCases = [
+      { value: true },
+      { value: false }
+    ];
+
+    groupExpansionDefaultTestCases.forEach(function(testCase: any) {
+      it('should apply default group expansion to all groups when default is ' + testCase.value.toString(), () => {
+        let rows = [
+          {
+            key: '20', value: [
+              {age: '20', name: 'name1'},
+              {age: '20', name: 'name2'},
+            ]
+          },
+          {
+            key: '30', value: [
+              {age: '30', name: 'name3'},
+              {age: '30', name: 'name4'},
+              {age: '30', name: 'name5'},
+            ],
+          },
+          {
+            key: '40', value: [
+              {age: '40', name: 'name6'},
+            ],
+          }
+        ];
+
+        component.groupExpansionDefault =  testCase.value;
+        component.rows = rows;
+        rows.forEach(function(row) {
+          let expanded = component.getRowExpanded(row);
+          expect(expanded).toBe(testCase.value);
+        });
+      });
+    });
+
+    groupExpansionDefaultTestCases.forEach(function(testCase: any) {
+      it('should apply default group expansion to all newly added groups when default expansion is ' + testCase.value.toString(), () => {
+        let rows = [
+          {
+            key: '20', value: [
+              {age: '20', name: 'name1'},
+              {age: '20', name: 'name2'},
+            ]
+          },
+          {
+            key: '30', value: [
+              {age: '30', name: 'name3'},
+              {age: '30', name: 'name4'},
+              {age: '30', name: 'name5'},
+            ],
+          },
+          {
+            key: '40', value: [
+              {age: '40', name: 'name6'},
+            ],
+          }
+        ];
+
+        component.groupExpansionDefault =  testCase.value;
+        component.rows = rows;
+
+        let updatedRows = [
+          {
+            key: '20', value: [
+              {age: '20', name: 'name1'},
+              {age: '20', name: 'name2'},
+              {age: '20', name: 'name7'},
+            ]
+          },
+          {
+            key: '30', value: [
+              {age: '30', name: 'name3'},
+              {age: '30', name: 'name4'},
+            ],
+          },
+          {
+            key: '50', value: [
+              {age: '50', name: 'name8'},
+            ],
+          }
+        ];
+
+        updatedRows.forEach(function(row) {
+          let expanded = component.getRowExpanded(row);
+          expect(expanded).toBe(testCase.value);
+        });
+      });
+    });
+
+    groupExpansionDefaultTestCases.forEach(function(testCase: any) {
+      it('should toggle group expansion state when requested when default expansion is ' + testCase.value.toString(), () => {
+        let rows = [
+          {
+            key: '20', value: [
+              {age: '20', name: 'name1'},
+              {age: '20', name: 'name2'},
+            ]
+          },
+          {
+            key: '30', value: [
+              {age: '30', name: 'name3'},
+              {age: '30', name: 'name4'},
+              {age: '30', name: 'name5'},
+            ],
+          },
+          {
+            key: '40', value: [
+              {age: '40', name: 'name6'},
+            ],
+          }
+        ];
+
+        component.groupExpansionDefault =  testCase.value;
+        component.rows = rows;
+
+        // Toggle away from default.
+        rows.forEach(function(row) {
+          var expanded = component.getRowExpanded(row);
+          component.toggleRowExpansion(row);
+          expanded = component.getRowExpanded(row);
+          expect(expanded).toBe(!testCase.value);
+        });
+
+        // Toggle back to default.
+        rows.forEach(function(row) {
+          var expanded = component.getRowExpanded(row);
+          component.toggleRowExpansion(row);
+          expanded = component.getRowExpanded(row);
+          expect(expanded).toBe(testCase.value);
+        });
+      });
+    });
+
+    groupExpansionDefaultTestCases.forEach(function(testCase: any) {
+      it('should preserve group expansion state when rows change when default expansion is ' + testCase.value.toString(), () => {
+        let rows = [
+          {
+            key: '20', value: [
+              {age: '20', name: 'name1'},
+              {age: '20', name: 'name2'},
+            ]
+          },
+          {
+            key: '30', value: [
+              {age: '30', name: 'name3'},
+              {age: '30', name: 'name4'},
+              {age: '30', name: 'name5'},
+            ],
+          },
+          {
+            key: '40', value: [
+              {age: '40', name: 'name6'},
+            ],
+          }
+        ];
+
+        component.groupExpansionDefault =  testCase.value;
+        component.rows = rows;
+
+        // Toggle a row
+        var expanded = component.getRowExpanded(rows[1]);
+        component.toggleRowExpansion(rows[1]);
+
+        // Update data
+        let updatedRows = [
+          {
+            key: '20', value: [
+              {age: '20', name: 'name1'},
+              {age: '20', name: 'name2'},
+              {age: '20', name: 'name7'},
+            ]
+          },
+          {
+            key: '30', value: [
+              {age: '30', name: 'name3'},
+              {age: '30', name: 'name4'},
+            ],
+          },
+          {
+            key: '50', value: [
+              {age: '50', name: 'name8'},
+            ],
+          }
+        ];
+
+        component.rows = updatedRows;
+
+        // First row should remain at default expansion value
+        expanded = component.getRowExpanded(rows[0]);
+        expect(expanded).toBe(testCase.value);
+
+        // Toggled row should remain at toggled expansion value
+        expanded = component.getRowExpanded(rows[1]);
+        expect(expanded).toBe(!testCase.value);
+
+        // Newly added row should be at default expansion value
+        expanded = component.getRowExpanded(rows[2]);
+        expect(expanded).toBe(testCase.value);
+      });
+    });
+  });
 });
