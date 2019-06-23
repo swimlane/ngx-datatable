@@ -150,8 +150,9 @@ nav {
   top:0;
   left:0;
   width: 200px;
-  position: absolute;
-  min-height: 1900px;
+  position: fixed;
+  height: 100vh;
+  overflow-y: scroll;
   font-size:14px;
   box-shadow: 0 7px 8px -4px rgba(0,0,0,.2),0 13px 19px 2px rgba(0,0,0,.14),0 5px 24px 4px rgba(0,0,0,.12);
 }
