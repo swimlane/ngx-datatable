@@ -151,7 +151,7 @@ nav {
   left:0;
   width: 200px;
   position: absolute;
-  min-height: 1900px;
+  height: 100vh;
   font-size:14px;
   box-shadow: 0 7px 8px -4px rgba(0,0,0,.2),0 13px 19px 2px rgba(0,0,0,.14),0 5px 24px 4px rgba(0,0,0,.12);
 }
@@ -166,7 +166,7 @@ nav li {
 
 nav h3 {
   font-size: 14px;
-  margin:0 0 10px 0;
+  margin:0 0 0 0;
 }
 
 nav h4 {
@@ -179,10 +179,10 @@ nav h4 a {
 
 content {
   margin-left: 200px;
-  min-height: 100vh;
+  height: 100vh;
   display:block;
   position: relative;
-  padding-bottom: 20px;
+  overflow: auto;
 }
 
 content h3 {
@@ -192,6 +192,8 @@ content h3 {
 .main-ul {
   margin-left: 15px !important;
   display: block;
+  height: calc(100vh - 52px);
+  overflow: auto;
 }
 
 .github-button-wrap {
