@@ -1,7 +1,19 @@
 import {
-  Component, Input, PipeTransform, HostBinding, ViewChild, ChangeDetectorRef,
-  Output, EventEmitter, HostListener, ElementRef, ViewContainerRef, OnDestroy, DoCheck,
-  ChangeDetectionStrategy, Renderer2
+  Component,
+  Input,
+  PipeTransform,
+  HostBinding,
+  ViewChild,
+  ChangeDetectorRef,
+  Output,
+  EventEmitter,
+  HostListener,
+  ElementRef,
+  ViewContainerRef,
+  OnDestroy,
+  DoCheck,
+  ChangeDetectionStrategy,
+  Renderer2
 } from '@angular/core';
 
 import { Keys } from '../../utils';
@@ -11,17 +23,24 @@ import { MouseEvent, KeyboardEvent, Event } from '../../events';
 import { ContentChild } from '@angular/core/src/metadata/di';
 import { ActivateHelperService } from '../../services';
 
+
 export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
 
 @Component({
   selector: 'datatable-body-cell',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="datatable-body-cell-label"
-      [style.margin-left.px]="calcLeftMargin(column, row)">
+    <div
+      class="datatable-body-cell-label"
+      [style.margin-left.px]="calcLeftMargin(column, row)"
+    >
       <label
-        *ngIf="column.checkboxable && (!displayCheck || displayCheck(row, column, value))"
-        class="datatable-checkbox">
+        *ngIf="
+          column.checkboxable &&
+          (!displayCheck || displayCheck(row, column, value))
+        "
+        class="datatable-checkbox"
+      >
         <input
           type="checkbox"
           [checked]="isSelected"
@@ -29,41 +48,57 @@ export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
         />
       </label>
       <ng-container *ngIf="column.isTreeColumn">
-        <button *ngIf="!column.treeToggleTemplate"
+        <button
+          *ngIf="!column.treeToggleTemplate"
           class="datatable-tree-button"
-          [disabled]="treeStatus==='disabled'"
-          (click)="onTreeAction()">
+          [disabled]="treeStatus === 'disabled'"
+          (click)="onTreeAction()"
+        >
           <span>
-            <i *ngIf="treeStatus==='loading'"
-              class="icon datatable-icon-collapse"></i>
-            <i *ngIf="treeStatus==='collapsed'"
-              class="icon datatable-icon-up"></i>
-            <i *ngIf="treeStatus==='expanded' ||
-                      treeStatus==='disabled'"
-              class="icon datatable-icon-down"></i>
+            <i
+              *ngIf="treeStatus === 'loading'"
+              class="icon datatable-icon-collapse"
+            ></i>
+            <i
+              *ngIf="treeStatus === 'collapsed'"
+              class="icon datatable-icon-up"
+            ></i>
+            <i
+              *ngIf="treeStatus === 'expanded' || treeStatus === 'disabled'"
+              class="icon datatable-icon-down"
+            ></i>
           </span>
         </button>
-        <ng-template *ngIf="column.treeToggleTemplate"
+        <ng-template
+          *ngIf="column.treeToggleTemplate"
           [ngTemplateOutlet]="column.treeToggleTemplate"
-          [ngTemplateOutletContext]="{ cellContext: cellContext }">
+          [ngTemplateOutletContext]="{ cellContext: cellContext }"
+        >
         </ng-template>
       </ng-container>
 
       <span
         *ngIf="!column.cellTemplate"
         [title]="sanitizedValue"
-        [innerHTML]="value">
+        [innerHTML]="value"
+      >
       </span>
-      <ng-template #cellTemplate
+      <ng-template
+        #cellTemplate
         *ngIf="column.cellTemplate"
         [ngTemplateOutlet]="column.cellTemplate"
-        [ngTemplateOutletContext]="cellContext">
+        [ngTemplateOutletContext]="cellContext"
+      >
       </ng-template>
     </div>
   `
 })
 export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
-  @Input() displayCheck: (row: any, column?: TableColumn, value?: any) => boolean;
+  @Input() displayCheck: (
+    row: any,
+    column?: TableColumn,
+    value?: any
+  ) => boolean;
 
   @Input() set group(group: any) {
     this._group = group;
@@ -150,10 +185,12 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   }
 
   @Input() set treeStatus(status: TreeStatus) {
-    if (status !== 'collapsed' &&
-        status !== 'expanded' &&
-        status !== 'loading' &&
-        status !== 'disabled') {
+    if (
+      status !== 'collapsed' &&
+      status !== 'expanded' &&
+      status !== 'loading' &&
+      status !== 'disabled'
+    ) {
       this._treeStatus = 'collapsed';
     } else {
       this._treeStatus = status;
@@ -171,7 +208,8 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
 
   @Output() treeAction: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild('cellTemplate', { read: ViewContainerRef }) cellTemplate: ViewContainerRef;
+  @ViewChild('cellTemplate', { read: ViewContainerRef, static: true })
+  cellTemplate: ViewContainerRef;
 
   @HostBinding('class')
   get columnCssClasses(): any {
@@ -179,12 +217,12 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     if (this.column.cellClass) {
       if (typeof this.column.cellClass === 'string') {
         cls += ' ' + this.column.cellClass;
-      } else if(typeof this.column.cellClass === 'function') {
+      } else if (typeof this.column.cellClass === 'function') {
         const res = this.column.cellClass({
           row: this.row,
           group: this.group,
           column: this.column,
-          value: this.value ,
+          value: this.value,
           rowHeight: this.rowHeight
         });
 
@@ -246,7 +284,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     isSelected: this.isSelected,
     rowIndex: this.rowIndex,
     treeStatus: this.treeStatus,
-    onTreeAction: this.onTreeAction.bind(this),
+    onTreeAction: this.onTreeAction.bind(this)
   };
 
   private _isSelected: boolean;
@@ -297,10 +335,11 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
       }
     }
 
-    if(this.value !== value) {
+    if (this.value !== value) {
       this.value = value;
       this.cellContext.value = value;
-      this.sanitizedValue = value !== null && value !== undefined ? this.stripHtml(value) : value;
+      this.sanitizedValue =
+        value !== null && value !== undefined ? this.stripHtml(value) : value;
       this.cd.markForCheck();
     }
   }
@@ -344,16 +383,17 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   }
 
   stripHtml(html: string): string {
-    if(!html.replace) return html;
+    if (!html.replace) return html;
     return html.replace(/<\/?[^>]+(>|$)/g, '');
   }
 
-  onTreeAction(row: any) {
-    this.treeAction.emit();
+  onTreeAction() {
+    this.treeAction.emit(this.row);
   }
 
   calcLeftMargin(column: any, row: any) {
-    const levelIndent = column.treeLevelIndent != null ? column.treeLevelIndent : 50;
+    const levelIndent =
+      column.treeLevelIndent != null ? column.treeLevelIndent : 50;
     return column.isTreeColumn ? row.level * levelIndent : 0;
   }
 
@@ -403,5 +443,4 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
       }));
     }
   }
-
 }

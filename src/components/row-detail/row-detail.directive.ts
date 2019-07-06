@@ -1,18 +1,30 @@
-import { Input, Output, EventEmitter, Directive, TemplateRef, ContentChild } from '@angular/core';
+import {
+  Input,
+  Output,
+  EventEmitter,
+  Directive,
+  TemplateRef,
+  ContentChild
+} from '@angular/core';
 import { DatatableRowDetailTemplateDirective } from './row-detail-template.directive';
 
 @Directive({ selector: 'ngx-datatable-row-detail' })
 export class DatatableRowDetailDirective {
-
   /**
-   * The detail row height is required especially 
+   * The detail row height is required especially
    * when virtual scroll is enabled.
    */
-  @Input() rowHeight: (number | ((row?: any, index?: number) => number)) = 0;
+  @Input() rowHeight: number | ((row?: any, index?: number) => number) = 0;
 
-  @Input()
-  @ContentChild(DatatableRowDetailTemplateDirective, { read: TemplateRef }) 
-  template: TemplateRef<any>;
+  @Input('template')
+  _templateInput: TemplateRef<any>;
+
+  @ContentChild(DatatableRowDetailTemplateDirective, { read: TemplateRef, static: true })
+  _templateQuery: TemplateRef<any>;
+
+  get template(): TemplateRef<any> {
+    return this._templateInput || this._templateQuery;
+  }
 
   /**
    * Row detail row visbility was toggled.
@@ -48,5 +60,4 @@ export class DatatableRowDetailDirective {
       value: false
     });
   }
-
 }

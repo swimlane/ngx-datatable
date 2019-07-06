@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import {
@@ -95,4 +95,29 @@ import {
     DatatableGroupHeaderTemplateDirective
   ]
 })
-export class NgxDatatableModule { }
+export class NgxDatatableModule {
+
+  /**
+   * Configure global configuration via INgxDatatableConfig
+   * @param configuration
+   */
+  static forRoot(configuration: INgxDatatableConfig): ModuleWithProviders {
+    return {
+      ngModule: NgxDatatableModule,
+      providers: [
+        {provide: 'configuration', useValue: configuration },
+      ]
+    };
+  }
+}
+
+/**
+ * Interface definition for INgxDatatableConfig global configuration
+ */
+export interface INgxDatatableConfig {
+  messages: {
+    emptyMessage: string, // Message to show when array is presented, but contains no values
+    totalMessage: string, // Footer total message
+    selectedMessage: string // Footer selected message
+  };
+}

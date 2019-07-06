@@ -5,12 +5,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const commonConfig = require('./webpack.common');
 const { ENV, dir, APP_VERSION } = require('./helpers');
 const { CheckerPlugin } = require('awesome-typescript-loader');
-// const ngtools = require('@ngtools/webpack');
 
 const banner =
 `/**
- * angular2-data-table v${APP_VERSION} (https://github.com/swimlane/angular2-data-table)
- * Copyright 2016
+ * ngx-datatable v${APP_VERSION} (https://github.com/swimlane/ngx-datatable)
+ * Copyright 2019
  * Licensed under MIT
  */`;
 
@@ -64,19 +63,7 @@ module.exports = function(env) {
         banner: banner,
         raw: true,
         entryOnly: true
-      }),
-      /*
-      new ngtools.AotPlugin({
-        tsConfigPath: 'tsconfig-aot.json',
-        baseDir: dir()
-        entryModule: dir('datatable.module.ts') + '#Angular2DataTableModule'
-      }),
-      new CleanWebpackPlugin(['release'], {
-        root: dir(),
-        verbose: false,
-        dry: false
       })
-      */
     ]
   });
 

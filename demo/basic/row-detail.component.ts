@@ -7,89 +7,124 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
       <h3>
         Row Detail Demo
         <small>
-          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/row-detail.component.ts" target="_blank">
+          <a
+            href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/row-detail.component.ts"
+            target="_blank"
+          >
             Source
           </a>
         </small>
         <small>
-          <a href="javascript:void(0)" (click)="table.rowDetail.expandAllRows()">Expand All</a> | 
-          <a href="javascript:void(0)" (click)="table.rowDetail.collapseAllRows()">Collapse All</a>
+          <a href="javascript:void(0)" (click)="table.rowDetail.expandAllRows()"
+            >Expand All</a
+          >
+          |
+          <a
+            href="javascript:void(0)"
+            (click)="table.rowDetail.collapseAllRows()"
+            >Collapse All</a
+          >
         </small>
       </h3>
       <ngx-datatable
         #myTable
-        class='material expandable'
+        class="material expandable"
         [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="50"
         [scrollbarV]="true"
-        [rows]='rows'
-        (page)="onPage($event)">
+        [rows]="rows"
+        (page)="onPage($event)"
+      >
         <!-- Row Detail Template -->
-        <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow (toggle)="onDetailToggle($event)">
-          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+        <ngx-datatable-row-detail
+          [rowHeight]="100"
+          #myDetailRow
+          (toggle)="onDetailToggle($event)"
+        >
+          <ng-template
+            let-row="row"
+            let-expanded="expanded"
+            ngx-datatable-row-detail-template
+          >
             <div style="padding-left:35px;">
               <div><strong>Address</strong></div>
-              <div>{{row.address.city}}, {{row.address.state}}</div>
+              <div>{{ row.address.city }}, {{ row.address.state }}</div>
             </div>
           </ng-template>
         </ngx-datatable-row-detail>
 
         <!-- Column Templates -->
-         <ngx-datatable-column
+        <ngx-datatable-column
           [width]="50"
           [resizeable]="false"
           [sortable]="false"
           [draggable]="false"
-          [canAutoResize]="false">
-          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+          [canAutoResize]="false"
+        >
+          <ng-template
+            let-row="row"
+            let-expanded="expanded"
+            ngx-datatable-cell-template
+          >
             <a
               href="javascript:void(0)"
               [class.datatable-icon-right]="!expanded"
               [class.datatable-icon-down]="expanded"
               title="Expand/Collapse Row"
-              (click)="toggleExpandRow(row)">
+              (click)="toggleExpandRow(row)"
+            >
             </a>
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Index" width="80">
-          <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
-            <strong>{{rowIndex}}</strong>
+          <ng-template
+            let-rowIndex="rowIndex"
+            let-row="row"
+            ngx-datatable-cell-template
+          >
+            <strong>{{ rowIndex }}</strong>
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Expanded" width="80">
-          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
-            <strong>{{expanded === 1}}</strong>
+          <ng-template
+            let-row="row"
+            let-expanded="expanded"
+            ngx-datatable-cell-template
+          >
+            <strong>{{ expanded === 1 }}</strong>
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Name" width="200">
           <ng-template let-value="value" ngx-datatable-cell-template>
-            <strong>{{value}}</strong>
+            <strong>{{ value }}</strong>
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Gender" width="300">
-          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-            <i [innerHTML]="row['name']"></i> and <i>{{value}}</i>
+          <ng-template
+            let-row="row"
+            let-value="value"
+            ngx-datatable-cell-template
+          >
+            <i [innerHTML]="row['name']"></i> and <i>{{ value }}</i>
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Age" ></ngx-datatable-column>
+        <ngx-datatable-column name="Age"></ngx-datatable-column>
       </ngx-datatable>
     </div>
   `,
   encapsulation: ViewEncapsulation.None
-
 })
 export class RowDetailsComponent {
-
-  @ViewChild('myTable') table: any;
+  @ViewChild('myTable', { static: false }) table: any;
 
   rows: any[] = [];
   expanded: any = {};
   timeout: any;
 
   constructor() {
-    this.fetch((data) => {
+    this.fetch(data => {
       this.rows = data;
     });
   }
@@ -120,5 +155,4 @@ export class RowDetailsComponent {
   onDetailToggle(event) {
     console.log('Detail Toggled', event);
   }
-
 }

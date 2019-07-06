@@ -112,6 +112,7 @@ export function forceFillColumnWidths(
   let contentWidth = getContentWidth(allColumns, defaultColWidth);
   let remainingWidth = expectedWidth - contentWidth;
   const columnsProcessed: any[] = [];
+  const remainingWidthLimit = 1; // when to stop
 
   // This loop takes care of the
   do {
@@ -141,7 +142,7 @@ export function forceFillColumnWidths(
     contentWidth = getContentWidth(allColumns);
     remainingWidth = expectedWidth - contentWidth;
     removeProcessedColumns(columnsToResize, columnsProcessed);
-  } while (remainingWidth > 0 && columnsToResize.length !== 0);
+  } while (Math.abs(remainingWidth) > remainingWidthLimit && columnsToResize.length !== 0);
 }
 
 /**

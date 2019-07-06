@@ -10,7 +10,7 @@
 
 It was built for modern browsers using _TypeScript, CSS3 and HTML5_ and Angular `>=4.0.0`. This is the sister project of the [angular-data-table](https://github.com/swimlane/angular-data-table) that is designed for Angular 1.x.
 
-Check out the [documentation](https://swimlane.gitbooks.io/ngx-datatable/) & [demos](http://swimlane.github.io/ngx-datatable/) for more information!
+Check out the [documentation](https://swimlane.gitbook.io/ngx-datatable/) & [demos](http://swimlane.github.io/ngx-datatable/) for more information!
 
 See the [changelog](https://github.com/swimlane/ngx-datatable/blob/master/docs/changelog.md) for recent changes.
 
