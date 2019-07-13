@@ -23,6 +23,8 @@ import { RowCssComponent } from './basic/css.component';
 import { DynamicHeightComponent } from './basic/dynamic-height.component';
 import { FooterDemoComponent } from './basic/footer.component';
 import { RowGroupingComponent } from './basic/row-grouping.component';
+import { ReusabilityComponent } from './basic/reusability/reusability.component';
+import { ReusableTableComponent } from './basic/reusability/reusable-table.component';
 
 // -- Themes
 import { BootstrapThemeComponent } from './basic/bootstrap.component';
@@ -125,16 +127,19 @@ import { SummaryRowInlineHtmlComponent } from './summary/summary-row-inline-html
     SummaryRowCustomTemplateComponent,
     SummaryRowServerPagingComponent,
     SummaryRowInlineHtmlComponent,
+    ReusabilityComponent,
+    ReusableTableComponent
   ],
-  imports: [BrowserModule,
+  imports: [
+    BrowserModule,
     NgxDatatableModule.forRoot({
       messages: {
-        emptyMessage: 'No data to display',   // Message to show when array is presented, but contains no values
-        totalMessage: 'total',                // Footer total message
-        selectedMessage: 'selected'           // Footer selected message
+        emptyMessage: 'No data to display', // Message to show when array is presented, but contains no values
+        totalMessage: 'total', // Footer total message
+        selectedMessage: 'selected' // Footer selected message
       }
     })
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

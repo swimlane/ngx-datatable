@@ -5,9 +5,12 @@ import { Component } from '@angular/core';
   template: `
     <div>
       <h3>
-        Fluid Row Heights 
+        Fluid Row Heights
         <small>
-          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/basic-auto.component.ts" target="_blank">
+          <a
+            href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/basic-auto.component.ts"
+            target="_blank"
+          >
             Source
           </a>
         </small>
@@ -21,13 +24,13 @@ import { Component } from '@angular/core';
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="'auto'"
-        [reorderable]="reorderable">
+        [reorderable]="reorderable"
+      >
       </ngx-datatable>
     </div>
   `
 })
 export class BasicAutoComponent {
-
   rows = [];
   loadingIndicator: boolean = true;
   reorderable: boolean = true;
@@ -39,9 +42,11 @@ export class BasicAutoComponent {
   ];
 
   constructor() {
-    this.fetch((data) => {
+    this.fetch(data => {
       this.rows = data;
-      setTimeout(() => { this.loadingIndicator = false; }, 1500);
+      setTimeout(() => {
+        this.loadingIndicator = false;
+      }, 1500);
     });
   }
 
@@ -55,5 +60,4 @@ export class BasicAutoComponent {
 
     req.send();
   }
-
 }
