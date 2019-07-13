@@ -3,8 +3,7 @@ import {
   TemplateRef,
   ContentChild,
   Input,
-  OnChanges,
-  SimpleChanges
+  OnChanges
 } from '@angular/core';
 import { DataTableColumnHeaderDirective } from './column-header.directive';
 import { DataTableColumnCellDirective } from './column-cell.directive';
@@ -36,11 +35,15 @@ export class DataTableColumnDirective implements OnChanges {
   @Input() treeLevelIndent: number;
   @Input() summaryFunc: (cells: any[]) => any;
   @Input() summaryTemplate: TemplateRef<any>;
+  @Input() initialOrder?: number;
 
   @Input('cellTemplate')
   _cellTemplateInput: TemplateRef<any>;
 
-  @ContentChild(DataTableColumnCellDirective, { read: TemplateRef, static: true })
+  @ContentChild(DataTableColumnCellDirective, {
+    read: TemplateRef,
+    static: true
+  })
   _cellTemplateQuery: TemplateRef<any>;
 
   get cellTemplate(): TemplateRef<any> {
@@ -50,7 +53,10 @@ export class DataTableColumnDirective implements OnChanges {
   @Input('headerTemplate')
   _headerTemplateInput: TemplateRef<any>;
 
-  @ContentChild(DataTableColumnHeaderDirective, { read: TemplateRef, static: true })
+  @ContentChild(DataTableColumnHeaderDirective, {
+    read: TemplateRef,
+    static: true
+  })
   _headerTemplateQuery: TemplateRef<any>;
 
   get headerTemplate(): TemplateRef<any> {
@@ -60,7 +66,10 @@ export class DataTableColumnDirective implements OnChanges {
   @Input('treeToggleTemplate')
   _treeToggleTemplateInput: TemplateRef<any>;
 
-  @ContentChild(DataTableColumnCellTreeToggle, { read: TemplateRef, static: true })
+  @ContentChild(DataTableColumnCellTreeToggle, {
+    read: TemplateRef,
+    static: true
+  })
   _treeToggleTemplateQuery: TemplateRef<any>;
 
   get treeToggleTemplate(): TemplateRef<any> {

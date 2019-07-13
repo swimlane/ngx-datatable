@@ -1,7 +1,7 @@
 import {
   Component, Input, Output, ElementRef, EventEmitter, ViewChild,
   HostListener, ContentChildren, OnInit, QueryList, AfterViewInit,
-  HostBinding, ContentChild, TemplateRef, IterableDiffer,
+  HostBinding, ContentChild,
   DoCheck, KeyValueDiffers, KeyValueDiffer, ViewEncapsulation,
   ChangeDetectionStrategy, ChangeDetectorRef, SkipSelf, OnDestroy, Optional, Inject
 } from '@angular/core';
@@ -19,9 +19,9 @@ import { DataTableColumnDirective } from './columns';
 import { DatatableRowDetailDirective } from './row-detail';
 import { DatatableFooterDirective } from './footer';
 import { DataTableHeaderComponent } from './header';
-import { MouseEvent } from '../events';
+
 import { BehaviorSubject, Subscription } from 'rxjs';
-import {INgxDatatableConfig} from "../datatable.module";
+import { INgxDatatableConfig } from '../datatable.module';
 
 @Component({
   selector: 'ngx-datatable',
@@ -267,6 +267,12 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * the built-in basic sorting.
    */
   @Input() externalSorting: boolean = false;
+
+  /**
+   * Extra columns passed dinamically
+   * 
+   */
+  @Input() extraColumns?: QueryList<DataTableColumnDirective>;
 
   /**
    * The page size to be shown.
@@ -776,6 +782,14 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   ngAfterContentInit() {
     this.columnTemplates.changes.subscribe(v =>
       this.translateColumns(v));
+
+    // Merge existing columns with extraColumns passed as Input()
+    if (this.extraColumns) {
+      this.extraColumns.reset(
+        this.sortInitialColumns([...this.columnTemplates.toArray(), ...this.extraColumns.toArray()])
+      );
+      this.columnTemplates = this.extraColumns;
+    }
       
     this.listenForColumnInputChanges();
   }
@@ -1210,6 +1224,44 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
           this.columnTemplates.notifyOnChanges();
         }
       }));
+  }
+
+  private sortInitialColumns(columns: DataTableColumnDirective[]): DataTableColumnDirective[] {
+    const posVisited: number[] = [];
+    let done = false;
+
+    // first order the columns with an initialOrder defined at the beginning of the array
+    columns.sort((a, b) => {
+      const aOrder = a.initialOrder || -1;
+      const bOrder = b.initialOrder || -1;
+
+      return aOrder - bOrder;
+    });
+
+    // then place columns with an initialOrder in the correct position
+    while(!done) {
+      for (let i = 0; i < columns.length; i++) {
+        const col = columns[i];
+        const initialOrder = col.initialOrder;
+
+        if (i === columns.length - 1) {
+          done = true;
+        }
+
+        if (initialOrder !== undefined 
+          && initialOrder < columns.length 
+          && !posVisited.includes(initialOrder) 
+          && i !== initialOrder) {
+
+          const cutOut = columns.splice(i, 1) [0];
+          columns.splice(col.initialOrder, 0, cutOut);
+          posVisited.push(initialOrder); // ignore positions duplicates
+          break;
+        }
+      }
+    }
+
+    return columns;
   }
 
   private sortInternalRows(): void {
