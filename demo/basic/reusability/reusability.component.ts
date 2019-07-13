@@ -17,7 +17,14 @@ import { Component } from '@angular/core';
       </h3>
       <reusable-table [columns]="columns" [rows]="rows">
         <ngx-datatable-column name="Gender"></ngx-datatable-column>
-        <ngx-datatable-column name="Company"></ngx-datatable-column>
+      </reusable-table>
+      <br />
+      <reusable-table [columns]="columns" [rows]="rows">
+        <ngx-datatable-column name="Gender"></ngx-datatable-column>
+        <ngx-datatable-column
+          name="Company"
+          [initialOrder]="0"
+        ></ngx-datatable-column>
       </reusable-table>
     </div>
   `
@@ -25,11 +32,7 @@ import { Component } from '@angular/core';
 export class ReusabilityComponent {
   rows = [];
 
-  columns = [
-    { prop: 'name' },
-    { name: 'Gender' },
-    { name: 'Company', sortable: false }
-  ];
+  columns = [{ prop: 'name' }, { name: 'Gender' }, { name: 'Company' }];
 
   constructor() {
     this.fetch(data => {

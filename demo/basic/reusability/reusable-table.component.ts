@@ -11,6 +11,7 @@ import { DataTableColumnDirective } from '../../../src';
         [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
+        [limit]="5"
         [rowHeight]="'auto'"
         (page)="onPage($event)"
         [extraColumns]="extraColumns"
@@ -28,6 +29,4 @@ export class ReusableTableComponent {
   @ContentChildren(DataTableColumnDirective) extraColumns: QueryList<
     DataTableColumnDirective
   >;
-
-  // columns = [{ prop: 'name' }, { name: 'Gender' }, { name: 'Company' }];
 }

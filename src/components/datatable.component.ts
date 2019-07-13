@@ -785,7 +785,6 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
     // Merge existing columns with extraColumns passed as Input()
     if (this.extraColumns) {
-      console.log('extraColumns');
       this.extraColumns.reset(
         this.sortInitialColumns([...this.columnTemplates.toArray(), ...this.extraColumns.toArray()])
       );
