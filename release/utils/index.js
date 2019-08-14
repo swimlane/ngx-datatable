@@ -17,4 +17,5 @@ __export(require("./sort"));
 __export(require("./row-height-cache"));
 __export(require("./column-helper"));
 __export(require("./elm-from-point"));
+__export(require("./tree"));
 //# sourceMappingURL=index.js.map

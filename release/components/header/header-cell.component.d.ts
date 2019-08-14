@@ -9,7 +9,7 @@ export declare class DataTableHeaderCellComponent {
     targetMarkerTemplate: any;
     targetMarkerContext: any;
     _allRowsSelected: boolean;
-    allRowsSelected: boolean;
+    allRowsSelected: any;
     selectionType: SelectionType;
     column: TableColumn;
     headerHeight: number;

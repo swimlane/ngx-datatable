@@ -55,7 +55,10 @@ var DatatableGroupHeaderDirective = /** @class */ (function () {
     ], DatatableGroupHeaderDirective.prototype, "rowHeight", void 0);
     __decorate([
         core_1.Input(),
-        core_1.ContentChild(body_group_header_template_directive_1.DatatableGroupHeaderTemplateDirective, { read: core_1.TemplateRef }),
+        core_1.ContentChild(body_group_header_template_directive_1.DatatableGroupHeaderTemplateDirective, {
+            read: core_1.TemplateRef,
+            static: true
+        }),
         __metadata("design:type", core_1.TemplateRef)
     ], DatatableGroupHeaderDirective.prototype, "template", void 0);
     __decorate([

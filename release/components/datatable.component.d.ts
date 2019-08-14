@@ -18,11 +18,11 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     targetMarkerTemplate: any;
     /**
-     * Gets the rows.
-     */
-    /**
      * Rows that are displayed in the table.
      */
+    /**
+    * Gets the rows.
+    */
     rows: any;
     /**
      * This attribute allows the user to set the name of the column to group the data with
@@ -45,11 +45,11 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     groupedRows: any[];
     /**
-     * Get the columns.
-     */
-    /**
      * Columns to be displayed.
      */
+    /**
+    * Get the columns.
+    */
     columns: TableColumn[];
     /**
      * List of row objects that should be
@@ -96,20 +96,20 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     externalSorting: boolean;
     /**
-     * Gets the limit.
-     */
-    /**
      * The page size to be shown.
      * Default value: `undefined`
      */
-    limit: number | undefined;
     /**
-     * Gets the count.
-     */
+    * Gets the limit.
+    */
+    limit: number | undefined;
     /**
      * The total count of all rows.
      * Default value: `0`
      */
+    /**
+    * Gets the count.
+    */
     count: number;
     /**
      * The current offset ( page - 1 ) shown.
@@ -222,6 +222,14 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     virtualization: boolean;
     /**
+     * Tree from relation
+     */
+    treeFromRelation: string;
+    /**
+     * Tree to relation
+     */
+    treeToRelation: string;
+    /**
      * A flag for switching summary row on / off
      */
     summaryRow: boolean;
@@ -272,6 +280,10 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
         content: any;
     }>;
     /**
+     * A row was expanded ot collapsed for tree
+     */
+    treeAction: EventEmitter<any>;
+    /**
      * CSS class applied if the header height if fixed height.
      */
     readonly isFixedHeader: boolean;
@@ -285,6 +297,11 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      * vertical scrolling is enabled.
      */
     readonly isVertScroll: boolean;
+    /**
+     * CSS class applied to root element if
+     * virtualization is enabled.
+     */
+    readonly isVirtualized: boolean;
     /**
      * CSS class applied to the root element
      * if the horziontal scrolling is enabled.
@@ -315,12 +332,12 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     readonly isMultiClickSelection: boolean;
     /**
-     * Returns the column templates.
-     */
-    /**
      * Column templates gathered from `ContentChildren`
      * if described in your markup.
      */
+    /**
+    * Returns the column templates.
+    */
     columnTemplates: QueryList<DataTableColumnDirective>;
     /**
      * Row Detail templates gathered from the ContentChild
@@ -434,7 +451,7 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
     /**
      * Body triggered a page event.
      */
-    onBodyPage({offset}: any): void;
+    onBodyPage({ offset }: any): void;
     /**
      * The body triggered a scroll event.
      */
@@ -454,19 +471,19 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
     /**
      * The header triggered a contextmenu event.
      */
-    onColumnContextmenu({event, column}: any): void;
+    onColumnContextmenu({ event, column }: any): void;
     /**
      * The body triggered a contextmenu event.
      */
-    onRowContextmenu({event, row}: any): void;
+    onRowContextmenu({ event, row }: any): void;
     /**
      * The header triggered a column resize event.
      */
-    onColumnResize({column, newValue}: any): void;
+    onColumnResize({ column, newValue }: any): void;
     /**
      * The header triggered a column re-order event.
      */
-    onColumnReorder({column, newValue, prevValue}: any): void;
+    onColumnReorder({ column, newValue, prevValue }: any): void;
     /**
      * The header triggered a column sort event.
      */
@@ -479,11 +496,15 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      * A row was selected from body
      */
     onBodySelect(event: any): void;
+    /**
+     * A row was expanded or collapsed for tree
+     */
+    onTreeAction(event: any): void;
     ngOnDestroy(): void;
     /**
      * listen for changes to input bindings of all DataTableColumnDirective and
      * trigger the columnTemplates.changes observable to emit
      */
-    private listenForColumnInputChanges();
-    private sortInternalRows();
+    private listenForColumnInputChanges;
+    private sortInternalRows;
 }

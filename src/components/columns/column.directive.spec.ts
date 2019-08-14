@@ -97,6 +97,7 @@ describe('DataTableColumnDirective', () => {
       expect(directive.minWidth).toBeUndefined();
       expect(directive.width).toBeUndefined();
       expect(directive.maxWidth).toBeUndefined();
+      expect(directive.treeLevelIndent).toBeUndefined();
     });
   });
 

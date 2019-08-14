@@ -33,6 +33,7 @@ import { ClientPagingComponent } from './paging/paging-client.component';
 import { ServerPagingComponent } from './paging/paging-server.component';
 import { ServerScrollingComponent } from './paging/scrolling-server.component';
 import { VirtualPagingComponent } from './paging/paging-virtual.component';
+import { PagingScrollingNoVirtualizationComponent } from './paging/paging-scrolling-novirtualization.component';
 
 // -- Sorting
 import { SortingComparatorComponent } from './sorting/sorting-comparator.component';
@@ -43,6 +44,10 @@ import { ClientSortingComponent } from './sorting/sorting-client.component';
 // -- Templates
 import { InlineTemplatesComponent } from './templates/template-dom.component';
 import { TemplateRefTemplatesComponent } from './templates/template-obj.component';
+
+// -- Tree
+import { FullScreenTreeComponent } from './tree/fullscreen.component';
+import { ClientTreeComponent } from './tree/client-tree.component';
 
 // -- Selection
 import { CellSelectionComponent } from './selection/selection-cell.component';
@@ -74,6 +79,7 @@ import { SummaryRowInlineHtmlComponent } from './summary/summary-row-inline-html
     BasicAutoComponent,
     BasicFixedComponent,
     FullScreenComponent,
+    FullScreenTreeComponent,
     InlineEditComponent,
     VirtualScrollComponent,
     HorzVertScrolling,
@@ -82,6 +88,7 @@ import { SummaryRowInlineHtmlComponent } from './summary/summary-row-inline-html
     ResponsiveComponent,
     ClientPagingComponent,
     ServerPagingComponent,
+    PagingScrollingNoVirtualizationComponent,
     ServerScrollingComponent,
     ClientSortingComponent,
     DefaultSortingComponent,
@@ -114,13 +121,22 @@ import { SummaryRowInlineHtmlComponent } from './summary/summary-row-inline-html
     FooterDemoComponent,
     RowGroupingComponent,
     BootstrapThemeComponent,
+    ClientTreeComponent,
     SummaryRowSimpleComponent,
     SummaryRowWithScrollbarComponent,
     SummaryRowCustomTemplateComponent,
     SummaryRowServerPagingComponent,
     SummaryRowInlineHtmlComponent,
   ],
-  imports: [BrowserModule, NgxDatatableModule],
+  imports: [BrowserModule,
+    NgxDatatableModule.forRoot({
+      messages: {
+        emptyMessage: 'No data to display',   // Message to show when array is presented, but contains no values
+        totalMessage: 'total',                // Footer total message
+        selectedMessage: 'selected'           // Footer selected message
+      }
+    })
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

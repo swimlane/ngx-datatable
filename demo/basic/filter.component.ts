@@ -1,5 +1,5 @@
-import {Component, ViewChild} from '@angular/core';
-import {DatatableComponent} from '../../src/components/datatable.component';
+import { Component, ViewChild } from '@angular/core';
+import { DatatableComponent } from '../../src/components/datatable.component';
 
 @Component({
   selector: 'filter-demo',
@@ -8,46 +8,45 @@ import {DatatableComponent} from '../../src/components/datatable.component';
       <h3>
         Client-side Search and Filtering
         <small>
-          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/filter.component.ts" target="_blank">
+          <a
+            href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/filter.component.ts"
+            target="_blank"
+          >
             Source
           </a>
         </small>
       </h3>
       <input
-        type='text'
-        style='padding:8px;margin:15px auto;width:30%;'
-        placeholder='Type to filter the name column...'
-        (keyup)='updateFilter($event)'
+        type="text"
+        style="padding:8px;margin:15px auto;width:30%;"
+        placeholder="Type to filter the name column..."
+        (keyup)="updateFilter($event)"
       />
       <ngx-datatable
         #table
-        class='material'
+        class="material"
         [columns]="columns"
         [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="'auto'"
         [limit]="10"
-        [rows]='rows'>
+        [rows]="rows"
+      >
       </ngx-datatable>
     </div>
   `
 })
 export class FilterBarComponent {
-
   rows = [];
 
   temp = [];
 
-  columns = [
-    { prop: 'name' },
-    { name: 'Company' },
-    { name: 'Gender' }
-  ];
-  @ViewChild(DatatableComponent) table: DatatableComponent;
+  columns = [{ prop: 'name' }, { name: 'Company' }, { name: 'Gender' }];
+  @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
 
   constructor() {
-    this.fetch((data) => {
+    this.fetch(data => {
       // cache our list
       this.temp = [...data];
 
@@ -80,5 +79,4 @@ export class FilterBarComponent {
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
   }
-
 }

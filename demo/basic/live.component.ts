@@ -7,13 +7,16 @@ import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
       <h3>
         Live Data Demo
         <small>
-          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/live.component.ts" target="_blank">
+          <a
+            href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/live.component.ts"
+            target="_blank"
+          >
             Source
           </a>
         </small>
         <small>
           <a href="javascript:void(0)" (click)="start()">Start</a> |
-          <a href="javascript:void(0)" (click)="stop()">Stop</a> | 
+          <a href="javascript:void(0)" (click)="stop()">Stop</a> |
           <a href="javascript:void(0)" (click)="add()">Add</a> |
           <a href="javascript:void(0)" (click)="remove()">Remove</a>
         </small>
@@ -27,7 +30,8 @@ import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
         [footerHeight]="50"
         [rowHeight]="'auto'"
         [trackByProp]="'updated'"
-        [rows]="rows">
+        [rows]="rows"
+      >
         <ngx-datatable-column name="Name"></ngx-datatable-column>
         <ngx-datatable-column name="Gender"></ngx-datatable-column>
         <ngx-datatable-column name="Company"></ngx-datatable-column>
@@ -36,19 +40,16 @@ import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
   `
 })
 export class LiveDataComponent {
-
-  @ViewChild('mydatatable') mydatatable: any;
+  @ViewChild('mydatatable', { static: false }) mydatatable: any;
 
   count: number = 50;
   rows: any[] = [];
   active: boolean = true;
   temp: any[] = [];
-  cols: any = [
-    'name', 'gender', 'company'
-  ];
+  cols: any = ['name', 'gender', 'company'];
 
   constructor(private cd: ChangeDetectorRef) {
-    this.fetch((data) => {
+    this.fetch(data => {
       this.rows = data.map(d => {
         d.updated = Date.now().toString();
         return d;
@@ -65,7 +66,7 @@ export class LiveDataComponent {
   }
 
   start(): void {
-    if(!this.active) return;
+    if (!this.active) return;
 
     setTimeout(this.updateRandom.bind(this), 50);
   }
@@ -89,7 +90,7 @@ export class LiveDataComponent {
     const prop = this.cols[cellNum];
     const rows = this.rows;
 
-    if(rows.length) {
+    if (rows.length) {
       const row = rows[rowNum];
       row[prop] = rows[newRow][prop];
       row.updated = Date.now().toString();
@@ -112,5 +113,4 @@ export class LiveDataComponent {
 
     req.send();
   }
-
 }

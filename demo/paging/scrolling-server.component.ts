@@ -102,11 +102,10 @@ export class ServerScrollingComponent {
     // 2) it enables display of the loading indicator
     this.isLoading = true;
 
-    this.serverResultsService
-      .getResults(this.rows.length, limit)
-      .subscribe(results => {
-        this.rows = [...this.rows, ...results.data];
-        this.isLoading = false;
-      });
+    this.serverResultsService.getResults(this.rows.length, limit).subscribe(results => {
+      let rows = [...this.rows, ...results.data];
+       this.rows = rows;
+      this.isLoading = false;
+    });
   }
 }
