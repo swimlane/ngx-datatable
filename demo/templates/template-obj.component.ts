@@ -6,8 +6,11 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
     <div>
       <h3>
         TemplateRef via Column Property
-         <small>
-          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/templates/template-obj.component.ts" target="_blank">
+        <small>
+          <a
+            href="https://github.com/swimlane/ngx-datatable/blob/master/demo/templates/template-obj.component.ts"
+            target="_blank"
+          >
             Source
           </a>
         </small>
@@ -19,11 +22,12 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
         [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
-        [rowHeight]="'auto'">
+        [rowHeight]="'auto'"
+      >
       </ngx-datatable>
 
-      <ng-template #hdrTpl let-column="column" >
-        <strong>Fancy</strong>: {{column.name}} !!
+      <ng-template #hdrTpl let-column="column">
+        <strong>Fancy</strong>: {{ column.name }} !!
       </ng-template>
 
       <ng-template #editTmpl let-row="row" let-value="value">
@@ -42,25 +46,26 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
   `
 })
 export class TemplateRefTemplatesComponent {
-
-  @ViewChild('editTmpl') editTmpl: TemplateRef<any>;
-  @ViewChild('hdrTpl') hdrTpl: TemplateRef<any>;
+  @ViewChild('editTmpl', { static: true }) editTmpl: TemplateRef<any>;
+  @ViewChild('hdrTpl', { static: true }) hdrTpl: TemplateRef<any>;
 
   rows = [];
   columns = [];
 
   constructor() {
-    this.fetch((data) => {
+    this.fetch(data => {
       this.rows = data.splice(0, 5);
     });
   }
 
   ngOnInit() {
-    this.columns = [{
-      cellTemplate: this.editTmpl,
-      headerTemplate: this.hdrTpl,
-      name: 'Gender'
-    }];
+    this.columns = [
+      {
+        cellTemplate: this.editTmpl,
+        headerTemplate: this.hdrTpl,
+        name: 'Gender'
+      }
+    ];
   }
 
   fetch(cb) {
@@ -73,5 +78,4 @@ export class TemplateRefTemplatesComponent {
 
     req.send();
   }
-
 }

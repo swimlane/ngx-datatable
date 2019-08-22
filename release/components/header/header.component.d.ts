@@ -34,9 +34,7 @@ export declare class DataTableHeaderComponent {
     _columns: any[];
     _headerHeight: string;
     _styleByGroup: {
-        left: {};
-        center: {};
-        right: {};
+        [prop: string]: {};
     };
     constructor(cd: ChangeDetectorRef);
     onLongPressStart({ event, model }: {

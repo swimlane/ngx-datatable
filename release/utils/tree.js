@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var _1 = require(".");
+var column_prop_getters_1 = require("./column-prop-getters");
 function optionalGetterForProp(prop) {
-    return prop && (function (row) { return _1.getterForProp(prop)(row, prop); });
+    return prop && (function (row) { return column_prop_getters_1.getterForProp(prop)(row, prop); });
 }
 exports.optionalGetterForProp = optionalGetterForProp;
 /**
