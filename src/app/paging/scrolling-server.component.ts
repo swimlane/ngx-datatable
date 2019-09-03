@@ -19,7 +19,7 @@ export class MockServerResultsService {
   public getResults(offset: number, limit: number): Observable<PagedData<CorporateEmployee>> {
     return of(companyData.slice(offset, offset + limit)).pipe(
       delay(new Date(Date.now() + 500)),
-      map(data => ({ data }))
+      map(d => ({ data: d }))
     );
   }
 }

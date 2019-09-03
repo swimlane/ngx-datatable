@@ -54,13 +54,13 @@ export class InlineTemplatesComponent {
   rows = [];
   joke = 'knock knock';
 
+  ColumnMode = ColumnMode;
+
   constructor() {
     this.fetch(data => {
       this.rows = data.splice(0, 5);
     });
   }
-
-  ColumnMode = ColumnMode;
 
   fetch(cb) {
     const req = new XMLHttpRequest();

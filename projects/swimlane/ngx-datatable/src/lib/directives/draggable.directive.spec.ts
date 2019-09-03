@@ -74,6 +74,7 @@ describe('DraggableDirective', () => {
           directive.onMousedown(mouseDown);
           expect(directive.subscription).toBeTruthy();
 
+          // tslint:disable-next-line: no-object-literal-type-assertion
           directive.onMouseup(<MouseEvent>{});
 
           expect(directive.subscription).toBeUndefined();
@@ -87,6 +88,7 @@ describe('DraggableDirective', () => {
 
           expect(directive.subscription).toBeTruthy();
 
+          // tslint:disable-next-line: no-object-literal-type-assertion
           directive.onMouseup(<MouseEvent>{});
 
           expect(directive.subscription).toBeTruthy();

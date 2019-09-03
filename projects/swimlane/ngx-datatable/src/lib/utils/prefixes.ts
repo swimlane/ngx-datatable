@@ -15,6 +15,7 @@ const prefix = (function() {
           .match(/-(moz|webkit|ms)-/)
       : null;
   const pre = match !== null ? match[1] : undefined;
+  // tslint:disable-next-line: tsr-detect-non-literal-regexp
   const dom = typeof pre !== 'undefined' ? 'WebKit|Moz|MS|O'.match(new RegExp('(' + pre + ')', 'i'))[1] : undefined;
 
   return dom

@@ -8,7 +8,7 @@
     "build-pkg": "ng build @swimlane/ngx-datatable && npm run copy-files",
     "copy-files": "cp README.md dist/swimlane/ngx-datatable/README.md && cp LICENSE dist/swimlane/ngx-datatable/LICENSE",
     "test": "ng test @swimlane/ngx-datatable",
-    "test:ci": "ng test @swimlane/ngx-ngx-datatable --watch=false --progress=false --browsers=ChromeHeadlessCI",
+    "test:ci": "ng test @swimlane/ngx-datatable --watch=false --progress=false --browsers=ChromeHeadlessCI",
     "ci": "concurrently \"npm run lint\" \"npm run test:ci\"",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -41,6 +41,7 @@
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
     "concurrently": "^4.1.2",
+    "jasmine": "^3.4.0",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.1.0",
@@ -55,6 +56,8 @@
     "tsickle": "^0.36.0",
     "tslint": "~5.15.0",
     "tslint-config-prettier": "^1.17.0",
+    "tslint-config-security": "^1.16.0",
+    "tslint-config-swimlane": "^4.0.0",
     "typescript": "~3.5.3"
   }
 }

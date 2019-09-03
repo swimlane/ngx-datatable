@@ -12,8 +12,6 @@ import {
   AfterViewInit,
   HostBinding,
   ContentChild,
-  TemplateRef,
-  IterableDiffer,
   DoCheck,
   KeyValueDiffers,
   KeyValueDiffer,
@@ -330,14 +328,6 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     // Footer selected message
     selectedMessage: 'selected'
   };
-
-  /**
-   * This will be used when displaying or selecting rows.
-   * when tracking/comparing them, we'll use the value of this fn,
-   *
-   * (`fn(x) === fn(y)` instead of `x === y`)
-   */
-  @Input() rowIdentity: (x: any) => any = (x: any) => x;
 
   /**
    * Row specific classes.
@@ -662,6 +652,14 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       this.messages = { ...this.configuration.messages };
     }
   }
+
+  /**
+   * This will be used when displaying or selecting rows.
+   * when tracking/comparing them, we'll use the value of this fn,
+   *
+   * (`fn(x) === fn(y)` instead of `x === y`)
+   */
+  @Input() rowIdentity: (x: any) => any = (x: any) => x;
 
   /**
    * Lifecycle hook that is called after data-bound

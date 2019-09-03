@@ -45,12 +45,12 @@ export class PagingScrollingNoVirtualizationComponent {
   page = new Page();
   rows = new Array<CorporateEmployee>();
 
+  ColumnMode = ColumnMode;
+
   constructor(private serverResultsService: MockServerResultsService) {
     this.page.pageNumber = 0;
     this.page.size = 20;
   }
-
-  ColumnMode = ColumnMode;
 
   ngOnInit() {
     this.setPage({ offset: 0 });
