@@ -9,7 +9,7 @@ import { ColumnMode, SelectionType } from 'projects/swimlane/ngx-datatable/src/l
         Multi Select
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/demo/selection/selection-multi.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/selection/selection-multi.component.ts"
             target="_blank"
           >
             Source

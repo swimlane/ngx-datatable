@@ -9,7 +9,7 @@ import { ColumnMode, SelectionType } from 'projects/swimlane/ngx-datatable/src/l
         Selection Callback to Disable Selections
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/demo/selection/selection-disabled.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/selection/selection-disabled.component.ts"
             target="_blank"
           >
             Source

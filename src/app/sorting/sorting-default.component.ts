@@ -9,7 +9,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/lib/types';
         Client-side Sorting
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/demo/sorting/sorting-default.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/sorting/sorting-default.component.ts"
             target="_blank"
           >
             Source

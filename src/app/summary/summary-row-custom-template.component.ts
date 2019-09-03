@@ -9,7 +9,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/lib/types';
         Summary Row with Custom Template
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/demo/summary/summary-row-custom-template.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/summary/summary-row-custom-template.component.ts"
           >
             Source
           </a>

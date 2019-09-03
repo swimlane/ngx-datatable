@@ -9,7 +9,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/lib/types';
         Full Screen
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/fullscreen.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/fullscreen.component.ts"
             target="_blank"
           >
             Source

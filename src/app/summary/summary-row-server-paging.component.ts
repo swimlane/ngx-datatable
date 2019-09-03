@@ -14,7 +14,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/lib/types';
         Server-side paging
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/demo/summary/summary-row-server-paging.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/summary/summary-row-server-paging.component.ts"
           >
             Source
           </a>

@@ -9,7 +9,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/lib/types';
         Virtual Scrolling with 10k Rows
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/virtual.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/virtual.component.ts"
             target="_blank"
           >
             Source

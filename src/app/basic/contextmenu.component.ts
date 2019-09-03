@@ -9,7 +9,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/lib/types';
         Context Menu Event
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/contextmenu.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/contextmenu.component.ts"
             target="_blank"
           >
             Source

@@ -9,7 +9,7 @@ import { ColumnMode, SelectionType } from 'projects/swimlane/ngx-datatable/src/l
         Custom Checkbox Selection
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/demo/selection/selection-chkbox-template.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/selection/selection-chkbox-template.component.ts"
             target="_blank"
           >
             Source

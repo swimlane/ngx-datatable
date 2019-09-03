@@ -9,7 +9,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/lib/types';
         Inline HTML template
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/demo/summary/summary-row-inline-html.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/summary/summary-row-inline-html.component.ts"
           >
             Source
           </a>

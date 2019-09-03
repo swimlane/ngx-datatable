@@ -9,7 +9,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/lib/types';
         Column Toggling
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/demo/columns/column-toggle.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/columns/column-toggle.component.ts"
             target="_blank"
           >
             Source

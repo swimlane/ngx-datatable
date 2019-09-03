@@ -9,7 +9,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/lib/types';
         Column Pinning
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/demo/columns/pinning.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/columns/pinning.component.ts"
             target="_blank"
           >
             Source

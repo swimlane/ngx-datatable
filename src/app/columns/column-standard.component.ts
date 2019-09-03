@@ -9,7 +9,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/lib/types';
         Fixed Column Widths
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/demo/columns/column-standard.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/columns/column-standard.component.ts"
             target="_blank"
           >
             Source

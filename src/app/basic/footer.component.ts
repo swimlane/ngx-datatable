@@ -9,7 +9,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/lib/types';
         Custom Footer
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/footer.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/footer.component.ts"
             target="_blank"
           >
             Source

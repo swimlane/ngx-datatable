@@ -8,7 +8,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/lib/types';
       <h3>
         Row/Header/Cell CSS Class Demo
         <small>
-          <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/basic/css.component.ts" target="_blank">
+          <a href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/css.component.ts" target="_blank">
             Source
           </a>
         </small>
