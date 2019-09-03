@@ -8,7 +8,7 @@
     "build-pkg": "ng build @swimlane/ngx-datatable && npm run copy-files",
     "copy-files": "cp README.md dist/swimlane/ngx-datatable/README.md && cp LICENSE dist/swimlane/ngx-datatable/LICENSE",
     "test": "ng test @swimlane/ngx-datatable",
-    "test:ci": "ng test @swimlane/ngx-datatable --watch=false --progress=false --browsers=ChromeHeadlessCI",
+    "test:ci": "ng test @swimlane/ngx-datatable --watch=false --progress=false",
     "ci": "concurrently \"npm run lint\" \"npm run test:ci\"",
     "lint": "ng lint",
     "e2e": "ng e2e",
