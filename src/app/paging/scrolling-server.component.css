@@ -2,7 +2,7 @@
   height: calc(100vh - 110px);
 }
 
-.server-scrolling-demo .progress-linear {
+::ng-deep .progress-linear {
   position: fixed !important;
   bottom: 0px;
 }
