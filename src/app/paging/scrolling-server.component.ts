@@ -4,7 +4,7 @@ import { delay, map } from 'rxjs/operators';
 import { CorporateEmployee } from './model/corporate-employee';
 
 import data from 'src/assets/data/company.json';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/lib/types';
+import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
 const companyData = data as any[];
 
 class PagedData<T> {

@@ -24,26 +24,28 @@ import {
   Inject
 } from '@angular/core';
 
-import {
-  forceFillColumnWidths,
-  adjustColumnWidths,
-  sortRows,
-  setColumnDefaults,
-  throttleable,
-  translateTemplates,
-  groupRowsByParents,
-  optionalGetterForProp
-} from '../utils';
-import { ScrollbarHelper, DimensionsHelper, ColumnChangesService } from '../services';
-import { ColumnMode, SortType, SelectionType, TableColumn, ContextmenuType } from '../types';
-import { DataTableBodyComponent } from './body';
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
-import { DataTableColumnDirective } from './columns';
-import { DatatableRowDetailDirective } from './row-detail';
-import { DatatableFooterDirective } from './footer';
-import { DataTableHeaderComponent } from './header';
+
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { INgxDatatableConfig } from '../ngx-datatable.module';
+import { groupRowsByParents, optionalGetterForProp } from '../utils/tree';
+import { TableColumn } from '../types/table-column.type';
+import { setColumnDefaults, translateTemplates } from '../utils/column-helper';
+import { ColumnMode } from '../types/column-mode.type';
+import { SelectionType } from '../types/selection.type';
+import { SortType } from '../types/sort.type';
+import { ContextmenuType } from '../types/contextmenu.type';
+import { DataTableColumnDirective } from './columns/column.directive';
+import { DatatableRowDetailDirective } from './row-detail/row-detail.directive';
+import { DatatableFooterDirective } from './footer/footer.directive';
+import { DataTableBodyComponent } from './body/body.component';
+import { DataTableHeaderComponent } from './header/header.component';
+import { ScrollbarHelper } from '../services/scrollbar-helper.service';
+import { ColumnChangesService } from '../services/column-changes.service';
+import { DimensionsHelper } from '../services/dimensions-helper.service';
+import { throttleable } from '../utils/throttle';
+import { forceFillColumnWidths, adjustColumnWidths } from '../utils/math';
+import { sortRows } from '../utils/sort';
 
 @Component({
   selector: 'ngx-datatable',

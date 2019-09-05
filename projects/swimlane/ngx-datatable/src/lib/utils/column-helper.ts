@@ -1,8 +1,8 @@
-import { TableColumn } from '../types';
-import { DataTableColumnDirective } from '../components/columns';
 import { camelCase, deCamelCase } from './camel-case';
 import { id } from './id';
 import { getterForProp } from './column-prop-getters';
+import { TableColumn } from '../types/table-column.type';
+import { DataTableColumnDirective } from '../components/columns/column.directive';
 
 /**
  * Sets the column defaults

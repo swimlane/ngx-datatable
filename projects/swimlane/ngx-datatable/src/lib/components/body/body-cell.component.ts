@@ -15,10 +15,10 @@ import {
   ChangeDetectionStrategy
 } from '@angular/core';
 
-import { Keys } from '../../utils';
-import { SortDirection } from '../../types';
 import { TableColumn } from '../../types/table-column.type';
 import { MouseEvent, KeyboardEvent } from '../../events';
+import { SortDirection } from '../../types/sort-direction.type';
+import { Keys } from '../../utils/keys';
 
 export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
 
@@ -194,15 +194,25 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
         } else if (typeof res === 'object') {
           const keys = Object.keys(res);
           for (const k of keys) {
-            if (res[k] === true) { cls += ` ${k}`; }
+            if (res[k] === true) {
+              cls += ` ${k}`;
+            }
           }
         }
       }
     }
-    if (!this.sortDir) { cls += ' sort-active'; }
-    if (this.isFocused) { cls += ' active'; }
-    if (this.sortDir === SortDirection.asc) { cls += ' sort-asc'; }
-    if (this.sortDir === SortDirection.desc) { cls += ' sort-desc'; }
+    if (!this.sortDir) {
+      cls += ' sort-active';
+    }
+    if (this.isFocused) {
+      cls += ' active';
+    }
+    if (this.sortDir === SortDirection.asc) {
+      cls += ' sort-asc';
+    }
+    if (this.sortDir === SortDirection.desc) {
+      cls += ' sort-desc';
+    }
 
     return cls;
   }
@@ -225,7 +235,9 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   @HostBinding('style.height')
   get height(): string | number {
     const height = this.rowHeight;
-    if (isNaN(height)) { return height; }
+    if (isNaN(height)) {
+      return height;
+    }
     return height + 'px';
   }
 
@@ -381,17 +393,23 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   }
 
   calcSortDir(sorts: any[]): any {
-    if (!sorts) { return; }
+    if (!sorts) {
+      return;
+    }
 
     const sort = sorts.find((s: any) => {
       return s.prop === this.column.prop;
     });
 
-    if (sort) { return sort.dir; }
+    if (sort) {
+      return sort.dir;
+    }
   }
 
   stripHtml(html: string): string {
-    if (!html.replace) { return html; }
+    if (!html.replace) {
+      return html;
+    }
     return html.replace(/<\/?[^>]+(>|$)/g, '');
   }
 

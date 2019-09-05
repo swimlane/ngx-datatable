@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/lib/types';
+import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 @Component({
   selector: 'row-details-demo',

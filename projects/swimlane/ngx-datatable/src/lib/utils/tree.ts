@@ -1,5 +1,5 @@
-import { ValueGetter, getterForProp } from './column-prop-getters';
-import { TableColumn, TableColumnProp } from '../types';
+import { getterForProp } from './column-prop-getters';
+import { TableColumnProp } from '../types/table-column.type';
 
 export type OptionalValueGetter = (row: any) => any | undefined;
 export function optionalGetterForProp(prop: TableColumnProp): OptionalValueGetter {

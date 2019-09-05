@@ -10,10 +10,12 @@ import {
   OnDestroy,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '../../utils';
-import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
 import { MouseEvent } from '../../events';
+import { SelectionType } from '../../types/selection.type';
+import { columnsByPin, columnGroupWidths } from '../../utils/column';
+import { RowHeightCache } from '../../utils/row-height-cache';
+import { translateXY } from '../../utils/translate';
 
 @Component({
   selector: 'datatable-body',

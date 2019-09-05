@@ -8,9 +8,12 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef
 } from '@angular/core';
-import { SortDirection, SortType, SelectionType, TableColumn } from '../../types';
-import { nextSortDir } from '../../utils';
 import { MouseEvent } from '../../events';
+import { SortType } from '../../types/sort.type';
+import { SelectionType } from '../../types/selection.type';
+import { TableColumn } from '../../types/table-column.type';
+import { nextSortDir } from '../../utils/sort';
+import { SortDirection } from '../../types/sort-direction.type';
 
 @Component({
   selector: 'datatable-header-cell',

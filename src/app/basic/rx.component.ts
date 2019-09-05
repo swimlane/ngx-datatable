@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/lib/types';
+import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 @Component({
   selector: 'rx-demo',

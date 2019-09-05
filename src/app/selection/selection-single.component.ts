@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ColumnMode, SelectionType } from 'projects/swimlane/ngx-datatable/src/lib/types';
+import { ColumnMode, SelectionType } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 @Component({
   selector: 'single-selection-demo',

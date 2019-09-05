@@ -1,6 +1,6 @@
-// maybe rename this file to prop-getters.ts
+import { TableColumnProp } from '../types/table-column.type';
 
-import { TableColumnProp } from '../types';
+// maybe rename this file to prop-getters.ts
 
 export type ValueGetter = (obj: any, prop: TableColumnProp) => any;
 
