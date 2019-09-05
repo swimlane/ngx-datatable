@@ -1,10 +1,15 @@
 # Changelog
 
+## 16.0.2
+
+- Bug: Remove barrel files because ng-packagr doesn't work well with them
+
 ## 16.0.1
 
 - Bug: Include styles, assets and themes in release
 
 ## 16.0.0
+
 - Breaking: the release files are not under the `/release` folder any more. Also, paths to `themes` and `assets` have changed. If you are importing any assets or styles from the release folder, you would need to update the paths.
 - Chore: Migrates the project to angular-cli, making it compatible with Ivy (#1738)
 - Feature: Implements global module config via forRoot (#1688)
