@@ -1,5 +1,16 @@
 # Changelog
 
+## 16.0.0
+
+- Chore: Migrates the project to angular-cli, making it compatible with Ivy (#1738)
+- Feature: Implements global module config via forRoot (#1688)
+- Feature: Colors of material style can be modified by target application (#1651)
+- Bug: Fixes Exception in scoller component destroy (#1685)
+- Bug: Fixes issue 1686: column resizing issue in force columns mode (no horizontal scroll) when container get smaller (#1687)
+-
+
+* Docs: Updates demo pages (#1738)
+
 ## 15.0.2
 
 - Fix: Fixes issue where footer pagination does not work when virtual scrolling is enabled (#1704)
