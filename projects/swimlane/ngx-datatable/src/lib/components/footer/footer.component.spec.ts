@@ -2,8 +2,9 @@ import { Component, DebugElement, Input, Output, EventEmitter, ViewChild, Templa
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { DataTableFooterComponent, DataTablePagerComponent } from '.';
 import { addMatchers } from '../../test';
+import { DataTablePagerComponent } from './pager.component';
+import { DataTableFooterComponent } from './footer.component';
 
 let fixture: ComponentFixture<TestFixtureComponent>;
 let component: TestFixtureComponent;

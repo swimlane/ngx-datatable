@@ -1,6 +1,5 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-
-import { DataTableRowWrapperComponent } from '.';
+import { DataTableRowWrapperComponent } from './body-row-wrapper.component';
 
 describe('DataTableRowWrapperComponent', () => {
   let fixture: ComponentFixture<DataTableRowWrapperComponent>;

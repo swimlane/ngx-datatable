@@ -1,9 +1,9 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 
-import { DataTableBodyCellComponent } from '.';
 import { numericIndexGetter } from '../../utils/column-prop-getters';
 import { setColumnDefaults } from '../../utils/column-helper';
 import { TableColumn } from '../../types/table-column.type';
+import { DataTableBodyCellComponent } from './body-cell.component';
 
 describe('DataTableBodyCellComponent', () => {
   let fixture: ComponentFixture<DataTableBodyCellComponent>;

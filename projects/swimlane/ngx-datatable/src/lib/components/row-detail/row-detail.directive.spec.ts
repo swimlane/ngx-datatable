@@ -1,8 +1,8 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-
-import { DatatableRowDetailDirective, DatatableRowDetailTemplateDirective } from '.';
+import { DatatableRowDetailDirective } from './row-detail.directive';
+import { DatatableRowDetailTemplateDirective } from './row-detail-template.directive';
 
 @Component({
   selector: 'test-fixture-component',
