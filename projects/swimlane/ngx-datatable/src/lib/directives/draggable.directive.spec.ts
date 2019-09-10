@@ -1,8 +1,8 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-import { Component, DebugElement } from '@angular/core';
+import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { DraggableDirective } from '../../public-api';
 
-import { DraggableDirective } from '.';
 
 @Component({
   selector: 'test-fixture-component',

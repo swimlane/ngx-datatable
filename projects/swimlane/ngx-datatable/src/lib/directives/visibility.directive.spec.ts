@@ -1,8 +1,7 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-import { Component, DebugElement } from '@angular/core';
+import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
-
-import { VisibilityDirective } from '.';
+import { VisibilityDirective } from '../../public-api';
 
 @Component({
   selector: 'test-fixture-component',

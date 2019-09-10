@@ -5,10 +5,9 @@ import {} from 'jasmine';
 
 import { DataTableBodyRowComponent } from '../body-row.component';
 import { DataTableBodyCellComponent } from '../body-cell.component';
-import { DataTableSummaryRowComponent } from './summary-row.component';
-import { ISummaryColumn } from './';
+import { DataTableSummaryRowComponent, ISummaryColumn } from './summary-row.component';
 import { ScrollbarHelper } from '../../../services/scrollbar-helper.service';
-import { setColumnDefaults } from '../../../utils';
+import { setColumnDefaults } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 describe('DataTableSummaryRowComponent', () => {
   let fixture: ComponentFixture<DataTableSummaryRowComponent>;

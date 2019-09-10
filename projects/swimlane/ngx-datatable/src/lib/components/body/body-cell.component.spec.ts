@@ -1,6 +1,6 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 
-import { DataTableBodyCellComponent } from '.';
+import { DataTableBodyCellComponent } from '../../../public-api';
 import { numericIndexGetter } from '../../utils/column-prop-getters';
 import { setColumnDefaults } from '../../utils/column-helper';
 import { TableColumn } from '../../types/table-column.type';

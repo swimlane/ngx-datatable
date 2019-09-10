@@ -1,6 +1,5 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-
-import { ScrollerComponent } from '.';
+import { ScrollerComponent } from '../../../public-api';
 
 describe('ScrollerComponent', () => {
   let fixture: ComponentFixture<ScrollerComponent>;

@@ -9,9 +9,9 @@ import {
   DataTableSelectionComponent,
   DataTableSummaryRowComponent,
   ProgressBarComponent,
-  ScrollerComponent
-} from '.';
-import { ScrollbarHelper } from '../../services';
+  ScrollerComponent,
+  ScrollbarHelper
+} from '../../../public-api';
 
 describe('DataTableBodyComponent', () => {
   let fixture: ComponentFixture<DataTableBodyComponent>;

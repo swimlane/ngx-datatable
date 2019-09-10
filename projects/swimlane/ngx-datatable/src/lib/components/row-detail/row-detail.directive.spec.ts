@@ -2,7 +2,7 @@ import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { DatatableRowDetailDirective, DatatableRowDetailTemplateDirective } from '.';
+import { DatatableRowDetailDirective, DatatableRowDetailTemplateDirective } from '../../../public-api';
 
 @Component({
   selector: 'test-fixture-component',

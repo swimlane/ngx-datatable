@@ -1,6 +1,6 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 
-import { DataTableSelectionComponent } from '.';
+import { DataTableSelectionComponent } from '../../../public-api';
 
 describe('DataTableSelectionComponent', () => {
   let fixture: ComponentFixture<DataTableSelectionComponent>;

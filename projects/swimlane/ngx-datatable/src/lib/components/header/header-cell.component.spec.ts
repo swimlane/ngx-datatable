@@ -1,6 +1,6 @@
 import { async, TestBed } from '@angular/core/testing';
 
-import { DataTableHeaderCellComponent } from '.';
+import { DataTableHeaderCellComponent } from '../../../public-api';
 
 describe('DataTableHeaderCellComponent', () => {
   let fixture;
