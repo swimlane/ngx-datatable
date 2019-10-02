@@ -3,7 +3,7 @@ import {
   QueryList, KeyValueDiffers, AfterContentInit, OnDestroy, Inject
 } from '@angular/core';
 import { DraggableDirective } from './draggable.directive';
-import { DOCUMENT } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
 
 @Directive({ selector: '[orderable]' })
 export class OrderableDirective implements AfterContentInit, OnDestroy {
@@ -11,7 +11,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
   @Output() reorder: EventEmitter<any> = new EventEmitter();
   @Output() targetChanged: EventEmitter<any> = new EventEmitter();
 
-  @ContentChildren(DraggableDirective, { descendants: true })
+  @ContentChildren(DraggableDirective, { descendants: true, static: false })
   draggables: QueryList<DraggableDirective>;
 
   positions: any;

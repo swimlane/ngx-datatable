@@ -71,18 +71,17 @@
     "@angular/core": "<7.0.0",
     "@angular/platform-browser": "<7.0.0",
     "@angular/platform-browser-dynamic": "<7.0.0",
-    "core-js": "^2.4.0",
-    "rxjs": "^6.0.0"
+    "rxjs": "^6.x"
   },
   "devDependencies": {
-    "@angular/animations": "^6.0.0",
-    "@angular/common": "^6.0.0",
-    "@angular/compiler": "^6.0.0",
-    "@angular/compiler-cli": "^6.0.0",
-    "@angular/core": "^6.0.0",
-    "@angular/platform-browser": "^6.0.0",
-    "@angular/platform-browser-dynamic": "^6.0.0",
-    "@angular/platform-server": "^6.0.0",
+    "@angular/animations": "^8.0.0",
+    "@angular/common": "^8.0.0",
+    "@angular/compiler": "^8.0.0",
+    "@angular/compiler-cli": "^8.0.0",
+    "@angular/core": "^8.0.0",
+    "@angular/platform-browser": "^8.0.0",
+    "@angular/platform-browser-dynamic": "^8.0.0",
+    "@angular/platform-server": "^8.0.0",
     "@types/jasmine": "^2.8.4",
     "@types/node": "^8.0.53",
     "angular2-template-loader": "^0.6.2",
@@ -110,7 +109,6 @@
     "karma-remap-coverage": "^0.1.3",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.6",
-    "node-sass": "^4.6.1",
     "npm-run-all": "^4.1.2",
     "postcss": "^5.2.11",
     "postcss-loader": "^1.2.2",
@@ -137,5 +135,8 @@
     "webpack-merge": "^4.1.1",
     "webpack-notifier": "^1.5.0",
     "zone.js": "^0.8.26"
+  },
+  "dependencies": {
+    "node-sass": "^4.12.0"
   }
 }

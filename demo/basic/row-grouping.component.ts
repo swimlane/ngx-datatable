@@ -96,7 +96,7 @@ import { NgStyle } from '@angular/common';
 })
 export class RowGroupingComponent {
 
-  @ViewChild('myTable') table: any;
+  @ViewChild('myTable', { static: false }) table: any;
 
   funder = [];
   calculated = [];

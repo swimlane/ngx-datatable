@@ -13,7 +13,7 @@ export class DatatableFooterDirective {
   @Input() pagerNextIcon: string;
 
   @Input()
-  @ContentChild(DataTableFooterTemplateDirective, { read: TemplateRef }) 
+  @ContentChild(DataTableFooterTemplateDirective, { read: TemplateRef, static: false }) 
   template: TemplateRef<any>;
 
 }

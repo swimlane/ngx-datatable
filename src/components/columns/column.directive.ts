@@ -29,11 +29,11 @@ export class DataTableColumnDirective implements OnChanges {
   @Input() summaryTemplate: TemplateRef<any>;
 
   @Input()
-  @ContentChild(DataTableColumnCellDirective, { read: TemplateRef })
+  @ContentChild(DataTableColumnCellDirective, { read: TemplateRef, static: false })
   cellTemplate: TemplateRef<any>;
 
   @Input()
-  @ContentChild(DataTableColumnHeaderDirective, { read: TemplateRef })
+  @ContentChild(DataTableColumnHeaderDirective, { read: TemplateRef, static: false })
   headerTemplate: TemplateRef<any>;
 
   private isFirstChange = true;

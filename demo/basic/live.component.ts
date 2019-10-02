@@ -37,7 +37,7 @@ import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 })
 export class LiveDataComponent {
 
-  @ViewChild('mydatatable') mydatatable: any;
+  @ViewChild('mydatatable', { static: false }) mydatatable: any;
 
   count: number = 50;
   rows: any[] = [];
