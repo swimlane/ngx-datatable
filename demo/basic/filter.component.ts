@@ -44,7 +44,7 @@ export class FilterBarComponent {
     { name: 'Company' },
     { name: 'Gender' }
   ];
-  @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
+  @ViewChild(DatatableComponent, { static: true }) table: DatatableComponent;
 
   constructor() {
     this.fetch((data) => {

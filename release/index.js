@@ -576,7 +576,7 @@ var DataTableBodyCellComponent = /** @class */ (function () {
         __metadata("design:type", core_1.EventEmitter)
     ], DataTableBodyCellComponent.prototype, "activate", void 0);
     __decorate([
-        core_1.ViewChild('cellTemplate', { read: core_1.ViewContainerRef, static: false }),
+        core_1.ViewChild('cellTemplate', { read: core_1.ViewContainerRef, static: true }),
         __metadata("design:type", core_1.ViewContainerRef)
     ], DataTableBodyCellComponent.prototype, "cellTemplate", void 0);
     __decorate([
@@ -743,7 +743,7 @@ var DatatableGroupHeaderDirective = /** @class */ (function () {
     ], DatatableGroupHeaderDirective.prototype, "rowHeight", void 0);
     __decorate([
         core_1.Input(),
-        core_1.ContentChild(body_group_header_template_directive_1.DatatableGroupHeaderTemplateDirective, { read: core_1.TemplateRef, static: false }),
+        core_1.ContentChild(body_group_header_template_directive_1.DatatableGroupHeaderTemplateDirective, { read: core_1.TemplateRef, static: true }),
         __metadata("design:type", core_1.TemplateRef)
     ], DatatableGroupHeaderDirective.prototype, "template", void 0);
     __decorate([
@@ -1917,7 +1917,7 @@ var DataTableBodyComponent = /** @class */ (function () {
         __metadata("design:type", Object)
     ], DataTableBodyComponent.prototype, "rowContextmenu", void 0);
     __decorate([
-        core_1.ViewChild(scroller_component_1.ScrollerComponent, { static: false }),
+        core_1.ViewChild(scroller_component_1.ScrollerComponent, { static: true }),
         __metadata("design:type", scroller_component_1.ScrollerComponent)
     ], DataTableBodyComponent.prototype, "scroller", void 0);
     DataTableBodyComponent = __decorate([
@@ -2591,12 +2591,12 @@ var DataTableColumnDirective = /** @class */ (function () {
     ], DataTableColumnDirective.prototype, "summaryTemplate", void 0);
     __decorate([
         core_1.Input(),
-        core_1.ContentChild(column_cell_directive_1.DataTableColumnCellDirective, { read: core_1.TemplateRef, static: false }),
+        core_1.ContentChild(column_cell_directive_1.DataTableColumnCellDirective, { read: core_1.TemplateRef, static: true }),
         __metadata("design:type", core_1.TemplateRef)
     ], DataTableColumnDirective.prototype, "cellTemplate", void 0);
     __decorate([
         core_1.Input(),
-        core_1.ContentChild(column_header_directive_1.DataTableColumnHeaderDirective, { read: core_1.TemplateRef, static: false }),
+        core_1.ContentChild(column_header_directive_1.DataTableColumnHeaderDirective, { read: core_1.TemplateRef, static: true }),
         __metadata("design:type", core_1.TemplateRef)
     ], DataTableColumnDirective.prototype, "headerTemplate", void 0);
     DataTableColumnDirective = __decorate([
@@ -3771,23 +3771,23 @@ var DatatableComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [core_1.QueryList])
     ], DatatableComponent.prototype, "columnTemplates", null);
     __decorate([
-        core_1.ContentChild(row_detail_1.DatatableRowDetailDirective, { static: false }),
+        core_1.ContentChild(row_detail_1.DatatableRowDetailDirective, { static: true }),
         __metadata("design:type", row_detail_1.DatatableRowDetailDirective)
     ], DatatableComponent.prototype, "rowDetail", void 0);
     __decorate([
-        core_1.ContentChild(body_group_header_directive_1.DatatableGroupHeaderDirective, { static: false }),
+        core_1.ContentChild(body_group_header_directive_1.DatatableGroupHeaderDirective, { static: true }),
         __metadata("design:type", body_group_header_directive_1.DatatableGroupHeaderDirective)
     ], DatatableComponent.prototype, "groupHeader", void 0);
     __decorate([
-        core_1.ContentChild(footer_1.DatatableFooterDirective, { static: false }),
+        core_1.ContentChild(footer_1.DatatableFooterDirective, { static: true }),
         __metadata("design:type", footer_1.DatatableFooterDirective)
     ], DatatableComponent.prototype, "footer", void 0);
     __decorate([
-        core_1.ViewChild(body_1.DataTableBodyComponent, { static: false }),
+        core_1.ViewChild(body_1.DataTableBodyComponent, { static: true }),
         __metadata("design:type", body_1.DataTableBodyComponent)
     ], DatatableComponent.prototype, "bodyComponent", void 0);
     __decorate([
-        core_1.ViewChild(header_1.DataTableHeaderComponent, { static: false }),
+        core_1.ViewChild(header_1.DataTableHeaderComponent, { static: true }),
         __metadata("design:type", header_1.DataTableHeaderComponent)
     ], DatatableComponent.prototype, "headerComponent", void 0);
     __decorate([
@@ -4010,7 +4010,7 @@ var DatatableFooterDirective = /** @class */ (function () {
     ], DatatableFooterDirective.prototype, "pagerNextIcon", void 0);
     __decorate([
         core_1.Input(),
-        core_1.ContentChild(footer_template_directive_1.DataTableFooterTemplateDirective, { read: core_1.TemplateRef, static: false }),
+        core_1.ContentChild(footer_template_directive_1.DataTableFooterTemplateDirective, { read: core_1.TemplateRef, static: true }),
         __metadata("design:type", core_1.TemplateRef)
     ], DatatableFooterDirective.prototype, "template", void 0);
     DatatableFooterDirective = __decorate([
@@ -4980,7 +4980,7 @@ var DatatableRowDetailDirective = /** @class */ (function () {
     ], DatatableRowDetailDirective.prototype, "rowHeight", void 0);
     __decorate([
         core_1.Input(),
-        core_1.ContentChild(row_detail_template_directive_1.DatatableRowDetailTemplateDirective, { read: core_1.TemplateRef, static: false }),
+        core_1.ContentChild(row_detail_template_directive_1.DatatableRowDetailTemplateDirective, { read: core_1.TemplateRef, static: true }),
         __metadata("design:type", core_1.TemplateRef)
     ], DatatableRowDetailDirective.prototype, "template", void 0);
     __decorate([
@@ -5555,7 +5555,7 @@ var OrderableDirective = /** @class */ (function () {
         __metadata("design:type", core_1.EventEmitter)
     ], OrderableDirective.prototype, "targetChanged", void 0);
     __decorate([
-        core_1.ContentChildren(draggable_directive_1.DraggableDirective, { descendants: true, static: false }),
+        core_1.ContentChildren(draggable_directive_1.DraggableDirective, { descendants: true, static: true }),
         __metadata("design:type", core_1.QueryList)
     ], OrderableDirective.prototype, "draggables", void 0);
     OrderableDirective = __decorate([

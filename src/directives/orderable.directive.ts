@@ -11,7 +11,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
   @Output() reorder: EventEmitter<any> = new EventEmitter();
   @Output() targetChanged: EventEmitter<any> = new EventEmitter();
 
-  @ContentChildren(DraggableDirective, { descendants: true, static: false })
+  @ContentChildren(DraggableDirective, { descendants: true, static: true })
   draggables: QueryList<DraggableDirective>;
 
   positions: any;

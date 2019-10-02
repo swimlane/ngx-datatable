@@ -125,7 +125,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild('cellTemplate', { read: ViewContainerRef, static: false }) cellTemplate: ViewContainerRef;
+  @ViewChild('cellTemplate', { read: ViewContainerRef, static: true }) cellTemplate: ViewContainerRef;
 
   @HostBinding('class')
   get columnCssClasses(): any {    

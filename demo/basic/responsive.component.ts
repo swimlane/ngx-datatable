@@ -108,7 +108,7 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 })
 export class ResponsiveComponent {
 
-  @ViewChild('myTable', { static: false }) table: any;
+  @ViewChild('myTable', { static: true }) table: any;
 
   rows: any[] = [];
   expanded: any = {};

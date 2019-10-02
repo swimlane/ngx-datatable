@@ -36,7 +36,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 export class SummaryRowCustomTemplateComponent implements OnInit {
   rows = [];
 
-  @ViewChild('nameSummaryCell', { static: false })
+  @ViewChild('nameSummaryCell', { static: true })
   nameSummaryCell: TemplateRef<any>;
 
   columns = [];

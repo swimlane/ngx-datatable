@@ -288,7 +288,7 @@ class TestFixtureComponent {
    * selectively be passed to the DatatableFooterComponent
    * in these unit tests
    */
-  @ViewChild('testTemplate', { read: TemplateRef, static: false })
+  @ViewChild('testTemplate', { read: TemplateRef, static: true })
   testTemplate: TemplateRef<any>;
 
   onPageEvent() {
