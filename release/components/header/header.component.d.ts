@@ -39,11 +39,11 @@ export declare class DataTableHeaderComponent {
         right: {};
     };
     constructor(cd: ChangeDetectorRef);
-    onLongPressStart({event, model}: {
+    onLongPressStart({ event, model }: {
         event: any;
         model: any;
     }): void;
-    onLongPressEnd({event, model}: {
+    onLongPressEnd({ event, model }: {
         event: any;
         model: any;
     }): void;
@@ -51,10 +51,10 @@ export declare class DataTableHeaderComponent {
     trackByGroups(index: number, colGroup: any): any;
     columnTrackingFn(index: number, column: any): any;
     onColumnResized(width: number, column: DataTableColumnDirective): void;
-    onColumnReordered({prevIndex, newIndex, model}: any): void;
-    onTargetChanged({prevIndex, newIndex, initialIndex}: any): void;
+    onColumnReordered({ prevIndex, newIndex, model }: any): void;
+    onTargetChanged({ prevIndex, newIndex, initialIndex }: any): void;
     getColumn(index: number): any;
-    onSort({column, prevValue, newValue}: any): void;
+    onSort({ column, prevValue, newValue }: any): void;
     calcNewSorts(column: any, prevValue: number, newValue: number): any[];
     setStylesByGroup(): void;
     calcStylesByGroup(group: string): any;

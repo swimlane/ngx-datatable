@@ -1,11 +1,14 @@
 "use strict";
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
 };
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -833,6 +836,7 @@ var DatatableComponent = /** @class */ (function () {
      * Toggle all row selection
      */
     DatatableComponent.prototype.onHeaderSelect = function (event) {
+        var _a, _b;
         if (this.selectAllRowsOnPage) {
             // before we splice, chk if we currently have all selected
             var first = this.bodyComponent.indexes.first;
@@ -858,7 +862,6 @@ var DatatableComponent = /** @class */ (function () {
         this.select.emit({
             selected: this.selected
         });
-        var _a, _b;
     };
     /**
      * A row was selected from body
@@ -1124,23 +1127,23 @@ var DatatableComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [core_1.QueryList])
     ], DatatableComponent.prototype, "columnTemplates", null);
     __decorate([
-        core_1.ContentChild(row_detail_1.DatatableRowDetailDirective),
+        core_1.ContentChild(row_detail_1.DatatableRowDetailDirective, { static: true }),
         __metadata("design:type", row_detail_1.DatatableRowDetailDirective)
     ], DatatableComponent.prototype, "rowDetail", void 0);
     __decorate([
-        core_1.ContentChild(body_group_header_directive_1.DatatableGroupHeaderDirective),
+        core_1.ContentChild(body_group_header_directive_1.DatatableGroupHeaderDirective, { static: true }),
         __metadata("design:type", body_group_header_directive_1.DatatableGroupHeaderDirective)
     ], DatatableComponent.prototype, "groupHeader", void 0);
     __decorate([
-        core_1.ContentChild(footer_1.DatatableFooterDirective),
+        core_1.ContentChild(footer_1.DatatableFooterDirective, { static: true }),
         __metadata("design:type", footer_1.DatatableFooterDirective)
     ], DatatableComponent.prototype, "footer", void 0);
     __decorate([
-        core_1.ViewChild(body_1.DataTableBodyComponent),
+        core_1.ViewChild(body_1.DataTableBodyComponent, { static: true }),
         __metadata("design:type", body_1.DataTableBodyComponent)
     ], DatatableComponent.prototype, "bodyComponent", void 0);
     __decorate([
-        core_1.ViewChild(header_1.DataTableHeaderComponent),
+        core_1.ViewChild(header_1.DataTableHeaderComponent, { static: true }),
         __metadata("design:type", header_1.DataTableHeaderComponent)
     ], DatatableComponent.prototype, "headerComponent", void 0);
     __decorate([

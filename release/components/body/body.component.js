@@ -732,7 +732,7 @@ var DataTableBodyComponent = /** @class */ (function () {
         __metadata("design:type", Object)
     ], DataTableBodyComponent.prototype, "rowContextmenu", void 0);
     __decorate([
-        core_1.ViewChild(scroller_component_1.ScrollerComponent),
+        core_1.ViewChild(scroller_component_1.ScrollerComponent, { static: true }),
         __metadata("design:type", scroller_component_1.ScrollerComponent)
     ], DataTableBodyComponent.prototype, "scroller", void 0);
     DataTableBodyComponent = __decorate([
