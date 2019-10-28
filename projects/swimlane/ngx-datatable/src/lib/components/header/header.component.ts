@@ -300,6 +300,10 @@ export class DataTableHeaderComponent {
   }
 
   setStylesByGroup() {
+    if (!this._columnGroupWidths) {
+      return;
+    }
+
     this._styleByGroup.left = this.calcStylesByGroup('left');
     this._styleByGroup.center = this.calcStylesByGroup('center');
     this._styleByGroup.right = this.calcStylesByGroup('right');
