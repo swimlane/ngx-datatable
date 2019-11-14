@@ -656,14 +656,6 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   }
 
   /**
-   * This will be used when displaying or selecting rows.
-   * when tracking/comparing them, we'll use the value of this fn,
-   *
-   * (`fn(x) === fn(y)` instead of `x === y`)
-   */
-  @Input() rowIdentity: (x: any) => any = (x: any) => x;
-
-  /**
    * Lifecycle hook that is called after data-bound
    * properties of a directive are initialized.
    */
@@ -710,9 +702,24 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    */
   ngAfterContentInit() {
     this.columnTemplates.changes.subscribe(v => this.translateColumns(v));
-
     this.listenForColumnInputChanges();
   }
+
+  /**
+   * This will be used when displaying or selecting rows.
+   * when tracking/comparing them, we'll use the value of this fn,
+   *
+   * (`fn(x) === fn(y)` instead of `x === y`)
+   */
+  @Input() rowIdentity: (x: any) => any = (x: any) => {
+    if (this._groupRowsBy) {
+      // each group in groupedRows are stored as {key, value: [rows]},
+      // where key is the groupRowsBy index
+      return x.key;
+    } else {
+      return x;
+    }
+  };
 
   /**
    * Translates the templates to the column objects

@@ -156,7 +156,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   @Input() set rows(val: any[]) {
     this._rows = val;
-    this.rowExpansions.clear();
     this.recalcLayout();
   }
 
@@ -256,7 +255,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   rowTrackingFn: any;
   listener: any;
   rowIndexes: any = new Map();
-  rowExpansions: any = new Map();
+  rowExpansions: any[] = [];
 
   _rows: any[];
   _bodyHeight: any;
@@ -470,10 +469,10 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   getRowAndDetailHeight(row: any): number {
     let rowHeight = this.getRowHeight(row);
-    const expanded = this.rowExpansions.get(row);
+    const expanded = this.getRowExpanded(row);
 
     // Adding detail row height if its expanded.
-    if (expanded === 1) {
+    if (expanded) {
       rowHeight += this.getDetailRowHeight(row);
     }
 
@@ -619,6 +618,13 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
     // Initialize the tree only if there are rows inside the tree.
     if (this.rows && this.rows.length) {
+      const rowExpansions = new Set();
+      for (const row of this.rows) {
+        if (this.getRowExpanded(row)) {
+          rowExpansions.add(row);
+        }
+      }
+
       this.rowHeightsCache.initCache({
         rows: this.rows,
         rowHeight: this.rowHeight,
@@ -626,7 +632,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         externalVirtual: this.scrollbarV && this.externalPaging,
         rowCount: this.rowCount,
         rowIndexes: this.rowIndexes,
-        rowExpansions: this.rowExpansions
+        rowExpansions
       });
     }
   }
@@ -657,7 +663,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   toggleRowExpansion(row: any): void {
     // Capture the row index of the first row that is visible on the viewport.
     const viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
-    let expanded = this.rowExpansions.get(row);
+    const rowExpandedIdx = this.getRowExpandedIdx(row, this.rowExpansions);
+    const expanded = rowExpandedIdx > -1;
 
     // If the detailRowHeight is auto --> only in case of non-virtualized scroll
     if (this.scrollbarV && this.virtualization) {
@@ -668,8 +675,11 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     }
 
     // Update the toggled row and update thive nevere heights in the cache.
-    expanded = expanded ^= 1;
-    this.rowExpansions.set(row, expanded);
+    if (expanded) {
+      this.rowExpansions.splice(rowExpandedIdx, 1);
+    } else {
+      this.rowExpansions.push(row);
+    }
 
     this.detailToggle.emit({
       rows: [row],
@@ -682,15 +692,15 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   toggleAllRows(expanded: boolean): void {
     // clear prev expansions
-    this.rowExpansions.clear();
-
-    const rowExpanded = expanded ? 1 : 0;
+    this.rowExpansions = [];
 
     // Capture the row index of the first row that is visible on the viewport.
     const viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
 
-    for (const row of this.rows) {
-      this.rowExpansions.set(row, rowExpanded);
+    if (expanded) {
+      for (const row of this.rows) {
+        this.rowExpansions.push(row);
+      }
     }
 
     if (this.scrollbarV) {
@@ -749,14 +759,23 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * Returns if the row was expanded and set default row expansion when row expansion is empty
    */
   getRowExpanded(row: any): boolean {
-    if (this.rowExpansions.size === 0 && this.groupExpansionDefault) {
+    if (this.rowExpansions.length === 0 && this.groupExpansionDefault) {
       for (const group of this.groupedRows) {
-        this.rowExpansions.set(group, 1);
+        this.rowExpansions.push(group);
       }
     }
 
-    const expanded = this.rowExpansions.get(row);
-    return expanded === 1;
+    return this.getRowExpandedIdx(row, this.rowExpansions) > -1;
+  }
+
+  getRowExpandedIdx(row: any, expanded: any[]): number {
+    if (!expanded || !expanded.length) return -1;
+
+    const rowId = this.rowIdentity(row);
+    return expanded.findIndex((r) => {
+      const id = this.rowIdentity(r);
+      return id === rowId;
+    });
   }
 
   /**
