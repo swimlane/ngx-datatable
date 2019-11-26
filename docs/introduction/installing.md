@@ -5,8 +5,6 @@ in Github or via [NPM](https://www.npmjs.com/package/@swimlane/ngx-datatable).
 
 - `npm install @swimlane/ngx-datatable`
 
-Also, the release code is checked in and resides [here](https://github.com/swimlane/ngx-datatable/tree/master/release).
-
 ### CSS
 
 If you want to use material theme, include `./themes/material.css`. For more information, visit the 'Themes' section.
