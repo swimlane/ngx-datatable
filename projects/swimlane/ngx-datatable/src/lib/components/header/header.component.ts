@@ -5,7 +5,8 @@ import {
   Input,
   HostBinding,
   ChangeDetectorRef,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  ViewRef
 } from '@angular/core';
 import { MouseEvent } from '../../events';
 import { columnsByPin, columnGroupWidths, columnsByPinArr } from '../../utils/column';
@@ -303,7 +304,9 @@ export class DataTableHeaderComponent {
     this._styleByGroup.left = this.calcStylesByGroup('left');
     this._styleByGroup.center = this.calcStylesByGroup('center');
     this._styleByGroup.right = this.calcStylesByGroup('right');
-    this.cd.detectChanges();
+    if (!(this.cd as ViewRef).destroyed) {
+      this.cd.detectChanges();
+    }
   }
 
   calcStylesByGroup(group: string): any {
