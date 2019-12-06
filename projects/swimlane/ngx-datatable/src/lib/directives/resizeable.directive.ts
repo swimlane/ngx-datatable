@@ -29,6 +29,7 @@ export class ResizeableDirective implements OnDestroy, AfterViewInit {
   element: HTMLElement;
   subscription: Subscription;
   resizing: boolean = false;
+  private resizeHandle: HTMLElement;
 
   constructor(element: ElementRef, private renderer: Renderer2) {
     this.element = element.nativeElement;
@@ -36,17 +37,22 @@ export class ResizeableDirective implements OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     const renderer2 = this.renderer;
-    const node = renderer2.createElement('span');
+    this.resizeHandle = renderer2.createElement('span');
     if (this.resizeEnabled) {
-      renderer2.addClass(node, 'resize-handle');
+      renderer2.addClass(this.resizeHandle, 'resize-handle');
     } else {
-      renderer2.addClass(node, 'resize-handle--not-resizable');
+      renderer2.addClass(this.resizeHandle, 'resize-handle--not-resizable');
     }
-    renderer2.appendChild(this.element, node);
+    renderer2.appendChild(this.element, this.resizeHandle);
   }
 
   ngOnDestroy(): void {
     this._destroySubscription();
+    if (this.renderer.destroyNode) {
+      this.renderer.destroyNode(this.resizeHandle);
+    } else {
+      this.renderer.removeChild(this.renderer.parentNode(this.resizeHandle), this.resizeHandle);
+    }
   }
 
   onMouseup(): void {
