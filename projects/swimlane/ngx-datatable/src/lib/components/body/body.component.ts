@@ -175,7 +175,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   @Input() set offset(val: number) {
     this._offset = val;
-    this.recalcLayout();
+    if (!this.scrollbarV || (this.scrollbarV && !this.virtualization))
+      this.recalcLayout();
   }
 
   get offset(): number {
