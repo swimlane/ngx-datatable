@@ -17,9 +17,8 @@
     "build-docs": "cross-env NODE_ENV=production ng build --prod --base-href=\"/ngx-datatable/\"",
     "predeploy-docs": "npm run build-docs",
     "deploy-docs": "angular-cli-ghpages --dir ./dist/ngx-datatable",
-    "publish": "npm publish dist/ngx-datatable"
+    "publish": "npm publish dist/stas-kh/ngx-datatable-with-ie-fix"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "~8.2.3",
     "@angular/common": "~8.2.3",
