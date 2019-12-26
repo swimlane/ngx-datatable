@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ColumnMode, SelectionType } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode, SelectionType } from 'projects/stas-kh/ngx-datatable-with-ie-fix/src/public-api';
 
 @Component({
   selector: 'cell-selection-demo',

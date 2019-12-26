@@ -16,7 +16,7 @@ module.exports = function(config) {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
     coverageIstanbulReporter: {
-      dir: require('path').join(__dirname, '../../../coverage/swimlane/ngx-datatable'),
+      dir: require('path').join(__dirname, '../../../coverage/stas-kh/ngx-datatable-with-ie-fix'),
       reports: ['html', 'lcovonly', 'text-summary'],
       fixWebpackSourcePaths: true
     },

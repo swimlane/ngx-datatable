@@ -1,5 +1,5 @@
 /*
- * Public API Surface of ngx-datatable
+ * Public API Surface of ngx-datatable-with-ie-fix
  */
 
 // components

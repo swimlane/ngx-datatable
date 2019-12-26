@@ -362,7 +362,7 @@ describe('DatatableComponent With Custom Templates', () => {
     expect(textContent({ row: 3, column: 1 })).toContain('20', 'Ascending');
   });
 
-  it('should reflect changes to input bindings of `ngx-datatable-column`', () => {
+  it('should reflect changes to input bindings of `ngx-datatable-with-ie-fix-column`', () => {
     const initialRows = [
       { id: 5, user: 'Sam', age: 35 },
       { id: 20, user: 'Bob', age: 50 },
@@ -456,7 +456,7 @@ function sortBy({ column }: { column: number }) {
 
 /**
  * test helper function to return text content of a cell within the
- * body of the ngx-datatable component
+ * body of the ngx-datatable-with-ie-fix component
  */
 function textContent({ row, column }: { row: number; column: number }) {
   const [rowIndex, columnIndex] = [row - 1, column - 1];

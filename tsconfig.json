@@ -17,8 +17,8 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@swimlane/ngx-datatable": ["dist/swimlane/ngx-datatable"],
-      "@swimlane/ngx-datatable/*": ["dist/swimlane/ngx-datatable/*"]
+      "@swimlane/ngx-datatable": ["dist/stas-kh/ngx-datatable-with-ie-fix"],
+      "@swimlane/ngx-datatable/*": ["dist/stas-kh/ngx-datatable-with-ie-fix/*"]
     }
   },
   "angularCompilerOptions": {

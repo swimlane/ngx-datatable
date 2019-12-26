@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy, Location } from '@angular/common';
-import packageInfo from 'projects/swimlane/ngx-datatable/package.json';
+import packageInfo from 'projects/stas-kh/ngx-datatable-with-ie-fix/package.json';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +8,9 @@ import packageInfo from 'projects/swimlane/ngx-datatable/package.json';
   encapsulation: ViewEncapsulation.None,
   styleUrls: [
     './app.component.scss',
-    '../../projects/swimlane/ngx-datatable/src/lib/themes/material.scss',
-    '../../projects/swimlane/ngx-datatable/src/lib/themes/dark.scss',
-    '../../projects/swimlane/ngx-datatable/src/lib/themes/bootstrap.scss'
+    '../../projects/stas-kh/ngx-datatable-with-ie-fix/src/lib/themes/material.scss',
+    '../../projects/stas-kh/ngx-datatable-with-ie-fix/src/lib/themes/dark.scss',
+    '../../projects/stas-kh/ngx-datatable-with-ie-fix/src/lib/themes/bootstrap.scss'
   ],
   providers: [
     Location,

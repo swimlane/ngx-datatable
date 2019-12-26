@@ -3,7 +3,7 @@ import { MockServerResultsService } from './mock-server-results-service';
 import { PagedData } from './model/paged-data';
 import { CorporateEmployee } from './model/corporate-employee';
 import { Page } from './model/page';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode } from 'projects/stas-kh/ngx-datatable-with-ie-fix/src/public-api';
 
 @Component({
   selector: 'paging-scrolling-novirtualization-demo',

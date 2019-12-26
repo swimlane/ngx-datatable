@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode } from 'projects/stas-kh/ngx-datatable-with-ie-fix/src/public-api';
 
 @Component({
   selector: 'basic-auto-demo',

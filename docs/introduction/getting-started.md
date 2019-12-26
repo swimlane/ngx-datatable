@@ -6,7 +6,7 @@ in your application module like:
 ```javascript
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgxDatatableModule } from ngx-datatable-with-ie-fix;
 
 import { AppComponent } from './app.component';
 

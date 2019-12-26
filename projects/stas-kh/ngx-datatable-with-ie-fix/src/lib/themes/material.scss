@@ -6,12 +6,12 @@
   To modify table colors, add the following lines to the scss file of your application
   (this example modifies the color of the selected row - selectionType = single, multi or multiClick):
 
-  $ngx-datatable-selected-active-background: yellow;
-  $ngx-datatable-selected-active-background-hover: rgba(yellow, 0.2);
+  $ngx-datatable-with-ie-fix-selected-active-background: yellow;
+  $ngx-datatable-with-ie-fix-selected-active-background-hover: rgba(yellow, 0.2);
 
-  @import '~@swimlane/ngx-datatable/index.css';
-  @import '~@swimlane/ngx-datatable/themes/material.scss';
-  @import '~@swimlane/ngx-datatable/assets/icons.css';
+  @import '~@stas-kh/ngx-datatable-with-ie-fix/index.css';
+  @import '~@stas-kh/ngx-datatable-with-ie-fix/themes/material.scss';
+  @import '~@stas-kh/ngx-datatable-with-ie-fix/assets/icons.css';
 
 That's all.
 */
