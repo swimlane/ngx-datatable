@@ -1,0 +1,101 @@
+/*
+bootstrap table theme
+*/
+
+.ngx-datatable.bootstrap {
+  box-shadow: none;
+  font-size: 13px;
+  .datatable-header {
+    height: unset !important;
+    .datatable-header-cell {
+      vertical-align: bottom;
+      padding: 0.75rem;
+      border-bottom: 1px solid #d1d4d7;
+      .datatable-header-cell-label {
+        line-height: 24px;
+      }
+    }
+  }
+  .datatable-body {
+    .datatable-body-row {
+      vertical-align: top;
+      border-top: 1px solid #d1d4d7;
+      &.datatable-row-even {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+      &.active {
+        background-color: #1483ff;
+        color: #fff;
+      }
+      .datatable-body-cell {
+        padding: 0.75rem;
+        text-align: left;
+        vertical-align: top;
+      }
+    }
+    .empty-row {
+      $alert-padding-y: 0.75rem !default;
+      $alert-padding-x: 1.25rem !default;
+      position: relative;
+      padding: $alert-padding-y $alert-padding-x;
+      margin-bottom: 0;
+    }
+  }
+  .datatable-footer {
+    background: #424242;
+    color: #ededed;
+    margin-top: -1px;
+    .page-count {
+      line-height: 50px;
+      height: 50px;
+      padding: 0 1.2rem;
+    }
+    .datatable-pager {
+      margin: 0 10px;
+      vertical-align: top;
+      ul {
+        li {
+          margin: 10px 0px;
+          &:not(.disabled) {
+            &.active,
+            &:hover {
+              a {
+                background-color: #545454;
+                font-weight: bold;
+              }
+            }
+          }
+        }
+      }
+      a {
+        height: 22px;
+        min-width: 24px;
+        line-height: 22px;
+        padding: 0;
+        border-radius: 3px;
+        margin: 0 3px;
+        text-align: center;
+        vertical-align: top;
+        text-decoration: none;
+        vertical-align: bottom;
+        color: #ededed;
+      }
+      .datatable-icon-left,
+      .datatable-icon-skip,
+      .datatable-icon-right,
+      .datatable-icon-prev {
+        font-size: 18px;
+        line-height: 27px;
+        padding: 0 3px;
+      }
+    }
+  }
+  // Summary row styles
+  .datatable-summary-row {
+    .datatable-body-row {
+      .datatable-body-cell {
+        font-weight: bold;
+      }
+    }
+  }
+}
