@@ -1,16 +1,12 @@
 {
-  "name": "@swimlane/ngx-datatable",
-  "version": "16.0.2",
-  "description": "ngx-datatable is an Angular table grid component for presenting large and complex data.",
+  "name": "ngx-datatable-with-ie-fix",
+  "version": "8.0.0",
+  "description": "ngx-datatable-with-ie-fix is an Angular table grid component for presenting large and complex data.",
   "peerDependencies": {
     "@angular/common": "<9.0.0",
     "@angular/core": "<9.0.0",
     "@angular/platform-browser": "<9.0.0",
     "rxjs": "^6.5.2"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/swimlane/ngx-datatable.git"
   },
   "keywords": [
     "angularjs",
@@ -21,10 +17,10 @@
     "grid",
     "table"
   ],
-  "author": "Swimlane",
+  "author": "Stanislav Khorunzhyi",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/swimlane/ngx-datatable/issues"
+  "repository": {
+    "url": "git+https://github.com/stas-kh/ngx-datatable"
   },
-  "homepage": "https://github.com/swimlane/ngx-datatable#readme"
+  "homepage": "https://github.com/stas-kh/ngx-datatable#readme"
 }
