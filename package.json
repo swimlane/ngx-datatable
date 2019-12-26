@@ -1,15 +1,15 @@
 {
-  "name": "ngx-datatable",
-  "version": "0.0.0",
+  "name": "ngx-datatable-with-ie-fix",
+  "version": "4.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build-pkg": "ng build @swimlane/ngx-datatable && npm run copy-files && npm run build:css",
+    "build-pkg": "ng build stas-kh/ngx-datatable && npm run copy-files && npm run build:css",
     "copy-files": "cp README.md dist/swimlane/ngx-datatable/README.md && cp LICENSE dist/swimlane/ngx-datatable/LICENSE && cpx \"src/assets/**/*\" \"dist/swimlane/ngx-datatable/assets\" && cpx \"projects/swimlane/ngx-datatable/src/lib/themes/**/*\" \"dist/swimlane/ngx-datatable/themes\"",
     "build:css": "scss-bundle && node-sass -o dist/swimlane/ngx-datatable/themes dist/swimlane/ngx-datatable/themes && node-sass -o dist/swimlane/ngx-datatable dist/swimlane/ngx-datatable",
-    "test": "ng test @swimlane/ngx-datatable",
-    "test:ci": "ng test @swimlane/ngx-datatable --watch=false --progress=false",
+    "test": "ng test stas-kh/ngx-datatable",
+    "test:ci": "ng test stas-kh/ngx-datatable --watch=false --progress=false",
     "ci": "concurrently \"npm run lint\" \"npm run test:ci\"",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -19,6 +19,10 @@
     "deploy-docs": "angular-cli-ghpages --dir ./dist/ngx-datatable",
     "publish": "npm publish dist/swimlane/ngx-datatable"
   },
+  "repository": {
+    "url": "git+https://github.com/stas-kh/ngx-datatable"
+  },
+  "homepage": "https://github.com/stas-kh/ngx-datatable#readme",
   "private": true,
   "dependencies": {
     "@angular/animations": "~8.2.3",
@@ -39,7 +43,7 @@
     "@angular/cli": "~8.3.0",
     "@angular/compiler-cli": "~8.2.3",
     "@angular/language-service": "~8.2.3",
-    "@swimlane/prettier-config-swimlane": "^2.0.0",
+    "stas-kh/prettier-config-swimlane": "^2.0.0",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
@@ -69,4 +73,4 @@
     "tslint-config-swimlane": "^4.0.0",
     "typescript": "~3.5.3"
   }
-}
+},

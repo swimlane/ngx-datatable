@@ -64,5 +64,4 @@ export * from './lib/utils/throttle';
 export * from './lib/utils/sort';
 export * from './lib/utils/row-height-cache';
 export * from './lib/utils/column-helper';
-export * from './lib/utils/elm-from-point';
 export * from './lib/utils/tree';

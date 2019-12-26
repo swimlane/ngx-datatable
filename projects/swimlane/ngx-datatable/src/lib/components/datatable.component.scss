@@ -175,6 +175,7 @@
 
       .resize-handle {
         cursor: ew-resize;
+        visibility: visible;
       }
 
       &.resizeable:hover {
@@ -310,6 +311,34 @@
           }
         }
       }
+    }
+  }
+}
+
+@media all and (-ms-high-contrast: none) {
+  .datatable-header-cell {
+    pointer-events: none;
+
+    > div {
+      pointer-events: none;
+    }
+
+    * {
+      pointer-events: auto;
+    }
+  }
+}
+
+@supports (-ms-ime-align: auto) {
+  .datatable-header-cell {
+    pointer-events: none;
+
+    > div {
+      pointer-events: none;
+    }
+
+    * {
+      pointer-events: auto;
     }
   }
 }

@@ -22,6 +22,9 @@
     (columnContextmenu)="onColumnContextmenu($event)"
   >
   </datatable-header>
+  <datatable-progress
+    *ngIf="loadingIndicator">
+  </datatable-progress>
   <datatable-body
     [groupRowsBy]="groupRowsBy"
     [groupedRows]="groupedRows"
@@ -30,7 +33,6 @@
     [scrollbarV]="scrollbarV"
     [scrollbarH]="scrollbarH"
     [virtualization]="virtualization"
-    [loadingIndicator]="loadingIndicator"
     [externalPaging]="externalPaging"
     [rowHeight]="rowHeight"
     [rowCount]="rowCount"
