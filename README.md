@@ -1,4 +1,4 @@
-# ngx-datatable-with-ie-fix
+# @stas-kh/ngx-datatable
 It is a forked version of [@swimlane/ngx-datatable](https://github.com/swimlane/ngx-datatable) with fixes for Internet Explorer 11.
 
 ## Changes in this version
@@ -10,5 +10,5 @@ It is a forked version of [@swimlane/ngx-datatable](https://github.com/swimlane/
 ## Installation
 To use ngx-datatable-with-ie-fix in your project install it via [npm](https://www.npmjs.com/package/@swimlane/ngx-datatable):
 ```
-npm i ngx-datatable-with-ie-fix --save
+npm i @stas-kh/ngx-datatable --save
 ```
