@@ -1,6 +1,6 @@
 {
   "name": "ngx-datatable-with-ie-fix",
-  "version": "8.0.0",
+  "version": "8.0.1",
   "description": "ngx-datatable-with-ie-fix is an Angular table grid component for presenting large and complex data.",
   "peerDependencies": {
     "@angular/common": "<9.0.0",
