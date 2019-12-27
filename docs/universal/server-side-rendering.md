@@ -25,11 +25,11 @@ I am using the ideas about dimensions from client hints that I set on the signin
 
 
 ```typescript
-import { ScrollbarHelper } from '@swimlane/ngx-datatable';
+import { ScrollbarHelper } from ngx-datatable-with-ie-fix;
 import { Injectable, Inject } from '@angular/core';
 import { Request } from 'express';
 import { REQUEST } from '@nguniversal/express-engine/tokens';
-import { DimensionsHelper } from '@swimlane/ngx-datatable';
+import { DimensionsHelper } from ngx-datatable-with-ie-fix;
 
 @Injectable()
 export class ServerDimensionsHelper extends DimensionsHelper {
@@ -64,7 +64,7 @@ export class ServerDimensionsHelper extends DimensionsHelper {
 In this case I just returned the scrollbar width based on what I used for css styling
 
 ```typescript
-import { ScrollbarHelper } from '@swimlane/ngx-datatable';
+import { ScrollbarHelper } from ngx-datatable-with-ie-fix;
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 

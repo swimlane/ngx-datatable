@@ -1,0 +1,6 @@
+{
+  "bundlerOptions": {
+    "entryFile": "./projects/stas-kh/ngx-datatable-with-ie-fix/src/lib/components/datatable.component.scss",
+    "outFile": "./dist/stas-kh/ngx-datatable-with-ie-fix/index.scss"
+  }
+}

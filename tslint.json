@@ -1,7 +1,6 @@
 {
-  "extends": "tslint-config-swimlane/base.json",
-  "rulesDirectory": [],
+  "extends": ["tslint-config-swimlane/base", "tslint-config-prettier"],
   "rules": {
-    "prefer-conditional-expression": false
+    "no-implicit-dependencies": [false, "dev"]
   }
 }

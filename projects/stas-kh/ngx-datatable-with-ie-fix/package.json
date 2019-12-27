@@ -1,0 +1,26 @@
+{
+  "name": "ngx-datatable-with-ie-fix",
+  "version": "8.0.1",
+  "description": "ngx-datatable-with-ie-fix is an Angular table grid component for presenting large and complex data.",
+  "peerDependencies": {
+    "@angular/common": "<9.0.0",
+    "@angular/core": "<9.0.0",
+    "@angular/platform-browser": "<9.0.0",
+    "rxjs": "^6.5.2"
+  },
+  "keywords": [
+    "angularjs",
+    "angular",
+    "javascript",
+    "angular2",
+    "datatable",
+    "grid",
+    "table"
+  ],
+  "author": "Stanislav Khorunzhyi",
+  "license": "MIT",
+  "repository": {
+    "url": "git+https://github.com/stas-kh/ngx-datatable"
+  },
+  "homepage": "https://github.com/stas-kh/ngx-datatable#readme"
+}
