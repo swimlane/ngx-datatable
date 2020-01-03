@@ -1,6 +1,6 @@
 {
   "name": "@stas-kh/ngx-datatable",
-  "version": "8.0.1",
+  "version": "8.1.1",
   "description": "@stas-kh/ngx-datatable is an Angular table grid component for presenting large and complex data.",
   "peerDependencies": {
     "@angular/common": "<9.0.0",
