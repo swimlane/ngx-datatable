@@ -1,6 +1,6 @@
 {
   "name": "@stas-kh/ngx-datatable",
-  "version": "8.0.1",
+  "version": "8.0.4",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
