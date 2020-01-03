@@ -5,7 +5,7 @@ import {
   Input,
   HostBinding,
   ChangeDetectorRef,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy, OnDestroy
 } from '@angular/core';
 import { MouseEvent } from '../../events';
 import { columnsByPin, columnGroupWidths, columnsByPinArr } from '../../utils/column';
@@ -68,7 +68,7 @@ import { translateXY } from '../../utils/translate';
   },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DataTableHeaderComponent {
+export class DataTableHeaderComponent implements OnDestroy {
   @Input() sortAscendingIcon: any;
   @Input() sortDescendingIcon: any;
   @Input() scrollbarH: boolean;
@@ -158,7 +158,13 @@ export class DataTableHeaderComponent {
     right: {}
   };
 
+  private destroyed = false;
+
   constructor(private cd: ChangeDetectorRef) {}
+
+  ngOnDestroy(): void {
+    this.destroyed = true;
+  }
 
   onLongPressStart({ event, model }: { event: any; model: any }) {
     model.dragging = true;
@@ -303,7 +309,9 @@ export class DataTableHeaderComponent {
     this._styleByGroup.left = this.calcStylesByGroup('left');
     this._styleByGroup.center = this.calcStylesByGroup('center');
     this._styleByGroup.right = this.calcStylesByGroup('right');
-    this.cd.detectChanges();
+    if (!this.destroyed) {
+      this.cd.detectChanges();
+    }
   }
 
   calcStylesByGroup(group: string): any {
