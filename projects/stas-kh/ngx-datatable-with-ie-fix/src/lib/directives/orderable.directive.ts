@@ -12,6 +12,13 @@ import {
 import { DraggableDirective } from './draggable.directive';
 import { DOCUMENT } from '@angular/common';
 
+const getElementsFromPoint = (x: number, y: number) => {
+  if ((document as any).msElementsFromPoint) {
+    return Array.from((document as any).msElementsFromPoint(x, y));
+  }
+  return document.elementsFromPoint(x, y);
+};
+
 @Directive({ selector: '[orderable]' })
 export class OrderableDirective implements AfterContentInit, OnDestroy {
   @Output() reorder: EventEmitter<any> = new EventEmitter();
@@ -128,7 +135,10 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
     let i = 0;
     const x = event.x || event.clientX;
     const y = event.y || event.clientY;
-    const targets = this.document.elementsFromPoint(x, y);
+    /*
+    * Fixed problem with getting coordinates in IE
+    */
+    const targets = getElementsFromPoint(x, y);
 
     for (const prop in this.positions) {
       // current column position which throws event.
