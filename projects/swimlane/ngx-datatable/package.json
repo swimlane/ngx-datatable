@@ -1,6 +1,6 @@
 {
   "name": "@swimlane/ngx-datatable",
-  "version": "16.0.2",
+  "version": "16.0.3",
   "description": "ngx-datatable is an Angular table grid component for presenting large and complex data.",
   "peerDependencies": {
     "@angular/common": "<9.0.0",
@@ -16,7 +16,6 @@
     "angularjs",
     "angular",
     "javascript",
-    "angular2",
     "datatable",
     "grid",
     "table"

@@ -1,5 +1,11 @@
 # Changelog
 
+## 16.0.3
+
+- Bug: Fix disappearing rows with vertical scrollbar, virtual scrolling & rowdetail auto height (#1799)
+- Bug: Fix memory leak due to created element not cleaned up (#1792)
+- Bug: do not collapse row details when row updated (#1778)
+
 ## 16.0.2
 
 - Bug: Remove barrel files because ng-packagr doesn't work well with them
