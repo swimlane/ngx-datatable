@@ -608,7 +608,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   get allRowsSelected(): boolean {
     let allRowsSelected = this.rows && this.selected && this.selected.length === this.rows.length;
 
-    if (this.selectAllRowsOnPage) {
+    if (this.bodyComponent && this.selectAllRowsOnPage) {
       const indexes = this.bodyComponent.indexes;
       const rowsOnPage = indexes.last - indexes.first;
       allRowsSelected = this.selected.length === rowsOnPage;
@@ -1086,7 +1086,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Toggle all row selection
    */
   onHeaderSelect(event: any): void {
-    if (this.selectAllRowsOnPage) {
+    if (this.bodyComponent && this.selectAllRowsOnPage) {
       // before we splice, chk if we currently have all selected
       const first = this.bodyComponent.indexes.first;
       const last = this.bodyComponent.indexes.last;
