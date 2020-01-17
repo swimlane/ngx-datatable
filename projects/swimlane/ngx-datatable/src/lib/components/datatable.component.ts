@@ -22,39 +22,39 @@ import {
   OnDestroy,
   Optional,
   Inject
-} from '@angular/core';
+} from "@angular/core";
 
-import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
+import { DatatableGroupHeaderDirective } from "./body/body-group-header.directive";
 
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { INgxDatatableConfig } from '../ngx-datatable.module';
-import { groupRowsByParents, optionalGetterForProp } from '../utils/tree';
-import { TableColumn } from '../types/table-column.type';
-import { setColumnDefaults, translateTemplates } from '../utils/column-helper';
-import { ColumnMode } from '../types/column-mode.type';
-import { SelectionType } from '../types/selection.type';
-import { SortType } from '../types/sort.type';
-import { ContextmenuType } from '../types/contextmenu.type';
-import { DataTableColumnDirective } from './columns/column.directive';
-import { DatatableRowDetailDirective } from './row-detail/row-detail.directive';
-import { DatatableFooterDirective } from './footer/footer.directive';
-import { DataTableBodyComponent } from './body/body.component';
-import { DataTableHeaderComponent } from './header/header.component';
-import { ScrollbarHelper } from '../services/scrollbar-helper.service';
-import { ColumnChangesService } from '../services/column-changes.service';
-import { DimensionsHelper } from '../services/dimensions-helper.service';
-import { throttleable } from '../utils/throttle';
-import { forceFillColumnWidths, adjustColumnWidths } from '../utils/math';
-import { sortRows } from '../utils/sort';
+import { BehaviorSubject, Subscription } from "rxjs";
+import { INgxDatatableConfig } from "../ngx-datatable.module";
+import { groupRowsByParents, optionalGetterForProp } from "../utils/tree";
+import { TableColumn } from "../types/table-column.type";
+import { setColumnDefaults, translateTemplates } from "../utils/column-helper";
+import { ColumnMode } from "../types/column-mode.type";
+import { SelectionType } from "../types/selection.type";
+import { SortType } from "../types/sort.type";
+import { ContextmenuType } from "../types/contextmenu.type";
+import { DataTableColumnDirective } from "./columns/column.directive";
+import { DatatableRowDetailDirective } from "./row-detail/row-detail.directive";
+import { DatatableFooterDirective } from "./footer/footer.directive";
+import { DataTableBodyComponent } from "./body/body.component";
+import { DataTableHeaderComponent } from "./header/header.component";
+import { ScrollbarHelper } from "../services/scrollbar-helper.service";
+import { ColumnChangesService } from "../services/column-changes.service";
+import { DimensionsHelper } from "../services/dimensions-helper.service";
+import { throttleable } from "../utils/throttle";
+import { forceFillColumnWidths, adjustColumnWidths } from "../utils/math";
+import { sortRows } from "../utils/sort";
 
 @Component({
-  selector: 'ngx-datatable',
-  templateUrl: './datatable.component.html',
+  selector: "ngx-datatable",
+  templateUrl: "./datatable.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./datatable.component.scss'],
+  styleUrls: ["./datatable.component.scss"],
   host: {
-    class: 'ngx-datatable'
+    class: "ngx-datatable"
   }
 })
 export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
@@ -178,7 +178,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * The row height; which is necessary
    * to calculate the height for the lazy rendering.
    */
-  @Input() rowHeight: number | 'auto' | ((row?: any) => number) = 30;
+  @Input() rowHeight: number | "auto" | ((row?: any) => number) = 30;
 
   /**
    * Type of column width distribution formula.
@@ -254,7 +254,10 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     this._offset = val;
   }
   get offset(): number {
-    return Math.max(Math.min(this._offset, Math.ceil(this.rowCount / this.pageSize) - 1), 0);
+    return Math.max(
+      Math.min(this._offset, Math.ceil(this.rowCount / this.pageSize) - 1),
+      0
+    );
   }
 
   /**
@@ -304,12 +307,12 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Css class overrides
    */
   @Input() cssClasses: any = {
-    sortAscending: 'datatable-icon-up',
-    sortDescending: 'datatable-icon-down',
-    pagerLeftArrow: 'datatable-icon-left',
-    pagerRightArrow: 'datatable-icon-right',
-    pagerPrevious: 'datatable-icon-prev',
-    pagerNext: 'datatable-icon-skip'
+    sortAscending: "datatable-icon-up",
+    sortDescending: "datatable-icon-down",
+    pagerLeftArrow: "datatable-icon-left",
+    pagerRightArrow: "datatable-icon-right",
+    pagerPrevious: "datatable-icon-prev",
+    pagerNext: "datatable-icon-skip"
   };
 
   /**
@@ -322,13 +325,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   @Input() messages: any = {
     // Message to show when array is presented
     // but contains no values
-    emptyMessage: 'No data to display',
+    emptyMessage: "No data to display",
 
     // Footer total message
-    totalMessage: 'total',
+    totalMessage: "total",
 
     // Footer selected message
-    selectedMessage: 'selected'
+    selectedMessage: "selected"
   };
 
   /**
@@ -409,7 +412,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   /**
    * A property holds a summary row position: top/bottom
    */
-  @Input() summaryPosition: string = 'top';
+  @Input() summaryPosition: string = "top";
 
   /**
    * Body was scrolled typically in a `scrollbarV:true` scenario.
@@ -451,7 +454,11 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * type indicates whether the header or the body was clicked.
    * content contains either the column or the row that was clicked.
    */
-  @Output() tableContextmenu = new EventEmitter<{ event: MouseEvent; type: ContextmenuType; content: any }>(false);
+  @Output() tableContextmenu = new EventEmitter<{
+    event: MouseEvent;
+    type: ContextmenuType;
+    content: any;
+  }>(false);
 
   /**
    * A row was expanded ot collapsed for tree
@@ -461,26 +468,28 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   /**
    * CSS class applied if the header height if fixed height.
    */
-  @HostBinding('class.fixed-header')
+  @HostBinding("class.fixed-header")
   get isFixedHeader(): boolean {
     const headerHeight: number | string = this.headerHeight;
-    return typeof headerHeight === 'string' ? <string>headerHeight !== 'auto' : true;
+    return typeof headerHeight === "string"
+      ? <string>headerHeight !== "auto"
+      : true;
   }
 
   /**
    * CSS class applied to the root element if
    * the row heights are fixed heights.
    */
-  @HostBinding('class.fixed-row')
+  @HostBinding("class.fixed-row")
   get isFixedRow(): boolean {
-    return this.rowHeight !== 'auto';
+    return this.rowHeight !== "auto";
   }
 
   /**
    * CSS class applied to root element if
    * vertical scrolling is enabled.
    */
-  @HostBinding('class.scroll-vertical')
+  @HostBinding("class.scroll-vertical")
   get isVertScroll(): boolean {
     return this.scrollbarV;
   }
@@ -489,7 +498,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * CSS class applied to root element if
    * virtualization is enabled.
    */
-  @HostBinding('class.virtualized')
+  @HostBinding("class.virtualized")
   get isVirtualized(): boolean {
     return this.virtualization;
   }
@@ -498,7 +507,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * CSS class applied to the root element
    * if the horziontal scrolling is enabled.
    */
-  @HostBinding('class.scroll-horz')
+  @HostBinding("class.scroll-horz")
   get isHorScroll(): boolean {
     return this.scrollbarH;
   }
@@ -506,7 +515,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   /**
    * CSS class applied to root element is selectable.
    */
-  @HostBinding('class.selectable')
+  @HostBinding("class.selectable")
   get isSelectable(): boolean {
     return this.selectionType !== undefined;
   }
@@ -514,7 +523,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   /**
    * CSS class applied to root is checkbox selection.
    */
-  @HostBinding('class.checkbox-selection')
+  @HostBinding("class.checkbox-selection")
   get isCheckboxSelection(): boolean {
     return this.selectionType === SelectionType.checkbox;
   }
@@ -522,7 +531,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   /**
    * CSS class applied to root if cell selection.
    */
-  @HostBinding('class.cell-selection')
+  @HostBinding("class.cell-selection")
   get isCellSelection(): boolean {
     return this.selectionType === SelectionType.cell;
   }
@@ -530,7 +539,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   /**
    * CSS class applied to root if single select.
    */
-  @HostBinding('class.single-selection')
+  @HostBinding("class.single-selection")
   get isSingleSelection(): boolean {
     return this.selectionType === SelectionType.single;
   }
@@ -538,7 +547,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   /**
    * CSS class added to root element if mulit select
    */
-  @HostBinding('class.multi-selection')
+  @HostBinding("class.multi-selection")
   get isMultiSelection(): boolean {
     return this.selectionType === SelectionType.multi;
   }
@@ -546,7 +555,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   /**
    * CSS class added to root element if mulit click select
    */
-  @HostBinding('class.multi-click-selection')
+  @HostBinding("class.multi-click-selection")
   get isMultiClickSelection(): boolean {
     return this.selectionType === SelectionType.multiClick;
   }
@@ -606,7 +615,8 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Returns if all rows are selected.
    */
   get allRowsSelected(): boolean {
-    let allRowsSelected = this.rows && this.selected && this.selected.length === this.rows.length;
+    let allRowsSelected =
+      this.rows && this.selected && this.selected.length === this.rows.length;
 
     if (this.selectAllRowsOnPage) {
       const indexes = this.bodyComponent.indexes;
@@ -614,7 +624,9 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       allRowsSelected = this.selected.length === rowsOnPage;
     }
 
-    return this.selected && this.rows && this.rows.length !== 0 && allRowsSelected;
+    return (
+      this.selected && this.rows && this.rows.length !== 0 && allRowsSelected
+    );
   }
 
   element: HTMLElement;
@@ -643,7 +655,9 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     element: ElementRef,
     differs: KeyValueDiffers,
     private columnChangesService: ColumnChangesService,
-    @Optional() @Inject('configuration') private configuration: INgxDatatableConfig
+    @Optional()
+    @Inject("configuration")
+    private configuration: INgxDatatableConfig
   ) {
     // get ref to elm for measuring
     this.element = element.nativeElement;
@@ -677,7 +691,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
     // this has to be done to prevent the change detection
     // tree from freaking out because we are readjusting
-    if (typeof requestAnimationFrame === 'undefined') {
+    if (typeof requestAnimationFrame === "undefined") {
       return;
     }
 
@@ -701,13 +715,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * content has been fully initialized.
    */
   ngAfterContentInit() {
-<<<<<<< HEAD:src/components/datatable.component.ts
-    this.columnTemplates.changes.subscribe(v =>
-      this.translateColumns(v));
-
-=======
     this.columnTemplates.changes.subscribe(v => this.translateColumns(v));
->>>>>>> master:projects/swimlane/ngx-datatable/src/lib/components/datatable.component.ts
     this.listenForColumnInputChanges();
   }
 
@@ -814,7 +822,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   /**
    * Window resize handler to update sizes.
    */
-  @HostListener('window:resize')
+  @HostListener("window:resize")
   @throttleable(5)
   onWindowResize(): void {
     this.recalculate();
@@ -877,10 +885,6 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Body triggered a page event.
    */
   onBodyPage({ offset }: any): void {
-<<<<<<< HEAD:src/components/datatable.component.ts
-
-=======
->>>>>>> master:projects/swimlane/ngx-datatable/src/lib/components/datatable.component.ts
     // Avoid pagination caming from body events like scroll when the table
     // has no virtualization and the external paging is enable.
     // This means, let's the developer handle pagination by my him(her) self
@@ -978,14 +982,22 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * The header triggered a contextmenu event.
    */
   onColumnContextmenu({ event, column }: any): void {
-    this.tableContextmenu.emit({ event, type: ContextmenuType.header, content: column });
+    this.tableContextmenu.emit({
+      event,
+      type: ContextmenuType.header,
+      content: column
+    });
   }
 
   /**
    * The body triggered a contextmenu event.
    */
   onRowContextmenu({ event, row }: any): void {
-    this.tableContextmenu.emit({ event, type: ContextmenuType.body, content: row });
+    this.tableContextmenu.emit({
+      event,
+      type: ContextmenuType.body,
+      content: row
+    });
   }
 
   /**
@@ -1139,7 +1151,9 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   onTreeAction(event: any) {
     const row = event.row;
     // TODO: For duplicated items this will not work
-    const rowIndex = this._rows.findIndex(r => r[this.treeToRelation] === event.row[this.treeToRelation]);
+    const rowIndex = this._rows.findIndex(
+      r => r[this.treeToRelation] === event.row[this.treeToRelation]
+    );
     this.treeAction.emit({ row, rowIndex });
   }
 
@@ -1162,6 +1176,10 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   }
 
   private sortInternalRows(): void {
-    this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
+    this._internalRows = sortRows(
+      this._internalRows,
+      this._internalColumns,
+      this.sorts
+    );
   }
 }
