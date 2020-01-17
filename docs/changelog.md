@@ -1,5 +1,29 @@
 # Changelog
 
+## 16.0.3
+
+- Bug: Fix disappearing rows with vertical scrollbar, virtual scrolling & rowdetail auto height (#1799)
+- Bug: Fix memory leak due to created element not cleaned up (#1792)
+- Bug: do not collapse row details when row updated (#1778)
+
+## 16.0.2
+
+- Bug: Remove barrel files because ng-packagr doesn't work well with them
+
+## 16.0.1
+
+- Bug: Include styles, assets and themes in release
+
+## 16.0.0
+
+- Breaking: the release files are not under the `/release` folder any more. Also, paths to `themes` and `assets` have changed. If you are importing any assets or styles from the release folder, you would need to update the paths.
+- Chore: Migrates the project to angular-cli, making it compatible with Ivy (#1738)
+- Feature: Implements global module config via forRoot (#1688)
+- Feature: Colors of material style can be modified by target application (#1651)
+- Bug: Fixes Exception in scoller component destroy (#1685)
+- Bug: Fixes issue 1686: column resizing issue in force columns mode (no horizontal scroll) when container get smaller (#1687)
+- Docs: Updates demo pages (#1738)
+
 ## 15.0.2
 
 - Fix: Fixes issue where footer pagination does not work when virtual scrolling is enabled (#1704)

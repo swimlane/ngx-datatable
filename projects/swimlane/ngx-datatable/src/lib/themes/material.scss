@@ -1,0 +1,478 @@
+/*
+  This stylesheet uses scss valiables for most of the colors / background-colors of the table
+  to enable the customization of the displayed table without cloning the stylesheet into the
+  own application.
+
+  To modify table colors, add the following lines to the scss file of your application
+  (this example modifies the color of the selected row - selectionType = single, multi or multiClick):
+
+  $ngx-datatable-selected-active-background: yellow;
+  $ngx-datatable-selected-active-background-hover: rgba(yellow, 0.2);
+
+  @import '~@swimlane/ngx-datatable/index.css';
+  @import '~@swimlane/ngx-datatable/themes/material.scss';
+  @import '~@swimlane/ngx-datatable/assets/icons.css';
+
+That's all.
+*/
+
+// common datatable colors
+$ngx-datatable-background: #fff !default;
+$ngx-datatable-box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+  0 3px 14px 2px rgba(0, 0, 0, 0.12) !default;
+$ngx-datatable-row-odd-background: #eee !default;
+
+// default row and cell background colors
+$ngx-datatable-default-background: #fff !default;
+$ngx-datatable-default-background-hover: #eee !default;
+$ngx-datatable-default-background-focus: #ddd !default;
+
+// default background colors for cell selection style
+$ngx-datatable-cellselection-background-hover: #eee !default;
+$ngx-datatable-cellselection-background-focus: #ddd !default;
+
+// background and text colors for selected cell / row
+$ngx-datatable-selected-active-background: #304ffe !default;
+$ngx-datatable-selected-active-color: #fff !default;
+$ngx-datatable-selected-active-background-hover: #193ae4 !default;
+$ngx-datatable-selected-active-color-hover: #fff !default;
+$ngx-datatable-selected-active-background-focus: #2041ef !default;
+$ngx-datatable-selected-active-color-focus: #fff !default;
+
+// colors for header elements
+$datatable-header-cell-background: #fff !default;
+$datatable-header-cell-color: rgba(0, 0, 0, 0.54) !default;
+$datatable-header-border-bottom-color: rgba(0, 0, 0, 0.12) !default;
+$datatable-header-resize-handle-color: #eee !default;
+
+// colors for table body elements
+$datatable-row-detail-background: #f5f5f5 !default;
+$datatable-body-cell-color: rgba(0, 0, 0, 0.87) !default;
+$datatable-group-header-background: #f5f5f5 !default;
+$datatable-group-header-border-top-color: #d9d8d9 !default;
+$datatable-group-header-border-bottom-color: #d9d8d9 !default;
+
+// colors for footer elements
+$datatable-footer-cell-color: rgba(0, 0, 0, 0.54) !default;
+$datatable-footer-border-top-color: rgba(0, 0, 0, 0.12) !default;
+$datatable-pager-color: rgba(0, 0, 0, 0.54) !default;
+$datatable-pager-color-hover: rgba(0, 0, 0, 0.75) !default;
+$datatable-pager-background-hover: rgba(158, 158, 158, 0.2) !default;
+$datatable-pager-disabled-color: rgba(0, 0, 0, 0.26) !default;
+$datatable-pager-disabled-background: transparent !default;
+$datatable-pager-active-background: rgba(158, 158, 158, 0.2) !default;
+
+// colors for summary row elements
+$datatable-summary-row-background: #ddd !default;
+$datatable-summary-row-background-hover: #ddd !default;
+
+.ngx-datatable.material {
+  background: $ngx-datatable-background;
+  box-shadow: $ngx-datatable-box-shadow;
+
+  &.striped {
+    .datatable-row-odd {
+      background: $ngx-datatable-row-odd-background;
+    }
+  }
+
+  &.single-selection,
+  &.multi-selection,
+  &.multi-click-selection {
+    .datatable-body-row {
+      &.active,
+      &.active .datatable-row-group {
+        background-color: $ngx-datatable-selected-active-background;
+        color: $ngx-datatable-selected-active-color;
+      }
+
+      &.active:hover,
+      &.active:hover .datatable-row-group {
+        background-color: $ngx-datatable-selected-active-background-hover;
+        color: $ngx-datatable-selected-active-color-hover;
+      }
+
+      &.active:focus,
+      &.active:focus .datatable-row-group {
+        background-color: $ngx-datatable-selected-active-background-focus;
+        color: $ngx-datatable-selected-active-color-focus;
+      }
+    }
+  }
+
+  &:not(.cell-selection) {
+    .datatable-body-row {
+      &:hover,
+      &:hover .datatable-row-group {
+        background-color: $ngx-datatable-default-background-hover;
+        transition-property: background;
+        transition-duration: 0.3s;
+        transition-timing-function: linear;
+      }
+
+      &:focus,
+      &:focus .datatable-row-group {
+        background-color: $ngx-datatable-default-background-focus;
+      }
+    }
+  }
+
+  &.cell-selection {
+    .datatable-body-cell {
+      &:hover,
+      &:hover .datatable-row-group {
+        background-color: $ngx-datatable-cellselection-background-hover;
+        transition-property: background;
+        transition-duration: 0.3s;
+        transition-timing-function: linear;
+      }
+
+      &:focus,
+      &:focus .datatable-row-group {
+        background-color: $ngx-datatable-cellselection-background-focus;
+      }
+
+      &.active,
+      &.active .datatable-row-group {
+        background-color: $ngx-datatable-selected-active-background;
+        color: $ngx-datatable-selected-active-color;
+      }
+
+      &.active:hover,
+      &.active:hover .datatable-row-group {
+        background-color: $ngx-datatable-selected-active-background-hover;
+        color: $ngx-datatable-selected-active-color-hover;
+      }
+
+      &.active:focus,
+      &.active:focus .datatable-row-group {
+        background-color: $ngx-datatable-selected-active-background-focus;
+        color: $ngx-datatable-selected-active-color-focus;
+      }
+    }
+  }
+
+  /**
+	 * Shared Styles
+	 */
+  .empty-row {
+    height: 50px;
+    text-align: left;
+    padding: 0.5rem 1.2rem;
+    vertical-align: top;
+    border-top: 0;
+  }
+
+  .loading-row {
+    text-align: left;
+    padding: 0.5rem 1.2rem;
+    vertical-align: top;
+    border-top: 0;
+  }
+
+  /**
+	 * Global Row Styles
+	 */
+  .datatable-header,
+  .datatable-body {
+    .datatable-row-left {
+      background-color: $ngx-datatable-background;
+      background-position: 100% 0;
+      background-repeat: repeat-y;
+      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQIHWPSkNeSBmJhTQVtbiDNCgASagIIuJX8OgAAAABJRU5ErkJggg==);
+    }
+
+    .datatable-row-right {
+      background-position: 0 0;
+      background-color: $ngx-datatable-background;
+      background-repeat: repeat-y;
+      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQI12PQkNdi1VTQ5gbSwkAsDQARLAIGtOSFUAAAAABJRU5ErkJggg==);
+    }
+  }
+
+  /**
+	 * Header Styles
+	 */
+  .datatable-header {
+    border-bottom: 1px solid $datatable-header-border-bottom-color;
+
+    .datatable-header-cell {
+      text-align: left;
+      padding: 0.9rem 1.2rem;
+      font-weight: 400;
+      background-color: $datatable-header-cell-background;
+      color: $datatable-header-cell-color;
+      vertical-align: bottom;
+      font-size: 12px;
+      font-weight: 500;
+
+      .datatable-header-cell-wrapper {
+        position: relative;
+      }
+
+      &.longpress {
+        .draggable::after {
+          transition: transform 400ms ease, opacity 400ms ease;
+          opacity: 0.5;
+          transform: scale(1);
+        }
+      }
+
+      .draggable::after {
+        content: ' ';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: -30px 0 0 -30px;
+        height: 60px;
+        width: 60px;
+        background: #eee;
+        border-radius: 100%;
+        opacity: 1;
+        filter: none;
+        transform: scale(0);
+        z-index: 9999;
+        pointer-events: none;
+      }
+
+      &.dragging {
+        .resize-handle {
+          border-right: none;
+        }
+      }
+    }
+
+    .resize-handle {
+      border-right: solid 1px $datatable-header-resize-handle-color;
+    }
+  }
+
+  /**
+	 * Body Styles
+	 */
+  .datatable-body {
+    .datatable-row-detail {
+      background: $datatable-row-detail-background;
+      padding: 10px;
+    }
+
+    .datatable-group-header {
+      background: $datatable-group-header-background;
+      border-bottom: solid 1px $datatable-group-header-border-bottom-color;
+      border-top: solid 1px $datatable-group-header-border-top-color;
+    }
+
+    .datatable-body-row {
+      .datatable-body-cell {
+        text-align: left;
+        padding: 0.9rem 1.2rem;
+        vertical-align: top;
+        border-top: 0;
+        color: $datatable-body-cell-color;
+        transition: width 0.3s ease;
+        font-size: 14px;
+        font-weight: 400;
+
+        // cell active class
+        // &.active {
+        //  background: #0829e0
+        // }
+      }
+      .datatable-body-group-cell {
+        text-align: left;
+        padding: 0.9rem 1.2rem;
+        vertical-align: top;
+        border-top: 0;
+        color: $datatable-body-cell-color;
+        transition: width 0.3s ease;
+        font-size: 14px;
+        font-weight: 400;
+      }
+    }
+
+    .progress-linear {
+      display: block;
+      position: relative;
+      width: 100%;
+      height: 5px;
+      padding: 0;
+      margin: 0;
+      position: absolute;
+
+      .container {
+        display: block;
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        height: 5px;
+        -webkit-transform: translate(0, 0) scale(1, 1);
+        transform: translate(0, 0) scale(1, 1);
+        background-color: rgb(170, 209, 249);
+
+        .bar {
+          transition: all 0.2s linear;
+          -webkit-animation: query 0.8s infinite cubic-bezier(0.39, 0.575, 0.565, 1);
+          animation: query 0.8s infinite cubic-bezier(0.39, 0.575, 0.565, 1);
+
+          transition: -webkit-transform 0.2s linear;
+          transition: transform 0.2s linear;
+          background-color: rgb(16, 108, 200);
+
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          width: 100%;
+          height: 5px;
+        }
+      }
+    }
+  }
+
+  /**
+	 * Footer Styles
+	 */
+  .datatable-footer {
+    border-top: 1px solid $datatable-footer-border-top-color;
+    font-size: 12px;
+    font-weight: 400;
+    color: $datatable-footer-cell-color;
+
+    .page-count {
+      line-height: 50px;
+      height: 50px;
+      padding: 0 1.2rem;
+    }
+
+    .datatable-pager {
+      margin: 0 10px;
+
+      li {
+        vertical-align: middle;
+
+        &.disabled a {
+          color: $datatable-pager-disabled-color !important;
+          background-color: $datatable-pager-disabled-background !important;
+        }
+
+        &.active a {
+          background-color: $datatable-pager-active-background;
+          font-weight: bold;
+        }
+      }
+
+      a {
+        height: 22px;
+        min-width: 24px;
+        line-height: 22px;
+        padding: 0 6px;
+        border-radius: 3px;
+        margin: 6px 3px;
+        text-align: center;
+        vertical-align: top;
+        color: $datatable-pager-color;
+        text-decoration: none;
+        vertical-align: bottom;
+
+        &:hover {
+          color: $datatable-pager-color-hover;
+          background-color: $datatable-pager-background-hover;
+        }
+      }
+
+      .datatable-icon-left,
+      .datatable-icon-skip,
+      .datatable-icon-right,
+      .datatable-icon-prev {
+        font-size: 20px;
+        line-height: 20px;
+        padding: 0 3px;
+      }
+    }
+  }
+
+  // Summary row styles
+  .datatable-summary-row {
+    .datatable-body-row {
+      background-color: $datatable-summary-row-background;
+
+      &:hover {
+        background-color: $datatable-summary-row-background-hover;
+      }
+
+      .datatable-body-cell {
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+/**
+ * Checkboxes
+**/
+.datatable-checkbox {
+  position: relative;
+  margin: 0;
+  cursor: pointer;
+  vertical-align: middle;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 0;
+
+  input[type='checkbox'] {
+    position: relative;
+    margin: 0 1rem 0 0;
+    cursor: pointer;
+    outline: none;
+
+    &:before {
+      -webkit-transition: all 0.3s ease-in-out;
+      -moz-transition: all 0.3s ease-in-out;
+      transition: all 0.3s ease-in-out;
+      content: '';
+      position: absolute;
+      left: 0;
+      z-index: 1;
+      width: 1rem;
+      height: 1rem;
+      border: 2px solid #f2f2f2;
+    }
+
+    &:checked:before {
+      -webkit-transform: rotate(-45deg);
+      -moz-transform: rotate(-45deg);
+      -ms-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+      height: 0.5rem;
+      border-color: #009688;
+      border-top-style: none;
+      border-right-style: none;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1rem;
+      height: 1rem;
+      background: #fff;
+      cursor: pointer;
+    }
+  }
+}
+
+/**
+ * Progress bar animations
+ */
+@keyframes query {
+  0% {
+    opacity: 1;
+    transform: translateX(35%) scale(0.3, 1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0, 1);
+  }
+}

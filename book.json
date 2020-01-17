@@ -1,32 +1,32 @@
 {
-    "gitbook": "3.x.x",
-    "title": "Swimlane",
-    "root": "/docs",
-    "plugins": [
-        "highlight",
-        "github",
-        "theme-api",
-        "include-codeblock",
-        "versions",
-        "anchors",
-        "youtube",
-        "githubcontributors",
-        "collapsible-chapters"
-    ],
-    "pluginsConfig": {
-        "github": {
-            "url": "https://github.com/swimlane/angular2-data-table/"
-        },
-        "theme-api": {
-            "theme": "dark"
-        },
-        "versions": {
-            "gitbookConfigURL": "https://unpkg.com/angular2-data-table/book.json",
-            "type": "tags"
-        },
-        "githubcontributors": {
-          "githubOwner": "swimlane",
-          "githubRepository": "angular2-data-table"
-        }
+  "gitbook": "3.x.x",
+  "title": "Swimlane",
+  "root": "/docs",
+  "plugins": [
+    "highlight",
+    "github",
+    "theme-api",
+    "include-codeblock",
+    "versions",
+    "anchors",
+    "youtube",
+    "githubcontributors",
+    "collapsible-chapters"
+  ],
+  "pluginsConfig": {
+    "github": {
+      "url": "https://github.com/swimlane/ngx-datatable/"
+    },
+    "theme-api": {
+      "theme": "dark"
+    },
+    "versions": {
+      "gitbookConfigURL": "https://unpkg.com/ngx-datatable/book.json",
+      "type": "tags"
+    },
+    "githubcontributors": {
+      "githubOwner": "swimlane",
+      "githubRepository": "ngx-datatable"
     }
+  }
 }

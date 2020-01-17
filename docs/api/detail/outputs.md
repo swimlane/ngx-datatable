@@ -1,7 +1,9 @@
 # Row Detail Outputs
-All outputs are Angular2 `EventEmitter`ers.
+
+All outputs are Angular `EventEmitter`ers.
 
 ### `toggle`
+
 Row detail row was toggled.
 
 ```

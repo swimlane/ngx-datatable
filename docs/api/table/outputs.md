@@ -1,7 +1,9 @@
 # Table Outputs
-All outputs are Angular2 `EventEmitter`ers.
+
+All outputs are Angular `EventEmitter`ers.
 
 ### `activate`
+
 A cell or row was focused via keyboard or mouse click.
 
 ```
@@ -17,6 +19,7 @@ A cell or row was focused via keyboard or mouse click.
 ```
 
 ### `detailToggle`
+
 Row detail row was toggled.
 
 ```
@@ -27,6 +30,7 @@ Row detail row was toggled.
 ```
 
 ### `page`
+
 The table was paged either triggered by the pager or the body scroll.
 
 ```
@@ -38,7 +42,8 @@ The table was paged either triggered by the pager or the body scroll.
 }
 ```
 
-### `reorder` 
+### `reorder`
+
 Columns were re-ordered.
 
 ```
@@ -50,6 +55,7 @@ Columns were re-ordered.
 ```
 
 ### `resize`
+
 Column was resized.
 
 ```
@@ -60,6 +66,7 @@ Column was resized.
 ```
 
 ### `tableContextmenu`
+
 The context menu was invoked on the table.
 
 ```
@@ -71,6 +78,7 @@ The context menu was invoked on the table.
 ```
 
 ### `scroll`
+
 Body was scrolled typically in a `scrollbarV:true` scenario.
 
 ```
@@ -81,6 +89,7 @@ Body was scrolled typically in a `scrollbarV:true` scenario.
 ```
 
 ### `select`
+
 A cell or row was selected.
 
 ```
@@ -90,6 +99,7 @@ A cell or row was selected.
 ```
 
 ### `sort`
+
 Column sort was invoked.
 
 ```

@@ -1,0 +1,18 @@
+.name-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .chip {
+    background-color: #555;
+    border-radius: 20px;
+    text-align: center;
+    margin: 3px 1px;
+    width: 100px;
+    padding: 2px 0px;
+
+    .chip-content {
+      color: #fff;
+    }
+  }
+}

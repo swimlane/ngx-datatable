@@ -1,0 +1,6 @@
+{
+  "bundlerOptions": {
+    "entryFile": "./projects/swimlane/ngx-datatable/src/lib/components/datatable.component.scss",
+    "outFile": "./dist/swimlane/ngx-datatable/index.scss"
+  }
+}
