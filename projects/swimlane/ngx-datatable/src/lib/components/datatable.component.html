@@ -58,9 +58,6 @@
     [rowClass]="rowClass"
     [selectCheck]="selectCheck"
     [displayCheck]="displayCheck"
-    [summaryRow]="summaryRow"
-    [summaryHeight]="summaryHeight"
-    [summaryPosition]="summaryPosition"
     (page)="onBodyPage($event)"
     (activate)="activate.emit($event)"
     (rowContextmenu)="onRowContextmenu($event)"
@@ -72,7 +69,7 @@
   <datatable-summary-row
     *ngIf="summaryRow && summaryPosition === 'top'"
     [rowHeight]="summaryHeight"
-    [offsetX]="offsetX"
+    [offsetX]="_offsetX | async"
     [innerWidth]="_innerWidth"
     [rows]="rows"
     [columns]="_internalColumns">
