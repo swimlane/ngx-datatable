@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, PipeTransform, TemplateRef, ElementRef } from '@angular/core';
+import { Component, Input, OnChanges, PipeTransform, TemplateRef } from '@angular/core';
 
 export interface ISummaryColumn {
   summaryFunc?: (cells: any[]) => any;
