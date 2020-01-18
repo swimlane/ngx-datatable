@@ -66,6 +66,9 @@ $datatable-pager-active-background: rgba(158, 158, 158, 0.2) !default;
 $datatable-summary-row-background: #ddd !default;
 $datatable-summary-row-background-hover: #ddd !default;
 
+// common values
+$datatable-default-cell-padding: 0.9rem 1.2rem;
+
 .ngx-datatable.material {
   background: $ngx-datatable-background;
   box-shadow: $ngx-datatable-box-shadow;
@@ -198,7 +201,7 @@ $datatable-summary-row-background-hover: #ddd !default;
 
     .datatable-header-cell {
       text-align: left;
-      padding: 0.9rem 1.2rem;
+      padding: $datatable-default-cell-padding;
       font-weight: 400;
       background-color: $datatable-header-cell-background;
       color: $datatable-header-cell-color;
@@ -265,7 +268,7 @@ $datatable-summary-row-background-hover: #ddd !default;
     .datatable-body-row {
       .datatable-body-cell {
         text-align: left;
-        padding: 0.9rem 1.2rem;
+        padding: $datatable-default-cell-padding;
         vertical-align: top;
         border-top: 0;
         color: $datatable-body-cell-color;
@@ -280,7 +283,7 @@ $datatable-summary-row-background-hover: #ddd !default;
       }
       .datatable-body-group-cell {
         text-align: left;
-        padding: 0.9rem 1.2rem;
+        padding: $datatable-default-cell-padding;
         vertical-align: top;
         border-top: 0;
         color: $datatable-body-cell-color;
@@ -393,15 +396,19 @@ $datatable-summary-row-background-hover: #ddd !default;
 
   // Summary row styles
   .datatable-summary-row {
-    .datatable-body-row {
+    div {
       background-color: $datatable-summary-row-background;
 
-      &:hover {
-        background-color: $datatable-summary-row-background-hover;
-      }
-
-      .datatable-body-cell {
-        font-weight: bold;
+      .datatable-body-row {
+        background-color: $datatable-summary-row-background;
+        &:hover {
+          background-color: $datatable-summary-row-background-hover;
+        }
+        .datatable-body-cell {
+          font-weight: bold;
+          background-color: $datatable-summary-row-background-hover;
+          padding: $datatable-default-cell-padding;
+        }
       }
     }
   }
