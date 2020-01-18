@@ -29,7 +29,7 @@ import { Component } from '@angular/core';
         [rowHeight]="40"
         [summaryRow]="true"
         [summaryPosition]="summaryPosition"
-        [summaryHeight]="90"
+        [summaryHeight]="60"
         [columns]="columns"
         [headerHeight]="50"
         [scrollbarV]="true"

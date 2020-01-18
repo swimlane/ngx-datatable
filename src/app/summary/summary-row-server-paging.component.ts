@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MockServerResultsService } from '../paging/mock-server-results-service';
-import { PagedData } from '../paging/model/paged-data';
 import { CorporateEmployee } from '../paging/model/corporate-employee';
 import { Page } from '../paging/model/page';
 import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
