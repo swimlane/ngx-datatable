@@ -1,10 +1,11 @@
 import { Component, Input, OnChanges, PipeTransform, TemplateRef } from '@angular/core';
+import { TableColumnProp } from '../../../../public-api';
 
 export interface ISummaryColumn {
   summaryFunc?: (cells: any[]) => any;
   summaryTemplate?: TemplateRef<any>;
 
-  prop: string;
+  prop?: TableColumnProp;
   pipe?: PipeTransform;
 }
 
@@ -32,7 +33,7 @@ function noopSumFunc(cells: any[]): void {
       <datatable-body-row
         *ngIf="summaryRow && _internalColumns"
         tabindex="-1"
-        [innerWidth]="offsetWidth"
+        [innerWidth]="innerWidth"
         [offsetX]="offsetX"
         [columns]="_internalColumns"
         [rowHeight]="rowHeight"
