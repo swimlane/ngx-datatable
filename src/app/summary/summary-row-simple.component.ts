@@ -1,8 +1,8 @@
-import { Component } from "@angular/core";
-import { ColumnMode } from "projects/swimlane/ngx-datatable/src/public-api";
+import { Component } from '@angular/core';
+import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 @Component({
-  selector: "summary-row-simple-demo",
+  selector: 'summary-row-simple-demo',
   template: `
     <div>
       <h3>
@@ -27,10 +27,7 @@ import { ColumnMode } from "projects/swimlane/ngx-datatable/src/public-api";
         </div>
         <div>
           <label for="position-select">Position</label>
-          <select
-            id="position-select"
-            (change)="summaryPosition = $event.target.value"
-          >
+          <select id="position-select" (change)="summaryPosition = $event.target.value">
             <option [value]="'top'">Top</option>
             <option [value]="'bottom'">Bottom</option>
           </select>
@@ -50,19 +47,19 @@ import { ColumnMode } from "projects/swimlane/ngx-datatable/src/public-api";
       </ngx-datatable>
     </div>
   `,
-  styleUrls: ["./summary-row-simple.component.scss"]
+  styleUrls: ['./summary-row-simple.component.scss']
 })
 export class SummaryRowSimpleComponent {
   rows = [];
 
   columns = [
-    { prop: "name" },
-    { name: "Gender", summaryFunc: cells => this.summaryForGender(cells) },
-    { prop: "age", summaryFunc: cells => this.avgAge(cells) }
+    { prop: 'name' },
+    { name: 'Gender', summaryFunc: cells => this.summaryForGender(cells) },
+    { prop: 'age', summaryFunc: cells => this.avgAge(cells) }
   ];
 
   enableSummary = true;
-  summaryPosition = "top";
+  summaryPosition = 'top';
 
   ColumnMode = ColumnMode;
 
@@ -74,7 +71,7 @@ export class SummaryRowSimpleComponent {
 
   fetch(cb) {
     const req = new XMLHttpRequest();
-    req.open("GET", `assets/data/company.json`);
+    req.open('GET', `assets/data/company.json`);
 
     req.onload = () => {
       cb(JSON.parse(req.response));
@@ -84,17 +81,14 @@ export class SummaryRowSimpleComponent {
   }
 
   private summaryForGender(cells: string[]) {
-    const males = cells.filter(cell => cell === "male").length;
-    const females = cells.filter(cell => cell === "female").length;
+    const males = cells.filter(cell => cell === 'male').length;
+    const females = cells.filter(cell => cell === 'female').length;
 
     return `males: ${males}, females: ${females}`;
   }
 
   private avgAge(cells: number[]): number {
     const filteredCells = cells.filter(cell => !!cell);
-    return (
-      filteredCells.reduce((sum, cell) => (sum += cell), 0) /
-      filteredCells.length
-    );
+    return filteredCells.reduce((sum, cell) => (sum += cell), 0) / filteredCells.length;
   }
 }

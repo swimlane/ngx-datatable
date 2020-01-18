@@ -1,8 +1,8 @@
-import { Component } from "@angular/core";
-import { ColumnMode } from "projects/swimlane/ngx-datatable/src/public-api";
+import { Component } from '@angular/core';
+import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 @Component({
-  selector: "summary-row-inline-html",
+  selector: 'summary-row-inline-html',
   template: `
     <div>
       <h3>
@@ -25,18 +25,9 @@ import { ColumnMode } from "projects/swimlane/ngx-datatable/src/public-api";
         rowHeight="auto"
         [rows]="rows"
       >
-        <ngx-datatable-column
-          prop="name"
-          [summaryTemplate]="nameSummaryCell"
-        ></ngx-datatable-column>
-        <ngx-datatable-column
-          name="Gender"
-          [summaryFunc]="summaryForGender"
-        ></ngx-datatable-column>
-        <ngx-datatable-column
-          prop="age"
-          [summaryFunc]="avgAge"
-        ></ngx-datatable-column>
+        <ngx-datatable-column prop="name" [summaryTemplate]="nameSummaryCell"></ngx-datatable-column>
+        <ngx-datatable-column name="Gender" [summaryFunc]="summaryForGender"></ngx-datatable-column>
+        <ngx-datatable-column prop="age" [summaryFunc]="avgAge"></ngx-datatable-column>
       </ngx-datatable>
       <ng-template #nameSummaryCell>
         <div class="name-container">
@@ -47,13 +38,13 @@ import { ColumnMode } from "projects/swimlane/ngx-datatable/src/public-api";
       </ng-template>
     </div>
   `,
-  styleUrls: ["./summary-row-inline-html.component.scss"]
+  styleUrls: ['./summary-row-inline-html.component.scss']
 })
 export class SummaryRowInlineHtmlComponent {
   rows = [];
 
   enableSummary = true;
-  summaryPosition = "top";
+  summaryPosition = 'top';
 
   ColumnMode = ColumnMode;
 
@@ -65,7 +56,7 @@ export class SummaryRowInlineHtmlComponent {
 
   fetch(cb) {
     const req = new XMLHttpRequest();
-    req.open("GET", `assets/data/company.json`);
+    req.open('GET', `assets/data/company.json`);
 
     req.onload = () => {
       cb(JSON.parse(req.response));
@@ -75,23 +66,18 @@ export class SummaryRowInlineHtmlComponent {
   }
 
   getNames(): string[] {
-    return this.rows
-      .map(row => row.name)
-      .map(fullName => fullName.split(" ")[1]);
+    return this.rows.map(row => row.name).map(fullName => fullName.split(' ')[1]);
   }
 
   summaryForGender(cells: string[]) {
-    const males = cells.filter(cell => cell === "male").length;
-    const females = cells.filter(cell => cell === "female").length;
+    const males = cells.filter(cell => cell === 'male').length;
+    const females = cells.filter(cell => cell === 'female').length;
 
     return `males: ${males}, females: ${females}`;
   }
 
   avgAge(cells: number[]): number {
     const filteredCells = cells.filter(cell => !!cell);
-    return (
-      filteredCells.reduce((sum, cell) => (sum += cell), 0) /
-      filteredCells.length
-    );
+    return filteredCells.reduce((sum, cell) => (sum += cell), 0) / filteredCells.length;
   }
 }

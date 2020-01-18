@@ -4,11 +4,14 @@ import { Component } from '@angular/core';
   selector: 'summary-row-with-scrollbar-demo',
   template: `
     <div>
-      <h3>Summary Row With Scrollbar
+      <h3>
+        Summary Row With Scrollbar
         <small>
-        <a href="https://github.com/swimlane/ngx-datatable/blob/master/demo/summary/summary-row-with-scrollbar.component.ts">
-          Source
-        </a>
+          <a
+            href="https://github.com/swimlane/ngx-datatable/blob/master/demo/summary/summary-row-with-scrollbar.component.ts"
+          >
+            Source
+          </a>
         </small>
       </h3>
       <div class="controls">
@@ -30,26 +33,26 @@ import { Component } from '@angular/core';
         [columns]="columns"
         [headerHeight]="50"
         [scrollbarV]="true"
-        [rows]="rows">
+        [rows]="rows"
+      >
       </ngx-datatable>
     </div>
   `,
-  styleUrls: [ './summary-row-with-scrollbar.component.scss' ]
+  styleUrls: ['./summary-row-with-scrollbar.component.scss']
 })
-
 export class SummaryRowWithScrollbarComponent {
   rows = [];
 
   columns = [
     { prop: 'name' },
-    { name: 'Gender', summaryFunc: (cells) => this.summaryForGender(cells) },
-    { name: 'Company' },
+    { name: 'Gender', summaryFunc: cells => this.summaryForGender(cells) },
+    { name: 'Company' }
   ];
 
   summaryPosition = 'top';
 
   constructor() {
-    this.fetch((data) => {
+    this.fetch(data => {
       this.rows = data.splice(0, 50);
     });
   }
@@ -74,6 +77,6 @@ export class SummaryRowWithScrollbarComponent {
 
   private avgAge(cells: number[]): number {
     const filteredCells = cells.filter(cell => !!cell);
-    return filteredCells.reduce((sum, cell) => sum += cell, 0) / filteredCells.length;
+    return filteredCells.reduce((sum, cell) => (sum += cell), 0) / filteredCells.length;
   }
 }

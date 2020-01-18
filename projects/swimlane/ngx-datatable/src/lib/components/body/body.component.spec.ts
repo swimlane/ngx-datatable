@@ -1,16 +1,16 @@
-import { async, TestBed, ComponentFixture } from "@angular/core/testing";
-import {} from "jasmine";
-import { DataTableBodyComponent } from "./body.component";
-import { DataTableBodyRowComponent } from "./body-row.component";
-import { DataTableRowWrapperComponent } from "./body-row-wrapper.component";
-import { DataTableBodyCellComponent } from "./body-cell.component";
-import { DataTableSelectionComponent } from "./selection.component";
-import { DataTableSummaryRowComponent } from "./summary/summary-row.component";
-import { ProgressBarComponent } from "./progress-bar.component";
-import { ScrollerComponent } from "./scroller.component";
-import { ScrollbarHelper } from "../../services/scrollbar-helper.service";
+import { async, TestBed, ComponentFixture } from '@angular/core/testing';
+import {} from 'jasmine';
+import { DataTableBodyComponent } from './body.component';
+import { DataTableBodyRowComponent } from './body-row.component';
+import { DataTableRowWrapperComponent } from './body-row-wrapper.component';
+import { DataTableBodyCellComponent } from './body-cell.component';
+import { DataTableSelectionComponent } from './selection.component';
+import { DataTableSummaryRowComponent } from './summary/summary-row.component';
+import { ProgressBarComponent } from './progress-bar.component';
+import { ScrollerComponent } from './scroller.component';
+import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 
-describe("DataTableBodyComponent", () => {
+describe('DataTableBodyComponent', () => {
   let fixture: ComponentFixture<DataTableBodyComponent>;
   let component: DataTableBodyComponent;
   let element;
@@ -40,14 +40,14 @@ describe("DataTableBodyComponent", () => {
     });
   }));
 
-  describe("fixture", () => {
-    it("should have a component instance", () => {
+  describe('fixture', () => {
+    it('should have a component instance', () => {
       expect(component).toBeTruthy();
     });
   });
 
-  describe("Paging", () => {
-    it("should have correct indexes for normal paging with rows > pageSize", () => {
+  describe('Paging', () => {
+    it('should have correct indexes for normal paging with rows > pageSize', () => {
       component.externalPaging = false;
       component.rows = [
         { num: 1 },
@@ -69,7 +69,7 @@ describe("DataTableBodyComponent", () => {
       expect(component.indexes).toEqual(expectedIndexes);
     });
 
-    it("should have correct indexes for normal paging with rows < pageSize", () => {
+    it('should have correct indexes for normal paging with rows < pageSize', () => {
       component.externalPaging = false;
       component.rows = [{ num: 1 }, { num: 2 }, { num: 3 }, { num: 4 }];
       component.pageSize = 5;
@@ -80,7 +80,7 @@ describe("DataTableBodyComponent", () => {
       expect(component.indexes).toEqual(expectedIndexes);
     });
 
-    it("should have correct indexes for external paging with rows > pageSize", () => {
+    it('should have correct indexes for external paging with rows > pageSize', () => {
       component.externalPaging = true;
       component.rows = [
         { num: 1 },
@@ -102,7 +102,7 @@ describe("DataTableBodyComponent", () => {
       expect(component.indexes).toEqual(expectedIndexes);
     });
 
-    it("should have correct indexes for external paging with rows < pageSize", () => {
+    it('should have correct indexes for external paging with rows < pageSize', () => {
       component.externalPaging = true;
       component.rows = [{ num: 1 }, { num: 2 }, { num: 3 }, { num: 4 }];
       component.pageSize = 5;

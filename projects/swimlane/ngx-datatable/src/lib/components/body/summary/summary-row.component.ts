@@ -1,11 +1,4 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  PipeTransform,
-  TemplateRef,
-  ElementRef
-} from "@angular/core";
+import { Component, Input, OnChanges, PipeTransform, TemplateRef, ElementRef } from '@angular/core';
 
 export interface ISummaryColumn {
   summaryFunc?: (cells: any[]) => any;
@@ -21,7 +14,7 @@ function defaultSumFunc(cells: any[]): any {
   if (!cellsWithValues.length) {
     return null;
   }
-  if (cellsWithValues.some(cell => typeof cell !== "number")) {
+  if (cellsWithValues.some(cell => typeof cell !== 'number')) {
     return null;
   }
 
@@ -33,7 +26,7 @@ function noopSumFunc(cells: any[]): void {
 }
 
 @Component({
-  selector: "datatable-summary-row",
+  selector: 'datatable-summary-row',
   template: `
     <div>
       <datatable-body-row
@@ -50,7 +43,7 @@ function noopSumFunc(cells: any[]): void {
     </div>
   `,
   host: {
-    class: "datatable-summary-row"
+    class: 'datatable-summary-row'
   }
 })
 export class DataTableSummaryRowComponent implements OnChanges {
