@@ -133,8 +133,8 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
 
   isTarget(model: any, event: any): any {
     let i = 0;
-    const x = event.x || event.clientX;
-    const y = event.y || event.clientY;
+    const x = event.clientX || event.x;
+    const y = event.clientY || event.y;
     /*
     * Fixed problem with getting coordinates in IE
     */
