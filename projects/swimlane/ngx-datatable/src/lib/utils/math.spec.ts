@@ -14,7 +14,7 @@ describe('Math function', () => {
 
         expect(columns[0].width).toBe(250); // Not changed
         expect(columns[1].width).toBe(400);
-        expect(columns[2].width).toBe(250);
+        expect(columns[2].width).toBe(100);
       });
     });
 
