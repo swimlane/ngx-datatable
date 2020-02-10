@@ -803,6 +803,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   recalculate(): void {
     this.recalculateDims();
     this.recalculateColumns();
+    this.cd.markForCheck();
   }
 
   /**
