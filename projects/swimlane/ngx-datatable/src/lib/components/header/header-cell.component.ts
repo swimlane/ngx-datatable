@@ -47,8 +47,26 @@ import { SortDirection } from '../../types/sort-direction.type';
 })
 export class DataTableHeaderCellComponent {
   @Input() sortType: SortType;
-  @Input() sortAscendingIcon: string;
-  @Input() sortDescendingIcon: string;
+
+  @Input()
+  set sortAscendingIcon(val: string) {
+    this._sortAscendingIcon = val;
+    this.sortClass = this.calcSortClass(this.sortDir);
+  };
+
+  get sortAscendingIcon() {
+    return this._sortAscendingIcon;
+  }
+
+  @Input()
+  set sortDescendingIcon(val: string) {
+    this._sortDescendingIcon = val;
+    this.sortClass = this.calcSortClass(this.sortDir);
+  };
+
+  get sortDescendingIcon() {
+    return this._sortDescendingIcon;
+  }
 
   @Input() isTarget: boolean;
   @Input() targetMarkerTemplate: any;
@@ -169,6 +187,8 @@ export class DataTableHeaderCellComponent {
 
   private _column: TableColumn;
   private _sorts: any[];
+  private _sortAscendingIcon;
+  private _sortDescendingIcon;
 
   constructor(private cd: ChangeDetectorRef) {}
 

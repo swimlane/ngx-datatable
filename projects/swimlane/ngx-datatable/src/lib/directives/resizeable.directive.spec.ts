@@ -36,6 +36,7 @@ describe('ResizeableDirective', () => {
 
     beforeEach(() => {
       directive = fixture.debugElement.query(By.directive(ResizeableDirective)).injector.get(ResizeableDirective);
+      fixture.detectChanges();
     });
 
     it('should have a component instance', () => {
