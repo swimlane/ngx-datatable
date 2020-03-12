@@ -48,6 +48,7 @@
     "concurrently": "^4.1.2",
     "cpx": "^1.5.0",
     "cross-env": "^5.2.1",
+    "husky": "^4.2.3",
     "jasmine": "^3.4.0",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
@@ -59,6 +60,7 @@
     "ng-packagr": "^5.4.0",
     "node-sass": "^4.12.0",
     "prettier": "^1.17.0",
+    "pretty-quick": "^2.0.1",
     "protractor": "~5.4.0",
     "scss-bundle": "^3.0.1",
     "ts-node": "~7.0.0",
@@ -68,5 +70,10 @@
     "tslint-config-security": "^1.16.0",
     "tslint-config-swimlane": "^4.0.0",
     "typescript": "~3.5.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   }
 }
