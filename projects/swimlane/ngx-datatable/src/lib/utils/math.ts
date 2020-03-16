@@ -109,12 +109,13 @@ export function forceFillColumnWidths(
   let exceedsWindow = false;
   let contentWidth = getContentWidth(allColumns, defaultColWidth);
   let remainingWidth = expectedWidth - contentWidth;
+  let columnsToResizeLength = columnsToResize.length;
   const columnsProcessed: any[] = [];
   const remainingWidthLimit = 1; // when to stop
 
   // This loop takes care of the
   do {
-    additionWidthPerColumn = remainingWidth / columnsToResize.length;
+    additionWidthPerColumn = remainingWidth / columnsToResizeLength;
     exceedsWindow = contentWidth >= expectedWidth;
 
     for (const column of columnsToResize) {
@@ -126,14 +127,22 @@ export function forceFillColumnWidths(
         if (column.minWidth && newSize < column.minWidth) {
           column.width = column.minWidth;
           columnsProcessed.push(column);
+          columnsToResizeLength--;
         } else if (column.maxWidth && newSize > column.maxWidth) {
           column.width = column.maxWidth;
           columnsProcessed.push(column);
-        } else {
-          column.width = newSize;
+          columnsToResizeLength--;
         }
       }
+      column.width = Math.max(0, column.width);
+    }
 
+    additionWidthPerColumn = remainingWidth / columnsToResizeLength;
+    for (const column of columnsToResize) {
+      const newSize = (column.width || defaultColWidth) + additionWidthPerColumn;
+      if (!column.minWidth && !column.maxWidth) {
+        column.width = newSize;
+      }
       column.width = Math.max(0, column.width);
     }
 
