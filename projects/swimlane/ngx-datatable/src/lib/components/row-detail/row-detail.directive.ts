@@ -1,6 +1,11 @@
 import { Input, Output, EventEmitter, Directive, TemplateRef, ContentChild } from '@angular/core';
 import { DatatableRowDetailTemplateDirective } from './row-detail-template.directive';
 
+export interface IRowDetailToggle {
+  type: string;
+  value: any;
+}
+
 @Directive({ selector: 'ngx-datatable-row-detail' })
 export class DatatableRowDetailDirective {
   /**
@@ -22,7 +27,7 @@ export class DatatableRowDetailDirective {
   /**
    * Row detail row visbility was toggled.
    */
-  @Output() toggle: EventEmitter<any> = new EventEmitter();
+  @Output() toggle: EventEmitter<IRowDetailToggle> = new EventEmitter();
 
   /**
    * Toggle the expansion of the row

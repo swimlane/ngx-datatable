@@ -11,6 +11,7 @@ import {
   KeyValueDiffers
 } from '@angular/core';
 import { MouseEvent } from '../../events';
+import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive';
 
 @Component({
   selector: 'datatable-row-wrapper',
@@ -45,10 +46,10 @@ import { MouseEvent } from '../../events';
 })
 export class DataTableRowWrapperComponent implements DoCheck {
   @Input() innerWidth: number;
-  @Input() rowDetail: any;
+  @Input() rowDetail: DatatableRowDetailDirective;
   @Input() groupHeader: any;
   @Input() offsetX: number;
-  @Input() detailRowHeight: any;
+  @Input() detailRowHeight: number;
   @Input() row: any;
   @Input() groupedRows: any;
   @Output() rowContextmenu = new EventEmitter<{ event: MouseEvent; row: any }>(false);

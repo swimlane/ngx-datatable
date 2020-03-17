@@ -13,9 +13,11 @@ import {
 import { ScrollerComponent } from './scroller.component';
 import { MouseEvent } from '../../events';
 import { SelectionType } from '../../types/selection.type';
-import { columnsByPin, columnGroupWidths } from '../../utils/column';
+import { columnsByPin, columnGroupWidths, IColumnGroupWidths } from '../../utils/column';
 import { RowHeightCache } from '../../utils/row-height-cache';
 import { translateXY } from '../../utils/translate';
+import { Subscription } from 'rxjs';
+import { DatatableRowDetailDirective, IRowDetailToggle } from '../row-detail/row-detail.directive';
 
 @Component({
   selector: 'datatable-body',
@@ -130,7 +132,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() selectionType: SelectionType;
   @Input() selected: any[] = [];
   @Input() rowIdentity: any;
-  @Input() rowDetail: any;
+  @Input() rowDetail: DatatableRowDetailDirective;
   @Input() groupHeader: any;
   @Input() selectCheck: any;
   @Input() displayCheck: any;
@@ -157,6 +159,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() set rows(val: any[]) {
     this._rows = val;
     this.recalcLayout();
+    this.offsetY = 0;
   }
 
   get rows(): any[] {
@@ -209,7 +212,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     } else {
       this._bodyHeight = 'auto';
     }
-
     this.recalcLayout();
   }
 
@@ -249,14 +251,15 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   rowHeightsCache: RowHeightCache = new RowHeightCache();
   temp: any[] = [];
-  offsetY = 0;
-  indexes: any = {};
-  columnGroupWidths: any;
-  columnGroupWidthsWithoutGroup: any;
-  rowTrackingFn: any;
-  listener: any;
-  rowIndexes: any = new Map();
+  offsetY: number = 0;
+  indexes: { first: number, last: number } = { first: null, last: null };
+  columnGroupWidths: IColumnGroupWidths;
+  // columnGroupWidthsWithoutGroup: any; // Unused
+  rowTrackingFn: (index: number, row: any) => any;
+  listener: Subscription;
+  rowIndexes: Map<any, number> = new Map();
   rowExpansions: any[] = [];
+
 
   _rows: any[];
   _bodyHeight: any;
@@ -285,7 +288,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     if (this.rowDetail) {
-      this.listener = this.rowDetail.toggle.subscribe(({ type, value }: { type: string; value: any }) => {
+      this.listener = this.rowDetail.toggle.subscribe(({ type, value }: IRowDetailToggle) => {
         if (type === 'row') {
           this.toggleRowExpansion(value);
         }
@@ -511,7 +514,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    *
    * @memberOf DataTableBodyComponent
    */
-  getRowsStyles(rows: any): any {
+  getRowsStyles = (rows: any): any => {
     const styles: any = {};
 
     // only add styles for the group if there is a group
@@ -534,10 +537,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       // The position of this row would be the sum of all row heights
       // until the previous row position.
       const pos = this.rowHeightsCache.query(idx - 1);
-
       translateXY(styles, 0, pos);
     }
-
     return styles;
   }
 

@@ -1,8 +1,26 @@
+export interface IColumnsPin {
+  left: any[];
+  center: any[];
+  right: any[];
+}
+
+export interface IColumnsPinArray {
+  type: string;
+  columns: any[];
+}
+
+export interface IColumnGroupWidths {
+  left: number;
+  center: number;
+  right: number;
+  total: number;
+}
+
 /**
  * Returns the columns by pin.
  */
-export function columnsByPin(cols: any[]) {
-  const ret: { left: any; center: any; right: any } = {
+export function columnsByPin(cols: any[]): IColumnsPin {
+  const ret: IColumnsPin = {
     left: [],
     center: [],
     right: []
@@ -26,7 +44,7 @@ export function columnsByPin(cols: any[]) {
 /**
  * Returns the widths of all group sets of a column
  */
-export function columnGroupWidths(groups: any, all: any) {
+export function columnGroupWidths(groups: any, all: any): IColumnGroupWidths {
   return {
     left: columnTotalWidth(groups.left),
     center: columnTotalWidth(groups.center),
@@ -38,7 +56,7 @@ export function columnGroupWidths(groups: any, all: any) {
 /**
  * Calculates the total width of all columns and their groups
  */
-export function columnTotalWidth(columns: any[], prop?: string) {
+export function columnTotalWidth(columns: any[], prop?: string): number {
   let totalWidth = 0;
 
   if (columns) {
@@ -55,7 +73,7 @@ export function columnTotalWidth(columns: any[], prop?: string) {
 /**
  * Calculates the total width of all columns and their groups
  */
-export function columnsTotalWidth(columns: any, prop?: any) {
+export function columnsTotalWidth(columns: any, prop?: any): number {
   let totalWidth = 0;
 
   for (const column of columns) {
@@ -66,13 +84,13 @@ export function columnsTotalWidth(columns: any, prop?: any) {
   return totalWidth;
 }
 
-export function columnsByPinArr(val: any) {
-  const colsByPinArr = [];
-  const colsByPin = columnsByPin(val);
+export function columnsByPinArr(val: any): IColumnsPinArray[] {
+  const colsByPinArr: IColumnsPinArray[] = [];
+  const colsByPin: IColumnsPin = columnsByPin(val);
 
-  colsByPinArr.push({ type: 'left', columns: colsByPin['left'] });
-  colsByPinArr.push({ type: 'center', columns: colsByPin['center'] });
-  colsByPinArr.push({ type: 'right', columns: colsByPin['right'] });
+  colsByPinArr.push({ type: 'left', columns: colsByPin.left });
+  colsByPinArr.push({ type: 'center', columns: colsByPin.center });
+  colsByPinArr.push({ type: 'right', columns: colsByPin.right });
 
   return colsByPinArr;
 }
