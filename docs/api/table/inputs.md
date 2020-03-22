@@ -71,6 +71,9 @@ Current offset ( page - 1 ) shown. Default value: `0`
 ## `reorderable`
 Column re-ordering enabled/disabled. Default value: `true`
 
+## `swapColumns`
+Swap columns on re-order columns or move them. Default value: `true`
+
 ## `rowHeight`: `Function|number|undefined`
 The height of the row.
 
