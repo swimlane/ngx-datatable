@@ -23,6 +23,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
         [columns]="columns"
         [columnMode]="ColumnMode.force"
         [headerHeight]="40"
+        [summaryHeight]="50"
         [summaryRow]="true"
         [summaryPosition]="'bottom'"
         [footerHeight]="40"

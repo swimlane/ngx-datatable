@@ -451,7 +451,11 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * type indicates whether the header or the body was clicked.
    * content contains either the column or the row that was clicked.
    */
-  @Output() tableContextmenu = new EventEmitter<{ event: MouseEvent; type: ContextmenuType; content: any }>(false);
+  @Output() tableContextmenu = new EventEmitter<{
+    event: MouseEvent;
+    type: ContextmenuType;
+    content: any;
+  }>(false);
 
   /**
    * A row was expanded ot collapsed for tree
@@ -643,7 +647,9 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     element: ElementRef,
     differs: KeyValueDiffers,
     private columnChangesService: ColumnChangesService,
-    @Optional() @Inject('configuration') private configuration: INgxDatatableConfig
+    @Optional()
+    @Inject('configuration')
+    private configuration: INgxDatatableConfig
   ) {
     // get ref to elm for measuring
     this.element = element.nativeElement;
@@ -853,6 +859,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       let height = dims.height;
       if (this.headerHeight) height = height - this.headerHeight;
       if (this.footerHeight) height = height - this.footerHeight;
+      if (this.summaryRow) height = height - this.summaryHeight;
       this.bodyHeight = height;
     }
 
@@ -968,14 +975,22 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * The header triggered a contextmenu event.
    */
   onColumnContextmenu({ event, column }: any): void {
-    this.tableContextmenu.emit({ event, type: ContextmenuType.header, content: column });
+    this.tableContextmenu.emit({
+      event,
+      type: ContextmenuType.header,
+      content: column
+    });
   }
 
   /**
    * The body triggered a contextmenu event.
    */
   onRowContextmenu({ event, row }: any): void {
-    this.tableContextmenu.emit({ event, type: ContextmenuType.body, content: row });
+    this.tableContextmenu.emit({
+      event,
+      type: ContextmenuType.body,
+      content: row
+    });
   }
 
   /**

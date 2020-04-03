@@ -24,6 +24,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
         [columnMode]="ColumnMode.force"
         [headerHeight]="40"
         [summaryRow]="true"
+        [summaryHeight]="40"
         [footerHeight]="40"
         [limit]="10"
         rowHeight="auto"

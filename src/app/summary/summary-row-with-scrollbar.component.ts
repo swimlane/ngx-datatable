@@ -1,30 +1,20 @@
 import { Component } from '@angular/core';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 @Component({
-  selector: 'summary-row-simple-demo',
+  selector: 'summary-row-with-scrollbar-demo',
   template: `
     <div>
       <h3>
-        Simple Summary Row
+        Summary Row With Scrollbar
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/summary/summary-row-simple.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/demo/summary/summary-row-with-scrollbar.component.ts"
           >
             Source
           </a>
         </small>
       </h3>
       <div class="controls">
-        <div>
-          <input
-            id="enable-summary"
-            type="checkbox"
-            [checked]="enableSummary"
-            (change)="enableSummary = !enableSummary"
-          />
-          <label for="enable-summary">Enable Summary Row</label>
-        </div>
         <div>
           <label for="position-select">Position</label>
           <select id="position-select" (change)="summaryPosition = $event.target.value">
@@ -35,37 +25,35 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
       </div>
       <ngx-datatable
         class="material"
-        [summaryRow]="enableSummary"
+        columnMode="force"
+        [rowHeight]="40"
+        [summaryRow]="true"
         [summaryPosition]="summaryPosition"
+        [summaryHeight]="60"
         [columns]="columns"
-        [columnMode]="ColumnMode.force"
         [headerHeight]="50"
-        rowHeight="auto"
-        [summaryHeight]="55"
+        [scrollbarV]="true"
         [rows]="rows"
       >
       </ngx-datatable>
     </div>
   `,
-  styleUrls: ['./summary-row-simple.component.scss']
+  styleUrls: ['./summary-row-with-scrollbar.component.scss']
 })
-export class SummaryRowSimpleComponent {
+export class SummaryRowWithScrollbarComponent {
   rows = [];
 
   columns = [
     { prop: 'name' },
     { name: 'Gender', summaryFunc: cells => this.summaryForGender(cells) },
-    { prop: 'age', summaryFunc: cells => this.avgAge(cells) }
+    { name: 'Company' }
   ];
 
-  enableSummary = true;
   summaryPosition = 'top';
-
-  ColumnMode = ColumnMode;
 
   constructor() {
     this.fetch(data => {
-      this.rows = data.splice(0, 5);
+      this.rows = data.splice(0, 50);
     });
   }
 

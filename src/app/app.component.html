@@ -181,6 +181,9 @@
             <a href="#simple-summary" (click)="state = 'simple-summary'">Simple</a>
           </li>
           <li>
+            <a href="#with-scrollbar-summary" (click)="state = 'with-scrollbar-summary'">With Scrollbar</a>
+          </li>
+          <li>
             <a href="#custom-template-summary" (click)="state = 'custom-template-summary'">Custom Template</a>
           </li>
           <li>
@@ -260,6 +263,7 @@
 
     <!-- Summary row -->
     <summary-row-simple-demo *ngIf="state === 'simple-summary'"></summary-row-simple-demo>
+    <summary-row-with-scrollbar-demo *ngIf="state === 'with-scrollbar-summary'"></summary-row-with-scrollbar-demo>
     <summary-row-custom-template-demo *ngIf="state === 'custom-template-summary'"> </summary-row-custom-template-demo>
     <summary-row-server-paging-demo *ngIf="state === 'paging-summary'"> </summary-row-server-paging-demo>
     <summary-row-inline-html *ngIf="state === 'inline-html-summary'"></summary-row-inline-html>

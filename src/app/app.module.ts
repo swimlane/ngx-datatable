@@ -68,6 +68,7 @@ import { ColumnReorderComponent } from './columns/column-reorder.component';
 
 // -- Summary row
 import { SummaryRowSimpleComponent } from './summary/summary-row-simple.component';
+import { SummaryRowWithScrollbarComponent } from './summary/summary-row-with-scrollbar.component';
 import { SummaryRowCustomTemplateComponent } from './summary/summary-row-custom-template.component';
 import { SummaryRowServerPagingComponent } from './summary/summary-row-server-paging.component';
 import { SummaryRowInlineHtmlComponent } from './summary/summary-row-inline-html.component';
@@ -124,6 +125,7 @@ import { CommonModule } from '@angular/common';
     BootstrapThemeComponent,
     ClientTreeComponent,
     SummaryRowSimpleComponent,
+    SummaryRowWithScrollbarComponent,
     SummaryRowCustomTemplateComponent,
     SummaryRowServerPagingComponent,
     SummaryRowInlineHtmlComponent

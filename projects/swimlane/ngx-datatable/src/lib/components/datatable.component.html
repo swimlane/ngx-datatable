@@ -22,6 +22,14 @@
     (columnContextmenu)="onColumnContextmenu($event)"
   >
   </datatable-header>
+  <datatable-summary-row
+    *ngIf="summaryRow && summaryPosition === 'top'"
+    [rowHeight]="summaryHeight"
+    [offsetX]="_offsetX | async"
+    [innerWidth]="_innerWidth"
+    [rows]="rows"
+    [columns]="_internalColumns">
+  </datatable-summary-row>
   <datatable-body
     [groupRowsBy]="groupRowsBy"
     [groupedRows]="groupedRows"
@@ -50,9 +58,6 @@
     [rowClass]="rowClass"
     [selectCheck]="selectCheck"
     [displayCheck]="displayCheck"
-    [summaryRow]="summaryRow"
-    [summaryHeight]="summaryHeight"
-    [summaryPosition]="summaryPosition"
     (page)="onBodyPage($event)"
     (activate)="activate.emit($event)"
     (rowContextmenu)="onRowContextmenu($event)"
@@ -61,6 +66,14 @@
     (treeAction)="onTreeAction($event)"
   >
   </datatable-body>
+  <datatable-summary-row
+    *ngIf="summaryRow && summaryPosition === 'bottom'"
+    [rowHeight]="summaryHeight"
+    [offsetX]="_offsetX | async"
+    [innerWidth]="_innerWidth"
+    [rows]="rows"
+    [columns]="_internalColumns">
+  </datatable-summary-row>
   <datatable-footer
     *ngIf="footerHeight"
     [rowCount]="rowCount"

@@ -37,7 +37,8 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
         </div>
       </ng-template>
     </div>
-  `
+  `,
+  styleUrls: ['./summary-row-inline-html.component.scss']
 })
 export class SummaryRowInlineHtmlComponent {
   rows = [];

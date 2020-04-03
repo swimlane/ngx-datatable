@@ -40,15 +40,6 @@ import { translateXY } from '../../utils/translate';
         [scrollWidth]="columnGroupWidths?.total"
         (scroll)="onBodyScroll($event)"
       >
-        <datatable-summary-row
-          *ngIf="summaryRow && summaryPosition === 'top'"
-          [rowHeight]="summaryHeight"
-          [offsetX]="offsetX"
-          [innerWidth]="innerWidth"
-          [rows]="rows"
-          [columns]="columns"
-        >
-        </datatable-summary-row>
         <datatable-row-wrapper
           [groupedRows]="groupedRows"
           *ngFor="let group of temp; let i = index; trackBy: rowTrackingFn"
@@ -100,16 +91,6 @@ import { translateXY } from '../../utils/translate';
             </datatable-body-row>
           </ng-template>
         </datatable-row-wrapper>
-        <datatable-summary-row
-          *ngIf="summaryRow && summaryPosition === 'bottom'"
-          [ngStyle]="getBottomSummaryRowStyles()"
-          [rowHeight]="summaryHeight"
-          [offsetX]="offsetX"
-          [innerWidth]="innerWidth"
-          [rows]="rows"
-          [columns]="columns"
-        >
-        </datatable-summary-row>
       </datatable-scroller>
       <div class="empty-row" *ngIf="!rows?.length && !loadingIndicator" [innerHTML]="emptyMessage"></div>
     </datatable-selection>
@@ -141,9 +122,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() innerWidth: number;
   @Input() groupRowsBy: string;
   @Input() virtualization: boolean;
-  @Input() summaryRow: boolean;
-  @Input() summaryPosition: string;
-  @Input() summaryHeight: number;
 
   @Input() set pageSize(val: number) {
     this._pageSize = val;
@@ -175,8 +153,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   @Input() set offset(val: number) {
     this._offset = val;
-    if (!this.scrollbarV || (this.scrollbarV && !this.virtualization))
-      this.recalcLayout();
+    if (!this.scrollbarV || (this.scrollbarV && !this.virtualization)) this.recalcLayout();
   }
 
   get offset(): number {
@@ -773,7 +750,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     if (!expanded || !expanded.length) return -1;
 
     const rowId = this.rowIdentity(row);
-    return expanded.findIndex((r) => {
+    return expanded.findIndex(r => {
       const id = this.rowIdentity(r);
       return id === rowId;
     });
