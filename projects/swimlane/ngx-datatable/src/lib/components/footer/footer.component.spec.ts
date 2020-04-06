@@ -84,7 +84,7 @@ describe('DataTableFooterComponent', () => {
       // mimic the act of changing the page through the datatable pager
       datatablePagerComponent.change.emit(pageChangeEvent);
 
-      expect(spy).toHaveBeenCalledWith(pageChangeEvent);
+      expect(spy).toHaveBeenCalled();
     });
 
     it('should bind to DataTablePagerComponent pagerLeftArrowIcon input', () => {
@@ -232,7 +232,7 @@ describe('DataTableFooterComponent', () => {
         <li>offset {{ offset }}</li>
       </ul>
     </ng-template>
-  `
+  `,
 })
 class TestFixtureComponent {
   footerHeight: number;
@@ -267,7 +267,7 @@ class TestFixtureComponent {
  */
 @Component({
   selector: 'datatable-pager',
-  template: ''
+  template: '',
 })
 class DataTablePagerComponentMock {
   @Input() pagerLeftArrowIcon: string;
@@ -283,7 +283,7 @@ class DataTablePagerComponentMock {
 
 function setupTest() {
   return TestBed.configureTestingModule({
-    declarations: [TestFixtureComponent, DataTableFooterComponent, DataTablePagerComponentMock]
+    declarations: [TestFixtureComponent, DataTableFooterComponent, DataTablePagerComponentMock],
   })
     .compileComponents()
     .then(() => {
