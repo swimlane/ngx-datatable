@@ -246,7 +246,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   }
 
   rowHeightsCache: RowHeightCache = new RowHeightCache();
-  temp: any[] = [];
   offsetY = 0;
   indexes: any = {};
   columnGroupWidths: any;
@@ -394,8 +393,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   updateRows(): void {
     const { first, last } = this.indexes;
     let rowIndex = first;
-    let idx = 0;
-    const temp: any[] = [];
 
     // if grouprowsby has been specified treat row paging
     // parameters as group paging parameters ie if limit 10 has been
@@ -418,11 +415,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
           group.value.forEach((g: any, i: number) => {
             const _idx = `${rowIndex}-${i}`;
             this.rowIndexes.set(g, _idx);
-            temp[idx] = g;
           });
         }
-        temp[idx] = group;
-        idx++;
 
         // Group index in this context
         rowIndex++;
@@ -430,19 +424,13 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     } else {
       while (rowIndex < last && rowIndex < this.rowCount) {
         const row = this.rows[rowIndex];
-
         if (row) {
           // add indexes for each row
           this.rowIndexes.set(row, rowIndex);
-          temp[idx] = row;
         }
-
-        idx++;
         rowIndex++;
       }
     }
-
-    this.temp = temp;
   }
 
   /**
