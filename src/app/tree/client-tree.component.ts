@@ -9,7 +9,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
         Flex Column Width Distribution
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/columns/column-flex.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/tree/client-tree.component.ts"
             target="_blank"
           >
             Source
