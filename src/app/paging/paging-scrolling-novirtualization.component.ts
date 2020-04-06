@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MockServerResultsService } from './mock-server-results-service';
-import { PagedData } from './model/paged-data';
 import { CorporateEmployee } from './model/corporate-employee';
 import { Page } from './model/page';
 import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
@@ -14,7 +13,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
         Server-side Paging
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/paging/paging-server.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/paging/paging-scrolling-novirtualization.component.ts"
             target="_blank"
           >
             Source
