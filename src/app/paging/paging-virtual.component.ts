@@ -1,9 +1,16 @@
 import { Component } from '@angular/core';
 import { MockServerResultsService } from './mock-server-results-service';
-import { PagedData } from './model/paged-data';
 import { CorporateEmployee } from './model/corporate-employee';
 import { Page } from './model/page';
 import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { delay } from 'rxjs/operators';
+
+interface PageInfo {
+  offset: number;
+  pageSize: number;
+  limit: number;
+  count: number;
+}
 
 @Component({
   selector: 'virtual-paging-demo',
@@ -24,15 +31,21 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
       <ngx-datatable
         class="material"
         [rows]="rows"
-        [columns]="[{ name: 'Name' }, { name: 'Gender' }, { name: 'Company' }]"
+        [columns]="[
+          { name: 'Name', sortable: false },
+          { name: 'Gender', sortable: false },
+          { name: 'Company', sortable: false }
+        ]"
         [columnMode]="ColumnMode.force"
         [headerHeight]="50"
+        [loadingIndicator]="isLoading > 0"
         [scrollbarV]="true"
         [footerHeight]="50"
         [rowHeight]="50"
         [externalPaging]="true"
-        [count]="page.totalElements"
-        [offset]="page.pageNumber"
+        [externalSorting]="true"
+        [count]="totalElements"
+        [offset]="pageNumber"
         (page)="setPage($event)"
       >
       </ngx-datatable>
@@ -40,44 +53,61 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
   `
 })
 export class VirtualPagingComponent {
-  page = new Page();
-  rows = new Array<CorporateEmployee>();
+  totalElements: number;
+  pageNumber: number;
+  rows: CorporateEmployee[];
   cache: any = {};
 
   ColumnMode = ColumnMode;
 
+  isLoading = 0;
+
   constructor(private serverResultsService: MockServerResultsService) {
-    this.page.pageNumber = 0;
+    this.pageNumber = 0;
   }
 
-  /**
-   * Populate the table with new data based on the page number
-   * @param page The page to select
-   */
-  setPage(pageInfo) {
-    this.page.pageNumber = pageInfo.offset;
-    this.page.size = pageInfo.pageSize;
+  setPage(pageInfo: PageInfo) {
+    // current page number is determined by last call to setPage
+    this.pageNumber = pageInfo.offset;
 
-    // cache results
-    // if(this.cache[this.page.pageNumber]) return;
+    // don't load same data twice
+    if (this.cache[pageInfo.offset]) return;
+    this.cache[pageInfo.offset] = true;
 
-    this.serverResultsService.getResults(this.page).subscribe(pagedData => {
-      this.page = pagedData.page;
+    // counter of pages loading
+    this.isLoading++;
 
-      // calc start
-      const start = this.page.pageNumber * this.page.size;
+    // class to idendify loading page
+    const page = new Page();
+    page.pageNumber = pageInfo.offset;
+    page.size = pageInfo.pageSize;
 
-      // copy rows
-      const rows = [...this.rows];
+    this.serverResultsService
+      .getResults(page)
+      .pipe(delay(new Date(Date.now() + 1000 * Math.random()))) // simulating variability in returned data
+      .subscribe(pagedData => {
+        // update total count
+        this.totalElements = pagedData.page.totalElements;
 
-      // insert rows into new position
-      rows.splice(start, 0, ...pagedData.data);
+        // create array to store data if missing
+        if (!this.rows) {
+          // length should be total count
+          this.rows = new Array<CorporateEmployee>(pagedData.page.totalElements || 0);
+        }
 
-      // set rows to our new rows
-      this.rows = rows;
+        // calc starting index
+        const start = pagedData.page.pageNumber * pagedData.page.size;
 
-      // add flag for results
-      this.cache[this.page.pageNumber] = true;
-    });
+        // copy existing data
+        const rows = [...this.rows];
+
+        // insert new rows into new position
+        rows.splice(start, pagedData.page.size, ...pagedData.data);
+
+        // set rows to our new rows
+        this.rows = rows;
+
+        this.isLoading--;
+      });
   }
 }
