@@ -1,10 +1,10 @@
-import { async, TestBed } from '@angular/core/testing';
+import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { DataTableHeaderCellComponent } from './header-cell.component';
 
 describe('DataTableHeaderCellComponent', () => {
-  let fixture;
+  let fixture: ComponentFixture<DataTableHeaderCellComponent>;
   let component: DataTableHeaderCellComponent;
-  let element;
+  let element: any;
 
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {

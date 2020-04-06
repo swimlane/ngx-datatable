@@ -5,9 +5,9 @@ import {
   Input,
   HostBinding,
   ChangeDetectorRef,
-  ChangeDetectionStrategy, OnDestroy
+  ChangeDetectionStrategy,
+  OnDestroy
 } from '@angular/core';
-import { MouseEvent } from '../../events';
 import { columnsByPin, columnGroupWidths, columnsByPinArr } from '../../utils/column';
 import { SortType } from '../../types/sort.type';
 import { SelectionType } from '../../types/selection.type';

@@ -10,7 +10,6 @@ import {
   ChangeDetectorRef,
   KeyValueDiffers
 } from '@angular/core';
-import { MouseEvent } from '../../events';
 
 @Component({
   selector: 'datatable-row-wrapper',

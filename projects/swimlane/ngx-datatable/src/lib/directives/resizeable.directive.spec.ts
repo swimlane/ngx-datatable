@@ -14,7 +14,7 @@ class TestFixtureComponent {}
 describe('ResizeableDirective', () => {
   let fixture: ComponentFixture<TestFixtureComponent>;
   let component: TestFixtureComponent;
-  let element;
+  let element: any;
 
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {

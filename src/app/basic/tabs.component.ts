@@ -8,7 +8,10 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
       <h3>
         Hidden By Default
         <small>
-          <a href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/tabs.component.ts" target="_blank">
+          <a
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/tabs.component.ts"
+            target="_blank"
+          >
             Source
           </a>
         </small>
@@ -36,9 +39,9 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
             [rowHeight]="50"
             [scrollbarV]="true"
           >
-            <ngx-datatable-column name="Name" width="200"></ngx-datatable-column>
-            <ngx-datatable-column name="Gender" width="300"></ngx-datatable-column>
-            <ngx-datatable-column name="Age" width="80"></ngx-datatable-column>
+            <ngx-datatable-column name="Name" [width]="200"></ngx-datatable-column>
+            <ngx-datatable-column name="Gender" [width]="300"></ngx-datatable-column>
+            <ngx-datatable-column name="Age" [width]="80"></ngx-datatable-column>
           </ngx-datatable>
         </div>
 
@@ -53,9 +56,9 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
             [rowHeight]="50"
             [scrollbarV]="true"
           >
-            <ngx-datatable-column name="Name" width="200"></ngx-datatable-column>
-            <ngx-datatable-column name="Gender" width="300"></ngx-datatable-column>
-            <ngx-datatable-column name="Age" width="80"></ngx-datatable-column>
+            <ngx-datatable-column name="Name" [width]="200"></ngx-datatable-column>
+            <ngx-datatable-column name="Gender" [width]="300"></ngx-datatable-column>
+            <ngx-datatable-column name="Age" [width]="80"></ngx-datatable-column>
           </ngx-datatable>
         </div>
       </div>

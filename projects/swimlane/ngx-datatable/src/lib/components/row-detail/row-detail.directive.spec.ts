@@ -1,5 +1,5 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-import { Component, DebugElement } from '@angular/core';
+import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { DatatableRowDetailDirective } from './row-detail.directive';
 import { DatatableRowDetailTemplateDirective } from './row-detail-template.directive';

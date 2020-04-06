@@ -9,8 +9,7 @@ import {
   AfterViewInit,
   Renderer2
 } from '@angular/core';
-import { Observable, Subscription, fromEvent } from 'rxjs';
-import { MouseEvent } from '../events';
+import { Subscription, fromEvent } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Directive({
@@ -50,7 +49,7 @@ export class ResizeableDirective implements OnDestroy, AfterViewInit {
     this._destroySubscription();
     if (this.renderer.destroyNode) {
       this.renderer.destroyNode(this.resizeHandle);
-    } else {
+    } else if (this.resizeHandle) {
       this.renderer.removeChild(this.renderer.parentNode(this.resizeHandle), this.resizeHandle);
     }
   }

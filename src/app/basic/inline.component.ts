@@ -19,10 +19,10 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
       <ngx-datatable
         #mydatatable
         class="material"
-        headerHeight="50"
+        [headerHeight]="50"
         [limit]="5"
         [columnMode]="ColumnMode.force"
-        footerHeight="50"
+        [footerHeight]="50"
         rowHeight="auto"
         [rows]="rows"
       >

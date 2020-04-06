@@ -1,7 +1,6 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { DebugElement, PipeTransform } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import {} from 'jasmine';
 
 import { DataTableBodyRowComponent } from '../body-row.component';
 import { DataTableBodyCellComponent } from '../body-cell.component';

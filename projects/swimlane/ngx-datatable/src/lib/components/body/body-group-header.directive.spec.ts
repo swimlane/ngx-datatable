@@ -1,5 +1,5 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-import { Component, DebugElement } from '@angular/core';
+import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { DatatableGroupHeaderDirective } from './body-group-header.directive';
@@ -19,7 +19,7 @@ class TestFixtureComponent {}
 describe('DatatableGroupHeaderDirective', () => {
   let fixture: ComponentFixture<TestFixtureComponent>;
   let component: TestFixtureComponent;
-  let element;
+  let element: any;
 
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {

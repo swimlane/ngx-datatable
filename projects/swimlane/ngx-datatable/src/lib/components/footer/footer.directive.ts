@@ -1,4 +1,4 @@
-import { Input, Output, EventEmitter, Directive, TemplateRef, ContentChild } from '@angular/core';
+import { Input, Directive, TemplateRef, ContentChild } from '@angular/core';
 import { DataTableFooterTemplateDirective } from './footer-template.directive';
 
 @Directive({ selector: 'ngx-datatable-footer' })

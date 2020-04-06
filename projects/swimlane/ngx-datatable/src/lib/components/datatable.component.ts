@@ -19,7 +19,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   SkipSelf,
-  OnDestroy,
   Optional,
   Inject
 } from '@angular/core';
@@ -184,13 +183,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Type of column width distribution formula.
    * Example: flex, force, standard
    */
-  @Input() columnMode: ColumnMode = ColumnMode.standard;
+  @Input() columnMode: ColumnMode | keyof typeof ColumnMode = ColumnMode.standard;
 
   /**
    * The minimum header height in pixels.
    * Pass a falsey for no header
    */
-  @Input() headerHeight: any = 30;
+  @Input() headerHeight: number = 30;
 
   /**
    * The minimum footer height in pixels.

@@ -20,23 +20,23 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
         class="material"
         [rows]="rows"
         [columnMode]="ColumnMode.force"
-        headerHeight="50"
-        footerHeight="50"
+        [headerHeight]="50"
+        [footerHeight]="50"
         [rowHeight]="getRowHeight"
         [scrollbarV]="true"
         (page)="onPage($event)"
       >
-        <ngx-datatable-column name="Name" width="300">
+        <ngx-datatable-column name="Name" [width]="300">
           <ng-template let-value="value" ngx-datatable-cell-template>
             <strong>{{ value }}</strong>
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Gender" width="300">
+        <ngx-datatable-column name="Gender" [width]="300">
           <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
             <i [innerHTML]="row['name']"></i> and <i>{{ value }}</i>
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Row Height" prop="height" width="80"> </ngx-datatable-column>
+        <ngx-datatable-column name="Row Height" prop="height" [width]="80"> </ngx-datatable-column>
       </ngx-datatable>
     </div>
   `

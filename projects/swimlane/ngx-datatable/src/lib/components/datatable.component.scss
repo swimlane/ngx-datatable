@@ -3,7 +3,7 @@
   overflow: hidden;
   justify-content: center;
   position: relative;
-  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 
   [hidden] {
     display: none !important;
