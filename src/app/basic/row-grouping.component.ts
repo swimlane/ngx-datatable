@@ -116,7 +116,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
   `
 })
 export class RowGroupingComponent {
-  @ViewChild('myTable', { static: false }) table: any;
+  @ViewChild('myTable') table: any;
 
   funder = [];
   calculated = [];

@@ -88,7 +88,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
   encapsulation: ViewEncapsulation.None
 })
 export class RowDetailsComponent {
-  @ViewChild('myTable', { static: false }) table: any;
+  @ViewChild('myTable') table: any;
 
   rows: any[] = [];
   expanded: any = {};

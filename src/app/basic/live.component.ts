@@ -8,7 +8,10 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
       <h3>
         Live Data Demo
         <small>
-          <a href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/live.component.ts" target="_blank">
+          <a
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/live.component.ts"
+            target="_blank"
+          >
             Source
           </a>
         </small>
@@ -38,7 +41,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
   `
 })
 export class LiveDataComponent {
-  @ViewChild('mydatatable', { static: false }) mydatatable: any;
+  @ViewChild('mydatatable') mydatatable: any;
 
   count = 50;
   rows: any[] = [];

@@ -14,7 +14,7 @@ export class DatatableFooterDirective {
   @Input('template')
   _templateInput: TemplateRef<any>;
 
-  @ContentChild(DataTableFooterTemplateDirective, { read: TemplateRef, static: false })
+  @ContentChild(DataTableFooterTemplateDirective, { read: TemplateRef })
   _templateQuery: TemplateRef<any>;
 
   get template(): TemplateRef<any> {
