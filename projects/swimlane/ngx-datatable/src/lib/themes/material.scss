@@ -251,6 +251,8 @@ $datatable-summary-row-background-hover: #ddd !default;
 	 * Body Styles
 	 */
   .datatable-body {
+    position: relative;
+
     .datatable-row-detail {
       background: $datatable-row-detail-background;
       padding: 10px;
@@ -292,12 +294,12 @@ $datatable-summary-row-background-hover: #ddd !default;
 
     .progress-linear {
       display: block;
-      position: relative;
+      position: sticky;
       width: 100%;
       height: 5px;
       padding: 0;
       margin: 0;
-      position: absolute;
+      top: 0;
 
       .container {
         display: block;

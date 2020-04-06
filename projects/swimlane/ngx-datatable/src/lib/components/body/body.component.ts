@@ -19,6 +19,7 @@ import { translateXY } from '../../utils/translate';
 @Component({
   selector: 'datatable-body',
   template: `
+    <datatable-progress *ngIf="loadingIndicator"> </datatable-progress>
     <datatable-selection
       #selector
       [selected]="selected"
@@ -30,7 +31,6 @@ import { translateXY } from '../../utils/translate';
       (select)="select.emit($event)"
       (activate)="activate.emit($event)"
     >
-      <datatable-progress *ngIf="loadingIndicator"> </datatable-progress>
       <datatable-scroller
         *ngIf="rows?.length"
         [scrollbarV]="scrollbarV"
