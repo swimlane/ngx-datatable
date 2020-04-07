@@ -56,36 +56,39 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
             let-row="row"
             let-group="group"
           >
-            <input
-              type="checkbox"
-              id="ep1{{ rowIndex }}"
-              name="{{ rowIndex }}"
-              value="0"
-              class="expectedpayment"
-              (change)="checkGroup($event, row, rowIndex, group)"
-              [checked]="row.exppayyes === 1"
-            />
-            <label for="ep1{{ rowIndex }}"></label>
-            <input
-              type="checkbox"
-              id="ep2{{ rowIndex }}"
-              name="{{ rowIndex }}"
-              value="1"
-              class="expectedpayment2"
-              (change)="checkGroup($event, row, rowIndex, group)"
-              [checked]="row.exppayno === 1"
-            />
-            <label for="ep2{{ rowIndex }}"></label>
-            <input
-              type="checkbox"
-              id="ep3{{ rowIndex }}"
-              name="{{ rowIndex }}"
-              value="2"
-              class="expectedpayment3"
-              (change)="checkGroup($event, row, rowIndex, group)"
-              [checked]="row.exppaypending === 1"
-            />
-            <label for="ep3{{ rowIndex }}"></label>
+            <label for="ep1{{ rowIndex }}" class="datatable-checkbox">
+              <input
+                type="checkbox"
+                id="ep1{{ rowIndex }}"
+                name="{{ rowIndex }}"
+                value="0"
+                class="expectedpayment"
+                (change)="checkGroup($event, row, rowIndex, group)"
+                [checked]="row.exppayyes === 1"
+              />
+            </label>
+            <label for="ep2{{ rowIndex }}" class="datatable-checkbox">
+              <input
+                type="checkbox"
+                id="ep2{{ rowIndex }}"
+                name="{{ rowIndex }}"
+                value="1"
+                class="expectedpayment2"
+                (change)="checkGroup($event, row, rowIndex, group)"
+                [checked]="row.exppayno === 1"
+              />
+            </label>
+            <label for="ep3{{ rowIndex }}" class="datatable-checkbox">
+              <input
+                type="checkbox"
+                id="ep3{{ rowIndex }}"
+                name="{{ rowIndex }}"
+                value="2"
+                class="expectedpayment3"
+                (change)="checkGroup($event, row, rowIndex, group)"
+                [checked]="row.exppaypending === 1"
+              />
+            </label>
           </ng-template>
         </ngx-datatable-column>
 

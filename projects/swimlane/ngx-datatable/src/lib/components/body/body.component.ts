@@ -253,7 +253,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   columnGroupWidthsWithoutGroup: any;
   rowTrackingFn: any;
   listener: any;
-  rowIndexes: any = new Map();
+  rowIndexes: any = new WeakMap<any, string>();
   rowExpansions: any[] = [];
 
   _rows: any[];
@@ -397,8 +397,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     let idx = 0;
     const temp: any[] = [];
 
-    this.rowIndexes.clear();
-
     // if grouprowsby has been specified treat row paging
     // parameters as group paging parameters ie if limit 10 has been
     // specified treat it as 10 groups rather than 10 rows
@@ -413,6 +411,15 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       while (rowIndex < last && rowIndex < this.groupedRows.length) {
         // Add the groups into this page
         const group = this.groupedRows[rowIndex];
+        this.rowIndexes.set(group, rowIndex);
+
+        if (group.value) {
+          // add indexes for each group item
+          group.value.forEach((g: any, i: number) => {
+            const _idx = `${rowIndex}-${i}`;
+            this.rowIndexes.set(g, _idx);
+          });
+        }
         temp[idx] = group;
         idx++;
 
@@ -424,6 +431,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         const row = this.rows[rowIndex];
 
         if (row) {
+          // add indexes for each row
           this.rowIndexes.set(row, rowIndex);
           temp[idx] = row;
         }
