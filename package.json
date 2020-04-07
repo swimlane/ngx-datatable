@@ -5,9 +5,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build-pkg": "ng build @swimlane/ngx-datatable && npm run copy-files && npm run build:css",
+    "build-pkg": "ng build @swimlane/ngx-datatable --prod && npm run copy-files && npm run build:css",
     "copy-files": "cp README.md dist/swimlane/ngx-datatable/README.md && cp LICENSE dist/swimlane/ngx-datatable/LICENSE && cpx \"src/assets/**/*\" \"dist/swimlane/ngx-datatable/assets\" && cpx \"projects/swimlane/ngx-datatable/src/lib/themes/**/*\" \"dist/swimlane/ngx-datatable/themes\"",
-    "build:css": "scss-bundle && node-sass -o dist/swimlane/ngx-datatable/themes dist/swimlane/ngx-datatable/themes && node-sass -o dist/swimlane/ngx-datatable dist/swimlane/ngx-datatable",
+    "build:css": "scss-bundle  -c ./scss-bundle.config.json && node-sass -o dist/swimlane/ngx-datatable/themes dist/swimlane/ngx-datatable/themes && node-sass -o dist/swimlane/ngx-datatable dist/swimlane/ngx-datatable",
     "test": "ng test @swimlane/ngx-datatable",
     "test:ci": "ng test @swimlane/ngx-datatable --watch=false --progress=false",
     "ci": "concurrently \"npm run lint\" \"npm run test:ci\"",
@@ -17,7 +17,9 @@
     "build-docs": "cross-env NODE_ENV=production ng build --prod --base-href=\"/ngx-datatable/\"",
     "predeploy-docs": "npm run build-docs",
     "deploy-docs": "angular-cli-ghpages --dir ./dist/ngx-datatable",
-    "publish": "npm publish dist/swimlane/ngx-datatable"
+    "publish": "npm publish dist/swimlane/ngx-datatable",
+    "prepack": "npm run build-pkg",
+    "pack": "npm pack ./dist/swimlane/ngx-datatable/"
   },
   "private": true,
   "dependencies": {
