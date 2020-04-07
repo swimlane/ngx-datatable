@@ -16,7 +16,6 @@ import {
 } from '@angular/core';
 
 import { TableColumn } from '../../types/table-column.type';
-import { MouseEvent, KeyboardEvent } from '../../events';
 import { SortDirection } from '../../types/sort-direction.type';
 import { Keys } from '../../utils/keys';
 

@@ -8,7 +8,9 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
       <h3>
         Simple Summary Row
         <small>
-          <a href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/summary/summary-row-simple.component.ts">
+          <a
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/summary/summary-row-simple.component.ts"
+          >
             Source
           </a>
         </small>
@@ -25,7 +27,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
         </div>
         <div>
           <label for="position-select">Position</label>
-          <select id="position-select" (change)="summaryPosition = $event.target.value">
+          <select id="position-select" (change)="onPositionSelectChange($event)">
             <option [value]="'top'">Top</option>
             <option [value]="'bottom'">Bottom</option>
           </select>
@@ -67,7 +69,7 @@ export class SummaryRowSimpleComponent {
     });
   }
 
-  fetch(cb) {
+  fetch(cb: (data: [unknown]) => void) {
     const req = new XMLHttpRequest();
     req.open('GET', `assets/data/company.json`);
 
@@ -78,8 +80,9 @@ export class SummaryRowSimpleComponent {
     req.send();
   }
 
-  onSummaryStateChange(a) {
-    console.log(a);
+  onPositionSelectChange($event: Event) {
+    const target = $event.target as HTMLSelectElement;
+    this.summaryPosition = target.value;
   }
 
   private summaryForGender(cells: string[]) {

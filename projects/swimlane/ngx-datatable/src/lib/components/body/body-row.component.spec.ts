@@ -5,7 +5,7 @@ import { DataTableBodyCellComponent } from './body-cell.component';
 describe('DataTableBodyRowComponent', () => {
   let fixture: ComponentFixture<DataTableBodyRowComponent>;
   let component: DataTableBodyRowComponent;
-  let element;
+  let element: any;
 
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {

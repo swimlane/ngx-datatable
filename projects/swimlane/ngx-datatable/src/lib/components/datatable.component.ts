@@ -19,7 +19,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   SkipSelf,
-  OnDestroy,
   Optional,
   Inject
 } from '@angular/core';
@@ -184,13 +183,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Type of column width distribution formula.
    * Example: flex, force, standard
    */
-  @Input() columnMode: ColumnMode = ColumnMode.standard;
+  @Input() columnMode: ColumnMode | keyof typeof ColumnMode = ColumnMode.standard;
 
   /**
    * The minimum header height in pixels.
    * Pass a falsey for no header
    */
-  @Input() headerHeight: any = 30;
+  @Input() headerHeight: number = 30;
 
   /**
    * The minimum footer height in pixels.
@@ -571,26 +570,26 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   /**
    * Row Detail templates gathered from the ContentChild
    */
-  @ContentChild(DatatableRowDetailDirective, { static: false })
+  @ContentChild(DatatableRowDetailDirective)
   rowDetail: DatatableRowDetailDirective;
 
   /**
    * Group Header templates gathered from the ContentChild
    */
-  @ContentChild(DatatableGroupHeaderDirective, { static: false })
+  @ContentChild(DatatableGroupHeaderDirective)
   groupHeader: DatatableGroupHeaderDirective;
 
   /**
    * Footer template gathered from the ContentChild
    */
-  @ContentChild(DatatableFooterDirective, { static: false })
+  @ContentChild(DatatableFooterDirective)
   footer: DatatableFooterDirective;
 
   /**
    * Reference to the body component for manually
    * invoking functions on the body.
    */
-  @ViewChild(DataTableBodyComponent, { static: false })
+  @ViewChild(DataTableBodyComponent)
   bodyComponent: DataTableBodyComponent;
 
   /**
@@ -599,7 +598,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    *
    * @memberOf DatatableComponent
    */
-  @ViewChild(DataTableHeaderComponent, { static: false })
+  @ViewChild(DataTableHeaderComponent)
   headerComponent: DataTableHeaderComponent;
 
   /**

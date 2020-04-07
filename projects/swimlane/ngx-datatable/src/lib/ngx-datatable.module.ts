@@ -85,7 +85,7 @@ export class NgxDatatableModule {
    * Configure global configuration via INgxDatatableConfig
    * @param configuration
    */
-  static forRoot(configuration: INgxDatatableConfig): ModuleWithProviders {
+  static forRoot(configuration: INgxDatatableConfig): ModuleWithProviders<NgxDatatableModule> {
     return {
       ngModule: NgxDatatableModule,
       providers: [{ provide: 'configuration', useValue: configuration }]

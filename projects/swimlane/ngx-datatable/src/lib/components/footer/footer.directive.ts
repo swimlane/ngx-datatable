@@ -1,4 +1,4 @@
-import { Input, Output, EventEmitter, Directive, TemplateRef, ContentChild } from '@angular/core';
+import { Input, Directive, TemplateRef, ContentChild } from '@angular/core';
 import { DataTableFooterTemplateDirective } from './footer-template.directive';
 
 @Directive({ selector: 'ngx-datatable-footer' })
@@ -14,7 +14,7 @@ export class DatatableFooterDirective {
   @Input('template')
   _templateInput: TemplateRef<any>;
 
-  @ContentChild(DataTableFooterTemplateDirective, { read: TemplateRef, static: false })
+  @ContentChild(DataTableFooterTemplateDirective, { read: TemplateRef })
   _templateQuery: TemplateRef<any>;
 
   get template(): TemplateRef<any> {

@@ -44,7 +44,7 @@ export class FilterBarComponent {
   temp = [];
 
   columns = [{ prop: 'name' }, { name: 'Company' }, { name: 'Gender' }];
-  @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
+  @ViewChild(DatatableComponent) table: DatatableComponent;
 
   ColumnMode = ColumnMode;
 

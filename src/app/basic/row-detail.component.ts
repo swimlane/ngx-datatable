@@ -33,7 +33,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
         (page)="onPage($event)"
       >
         <!-- Row Detail Template -->
-        <ngx-datatable-row-detail rowHeight="100" #myDetailRow (toggle)="onDetailToggle($event)">
+        <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow (toggle)="onDetailToggle($event)">
           <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
             <div style="padding-left:35px;">
               <div><strong>Address</strong></div>
@@ -61,22 +61,22 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
             </a>
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Index" width="80">
+        <ngx-datatable-column name="Index" [width]="80">
           <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
             <strong>{{ rowIndex }}</strong>
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Expanded" width="80">
+        <ngx-datatable-column name="Expanded" [width]="80">
           <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
             <strong>{{ expanded === 1 }}</strong>
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Name" width="200">
+        <ngx-datatable-column name="Name" [width]="200">
           <ng-template let-value="value" ngx-datatable-cell-template>
             <strong>{{ value }}</strong>
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Gender" width="300">
+        <ngx-datatable-column name="Gender" [width]="300">
           <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
             <i [innerHTML]="row['name']"></i> and <i>{{ value }}</i>
           </ng-template>
@@ -88,7 +88,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
   encapsulation: ViewEncapsulation.None
 })
 export class RowDetailsComponent {
-  @ViewChild('myTable', { static: false }) table: any;
+  @ViewChild('myTable') table: any;
 
   rows: any[] = [];
   expanded: any = {};

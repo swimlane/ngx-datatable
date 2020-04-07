@@ -26,7 +26,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
         [scrollbarH]="true"
         [headerHeight]="50"
         [footerHeight]="50"
-        rowHeight="40"
+        [rowHeight]="40"
         [limit]="4"
         [groupExpansionDefault]="true"
       >
@@ -119,7 +119,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
   `
 })
 export class RowGroupingComponent {
-  @ViewChild('myTable', { static: false }) table: any;
+  @ViewChild('myTable') table: any;
 
   funder = [];
   calculated = [];

@@ -1,5 +1,4 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-import {} from 'jasmine';
 import { DataTableBodyComponent } from './body.component';
 import { DataTableBodyRowComponent } from './body-row.component';
 import { DataTableRowWrapperComponent } from './body-row-wrapper.component';
@@ -13,7 +12,7 @@ import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 describe('DataTableBodyComponent', () => {
   let fixture: ComponentFixture<DataTableBodyComponent>;
   let component: DataTableBodyComponent;
-  let element;
+  let element: any;
 
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
