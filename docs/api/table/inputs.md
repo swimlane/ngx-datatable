@@ -141,7 +141,7 @@ Row selection mode
 
 | Value                  | Description                                            | Default |
 | :--------------------- | :----------------------------------------------------- | ------- |
-| `undefined|false|null` | Rows cannot be selected                                | x       |
+| Anything falsy (like `undefined`, `null`, `false`, `0`) | Rows cannot be selected                                | x       |
 | `"single"`             | One row can be selected at a time                      |         |
 | `"cell"`               | One cell can be selected at a time                     |         |
 | `"multi"`              | Multiple rows can be selected using Ctrl or Shift key  |         |
