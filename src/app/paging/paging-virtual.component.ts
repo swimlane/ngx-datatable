@@ -85,7 +85,7 @@ export class VirtualPagingComponent {
     this.serverResultsService
       .getResults(page)
       .pipe(delay(new Date(Date.now() + 1000 * Math.random()))) // simulating variability in returned data
-      .subscribe(pagedData => {
+      .subscribe((pagedData) => {
         // update total count
         this.totalElements = pagedData.page.totalElements;
 

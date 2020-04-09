@@ -20,6 +20,7 @@ install:
   - npm ci
   - npm install codeclimate-test-reporter
   - npm run build
+  - npm run build:lib:prod
 
 script:
   - npm run ci

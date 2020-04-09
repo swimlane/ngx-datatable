@@ -5,9 +5,7 @@ import { LongPressDirective } from './long-press.directive';
 
 @Component({
   selector: 'test-fixture-component',
-  template: `
-    <div long-press></div>
-  `
+  template: ` <div long-press></div> `
 })
 class TestFixtureComponent {}
 

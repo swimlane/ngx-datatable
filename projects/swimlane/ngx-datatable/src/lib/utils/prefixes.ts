@@ -5,7 +5,7 @@ const testStyle = typeof document !== 'undefined' ? document.createElement('div'
 
 // Get Prefix
 // http://davidwalsh.name/vendor-prefix
-const prefix = (function() {
+const prefix = (function () {
   const styles = typeof window !== 'undefined' ? window.getComputedStyle(document.documentElement, '') : undefined;
   const match =
     typeof styles !== 'undefined'

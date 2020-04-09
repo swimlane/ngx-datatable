@@ -179,7 +179,7 @@ export class DataTableHeaderComponent implements OnDestroy {
     setTimeout(() => {
       // datatable component creates copies from columns on reorder
       // set dragging to false on new objects
-      const column = this._columns.find(c => c.$$id === model.$$id);
+      const column = this._columns.find((c) => c.$$id === model.$$id);
       if (column) {
         column.dragging = false;
       }

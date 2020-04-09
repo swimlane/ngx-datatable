@@ -95,7 +95,7 @@ export function forceFillColumnWidths(
   allowBleed: boolean,
   defaultColWidth: number = 300
 ) {
-  const columnsToResize = allColumns.slice(startIdx + 1, allColumns.length).filter(c => {
+  const columnsToResize = allColumns.slice(startIdx + 1, allColumns.length).filter((c) => {
     return c.canAutoResize !== false;
   });
 

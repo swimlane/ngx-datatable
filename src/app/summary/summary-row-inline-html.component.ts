@@ -48,7 +48,7 @@ export class SummaryRowInlineHtmlComponent {
   ColumnMode = ColumnMode;
 
   constructor() {
-    this.fetch(data => {
+    this.fetch((data) => {
       this.rows = data.splice(0, 5);
     });
   }
@@ -65,18 +65,18 @@ export class SummaryRowInlineHtmlComponent {
   }
 
   getNames(): string[] {
-    return this.rows.map(row => row.name).map(fullName => fullName.split(' ')[1]);
+    return this.rows.map((row) => row.name).map((fullName) => fullName.split(' ')[1]);
   }
 
   summaryForGender(cells: string[]) {
-    const males = cells.filter(cell => cell === 'male').length;
-    const females = cells.filter(cell => cell === 'female').length;
+    const males = cells.filter((cell) => cell === 'male').length;
+    const females = cells.filter((cell) => cell === 'female').length;
 
     return `males: ${males}, females: ${females}`;
   }
 
   avgAge(cells: number[]): number {
-    const filteredCells = cells.filter(cell => !!cell);
+    const filteredCells = cells.filter((cell) => !!cell);
     return filteredCells.reduce((sum, cell) => (sum += cell), 0) / filteredCells.length;
   }
 }

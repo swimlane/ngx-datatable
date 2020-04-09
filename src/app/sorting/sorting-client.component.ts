@@ -40,7 +40,7 @@ export class ClientSortingComponent {
   SortType = SortType;
 
   constructor() {
-    this.fetch(data => {
+    this.fetch((data) => {
       this.rows = data;
     });
   }

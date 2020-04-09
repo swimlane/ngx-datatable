@@ -44,9 +44,15 @@ export class MultipleTablesComponent {
 
   columns2 = [{ prop: 'name', name: 'Name' }, { name: 'Gender' }];
 
-  rows1 = [{ name: 'Larry', gender: 'Male', company: 'Cisco' }, { name: 'Lauren', gender: 'Female', company: 'HP' }];
+  rows1 = [
+    { name: 'Larry', gender: 'Male', company: 'Cisco' },
+    { name: 'Lauren', gender: 'Female', company: 'HP' }
+  ];
 
-  rows2 = [{ name: 'Callie', gender: 'Female' }, { name: 'Maggie', gender: 'Female' }];
+  rows2 = [
+    { name: 'Callie', gender: 'Female' },
+    { name: 'Maggie', gender: 'Female' }
+  ];
 
   ColumnMode = ColumnMode;
 }

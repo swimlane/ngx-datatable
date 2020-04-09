@@ -49,7 +49,7 @@ export class FilterBarComponent {
   ColumnMode = ColumnMode;
 
   constructor() {
-    this.fetch(data => {
+    this.fetch((data) => {
       // cache our list
       this.temp = [...data];
 
@@ -73,7 +73,7 @@ export class FilterBarComponent {
     const val = event.target.value.toLowerCase();
 
     // filter our data
-    const temp = this.temp.filter(function(d) {
+    const temp = this.temp.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
 

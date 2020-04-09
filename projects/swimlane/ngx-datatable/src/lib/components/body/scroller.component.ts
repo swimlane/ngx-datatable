@@ -16,9 +16,7 @@ import { MouseEvent } from '../../events';
 
 @Component({
   selector: 'datatable-scroller',
-  template: `
-    <ng-content></ng-content>
-  `,
+  template: ` <ng-content></ng-content> `,
   host: {
     class: 'datatable-scroll'
   },

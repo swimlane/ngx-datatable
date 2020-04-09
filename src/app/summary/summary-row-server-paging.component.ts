@@ -46,7 +46,7 @@ export class SummaryRowServerPagingComponent {
 
   columns = [
     // NOTE: cells for current page only !
-    { name: 'Name', summaryFunc: cells => `${cells.length} total` },
+    { name: 'Name', summaryFunc: (cells) => `${cells.length} total` },
     { name: 'Gender', summaryFunc: () => this.getGenderSummary() },
     { name: 'Company', summaryFunc: () => null }
   ];
@@ -68,7 +68,7 @@ export class SummaryRowServerPagingComponent {
    */
   setPage(pageInfo) {
     this.page.pageNumber = pageInfo.offset;
-    this.serverResultsService.getResults(this.page).subscribe(pagedData => {
+    this.serverResultsService.getResults(this.page).subscribe((pagedData) => {
       this.page = pagedData.page;
       this.rows = pagedData.data;
     });

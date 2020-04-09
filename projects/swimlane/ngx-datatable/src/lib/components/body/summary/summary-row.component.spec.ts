@@ -17,7 +17,10 @@ describe('DataTableSummaryRowComponent', () => {
   let columns: ISummaryColumn[];
 
   beforeEach(() => {
-    rows = [{ col1: 10, col2: 20 }, { col1: 1, col2: 30 }];
+    rows = [
+      { col1: 10, col2: 20 },
+      { col1: 1, col2: 30 }
+    ];
     columns = [{ prop: 'col1' }, { prop: 'col2' }];
     setColumnDefaults(columns);
   });
@@ -91,7 +94,10 @@ describe('DataTableSummaryRowComponent', () => {
       });
 
       it('should not compute a result if there are non-number cells', () => {
-        component.rows = [{ col1: 'aaa', col2: 'xxx' }, { col1: 'bbb', col2: 34 }];
+        component.rows = [
+          { col1: 'aaa', col2: 'xxx' },
+          { col1: 'bbb', col2: 34 }
+        ];
 
         triggerChange();
         expect(component.summaryRow.col1).toEqual(null);

@@ -15,7 +15,7 @@ export function camelCase(str: string): string {
     .toLowerCase();
 
   // uppercase characters preceded by a space or number
-  str = str.replace(/([ 0-9]+)([a-zA-Z])/g, function(a, b, c) {
+  str = str.replace(/([ 0-9]+)([a-zA-Z])/g, function (a, b, c) {
     return b.trim() + c.toUpperCase();
   });
 
@@ -27,5 +27,5 @@ export function camelCase(str: string): string {
  * http://stackoverflow.com/questions/7225407/convert-camelcasetext-to-camel-case-text
  */
 export function deCamelCase(str: string): string {
-  return str.replace(/([A-Z])/g, match => ` ${match}`).replace(/^./, match => match.toUpperCase());
+  return str.replace(/([A-Z])/g, (match) => ` ${match}`).replace(/^./, (match) => match.toUpperCase());
 }

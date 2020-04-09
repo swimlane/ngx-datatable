@@ -35,7 +35,7 @@ export function orderByComparator(a: any, b: any): number {
   if (a instanceof Date && b instanceof Date) {
     if (a < b) return -1;
     if (a > b) return 1;
-  } else if (isNaN(parseFloat(a)) || !isFinite(a) || (isNaN(parseFloat(b)) || !isFinite(b))) {
+  } else if (isNaN(parseFloat(a)) || !isFinite(a) || isNaN(parseFloat(b)) || !isFinite(b)) {
     // Convert to string in case of a=0 or b=0
     a = String(a);
     b = String(b);
@@ -77,7 +77,7 @@ export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[
 
   // cache valueGetter and compareFn so that they
   // do not need to be looked-up in the sort function body
-  const cachedDirs = dirs.map(dir => {
+  const cachedDirs = dirs.map((dir) => {
     const prop = dir.prop;
     return {
       prop,
@@ -87,7 +87,7 @@ export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[
     };
   });
 
-  return temp.sort(function(rowA: any, rowB: any) {
+  return temp.sort(function (rowA: any, rowB: any) {
     for (const cachedDir of cachedDirs) {
       // Get property and valuegetters for column to be sorted
       const { prop, valueGetter } = cachedDir;

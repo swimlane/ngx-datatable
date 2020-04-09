@@ -1,6 +1,6 @@
 # Getting Started
 
-After [Installing](installing.md), include `NgxDatatableModule` 
+After [Installing](installing.md), include `NgxDatatableModule`
 in your application module like:
 
 ```javascript
@@ -15,7 +15,7 @@ import { AppComponent } from './app.component';
   imports: [NgxDatatableModule, BrowserModule],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
 ```
 
 then in your `app.component.ts` you define a table like:
@@ -27,10 +27,7 @@ import { Component } from '@angular/core';
   selector: 'app',
   template: `
     <div>
-      <ngx-datatable
-        [rows]="rows"
-        [columns]="columns">
-      </ngx-datatable>
+      <ngx-datatable [rows]="rows" [columns]="columns"> </ngx-datatable>
     </div>
   `
 })
@@ -38,18 +35,14 @@ export class AppComponent {
   rows = [
     { name: 'Austin', gender: 'Male', company: 'Swimlane' },
     { name: 'Dany', gender: 'Male', company: 'KFC' },
-    { name: 'Molly', gender: 'Female', company: 'Burger King' },
+    { name: 'Molly', gender: 'Female', company: 'Burger King' }
   ];
-  columns = [
-    { prop: 'name' },
-    { name: 'Gender' },
-    { name: 'Company' }
-  ];
+  columns = [{ prop: 'name' }, { name: 'Gender' }, { name: 'Company' }];
 }
 ```
 
-and you're off to the races! 
+and you're off to the races!
 
-For more examples, visit the 
+For more examples, visit the
 [demos](https://github.com/swimlane/angular2-data-table/tree/master/demo) directory
 in the source code!

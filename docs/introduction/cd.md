@@ -1,15 +1,16 @@
 # Change Detection
-The table implements `OnPush` change detection which means the dirty checking checks for immutable 
+
+The table implements `OnPush` change detection which means the dirty checking checks for immutable
 data types. That means if you do object mutations like:
 
 ```javascript
-this.rows[i]['gender'] = 'Female'
-``` 
+this.rows[i]['gender'] = 'Female';
+```
 
 The table will not detect a change! Instead if you do a change like this, you need to do:
 
 ```javascript
-this.rows[i]['gender'] = 'Female'
+this.rows[i]['gender'] = 'Female';
 this.rows = [...this.rows];
 ```
 
