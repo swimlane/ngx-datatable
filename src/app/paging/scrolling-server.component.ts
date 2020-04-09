@@ -19,7 +19,7 @@ export class MockServerResultsService {
   public getResults(offset: number, limit: number): Observable<PagedData<CorporateEmployee>> {
     return of(companyData.slice(offset, offset + limit)).pipe(
       delay(new Date(Date.now() + 500)),
-      map(d => ({ data: d }))
+      map((d) => ({ data: d }))
     );
   }
 }
@@ -99,7 +99,7 @@ export class ServerScrollingComponent {
     // 2) it enables display of the loading indicator
     this.isLoading = true;
 
-    this.serverResultsService.getResults(this.rows.length, limit).subscribe(results => {
+    this.serverResultsService.getResults(this.rows.length, limit).subscribe((results) => {
       const rows = [...this.rows, ...results.data];
       this.rows = rows;
       this.isLoading = false;

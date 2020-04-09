@@ -14,9 +14,7 @@ export interface Model {
 
 @Component({
   selector: 'datatable-selection',
-  template: `
-    <ng-content></ng-content>
-  `,
+  template: ` <ng-content></ng-content> `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableSelectionComponent {
@@ -146,7 +144,7 @@ export class DataTableSelectionComponent {
     if (!selected || !selected.length) return -1;
 
     const rowId = this.rowIdentity(row);
-    return selected.findIndex(r => {
+    return selected.findIndex((r) => {
       const id = this.rowIdentity(r);
       return id === rowId;
     });

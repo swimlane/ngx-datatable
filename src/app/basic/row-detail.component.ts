@@ -97,7 +97,7 @@ export class RowDetailsComponent {
   ColumnMode = ColumnMode;
 
   constructor() {
-    this.fetch(data => {
+    this.fetch((data) => {
       this.rows = data;
     });
   }

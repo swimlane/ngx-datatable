@@ -1,29 +1,24 @@
 /// <reference path="./jasmine-matchers.d.ts" />
 
-export const addMatchers = () => jasmine.addMatchers({
-  toHaveText, toHaveCssClass
-});
+export const addMatchers = () =>
+  jasmine.addMatchers({
+    toHaveText,
+    toHaveCssClass
+  });
 
 /**
  * `toHaveText()` adapted from https://angular.io/guide/testing
  */
 function toHaveText(): jasmine.CustomMatcher {
   return {
-    compare(
-      actual: any,
-      expectedText: string,
-      expectationFailOutput?: any
-    ): jasmine.CustomMatcherResult {
+    compare(actual: any, expectedText: string, expectationFailOutput?: any): jasmine.CustomMatcherResult {
       const actualText = elementText(actual);
       const pass = actualText.indexOf(expectedText) > -1;
       const message = pass ? '' : composeMessage();
       return { pass, message };
 
       function composeMessage() {
-        const a =
-          actualText.length < 100
-            ? actualText
-            : actualText.substr(0, 100) + '...';
+        const a = actualText.length < 100 ? actualText : actualText.substr(0, 100) + '...';
         const efo = expectationFailOutput ? ` '${expectationFailOutput}'` : '';
         return `Expected element to have text content '${expectedText}' instead of '${a}'${efo}`;
       }
@@ -58,12 +53,10 @@ function toHaveCssClass(util, customEqualityTests) {
   return { compare: buildError(false), negativeCompare: buildError(true) };
 
   function buildError(isNot: boolean) {
-    return function(actual: HTMLElement, className: string) {
+    return function (actual: HTMLElement, className: string) {
       return {
         pass: actual.classList.contains(className) === !isNot,
-        message: `Expected ${actual.outerHTML} ${
-          isNot ? 'not ' : ''
-        }to contain the CSS class "${className}"`
+        message: `Expected ${actual.outerHTML} ${isNot ? 'not ' : ''}to contain the CSS class "${className}"`
       };
     };
   }

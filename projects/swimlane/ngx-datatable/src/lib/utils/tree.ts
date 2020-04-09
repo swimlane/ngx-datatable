@@ -3,7 +3,7 @@ import { TableColumnProp } from '../types/table-column.type';
 
 export type OptionalValueGetter = (row: any) => any | undefined;
 export function optionalGetterForProp(prop: TableColumnProp): OptionalValueGetter {
-  return prop && (row => getterForProp(prop)(row, prop));
+  return prop && ((row) => getterForProp(prop)(row, prop));
 }
 
 /**
@@ -77,7 +77,7 @@ export function groupRowsByParents(rows: any[], from?: OptionalValueGetter, to?:
     }
 
     let resolvedRows: any[] = [];
-    nodeById[0].flatten(function() {
+    nodeById[0].flatten(function () {
       resolvedRows = [...resolvedRows, this.row];
     }, true);
 

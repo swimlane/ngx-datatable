@@ -23,7 +23,7 @@ import {
       >
       </ng-template>
     </div>
-    <ng-content *ngIf="(groupHeader && groupHeader.template && expanded) || (!groupHeader || !groupHeader.template)">
+    <ng-content *ngIf="(groupHeader && groupHeader.template && expanded) || !groupHeader || !groupHeader.template">
     </ng-content>
     <div
       *ngIf="rowDetail && rowDetail.template && expanded"

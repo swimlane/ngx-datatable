@@ -46,7 +46,7 @@ export class TemplateRefTemplatesComponent {
   ColumnMode = ColumnMode;
 
   constructor() {
-    this.fetch(data => {
+    this.fetch((data) => {
       this.rows = data.splice(0, 5);
     });
   }

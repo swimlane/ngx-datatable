@@ -1,6 +1,7 @@
 # Row Detail Options
 
 ### `template`: `TemplateRef`
+
 Template to use in the detail row. Example:
 
 ```
@@ -13,9 +14,11 @@ Template to use in the detail row. Example:
 ```
 
 ### `rowHeight`: `Number|Function`
+
 Height of the detail row.
 
 **Template**
+
 ```html
 <ngx-datatable-row-detail [rowHeight]="getHeight" #myDetailRow (toggle)="onDetailToggle($event)">
   <ng-template let-row="row" ngx-datatable-row-detail-template>
@@ -26,6 +29,7 @@ Height of the detail row.
 ```
 
 **Typescript**
+
 ```javascript
 getHeight(row: any, index: number): number {
   return row.someHeight;

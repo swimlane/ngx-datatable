@@ -393,9 +393,7 @@ describe('DatatableComponent With Custom Templates', () => {
 });
 
 @Component({
-  template: `
-    <ngx-datatable [columns]="columns" [rows]="rows" [sorts]="sorts"> </ngx-datatable>
-  `
+  template: ` <ngx-datatable [columns]="columns" [rows]="rows" [sorts]="sorts"> </ngx-datatable> `
 })
 class TestFixtureComponent {
   columns: any[] = [];

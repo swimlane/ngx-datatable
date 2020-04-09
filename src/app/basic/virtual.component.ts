@@ -49,7 +49,7 @@ export class VirtualScrollComponent {
   ColumnMode = ColumnMode;
 
   constructor() {
-    this.fetch(data => {
+    this.fetch((data) => {
       this.rows = data;
     });
   }
