@@ -1,5 +1,15 @@
 # Changelog
 
+## 16.1.0
+
+- Fix: [selectAllRowsOnPage] is broken. (#1809)
+- Fix: Bug when using cellClass as string. (#1817)
+- Fix: Docs. (#1812, #1837, #1845, #1854)
+- Fix: redraw after recalculate (#1816)
+- Fix: undefined row index for rows in groups (#1857)
+- Chore: Add pretty-quick as a precommit hook using husky (#1841)
+- Chore: Bump dependecies (#1858, #1862, #1859)
+
 ## 16.0.3
 
 - Bug: Fix disappearing rows with vertical scrollbar, virtual scrolling & rowdetail auto height (#1799)
