@@ -27,5 +27,5 @@ export function camelCase(str: string): string {
  * http://stackoverflow.com/questions/7225407/convert-camelcasetext-to-camel-case-text
  */
 export function deCamelCase(str: string): string {
-  return str.replace(/([A-Z])/g, (match) => ` ${match}`).replace(/^./, (match) => match.toUpperCase());
+  return str.replace(/([A-Z])/g, match => ` ${match}`).replace(/^./, match => match.toUpperCase());
 }

@@ -41,14 +41,14 @@ export class BootstrapThemeComponent {
 
   columns = [
     { prop: 'name', summaryFunc: () => null },
-    { name: 'Gender', summaryFunc: (cells) => this.summaryForGender(cells) },
+    { name: 'Gender', summaryFunc: cells => this.summaryForGender(cells) },
     { name: 'Company', summaryFunc: () => null }
   ];
 
   ColumnMode = ColumnMode;
 
   constructor() {
-    this.fetch((data) => {
+    this.fetch(data => {
       this.rows = data;
       setTimeout(() => {
         this.loadingIndicator = false;
@@ -68,8 +68,8 @@ export class BootstrapThemeComponent {
   }
 
   private summaryForGender(cells: string[]) {
-    const males = cells.filter((cell) => cell === 'male').length;
-    const females = cells.filter((cell) => cell === 'female').length;
+    const males = cells.filter(cell => cell === 'male').length;
+    const females = cells.filter(cell => cell === 'female').length;
 
     return `males: ${males}, females: ${females}`;
   }

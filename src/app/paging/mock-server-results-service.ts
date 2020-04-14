@@ -19,7 +19,7 @@ export class MockServerResultsService {
    * @returns {any} An observable containing the employee data
    */
   public getResults(page: Page): Observable<PagedData<CorporateEmployee>> {
-    return of(companyData).pipe(map((d) => this.getPagedData(page)));
+    return of(companyData).pipe(map(d => this.getPagedData(page)));
   }
 
   /**

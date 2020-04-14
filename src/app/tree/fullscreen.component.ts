@@ -65,9 +65,9 @@ export class FullScreenTreeComponent {
   ColumnMode = ColumnMode;
 
   constructor(private cd: ChangeDetectorRef) {
-    this.fetch((data) => {
+    this.fetch(data => {
       data = data.slice(1, this.lastIndex);
-      this.rows = data.map((d) => {
+      this.rows = data.map(d => {
         d.treeStatus = 'collapsed';
         d.parentId = null;
         return d;
@@ -93,8 +93,8 @@ export class FullScreenTreeComponent {
     const row = event.row;
     if (row.treeStatus === 'collapsed') {
       row.treeStatus = 'loading';
-      this.fetch((data) => {
-        data = data.slice(this.lastIndex, this.lastIndex + 3).map((d) => {
+      this.fetch(data => {
+        data = data.slice(this.lastIndex, this.lastIndex + 3).map(d => {
           d.treeStatus = 'collapsed';
           d.parentId = row.id;
           return d;

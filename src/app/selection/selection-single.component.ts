@@ -61,7 +61,7 @@ export class SingleSelectionComponent {
   SelectionType = SelectionType;
 
   constructor() {
-    this.fetch((data) => {
+    this.fetch(data => {
       this.selected = [data[2]];
       this.rows = data;
     });

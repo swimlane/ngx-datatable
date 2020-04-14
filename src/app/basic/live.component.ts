@@ -52,8 +52,8 @@ export class LiveDataComponent {
   ColumnMode = ColumnMode;
 
   constructor(private cd: ChangeDetectorRef) {
-    this.fetch((data) => {
-      this.rows = data.map((d) => {
+    this.fetch(data => {
+      this.rows = data.map(d => {
         d.updated = Date.now().toString();
         return d;
       });

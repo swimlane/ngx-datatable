@@ -144,7 +144,7 @@ export class DataTableSelectionComponent {
     if (!selected || !selected.length) return -1;
 
     const rowId = this.rowIdentity(row);
-    return selected.findIndex((r) => {
+    return selected.findIndex(r => {
       const id = this.rowIdentity(r);
       return id === rowId;
     });

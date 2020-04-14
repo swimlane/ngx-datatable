@@ -49,7 +49,7 @@ export class DefaultSortingComponent implements OnInit {
   ColumnMode = ColumnMode;
 
   ngOnInit() {
-    this.fetch((data) => {
+    this.fetch(data => {
       this.rows = data;
     });
   }
