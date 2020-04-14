@@ -66,7 +66,7 @@ export class ColumnReorderComponent {
   ColumnMode = ColumnMode;
 
   constructor() {
-    this.fetch((data) => {
+    this.fetch(data => {
       this.rows = data;
       setTimeout(() => {
         this.loadingIndicator = false;

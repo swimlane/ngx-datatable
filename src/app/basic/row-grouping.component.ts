@@ -132,7 +132,7 @@ export class RowGroupingComponent {
   ColumnMode = ColumnMode;
 
   constructor() {
-    this.fetch((data) => {
+    this.fetch(data => {
       this.rows = data;
     });
   }
@@ -219,24 +219,21 @@ export class RowGroupingComponent {
 
     // check if there is a pending selected payment or a row that does not have any expected payment selected
     if (
-      group.filter((rowFilter) => rowFilter.exppaypending === 1).length === 0 &&
-      group.filter(
-        (rowFilter) => rowFilter.exppaypending === 0 && rowFilter.exppayyes === 0 && rowFilter.exppayno === 0
-      ).length === 0
+      group.filter(rowFilter => rowFilter.exppaypending === 1).length === 0 &&
+      group.filter(rowFilter => rowFilter.exppaypending === 0 && rowFilter.exppayyes === 0 && rowFilter.exppayno === 0)
+        .length === 0
     ) {
       console.log('expected payment dealt with');
 
       // check if can set the group status
-      const numberOfExpPayYes = group.filter((rowFilter) => rowFilter.exppayyes === 1).length;
-      const numberOfSourceFunder = group.filter(
-        (rowFilter) => rowFilter.exppayyes === 1 && rowFilter.source === 'Funder'
-      ).length;
+      const numberOfExpPayYes = group.filter(rowFilter => rowFilter.exppayyes === 1).length;
+      const numberOfSourceFunder = group.filter(rowFilter => rowFilter.exppayyes === 1 && rowFilter.source === 'Funder')
+        .length;
       const numberOfSourceCalculated = group.filter(
-        (rowFilter) => rowFilter.exppayyes === 1 && rowFilter.source === 'Calculated'
+        rowFilter => rowFilter.exppayyes === 1 && rowFilter.source === 'Calculated'
       ).length;
-      const numberOfSourceManual = group.filter(
-        (rowFilter) => rowFilter.exppayyes === 1 && rowFilter.source === 'Manual'
-      ).length;
+      const numberOfSourceManual = group.filter(rowFilter => rowFilter.exppayyes === 1 && rowFilter.source === 'Manual')
+        .length;
 
       console.log('numberOfExpPayYes', numberOfExpPayYes);
       console.log('numberOfSourceFunder', numberOfSourceFunder);

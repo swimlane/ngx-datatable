@@ -46,7 +46,7 @@ export class ServerSortingComponent {
   ColumnMode = ColumnMode;
 
   constructor() {
-    this.fetch((data) => {
+    this.fetch(data => {
       this.rows = data;
     });
   }
