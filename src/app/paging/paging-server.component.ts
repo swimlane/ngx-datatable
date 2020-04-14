@@ -59,7 +59,7 @@ export class ServerPagingComponent {
    */
   setPage(pageInfo) {
     this.page.pageNumber = pageInfo.offset;
-    this.serverResultsService.getResults(this.page).subscribe((pagedData) => {
+    this.serverResultsService.getResults(this.page).subscribe(pagedData => {
       this.page = pagedData.page;
       this.rows = pagedData.data;
     });

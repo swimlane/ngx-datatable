@@ -779,7 +779,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     if (!expanded || !expanded.length) return -1;
 
     const rowId = this.rowIdentity(row);
-    return expanded.findIndex((r) => {
+    return expanded.findIndex(r => {
       const id = this.rowIdentity(r);
       return id === rowId;
     });

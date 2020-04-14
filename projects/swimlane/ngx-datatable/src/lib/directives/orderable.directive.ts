@@ -35,7 +35,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.draggables.forEach((d) => {
+    this.draggables.forEach(d => {
       d.dragStart.unsubscribe();
       d.dragging.unsubscribe();
       d.dragEnd.unsubscribe();

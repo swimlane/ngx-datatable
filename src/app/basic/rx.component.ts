@@ -35,8 +35,8 @@ export class RxDemoComponent {
   ColumnMode = ColumnMode;
 
   constructor() {
-    this.rows = Observable.create((subscriber) => {
-      this.fetch((data) => {
+    this.rows = Observable.create(subscriber => {
+      this.fetch(data => {
         subscriber.next(data.splice(0, 15));
         subscriber.next(data.splice(15, 30));
         subscriber.complete();

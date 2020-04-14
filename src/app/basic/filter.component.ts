@@ -49,7 +49,7 @@ export class FilterBarComponent {
   ColumnMode = ColumnMode;
 
   constructor() {
-    this.fetch((data) => {
+    this.fetch(data => {
       // cache our list
       this.temp = [...data];
 

@@ -9,12 +9,12 @@ export interface ISummaryColumn {
 }
 
 function defaultSumFunc(cells: any[]): any {
-  const cellsWithValues = cells.filter((cell) => !!cell);
+  const cellsWithValues = cells.filter(cell => !!cell);
 
   if (!cellsWithValues.length) {
     return null;
   }
-  if (cellsWithValues.some((cell) => typeof cell !== 'number')) {
+  if (cellsWithValues.some(cell => typeof cell !== 'number')) {
     return null;
   }
 
@@ -64,7 +64,7 @@ export class DataTableSummaryRowComponent implements OnChanges {
   }
 
   private updateInternalColumns() {
-    this._internalColumns = this.columns.map((col) => ({
+    this._internalColumns = this.columns.map(col => ({
       ...col,
       cellTemplate: col.summaryTemplate
     }));
@@ -74,9 +74,9 @@ export class DataTableSummaryRowComponent implements OnChanges {
     this.summaryRow = {};
 
     this.columns
-      .filter((col) => !col.summaryTemplate)
-      .forEach((col) => {
-        const cellsFromSingleColumn = this.rows.map((row) => row[col.prop]);
+      .filter(col => !col.summaryTemplate)
+      .forEach(col => {
+        const cellsFromSingleColumn = this.rows.map(row => row[col.prop]);
         const sumFunc = this.getSummaryFunction(col);
 
         this.summaryRow[col.prop] = col.pipe
