@@ -1,5 +1,13 @@
 # Changelog
 
+## 17.0.0
+
+- Chore: explicitly only suppot ng9
+
+## 16.1.1
+
+- Chore: Patch release to override 16.1.0
+
 ## 16.1.0
 
 - Fix: [selectAllRowsOnPage] is broken. (#1809)
