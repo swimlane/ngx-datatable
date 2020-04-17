@@ -1,5 +1,9 @@
 # Changelog
 
+## 16.1.1
+
+- Patch release to override 16.1.0
+
 ## 16.0.2
 
 - Bug: Remove barrel files because ng-packagr doesn't work well with them
