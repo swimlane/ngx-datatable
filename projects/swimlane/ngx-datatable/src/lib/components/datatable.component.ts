@@ -274,7 +274,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * For no selection pass a `falsey`.
    * Default value: `undefined`
    */
-  @Input() selectionType: SelectionType;
+  @Input() selectionType: SelectionType | keyof typeof SelectionType;
 
   /**
    * Enable/Disable ability to re-order columns
