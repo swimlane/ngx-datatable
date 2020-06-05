@@ -77,7 +77,7 @@ export class VirtualPagingComponent {
     // counter of pages loading
     this.isLoading++;
 
-    // class to idendify loading page
+    // class to identify loading page
     const page = new Page();
     page.pageNumber = pageInfo.offset;
     page.size = pageInfo.pageSize;
