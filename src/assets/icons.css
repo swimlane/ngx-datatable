@@ -53,6 +53,9 @@
 .datatable-icon-down:before {
   content: '\66';
 }
+.datatable-icon-sort-unset:before {
+  content: '\63';
+}
 .datatable-icon-sort:before {
   content: '\67';
 }
