@@ -55,6 +55,7 @@
 }
 .datatable-icon-sort-unset:before {
   content: '\63';
+  opacity: 0.5;
 }
 .datatable-icon-sort:before {
   content: '\67';
