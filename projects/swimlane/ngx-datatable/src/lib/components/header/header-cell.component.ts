@@ -25,7 +25,12 @@ import { SortDirection } from '../../types/sort-direction.type';
       >
       </ng-template>
       <label *ngIf="isCheckboxable" class="datatable-checkbox">
-        <input type="checkbox" [checked]="allRowsSelected" (change)="select.emit(!allRowsSelected)" />
+        <input
+          type="checkbox"
+          [indeterminate]="indeterminate"
+          [checked]="allRowsSelected"
+          (change)="select.emit(!allRowsSelected)"
+        />
       </label>
       <span *ngIf="!column.headerTemplate" class="datatable-header-cell-wrapper">
         <span class="datatable-header-cell-label draggable" (click)="onSort()" [innerHTML]="name"> </span>
@@ -61,6 +66,16 @@ export class DataTableHeaderCellComponent {
   }
   get allRowsSelected() {
     return this._allRowsSelected;
+  }
+
+  _indeterminate: boolean;
+
+  @Input() set indeterminate(value) {
+    this._indeterminate = value;
+    this.cellContext.indeterminate = value;
+  }
+  get indeterminate() {
+    return this._indeterminate;
   }
 
   @Input() selectionType: SelectionType;
@@ -163,6 +178,7 @@ export class DataTableHeaderCellComponent {
     sortDir: this.sortDir,
     sortFn: this.sortFn,
     allRowsSelected: this.allRowsSelected,
+    indeterminate: this.indeterminate,
     selectFn: this.selectFn
   };
 

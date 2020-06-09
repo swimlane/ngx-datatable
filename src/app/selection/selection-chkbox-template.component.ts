@@ -47,9 +47,15 @@ import { ColumnMode, SelectionType } from 'projects/swimlane/ngx-datatable/src/p
               ngx-datatable-header-template
               let-value="value"
               let-allRowsSelected="allRowsSelected"
+              let-indeterminate="indeterminate"
               let-selectFn="selectFn"
             >
-              <input type="checkbox" [checked]="allRowsSelected" (change)="selectFn(!allRowsSelected)" />
+              <input
+                type="checkbox"
+                [indeterminate]="indeterminate"
+                [checked]="allRowsSelected"
+                (change)="selectFn(!allRowsSelected)"
+              />
             </ng-template>
             <ng-template
               ngx-datatable-cell-template

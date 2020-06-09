@@ -451,6 +451,23 @@ $datatable-summary-row-background-hover: #ddd !default;
       border-right-style: none;
     }
 
+    &:indeterminate:before {
+      width: 1rem;
+      height: 1rem;
+      left: -1rem;
+      top: -0.5rem;
+      border-top: none;
+      border-left: none;
+      border-right: 2px solid #009688;
+      border-bottom: none;
+      -webkit-transform: rotate(90deg);
+      transform: rotate(90deg);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      -webkit-transform-origin: 100% 100%;
+      transform-origin: 100% 100%;
+    }
+
     &:after {
       content: '';
       position: absolute;

@@ -55,6 +55,7 @@ import { translateXY } from '../../utils/translate';
           [sortAscendingIcon]="sortAscendingIcon"
           [sortDescendingIcon]="sortDescendingIcon"
           [allRowsSelected]="allRowsSelected"
+          [indeterminate]="indeterminate"
           (sort)="onSort($event)"
           (select)="select.emit($event)"
           (columnContextmenu)="columnContextmenu.emit($event)"
@@ -95,6 +96,7 @@ export class DataTableHeaderComponent implements OnDestroy {
   @Input() sorts: any[];
   @Input() sortType: SortType;
   @Input() allRowsSelected: boolean;
+  @Input() indeterminate: boolean;
   @Input() selectionType: SelectionType;
   @Input() reorderable: boolean;
 
