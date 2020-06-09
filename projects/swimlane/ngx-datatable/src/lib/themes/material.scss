@@ -451,7 +451,7 @@ $datatable-summary-row-background-hover: #ddd !default;
       border-right-style: none;
     }
 
-    &:indeterminate:before {
+    &:indeterminate::before {
       width: 1rem;
       height: 1rem;
       left: -1rem;
