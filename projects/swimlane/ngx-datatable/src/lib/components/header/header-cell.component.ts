@@ -48,6 +48,7 @@ export class DataTableHeaderCellComponent {
   @Input() sortType: SortType;
   @Input() sortAscendingIcon: string;
   @Input() sortDescendingIcon: string;
+  @Input() sortUnsetIcon: string;
 
   @Input() isTarget: boolean;
   @Input() targetMarkerTemplate: any;
@@ -176,6 +177,10 @@ export class DataTableHeaderCellComponent {
     this.columnContextmenu.emit({ event: $event, column: this.column });
   }
 
+  ngOnInit() {
+    this.sortClass = this.calcSortClass(this.sortDir);
+  }
+
   calcSortDir(sorts: any[]): any {
     if (sorts && this.column) {
       const sort = sorts.find((s: any) => {
@@ -198,12 +203,13 @@ export class DataTableHeaderCellComponent {
   }
 
   calcSortClass(sortDir: SortDirection): string {
+    if (!this.cellContext.column.sortable) return;
     if (sortDir === SortDirection.asc) {
       return `sort-btn sort-asc ${this.sortAscendingIcon}`;
     } else if (sortDir === SortDirection.desc) {
       return `sort-btn sort-desc ${this.sortDescendingIcon}`;
     } else {
-      return `sort-btn`;
+      return `sort-btn ${this.sortUnsetIcon}`;
     }
   }
 }
