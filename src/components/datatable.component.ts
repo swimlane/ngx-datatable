@@ -27,7 +27,8 @@ import { BehaviorSubject, Subscription } from 'rxjs';
   template: `
     <div
       visibilityObserver
-      (visible)="recalculate()">
+      (visible)="recalculate()"
+      role="grid">
       <datatable-header
         *ngIf="headerHeight"
         [sorts]="sorts"
