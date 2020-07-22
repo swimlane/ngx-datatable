@@ -14,7 +14,8 @@ import { MouseEvent } from '../../events';
       (reorder)="onColumnReordered($event)"
       (targetChanged)="onTargetChanged($event)"
       [style.width.px]="_columnGroupWidths.total"
-      class="datatable-header-inner">
+      class="datatable-header-inner"
+      role="row">
       <div
         *ngFor="let colGroup of _columnsByPin; trackBy: trackByGroups"
         [class]="'datatable-row-' + colGroup.type"

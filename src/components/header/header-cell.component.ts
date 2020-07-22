@@ -9,7 +9,9 @@ import { MouseEvent } from '../../events';
 @Component({
   selector: 'datatable-header-cell',
   template: `
-    <div class="datatable-header-cell-template-wrap">
+    <div 
+      class="datatable-header-cell-template-wrap"
+      role="columnheader">
       <ng-template
         *ngIf="isTarget"
         [ngTemplateOutlet]="targetMarkerTemplate"
