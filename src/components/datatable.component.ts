@@ -49,7 +49,8 @@ import { BehaviorSubject, Subscription } from 'rxjs';
         (resize)="onColumnResize($event)"
         (reorder)="onColumnReorder($event)"
         (select)="onHeaderSelect($event)"
-        (columnContextmenu)="onColumnContextmenu($event)">
+        (columnContextmenu)="onColumnContextmenu($event)"
+        role="rowgroup">
       </datatable-header>
       <datatable-body
         [groupRowsBy]="groupRowsBy"
@@ -87,7 +88,8 @@ import { BehaviorSubject, Subscription } from 'rxjs';
         (rowContextmenu)="onRowContextmenu($event)"
         (select)="onBodySelect($event)"
         (scroll)="onBodyScroll($event)"
-        (treeAction)="onTreeAction($event)">
+        (treeAction)="onTreeAction($event)"
+        role="rowgroup">
       </datatable-body>
       <datatable-footer
         *ngIf="footerHeight"

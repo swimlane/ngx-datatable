@@ -31,7 +31,8 @@ import { TreeStatus } from '../../index';
         [displayCheck]="displayCheck"
         [treeStatus]="treeStatus"
         (activate)="onActivate($event, ii)"
-        (treeAction)="onTreeAction()">
+        (treeAction)="onTreeAction()"
+        role="gridcell">
       </datatable-body-cell>
     </div>
   `
