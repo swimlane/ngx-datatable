@@ -3,10 +3,13 @@
   "version": "17.1.0",
   "description": "ngx-datatable is an Angular table grid component for presenting large and complex data.",
   "peerDependencies": {
-    "@angular/common": "~9.1.0",
-    "@angular/core": "~9.1.0",
-    "@angular/platform-browser": "~9.1.0",
-    "rxjs": "~6.5.5"
+    "@angular/common": "^10.0.0",
+    "@angular/core": "^10.0.0",
+    "@angular/platform-browser": "^10.0.0",
+    "rxjs": "^6.5.5"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
   },
   "repository": {
     "type": "git",
