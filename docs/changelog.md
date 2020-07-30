@@ -1,5 +1,9 @@
 # Changelog
 
+## 17.1.0
+
+- Feature: Add sorting: unset icon
+
 ## 17.0.0
 
 - Chore: explicitly only suppot ng9
