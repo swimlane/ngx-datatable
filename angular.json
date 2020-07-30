@@ -147,5 +147,8 @@
       }
     }
   },
-  "defaultProject": "ngx-datatable"
+  "defaultProject": "ngx-datatable",
+  "cli": {
+    "analytics": "f150d574-5933-46e5-843f-a9f1ebd31b57"
+  }
 }
