@@ -406,7 +406,7 @@ export declare class DatatableComponent implements OnInit, AfterViewInit, DoChec
     bodyHeight: number;
     rowCount: number;
     offsetX: number;
-    rowDiffer: IterableDiffer;
+    rowDiffer: IterableDiffer<any>;
     _count: number;
     _rows: any[];
     _columns: any[];
