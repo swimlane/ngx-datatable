@@ -9,7 +9,7 @@ describe('deepMerge', () => {
     };
 
     const func = {
-      a: function () {
+      a() {
         this.c = 2;
       }
     };
@@ -26,7 +26,7 @@ describe('deepMerge', () => {
     };
 
     const func = {
-      a: function () {
+      a() {
         this.c = 2;
       }
     };
