@@ -45,6 +45,7 @@ import { DimensionsHelper } from '../services/dimensions-helper.service';
 import { throttleable } from '../utils/throttle';
 import { forceFillColumnWidths, adjustColumnWidths } from '../utils/math';
 import { sortRows } from '../utils/sort';
+import { deepMerge } from '../utils/deep-merge';
 
 @Component({
   selector: 'ngx-datatable',
@@ -166,48 +167,96 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   /**
    * Enable vertical scrollbars
    */
-  @Input() scrollbarV: boolean = false;
+  @Input() set scrollbarV(val: boolean | null | undefined) {
+    this.configuration.scrollbarV = val;
+  }
+
+  get scrollbarV(): boolean | null | undefined {
+    return this.configuration.scrollbarV;
+  }
 
   /**
    * Enable horz scrollbars
    */
-  @Input() scrollbarH: boolean = false;
+  @Input() set scrollbarH(val: boolean | null | undefined) {
+    this.configuration.scrollbarH = val;
+  }
+
+  get scrollbarH(): boolean | null | undefined {
+    return this.configuration.scrollbarH;
+  }
 
   /**
    * The row height; which is necessary
    * to calculate the height for the lazy rendering.
    */
-  @Input() rowHeight: number | 'auto' | ((row?: any) => number) = 30;
+  @Input() set rowHeight(val: number | 'auto' | ((row?: any) => number)) {
+    this.configuration.rowHeight = val;
+  }
+
+  get rowHeight(): number | 'auto' | ((row?: any) => number) {
+    return this.configuration.rowHeight;
+  }
 
   /**
    * Type of column width distribution formula.
    * Example: flex, force, standard
    */
-  @Input() columnMode: ColumnMode | keyof typeof ColumnMode = ColumnMode.standard;
+  @Input() set columnMode(val: ColumnMode | keyof typeof ColumnMode) {
+    this.configuration.columnMode = val;
+  }
+
+  get columnMode(): ColumnMode | keyof typeof ColumnMode {
+    return this.configuration.columnMode;
+  }
 
   /**
    * The minimum header height in pixels.
    * Pass a falsey for no header
    */
-  @Input() headerHeight: number = 30;
+  @Input() set headerHeight(val: number) {
+    this.configuration.headerHeight = val;
+  }
+
+  get headerHeight(): number {
+    return this.configuration.headerHeight;
+  }
 
   /**
    * The minimum footer height in pixels.
    * Pass falsey for no footer
    */
-  @Input() footerHeight: number = 0;
+  @Input() set footerHeight(val: number) {
+    this.configuration.footerHeight = val;
+  }
+
+  get footerHeight(): number {
+    return this.configuration.footerHeight;
+  }
 
   /**
    * If the table should use external paging
    * otherwise its assumed that all data is preloaded.
    */
-  @Input() externalPaging: boolean = false;
+  @Input() set externalPaging(val: boolean) {
+    this.configuration.externalPaging = val;
+  }
+
+  get externalPaging(): boolean {
+    return this.configuration.externalPaging;
+  }
 
   /**
    * If the table should use external sorting or
    * the built-in basic sorting.
    */
-  @Input() externalSorting: boolean = false;
+  @Input() set externalSorting(val: boolean) {
+    this.configuration.externalSorting = val;
+  }
+
+  get externalSorting(): boolean {
+    return this.configuration.externalSorting;
+  }
 
   /**
    * The page size to be shown.
@@ -260,7 +309,12 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Show the linear loading bar.
    * Default value: `false`
    */
-  @Input() loadingIndicator: boolean = false;
+  @Input() set loadingIndicator(val: boolean) {
+    this.configuration.loadingIndicator = val;
+  }
+  get loadingIndicator(): boolean {
+    return this.configuration.loadingIndicator;
+  }
 
   /**
    * Type of row selection. Options are:
@@ -274,43 +328,65 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * For no selection pass a `falsey`.
    * Default value: `undefined`
    */
-  @Input() selectionType: SelectionType;
+  @Input() set selectionType(val: SelectionType) {
+    this.configuration.selectionType = val;
+  }
+  get selectionType(): SelectionType {
+    return this.configuration.selectionType;
+  }
 
   /**
    * Enable/Disable ability to re-order columns
    * by dragging them.
    */
-  @Input() reorderable: boolean = true;
+  @Input() set reorderable(val: boolean) {
+    this.configuration.reorderable = val;
+  }
+  get reorderable(): boolean {
+    return this.configuration.reorderable;
+  }
 
   /**
    * Swap columns on re-order columns or
    * move them.
    */
-  @Input() swapColumns: boolean = true;
+  @Input() set swapColumns(val: boolean) {
+    this.configuration.swapColumns = val;
+  }
+  get swapColumns(): boolean {
+    return this.configuration.swapColumns;
+  }
 
   /**
    * The type of sorting
    */
-  @Input() sortType: SortType = SortType.single;
+  @Input() set sortType(val: SortType) {
+    this.configuration.sortType = val;
+  }
+  get sortType(): SortType {
+    return this.configuration.sortType;
+  }
 
   /**
    * Array of sorted columns by property and type.
    * Default value: `[]`
    */
-  @Input() sorts: any[] = [];
+  @Input() set sorts(val: any) {
+    this.configuration.sorts = val;
+  }
+  get sorts(): any {
+    return this.configuration.sorts;
+  }
 
   /**
    * Css class overrides
    */
-  @Input() cssClasses: any = {
-    sortAscending: 'datatable-icon-up',
-    sortDescending: 'datatable-icon-down',
-    sortUnset: 'datatable-icon-sort-unset',
-    pagerLeftArrow: 'datatable-icon-left',
-    pagerRightArrow: 'datatable-icon-right',
-    pagerPrevious: 'datatable-icon-prev',
-    pagerNext: 'datatable-icon-skip'
-  };
+  @Input() set cssClasses(val: any) {
+    this.configuration.cssClasses = val;
+  }
+  get cssClasses(): any {
+    return this.configuration.cssClasses;
+  }
 
   /**
    * Message overrides for localization
@@ -319,17 +395,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * totalMessage     [default] = 'total'
    * selectedMessage  [default] = 'selected'
    */
-  @Input() messages: any = {
-    // Message to show when array is presented
-    // but contains no values
-    emptyMessage: 'No data to display',
-
-    // Footer total message
-    totalMessage: 'total',
-
-    // Footer selected message
-    selectedMessage: 'selected'
+  @Input() set messages(val: any) {
+    this.configuration.messages = {...this.configuration.messages, ...val};
   };
+
+  get messages(): any {
+    return this.configuration.messages;    
+  }
 
   /**
    * Row specific classes.
@@ -338,7 +410,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    *  [rowClass]="'first second'"
    *  [rowClass]="{ 'first': true, 'second': true, 'third': false }"
    */
-  @Input() rowClass: any;
+  @Input() set rowClass(val: any) {
+    this.configuration.rowClass = val;
+  };
+
+  get rowClass(): any {
+    return this.configuration.rowClass;    
+  }
 
   /**
    * A boolean/function you can use to check whether you want
@@ -348,7 +426,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    *      return selection !== 'Ethel Price';
    *    }
    */
-  @Input() selectCheck: any;
+  @Input() set selectCheck(val: any) {
+    this.configuration.selectCheck = val;
+  };
+
+  get selectCheck(): any {
+    return this.configuration.selectCheck;    
+  }
 
   /**
    * A function you can use to check whether you want
@@ -358,20 +442,38 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    *      return row.name !== 'Ethel Price';
    *    }
    */
-  @Input() displayCheck: (row: any, column?: any, value?: any) => boolean;
+  @Input() set displayCheck(val: (row: any, column?: any, value?: any) => boolean) {
+    this.configuration.displayCheck = val;
+  };
+
+  get displayCheck(): (row: any, column?: any, value?: any) => boolean {
+    return this.configuration.displayCheck;    
+  }
 
   /**
    * A boolean you can use to set the detault behaviour of rows and groups
    * whether they will start expanded or not. If ommited the default is NOT expanded.
    *
    */
-  @Input() groupExpansionDefault: boolean = false;
+  @Input() set groupExpansionDefault(val: boolean) {
+    this.configuration.groupExpansionDefault = val;
+  };
+
+  get groupExpansionDefault(): boolean {
+    return this.configuration.groupExpansionDefault;    
+  }
 
   /**
    * Property to which you can use for custom tracking of rows.
    * Example: 'name'
    */
-  @Input() trackByProp: string;
+  @Input() set trackByProp(val: string) {
+    this.configuration.trackByProp = val;
+  };
+
+  get trackByProp(): string {
+    return this.configuration.trackByProp;    
+  }
 
   /**
    * Property to which you can use for determining select all
@@ -384,32 +486,62 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   /**
    * A flag for row virtualization on / off
    */
-  @Input() virtualization: boolean = true;
+  @Input() set virtualization(val: boolean) {
+    this.configuration.virtualization = val;
+  };
+  get virtualization(): boolean {
+    return this.configuration.virtualization;    
+  }
 
   /**
    * Tree from relation
    */
-  @Input() treeFromRelation: string;
+  @Input() set treeFromRelation(val: string) {
+    this.configuration.treeFromRelation = val;
+  };
+  get treeFromRelation(): string {
+    return this.configuration.treeFromRelation;    
+  }
 
   /**
    * Tree to relation
    */
-  @Input() treeToRelation: string;
+  @Input() set treeToRelation(val: string) {
+    this.configuration.treeToRelation = val;
+  };
+  get treeToRelation(): string {
+    return this.configuration.treeToRelation;    
+  }
 
   /**
    * A flag for switching summary row on / off
    */
-  @Input() summaryRow: boolean = false;
+  @Input() set summaryRow(val: boolean) {
+    this.configuration.summaryRow = val;
+  };
+  get summaryRow(): boolean {
+    return this.configuration.summaryRow;    
+  }
 
   /**
    * A height of summary row
    */
-  @Input() summaryHeight: number = 30;
+  @Input() set summaryHeight(val: number) {
+    this.configuration.summaryHeight = val;
+  };
+  get summaryHeight(): number {
+    return this.configuration.summaryHeight;    
+  }
 
   /**
    * A property holds a summary row position: top/bottom
    */
-  @Input() summaryPosition: string = 'top';
+  @Input() set summaryPosition(val: string) {
+    this.configuration.summaryPosition = val;
+  };
+  get summaryPosition(): string {
+    return this.configuration.summaryPosition;    
+  }
 
   /**
    * Body was scrolled typically in a `scrollbarV:true` scenario.
@@ -636,6 +768,48 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   _columnTemplates: QueryList<DataTableColumnDirective>;
   _subscriptions: Subscription[] = [];
 
+  private configuration: INgxDatatableConfig = {
+    scrollbarV: false,
+    scrollbarH: false,
+    rowHeight: 30,
+    columnMode: ColumnMode.standard,
+    headerHeight: 30,
+    footerHeight: 0,
+    externalPaging: false,
+    externalSorting: false,
+    loadingIndicator: false,
+    selectionType: undefined,
+    reorderable: true,
+    swapColumns: true,
+    sortType: SortType.single,
+    sorts: [],    
+    cssClasses: {
+      sortAscending: 'datatable-icon-up',
+      sortDescending: 'datatable-icon-down',
+      sortUnset: 'datatable-icon-sort-unset',
+      pagerLeftArrow: 'datatable-icon-left',
+      pagerRightArrow: 'datatable-icon-right',
+      pagerPrevious: 'datatable-icon-prev',
+      pagerNext: 'datatable-icon-skip'
+    },
+    messages: {
+      emptyMessage: 'No data to display',
+      totalMessage: 'total',
+      selectedMessage: 'selected'
+    },
+    rowClass: undefined,
+    selectCheck: undefined,
+    displayCheck: undefined,
+    groupExpansionDefault: false,
+    trackByProp: undefined,
+    virtualization: true,
+    treeFromRelation: undefined,
+    treeToRelation: undefined,
+    summaryRow: false,
+    summaryHeight: 30,
+    summaryPosition: 'top'
+  };
+
   constructor(
     @SkipSelf() private scrollbarHelper: ScrollbarHelper,
     @SkipSelf() private dimensionsHelper: DimensionsHelper,
@@ -643,16 +817,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     element: ElementRef,
     differs: KeyValueDiffers,
     private columnChangesService: ColumnChangesService,
-    @Optional() @Inject('configuration') private configuration: INgxDatatableConfig
+    @Optional() @Inject('configuration') configuration: INgxDatatableConfig
   ) {
     // get ref to elm for measuring
     this.element = element.nativeElement;
     this.rowDiffer = differs.find({}).create();
 
-    // apply global settings from Module.forRoot
-    if (this.configuration && this.configuration.messages) {
-      this.messages = { ...this.configuration.messages };
-    }
+    this.configuration = deepMerge({}, this.configuration, configuration);
   }
 
   /**
