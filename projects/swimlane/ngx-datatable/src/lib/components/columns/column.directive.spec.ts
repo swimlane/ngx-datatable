@@ -1,5 +1,5 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-import { Component, DebugElement } from '@angular/core';
+import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { ColumnChangesService } from '../../services/column-changes.service';
@@ -111,19 +111,19 @@ describe('DataTableColumnDirective', () => {
       component.columnName = 'Column A';
       fixture.detectChanges();
 
-      expect(TestBed.get(ColumnChangesService).onInputChange).not.toHaveBeenCalled();
+      expect(TestBed.inject(ColumnChangesService).onInputChange).not.toHaveBeenCalled();
     });
 
     it('notifies of subsequent changes', () => {
       component.columnName = 'Column A';
       fixture.detectChanges();
 
-      expect(TestBed.get(ColumnChangesService).onInputChange).not.toHaveBeenCalled();
+      expect(TestBed.inject(ColumnChangesService).onInputChange).not.toHaveBeenCalled();
 
       component.columnName = 'Column B';
       fixture.detectChanges();
 
-      expect(TestBed.get(ColumnChangesService).onInputChange).toHaveBeenCalled();
+      expect(TestBed.inject(ColumnChangesService).onInputChange).toHaveBeenCalled();
     });
   });
 });
