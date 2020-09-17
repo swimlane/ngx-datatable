@@ -1,5 +1,9 @@
 # Changelog
 
+## 18.0.0
+
+- Breaking: Update to angular 10
+
 ## 17.1.0
 
 - Feature: Add sorting: unset icon
