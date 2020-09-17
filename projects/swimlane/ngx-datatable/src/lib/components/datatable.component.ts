@@ -617,6 +617,10 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     return this.selected && this.rows && this.rows.length !== 0 && allRowsSelected;
   }
 
+  get someRowsSelected(): boolean {
+    return !!this.selected?.length && !this.allRowsSelected;
+  }
+
   element: HTMLElement;
   _innerWidth: number;
   pageSize: number;
