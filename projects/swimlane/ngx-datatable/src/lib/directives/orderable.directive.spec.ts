@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Component, ElementRef } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
@@ -24,20 +24,22 @@ describe('OrderableDirective', () => {
     });
   });
 
-  beforeEach(async(() => {
-    TestBed.compileComponents().then(() => {
-      fixture = TestBed.createComponent(TestFixtureComponent);
-      component = fixture.componentInstance;
-      element = fixture.nativeElement;
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.compileComponents().then(() => {
+        fixture = TestBed.createComponent(TestFixtureComponent);
+        component = fixture.componentInstance;
+        element = fixture.nativeElement;
 
-      /* This is required in order to resolve the `ContentChildren`.
-       *  If we don't go through at least on change detection cycle
-       *  the `draggables` will be `undefined` and `ngOnDestroy` will
-       *  fail.
-       */
-      fixture.detectChanges();
-    });
-  }));
+        /* This is required in order to resolve the `ContentChildren`.
+         *  If we don't go through at least on change detection cycle
+         *  the `draggables` will be `undefined` and `ngOnDestroy` will
+         *  fail.
+         */
+        fixture.detectChanges();
+      });
+    })
+  );
 
   describe('fixture', () => {
     let directive: OrderableDirective;

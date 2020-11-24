@@ -74,23 +74,26 @@ export class DataTableRowWrapperComponent implements DoCheck {
     return this._expanded;
   }
 
-  groupContext: any = {
-    group: this.row,
-    expanded: this.expanded,
-    rowIndex: this.rowIndex
-  };
-
-  rowContext: any = {
-    row: this.row,
-    expanded: this.expanded,
-    rowIndex: this.rowIndex
-  };
+  groupContext: any;
+  rowContext: any;
 
   private rowDiffer: KeyValueDiffer<{}, {}>;
   private _expanded: boolean = false;
   private _rowIndex: number;
 
   constructor(private cd: ChangeDetectorRef, private differs: KeyValueDiffers) {
+    this.groupContext = {
+      group: this.row,
+      expanded: this.expanded,
+      rowIndex: this.rowIndex
+    };
+
+    this.rowContext = {
+      row: this.row,
+      expanded: this.expanded,
+      rowIndex: this.rowIndex
+    };
+
     this.rowDiffer = differs.find({}).create();
   }
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { ColumnChangesService } from '../services/column-changes.service';
@@ -12,7 +12,7 @@ let fixture: ComponentFixture<any>;
 let component: any;
 
 describe('DatatableComponent', () => {
-  beforeEach(async(() => setupTest(TestFixtureComponent)));
+  beforeEach(waitForAsync(() => setupTest(TestFixtureComponent)));
 
   it('should sort date values', () => {
     const initialRows = [
@@ -341,7 +341,7 @@ describe('DatatableComponent', () => {
 });
 
 describe('DatatableComponent With Custom Templates', () => {
-  beforeEach(async(() => setupTest(TestFixtureComponentWithCustomTemplates)));
+  beforeEach(waitForAsync(() => setupTest(TestFixtureComponentWithCustomTemplates)));
 
   it('should sort when the table is initially rendered if `sorts` are provided', () => {
     const initialRows = [{ id: 5 }, { id: 20 }, { id: 12 }];
