@@ -45,9 +45,12 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1000.4",
     "@angular-devkit/build-ng-packagr": "~0.1000.4",
+    "@angular-devkit/core": "^11.0.2",
+    "@angular-devkit/schematics": "^11.0.2",
     "@angular/cli": "~10.0.4",
     "@angular/compiler-cli": "~10.0.5",
     "@angular/language-service": "~10.0.5",
+    "@schematics/angular": "^11.0.2",
     "@swimlane/prettier-config-swimlane": "^3.0.2",
     "@types/jasmine": "^3.5.10",
     "@types/jasminewd2": "~2.0.3",
