@@ -255,6 +255,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   listener: any;
   rowIndexes: any = new WeakMap<any, string>();
   rowExpansions: any[] = [];
+  isAllGroupCollapsed: boolean;
 
   _rows: any[];
   _bodyHeight: any;
@@ -688,6 +689,9 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       this.rowExpansions.push(row);
     }
 
+    // To identify if all group is collapsed
+    this.isAllGroupCollapsed = this.rowExpansions.length === 0;
+
     this.detailToggle.emit({
       rows: [row],
       currentIndex: viewPortFirstRowIndex
@@ -766,7 +770,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * Returns if the row was expanded and set default row expansion when row expansion is empty
    */
   getRowExpanded(row: any): boolean {
-    if (this.rowExpansions.length === 0 && this.groupExpansionDefault) {
+    // By default, expand all groups. But avoid expanding all the groups when all the groups are collapsed by user
+    if (this.rowExpansions.length === 0 && this.groupExpansionDefault && !this.isAllGroupCollapsed) {
       for (const group of this.groupedRows) {
         this.rowExpansions.push(group);
       }
