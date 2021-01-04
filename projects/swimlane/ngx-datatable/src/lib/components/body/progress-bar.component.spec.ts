@@ -1,4 +1,4 @@
-import { async, TestBed, ComponentFixture } from '@angular/core/testing';
+import { TestBed, ComponentFixture, waitForAsync } from '@angular/core/testing';
 import { ProgressBarComponent } from './progress-bar.component';
 
 describe('ProgressBarComponent', () => {
@@ -13,13 +13,15 @@ describe('ProgressBarComponent', () => {
     });
   });
 
-  beforeEach(async(() => {
-    TestBed.compileComponents().then(() => {
-      fixture = TestBed.createComponent(ProgressBarComponent);
-      component = fixture.componentInstance;
-      element = fixture.nativeElement;
-    });
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.compileComponents().then(() => {
+        fixture = TestBed.createComponent(ProgressBarComponent);
+        component = fixture.componentInstance;
+        element = fixture.nativeElement;
+      });
+    })
+  );
 
   describe('fixture', () => {
     it('should have a component instance', () => {

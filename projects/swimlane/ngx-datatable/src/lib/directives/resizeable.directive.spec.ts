@@ -1,4 +1,4 @@
-import { async, TestBed, ComponentFixture } from '@angular/core/testing';
+import { TestBed, ComponentFixture, waitForAsync } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ResizeableDirective } from './resizeable.directive';
@@ -21,13 +21,15 @@ describe('ResizeableDirective', () => {
     });
   });
 
-  beforeEach(async(() => {
-    TestBed.compileComponents().then(() => {
-      fixture = TestBed.createComponent(TestFixtureComponent);
-      component = fixture.componentInstance;
-      element = fixture.nativeElement;
-    });
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.compileComponents().then(() => {
+        fixture = TestBed.createComponent(TestFixtureComponent);
+        component = fixture.componentInstance;
+        element = fixture.nativeElement;
+      });
+    })
+  );
 
   describe('fixture', () => {
     let directive: ResizeableDirective;

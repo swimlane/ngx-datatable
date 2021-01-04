@@ -159,18 +159,20 @@ export class DataTableHeaderCellComponent {
   sortDir: SortDirection;
   selectFn = this.select.emit.bind(this.select);
 
-  cellContext: any = {
-    column: this.column,
-    sortDir: this.sortDir,
-    sortFn: this.sortFn,
-    allRowsSelected: this.allRowsSelected,
-    selectFn: this.selectFn
-  };
+  cellContext: any;
 
   private _column: TableColumn;
   private _sorts: any[];
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(private cd: ChangeDetectorRef) {
+    this.cellContext = {
+      column: this.column,
+      sortDir: this.sortDir,
+      sortFn: this.sortFn,
+      allRowsSelected: this.allRowsSelected,
+      selectFn: this.selectFn
+    };
+  }
 
   @HostListener('contextmenu', ['$event'])
   onContextmenu($event: MouseEvent): void {
