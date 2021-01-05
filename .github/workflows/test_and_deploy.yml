@@ -1,0 +1,38 @@
+name: Build, Test, and Deploy
+
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Use Node.js 12.x
+      uses: actions/checkout@v1
+      with:
+        node-version: 12.x
+
+    - name: Install
+      run: |
+        npm ci
+      env:
+        CI: true
+
+    - name: Build
+      run: |
+        npm run build
+      env:
+        CI: true
+
+    - name: Test
+      run: |
+        npm run ci
+      env:
+        CI: true
+
+    - name: Prepare and deploy
+      run: |
+        npm run deploy-docs -- --name="Swimlane" --email="swimlane-devops@swimlane.com" --no-silent
+      if: ${{ github.ref == 'refs/heads/master' }}
+      env:
+        CI: true
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}

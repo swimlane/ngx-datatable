@@ -11,7 +11,7 @@
     "test": "run-p lint test:unit",
     "test:unit": "ng test @swimlane/ngx-datatable --watch=false",
     "test:watch": "ng test @swimlane/ngx-datatable",
-    "test:ci": "ng test @swimlane/ngx-datatable --watch=false --progress=false",
+    "test:ci": "ng test @swimlane/ngx-datatable --watch=false --progress=false --browsers=ChromeHeadlessCI",
     "ci": "run-s lint prettier:ci test:ci",
     "lint": "ng lint",
     "e2e": "ng e2e",
