@@ -1,4 +1,4 @@
-import { async, TestBed, ComponentFixture } from '@angular/core/testing';
+import { TestBed, ComponentFixture, waitForAsync } from '@angular/core/testing';
 import { DataTableBodyComponent } from './body.component';
 import { DataTableBodyRowComponent } from './body-row.component';
 import { DataTableRowWrapperComponent } from './body-row-wrapper.component';
@@ -31,13 +31,15 @@ describe('DataTableBodyComponent', () => {
     });
   });
 
-  beforeEach(async(() => {
-    TestBed.compileComponents().then(() => {
-      fixture = TestBed.createComponent(DataTableBodyComponent);
-      component = fixture.componentInstance;
-      element = fixture.nativeElement;
-    });
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.compileComponents().then(() => {
+        fixture = TestBed.createComponent(DataTableBodyComponent);
+        component = fixture.componentInstance;
+        element = fixture.nativeElement;
+      });
+    })
+  );
 
   describe('fixture', () => {
     it('should have a component instance', () => {

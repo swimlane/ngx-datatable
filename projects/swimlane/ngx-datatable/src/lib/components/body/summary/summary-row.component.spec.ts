@@ -1,4 +1,4 @@
-import { async, TestBed, ComponentFixture } from '@angular/core/testing';
+import { TestBed, ComponentFixture, waitForAsync } from '@angular/core/testing';
 import { DebugElement, PipeTransform } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
@@ -25,12 +25,14 @@ describe('DataTableSummaryRowComponent', () => {
     setColumnDefaults(columns);
   });
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [DataTableSummaryRowComponent, DataTableBodyRowComponent, DataTableBodyCellComponent],
-      providers: [ScrollbarHelper]
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [DataTableSummaryRowComponent, DataTableBodyRowComponent, DataTableBodyCellComponent],
+        providers: [ScrollbarHelper]
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DataTableSummaryRowComponent);

@@ -1,5 +1,5 @@
 import { Component, DebugElement, Input, Output, EventEmitter, ViewChild, TemplateRef } from '@angular/core';
-import { async, TestBed, ComponentFixture } from '@angular/core/testing';
+import { TestBed, ComponentFixture, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { addMatchers } from '../../test';
@@ -13,7 +13,7 @@ let page: Page;
 describe('DataTableFooterComponent', () => {
   beforeAll(addMatchers);
 
-  beforeEach(async(setupTest));
+  beforeEach(waitForAsync(setupTest));
 
   describe('div.datatable-footer-inner', () => {
     it(`should have a height`, () => {

@@ -1,4 +1,4 @@
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 
 import { DataTablePagerComponent } from './pager.component';
 
@@ -14,13 +14,15 @@ describe('DataTablePagerComponent', () => {
     })
   );
 
-  beforeEach(async(() => {
-    TestBed.compileComponents();
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.compileComponents();
 
-    fixture = TestBed.createComponent(DataTablePagerComponent);
-    pager = fixture.componentInstance;
-    element = fixture.nativeElement;
-  }));
+      fixture = TestBed.createComponent(DataTablePagerComponent);
+      pager = fixture.componentInstance;
+      element = fixture.nativeElement;
+    })
+  );
 
   describe('size', () => {
     it('should be defined', () => {
