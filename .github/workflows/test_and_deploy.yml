@@ -6,26 +6,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Use Node.js 12.x
-      uses: actions/checkout@v1
+    - name: Checkout
+      uses: actions/checkout@v2
       with:
         node-version: 12.x
 
     - name: Install
-      run: |
-        npm ci
-      env:
-        CI: true
+      uses: bahmutov/npm-install@v1
 
     - name: Build
       run: |
-        npm run build
+        npm run build --if-present
       env:
         CI: true
 
     - name: Test
       run: |
-        npm run ci
+        npm run ci --if-present
       env:
         CI: true
 
