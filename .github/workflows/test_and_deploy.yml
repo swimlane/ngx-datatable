@@ -31,7 +31,7 @@ jobs:
 
     - name: Prepare and deploy
       run: |
-        npm run deploy-docs -- --name="Swimlane" --email="swimlane-devops@swimlane.com" --no-silent
+        npm run deploy-docs -- --name="Swimlane" --email="swimlane-devops@swimlane.com"
       if: ${{ github.ref == 'refs/heads/master' }}
       env:
         CI: true
