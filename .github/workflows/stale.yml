@@ -1,0 +1,21 @@
+name: 'Close stale issues and PRs'
+on:
+  schedule:
+    # Check once a day
+    - cron: '0 0 * * *'
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v3
+        with:
+          # A full list of config options can be found at: https://github.com/actions/stale/blob/main/action.yml
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          days-before-stale: 30
+          days-before-close: 7
+          stale-issue-message: 'This issue is stale because it has been open 30 days with no activity. Remove stale label or comment or this will be closed in 7 days.'
+          close-issue-message: 'This issue was closed because it has been stalled for 7 days with no activity.'
+          stale-pr-message: 'This pr is stale because it has been open 30 days with no activity. Remove stale label or comment or this will be closed in 7 days.'
+          close-pr-message: 'This pr was closed because it has been stalled for 7 days with no activity.'
+          only-labels: 'Need+More+Info,Need+Demo'
