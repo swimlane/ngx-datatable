@@ -1,0 +1,105 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: 'data-table';
+  src: url('fonts/data-table.eot');
+  src: url('fonts/data-table.eot?#iefix') format('embedded-opentype'), url('fonts/data-table.woff') format('woff'),
+    url('fonts/data-table.ttf') format('truetype'), url('fonts/data-table.svg#data-table') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[data-icon]::before {
+  font-family: 'data-table' !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^='datatable-icon-']::before,
+[class*=' datatable-icon-']::before {
+  font-family: 'data-table' !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.datatable-icon-filter::before {
+  content: '\62';
+}
+
+.datatable-icon-collapse::before {
+  content: '\61';
+}
+
+.datatable-icon-expand::before {
+  content: '\63';
+}
+
+.datatable-icon-close::before {
+  content: '\64';
+}
+
+.datatable-icon-up::before {
+  content: '\65';
+}
+
+.datatable-icon-down::before {
+  content: '\66';
+}
+
+.datatable-icon-sort-unset::before {
+  content: '\63';
+  opacity: 0.5;
+}
+
+.datatable-icon-sort::before {
+  content: '\67';
+}
+
+.datatable-icon-done::before {
+  content: '\68';
+}
+
+.datatable-icon-done-all::before {
+  content: '\69';
+}
+
+.datatable-icon-search::before {
+  content: '\6a';
+}
+
+.datatable-icon-pin::before {
+  content: '\6b';
+}
+
+.datatable-icon-add::before {
+  content: '\6d';
+}
+
+.datatable-icon-left::before {
+  content: '\6f';
+}
+
+.datatable-icon-right::before {
+  content: '\70';
+}
+
+.datatable-icon-skip::before {
+  content: '\71';
+}
+
+.datatable-icon-prev::before {
+  content: '\72';
+}
