@@ -63,6 +63,7 @@ import { translateXY } from '../../utils/translate';
           (rowContextmenu)="rowContextmenu.emit($event)"
         >
           <datatable-body-row
+            role="row"
             *ngIf="!groupedRows; else groupedRowsTemplate"
             tabindex="-1"
             [isSelected]="selector.getRowSelected(group)"
@@ -82,6 +83,7 @@ import { translateXY } from '../../utils/translate';
           </datatable-body-row>
           <ng-template #groupedRowsTemplate>
             <datatable-body-row
+              role="row"
               *ngFor="let row of group.value; let i = index; trackBy: rowTrackingFn"
               tabindex="-1"
               [isSelected]="selector.getRowSelected(row)"
@@ -100,6 +102,7 @@ import { translateXY } from '../../utils/translate';
           </ng-template>
         </datatable-row-wrapper>
         <datatable-summary-row
+          role="row"
           *ngIf="summaryRow && summaryPosition === 'bottom'"
           [ngStyle]="getBottomSummaryRowStyles()"
           [rowHeight]="summaryHeight"

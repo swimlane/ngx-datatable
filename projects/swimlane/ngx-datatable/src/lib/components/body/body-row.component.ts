@@ -30,6 +30,7 @@ import { translateXY } from '../../utils/translate';
       [ngStyle]="_groupStyles[colGroup.type]"
     >
       <datatable-body-cell
+        role="cell"
         *ngFor="let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn"
         tabindex="-1"
         [row]="row"
