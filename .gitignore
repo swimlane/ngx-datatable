@@ -7,3 +7,5 @@ build/
 coverage/
 .idea
 yarn.lock
+/.vscode
+*.tgz
