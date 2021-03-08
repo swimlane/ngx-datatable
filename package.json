@@ -20,7 +20,7 @@
     "build-docs": "cross-env NODE_ENV=production ng build --prod --base-href=\"/ngx-datatable/\"",
     "predeploy-docs": "npm run build-docs",
     "deploy-docs": "angular-cli-ghpages --dir ./dist/ngx-datatable",
-    "package": "run-s build:lib:prod copy-files",
+    "package": "run-s build:lib:prod copy-files build:css",
     "prepare:lib": "run-s ci package",
     "publish:lib": "npm publish ./dist/swimlane/ngx-datatable",
     "prepack": "npm run package",
