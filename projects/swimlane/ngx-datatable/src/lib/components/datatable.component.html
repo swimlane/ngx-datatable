@@ -1,5 +1,6 @@
-<div visibilityObserver (visible)="recalculate()">
+<div role="table" visibilityObserver (visible)="recalculate()">
   <datatable-header
+    role="rowgroup"
     *ngIf="headerHeight"
     [sorts]="sorts"
     [sortType]="sortType"
@@ -24,6 +25,7 @@
   >
   </datatable-header>
   <datatable-body
+    role="rowgroup"
     [groupRowsBy]="groupRowsBy"
     [groupedRows]="groupedRows"
     [rows]="_internalRows"
