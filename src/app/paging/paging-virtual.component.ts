@@ -67,47 +67,56 @@ export class VirtualPagingComponent {
   }
 
   setPage(pageInfo: PageInfo) {
-    // current page number is determined by last call to setPage
+    // Current page number is determined by last call to setPage
+    // This is the page the UI is currently displaying
+    // The current page is based on the UI pagesize and scroll position
+    // Pagesize can change depending on browser size
     this.pageNumber = pageInfo.offset;
 
-    // don't load same data twice
-    if (this.cache[pageInfo.offset]) return;
-    this.cache[pageInfo.offset] = true;
+    // Calculate row offset in the UI using pageInfo
+    // This is the scroll position in rows
+    const rowOffset = pageInfo.offset * pageInfo.pageSize;
 
-    // counter of pages loading
+    // When calling the server, we keep page size fixed
+    // This should be the max UI pagesize or larger
+    // This is not necessary but helps simplify caching since the UI page size can change
+    const page = new Page();
+    page.size = 20;
+    page.pageNumber = Math.floor(rowOffset / page.size);
+
+    // We keep a index of server loaded pages so we don't load same data twice
+    // This is based on the server page not the UI
+    if (this.cache[page.pageNumber]) return;
+    this.cache[page.pageNumber] = true;
+
+    // Counter of pending API calls
     this.isLoading++;
 
-    // class to idendify loading page
-    const page = new Page();
-    page.pageNumber = pageInfo.offset;
-    page.size = pageInfo.pageSize;
+    this.serverResultsService.getResults(page).subscribe(pagedData => {
+      // Update total count
+      this.totalElements = pagedData.page.totalElements;
 
-    this.serverResultsService
-      .getResults(page)
-      .pipe(delay(new Date(Date.now() + 1000 * Math.random()))) // simulating variability in returned data
-      .subscribe(pagedData => {
-        // update total count
-        this.totalElements = pagedData.page.totalElements;
+      // Create array to store data if missing
+      // The array should have the correct number of with "holes" for missing data
+      if (!this.rows) {
+        this.rows = new Array<CorporateEmployee>(this.totalElements || 0);
+      }
 
-        // create array to store data if missing
-        if (!this.rows) {
-          // length should be total count
-          this.rows = new Array<CorporateEmployee>(pagedData.page.totalElements || 0);
-        }
+      // Calc starting row offset
+      // This is the position to insert the new data
+      const start = pagedData.page.pageNumber * pagedData.page.size;
 
-        // calc starting index
-        const start = pagedData.page.pageNumber * pagedData.page.size;
+      // Copy existing data
+      const rows = [...this.rows];
 
-        // copy existing data
-        const rows = [...this.rows];
+      // Insert new rows into correct position
+      rows.splice(start, pagedData.page.size, ...pagedData.data);
 
-        // insert new rows into new position
-        rows.splice(start, pagedData.page.size, ...pagedData.data);
+      // Set rows to our new rows for display
+      this.rows = rows;
 
-        // set rows to our new rows
-        this.rows = rows;
-
-        this.isLoading--;
-      });
+      // Decrement the counter of pending API calls
+      this.isLoading--;
+    });
   }
 }
