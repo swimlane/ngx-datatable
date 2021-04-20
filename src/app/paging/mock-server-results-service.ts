@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 import { PagedData } from './model/paged-data';
 import { CorporateEmployee } from './model/corporate-employee';
 import { Page } from './model/page';
 
-import data from 'src/assets/data/company.json';
-const companyData = data as any[];
+import companyData from 'src/assets/data/company.json';
 
 /**
  * A server used to mock a paged data result from a server
@@ -19,7 +18,9 @@ export class MockServerResultsService {
    * @returns {any} An observable containing the employee data
    */
   public getResults(page: Page): Observable<PagedData<CorporateEmployee>> {
-    return of(companyData).pipe(map(d => this.getPagedData(page)));
+    return of(companyData)
+      .pipe(map(d => this.getPagedData(page)))
+      .pipe(delay(1000 * Math.random()));
   }
 
   /**
