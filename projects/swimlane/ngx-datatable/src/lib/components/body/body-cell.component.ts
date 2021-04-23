@@ -29,6 +29,7 @@ export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
       <label
         *ngIf="column.checkboxable && (!displayCheck || displayCheck(row, column, value))"
         class="datatable-checkbox"
+        [class.checked]="isSelected"
       >
         <input type="checkbox" [checked]="isSelected" (click)="onCheckboxChange($event)" />
       </label>

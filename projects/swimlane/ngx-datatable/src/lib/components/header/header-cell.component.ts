@@ -24,7 +24,7 @@ import { SortDirection } from '../../types/sort-direction.type';
         [ngTemplateOutletContext]="targetMarkerContext"
       >
       </ng-template>
-      <label *ngIf="isCheckboxable" class="datatable-checkbox">
+      <label *ngIf="isCheckboxable" class="datatable-checkbox" [class.checked]="allRowsSelected">
         <input type="checkbox" [checked]="allRowsSelected" (change)="select.emit(!allRowsSelected)" />
       </label>
       <span *ngIf="!column.headerTemplate" class="datatable-header-cell-wrapper">
