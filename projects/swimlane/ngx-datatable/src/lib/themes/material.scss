@@ -417,26 +417,6 @@ $datatable-summary-row-background-hover: #ddd !default;
   left: -9999px;
   opacity: 0;
 
-  &:checked {
-    ~ label {
-      &::after {
-        transform: translateY(2px) rotate(-45deg) scale(0.9);
-        height: 0.5rem;
-        border-color: #009688;
-        border-top-style: none;
-        border-right-style: none;
-      }
-    }
-  }
-
-  &:disabled {
-    ~ label {
-      cursor: not-allowed;
-      pointer-events: none;
-      opacity: 0.5;
-    }
-  }
-
   ~ label {
     display: inline-flex;
     position: relative;
@@ -465,6 +445,26 @@ $datatable-summary-row-background-hover: #ddd !default;
     &::after {
       border: 2px solid #f2f2f2;
       transition: all 0.3s ease-in-out;
+    }
+  }
+
+  &:checked {
+    ~ label {
+      &::after {
+        transform: translateY(2px) rotate(-45deg) scale(0.9);
+        height: 0.5rem;
+        border-color: #009688;
+        border-top-style: none;
+        border-right-style: none;
+      }
+    }
+  }
+
+  &:disabled {
+    ~ label {
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 0.5;
     }
   }
 }
