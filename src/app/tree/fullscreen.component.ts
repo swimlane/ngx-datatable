@@ -9,7 +9,7 @@ import { ColumnMode } from 'projects/ngx-datatable/src/public-api';
         Full Screen
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/tree/fullscreen.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/master/src/app/tree/fullscreen.component.ts"
             target="_blank"
           >
             Source

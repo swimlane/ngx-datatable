@@ -33,7 +33,7 @@ export class MockServerResultsService {
         Server-side Scrolling
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/paging/scrolling-server.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/master/src/app/paging/scrolling-server.component.ts"
             target="_blank"
           >
             Source

@@ -9,7 +9,7 @@ import { ColumnMode, SelectionType } from 'projects/ngx-datatable/src/public-api
         Single Row Selection
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/selection/selection-single.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/master/src/app/selection/selection-single.component.ts"
             target="_blank"
           >
             Source

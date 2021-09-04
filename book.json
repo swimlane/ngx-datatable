@@ -1,6 +1,6 @@
 {
   "gitbook": "3.x.x",
-  "title": "Swimlane",
+  "title": "Siemens",
   "root": "/docs",
   "plugins": [
     "highlight",
@@ -15,7 +15,7 @@
   ],
   "pluginsConfig": {
     "github": {
-      "url": "https://github.com/swimlane/ngx-datatable/"
+      "url": "https://github.com/siemens/ngx-datatable/"
     },
     "theme-api": {
       "theme": "dark"
@@ -25,7 +25,7 @@
       "type": "tags"
     },
     "githubcontributors": {
-      "githubOwner": "swimlane",
+      "githubOwner": "siemens",
       "githubRepository": "ngx-datatable"
     }
   }

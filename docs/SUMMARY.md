@@ -21,8 +21,8 @@
     - [Inputs](api/detail/inputs.md)
     - [Outputs](api/detail/outputs.md)
 - Demos
-  - [Online](http://swimlane.github.io/ngx-datatable/)
-  - [Source Code](https://github.com/swimlane/ngx-datatable/tree/master/src/app)
+  - [Online](http://siemens.github.io/ngx-datatable/)
+  - [Source Code](https://github.com/siemens/ngx-datatable/tree/master/src/app)
 - Contributing
   - [Building](contributing/building.md)
   - [Guidelines](contributing/guidelines.md)

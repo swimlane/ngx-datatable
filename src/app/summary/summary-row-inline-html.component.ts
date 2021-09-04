@@ -9,7 +9,7 @@ import { ColumnMode } from 'projects/ngx-datatable/src/public-api';
         Inline HTML template
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/summary/summary-row-inline-html.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/master/src/app/summary/summary-row-inline-html.component.ts"
           >
             Source
           </a>

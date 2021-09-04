@@ -1,18 +1,18 @@
 # ngx-datatable
 
-[![Join the chat at https://gitter.im/swimlane/ngx-datatable](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/swimlane/ngx-datatable?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Code Climate](https://codeclimate.com/github/swimlane/ngx-datatable/badges/gpa.svg)](https://codeclimate.com/github/swimlane/ngx-datatable)
-[![Test Coverage](https://codeclimate.com/github/swimlane/ngx-datatable/badges/coverage.svg)](https://codeclimate.com/github/swimlane/ngx-datatable/coverage)
-[![npm version](https://badge.fury.io/js/%40swimlane%2Fngx-datatable.svg)](https://badge.fury.io/js/%40swimlane%2Fngx-datatable)
+[![Join the chat at https://gitter.im/siemens/ngx-datatable](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/siemens/ngx-datatable?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Code Climate](https://codeclimate.com/github/siemens/ngx-datatable/badges/gpa.svg)](https://codeclimate.com/github/siemens/ngx-datatable)
+[![Test Coverage](https://codeclimate.com/github/siemens/ngx-datatable/badges/coverage.svg)](https://codeclimate.com/github/siemens/ngx-datatable/coverage)
+[![npm version](https://badge.fury.io/js/%40siemens%2Fngx-datatable.svg)](https://badge.fury.io/js/%40siemens%2Fngx-datatable)
 [![npm downloads](https://img.shields.io/npm/dm/@siemens/ngx-datatable.svg)](https://npmjs.org/@siemens/ngx-datatable)
 
 `ngx-datatable` is an Angular component for presenting large and complex data. It has all the features you would expect from any other table but in a light package with _no external dependencies_. The table was designed to be extremely flexible and light; it doesn't make any assumptions about your data or how you: filter, sort or page it.
 
 It was built for modern browsers using _TypeScript, CSS3 and HTML5_ and Angular `8.0.0`. This is the sister project of the [angular-data-table](https://github.com/swimlane/angular-data-table) that is designed for Angular 1.x.
 
-Check out the [documentation](https://swimlane.gitbook.io/ngx-datatable/) & [demos](http://swimlane.github.io/ngx-datatable/) for more information!
+Check out the [documentation](https://siemens.gitbook.io/ngx-datatable/) & [demos](http://siemens.github.io/ngx-datatable/) for more information!
 
-See the [changelog](https://github.com/swimlane/ngx-datatable/blob/master/docs/changelog.md) for recent changes.
+See the [changelog](https://github.com/siemens/ngx-datatable/blob/master/docs/changelog.md) for recent changes.
 
 ## Features
 
