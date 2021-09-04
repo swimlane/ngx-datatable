@@ -17,8 +17,8 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@siemens/ngx-datatable": ["dist/swimlane/ngx-datatable"],
-      "@siemens/ngx-datatable/*": ["dist/swimlane/ngx-datatable/*"]
+      "@siemens/ngx-datatable": ["dist/ngx-datatable"],
+      "@siemens/ngx-datatable/*": ["dist/ngx-datatable/*"]
     }
   },
   "angularCompilerOptions": {
