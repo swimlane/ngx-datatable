@@ -4,7 +4,7 @@
 [![Code Climate](https://codeclimate.com/github/swimlane/ngx-datatable/badges/gpa.svg)](https://codeclimate.com/github/swimlane/ngx-datatable)
 [![Test Coverage](https://codeclimate.com/github/swimlane/ngx-datatable/badges/coverage.svg)](https://codeclimate.com/github/swimlane/ngx-datatable/coverage)
 [![npm version](https://badge.fury.io/js/%40swimlane%2Fngx-datatable.svg)](https://badge.fury.io/js/%40swimlane%2Fngx-datatable)
-[![npm downloads](https://img.shields.io/npm/dm/@swimlane/ngx-datatable.svg)](https://npmjs.org/@swimlane/ngx-datatable)
+[![npm downloads](https://img.shields.io/npm/dm/@siemens/ngx-datatable.svg)](https://npmjs.org/@siemens/ngx-datatable)
 
 `ngx-datatable` is an Angular component for presenting large and complex data. It has all the features you would expect from any other table but in a light package with _no external dependencies_. The table was designed to be extremely flexible and light; it doesn't make any assumptions about your data or how you: filter, sort or page it.
 
@@ -34,10 +34,10 @@ See the [changelog](https://github.com/swimlane/ngx-datatable/blob/master/docs/c
 
 ## Installation
 
-To use ngx-datatable in your project install it via [npm](https://www.npmjs.com/package/@swimlane/ngx-datatable):
+To use ngx-datatable in your project install it via [npm](https://www.npmjs.com/package/@siemens/ngx-datatable):
 
 ```
-npm i @swimlane/ngx-datatable --save
+npm i @siemens/ngx-datatable --save
 ```
 
 ## Credits

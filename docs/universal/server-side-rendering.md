@@ -22,11 +22,11 @@ This service must send back the dimensions of the grid or fallback to a default 
 I am using the ideas about dimensions from client hints that I set on the signin page. http://httpwg.org/http-extensions/client-hints.html
 
 ```typescript
-import { ScrollbarHelper } from '@swimlane/ngx-datatable';
+import { ScrollbarHelper } from '@siemens/ngx-datatable';
 import { Injectable, Inject } from '@angular/core';
 import { Request } from 'express';
 import { REQUEST } from '@nguniversal/express-engine/tokens';
-import { DimensionsHelper } from '@swimlane/ngx-datatable';
+import { DimensionsHelper } from '@siemens/ngx-datatable';
 
 @Injectable()
 export class ServerDimensionsHelper extends DimensionsHelper {
@@ -58,7 +58,7 @@ export class ServerDimensionsHelper extends DimensionsHelper {
 In this case I just returned the scrollbar width based on what I used for css styling
 
 ```typescript
-import { ScrollbarHelper } from '@swimlane/ngx-datatable';
+import { ScrollbarHelper } from '@siemens/ngx-datatable';
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
