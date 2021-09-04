@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { NgStyle } from '@angular/common';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode } from 'projects/ngx-datatable/src/public-api';
 
 @Component({
   selector: 'row-grouping-demo',

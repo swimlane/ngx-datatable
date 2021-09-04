@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ColumnMode, SortType } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode, SortType } from 'projects/ngx-datatable/src/public-api';
 
 @Component({
   selector: 'client-sorting-demo',

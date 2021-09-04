@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { DatatableComponent } from '../../../projects/swimlane/ngx-datatable/src/lib/components/datatable.component';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { DatatableComponent } from '../../../projects/ngx-datatable/src/lib/components/datatable.component';
+import { ColumnMode } from 'projects/ngx-datatable/src/public-api';
 
 @Component({
   selector: 'filter-demo',
