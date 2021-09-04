@@ -116,7 +116,7 @@
         }
       }
     },
-    "@swimlane/ngx-datatable": {
+    "ngx-datatable-lib": {
       "projectType": "library",
       "root": "projects/ngx-datatable",
       "sourceRoot": "projects/ngx-datatable/src",
