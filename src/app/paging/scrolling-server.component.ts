@@ -4,7 +4,7 @@ import { delay, map } from 'rxjs/operators';
 import { CorporateEmployee } from './model/corporate-employee';
 
 import data from 'src/assets/data/company.json';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode } from 'projects/ngx-datatable/src/public-api';
 const companyData = data as any[];
 
 class PagedData<T> {
@@ -33,7 +33,7 @@ export class MockServerResultsService {
         Server-side Scrolling
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/paging/scrolling-server.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/master/src/app/paging/scrolling-server.component.ts"
             target="_blank"
           >
             Source

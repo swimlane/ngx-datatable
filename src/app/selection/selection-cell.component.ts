@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ColumnMode, SelectionType } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode, SelectionType } from 'projects/ngx-datatable/src/public-api';
 
 @Component({
   selector: 'cell-selection-demo',
@@ -9,7 +9,7 @@ import { ColumnMode, SelectionType } from 'projects/swimlane/ngx-datatable/src/p
         Cell Selection
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/selection/selection-cell.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/master/src/app/selection/selection-cell.component.ts"
             target="_blank"
           >
             Source

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MockServerResultsService } from './mock-server-results-service';
 import { CorporateEmployee } from './model/corporate-employee';
 import { Page } from './model/page';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode } from 'projects/ngx-datatable/src/public-api';
 import { delay } from 'rxjs/operators';
 
 interface PageInfo {
@@ -21,7 +21,7 @@ interface PageInfo {
         Virtual Server-side Paging
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/paging/paging-virtual.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/master/src/app/paging/paging-virtual.component.ts"
             target="_blank"
           >
             Source

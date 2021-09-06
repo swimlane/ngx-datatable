@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { DatatableComponent } from '../../../projects/swimlane/ngx-datatable/src/lib/components/datatable.component';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { DatatableComponent } from '../../../projects/ngx-datatable/src/lib/components/datatable.component';
+import { ColumnMode } from 'projects/ngx-datatable/src/public-api';
 
 @Component({
   selector: 'filter-demo',
@@ -10,7 +10,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
         Client-side Search and Filtering
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/filter.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/master/src/app/basic/filter.component.ts"
             target="_blank"
           >
             Source

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode } from 'projects/ngx-datatable/src/public-api';
 
 @Component({
   selector: 'rx-demo',
@@ -9,7 +9,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
       <h3>
         RXjs Data
         <small>
-          <a href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/rx.component.ts" target="_blank">
+          <a href="https://github.com/siemens/ngx-datatable/blob/master/src/app/basic/rx.component.ts" target="_blank">
             Source
           </a>
         </small>

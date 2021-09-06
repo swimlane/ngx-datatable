@@ -3,7 +3,7 @@ import { MockServerResultsService } from '../paging/mock-server-results-service'
 import { PagedData } from '../paging/model/paged-data';
 import { CorporateEmployee } from '../paging/model/corporate-employee';
 import { Page } from '../paging/model/page';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode } from 'projects/ngx-datatable/src/public-api';
 
 @Component({
   selector: 'summary-row-server-paging-demo',
@@ -14,7 +14,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
         Server-side paging
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/summary/summary-row-server-paging.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/master/src/app/summary/summary-row-server-paging.component.ts"
           >
             Source
           </a>

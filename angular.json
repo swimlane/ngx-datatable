@@ -116,38 +116,38 @@
         }
       }
     },
-    "@swimlane/ngx-datatable": {
+    "ngx-datatable-lib": {
       "projectType": "library",
-      "root": "projects/swimlane/ngx-datatable",
-      "sourceRoot": "projects/swimlane/ngx-datatable/src",
+      "root": "projects/ngx-datatable",
+      "sourceRoot": "projects/ngx-datatable/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "projects/swimlane/ngx-datatable/tsconfig.lib.json",
-            "project": "projects/swimlane/ngx-datatable/ng-package.json"
+            "tsConfig": "projects/ngx-datatable/tsconfig.lib.json",
+            "project": "projects/ngx-datatable/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/swimlane/ngx-datatable/tsconfig.lib.prod.json"
+              "tsConfig": "projects/ngx-datatable/tsconfig.lib.prod.json"
             }
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/swimlane/ngx-datatable/src/test.ts",
-            "tsConfig": "projects/swimlane/ngx-datatable/tsconfig.spec.json",
-            "karmaConfig": "projects/swimlane/ngx-datatable/karma.conf.js"
+            "main": "projects/ngx-datatable/src/test.ts",
+            "tsConfig": "projects/ngx-datatable/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-datatable/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/swimlane/ngx-datatable/tsconfig.lib.json",
-              "projects/swimlane/ngx-datatable/tsconfig.spec.json"
+              "projects/ngx-datatable/tsconfig.lib.json",
+              "projects/ngx-datatable/tsconfig.spec.json"
             ],
             "exclude": ["**/node_modules/**"]
           }

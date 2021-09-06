@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode } from 'projects/ngx-datatable/src/public-api';
 
 @Component({
   selector: 'inline-templates-demo',
@@ -9,7 +9,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
         Expressive Templates
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/templates/template-dom.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/master/src/app/templates/template-dom.component.ts"
             target="_blank"
           >
             Source

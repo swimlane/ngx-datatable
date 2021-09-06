@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode } from 'projects/ngx-datatable/src/public-api';
 
 @Component({
   selector: 'server-sorting-demo',
@@ -9,7 +9,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
         Server-side Sorting
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/sorting/sorting-server.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/master/src/app/sorting/sorting-server.component.ts"
             target="_blank"
           >
             Source

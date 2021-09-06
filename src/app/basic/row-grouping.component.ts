@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { NgStyle } from '@angular/common';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode } from 'projects/ngx-datatable/src/public-api';
 
 @Component({
   selector: 'row-grouping-demo',
@@ -10,7 +10,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
         Row Grouping
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/row-grouping.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/master/src/app/basic/row-grouping.component.ts"
             target="_blank"
           >
             Source
