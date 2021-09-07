@@ -26,10 +26,15 @@ jobs:
       env:
         CI: true
 
-    - name: Prepare and deploy
+    - name: Build Docs
       run: |
-        npm run deploy-docs -- --name="Siemens" --email="info@siemens.com"
-      if: ${{ github.ref == 'refs/heads/master' }}
+        npm run build-docs --if-present
       env:
         CI: true
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+    - name: Deploy Docs
+      uses: JamesIves/github-pages-deploy-action@4.1.5
+      with:
+        branch: gh-pages
+        folder: dist/ngx-datatable
+      if: ${{ github.ref == 'refs/heads/master' }}
