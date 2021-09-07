@@ -1,5 +1,10 @@
 # Changelog
 
+## 20.0.0
+
+- Breaking: Update to angular 12
+- Breaking: fork into `@siemens` scope
+
 ## 19.0.0
 
 - Breaking: Update to angular 11
