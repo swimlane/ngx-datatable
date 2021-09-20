@@ -880,12 +880,14 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
     this.offset = offset;
 
-    this.page.emit({
-      count: this.count,
-      pageSize: this.pageSize,
-      limit: this.limit,
-      offset: this.offset
-    });
+    if (!isNaN(this.offset)) {
+      this.page.emit({
+        count: this.count,
+        pageSize: this.pageSize,
+        limit: this.limit,
+        offset: this.offset
+      });
+    }
   }
 
   /**
