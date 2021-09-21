@@ -57,6 +57,7 @@ export class VirtualPagingComponent {
   pageNumber: number;
   rows: CorporateEmployee[];
   cache: any = {};
+  cachePageSize = 0;
 
   ColumnMode = ColumnMode;
 
@@ -77,15 +78,16 @@ export class VirtualPagingComponent {
     // This is the scroll position in rows
     const rowOffset = pageInfo.offset * pageInfo.pageSize;
 
-    // When calling the server, we keep page size fixed
-    // This should be the max UI pagesize or larger
-    // This is not necessary but helps simplify caching since the UI page size can change
     const page = new Page();
-    page.size = 20;
+    page.size = pageInfo.pageSize;
     page.pageNumber = Math.floor(rowOffset / page.size);
 
     // We keep a index of server loaded pages so we don't load same data twice
     // This is based on the server page not the UI
+    if (this.cachePageSize !== page.size) {
+      this.cachePageSize = page.size;
+      this.cache = {};
+    }
     if (this.cache[page.pageNumber]) return;
     this.cache[page.pageNumber] = true;
 
