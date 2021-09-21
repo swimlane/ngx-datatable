@@ -34,6 +34,10 @@ function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
   // calculate total width and flexgrow points for coulumns that can be resized
   for (const attr in colsByGroup) {
     for (const column of colsByGroup[attr]) {
+      if (column.$$oldWidth) {
+        // when manually resized, switch off auto-resize
+        column.canAutoResize = false;
+      }
       if (!column.canAutoResize) {
         maxWidth -= column.width;
         totalFlexGrow -= column.flexGrow ? column.flexGrow : 0;
@@ -141,6 +145,11 @@ export function forceFillColumnWidths(
     remainingWidth = expectedWidth - contentWidth;
     removeProcessedColumns(columnsToResize, columnsProcessed);
   } while (remainingWidth > remainingWidthLimit && columnsToResize.length !== 0);
+
+  // reset so we don't have stale values
+  for (const column of columnsToResize) {
+    column.$$oldWidth = 0;
+  }
 }
 
 /**
