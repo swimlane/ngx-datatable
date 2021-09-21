@@ -332,6 +332,17 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   };
 
   /**
+   * A flag to display custom content instead of emptyMessage,
+   * when rows array contains no values. Assumes that custom content has been
+   * provided with the appropriate `empty-content` attribute.
+   *
+   *    <ngx-datatable>
+   *      <div empty-content>...</div>
+   *    </ngx-datatable>
+   */
+  @Input() emptyCustomContent: boolean = false;
+
+  /**
    * Row specific classes.
    * Similar implementation to ngClass.
    *

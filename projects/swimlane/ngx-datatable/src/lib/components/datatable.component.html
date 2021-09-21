@@ -50,6 +50,7 @@
     [bodyHeight]="bodyHeight"
     [selectionType]="selectionType"
     [emptyMessage]="messages.emptyMessage"
+    [emptyCustomContent]="emptyCustomContent"
     [rowIdentity]="rowIdentity"
     [rowClass]="rowClass"
     [selectCheck]="selectCheck"
@@ -64,6 +65,7 @@
     (scroll)="onBodyScroll($event)"
     (treeAction)="onTreeAction($event)"
   >
+    <ng-content select="[empty-content]" ngProjectAs="[empty-content]"></ng-content>
   </datatable-body>
   <datatable-footer
     *ngIf="footerHeight"
