@@ -113,7 +113,15 @@ import { translateXY } from '../../utils/translate';
         >
         </datatable-summary-row>
       </datatable-scroller>
-      <div class="empty-row" *ngIf="!rows?.length && !loadingIndicator" [innerHTML]="emptyMessage"></div>
+      <div
+        class="empty-row"
+        *ngIf="!rows?.length && !loadingIndicator && !emptyCustomContent"
+        [innerHTML]="emptyMessage"
+      ></div>
+      <ng-content
+        select="[empty-content]"
+        *ngIf="!rows?.length && !loadingIndicator && emptyCustomContent"
+      ></ng-content>
     </datatable-selection>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -129,6 +137,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() rowHeight: number | 'auto' | ((row?: any) => number);
   @Input() offsetX: number;
   @Input() emptyMessage: string;
+  @Input() emptyCustomContent: boolean;
   @Input() selectionType: SelectionType;
   @Input() selected: any[] = [];
   @Input() rowIdentity: any;
