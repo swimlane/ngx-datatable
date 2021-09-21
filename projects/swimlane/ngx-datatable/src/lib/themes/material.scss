@@ -197,6 +197,7 @@ $datatable-summary-row-background-hover: #ddd !default;
     border-bottom: 1px solid $datatable-header-border-bottom-color;
 
     .datatable-header-cell {
+      flex-shrink: 0;
       text-align: left;
       padding: 0.9rem 1.2rem;
       font-weight: 400;
@@ -266,6 +267,7 @@ $datatable-summary-row-background-hover: #ddd !default;
 
     .datatable-body-row {
       .datatable-body-cell {
+        flex-shrink: 0;
         text-align: left;
         padding: 0.9rem 1.2rem;
         vertical-align: top;

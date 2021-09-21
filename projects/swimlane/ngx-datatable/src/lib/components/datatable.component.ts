@@ -1025,6 +1025,16 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     });
   }
 
+  onColumnResizing({ column, newValue }: any): void {
+    if (column === undefined) {
+      return;
+    }
+    column.width = newValue;
+    column.$$oldWidth = newValue;
+    const idx = this._internalColumns.indexOf(column);
+    this.recalculateColumns(this._internalColumns, idx);
+  }
+
   /**
    * The header triggered a column re-order event.
    */

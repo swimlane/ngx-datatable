@@ -24,10 +24,10 @@ export class ResizeableDirective implements OnDestroy, AfterViewInit {
   @Input() maxWidth: number;
 
   @Output() resize: EventEmitter<any> = new EventEmitter();
+  @Output() resizing: EventEmitter<any> = new EventEmitter();
 
   element: HTMLElement;
   subscription: Subscription;
-  resizing: boolean = false;
   private resizeHandle: HTMLElement;
 
   constructor(element: ElementRef, private renderer: Renderer2) {
@@ -55,8 +55,6 @@ export class ResizeableDirective implements OnDestroy, AfterViewInit {
   }
 
   onMouseup(): void {
-    this.resizing = false;
-
     if (this.subscription && !this.subscription.closed) {
       this._destroySubscription();
       this.resize.emit(this.element.clientWidth);
@@ -71,7 +69,6 @@ export class ResizeableDirective implements OnDestroy, AfterViewInit {
 
     if (isHandle) {
       event.stopPropagation();
-      this.resizing = true;
 
       const mouseup = fromEvent(document, 'mouseup');
       this.subscription = mouseup.subscribe((ev: MouseEvent) => this.onMouseup());
@@ -87,13 +84,7 @@ export class ResizeableDirective implements OnDestroy, AfterViewInit {
   move(event: MouseEvent, initialWidth: number, mouseDownScreenX: number): void {
     const movementX = event.screenX - mouseDownScreenX;
     const newWidth = initialWidth + movementX;
-
-    const overMinWidth = !this.minWidth || newWidth >= this.minWidth;
-    const underMaxWidth = !this.maxWidth || newWidth <= this.maxWidth;
-
-    if (overMinWidth && underMaxWidth) {
-      this.element.style.width = `${newWidth}px`;
-    }
+    this.resizing.emit(newWidth);
   }
 
   private _destroySubscription() {

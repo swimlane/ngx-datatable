@@ -36,6 +36,7 @@ import { translateXY } from '../../utils/translate';
           resizeable
           [resizeEnabled]="column.resizeable"
           (resize)="onColumnResized($event, column)"
+          (resizing)="onColumnResizing($event, column)"
           long-press
           [pressModel]="column"
           [pressEnabled]="reorderable && column.draggable"
@@ -145,6 +146,7 @@ export class DataTableHeaderComponent implements OnDestroy {
   @Output() sort: EventEmitter<any> = new EventEmitter();
   @Output() reorder: EventEmitter<any> = new EventEmitter();
   @Output() resize: EventEmitter<any> = new EventEmitter();
+  @Output() resizing: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
   @Output() columnContextmenu = new EventEmitter<{ event: MouseEvent; column: any }>(false);
 
@@ -208,17 +210,24 @@ export class DataTableHeaderComponent implements OnDestroy {
   }
 
   onColumnResized(width: number, column: DataTableColumnDirective): void {
+    this.resize.emit(this.makeResizeEvent(width, column));
+  }
+
+  onColumnResizing(width: number, column: DataTableColumnDirective): void {
+    this.resizing.emit(this.makeResizeEvent(width, column));
+  }
+
+  private makeResizeEvent(width: number, column: DataTableColumnDirective) {
     if (width <= column.minWidth) {
       width = column.minWidth;
     } else if (width >= column.maxWidth) {
       width = column.maxWidth;
     }
-
-    this.resize.emit({
+    return {
       column,
       prevValue: column.width,
       newValue: width
-    });
+    };
   }
 
   onColumnReordered({ prevIndex, newIndex, model }: any): void {
