@@ -556,17 +556,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * if described in your markup.
    */
   @ContentChildren(DataTableColumnDirective)
-  set columnTemplates(val: QueryList<DataTableColumnDirective>) {
-    this._columnTemplates = val;
-    this.translateColumns(val);
-  }
-
-  /**
-   * Returns the column templates.
-   */
-  get columnTemplates(): QueryList<DataTableColumnDirective> {
-    return this._columnTemplates;
-  }
+  columnTemplates: QueryList<DataTableColumnDirective>;
 
   /**
    * Row Detail templates gathered from the ContentChild
@@ -702,6 +692,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    */
   ngAfterContentInit() {
     this.columnTemplates.changes.subscribe(v => this.translateColumns(v));
+    this.translateColumns(this.columnTemplates);
     this.listenForColumnInputChanges();
   }
 
