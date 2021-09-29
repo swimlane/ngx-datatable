@@ -48,9 +48,11 @@ interface PageInfo {
         [offset]="pageNumber"
         (page)="setPage($event)"
       >
+        <div loading-indicator class="custom-loading-indicator">loading...</div>
       </ngx-datatable>
     </div>
-  `
+  `,
+  styleUrls: ['./paging-virtual.component.scss']
 })
 export class VirtualPagingComponent {
   totalElements: number;

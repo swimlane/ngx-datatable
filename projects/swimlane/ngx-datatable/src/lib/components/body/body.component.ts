@@ -19,7 +19,10 @@ import { translateXY } from '../../utils/translate';
 @Component({
   selector: 'datatable-body',
   template: `
-    <datatable-progress *ngIf="loadingIndicator"> </datatable-progress>
+    <ng-container *ngIf="loadingIndicator">
+      <span #customIndicator><ng-content select="[loading-indicator]"></ng-content></span>
+      <datatable-progress *ngIf="!customIndicator?.hasChildNodes()"></datatable-progress>
+    </ng-container>
     <datatable-selection
       #selector
       [selected]="selected"
