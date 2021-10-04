@@ -1,15 +1,21 @@
 # Changelog
 
+## 21.0.0
+
+- Feature: support custom loading indicator
+- Fix: prevent internal sorting if `externalSorting` is set
+- Breaking: `emptyCustomContent` input no longer required/supported
+
 ## 20.1.0
 
-Feature: support custom content for empty table
-Fix: tabindex on datatable body
-Fix: orderable directive
-Fix: column resizing cases
-Fix: refresh virtual grid after scroll
-Fix: clearTimeout/\_destroySubscription race
-Fix: CSP script-src 'self'
-Fix: emit page event on page size change for virtual paging
+- Feature: support custom content for empty table
+- Fix: tabindex on datatable body
+- Fix: orderable directive
+- Fix: column resizing cases
+- Fix: refresh virtual grid after scroll
+- Fix: clearTimeout/\_destroySubscription race
+- Fix: CSP script-src 'self'
+- Fix: emit page event on page size change for virtual paging
 
 ## 20.0.0
 
