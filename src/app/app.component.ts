@@ -7,7 +7,6 @@ import packageInfo from 'projects/swimlane/ngx-datatable/package.json';
   templateUrl: './app.component.html',
   encapsulation: ViewEncapsulation.None,
   styleUrls: [
-    './app.component.scss',
     '../../projects/swimlane/ngx-datatable/src/lib/themes/material.scss',
     '../../projects/swimlane/ngx-datatable/src/lib/themes/dark.scss',
     '../../projects/swimlane/ngx-datatable/src/lib/themes/bootstrap.scss'
