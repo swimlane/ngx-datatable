@@ -152,6 +152,11 @@
           <li>
             <a href="#chkbox-selection-template" (click)="state = 'chkbox-selection-template'">Custom Checkbox</a>
           </li>
+          <li>
+            <a href="#multi-click-chkbox-selection" (click)="state = 'multi-click-chkbox-selection'"
+              >Multi Click & Chkbox</a
+            >
+          </li>
         </ul>
       </li>
       <li>
@@ -242,10 +247,13 @@
     <cell-selection-demo *ngIf="state === 'cell-selection'"></cell-selection-demo>
     <single-selection-demo *ngIf="state === 'single-selection'"></single-selection-demo>
     <multi-selection-demo *ngIf="state === 'multi-selection'"></multi-selection-demo>
+    <multi-click-selection-demo *ngIf="state === 'multi-click-selection'"></multi-click-selection-demo>
     <multidisable-selection-demo *ngIf="state === 'multidisable-selection'"></multidisable-selection-demo>
     <chkbox-selection-demo *ngIf="state === 'chkbox-selection'"></chkbox-selection-demo>
     <chkbox-selection-template-demo *ngIf="state === 'chkbox-selection-template'"></chkbox-selection-template-demo>
-    <multi-click-selection-demo *ngIf="state === 'multi-click-selection'"></multi-click-selection-demo>
+    <multi-click-chkbox-selection-demo
+      *ngIf="state === 'multi-click-chkbox-selection'"
+    ></multi-click-chkbox-selection-demo>
 
     <!-- Templates -->
     <template-ref-demo *ngIf="state === 'templateref'"></template-ref-demo>

@@ -57,6 +57,7 @@ import { SingleSelectionComponent } from './selection/selection-single.component
 import { MultiDisableSelectionComponent } from './selection/selection-disabled.component';
 import { CheckboxSelectionComponent } from './selection/selection-chkbox.component';
 import { MultiClickSelectionComponent } from './selection/selection-multi-click.component';
+import { MultiClickCheckboxSelectionComponent } from './selection/selection-multi-click-chkbox.component';
 import { CustomCheckboxSelectionComponent } from './selection/selection-chkbox-template.component';
 
 // -- Columns
@@ -98,6 +99,7 @@ import { CommonModule } from '@angular/common';
     SortingComparatorComponent,
     CellSelectionComponent,
     MultiSelectionComponent,
+    MultiClickCheckboxSelectionComponent,
     InlineTemplatesComponent,
     TemplateRefTemplatesComponent,
     ColumnFlexComponent,
