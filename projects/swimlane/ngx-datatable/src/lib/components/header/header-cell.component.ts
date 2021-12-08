@@ -151,7 +151,7 @@ export class DataTableHeaderCellComponent {
   }
 
   get isCheckboxable(): boolean {
-    return this.column.checkboxable && this.column.headerCheckboxable && this.selectionType === SelectionType.checkbox;
+    return this.column.headerCheckboxable;
   }
 
   sortFn = this.onSort.bind(this);
