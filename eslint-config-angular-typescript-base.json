@@ -1,0 +1,76 @@
+{
+  "extends": [
+    "plugin:@angular-eslint/ng-cli-compat",
+    "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
+    "plugin:@angular-eslint/recommended",
+    "plugin:@angular-eslint/template/process-inline-templates"
+  ],
+  "parserOptions": {
+    "allowAutomaticSingleRunInference": true
+  },
+  "settings": {
+    "import/ignore": ["node_modules"]
+  },
+  "rules": {
+    "@angular-eslint/no-attribute-decorator": "error",
+    "@angular-eslint/no-forward-ref": "error",
+    "@angular-eslint/no-host-metadata-property": ["error", { "allowStatic": true }],
+    "@angular-eslint/use-component-view-encapsulation": "error",
+
+    "brace-style": "off",
+    "no-bitwise": "off",
+    "comma-dangle": "off",
+    "comma-spacing": "off",
+    "func-call-spacing": "off",
+    "indent": "off",
+    "keyword-spacing": "off",
+    "no-shadow": "off",
+    "no-duplicate-imports": "off",
+    "no-redeclare": "off",
+    "no-underscore-dangle": "off",
+    "@angular-eslint/no-input-rename": "off",
+    "@angular-eslint/directive-class-suffix": "off",
+    "@angular-eslint/no-output-native": "off",
+    "@typescript-eslint/array-type": "error",
+    "@typescript-eslint/brace-style": ["error", "1tbs", { "allowSingleLine": true } ],
+    "@typescript-eslint/comma-dangle": "error",
+    "@typescript-eslint/comma-spacing": "error",
+    "@typescript-eslint/func-call-spacing": "error",
+    "@typescript-eslint/indent": ["error", 2, { "SwitchCase": 1 }],
+    "@typescript-eslint/keyword-spacing": "error",
+    "@typescript-eslint/member-ordering": "off",
+    "@typescript-eslint/naming-convention": "off",
+    "@typescript-eslint/no-duplicate-imports": "error",
+    "@typescript-eslint/no-non-null-asserted-optional-chain": "error",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-redeclare": "error",
+    "@typescript-eslint/no-require-imports": "error",
+    "@typescript-eslint/no-shadow": ["error", { "ignoreTypeValueShadow": true }],
+    "@typescript-eslint/no-var-requires": "error",
+    "@typescript-eslint/type-annotation-spacing": "error",
+
+    "array-bracket-spacing": "error",
+    "arrow-parens": [
+      "error",
+      "as-needed"
+    ],
+    "arrow-spacing": "error",
+    "curly": "error",
+    "jsdoc/newline-after-description": "off",
+    "key-spacing": "error",
+    "no-empty": "error",
+    "no-irregular-whitespace": "error",
+    "no-multi-spaces": "error",
+    "no-multiple-empty-lines": "error",
+    "object-curly-spacing": ["error", "always"],
+    "prefer-arrow/prefer-arrow-functions": "off",
+    "quote-props": [
+      "error",
+      "consistent"
+    ],
+    "semi-spacing": "error",
+    "space-in-parens": "error",
+    "space-infix-ops": "error",
+    "sort-imports": ["error", { "ignoreCase": true, "ignoreDeclarationSort": true }]
+  }
+}

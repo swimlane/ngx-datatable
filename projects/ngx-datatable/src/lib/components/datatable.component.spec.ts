@@ -114,9 +114,7 @@ describe('DatatableComponent', () => {
     const columns = [
       {
         prop: 'product',
-        comparator: (productA: string, productB: string) => {
-          return productA.length - productB.length;
-        }
+        comparator: (productA: string, productB: string) => productA.length - productB.length
       }
     ];
 
@@ -199,9 +197,7 @@ describe('DatatableComponent', () => {
     const columns = [
       {
         prop: 'name',
-        comparator: (nameA: string, nameB: string) => {
-          return nameA.length - nameB.length;
-        }
+        comparator: (nameA: string, nameB: string) => nameA.length - nameB.length
       },
       {
         prop: 'state'
@@ -254,9 +250,7 @@ describe('DatatableComponent', () => {
     const columns = [
       {
         prop: 'name',
-        comparator: (nameA: string, nameB: string) => {
-          return nameA.length - nameB.length;
-        }
+        comparator: (nameA: string, nameB: string) => nameA.length - nameB.length
       },
       {
         prop: 'state'
@@ -423,6 +417,7 @@ class TestFixtureComponent {
     </ngx-datatable>
   `
 })
+// eslint-disable-next-line @angular-eslint/component-class-suffix
 class TestFixtureComponentWithCustomTemplates {
   rows: any[] = [];
   sorts: any[] = [];

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MockServerResultsService } from './mock-server-results-service';
 import { CorporateEmployee } from './model/corporate-employee';
 import { Page } from './model/page';
@@ -38,7 +38,7 @@ import { ColumnMode } from 'projects/ngx-datatable/src/public-api';
     </div>
   `
 })
-export class ServerPagingComponent {
+export class ServerPagingComponent implements OnInit{
   page = new Page();
   rows = new Array<CorporateEmployee>();
 

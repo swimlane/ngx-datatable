@@ -1,0 +1,37 @@
+{
+  "extends": "../../.eslintrc.js",
+  "ignorePatterns": [
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "projects/ngx-datatable/tsconfig.lib.json",
+          "projects/ngx-datatable/tsconfig.lib.prod.json",
+          "projects/ngx-datatable/tsconfig.spec.json"
+        ]
+      },
+      "rules": {
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "",
+            "style": "kebab-case"
+          }
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "",
+            "style": "camelCase"
+          }
+        ]
+      }
+    }
+  ]
+}

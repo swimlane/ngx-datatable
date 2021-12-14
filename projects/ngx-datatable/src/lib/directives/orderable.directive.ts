@@ -1,13 +1,13 @@
 import {
-  Directive,
-  Output,
-  EventEmitter,
-  ContentChildren,
-  QueryList,
-  KeyValueDiffers,
   AfterContentInit,
+  ContentChildren,
+  Directive,
+  EventEmitter,
+  Inject,
+  KeyValueDiffers,
   OnDestroy,
-  Inject
+  Output,
+  QueryList
 } from '@angular/core';
 import { DraggableDirective } from './draggable.directive';
 import { DOCUMENT } from '@angular/common';
@@ -18,7 +18,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
   @Output() targetChanged: EventEmitter<any> = new EventEmitter();
 
   @ContentChildren(DraggableDirective, { descendants: true })
-  draggables: QueryList<DraggableDirective>;
+    draggables: QueryList<DraggableDirective>;
 
   positions: any;
   differ: any;
@@ -76,10 +76,10 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
     let i = 0;
     for (const dragger of this.draggables.toArray()) {
       const elm = dragger.element;
-      const left = parseInt(elm.offsetLeft.toString(), 0);
+      const left = parseInt(elm.offsetLeft.toString(), 10);
       this.positions[dragger.dragModel.$$id] = {
         left,
-        right: left + parseInt(elm.offsetWidth.toString(), 0),
+        right: left + parseInt(elm.offsetWidth.toString(), 10),
         index: i++,
         element: elm
       };
@@ -130,6 +130,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
     const y = event.y || event.clientY;
     const targets = this.document.elementsFromPoint(x, y);
 
+    // eslint-disable-next-line guard-for-in
     for (const id in this.positions) {
       // current column position which throws event.
       const pos = this.positions[id];

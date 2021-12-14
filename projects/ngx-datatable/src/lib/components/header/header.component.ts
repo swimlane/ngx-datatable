@@ -1,14 +1,14 @@
 import {
-  Component,
-  Output,
-  EventEmitter,
-  Input,
-  HostBinding,
-  ChangeDetectorRef,
   ChangeDetectionStrategy,
-  OnDestroy
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  HostBinding,
+  Input,
+  OnDestroy,
+  Output
 } from '@angular/core';
-import { columnsByPin, columnGroupWidths, columnsByPinArr } from '../../utils/column';
+import { columnGroupWidths, columnsByPin, columnsByPinArr } from '../../utils/column';
 import { SortType } from '../../types/sort.type';
 import { SelectionType } from '../../types/selection.type';
 import { DataTableColumnDirective } from '../columns/column.directive';
@@ -158,7 +158,7 @@ export class DataTableHeaderComponent implements OnDestroy {
   _offsetX: number;
   _columns: any[];
   _headerHeight: string;
-  _styleByGroup: { [prop: string]: {} } = {
+  _styleByGroup: { [prop: string]: unknown } = {
     left: {},
     center: {},
     right: {}

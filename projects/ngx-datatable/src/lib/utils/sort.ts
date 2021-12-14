@@ -30,22 +30,22 @@ export function nextSortDir(sortType: SortType, current: SortDirection): SortDir
  * https://github.com/FuelInteractive/fuel-ui/tree/master/src/pipes/OrderBy
  */
 export function orderByComparator(a: any, b: any): number {
-  if (a === null || typeof a === 'undefined') a = 0;
-  if (b === null || typeof b === 'undefined') b = 0;
+  if (a === null || typeof a === 'undefined') {a = 0;}
+  if (b === null || typeof b === 'undefined') {b = 0;}
   if (a instanceof Date && b instanceof Date) {
-    if (a < b) return -1;
-    if (a > b) return 1;
+    if (a < b) {return -1;}
+    if (a > b) {return 1;}
   } else if (isNaN(parseFloat(a)) || !isFinite(a) || isNaN(parseFloat(b)) || !isFinite(b)) {
     // Convert to string in case of a=0 or b=0
     a = String(a);
     b = String(b);
     // Isn't a number so lowercase the string to properly compare
-    if (a.toLowerCase() < b.toLowerCase()) return -1;
-    if (a.toLowerCase() > b.toLowerCase()) return 1;
+    if (a.toLowerCase() < b.toLowerCase()) {return -1;}
+    if (a.toLowerCase() > b.toLowerCase()) {return 1;}
   } else {
     // Parse strings as numbers to compare properly
-    if (parseFloat(a) < parseFloat(b)) return -1;
-    if (parseFloat(a) > parseFloat(b)) return 1;
+    if (parseFloat(a) < parseFloat(b)) {return -1;}
+    if (parseFloat(a) > parseFloat(b)) {return 1;}
   }
 
   // equal each other
@@ -57,8 +57,8 @@ export function orderByComparator(a: any, b: any): number {
  * does not sort the `rows` argument in place
  */
 export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[] {
-  if (!rows) return [];
-  if (!dirs || !dirs.length || !columns) return [...rows];
+  if (!rows) {return [];}
+  if (!dirs || !dirs.length || !columns) {return [...rows];}
 
   /**
    * record the row ordering of results from prior sort operations (if applicable)
@@ -87,7 +87,7 @@ export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[
     };
   });
 
-  return temp.sort(function (rowA: any, rowB: any) {
+  return temp.sort(function(rowA: any, rowB: any) {
     for (const cachedDir of cachedDirs) {
       // Get property and valuegetters for column to be sorted
       const { prop, valueGetter } = cachedDir;
@@ -108,10 +108,10 @@ export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[
           : -cachedDir.compareFn(propA, propB, rowA, rowB, cachedDir.dir);
 
       // Don't return 0 yet in case of needing to sort by next property
-      if (comparison !== 0) return comparison;
+      if (comparison !== 0) {return comparison;}
     }
 
-    if (!(rowToIndexMap.has(rowA) && rowToIndexMap.has(rowB))) return 0;
+    if (!(rowToIndexMap.has(rowA) && rowToIndexMap.has(rowB))) {return 0;}
 
     /**
      * all else being equal, preserve original order of the rows (stable sort)

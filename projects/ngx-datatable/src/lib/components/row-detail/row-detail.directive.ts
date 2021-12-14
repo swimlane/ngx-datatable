@@ -1,4 +1,4 @@
-import { Input, Output, EventEmitter, Directive, TemplateRef, ContentChild } from '@angular/core';
+import { ContentChild, Directive, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
 import { DatatableRowDetailTemplateDirective } from './row-detail-template.directive';
 
 @Directive({ selector: 'ngx-datatable-row-detail' })
@@ -10,10 +10,10 @@ export class DatatableRowDetailDirective {
   @Input() rowHeight: number | ((row?: any, index?: number) => number) = 0;
 
   @Input('template')
-  _templateInput: TemplateRef<any>;
+    _templateInput: TemplateRef<any>;
 
   @ContentChild(DatatableRowDetailTemplateDirective, { read: TemplateRef, static: true })
-  _templateQuery: TemplateRef<any>;
+    _templateQuery: TemplateRef<any>;
 
   get template(): TemplateRef<any> {
     return this._templateInput || this._templateQuery;

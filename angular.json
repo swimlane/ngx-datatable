@@ -107,6 +107,15 @@
               "devServerTarget": "ngx-datatable:serve:production"
             }
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     },
@@ -134,6 +143,15 @@
             "main": "projects/ngx-datatable/src/test.ts",
             "tsConfig": "projects/ngx-datatable/tsconfig.spec.json",
             "karmaConfig": "projects/ngx-datatable/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/ngx-datatable/src/**/*.ts",
+              "projects/ngx-datatable/src/**/*.html"
+            ]
           }
         }
       }

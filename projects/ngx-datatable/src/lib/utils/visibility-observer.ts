@@ -9,7 +9,7 @@ export function checkVisibility(element: any, callback: any, zone: NgZone) {
 
     if (offsetHeight && offsetWidth) {
       clearTimeout(timeout);
-      if (callback) zone.run(() => callback());
+      if (callback) {zone.run(() => callback());}
     } else {
       clearTimeout(timeout);
       zone.runOutsideAngular(() => {

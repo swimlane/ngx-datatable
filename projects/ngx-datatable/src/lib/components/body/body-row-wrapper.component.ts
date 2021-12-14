@@ -1,14 +1,14 @@
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
-  Input,
-  Output,
+  DoCheck,
   EventEmitter,
   HostListener,
-  DoCheck,
-  ChangeDetectionStrategy,
+  Input,
   KeyValueDiffer,
-  ChangeDetectorRef,
-  KeyValueDiffers
+  KeyValueDiffers,
+  Output
 } from '@angular/core';
 
 @Component({
@@ -77,8 +77,8 @@ export class DataTableRowWrapperComponent implements DoCheck {
   groupContext: any;
   rowContext: any;
 
-  private rowDiffer: KeyValueDiffer<{}, {}>;
-  private _expanded: boolean = false;
+  private rowDiffer: KeyValueDiffer<unknown, unknown>;
+  private _expanded = false;
   private _rowIndex: number;
 
   constructor(private cd: ChangeDetectorRef, private differs: KeyValueDiffers) {
@@ -111,11 +111,11 @@ export class DataTableRowWrapperComponent implements DoCheck {
   }
 
   getGroupHeaderStyle(): any {
-    const styles = {};
+    const styles = {} as any;
 
-    styles['transform'] = 'translate3d(' + this.offsetX + 'px, 0px, 0px)';
+    styles.transform = 'translate3d(' + this.offsetX + 'px, 0px, 0px)';
     styles['backface-visibility'] = 'hidden';
-    styles['width'] = this.innerWidth;
+    styles.width = this.innerWidth;
 
     return styles;
   }

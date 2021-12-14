@@ -1,4 +1,4 @@
-import { TestBed, ComponentFixture, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { numericIndexGetter } from '../../utils/column-prop-getters';
 import { setColumnDefaults } from '../../utils/column-helper';

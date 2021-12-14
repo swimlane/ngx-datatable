@@ -1,6 +1,6 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { SelectionType } from '../../types/selection.type';
-import { selectRowsBetween, selectRows } from '../../utils/selection';
+import { selectRows, selectRowsBetween } from '../../utils/selection';
 import { Keys } from '../../utils/keys';
 
 export interface Model {
@@ -31,7 +31,7 @@ export class DataTableSelectionComponent {
   prevIndex: number;
 
   selectRow(event: KeyboardEvent | MouseEvent, index: number, row: any): void {
-    if (!this.selectEnabled) return;
+    if (!this.selectEnabled) {return;}
 
     const chkbox = this.selectionType === SelectionType.checkbox;
     const multi = this.selectionType === SelectionType.multi;
@@ -72,7 +72,7 @@ export class DataTableSelectionComponent {
     if (select) {
       this.selectRow(event, index, row);
     } else if (type === 'keydown') {
-      if ((<KeyboardEvent>event).keyCode === Keys.return) {
+      if ((event as KeyboardEvent).keyCode === Keys.return) {
         this.selectRow(event, index, row);
       } else {
         this.onKeyboardFocus(model);
@@ -82,7 +82,7 @@ export class DataTableSelectionComponent {
   }
 
   onKeyboardFocus(model: Model): void {
-    const { keyCode } = <KeyboardEvent>model.event;
+    const { keyCode } = model.event as KeyboardEvent;
     const shouldFocus = keyCode === Keys.up || keyCode === Keys.down || keyCode === Keys.right || keyCode === Keys.left;
 
     if (shouldFocus) {
@@ -98,7 +98,7 @@ export class DataTableSelectionComponent {
 
   focusRow(rowElement: any, keyCode: number): void {
     const nextRowElement = this.getPrevNextRow(rowElement, keyCode);
-    if (nextRowElement) nextRowElement.focus();
+    if (nextRowElement) {nextRowElement.focus();}
   }
 
   getPrevNextRow(rowElement: any, keyCode: number): any {
@@ -129,11 +129,11 @@ export class DataTableSelectionComponent {
       const nextRowElement = this.getPrevNextRow(rowElement, keyCode);
       if (nextRowElement) {
         const children = nextRowElement.getElementsByClassName('datatable-body-cell');
-        if (children.length) nextCellElement = children[cellIndex];
+        if (children.length) {nextCellElement = children[cellIndex];}
       }
     }
 
-    if (nextCellElement) nextCellElement.focus();
+    if (nextCellElement) {nextCellElement.focus();}
   }
 
   getRowSelected(row: any): boolean {
@@ -141,7 +141,7 @@ export class DataTableSelectionComponent {
   }
 
   getRowSelectedIdx(row: any, selected: any[]): number {
-    if (!selected || !selected.length) return -1;
+    if (!selected || !selected.length) {return -1;}
 
     const rowId = this.rowIdentity(row);
     return selected.findIndex(r => {

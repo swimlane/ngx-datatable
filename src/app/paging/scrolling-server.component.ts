@@ -1,4 +1,4 @@
-import { Component, ElementRef, Injectable } from '@angular/core';
+import { Component, ElementRef, Injectable, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 import { CorporateEmployee } from './model/corporate-employee';
@@ -55,7 +55,7 @@ export class MockServerResultsService {
   `,
   styleUrls: ['./scrolling-server.component.css']
 })
-export class ServerScrollingComponent {
+export class ServerScrollingComponent implements OnInit {
   readonly headerHeight = 50;
   readonly rowHeight = 50;
   readonly pageLimit = 10;

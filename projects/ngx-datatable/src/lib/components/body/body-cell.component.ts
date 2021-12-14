@@ -1,18 +1,18 @@
 import {
-  Component,
-  Input,
-  PipeTransform,
-  HostBinding,
-  ViewChild,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Output,
-  EventEmitter,
-  HostListener,
-  ElementRef,
-  ViewContainerRef,
-  OnDestroy,
+  Component,
   DoCheck,
-  ChangeDetectionStrategy
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  OnDestroy,
+  Output,
+  PipeTransform,
+  ViewChild,
+  ViewContainerRef
 } from '@angular/core';
 
 import { TableColumn } from '../../types/table-column.type';
@@ -171,7 +171,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   @Output() treeAction: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('cellTemplate', { read: ViewContainerRef, static: true })
-  cellTemplate: ViewContainerRef;
+    cellTemplate: ViewContainerRef;
 
   @HostBinding('class')
   get columnCssClasses(): any {
@@ -398,9 +398,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
       return;
     }
 
-    const sort = sorts.find((s: any) => {
-      return s.prop === this.column.prop;
-    });
+    const sort = sorts.find((s: any) => s.prop === this.column.prop);
 
     if (sort) {
       return sort.dir;

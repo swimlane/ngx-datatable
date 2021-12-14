@@ -15,7 +15,7 @@ export class MockServerResultsService {
   /**
    * A method that mocks a paged server response
    * @param page The selected page
-   * @returns {any} An observable containing the employee data
+   * @returns An observable containing the employee data
    */
   public getResults(page: Page): Observable<PagedData<CorporateEmployee>> {
     return of(companyData)
@@ -26,7 +26,7 @@ export class MockServerResultsService {
   /**
    * Package companyData into a PagedData object based on the selected Page
    * @param page The page data used to get the selected data from companyData
-   * @returns {PagedData<CorporateEmployee>} An array of the selected data and page
+   * @returns An array of the selected data and page
    */
   private getPagedData(page: Page): PagedData<CorporateEmployee> {
     const pagedData = new PagedData<CorporateEmployee>();

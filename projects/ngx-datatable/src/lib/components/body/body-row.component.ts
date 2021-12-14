@@ -1,21 +1,21 @@
 import {
-  Component,
-  Input,
-  HostBinding,
-  ElementRef,
-  Output,
-  KeyValueDiffers,
-  KeyValueDiffer,
-  EventEmitter,
-  HostListener,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
   DoCheck,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  KeyValueDiffer,
+  KeyValueDiffers,
+  Output,
   SkipSelf
 } from '@angular/core';
 
 import { TreeStatus } from './body-cell.component';
-import { columnsByPin, columnGroupWidths, columnsByPinArr } from '../../utils/column';
+import { columnGroupWidths, columnsByPin, columnsByPinArr } from '../../utils/column';
 import { Keys } from '../../utils/keys';
 import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 import { translateXY } from '../../utils/translate';
@@ -125,7 +125,7 @@ export class DataTableBodyRowComponent implements DoCheck {
 
   @HostBinding('style.height.px')
   @Input()
-  rowHeight: number;
+    rowHeight: number;
 
   @HostBinding('style.width.px')
   get columnsTotalWidths(): string {
@@ -141,13 +141,13 @@ export class DataTableBodyRowComponent implements DoCheck {
   _offsetX: number;
   _columns: any[];
   _innerWidth: number;
-  _groupStyles: { [prop: string]: {} } = {
+  _groupStyles: { [prop: string]: unknown } = {
     left: {},
     center: {},
     right: {}
   };
 
-  private _rowDiffer: KeyValueDiffer<{}, {}>;
+  private _rowDiffer: KeyValueDiffer<unknown, unknown>;
 
   constructor(
     private differs: KeyValueDiffers,
@@ -191,7 +191,7 @@ export class DataTableBodyRowComponent implements DoCheck {
     if (group === 'left') {
       translateXY(styles, offsetX, 0);
     } else if (group === 'right') {
-      const bodyWidth = parseInt(this.innerWidth + '', 0);
+      const bodyWidth = parseInt(this.innerWidth + '', 10);
       const totalDiff = widths.total - bodyWidth;
       const offsetDiff = totalDiff - offsetX;
       const offset = (offsetDiff + this.scrollbarHelper.width) * -1;

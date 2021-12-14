@@ -1,5 +1,5 @@
-import { Directive, ElementRef, Input, Output, EventEmitter, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
-import { Subscription, fromEvent } from 'rxjs';
+import { Directive, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
+import { fromEvent, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 /**
@@ -14,15 +14,15 @@ import { takeUntil } from 'rxjs/operators';
 export class DraggableDirective implements OnDestroy, OnChanges {
   @Input() dragEventTarget: any;
   @Input() dragModel: any;
-  @Input() dragX: boolean = true;
-  @Input() dragY: boolean = true;
+  @Input() dragX = true;
+  @Input() dragY = true;
 
   @Output() dragStart: EventEmitter<any> = new EventEmitter();
   @Output() dragging: EventEmitter<any> = new EventEmitter();
   @Output() dragEnd: EventEmitter<any> = new EventEmitter();
 
   element: HTMLElement;
-  isDragging: boolean = false;
+  isDragging = false;
   subscription: Subscription;
 
   constructor(element: ElementRef) {
@@ -30,8 +30,8 @@ export class DraggableDirective implements OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['dragEventTarget'] && changes['dragEventTarget'].currentValue && this.dragModel.dragging) {
-      this.onMousedown(changes['dragEventTarget'].currentValue);
+    if (changes.dragEventTarget && changes.dragEventTarget.currentValue && this.dragModel.dragging) {
+      this.onMousedown(changes.dragEventTarget.currentValue);
     }
   }
 
@@ -40,7 +40,7 @@ export class DraggableDirective implements OnDestroy, OnChanges {
   }
 
   onMouseup(event: MouseEvent): void {
-    if (!this.isDragging) return;
+    if (!this.isDragging) {return;}
 
     this.isDragging = false;
     this.element.classList.remove('dragging');
@@ -57,7 +57,7 @@ export class DraggableDirective implements OnDestroy, OnChanges {
 
   onMousedown(event: MouseEvent): void {
     // we only want to drag the inner header text
-    const isDragElm = (<HTMLElement>event.target).classList.contains('draggable');
+    const isDragElm = (event.target as HTMLElement).classList.contains('draggable');
 
     if (isDragElm && (this.dragX || this.dragY)) {
       event.preventDefault();
@@ -83,13 +83,13 @@ export class DraggableDirective implements OnDestroy, OnChanges {
   }
 
   move(event: MouseEvent, mouseDownPos: { x: number; y: number }): void {
-    if (!this.isDragging) return;
+    if (!this.isDragging) {return;}
 
     const x = event.clientX - mouseDownPos.x;
     const y = event.clientY - mouseDownPos.y;
 
-    if (this.dragX) this.element.style.left = `${x}px`;
-    if (this.dragY) this.element.style.top = `${y}px`;
+    if (this.dragX) {this.element.style.left = `${x}px`;}
+    if (this.dragY) {this.element.style.top = `${y}px`;}
 
     this.element.classList.add('dragging');
 

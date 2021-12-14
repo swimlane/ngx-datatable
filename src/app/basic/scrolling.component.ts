@@ -34,7 +34,7 @@ import { Component } from '@angular/core';
     </div>
   `
 })
-export class HorzVertScrolling {
+export class HorzVertScrollingComponent {
   rows = [];
 
   constructor() {

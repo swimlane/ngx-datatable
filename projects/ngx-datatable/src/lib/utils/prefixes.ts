@@ -5,25 +5,25 @@ const testStyle = typeof document !== 'undefined' ? document.createElement('div'
 
 // Get Prefix
 // http://davidwalsh.name/vendor-prefix
-const prefix = (function () {
+const prefix = (function() {
   const styles = typeof window !== 'undefined' ? window.getComputedStyle(document.documentElement, '') : undefined;
   const match =
     typeof styles !== 'undefined'
       ? Array.prototype.slice
-          .call(styles)
-          .join('')
-          .match(/-(moz|webkit|ms)-/)
+        .call(styles)
+        .join('')
+        .match(/-(moz|webkit|ms)-/)
       : null;
   const pre = match !== null ? match[1] : undefined;
   const dom = typeof pre !== 'undefined' ? 'WebKit|Moz|MS|O'.match(new RegExp('(' + pre + ')', 'i'))[1] : undefined;
 
   return dom
     ? {
-        dom,
-        lowercase: pre,
-        css: `-${pre}-`,
-        js: pre[0].toUpperCase() + pre.substr(1)
-      }
+      dom,
+      lowercase: pre,
+      css: `-${pre}-`,
+      js: pre[0].toUpperCase() + pre.substr(1)
+    }
     : undefined;
 })();
 

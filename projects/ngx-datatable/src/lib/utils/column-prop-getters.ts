@@ -94,11 +94,11 @@ export function deepValueGetter(obj: any, path: string): any {
   }
 
   current = obj;
-  const split = path.split('.');
+  const splits = path.split('.');
 
-  if (split.length) {
-    for (let i = 0; i < split.length; i++) {
-      current = current[split[i]];
+  if (splits.length) {
+    for (const split of splits) {
+      current = current[split];
 
       // if found undefined, return empty string
       if (current === undefined || current === null) {

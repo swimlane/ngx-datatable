@@ -72,12 +72,12 @@ export function groupRowsByParents(rows: any[], from?: OptionalValueGetter, to?:
         parent = fromValue;
       }
       node.parent = nodeById[parent];
-      node.row['level'] = node.parent.row['level'] + 1;
+      node.row.level = node.parent.row.level + 1;
       node.parent.children.push(node);
     }
 
     let resolvedRows: any[] = [];
-    nodeById[0].flatten(function () {
+    nodeById[0].flatten(function() {
       resolvedRows = [...resolvedRows, this.row];
     }, true);
 
@@ -105,11 +105,11 @@ class TreeNode {
   }
 
   flatten(f: any, recursive: boolean) {
-    if (this.row['treeStatus'] === 'expanded') {
+    if (this.row.treeStatus === 'expanded') {
       for (let i = 0, l = this.children.length; i < l; i++) {
         const child = this.children[i];
         f.apply(child, Array.prototype.slice.call(arguments, 2));
-        if (recursive) child.flatten.apply(child, arguments);
+        if (recursive) {child.flatten.apply(child, arguments);}
       }
     }
   }
