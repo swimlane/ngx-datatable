@@ -12,11 +12,9 @@
     "test:unit": "ng test ngx-datatable-lib --watch=false",
     "test:watch": "ng test ngx-datatable-lib",
     "test:ci": "ng test ngx-datatable-lib --watch=false --progress=false --browsers=ChromeHeadlessCI",
-    "ci": "run-s lint prettier:ci test:ci",
+    "ci": "run-s lint test:ci",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "prettier": "prettier --write \"{src,projects}/*.{js,ts,html,scss,css,md,json}\"",
-    "prettier:ci": "prettier --check \"{src,projects}/*.{js,ts,html,scss,css,md,json}\"",
     "build-docs": "cross-env NODE_ENV=production ng build --configuration production --base-href=\"/ngx-datatable/\"",
     "predeploy-docs": "npm run build-docs",
     "deploy-docs": "angular-cli-ghpages --dir ./dist/ngx-datatable",
@@ -38,7 +36,7 @@
     "@angular/platform-browser": "~13.1.0",
     "@angular/platform-browser-dynamic": "~13.1.0",
     "@angular/router": "~13.1.0",
-    "rxjs": "~6.6.3",
+    "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
@@ -47,17 +45,15 @@
     "@angular/cli": "~13.1.1",
     "@angular/compiler-cli": "~13.1.0",
     "@angular/language-service": "~13.1.0",
-    "@swimlane/prettier-config-swimlane": "^3.0.2",
-    "@types/jasmine": "~3.6.0",
+    "@types/jasmine": "~3.10.0",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "^12.11.1",
+    "@types/node": "~16.11.12",
     "angular-cli-ghpages": "^0.6.0",
     "cpx": "^1.5.0",
     "cross-env": "^7.0.2",
-    "husky": "^4.2.4",
     "jasmine": "^3.5.0",
-    "jasmine-core": "~3.6.0",
-    "jasmine-spec-reporter": "~5.0.0",
+    "jasmine-core": "~3.10.1",
+    "jasmine-spec-reporter": "~7.0.0",
     "karma": "~6.3.4",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage-istanbul-reporter": "~3.0.2",
@@ -66,16 +62,9 @@
     "ng-packagr": "^13.1.1",
     "node-sass": "^7.0.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.0.4",
-    "pretty-quick": "^2.0.1",
     "protractor": "~7.0.0",
     "scss-bundle": "^3.1.1",
-    "ts-node": "~7.0.0",
+    "ts-node": "~9.1.1",
     "typescript": "^4.5.4"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
   }
 }
