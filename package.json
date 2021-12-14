@@ -76,6 +76,6 @@
     "protractor": "~7.0.0",
     "scss-bundle": "^3.1.1",
     "ts-node": "~9.1.1",
-    "typescript": "^4.5.4"
+    "typescript": "~4.4.3"
   }
 }
