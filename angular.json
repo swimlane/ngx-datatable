@@ -1,7 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "cli": {
-    "analytics": "b0fec727-d21d-49bf-b321-5c65a26c8df5"
+    "analytics": "b0fec727-d21d-49bf-b321-5c65a26c8df5",
+    "packageManager": "npm"
   },
   "version": 1,
   "newProjectRoot": "projects",
@@ -145,10 +146,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "projects/ngx-datatable/tsconfig.lib.json",
-              "projects/ngx-datatable/tsconfig.spec.json"
-            ],
+            "tsConfig": ["projects/ngx-datatable/tsconfig.lib.json", "projects/ngx-datatable/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**"]
           }
         }
