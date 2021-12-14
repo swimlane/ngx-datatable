@@ -1,18 +1,18 @@
 import {
-  Component,
-  Output,
-  EventEmitter,
-  Input,
-  HostBinding,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
-  ViewChild,
-  OnInit,
+  Component,
+  EventEmitter,
+  HostBinding,
+  Input,
   OnDestroy,
-  ChangeDetectionStrategy
+  OnInit,
+  Output,
+  ViewChild
 } from '@angular/core';
 import { ScrollerComponent } from './scroller.component';
 import { SelectionType } from '../../types/selection.type';
-import { columnsByPin, columnGroupWidths } from '../../utils/column';
+import { columnGroupWidths, columnsByPin } from '../../utils/column';
 import { RowHeightCache } from '../../utils/row-height-cache';
 import { translateXY } from '../../utils/translate';
 
@@ -199,7 +199,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() set offset(val: number) {
     if (val !== this._offset) {
       this._offset = val;
-      if (!this.scrollbarV || (this.scrollbarV && !this.virtualization)) this.recalcLayout();
+      if (!this.scrollbarV || (this.scrollbarV && !this.virtualization)) {this.recalcLayout();}
     }
   }
 
@@ -494,6 +494,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     let rowHeight = 0;
 
     if (group.value) {
+      // eslint-disable-next-line @typescript-eslint/prefer-for-of
       for (let index = 0; index < group.value.length; index++) {
         rowHeight += this.getRowAndDetailHeight(group.value[index]);
       }
@@ -619,7 +620,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         // Calculation of the first and last indexes will be based on where the
         // scrollY position would be at.  The last index would be the one
         // that shows up inside the view port the last.
-        const height = parseInt(this.bodyHeight, 0);
+        const height = parseInt(this.bodyHeight, 10);
         first = this.rowHeightsCache.getRowIndex(this.offsetY);
         last = this.rowHeightsCache.getRowIndex(height + this.offsetY) + 1;
       } else {
@@ -783,7 +784,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     if (group === 'left') {
       translateXY(styles, offsetX, 0);
     } else if (group === 'right') {
-      const bodyWidth = parseInt(this.innerWidth + '', 0);
+      const bodyWidth = parseInt(this.innerWidth + '', 10);
       const totalDiff = widths.total - bodyWidth;
       const offsetDiff = totalDiff - offsetX;
       const offset = offsetDiff * -1;
@@ -807,7 +808,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   }
 
   getRowExpandedIdx(row: any, expanded: any[]): number {
-    if (!expanded || !expanded.length) return -1;
+    if (!expanded || !expanded.length) {return -1;}
 
     const rowId = this.rowIdentity(row);
     return expanded.findIndex(r => {

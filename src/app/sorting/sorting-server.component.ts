@@ -74,9 +74,7 @@ export class ServerSortingComponent {
       // your server would return the result for
       // you and you would just set the rows prop
       const sort = event.sorts[0];
-      rows.sort((a, b) => {
-        return a[sort.prop].localeCompare(b[sort.prop]) * (sort.dir === 'desc' ? -1 : 1);
-      });
+      rows.sort((a, b) => a[sort.prop].localeCompare(b[sort.prop]) * (sort.dir === 'desc' ? -1 : 1));
 
       this.rows = rows;
       this.loading = false;

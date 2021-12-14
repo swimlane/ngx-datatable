@@ -1,4 +1,4 @@
-import { TestBed, ComponentFixture, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DataTableBodyRowComponent } from './body-row.component';
 import { DataTableBodyCellComponent } from './body-cell.component';
 

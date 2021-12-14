@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ColumnMode } from 'projects/ngx-datatable/src/public-api';
 
 @Component({
@@ -36,7 +36,7 @@ import { ColumnMode } from 'projects/ngx-datatable/src/public-api';
     </div>
   `
 })
-export class TemplateRefTemplatesComponent {
+export class TemplateRefTemplatesComponent implements OnInit {
   @ViewChild('editTmpl', { static: true }) editTmpl: TemplateRef<any>;
   @ViewChild('hdrTpl', { static: true }) hdrTpl: TemplateRef<any>;
 

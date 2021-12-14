@@ -70,9 +70,9 @@ export function columnsByPinArr(val: any) {
   const colsByPinArr = [];
   const colsByPin = columnsByPin(val);
 
-  colsByPinArr.push({ type: 'left', columns: colsByPin['left'] });
-  colsByPinArr.push({ type: 'center', columns: colsByPin['center'] });
-  colsByPinArr.push({ type: 'right', columns: colsByPin['right'] });
+  colsByPinArr.push({ type: 'left', columns: colsByPin.left });
+  colsByPinArr.push({ type: 'center', columns: colsByPin.center });
+  colsByPinArr.push({ type: 'right', columns: colsByPin.right });
 
   return colsByPinArr;
 }

@@ -33,16 +33,18 @@ export function adjustColumnWidths(allColumns: any, expectedWidth: any) {
 function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
   // calculate total width and flexgrow points for coulumns that can be resized
   for (const attr in colsByGroup) {
-    for (const column of colsByGroup[attr]) {
-      if (column.$$oldWidth) {
-        // when manually resized, switch off auto-resize
-        column.canAutoResize = false;
-      }
-      if (!column.canAutoResize) {
-        maxWidth -= column.width;
-        totalFlexGrow -= column.flexGrow ? column.flexGrow : 0;
-      } else {
-        column.width = 0;
+    if (colsByGroup.hasOwnProperty(attr)){
+      for (const column of colsByGroup[attr]) {
+        if (column.$$oldWidth) {
+          // when manually resized, switch off auto-resize
+          column.canAutoResize = false;
+        }
+        if (!column.canAutoResize) {
+          maxWidth -= column.width;
+          totalFlexGrow -= column.flexGrow ? column.flexGrow : 0;
+        } else {
+          column.width = 0;
+        }
       }
     }
   }
@@ -56,16 +58,18 @@ function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
     remainingWidth = 0;
 
     for (const attr in colsByGroup) {
-      for (const column of colsByGroup[attr]) {
+      if (colsByGroup.hasOwnProperty(attr)){
+        for (const column of colsByGroup[attr]) {
         // if the column can be resize and it hasn't reached its minimum width yet
-        if (column.canAutoResize && !hasMinWidth[column.prop]) {
-          const newWidth = column.width + column.flexGrow * widthPerFlexPoint;
-          if (column.minWidth !== undefined && newWidth < column.minWidth) {
-            remainingWidth += newWidth - column.minWidth;
-            column.width = column.minWidth;
-            hasMinWidth[column.prop] = true;
-          } else {
-            column.width = newWidth;
+          if (column.canAutoResize && !hasMinWidth[column.prop]) {
+            const newWidth = column.width + column.flexGrow * widthPerFlexPoint;
+            if (column.minWidth !== undefined && newWidth < column.minWidth) {
+              remainingWidth += newWidth - column.minWidth;
+              column.width = column.minWidth;
+              hasMinWidth[column.prop] = true;
+            } else {
+              column.width = newWidth;
+            }
           }
         }
       }
@@ -99,9 +103,7 @@ export function forceFillColumnWidths(
   allowBleed: boolean,
   defaultColWidth: number = 300
 ) {
-  const columnsToResize = allColumns.slice(startIdx + 1, allColumns.length).filter(c => {
-    return c.canAutoResize !== false;
-  });
+  const columnsToResize = allColumns.slice(startIdx + 1, allColumns.length).filter(c => c.canAutoResize !== false);
 
   for (const column of columnsToResize) {
     if (!column.$$oldWidth) {

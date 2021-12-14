@@ -1,15 +1,15 @@
 import {
+  ChangeDetectionStrategy,
   Component,
-  Input,
   ElementRef,
-  Output,
   EventEmitter,
-  Renderer2,
-  NgZone,
-  OnInit,
-  OnDestroy,
   HostBinding,
-  ChangeDetectionStrategy
+  Input,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  Output,
+  Renderer2
 } from '@angular/core';
 
 import { MouseEvent } from '../../events';
@@ -23,23 +23,23 @@ import { MouseEvent } from '../../events';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ScrollerComponent implements OnInit, OnDestroy {
-  @Input() scrollbarV: boolean = false;
-  @Input() scrollbarH: boolean = false;
+  @Input() scrollbarV = false;
+  @Input() scrollbarH = false;
 
   @HostBinding('style.height.px')
   @Input()
-  scrollHeight: number;
+    scrollHeight: number;
 
   @HostBinding('style.width.px')
   @Input()
-  scrollWidth: number;
+    scrollWidth: number;
 
   @Output() scroll: EventEmitter<any> = new EventEmitter();
 
-  scrollYPos: number = 0;
-  scrollXPos: number = 0;
-  prevScrollYPos: number = 0;
-  prevScrollXPos: number = 0;
+  scrollYPos = 0;
+  scrollXPos = 0;
+  prevScrollYPos = 0;
+  prevScrollXPos = 0;
   element: any;
   parentElement: any;
   onScrollListener: any;
@@ -74,7 +74,7 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   }
 
   onScrolled(event: MouseEvent): void {
-    const dom: Element = <Element>event.currentTarget;
+    const dom: Element = event.currentTarget as Element;
     requestAnimationFrame(() => {
       this.scrollYPos = dom.scrollTop;
       this.scrollXPos = dom.scrollLeft;

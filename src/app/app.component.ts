@@ -1,10 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { LocationStrategy, HashLocationStrategy, Location } from '@angular/common';
+import { HashLocationStrategy, Location, LocationStrategy } from '@angular/common';
 import packageInfo from 'projects/ngx-datatable/package.json';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
+  // eslint-disable-next-line @angular-eslint/use-component-view-encapsulation
   encapsulation: ViewEncapsulation.None,
   styleUrls: [
     './app.component.scss',

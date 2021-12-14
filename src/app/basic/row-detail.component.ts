@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ColumnMode } from 'projects/ngx-datatable/src/public-api';
 
 @Component({
@@ -85,6 +85,7 @@ import { ColumnMode } from 'projects/ngx-datatable/src/public-api';
       </ngx-datatable>
     </div>
   `,
+  // eslint-disable-next-line @angular-eslint/use-component-view-encapsulation
   encapsulation: ViewEncapsulation.None
 })
 export class RowDetailsComponent {

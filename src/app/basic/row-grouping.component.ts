@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgStyle } from '@angular/common';
 import { ColumnMode } from 'projects/ngx-datatable/src/public-api';
 
@@ -189,6 +189,7 @@ export class RowGroupingComponent {
         // Sources are funder and calculated
         if (group[0].startdate === group[1].startdate && group[0].enddate === group[1].enddate) {
           // Start dates and end dates match
+          // eslint-disable-next-line @typescript-eslint/prefer-for-of
           for (let index = 0; index < group.length; index++) {
             if (group[index].source !== row.source) {
               if (event.target.value === '0') {
@@ -207,6 +208,7 @@ export class RowGroupingComponent {
         }
       }
     } else {
+      // eslint-disable-next-line @typescript-eslint/prefer-for-of
       for (let index = 0; index < group.length; index++) {
         if (group[index].exppayyes === 0 && group[index].exppayno === 0 && group[index].exppaypending === 0) {
           expectedPaymentDealtWith = false;

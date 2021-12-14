@@ -1,26 +1,28 @@
 import {
-  Component,
-  Input,
-  Output,
-  ElementRef,
-  EventEmitter,
-  ViewChild,
-  HostListener,
-  ContentChildren,
-  OnInit,
-  QueryList,
+  AfterContentInit,
   AfterViewInit,
-  HostBinding,
-  ContentChild,
-  DoCheck,
-  KeyValueDiffers,
-  KeyValueDiffer,
-  ViewEncapsulation,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  SkipSelf,
+  Component,
+  ContentChild,
+  ContentChildren,
+  DoCheck,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Inject,
+  Input,
+  KeyValueDiffer,
+  KeyValueDiffers,
+  OnDestroy,
+  OnInit,
   Optional,
-  Inject
+  Output,
+  QueryList,
+  SkipSelf,
+  ViewChild,
+  ViewEncapsulation
 } from '@angular/core';
 
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
@@ -43,20 +45,21 @@ import { ScrollbarHelper } from '../services/scrollbar-helper.service';
 import { ColumnChangesService } from '../services/column-changes.service';
 import { DimensionsHelper } from '../services/dimensions-helper.service';
 import { throttleable } from '../utils/throttle';
-import { forceFillColumnWidths, adjustColumnWidths } from '../utils/math';
+import { adjustColumnWidths, forceFillColumnWidths } from '../utils/math';
 import { sortRows } from '../utils/sort';
 
 @Component({
   selector: 'ngx-datatable',
   templateUrl: './datatable.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  // eslint-disable-next-line @angular-eslint/use-component-view-encapsulation
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./datatable.component.scss'],
   host: {
     class: 'ngx-datatable'
   }
 })
-export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
+export class DatatableComponent implements OnInit, DoCheck, AfterViewInit, AfterContentInit, OnDestroy {
   /**
    * Template for the target marker of drag target columns.
    */
@@ -166,12 +169,12 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   /**
    * Enable vertical scrollbars
    */
-  @Input() scrollbarV: boolean = false;
+  @Input() scrollbarV = false;
 
   /**
    * Enable horz scrollbars
    */
-  @Input() scrollbarH: boolean = false;
+  @Input() scrollbarH = false;
 
   /**
    * The row height; which is necessary
@@ -189,25 +192,25 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * The minimum header height in pixels.
    * Pass a falsey for no header
    */
-  @Input() headerHeight: number = 30;
+  @Input() headerHeight = 30;
 
   /**
    * The minimum footer height in pixels.
    * Pass falsey for no footer
    */
-  @Input() footerHeight: number = 0;
+  @Input() footerHeight = 0;
 
   /**
    * If the table should use external paging
    * otherwise its assumed that all data is preloaded.
    */
-  @Input() externalPaging: boolean = false;
+  @Input() externalPaging = false;
 
   /**
    * If the table should use external sorting or
    * the built-in basic sorting.
    */
-  @Input() externalSorting: boolean = false;
+  @Input() externalSorting = false;
 
   /**
    * The page size to be shown.
@@ -260,7 +263,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Show the linear loading bar.
    * Default value: `false`
    */
-  @Input() loadingIndicator: boolean = false;
+  @Input() loadingIndicator = false;
 
   /**
    * Type of row selection. Options are:
@@ -280,13 +283,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Enable/Disable ability to re-order columns
    * by dragging them.
    */
-  @Input() reorderable: boolean = true;
+  @Input() reorderable = true;
 
   /**
    * Swap columns on re-order columns or
    * move them.
    */
-  @Input() swapColumns: boolean = true;
+  @Input() swapColumns = true;
 
   /**
    * The type of sorting
@@ -365,7 +368,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * whether they will start expanded or not. If ommited the default is NOT expanded.
    *
    */
-  @Input() groupExpansionDefault: boolean = false;
+  @Input() groupExpansionDefault = false;
 
   /**
    * Property to which you can use for custom tracking of rows.
@@ -384,7 +387,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   /**
    * A flag for row virtualization on / off
    */
-  @Input() virtualization: boolean = true;
+  @Input() virtualization = true;
 
   /**
    * Tree from relation
@@ -399,17 +402,17 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   /**
    * A flag for switching summary row on / off
    */
-  @Input() summaryRow: boolean = false;
+  @Input() summaryRow = false;
 
   /**
    * A height of summary row
    */
-  @Input() summaryHeight: number = 30;
+  @Input() summaryHeight = 30;
 
   /**
    * A property holds a summary row position: top/bottom
    */
-  @Input() summaryPosition: string = 'top';
+  @Input() summaryPosition = 'top';
 
   /**
    * Body was scrolled typically in a `scrollbarV:true` scenario.
@@ -464,7 +467,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   @HostBinding('class.fixed-header')
   get isFixedHeader(): boolean {
     const headerHeight: number | string = this.headerHeight;
-    return typeof headerHeight === 'string' ? <string>headerHeight !== 'auto' : true;
+    return typeof headerHeight === 'string' ? (headerHeight as string) !== 'auto' : true;
   }
 
   /**
@@ -572,26 +575,26 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Row Detail templates gathered from the ContentChild
    */
   @ContentChild(DatatableRowDetailDirective)
-  rowDetail: DatatableRowDetailDirective;
+    rowDetail: DatatableRowDetailDirective;
 
   /**
    * Group Header templates gathered from the ContentChild
    */
   @ContentChild(DatatableGroupHeaderDirective)
-  groupHeader: DatatableGroupHeaderDirective;
+    groupHeader: DatatableGroupHeaderDirective;
 
   /**
    * Footer template gathered from the ContentChild
    */
   @ContentChild(DatatableFooterDirective)
-  footer: DatatableFooterDirective;
+    footer: DatatableFooterDirective;
 
   /**
    * Reference to the body component for manually
    * invoking functions on the body.
    */
   @ViewChild(DataTableBodyComponent)
-  bodyComponent: DataTableBodyComponent;
+    bodyComponent: DataTableBodyComponent;
 
   /**
    * Reference to the header component for manually
@@ -600,7 +603,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * @memberOf DatatableComponent
    */
   @ViewChild(DataTableHeaderComponent)
-  headerComponent: DataTableHeaderComponent;
+    headerComponent: DataTableHeaderComponent;
 
   /**
    * Returns if all rows are selected.
@@ -621,13 +624,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   _innerWidth: number;
   pageSize: number;
   bodyHeight: number;
-  rowCount: number = 0;
-  rowDiffer: KeyValueDiffer<{}, {}>;
+  rowCount = 0;
+  rowDiffer: KeyValueDiffer<unknown, unknown>;
 
   _offsetX = new BehaviorSubject(0);
   _limit: number | undefined;
-  _count: number = 0;
-  _offset: number = 0;
+  _count = 0;
+  _offset = 0;
   _rows: any[];
   _groupRowsBy: string;
   _internalRows: any[];
@@ -748,7 +751,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   groupArrayBy(originalArray: any, groupBy: any) {
     // create a map to hold groups with their corresponding results
     const map = new Map();
-    let i: number = 0;
+    let i = 0;
 
     originalArray.forEach((item: any) => {
       const key = item[groupBy];
@@ -760,9 +763,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       i++;
     });
 
-    const addGroup = (key: any, value: any) => {
-      return { key, value };
-    };
+    const addGroup = (key: any, value: any) => ({ key, value });
 
     // convert map back to a simple array of objects
     return Array.from(map, x => addGroup(x[0], x[1]));
@@ -826,7 +827,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     forceIdx: number = -1,
     allowBleed: boolean = this.scrollbarH
   ): any[] | undefined {
-    if (!columns) return undefined;
+    if (!columns) {return undefined;}
 
     let width = this._innerWidth;
     if (this.scrollbarV) {
@@ -853,8 +854,8 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
     if (this.scrollbarV) {
       let height = dims.height;
-      if (this.headerHeight) height = height - this.headerHeight;
-      if (this.footerHeight) height = height - this.footerHeight;
+      if (this.headerHeight) {height = height - this.headerHeight;}
+      if (this.footerHeight) {height = height - this.footerHeight;}
       this.bodyHeight = height;
     }
 
@@ -954,7 +955,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    */
   calcRowCount(val: any[] = this.rows): number {
     if (!this.externalPaging) {
-      if (!val) return 0;
+      if (!val) {return 0;}
 
       if (this.groupedRows) {
         return this.groupedRows.length;
@@ -1030,9 +1031,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * The header triggered a column re-order event.
    */
   onColumnReorder({ column, newValue, prevValue }: any): void {
-    const cols = this._internalColumns.map(c => {
-      return { ...c };
-    });
+    const cols = this._internalColumns.map(c => ({ ...c }));
 
     if (this.swapColumns) {
       const prevCol = cols[newValue];

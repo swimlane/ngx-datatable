@@ -64,9 +64,7 @@ export class ColumnToggleComponent {
     const isChecked = this.isChecked(col);
 
     if (isChecked) {
-      this.columns = this.columns.filter(c => {
-        return c.name !== col.name;
-      });
+      this.columns = this.columns.filter(c => c.name !== col.name);
     } else {
       this.columns = [...this.columns, col];
     }
@@ -74,9 +72,7 @@ export class ColumnToggleComponent {
 
   isChecked(col) {
     return (
-      this.columns.find(c => {
-        return c.name === col.name;
-      }) !== undefined
+      this.columns.find(c => c.name === col.name) !== undefined
     );
   }
 }

@@ -1,12 +1,13 @@
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
-  Input,
   EventEmitter,
-  Output,
   HostBinding,
   HostListener,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef
+  Input,
+  OnInit,
+  Output
 } from '@angular/core';
 import { SortType } from '../../types/sort.type';
 import { SelectionType } from '../../types/selection.type';
@@ -44,7 +45,7 @@ import { SortDirection } from '../../types/sort-direction.type';
   },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DataTableHeaderCellComponent {
+export class DataTableHeaderCellComponent implements OnInit {
   @Input() sortType: SortType;
   @Input() sortAscendingIcon: string;
   @Input() sortDescendingIcon: string;
@@ -78,7 +79,7 @@ export class DataTableHeaderCellComponent {
 
   @HostBinding('style.height.px')
   @Input()
-  headerHeight: number;
+    headerHeight: number;
 
   @Input() set sorts(val: any[]) {
     this._sorts = val;
@@ -100,8 +101,8 @@ export class DataTableHeaderCellComponent {
   get columnCssClasses(): any {
     let cls = 'datatable-header-cell';
 
-    if (this.column.sortable) cls += ' sortable';
-    if (this.column.resizeable) cls += ' resizeable';
+    if (this.column.sortable) {cls += ' sortable';}
+    if (this.column.resizeable) {cls += ' resizeable';}
     if (this.column.headerClass) {
       if (typeof this.column.headerClass === 'string') {
         cls += ' ' + this.column.headerClass;
@@ -115,7 +116,7 @@ export class DataTableHeaderCellComponent {
         } else if (typeof res === 'object') {
           const keys = Object.keys(res);
           for (const k of keys) {
-            if (res[k] === true) cls += ` ${k}`;
+            if (res[k] === true) {cls += ` ${k}`;}
           }
         }
       }
@@ -185,16 +186,14 @@ export class DataTableHeaderCellComponent {
 
   calcSortDir(sorts: any[]): any {
     if (sorts && this.column) {
-      const sort = sorts.find((s: any) => {
-        return s.prop === this.column.prop;
-      });
+      const sort = sorts.find((s: any) => s.prop === this.column.prop);
 
-      if (sort) return sort.dir;
+      if (sort) {return sort.dir;}
     }
   }
 
   onSort(): void {
-    if (!this.column.sortable) return;
+    if (!this.column.sortable) {return;}
 
     const newValue = nextSortDir(this.sortType, this.sortDir);
     this.sort.emit({
@@ -205,7 +204,7 @@ export class DataTableHeaderCellComponent {
   }
 
   calcSortClass(sortDir: SortDirection): string {
-    if (!this.cellContext.column.sortable) return;
+    if (!this.cellContext.column.sortable) {return;}
     if (sortDir === SortDirection.asc) {
       return `sort-btn sort-asc ${this.sortAscendingIcon}`;
     } else if (sortDir === SortDirection.desc) {

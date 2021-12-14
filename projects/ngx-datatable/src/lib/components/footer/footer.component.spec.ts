@@ -1,5 +1,5 @@
-import { Component, DebugElement, Input, Output, EventEmitter, ViewChild, TemplateRef } from '@angular/core';
-import { TestBed, ComponentFixture, waitForAsync } from '@angular/core/testing';
+import { Component, DebugElement, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { addMatchers } from '../../test';
@@ -254,7 +254,7 @@ class TestFixtureComponent {
    * in these unit tests
    */
   @ViewChild('testTemplate', { read: TemplateRef, static: true })
-  testTemplate: TemplateRef<any>;
+    testTemplate: TemplateRef<any>;
 
   onPageEvent() {
     return;
@@ -269,6 +269,7 @@ class TestFixtureComponent {
   selector: 'datatable-pager',
   template: ''
 })
+// eslint-disable-next-line @angular-eslint/component-class-suffix
 class DataTablePagerComponentMock {
   @Input() pagerLeftArrowIcon: string;
   @Input() pagerRightArrowIcon: string;

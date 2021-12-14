@@ -1,13 +1,13 @@
-import { Directive, Input, Output, EventEmitter, HostBinding, HostListener, OnDestroy } from '@angular/core';
-import { Observable, Subscription, fromEvent } from 'rxjs';
+import { Directive, EventEmitter, HostBinding, HostListener, Input, OnDestroy, Output } from '@angular/core';
+import { fromEvent, Observable, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MouseEvent } from '../events';
 
 @Directive({ selector: '[long-press]' })
 export class LongPressDirective implements OnDestroy {
-  @Input() pressEnabled: boolean = true;
+  @Input() pressEnabled = true;
   @Input() pressModel: any;
-  @Input() duration: number = 500;
+  @Input() duration = 500;
 
   @Output() longPressStart: EventEmitter<any> = new EventEmitter();
   @Output() longPressing: EventEmitter<any> = new EventEmitter();
@@ -16,8 +16,8 @@ export class LongPressDirective implements OnDestroy {
   pressing: boolean;
   isLongPressing: boolean;
   timeout: any;
-  mouseX: number = 0;
-  mouseY: number = 0;
+  mouseX = 0;
+  mouseY = 0;
 
   subscription: Subscription;
 
@@ -34,11 +34,11 @@ export class LongPressDirective implements OnDestroy {
   @HostListener('mousedown', ['$event'])
   onMouseDown(event: MouseEvent): void {
     // don't do right/middle clicks
-    if (event.which !== 1 || !this.pressEnabled) return;
+    if (event.which !== 1 || !this.pressEnabled) {return;}
 
     // don't start drag if its on resize handle
-    const target = <HTMLElement>event.target;
-    if (target.classList.contains('resize-handle')) return;
+    const target = event.target as HTMLElement;
+    if (target.classList.contains('resize-handle')) {return;}
 
     this.mouseX = event.clientX;
     this.mouseY = event.clientY;

@@ -75,7 +75,7 @@ describe('OrderableDirective', () => {
       }
 
       function newDraggable() {
-        const draggable = new DraggableDirective(<ElementRef>{});
+        const draggable = new DraggableDirective({} as ElementRef);
 
         // used for the KeyValueDiffer
         draggable.dragModel = {

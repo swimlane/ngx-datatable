@@ -15,7 +15,7 @@ export function camelCase(str: string): string {
     .toLowerCase();
 
   // uppercase characters preceded by a space or number
-  str = str.replace(/([ 0-9]+)([a-zA-Z])/g, function (a, b, c) {
+  str = str.replace(/([ 0-9]+)([a-zA-Z])/g, function(a, b, c) {
     return b.trim() + c.toUpperCase();
   });
 

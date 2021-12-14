@@ -3,11 +3,11 @@
  */
 export class Page {
   // The number of elements in the page
-  size: number = 0;
+  size = 0;
   // The total number of elements
-  totalElements: number = 0;
+  totalElements = 0;
   // The total number of pages
-  totalPages: number = 0;
+  totalPages = 0;
   // The current page number
-  pageNumber: number = 0;
+  pageNumber = 0;
 }

@@ -1,4 +1,4 @@
-import { Directive, Output, EventEmitter, ElementRef, HostBinding, NgZone, OnInit, OnDestroy } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, HostBinding, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
 
 /**
  * Visibility Observer Directive
@@ -14,7 +14,7 @@ import { Directive, Output, EventEmitter, ElementRef, HostBinding, NgZone, OnIni
 @Directive({ selector: '[visibilityObserver]' })
 export class VisibilityDirective implements OnInit, OnDestroy {
   @HostBinding('class.visible')
-  isVisible: boolean = false;
+    isVisible = false;
 
   @Output() visible: EventEmitter<any> = new EventEmitter();
 

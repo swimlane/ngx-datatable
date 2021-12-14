@@ -1,25 +1,23 @@
 import {
+  AfterViewInit,
   Directive,
   ElementRef,
+  EventEmitter,
+  HostBinding,
   HostListener,
   Input,
-  Output,
-  EventEmitter,
   OnDestroy,
-  AfterViewInit,
+  Output,
   Renderer2
 } from '@angular/core';
-import { Subscription, fromEvent } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Directive({
-  selector: '[resizeable]',
-  host: {
-    '[class.resizeable]': 'resizeEnabled'
-  }
+  selector: '[resizeable]'
 })
 export class ResizeableDirective implements OnDestroy, AfterViewInit {
-  @Input() resizeEnabled: boolean = true;
+  @HostBinding('class.resizeable') @Input() resizeEnabled = true;
   @Input() minWidth: number;
   @Input() maxWidth: number;
 
@@ -63,7 +61,7 @@ export class ResizeableDirective implements OnDestroy, AfterViewInit {
 
   @HostListener('mousedown', ['$event'])
   onMousedown(event: MouseEvent): void {
-    const isHandle = (<HTMLElement>event.target).classList.contains('resize-handle');
+    const isHandle = (event.target as HTMLElement).classList.contains('resize-handle');
     const initialWidth = this.element.clientWidth;
     const mouseDownScreenX = event.screenX;
 

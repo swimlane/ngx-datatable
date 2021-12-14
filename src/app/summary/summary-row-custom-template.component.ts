@@ -41,7 +41,7 @@ export class SummaryRowCustomTemplateComponent implements OnInit {
   rows = [];
 
   @ViewChild('nameSummaryCell')
-  nameSummaryCell: TemplateRef<any>;
+    nameSummaryCell: TemplateRef<any>;
 
   columns = [];
 

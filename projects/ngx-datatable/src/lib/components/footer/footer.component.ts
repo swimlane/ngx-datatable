@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, ChangeDetectionStrategy, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { DatatableFooterDirective } from './footer.directive';
 @Component({
   selector: 'datatable-footer',
@@ -56,7 +56,7 @@ export class DataTableFooterComponent {
   @Input() totalMessage: string;
   @Input() footerTemplate: DatatableFooterDirective;
 
-  @Input() selectedCount: number = 0;
+  @Input() selectedCount = 0;
   @Input() selectedMessage: string | boolean;
 
   @Output() page: EventEmitter<any> = new EventEmitter();
