@@ -202,7 +202,6 @@ $datatable-summary-row-background-hover: #ddd !default;
     .datatable-header-cell {
       text-align: left;
       padding: 0.9rem 1.2rem;
-      font-weight: 400;
       background-color: $datatable-header-cell-background;
       color: $datatable-header-cell-color;
       vertical-align: bottom;
@@ -374,7 +373,6 @@ $datatable-summary-row-background-hover: #ddd !default;
         border-radius: 3px;
         margin: 6px 3px;
         text-align: center;
-        vertical-align: top;
         color: $datatable-pager-color;
         text-decoration: none;
         vertical-align: bottom;
