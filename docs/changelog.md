@@ -1,5 +1,11 @@
 # Changelog
 
+## 21.1.0
+
+- Feature: decouple checkboxable and headerCheckboxable from SelectionType.checkbox
+- Feature: update to Angular 13 and ivy
+- Chore: switch from TSLint/Prettier to ESLint
+
 ## 21.0.0
 
 - Feature: support custom loading indicator
