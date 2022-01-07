@@ -19,7 +19,6 @@ Some examples of the things we don't plan to build in this project are:
 - Context Menus
 - Column Filters
 - Column Toggling
-- Inline Editing
 
 If you are interested in building something like that for this project, I'm happy
 to help point you in the right direction and would be happy to list a link as a
