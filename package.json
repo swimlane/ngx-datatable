@@ -30,23 +30,23 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^12.1.5",
-    "@angular/common": "^12.1.5",
-    "@angular/compiler": "^12.1.5",
-    "@angular/core": "^12.1.5",
-    "@angular/forms": "^12.1.5",
-    "@angular/platform-browser": "^12.1.5",
-    "@angular/platform-browser-dynamic": "^12.1.5",
-    "@angular/router": "^12.1.5",
+    "@angular/animations": "^13.0.1",
+    "@angular/common": "^13.0.1",
+    "@angular/compiler": "^13.0.1",
+    "@angular/core": "^13.0.1",
+    "@angular/forms": "^13.0.1",
+    "@angular/platform-browser": "^13.0.1",
+    "@angular/platform-browser-dynamic": "^13.0.1",
+    "@angular/router": "^13.0.1",
     "rxjs": "^6.6.7",
     "tslib": "^2.3.1",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~12.1.4",
-    "@angular/cli": "~12.1.4",
-    "@angular/compiler-cli": "^12.1.5",
-    "@angular/language-service": "^12.1.5",
+    "@angular-devkit/build-angular": "~13.0.2",
+    "@angular/cli": "~13.0.2",
+    "@angular/compiler-cli": "^13.0.1",
+    "@angular/language-service": "^13.0.1",
     "@swimlane/prettier-config-swimlane": "^3.0.2",
     "@types/jasmine": "^3.6.11",
     "@types/jasminewd2": "^2.0.10",
@@ -64,7 +64,7 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.7.0",
-    "ng-packagr": "^12.2.2",
+    "ng-packagr": "^13.0.3",
     "node-sass": "^6.0.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.4.1",
@@ -76,7 +76,7 @@
     "tslint-config-prettier": "^1.17.0",
     "tslint-config-security": "^1.16.0",
     "tslint-config-swimlane": "^5.0.0",
-    "typescript": "~4.3.5"
+    "typescript": "~4.4.4"
   },
   "husky": {
     "hooks": {
