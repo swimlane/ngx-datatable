@@ -11,7 +11,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   DoCheck,
-  SkipSelf
+  SimpleChanges,
+  SkipSelf,
+  OnChanges
 } from '@angular/core';
 
 import { TreeStatus } from './body-cell.component';
@@ -49,7 +51,7 @@ import { translateXY } from '../../utils/translate';
     </div>
   `
 })
-export class DataTableBodyRowComponent implements DoCheck {
+export class DataTableBodyRowComponent implements DoCheck, OnChanges {
   @Input() set columns(val: any[]) {
     this._columns = val;
     this.recalculateColumns(val);
@@ -82,6 +84,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   @Input() isSelected: boolean;
   @Input() rowIndex: number;
   @Input() displayCheck: any;
+  @Input() scrollbarV: boolean;
   @Input() treeStatus: TreeStatus = 'collapsed';
 
   @Input()
@@ -159,6 +162,12 @@ export class DataTableBodyRowComponent implements DoCheck {
     this._rowDiffer = differs.find({}).create();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.scrollbarV) {
+      this.buildStylesByGroup();
+    }
+  }
+
   ngDoCheck(): void {
     if (this._rowDiffer.diff(this.row)) {
       this.cd.markForCheck();
@@ -193,9 +202,11 @@ export class DataTableBodyRowComponent implements DoCheck {
     } else if (group === 'right') {
       const bodyWidth = parseInt(this.innerWidth + '', 0);
       const totalDiff = widths.total - bodyWidth;
-      const offsetDiff = totalDiff - offsetX;
-      const offset = (offsetDiff + this.scrollbarHelper.width) * -1;
-      translateXY(styles, offset, 0);
+      let offset = totalDiff - offsetX;
+      if (this.scrollbarV) {
+        offset += this.scrollbarHelper.width;
+      }
+      translateXY(styles, offset * -1, 0);
     }
 
     return styles;

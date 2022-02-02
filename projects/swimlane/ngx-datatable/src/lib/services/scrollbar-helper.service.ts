@@ -7,27 +7,21 @@ import { DOCUMENT } from '@angular/common';
  */
 @Injectable()
 export class ScrollbarHelper {
-  width: number = this.getWidth();
+  width: number = 0;
 
-  constructor(@Inject(DOCUMENT) private document: any) {}
+  constructor(@Inject(DOCUMENT) private document: any) {
+    window.onload = this.setWidth;
+  }
 
-  getWidth(): number {
-    const outer = this.document.createElement('div');
-    outer.style.visibility = 'hidden';
-    outer.style.width = '100px';
-    outer.style.msOverflowStyle = 'scrollbar';
-    this.document.body.appendChild(outer);
+  private setWidth(): void {
+    const out = document.createElement('div');
+    const ins = document.createElement('div');
+    out.style.width = ins.style.width = '100%';
+    out.style.overflow = 'scroll';
+    document.body.appendChild(out).appendChild(ins);
+    const width = out.offsetWidth - ins.offsetWidth;
+    out.parentNode.removeChild(out);
 
-    const widthNoScroll = outer.offsetWidth;
-    outer.style.overflow = 'scroll';
-
-    const inner = this.document.createElement('div');
-    inner.style.width = '100%';
-    outer.appendChild(inner);
-
-    const widthWithScroll = inner.offsetWidth;
-    outer.parentNode.removeChild(outer);
-
-    return widthNoScroll - widthWithScroll;
+    this.width = width;
   }
 }

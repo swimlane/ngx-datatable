@@ -6,13 +6,15 @@ import {
   HostBinding,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
-  OnDestroy
+  OnDestroy,
+  SkipSelf
 } from '@angular/core';
 import { columnsByPin, columnGroupWidths, columnsByPinArr } from '../../utils/column';
 import { SortType } from '../../types/sort.type';
 import { SelectionType } from '../../types/selection.type';
 import { DataTableColumnDirective } from '../columns/column.directive';
 import { translateXY } from '../../utils/translate';
+import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 
 @Component({
   selector: 'datatable-header',
@@ -76,10 +78,9 @@ export class DataTableHeaderComponent implements OnDestroy {
   @Input() sortDescendingIcon: any;
   @Input() sortUnsetIcon: any;
   @Input() scrollbarH: boolean;
+  @Input() scrollbarV: boolean;
   @Input() dealsWithGroup: boolean;
   @Input() targetMarkerTemplate: any;
-
-  targetMarkerContext: any;
 
   @Input() set innerWidth(val: number) {
     this._innerWidth = val;
@@ -164,7 +165,7 @@ export class DataTableHeaderComponent implements OnDestroy {
 
   private destroyed = false;
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(private cd: ChangeDetectorRef, @SkipSelf() private scrollbarHelper: ScrollbarHelper) {}
 
   ngOnDestroy(): void {
     this.destroyed = true;
@@ -329,9 +330,11 @@ export class DataTableHeaderComponent implements OnDestroy {
     if (group === 'center') {
       translateXY(styles, offsetX * -1, 0);
     } else if (group === 'right') {
-      const totalDiff = widths.total - this.innerWidth;
-      const offset = totalDiff * -1;
-      translateXY(styles, offset, 0);
+      let offset = widths.total - this.innerWidth;
+      if (this.scrollbarV) {
+        offset += this.scrollbarHelper.width;
+      }
+      translateXY(styles, offset * -1, 0);
     }
 
     return styles;

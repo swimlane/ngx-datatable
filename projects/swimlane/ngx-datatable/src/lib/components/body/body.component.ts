@@ -75,6 +75,7 @@ import { translateXY } from '../../utils/translate';
             [rowIndex]="getRowIndex(group)"
             [expanded]="getRowExpanded(group)"
             [rowClass]="rowClass"
+            [scrollbarV]="scrollbarV"
             [displayCheck]="displayCheck"
             [treeStatus]="group && group.treeStatus"
             (treeAction)="onTreeAction(group)"
@@ -96,6 +97,7 @@ import { translateXY } from '../../utils/translate';
               [rowIndex]="getRowIndex(row)"
               [expanded]="getRowExpanded(row)"
               [rowClass]="rowClass"
+              [scrollbarV]="scrollbarV"
               (activate)="selector.onActivate($event, i)"
             >
             </datatable-body-row>

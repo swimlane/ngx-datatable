@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 @Component({
-  selector: 'column-pinning-demo',
+  selector: 'column-scrollbar-v-pinning-demo',
   template: `
     <div>
       <h3>
-        Column Pinning
+        Column Scrollbar V Pinning
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/columns/pinning.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/columns/column-scrollbar-v-pinning.component.ts"
             target="_blank"
           >
             Source
@@ -36,7 +36,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
     </div>
   `
 })
-export class ColumnPinningComponent {
+export class ColumnScrollbarVPinningComponent {
   rows = [];
 
   ColumnMode = ColumnMode;
