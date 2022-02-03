@@ -29,7 +29,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { INgxDatatableConfig } from '../ngx-datatable.module';
 import { groupRowsByParents, optionalGetterForProp } from '../utils/tree';
 import { TableColumn } from '../types/table-column.type';
-import { setColumnDefaults, translateTemplates } from '../utils/column-helper';
+import { isNullOrUndefined, setColumnDefaults, translateTemplates } from '../utils/column-helper';
 import { ColumnMode } from '../types/column-mode.type';
 import { SelectionType } from '../types/selection.type';
 import { SortType } from '../types/sort.type';
@@ -39,11 +39,11 @@ import { DatatableRowDetailDirective } from './row-detail/row-detail.directive';
 import { DatatableFooterDirective } from './footer/footer.directive';
 import { DataTableBodyComponent } from './body/body.component';
 import { DataTableHeaderComponent } from './header/header.component';
-import { ScrollbarHelper } from '../services/scrollbar-helper.service';
 import { ColumnChangesService } from '../services/column-changes.service';
 import { DimensionsHelper } from '../services/dimensions-helper.service';
 import { throttleable } from '../utils/throttle';
 import { forceFillColumnWidths, adjustColumnWidths } from '../utils/math';
+import { Scrollbar } from '../utils/scrollbar';
 import { sortRows } from '../utils/sort';
 
 @Component({
@@ -637,7 +637,6 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   _subscriptions: Subscription[] = [];
 
   constructor(
-    @SkipSelf() private scrollbarHelper: ScrollbarHelper,
     @SkipSelf() private dimensionsHelper: DimensionsHelper,
     private cd: ChangeDetectorRef,
     element: ElementRef,
@@ -645,6 +644,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     private columnChangesService: ColumnChangesService,
     @Optional() @Inject('configuration') private configuration: INgxDatatableConfig
   ) {
+    Scrollbar.widthChange.subscribe(() => this.recalculateColumns());
     // get ref to elm for measuring
     this.element = element.nativeElement;
     this.rowDiffer = differs.find({}).create();
@@ -660,7 +660,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * properties of a directive are initialized.
    */
   ngOnInit(): void {
-    // need to call this immediatly to size
+    // need to call this immediately to size
     // if the table is hidden the visibility
     // listener will invoke this itself upon show
     this.recalculate();
@@ -816,7 +816,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   }
 
   /**
-   * Recalulcates the column widths based on column width
+   * Recalculates the column widths based on column width
    * distribution mode and scrollbar offsets.
    */
   recalculateColumns(
@@ -828,7 +828,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
     let width = this._innerWidth;
     if (this.scrollbarV) {
-      width = width - this.scrollbarHelper.width;
+      width = width - Scrollbar.width;
     }
 
     if (this.columnMode === ColumnMode.force) {
@@ -860,7 +860,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   }
 
   /**
-   * Recalculates the pages after a update.
+   * Recalculates the pages after an update.
    */
   recalculatePages(): void {
     this.pageSize = this.calcPageSize();
@@ -892,9 +892,11 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * The body triggered a scroll event.
    */
   onBodyScroll(event: MouseEvent): void {
-    this._offsetX.next(event.offsetX);
-    this.scroll.emit(event);
-    this.cd.detectChanges();
+    if (!isNullOrUndefined(event.offsetX)) {
+      this._offsetX.next(event.offsetX);
+      this.scroll.emit(event);
+      this.cd.detectChanges();
+    }
   }
 
   /**

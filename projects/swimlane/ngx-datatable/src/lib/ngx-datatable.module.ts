@@ -1,6 +1,5 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ScrollbarHelper } from './services/scrollbar-helper.service';
 import { DimensionsHelper } from './services/dimensions-helper.service';
 import { ColumnChangesService } from './services/column-changes.service';
 import { DataTableFooterTemplateDirective } from './components/footer/footer-template.directive';
@@ -31,10 +30,13 @@ import { DataTableColumnCellTreeToggle } from './components/columns/tree.directi
 import { DatatableFooterDirective } from './components/footer/footer.directive';
 import { DatatableGroupHeaderTemplateDirective } from './components/body/body-group-header-template.directive';
 import { DataTableSummaryRowComponent } from './components/body/summary/summary-row.component';
+import { scrollbarInitializer } from './utils/scrollbar';
+
+scrollbarInitializer();
 
 @NgModule({
   imports: [CommonModule],
-  providers: [ScrollbarHelper, DimensionsHelper, ColumnChangesService],
+  providers: [DimensionsHelper, ColumnChangesService],
   declarations: [
     DataTableFooterTemplateDirective,
     VisibilityDirective,

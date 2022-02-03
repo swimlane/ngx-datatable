@@ -36,7 +36,6 @@ export * from './lib/directives/resizeable.directive';
 export * from './lib/directives/visibility.directive';
 
 // services
-export * from './lib/services/scrollbar-helper.service';
 export * from './lib/services/dimensions-helper.service';
 export * from './lib/services/column-changes.service';
 
@@ -59,6 +58,7 @@ export * from './lib/utils/keys';
 export * from './lib/utils/math';
 export * from './lib/utils/prefixes';
 export * from './lib/utils/selection';
+export * from './lib/utils/scrollbar';
 export * from './lib/utils/translate';
 export * from './lib/utils/throttle';
 export * from './lib/utils/sort';

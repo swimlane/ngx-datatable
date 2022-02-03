@@ -1,11 +1,10 @@
 import { TestBed, ComponentFixture, waitForAsync } from '@angular/core/testing';
-import { DebugElement, PipeTransform } from '@angular/core';
+import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { DataTableBodyRowComponent } from '../body-row.component';
 import { DataTableBodyCellComponent } from '../body-cell.component';
 import { DataTableSummaryRowComponent, ISummaryColumn } from './summary-row.component';
-import { ScrollbarHelper } from '../../../services/scrollbar-helper.service';
 import { setColumnDefaults } from '../../../utils/column-helper';
 
 describe('DataTableSummaryRowComponent', () => {
@@ -28,8 +27,7 @@ describe('DataTableSummaryRowComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        declarations: [DataTableSummaryRowComponent, DataTableBodyRowComponent, DataTableBodyCellComponent],
-        providers: [ScrollbarHelper]
+        declarations: [DataTableSummaryRowComponent, DataTableBodyRowComponent, DataTableBodyCellComponent]
       }).compileComponents();
     })
   );
