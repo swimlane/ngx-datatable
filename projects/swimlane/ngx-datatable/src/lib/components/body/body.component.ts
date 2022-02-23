@@ -415,6 +415,19 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
     if (direction !== undefined && !isNaN(offset) && offset !== this._offsetEvent) {
       this._offsetEvent = offset;
+      const scrollInBetween = !Number.isInteger(offset);
+      // if scroll was done by mouse drag make sure previous row and next row data is also fetched if its not fetched
+      if (scrollInBetween && this.scrollbarV && this.virtualization && this.externalPaging) {
+        const upRow = this.rows[this.indexes.first - 1];
+        if (!upRow && direction === 'up') {
+          this.page.emit({ offset: offset - 1 });
+        }
+
+        const downRow = this.rows[this.indexes.first + this.pageSize];
+        if (!downRow && direction === 'down') {
+          this.page.emit({ offset: offset + 1 });
+        }
+      }
       this.page.emit({ offset });
     }
   }
