@@ -42,6 +42,16 @@ bootstrap table theme
       padding: $alert-padding-y $alert-padding-x;
       margin-bottom: 0;
     }
+    .custom-loading-indicator-wrapper {
+      position: sticky;
+      top: 0;
+      height: 0;
+      z-index: 999;
+        .custom-loading-content {
+          width: 100%;
+          background-color: #fff;
+        }
+    }
   }
   .datatable-footer {
     background: #424242;
