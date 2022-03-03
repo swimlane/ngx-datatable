@@ -410,7 +410,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   updatePage(direction: string): void {
     let offset = this.indexes.first / this.pageSize;
-
+    const scrollInBetween = !Number.isInteger(offset);
     if (direction === 'up') {
       offset = Math.ceil(offset);
     } else if (direction === 'down') {
@@ -419,7 +419,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
     if (direction !== undefined && !isNaN(offset) && offset !== this._offsetEvent) {
       this._offsetEvent = offset;
-      const scrollInBetween = !Number.isInteger(offset);
       // if scroll was done by mouse drag make sure previous row and next row data is also fetched if its not fetched
       if (scrollInBetween && this.scrollbarV && this.virtualization && this.externalPaging) {
         const upRow = this.rows[this.indexes.first - 1];
