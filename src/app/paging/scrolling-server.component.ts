@@ -48,6 +48,7 @@ export class MockServerResultsService {
         [headerHeight]="headerHeight"
         [rowHeight]="rowHeight"
         [loadingIndicator]="isLoading"
+        [ghostLoadingIndicator]="isLoading"
         [scrollbarV]="true"
         (scroll)="onScroll($event.offsetY)"
       ></ngx-datatable>

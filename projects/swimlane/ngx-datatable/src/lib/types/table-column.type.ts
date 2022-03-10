@@ -153,6 +153,13 @@ export interface TableColumn {
   cellTemplate?: any;
 
   /**
+   * Ghost Cell template ref
+   *
+   * @memberOf TableColumn
+   */
+  ghostCellTemplate?: any;
+
+  /**
    * Header template ref
    *
    * @memberOf TableColumn

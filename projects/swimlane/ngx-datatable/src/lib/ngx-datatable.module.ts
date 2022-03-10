@@ -27,10 +27,12 @@ import { DataTableBodyCellComponent } from './components/body/body-cell.componen
 import { DataTableSelectionComponent } from './components/body/selection.component';
 import { DataTableColumnHeaderDirective } from './components/columns/column-header.directive';
 import { DataTableColumnCellDirective } from './components/columns/column-cell.directive';
+import { DataTableColumnGhostCellDirective } from './components/columns/column-ghost-cell.directive';
 import { DataTableColumnCellTreeToggle } from './components/columns/tree.directive';
 import { DatatableFooterDirective } from './components/footer/footer.directive';
 import { DatatableGroupHeaderTemplateDirective } from './components/body/body-group-header-template.directive';
 import { DataTableSummaryRowComponent } from './components/body/summary/summary-row.component';
+import { DataTableGhostLoaderComponent } from './components/body/ghost-loader/ghost-loader.component';
 
 @NgModule({
   imports: [CommonModule],
@@ -60,10 +62,12 @@ import { DataTableSummaryRowComponent } from './components/body/summary/summary-
     DataTableSelectionComponent,
     DataTableColumnHeaderDirective,
     DataTableColumnCellDirective,
+    DataTableColumnGhostCellDirective,
     DataTableColumnCellTreeToggle,
     DatatableFooterDirective,
     DatatableGroupHeaderTemplateDirective,
-    DataTableSummaryRowComponent
+    DataTableSummaryRowComponent,
+    DataTableGhostLoaderComponent
   ],
   exports: [
     DatatableComponent,
@@ -73,6 +77,7 @@ import { DataTableSummaryRowComponent } from './components/body/summary/summary-
     DataTableColumnDirective,
     DataTableColumnHeaderDirective,
     DataTableColumnCellDirective,
+    DataTableColumnGhostCellDirective,
     DataTableColumnCellTreeToggle,
     DataTableFooterTemplateDirective,
     DatatableFooterDirective,

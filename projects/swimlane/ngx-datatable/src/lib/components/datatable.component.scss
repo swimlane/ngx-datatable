@@ -216,6 +216,7 @@
     position: relative;
     z-index: 10;
     display: block;
+    overflow: hidden;
 
     .datatable-scroll {
       display: inline-block;

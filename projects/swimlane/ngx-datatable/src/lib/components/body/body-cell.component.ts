@@ -25,43 +25,48 @@ export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
   selector: 'datatable-body-cell',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="datatable-body-cell-label" [style.margin-left.px]="calcLeftMargin(column, row)">
-      <label
-        *ngIf="column.checkboxable && (!displayCheck || displayCheck(row, column, value))"
-        class="datatable-checkbox"
-      >
-        <input type="checkbox" [checked]="isSelected" (click)="onCheckboxChange($event)" />
-      </label>
-      <ng-container *ngIf="column.isTreeColumn">
-        <button
-          *ngIf="!column.treeToggleTemplate"
-          class="datatable-tree-button"
-          [disabled]="treeStatus === 'disabled'"
-          (click)="onTreeAction()"
+    <ng-container *ngIf="row; else ghostLoaderTemplate">
+      <div class="datatable-body-cell-label" [style.margin-left.px]="calcLeftMargin(column, row)">
+        <label
+          *ngIf="column.checkboxable && (!displayCheck || displayCheck(row, column, value))"
+          class="datatable-checkbox"
         >
-          <span>
-            <i *ngIf="treeStatus === 'loading'" class="icon datatable-icon-collapse"></i>
-            <i *ngIf="treeStatus === 'collapsed'" class="icon datatable-icon-up"></i>
-            <i *ngIf="treeStatus === 'expanded' || treeStatus === 'disabled'" class="icon datatable-icon-down"></i>
-          </span>
-        </button>
+          <input type="checkbox" [checked]="isSelected" (click)="onCheckboxChange($event)" />
+        </label>
+        <ng-container *ngIf="column.isTreeColumn">
+          <button
+            *ngIf="!column.treeToggleTemplate"
+            class="datatable-tree-button"
+            [disabled]="treeStatus === 'disabled'"
+            (click)="onTreeAction()"
+          >
+            <span>
+              <i *ngIf="treeStatus === 'loading'" class="icon datatable-icon-collapse"></i>
+              <i *ngIf="treeStatus === 'collapsed'" class="icon datatable-icon-up"></i>
+              <i *ngIf="treeStatus === 'expanded' || treeStatus === 'disabled'" class="icon datatable-icon-down"></i>
+            </span>
+          </button>
+          <ng-template
+            *ngIf="column.treeToggleTemplate"
+            [ngTemplateOutlet]="column.treeToggleTemplate"
+            [ngTemplateOutletContext]="{ cellContext: cellContext }"
+          >
+          </ng-template>
+        </ng-container>
+
+        <span *ngIf="!column.cellTemplate" [title]="sanitizedValue" [innerHTML]="value"> </span>
         <ng-template
-          *ngIf="column.treeToggleTemplate"
-          [ngTemplateOutlet]="column.treeToggleTemplate"
-          [ngTemplateOutletContext]="{ cellContext: cellContext }"
+          #cellTemplate
+          *ngIf="column.cellTemplate"
+          [ngTemplateOutlet]="column.cellTemplate"
+          [ngTemplateOutletContext]="cellContext"
         >
         </ng-template>
-      </ng-container>
-
-      <span *ngIf="!column.cellTemplate" [title]="sanitizedValue" [innerHTML]="value"> </span>
-      <ng-template
-        #cellTemplate
-        *ngIf="column.cellTemplate"
-        [ngTemplateOutlet]="column.cellTemplate"
-        [ngTemplateOutletContext]="cellContext"
-      >
-      </ng-template>
-    </div>
+      </div>
+    </ng-container>
+    <ng-template #ghostLoaderTemplate>
+      <ghost-loader [columns]="[column]" [pageSize]="1"></ghost-loader>
+    </ng-template>
   `
 })
 export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
@@ -172,6 +177,9 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
 
   @ViewChild('cellTemplate', { read: ViewContainerRef, static: true })
   cellTemplate: ViewContainerRef;
+
+  @ViewChild('ghostLoaderTemplate', { read: ViewContainerRef, static: true })
+  ghostLoaderTemplate: ViewContainerRef;
 
   @HostBinding('class')
   get columnCssClasses(): any {
@@ -285,6 +293,9 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   ngOnDestroy(): void {
     if (this.cellTemplate) {
       this.cellTemplate.clear();
+    }
+    if (this.ghostLoaderTemplate) {
+      this.ghostLoaderTemplate.clear();
     }
   }
 

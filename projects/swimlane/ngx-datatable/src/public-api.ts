@@ -24,6 +24,7 @@ export * from './lib/components/footer/footer-template.directive';
 export * from './lib/components/columns/column.directive';
 export * from './lib/components/columns/column-header.directive';
 export * from './lib/components/columns/column-cell.directive';
+export * from './lib/components/columns/column-ghost-cell.directive';
 export * from './lib/components/columns/tree.directive';
 export * from './lib/components/row-detail/row-detail.directive';
 export * from './lib/components/row-detail/row-detail-template.directive';

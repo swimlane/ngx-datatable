@@ -39,6 +39,7 @@ interface PageInfo {
         [columnMode]="ColumnMode.force"
         [headerHeight]="50"
         [loadingIndicator]="isLoading > 0"
+        [ghostLoadingIndicator]="isLoading > 0"
         [scrollbarV]="true"
         [footerHeight]="50"
         [rowHeight]="50"

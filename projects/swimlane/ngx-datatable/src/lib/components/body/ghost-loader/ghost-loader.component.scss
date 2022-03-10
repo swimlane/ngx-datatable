@@ -1,0 +1,38 @@
+/**
+ * Ghost loader animation
+ */
+@keyframes ghost {
+  from {
+    background-position: 0vw 0;
+  }
+  to {
+    background-position: 100vw 0;
+  }
+}
+
+.ghost-loader {
+  overflow: hidden;
+
+  .line {
+    width: 100%;
+    height: 12px;
+    animation-name: ghost;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .ghost-element {
+    display: flex;
+  }
+}
+
+:host.ghost-overlay {
+  position: sticky;
+  top: 20px;
+
+  .ghost-loader {
+    .line {
+      margin: 0.9rem 1.2rem;
+    }
+  }
+}
