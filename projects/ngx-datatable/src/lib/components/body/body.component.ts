@@ -27,6 +27,15 @@ import { translateXY } from '../../utils/translate';
       </div>
       <datatable-progress *ngIf="!customIndicator?.hasChildNodes()"></datatable-progress>
     </ng-container>
+    <ghost-loader
+      *ngIf="ghostLoadingIndicator && (!rowCount || !virtualization || !scrollbarV)"
+      class="ghost-overlay"
+      [columns]="columns"
+      [pageSize]="pageSize"
+      [rowHeight]="rowHeight"
+      [ghostBodyHeight]="bodyHeight"
+    >
+    </ghost-loader>
     <datatable-selection
       #selector
       [selected]="selected"
@@ -59,7 +68,7 @@ import { translateXY } from '../../utils/translate';
           [groupedRows]="groupedRows"
           *ngFor="let group of temp; let i = index; trackBy: rowTrackingFn"
           [innerWidth]="innerWidth"
-          [ngStyle]="getRowsStyles(group)"
+          [ngStyle]="getRowsStyles(group, indexes.first + i )"
           [rowDetail]="rowDetail"
           [groupHeader]="groupHeader"
           [offsetX]="offsetX"
@@ -120,14 +129,16 @@ import { translateXY } from '../../utils/translate';
         >
         </datatable-summary-row>
       </datatable-scroller>
+      <ng-container *ngIf="!rows?.length && !loadingIndicator && !ghostLoadingIndicator">
       <div
         class="empty-row"
-        *ngIf="!rows?.length && !loadingIndicator && !customEmptyContent?.hasChildNodes()"
+        *ngIf="!customEmptyContent?.children.length"
         [innerHTML]="emptyMessage"
       ></div>
       <div #customEmptyContent>
-        <ng-content select="[empty-content]" *ngIf="!rows?.length && !loadingIndicator"></ng-content>
+        <ng-content select="[empty-content]"></ng-content>
       </div>
+      </ng-container>
     </datatable-selection>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -139,6 +150,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() scrollbarV: boolean;
   @Input() scrollbarH: boolean;
   @Input() loadingIndicator: boolean;
+  @Input() ghostLoadingIndicator: boolean;
   @Input() externalPaging: boolean;
   @Input() rowHeight: number | 'auto' | ((row?: any) => number);
   @Input() offsetX: number;
@@ -203,7 +215,12 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() set offset(val: number) {
     if (val !== this._offset) {
       this._offset = val;
-      if (!this.scrollbarV || (this.scrollbarV && !this.virtualization)) {this.recalcLayout();}
+      if (!this.scrollbarV || (this.scrollbarV && !this.virtualization)) {
+        if (!isNaN(this._offset) && this.ghostLoadingIndicator) {
+          this.rows = [];
+        }
+        this.recalcLayout();
+      }
     }
   }
 
@@ -481,6 +498,8 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
           // add indexes for each row
           this.rowIndexes.set(row, rowIndex);
           temp[idx] = row;
+        } else if (this.virtualization) {
+          temp[idx] = undefined;
         }
 
         idx++;
@@ -561,11 +580,12 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * heights of the rows before it (i.e. row0 and row1).
    *
    * @param rows the row that needs to be placed in the 2D space.
+   * @param index for ghost cells in order to get correct position of ghost row
    * @returns the CSS3 style to be applied
    *
    * @memberOf DataTableBodyComponent
    */
-  getRowsStyles(rows: any): any {
+  getRowsStyles(rows: any, index = 0): any {
     const styles: any = {};
 
     // only add styles for the group if there is a group
@@ -581,7 +601,12 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         const row = rows[rows.length - 1];
         idx = row ? this.getRowIndex(row) : 0;
       } else {
-        idx = this.getRowIndex(rows);
+        if (rows) {
+          idx = this.getRowIndex(rows);
+        } else {
+          // When ghost cells are enabled use index to get the position of them
+          idx = index;
+        }
       }
 
       // const pos = idx * rowHeight;

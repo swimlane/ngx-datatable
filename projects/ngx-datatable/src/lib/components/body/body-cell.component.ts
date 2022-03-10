@@ -25,6 +25,7 @@ export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
   selector: 'datatable-body-cell',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
+  <ng-container *ngIf="row else ghostLoaderTemplate;">
     <div class="datatable-body-cell-label" [style.margin-left.px]="calcLeftMargin(column, row)">
       <label
         *ngIf="column.checkboxable && (!displayCheck || displayCheck(row, column, value))"
@@ -62,6 +63,10 @@ export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
       >
       </ng-template>
     </div>
+  </ng-container>
+  <ng-template #ghostLoaderTemplate>
+    <ghost-loader [columns]="[column]" [pageSize]="1"></ghost-loader>
+  </ng-template>
   `
 })
 export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
@@ -172,6 +177,9 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
 
   @ViewChild('cellTemplate', { read: ViewContainerRef, static: true })
     cellTemplate: ViewContainerRef;
+
+  @ViewChild('ghostLoaderTemplate', { read: ViewContainerRef, static: true })
+    ghostLoaderTemplate: ViewContainerRef;
 
   @HostBinding('class')
   get columnCssClasses(): any {
@@ -285,6 +293,9 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   ngOnDestroy(): void {
     if (this.cellTemplate) {
       this.cellTemplate.clear();
+    }
+    if (this.ghostLoaderTemplate) {
+      this.ghostLoaderTemplate.clear();
     }
   }
 

@@ -266,6 +266,21 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit, After
   @Input() loadingIndicator = false;
 
   /**
+   * Show ghost loaders on each cell.
+   * Default value: `false`
+   */
+  @Input() set ghostLoadingIndicator(val: boolean) {
+    this._ghostLoadingIndicator = val;
+    if (val && this.scrollbarV && !this.externalPaging) {
+      // in case where we don't have predefined total page length
+      this.rows = [...this.rows, undefined]; // undefined row will render ghost cell row at the end of the page
+    }
+  };
+  get ghostLoadingIndicator(): boolean {
+    return this._ghostLoadingIndicator;
+  }
+
+  /**
    * Type of row selection. Options are:
    *
    *  - `single`
@@ -638,6 +653,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit, After
   _columns: TableColumn[];
   _columnTemplates: QueryList<DataTableColumnDirective>;
   _subscriptions: Subscription[] = [];
+  _ghostLoadingIndicator = false;
 
   constructor(
     @SkipSelf() private scrollbarHelper: ScrollbarHelper,

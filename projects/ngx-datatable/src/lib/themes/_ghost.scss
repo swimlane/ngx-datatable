@@ -1,0 +1,16 @@
+$datatable-ghost-cell-container-background: #fff !default;
+$datatable-ghost-cell-strip-background: #dee2e5 !default;
+$datatable-ghost-cell-strip-background-image: linear-gradient(to right, #dee2e5 0%, #dee2e5 10%, #f0f2f5, transparent) !default;
+$datatable-ghost-cell-strip-radius: 4px !default;
+$datatble-ghost-cell-animation-duration: 10s;
+
+.ghost-cell-container {
+  background: $datatable-ghost-cell-container-background;
+}
+
+.ghost-cell-strip {
+  background: $datatable-ghost-cell-strip-background;
+  background-image: $datatable-ghost-cell-strip-background-image;
+  border-radius: $datatable-ghost-cell-strip-radius;
+  animation-duration: $datatble-ghost-cell-animation-duration;
+}

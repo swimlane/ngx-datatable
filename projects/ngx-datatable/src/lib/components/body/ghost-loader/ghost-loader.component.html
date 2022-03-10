@@ -1,0 +1,13 @@
+<div [style.height]="ghostBodyHeight + 'px'" class="ghost-loader ghost-cell-container">
+  <div [style.height]="rowHeight + 'px'" class="ghost-element" *ngFor="let item of [].constructor(pageSize)">
+    <ng-container *ngFor="let col of columns">
+      <div class="line ghost-cell-strip" *ngIf="!col.ghostCellTemplate else ghostCellTemplate;" [style.width]="col?.width + 'px'" >
+      </div>
+      <ng-template
+        #ghostCellTemplate
+        [ngTemplateOutlet]="col.ghostCellTemplate"
+      >
+      </ng-template>
+    </ng-container>
+  </div>
+</div>

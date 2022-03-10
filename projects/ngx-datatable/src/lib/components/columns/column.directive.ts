@@ -4,6 +4,7 @@ import { DataTableColumnCellDirective } from './column-cell.directive';
 import { DataTableColumnCellTreeToggle } from './tree.directive';
 import { ColumnChangesService } from '../../services/column-changes.service';
 import { TableColumnProp } from '../../types/table-column.type';
+import { DataTableColumnGhostCellDirective } from './column-ghost-cell.directive';
 
 @Directive({ selector: 'ngx-datatable-column' })
 export class DataTableColumnDirective implements OnChanges {
@@ -58,6 +59,16 @@ export class DataTableColumnDirective implements OnChanges {
 
   get treeToggleTemplate(): TemplateRef<any> {
     return this._treeToggleTemplateInput || this._treeToggleTemplateQuery;
+  }
+
+  @Input('ghostCellTemplate')
+    _ghostCellTemplateInput: TemplateRef<any>;
+
+  @ContentChild(DataTableColumnGhostCellDirective, { read: TemplateRef, static: true })
+    _ghostCellTemplateQuery: TemplateRef<any>;
+
+  get ghostCellTemplate(): TemplateRef<any> {
+    return this._ghostCellTemplateInput || this._ghostCellTemplateQuery;
   }
 
   private isFirstChange = true;

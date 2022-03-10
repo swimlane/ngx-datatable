@@ -66,6 +66,14 @@ $datatable-pager-active-background: rgba(158, 158, 158, 0.2) !default;
 $datatable-summary-row-background: #ddd !default;
 $datatable-summary-row-background-hover: #ddd !default;
 
+$datatable-ghost-cell-container-background: $ngx-datatable-background !default;
+$datatable-ghost-cell-strip-background: #d9d8d9 !default;
+$datatable-ghost-cell-strip-background-image: linear-gradient(to right, $datatable-ghost-cell-strip-background 0%, $datatable-ghost-cell-strip-background 10%, $ngx-datatable-background, transparent) !default;
+$datatable-ghost-cell-strip-radius: 0 !default;
+$datatble-ghost-cell-animation-duration: 10s;
+
+@import './ghost';
+
 .ngx-datatable.material {
   background: $ngx-datatable-background;
   box-shadow: $ngx-datatable-box-shadow;
