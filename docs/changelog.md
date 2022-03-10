@@ -1,5 +1,12 @@
 # Changelog
 
+## 21.1.1
+
+- Fix: add ghost loading indicator support
+- Fix: scroll bar re-draw issue and enabled DOM virtualization
+- Fix: loading indicator memory leak
+- Fix: redraw issue with virtual scrolling while dragging scrollbar
+
 ## 21.1.0
 
 - Feature: decouple checkboxable and headerCheckboxable from SelectionType.checkbox
