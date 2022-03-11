@@ -65,7 +65,7 @@ export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
     </div>
   </ng-container>
   <ng-template #ghostLoaderTemplate>
-    <ghost-loader [columns]="[column]" [pageSize]="1"></ghost-loader>
+    <ghost-loader *ngIf="ghostLoadingIndicator" [columns]="[column]" [pageSize]="1"></ghost-loader>
   </ng-template>
   `
 })
@@ -170,6 +170,8 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   get treeStatus(): TreeStatus {
     return this._treeStatus;
   }
+
+  @Input() ghostLoadingIndicator = false;
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
 

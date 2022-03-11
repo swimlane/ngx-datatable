@@ -93,6 +93,7 @@ import { translateXY } from '../../utils/translate';
             [rowClass]="rowClass"
             [displayCheck]="displayCheck"
             [treeStatus]="group && group.treeStatus"
+            [ghostLoadingIndicator]="ghostLoadingIndicator"
             (treeAction)="onTreeAction(group)"
             (activate)="selector.onActivate($event, indexes.first + i)"
           >
@@ -112,6 +113,7 @@ import { translateXY } from '../../utils/translate';
               [rowIndex]="getRowIndex(row)"
               [expanded]="getRowExpanded(row)"
               [rowClass]="rowClass"
+              [ghostLoadingIndicator]="ghostLoadingIndicator"
               (activate)="selector.onActivate($event, i)"
             >
             </datatable-body-row>
@@ -498,7 +500,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
           // add indexes for each row
           this.rowIndexes.set(row, rowIndex);
           temp[idx] = row;
-        } else if (this.virtualization) {
+        } else if (this.ghostLoadingIndicator && this.virtualization) {
           temp[idx] = undefined;
         }
 

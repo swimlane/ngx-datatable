@@ -42,6 +42,7 @@ import { translateXY } from '../../utils/translate';
         [rowHeight]="rowHeight"
         [displayCheck]="displayCheck"
         [treeStatus]="treeStatus"
+        [ghostLoadingIndicator]="ghostLoadingIndicator"
         (activate)="onActivate($event, ii)"
         (treeAction)="onTreeAction()"
       >
@@ -83,6 +84,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   @Input() rowIndex: number;
   @Input() displayCheck: any;
   @Input() treeStatus: TreeStatus = 'collapsed';
+  @Input() ghostLoadingIndicator = false;
 
   @Input()
   set offsetX(val: number) {
