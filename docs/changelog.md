@@ -1,5 +1,9 @@
 # Changelog
 
+## 21.1.2
+
+- Fix: only show ghost loading indicator when active
+
 ## 21.1.1
 
 - Fix: add ghost loading indicator support
