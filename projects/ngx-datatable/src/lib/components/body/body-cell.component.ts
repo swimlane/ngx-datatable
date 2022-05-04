@@ -39,6 +39,7 @@ export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
           class="datatable-tree-button"
           [disabled]="treeStatus === 'disabled'"
           (click)="onTreeAction()"
+          [attr.aria-label]="treeStatus"
         >
           <span>
             <i *ngIf="treeStatus === 'loading'" class="icon datatable-icon-collapse"></i>
