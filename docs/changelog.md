@@ -1,5 +1,9 @@
 # Changelog
 
+## 21.1.3
+
+- Fix: add missing aria-label to tree icons
+
 ## 21.1.2
 
 - Fix: only show ghost loading indicator when active
