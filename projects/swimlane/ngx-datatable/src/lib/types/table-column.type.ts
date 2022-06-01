@@ -1,4 +1,4 @@
-import { PipeTransform } from '@angular/core';
+import { PipeTransform, TemplateRef } from '@angular/core';
 import { ValueGetter } from '../utils/column-prop-getters';
 
 /**
@@ -215,5 +215,5 @@ export interface TableColumn {
    *
    * @memberOf TableColumn
    */
-  summaryTemplate?: any;
+  summaryTemplate?: TemplateRef<any>;
 }
