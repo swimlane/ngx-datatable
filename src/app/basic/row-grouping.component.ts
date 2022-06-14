@@ -182,13 +182,13 @@ export class RowGroupingComponent {
 
     if (group.length === 2) {
       // There are only 2 lines in a group
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       if (
         ['Calculated', 'Funder'].indexOf(group[0].source) > -1 &&
         ['Calculated', 'Funder'].indexOf(group[1].source) > -1
       ) {
         // Sources are funder and calculated
-        // tslint:disable-next-line:max-line-length
+        // eslint-disable-next-line max-len
         if (group[0].startdate === group[1].startdate && group[0].enddate === group[1].enddate) {
           // Start dates and end dates match
           for (let index = 0; index < group.length; index++) {
@@ -227,13 +227,15 @@ export class RowGroupingComponent {
 
       // check if can set the group status
       const numberOfExpPayYes = group.filter(rowFilter => rowFilter.exppayyes === 1).length;
-      const numberOfSourceFunder = group.filter(rowFilter => rowFilter.exppayyes === 1 && rowFilter.source === 'Funder')
-        .length;
+      const numberOfSourceFunder = group.filter(
+        rowFilter => rowFilter.exppayyes === 1 && rowFilter.source === 'Funder'
+      ).length;
       const numberOfSourceCalculated = group.filter(
         rowFilter => rowFilter.exppayyes === 1 && rowFilter.source === 'Calculated'
       ).length;
-      const numberOfSourceManual = group.filter(rowFilter => rowFilter.exppayyes === 1 && rowFilter.source === 'Manual')
-        .length;
+      const numberOfSourceManual = group.filter(
+        rowFilter => rowFilter.exppayyes === 1 && rowFilter.source === 'Manual'
+      ).length;
 
       console.log('numberOfExpPayYes', numberOfExpPayYes);
       console.log('numberOfSourceFunder', numberOfSourceFunder);

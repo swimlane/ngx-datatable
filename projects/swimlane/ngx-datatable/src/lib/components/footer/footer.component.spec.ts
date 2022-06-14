@@ -256,7 +256,7 @@ class TestFixtureComponent {
   @ViewChild('testTemplate', { read: TemplateRef, static: true })
   testTemplate: TemplateRef<any>;
 
-  onPageEvent() {
+  onPageEvent($event: any) {
     return;
   }
 }

@@ -9,7 +9,7 @@ import { BasicFixedComponent } from './basic/basic-fixed.component';
 import { BasicAutoComponent } from './basic/basic-auto.component';
 import { VirtualScrollComponent } from './basic/virtual.component';
 import { InlineEditComponent } from './basic/inline.component';
-import { HorzVertScrolling } from './basic/scrolling.component';
+import { HorzVertScrollingComponent } from './basic/scrolling.component';
 import { MultipleTablesComponent } from './basic/multiple.component';
 import { FullScreenComponent } from './basic/fullscreen.component';
 import { RowDetailsComponent } from './basic/row-detail.component';
@@ -83,7 +83,7 @@ import { CommonModule } from '@angular/common';
     FullScreenTreeComponent,
     InlineEditComponent,
     VirtualScrollComponent,
-    HorzVertScrolling,
+    HorzVertScrollingComponent,
     MultipleTablesComponent,
     RowDetailsComponent,
     ResponsiveComponent,
