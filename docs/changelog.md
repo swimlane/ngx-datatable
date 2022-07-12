@@ -1,5 +1,9 @@
 # Changelog
 
+## 21.2.0
+
+- Feature: Add on-demand vertical scrolling support
+
 ## 21.1.3
 
 - Fix: add missing aria-label to tree icons
