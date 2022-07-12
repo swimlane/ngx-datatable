@@ -172,6 +172,14 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit, After
   @Input() scrollbarV = false;
 
   /**
+   * Enable vertical scrollbars dynamically on demand.
+   * Property `scrollbarV` needs to be set `true` too.
+   * Width that is gained when no scrollbar is needed
+   * is added to the inner table width.
+   */
+  @Input() scrollbarVDynamic = false;
+
+  /**
    * Enable horz scrollbars
    */
   @Input() scrollbarH = false;
@@ -846,8 +854,22 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit, After
     if (!columns) {return undefined;}
 
     let width = this._innerWidth;
-    if (this.scrollbarV) {
+    if (this.scrollbarV && !this.scrollbarVDynamic) {
       width = width - this.scrollbarHelper.width;
+
+    } else if (this.scrollbarVDynamic){
+      const scrollerHeight = this.bodyComponent?.scroller?.element.offsetHeight;
+      if (scrollerHeight && this.bodyHeight < scrollerHeight) {
+        width = width - this.scrollbarHelper.width;
+      }
+
+      if (this.headerComponent?.innerWidth !== width){
+        this.headerComponent.innerWidth = width;
+      }
+      if (this.bodyComponent?.innerWidth !== width){
+        this.bodyComponent.innerWidth = width;
+        this.bodyComponent.cd.markForCheck();
+      }
     }
 
     if (this.columnMode === ColumnMode.force) {

@@ -28,6 +28,9 @@
             <a href="#horz-vert-scrolling" (click)="state = 'horz-vert-scrolling'">Horz/Vert Scrolling</a>
           </li>
           <li>
+            <a href="#scrolling-dynamically" (click)="state = 'scrolling-dynamically'">Vert Dynamic Scrolling</a>
+          </li>
+          <li>
             <a href="#multiple-tables" (click)="state = 'multiple-tables'">Multiple Tables</a>
           </li>
           <li><a href="#filter" (click)="state = 'filter'">Filtering</a></li>
@@ -206,6 +209,7 @@
     <inline-edit-demo *ngIf="state === 'inline-edit'"></inline-edit-demo>
     <virtual-scroll-demo *ngIf="state === 'virtual-scroll'"></virtual-scroll-demo>
     <horz-vert-scrolling-demo *ngIf="state === 'horz-vert-scrolling'"></horz-vert-scrolling-demo>
+    <scrolling-dynamically-demo *ngIf="state === 'scrolling-dynamically'"></scrolling-dynamically-demo>
     <multiple-tables-demo *ngIf="state === 'multiple-tables'"></multiple-tables-demo>
     <row-details-demo *ngIf="state === 'row-details'"></row-details-demo>
     <responsive-demo *ngIf="state === 'responsive'"></responsive-demo>

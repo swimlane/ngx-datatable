@@ -75,6 +75,7 @@ import { SummaryRowServerPagingComponent } from './summary/summary-row-server-pa
 import { SummaryRowInlineHtmlComponent } from './summary/summary-row-inline-html.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CommonModule } from '@angular/common';
+import { ScollingDynamicallyComponent } from './basic/scrolling-dynamically.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { CommonModule } from '@angular/common';
     InlineEditComponent,
     VirtualScrollComponent,
     HorzVertScrollingComponent,
+    ScollingDynamicallyComponent,
     MultipleTablesComponent,
     RowDetailsComponent,
     ResponsiveComponent,

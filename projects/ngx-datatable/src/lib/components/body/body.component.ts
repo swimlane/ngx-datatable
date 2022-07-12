@@ -318,7 +318,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   /**
    * Creates an instance of DataTableBodyComponent.
    */
-  constructor(private cd: ChangeDetectorRef) {
+  constructor(public cd: ChangeDetectorRef) {
     // declare fn here so we can get access to the `this` property
     this.rowTrackingFn = (index: number, row: any): any => {
       const idx = this.getRowIndex(row);

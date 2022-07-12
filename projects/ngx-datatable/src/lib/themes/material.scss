@@ -51,6 +51,7 @@ $datatable-body-cell-color: rgba(0, 0, 0, 0.87) !default;
 $datatable-group-header-background: #f5f5f5 !default;
 $datatable-group-header-border-top-color: #d9d8d9 !default;
 $datatable-group-header-border-bottom-color: #d9d8d9 !default;
+$datatable-body-row-border-bottom-color: #d9d8d9 !default;
 
 // colors for footer elements
 $datatable-footer-cell-color: rgba(0, 0, 0, 0.54) !default;
@@ -274,6 +275,8 @@ $datatble-ghost-cell-animation-duration: 10s;
     }
 
     .datatable-body-row {
+      border-bottom: 1px solid $datatable-body-row-border-bottom-color;
+
       .datatable-body-cell {
         flex-shrink: 0;
         text-align: left;

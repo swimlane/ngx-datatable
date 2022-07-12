@@ -40,13 +40,13 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   scrollXPos = 0;
   prevScrollYPos = 0;
   prevScrollXPos = 0;
-  element: any;
-  parentElement: any;
+  element: HTMLElement;
+  parentElement: HTMLElement;
   onScrollListener: any;
 
   private _scrollEventListener: any = null;
 
-  constructor(private ngZone: NgZone, element: ElementRef, private renderer: Renderer2) {
+  constructor(private ngZone: NgZone, element: ElementRef<HTMLElement>, private renderer: Renderer2) {
     this.element = element.nativeElement;
   }
 
