@@ -1,0 +1,57 @@
+name: Publish on NPM
+on:
+  release:
+    types: [published]
+jobs:
+  publish:
+    # Setup OS and Node Version
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # Latest nodes only
+        node-version: [14.x]
+    steps:
+      # Checkout code
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.ACTION_AUTH_TOKEN }}
+
+      # Make sure we have all branches
+      - name: Fetch other branches
+        run: git fetch --no-tags --prune --depth=5 origin master
+
+      # Setup node
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: https://registry.npmjs.org/
+
+      # https://github.com/marketplace/actions/npm-install-cache
+      - uses: c-hive/gha-npm-cache@v1
+        if: ${{ !env.ACT }}
+
+      - name: Set variables
+        run: |
+          LATEST_TAG=${{ github.event.release.tag_name }}
+          echo $LATEST_TAG
+          arrIN=(${LATEST_TAG//_/ })
+          echo "LIBRARY=${arrIN[0]}" >> $GITHUB_ENV
+          echo "VERSION=${arrIN[1]}" >> $GITHUB_ENV
+          echo $LIBS
+          echo $VERSION
+
+      # Run Install
+      - name: Install environment
+        run: npm ci
+
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
+
+      - name: Deploy
+
+        run: npm run publish:lib
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
