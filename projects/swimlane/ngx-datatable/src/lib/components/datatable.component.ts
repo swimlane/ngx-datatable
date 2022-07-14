@@ -861,10 +861,10 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
         width = width - this.scrollbarHelper.width;
       }
 
-      if (this.headerComponent?.innerWidth !== width) {
+      if (this.headerComponent && this.headerComponent.innerWidth !== width) {
         this.headerComponent.innerWidth = width;
       }
-      if (this.bodyComponent?.innerWidth !== width) {
+      if (this.bodyComponent && this.bodyComponent.innerWidth !== width) {
         this.bodyComponent.innerWidth = width;
         this.bodyComponent.cd.markForCheck();
       }
