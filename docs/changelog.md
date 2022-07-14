@@ -1,5 +1,9 @@
 # Changelog
 
+## 21.2.1
+
+- Fix: correct dynamic vertical scrolling
+
 ## 21.2.0
 
 - Feature: Add on-demand vertical scrolling support
