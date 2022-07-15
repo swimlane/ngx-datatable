@@ -6,7 +6,7 @@
     "@angular/common": ">=11.0.2",
     "@angular/core": ">=11.0.2",
     "@angular/platform-browser": ">=11.0.2",
-    "rxjs": "^6.6.3"
+    "rxjs": "^6.6.3 || ^7.4.0"
   },
   "dependencies": {
     "tslib": "^2.0.0"
