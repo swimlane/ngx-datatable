@@ -73,6 +73,15 @@ export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
 export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   @Input() displayCheck: (row: any, column?: TableColumn, value?: any) => boolean;
 
+  _disable$;
+  @Input() set disable$(val: any) {
+    this._disable$ = val;
+    this.cellContext.disable$ = val;
+  }
+  get disable$() {
+    return this._disable$;
+  }
+
   @Input() set group(group: any) {
     this._group = group;
     this.cellContext.group = group;
@@ -212,7 +221,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     if (!this.sortDir) {
       cls += ' sort-active';
     }
-    if (this.isFocused) {
+    if (this.isFocused && !this.disable$?.value) {
       cls += ' active';
     }
     if (this.sortDir === SortDirection.asc) {
@@ -220,6 +229,9 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     }
     if (this.sortDir === SortDirection.desc) {
       cls += ' sort-desc';
+    }
+    if (this.disable$?.value) {
+      cls += ' row-disabled';
     }
 
     return cls;
@@ -281,6 +293,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
       isSelected: this.isSelected,
       rowIndex: this.rowIndex,
       treeStatus: this.treeStatus,
+      disable$: this.disable$,
       onTreeAction: this.onTreeAction.bind(this)
     };
 
@@ -319,6 +332,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     if (this.value !== value) {
       this.value = value;
       this.cellContext.value = value;
+      this.cellContext.disable$ = this.disable$;
       this.sanitizedValue = value !== null && value !== undefined ? this.stripHtml(value) : value;
       this.cd.markForCheck();
     }

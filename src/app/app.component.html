@@ -93,6 +93,9 @@
           <li>
             <a href="#responsive" (click)="state = 'responsive'">Responsive</a>
           </li>
+          <li>
+            <a href="#disabled" (click)="state = 'disabled'">Disabled</a>
+          </li>
         </ul>
       </li>
       <li>
@@ -225,6 +228,7 @@
     <dynamic-height-demo *ngIf="state === 'dynamic'"></dynamic-height-demo>
     <footer-demo *ngIf="state === 'footer'"></footer-demo>
     <empty-demo *ngIf="state === 'empty'"></empty-demo>
+    <disabled-rows-demo *ngIf="state === 'disabled'"></disabled-rows-demo>
 
     <!-- Themes -->
     <basic-dark-theme-demo *ngIf="state === 'dark'"></basic-dark-theme-demo>

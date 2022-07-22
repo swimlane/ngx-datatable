@@ -80,6 +80,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
 $datatble-ghost-cell-animation-duration: 10s;
 
 @import './ghost';
+@import './rows';
 
 .ngx-datatable.material {
   background: $ngx-datatable-background;
@@ -134,33 +135,33 @@ $datatble-ghost-cell-animation-duration: 10s;
 
   &.cell-selection {
     .datatable-body-cell {
-      &:hover,
-      &:hover .datatable-row-group {
+      &:hover:not(.row-disabled),
+      &:hover:not(.row-disabled) .datatable-row-group {
         background-color: $ngx-datatable-cellselection-background-hover;
         transition-property: background;
         transition-duration: 0.3s;
         transition-timing-function: linear;
       }
 
-      &:focus,
-      &:focus .datatable-row-group {
+      &:focus:not(.row-disabled),
+      &:focus:not(.row-disabled) .datatable-row-group {
         background-color: $ngx-datatable-cellselection-background-focus;
       }
 
-      &.active,
-      &.active .datatable-row-group {
+      &.active:not(.row-disabled),
+      &.active:not(.row-disabled) .datatable-row-group {
         background-color: $ngx-datatable-selected-active-background;
         color: $ngx-datatable-selected-active-color;
       }
 
-      &.active:hover,
-      &.active:hover .datatable-row-group {
+      &.active:hover:not(.row-disabled),
+      &.active:hover:not(.row-disabled) .datatable-row-group {
         background-color: $ngx-datatable-selected-active-background-hover;
         color: $ngx-datatable-selected-active-color-hover;
       }
 
-      &.active:focus,
-      &.active:focus .datatable-row-group {
+      &.active:focus:not(.row-disabled),
+      &.active:focus:not(.row-disabled) .datatable-row-group {
         background-color: $ngx-datatable-selected-active-background-focus;
         color: $ngx-datatable-selected-active-color-focus;
       }
@@ -346,6 +347,17 @@ $datatble-ghost-cell-animation-duration: 10s;
           width: 100%;
           height: 5px;
         }
+      }
+    }
+
+    .custom-loading-indicator-wrapper {
+      position: sticky;
+      top: 0;
+      height: 0;
+      z-index: 999;
+      .custom-loading-content {
+        width: 100%;
+        background-color: $ngx-datatable-default-background;
       }
     }
   }
