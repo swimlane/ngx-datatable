@@ -438,6 +438,16 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit, After
   @Input() summaryPosition = 'top';
 
   /**
+   * A function you can use to check whether you want
+   * to disable a row. Example:
+   *
+   *    (row) => {
+   *      return row.name !== 'Ethel Price';
+   *    }
+   */
+  @Input() disableRowCheck: (row: any) => boolean;
+
+  /**
    * Body was scrolled typically in a `scrollbarV:true` scenario.
    */
   @Output() scroll: EventEmitter<any> = new EventEmitter();
@@ -1152,13 +1162,19 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit, After
         this.selected.push(...this._internalRows.slice(first, last));
       }
     } else {
+      let relevantRows;
+      if (this.disableRowCheck) {
+        relevantRows = this.rows.filter(row => !this.disableRowCheck(row));
+      } else {
+        relevantRows = this.rows;
+      }
       // before we splice, chk if we currently have all selected
-      const allSelected = this.selected.length === this.rows.length;
+      const allSelected = this.selected.length === relevantRows.length;
       // remove all existing either way
       this.selected = [];
       // do the opposite here
       if (!allSelected) {
-        this.selected.push(...this.rows);
+        this.selected.push(...relevantRows);
       }
     }
 

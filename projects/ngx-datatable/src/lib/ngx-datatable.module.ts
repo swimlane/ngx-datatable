@@ -33,6 +33,7 @@ import { DatatableFooterDirective } from './components/footer/footer.directive';
 import { DatatableGroupHeaderTemplateDirective } from './components/body/body-group-header-template.directive';
 import { DataTableSummaryRowComponent } from './components/body/summary/summary-row.component';
 import { DataTableGhostLoaderComponent } from './components/body/ghost-loader/ghost-loader.component';
+import { DisableRowDirective } from './directives/disable-row.directive';
 
 @NgModule({
   imports: [CommonModule],
@@ -67,7 +68,8 @@ import { DataTableGhostLoaderComponent } from './components/body/ghost-loader/gh
     DatatableFooterDirective,
     DatatableGroupHeaderTemplateDirective,
     DataTableSummaryRowComponent,
-    DataTableGhostLoaderComponent
+    DataTableGhostLoaderComponent,
+    DisableRowDirective
   ],
   exports: [
     DatatableComponent,
@@ -82,7 +84,8 @@ import { DataTableGhostLoaderComponent } from './components/body/ghost-loader/gh
     DataTableFooterTemplateDirective,
     DatatableFooterDirective,
     DataTablePagerComponent,
-    DatatableGroupHeaderTemplateDirective
+    DatatableGroupHeaderTemplateDirective,
+    DisableRowDirective
   ]
 })
 export class NgxDatatableModule {

@@ -1,0 +1,22 @@
+$disable-row-text-color: #83888E !default;
+
+.ngx-datatable {
+  .row-disabled {
+    color: $disable-row-text-color;
+    .datatable-body-cell-label {
+      color: $disable-row-text-color;
+    }
+  }
+  .datatable-row-wrapper {
+    .datatable-body-row {
+      &.row-disabled:hover {
+      background-color: inherit;
+      transition: none;
+        .datatable-row-group {
+            background-color: inherit;
+            transition: none;
+        }
+      }
+    }
+  }
+}

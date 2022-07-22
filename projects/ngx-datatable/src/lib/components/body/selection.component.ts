@@ -24,6 +24,7 @@ export class DataTableSelectionComponent {
   @Input() selectionType: SelectionType;
   @Input() rowIdentity: any;
   @Input() selectCheck: any;
+  @Input() disableCheck: any;
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
@@ -52,6 +53,10 @@ export class DataTableSelectionComponent {
 
     if (typeof this.selectCheck === 'function') {
       selected = selected.filter(this.selectCheck.bind(this));
+    }
+
+    if (typeof this.disableCheck === 'function') {
+      selected = selected.filter(rowData => !this.disableCheck(rowData));
     }
 
     this.selected.splice(0, this.selected.length);
@@ -87,7 +92,12 @@ export class DataTableSelectionComponent {
 
     if (shouldFocus) {
       const isCellSelection = this.selectionType === SelectionType.cell;
-
+      if (typeof this.disableCheck === 'function') {
+        const isRowDisabled = this.disableCheck(model.row);
+        if (isRowDisabled) {
+          return;
+        }
+      }
       if (!model.cellElement || !isCellSelection) {
         this.focusRow(model.rowElement, keyCode);
       } else if (isCellSelection) {

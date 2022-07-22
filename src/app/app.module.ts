@@ -24,6 +24,7 @@ import { DynamicHeightComponent } from './basic/dynamic-height.component';
 import { FooterDemoComponent } from './basic/footer.component';
 import { RowGroupingComponent } from './basic/row-grouping.component';
 import { BasicEmptyComponent } from './basic/empty.component';
+import { DisabledRowsComponent } from './basic/disabled-rows.component';
 
 // -- Themes
 import { BootstrapThemeComponent } from './basic/bootstrap.component';
@@ -132,7 +133,8 @@ import { ScollingDynamicallyComponent } from './basic/scrolling-dynamically.comp
     SummaryRowSimpleComponent,
     SummaryRowCustomTemplateComponent,
     SummaryRowServerPagingComponent,
-    SummaryRowInlineHtmlComponent
+    SummaryRowInlineHtmlComponent,
+    DisabledRowsComponent
   ],
   imports: [
     CommonModule,

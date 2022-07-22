@@ -19,6 +19,8 @@ import { columnGroupWidths, columnsByPin, columnsByPinArr } from '../../utils/co
 import { Keys } from '../../utils/keys';
 import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 import { translateXY } from '../../utils/translate';
+import { BehaviorSubject } from 'rxjs';
+import { DataTableRowWrapperComponent } from './body-row-wrapper.component';
 
 @Component({
   selector: 'datatable-body-row',
@@ -28,6 +30,7 @@ import { translateXY } from '../../utils/translate';
       *ngFor="let colGroup of _columnsByPin; let i = index; trackBy: trackByGroups"
       class="datatable-row-{{ colGroup.type }} datatable-row-group"
       [ngStyle]="_groupStyles[colGroup.type]"
+      [class.row-disabled]="disable$ ? (disable$ | async) : false"
     >
       <datatable-body-cell
         role="cell"
@@ -41,6 +44,7 @@ import { translateXY } from '../../utils/translate';
         [column]="column"
         [rowHeight]="rowHeight"
         [displayCheck]="displayCheck"
+        [disable$]="disable$"
         [treeStatus]="treeStatus"
         [ghostLoadingIndicator]="ghostLoadingIndicator"
         (activate)="onActivate($event, ii)"
@@ -86,6 +90,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   @Input() treeStatus: TreeStatus = 'collapsed';
   @Input() ghostLoadingIndicator = false;
 
+  @Input() disable$: BehaviorSubject<boolean>;
   @Input()
   set offsetX(val: number) {
     this._offsetX = val;
@@ -106,6 +111,9 @@ export class DataTableBodyRowComponent implements DoCheck {
     }
     if (this.rowIndex % 2 === 0) {
       cls += ' datatable-row-even';
+    }
+    if (this.disable$ && this.disable$.value) {
+      cls += ' row-disabled';
     }
 
     if (this.rowClass) {

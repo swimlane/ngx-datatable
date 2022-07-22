@@ -41,6 +41,7 @@ import { translateXY } from '../../utils/translate';
       [selected]="selected"
       [rows]="rows"
       [selectCheck]="selectCheck"
+      [disableCheck]="disableRowCheck"
       [selectEnabled]="selectEnabled"
       [selectionType]="selectionType"
       [rowIdentity]="rowIdentity"
@@ -65,6 +66,7 @@ import { translateXY } from '../../utils/translate';
         >
         </datatable-summary-row>
         <datatable-row-wrapper
+          #rowWrapper
           [groupedRows]="groupedRows"
           *ngFor="let group of temp; let i = index; trackBy: rowTrackingFn"
           [innerWidth]="innerWidth"
@@ -74,6 +76,7 @@ import { translateXY } from '../../utils/translate';
           [offsetX]="offsetX"
           [detailRowHeight]="getDetailRowHeight(group && group[i], i)"
           [row]="group"
+          [disableCheck]="disableRowCheck"
           [expanded]="getRowExpanded(group)"
           [rowIndex]="getRowIndex(group && group[i])"
           (rowContextmenu)="rowContextmenu.emit($event)"
@@ -82,6 +85,7 @@ import { translateXY } from '../../utils/translate';
             role="row"
             *ngIf="!groupedRows; else groupedRowsTemplate"
             tabindex="-1"
+            [disable$]="rowWrapper.disable$"
             [isSelected]="selector.getRowSelected(group)"
             [innerWidth]="innerWidth"
             [offsetX]="offsetX"
@@ -101,6 +105,7 @@ import { translateXY } from '../../utils/translate';
           <ng-template #groupedRowsTemplate>
             <datatable-body-row
               role="row"
+              [disable$]="rowWrapper.disable$"
               *ngFor="let row of group.value; let i = index; trackBy: rowTrackingFn"
               tabindex="-1"
               [isSelected]="selector.getRowSelected(row)"
@@ -174,6 +179,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() summaryRow: boolean;
   @Input() summaryPosition: string;
   @Input() summaryHeight: number;
+  @Input() disableRowCheck: (row: any) => boolean;
 
   @Input() set pageSize(val: number) {
     if (val !== this._pageSize) {

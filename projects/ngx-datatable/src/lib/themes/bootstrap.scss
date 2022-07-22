@@ -6,6 +6,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
 $datatble-ghost-cell-animation-duration: 10s;
 
 @import './ghost';
+@import './rows';
 
 .ngx-datatable.bootstrap {
   box-shadow: none;

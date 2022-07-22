@@ -8,8 +8,10 @@ import {
   Input,
   KeyValueDiffer,
   KeyValueDiffers,
+  OnInit,
   Output
 } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'datatable-row-wrapper',
@@ -42,7 +44,7 @@ import {
     class: 'datatable-row-wrapper'
   }
 })
-export class DataTableRowWrapperComponent implements DoCheck {
+export class DataTableRowWrapperComponent implements DoCheck, OnInit {
   @Input() innerWidth: number;
   @Input() rowDetail: any;
   @Input() groupHeader: any;
@@ -50,6 +52,7 @@ export class DataTableRowWrapperComponent implements DoCheck {
   @Input() detailRowHeight: any;
   @Input() row: any;
   @Input() groupedRows: any;
+  @Input() disableCheck: (row: any) => boolean;
   @Output() rowContextmenu = new EventEmitter<{ event: MouseEvent; row: any }>(false);
 
   @Input() set rowIndex(val: number) {
@@ -76,6 +79,7 @@ export class DataTableRowWrapperComponent implements DoCheck {
 
   groupContext: any;
   rowContext: any;
+  disable$: BehaviorSubject<boolean>;
 
   private rowDiffer: KeyValueDiffer<unknown, unknown>;
   private _expanded = false;
@@ -97,10 +101,22 @@ export class DataTableRowWrapperComponent implements DoCheck {
     this.rowDiffer = differs.find({}).create();
   }
 
+  ngOnInit(): void {
+    if (this.disableCheck) {
+      const isRowDisabled = this.disableCheck(this.row);
+      this.disable$ = new BehaviorSubject(isRowDisabled);
+    }
+    this.rowContext.disableRow$ = this.disable$;
+  }
+
   ngDoCheck(): void {
     if (this.rowDiffer.diff(this.row)) {
       this.rowContext.row = this.row;
       this.groupContext.group = this.row;
+      if (this.disableCheck) {
+        const isRowDisabled = this.disableCheck(this.row);
+        this.disable$.next(isRowDisabled);
+      }
       this.cd.markForCheck();
     }
   }
