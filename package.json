@@ -21,7 +21,7 @@
     "predeploy-docs": "npm run build-docs",
     "deploy-docs": "angular-cli-ghpages --dir ./dist/ngx-datatable",
     "package": "run-s build:lib:prod copy-files build:css",
-    "prepublish:lib": "run-s ci package",
+    "prepublish:lib": "run-s package",
     "publish:lib": "npm publish ./dist/swimlane/ngx-datatable",
     "prepack": "npm run package",
     "pack": "npm pack ./dist/swimlane/ngx-datatable/",
