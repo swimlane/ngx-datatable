@@ -1,5 +1,10 @@
 # Changelog
 
+## 21.3.0
+
+- Feature: allow support to mark complete row as disable
+- Fix: increase style compliation budget
+
 ## 21.2.1
 
 - Fix: correct dynamic vertical scrolling
