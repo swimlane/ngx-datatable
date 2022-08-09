@@ -157,7 +157,17 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() scrollbarV: boolean;
   @Input() scrollbarH: boolean;
   @Input() loadingIndicator: boolean;
-  @Input() ghostLoadingIndicator: boolean;
+  private _ghostLoadingIndicator: boolean;
+  @Input() set ghostLoadingIndicator(val: boolean) {
+    this._ghostLoadingIndicator = val;
+    if (!val) {
+      // remove placeholder rows once ghostloading is set to false
+      this.temp = this.temp.filter(item => !!item);
+    }
+  };
+  get ghostLoadingIndicator() {
+    return this._ghostLoadingIndicator;
+  }
   @Input() externalPaging: boolean;
   @Input() rowHeight: number | 'auto' | ((row?: any) => number);
   @Input() offsetX: number;
