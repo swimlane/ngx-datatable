@@ -52,6 +52,12 @@ jobs:
 
       - name: Deploy
 
+        run: npm run prepublish:lib
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
+      - name: Deploy
+
         run: npm run publish:lib
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
