@@ -1,9 +1,13 @@
 # Changelog
 
+## 21.3.1
+
+- Fix: remove ghost placeholder cells after data load
+
 ## 21.3.0
 
 - Feature: allow support to mark complete row as disable
-- Fix: increase style compliation budget
+- Fix: increase style compilation budget
 
 ## 21.2.1
 
