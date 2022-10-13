@@ -187,13 +187,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
   /**
    * The minimum header height in pixels.
-   * Pass a falsey for no header
+   * Pass 0 for no header
    */
-  @Input() headerHeight: number = 30;
+  @Input() headerHeight: number | 'auto' = 30;
 
   /**
    * The minimum footer height in pixels.
-   * Pass falsey for no footer
+   * Pass 0 for no footer
    */
   @Input() footerHeight: number = 0;
 
