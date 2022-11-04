@@ -1,17 +1,20 @@
 import {
-  Component,
-  Output,
-  EventEmitter,
-  Input,
-  HostBinding,
-  ChangeDetectorRef,
   ChangeDetectionStrategy,
-  OnDestroy
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  HostBinding,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges
 } from '@angular/core';
-import { columnsByPin, columnGroupWidths, columnsByPinArr } from '../../utils/column';
+import { columnGroupWidths, columnsByPin, columnsByPinArr } from '../../utils/column';
 import { SortType } from '../../types/sort.type';
 import { SelectionType } from '../../types/selection.type';
 import { DataTableColumnDirective } from '../columns/column.directive';
+import { isNullOrUndefined } from '../../utils/column-helper';
+import { Scrollbar } from '../../utils/scrollbar';
 import { translateXY } from '../../utils/translate';
 
 @Component({
@@ -22,13 +25,13 @@ import { translateXY } from '../../utils/translate';
       orderable
       (reorder)="onColumnReordered($event)"
       (targetChanged)="onTargetChanged($event)"
-      [style.width.px]="_columnGroupWidths.total"
+      [style.width.px]="columnGroupWidths.total"
       class="datatable-header-inner"
     >
       <div
-        *ngFor="let colGroup of _columnsByPin; trackBy: trackByGroups"
+        *ngFor="let colGroup of columnsByPin; trackBy: trackByGroups"
         [class]="'datatable-row-' + colGroup.type"
-        [ngStyle]="_styleByGroup[colGroup.type]"
+        [ngStyle]="styleByGroup[colGroup.type]"
       >
         <datatable-header-cell
           role="columnheader"
@@ -71,123 +74,52 @@ import { translateXY } from '../../utils/translate';
   },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DataTableHeaderComponent implements OnDestroy {
+export class DataTableHeaderComponent implements OnChanges {
+  @Input() allRowsSelected: boolean;
+  @Input() columns: any[];
+  @Input() dealsWithGroup: boolean;
+  @Input() innerWidth: number;
+  @Input() offsetX: number;
+  @Input() reorderable: boolean;
+  @Input() scrollbarH: boolean;
+  @Input() scrollbarV: boolean;
+  @Input() selectionType: SelectionType;
   @Input() sortAscendingIcon: any;
   @Input() sortDescendingIcon: any;
+  @Input() sortType: SortType;
   @Input() sortUnsetIcon: any;
-  @Input() scrollbarH: boolean;
-  @Input() dealsWithGroup: boolean;
+  @Input() sorts: any[];
   @Input() targetMarkerTemplate: any;
 
-  targetMarkerContext: any;
-
-  @Input() set innerWidth(val: number) {
-    this._innerWidth = val;
-    setTimeout(() => {
-      if (this._columns) {
-        const colByPin = columnsByPin(this._columns);
-        this._columnGroupWidths = columnGroupWidths(colByPin, this._columns);
-        this.setStylesByGroup();
-      }
-    });
-  }
-
-  get innerWidth(): number {
-    return this._innerWidth;
-  }
-
-  @Input() sorts: any[];
-  @Input() sortType: SortType;
-  @Input() allRowsSelected: boolean;
-  @Input() selectionType: SelectionType;
-  @Input() reorderable: boolean;
-
-  dragEventTarget: any;
-
-  @HostBinding('style.height')
-  @Input()
-  set headerHeight(val: any) {
-    if (val !== 'auto') {
-      this._headerHeight = `${val}px`;
-    } else {
-      this._headerHeight = val;
-    }
-  }
-
-  get headerHeight(): any {
-    return this._headerHeight;
-  }
-
-  @Input() set columns(val: any[]) {
-    this._columns = val;
-
-    const colsByPin = columnsByPin(val);
-    this._columnsByPin = columnsByPinArr(val);
-    setTimeout(() => {
-      this._columnGroupWidths = columnGroupWidths(colsByPin, val);
-      this.setStylesByGroup();
-    });
-  }
-
-  get columns(): any[] {
-    return this._columns;
-  }
-
-  @Input()
-  set offsetX(val: number) {
-    this._offsetX = val;
-    this.setStylesByGroup();
-  }
-  get offsetX() {
-    return this._offsetX;
-  }
-
-  @Output() sort: EventEmitter<any> = new EventEmitter();
+  @Output() columnContextmenu = new EventEmitter<{ event: MouseEvent; column: any }>(false);
   @Output() reorder: EventEmitter<any> = new EventEmitter();
   @Output() resize: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
-  @Output() columnContextmenu = new EventEmitter<{ event: MouseEvent; column: any }>(false);
+  @Output() sort: EventEmitter<any> = new EventEmitter();
 
-  _columnsByPin: any;
-  _columnGroupWidths: any = {
-    total: 100
-  };
-  _innerWidth: number;
-  _offsetX: number;
-  _columns: any[];
-  _headerHeight: string;
-  _styleByGroup: { [prop: string]: {} } = {
+  columnGroupWidths: any = { total: 100 };
+  columnsByPin: any;
+  dragEventTarget: any;
+  styleByGroup: { [prop: string]: {} } = {
     left: {},
     center: {},
     right: {}
   };
 
-  private destroyed = false;
-
-  constructor(private cd: ChangeDetectorRef) {}
-
-  ngOnDestroy(): void {
-    this.destroyed = true;
+  constructor(private cd: ChangeDetectorRef) {
+    Scrollbar.widthChange.subscribe(() => this.recalculateColumns());
   }
 
-  onLongPressStart({ event, model }: { event: any; model: any }) {
-    model.dragging = true;
-    this.dragEventTarget = event;
+  private _headerHeight: string;
+
+  get headerHeight(): any {
+    return this._headerHeight;
   }
 
-  onLongPressEnd({ event, model }: { event: any; model: any }) {
-    this.dragEventTarget = event;
-
-    // delay resetting so sort can be
-    // prevented if we were dragging
-    setTimeout(() => {
-      // datatable component creates copies from columns on reorder
-      // set dragging to false on new objects
-      const column = this._columns.find(c => c.$$id === model.$$id);
-      if (column) {
-        column.dragging = false;
-      }
-    }, 5);
+  @HostBinding('style.height')
+  @Input()
+  set headerHeight(val: any) {
+    this._headerHeight = val === 'auto' ? val : `${val}px`;
   }
 
   @HostBinding('style.width')
@@ -199,84 +131,23 @@ export class DataTableHeaderComponent implements OnDestroy {
     return '100%';
   }
 
-  trackByGroups(index: number, colGroup: any): any {
-    return colGroup.type;
-  }
+  trackByGroups = (index: number, colGroup: any): any => colGroup.type;
 
-  columnTrackingFn(index: number, column: any): any {
-    return column.$$id;
-  }
+  columnTrackingFn = (index: number, column: any): any => column.$$id;
 
-  onColumnResized(width: number, column: DataTableColumnDirective): void {
-    if (width <= column.minWidth) {
-      width = column.minWidth;
-    } else if (width >= column.maxWidth) {
-      width = column.maxWidth;
-    }
-
-    this.resize.emit({
-      column,
-      prevValue: column.width,
-      newValue: width
-    });
-  }
-
-  onColumnReordered({ prevIndex, newIndex, model }: any): void {
-    const column = this.getColumn(newIndex);
-    column.isTarget = false;
-    column.targetMarkerContext = undefined;
-    this.reorder.emit({
-      column: model,
-      prevValue: prevIndex,
-      newValue: newIndex
-    });
-  }
-
-  onTargetChanged({ prevIndex, newIndex, initialIndex }: any): void {
-    if (prevIndex || prevIndex === 0) {
-      const oldColumn = this.getColumn(prevIndex);
-      oldColumn.isTarget = false;
-      oldColumn.targetMarkerContext = undefined;
-    }
-    if (newIndex || newIndex === 0) {
-      const newColumn = this.getColumn(newIndex);
-      newColumn.isTarget = true;
-
-      if (initialIndex !== newIndex) {
-        newColumn.targetMarkerContext = {
-          class: 'targetMarker '.concat(initialIndex > newIndex ? 'dragFromRight' : 'dragFromLeft')
-        };
-      }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.columns || changes.innerWidth || changes.scrollbarV) {
+      this.recalculateColumns();
+    } else if (changes.offsetX) {
+      this.buildStylesByGroup();
     }
   }
 
-  getColumn(index: number): any {
-    const leftColumnCount = this._columnsByPin[0].columns.length;
-    if (index < leftColumnCount) {
-      return this._columnsByPin[0].columns[index];
-    }
-
-    const centerColumnCount = this._columnsByPin[1].columns.length;
-    if (index < leftColumnCount + centerColumnCount) {
-      return this._columnsByPin[1].columns[index - leftColumnCount];
-    }
-
-    return this._columnsByPin[2].columns[index - leftColumnCount - centerColumnCount];
-  }
-
-  onSort({ column, prevValue, newValue }: any): void {
-    // if we are dragging don't sort!
-    if (column.dragging) {
-      return;
-    }
-
-    const sorts = this.calcNewSorts(column, prevValue, newValue);
-    this.sort.emit({
-      sorts,
-      column,
-      prevValue,
-      newValue
-    });
+  buildStylesByGroup(): void {
+    this.styleByGroup.left = this.calcStylesByGroup('left');
+    this.styleByGroup.center = this.calcStylesByGroup('center');
+    this.styleByGroup.right = this.calcStylesByGroup('right');
+    this.cd.markForCheck();
   }
 
   calcNewSorts(column: any, prevValue: number, newValue: number): any[] {
@@ -309,31 +180,133 @@ export class DataTableHeaderComponent implements OnDestroy {
     return sorts;
   }
 
-  setStylesByGroup() {
-    this._styleByGroup.left = this.calcStylesByGroup('left');
-    this._styleByGroup.center = this.calcStylesByGroup('center');
-    this._styleByGroup.right = this.calcStylesByGroup('right');
-    if (!this.destroyed) {
-      this.cd.detectChanges();
-    }
-  }
-
   calcStylesByGroup(group: string): any {
-    const widths = this._columnGroupWidths;
-    const offsetX = this.offsetX;
-
-    const styles = {
-      width: `${widths[group]}px`
-    };
+    const widths = this.columnGroupWidths;
+    const styles = { width: `${widths[group]}px` };
 
     if (group === 'center') {
-      translateXY(styles, offsetX * -1, 0);
+      translateXY(styles, this.offsetX * -1, 0);
     } else if (group === 'right') {
-      const totalDiff = widths.total - this.innerWidth;
-      const offset = totalDiff * -1;
-      translateXY(styles, offset, 0);
+      const headerWidth = parseInt(this.innerWidth + '', 0);
+      const offset = widths.total - headerWidth;
+      translateXY(styles, offset * -1, 0);
     }
 
     return styles;
+  }
+
+  fillWidth(): void {
+    for (let i = this.columns.length - 1; i > -1; i--) {
+      const col = this.columns[i];
+      if (col.frozenRight) {
+        this.columnGroupWidths.right += Scrollbar.width;
+        this.columnGroupWidths.total += Scrollbar.width;
+        break;
+      }
+      i++;
+    }
+  }
+
+  getColumn(index: number): any {
+    const leftColumnCount = this.columnsByPin[0].columns.length;
+    if (index < leftColumnCount) {
+      return this.columnsByPin[0].columns[index];
+    }
+
+    const centerColumnCount = this.columnsByPin[1].columns.length;
+    if (index < leftColumnCount + centerColumnCount) {
+      return this.columnsByPin[1].columns[index - leftColumnCount];
+    }
+
+    return this.columnsByPin[2].columns[index - leftColumnCount - centerColumnCount];
+  }
+
+  onColumnReordered({ prevIndex, newIndex, model }: any): void {
+    const column = this.getColumn(newIndex);
+    column.isTarget = false;
+    column.targetMarkerContext = undefined;
+    this.reorder.emit({
+      column: model,
+      prevValue: prevIndex,
+      newValue: newIndex
+    });
+  }
+
+  onColumnResized(width: number, column: DataTableColumnDirective): void {
+    if (width <= column.minWidth) {
+      width = column.minWidth;
+    } else if (width >= column.maxWidth) {
+      width = column.maxWidth;
+    }
+
+    this.resize.emit({
+      column,
+      prevValue: column.width,
+      newValue: width
+    });
+  }
+
+  onLongPressEnd({ event, model }: { event: any; model: any }) {
+    this.dragEventTarget = event;
+
+    // delay resetting so sort can be
+    // prevented if we were dragging
+    setTimeout(() => {
+      // datatable component creates copies from columns on reorder
+      // set dragging to false on new objects
+      const column = this.columns.find(c => c.$$id === model.$$id);
+      if (column) {
+        column.dragging = false;
+      }
+    }, 5);
+  }
+
+  onLongPressStart({ event, model }: { event: any; model: any }) {
+    model.dragging = true;
+    this.dragEventTarget = event;
+  }
+
+  onSort({ column, prevValue, newValue }: any): void {
+    // if we are dragging don't sort!
+    if (column.dragging) {
+      return;
+    }
+
+    const sorts = this.calcNewSorts(column, prevValue, newValue);
+    this.sort.emit({
+      sorts,
+      column,
+      prevValue,
+      newValue
+    });
+  }
+
+  onTargetChanged({ prevIndex, newIndex, initialIndex }: any): void {
+    console.log(prevIndex, newIndex, initialIndex, this.getColumn(prevIndex), this.getColumn(newIndex));
+    if (!isNullOrUndefined(prevIndex)) {
+      const oldCol = this.getColumn(prevIndex);
+      oldCol.isTarget = false;
+      oldCol.targetMarkerContext = undefined;
+    }
+    if (!isNullOrUndefined(newIndex)) {
+      const newCol = this.getColumn(newIndex);
+      newCol.isTarget = true;
+
+      if (initialIndex !== newIndex) {
+        newCol.targetMarkerContext = {
+          class: 'targetMarker '.concat(initialIndex > newIndex ? 'dragFromRight' : 'dragFromLeft')
+        };
+      }
+    }
+  }
+
+  recalculateColumns(): void {
+    const colsByPin = columnsByPin(this.columns);
+    this.columnsByPin = columnsByPinArr(this.columns);
+    this.columnGroupWidths = columnGroupWidths(colsByPin, this.columns);
+    if (this.scrollbarV) {
+      this.fillWidth();
+    }
+    this.buildStylesByGroup();
   }
 }

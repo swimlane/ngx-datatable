@@ -63,7 +63,8 @@ import { ColumnToggleComponent } from './columns/column-toggle.component';
 import { ColumnStandardComponent } from './columns/column-standard.component';
 import { ColumnForceComponent } from './columns/column-force.component';
 import { ColumnFlexComponent } from './columns/column-flex.component';
-import { ColumnPinningComponent } from './columns/pinning.component';
+import { ColumnPinningComponent } from './columns/column-pinning.component';
+import { ColumnScrollbarVPinningComponent } from './columns/column-scrollbar-v-pinning.component';
 import { ColumnReorderComponent } from './columns/column-reorder.component';
 
 // -- Summary row
@@ -104,6 +105,7 @@ import { CommonModule } from '@angular/common';
     ColumnStandardComponent,
     ColumnForceComponent,
     ColumnPinningComponent,
+    ColumnScrollbarVPinningComponent,
     ColumnReorderComponent,
     FilterBarComponent,
     VirtualPagingComponent,

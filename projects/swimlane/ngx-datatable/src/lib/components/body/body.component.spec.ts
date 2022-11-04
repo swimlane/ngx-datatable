@@ -7,7 +7,6 @@ import { DataTableSelectionComponent } from './selection.component';
 import { DataTableSummaryRowComponent } from './summary/summary-row.component';
 import { ProgressBarComponent } from './progress-bar.component';
 import { ScrollerComponent } from './scroller.component';
-import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 
 describe('DataTableBodyComponent', () => {
   let fixture: ComponentFixture<DataTableBodyComponent>;
@@ -26,8 +25,7 @@ describe('DataTableBodyComponent', () => {
         DataTableSummaryRowComponent,
         ProgressBarComponent,
         ScrollerComponent
-      ],
-      providers: [ScrollbarHelper]
+      ]
     });
   });
 

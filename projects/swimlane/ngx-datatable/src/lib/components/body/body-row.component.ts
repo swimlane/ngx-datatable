@@ -1,23 +1,23 @@
 import {
-  Component,
-  Input,
-  HostBinding,
-  ElementRef,
-  Output,
-  KeyValueDiffers,
-  KeyValueDiffer,
-  EventEmitter,
-  HostListener,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
   DoCheck,
-  SkipSelf
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  KeyValueDiffer,
+  KeyValueDiffers,
+  OnChanges,
+  Output,
+  SimpleChanges
 } from '@angular/core';
-
 import { TreeStatus } from './body-cell.component';
-import { columnsByPin, columnGroupWidths, columnsByPinArr } from '../../utils/column';
+import { columnGroupWidths, columnsByPin, columnsByPinArr } from '../../utils/column';
 import { Keys } from '../../utils/keys';
-import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
+import { Scrollbar } from '../../utils/scrollbar';
 import { translateXY } from '../../utils/translate';
 
 @Component({
@@ -25,9 +25,9 @@ import { translateXY } from '../../utils/translate';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div
-      *ngFor="let colGroup of _columnsByPin; let i = index; trackBy: trackByGroups"
+      *ngFor="let colGroup of columnsByPin; let i = index; trackBy: trackByGroups"
       class="datatable-row-{{ colGroup.type }} datatable-row-group"
-      [ngStyle]="_groupStyles[colGroup.type]"
+      [ngStyle]="groupStyles[colGroup.type]"
     >
       <datatable-body-cell
         role="cell"
@@ -49,49 +49,43 @@ import { translateXY } from '../../utils/translate';
     </div>
   `
 })
-export class DataTableBodyRowComponent implements DoCheck {
-  @Input() set columns(val: any[]) {
-    this._columns = val;
-    this.recalculateColumns(val);
-    this.buildStylesByGroup();
-  }
-
-  get columns(): any[] {
-    return this._columns;
-  }
-
-  @Input() set innerWidth(val: number) {
-    if (this._columns) {
-      const colByPin = columnsByPin(this._columns);
-      this._columnGroupWidths = columnGroupWidths(colByPin, this._columns);
-    }
-
-    this._innerWidth = val;
-    this.recalculateColumns();
-    this.buildStylesByGroup();
-  }
-
-  get innerWidth(): number {
-    return this._innerWidth;
-  }
-
-  @Input() expanded: boolean;
-  @Input() rowClass: any;
-  @Input() row: any;
-  @Input() group: any;
-  @Input() isSelected: boolean;
-  @Input() rowIndex: number;
+export class DataTableBodyRowComponent implements DoCheck, OnChanges {
+  @Input() columns: any[];
   @Input() displayCheck: any;
+  @Input() expanded: boolean;
+  @Input() group: any;
+  @Input() innerWidth: number;
+  @Input() isSelected: boolean;
+  @Input() offsetX: number;
+  @Input() row: any;
+  @Input() rowClass: any;
+  @Input() rowIndex: number;
+  @Input() scrollbarV: boolean;
   @Input() treeStatus: TreeStatus = 'collapsed';
 
+  @Output() activate: EventEmitter<any> = new EventEmitter();
+  @Output() treeAction: EventEmitter<any> = new EventEmitter();
+
+  columnsByPin: any;
+  groupStyles: { [prop: string]: {} } = {
+    left: {},
+    center: {},
+    right: {}
+  };
+
+  private _element: any;
+  private _columnGroupWidths: any;
+  private _rowDiffer: KeyValueDiffer<{}, {}>;
+
+  constructor(private cd: ChangeDetectorRef, differs: KeyValueDiffers, element: ElementRef) {
+    Scrollbar.widthChange.subscribe(() => this.recalculateColumns());
+    this._element = element.nativeElement;
+    this._rowDiffer = differs.find({}).create();
+  }
+
+  @HostBinding('style.height.px')
   @Input()
-  set offsetX(val: number) {
-    this._offsetX = val;
-    this.buildStylesByGroup();
-  }
-  get offsetX() {
-    return this._offsetX;
-  }
+  rowHeight: number;
 
   @HostBinding('class')
   get cssClass() {
@@ -123,41 +117,32 @@ export class DataTableBodyRowComponent implements DoCheck {
     return cls;
   }
 
-  @HostBinding('style.height.px')
-  @Input()
-  rowHeight: number;
-
   @HostBinding('style.width.px')
   get columnsTotalWidths(): string {
     return this._columnGroupWidths.total;
   }
 
-  @Output() activate: EventEmitter<any> = new EventEmitter();
-  @Output() treeAction: EventEmitter<any> = new EventEmitter();
+  @HostListener('keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent): void {
+    const actions = [Keys.return, Keys.down, Keys.up, Keys.left, Keys.right];
+    const isAction = actions.includes(event.keyCode);
+    const isTargetRow = event.target === this._element;
 
-  _element: any;
-  _columnGroupWidths: any;
-  _columnsByPin: any;
-  _offsetX: number;
-  _columns: any[];
-  _innerWidth: number;
-  _groupStyles: { [prop: string]: {} } = {
-    left: {},
-    center: {},
-    right: {}
-  };
-
-  private _rowDiffer: KeyValueDiffer<{}, {}>;
-
-  constructor(
-    private differs: KeyValueDiffers,
-    @SkipSelf() private scrollbarHelper: ScrollbarHelper,
-    private cd: ChangeDetectorRef,
-    element: ElementRef
-  ) {
-    this._element = element.nativeElement;
-    this._rowDiffer = differs.find({}).create();
+    if (isAction && isTargetRow) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.emitActivate('keydown', event);
+    }
   }
+
+  @HostListener('mouseenter', ['$event'])
+  onMouseenter(event: any): void {
+    this.emitActivate('mouseenter', event);
+  }
+
+  trackByGroups = (index: number, colGroup: any): any => colGroup.type;
+
+  columnTrackingFn = (index: number, column: any): any => column.$$id;
 
   ngDoCheck(): void {
     if (this._rowDiffer.diff(this.row)) {
@@ -165,22 +150,22 @@ export class DataTableBodyRowComponent implements DoCheck {
     }
   }
 
-  trackByGroups(index: number, colGroup: any): any {
-    return colGroup.type;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.columns || changes.innerWidth || changes.scrollbarV) {
+      this.recalculateColumns();
+    } else if (changes.offsetX) {
+      this.buildStylesByGroup();
+    }
   }
 
-  columnTrackingFn(index: number, column: any): any {
-    return column.$$id;
-  }
-
-  buildStylesByGroup() {
-    this._groupStyles.left = this.calcStylesByGroup('left');
-    this._groupStyles.center = this.calcStylesByGroup('center');
-    this._groupStyles.right = this.calcStylesByGroup('right');
+  buildStylesByGroup(): void {
+    this.groupStyles.left = this.calcStylesByGroup('left');
+    this.groupStyles.center = this.calcStylesByGroup('center');
+    this.groupStyles.right = this.calcStylesByGroup('right');
     this.cd.markForCheck();
   }
 
-  calcStylesByGroup(group: string) {
+  calcStylesByGroup(group: string): any {
     const widths = this._columnGroupWidths;
     const offsetX = this.offsetX;
 
@@ -193,63 +178,42 @@ export class DataTableBodyRowComponent implements DoCheck {
     } else if (group === 'right') {
       const bodyWidth = parseInt(this.innerWidth + '', 0);
       const totalDiff = widths.total - bodyWidth;
-      const offsetDiff = totalDiff - offsetX;
-      const offset = (offsetDiff + this.scrollbarHelper.width) * -1;
-      translateXY(styles, offset, 0);
+      let offset = totalDiff - offsetX;
+      if (this.scrollbarV) {
+        offset += Scrollbar.width;
+      }
+      if (offset >= 0) {
+        translateXY(styles, offset * -1, 0);
+      }
     }
 
     return styles;
   }
 
-  onActivate(event: any, index: number): void {
-    event.cellIndex = index;
-    event.rowElement = this._element;
-    this.activate.emit(event);
-  }
-
-  @HostListener('keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent): void {
-    const keyCode = event.keyCode;
-    const isTargetRow = event.target === this._element;
-
-    const isAction =
-      keyCode === Keys.return ||
-      keyCode === Keys.down ||
-      keyCode === Keys.up ||
-      keyCode === Keys.left ||
-      keyCode === Keys.right;
-
-    if (isAction && isTargetRow) {
-      event.preventDefault();
-      event.stopPropagation();
-
-      this.activate.emit({
-        type: 'keydown',
-        event,
-        row: this.row,
-        rowElement: this._element
-      });
-    }
-  }
-
-  @HostListener('mouseenter', ['$event'])
-  onMouseenter(event: any): void {
+  emitActivate(type: string, event: any): void {
     this.activate.emit({
-      type: 'mouseenter',
+      type,
       event,
       row: this.row,
       rowElement: this._element
     });
   }
 
-  recalculateColumns(val: any[] = this.columns): void {
-    this._columns = val;
-    const colsByPin = columnsByPin(this._columns);
-    this._columnsByPin = columnsByPinArr(this._columns);
-    this._columnGroupWidths = columnGroupWidths(colsByPin, this._columns);
+  onActivate(event: any, index: number): void {
+    // event comes with keys: { type, event, row, group, rowHeight, column, value, cellElement, treeStatus? }
+    event.cellIndex = index;
+    event.rowElement = this._element;
+    this.activate.emit(event);
   }
 
-  onTreeAction() {
+  onTreeAction(): void {
     this.treeAction.emit();
+  }
+
+  recalculateColumns(): void {
+    const colsByPin = columnsByPin(this.columns);
+    this.columnsByPin = columnsByPinArr(this.columns);
+    this._columnGroupWidths = columnGroupWidths(colsByPin, this.columns);
+    this.buildStylesByGroup();
   }
 }

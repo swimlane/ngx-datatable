@@ -1,18 +1,18 @@
 import {
-  Component,
-  Input,
-  PipeTransform,
-  HostBinding,
-  ViewChild,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Output,
-  EventEmitter,
-  HostListener,
-  ElementRef,
-  ViewContainerRef,
-  OnDestroy,
+  Component,
   DoCheck,
-  ChangeDetectionStrategy
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  OnDestroy,
+  Output,
+  PipeTransform,
+  ViewChild,
+  ViewContainerRef
 } from '@angular/core';
 
 import { TableColumn } from '../../types/table-column.type';
@@ -324,22 +324,34 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
 
   @HostListener('click', ['$event'])
   onClick(event: MouseEvent): void {
-    this.activate.emit({
-      type: 'click',
-      event,
-      row: this.row,
-      group: this.group,
-      rowHeight: this.rowHeight,
-      column: this.column,
-      value: this.value,
-      cellElement: this._element
-    });
+    this.emitActivate('click', event);
   }
 
   @HostListener('dblclick', ['$event'])
   onDblClick(event: MouseEvent): void {
-    this.activate.emit({
-      type: 'dblclick',
+    this.emitActivate('dblclick', event);
+  }
+
+  @HostListener('keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent): void {
+    const actions = [Keys.return, Keys.down, Keys.up, Keys.left, Keys.right];
+    const isAction = actions.includes(event.keyCode);
+    const isTargetCell = event.target === this._element;
+
+    if (isAction && isTargetCell) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.emitActivate('keydown', event);
+    }
+  }
+
+  onCheckboxChange(event: any): void {
+    this.emitActivate('checkbox', event, { treeStatus: 'collapsed' });
+  }
+
+  emitActivate(type: string, event: any, additionalFields?: any) {
+    const obj = {
+      type,
       event,
       row: this.row,
       group: this.group,
@@ -347,50 +359,11 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
       column: this.column,
       value: this.value,
       cellElement: this._element
-    });
-  }
-
-  @HostListener('keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent): void {
-    const keyCode = event.keyCode;
-    const isTargetCell = event.target === this._element;
-
-    const isAction =
-      keyCode === Keys.return ||
-      keyCode === Keys.down ||
-      keyCode === Keys.up ||
-      keyCode === Keys.left ||
-      keyCode === Keys.right;
-
-    if (isAction && isTargetCell) {
-      event.preventDefault();
-      event.stopPropagation();
-
-      this.activate.emit({
-        type: 'keydown',
-        event,
-        row: this.row,
-        group: this.group,
-        rowHeight: this.rowHeight,
-        column: this.column,
-        value: this.value,
-        cellElement: this._element
-      });
+    };
+    if (additionalFields) {
+      Object.assign(obj, additionalFields);
     }
-  }
-
-  onCheckboxChange(event: any): void {
-    this.activate.emit({
-      type: 'checkbox',
-      event,
-      row: this.row,
-      group: this.group,
-      rowHeight: this.rowHeight,
-      column: this.column,
-      value: this.value,
-      cellElement: this._element,
-      treeStatus: 'collapsed'
-    });
+    this.activate.emit(obj);
   }
 
   calcSortDir(sorts: any[]): any {
