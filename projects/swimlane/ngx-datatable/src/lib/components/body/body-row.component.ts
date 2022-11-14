@@ -106,6 +106,8 @@ export class DataTableBodyRowComponent implements DoCheck {
       cls += ' datatable-row-even';
     }
 
+    cls += ' datatable-row-level-' + (this.row?.level ?? 0);
+
     if (this.rowClass) {
       const res = this.rowClass(this.row);
       if (typeof res === 'string') {
