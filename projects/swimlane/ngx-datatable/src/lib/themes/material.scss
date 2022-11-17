@@ -81,19 +81,22 @@ $datatable-summary-row-background-hover: #ddd !default;
   &.multi-click-selection {
     .datatable-body-row {
       &.active,
-      &.active .datatable-row-group {
+      &.active .datatable-row-group,
+      &.active .datatable-row-group .datatable-body-cell {
         background-color: $ngx-datatable-selected-active-background;
         color: $ngx-datatable-selected-active-color;
       }
 
       &.active:hover,
-      &.active:hover .datatable-row-group {
+      &.active:hover .datatable-row-group,
+      &.active:hover .datatable-row-group .datatable-body-cell {
         background-color: $ngx-datatable-selected-active-background-hover;
         color: $ngx-datatable-selected-active-color-hover;
       }
 
       &.active:focus,
-      &.active:focus .datatable-row-group {
+      &.active:focus .datatable-row-group,
+      &.active:focus .datatable-row-group .datatable-body-cell {
         background-color: $ngx-datatable-selected-active-background-focus;
         color: $ngx-datatable-selected-active-color-focus;
       }
@@ -199,7 +202,6 @@ $datatable-summary-row-background-hover: #ddd !default;
     .datatable-header-cell {
       text-align: left;
       padding: 0.9rem 1.2rem;
-      font-weight: 400;
       background-color: $datatable-header-cell-background;
       color: $datatable-header-cell-color;
       vertical-align: bottom;
@@ -371,7 +373,6 @@ $datatable-summary-row-background-hover: #ddd !default;
         border-radius: 3px;
         margin: 6px 3px;
         text-align: center;
-        vertical-align: top;
         color: $datatable-pager-color;
         text-decoration: none;
         vertical-align: bottom;
