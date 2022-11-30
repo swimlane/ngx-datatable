@@ -66,18 +66,34 @@ import { DataTableSummaryRowComponent } from './components/body/summary/summary-
     DataTableSummaryRowComponent
   ],
   exports: [
+    DataTableFooterTemplateDirective,
+    VisibilityDirective,
+    DraggableDirective,
+    ResizeableDirective,
+    OrderableDirective,
+    LongPressDirective,
+    ScrollerComponent,
     DatatableComponent,
+    DataTableColumnDirective,
+    DataTableHeaderComponent,
+    DataTableHeaderCellComponent,
+    DataTableBodyComponent,
+    DataTableFooterComponent,
+    DataTablePagerComponent,
+    ProgressBarComponent,
+    DataTableBodyRowComponent,
+    DataTableRowWrapperComponent,
     DatatableRowDetailDirective,
     DatatableGroupHeaderDirective,
     DatatableRowDetailTemplateDirective,
-    DataTableColumnDirective,
+    DataTableBodyCellComponent,
+    DataTableSelectionComponent,
     DataTableColumnHeaderDirective,
     DataTableColumnCellDirective,
     DataTableColumnCellTreeToggle,
-    DataTableFooterTemplateDirective,
     DatatableFooterDirective,
-    DataTablePagerComponent,
-    DatatableGroupHeaderTemplateDirective
+    DatatableGroupHeaderTemplateDirective,
+    DataTableSummaryRowComponent
   ]
 })
 export class NgxDatatableModule {
