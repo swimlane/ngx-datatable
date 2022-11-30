@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { GenderPipe } from '../pipes/gender.pipe';
 
 @Component({
   selector: 'basic-auto-demo',
@@ -36,7 +37,7 @@ export class BasicAutoComponent {
   loadingIndicator = true;
   reorderable = true;
 
-  columns = [{ prop: 'name' }, { name: 'Gender' }, { name: 'Company', sortable: false }];
+  columns = [{ prop: 'name' }, { name: 'Gender', titlePipe: new GenderPipe() }, { name: 'Company', sortable: false }];
 
   ColumnMode = ColumnMode;
 

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { GenderPipe } from '../pipes/gender.pipe';
 
 @Component({
   selector: 'row-css-demo',
@@ -26,7 +27,12 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
         [scrollbarV]="true"
       >
         <ngx-datatable-column name="Name"></ngx-datatable-column>
-        <ngx-datatable-column name="Gender" headerClass="is-gender" [cellClass]="getCellClass"></ngx-datatable-column>
+        <ngx-datatable-column
+          name="Gender"
+          [titlePipe]="genderPipe"
+          headerClass="is-gender"
+          [cellClass]="getCellClass"
+        ></ngx-datatable-column>
         <ngx-datatable-column name="Age"></ngx-datatable-column>
       </ngx-datatable>
     </div>
@@ -36,6 +42,7 @@ export class RowCssComponent {
   rows = [];
   expanded = {};
   timeout: any;
+  genderPipe = new GenderPipe();
 
   ColumnMode = ColumnMode;
 

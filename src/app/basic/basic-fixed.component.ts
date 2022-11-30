@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { GenderPipe } from '../pipes/gender.pipe';
 
 @Component({
   selector: 'basic-fixed-demo',
@@ -31,7 +32,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
 })
 export class BasicFixedComponent {
   rows = [];
-  columns = [{ prop: 'name' }, { name: 'Company' }, { name: 'Gender' }];
+  columns = [{ prop: 'name' }, { name: 'Company' }, { name: 'Gender', titlePipe: new GenderPipe() }];
 
   ColumnMode = ColumnMode;
 

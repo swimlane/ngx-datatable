@@ -107,6 +107,13 @@ export interface TableColumn {
   pipe?: PipeTransform;
 
   /**
+   * Custom title pipe transforms
+   *
+   * @memberOf TableColumn
+   */
+  titlePipe?: PipeTransform;
+
+  /**
    * Can the column be sorted
    *
    * @memberOf TableColumn

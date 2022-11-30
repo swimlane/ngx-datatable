@@ -290,24 +290,32 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
 
   checkValueUpdates(): void {
     let value = '';
+    let sanitizedValue = '';
 
     if (!this.row || !this.column) {
       value = '';
     } else {
       const val = this.column.$$valueGetter(this.row, this.column.prop);
       const userPipe: PipeTransform = this.column.pipe;
+      const titlePipe: PipeTransform = this.column.titlePipe;
 
       if (userPipe) {
         value = userPipe.transform(val);
       } else if (value !== undefined) {
         value = val;
       }
+
+      if (titlePipe) {
+        sanitizedValue = titlePipe.transform(val);
+      } else {
+        sanitizedValue = value !== null && value !== undefined ? this.stripHtml(value) : value;
+      }
     }
 
     if (this.value !== value) {
       this.value = value;
       this.cellContext.value = value;
-      this.sanitizedValue = value !== null && value !== undefined ? this.stripHtml(value) : value;
+      this.sanitizedValue = sanitizedValue;
       this.cd.markForCheck();
     }
   }
