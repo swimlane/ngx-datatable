@@ -1,5 +1,4 @@
-import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
-import { NgStyle } from '@angular/common';
+import { Component, ViewChild } from '@angular/core';
 import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 @Component({
