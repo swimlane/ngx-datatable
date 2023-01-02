@@ -45,7 +45,7 @@ import { DatatableFooterDirective } from './footer.directive';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableFooterComponent {
-  @Input() footerHeight: number;
+  @Input() footerHeight: number | 'auto';
   @Input() rowCount: number;
   @Input() pageSize: number;
   @Input() offset: number;
