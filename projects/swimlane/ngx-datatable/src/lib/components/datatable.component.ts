@@ -189,13 +189,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * The minimum header height in pixels.
    * Pass a falsey for no header
    */
-  @Input() headerHeight: number = 30;
+  @Input() headerHeight: number | 'auto' = 30;
 
   /**
    * The minimum footer height in pixels.
    * Pass falsey for no footer
    */
-  @Input() footerHeight: number = 0;
+  @Input() footerHeight: number | 'auto' = 0;
 
   /**
    * If the table should use external paging
@@ -851,8 +851,8 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
     if (this.scrollbarV) {
       let height = dims.height;
-      if (this.headerHeight) height = height - this.headerHeight;
-      if (this.footerHeight) height = height - this.footerHeight;
+      if (this.headerHeight) height = height - (this.headerHeight as number);
+      if (this.footerHeight) height = height - (this.footerHeight as number);
       this.bodyHeight = height;
     }
 
