@@ -281,7 +281,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit, After
     this._ghostLoadingIndicator = val;
     if (val && this.scrollbarV && !this.externalPaging) {
       // in case where we don't have predefined total page length
-      this.rows = [...this.rows, undefined]; // undefined row will render ghost cell row at the end of the page
+      this.rows = [...(this.rows ?? []), undefined]; // undefined row will render ghost cell row at the end of the page
     }
   };
   get ghostLoadingIndicator(): boolean {
