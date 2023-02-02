@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef, OnDestroy, HostListener } from '@angular/core';
 import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 @Component({
@@ -40,7 +40,8 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
     </div>
   `
 })
-export class LiveDataComponent {
+export class LiveDataComponent implements OnDestroy {
+  static _timeOutID: any;
   @ViewChild('mydatatable') mydatatable: any;
 
   count = 50;
@@ -73,7 +74,7 @@ export class LiveDataComponent {
       return;
     }
 
-    setTimeout(this.updateRandom.bind(this), 50);
+    LiveDataComponent._timeOutID = setTimeout(this.updateRandom.bind(this), 50);
   }
 
   stop(): void {
@@ -117,5 +118,10 @@ export class LiveDataComponent {
     };
 
     req.send();
+  }
+
+  @HostListener('unloaded')
+  public ngOnDestroy(): void {
+    clearTimeout(LiveDataComponent._timeOutID);
   }
 }

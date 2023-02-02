@@ -57,6 +57,7 @@ import { sortRows } from '../utils/sort';
   }
 })
 export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
+  static _requestID: any;
   /**
    * Template for the target marker of drag target columns.
    */
@@ -681,7 +682,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       return;
     }
 
-    requestAnimationFrame(() => {
+    DatatableComponent._requestID = requestAnimationFrame(() => {
       this.recalculate();
 
       // emit page for virtual server-side kickoff
@@ -1135,6 +1136,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
   ngOnDestroy() {
     this._subscriptions.forEach(subscription => subscription.unsubscribe());
+    cancelAnimationFrame(DatatableComponent._requestID);
   }
 
   /**

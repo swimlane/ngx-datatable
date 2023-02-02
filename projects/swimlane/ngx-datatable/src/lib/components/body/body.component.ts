@@ -122,6 +122,7 @@ import { translateXY } from '../../utils/translate';
   }
 })
 export class DataTableBodyComponent implements OnInit, OnDestroy {
+  static _timeOutID: any;
   @Input() scrollbarV: boolean;
   @Input() scrollbarH: boolean;
   @Input() loadingIndicator: boolean;
@@ -327,6 +328,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     if (this.rowDetail || this.groupHeader) {
       this.listener.unsubscribe();
     }
+    clearTimeout(DataTableBodyComponent._timeOutID);
   }
 
   /**
@@ -576,7 +578,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    * Hides the loading indicator
    */
   hideIndicator(): void {
-    setTimeout(() => (this.loadingIndicator = false), 500);
+    DataTableBodyComponent._timeOutID = setTimeout(() => (this.loadingIndicator = false), 500);
   }
 
   /**

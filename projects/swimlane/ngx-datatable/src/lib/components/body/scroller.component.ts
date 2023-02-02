@@ -23,6 +23,7 @@ import { MouseEvent } from '../../events';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ScrollerComponent implements OnInit, OnDestroy {
+  static _requestID: any;
   @Input() scrollbarV: boolean = false;
   @Input() scrollbarH: boolean = false;
 
@@ -65,6 +66,7 @@ export class ScrollerComponent implements OnInit, OnDestroy {
       this.parentElement.removeEventListener('scroll', this._scrollEventListener);
       this._scrollEventListener = null;
     }
+    cancelAnimationFrame(ScrollerComponent._requestID);
   }
 
   setOffset(offsetY: number): void {
@@ -75,7 +77,7 @@ export class ScrollerComponent implements OnInit, OnDestroy {
 
   onScrolled(event: MouseEvent): void {
     const dom: Element = <Element>event.currentTarget;
-    requestAnimationFrame(() => {
+    ScrollerComponent._requestID = requestAnimationFrame(() => {
       this.scrollYPos = dom.scrollTop;
       this.scrollXPos = dom.scrollLeft;
       this.updateOffset();
