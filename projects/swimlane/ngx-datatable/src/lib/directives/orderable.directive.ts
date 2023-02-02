@@ -40,6 +40,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
       d.dragging.unsubscribe();
       d.dragEnd.unsubscribe();
     });
+    this.draggables?.destroy();
   }
 
   updateSubscriptions(): void {
