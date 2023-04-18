@@ -1,5 +1,9 @@
 # Changelog
 
+## 21.4.0
+
+- Feature: add row drag and drop capability
+
 ## 21.3.1
 
 - Fix: remove ghost placeholder cells after data load
