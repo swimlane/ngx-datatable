@@ -46,6 +46,7 @@ import { DataTableRowWrapperComponent } from './body-row-wrapper.component';
         [displayCheck]="displayCheck"
         [disable$]="disable$"
         [treeStatus]="treeStatus"
+        [ghostLoadingIndicator]="ghostLoadingIndicator"
         (activate)="onActivate($event, ii)"
         (treeAction)="onTreeAction()"
       >
@@ -87,6 +88,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   @Input() rowIndex: number;
   @Input() displayCheck: any;
   @Input() treeStatus: TreeStatus = 'collapsed';
+  @Input() ghostLoadingIndicator = false;
 
   @Input() disable$: BehaviorSubject<boolean>;
   @Input()
