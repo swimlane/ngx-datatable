@@ -1,5 +1,9 @@
 # Changelog
 
+## 21.4.1
+
+- Fix: emit missing `dragleave` drag-and-drop event
+
 ## 21.4.0
 
 - Feature: add row drag and drop capability
