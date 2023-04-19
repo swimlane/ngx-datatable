@@ -106,6 +106,7 @@ import { DragEventData } from '../../types/drag-events.type';
             (drop)="drop($event, group, rowElement)"
             (dragover)="dragOver($event, group)"
             (dragenter)="dragEnter($event, group, rowElement)"
+            (dragleave)="dragLeave($event, group, rowElement)"
             (dragstart)="drag($event, group, rowElement)"
             (dragend)="dragEnd($event, group)"
           >
@@ -133,6 +134,7 @@ import { DragEventData } from '../../types/drag-events.type';
               (drop)="drop($event, row, rowElement)"
               (dragover)="dragOver($event, row)"
               (dragenter)="dragEnter($event, row, rowElement)"
+              (dragleave)="dragLeave($event, row, rowElement)"
               (dragstart)="drag($event, row, rowElement)"
               (dragend)="dragEnd($event, row)"
             >
@@ -948,6 +950,18 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       srcElement: this._draggedRowElement,
       targetElement: rowComponent._element,
       eventType: 'dragenter',
+      dragRow: this._draggedRow,
+      dropRow
+    });
+  }
+
+  dragLeave(event: DragEvent, dropRow, rowComponent) {
+    event.preventDefault();
+    this.rowDragEvents.emit({
+      event,
+      srcElement: this._draggedRowElement,
+      targetElement: rowComponent._element,
+      eventType: 'dragleave',
       dragRow: this._draggedRow,
       dropRow
     });
