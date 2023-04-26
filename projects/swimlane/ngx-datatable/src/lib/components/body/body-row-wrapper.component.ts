@@ -29,6 +29,7 @@ import {
       *ngIf="rowDetail && rowDetail.template && expanded"
       [style.height.px]="detailRowHeight"
       class="datatable-row-detail"
+      [ngStyle]="getGroupHeaderStyle()"
     >
       <ng-template
         *ngIf="rowDetail && rowDetail.template"
