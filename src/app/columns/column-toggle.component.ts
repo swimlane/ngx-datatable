@@ -37,8 +37,74 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
           </li>
         </ul>
       </div>
+      <div class="selected-column">
+        <h4>Dropdown</h4>
+        <form>
+          <div class="multiselect">
+            <div class="selectBox" (click)="showCheckboxes()">
+              <select>
+                <option>Show/Hide Column</option>
+              </select>
+              <div class="overSelect"></div>
+            </div>
+            <div id="checkboxes">
+              <label for="select/unselect">
+                <input
+                  type="checkbox"
+                  id="select/Unselect"
+                  [checked]="allColumnsChecked"
+                  (click)="allColumnsChecked ? uncheckAll() : checkAll()"
+                />{{ allColumnsChecked ? 'Unselect All' : 'Select All' }}</label
+              >
+              <label *ngFor="let col of allColumns" [for]="col.name">
+                <input type="checkbox" [id]="col.name" [checked]="isChecked(col)" (click)="toggle(col)" />{{
+                  col.name
+                }}</label
+              >
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
-  `
+  `,
+  styles: [
+    `
+      .multiselect {
+        width: 200px;
+        margin: 0 auto;
+      }
+
+      .selectBox {
+        position: relative;
+      }
+
+      .selectBox select {
+        width: 100%;
+        font-weight: bold;
+      }
+
+      .overSelect {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+      }
+
+      #checkboxes {
+        display: none;
+        border: 1px #dadada solid;
+      }
+
+      #checkboxes label {
+        display: block;
+      }
+
+      #checkboxes label:hover {
+        background-color: #1e90ff;
+      }
+    `
+  ]
 })
 export class ColumnToggleComponent {
   rows = [
@@ -60,6 +126,9 @@ export class ColumnToggleComponent {
 
   ColumnMode = ColumnMode;
 
+  allColumnsChecked: boolean = true;
+  expanded: boolean = false;
+
   toggle(col) {
     const isChecked = this.isChecked(col);
 
@@ -78,5 +147,31 @@ export class ColumnToggleComponent {
         return c.name === col.name;
       }) !== undefined
     );
+  }
+
+  checkAll() {
+    this.columns = this.allColumns;
+    this.allColumnsChecked = true;
+  }
+
+  uncheckAll() {
+    if (this.columns.length == 0) {
+      this.columns = this.allColumns;
+      this.allColumnsChecked = true;
+    } else {
+      this.columns = [];
+      this.allColumnsChecked = false;
+    }
+  }
+
+  showCheckboxes() {
+    var checkboxes = document.getElementById('checkboxes');
+    if (!this.expanded) {
+      checkboxes.style.display = 'block';
+      this.expanded = true;
+    } else {
+      checkboxes.style.display = 'none';
+      this.expanded = false;
+    }
   }
 }
