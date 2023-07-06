@@ -701,8 +701,16 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit, After
     this.rowDiffer = differs.find({}).create();
 
     // apply global settings from Module.forRoot
-    if (this.configuration && this.configuration.messages) {
-      this.messages = { ...this.configuration.messages };
+    if (this.configuration) {
+      if (this.configuration.messages) {
+        this.messages = { ...this.configuration.messages };
+      }
+      if (this.configuration.cssClasses) {
+        this.cssClasses = { ...this.configuration.cssClasses };
+      }
+      this.headerHeight = this.configuration.headerHeight ?? this.headerHeight;
+      this.footerHeight = this.configuration.footerHeight ?? this.footerHeight;
+      this.rowHeight = this.configuration.rowHeight ?? this.rowHeight;
     }
   }
 

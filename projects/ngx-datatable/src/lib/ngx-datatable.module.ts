@@ -105,9 +105,21 @@ export class NgxDatatableModule {
  * Interface definition for INgxDatatableConfig global configuration
  */
 export interface INgxDatatableConfig {
-  messages: {
+  messages?: {
     emptyMessage: string; // Message to show when array is presented, but contains no values
     totalMessage: string; // Footer total message
     selectedMessage: string; // Footer selected message
   };
+  cssClasses?: {
+    sortAscending: string,
+    sortDescending: string,
+    sortUnset: string,
+    pagerLeftArrow: string,
+    pagerRightArrow: string,
+    pagerPrevious: string,
+    pagerNext: string
+  };
+  headerHeight?: number,
+  footerHeight?: number,
+  rowHeight?: number,
 }
