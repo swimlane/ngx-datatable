@@ -137,6 +137,5 @@
         }
       }
     }
-  },
-  "defaultProject": "ngx-datatable"
+  }
 }
