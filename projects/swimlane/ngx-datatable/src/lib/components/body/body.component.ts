@@ -137,6 +137,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() selectCheck: any;
   @Input() displayCheck: any;
   @Input() trackByProp: string;
+  @Input() trackByOverride: () => boolean;
   @Input() rowClass: any;
   @Input() groupedRows: any;
   @Input() groupExpansionDefault: boolean;
@@ -271,6 +272,10 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   constructor(private cd: ChangeDetectorRef) {
     // declare fn here so we can get access to the `this` property
+    if (this.trackByOverride !== undefined){
+      this.rowTrackingFn = this.trackByFunction;
+      return;
+    }
     this.rowTrackingFn = (index: number, row: any): any => {
       const idx = this.getRowIndex(row);
       if (this.trackByProp) {

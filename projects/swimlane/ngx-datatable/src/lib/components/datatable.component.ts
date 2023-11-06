@@ -20,7 +20,8 @@ import {
   ChangeDetectorRef,
   SkipSelf,
   Optional,
-  Inject
+  Inject,
+  TrackByFunction
 } from '@angular/core';
 
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
@@ -374,11 +375,19 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   @Input() trackByProp: string;
 
   /**
+   * Property to which you can add a function to override the 
+   * custom tracking of rows.
+   */
+
+  @Input() trackByOverride: TrackByFunction<T>;
+
+  /**
    * Property to which you can use for determining select all
    * rows on current page or not.
    *
    * @memberOf DatatableComponent
    */
+
   @Input() selectAllRowsOnPage = false;
 
   /**
