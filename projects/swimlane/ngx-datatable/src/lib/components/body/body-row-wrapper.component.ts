@@ -110,13 +110,14 @@ export class DataTableRowWrapperComponent implements DoCheck, OnInit {
   }
 
   ngDoCheck(): void {
+    if (this.disableCheck) {
+      const isRowDisabled = this.disableCheck(this.row);
+      this.disable$.next(isRowDisabled);
+      this.cd.markForCheck();
+    }
     if (this.rowDiffer.diff(this.row)) {
       this.rowContext.row = this.row;
       this.groupContext.group = this.row;
-      if (this.disableCheck) {
-        const isRowDisabled = this.disableCheck(this.row);
-        this.disable$.next(isRowDisabled);
-      }
       this.cd.markForCheck();
     }
   }
