@@ -31,18 +31,20 @@ export function adjustColumnWidths(allColumns: any, expectedWidth: any) {
  * Resizes columns based on the flexGrow property, while respecting manually set widths
  */
 function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
-  // calculate total width and flexgrow points for coulumns that can be resized
+  // calculate total width and flexgrow points for columns that can be resized
   for (const attr in colsByGroup) {
-    for (const column of colsByGroup[attr]) {
-      if (column.$$oldWidth) {
-        // when manually resized, switch off auto-resize
-        column.canAutoResize = false;
-      }
-      if (!column.canAutoResize) {
-        maxWidth -= column.width;
-        totalFlexGrow -= column.flexGrow ? column.flexGrow : 0;
-      } else {
-        column.width = 0;
+    if (colsByGroup.hasOwnProperty(attr)) {
+      for (const column of colsByGroup[attr]) {
+        if (column.$$oldWidth) {
+          // when manually resized, switch off auto-resize
+          column.canAutoResize = false;
+        }
+        if (!column.canAutoResize) {
+          maxWidth -= column.width;
+          totalFlexGrow -= column.flexGrow ? column.flexGrow : 0;
+        } else {
+          column.width = 0;
+        }
       }
     }
   }
@@ -56,21 +58,49 @@ function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
     remainingWidth = 0;
 
     for (const attr in colsByGroup) {
-      for (const column of colsByGroup[attr]) {
-        // if the column can be resize and it hasn't reached its minimum width yet
-        if (column.canAutoResize && !hasMinWidth[column.prop]) {
-          const newWidth = column.width + column.flexGrow * widthPerFlexPoint;
-          if (column.minWidth !== undefined && newWidth < column.minWidth) {
-            remainingWidth += newWidth - column.minWidth;
-            column.width = column.minWidth;
-            hasMinWidth[column.prop] = true;
-          } else {
-            column.width = newWidth;
+      if (colsByGroup.hasOwnProperty(attr)) {
+        for (const column of colsByGroup[attr]) {
+          // if the column can be resize and it hasn't reached its minimum width yet
+          if (column.canAutoResize && !hasMinWidth[column.prop]) {
+            const newWidth = column.width + column.flexGrow * widthPerFlexPoint;
+            if (column.minWidth !== undefined && newWidth < column.minWidth) {
+              remainingWidth += newWidth - column.minWidth;
+              column.width = column.minWidth;
+              hasMinWidth[column.prop] = true;
+            } else {
+              column.width = newWidth;
+            }
           }
         }
       }
     }
   } while (remainingWidth !== 0);
+
+  // Adjust for any remaining offset in computed widths vs maxWidth
+  const columns = Object.values<{
+    width: number;
+    canAutoResize: boolean;
+    minWidth: number;
+    maxWidth: number;
+  }>(colsByGroup).reduce((acc, col) => acc.concat(col), []);
+
+  const totalWidthAchieved = columns.reduce((acc, col) => acc + col.width, 0);
+  const delta = maxWidth - totalWidthAchieved;
+
+  if (delta === 0) {
+    return;
+  }
+
+  // adjust the first column that can be auto-resized respecting the min/max widths
+  for (const col of columns.filter(c => c.canAutoResize).sort((a, b) => a.width - b.width)) {
+    if (
+      (delta > 0 && (!col.maxWidth || col.width + delta <= col.maxWidth)) ||
+      (delta < 0 && (!col.minWidth || col.width + delta >= col.minWidth))
+    ) {
+      col.width += delta;
+      break;
+    }
+  }
 }
 
 /**
@@ -99,9 +129,7 @@ export function forceFillColumnWidths(
   allowBleed: boolean,
   defaultColWidth: number = 300
 ) {
-  const columnsToResize = allColumns.slice(startIdx + 1, allColumns.length).filter(c => {
-    return c.canAutoResize !== false;
-  });
+  const columnsToResize = allColumns.slice(startIdx + 1, allColumns.length).filter(c => c.canAutoResize !== false);
 
   for (const column of columnsToResize) {
     if (!column.$$oldWidth) {
