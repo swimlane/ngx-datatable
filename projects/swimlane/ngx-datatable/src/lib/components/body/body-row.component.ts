@@ -229,7 +229,9 @@ export class DataTableBodyRowComponent implements DoCheck {
       keyCode === Keys.left ||
       keyCode === Keys.right;
 
-    if (isAction && isTargetRow) {
+    const isCtrlA = event.key === 'a' && (event.ctrlKey || event.metaKey);
+
+    if ((isAction && isTargetRow) || isCtrlA) {
       event.preventDefault();
       event.stopPropagation();
 

@@ -42,6 +42,9 @@ export class DataTableSelectionComponent {
     if (multi || chkbox || multiClick) {
       if (event.shiftKey) {
         selected = selectRowsBetween([], this.rows, index, this.prevIndex, this.getRowSelectedIdx.bind(this));
+      } else if ((event as KeyboardEvent).key === 'a' && (event.ctrlKey || event.metaKey)) {
+        // select all rows except dummy rows which are added for ghostloader in case of virtual scroll
+        selected = this.rows.filter(rowItem => !!rowItem);
       } else if (event.ctrlKey || event.metaKey || multiClick || chkbox) {
         selected = selectRows([...this.selected], row, this.getRowSelectedIdx.bind(this));
       } else {
@@ -79,6 +82,8 @@ export class DataTableSelectionComponent {
     } else if (type === 'keydown') {
       if ((<KeyboardEvent>event).keyCode === Keys.return) {
         this.selectRow(event, index, row);
+      } else if ((event as KeyboardEvent).key === 'a' && (event.ctrlKey || event.metaKey)) {
+        this.selectRow(event, 0, this.rows[this.rows.length - 1]);
       } else {
         this.onKeyboardFocus(model);
       }
