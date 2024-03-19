@@ -1163,6 +1163,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     // Always go to first page when sorting to see the newly sorted data
     this.offset = 0;
     this.bodyComponent.updateOffsetY(this.offset);
+    // Emit the page object with updated offset value
+    this.page.emit({
+      count: this.count,
+      pageSize: this.pageSize,
+      limit: this.limit,
+      offset: this.offset
+    });
     this.sort.emit(event);
   }
 
