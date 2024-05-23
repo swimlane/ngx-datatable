@@ -31,10 +31,10 @@ export function getVendorPrefixedName(property: string) {
   const name = camelCase(property);
 
   if (!cache[name]) {
-    if (prefix !== undefined && testStyle[prefix.css + property] !== undefined) {
-      cache[name] = prefix.css + property;
-    } else if (testStyle[property] !== undefined) {
+    if (testStyle[property] !== undefined) {
       cache[name] = property;
+    } else if (prefix !== undefined && testStyle[prefix.css + property] !== undefined) {
+      cache[name] = prefix.css + property;
     }
   }
 
