@@ -150,6 +150,10 @@ export class DataTableHeaderCellComponent {
     return this.column.width;
   }
 
+  @HostBinding('tabindex') get tabindex(): number {
+    return this.column.sortable ? 0 : -1;
+  } 
+
   get isCheckboxable(): boolean {
     return this.column.headerCheckboxable;
   }
@@ -177,6 +181,11 @@ export class DataTableHeaderCellComponent {
   @HostListener('contextmenu', ['$event'])
   onContextmenu($event: MouseEvent): void {
     this.columnContextmenu.emit({ event: $event, column: this.column });
+  }
+
+  @HostListener('keydown.enter')
+  enter(): void {
+    this.onSort();
   }
 
   ngOnInit() {
