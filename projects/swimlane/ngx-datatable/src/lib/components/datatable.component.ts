@@ -44,8 +44,8 @@ import { ScrollbarHelper } from '../services/scrollbar-helper.service';
 import { ColumnChangesService } from '../services/column-changes.service';
 import { DimensionsHelper } from '../services/dimensions-helper.service';
 import { throttleable } from '../utils/throttle';
-import { forceFillColumnWidths, adjustColumnWidths } from '../utils/math';
-import { sortRows } from '../utils/sort';
+import { adjustColumnWidths, forceFillColumnWidths } from '../utils/math';
+import { sortGroupedRows, sortRows } from '../utils/sort';
 
 @Component({
   selector: 'ngx-datatable',
@@ -1258,6 +1258,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   }
 
   private sortInternalRows(): void {
-    this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
+    if (this.groupedRows && this.groupedRows.length) {
+      const sortOnGroupHeader = this.sorts?.find(sortColumns => sortColumns.prop === this._groupRowsBy);
+      this.groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
+      this.groupedRows = sortGroupedRows(this.groupedRows, this._internalColumns, this.sorts, sortOnGroupHeader);
+      this._internalRows = [...this._internalRows];
+    } else {
+      this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
+    }
   }
 }

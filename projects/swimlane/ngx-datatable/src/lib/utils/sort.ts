@@ -119,3 +119,20 @@ export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[
     return rowToIndexMap.get(rowA) < rowToIndexMap.get(rowB) ? -1 : 1;
   });
 }
+
+export function sortGroupedRows(
+  groupedRows: any[],
+  columns: any[],
+  dirs: SortPropDir[],
+  sortOnGroupHeader: SortPropDir
+): any[] {
+  if (sortOnGroupHeader) {
+    groupedRows = sortRows(groupedRows, columns, [
+      {
+        dir: sortOnGroupHeader.dir,
+        prop: 'key'
+      }
+    ]);
+  }
+  return groupedRows.map(group => ({ ...group, value: sortRows(group.value, columns, dirs) }));
+}
