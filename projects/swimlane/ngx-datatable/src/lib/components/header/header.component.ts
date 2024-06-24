@@ -1,18 +1,21 @@
 import {
-  Component,
-  Output,
-  EventEmitter,
-  Input,
-  HostBinding,
-  ChangeDetectorRef,
   ChangeDetectionStrategy,
-  OnDestroy
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  HostBinding,
+  Input,
+  OnDestroy,
+  Output,
+  SimpleChanges,
+  SkipSelf
 } from '@angular/core';
 import { columnsByPin, columnGroupWidths, columnsByPinArr } from '../../utils/column';
 import { SortType } from '../../types/sort.type';
 import { SelectionType } from '../../types/selection.type';
 import { DataTableColumnDirective } from '../columns/column.directive';
 import { translateXY } from '../../utils/translate';
+import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 
 @Component({
   selector: 'datatable-header',
@@ -102,6 +105,7 @@ export class DataTableHeaderComponent implements OnDestroy {
   @Input() allRowsSelected: boolean;
   @Input() selectionType: SelectionType;
   @Input() reorderable: boolean;
+  @Input() verticalScrollVisible = false;
 
   dragEventTarget: any;
 
@@ -166,7 +170,16 @@ export class DataTableHeaderComponent implements OnDestroy {
 
   private destroyed = false;
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(private cd: ChangeDetectorRef, @SkipSelf() private scrollbarHelper: ScrollbarHelper) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.verticalScrollVisible) {
+      this._styleByGroup.right = this.calcStylesByGroup('right');
+      if (!this.destroyed) {
+        this.cd.detectChanges();
+      }
+    }
+  }
 
   ngOnDestroy(): void {
     this.destroyed = true;
@@ -195,7 +208,8 @@ export class DataTableHeaderComponent implements OnDestroy {
   @HostBinding('style.width')
   get headerWidth(): string {
     if (this.scrollbarH) {
-      return this.innerWidth + 'px';
+      const width = this.verticalScrollVisible ? this.innerWidth - this.scrollbarHelper.width : this.innerWidth;
+      return width + 'px';
     }
 
     return '100%';
@@ -339,7 +353,7 @@ export class DataTableHeaderComponent implements OnDestroy {
       translateXY(styles, offsetX * -1, 0);
     } else if (group === 'right') {
       const totalDiff = widths.total - this.innerWidth;
-      const offset = totalDiff * -1;
+      const offset = (totalDiff + (this.verticalScrollVisible ? this.scrollbarHelper.width : 0)) * -1;
       translateXY(styles, offset, 0);
     }
 

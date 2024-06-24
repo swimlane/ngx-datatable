@@ -1,16 +1,18 @@
 import {
-  Component,
-  Input,
-  HostBinding,
-  ElementRef,
-  Output,
-  KeyValueDiffers,
-  KeyValueDiffer,
-  EventEmitter,
-  HostListener,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
   DoCheck,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  KeyValueDiffer,
+  KeyValueDiffers,
+  OnChanges,
+  Output,
+  SimpleChanges,
   SkipSelf
 } from '@angular/core';
 
@@ -54,7 +56,7 @@ import { DataTableRowWrapperComponent } from './body-row-wrapper.component';
     </div>
   `
 })
-export class DataTableBodyRowComponent implements DoCheck {
+export class DataTableBodyRowComponent implements DoCheck, OnChanges {
   @Input() set columns(val: any[]) {
     this._columns = val;
     this.recalculateColumns(val);
@@ -89,6 +91,7 @@ export class DataTableBodyRowComponent implements DoCheck {
   @Input() displayCheck: any;
   @Input() treeStatus: TreeStatus = 'collapsed';
   @Input() ghostLoadingIndicator = false;
+  @Input() verticalScrollVisible = false;
 
   @Input() disable$: BehaviorSubject<boolean>;
   @Input()
@@ -169,6 +172,12 @@ export class DataTableBodyRowComponent implements DoCheck {
     this._rowDiffer = differs.find({}).create();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.verticalScrollVisible) {
+      this.buildStylesByGroup();
+    }
+  }
+
   ngDoCheck(): void {
     if (this._rowDiffer.diff(this.row)) {
       this.cd.markForCheck();
@@ -204,7 +213,7 @@ export class DataTableBodyRowComponent implements DoCheck {
       const bodyWidth = this.innerWidth;
       const totalDiff = widths.total - bodyWidth;
       const offsetDiff = totalDiff - offsetX;
-      const offset = (offsetDiff + this.scrollbarHelper.width) * -1;
+      const offset = (offsetDiff + (this.verticalScrollVisible ? this.scrollbarHelper.width : 0)) * -1;
       translateXY(styles, offset, 0);
     }
 
