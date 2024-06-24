@@ -799,7 +799,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * Creates a map with the data grouped by the user choice of grouping index
    *
    * @param originalArray the original array passed via parameter
-   * @param groupByIndex  the index of the column to group the data by
+   * @param groupBy  the index of the column to group the data by
    */
   groupArrayBy(originalArray: any, groupBy: any) {
     // create a map to hold groups with their corresponding results
