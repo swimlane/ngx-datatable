@@ -771,7 +771,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     if (this._groupRowsBy) {
       // each group in groupedRows are stored as {key, value: [rows]},
       // where key is the groupRowsBy index
-      return x.key;
+      return x.key ?? x;
     } else {
       return x;
     }

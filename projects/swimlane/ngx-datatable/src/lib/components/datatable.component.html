@@ -76,7 +76,7 @@
   </div>
   <datatable-footer
     *ngIf="footerHeight"
-    [rowCount]="rowCount"
+    [rowCount]="groupedRows !== undefined ? _internalRows.length : rowCount"
     [pageSize]="pageSize"
     [offset]="offset"
     [footerHeight]="footerHeight"
