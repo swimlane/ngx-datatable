@@ -154,10 +154,19 @@ import { DragEventData } from '../../types/drag-events.type';
         </datatable-summary-row>
       </datatable-scroller>
       <ng-container *ngIf="!rows?.length && !loadingIndicator && !ghostLoadingIndicator">
-        <div class="empty-row" *ngIf="!customEmptyContent?.children.length" [innerHTML]="emptyMessage"></div>
-        <div #customEmptyContent>
-          <ng-content select="[empty-content]"></ng-content>
-        </div>
+        <datatable-scroller
+          [scrollbarV]="scrollbarV"
+          [scrollbarH]="scrollbarH"
+          [scrollHeight]="scrollHeight"
+          [scrollWidth]="columnGroupWidths?.total"
+          (scroll)="onBodyScroll($event)"
+        >
+          <div class="empty-row" *ngIf="!customEmptyContent?.children.length" [innerHTML]="emptyMessage"></div>
+          <div #customEmptyContent>
+            {{ columnGroupWidths?.total }}
+            <ng-content select="[empty-content]"></ng-content>
+          </div>
+        </datatable-scroller>
       </ng-container>
     </datatable-selection>
   `,
