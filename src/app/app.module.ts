@@ -77,12 +77,15 @@ import { SummaryRowInlineHtmlComponent } from './summary/summary-row-inline-html
 import { AppRoutingModule } from './app-routing.module';
 import { CommonModule } from '@angular/common';
 import { ScollingDynamicallyComponent } from './basic/scrolling-dynamically.component';
+import { DragDropComponent } from './drag-drop/drag-drop.component';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
 @NgModule({
   declarations: [
     AppComponent,
     BasicAutoComponent,
     BasicFixedComponent,
+    DragDropComponent,
     FullScreenComponent,
     FullScreenTreeComponent,
     InlineEditComponent,
@@ -140,6 +143,7 @@ import { ScollingDynamicallyComponent } from './basic/scrolling-dynamically.comp
     CommonModule,
     BrowserModule,
     AppRoutingModule,
+    DragDropModule,
     NgxDatatableModule.forRoot({
       messages: {
         emptyMessage: 'No data to display', // Message to show when array is presented, but contains no values

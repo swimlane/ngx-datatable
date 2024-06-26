@@ -52,6 +52,9 @@
           <li>
             <a href="#empty" (click)="state = 'empty'">Empty Template</a>
           </li>
+          <li>
+            <a href="#drag-drop" (click)="state = 'drag-drop'">Drag Drop</a>
+          </li>
         </ul>
       </li>
       <li>
@@ -228,6 +231,7 @@
     <dynamic-height-demo *ngIf="state === 'dynamic'"></dynamic-height-demo>
     <footer-demo *ngIf="state === 'footer'"></footer-demo>
     <empty-demo *ngIf="state === 'empty'"></empty-demo>
+    <drag-drop-demo *ngIf="state === 'drag-drop'"></drag-drop-demo>
     <disabled-rows-demo *ngIf="state === 'disabled'"></disabled-rows-demo>
 
     <!-- Themes -->

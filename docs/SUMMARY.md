@@ -20,6 +20,8 @@
   - Row Detail
     - [Inputs](api/detail/inputs.md)
     - [Outputs](api/detail/outputs.md)
+  - Row
+    - [Custom row wrapper](api/row/row-def.md)
 - Demos
   - [Online](http://swimlane.github.io/ngx-datatable/)
   - [Source Code](https://github.com/swimlane/ngx-datatable/tree/master/src/app)

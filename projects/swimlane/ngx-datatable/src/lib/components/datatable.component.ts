@@ -1,26 +1,29 @@
 import {
-  Component,
-  Input,
-  Output,
-  ElementRef,
-  EventEmitter,
-  ViewChild,
-  HostListener,
-  ContentChildren,
-  OnInit,
-  QueryList,
+  AfterContentInit,
   AfterViewInit,
-  HostBinding,
-  ContentChild,
-  DoCheck,
-  KeyValueDiffers,
-  KeyValueDiffer,
-  ViewEncapsulation,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  SkipSelf,
+  Component,
+  ContentChild,
+  ContentChildren,
+  DoCheck,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Inject,
+  Input,
+  KeyValueDiffer,
+  KeyValueDiffers,
+  OnDestroy,
+  OnInit,
   Optional,
-  Inject
+  Output,
+  QueryList,
+  SkipSelf,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation
 } from '@angular/core';
 
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
@@ -46,6 +49,7 @@ import { DimensionsHelper } from '../services/dimensions-helper.service';
 import { throttleable } from '../utils/throttle';
 import { adjustColumnWidths, forceFillColumnWidths } from '../utils/math';
 import { sortGroupedRows, sortRows } from '../utils/sort';
+import { DatatableRowDefDirective } from './body/body-row-def.component';
 
 @Component({
   selector: 'ngx-datatable',
@@ -651,6 +655,10 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
 
   @ViewChild(DataTableBodyComponent, { read: ElementRef })
   private bodyElement: ElementRef<HTMLElement>;
+  @ContentChild(DatatableRowDefDirective, {
+    read: TemplateRef
+  })
+  rowDefTemplate?: TemplateRef<any>;
 
   /**
    * Returns if all rows are selected.

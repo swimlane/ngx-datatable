@@ -1,14 +1,15 @@
 import {
-  Component,
-  Output,
-  EventEmitter,
-  Input,
-  HostBinding,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
-  ViewChild,
-  OnInit,
+  Component,
+  EventEmitter,
+  HostBinding,
+  Input,
   OnDestroy,
-  ChangeDetectionStrategy
+  OnInit,
+  Output,
+  TemplateRef,
+  ViewChild
 } from '@angular/core';
 import { ScrollerComponent } from './scroller.component';
 import { SelectionType } from '../../types/selection.type';
@@ -82,36 +83,51 @@ import { DragEventData } from '../../types/drag-events.type';
           [rowIndex]="getRowIndex(group && group[i])"
           (rowContextmenu)="rowContextmenu.emit($event)"
         >
-          <datatable-body-row
-            role="row"
-            *ngIf="!groupedRows; else groupedRowsTemplate"
-            tabindex="-1"
-            #rowElement
-            [disable$]="rowWrapper.disable$"
-            [isSelected]="selector.getRowSelected(group)"
-            [innerWidth]="innerWidth"
-            [offsetX]="offsetX"
-            [columns]="columns"
-            [rowHeight]="getRowHeight(group)"
-            [row]="group"
-            [rowIndex]="getRowIndex(group)"
-            [expanded]="getRowExpanded(group)"
-            [rowClass]="rowClass"
-            [displayCheck]="displayCheck"
-            [treeStatus]="group && group.treeStatus"
-            [ghostLoadingIndicator]="ghostLoadingIndicator"
-            [draggable]="rowDraggable"
-            [verticalScrollVisible]="verticalScrollVisible"
-            (treeAction)="onTreeAction(group)"
-            (activate)="selector.onActivate($event, indexes.first + i)"
-            (drop)="drop($event, group, rowElement)"
-            (dragover)="dragOver($event, group)"
-            (dragenter)="dragEnter($event, group, rowElement)"
-            (dragleave)="dragLeave($event, group, rowElement)"
-            (dragstart)="drag($event, group, rowElement)"
-            (dragend)="dragEnd($event, group)"
-          >
-          </datatable-body-row>
+          <ng-container *ngIf="rowDefTemplate else bodyRow">
+            <ng-container
+              *rowDefInternal="{
+                template: rowDefTemplate,
+                rowTemplate: bodyRow,
+                row: group,
+                index: i
+              }"
+            />
+          </ng-container>
+        
+          <ng-template #bodyRow>
+            <datatable-body-row
+              role="row"
+              *ngIf="!groupedRows; else groupedRowsTemplate"
+              tabindex="-1"
+              #rowElement
+              [disable$]="rowWrapper.disable$"
+              [isSelected]="selector.getRowSelected(group)"
+              [innerWidth]="innerWidth"
+              [offsetX]="offsetX"
+              [columns]="columns"
+              [rowHeight]="getRowHeight(group)"
+              [row]="group"
+              [rowIndex]="getRowIndex(group)"
+              [expanded]="getRowExpanded(group)"
+              [rowClass]="rowClass"
+              [displayCheck]="displayCheck"
+              [treeStatus]="group && group.treeStatus"
+              [ghostLoadingIndicator]="ghostLoadingIndicator"
+              [draggable]="rowDraggable"
+              [verticalScrollVisible]="verticalScrollVisible"
+              (treeAction)="onTreeAction(group)"
+              (activate)="selector.onActivate($event, indexes.first + i)"
+              (drop)="drop($event, group, rowElement)"
+              (dragover)="dragOver($event, group)"
+              (dragenter)="dragEnter($event, group, rowElement)"
+              (dragleave)="dragLeave($event, group, rowElement)"
+              (dragstart)="drag($event, group, rowElement)"
+              (dragend)="dragEnd($event, group)"
+            >
+            </datatable-body-row>
+
+          </ng-template>
+
           <ng-template #groupedRowsTemplate>
             <datatable-body-row
               role="row"
@@ -178,6 +194,7 @@ import { DragEventData } from '../../types/drag-events.type';
   }
 })
 export class DataTableBodyComponent implements OnInit, OnDestroy {
+  @Input() rowDefTemplate?: TemplateRef<any>;
   @Input() scrollbarV: boolean;
   @Input() scrollbarH: boolean;
   @Input() loadingIndicator: boolean;

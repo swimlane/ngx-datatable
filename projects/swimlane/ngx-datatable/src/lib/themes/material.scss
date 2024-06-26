@@ -281,6 +281,10 @@ $datatble-ghost-cell-animation-duration: 10s;
       border-top: solid 1px $datatable-group-header-border-top-color;
     }
 
+    datatable-row-def {
+      background-color: $ngx-datatable-background;
+    }
+
     .datatable-body-row {
       border-bottom: 1px solid $datatable-body-row-border-bottom-color;
 
