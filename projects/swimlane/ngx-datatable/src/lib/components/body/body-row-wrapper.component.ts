@@ -132,7 +132,7 @@ export class DataTableRowWrapperComponent implements DoCheck, OnInit {
 
     styles['transform'] = 'translate3d(' + this.offsetX + 'px, 0px, 0px)';
     styles['backface-visibility'] = 'hidden';
-    styles['width'] = this.innerWidth;
+    styles['width'] = this.innerWidth + 'px';
 
     return styles;
   }
