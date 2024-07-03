@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import { ScrollerComponent } from './scroller.component';
 import { SelectionType } from '../../types/selection.type';
-import { columnsByPin, columnGroupWidths } from '../../utils/column';
+import { columnGroupWidths, columnsByPin } from '../../utils/column';
 import { RowHeightCache } from '../../utils/row-height-cache';
 import { translateXY } from '../../utils/translate';
 import { DragEventData } from '../../types/drag-events.type';
@@ -72,7 +72,7 @@ import { DragEventData } from '../../types/drag-events.type';
           [groupedRows]="groupedRows"
           *ngFor="let group of temp; let i = index; trackBy: rowTrackingFn"
           [innerWidth]="innerWidth"
-          [ngStyle]="getRowsStyles(group, indexes.first + i)"
+          [ngStyle]="getRowsStyles(group, indexes.first + i )"
           [rowDetail]="rowDetail"
           [groupHeader]="groupHeader"
           [offsetX]="offsetX"
@@ -180,7 +180,11 @@ import { DragEventData } from '../../types/drag-events.type';
           [style.width]="scrollbarH ? columnGroupWidths?.total + 'px' : '100%'"
           (scroll)="onBodyScroll($event)"
         >
-          <div class="empty-row" *ngIf="!customEmptyContent?.children.length" [innerHTML]="emptyMessage"></div>
+          <div
+            class="empty-row"
+            *ngIf="!customEmptyContent?.children.length"
+            [innerHTML]="emptyMessage"
+          ></div>
           <div #customEmptyContent>
             <ng-content select="[empty-content]"></ng-content>
           </div>
@@ -399,38 +403,33 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     if (this.rowDetail) {
-      this.listener = this.rowDetail.toggle.subscribe(({ type, value }: { type: string; value: any }) => {
-        if (type === 'row') {
-          this.toggleRowExpansion(value);
-        }
-        if (type === 'all') {
-          this.toggleAllRows(value);
-        }
-
-        // Refresh rows after toggle
-        // Fixes #883
-        this.updateIndexes();
-        this.updateRows();
-        this.cd.markForCheck();
-      });
+      this.listener = this.rowDetail.toggle.subscribe(({ type, value }: { type: string; value: any }) =>
+        this.toggleStateChange(type, value)
+      );
     }
 
     if (this.groupHeader) {
       this.listener = this.groupHeader.toggle.subscribe(({ type, value }: { type: string; value: any }) => {
-        if (type === 'group') {
-          this.toggleRowExpansion(value);
-        }
-        if (type === 'all') {
-          this.toggleAllRows(value);
-        }
-
-        // Refresh rows after toggle
-        // Fixes #883
-        this.updateIndexes();
-        this.updateRows();
-        this.cd.markForCheck();
+        // Remove default expansion state once user starts manual toggle.
+        this.groupExpansionDefault = false;
+        this.toggleStateChange(type, value);
       });
     }
+  }
+
+  private toggleStateChange(type: string, value: any) {
+    if (type === 'group' || type === 'row') {
+      this.toggleRowExpansion(value);
+    }
+    if (type === 'all') {
+      this.toggleAllRows(value);
+    }
+
+    // Refresh rows after toggle
+    // Fixes #883
+    this.updateIndexes();
+    this.updateRows();
+    this.cd.markForCheck();
   }
 
   /**
@@ -564,7 +563,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
           // add indexes for each row
           this.rowIndexes.set(row, rowIndex);
           temp[idx] = row;
-        } else if (this.virtualization) {
+        } else if (this.ghostLoadingIndicator && this.virtualization) {
           temp[idx] = undefined;
         }
 
@@ -595,6 +594,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     let rowHeight = 0;
 
     if (group.value) {
+      // eslint-disable-next-line @typescript-eslint/prefer-for-of
       for (let index = 0; index < group.value.length; index++) {
         rowHeight += this.getRowAndDetailHeight(group.value[index]);
       }
@@ -734,7 +734,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
         // Calculation of the first and last indexes will be based on where the
         // scrollY position would be at.  The last index would be the one
         // that shows up inside the view port the last.
-        const height = parseInt(this.bodyHeight, 0);
+        const height = parseInt(this.bodyHeight, 10);
         first = this.rowHeightsCache.getRowIndex(this.offsetY);
         last = this.rowHeightsCache.getRowIndex(height + this.offsetY) + 1;
       } else {
@@ -849,9 +849,9 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
     // Capture the row index of the first row that is visible on the viewport.
     const viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
-
+    const rows = this.groupedRows ?? this.rows;
     if (expanded) {
-      for (const row of this.rows) {
+      for (const row of rows) {
         this.rowExpansions.push(row);
       }
     }
@@ -863,7 +863,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
     // Emit all rows that have been expanded.
     this.detailToggle.emit({
-      rows: this.rows,
+      rows: rows,
       currentIndex: viewPortFirstRowIndex
     });
   }
@@ -922,7 +922,9 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   }
 
   getRowExpandedIdx(row: any, expanded: any[]): number {
-    if (!expanded || !expanded.length) return -1;
+    if (!expanded || !expanded.length) {
+      return -1;
+    }
 
     const rowId = this.rowIdentity(row);
     return expanded.findIndex(r => {
