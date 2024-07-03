@@ -62,6 +62,7 @@ import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
           [sortDescendingIcon]="sortDescendingIcon"
           [sortUnsetIcon]="sortUnsetIcon"
           [allRowsSelected]="allRowsSelected"
+          [enableClearingSortState]="enableClearingSortState"
           (sort)="onSort($event)"
           (select)="select.emit($event)"
           (columnContextmenu)="columnContextmenu.emit($event)"
@@ -82,6 +83,7 @@ export class DataTableHeaderComponent implements OnDestroy {
   @Input() scrollbarH: boolean;
   @Input() dealsWithGroup: boolean;
   @Input() targetMarkerTemplate: any;
+  @Input() enableClearingSortState = false;
 
   targetMarkerContext: any;
 

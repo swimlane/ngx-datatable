@@ -456,6 +456,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   @Input() rowDraggable = false;
 
   /**
+   * A flag to controll behavior of sort states.
+   * By default sort on column toggles between ascending and descending without getting removed.
+   * Set true to clear sorting of column after performing ascending and descending sort on that column.
+   */
+  @Input() enableClearingSortState = false;
+
+  /**
    * Body was scrolled typically in a `scrollbarV:true` scenario.
    */
   @Output() scroll: EventEmitter<any> = new EventEmitter();
@@ -1266,13 +1273,17 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   }
 
   private sortInternalRows(): void {
+    // if there are no sort criteria we reset the rows with original rows
+    if (!this.sorts || !this.sorts?.length) {
+      this._internalRows = this._rows;
+    }
     if (this.groupedRows && this.groupedRows.length) {
       const sortOnGroupHeader = this.sorts?.find(sortColumns => sortColumns.prop === this._groupRowsBy);
       this.groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
       this.groupedRows = sortGroupedRows(this.groupedRows, this._internalColumns, this.sorts, sortOnGroupHeader);
       this._internalRows = [...this._internalRows];
     } else {
-      this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
+      this._internalRows = sortRows(this._rows, this._internalColumns, this.sorts);
     }
   }
 }
