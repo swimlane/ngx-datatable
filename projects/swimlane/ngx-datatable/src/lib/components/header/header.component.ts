@@ -5,6 +5,7 @@ import {
   EventEmitter,
   HostBinding,
   Input,
+  OnChanges,
   OnDestroy,
   Output,
   SimpleChanges,
@@ -76,7 +77,7 @@ import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
   },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DataTableHeaderComponent implements OnDestroy {
+export class DataTableHeaderComponent implements OnDestroy, OnChanges {
   @Input() sortAscendingIcon: any;
   @Input() sortDescendingIcon: any;
   @Input() sortUnsetIcon: any;
