@@ -1283,7 +1283,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       this.groupedRows = sortGroupedRows(this.groupedRows, this._internalColumns, this.sorts, sortOnGroupHeader);
       this._internalRows = [...this._internalRows];
     } else {
-      this._internalRows = sortRows(this._rows, this._internalColumns, this.sorts);
+      this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);
     }
   }
 }
