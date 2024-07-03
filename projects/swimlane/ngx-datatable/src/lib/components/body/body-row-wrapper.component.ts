@@ -17,7 +17,12 @@ import { BehaviorSubject } from 'rxjs';
   selector: 'datatable-row-wrapper',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div *ngIf="groupHeader && groupHeader.template" class="datatable-group-header" [ngStyle]="getGroupHeaderStyle()">
+    <div
+      *ngIf="groupHeader && groupHeader.template"
+      [style.height.px]="groupHeaderRowHeight"
+      class="datatable-group-header"
+      [ngStyle]="getGroupHeaderStyle()"
+    >
       <ng-template
         *ngIf="groupHeader && groupHeader.template"
         [ngTemplateOutlet]="groupHeader.template"
@@ -50,6 +55,7 @@ export class DataTableRowWrapperComponent implements DoCheck, OnInit {
   @Input() groupHeader: any;
   @Input() offsetX: number;
   @Input() detailRowHeight: any;
+  @Input() groupHeaderRowHeight: number;
   @Input() row: any;
   @Input() groupedRows: any;
   @Input() disableCheck: (row: any) => boolean;

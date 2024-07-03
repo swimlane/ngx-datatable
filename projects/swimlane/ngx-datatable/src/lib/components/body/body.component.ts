@@ -77,6 +77,7 @@ import { DragEventData } from '../../types/drag-events.type';
           [groupHeader]="groupHeader"
           [offsetX]="offsetX"
           [detailRowHeight]="getDetailRowHeight(group && group[i], i)"
+          [groupHeaderRowHeight]="getGroupHeaderRowHeight(group && group[i], i)"
           [row]="group"
           [disableCheck]="disableRowCheck"
           [expanded]="getRowExpanded(group)"
@@ -625,6 +626,14 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       return 0;
     }
     const rowHeight = this.rowDetail.rowHeight;
+    return typeof rowHeight === 'function' ? rowHeight(row, index) : (rowHeight as number);
+  };
+
+  getGroupHeaderRowHeight = (row?: any, index?: any): number => {
+    if (!this.groupHeader) {
+      return 0;
+    }
+    const rowHeight = this.groupHeader?.rowHeight === 0 ? this.rowHeight : this.groupHeader?.rowHeight;
     return typeof rowHeight === 'function' ? rowHeight(row, index) : (rowHeight as number);
   };
 
