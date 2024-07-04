@@ -50,6 +50,7 @@ import { throttleable } from '../utils/throttle';
 import { adjustColumnWidths, forceFillColumnWidths } from '../utils/math';
 import { sortGroupedRows, sortRows } from '../utils/sort';
 import { DatatableRowDefDirective } from './body/body-row-def.component';
+import { DatatableComponentToken } from '../utils/table-token';
 
 @Component({
   selector: 'ngx-datatable',
@@ -59,7 +60,13 @@ import { DatatableRowDefDirective } from './body/body-row-def.component';
   styleUrls: ['./datatable.component.scss'],
   host: {
     class: 'ngx-datatable'
-  }
+  },
+  providers: [
+    {
+      provide: DatatableComponentToken,
+      useExisting: DatatableComponent
+    }
+  ]
 })
 export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   /**
