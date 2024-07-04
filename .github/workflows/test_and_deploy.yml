@@ -1,6 +1,6 @@
 name: Build, Test, and Deploy
 
-on: [push]
+on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
