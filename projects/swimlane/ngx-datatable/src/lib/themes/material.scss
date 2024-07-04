@@ -279,6 +279,11 @@ $datatble-ghost-cell-animation-duration: 10s;
       background: $datatable-group-header-background;
       border-bottom: solid 1px $datatable-group-header-border-bottom-color;
       border-top: solid 1px $datatable-group-header-border-top-color;
+
+      .datatable-group-cell {
+        padding-inline-start: 1.2rem;
+        display: flex;
+      }
     }
 
     datatable-row-def {

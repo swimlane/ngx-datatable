@@ -30,10 +30,15 @@ import { SelectionType } from 'projects/swimlane/ngx-datatable/src/lib/types/sel
         [rowHeight]="40"
         [limit]="4"
         [groupExpansionDefault]="true"
-        [selectionType]="SelectionType.multiClick"
+        [selectionType]="SelectionType.checkbox"
       >
         <!-- Group Header Template -->
-        <ngx-datatable-group-header [rowHeight]="34" #myGroupHeader (toggle)="onDetailToggle($event)">
+        <ngx-datatable-group-header
+          [rowHeight]="34"
+          [checkboxable]="true"
+          #myGroupHeader
+          (toggle)="onDetailToggle($event)"
+        >
           <ng-template let-group="group" let-expanded="expanded" ngx-datatable-group-header-template>
             <div style="padding-left:5px;height: 100%; display:flex;align-items: center;">
               <a
@@ -50,7 +55,15 @@ import { SelectionType } from 'projects/swimlane/ngx-datatable/src/lib/types/sel
         </ngx-datatable-group-header>
 
         <!-- Row Column Template -->
-        <ngx-datatable-column name="Exp. Pay." prop="" editable="true" frozenLeft="True" [sortable]="false">
+        <ngx-datatable-column
+          name="Exp. Pay."
+          prop=""
+          [headerCheckboxable]="true"
+          [checkboxable]="true"
+          editable="true"
+          frozenLeft="True"
+          [sortable]="false"
+        >
           <ng-template
             ngx-datatable-cell-template
             let-rowIndex="rowIndex"

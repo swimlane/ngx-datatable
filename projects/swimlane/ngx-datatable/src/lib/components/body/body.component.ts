@@ -82,6 +82,7 @@ import { DragEventData } from '../../types/drag-events.type';
           [disableCheck]="disableRowCheck"
           [expanded]="getRowExpanded(group)"
           [rowIndex]="getRowIndex(group && group[i])"
+          [selected]="selected"
           (rowContextmenu)="rowContextmenu.emit($event)"
         >
           <ng-container *ngIf="rowDefTemplate else bodyRow">

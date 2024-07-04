@@ -8,6 +8,11 @@ export class DatatableGroupHeaderDirective {
    */
   @Input() rowHeight: number | ((group?: any, index?: number) => number) = 0;
 
+  /**
+   * Show checkbox at group header to select all rows of the group.
+   */
+  @Input() checkboxable = false;
+
   @Input('template')
   _templateInput: TemplateRef<any>;
 
