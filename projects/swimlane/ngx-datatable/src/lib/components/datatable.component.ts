@@ -1287,6 +1287,14 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     // if there are no sort criteria we reset the rows with original rows
     if (!this.sorts || !this.sorts?.length) {
       this._internalRows = this._rows;
+      // if there is any tree relation then re-group rows accordingly
+      if (this.treeFromRelation && this.treeToRelation) {
+        this._internalRows = groupRowsByParents(
+          this._internalRows,
+          optionalGetterForProp(this.treeFromRelation),
+          optionalGetterForProp(this.treeToRelation)
+        );
+      }
     }
     if (this.groupedRows && this.groupedRows.length) {
       const sortOnGroupHeader = this.sorts?.find(sortColumns => sortColumns.prop === this._groupRowsBy);
