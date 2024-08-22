@@ -344,6 +344,28 @@ $datatable-summary-row-background-hover: #ddd !default;
       line-height: 50px;
       height: 50px;
       padding: 0 1.2rem;
+
+
+      a {
+        height: 22px;
+        min-width: 24px;
+        line-height: 22px;
+        padding: 3px 12px;
+        border-radius: 3px;
+        margin: 6px 3px;
+        text-align: center;
+        vertical-align: top;
+        color: $datatable-pager-color;
+        text-decoration: none;
+        vertical-align: middle;
+        font-weight: bold;
+        font-size: 16px;
+
+        &:hover {
+          color: $datatable-pager-color-hover;
+          background-color: $datatable-pager-background-hover;
+        }
+      }
     }
 
     .datatable-pager {
@@ -382,6 +404,7 @@ $datatable-summary-row-background-hover: #ddd !default;
         }
       }
 
+      .datatable-icon-refresh,
       .datatable-icon-left,
       .datatable-icon-skip,
       .datatable-icon-right,

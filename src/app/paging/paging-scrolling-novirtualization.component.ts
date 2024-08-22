@@ -35,6 +35,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
         [offset]="page.pageNumber"
         [limit]="page.size"
         (page)="setPage($event)"
+        (refresh)="setPage($event)"
       >
       </ngx-datatable>
     </div>

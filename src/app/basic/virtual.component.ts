@@ -25,6 +25,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
         [rowHeight]="getRowHeight"
         [scrollbarV]="true"
         (page)="onPage($event)"
+        (refresh)="onPage($event)"
       >
         <ngx-datatable-column name="Name" [width]="300">
           <ng-template let-value="value" ngx-datatable-cell-template>

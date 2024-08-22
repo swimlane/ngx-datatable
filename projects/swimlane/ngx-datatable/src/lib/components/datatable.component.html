@@ -78,7 +78,9 @@
     [selectedCount]="selected.length"
     [selectedMessage]="!!selectionType && messages.selectedMessage"
     [pagerNextIcon]="cssClasses.pagerNext"
+    [refreshIcon]="cssClasses.refresh"
     (page)="onFooterPage($event)"
+    (refresh)="onFooterRefresh($event)"
   >
   </datatable-footer>
 </div>

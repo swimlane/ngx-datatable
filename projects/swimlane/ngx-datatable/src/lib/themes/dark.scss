@@ -59,6 +59,26 @@
       line-height: 50px;
       height: 50px;
       padding: 0 1.2rem;
+      
+      a {
+        height: 22px;
+        min-width: 24px;
+        line-height: 22px;
+        padding: 4px 8px;
+        border-radius: 3px;
+        margin: 0 3px;
+        text-align: center;
+        vertical-align: top;
+        text-decoration: none;
+        vertical-align: middle;
+        color: #72809b;
+        font-size: 16px;
+
+        &:hover {
+          background-color: #455066;
+          font-weight: bold;
+        }
+      }
     }
 
     .datatable-pager {
@@ -93,6 +113,8 @@
         color: #72809b;
       }
 
+      
+      .datatable-icon-refresh,
       .datatable-icon-left,
       .datatable-icon-skip,
       .datatable-icon-right,

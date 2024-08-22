@@ -103,3 +103,7 @@
 .datatable-icon-prev::before {
   content: '\72';
 }
+
+.datatable-icon-refresh::before {
+  content: '\1F5D8';
+}

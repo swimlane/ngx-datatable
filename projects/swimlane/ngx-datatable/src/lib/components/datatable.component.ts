@@ -309,7 +309,8 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     pagerLeftArrow: 'datatable-icon-left',
     pagerRightArrow: 'datatable-icon-right',
     pagerPrevious: 'datatable-icon-prev',
-    pagerNext: 'datatable-icon-skip'
+    pagerNext: 'datatable-icon-skip',
+    refresh: 'datatable-icon-refresh'
   };
 
   /**
@@ -435,6 +436,11 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    * The table was paged either triggered by the pager or the body scroll.
    */
   @Output() page: EventEmitter<any> = new EventEmitter();
+
+  /**
+ * The table was refreshed
+ */
+  @Output() refresh: EventEmitter<any> = new EventEmitter();
 
   /**
    * Columns were re-ordered.
@@ -918,6 +924,28 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       });
     }
   }
+
+    /**
+   * The footer triggered a refresh event.
+   */
+    onFooterRefresh(event: any) {
+      this.offset = event.page - 1;
+      this.bodyComponent.updateOffsetY(this.offset);
+  
+      this.refresh.emit({
+        count: this.count,
+        pageSize: this.pageSize,
+        limit: this.limit,
+        offset: this.offset
+      });
+  
+      if (this.selectAllRowsOnPage) {
+        this.selected = [];
+        this.select.emit({
+          selected: this.selected
+        });
+      }
+    }
 
   /**
    * Recalculates the sizes of the page

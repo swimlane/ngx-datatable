@@ -23,6 +23,9 @@ import { DatatableFooterDirective } from './footer.directive';
       <div class="page-count" *ngIf="!footerTemplate">
         <span *ngIf="selectedMessage"> {{ selectedCount?.toLocaleString() }} {{ selectedMessage }} / </span>
         {{ rowCount?.toLocaleString() }} {{ totalMessage }}
+        <a role="button" aria-label="refresh" href="javascript:void(0)" (click)="reload()">
+          <i class="{{ refreshIcon }}"></i>
+        </a>
       </div>
       <datatable-pager
         *ngIf="!footerTemplate"
@@ -53,6 +56,7 @@ export class DataTableFooterComponent {
   @Input() pagerRightArrowIcon: string;
   @Input() pagerPreviousIcon: string;
   @Input() pagerNextIcon: string;
+  @Input() refreshIcon: string;
   @Input() totalMessage: string;
   @Input() footerTemplate: DatatableFooterDirective;
 
@@ -60,6 +64,13 @@ export class DataTableFooterComponent {
   @Input() selectedMessage: string | boolean;
 
   @Output() page: EventEmitter<any> = new EventEmitter();
+  @Output() refresh: EventEmitter<any> = new EventEmitter();
+
+  reload(): void {
+    this.refresh.emit({
+      page: this.curPage
+    })
+  }
 
   get isVisible(): boolean {
     return this.rowCount / this.pageSize > 1;

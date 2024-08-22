@@ -30,6 +30,7 @@ pagerLeftArrow: 'datatable-icon-left',
 pagerRightArrow: 'datatable-icon-right',
 pagerPrevious: 'datatable-icon-prev',
 pagerNext: 'datatable-icon-skip'
+refresh: 'datatable-icon-refresh'
 ```
 
 ## `externalPaging`

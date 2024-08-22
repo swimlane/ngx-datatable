@@ -212,6 +212,7 @@ describe('DataTableFooterComponent', () => {
       [selectedCount]="selectedCount"
       [selectedMessage]="selectedMessage"
       [pagerNextIcon]="pagerNextIcon"
+      [refreshIcon]="refreshIcon"
       (page)="onPageEvent($event)"
     >
     </datatable-footer>
@@ -243,6 +244,7 @@ class TestFixtureComponent {
   pagerRightArrowIcon: string;
   pagerPreviousIcon: string;
   pagerNextIcon: string;
+  refreshIcon: string;
   totalMessage: string;
   footerTemplate: { template: TemplateRef<any> };
   selectedCount: number;
@@ -274,6 +276,7 @@ class DataTablePagerComponentMock {
   @Input() pagerRightArrowIcon: string;
   @Input() pagerPreviousIcon: string;
   @Input() pagerNextIcon: string;
+  @Input() refreshIcon: string;
   @Input() page: number;
   @Input() size: number;
   @Input() count: number;

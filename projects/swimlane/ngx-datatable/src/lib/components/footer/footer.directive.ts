@@ -10,6 +10,7 @@ export class DatatableFooterDirective {
   @Input() pagerRightArrowIcon: string;
   @Input() pagerPreviousIcon: string;
   @Input() pagerNextIcon: string;
+  @Input() refreshIcon: string;
 
   @Input('template')
   _templateInput: TemplateRef<any>;

@@ -47,6 +47,7 @@ interface PageInfo {
         [count]="totalElements"
         [offset]="pageNumber"
         (page)="setPage($event)"
+        (refresh)="setPage($event)"
       >
       </ngx-datatable>
     </div>
