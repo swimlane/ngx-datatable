@@ -944,6 +944,11 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       adjustColumnWidths(columns, width);
     }
 
+    if (this.bodyComponent) {
+      this.bodyComponent.updateColumnGroupWidths();
+      this.bodyComponent.cd.markForCheck();
+    }
+
     return columns;
   }
 

@@ -269,8 +269,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Input() set columns(val: any[]) {
     if (val !== this._columns) {
       this._columns = val;
-      const colsByPin = columnsByPin(val);
-      this.columnGroupWidths = columnGroupWidths(colsByPin, val);
+      this.updateColumnGroupWidths();
     }
   }
 
@@ -1013,5 +1012,10 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     });
     this._draggedRow = undefined;
     this._draggedRowElement = undefined;
+  }
+
+  updateColumnGroupWidths() {
+    const colsByPin = columnsByPin(this._columns);
+    this.columnGroupWidths = columnGroupWidths(colsByPin, this._columns);
   }
 }
