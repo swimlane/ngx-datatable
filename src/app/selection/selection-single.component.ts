@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ColumnMode, SelectionType } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode, SelectionType, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { Employee } from '../data.model';
 
 @Component({
   selector: 'single-selection-demo',
@@ -51,11 +52,11 @@ import { ColumnMode, SelectionType } from 'projects/swimlane/ngx-datatable/src/p
   `
 })
 export class SingleSelectionComponent {
-  rows = [];
+  rows: Employee[] = [];
 
-  selected = [];
+  selected: Employee[] = [];
 
-  columns: any[] = [{ prop: 'name' }, { name: 'Company' }, { name: 'Gender' }];
+  columns: TableColumn[] = [{ prop: 'name' }, { name: 'Company' }, { name: 'Gender' }];
 
   ColumnMode = ColumnMode;
   SelectionType = SelectionType;

@@ -1,5 +1,6 @@
-import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { ColumnMode, DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { Employee } from '../data.model';
 
 @Component({
   selector: 'live-data-demo',
@@ -41,13 +42,13 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
   `
 })
 export class LiveDataComponent {
-  @ViewChild('mydatatable') mydatatable: any;
+  @ViewChild('mydatatable') mydatatable: DatatableComponent<Employee & { updated: string }>;
 
   count = 50;
-  rows: any[] = [];
+  rows: (Employee & { updated: string })[] = [];
   active = true;
-  temp: any[] = [];
-  cols: any = ['name', 'gender', 'company'];
+  temp: (Employee & { updated: string })[] = [];
+  cols = ['name', 'gender', 'company'];
 
   ColumnMode = ColumnMode;
 

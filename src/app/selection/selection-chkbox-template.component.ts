@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ColumnMode, SelectionType } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { Employee } from '../data.model';
 
 @Component({
   selector: 'chkbox-selection-template-demo',
@@ -43,13 +44,8 @@ import { ColumnMode, SelectionType } from 'projects/swimlane/ngx-datatable/src/p
             [draggable]="false"
             [resizeable]="false"
           >
-            <ng-template
-              ngx-datatable-header-template
-              let-value="value"
-              let-allRowsSelected="allRowsSelected"
-              let-selectFn="selectFn"
-            >
-              <input type="checkbox" [checked]="allRowsSelected" (change)="selectFn(!allRowsSelected)" />
+            <ng-template ngx-datatable-header-template let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
+              <input type="checkbox" [checked]="allRowsSelected" (change)="selectFn()" />
             </ng-template>
             <ng-template
               ngx-datatable-cell-template
@@ -81,8 +77,8 @@ import { ColumnMode, SelectionType } from 'projects/swimlane/ngx-datatable/src/p
   `
 })
 export class CustomCheckboxSelectionComponent {
-  rows = [];
-  selected = [];
+  rows: Employee[] = [];
+  selected: Employee[] = [];
 
   ColumnMode = ColumnMode;
   SelectionType = SelectionType;

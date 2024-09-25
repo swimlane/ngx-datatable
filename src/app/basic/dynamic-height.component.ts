@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { FullEmployee } from '../data.model';
 
 @Component({
   selector: 'dynamic-height-demo',
@@ -33,7 +34,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
   `
 })
 export class DynamicHeightComponent {
-  rows = [];
+  rows: FullEmployee[] = [];
   expanded = {};
   timeout: any;
 

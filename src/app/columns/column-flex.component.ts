@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { Employee } from '../data.model';
 
 @Component({
   selector: 'column-flex-demo',
@@ -44,7 +45,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
   `
 })
 export class ColumnFlexComponent {
-  rows = [];
+  rows: Employee[] = [];
 
   ColumnMode = ColumnMode;
 

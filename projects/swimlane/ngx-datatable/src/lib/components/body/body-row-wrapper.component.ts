@@ -17,7 +17,13 @@ import {
   ViewChild
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Group, RowOrGroup } from '../../types/group.type';
+import { NgStyle } from '@angular/common';
 import { DatatableComponentToken } from '../../utils/table-token';
+import { RowDetailContext } from '../../types/detail-context.type';
+import { GroupContext } from '../../types/cell-context.type';
+import { DatatableGroupHeaderDirective } from './body-group-header.directive';
+import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive';
 
 @Component({
   selector: 'datatable-row-wrapper',
@@ -35,7 +41,7 @@ import { DatatableComponentToken } from '../../utils/table-token';
             <input
               #select
               type="checkbox"
-              [checked]="selectedGroupRows.length === row.value.length"
+              [checked]="selectedGroupRows.length === group.value.length"
               (change)="onCheckboxChange(select.checked)"
             />
           </label>
@@ -67,19 +73,19 @@ import { DatatableComponentToken } from '../../utils/table-token';
     class: 'datatable-row-wrapper'
   }
 })
-export class DataTableRowWrapperComponent implements DoCheck, OnInit {
+export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit {
   @ViewChild('select') checkBoxInput!: ElementRef<HTMLInputElement>;
   @Input() innerWidth: number;
-  @Input() rowDetail: any;
-  @Input() groupHeader: any;
+  @Input() rowDetail: DatatableRowDetailDirective;
+  @Input() groupHeader: DatatableGroupHeaderDirective;
   @Input() offsetX: number;
-  @Input() detailRowHeight: any;
+  @Input() detailRowHeight: number;
   @Input() groupHeaderRowHeight: number;
-  @Input() row: any;
-  @Input() groupedRows: any;
-  @Input() disableCheck: (row: any) => boolean;
-  @Input() selected: any[];
-  @Output() rowContextmenu = new EventEmitter<{ event: MouseEvent; row: any }>(false);
+  @Input() row: RowOrGroup<TRow>;
+  @Input() groupedRows: Group<TRow>[];
+  @Input() disableCheck: (row: RowOrGroup<TRow>) => boolean;
+  @Input() selected: TRow[];
+  @Output() rowContextmenu = new EventEmitter<{ event: MouseEvent; row: RowOrGroup<TRow> }>(false);
 
   @Input() set rowIndex(val: number) {
     this._rowIndex = val;
@@ -92,7 +98,7 @@ export class DataTableRowWrapperComponent implements DoCheck, OnInit {
     return this._rowIndex;
   }
 
-  selectedGroupRows = [];
+  selectedGroupRows: TRow[] = [];
 
   @Input() set expanded(val: boolean) {
     this._expanded = val;
@@ -105,21 +111,17 @@ export class DataTableRowWrapperComponent implements DoCheck, OnInit {
     return this._expanded;
   }
 
-  groupContext: any;
-  rowContext: any;
+  groupContext: GroupContext<TRow>;
+  rowContext: RowDetailContext<TRow>;
   disable$: BehaviorSubject<boolean>;
 
-  private rowDiffer: KeyValueDiffer<unknown, unknown>;
-  private selectedRowsDiffer: IterableDiffer<unknown[]>;
+  private rowDiffer: KeyValueDiffer<keyof RowOrGroup<TRow>, any>;
+  private selectedRowsDiffer: IterableDiffer<TRow>;
   private _expanded = false;
   private _rowIndex: number;
   private tableComponent = inject(DatatableComponentToken);
 
-  constructor(
-    private cd: ChangeDetectorRef,
-    private differs: KeyValueDiffers,
-    private iterableDiffers: IterableDiffers
-  ) {
+  constructor(private cd: ChangeDetectorRef, differs: KeyValueDiffers, private iterableDiffers: IterableDiffers) {
     this.groupContext = {
       group: this.row,
       expanded: this.expanded,
@@ -129,27 +131,39 @@ export class DataTableRowWrapperComponent implements DoCheck, OnInit {
     this.rowContext = {
       row: this.row,
       expanded: this.expanded,
-      rowIndex: this.rowIndex
+      rowIndex: this.rowIndex,
+      disableRow$: this.disable$
     };
 
     this.rowDiffer = differs.find({}).create();
     this.selectedRowsDiffer = this.iterableDiffers.find(this.selected ?? []).create();
   }
 
+  get group(): Group<TRow> {
+    if (typeof this.row === 'object' && 'value' in this.row) {
+      return this.row;
+    } else {
+      throw new Error('Row is not a group');
+    }
+  }
+
   ngOnInit(): void {
     if (this.disableCheck) {
       const isRowDisabled = this.disableCheck(this.row);
       this.disable$ = new BehaviorSubject(isRowDisabled);
+      this.rowContext.disableRow$ = this.disable$;
     }
-    this.rowContext.disableRow$ = this.disable$;
   }
 
   ngDoCheck(): void {
     if (this.disableCheck) {
       const isRowDisabled = this.disableCheck(this.row);
-      this.disable$.next(isRowDisabled);
-      this.cd.markForCheck();
+      if (isRowDisabled !== this.disable$.value) {
+        this.disable$.next(isRowDisabled);
+        this.cd.markForCheck();
+      }
     }
+
     if (this.rowDiffer.diff(this.row)) {
       this.rowContext.row = this.row;
       this.groupContext.group = this.row;
@@ -160,9 +174,9 @@ export class DataTableRowWrapperComponent implements DoCheck, OnInit {
     // if any of the row of this group is not present in `selected` rows array
     // mark group header checkbox state as indeterminate
     if (this.groupHeader?.checkboxable && this.selectedRowsDiffer.diff(this.selected)) {
-      const selectedRows = this.selected.filter(row => this.row.value.find(item => item === row));
+      const selectedRows = this.selected.filter(row => this.group.value.find(item => item === row));
       if (this.checkBoxInput) {
-        if (selectedRows.length && selectedRows.length !== this.row.value.length) {
+        if (selectedRows.length && selectedRows.length !== this.group.value.length) {
           this.checkBoxInput.nativeElement.indeterminate = true;
         } else {
           this.checkBoxInput.nativeElement.indeterminate = false;
@@ -177,22 +191,20 @@ export class DataTableRowWrapperComponent implements DoCheck, OnInit {
     this.rowContextmenu.emit({ event: $event, row: this.row });
   }
 
-  getGroupHeaderStyle(): any {
-    const styles = {};
-
-    styles['transform'] = 'translate3d(' + this.offsetX + 'px, 0px, 0px)';
-    styles['backface-visibility'] = 'hidden';
-    styles['width'] = this.innerWidth + 'px';
-
-    return styles;
+  getGroupHeaderStyle(): NgStyle['ngStyle'] {
+    return {
+      transform: 'translate3d(' + this.offsetX + 'px, 0px, 0px)',
+      'backface-visibility': 'hidden',
+      width: this.innerWidth + 'px'
+    };
   }
 
   onCheckboxChange(groupSelected: boolean): void {
     // First remove all rows of this group from `selected`
-    this.selected = [...this.selected.filter(row => !this.row.value.find(item => item === row))];
+    this.selected = [...this.selected.filter(row => !this.group.value.find(item => item === row))];
     // If checkbox is checked then add all rows of this group in `selected`
     if (groupSelected) {
-      this.selected = [...this.selected, ...this.row.value];
+      this.selected = [...this.selected, ...this.group.value];
     }
     // Update `selected` of DatatableComponent with newly evaluated `selected`
     this.tableComponent.selected = [...this.selected];

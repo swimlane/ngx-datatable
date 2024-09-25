@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { Employee } from '../data.model';
 
 @Component({
   selector: 'footer-demo',
@@ -46,9 +47,9 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
   `
 })
 export class FooterDemoComponent {
-  rows = [];
+  rows: Employee[] = [];
 
-  columns = [{ prop: 'name' }, { name: 'Gender' }, { name: 'Company' }];
+  columns: TableColumn[] = [{ prop: 'name' }, { name: 'Gender' }, { name: 'Company' }];
 
   ColumnMode = ColumnMode;
 

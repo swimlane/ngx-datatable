@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { DatatableComponent } from '../../../projects/swimlane/ngx-datatable/src/lib/components/datatable.component';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { DatatableComponent } from 'projects/swimlane/ngx-datatable/src/lib/components/datatable.component';
+import { ColumnMode, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { Employee } from '../data.model';
 
 @Component({
   selector: 'filter-demo',
@@ -39,12 +40,12 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
   `
 })
 export class FilterBarComponent {
-  rows = [];
+  rows: Employee[] = [];
 
-  temp = [];
+  temp: Employee[] = [];
 
-  columns = [{ prop: 'name' }, { name: 'Company' }, { name: 'Gender' }];
-  @ViewChild(DatatableComponent) table: DatatableComponent;
+  columns: TableColumn[] = [{ prop: 'name' }, { name: 'Company' }, { name: 'Gender' }];
+  @ViewChild(DatatableComponent) table: DatatableComponent<Employee>;
 
   ColumnMode = ColumnMode;
 
@@ -72,13 +73,10 @@ export class FilterBarComponent {
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
 
-    // filter our data
-    const temp = this.temp.filter(function (d) {
+    // filter our data and update the rows
+    this.rows = this.temp.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
-
-    // update the rows
-    this.rows = temp;
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
   }

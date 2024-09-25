@@ -18,6 +18,11 @@ import {
 import { TableColumn } from '../../types/table-column.type';
 import { SortDirection } from '../../types/sort-direction.type';
 import { Keys } from '../../utils/keys';
+import { RowOrGroup } from '../../types/group.type';
+import { BehaviorSubject } from 'rxjs';
+import { ActivateEvent } from '../../types/activate-event.type';
+import { CellContext } from '../../types/cell-context.type';
+import { SortPropDir } from '../../types/sort-prop-dir.type';
 
 export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
 
@@ -70,11 +75,11 @@ export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
     </ng-template>
   `
 })
-export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
-  @Input() displayCheck: (row: any, column?: TableColumn, value?: any) => boolean;
+export class DataTableBodyCellComponent<TRow extends { level?: number } = any> implements DoCheck, OnDestroy {
+  @Input() displayCheck: (row: RowOrGroup<TRow>, column: TableColumn, value: any) => boolean;
 
-  _disable$;
-  @Input() set disable$(val: any) {
+  _disable$: BehaviorSubject<boolean>;
+  @Input() set disable$(val: BehaviorSubject<boolean>) {
     this._disable$ = val;
     this.cellContext.disable$ = val;
   }
@@ -82,7 +87,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     return this._disable$;
   }
 
-  @Input() set group(group: any) {
+  @Input() set group(group: TRow[]) {
     this._group = group;
     this.cellContext.group = group;
     this.checkValueUpdates();
@@ -146,23 +151,23 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     return this._column;
   }
 
-  @Input() set row(row: any) {
+  @Input() set row(row: RowOrGroup<TRow>) {
     this._row = row;
     this.cellContext.row = row;
     this.checkValueUpdates();
     this.cd.markForCheck();
   }
 
-  get row(): any {
+  get row(): RowOrGroup<TRow> {
     return this._row;
   }
 
-  @Input() set sorts(val: any[]) {
+  @Input() set sorts(val: SortPropDir[]) {
     this._sorts = val;
-    this.calcSortDir = this.calcSortDir(val);
+    this.sortDir = this.calcSortDir(val);
   }
 
-  get sorts(): any[] {
+  get sorts(): SortPropDir[] {
     return this._sorts;
   }
 
@@ -183,7 +188,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
 
   @Input() ghostLoadingIndicator = false;
 
-  @Output() activate: EventEmitter<any> = new EventEmitter();
+  @Output() activate: EventEmitter<ActivateEvent<TRow>> = new EventEmitter();
 
   @Output() treeAction: EventEmitter<any> = new EventEmitter();
 
@@ -194,7 +199,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
   ghostLoaderTemplate: ViewContainerRef;
 
   @HostBinding('class')
-  get columnCssClasses(): any {
+  get columnCssClasses(): string {
     let cls = 'datatable-body-cell';
     if (this.column.cellClass) {
       if (typeof this.column.cellClass === 'string') {
@@ -263,30 +268,28 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     return height + 'px';
   }
 
-  sanitizedValue: any;
+  sanitizedValue: string;
   value: any;
   sortDir: SortDirection;
   isFocused = false;
-  onCheckboxChangeFn = this.onCheckboxChange.bind(this);
-  activateFn = this.activate.emit.bind(this.activate);
 
-  cellContext: any;
+  cellContext: CellContext<TRow>;
 
   private _isSelected: boolean;
-  private _sorts: any[];
+  private _sorts: SortPropDir[];
   private _column: TableColumn;
-  private _row: any;
-  private _group: any;
+  private _row: RowOrGroup<TRow>;
+  private _group: TRow[];
   private _rowHeight: number;
   private _rowIndex: number;
   private _expanded: boolean;
-  private _element: any;
+  private _element: HTMLElement;
   private _treeStatus: TreeStatus;
 
-  constructor(element: ElementRef, private cd: ChangeDetectorRef) {
+  constructor(element: ElementRef<HTMLElement>, private cd: ChangeDetectorRef) {
     this.cellContext = {
-      onCheckboxChangeFn: this.onCheckboxChangeFn,
-      activateFn: this.activateFn,
+      onCheckboxChangeFn: (event: Event) => this.onCheckboxChange(event),
+      activateFn: (event: ActivateEvent<TRow>) => this.activate.emit(event),
       row: this.row,
       group: this.group,
       value: this.value,
@@ -296,7 +299,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
       rowIndex: this.rowIndex,
       treeStatus: this.treeStatus,
       disable$: this.disable$,
-      onTreeAction: this.onTreeAction.bind(this)
+      onTreeAction: () => this.onTreeAction()
     };
 
     this._element = element.nativeElement;
@@ -407,7 +410,7 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     }
   }
 
-  onCheckboxChange(event: any): void {
+  onCheckboxChange(event: Event): void {
     this.activate.emit({
       type: 'checkbox',
       event,
@@ -421,17 +424,15 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     });
   }
 
-  calcSortDir(sorts: any[]): any {
+  calcSortDir(sorts: SortPropDir[]): SortDirection {
     if (!sorts) {
       return;
     }
 
-    const sort = sorts.find((s: any) => {
-      return s.prop === this.column.prop;
-    });
+    const sort = sorts.find(s => s.prop === this.column.prop);
 
     if (sort) {
-      return sort.dir;
+      return sort.dir as SortDirection;
     }
   }
 
@@ -446,8 +447,8 @@ export class DataTableBodyCellComponent implements DoCheck, OnDestroy {
     this.treeAction.emit(this.row);
   }
 
-  calcLeftMargin(column: any, row: any) {
+  calcLeftMargin(column: TableColumn, row: RowOrGroup<TRow>): number {
     const levelIndent = column.treeLevelIndent != null ? column.treeLevelIndent : 50;
-    return column.isTreeColumn ? row.level * levelIndent : 0;
+    return column.isTreeColumn ? (row as TRow).level * levelIndent : 0;
   }
 }

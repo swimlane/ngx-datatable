@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { Employee } from '../data.model';
 
 @Component({
   selector: 'basic-bootstrap-theme-demo',
@@ -35,11 +36,11 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
   `
 })
 export class BootstrapThemeComponent {
-  rows = [];
+  rows: Employee[] = [];
   loadingIndicator = true;
   reorderable = true;
 
-  columns = [
+  columns: TableColumn[] = [
     { prop: 'name', summaryFunc: () => null },
     { name: 'Gender', summaryFunc: cells => this.summaryForGender(cells) },
     { name: 'Company', summaryFunc: () => null }

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ColumnMode, SelectionType } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { FullEmployee } from '../data.model';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'disabled-rows-demo',
@@ -79,7 +81,7 @@ import { ColumnMode, SelectionType } from 'projects/swimlane/ngx-datatable/src/p
   `
 })
 export class DisabledRowsComponent {
-  rows = [];
+  rows: (FullEmployee & { isDisabled?: boolean })[] = [];
 
   ColumnMode = ColumnMode;
   SelectionType = SelectionType;
@@ -101,21 +103,17 @@ export class DisabledRowsComponent {
     req.send();
   }
 
-  isRowDisabled(row: any) {
-    if (!row.isDisabled && row.age < 40) {
-      return false;
-    } else {
-      return true;
-    }
+  isRowDisabled(row: FullEmployee & { isDisabled: boolean }) {
+    return !(!row.isDisabled && row.age < 40);
   }
 
-  disableRow(rowIndex, disableRow$) {
+  disableRow(rowIndex: number, disableRow$: BehaviorSubject<boolean>) {
     this.rows[rowIndex].isDisabled = true;
     this.rows = [...this.rows];
     disableRow$.next(true);
   }
 
-  updateValue(event, cell, rowIndex, disableRow$) {
+  updateValue(event, cell, rowIndex: number, disableRow$: BehaviorSubject<boolean>) {
     this.rows[rowIndex][cell] = event.target.value;
     this.rows = [...this.rows];
     if (disableRow$ && cell === 'age' && this.rows[rowIndex][cell] > 40) {

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { Employee } from '../data.model';
 
 @Component({
   selector: 'comparator-sorting-demo',
@@ -30,9 +31,9 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
   `
 })
 export class SortingComparatorComponent {
-  rows = [];
+  rows: Employee[] = [];
 
-  columns = [
+  columns: TableColumn[] = [
     { name: 'Company', comparator: this.companyComparator.bind(this) },
     { name: 'Name', sortable: false },
     { name: 'Gender', sortable: false }

@@ -2,16 +2,17 @@ import { Directive, Input, Output, EventEmitter, HostBinding, HostListener, OnDe
 import { Observable, Subscription, fromEvent } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MouseEvent } from '../events';
+import { TableColumn } from '../types/table-column.type';
 
 @Directive({ selector: '[long-press]' })
 export class LongPressDirective implements OnDestroy {
-  @Input() pressEnabled: boolean = true;
-  @Input() pressModel: any;
-  @Input() duration: number = 500;
+  @Input() pressEnabled = true;
+  @Input() pressModel: TableColumn;
+  @Input() duration = 500;
 
-  @Output() longPressStart: EventEmitter<any> = new EventEmitter();
-  @Output() longPressing: EventEmitter<any> = new EventEmitter();
-  @Output() longPressEnd: EventEmitter<any> = new EventEmitter();
+  @Output() longPressStart: EventEmitter<{ event: MouseEvent; model: TableColumn }> = new EventEmitter();
+  @Output() longPressing: EventEmitter<{ event: MouseEvent; model: TableColumn }> = new EventEmitter();
+  @Output() longPressEnd: EventEmitter<{ model: TableColumn }> = new EventEmitter();
 
   pressing: boolean;
   isLongPressing: boolean;

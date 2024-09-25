@@ -1,5 +1,6 @@
-import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ColumnMode, DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { FullEmployee } from '../data.model';
 
 @Component({
   selector: 'row-details-demo',
@@ -88,9 +89,9 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
   encapsulation: ViewEncapsulation.None
 })
 export class RowDetailsComponent {
-  @ViewChild('myTable') table: any;
+  @ViewChild('myTable') table: DatatableComponent<FullEmployee>;
 
-  rows: any[] = [];
+  rows: FullEmployee[] = [];
   expanded: any = {};
   timeout: any;
 

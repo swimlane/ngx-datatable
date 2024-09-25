@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { Employee } from '../data.model';
 
 @Component({
   selector: 'server-sorting-demo',
@@ -35,9 +36,9 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
 export class ServerSortingComponent {
   loading = false;
 
-  rows = [];
+  rows: Employee[] = [];
 
-  columns = [
+  columns: TableColumn[] = [
     { name: 'Company', sortable: true },
     { name: 'Name', sortable: true },
     { name: 'Gender', sortable: true }

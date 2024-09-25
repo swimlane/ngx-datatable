@@ -1,5 +1,6 @@
-import { PipeTransform } from '@angular/core';
+import { PipeTransform, TemplateRef } from '@angular/core';
 import { ValueGetter } from '../utils/column-prop-getters';
+import { HeaderCellContext } from './cell-context.type';
 
 /**
  * Column property that indicates how to retrieve this column's
@@ -120,6 +121,15 @@ export interface TableColumn {
    */
   draggable?: boolean;
 
+  /** @internal */
+  dragging?: boolean;
+
+  /** @internal */
+  isTarget?: boolean;
+
+  /** @internal */
+  targetMarkerContext?: any;
+
   /**
    * Whether the column can automatically resize to fill space in the table.
    *
@@ -164,7 +174,7 @@ export interface TableColumn {
    *
    * @memberOf TableColumn
    */
-  headerTemplate?: any;
+  headerTemplate?: TemplateRef<HeaderCellContext>;
 
   /**
    * Tree toggle template ref

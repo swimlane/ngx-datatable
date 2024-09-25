@@ -1,21 +1,22 @@
 import { Input, Output, EventEmitter, Directive, TemplateRef, ContentChild } from '@angular/core';
 import { DatatableRowDetailTemplateDirective } from './row-detail-template.directive';
+import { RowDetailContext } from '../../types/detail-context.type';
 
 @Directive({ selector: 'ngx-datatable-row-detail' })
-export class DatatableRowDetailDirective {
+export class DatatableRowDetailDirective<TRow = any> {
   /**
    * The detail row height is required especially
    * when virtual scroll is enabled.
    */
-  @Input() rowHeight: number | ((row?: any, index?: number) => number) = 0;
+  @Input() rowHeight: number | ((row?: TRow, index?: number) => number) = 0;
 
   @Input('template')
-  _templateInput: TemplateRef<any>;
+  _templateInput: TemplateRef<RowDetailContext<TRow>>;
 
   @ContentChild(DatatableRowDetailTemplateDirective, { read: TemplateRef, static: true })
-  _templateQuery: TemplateRef<any>;
+  _templateQuery: TemplateRef<RowDetailContext<TRow>>;
 
-  get template(): TemplateRef<any> {
+  get template(): TemplateRef<RowDetailContext<TRow>> {
     return this._templateInput || this._templateQuery;
   }
 
@@ -27,7 +28,7 @@ export class DatatableRowDetailDirective {
   /**
    * Toggle the expansion of the row
    */
-  toggleExpandRow(row: any): void {
+  toggleExpandRow(row: TRow): void {
     this.toggle.emit({
       type: 'row',
       value: row

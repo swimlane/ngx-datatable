@@ -1,6 +1,12 @@
-import { Directive, TemplateRef } from '@angular/core';
+import { Directive } from '@angular/core';
+import { FooterContext } from '../../types/footer-context';
 
 @Directive({ selector: '[ngx-datatable-footer-template]' })
 export class DataTableFooterTemplateDirective {
-  constructor(public template: TemplateRef<any>) {}
+  static ngTemplateContextGuard(
+    directive: DataTableFooterTemplateDirective,
+    context: unknown
+  ): context is FooterContext {
+    return true;
+  }
 }

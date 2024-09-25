@@ -1,27 +1,32 @@
 import {
-  Directive,
-  Output,
-  EventEmitter,
-  ContentChildren,
-  QueryList,
-  KeyValueDiffers,
   AfterContentInit,
+  ContentChildren,
+  Directive,
+  EventEmitter,
+  Inject,
+  KeyValueChangeRecord,
+  KeyValueDiffer,
+  KeyValueDiffers,
   OnDestroy,
-  Inject
+  Output,
+  QueryList
 } from '@angular/core';
 import { DraggableDirective } from './draggable.directive';
 import { DOCUMENT } from '@angular/common';
+import { TableColumn } from '../types/table-column.type';
+import { DraggableDragEvent } from '../types/drag-events.type';
+import { OrderableReorderEvent, OrderPosition, TargetChangedEvent } from '../types/orderable.types';
 
 @Directive({ selector: '[orderable]' })
 export class OrderableDirective implements AfterContentInit, OnDestroy {
-  @Output() reorder: EventEmitter<any> = new EventEmitter();
-  @Output() targetChanged: EventEmitter<any> = new EventEmitter();
+  @Output() reorder: EventEmitter<OrderableReorderEvent> = new EventEmitter();
+  @Output() targetChanged: EventEmitter<TargetChangedEvent> = new EventEmitter();
 
   @ContentChildren(DraggableDirective, { descendants: true })
   draggables: QueryList<DraggableDirective>;
 
-  positions: any;
-  differ: any;
+  positions: Record<string, OrderPosition>;
+  differ: KeyValueDiffer<string, DraggableDirective>;
   lastDraggingIndex: number;
 
   constructor(differs: KeyValueDiffers, @Inject(DOCUMENT) private document: any) {
@@ -46,8 +51,9 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
     const diffs = this.differ.diff(this.createMapDiffs());
 
     if (diffs) {
-      const subscribe = ({ currentValue, previousValue }: any) => {
-        unsubscribe({ previousValue });
+      const subscribe = (record: KeyValueChangeRecord<string, DraggableDirective>) => {
+        unsubscribe(record);
+        const { currentValue } = record;
 
         if (currentValue) {
           currentValue.dragStart.subscribe(this.onDragStart.bind(this));
@@ -56,7 +62,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
         }
       };
 
-      const unsubscribe = ({ previousValue }: any) => {
+      const unsubscribe = ({ previousValue }: KeyValueChangeRecord<string, DraggableDirective>) => {
         if (previousValue) {
           previousValue.dragStart.unsubscribe();
           previousValue.dragging.unsubscribe();
@@ -86,7 +92,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
     }
   }
 
-  onDragging({ element, model, event }: any): void {
+  onDragging({ element, model, event }: DraggableDragEvent): void {
     const prevPos = this.positions[model.$$id];
     const target = this.isTarget(model, event);
 
@@ -108,7 +114,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
     }
   }
 
-  onDragEnd({ element, model, event }: any): void {
+  onDragEnd({ element, model, event }: DraggableDragEvent): void {
     const prevPos = this.positions[model.$$id];
 
     const target = this.isTarget(model, event);
@@ -124,7 +130,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
     element.style.left = 'auto';
   }
 
-  isTarget(model: any, event: any): any {
+  isTarget(model: TableColumn, event: MouseEvent) {
     let i = 0;
     const x = event.x || event.clientX;
     const y = event.y || event.clientY;

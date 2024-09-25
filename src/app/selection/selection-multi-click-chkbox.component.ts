@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ColumnMode, SelectionType } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { Employee } from '../data.model';
 
 @Component({
   selector: 'multi-click-chkbox-selection-demo',
@@ -70,8 +71,8 @@ import { ColumnMode, SelectionType } from 'projects/swimlane/ngx-datatable/src/p
   `
 })
 export class MultiClickCheckboxSelectionComponent {
-  rows = [];
-  selected = [];
+  rows: Employee[] = [];
+  selected: Employee[] = [];
 
   ColumnMode = ColumnMode;
   SelectionType = SelectionType;

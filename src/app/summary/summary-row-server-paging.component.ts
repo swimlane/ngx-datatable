@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MockServerResultsService } from '../paging/mock-server-results-service';
-import { PagedData } from '../paging/model/paged-data';
-import { CorporateEmployee } from '../paging/model/corporate-employee';
 import { Page } from '../paging/model/page';
 import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { Employee } from '../data.model';
 
 @Component({
   selector: 'summary-row-server-paging-demo',
@@ -40,9 +39,14 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
     </div>
   `
 })
-export class SummaryRowServerPagingComponent {
-  page = new Page();
-  rows = new Array<CorporateEmployee>();
+export class SummaryRowServerPagingComponent implements OnInit {
+  page: Page = {
+    pageNumber: 0,
+    size: 20,
+    totalPages: 0,
+    totalElements: 0
+  };
+  rows: Employee[] = [];
 
   columns = [
     // NOTE: cells for current page only !
@@ -53,10 +57,7 @@ export class SummaryRowServerPagingComponent {
 
   ColumnMode = ColumnMode;
 
-  constructor(private serverResultsService: MockServerResultsService) {
-    this.page.pageNumber = 0;
-    this.page.size = 20;
-  }
+  constructor(private serverResultsService: MockServerResultsService) {}
 
   ngOnInit() {
     this.setPage({ offset: 0 });

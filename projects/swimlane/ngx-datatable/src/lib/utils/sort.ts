@@ -5,7 +5,7 @@ import { SortPropDir } from '../types/sort-prop-dir.type';
 /**
  * Gets the next sort direction
  */
-export function nextSortDir(sortType: SortType, current: SortDirection): SortDirection | undefined {
+export function nextSortDir(sortType: SortType, current: SortDirection | 'desc' | 'asc'): SortDirection | undefined {
   if (sortType === SortType.single) {
     if (current === SortDirection.asc) {
       return SortDirection.desc;

@@ -1,6 +1,8 @@
 import { Directive, ElementRef, Input, Output, EventEmitter, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { Subscription, fromEvent } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { TableColumn } from '../types/table-column.type';
+import { DraggableDragEvent } from '../types/drag-events.type';
 
 /**
  * Draggable Directive for Angular2
@@ -13,13 +15,13 @@ import { takeUntil } from 'rxjs/operators';
 @Directive({ selector: '[draggable]' })
 export class DraggableDirective implements OnDestroy, OnChanges {
   @Input() dragEventTarget: any;
-  @Input() dragModel: any;
-  @Input() dragX: boolean = true;
-  @Input() dragY: boolean = true;
+  @Input() dragModel: TableColumn;
+  @Input() dragX = true;
+  @Input() dragY = true;
 
-  @Output() dragStart: EventEmitter<any> = new EventEmitter();
-  @Output() dragging: EventEmitter<any> = new EventEmitter();
-  @Output() dragEnd: EventEmitter<any> = new EventEmitter();
+  @Output() dragStart: EventEmitter<DraggableDragEvent> = new EventEmitter();
+  @Output() dragging: EventEmitter<DraggableDragEvent> = new EventEmitter();
+  @Output() dragEnd: EventEmitter<DraggableDragEvent> = new EventEmitter();
 
   element: HTMLElement;
   isDragging: boolean = false;

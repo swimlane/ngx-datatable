@@ -1,3 +1,5 @@
+import { TableColumn } from './table-column.type';
+
 export type DragEventType = 'drag' | 'dragend' | 'dragenter' | 'dragleave' | 'dragover' | 'dragstart' | 'drop';
 
 export interface DragEventData {
@@ -7,4 +9,10 @@ export interface DragEventData {
   eventType: DragEventType;
   dragRow: any;
   dropRow?: any;
+}
+
+export interface DraggableDragEvent {
+  event: MouseEvent;
+  element: HTMLElement;
+  model: TableColumn;
 }

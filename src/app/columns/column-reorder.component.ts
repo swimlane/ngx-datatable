@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { Employee } from '../data.model';
 
 @Component({
   selector: 'column-reorder-demo',
@@ -56,12 +57,12 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
   `
 })
 export class ColumnReorderComponent {
-  rows = [];
+  rows: Employee[] = [];
   loadingIndicator = true;
   reorderable = true;
   swapColumns = false;
 
-  columns = [{ prop: 'name' }, { name: 'Gender' }, { name: 'Company', sortable: false }];
+  columns: TableColumn[] = [{ prop: 'name' }, { name: 'Gender' }, { name: 'Company', sortable: false }];
 
   ColumnMode = ColumnMode;
 

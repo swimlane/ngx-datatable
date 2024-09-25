@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode, TreeStatus } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { Employee } from '../data.model';
 
 @Component({
   selector: 'client-side-tree-demo',
@@ -48,7 +49,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
   styles: ['.icon {height: 10px; width: 10px; }', '.disabled {opacity: 0.5; }']
 })
 export class ClientTreeComponent {
-  rows = [];
+  rows: (Employee & { treeStatus: TreeStatus })[] = [];
 
   ColumnMode = ColumnMode;
 

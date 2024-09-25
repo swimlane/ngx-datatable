@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter, ChangeDetectionStrategy, Input } from '@angular/core';
 import { DatatableFooterDirective } from './footer.directive';
+import { PagerPageEvent } from '../../types/page-event.type';
 @Component({
   selector: 'datatable-footer',
   template: `
@@ -59,7 +60,7 @@ export class DataTableFooterComponent {
   @Input() selectedCount: number = 0;
   @Input() selectedMessage: string | boolean;
 
-  @Output() page: EventEmitter<any> = new EventEmitter();
+  @Output() page: EventEmitter<PagerPageEvent> = new EventEmitter();
 
   get isVisible(): boolean {
     return this.rowCount / this.pageSize > 1;

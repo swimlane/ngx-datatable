@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { Employee } from '../data.model';
 
 @Component({
   selector: 'rx-demo',
@@ -28,9 +29,9 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
   `
 })
 export class RxDemoComponent {
-  rows: Observable<any[]>;
+  rows: Observable<Employee[]>;
 
-  columns = [{ name: 'Name' }, { name: 'Gender' }, { name: 'Company' }];
+  columns: TableColumn[] = [{ name: 'Name' }, { name: 'Gender' }, { name: 'Company' }];
 
   ColumnMode = ColumnMode;
 

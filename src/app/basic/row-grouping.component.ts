@@ -1,8 +1,8 @@
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
-import { NgStyle } from '@angular/common';
-
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { Component, ViewChild } from '@angular/core';
+import { ColumnMode, DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { GroupedEmployee } from '../data.model';
 import { SelectionType } from 'projects/swimlane/ngx-datatable/src/lib/types/selection.type';
+
 @Component({
   selector: 'row-grouping-demo',
   template: `
@@ -134,15 +134,10 @@ import { SelectionType } from 'projects/swimlane/ngx-datatable/src/lib/types/sel
   `
 })
 export class RowGroupingComponent {
-  @ViewChild('myTable') table: any;
+  @ViewChild('myTable') table: DatatableComponent<GroupedEmployee>;
 
-  funder = [];
-  calculated = [];
-  pending = [];
-  groups = [];
-
-  editing = {};
-  rows = [];
+  editing: Record<string, boolean> = {};
+  rows: GroupedEmployee[] = [];
 
   ColumnMode = ColumnMode;
   SelectionType = SelectionType;
@@ -162,17 +157,6 @@ export class RowGroupingComponent {
     };
 
     req.send();
-  }
-
-  getGroupRowHeight(group, rowHeight) {
-    let style = {};
-
-    style = {
-      height: group.length * 40 + 'px',
-      width: '100%'
-    };
-
-    return style;
   }
 
   checkGroup(event, row, rowIndex, group) {

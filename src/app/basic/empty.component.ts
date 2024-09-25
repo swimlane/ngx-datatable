@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 @Component({
   selector: 'empty-demo',
@@ -30,6 +30,6 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
   `
 })
 export class BasicEmptyComponent {
-  columns = [{ prop: 'name' }, { name: 'Gender' }, { name: 'Company', sortable: false }];
+  columns: TableColumn[] = [{ prop: 'name' }, { name: 'Gender' }, { name: 'Company', sortable: false }];
   ColumnMode = ColumnMode;
 }

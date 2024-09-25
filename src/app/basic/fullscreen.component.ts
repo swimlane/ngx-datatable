@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { FullEmployee } from '../data.model';
 
 @Component({
   selector: 'full-screen-demo',
@@ -38,7 +39,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
   `
 })
 export class FullScreenComponent {
-  rows = [];
+  rows: FullEmployee[] = [];
 
   ColumnMode = ColumnMode;
 

@@ -12,8 +12,6 @@ import {
   ChangeDetectionStrategy
 } from '@angular/core';
 
-import { MouseEvent } from '../../events';
-
 @Component({
   selector: 'datatable-scroller',
   template: ` <ng-content></ng-content> `,
@@ -42,11 +40,10 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   prevScrollXPos = 0;
   element: HTMLElement;
   parentElement: HTMLElement;
-  onScrollListener: any;
 
   private _scrollEventListener: any = null;
 
-  constructor(private ngZone: NgZone, element: ElementRef<HTMLElement>, private renderer: Renderer2) {
+  constructor(element: ElementRef<HTMLElement>, private renderer: Renderer2) {
     this.element = element.nativeElement;
   }
 

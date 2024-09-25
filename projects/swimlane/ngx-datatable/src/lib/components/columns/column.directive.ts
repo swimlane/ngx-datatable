@@ -5,6 +5,7 @@ import { DataTableColumnCellTreeToggle } from './tree.directive';
 import { ColumnChangesService } from '../../services/column-changes.service';
 import { TableColumnProp } from '../../types/table-column.type';
 import { DataTableColumnGhostCellDirective } from './column-ghost-cell.directive';
+import { HeaderCellContext } from '../../types/cell-context.type';
 
 @Directive({ selector: 'ngx-datatable-column' })
 export class DataTableColumnDirective implements OnChanges {
@@ -42,12 +43,12 @@ export class DataTableColumnDirective implements OnChanges {
   }
 
   @Input('headerTemplate')
-  _headerTemplateInput: TemplateRef<any>;
+  _headerTemplateInput: TemplateRef<HeaderCellContext>;
 
   @ContentChild(DataTableColumnHeaderDirective, { read: TemplateRef, static: true })
-  _headerTemplateQuery: TemplateRef<any>;
+  _headerTemplateQuery: TemplateRef<HeaderCellContext>;
 
-  get headerTemplate(): TemplateRef<any> {
+  get headerTemplate(): TemplateRef<HeaderCellContext> {
     return this._headerTemplateInput || this._headerTemplateQuery;
   }
 
@@ -62,12 +63,12 @@ export class DataTableColumnDirective implements OnChanges {
   }
 
   @Input('ghostCellTemplate')
-  _ghostCellTemplateInput: TemplateRef<any>;
+  _ghostCellTemplateInput: TemplateRef<void>;
 
   @ContentChild(DataTableColumnGhostCellDirective, { read: TemplateRef, static: true })
-  _ghostCellTemplateQuery: TemplateRef<any>;
+  _ghostCellTemplateQuery: TemplateRef<void>;
 
-  get ghostCellTemplate(): TemplateRef<any> {
+  get ghostCellTemplate(): TemplateRef<void> {
     return this._ghostCellTemplateInput || this._ghostCellTemplateQuery;
   }
 
