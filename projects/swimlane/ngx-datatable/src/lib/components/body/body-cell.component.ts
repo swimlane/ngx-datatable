@@ -166,14 +166,14 @@ export class DataTableBodyCellComponent<TRow extends { level?: number } = any>
     return this._column;
   }
 
-  @Input() set row(row: RowOrGroup<TRow>) {
+  @Input() set row(row: TRow) {
     this._row = row;
     this.cellContext.row = row;
     this.checkValueUpdates();
     this.cd.markForCheck();
   }
 
-  get row(): RowOrGroup<TRow> {
+  get row(): TRow {
     return this._row;
   }
 
@@ -298,7 +298,7 @@ export class DataTableBodyCellComponent<TRow extends { level?: number } = any>
   private _isSelected: boolean;
   private _sorts: SortPropDir[];
   private _column: TableColumn;
-  private _row: RowOrGroup<TRow>;
+  private _row: TRow;
   private _group: TRow[];
   private _rowHeight: number;
   private _rowIndex: number;

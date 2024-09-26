@@ -638,7 +638,7 @@ export class DatatableComponent<TRow = any>
    * if described in your markup.
    */
   @ContentChildren(DataTableColumnDirective)
-    columnTemplates!: QueryList<DataTableColumnDirective>;
+  columnTemplates!: QueryList<DataTableColumnDirective>;
 
   /**
    * Row Detail templates gathered from the ContentChild

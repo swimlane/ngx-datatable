@@ -54,16 +54,16 @@ export interface HeaderCellContext {
   selectFn: () => void;
 }
 
-export interface GroupContext<TRow> {
-  group: RowOrGroup<TRow>;
+export interface GroupContext<TRow = any> {
+  group: Group<TRow>;
   expanded: boolean;
   rowIndex: number;
 }
 
-export interface CellContext<TRow> {
+export interface CellContext<TRow = any> {
   onCheckboxChangeFn: (event: Event) => void;
   activateFn: (event: ActivateEvent<TRow>) => void;
-  row: RowOrGroup<TRow>;
+  row: TRow;
   group: TRow[];
   value: any;
   column: TableColumn;
@@ -100,8 +100,8 @@ export interface Group<TRow> {
 /** Type for either a row or a group */
 export type RowOrGroup<TRow> = TRow | Group<TRow>;
 
-export interface RowDetailContext<TRow> {
-  row: RowOrGroup<TRow>;
+export interface RowDetailContext<TRow = any> {
+  row: TRow;
   expanded: boolean;
   rowIndex: number;
   disableRow$?: Observable<boolean>;
@@ -134,6 +134,18 @@ export interface ScrollEvent {
   offsetY: number;
   offsetX: number;
 }
+
+export interface GroupToggleEvent<TRow> {
+  type: 'group';
+  value: Group<TRow>;
+}
+
+export interface AllGroupsToggleEvent {
+  type: 'all';
+  value: boolean;
+}
+
+export type GroupToggleEvents<TRow> = GroupToggleEvent<TRow> | AllGroupsToggleEvent;
 
 export enum SelectionType {
   single = 'single',

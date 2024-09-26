@@ -4,11 +4,11 @@ import { RowDetailContext } from '../../types/public.types';
 @Directive({
   selector: '[ngx-datatable-row-detail-template]'
 })
-export class DatatableRowDetailTemplateDirective<TRow = any> {
-  static ngTemplateContextGuard<TRow>(
-    directive: DatatableRowDetailTemplateDirective<TRow>,
+export class DatatableRowDetailTemplateDirective {
+  static ngTemplateContextGuard(
+    directive: DatatableRowDetailTemplateDirective,
     context: unknown
-  ): context is RowDetailContext<TRow> {
+  ): context is RowDetailContext {
     return true;
   }
 }

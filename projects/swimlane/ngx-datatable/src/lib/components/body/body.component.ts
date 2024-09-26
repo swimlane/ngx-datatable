@@ -144,6 +144,7 @@ import {
           </ng-template>
 
           <ng-container *ngIf="isGroup(group)">
+            <!-- The row typecast is due to angular compiler acting weird. It is obvious that it is of type TRow, but the compiler does not understand. -->
             <datatable-body-row
               role="row"
               [disable$]="rowWrapper.disable$"
@@ -155,7 +156,7 @@ import {
               [offsetX]="offsetX"
               [columns]="columns"
               [rowHeight]="getRowHeight(row)"
-              [row]="row"
+              [row]="$any(row)"
               [group]="group.value"
               [rowIndex]="getRowIndex(row)"
               [expanded]="getRowExpanded(row)"

@@ -4,11 +4,11 @@ import { GroupContext } from '../../types/public.types';
 @Directive({
   selector: '[ngx-datatable-group-header-template]'
 })
-export class DatatableGroupHeaderTemplateDirective<TRow> {
-  static ngTemplateContextGuard<TRow>(
-    directive: DatatableGroupHeaderTemplateDirective<TRow>,
+export class DatatableGroupHeaderTemplateDirective {
+  static ngTemplateContextGuard(
+    directive: DatatableGroupHeaderTemplateDirective,
     context: unknown
-  ): context is GroupContext<TRow> {
+  ): context is GroupContext {
     return true;
   }
 }
