@@ -84,7 +84,9 @@ export function isNullOrUndefined<T>(value: T | null | undefined): value is null
 /**
  * Translates templates definitions to objects
  */
-export function translateTemplates(templates: DataTableColumnDirective[]): TableColumn[] {
+export function translateTemplates<TRow>(
+  templates: DataTableColumnDirective<TRow>[]
+): TableColumn[] {
   const result: TableColumn[] = [];
   for (const temp of templates) {
     const col: TableColumn = {};

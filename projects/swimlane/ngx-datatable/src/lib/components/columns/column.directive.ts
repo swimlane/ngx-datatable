@@ -12,10 +12,10 @@ import { DataTableColumnCellTreeToggle } from './tree.directive';
 import { ColumnChangesService } from '../../services/column-changes.service';
 import { TableColumnProp } from '../../types/table-column.type';
 import { DataTableColumnGhostCellDirective } from './column-ghost-cell.directive';
-import { HeaderCellContext } from '../../types/public.types';
+import { CellContext, HeaderCellContext } from '../../types/public.types';
 
 @Directive({ selector: 'ngx-datatable-column' })
-export class DataTableColumnDirective implements OnChanges {
+export class DataTableColumnDirective<TRow> implements OnChanges {
   @Input() name: string;
   @Input() prop: TableColumnProp;
   @Input() frozenLeft: any;
@@ -40,12 +40,12 @@ export class DataTableColumnDirective implements OnChanges {
   @Input() summaryTemplate: TemplateRef<any>;
 
   @Input('cellTemplate')
-  _cellTemplateInput: TemplateRef<any>;
+  _cellTemplateInput: TemplateRef<CellContext<TRow>>;
 
   @ContentChild(DataTableColumnCellDirective, { read: TemplateRef, static: true })
-  _cellTemplateQuery: TemplateRef<any>;
+  _cellTemplateQuery: TemplateRef<CellContext<TRow>>;
 
-  get cellTemplate(): TemplateRef<any> {
+  get cellTemplate(): TemplateRef<CellContext<TRow>> {
     return this._cellTemplateInput || this._cellTemplateQuery;
   }
 

@@ -638,7 +638,7 @@ export class DatatableComponent<TRow = any>
    * if described in your markup.
    */
   @ContentChildren(DataTableColumnDirective)
-  columnTemplates!: QueryList<DataTableColumnDirective>;
+  columnTemplates!: QueryList<DataTableColumnDirective<TRow>>;
 
   /**
    * Row Detail templates gathered from the ContentChild
@@ -815,7 +815,7 @@ export class DatatableComponent<TRow = any>
   /**
    * Translates the templates to the column objects
    */
-  translateColumns(val: QueryList<DataTableColumnDirective>) {
+  translateColumns(val: QueryList<DataTableColumnDirective<TRow>>) {
     if (val) {
       const arr = val.toArray();
       if (arr.length) {

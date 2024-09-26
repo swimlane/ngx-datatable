@@ -69,7 +69,7 @@ import { FullEmployee } from '../data.model';
         </ngx-datatable-column>
         <ngx-datatable-column name="Expanded" [width]="80">
           <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
-            <strong>{{ expanded === 1 }}</strong>
+            <strong>{{ expanded }}</strong>
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Name" [width]="200">

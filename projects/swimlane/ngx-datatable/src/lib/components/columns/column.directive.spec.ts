@@ -48,7 +48,7 @@ describe('DataTableColumnDirective', () => {
   }));
 
   describe('fixture', () => {
-    let directive: DataTableColumnDirective;
+    let directive: DataTableColumnDirective<unknown>;
 
     beforeEach(() => {
       directive = fixture.debugElement
@@ -66,7 +66,7 @@ describe('DataTableColumnDirective', () => {
   });
 
   describe('directive #1', () => {
-    let directive: DataTableColumnDirective;
+    let directive: DataTableColumnDirective<unknown>;
 
     beforeEach(() => {
       directive = fixture.debugElement.query(By.css('#t1')).injector.get(DataTableColumnDirective);
@@ -97,7 +97,7 @@ describe('DataTableColumnDirective', () => {
   });
 
   describe('directive #2', () => {
-    let directive: DataTableColumnDirective;
+    let directive: DataTableColumnDirective<unknown>;
 
     beforeEach(() => {
       directive = fixture.debugElement.query(By.css('#t2')).injector.get(DataTableColumnDirective);
