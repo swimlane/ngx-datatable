@@ -16,17 +16,15 @@ import {
   SkipSelf
 } from '@angular/core';
 
-import { TreeStatus } from './body-cell.component';
-import { columnsByPin, columnGroupWidths, columnsByPinArr } from '../../utils/column';
+import { columnGroupWidths, columnsByPin, columnsByPinArr } from '../../utils/column';
 import { Keys } from '../../utils/keys';
 import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 import { translateXY } from '../../utils/translate';
 import { BehaviorSubject } from 'rxjs';
-import { RowOrGroup } from '../../types/group.type';
+import { RowOrGroup, TreeStatus } from '../../types/public.types';
 import { NgStyle } from '@angular/common';
 import { TableColumn } from '../../types/table-column.type';
-import { PinnedColumns } from '../../types/column-pin.type';
-import { ColumnGroupWidth } from '../../types/column-group-width.type';
+import { ColumnGroupWidth, PinnedColumns } from '../../types/internal.types';
 
 @Component({
   selector: 'datatable-body-row',

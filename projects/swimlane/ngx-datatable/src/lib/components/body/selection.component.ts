@@ -1,7 +1,7 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { SelectionType } from '../../types/selection.type';
-import { selectRowsBetween, selectRows } from '../../utils/selection';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { selectRows, selectRowsBetween } from '../../utils/selection';
 import { Keys } from '../../utils/keys';
+import { SelectionType } from '../../types/public.types';
 
 export interface Model<TRow> {
   type: string;

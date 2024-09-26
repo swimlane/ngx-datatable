@@ -44,25 +44,7 @@ export * from './lib/services/dimensions-helper.service';
 export * from './lib/services/column-changes.service';
 
 // types
-export * from './lib/types/activate-event.type';
-export * from './lib/types/cell-context.type';
-export * from './lib/types/click.type';
-export * from './lib/types/column-group-width.type';
-export * from './lib/types/column-mode.type';
-export * from './lib/types/column-pin.type';
-export * from './lib/types/contextmenu.type';
-export * from './lib/types/detail-context.type';
-export * from './lib/types/drag-events.type';
-export * from './lib/types/footer-context';
-export * from './lib/types/group.type';
-export * from './lib/types/orderable.types';
-export * from './lib/types/page-event.type';
-export * from './lib/types/pages.type';
-export * from './lib/types/resize.type';
-export * from './lib/types/selection.type';
-export * from './lib/types/sort.type';
-export * from './lib/types/sort-direction.type';
-export * from './lib/types/sort-prop-dir.type';
+export * from './lib/types/public.types';
 export * from './lib/types/table-column.type';
 
 // utils

@@ -10,13 +10,16 @@ import {
   Output,
   TemplateRef
 } from '@angular/core';
-import { SortType } from '../../types/sort.type';
-import { SelectionType } from '../../types/selection.type';
 import { TableColumn } from '../../types/table-column.type';
 import { nextSortDir } from '../../utils/sort';
-import { InnerSortEvent, SortDirection } from '../../types/sort-direction.type';
-import { SortPropDir } from '../../types/sort-prop-dir.type';
-import { HeaderCellContext } from '../../types/cell-context.type';
+import {
+  HeaderCellContext,
+  InnerSortEvent,
+  SelectionType,
+  SortDirection,
+  SortPropDir,
+  SortType
+} from '../../types/public.types';
 
 @Component({
   selector: 'datatable-header-cell',

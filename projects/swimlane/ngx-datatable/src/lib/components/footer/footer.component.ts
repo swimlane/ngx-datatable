@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, ChangeDetectionStrategy, Input } from '@angular/core';
 import { DatatableFooterDirective } from './footer.directive';
-import { PagerPageEvent } from '../../types/page-event.type';
+import { PagerPageEvent } from '../../types/public.types';
 @Component({
   selector: 'datatable-footer',
   template: `

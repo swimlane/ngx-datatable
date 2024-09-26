@@ -1,7 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { ColumnMode, DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
+import {
+  ColumnMode,
+  DatatableComponent,
+  SelectionType
+} from 'projects/swimlane/ngx-datatable/src/public-api';
 import { GroupedEmployee } from '../data.model';
-import { SelectionType } from 'projects/swimlane/ngx-datatable/src/lib/types/selection.type';
 
 @Component({
   selector: 'row-grouping-demo',

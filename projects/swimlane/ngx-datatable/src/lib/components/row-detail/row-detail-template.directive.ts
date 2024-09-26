@@ -1,5 +1,5 @@
 import { Directive, TemplateRef } from '@angular/core';
-import { RowDetailContext } from '../../types/detail-context.type';
+import { RowDetailContext } from '../../types/public.types';
 
 @Directive({
   selector: '[ngx-datatable-row-detail-template]'

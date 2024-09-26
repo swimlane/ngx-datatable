@@ -1,5 +1,5 @@
 import { Directive } from '@angular/core';
-import { FooterContext } from '../../types/footer-context';
+import { FooterContext } from '../../types/public.types';
 
 @Directive({ selector: '[ngx-datatable-footer-template]' })
 export class DataTableFooterTemplateDirective {

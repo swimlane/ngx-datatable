@@ -17,11 +17,9 @@ import {
   ViewChild
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Group, RowOrGroup } from '../../types/group.type';
 import { NgStyle } from '@angular/common';
 import { DatatableComponentToken } from '../../utils/table-token';
-import { RowDetailContext } from '../../types/detail-context.type';
-import { GroupContext } from '../../types/cell-context.type';
+import { Group, GroupContext, RowDetailContext, RowOrGroup } from '../../types/public.types';
 import { DatatableGroupHeaderDirective } from './body-group-header.directive';
 import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive';
 
@@ -89,7 +87,10 @@ export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit
   @Input() groupedRows: Group<TRow>[];
   @Input() disableCheck: (row: RowOrGroup<TRow>) => boolean;
   @Input() selected: TRow[];
-  @Output() rowContextmenu = new EventEmitter<{ event: MouseEvent; row: RowOrGroup<TRow> }>(false);
+  @Output() rowContextmenu = new EventEmitter<{
+    event: MouseEvent;
+    row: RowOrGroup<TRow>;
+  }>(false);
 
   @Input() set rowIndex(val: number) {
     this._rowIndex = val;

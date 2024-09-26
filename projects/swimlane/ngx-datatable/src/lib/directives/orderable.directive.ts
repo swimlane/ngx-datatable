@@ -14,8 +14,18 @@ import {
 import { DraggableDirective } from './draggable.directive';
 import { DOCUMENT } from '@angular/common';
 import { TableColumn } from '../types/table-column.type';
-import { DraggableDragEvent } from '../types/drag-events.type';
-import { OrderableReorderEvent, OrderPosition, TargetChangedEvent } from '../types/orderable.types';
+import {
+  DraggableDragEvent,
+  OrderableReorderEvent,
+  TargetChangedEvent
+} from '../types/internal.types';
+
+interface OrderPosition {
+  left: number;
+  right: number;
+  index: number;
+  element: HTMLElement;
+}
 
 @Directive({ selector: '[orderable]' })
 export class OrderableDirective implements AfterContentInit, OnDestroy {

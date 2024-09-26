@@ -13,22 +13,24 @@ import {
   ViewChild
 } from '@angular/core';
 import { ScrollerComponent } from './scroller.component';
-import { SelectionType } from '../../types/selection.type';
 import { columnGroupWidths, columnsByPin } from '../../utils/column';
 import { RowHeightCache } from '../../utils/row-height-cache';
 import { translateXY } from '../../utils/translate';
-import { DragEventData } from '../../types/drag-events.type';
-import { TreeStatus } from './body-cell.component';
-import { Group, RowOrGroup } from '../../types/group.type';
-import { NgClass, NgStyle } from '@angular/common';
+import { NgStyle } from '@angular/common';
 import { TableColumn } from '../../types/table-column.type';
 import { Model } from './selection.component';
-import { BodyPageEvent } from '../../types/page-event.type';
 import { DatatableGroupHeaderDirective } from './body-group-header.directive';
 import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive';
 import { DataTableBodyRowComponent } from './body-row.component';
-import { ScrollEvent } from '../../types/scroll.type';
-import { ColumnGroupWidth } from '../../types/column-group-width.type';
+import { ColumnGroupWidth } from '../../types/internal.types';
+import {
+  DragEventData,
+  Group,
+  RowOrGroup,
+  ScrollEvent,
+  SelectionType,
+  TreeStatus
+} from '../../types/public.types';
 
 @Component({
   selector: 'datatable-body',
@@ -343,7 +345,7 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
   @Input() verticalScrollVisible = false;
 
   @Output() scroll: EventEmitter<ScrollEvent> = new EventEmitter();
-  @Output() page: EventEmitter<BodyPageEvent> = new EventEmitter();
+  @Output() page: EventEmitter<number> = new EventEmitter();
   @Output() activate: EventEmitter<Model<TRow>> = new EventEmitter();
   @Output() select: EventEmitter<{ selected: TRow[] }> = new EventEmitter();
   @Output() detailToggle: EventEmitter<any> = new EventEmitter();
@@ -517,15 +519,15 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
       if (scrollInBetween && this.scrollbarV && this.virtualization && this.externalPaging) {
         const upRow = this.rows[this.indexes.first - 1];
         if (!upRow && direction === 'up') {
-          this.page.emit({ offset: offset - 1 });
+          this.page.emit(offset - 1);
         }
 
         const downRow = this.rows[this.indexes.first + this.pageSize];
         if (!downRow && direction === 'down') {
-          this.page.emit({ offset: offset + 1 });
+          this.page.emit(offset + 1);
         }
       }
-      this.page.emit({ offset });
+      this.page.emit(offset);
     }
   }
 

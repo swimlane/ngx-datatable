@@ -16,15 +16,16 @@ import {
 } from '@angular/core';
 
 import { TableColumn } from '../../types/table-column.type';
-import { SortDirection } from '../../types/sort-direction.type';
 import { Keys } from '../../utils/keys';
-import { RowOrGroup } from '../../types/group.type';
 import { BehaviorSubject } from 'rxjs';
-import { ActivateEvent } from '../../types/activate-event.type';
-import { CellContext } from '../../types/cell-context.type';
-import { SortPropDir } from '../../types/sort-prop-dir.type';
-
-export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
+import {
+  ActivateEvent,
+  CellContext,
+  RowOrGroup,
+  SortDirection,
+  SortPropDir,
+  TreeStatus
+} from '../../types/public.types';
 
 @Component({
   selector: 'datatable-body-cell',

@@ -1,6 +1,6 @@
 import { PipeTransform, TemplateRef } from '@angular/core';
 import { ValueGetter } from '../utils/column-prop-getters';
-import { HeaderCellContext } from './cell-context.type';
+import { HeaderCellContext } from './public.types';
 
 /**
  * Column property that indicates how to retrieve this column's

@@ -33,11 +33,6 @@ import { INgxDatatableConfig } from '../ngx-datatable.module';
 import { groupRowsByParents, optionalGetterForProp } from '../utils/tree';
 import { TableColumn } from '../types/table-column.type';
 import { setColumnDefaults, translateTemplates } from '../utils/column-helper';
-import { ColumnMode } from '../types/column-mode.type';
-import { DragEventData } from '../types/drag-events.type';
-import { SelectionType } from '../types/selection.type';
-import { SortType } from '../types/sort.type';
-import { ContextmenuType } from '../types/contextmenu.type';
 import { DataTableColumnDirective } from './columns/column.directive';
 import { DatatableRowDetailDirective } from './row-detail/row-detail.directive';
 import { DatatableFooterDirective } from './footer/footer.directive';
@@ -48,19 +43,27 @@ import { ColumnChangesService } from '../services/column-changes.service';
 import { DimensionsHelper } from '../services/dimensions-helper.service';
 import { throttleable } from '../utils/throttle';
 import { adjustColumnWidths, forceFillColumnWidths } from '../utils/math';
-import { Group, RowOrGroup } from '../types/group.type';
-import { SortPropDir } from '../types/sort-prop-dir.type';
-import { NgClass } from '@angular/common';
 import { Model } from './body/selection.component';
-import { SortEvent } from '../types/sort-direction.type';
-import { BodyPageEvent, PageEvent, PagerPageEvent } from '../types/page-event.type';
-import { ReorderEvent } from '../types/orderable.types';
-import { ColumnResizeEvent } from '../types/resize.type';
 import { sortGroupedRows, sortRows } from '../utils/sort';
 import { DatatableRowDefDirective } from './body/body-row-def.component';
 import { DatatableComponentToken } from '../utils/table-token';
-import { ScrollEvent } from '../types/scroll.type';
-import { TreeStatus } from './body/body-cell.component';
+import {
+  ColumnMode,
+  ColumnResizeEvent,
+  ContextmenuType,
+  DragEventData,
+  Group,
+  PageEvent,
+  PagerPageEvent,
+  ReorderEvent,
+  RowOrGroup,
+  ScrollEvent,
+  SelectionType,
+  SortEvent,
+  SortPropDir,
+  SortType,
+  TreeStatus
+} from '../types/public.types';
 
 @Component({
   selector: 'ngx-datatable',
@@ -1000,7 +1003,7 @@ export class DatatableComponent<TRow = any>
   /**
    * Body triggered a page event.
    */
-  onBodyPage({ offset }: BodyPageEvent): void {
+  onBodyPage(offset: number): void {
     // Avoid pagination caming from body events like scroll when the table
     // has no virtualization and the external paging is enable.
     // This means, let's the developer handle pagination by my him(her) self

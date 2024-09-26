@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { PagerPageEvent } from '../../types/page-event.type';
-import { Page } from '../../types/pages.type';
+import { PagerPageEvent } from '../../types/public.types';
+import { Page } from '../../types/internal.types';
 
 @Component({
   selector: 'datatable-pager',

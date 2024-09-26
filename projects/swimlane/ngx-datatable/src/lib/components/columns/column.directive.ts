@@ -12,7 +12,7 @@ import { DataTableColumnCellTreeToggle } from './tree.directive';
 import { ColumnChangesService } from '../../services/column-changes.service';
 import { TableColumnProp } from '../../types/table-column.type';
 import { DataTableColumnGhostCellDirective } from './column-ghost-cell.directive';
-import { HeaderCellContext } from '../../types/cell-context.type';
+import { HeaderCellContext } from '../../types/public.types';
 
 @Directive({ selector: 'ngx-datatable-column' })
 export class DataTableColumnDirective implements OnChanges {

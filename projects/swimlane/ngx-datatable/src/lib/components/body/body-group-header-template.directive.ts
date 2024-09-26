@@ -1,5 +1,5 @@
 import { Directive, TemplateRef } from '@angular/core';
-import { GroupContext } from '../../types/cell-context.type';
+import { GroupContext } from '../../types/public.types';
 
 @Directive({
   selector: '[ngx-datatable-group-header-template]'

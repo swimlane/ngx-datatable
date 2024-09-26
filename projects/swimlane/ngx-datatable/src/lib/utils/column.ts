@@ -1,6 +1,5 @@
 import { TableColumn } from '../types/table-column.type';
-import { PinnedColumns } from '../types/column-pin.type';
-import { ColumnGroupWidth } from '../types/column-group-width.type';
+import { ColumnGroupWidth, PinnedColumns } from '../types/internal.types';
 
 /**
  * Returns the columns by pin.

@@ -11,7 +11,7 @@ import {
 import { fromEvent, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TableColumn } from '../types/table-column.type';
-import { DraggableDragEvent } from '../types/drag-events.type';
+import { DraggableDragEvent } from '../types/internal.types';
 
 /**
  * Draggable Directive for Angular2
