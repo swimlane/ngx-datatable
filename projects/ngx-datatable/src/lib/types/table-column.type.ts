@@ -1,6 +1,6 @@
 import { PipeTransform, TemplateRef } from '@angular/core';
 import { ValueGetter } from '../utils/column-prop-getters';
-import { HeaderCellContext } from './cell-context.type';
+import { CellContext, HeaderCellContext } from './cell-context.type';
 
 /**
  * Column property that indicates how to retrieve this column's
@@ -12,7 +12,7 @@ export type TableColumnProp = string | number;
 /**
  * Column Type
  */
-export interface TableColumn {
+export interface TableColumn<TRow = any> {
   /**
    * Internal unique id
    *
@@ -160,7 +160,7 @@ export interface TableColumn {
    *
    * @memberOf TableColumn
    */
-  cellTemplate?: any;
+  cellTemplate?: TemplateRef<CellContext<TRow>>;
 
   /**
    * Ghost Cell template ref

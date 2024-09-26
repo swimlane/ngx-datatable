@@ -2,7 +2,7 @@ import { TableColumn } from './table-column.type';
 import { SortDirection } from './sort-direction.type';
 import { ActivateEvent } from './activate-event.type';
 import { TreeStatus } from '../components/body/body-cell.component';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Group, RowOrGroup } from './group.type';
 
 export interface HeaderCellContext {
@@ -30,7 +30,7 @@ export interface CellContext<TRow> {
   isSelected: boolean;
   rowIndex: number;
   treeStatus: TreeStatus,
-  disable$: Observable<boolean>;
+  disable$: BehaviorSubject<boolean>;
   onTreeAction: () => void;
   expanded?: boolean;
 }

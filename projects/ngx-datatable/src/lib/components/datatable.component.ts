@@ -628,7 +628,7 @@ export class DatatableComponent<TRow = any> implements OnInit, DoCheck, AfterVie
    * if described in your markup.
    */
   @ContentChildren(DataTableColumnDirective)
-  set columnTemplates(val: QueryList<DataTableColumnDirective>) {
+  set columnTemplates(val: QueryList<DataTableColumnDirective<TRow>>) {
     this._columnTemplates = val;
     this.translateColumns(val);
   }
@@ -636,7 +636,7 @@ export class DatatableComponent<TRow = any> implements OnInit, DoCheck, AfterVie
   /**
    * Returns the column templates.
    */
-  get columnTemplates(): QueryList<DataTableColumnDirective> {
+  get columnTemplates(): QueryList<DataTableColumnDirective<TRow>> {
     return this._columnTemplates;
   }
 
@@ -711,7 +711,7 @@ export class DatatableComponent<TRow = any> implements OnInit, DoCheck, AfterVie
   _internalRows: TRow[];
   _internalColumns: TableColumn[];
   _columns: TableColumn[];
-  _columnTemplates: QueryList<DataTableColumnDirective>;
+  _columnTemplates: QueryList<DataTableColumnDirective<TRow>>;
   _subscriptions: Subscription[] = [];
   _ghostLoadingIndicator = false;
   protected verticalScrollVisible = false;
@@ -812,7 +812,7 @@ export class DatatableComponent<TRow = any> implements OnInit, DoCheck, AfterVie
   /**
    * Translates the templates to the column objects
    */
-  translateColumns(val: QueryList<DataTableColumnDirective>) {
+  translateColumns(val: QueryList<DataTableColumnDirective<TRow>>) {
     if (val) {
       const arr = val.toArray();
       if (arr.length) {
