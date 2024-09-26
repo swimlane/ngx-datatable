@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { ColumnMode, DatatableComponent } from 'projects/ngx-datatable/src/public-api';
 import { GroupedEmployee } from '../data.model';
-import { SelectionType } from './../../../projects/ngx-datatable/src/lib/types/selection.type';
+import { ColumnMode, DatatableComponent, Group, GroupToggleEvents, SelectionType } from "@siemens/ngx-datatable";
 
 @Component({
   selector: 'row-grouping-demo',
@@ -252,12 +251,12 @@ export class RowGroupingComponent {
     this.rows = [...this.rows];
   }
 
-  toggleExpandGroup(group) {
+  toggleExpandGroup(group: Group<GroupedEmployee>) {
     console.log('Toggled Expand Group!', group);
     this.table.groupHeader.toggleExpandGroup(group);
   }
 
-  onDetailToggle(event) {
+  onDetailToggle(event: GroupToggleEvents<GroupedEmployee>) {
     console.log('Detail Toggled', event);
   }
 }

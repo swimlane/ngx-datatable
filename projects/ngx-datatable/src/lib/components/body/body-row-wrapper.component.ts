@@ -120,18 +120,21 @@ export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit
   private tableComponent = inject(DatatableComponentToken);
 
   constructor(private cd: ChangeDetectorRef, differs: KeyValueDiffers, private iterableDiffers: IterableDiffers) {
-    this.groupContext = {
-      group: this.row,
-      expanded: this.expanded,
-      rowIndex: this.rowIndex
-    };
-
-    this.rowContext = {
-      row: this.row,
-      expanded: this.expanded,
-      rowIndex: this.rowIndex,
-      disableRow$: this.disable$
-    };
+    // this component renders either a group header or a row. Never both.
+    if (this.isGroup(this.row)) {
+      this.groupContext = {
+        group: this.row,
+        expanded: this.expanded,
+        rowIndex: this.rowIndex
+      };
+    } else {
+      this.rowContext = {
+        row: this.row,
+        expanded: this.expanded,
+        rowIndex: this.rowIndex,
+        disableRow$: this.disable$
+      };
+    }
 
     this.rowDiffer = differs.find({}).create();
     this.selectedRowsDiffer = this.iterableDiffers.find(this.selected ?? []).create();
@@ -163,8 +166,11 @@ export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit
     }
 
     if (this.rowDiffer.diff(this.row)) {
-      this.rowContext.row = this.row;
-      this.groupContext.group = this.row;
+      if (this.isGroup(this.row)) {
+        this.groupContext.group = this.row;
+      } else {
+        this.rowContext.row = this.row;
+      }
       this.cd.markForCheck();
     }
     // When groupheader is used with chechbox we use iterableDiffer
@@ -210,5 +216,9 @@ export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit
     this.tableComponent.onBodySelect({
       selected: this.selected
     });
+  }
+
+  isGroup(row: RowOrGroup<TRow>): row is Group<TRow> {
+    return !!this.groupHeader;
   }
 }

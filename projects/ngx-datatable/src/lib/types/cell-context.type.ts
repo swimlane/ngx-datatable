@@ -3,7 +3,7 @@ import { SortDirection } from './sort-direction.type';
 import { ActivateEvent } from './activate-event.type';
 import { TreeStatus } from '../components/body/body-cell.component';
 import { Observable } from 'rxjs';
-import { RowOrGroup } from './group.type';
+import { Group, RowOrGroup } from './group.type';
 
 export interface HeaderCellContext {
   column: TableColumn;
@@ -14,7 +14,7 @@ export interface HeaderCellContext {
 }
 
 export interface GroupContext<TRow> {
-  group: RowOrGroup<TRow>;
+  group: Group<TRow>;
   expanded: boolean;
   rowIndex: number;
 }

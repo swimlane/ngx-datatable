@@ -54,6 +54,7 @@ export * from './lib/types/contextmenu.type';
 export * from './lib/types/detail-context.type'
 export * from './lib/types/drag-events.type';
 export * from './lib/types/footer-context';
+export * from './lib/types/group.events';
 export * from './lib/types/group.type';
 export * from './lib/types/orderable.types';
 export * from './lib/types/page-event.type';
