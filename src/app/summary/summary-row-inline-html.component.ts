@@ -26,7 +26,10 @@ import { Employee } from '../data.model';
         rowHeight="auto"
         [rows]="rows"
       >
-        <ngx-datatable-column prop="name" [summaryTemplate]="nameSummaryCell"></ngx-datatable-column>
+        <ngx-datatable-column
+          prop="name"
+          [summaryTemplate]="nameSummaryCell"
+        ></ngx-datatable-column>
         <ngx-datatable-column name="Gender" [summaryFunc]="summaryForGender"></ngx-datatable-column>
         <ngx-datatable-column prop="age" [summaryFunc]="avgAge"></ngx-datatable-column>
       </ngx-datatable>

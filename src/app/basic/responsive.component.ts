@@ -107,9 +107,9 @@ import { FullEmployee } from '../data.model';
     </div>
 
     <div style="margin: 50px;">
-      This demo combines the features used in the <i>Row Detail</i> Rows demo, <i>Flex</i> Column demo, and the
-      <i>Inline</i> Templates demo. When your browser is at 800px, the gender and age columns will be hidden and will
-      appear in the row detail view.
+      This demo combines the features used in the <i>Row Detail</i> Rows demo, <i>Flex</i> Column
+      demo, and the <i>Inline</i> Templates demo. When your browser is at 800px, the gender and age
+      columns will be hidden and will appear in the row detail view.
     </div>
   `,
   encapsulation: ViewEncapsulation.None

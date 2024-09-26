@@ -43,7 +43,9 @@ describe('OrderableDirective', () => {
     let directive: OrderableDirective;
 
     beforeEach(() => {
-      directive = fixture.debugElement.query(By.directive(OrderableDirective)).injector.get(OrderableDirective);
+      directive = fixture.debugElement
+        .query(By.directive(OrderableDirective))
+        .injector.get(OrderableDirective);
     });
 
     it('should have a component instance', () => {

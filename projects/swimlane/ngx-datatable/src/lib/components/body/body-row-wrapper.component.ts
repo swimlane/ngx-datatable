@@ -54,7 +54,11 @@ import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive'
         </ng-template>
       </div>
     </div>
-    <ng-content *ngIf="(groupHeader && groupHeader.template && expanded) || !groupHeader || !groupHeader.template">
+    <ng-content
+      *ngIf="
+        (groupHeader && groupHeader.template && expanded) || !groupHeader || !groupHeader.template
+      "
+    >
     </ng-content>
     <div
       *ngIf="rowDetail && rowDetail.template && expanded"
@@ -121,7 +125,11 @@ export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit
   private _rowIndex: number;
   private tableComponent = inject(DatatableComponentToken);
 
-  constructor(private cd: ChangeDetectorRef, differs: KeyValueDiffers, private iterableDiffers: IterableDiffers) {
+  constructor(
+    private cd: ChangeDetectorRef,
+    differs: KeyValueDiffers,
+    private iterableDiffers: IterableDiffers
+  ) {
     this.groupContext = {
       group: this.row,
       expanded: this.expanded,
@@ -193,9 +201,9 @@ export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit
 
   getGroupHeaderStyle(): NgStyle['ngStyle'] {
     return {
-      transform: 'translate3d(' + this.offsetX + 'px, 0px, 0px)',
+      'transform': 'translate3d(' + this.offsetX + 'px, 0px, 0px)',
       'backface-visibility': 'hidden',
-      width: this.innerWidth + 'px'
+      'width': this.innerWidth + 'px'
     };
   }
 

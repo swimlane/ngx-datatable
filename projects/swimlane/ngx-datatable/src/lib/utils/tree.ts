@@ -42,7 +42,11 @@ export function optionalGetterForProp(prop: TableColumnProp): OptionalValueGette
  * @param rows
  *
  */
-export function groupRowsByParents(rows: any[], from?: OptionalValueGetter, to?: OptionalValueGetter): any[] {
+export function groupRowsByParents(
+  rows: any[],
+  from?: OptionalValueGetter,
+  to?: OptionalValueGetter
+): any[] {
   if (from && to) {
     const nodeById = {};
     const l = rows.length;
@@ -109,7 +113,9 @@ class TreeNode {
       for (let i = 0, l = this.children.length; i < l; i++) {
         const child = this.children[i];
         f.apply(child, Array.prototype.slice.call(arguments, 2));
-        if (recursive) child.flatten.apply(child, arguments);
+        if (recursive) {
+          child.flatten.apply(child, arguments);
+        }
       }
     }
   }

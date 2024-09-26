@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { ColumnMode, SelectionType, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
+import {
+  ColumnMode,
+  SelectionType,
+  TableColumn
+} from 'projects/swimlane/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
 
 @Component({
@@ -19,7 +23,10 @@ import { Employee } from '../data.model';
       </h3>
       <div style="float:left;width:75%">
         <div class="info">
-          <p>This demonstrates multi selection table, use CTRL or SHIFT click to select multiple items.</p>
+          <p
+            >This demonstrates multi selection table, use CTRL or SHIFT click to select multiple
+            items.</p
+          >
         </div>
 
         <ngx-datatable

@@ -27,7 +27,11 @@ import { FullEmployee } from '../data.model';
         [scrollbarV]="true"
       >
         <ngx-datatable-column name="Name"></ngx-datatable-column>
-        <ngx-datatable-column name="Gender" headerClass="is-gender" [cellClass]="getCellClass"></ngx-datatable-column>
+        <ngx-datatable-column
+          name="Gender"
+          headerClass="is-gender"
+          [cellClass]="getCellClass"
+        ></ngx-datatable-column>
         <ngx-datatable-column name="Age"></ngx-datatable-column>
       </ngx-datatable>
     </div>

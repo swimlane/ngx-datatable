@@ -6,11 +6,11 @@ engines:
       languages:
         - javascript
 exclude_paths:
-  - ".github/"
-  - "release/"
-  - "assets/"
-  - "config/"
-  - "docs/"
+  - '.github/'
+  - 'release/'
+  - 'assets/'
+  - 'config/'
+  - 'docs/'
 ratings:
-   paths:
-   - "src/**/**.ts"
+  paths:
+    - 'src/**/**.ts'

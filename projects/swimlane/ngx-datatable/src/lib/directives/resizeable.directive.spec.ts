@@ -21,21 +21,21 @@ describe('ResizeableDirective', () => {
     });
   });
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.compileComponents().then(() => {
-        fixture = TestBed.createComponent(TestFixtureComponent);
-        component = fixture.componentInstance;
-        element = fixture.nativeElement;
-      });
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.compileComponents().then(() => {
+      fixture = TestBed.createComponent(TestFixtureComponent);
+      component = fixture.componentInstance;
+      element = fixture.nativeElement;
+    });
+  }));
 
   describe('fixture', () => {
     let directive: ResizeableDirective;
 
     beforeEach(() => {
-      directive = fixture.debugElement.query(By.directive(ResizeableDirective)).injector.get(ResizeableDirective);
+      directive = fixture.debugElement
+        .query(By.directive(ResizeableDirective))
+        .injector.get(ResizeableDirective);
     });
 
     it('should have a component instance', () => {

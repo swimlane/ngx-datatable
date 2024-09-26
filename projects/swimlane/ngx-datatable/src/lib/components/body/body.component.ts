@@ -84,7 +84,7 @@ import { ColumnGroupWidth } from '../../types/column-group-width.type';
           [groupedRows]="groupedRows"
           *ngFor="let group of temp; let i = index; trackBy: rowTrackingFn"
           [innerWidth]="innerWidth"
-          [ngStyle]="getRowsStyles(group, indexes.first + i )"
+          [ngStyle]="getRowsStyles(group, indexes.first + i)"
           [rowDetail]="rowDetail"
           [groupHeader]="groupHeader"
           [offsetX]="offsetX"
@@ -97,7 +97,7 @@ import { ColumnGroupWidth } from '../../types/column-group-width.type';
           [selected]="selected"
           (rowContextmenu)="rowContextmenu.emit($event)"
         >
-          <ng-container *ngIf="rowDefTemplate else bodyRow">
+          <ng-container *ngIf="rowDefTemplate; else bodyRow">
             <ng-container
               *rowDefInternal="{
                 template: rowDefTemplate,
@@ -107,7 +107,7 @@ import { ColumnGroupWidth } from '../../types/column-group-width.type';
               }"
             />
           </ng-container>
-        
+
           <ng-template #bodyRow>
             <datatable-body-row
               role="row"
@@ -139,7 +139,6 @@ import { ColumnGroupWidth } from '../../types/column-group-width.type';
               (dragend)="dragEnd($event, group)"
             >
             </datatable-body-row>
-
           </ng-template>
 
           <ng-container *ngIf="isGroup(group)">
@@ -194,13 +193,12 @@ import { ColumnGroupWidth } from '../../types/column-group-width.type';
           (scroll)="onBodyScroll($event)"
         >
           <div
-          class="empty-row"
-          *ngIf="!customEmptyContent?.children.length"
-          [innerHTML]="emptyMessage"
-        ></div>
-        <div #customEmptyContent>
-          <ng-content select="[empty-content]"></ng-content>
-        </div></datatable-scroller>
+            class="empty-row"
+            *ngIf="!customEmptyContent?.children.length"
+            [innerHTML]="emptyMessage"
+          ></div>
+          <div #customEmptyContent> <ng-content select="[empty-content]"></ng-content> </div
+        ></datatable-scroller>
       </ng-container>
     </datatable-selection>
   `,
@@ -209,7 +207,9 @@ import { ColumnGroupWidth } from '../../types/column-group-width.type';
     class: 'datatable-body'
   }
 })
-export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = any> implements OnInit, OnDestroy {
+export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = any>
+  implements OnInit, OnDestroy
+{
   @Input() rowDefTemplate?: TemplateRef<any>;
   @Input() scrollbarV: boolean;
   @Input() scrollbarH: boolean;
@@ -413,17 +413,19 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
    */
   ngOnInit(): void {
     if (this.rowDetail) {
-      this.listener = this.rowDetail.toggle.subscribe(({ type, value }: { type: string; value: any }) =>
-        this.toggleStateChange(type, value)
+      this.listener = this.rowDetail.toggle.subscribe(
+        ({ type, value }: { type: string; value: any }) => this.toggleStateChange(type, value)
       );
     }
 
     if (this.groupHeader) {
-      this.listener = this.groupHeader.toggle.subscribe(({ type, value }: { type: string; value: any }) => {
-        // Remove default expansion state once user starts manual toggle.
-        this.groupExpansionDefault = false;
-        this.toggleStateChange(type, value);
-      });
+      this.listener = this.groupHeader.toggle.subscribe(
+        ({ type, value }: { type: string; value: any }) => {
+          // Remove default expansion state once user starts manual toggle.
+          this.groupExpansionDefault = false;
+          this.toggleStateChange(type, value);
+        }
+      );
     }
   }
 
@@ -643,7 +645,8 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
     if (!this.groupHeader) {
       return 0;
     }
-    const rowHeight = this.groupHeader?.rowHeight === 0 ? this.rowHeight : this.groupHeader?.rowHeight;
+    const rowHeight =
+      this.groupHeader?.rowHeight === 0 ? this.rowHeight : this.groupHeader?.rowHeight;
     return typeof rowHeight === 'function' ? rowHeight(row, index) : (rowHeight as number);
   };
 
@@ -963,7 +966,11 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
     });
   }
 
-  dragEnter(event: DragEvent, dropRow: RowOrGroup<TRow>, rowComponent: DataTableBodyRowComponent<TRow>) {
+  dragEnter(
+    event: DragEvent,
+    dropRow: RowOrGroup<TRow>,
+    rowComponent: DataTableBodyRowComponent<TRow>
+  ) {
     event.preventDefault();
     this.rowDragEvents.emit({
       event,
@@ -975,7 +982,11 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
     });
   }
 
-  dragLeave(event: DragEvent, dropRow: RowOrGroup<TRow>, rowComponent: DataTableBodyRowComponent<TRow>) {
+  dragLeave(
+    event: DragEvent,
+    dropRow: RowOrGroup<TRow>,
+    rowComponent: DataTableBodyRowComponent<TRow>
+  ) {
     event.preventDefault();
     this.rowDragEvents.emit({
       event,

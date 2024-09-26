@@ -28,11 +28,21 @@ import { Employee } from '../data.model';
       >
       </ngx-datatable>
 
-      <ng-template #hdrTpl let-column="column"> <strong>Fancy</strong>: {{ column.name }} !! </ng-template>
+      <ng-template #hdrTpl let-column="column">
+        <strong>Fancy</strong>: {{ column.name }} !!
+      </ng-template>
 
       <ng-template #editTmpl let-row="row" let-value="value">
-        <img *ngIf="value === 'male'" width="150" src="https://media.giphy.com/media/I8nepxWwlEuqI/giphy.gif" />
-        <img *ngIf="value === 'female'" width="150" src="https://media.giphy.com/media/sxSVG3XHf7yww/giphy.gif" />
+        <img
+          *ngIf="value === 'male'"
+          width="150"
+          src="https://media.giphy.com/media/I8nepxWwlEuqI/giphy.gif"
+        />
+        <img
+          *ngIf="value === 'female'"
+          width="150"
+          src="https://media.giphy.com/media/sxSVG3XHf7yww/giphy.gif"
+        />
       </ng-template>
     </div>
   `

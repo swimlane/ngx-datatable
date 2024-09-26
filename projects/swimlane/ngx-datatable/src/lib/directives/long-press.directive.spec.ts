@@ -21,21 +21,21 @@ describe('LongPressDirective', () => {
     });
   });
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.compileComponents().then(() => {
-        fixture = TestBed.createComponent(TestFixtureComponent);
-        component = fixture.componentInstance;
-        element = fixture.nativeElement;
-      });
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.compileComponents().then(() => {
+      fixture = TestBed.createComponent(TestFixtureComponent);
+      component = fixture.componentInstance;
+      element = fixture.nativeElement;
+    });
+  }));
 
   describe('fixture', () => {
     let directive: LongPressDirective;
 
     beforeEach(() => {
-      directive = fixture.debugElement.query(By.directive(LongPressDirective)).injector.get(LongPressDirective);
+      directive = fixture.debugElement
+        .query(By.directive(LongPressDirective))
+        .injector.get(LongPressDirective);
     });
 
     it('should have a component instance', () => {

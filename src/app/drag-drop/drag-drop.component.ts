@@ -10,7 +10,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
         Drag Drop Using Angular CDK
         <small>
           <a
-            href="https://github.com/siemens/ngx-datatable/blob/master/src/app/drag-drop/drag-drop.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/drag-drop/drag-drop.component.ts"
             target="_blank"
           >
             Source
@@ -31,7 +31,7 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
         cdkDropList
       >
         <ng-template rowDef>
-          <datatable-row-def cdkDrag [cdkDragPreviewContainer]="'parent'"/>
+          <datatable-row-def cdkDrag [cdkDragPreviewContainer]="'parent'" />
         </ng-template>
       </ngx-datatable>
     </div>

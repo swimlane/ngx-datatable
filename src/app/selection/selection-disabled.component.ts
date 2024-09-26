@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { ColumnMode, SelectionType, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
+import {
+  ColumnMode,
+  SelectionType,
+  TableColumn
+} from 'projects/swimlane/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
 
 @Component({

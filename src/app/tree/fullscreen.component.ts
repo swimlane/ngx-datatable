@@ -32,7 +32,12 @@ import { Employee } from '../data.model';
         (treeAction)="onTreeAction($event)"
       >
         <ngx-datatable-column name="Id" [width]="80"></ngx-datatable-column>
-        <ngx-datatable-column name="Name" [isTreeColumn]="true" [width]="300" [treeLevelIndent]="20">
+        <ngx-datatable-column
+          name="Name"
+          [isTreeColumn]="true"
+          [width]="300"
+          [treeLevelIndent]="20"
+        >
           <ng-template ngx-datatable-tree-toggle let-tree="cellContext">
             <button [disabled]="tree.treeStatus === 'disabled'" (click)="tree.onTreeAction()">
               <span *ngIf="tree.treeStatus === 'loading'"> ... </span>
@@ -45,7 +50,11 @@ import { Employee } from '../data.model';
         <ngx-datatable-column name="Gender"></ngx-datatable-column>
         <ngx-datatable-column name="Age"></ngx-datatable-column>
         <ngx-datatable-column name="City" [width]="300" prop="address.city"></ngx-datatable-column>
-        <ngx-datatable-column name="State" [width]="300" prop="address.state"></ngx-datatable-column>
+        <ngx-datatable-column
+          name="State"
+          [width]="300"
+          prop="address.state"
+        ></ngx-datatable-column>
       </ngx-datatable>
     </div>
   `,

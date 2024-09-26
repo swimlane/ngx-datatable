@@ -9,7 +9,7 @@ import { ColumnMode, TableColumn } from 'projects/swimlane/ngx-datatable/src/pub
         Custom Empty Component
         <small>
           <a
-            href="https://github.com/siemens/ngx-datatable/blob/master/src/app/basic/empty.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/empty.component.ts"
             target="_blank"
           >
             Source
@@ -24,12 +24,18 @@ import { ColumnMode, TableColumn } from 'projects/swimlane/ngx-datatable/src/pub
         [headerHeight]="50"
         [footerHeight]="50"
       >
-        <div empty-content style="text-align: center;">My custom empty component<br />uses two lines.</div>
+        <div empty-content style="text-align: center;"
+          >My custom empty component<br />uses two lines.</div
+        >
       </ngx-datatable>
     </div>
   `
 })
 export class BasicEmptyComponent {
-  columns: TableColumn[] = [{ prop: 'name' }, { name: 'Gender' }, { name: 'Company', sortable: false }];
+  columns: TableColumn[] = [
+    { prop: 'name' },
+    { name: 'Gender' },
+    { name: 'Company', sortable: false }
+  ];
   ColumnMode = ColumnMode;
 }

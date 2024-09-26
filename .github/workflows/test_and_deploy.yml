@@ -23,6 +23,12 @@ jobs:
         env:
           CI: true
 
+      - name: Format
+        run: |
+          npm run format:check --if-present
+        env:
+          CI: true
+
       - name: Build
         run: |
           npm run build --if-present

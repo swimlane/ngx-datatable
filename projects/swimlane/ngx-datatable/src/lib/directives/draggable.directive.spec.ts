@@ -34,7 +34,9 @@ describe('DraggableDirective', () => {
     let directive: DraggableDirective;
 
     beforeEach(() => {
-      directive = fixture.debugElement.query(By.directive(DraggableDirective)).injector.get(DraggableDirective);
+      directive = fixture.debugElement
+        .query(By.directive(DraggableDirective))
+        .injector.get(DraggableDirective);
     });
 
     it('should have a component instance', () => {

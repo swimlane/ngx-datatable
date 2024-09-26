@@ -44,7 +44,11 @@ import { Employee } from '../data.model';
             [draggable]="false"
             [resizeable]="false"
           >
-            <ng-template ngx-datatable-header-template let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
+            <ng-template
+              ngx-datatable-header-template
+              let-allRowsSelected="allRowsSelected"
+              let-selectFn="selectFn"
+            >
               <input type="checkbox" [checked]="allRowsSelected" (change)="selectFn()" />
             </ng-template>
             <ng-template

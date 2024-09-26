@@ -26,7 +26,9 @@ import { Employee } from '../data.model';
         rowHeight="auto"
       >
         <ngx-datatable-column name="Name">
-          <ng-template let-column="column" ngx-datatable-header-template> Holla! {{ column.name }} </ng-template>
+          <ng-template let-column="column" ngx-datatable-header-template>
+            Holla! {{ column.name }}
+          </ng-template>
           <ng-template let-value="value" ngx-datatable-cell-template>
             Hi: <strong>{{ value }}</strong>
           </ng-template>

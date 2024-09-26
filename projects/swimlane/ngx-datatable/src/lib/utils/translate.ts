@@ -3,8 +3,10 @@ import { camelCase } from './camel-case';
 
 // browser detection and prefixing tools
 const transform = typeof window !== 'undefined' ? getVendorPrefixedName('transform') : undefined;
-const hasCSSTransforms = typeof window !== 'undefined' ? !!getVendorPrefixedName('transform') : undefined;
-const hasCSS3DTransforms = typeof window !== 'undefined' ? !!getVendorPrefixedName('perspective') : undefined;
+const hasCSSTransforms =
+  typeof window !== 'undefined' ? !!getVendorPrefixedName('transform') : undefined;
+const hasCSS3DTransforms =
+  typeof window !== 'undefined' ? !!getVendorPrefixedName('perspective') : undefined;
 const ua = typeof window !== 'undefined' ? window.navigator.userAgent : 'Chrome';
 const isSafari = /Safari\//.test(ua) && !/Chrome\//.test(ua);
 

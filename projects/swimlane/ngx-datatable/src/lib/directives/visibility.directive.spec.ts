@@ -29,21 +29,21 @@ describe('VisibilityDirective', () => {
     });
   });
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.compileComponents().then(() => {
-        fixture = TestBed.createComponent(TestFixtureComponent);
-        component = fixture.componentInstance;
-        element = fixture.nativeElement;
-      });
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.compileComponents().then(() => {
+      fixture = TestBed.createComponent(TestFixtureComponent);
+      component = fixture.componentInstance;
+      element = fixture.nativeElement;
+    });
+  }));
 
   describe('fixture', () => {
     let directive: VisibilityDirective;
 
     beforeEach(() => {
-      directive = fixture.debugElement.query(By.directive(VisibilityDirective)).injector.get(VisibilityDirective);
+      directive = fixture.debugElement
+        .query(By.directive(VisibilityDirective))
+        .injector.get(VisibilityDirective);
     });
 
     it('should have a component instance', () => {

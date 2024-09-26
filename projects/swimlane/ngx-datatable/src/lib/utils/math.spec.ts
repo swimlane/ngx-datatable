@@ -39,11 +39,46 @@ describe('Math function', () => {
     describe('flex mode', () => {
       it('should not go over/under compared to given max width', () => {
         const cols = [
-          { prop: 'id1', width: 287, maxWidth: undefined, minWidth: 175, flexGrow: 2, canAutoResize: true },
-          { prop: 'id2', width: 215, maxWidth: undefined, minWidth: 200, flexGrow: 1.5, canAutoResize: true },
-          { prop: 'id3', width: 287, maxWidth: undefined, minWidth: 150, flexGrow: 2, canAutoResize: true },
-          { prop: 'id4', width: 175, maxWidth: undefined, minWidth: 175, flexGrow: 1, canAutoResize: true },
-          { prop: 'id5', width: 143, maxWidth: undefined, minWidth: 120, flexGrow: 1, canAutoResize: true }
+          {
+            prop: 'id1',
+            width: 287,
+            maxWidth: undefined,
+            minWidth: 175,
+            flexGrow: 2,
+            canAutoResize: true
+          },
+          {
+            prop: 'id2',
+            width: 215,
+            maxWidth: undefined,
+            minWidth: 200,
+            flexGrow: 1.5,
+            canAutoResize: true
+          },
+          {
+            prop: 'id3',
+            width: 287,
+            maxWidth: undefined,
+            minWidth: 150,
+            flexGrow: 2,
+            canAutoResize: true
+          },
+          {
+            prop: 'id4',
+            width: 175,
+            maxWidth: undefined,
+            minWidth: 175,
+            flexGrow: 1,
+            canAutoResize: true
+          },
+          {
+            prop: 'id5',
+            width: 143,
+            maxWidth: undefined,
+            minWidth: 120,
+            flexGrow: 1,
+            canAutoResize: true
+          }
         ];
 
         const givenTableWidth = 1180;
@@ -56,8 +91,22 @@ describe('Math function', () => {
 
       it('should overflow if the total of given min widths is bigger than given max width', () => {
         const cols = [
-          { prop: 'id1', width: 100, maxWidth: undefined, minWidth: 100, flexGrow: 1, canAutoResize: true },
-          { prop: 'id2', width: 100, maxWidth: undefined, minWidth: 100, flexGrow: 1, canAutoResize: true }
+          {
+            prop: 'id1',
+            width: 100,
+            maxWidth: undefined,
+            minWidth: 100,
+            flexGrow: 1,
+            canAutoResize: true
+          },
+          {
+            prop: 'id2',
+            width: 100,
+            maxWidth: undefined,
+            minWidth: 100,
+            flexGrow: 1,
+            canAutoResize: true
+          }
         ];
         const maxWidth = 199;
 
@@ -77,7 +126,14 @@ describe('Math function', () => {
             flexGrow: 3.0000000000000075,
             canAutoResize: true
           },
-          { prop: 'id2', width: 0, maxWidth: undefined, minWidth: 10, flexGrow: 1, canAutoResize: true }
+          {
+            prop: 'id2',
+            width: 0,
+            maxWidth: undefined,
+            minWidth: 10,
+            flexGrow: 1,
+            canAutoResize: true
+          }
         ];
 
         adjustColumnWidths(cols, 40);

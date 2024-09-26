@@ -93,7 +93,9 @@ export class VirtualPagingComponent {
       this.cachePageSize = page.size;
       this.cache = {};
     }
-    if (this.cache[page.pageNumber]) return;
+    if (this.cache[page.pageNumber]) {
+      return;
+    }
     this.cache[page.pageNumber] = true;
 
     // Counter of pending API calls

@@ -216,7 +216,8 @@ export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges
       const bodyWidth = this.innerWidth;
       const totalDiff = widths.total - bodyWidth;
       const offsetDiff = totalDiff - offsetX;
-      const offset = (offsetDiff + (this.verticalScrollVisible ? this.scrollbarHelper.width : 0)) * -1;
+      const offset =
+        (offsetDiff + (this.verticalScrollVisible ? this.scrollbarHelper.width : 0)) * -1;
       return {
         width: `${widths[group]}px`,
         ...translateXY(offset, 0)

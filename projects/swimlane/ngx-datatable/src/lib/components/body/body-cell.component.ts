@@ -36,7 +36,12 @@ export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
           *ngIf="column.checkboxable && (!displayCheck || displayCheck(row, column, value))"
           class="datatable-checkbox"
         >
-          <input type="checkbox" [checked]="isSelected" (click)="onCheckboxChange($event)" />
+          <input
+            type="checkbox"
+            [disabled]="disable$ | async"
+            [checked]="isSelected"
+            (click)="onCheckboxChange($event)"
+          />
         </label>
         <ng-container *ngIf="column.isTreeColumn">
           <button
@@ -49,7 +54,10 @@ export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
             <span>
               <i *ngIf="treeStatus === 'loading'" class="icon datatable-icon-collapse"></i>
               <i *ngIf="treeStatus === 'collapsed'" class="icon datatable-icon-up"></i>
-              <i *ngIf="treeStatus === 'expanded' || treeStatus === 'disabled'" class="icon datatable-icon-down"></i>
+              <i
+                *ngIf="treeStatus === 'expanded' || treeStatus === 'disabled'"
+                class="icon datatable-icon-down"
+              ></i>
             </span>
           </button>
           <ng-template
@@ -71,11 +79,17 @@ export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
       </div>
     </ng-container>
     <ng-template #ghostLoaderTemplate>
-      <ghost-loader *ngIf="ghostLoadingIndicator" [columns]="[column]" [pageSize]="1"></ghost-loader>
+      <ghost-loader
+        *ngIf="ghostLoadingIndicator"
+        [columns]="[column]"
+        [pageSize]="1"
+      ></ghost-loader>
     </ng-template>
   `
 })
-export class DataTableBodyCellComponent<TRow extends { level?: number } = any> implements DoCheck, OnDestroy {
+export class DataTableBodyCellComponent<TRow extends { level?: number } = any>
+  implements DoCheck, OnDestroy
+{
   @Input() displayCheck: (row: RowOrGroup<TRow>, column: TableColumn, value: any) => boolean;
 
   _disable$: BehaviorSubject<boolean>;
@@ -172,7 +186,12 @@ export class DataTableBodyCellComponent<TRow extends { level?: number } = any> i
   }
 
   @Input() set treeStatus(status: TreeStatus) {
-    if (status !== 'collapsed' && status !== 'expanded' && status !== 'loading' && status !== 'disabled') {
+    if (
+      status !== 'collapsed' &&
+      status !== 'expanded' &&
+      status !== 'loading' &&
+      status !== 'disabled'
+    ) {
       this._treeStatus = 'collapsed';
     } else {
       this._treeStatus = status;

@@ -78,7 +78,9 @@ import { TreeStatus } from './body/body-cell.component';
     }
   ]
 })
-export class DatatableComponent<TRow = any> implements OnInit, DoCheck, AfterViewInit, AfterContentInit, OnDestroy {
+export class DatatableComponent<TRow = any>
+  implements OnInit, DoCheck, AfterViewInit, AfterContentInit, OnDestroy
+{
   /**
    * Template for the target marker of drag target columns.
    */
@@ -975,8 +977,12 @@ export class DatatableComponent<TRow = any> implements OnInit, DoCheck, AfterVie
 
     if (this.scrollbarV) {
       let height = dims.height;
-      if (this.headerHeight) height = height - this.headerHeight;
-      if (this.footerHeight) height = height - this.footerHeight;
+      if (this.headerHeight) {
+        height = height - this.headerHeight;
+      }
+      if (this.footerHeight) {
+        height = height - this.footerHeight;
+      }
       this.bodyHeight = height;
     }
 
@@ -1279,7 +1285,9 @@ export class DatatableComponent<TRow = any> implements OnInit, DoCheck, AfterVie
   onTreeAction(event: { row: TRow }) {
     const row = event.row;
     // TODO: For duplicated items this will not work
-    const rowIndex = this._rows.findIndex(r => r[this.treeToRelation] === event.row[this.treeToRelation]);
+    const rowIndex = this._rows.findIndex(
+      r => r[this.treeToRelation] === event.row[this.treeToRelation]
+    );
     this.treeAction.emit({ row, rowIndex });
   }
 
@@ -1315,9 +1323,16 @@ export class DatatableComponent<TRow = any> implements OnInit, DoCheck, AfterVie
       }
     }
     if (this.groupedRows && this.groupedRows.length) {
-      const sortOnGroupHeader = this.sorts?.find(sortColumns => sortColumns.prop === this._groupRowsBy);
+      const sortOnGroupHeader = this.sorts?.find(
+        sortColumns => sortColumns.prop === this._groupRowsBy
+      );
       this.groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
-      this.groupedRows = sortGroupedRows(this.groupedRows, this._internalColumns, this.sorts, sortOnGroupHeader);
+      this.groupedRows = sortGroupedRows(
+        this.groupedRows,
+        this._internalColumns,
+        this.sorts,
+        sortOnGroupHeader
+      );
       this._internalRows = [...this._internalRows];
     } else {
       this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts);

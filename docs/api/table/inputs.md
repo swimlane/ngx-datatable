@@ -161,14 +161,14 @@ Default value: `[]`
 
 Row selection mode
 
-| Value                  | Description                                           | Default |
-| :--------------------- | :---------------------------------------------------- | ------- |
-| `undefined|false|null` | Rows cannot be selected                               | x       |
-| `"single"`             | One row can be selected at a time                     |         |
-| `"cell"`               | One cell can be selected at a time                    |         |
-| `"multi"`              | Multiple rows can be selected using Ctrl or Shift key |         |
-| `"multiClick"`         | Multiple rows can be selected by clicking             |         |
-| `"checkbox"`           | Multiple rows can be selected using checkboxes        |         |
+| Value          | Description                                           | Default |
+| :------------- | :---------------------------------------------------- | ------- | ----------------------- | --- |
+| `undefined     | false                                                 | null`   | Rows cannot be selected | x   |
+| `"single"`     | One row can be selected at a time                     |         |
+| `"cell"`       | One cell can be selected at a time                    |         |
+| `"multi"`      | Multiple rows can be selected using Ctrl or Shift key |         |
+| `"multiClick"` | Multiple rows can be selected by clicking             |         |
+| `"checkbox"`   | Multiple rows can be selected using checkboxes        |         |
 
 ## `sorts`
 

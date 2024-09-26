@@ -39,7 +39,11 @@ import { SelectionType } from 'projects/swimlane/ngx-datatable/src/lib/types/sel
           #myGroupHeader
           (toggle)="onDetailToggle($event)"
         >
-          <ng-template let-group="group" let-expanded="expanded" ngx-datatable-group-header-template>
+          <ng-template
+            let-group="group"
+            let-expanded="expanded"
+            ngx-datatable-group-header-template
+          >
             <div style="padding-left:5px;height: 100%; display:flex;align-items: center;">
               <a
                 href="#"
@@ -107,7 +111,12 @@ import { SelectionType } from 'projects/swimlane/ngx-datatable/src/lib/types/sel
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="Source" prop="source" editable="false" frozenLeft="True"></ngx-datatable-column>
+        <ngx-datatable-column
+          name="Source"
+          prop="source"
+          editable="false"
+          frozenLeft="True"
+        ></ngx-datatable-column>
         <ngx-datatable-column name="Name" prop="name" editable="true"></ngx-datatable-column>
         <ngx-datatable-column name="Gender" prop="gender"></ngx-datatable-column>
         <ngx-datatable-column name="Age" prop="age"></ngx-datatable-column>
@@ -199,7 +208,11 @@ export class RowGroupingComponent {
               }
             }
 
-            if (group[index].exppayyes === 0 && group[index].exppayno === 0 && group[index].exppaypending === 0) {
+            if (
+              group[index].exppayyes === 0 &&
+              group[index].exppayno === 0 &&
+              group[index].exppaypending === 0
+            ) {
               expectedPaymentDealtWith = false;
             }
             console.log('expectedPaymentDealtWith', expectedPaymentDealtWith);
@@ -208,7 +221,11 @@ export class RowGroupingComponent {
       }
     } else {
       for (let index = 0; index < group.length; index++) {
-        if (group[index].exppayyes === 0 && group[index].exppayno === 0 && group[index].exppaypending === 0) {
+        if (
+          group[index].exppayyes === 0 &&
+          group[index].exppayno === 0 &&
+          group[index].exppaypending === 0
+        ) {
           expectedPaymentDealtWith = false;
         }
         console.log('expectedPaymentDealtWith', expectedPaymentDealtWith);
@@ -218,8 +235,10 @@ export class RowGroupingComponent {
     // check if there is a pending selected payment or a row that does not have any expected payment selected
     if (
       group.filter(rowFilter => rowFilter.exppaypending === 1).length === 0 &&
-      group.filter(rowFilter => rowFilter.exppaypending === 0 && rowFilter.exppayyes === 0 && rowFilter.exppayno === 0)
-        .length === 0
+      group.filter(
+        rowFilter =>
+          rowFilter.exppaypending === 0 && rowFilter.exppayyes === 0 && rowFilter.exppayno === 0
+      ).length === 0
     ) {
       console.log('expected payment dealt with');
 

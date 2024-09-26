@@ -79,7 +79,11 @@ describe('DatatableComponent', () => {
   });
 
   it('should sort string values', () => {
-    const initialRows = [{ product: 'Computers' }, { product: 'Bikes' }, { product: 'Smartphones' }];
+    const initialRows = [
+      { product: 'Computers' },
+      { product: 'Bikes' },
+      { product: 'Smartphones' }
+    ];
 
     const columns = [
       {
@@ -313,7 +317,9 @@ describe('DatatableComponent', () => {
     component.columns = columns;
     fixture.detectChanges();
 
-    const datatableComponent = fixture.debugElement.query(By.directive(DatatableComponent)).componentInstance;
+    const datatableComponent = fixture.debugElement.query(
+      By.directive(DatatableComponent)
+    ).componentInstance;
     datatableComponent.offset = 1;
 
     // sort by `id` descending
@@ -458,7 +464,9 @@ function sortBy({ column }: { column: number }) {
  */
 function textContent({ row, column }: { row: number; column: number }) {
   const [rowIndex, columnIndex] = [row - 1, column - 1];
-  const bodyRowDe = fixture.debugElement.queryAll(By.directive(DataTableBodyRowComponent))[rowIndex];
+  const bodyRowDe = fixture.debugElement.queryAll(By.directive(DataTableBodyRowComponent))[
+    rowIndex
+  ];
   const bodyCellDe = bodyRowDe.queryAll(By.directive(DataTableBodyCellComponent))[columnIndex];
 
   return bodyCellDe.nativeElement.textContent;

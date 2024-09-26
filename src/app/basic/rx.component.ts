@@ -10,7 +10,10 @@ import { Employee } from '../data.model';
       <h3>
         RXjs Data
         <small>
-          <a href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/rx.component.ts" target="_blank">
+          <a
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/rx.component.ts"
+            target="_blank"
+          >
             Source
           </a>
         </small>

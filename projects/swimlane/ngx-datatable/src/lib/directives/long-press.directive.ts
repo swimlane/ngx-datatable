@@ -1,5 +1,13 @@
-import { Directive, Input, Output, EventEmitter, HostBinding, HostListener, OnDestroy } from '@angular/core';
-import { Observable, Subscription, fromEvent } from 'rxjs';
+import {
+  Directive,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  OnDestroy,
+  Output
+} from '@angular/core';
+import { fromEvent, Observable, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MouseEvent } from '../events';
 import { TableColumn } from '../types/table-column.type';
@@ -10,8 +18,10 @@ export class LongPressDirective implements OnDestroy {
   @Input() pressModel: TableColumn;
   @Input() duration = 500;
 
-  @Output() longPressStart: EventEmitter<{ event: MouseEvent; model: TableColumn }> = new EventEmitter();
-  @Output() longPressing: EventEmitter<{ event: MouseEvent; model: TableColumn }> = new EventEmitter();
+  @Output() longPressStart: EventEmitter<{ event: MouseEvent; model: TableColumn }> =
+    new EventEmitter();
+  @Output() longPressing: EventEmitter<{ event: MouseEvent; model: TableColumn }> =
+    new EventEmitter();
   @Output() longPressEnd: EventEmitter<{ model: TableColumn }> = new EventEmitter();
 
   pressing: boolean;
@@ -35,11 +45,15 @@ export class LongPressDirective implements OnDestroy {
   @HostListener('mousedown', ['$event'])
   onMouseDown(event: MouseEvent): void {
     // don't do right/middle clicks
-    if (event.which !== 1 || !this.pressEnabled) return;
+    if (event.which !== 1 || !this.pressEnabled) {
+      return;
+    }
 
     // don't start drag if its on resize handle
-    const target = <HTMLElement>event.target;
-    if (target.classList.contains('resize-handle')) return;
+    const target = event.target as HTMLElement;
+    if (target.classList.contains('resize-handle')) {
+      return;
+    }
 
     this.mouseX = event.clientX;
     this.mouseY = event.clientY;

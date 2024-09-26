@@ -11,7 +11,11 @@
             <a href="https://swimlane.gitbooks.io/ngx-datatable/content/" target="_black">Online</a>
           </li>
           <li>
-            <a href="https://www.gitbook.com/download/pdf/book/swimlane/ngx-datatable" target="_black">PDF</a>
+            <a
+              href="https://www.gitbook.com/download/pdf/book/swimlane/ngx-datatable"
+              target="_black"
+              >PDF</a
+            >
           </li>
         </ul>
       </li>
@@ -28,10 +32,14 @@
             <a href="#inline-edit" (click)="state = 'inline-edit'">Inline Editing</a>
           </li>
           <li>
-            <a href="#horz-vert-scrolling" (click)="state = 'horz-vert-scrolling'">Horz/Vert Scrolling</a>
+            <a href="#horz-vert-scrolling" (click)="state = 'horz-vert-scrolling'"
+              >Horz/Vert Scrolling</a
+            >
           </li>
           <li>
-            <a href="#scrolling-dynamically" (click)="state = 'scrolling-dynamically'">Vert Dynamic Scrolling</a>
+            <a href="#scrolling-dynamically" (click)="state = 'scrolling-dynamically'"
+              >Vert Dynamic Scrolling</a
+            >
           </li>
           <li>
             <a href="#multiple-tables" (click)="state = 'multiple-tables'">Multiple Tables</a>
@@ -111,12 +119,16 @@
             <a href="#server-paging" (click)="state = 'server-paging'">Server-side</a>
           </li>
           <li>
-            <a href="#paging-scrolling-novirtualization" (click)="state = 'paging-scrolling-novirtualization'"
+            <a
+              href="#paging-scrolling-novirtualization"
+              (click)="state = 'paging-scrolling-novirtualization'"
               >Scrolling no virtual</a
             >
           </li>
           <li>
-            <a href="#server-scrolling" (click)="state = 'server-scrolling'">Scrolling server-side</a>
+            <a href="#server-scrolling" (click)="state = 'server-scrolling'"
+              >Scrolling server-side</a
+            >
           </li>
           <li>
             <a href="#virtual-paging" (click)="state = 'virtual-paging'">Virtual server-side</a>
@@ -153,16 +165,22 @@
             <a href="#multi-selection" (click)="state = 'multi-selection'">Multi Row</a>
           </li>
           <li>
-            <a href="#multi-click-selection" (click)="state = 'multi-click-selection'">Multi Click Row</a>
+            <a href="#multi-click-selection" (click)="state = 'multi-click-selection'"
+              >Multi Click Row</a
+            >
           </li>
           <li>
-            <a href="#multidisable-selection" (click)="state = 'multidisable-selection'">Disable Callback</a>
+            <a href="#multidisable-selection" (click)="state = 'multidisable-selection'"
+              >Disable Callback</a
+            >
           </li>
           <li>
             <a href="#chkbox-selection" (click)="state = 'chkbox-selection'">Checkbox</a>
           </li>
           <li>
-            <a href="#chkbox-selection-template" (click)="state = 'chkbox-selection-template'">Custom Checkbox</a>
+            <a href="#chkbox-selection-template" (click)="state = 'chkbox-selection-template'"
+              >Custom Checkbox</a
+            >
           </li>
           <li>
             <a href="#multi-click-chkbox-selection" (click)="state = 'multi-click-chkbox-selection'"
@@ -198,7 +216,9 @@
             <a href="#simple-summary" (click)="state = 'simple-summary'">Simple</a>
           </li>
           <li>
-            <a href="#custom-template-summary" (click)="state = 'custom-template-summary'">Custom Template</a>
+            <a href="#custom-template-summary" (click)="state = 'custom-template-summary'"
+              >Custom Template</a
+            >
           </li>
           <li>
             <a href="#paging-summary" (click)="state = 'paging-summary'">Server-side paging</a>
@@ -218,7 +238,9 @@
     <inline-edit-demo *ngIf="state === 'inline-edit'"></inline-edit-demo>
     <virtual-scroll-demo *ngIf="state === 'virtual-scroll'"></virtual-scroll-demo>
     <horz-vert-scrolling-demo *ngIf="state === 'horz-vert-scrolling'"></horz-vert-scrolling-demo>
-    <scrolling-dynamically-demo *ngIf="state === 'scrolling-dynamically'"></scrolling-dynamically-demo>
+    <scrolling-dynamically-demo
+      *ngIf="state === 'scrolling-dynamically'"
+    ></scrolling-dynamically-demo>
     <multiple-tables-demo *ngIf="state === 'multiple-tables'"></multiple-tables-demo>
     <row-details-demo *ngIf="state === 'row-details'"></row-details-demo>
     <responsive-demo *ngIf="state === 'responsive'"></responsive-demo>
@@ -262,10 +284,16 @@
     <cell-selection-demo *ngIf="state === 'cell-selection'"></cell-selection-demo>
     <single-selection-demo *ngIf="state === 'single-selection'"></single-selection-demo>
     <multi-selection-demo *ngIf="state === 'multi-selection'"></multi-selection-demo>
-    <multi-click-selection-demo *ngIf="state === 'multi-click-selection'"></multi-click-selection-demo>
-    <multidisable-selection-demo *ngIf="state === 'multidisable-selection'"></multidisable-selection-demo>
+    <multi-click-selection-demo
+      *ngIf="state === 'multi-click-selection'"
+    ></multi-click-selection-demo>
+    <multidisable-selection-demo
+      *ngIf="state === 'multidisable-selection'"
+    ></multidisable-selection-demo>
     <chkbox-selection-demo *ngIf="state === 'chkbox-selection'"></chkbox-selection-demo>
-    <chkbox-selection-template-demo *ngIf="state === 'chkbox-selection-template'"></chkbox-selection-template-demo>
+    <chkbox-selection-template-demo
+      *ngIf="state === 'chkbox-selection-template'"
+    ></chkbox-selection-template-demo>
     <multi-click-chkbox-selection-demo
       *ngIf="state === 'multi-click-chkbox-selection'"
     ></multi-click-chkbox-selection-demo>
@@ -284,8 +312,10 @@
 
     <!-- Summary row -->
     <summary-row-simple-demo *ngIf="state === 'simple-summary'"></summary-row-simple-demo>
-    <summary-row-custom-template-demo *ngIf="state === 'custom-template-summary'"> </summary-row-custom-template-demo>
-    <summary-row-server-paging-demo *ngIf="state === 'paging-summary'"> </summary-row-server-paging-demo>
+    <summary-row-custom-template-demo *ngIf="state === 'custom-template-summary'">
+    </summary-row-custom-template-demo>
+    <summary-row-server-paging-demo *ngIf="state === 'paging-summary'">
+    </summary-row-server-paging-demo>
     <summary-row-inline-html *ngIf="state === 'inline-html-summary'"></summary-row-inline-html>
   </content>
 </div>

@@ -19,15 +19,17 @@ import { Employee } from '../data.model';
       </h3>
       <div class="info">
         <p>
-          <strong>Note:</strong> ngx-datatable does not provide a context menu feature. This demonstrates how you would
-          access the <code>contextmenu</code> event to display your own custom context menu.
+          <strong>Note:</strong> ngx-datatable does not provide a context menu feature. This
+          demonstrates how you would access the <code>contextmenu</code> event to display your own
+          custom context menu.
         </p>
         <p *ngIf="rawEvent">
           <strong>Mouse position:</strong> <code>(x: {{ rawEvent?.x }}, y: {{ rawEvent?.y }})</code>
         </p>
         <p *ngIf="contextmenuRow"><strong>Row:</strong> {{ contextmenuRow?.name }}</p>
         <p *ngIf="contextmenuColumn">
-          <strong>Header:</strong> name: {{ contextmenuColumn?.name }} prop: {{ contextmenuColumn?.prop }}
+          <strong>Header:</strong> name: {{ contextmenuColumn?.name }} prop:
+          {{ contextmenuColumn?.prop }}
         </p>
       </div>
       <ngx-datatable

@@ -25,14 +25,16 @@ describe('DataTableSummaryRowComponent', () => {
     setColumnDefaults(columns);
   });
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [DataTableSummaryRowComponent, DataTableBodyRowComponent, DataTableBodyCellComponent],
-        providers: [ScrollbarHelper]
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        DataTableSummaryRowComponent,
+        DataTableBodyRowComponent,
+        DataTableBodyCellComponent
+      ],
+      providers: [ScrollbarHelper]
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DataTableSummaryRowComponent);

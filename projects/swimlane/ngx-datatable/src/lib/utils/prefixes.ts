@@ -6,7 +6,10 @@ const testStyle = typeof document !== 'undefined' ? document.createElement('div'
 // Get Prefix
 // http://davidwalsh.name/vendor-prefix
 const prefix = (function () {
-  const styles = typeof window !== 'undefined' ? window.getComputedStyle(document.documentElement, '') : undefined;
+  const styles =
+    typeof window !== 'undefined'
+      ? window.getComputedStyle(document.documentElement, '')
+      : undefined;
   const match =
     typeof styles !== 'undefined'
       ? Array.prototype.slice
@@ -15,7 +18,10 @@ const prefix = (function () {
           .match(/-(moz|webkit|ms)-/)
       : null;
   const pre = match !== null ? match[1] : undefined;
-  const dom = typeof pre !== 'undefined' ? 'WebKit|Moz|MS|O'.match(new RegExp('(' + pre + ')', 'i'))[1] : undefined;
+  const dom =
+    typeof pre !== 'undefined'
+      ? 'WebKit|Moz|MS|O'.match(new RegExp('(' + pre + ')', 'i'))[1]
+      : undefined;
 
   return dom
     ? {

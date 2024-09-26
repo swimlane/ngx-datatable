@@ -20,7 +20,11 @@ export function elementsFromPoint(x: number, y: number) {
   //if (document === undefined) return elements;
 
   // get all elements via elementFromPoint, and remove them from hit-testing in order
-  while ((current = document.elementFromPoint(x, y)) && elements.indexOf(current) === -1 && current != null) {
+  while (
+    (current = document.elementFromPoint(x, y)) &&
+    elements.indexOf(current) === -1 &&
+    current != null
+  ) {
     // push the element and its current style
     elements.push(current);
     previousPointerEvents.push({

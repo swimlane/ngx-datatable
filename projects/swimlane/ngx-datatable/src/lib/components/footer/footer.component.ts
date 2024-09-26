@@ -22,7 +22,9 @@ import { PagerPageEvent } from '../../types/page-event.type';
       >
       </ng-template>
       <div class="page-count" *ngIf="!footerTemplate">
-        <span *ngIf="selectedMessage"> {{ selectedCount?.toLocaleString() }} {{ selectedMessage }} / </span>
+        <span *ngIf="selectedMessage">
+          {{ selectedCount?.toLocaleString() }} {{ selectedMessage }} /
+        </span>
         {{ rowCount?.toLocaleString() }} {{ totalMessage }}
       </div>
       <datatable-pager

@@ -11,7 +11,7 @@ import { BehaviorSubject } from 'rxjs';
         Disable Row
         <small>
           <a
-            href="https://github.com/siemens/ngx-datatable/blob/master/src/app/basic/disabled-rows.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/disabled-rows.component.ts"
             target="_blank"
           >
             Source

@@ -30,7 +30,15 @@ export class RowHeightCache {
    * @param detailRowHeight The detail row height.
    */
   initCache(details: any): void {
-    const { rows, rowHeight, detailRowHeight, externalVirtual, rowCount, rowIndexes, rowExpansions } = details;
+    const {
+      rows,
+      rowHeight,
+      detailRowHeight,
+      externalVirtual,
+      rowCount,
+      rowIndexes,
+      rowExpansions
+    } = details;
     const isFn = typeof rowHeight === 'function';
     const isDetailFn = typeof detailRowHeight === 'function';
 
@@ -80,7 +88,9 @@ export class RowHeightCache {
    * that is present in the current view port.  Below handles edge cases.
    */
   getRowIndex(scrollY: number): number {
-    if (scrollY === 0) return 0;
+    if (scrollY === 0) {
+      return 0;
+    }
     return this.calcRowIndex(scrollY);
   }
 
@@ -134,7 +144,9 @@ export class RowHeightCache {
    * that is present in the current view port.
    */
   private calcRowIndex(sum: number): number {
-    if (!this.treeArray.length) return 0;
+    if (!this.treeArray.length) {
+      return 0;
+    }
 
     let pos = -1;
     const dataLength = this.treeArray.length;

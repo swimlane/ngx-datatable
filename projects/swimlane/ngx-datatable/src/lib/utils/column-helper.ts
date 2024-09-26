@@ -8,7 +8,9 @@ import { DataTableColumnDirective } from '../components/columns/column.directive
  * Sets the column defaults
  */
 export function setColumnDefaults(columns: TableColumn[]) {
-  if (!columns) return;
+  if (!columns) {
+    return;
+  }
 
   // Only one column should hold the tree view
   // Thus if multiple columns are provided with

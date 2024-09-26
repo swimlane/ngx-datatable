@@ -37,7 +37,11 @@ export class BasicAutoComponent {
   loadingIndicator = true;
   reorderable = true;
 
-  columns: TableColumn[] = [{ prop: 'name' }, { name: 'Gender' }, { name: 'Company', sortable: false }];
+  columns: TableColumn[] = [
+    { prop: 'name' },
+    { name: 'Gender' },
+    { name: 'Company', sortable: false }
+  ];
 
   ColumnMode = ColumnMode;
 
