@@ -65,7 +65,7 @@ export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges
     this.buildStylesByGroup();
   }
 
-  get columns(): any[] {
+  get columns(): TableColumn[] {
     return this._columns;
   }
 
