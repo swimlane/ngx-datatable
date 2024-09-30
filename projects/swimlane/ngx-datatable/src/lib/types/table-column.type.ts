@@ -232,5 +232,5 @@ export interface TableColumn<TRow = any> {
    *
    * @memberOf TableColumn
    */
-  summaryTemplate?: any;
+  summaryTemplate?: TemplateRef<any>;
 }

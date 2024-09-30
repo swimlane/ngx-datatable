@@ -3,6 +3,7 @@ import {
   Directive,
   Input,
   OnChanges,
+  PipeTransform,
   SimpleChanges,
   TemplateRef
 } from '@angular/core';
@@ -18,12 +19,12 @@ import { CellContext, HeaderCellContext } from '../../types/public.types';
 export class DataTableColumnDirective<TRow> implements OnChanges {
   @Input() name: string;
   @Input() prop: TableColumnProp;
-  @Input() frozenLeft: any;
-  @Input() frozenRight: any;
+  @Input() frozenLeft: boolean;
+  @Input() frozenRight: boolean;
   @Input() flexGrow: number;
   @Input() resizeable: boolean;
   @Input() comparator: any;
-  @Input() pipe: any;
+  @Input() pipe: PipeTransform;
   @Input() sortable: boolean;
   @Input() draggable: boolean;
   @Input() canAutoResize: boolean;

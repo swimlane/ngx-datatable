@@ -70,7 +70,7 @@ import {
           [headerCheckboxable]="true"
           [checkboxable]="true"
           editable="true"
-          frozenLeft="True"
+          [frozenLeft]="true"
           [sortable]="false"
         >
           <ng-template
@@ -120,7 +120,7 @@ import {
           name="Source"
           prop="source"
           editable="false"
-          frozenLeft="True"
+          [frozenLeft]="true"
         ></ngx-datatable-column>
         <ngx-datatable-column name="Name" prop="name" editable="true"></ngx-datatable-column>
         <ngx-datatable-column name="Gender" prop="gender"></ngx-datatable-column>
