@@ -1,16 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { selectRows, selectRowsBetween } from '../../utils/selection';
 import { Keys } from '../../utils/keys';
-import { SelectionType } from '../../types/public.types';
-
-export interface Model<TRow> {
-  type: string;
-  event: MouseEvent | KeyboardEvent;
-  row: TRow;
-  rowElement: HTMLElement;
-  cellElement: HTMLElement;
-  cellIndex: number;
-}
+import { ActivateEvent, SelectionType } from '../../types/public.types';
 
 @Component({
   selector: 'datatable-selection',
@@ -26,7 +17,7 @@ export class DataTableSelectionComponent<TRow = any> {
   @Input() selectCheck: (value: TRow, index: number, array: TRow[]) => boolean;
   @Input() disableCheck: (row: TRow) => boolean;
 
-  @Output() activate: EventEmitter<Model<TRow>> = new EventEmitter();
+  @Output() activate: EventEmitter<ActivateEvent<TRow>> = new EventEmitter();
   @Output() select: EventEmitter<{ selected: TRow[] }> = new EventEmitter();
 
   prevIndex: number;
@@ -74,7 +65,7 @@ export class DataTableSelectionComponent<TRow = any> {
     });
   }
 
-  onActivate(model: Model<TRow>, index: number): void {
+  onActivate(model: ActivateEvent<TRow>, index: number): void {
     const { type, event, row } = model;
     const chkbox = this.selectionType === SelectionType.checkbox;
     const select =
@@ -94,7 +85,7 @@ export class DataTableSelectionComponent<TRow = any> {
     this.activate.emit(model);
   }
 
-  onKeyboardFocus(model: Model<TRow>): void {
+  onKeyboardFocus(model: ActivateEvent<TRow>): void {
     const { keyCode } = model.event as KeyboardEvent;
     const shouldFocus =
       keyCode === Keys.up ||

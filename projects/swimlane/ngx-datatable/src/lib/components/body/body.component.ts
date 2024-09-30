@@ -18,12 +18,12 @@ import { RowHeightCache } from '../../utils/row-height-cache';
 import { translateXY } from '../../utils/translate';
 import { NgStyle } from '@angular/common';
 import { TableColumn } from '../../types/table-column.type';
-import { Model } from './selection.component';
 import { DatatableGroupHeaderDirective } from './body-group-header.directive';
 import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive';
 import { DataTableBodyRowComponent } from './body-row.component';
 import { ColumnGroupWidth } from '../../types/internal.types';
 import {
+  ActivateEvent,
   DragEventData,
   Group,
   RowOrGroup,
@@ -347,7 +347,7 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
 
   @Output() scroll: EventEmitter<ScrollEvent> = new EventEmitter();
   @Output() page: EventEmitter<number> = new EventEmitter();
-  @Output() activate: EventEmitter<Model<TRow>> = new EventEmitter();
+  @Output() activate: EventEmitter<ActivateEvent<TRow>> = new EventEmitter();
   @Output() select: EventEmitter<{ selected: TRow[] }> = new EventEmitter();
   @Output() detailToggle: EventEmitter<any> = new EventEmitter();
   @Output() rowContextmenu = new EventEmitter<{ event: MouseEvent; row: RowOrGroup<TRow> }>(false);

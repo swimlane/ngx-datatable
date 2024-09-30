@@ -43,11 +43,11 @@ import { ColumnChangesService } from '../services/column-changes.service';
 import { DimensionsHelper } from '../services/dimensions-helper.service';
 import { throttleable } from '../utils/throttle';
 import { adjustColumnWidths, forceFillColumnWidths } from '../utils/math';
-import { Model } from './body/selection.component';
 import { sortGroupedRows, sortRows } from '../utils/sort';
 import { DatatableRowDefDirective } from './body/body-row-def.component';
 import { DatatableComponentToken } from '../utils/table-token';
 import {
+  ActivateEvent,
   ColumnMode,
   ColumnResizeEvent,
   ContextmenuType,
@@ -490,7 +490,7 @@ export class DatatableComponent<TRow = any>
   /**
    * A cell or row was focused via keyboard or mouse click.
    */
-  @Output() activate: EventEmitter<Model<TRow>> = new EventEmitter();
+  @Output() activate: EventEmitter<ActivateEvent<TRow>> = new EventEmitter();
 
   /**
    * A cell or row was selected.

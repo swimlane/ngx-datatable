@@ -21,7 +21,7 @@ import { Keys } from '../../utils/keys';
 import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 import { translateXY } from '../../utils/translate';
 import { BehaviorSubject } from 'rxjs';
-import { RowOrGroup, TreeStatus } from '../../types/public.types';
+import { ActivateEvent, RowOrGroup, TreeStatus } from '../../types/public.types';
 import { NgStyle } from '@angular/common';
 import { TableColumn } from '../../types/table-column.type';
 import { ColumnGroupWidth, PinnedColumns } from '../../types/internal.types';
@@ -147,7 +147,7 @@ export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges
     return this._columnGroupWidths.total;
   }
 
-  @Output() activate: EventEmitter<any> = new EventEmitter();
+  @Output() activate: EventEmitter<ActivateEvent<TRow>> = new EventEmitter();
   @Output() treeAction: EventEmitter<any> = new EventEmitter();
 
   _element: HTMLElement;
@@ -227,7 +227,7 @@ export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges
     };
   }
 
-  onActivate(event: any, index: number): void {
+  onActivate(event: ActivateEvent<TRow>, index: number): void {
     event.cellIndex = index;
     event.rowElement = this._element;
     this.activate.emit(event);
@@ -261,7 +261,7 @@ export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges
   }
 
   @HostListener('mouseenter', ['$event'])
-  onMouseenter(event: any): void {
+  onMouseenter(event: MouseEvent): void {
     this.activate.emit({
       type: 'mouseenter',
       event,
@@ -270,7 +270,7 @@ export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges
     });
   }
 
-  recalculateColumns(val: TableColumn[] = this.columns): void {
+  recalculateColumns(val: TableColumn<TRow>[] = this.columns): void {
     this._columns = val;
     const colsByPin = columnsByPin(this._columns);
     this._columnsByPin = columnsByPinArr(this._columns);
