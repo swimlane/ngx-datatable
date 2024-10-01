@@ -25,25 +25,30 @@ import {
   selector: 'datatable-header-cell',
   template: `
     <div class="datatable-header-cell-template-wrap">
-      <ng-template
-        *ngIf="isTarget"
-        [ngTemplateOutlet]="targetMarkerTemplate"
-        [ngTemplateOutletContext]="targetMarkerContext"
-      >
-      </ng-template>
-      <label *ngIf="isCheckboxable" class="datatable-checkbox">
-        <input type="checkbox" [checked]="allRowsSelected" (change)="select.emit()" />
-      </label>
-      <span *ngIf="!column.headerTemplate" class="datatable-header-cell-wrapper">
-        <span class="datatable-header-cell-label draggable" (click)="onSort()" [innerHTML]="name">
+      @if (isTarget) {
+        <ng-template
+          [ngTemplateOutlet]="targetMarkerTemplate"
+          [ngTemplateOutletContext]="targetMarkerContext"
+        >
+        </ng-template>
+      }
+      @if (isCheckboxable) {
+        <label class="datatable-checkbox">
+          <input type="checkbox" [checked]="allRowsSelected" (change)="select.emit()" />
+        </label>
+      }
+      @if (column.headerTemplate) {
+        <ng-template
+          [ngTemplateOutlet]="column.headerTemplate"
+          [ngTemplateOutletContext]="cellContext"
+        >
+        </ng-template>
+      } @else {
+        <span class="datatable-header-cell-wrapper">
+          <span class="datatable-header-cell-label draggable" (click)="onSort()" [innerHTML]="name">
+          </span>
         </span>
-      </span>
-      <ng-template
-        *ngIf="column.headerTemplate"
-        [ngTemplateOutlet]="column.headerTemplate"
-        [ngTemplateOutletContext]="cellContext"
-      >
-      </ng-template>
+      }
       <span (click)="onSort()" [class]="sortClass"> </span>
     </div>
   `,

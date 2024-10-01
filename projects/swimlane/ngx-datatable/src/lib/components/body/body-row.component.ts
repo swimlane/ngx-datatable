@@ -30,32 +30,34 @@ import { ColumnGroupWidth, PinnedColumns } from '../../types/internal.types';
   selector: 'datatable-body-row',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div
-      *ngFor="let colGroup of _columnsByPin; let i = index; trackBy: trackByGroups"
-      class="datatable-row-{{ colGroup.type }} datatable-row-group"
-      [ngStyle]="_groupStyles[colGroup.type]"
-      [class.row-disabled]="disable$ ? (disable$ | async) : false"
-    >
-      <datatable-body-cell
-        role="cell"
-        *ngFor="let column of colGroup.columns; let ii = index; trackBy: columnTrackingFn"
-        tabindex="-1"
-        [row]="row"
-        [group]="group"
-        [expanded]="expanded"
-        [isSelected]="isSelected"
-        [rowIndex]="rowIndex"
-        [column]="column"
-        [rowHeight]="rowHeight"
-        [displayCheck]="displayCheck"
-        [disable$]="disable$"
-        [treeStatus]="treeStatus"
-        [ghostLoadingIndicator]="ghostLoadingIndicator"
-        (activate)="onActivate($event, ii)"
-        (treeAction)="onTreeAction()"
+    @for (colGroup of _columnsByPin; track colGroup.type; let i = $index) {
+      <div
+        class="datatable-row-{{ colGroup.type }} datatable-row-group"
+        [ngStyle]="_groupStyles[colGroup.type]"
+        [class.row-disabled]="disable$ ? (disable$ | async) : false"
       >
-      </datatable-body-cell>
-    </div>
+        @for (column of colGroup.columns; track column.$$id; let ii = $index) {
+          <datatable-body-cell
+            role="cell"
+            tabindex="-1"
+            [row]="row"
+            [group]="group"
+            [expanded]="expanded"
+            [isSelected]="isSelected"
+            [rowIndex]="rowIndex"
+            [column]="column"
+            [rowHeight]="rowHeight"
+            [displayCheck]="displayCheck"
+            [disable$]="disable$"
+            [treeStatus]="treeStatus"
+            [ghostLoadingIndicator]="ghostLoadingIndicator"
+            (activate)="onActivate($event, ii)"
+            (treeAction)="onTreeAction()"
+          >
+          </datatable-body-cell>
+        }
+      </div>
+    }
   `
 })
 export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges {
@@ -184,14 +186,6 @@ export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges
     if (this._rowDiffer.diff(this.row)) {
       this.cd.markForCheck();
     }
-  }
-
-  trackByGroups(index: number, colGroup: PinnedColumns): string {
-    return colGroup.type;
-  }
-
-  columnTrackingFn(index: number, column: TableColumn): string {
-    return column.$$id;
   }
 
   buildStylesByGroup() {

@@ -57,7 +57,7 @@ import {
                 title="Expand/Collapse Group"
                 (click)="toggleExpandGroup(group)"
               >
-                <b>Age: {{ group.value[0].age }}</b>
+                <b>Age: {{ group ? group.value[0].age : '' }}</b>
               </a>
             </div>
           </ng-template>

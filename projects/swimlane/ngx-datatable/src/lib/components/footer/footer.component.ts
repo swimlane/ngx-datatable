@@ -9,37 +9,38 @@ import { PagerPageEvent } from '../../types/public.types';
       [ngClass]="{ 'selected-count': selectedMessage }"
       [style.height.px]="footerHeight"
     >
-      <ng-template
-        *ngIf="footerTemplate"
-        [ngTemplateOutlet]="footerTemplate.template"
-        [ngTemplateOutletContext]="{
-          rowCount: rowCount,
-          pageSize: pageSize,
-          selectedCount: selectedCount,
-          curPage: curPage,
-          offset: offset
-        }"
-      >
-      </ng-template>
-      <div class="page-count" *ngIf="!footerTemplate">
-        <span *ngIf="selectedMessage">
-          {{ selectedCount?.toLocaleString() }} {{ selectedMessage }} /
-        </span>
-        {{ rowCount?.toLocaleString() }} {{ totalMessage }}
-      </div>
-      <datatable-pager
-        *ngIf="!footerTemplate"
-        [pagerLeftArrowIcon]="pagerLeftArrowIcon"
-        [pagerRightArrowIcon]="pagerRightArrowIcon"
-        [pagerPreviousIcon]="pagerPreviousIcon"
-        [pagerNextIcon]="pagerNextIcon"
-        [page]="curPage"
-        [size]="pageSize"
-        [count]="rowCount"
-        [hidden]="!isVisible"
-        (change)="page.emit($event)"
-      >
-      </datatable-pager>
+      @if (footerTemplate) {
+        <ng-template
+          [ngTemplateOutlet]="footerTemplate.template"
+          [ngTemplateOutletContext]="{
+            rowCount: rowCount,
+            pageSize: pageSize,
+            selectedCount: selectedCount,
+            curPage: curPage,
+            offset: offset
+          }"
+        >
+        </ng-template>
+      } @else {
+        <div class="page-count">
+          @if (selectedMessage) {
+            <span> {{ selectedCount?.toLocaleString() }} {{ selectedMessage }} / </span>
+          }
+          {{ rowCount?.toLocaleString() }} {{ totalMessage }}
+        </div>
+        <datatable-pager
+          [pagerLeftArrowIcon]="pagerLeftArrowIcon"
+          [pagerRightArrowIcon]="pagerRightArrowIcon"
+          [pagerPreviousIcon]="pagerPreviousIcon"
+          [pagerNextIcon]="pagerNextIcon"
+          [page]="curPage"
+          [size]="pageSize"
+          [count]="rowCount"
+          [hidden]="!isVisible"
+          (change)="page.emit($event)"
+        >
+        </datatable-pager>
+      }
     </div>
   `,
   host: {

@@ -17,11 +17,12 @@ import {
  */
 @Component({
   selector: 'datatable-row-def',
-  template: `<ng-container
-    *ngIf="rowDef.rowDefInternal.rowTemplate"
-    [ngTemplateOutlet]="rowDef.rowDefInternal.rowTemplate"
-    [ngTemplateOutletContext]="rowDef"
-  />`
+  template: `@if (rowDef.rowDefInternal.rowTemplate) {
+    <ng-container
+      [ngTemplateOutlet]="rowDef.rowDefInternal.rowTemplate"
+      [ngTemplateOutletContext]="rowDef"
+    />
+  }`
 })
 export class DatatableRowDefComponent {
   rowDef = inject(RowDefToken);

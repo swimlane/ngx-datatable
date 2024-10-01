@@ -1,4 +1,5 @@
 import {
+  booleanAttribute,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -12,8 +13,10 @@ import {
   IterableDiffers,
   KeyValueDiffer,
   KeyValueDiffers,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
@@ -27,55 +30,48 @@ import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive'
   selector: 'datatable-row-wrapper',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div
-      *ngIf="groupHeader && groupHeader.template"
-      [style.height.px]="groupHeaderRowHeight"
-      class="datatable-group-header"
-      [ngStyle]="getGroupHeaderStyle()"
-    >
-      <div class="datatable-group-cell">
-        <div *ngIf="groupHeader.checkboxable">
-          <label class="datatable-checkbox">
-            <input
-              #select
-              type="checkbox"
-              [checked]="selectedGroupRows.length === group.value.length"
-              (change)="onCheckboxChange(select.checked)"
-            />
-          </label>
+    @if (groupHeader?.template) {
+      <div
+        [style.height.px]="groupHeaderRowHeight"
+        class="datatable-group-header"
+        [ngStyle]="getGroupHeaderStyle()"
+      >
+        <div class="datatable-group-cell">
+          @if (groupHeader.checkboxable) {
+            <div>
+              <label class="datatable-checkbox">
+                <input
+                  #select
+                  type="checkbox"
+                  [checked]="selectedGroupRows.length === group.value.length"
+                  (change)="onCheckboxChange(select.checked)"
+                />
+              </label>
+            </div>
+          }
+          <ng-template
+            [ngTemplateOutlet]="groupHeader.template"
+            [ngTemplateOutletContext]="groupContext"
+          >
+          </ng-template>
         </div>
-        <ng-template
-          *ngIf="groupHeader && groupHeader.template"
-          [ngTemplateOutlet]="groupHeader.template"
-          [ngTemplateOutletContext]="groupContext"
-        >
+      </div>
+    }
+    @if ((groupHeader?.template && expanded) || !groupHeader || !groupHeader.template) {
+      <ng-content> </ng-content>
+    }
+    @if (rowDetail?.template && expanded) {
+      <div [style.height.px]="detailRowHeight" class="datatable-row-detail">
+        <ng-template [ngTemplateOutlet]="rowDetail.template" [ngTemplateOutletContext]="rowContext">
         </ng-template>
       </div>
-    </div>
-    <ng-content
-      *ngIf="
-        (groupHeader && groupHeader.template && expanded) || !groupHeader || !groupHeader.template
-      "
-    >
-    </ng-content>
-    <div
-      *ngIf="rowDetail && rowDetail.template && expanded"
-      [style.height.px]="detailRowHeight"
-      class="datatable-row-detail"
-    >
-      <ng-template
-        *ngIf="rowDetail && rowDetail.template"
-        [ngTemplateOutlet]="rowDetail.template"
-        [ngTemplateOutletContext]="rowContext"
-      >
-      </ng-template>
-    </div>
+    }
   `,
   host: {
     class: 'datatable-row-wrapper'
   }
 })
-export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit {
+export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit, OnChanges {
   @ViewChild('select') checkBoxInput!: ElementRef<HTMLInputElement>;
   @Input() innerWidth: number;
   @Input() rowDetail: DatatableRowDetailDirective;
@@ -92,28 +88,11 @@ export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit
     row: RowOrGroup<TRow>;
   }>(false);
 
-  @Input() set rowIndex(val: number) {
-    this._rowIndex = val;
-    (this.rowContext ?? this.groupContext).rowIndex = val;
-    this.cd.markForCheck();
-  }
-
-  get rowIndex(): number {
-    return this._rowIndex;
-  }
+  @Input() rowIndex?: number;
 
   selectedGroupRows: TRow[] = [];
 
-  @Input() set expanded(val: boolean) {
-    this._expanded = val;
-    (this.groupContext ?? this.rowContext)!.expanded = val;
-    this.rowContext.expanded = val;
-    this.cd.markForCheck();
-  }
-
-  get expanded(): boolean {
-    return this._expanded;
-  }
+  @Input({ transform: booleanAttribute }) expanded = false;
 
   groupContext?: GroupContext<TRow>;
   rowContext?: RowDetailContext<TRow>;
@@ -121,8 +100,6 @@ export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit
 
   private rowDiffer: KeyValueDiffer<keyof RowOrGroup<TRow>, any>;
   private selectedRowsDiffer: IterableDiffer<TRow>;
-  private _expanded = false;
-  private _rowIndex: number;
   private tableComponent = inject(DatatableComponentToken);
 
   constructor(
@@ -130,24 +107,7 @@ export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit
     differs: KeyValueDiffers,
     private iterableDiffers: IterableDiffers
   ) {
-    // this component renders either a group header or a row. Never both.
-    if (this.isGroup(this.row)) {
-      this.groupContext = {
-        group: this.row,
-        expanded: this.expanded,
-        rowIndex: this.rowIndex
-      };
-    } else {
-      this.rowContext = {
-        row: this.row,
-        expanded: this.expanded,
-        rowIndex: this.rowIndex,
-        disableRow$: this.disable$
-      };
-    }
-
     this.rowDiffer = differs.find({}).create();
-    this.selectedRowsDiffer = this.iterableDiffers.find(this.selected ?? []).create();
   }
 
   get group(): Group<TRow> {
@@ -163,6 +123,36 @@ export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit
       const isRowDisabled = this.disableCheck(this.row);
       this.disable$ = new BehaviorSubject(isRowDisabled);
       this.rowContext.disableRow$ = this.disable$;
+    }
+    this.selectedRowsDiffer = this.iterableDiffers.find(this.selected ?? []).create();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['row']) {
+      // this component renders either a group header or a row. Never both.
+      if (this.isGroup(this.row)) {
+        this.groupContext = {
+          group: this.row,
+          expanded: this.expanded,
+          rowIndex: this.rowIndex
+        };
+      } else {
+        this.rowContext = {
+          row: this.row,
+          expanded: this.expanded,
+          rowIndex: this.rowIndex,
+          disableRow$: this.disable$
+        };
+      }
+    }
+    if (changes['rowIndex']) {
+      (this.rowContext ?? this.groupContext).rowIndex = this.rowIndex;
+    }
+    if (changes['expanded']) {
+      (this.groupContext ?? this.rowContext)!.expanded = this.expanded;
+      if (this.rowContext) {
+        this.rowContext.expanded = this.expanded;
+      }
     }
   }
 
