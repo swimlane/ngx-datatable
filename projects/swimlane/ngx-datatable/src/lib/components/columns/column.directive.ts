@@ -5,21 +5,19 @@ import {
   Input,
   OnChanges,
   PipeTransform,
-  SimpleChanges,
   TemplateRef
 } from '@angular/core';
 import { DataTableColumnHeaderDirective } from './column-header.directive';
 import { DataTableColumnCellDirective } from './column-cell.directive';
 import { DataTableColumnCellTreeToggle } from './tree.directive';
 import { ColumnChangesService } from '../../services/column-changes.service';
-import { TableColumnProp } from '../../types/table-column.type';
+import { TableColumn, TableColumnProp } from '../../types/table-column.type';
 import { DataTableColumnGhostCellDirective } from './column-ghost-cell.directive';
 import { CellContext, HeaderCellContext } from '../../types/public.types';
 
 @Directive({ selector: 'ngx-datatable-column' })
-export class DataTableColumnDirective<TRow> implements OnChanges {
+export class DataTableColumnDirective<TRow> implements TableColumn, OnChanges {
   private columnChangesService = inject(ColumnChangesService);
-
   @Input() name: string;
   @Input() prop: TableColumnProp;
   @Input() frozenLeft: boolean;
@@ -36,8 +34,18 @@ export class DataTableColumnDirective<TRow> implements OnChanges {
   @Input() maxWidth: number;
   @Input() checkboxable: boolean;
   @Input() headerCheckboxable: boolean;
-  @Input() headerClass: string | ((data: any) => string | any);
-  @Input() cellClass: string | ((data: any) => string | any);
+  @Input() headerClass:
+    | string
+    | ((data: { column: TableColumn }) => string | Record<string, boolean>);
+  @Input() cellClass?:
+    | string
+    | ((data: {
+        row: TRow;
+        group?: TRow[];
+        column: TableColumn<TRow>;
+        value: any;
+        rowHeight: number;
+      }) => string | Record<string, boolean>);
   @Input() isTreeColumn: boolean;
   @Input() treeLevelIndent: number;
   @Input() summaryFunc: (cells: any[]) => any;

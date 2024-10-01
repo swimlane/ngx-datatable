@@ -189,7 +189,15 @@ export interface TableColumn<TRow = any> {
    *
    * @memberOf TableColumn
    */
-  cellClass?: string | ((data: any) => string | any);
+  cellClass?:
+    | string
+    | ((data: {
+        row: TRow;
+        group?: TRow[];
+        column: TableColumn<TRow>;
+        value: any;
+        rowHeight: number;
+      }) => string | Record<string, boolean>);
 
   /**
    * CSS classes for the header
@@ -197,7 +205,7 @@ export interface TableColumn<TRow = any> {
    *
    * @memberOf TableColumn
    */
-  headerClass?: string | ((data: any) => string | any);
+  headerClass?: string | ((data: { column: TableColumn }) => string | Record<string, boolean>);
 
   /**
    * Header checkbox enabled
