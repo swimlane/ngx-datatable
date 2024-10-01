@@ -18,7 +18,6 @@ import {
 import { ScrollerComponent } from './scroller.component';
 import { columnGroupWidths, columnsByPin } from '../../utils/column';
 import { RowHeightCache } from '../../utils/row-height-cache';
-import { translateXY } from '../../utils/translate';
 import { NgStyle } from '@angular/common';
 import { TableColumn } from '../../types/table-column.type';
 import { DatatableGroupHeaderDirective } from './body-group-header.directive';
@@ -740,9 +739,7 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
         // const pos = idx * rowHeight;
         // The position of this row would be the sum of all row heights
         // until the previous row position.
-        const pos = this.rowHeightsCache().query(idx - 1);
-
-        Object.assign(styles, translateXY(0, pos));
+        styles.transform = `translateY(${this.rowHeightsCache().query(idx - 1)}px)`;
       }
       rowsStyles.push(styles);
     });
@@ -765,7 +762,7 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
 
     const pos = this.rowHeightsCache().query(this.rows.length - 1);
     return {
-      ...translateXY(0, pos),
+      transform: `translateY(${pos}px)`,
       position: 'absolute'
     };
   });

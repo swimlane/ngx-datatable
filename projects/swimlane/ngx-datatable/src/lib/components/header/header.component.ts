@@ -31,7 +31,6 @@ import {
   PinnedColumns,
   TargetChangedEvent
 } from '../../types/internal.types';
-import { translateXY } from '../../utils/translate';
 
 @Component({
   selector: 'datatable-header',
@@ -360,7 +359,7 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
 
     if (group === 'center') {
       return {
-        ...translateXY(this.offsetX * -1, 0),
+        transform: `translateX(${this.offsetX * -1}px)`,
         width: `${widths[group]}px`,
         willChange: 'transform'
       };
