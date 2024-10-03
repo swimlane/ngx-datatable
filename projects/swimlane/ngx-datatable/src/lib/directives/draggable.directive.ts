@@ -2,6 +2,7 @@ import {
   Directive,
   ElementRef,
   EventEmitter,
+  inject,
   Input,
   OnChanges,
   OnDestroy,
@@ -32,13 +33,9 @@ export class DraggableDirective implements OnDestroy, OnChanges {
   @Output() dragging: EventEmitter<DraggableDragEvent> = new EventEmitter();
   @Output() dragEnd: EventEmitter<DraggableDragEvent> = new EventEmitter();
 
-  element: HTMLElement;
-  isDragging: boolean = false;
+  element = inject(ElementRef).nativeElement;
+  isDragging = false;
   subscription: Subscription;
-
-  constructor(element: ElementRef) {
-    this.element = element.nativeElement;
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (

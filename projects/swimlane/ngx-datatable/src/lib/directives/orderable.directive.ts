@@ -3,7 +3,7 @@ import {
   ContentChildren,
   Directive,
   EventEmitter,
-  Inject,
+  inject,
   KeyValueChangeRecord,
   KeyValueDiffer,
   KeyValueDiffers,
@@ -29,6 +29,8 @@ interface OrderPosition {
 
 @Directive({ selector: '[orderable]' })
 export class OrderableDirective implements AfterContentInit, OnDestroy {
+  private document = inject(DOCUMENT);
+
   @Output() reorder: EventEmitter<OrderableReorderEvent> = new EventEmitter();
   @Output() targetChanged: EventEmitter<TargetChangedEvent> = new EventEmitter();
 
@@ -36,12 +38,8 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
   draggables: QueryList<DraggableDirective>;
 
   positions: Record<string, OrderPosition>;
-  differ: KeyValueDiffer<string, DraggableDirective>;
+  differ: KeyValueDiffer<string, DraggableDirective> = inject(KeyValueDiffers).find({}).create();
   lastDraggingIndex: number;
-
-  constructor(differs: KeyValueDiffers, @Inject(DOCUMENT) private document: any) {
-    this.differ = differs.find({}).create();
-  }
 
   ngAfterContentInit(): void {
     // HACK: Investigate Better Way

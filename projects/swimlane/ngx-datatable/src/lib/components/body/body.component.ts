@@ -4,6 +4,7 @@ import {
   Component,
   EventEmitter,
   HostBinding,
+  inject,
   Input,
   OnDestroy,
   OnInit,
@@ -252,6 +253,8 @@ import {
 export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = any>
   implements OnInit, OnDestroy
 {
+  cd = inject(ChangeDetectorRef);
+
   @Input() rowDefTemplate?: TemplateRef<any>;
   @Input() scrollbarV: boolean;
   @Input() scrollbarH: boolean;
@@ -438,7 +441,7 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
   /**
    * Creates an instance of DataTableBodyComponent.
    */
-  constructor(public cd: ChangeDetectorRef) {
+  constructor() {
     // declare fn here so we can get access to the `this` property
     this.rowTrackingFn = (index, row) => {
       const idx = this.getRowIndex(row);

@@ -3,6 +3,7 @@ import {
   ElementRef,
   EventEmitter,
   HostBinding,
+  inject,
   NgZone,
   OnDestroy,
   OnInit,
@@ -22,14 +23,15 @@ import {
  */
 @Directive({ selector: '[visibilityObserver]' })
 export class VisibilityDirective implements OnInit, OnDestroy {
+  private element = inject(ElementRef);
+  private zone = inject(NgZone);
+
   @HostBinding('class.visible')
   isVisible = false;
 
   @Output() visible: EventEmitter<any> = new EventEmitter();
 
   timeout: any;
-
-  constructor(private element: ElementRef, private zone: NgZone) {}
 
   ngOnInit(): void {
     this.runCheck();

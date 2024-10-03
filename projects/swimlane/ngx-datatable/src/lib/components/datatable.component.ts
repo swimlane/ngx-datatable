@@ -11,16 +11,14 @@ import {
   EventEmitter,
   HostBinding,
   HostListener,
-  Inject,
+  inject,
   Input,
   IterableDiffer,
   IterableDiffers,
   OnDestroy,
   OnInit,
-  Optional,
   Output,
   QueryList,
-  SkipSelf,
   TemplateRef,
   ViewChild,
   ViewEncapsulation
@@ -84,6 +82,12 @@ import {
 export class DatatableComponent<TRow = any>
   implements OnInit, DoCheck, AfterViewInit, AfterContentInit, OnDestroy
 {
+  private scrollbarHelper = inject(ScrollbarHelper);
+  private dimensionsHelper = inject(DimensionsHelper);
+  private cd = inject(ChangeDetectorRef);
+  private columnChangesService = inject(ColumnChangesService);
+  private configuration = inject<INgxDatatableConfig>('configuration' as any, { optional: true });
+
   /**
    * Template for the target marker of drag target columns.
    */
@@ -696,12 +700,12 @@ export class DatatableComponent<TRow = any>
     return this.selected && this.rows && this.rows.length !== 0 && allRowsSelected;
   }
 
-  element: HTMLElement;
+  element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
   _innerWidth: number;
   pageSize: number;
   bodyHeight: number;
   rowCount = 0;
-  rowDiffer: IterableDiffer<TRow>;
+  rowDiffer: IterableDiffer<TRow> = inject(IterableDiffers).find([]).create();
 
   _offsetX = new BehaviorSubject(0);
   _limit: number | undefined;
@@ -716,19 +720,7 @@ export class DatatableComponent<TRow = any>
   _ghostLoadingIndicator = false;
   protected verticalScrollVisible = false;
 
-  constructor(
-    @SkipSelf() private scrollbarHelper: ScrollbarHelper,
-    @SkipSelf() private dimensionsHelper: DimensionsHelper,
-    private cd: ChangeDetectorRef,
-    element: ElementRef<HTMLElement>,
-    differs: IterableDiffers,
-    private columnChangesService: ColumnChangesService,
-    @Optional() @Inject('configuration') private configuration: INgxDatatableConfig
-  ) {
-    // get ref to elm for measuring
-    this.element = element.nativeElement;
-    this.rowDiffer = differs.find([]).create();
-
+  constructor() {
     // apply global settings from Module.forRoot
     if (this.configuration) {
       if (this.configuration.messages) {

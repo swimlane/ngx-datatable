@@ -1,6 +1,6 @@
-import { Directive, TemplateRef } from '@angular/core';
+import { Directive, inject, TemplateRef } from '@angular/core';
 
 @Directive({ selector: '[ngx-datatable-tree-toggle]' })
 export class DataTableColumnCellTreeToggle {
-  constructor(public template: TemplateRef<any>) {}
+  template = inject<TemplateRef<any>>(TemplateRef);
 }

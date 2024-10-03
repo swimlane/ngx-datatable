@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
 /**
@@ -7,15 +7,14 @@ import { DOCUMENT } from '@angular/common';
  */
 @Injectable()
 export class ScrollbarHelper {
-  width: number = this.getWidth();
+  private document = inject(DOCUMENT);
 
-  constructor(@Inject(DOCUMENT) private document: any) {}
+  width: number = this.getWidth();
 
   getWidth(): number {
     const outer = this.document.createElement('div');
     outer.style.visibility = 'hidden';
     outer.style.width = '100px';
-    outer.style.msOverflowStyle = 'scrollbar';
     this.document.body.appendChild(outer);
 
     const widthNoScroll = outer.offsetWidth;

@@ -1,6 +1,7 @@
 import {
   ContentChild,
   Directive,
+  inject,
   Input,
   OnChanges,
   PipeTransform,
@@ -17,6 +18,8 @@ import { CellContext, HeaderCellContext } from '../../types/public.types';
 
 @Directive({ selector: 'ngx-datatable-column' })
 export class DataTableColumnDirective<TRow> implements OnChanges {
+  private columnChangesService = inject(ColumnChangesService);
+
   @Input() name: string;
   @Input() prop: TableColumnProp;
   @Input() frozenLeft: boolean;
@@ -81,8 +84,6 @@ export class DataTableColumnDirective<TRow> implements OnChanges {
   }
 
   private isFirstChange = true;
-
-  constructor(private columnChangesService: ColumnChangesService) {}
 
   ngOnChanges() {
     if (this.isFirstChange) {

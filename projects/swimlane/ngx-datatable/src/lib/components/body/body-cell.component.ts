@@ -1,18 +1,19 @@
 import {
-  Component,
-  Input,
-  PipeTransform,
-  HostBinding,
-  ViewChild,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Output,
-  EventEmitter,
-  HostListener,
-  ElementRef,
-  ViewContainerRef,
-  OnDestroy,
+  Component,
   DoCheck,
-  ChangeDetectionStrategy
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  inject,
+  Input,
+  OnDestroy,
+  Output,
+  PipeTransform,
+  ViewChild,
+  ViewContainerRef
 } from '@angular/core';
 
 import { TableColumn } from '../../types/table-column.type';
@@ -32,67 +33,60 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (row) {
-      <div class="datatable-body-cell-label" [style.margin-left.px]="calcLeftMargin(column, row)">
-        @if (column.checkboxable && (!displayCheck || displayCheck(row, column, value))) {
-          <label class="datatable-checkbox">
-            <input
-              type="checkbox"
-              [disabled]="disable$ | async"
-              [checked]="isSelected"
-              (click)="onCheckboxChange($event)"
-            />
-          </label>
-        }
-        @if (column.isTreeColumn) {
-          @if (!column.treeToggleTemplate) {
-            <button
-              class="datatable-tree-button"
-              [disabled]="treeStatus === 'disabled'"
-              (click)="onTreeAction()"
-              [attr.aria-label]="treeStatus"
-            >
-              <span>
-                @if (treeStatus === 'loading') {
-                  <i class="icon datatable-icon-collapse"></i>
-                }
-                @if (treeStatus === 'collapsed') {
-                  <i class="icon datatable-icon-up"></i>
-                }
-                @if (treeStatus === 'expanded' || treeStatus === 'disabled') {
-                  <i class="icon datatable-icon-down"></i>
-                }
-              </span>
-            </button>
-          } @else {
-            <ng-template
-              [ngTemplateOutlet]="column.treeToggleTemplate"
-              [ngTemplateOutletContext]="{ cellContext: cellContext }"
-            >
-            </ng-template>
+    <div class="datatable-body-cell-label" [style.margin-left.px]="calcLeftMargin(column, row)">
+      @if (column.checkboxable && (!displayCheck || displayCheck(row, column, value))) {
+      <label class="datatable-checkbox">
+        <input
+          type="checkbox"
+          [disabled]="disable$ | async"
+          [checked]="isSelected"
+          (click)="onCheckboxChange($event)"
+        />
+      </label>
+      } @if (column.isTreeColumn) { @if (!column.treeToggleTemplate) {
+      <button
+        class="datatable-tree-button"
+        [disabled]="treeStatus === 'disabled'"
+        (click)="onTreeAction()"
+        [attr.aria-label]="treeStatus"
+      >
+        <span>
+          @if (treeStatus === 'loading') {
+          <i class="icon datatable-icon-collapse"></i>
+          } @if (treeStatus === 'collapsed') {
+          <i class="icon datatable-icon-up"></i>
+          } @if (treeStatus === 'expanded' || treeStatus === 'disabled') {
+          <i class="icon datatable-icon-down"></i>
           }
-        }
-
-        @if (!column.cellTemplate) {
-          <span [title]="sanitizedValue" [innerHTML]="value"> </span>
-        } @else {
-          <ng-template
-            #cellTemplate
-            [ngTemplateOutlet]="column.cellTemplate"
-            [ngTemplateOutletContext]="cellContext"
-          >
-          </ng-template>
-        }
-      </div>
-    } @else {
-      @if (ghostLoadingIndicator) {
-        <ghost-loader [columns]="[column]" [pageSize]="1"></ghost-loader>
+        </span>
+      </button>
+      } @else {
+      <ng-template
+        [ngTemplateOutlet]="column.treeToggleTemplate"
+        [ngTemplateOutletContext]="{ cellContext: cellContext }"
+      >
+      </ng-template>
+      } } @if (!column.cellTemplate) {
+      <span [title]="sanitizedValue" [innerHTML]="value"> </span>
+      } @else {
+      <ng-template
+        #cellTemplate
+        [ngTemplateOutlet]="column.cellTemplate"
+        [ngTemplateOutletContext]="cellContext"
+      >
+      </ng-template>
       }
-    }
+    </div>
+    } @else { @if (ghostLoadingIndicator) {
+    <ghost-loader [columns]="[column]" [pageSize]="1"></ghost-loader>
+    } }
   `
 })
 export class DataTableBodyCellComponent<TRow extends { level?: number } = any>
   implements DoCheck, OnDestroy
 {
+  private cd = inject(ChangeDetectorRef);
+
   @Input() displayCheck: (row: RowOrGroup<TRow>, column: TableColumn, value: any) => boolean;
 
   _disable$: BehaviorSubject<boolean>;
@@ -305,10 +299,10 @@ export class DataTableBodyCellComponent<TRow extends { level?: number } = any>
   private _rowHeight: number;
   private _rowIndex: number;
   private _expanded: boolean;
-  private _element: HTMLElement;
+  private _element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
   private _treeStatus: TreeStatus;
 
-  constructor(element: ElementRef<HTMLElement>, private cd: ChangeDetectorRef) {
+  constructor() {
     this.cellContext = {
       onCheckboxChangeFn: (event: MouseEvent | KeyboardEvent) => this.onCheckboxChange(event),
       activateFn: (event: ActivateEvent<TRow>) => this.activate.emit(event),
@@ -323,8 +317,6 @@ export class DataTableBodyCellComponent<TRow extends { level?: number } = any>
       disable$: this.disable$,
       onTreeAction: () => this.onTreeAction()
     };
-
-    this._element = element.nativeElement;
   }
 
   ngDoCheck(): void {

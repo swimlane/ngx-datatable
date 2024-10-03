@@ -31,40 +31,38 @@ import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive'
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (groupHeader?.template) {
-      <div
-        [style.height.px]="groupHeaderRowHeight"
-        class="datatable-group-header"
-        [ngStyle]="getGroupHeaderStyle()"
-      >
-        <div class="datatable-group-cell">
-          @if (groupHeader.checkboxable) {
-            <div>
-              <label class="datatable-checkbox">
-                <input
-                  #select
-                  type="checkbox"
-                  [checked]="selectedGroupRows.length === group.value.length"
-                  (change)="onCheckboxChange(select.checked)"
-                />
-              </label>
-            </div>
-          }
-          <ng-template
-            [ngTemplateOutlet]="groupHeader.template"
-            [ngTemplateOutletContext]="groupContext"
-          >
-          </ng-template>
+    <div
+      [style.height.px]="groupHeaderRowHeight"
+      class="datatable-group-header"
+      [ngStyle]="getGroupHeaderStyle()"
+    >
+      <div class="datatable-group-cell">
+        @if (groupHeader.checkboxable) {
+        <div>
+          <label class="datatable-checkbox">
+            <input
+              #select
+              type="checkbox"
+              [checked]="selectedGroupRows.length === group.value.length"
+              (change)="onCheckboxChange(select.checked)"
+            />
+          </label>
         </div>
-      </div>
-    }
-    @if ((groupHeader?.template && expanded) || !groupHeader || !groupHeader.template) {
-      <ng-content> </ng-content>
-    }
-    @if (rowDetail?.template && expanded) {
-      <div [style.height.px]="detailRowHeight" class="datatable-row-detail">
-        <ng-template [ngTemplateOutlet]="rowDetail.template" [ngTemplateOutletContext]="rowContext">
+        }
+        <ng-template
+          [ngTemplateOutlet]="groupHeader.template"
+          [ngTemplateOutletContext]="groupContext"
+        >
         </ng-template>
       </div>
+    </div>
+    } @if ((groupHeader?.template && expanded) || !groupHeader || !groupHeader.template) {
+    <ng-content> </ng-content>
+    } @if (rowDetail?.template && expanded) {
+    <div [style.height.px]="detailRowHeight" class="datatable-row-detail">
+      <ng-template [ngTemplateOutlet]="rowDetail.template" [ngTemplateOutletContext]="rowContext">
+      </ng-template>
+    </div>
     }
   `,
   host: {
@@ -98,17 +96,13 @@ export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit
   rowContext?: RowDetailContext<TRow>;
   disable$: BehaviorSubject<boolean>;
 
-  private rowDiffer: KeyValueDiffer<keyof RowOrGroup<TRow>, any>;
+  private rowDiffer: KeyValueDiffer<keyof RowOrGroup<TRow>, any> = inject(KeyValueDiffers)
+    .find({})
+    .create();
+  private iterableDiffers = inject(IterableDiffers);
   private selectedRowsDiffer: IterableDiffer<TRow>;
   private tableComponent = inject(DatatableComponentToken);
-
-  constructor(
-    private cd: ChangeDetectorRef,
-    differs: KeyValueDiffers,
-    private iterableDiffers: IterableDiffers
-  ) {
-    this.rowDiffer = differs.find({}).create();
-  }
+  private cd = inject(ChangeDetectorRef);
 
   get group(): Group<TRow> {
     if (typeof this.row === 'object' && 'value' in this.row) {

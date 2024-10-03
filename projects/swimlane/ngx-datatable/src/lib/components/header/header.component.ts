@@ -4,12 +4,12 @@ import {
   Component,
   EventEmitter,
   HostBinding,
+  inject,
   Input,
   OnChanges,
   OnDestroy,
   Output,
   SimpleChanges,
-  SkipSelf,
   TemplateRef
 } from '@angular/core';
 import { columnGroupWidths, columnsByPin, columnsByPinArr } from '../../utils/column';
@@ -45,44 +45,44 @@ import {
       class="datatable-header-inner"
     >
       @for (colGroup of _columnsByPin; track colGroup.type) {
-        <div [class]="'datatable-row-' + colGroup.type" [ngStyle]="_styleByGroup[colGroup.type]">
-          @for (column of colGroup.columns; track column.$$id) {
-            <datatable-header-cell
-              role="columnheader"
-              resizeable
-              [resizeEnabled]="column.resizeable"
-              (resize)="onColumnResized($event, column)"
-              (resizing)="onColumnResizing($event, column)"
-              long-press
-              [pressModel]="column"
-              [pressEnabled]="reorderable && column.draggable"
-              (longPressStart)="onLongPressStart($event)"
-              (longPressEnd)="onLongPressEnd($event)"
-              draggable
-              [dragX]="reorderable && column.draggable && column.dragging"
-              [dragY]="false"
-              [dragModel]="column"
-              [dragEventTarget]="dragEventTarget"
-              [headerHeight]="headerHeight"
-              [isTarget]="column.isTarget"
-              [targetMarkerTemplate]="targetMarkerTemplate"
-              [targetMarkerContext]="column.targetMarkerContext"
-              [column]="column"
-              [sortType]="sortType"
-              [sorts]="sorts"
-              [selectionType]="selectionType"
-              [sortAscendingIcon]="sortAscendingIcon"
-              [sortDescendingIcon]="sortDescendingIcon"
-              [sortUnsetIcon]="sortUnsetIcon"
-              [allRowsSelected]="allRowsSelected"
-              [enableClearingSortState]="enableClearingSortState"
-              (sort)="onSort($event)"
-              (select)="select.emit($event)"
-              (columnContextmenu)="columnContextmenu.emit($event)"
-            >
-            </datatable-header-cell>
-          }
-        </div>
+      <div [class]="'datatable-row-' + colGroup.type" [ngStyle]="_styleByGroup[colGroup.type]">
+        @for (column of colGroup.columns; track column.$$id) {
+        <datatable-header-cell
+          role="columnheader"
+          resizeable
+          [resizeEnabled]="column.resizeable"
+          (resize)="onColumnResized($event, column)"
+          (resizing)="onColumnResizing($event, column)"
+          long-press
+          [pressModel]="column"
+          [pressEnabled]="reorderable && column.draggable"
+          (longPressStart)="onLongPressStart($event)"
+          (longPressEnd)="onLongPressEnd($event)"
+          draggable
+          [dragX]="reorderable && column.draggable && column.dragging"
+          [dragY]="false"
+          [dragModel]="column"
+          [dragEventTarget]="dragEventTarget"
+          [headerHeight]="headerHeight"
+          [isTarget]="column.isTarget"
+          [targetMarkerTemplate]="targetMarkerTemplate"
+          [targetMarkerContext]="column.targetMarkerContext"
+          [column]="column"
+          [sortType]="sortType"
+          [sorts]="sorts"
+          [selectionType]="selectionType"
+          [sortAscendingIcon]="sortAscendingIcon"
+          [sortDescendingIcon]="sortDescendingIcon"
+          [sortUnsetIcon]="sortUnsetIcon"
+          [allRowsSelected]="allRowsSelected"
+          [enableClearingSortState]="enableClearingSortState"
+          (sort)="onSort($event)"
+          (select)="select.emit($event)"
+          (columnContextmenu)="columnContextmenu.emit($event)"
+        >
+        </datatable-header-cell>
+        }
+      </div>
       }
     </div>
   `,
@@ -92,6 +92,9 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableHeaderComponent implements OnDestroy, OnChanges {
+  private cd = inject(ChangeDetectorRef);
+  private scrollbarHelper = inject(ScrollbarHelper);
+
   @Input() sortAscendingIcon: string;
   @Input() sortDescendingIcon: string;
   @Input() sortUnsetIcon: string;
@@ -184,11 +187,6 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
   } = { left: {}, center: {}, right: {} };
 
   private destroyed = false;
-
-  constructor(
-    private cd: ChangeDetectorRef,
-    @SkipSelf() private scrollbarHelper: ScrollbarHelper
-  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.verticalScrollVisible) {

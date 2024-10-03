@@ -1,4 +1,4 @@
-import { AfterContentInit, Directive, ElementRef, Input } from '@angular/core';
+import { AfterContentInit, Directive, ElementRef, inject, Input } from '@angular/core';
 
 /**
  * Row Disable Directive
@@ -13,6 +13,7 @@ import { AfterContentInit, Directive, ElementRef, Input } from '@angular/core';
  */
 @Directive({ selector: '[disable-row]' })
 export class DisableRowDirective {
+  private element = inject(ElementRef);
   private _disabled = false;
   @Input() set disabled(val: boolean) {
     this._disabled = val;
@@ -24,8 +25,6 @@ export class DisableRowDirective {
   get disabled() {
     return this._disabled;
   }
-
-  constructor(private element: ElementRef) {}
 
   disableAllElements() {
     const el = this.element?.nativeElement;

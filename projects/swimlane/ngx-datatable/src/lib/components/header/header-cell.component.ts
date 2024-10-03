@@ -5,6 +5,7 @@ import {
   EventEmitter,
   HostBinding,
   HostListener,
+  inject,
   Input,
   OnInit,
   Output,
@@ -26,28 +27,26 @@ import {
   template: `
     <div class="datatable-header-cell-template-wrap">
       @if (isTarget) {
-        <ng-template
-          [ngTemplateOutlet]="targetMarkerTemplate"
-          [ngTemplateOutletContext]="targetMarkerContext"
-        >
-        </ng-template>
-      }
-      @if (isCheckboxable) {
-        <label class="datatable-checkbox">
-          <input type="checkbox" [checked]="allRowsSelected" (change)="select.emit()" />
-        </label>
-      }
-      @if (column.headerTemplate) {
-        <ng-template
-          [ngTemplateOutlet]="column.headerTemplate"
-          [ngTemplateOutletContext]="cellContext"
-        >
-        </ng-template>
+      <ng-template
+        [ngTemplateOutlet]="targetMarkerTemplate"
+        [ngTemplateOutletContext]="targetMarkerContext"
+      >
+      </ng-template>
+      } @if (isCheckboxable) {
+      <label class="datatable-checkbox">
+        <input type="checkbox" [checked]="allRowsSelected" (change)="select.emit()" />
+      </label>
+      } @if (column.headerTemplate) {
+      <ng-template
+        [ngTemplateOutlet]="column.headerTemplate"
+        [ngTemplateOutletContext]="cellContext"
+      >
+      </ng-template>
       } @else {
-        <span class="datatable-header-cell-wrapper">
-          <span class="datatable-header-cell-label draggable" (click)="onSort()" [innerHTML]="name">
-          </span>
+      <span class="datatable-header-cell-wrapper">
+        <span class="datatable-header-cell-label draggable" (click)="onSort()" [innerHTML]="name">
         </span>
+      </span>
       }
       <span (click)="onSort()" [class]="sortClass"> </span>
     </div>
@@ -57,7 +56,9 @@ import {
   },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DataTableHeaderCellComponent {
+export class DataTableHeaderCellComponent implements OnInit {
+  private cd = inject(ChangeDetectorRef);
+
   @Input() sortType: SortType;
   @Input() sortAscendingIcon: string;
   @Input() sortDescendingIcon: string;
@@ -186,7 +187,7 @@ export class DataTableHeaderCellComponent {
   private _column: TableColumn;
   private _sorts: SortPropDir[];
 
-  constructor(private cd: ChangeDetectorRef) {
+  constructor() {
     this.cellContext = {
       column: this.column,
       sortDir: this.sortDir,
