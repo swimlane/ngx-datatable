@@ -16,7 +16,7 @@ import { Page } from '../../types/internal.types';
           <i class="{{ pagerLeftArrowIcon }}"></i>
         </a>
       </li>
-      @for (pg of pages; track pg) {
+      @for (pg of pages; track pg.number) {
         <li
           role="button"
           [attr.aria-label]="'page ' + pg.number"
