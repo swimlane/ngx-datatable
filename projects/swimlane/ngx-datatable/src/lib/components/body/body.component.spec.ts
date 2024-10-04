@@ -115,7 +115,7 @@ describe('DataTableBodyComponent', () => {
 
   describe('Summary row', () => {
     it('should not return custom styles for a bottom summary row if a scrollbar mode is off', () => {
-      const styles = component.getBottomSummaryRowStyles();
+      const styles = component.bottomSummaryRowsStyles();
       expect(styles).toBeFalsy();
     });
 
@@ -124,7 +124,7 @@ describe('DataTableBodyComponent', () => {
       component.scrollbarV = true;
       component.virtualization = true;
       component.rows = [{ num: 1 }, { num: 2 }, { num: 3 }, { num: 4 }];
-      const styles = component.getBottomSummaryRowStyles();
+      const styles = component.bottomSummaryRowsStyles();
       expect(styles).toBeDefined();
     });
   });

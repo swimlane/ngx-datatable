@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  computed,
   EventEmitter,
   HostBinding,
   inject,
@@ -9,6 +10,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  signal,
   TemplateRef,
   TrackByFunction,
   ViewChild
@@ -86,12 +88,12 @@ import {
             >
             </datatable-summary-row>
           }
-          @for (group of temp; track rowTrackingFn(i, group); let i = $index) {
+          @for (group of rowsToRender(); track rowTrackingFn(i, group); let i = $index) {
             <datatable-row-wrapper
               #rowWrapper
               [groupedRows]="groupedRows"
               [innerWidth]="innerWidth"
-              [ngStyle]="getRowsStyles(group, indexes.first + i)"
+              [ngStyle]="rowsStyles()[i]"
               [rowDetail]="rowDetail"
               [groupHeader]="groupHeader"
               [offsetX]="offsetX"
@@ -218,7 +220,7 @@ import {
           @if (summaryRow && summaryPosition === 'bottom') {
             <datatable-summary-row
               role="row"
-              [ngStyle]="getBottomSummaryRowStyles()"
+              [ngStyle]="bottomSummaryRowsStyles()"
               [rowHeight]="summaryHeight"
               [offsetX]="offsetX"
               [innerWidth]="innerWidth"
@@ -264,7 +266,7 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
     this._ghostLoadingIndicator = val;
     if (!val) {
       // remove placeholder rows once ghostloading is set to false
-      this.temp = this.temp.filter(item => !!item);
+      this.rowsToRender.set(this.rowsToRender().filter(item => !!item));
     }
   }
   get ghostLoadingIndicator() {
@@ -418,7 +420,7 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
   }
 
   rowHeightsCache: RowHeightCache = new RowHeightCache();
-  temp: RowOrGroup<TRow>[] = [];
+  rowsToRender = signal<RowOrGroup<TRow>[]>([]);
   offsetY = 0;
   indexes: any = {};
   columnGroupWidths: ColumnGroupWidth;
@@ -538,9 +540,13 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
     this.offsetY = scrollYPos;
     this.offsetX = scrollXPos;
 
+    const prevIndexes = { ...this.indexes };
     this.updateIndexes();
     this.updatePage(event.direction);
-    this.updateRows();
+    // only call updateRows if indexes are changed
+    if (prevIndexes.first !== this.indexes.first || prevIndexes.last !== this.indexes.last) {
+      this.updateRows();
+    }
     this.cd.detectChanges();
   }
 
@@ -628,8 +634,7 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
         rowIndex++;
       }
     }
-
-    this.temp = temp;
+    this.rowsToRender.set(temp);
   }
 
   /**
@@ -710,58 +715,59 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
    * case the positionY of the translate3d for row2 would be the sum of all the
    * heights of the rows before it (i.e. row0 and row1).
    *
-   * @param rows the row that needs to be placed in the 2D space.
-   * @param index for ghost cells in order to get correct position of ghost row
    * @returns the CSS3 style to be applied
    *
    * @memberOf DataTableBodyComponent
    */
-  getRowsStyles(rows: RowOrGroup<TRow> | TRow[], index = 0): NgStyle['ngStyle'] {
-    const styles: NgStyle['ngStyle'] = {};
+  rowsStyles = computed(() => {
+    const rowsStyles: NgStyle['ngStyle'][] = [];
+    this.rowsToRender().forEach((rows, index) => {
+      const styles: NgStyle['ngStyle'] = {};
 
-    // only add styles for the group if there is a group
-    if (this.groupedRows) {
-      styles.width = this.columnGroupWidths.total;
-    }
-
-    if (this.scrollbarV && this.virtualization) {
-      let idx = 0;
-
-      if (Array.isArray(rows)) {
-        // Get the latest row rowindex in a group
-        const row = rows[rows.length - 1];
-        idx = row ? this.getRowIndex(row) : 0;
-      } else {
-        if (rows) {
-          idx = this.getRowIndex(rows);
-        } else {
-          // When ghost cells are enabled use index to get the position of them
-          idx = index;
-        }
+      // only add styles for the group if there is a group
+      if (this.groupedRows) {
+        styles.width = this.columnGroupWidths.total;
       }
 
-      // const pos = idx * rowHeight;
-      // The position of this row would be the sum of all row heights
-      // until the previous row position.
-      const pos = this.rowHeightsCache.query(idx - 1);
+      if (this.scrollbarV && this.virtualization) {
+        let idx = 0;
 
-      Object.assign(styles, translateXY(0, pos));
-    }
+        if (Array.isArray(rows)) {
+          // Get the latest row rowindex in a group
+          const row = rows[rows.length - 1];
+          idx = row ? this.getRowIndex(row) : 0;
+        } else {
+          if (rows) {
+            idx = this.getRowIndex(rows);
+          } else {
+            // When ghost cells are enabled use index to get the position of them
+            idx = this.indexes.first + index;
+          }
+        }
 
-    return styles;
-  }
+        // const pos = idx * rowHeight;
+        // The position of this row would be the sum of all row heights
+        // until the previous row position.
+        const pos = this.rowHeightsCache.query(idx - 1);
+
+        Object.assign(styles, translateXY(0, pos));
+      }
+      rowsStyles.push(styles);
+    });
+    return rowsStyles;
+  });
 
   /**
    * Calculate bottom summary row offset for scrollbar mode.
    * For more information about cache and offset calculation
-   * see description for `getRowsStyles` method
+   * see description for `rowsStyles` signal
    *
    * @returns the CSS3 style to be applied
    *
    * @memberOf DataTableBodyComponent
    */
-  getBottomSummaryRowStyles(): NgStyle['ngStyle'] {
-    if (!this.scrollbarV || !this.rows || !this.rows.length) {
+  bottomSummaryRowsStyles = computed(() => {
+    if (!this.scrollbarV || !this.rows || !this.rows.length || !this.rowsToRender()) {
       return null;
     }
 
@@ -770,7 +776,7 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
       ...translateXY(0, pos),
       position: 'absolute'
     };
-  }
+  });
 
   /**
    * Hides the loading indicator
