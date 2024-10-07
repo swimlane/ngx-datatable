@@ -1,4 +1,4 @@
-export function selectRows(selected: any[], row: any, comparefn: any) {
+export function selectRows<TRow>(selected: TRow[], row: TRow, comparefn: any) {
   const selectedIndex = comparefn(row, selected);
 
   if (selectedIndex > -1) {

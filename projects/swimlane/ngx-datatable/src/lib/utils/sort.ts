@@ -1,5 +1,7 @@
 import { getterForProp } from './column-prop-getters';
-import { SortDirection, SortPropDir, SortType } from '../types/public.types';
+import { Group, SortDirection, SortPropDir, SortType } from '../types/public.types';
+import { TableColumn } from '../types/table-column.type';
+
 /**
  * Gets the next sort direction
  */
@@ -73,7 +75,7 @@ export function orderByComparator(a: any, b: any): number {
  * creates a shallow copy of the `rows` input and returns the sorted copy. this function
  * does not sort the `rows` argument in place
  */
-export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[] {
+export function sortRows<TRow>(rows: TRow[], columns: TableColumn[], dirs: SortPropDir[]): TRow[] {
   if (!rows) {
     return [];
   }
@@ -145,12 +147,12 @@ export function sortRows(rows: any[], columns: any[], dirs: SortPropDir[]): any[
   });
 }
 
-export function sortGroupedRows(
-  groupedRows: any[],
-  columns: any[],
+export function sortGroupedRows<TRow>(
+  groupedRows: Group<TRow>[],
+  columns: TableColumn[],
   dirs: SortPropDir[],
   sortOnGroupHeader: SortPropDir
-): any[] {
+): Group<TRow>[] {
   if (sortOnGroupHeader) {
     groupedRows = sortRows(groupedRows, columns, [
       {

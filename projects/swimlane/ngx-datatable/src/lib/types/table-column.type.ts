@@ -234,3 +234,9 @@ export interface TableColumn<TRow = any> {
    */
   summaryTemplate?: TemplateRef<any>;
 }
+
+export interface TableColumnGroup {
+  left: TableColumn[];
+  center: TableColumn[];
+  right: TableColumn[];
+}

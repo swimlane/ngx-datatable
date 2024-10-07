@@ -1,9 +1,10 @@
+import { TableColumn, TableColumnGroup } from '../types/table-column.type';
 import { columnsByPin, columnsTotalWidth } from './column';
 
 /**
  * Calculates the Total Flex Grow
  */
-export function getTotalFlexGrow(columns: any[]) {
+export function getTotalFlexGrow(columns: TableColumn[]) {
   let totalFlexGrow = 0;
 
   for (const c of columns) {
@@ -17,7 +18,7 @@ export function getTotalFlexGrow(columns: any[]) {
  * Adjusts the column widths.
  * Inspired by: https://github.com/facebook/fixed-data-table/blob/master/src/FixedDataTableWidthHelper.js
  */
-export function adjustColumnWidths(allColumns: any, expectedWidth: any) {
+export function adjustColumnWidths(allColumns: TableColumn[], expectedWidth: number) {
   const columnsWidth = columnsTotalWidth(allColumns);
   const totalFlexGrow = getTotalFlexGrow(allColumns);
   const colsByGroup = columnsByPin(allColumns);
@@ -30,7 +31,7 @@ export function adjustColumnWidths(allColumns: any, expectedWidth: any) {
 /**
  * Resizes columns based on the flexGrow property, while respecting manually set widths
  */
-function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
+function scaleColumns(colsByGroup: TableColumnGroup, maxWidth: number, totalFlexGrow: number) {
   // calculate total width and flexgrow points for columns that can be resized
   for (const attr in colsByGroup) {
     if (colsByGroup.hasOwnProperty(attr)) {
@@ -77,12 +78,10 @@ function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
   } while (remainingWidth !== 0);
 
   // Adjust for any remaining offset in computed widths vs maxWidth
-  const columns = Object.values<{
-    width: number;
-    canAutoResize: boolean;
-    minWidth: number;
-    maxWidth: number;
-  }>(colsByGroup).reduce((acc, col) => acc.concat(col), []);
+  const columns: TableColumn[] = Object.values(colsByGroup).reduce(
+    (acc, col) => acc.concat(col),
+    []
+  );
 
   const totalWidthAchieved = columns.reduce((acc, col) => acc + col.width, 0);
   const delta = maxWidth - totalWidthAchieved;
@@ -123,7 +122,7 @@ function scaleColumns(colsByGroup: any, maxWidth: any, totalFlexGrow: any) {
  *    the width should use the original width; not the newly proportioned widths.
  */
 export function forceFillColumnWidths(
-  allColumns: any[],
+  allColumns: TableColumn[],
   expectedWidth: number,
   startIdx: number,
   allowBleed: boolean,
@@ -185,7 +184,7 @@ export function forceFillColumnWidths(
 /**
  * Remove the processed columns from the current active columns.
  */
-function removeProcessedColumns(columnsToResize: any[], columnsProcessed: any[]) {
+function removeProcessedColumns(columnsToResize: TableColumn[], columnsProcessed: TableColumn[]) {
   for (const column of columnsProcessed) {
     const index = columnsToResize.indexOf(column);
     columnsToResize.splice(index, 1);
@@ -195,7 +194,7 @@ function removeProcessedColumns(columnsToResize: any[], columnsProcessed: any[])
 /**
  * Gets the width of the columns
  */
-function getContentWidth(allColumns: any, defaultColWidth: number = 300): number {
+function getContentWidth(allColumns: TableColumn[], defaultColWidth: number = 300): number {
   let contentWidth = 0;
 
   for (const column of allColumns) {

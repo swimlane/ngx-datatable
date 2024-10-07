@@ -42,11 +42,11 @@ export function optionalGetterForProp(prop: TableColumnProp): OptionalValueGette
  * @param rows
  *
  */
-export function groupRowsByParents(
-  rows: any[],
+export function groupRowsByParents<TRow>(
+  rows: TRow[],
   from?: OptionalValueGetter,
   to?: OptionalValueGetter
-): any[] {
+): TRow[] {
   if (from && to) {
     const nodeById = {};
     const l = rows.length;
