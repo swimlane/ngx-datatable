@@ -137,7 +137,7 @@ import {
                     [draggable]="rowDraggable"
                     [verticalScrollVisible]="verticalScrollVisible"
                     (treeAction)="onTreeAction(group)"
-                    (activate)="selector.onActivate($event, indexes.first + i)"
+                    (activate)="selector.onActivate($event, indexes().first + i)"
                     (drop)="drop($event, group, rowElement)"
                     (dragover)="dragOver($event, group)"
                     (dragenter)="dragEnter($event, group, rowElement)"
@@ -171,7 +171,7 @@ import {
                     [draggable]="rowDraggable"
                     [verticalScrollVisible]="verticalScrollVisible"
                     (treeAction)="onTreeAction(group)"
-                    (activate)="selector.onActivate($event, indexes.first + i)"
+                    (activate)="selector.onActivate($event, indexes().first + i)"
                     (drop)="drop($event, group, rowElement)"
                     (dragover)="dragOver($event, group)"
                     (dragenter)="dragEnter($event, group, rowElement)"
@@ -261,17 +261,7 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
   @Input() scrollbarV: boolean;
   @Input() scrollbarH: boolean;
   @Input() loadingIndicator: boolean;
-  private _ghostLoadingIndicator: boolean;
-  @Input() set ghostLoadingIndicator(val: boolean) {
-    this._ghostLoadingIndicator = val;
-    if (!val) {
-      // remove placeholder rows once ghostloading is set to false
-      this.rowsToRender.set(this.rowsToRender().filter(item => !!item));
-    }
-  }
-  get ghostLoadingIndicator() {
-    return this._ghostLoadingIndicator;
-  }
+  @Input() ghostLoadingIndicator: boolean;
   @Input() externalPaging: boolean;
   @Input() rowHeight: number | 'auto' | ((row?: any) => number);
   @Input() offsetX: number;
@@ -420,9 +410,11 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
   }
 
   rowHeightsCache: RowHeightCache = new RowHeightCache();
-  rowsToRender = signal<RowOrGroup<TRow>[]>([]);
+  rowsToRender = computed(() => {
+    return this.updateRows();
+  });
   offsetY = 0;
-  indexes: any = {};
+  indexes = signal<{ first: number; last: number }>({ first: 0, last: 0 });
   columnGroupWidths: ColumnGroupWidth;
   rowTrackingFn: TrackByFunction<RowOrGroup<TRow>>;
   listener: any;
@@ -490,7 +482,6 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
     // Refresh rows after toggle
     // Fixes #883
     this.updateIndexes();
-    this.updateRows();
     this.cd.markForCheck();
   }
 
@@ -543,13 +534,8 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
     this.offsetY = scrollYPos;
     this.offsetX = scrollXPos;
 
-    const prevIndexes = { ...this.indexes };
     this.updateIndexes();
     this.updatePage(event.direction);
-    // only call updateRows if indexes are changed
-    if (prevIndexes.first !== this.indexes.first || prevIndexes.last !== this.indexes.last) {
-      this.updateRows();
-    }
     this.cd.detectChanges();
   }
 
@@ -557,7 +543,7 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
    * Updates the page given a direction.
    */
   updatePage(direction: string): void {
-    let offset = this.indexes.first / this.pageSize;
+    let offset = this.indexes().first / this.pageSize;
     const scrollInBetween = !Number.isInteger(offset);
     if (direction === 'up') {
       offset = Math.ceil(offset);
@@ -569,12 +555,12 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
       this._offsetEvent = offset;
       // if scroll was done by mouse drag make sure previous row and next row data is also fetched if its not fetched
       if (scrollInBetween && this.scrollbarV && this.virtualization && this.externalPaging) {
-        const upRow = this.rows[this.indexes.first - 1];
+        const upRow = this.rows[this.indexes().first - 1];
         if (!upRow && direction === 'up') {
           this.page.emit(offset - 1);
         }
 
-        const downRow = this.rows[this.indexes.first + this.pageSize];
+        const downRow = this.rows[this.indexes().first + this.pageSize];
         if (!downRow && direction === 'down') {
           this.page.emit(offset + 1);
         }
@@ -586,11 +572,11 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
   /**
    * Updates the rows in the view port
    */
-  updateRows(): void {
-    const { first, last } = this.indexes;
+  updateRows(): RowOrGroup<TRow>[] {
+    const { first, last } = this.indexes();
     let rowIndex = first;
     let idx = 0;
-    const temp: any[] = [];
+    const temp: RowOrGroup<TRow>[] = [];
 
     // if grouprowsby has been specified treat row paging
     // parameters as group paging parameters ie if limit 10 has been
@@ -637,7 +623,7 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
         rowIndex++;
       }
     }
-    this.rowsToRender.set(temp);
+    return temp;
   }
 
   /**
@@ -744,7 +730,7 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
             idx = this.getRowIndex(rows);
           } else {
             // When ghost cells are enabled use index to get the position of them
-            idx = this.indexes.first + index;
+            idx = this.indexes().first + index;
           }
         }
 
@@ -818,7 +804,7 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
       last = Math.min(first + this.pageSize, this.rowCount);
     }
 
-    this.indexes = { first, last };
+    this.indexes.set({ first, last });
   }
 
   /**
@@ -865,7 +851,7 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
     // Capture the row index of the first row that is visible on the viewport.
     // If the scroll bar is just below the row which is highlighted then make that as the
     // first index.
-    const viewPortFirstRowIndex = this.indexes.first;
+    const viewPortFirstRowIndex = this.indexes().first;
 
     if (this.scrollbarV && this.virtualization) {
       const offsetScroll = this.rowHeightsCache.query(viewPortFirstRowIndex - 1);
@@ -942,7 +928,6 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
   recalcLayout(): void {
     this.refreshRowHeightCache();
     this.updateIndexes();
-    this.updateRows();
   }
 
   /**

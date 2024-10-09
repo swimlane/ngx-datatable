@@ -672,7 +672,7 @@ export class DatatableComponent<TRow = any>
 
     if (this.bodyComponent && this.selectAllRowsOnPage) {
       const indexes = this.bodyComponent.indexes;
-      const rowsOnPage = indexes.last - indexes.first;
+      const rowsOnPage = indexes().last - indexes().first;
       allRowsSelected = this.selected.length === rowsOnPage;
     }
 
@@ -1206,8 +1206,8 @@ export class DatatableComponent<TRow = any>
   onHeaderSelect(): void {
     if (this.bodyComponent && this.selectAllRowsOnPage) {
       // before we splice, chk if we currently have all selected
-      const first = this.bodyComponent.indexes.first;
-      const last = this.bodyComponent.indexes.last;
+      const first = this.bodyComponent.indexes().first;
+      const last = this.bodyComponent.indexes().last;
       const allSelected = this.selected.length === last - first;
 
       // remove all existing either way
