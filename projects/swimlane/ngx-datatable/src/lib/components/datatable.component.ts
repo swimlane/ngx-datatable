@@ -895,11 +895,10 @@ export class DatatableComponent<TRow = any>
     forceIdx: number = -1,
     allowBleed: boolean = this.scrollbarH
   ): TableColumn[] | undefined {
-    if (!columns) {
+    let width = this._innerWidth;
+    if (!columns || !width) {
       return undefined;
     }
-
-    let width = this._innerWidth;
     const bodyElement = this.bodyElement?.nativeElement;
     this.verticalScrollVisible = bodyElement?.scrollHeight > bodyElement?.clientHeight;
     if (this.scrollbarV && !this.scrollbarVDynamic) {
