@@ -838,9 +838,11 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
     // Initialize the tree only if there are rows inside the tree.
     if (this.rows && this.rows.length) {
       const rowExpansions = new Set<TRow>();
-      for (const row of this.rows) {
-        if (this.getRowExpanded(row)) {
-          rowExpansions.add(row);
+      if (this.rowDetail) {
+        for (const row of this.rows) {
+          if (this.getRowExpanded(row)) {
+            rowExpansions.add(row);
+          }
         }
       }
 
