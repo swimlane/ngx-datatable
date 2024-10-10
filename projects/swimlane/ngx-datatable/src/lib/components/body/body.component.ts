@@ -74,7 +74,7 @@ import {
         <datatable-scroller
           [scrollbarV]="scrollbarV"
           [scrollbarH]="scrollbarH"
-          [scrollHeight]="scrollHeight"
+          [scrollHeight]="scrollHeight()"
           [scrollWidth]="columnGroupWidths?.total"
           (scroll)="onBodyScroll($event)"
         >
@@ -238,7 +238,7 @@ import {
         <datatable-scroller
           [scrollbarV]="scrollbarV"
           [scrollbarH]="scrollbarH"
-          [scrollHeight]="scrollHeight"
+          [scrollHeight]="scrollHeight()"
           [style.width]="scrollbarH ? columnGroupWidths?.total + 'px' : '100%'"
           (scroll)="onBodyScroll($event)"
         >
@@ -404,18 +404,18 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
    * based on the row heights cache for virtual scroll and virtualization. Other scenarios
    * calculate scroll height automatically (as height will be undefined).
    */
-  get scrollHeight(): number | undefined {
-    if (this.scrollbarV && this.virtualization && this.rowCount) {
-      return this.rowHeightsCache.query(this.rowCount - 1);
+  scrollHeight = computed(() => {
+    if (this.rowHeightsCache() && this.scrollbarV && this.virtualization && this.rowCount) {
+      return this.rowHeightsCache().query(this.rowCount - 1);
     }
     // avoid TS7030: Not all code paths return a value.
     return undefined;
-  }
+  });
 
-  rowHeightsCache: RowHeightCache = new RowHeightCache();
   rowsToRender = computed(() => {
     return this.updateRows();
   });
+  rowHeightsCache = signal(new RowHeightCache());
   offsetY = 0;
   indexes = signal<{ first: number; last: number }>({ first: 0, last: 0 });
   columnGroupWidths: ColumnGroupWidth;
@@ -509,7 +509,7 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
     if (this.scrollbarV && this.virtualization && offset) {
       // First get the row Index that we need to move to.
       const rowIndex = this.pageSize * offset;
-      offset = this.rowHeightsCache.query(rowIndex - 1);
+      offset = this.rowHeightsCache().query(rowIndex - 1);
     } else if (this.scrollbarV && !this.virtualization) {
       offset = 0;
     }
@@ -740,7 +740,7 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
         // const pos = idx * rowHeight;
         // The position of this row would be the sum of all row heights
         // until the previous row position.
-        const pos = this.rowHeightsCache.query(idx - 1);
+        const pos = this.rowHeightsCache().query(idx - 1);
 
         Object.assign(styles, translateXY(0, pos));
       }
@@ -763,7 +763,7 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
       return null;
     }
 
-    const pos = this.rowHeightsCache.query(this.rows.length - 1);
+    const pos = this.rowHeightsCache().query(this.rows.length - 1);
     return {
       ...translateXY(0, pos),
       position: 'absolute'
@@ -790,8 +790,8 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
         // scrollY position would be at.  The last index would be the one
         // that shows up inside the view port the last.
         const height = parseInt(this._bodyHeight, 10);
-        first = this.rowHeightsCache.getRowIndex(this.offsetY);
-        last = this.rowHeightsCache.getRowIndex(height + this.offsetY) + 1;
+        first = this.rowHeightsCache().getRowIndex(this.offsetY);
+        last = this.rowHeightsCache().getRowIndex(height + this.offsetY) + 1;
       } else {
         // If virtual rows are not needed
         // We render all in one go
@@ -822,7 +822,7 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
     // clear the previous row height cache if already present.
     // this is useful during sorts, filters where the state of the
     // rows array is changed.
-    this.rowHeightsCache.clearCache();
+    this.rowHeightsCache().clearCache();
 
     // Initialize the tree only if there are rows inside the tree.
     if (this.rows && this.rows.length) {
@@ -835,7 +835,7 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
         }
       }
 
-      this.rowHeightsCache.initCache({
+      this.rowHeightsCache().initCache({
         rows: this.rows,
         rowHeight: this.rowHeight,
         detailRowHeight: this.getDetailRowHeight,
@@ -844,6 +844,7 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
         rowIndexes: this.rowIndexes,
         rowExpansions
       });
+      this.rowHeightsCache.set(Object.create(this.rowHeightsCache()));
     }
   }
 
@@ -857,7 +858,7 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
     const viewPortFirstRowIndex = this.indexes().first;
 
     if (this.scrollbarV && this.virtualization) {
-      const offsetScroll = this.rowHeightsCache.query(viewPortFirstRowIndex - 1);
+      const offsetScroll = this.rowHeightsCache().query(viewPortFirstRowIndex - 1);
       return offsetScroll <= this.offsetY ? viewPortFirstRowIndex - 1 : viewPortFirstRowIndex;
     }
 
@@ -881,7 +882,7 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
       const detailRowHeight = this.getDetailRowHeight(row) * (expanded ? -1 : 1);
       // const idx = this.rowIndexes.get(row) || 0;
       const idx = this.getRowIndex(row);
-      this.rowHeightsCache.update(idx, detailRowHeight);
+      this.rowHeightsCache().update(idx, detailRowHeight);
     }
 
     // Update the toggled row and update thive nevere heights in the cache.
