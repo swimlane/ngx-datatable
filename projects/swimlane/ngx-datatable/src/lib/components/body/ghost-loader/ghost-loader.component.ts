@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, numberAttribute } from '@angular/core';
+import { TableColumn } from '../../../types/table-column.type';
 
 @Component({
   selector: `ghost-loader`,
@@ -7,8 +8,8 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableGhostLoaderComponent {
-  @Input() columns;
-  @Input() pageSize;
-  @Input() rowHeight;
-  @Input() ghostBodyHeight;
+  @Input() columns: TableColumn[];
+  @Input({ transform: numberAttribute }) pageSize: number;
+  @Input() rowHeight: number | 'auto' | ((row?: any) => number);
+  @Input({ transform: numberAttribute }) ghostBodyHeight: number;
 }

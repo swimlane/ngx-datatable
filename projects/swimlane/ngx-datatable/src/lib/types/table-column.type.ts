@@ -167,7 +167,7 @@ export interface TableColumn<TRow = any> {
    *
    * @memberOf TableColumn
    */
-  ghostCellTemplate?: any;
+  ghostCellTemplate?: TemplateRef<any>;
 
   /**
    * Header template ref
