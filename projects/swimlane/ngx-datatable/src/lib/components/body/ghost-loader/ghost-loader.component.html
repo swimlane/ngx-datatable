@@ -4,8 +4,9 @@
       @for (col of columns; track col) {
         @if (!col.ghostCellTemplate) {
           <div class="line ghost-cell-strip" [style.width]="col?.width + 'px'"> </div>
-        } @else {}
-        <ng-template #ghostCellTemplate [ngTemplateOutlet]="col.ghostCellTemplate"> </ng-template>
+        } @else {
+          <ng-template [ngTemplateOutlet]="col.ghostCellTemplate"> </ng-template>
+        }
       }
     </div>
   }
