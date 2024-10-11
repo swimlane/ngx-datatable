@@ -34,6 +34,7 @@ import { Employee } from '../data.model';
         [count]="page.totalElements"
         [offset]="page.pageNumber"
         [limit]="page.size"
+        [ghostLoadingIndicator]="isLoading > 0"
         (page)="setPage($event)"
       >
       </ngx-datatable>
@@ -50,6 +51,7 @@ export class PagingScrollingNoVirtualizationComponent implements OnInit {
   rows: Employee[] = [];
 
   ColumnMode = ColumnMode;
+  isLoading = 0;
 
   constructor(private serverResultsService: MockServerResultsService) {}
 
@@ -63,7 +65,9 @@ export class PagingScrollingNoVirtualizationComponent implements OnInit {
    */
   setPage(pageInfo) {
     this.page.pageNumber = pageInfo.offset;
+    this.isLoading++;
     this.serverResultsService.getResults(this.page).subscribe(pagedData => {
+      this.isLoading--;
       this.page = pagedData.page;
       this.rows = pagedData.data;
     });

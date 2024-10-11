@@ -91,6 +91,9 @@ import {
           @for (group of rowsToRender(); track rowTrackingFn(i, group); let i = $index) {
             <datatable-row-wrapper
               #rowWrapper
+              [attr.hidden]="
+                ghostLoadingIndicator && (!rowCount || !virtualization || !scrollbarV) ? true : null
+              "
               [groupedRows]="groupedRows"
               [innerWidth]="innerWidth"
               [ngStyle]="rowsStyles()[i]"
