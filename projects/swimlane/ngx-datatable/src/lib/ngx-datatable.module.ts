@@ -132,4 +132,5 @@ export interface INgxDatatableConfig {
   headerHeight?: number;
   footerHeight?: number;
   rowHeight?: number;
+  defaultColumnWidth?: number;
 }

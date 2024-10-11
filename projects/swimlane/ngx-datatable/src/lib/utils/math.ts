@@ -126,7 +126,7 @@ export function forceFillColumnWidths(
   expectedWidth: number,
   startIdx: number,
   allowBleed: boolean,
-  defaultColWidth: number = 300
+  defaultColWidth: number = 150
 ) {
   const columnsToResize = allColumns
     .slice(startIdx + 1, allColumns.length)
@@ -170,7 +170,7 @@ export function forceFillColumnWidths(
       column.width = Math.max(0, column.width);
     }
 
-    contentWidth = getContentWidth(allColumns);
+    contentWidth = getContentWidth(allColumns, defaultColWidth);
     remainingWidth = expectedWidth - contentWidth;
     removeProcessedColumns(columnsToResize, columnsProcessed);
   } while (remainingWidth > remainingWidthLimit && columnsToResize.length !== 0);
@@ -194,7 +194,7 @@ function removeProcessedColumns(columnsToResize: TableColumn[], columnsProcessed
 /**
  * Gets the width of the columns
  */
-function getContentWidth(allColumns: TableColumn[], defaultColWidth: number = 300): number {
+function getContentWidth(allColumns: TableColumn[], defaultColWidth: number = 150): number {
   let contentWidth = 0;
 
   for (const column of allColumns) {

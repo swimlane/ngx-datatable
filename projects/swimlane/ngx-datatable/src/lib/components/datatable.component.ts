@@ -152,7 +152,7 @@ export class DatatableComponent<TRow = any>
   @Input() set columns(val: TableColumn[]) {
     if (val) {
       this._internalColumns = [...val];
-      setColumnDefaults(this._internalColumns);
+      setColumnDefaults(this._internalColumns, this._defaultColumnWidth);
       this.recalculateColumns();
     }
 
@@ -697,6 +697,7 @@ export class DatatableComponent<TRow = any>
   _columns: TableColumn[];
   _subscriptions: Subscription[] = [];
   _ghostLoadingIndicator = false;
+  _defaultColumnWidth?: number;
   protected verticalScrollVisible = false;
 
   constructor() {
@@ -711,6 +712,7 @@ export class DatatableComponent<TRow = any>
       this.headerHeight = this.configuration.headerHeight ?? this.headerHeight;
       this.footerHeight = this.configuration.footerHeight ?? this.footerHeight;
       this.rowHeight = this.configuration.rowHeight ?? this.rowHeight;
+      this._defaultColumnWidth = this.configuration.defaultColumnWidth ?? 150;
     }
   }
 
@@ -787,7 +789,7 @@ export class DatatableComponent<TRow = any>
       const arr = val.toArray();
       if (arr.length) {
         this._internalColumns = translateTemplates(arr);
-        setColumnDefaults(this._internalColumns);
+        setColumnDefaults(this._internalColumns, this._defaultColumnWidth);
         this.recalculateColumns();
         if (!this.externalSorting && this.rows?.length) {
           this.sortInternalRows();
@@ -919,7 +921,7 @@ export class DatatableComponent<TRow = any>
     }
 
     if (this.columnMode === ColumnMode.force) {
-      forceFillColumnWidths(columns, width, forceIdx, allowBleed);
+      forceFillColumnWidths(columns, width, forceIdx, allowBleed, this._defaultColumnWidth);
     } else if (this.columnMode === ColumnMode.flex) {
       adjustColumnWidths(columns, width);
     }

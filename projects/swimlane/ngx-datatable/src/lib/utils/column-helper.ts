@@ -7,7 +7,7 @@ import { DataTableColumnDirective } from '../components/columns/column.directive
 /**
  * Sets the column defaults
  */
-export function setColumnDefaults(columns: TableColumn[]) {
+export function setColumnDefaults(columns: TableColumn[], defaultColumnWidth = 150) {
   if (!columns) {
     return;
   }
@@ -58,7 +58,7 @@ export function setColumnDefaults(columns: TableColumn[]) {
     }
 
     if (!column.hasOwnProperty('width')) {
-      column.width = 150;
+      column.width = defaultColumnWidth;
     }
 
     if (!column.hasOwnProperty('isTreeColumn')) {
