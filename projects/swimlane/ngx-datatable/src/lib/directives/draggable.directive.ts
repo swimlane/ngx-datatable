@@ -1,4 +1,5 @@
 import {
+  booleanAttribute,
   Directive,
   ElementRef,
   EventEmitter,
@@ -26,8 +27,8 @@ import { DraggableDragEvent } from '../types/internal.types';
 export class DraggableDirective implements OnDestroy, OnChanges {
   @Input() dragEventTarget: any;
   @Input() dragModel: TableColumn;
-  @Input() dragX = true;
-  @Input() dragY = true;
+  @Input({ transform: booleanAttribute }) dragX = true;
+  @Input({ transform: booleanAttribute }) dragY = true;
 
   @Output() dragStart: EventEmitter<DraggableDragEvent> = new EventEmitter();
   @Output() dragging: EventEmitter<DraggableDragEvent> = new EventEmitter();

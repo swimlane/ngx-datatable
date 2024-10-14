@@ -1,9 +1,11 @@
 import {
+  booleanAttribute,
   Directive,
   EventEmitter,
   HostBinding,
   HostListener,
   Input,
+  numberAttribute,
   OnDestroy,
   Output
 } from '@angular/core';
@@ -14,9 +16,9 @@ import { TableColumn } from '../types/table-column.type';
 
 @Directive({ selector: '[long-press]' })
 export class LongPressDirective implements OnDestroy {
-  @Input() pressEnabled = true;
+  @Input({ transform: booleanAttribute }) pressEnabled = true;
   @Input() pressModel: TableColumn;
-  @Input() duration = 500;
+  @Input({ transform: numberAttribute }) duration = 500;
 
   @Output() longPressStart: EventEmitter<{ event: MouseEvent; model: TableColumn }> =
     new EventEmitter();

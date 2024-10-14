@@ -1,4 +1,11 @@
-import { AfterContentInit, Directive, ElementRef, inject, Input } from '@angular/core';
+import {
+  AfterContentInit,
+  booleanAttribute,
+  Directive,
+  ElementRef,
+  inject,
+  Input
+} from '@angular/core';
 
 /**
  * Row Disable Directive
@@ -15,7 +22,7 @@ import { AfterContentInit, Directive, ElementRef, inject, Input } from '@angular
 export class DisableRowDirective {
   private element = inject(ElementRef);
   private _disabled = false;
-  @Input() set disabled(val: boolean) {
+  @Input({ transform: booleanAttribute }) set disabled(val: boolean) {
     this._disabled = val;
     if (val) {
       this.disableAllElements();

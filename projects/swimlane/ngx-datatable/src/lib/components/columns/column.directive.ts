@@ -1,8 +1,10 @@
 import {
+  booleanAttribute,
   ContentChild,
   Directive,
   inject,
   Input,
+  numberAttribute,
   OnChanges,
   PipeTransform,
   TemplateRef
@@ -20,20 +22,20 @@ export class DataTableColumnDirective<TRow> implements TableColumn, OnChanges {
   private columnChangesService = inject(ColumnChangesService);
   @Input() name: string;
   @Input() prop: TableColumnProp;
-  @Input() frozenLeft: boolean;
-  @Input() frozenRight: boolean;
-  @Input() flexGrow: number;
-  @Input() resizeable: boolean;
+  @Input({ transform: booleanAttribute }) frozenLeft: boolean;
+  @Input({ transform: booleanAttribute }) frozenRight: boolean;
+  @Input({ transform: numberAttribute }) flexGrow: number;
+  @Input({ transform: booleanAttribute }) resizeable: boolean;
   @Input() comparator: any;
   @Input() pipe: PipeTransform;
-  @Input() sortable: boolean;
-  @Input() draggable: boolean;
-  @Input() canAutoResize: boolean;
-  @Input() minWidth: number;
-  @Input() width: number;
-  @Input() maxWidth: number;
-  @Input() checkboxable: boolean;
-  @Input() headerCheckboxable: boolean;
+  @Input({ transform: booleanAttribute }) sortable: boolean;
+  @Input({ transform: booleanAttribute }) draggable: boolean;
+  @Input({ transform: booleanAttribute }) canAutoResize: boolean;
+  @Input({ transform: numberAttribute }) minWidth: number;
+  @Input({ transform: numberAttribute }) width: number;
+  @Input({ transform: numberAttribute }) maxWidth: number;
+  @Input({ transform: booleanAttribute }) checkboxable: boolean;
+  @Input({ transform: booleanAttribute }) headerCheckboxable: boolean;
   @Input() headerClass:
     | string
     | ((data: { column: TableColumn }) => string | Record<string, boolean>);
@@ -46,7 +48,7 @@ export class DataTableColumnDirective<TRow> implements TableColumn, OnChanges {
         value: any;
         rowHeight: number;
       }) => string | Record<string, boolean>);
-  @Input() isTreeColumn: boolean;
+  @Input({ transform: booleanAttribute }) isTreeColumn: boolean;
   @Input() treeLevelIndent: number;
   @Input() summaryFunc: (cells: any[]) => any;
   @Input() summaryTemplate: TemplateRef<any>;

@@ -1,6 +1,7 @@
 import {
   AfterContentInit,
   AfterViewInit,
+  booleanAttribute,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -15,6 +16,7 @@ import {
   Input,
   IterableDiffer,
   IterableDiffers,
+  numberAttribute,
   OnDestroy,
   OnInit,
   Output,
@@ -176,7 +178,7 @@ export class DatatableComponent<TRow = any>
   /**
    * Enable vertical scrollbars
    */
-  @Input() scrollbarV: boolean = false;
+  @Input({ transform: booleanAttribute }) scrollbarV = false;
 
   /**
    * Enable vertical scrollbars dynamically on demand.
@@ -184,12 +186,12 @@ export class DatatableComponent<TRow = any>
    * Width that is gained when no scrollbar is needed
    * is added to the inner table width.
    */
-  @Input() scrollbarVDynamic = false;
+  @Input({ transform: booleanAttribute }) scrollbarVDynamic = false;
 
   /**
    * Enable horz scrollbars
    */
-  @Input() scrollbarH: boolean = false;
+  @Input({ transform: booleanAttribute }) scrollbarH = false;
 
   /**
    * The row height; which is necessary
@@ -207,31 +209,31 @@ export class DatatableComponent<TRow = any>
    * The minimum header height in pixels.
    * Pass a falsey for no header
    */
-  @Input() headerHeight: number = 30;
+  @Input({ transform: numberAttribute }) headerHeight = 30;
 
   /**
    * The minimum footer height in pixels.
    * Pass falsey for no footer
    */
-  @Input() footerHeight: number = 0;
+  @Input({ transform: numberAttribute }) footerHeight = 0;
 
   /**
    * If the table should use external paging
    * otherwise its assumed that all data is preloaded.
    */
-  @Input() externalPaging: boolean = false;
+  @Input({ transform: booleanAttribute }) externalPaging = false;
 
   /**
    * If the table should use external sorting or
    * the built-in basic sorting.
    */
-  @Input() externalSorting: boolean = false;
+  @Input({ transform: booleanAttribute }) externalSorting = false;
 
   /**
    * The page size to be shown.
    * Default value: `undefined`
    */
-  @Input() set limit(val: number | undefined) {
+  @Input({ transform: numberAttribute }) set limit(val: number | undefined) {
     this._limit = val;
 
     // recalculate sizes/etc
@@ -249,7 +251,7 @@ export class DatatableComponent<TRow = any>
    * The total count of all rows.
    * Default value: `0`
    */
-  @Input() set count(val: number) {
+  @Input({ transform: numberAttribute }) set count(val: number) {
     this._count = val;
 
     // recalculate sizes/etc
@@ -267,7 +269,7 @@ export class DatatableComponent<TRow = any>
    * The current offset ( page - 1 ) shown.
    * Default value: `0`
    */
-  @Input() set offset(val: number) {
+  @Input({ transform: numberAttribute }) set offset(val: number) {
     this._offset = val;
   }
   get offset(): number {
@@ -278,13 +280,13 @@ export class DatatableComponent<TRow = any>
    * Show the linear loading bar.
    * Default value: `false`
    */
-  @Input() loadingIndicator: boolean = false;
+  @Input({ transform: booleanAttribute }) loadingIndicator = false;
 
   /**
    * Show ghost loaders on each cell.
    * Default value: `false`
    */
-  @Input() set ghostLoadingIndicator(val: boolean) {
+  @Input({ transform: booleanAttribute }) set ghostLoadingIndicator(val: boolean) {
     this._ghostLoadingIndicator = val;
     if (val && this.scrollbarV && !this.externalPaging) {
       // in case where we don't have predefined total page length
@@ -313,13 +315,13 @@ export class DatatableComponent<TRow = any>
    * Enable/Disable ability to re-order columns
    * by dragging them.
    */
-  @Input() reorderable: boolean = true;
+  @Input({ transform: booleanAttribute }) reorderable = true;
 
   /**
    * Swap columns on re-order columns or
    * move them.
    */
-  @Input() swapColumns: boolean = true;
+  @Input({ transform: booleanAttribute }) swapColumns = true;
 
   /**
    * The type of sorting
@@ -396,7 +398,7 @@ export class DatatableComponent<TRow = any>
    * whether they will start expanded or not. If ommited the default is NOT expanded.
    *
    */
-  @Input() groupExpansionDefault: boolean = false;
+  @Input({ transform: booleanAttribute }) groupExpansionDefault = false;
 
   /**
    * Property to which you can use for custom tracking of rows.
@@ -410,12 +412,12 @@ export class DatatableComponent<TRow = any>
    *
    * @memberOf DatatableComponent
    */
-  @Input() selectAllRowsOnPage = false;
+  @Input({ transform: booleanAttribute }) selectAllRowsOnPage = false;
 
   /**
    * A flag for row virtualization on / off
    */
-  @Input() virtualization: boolean = true;
+  @Input({ transform: booleanAttribute }) virtualization = true;
 
   /**
    * Tree from relation
@@ -430,12 +432,12 @@ export class DatatableComponent<TRow = any>
   /**
    * A flag for switching summary row on / off
    */
-  @Input() summaryRow: boolean = false;
+  @Input({ transform: booleanAttribute }) summaryRow = false;
 
   /**
    * A height of summary row
    */
-  @Input() summaryHeight: number = 30;
+  @Input({ transform: numberAttribute }) summaryHeight = 30;
 
   /**
    * A property holds a summary row position: top/bottom
@@ -456,14 +458,14 @@ export class DatatableComponent<TRow = any>
    * A flag to enable drag behavior of native HTML5 drag and drop API on rows.
    * If set to true, {@link rowDragEvents} will emit dragstart and dragend events.
    */
-  @Input() rowDraggable = false;
+  @Input({ transform: booleanAttribute }) rowDraggable = false;
 
   /**
    * A flag to controll behavior of sort states.
    * By default sort on column toggles between ascending and descending without getting removed.
    * Set true to clear sorting of column after performing ascending and descending sort on that column.
    */
-  @Input() enableClearingSortState = false;
+  @Input({ transform: booleanAttribute }) enableClearingSortState = false;
 
   /**
    * Body was scrolled typically in a `scrollbarV:true` scenario.

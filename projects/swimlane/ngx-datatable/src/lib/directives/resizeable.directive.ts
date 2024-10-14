@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  booleanAttribute,
   Directive,
   ElementRef,
   EventEmitter,
@@ -7,6 +8,7 @@ import {
   HostListener,
   inject,
   Input,
+  numberAttribute,
   OnDestroy,
   Output,
   Renderer2
@@ -20,9 +22,9 @@ import { takeUntil } from 'rxjs/operators';
 export class ResizeableDirective implements OnDestroy, AfterViewInit {
   private renderer = inject(Renderer2);
 
-  @HostBinding('class.resizeable') @Input() resizeEnabled = true;
-  @Input() minWidth: number;
-  @Input() maxWidth: number;
+  @HostBinding('class.resizeable') @Input({ transform: booleanAttribute }) resizeEnabled = true;
+  @Input({ transform: numberAttribute }) minWidth: number;
+  @Input({ transform: numberAttribute }) maxWidth: number;
 
   @Output() resize: EventEmitter<any> = new EventEmitter();
   @Output() resizing: EventEmitter<any> = new EventEmitter();
