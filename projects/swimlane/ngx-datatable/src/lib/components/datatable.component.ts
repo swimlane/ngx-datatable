@@ -21,6 +21,7 @@ import {
   OnInit,
   Output,
   QueryList,
+  signal,
   TemplateRef,
   ViewChild,
   ViewEncapsulation
@@ -701,6 +702,11 @@ export class DatatableComponent<TRow = any>
   _ghostLoadingIndicator = false;
   _defaultColumnWidth?: number;
   protected verticalScrollVisible = false;
+  // In case horizontal scroll is enabled
+  // the column widths are initially calculated without vertical scroll offset
+  // this makes horizontal scroll to appear on load even if columns can fit in view
+  // this will be set to true once rows are available and rendered on UI
+  private _rowInitDone = signal(false);
 
   constructor() {
     // apply global settings from Module.forRoot
@@ -854,6 +860,7 @@ export class DatatableComponent<TRow = any>
       }
       if (rowDiffers) {
         queueMicrotask(() => {
+          this._rowInitDone.set(true);
           this.recalculate();
           this.cd.markForCheck();
         });
@@ -905,32 +912,32 @@ export class DatatableComponent<TRow = any>
     }
     const bodyElement = this.bodyElement?.nativeElement;
     this.verticalScrollVisible = bodyElement?.scrollHeight > bodyElement?.clientHeight;
-    if (this.scrollbarV && !this.scrollbarVDynamic) {
-      width = width - (this.verticalScrollVisible ? this.scrollbarHelper.width : 0);
-    } else if (this.scrollbarVDynamic) {
-      const scrollerHeight = this.bodyComponent?.scroller?.element.offsetHeight;
-      if (scrollerHeight && this.bodyHeight < scrollerHeight) {
-        width = width - (this.verticalScrollVisible ? this.scrollbarHelper.width : 0);
-      }
-
-      if (this.headerComponent && this.headerComponent.innerWidth !== width) {
-        this.headerComponent.innerWidth = width;
-      }
-      if (this.bodyComponent && this.bodyComponent.innerWidth !== width) {
-        this.bodyComponent.innerWidth = width;
-        this.bodyComponent.cd.markForCheck();
-      }
+    if (this.scrollbarV || this.scrollbarVDynamic) {
+      width =
+        width -
+        (this.verticalScrollVisible || !this._rowInitDone() ? this.scrollbarHelper.width : 0);
     }
 
     if (this.columnMode === ColumnMode.force) {
-      forceFillColumnWidths(columns, width, forceIdx, allowBleed, this._defaultColumnWidth);
+      forceFillColumnWidths(
+        columns,
+        width,
+        forceIdx,
+        allowBleed,
+        this._defaultColumnWidth,
+        this.scrollbarHelper.width
+      );
     } else if (this.columnMode === ColumnMode.flex) {
       adjustColumnWidths(columns, width);
     }
 
-    if (this.bodyComponent) {
-      this.bodyComponent.updateColumnGroupWidths();
+    if (this.bodyComponent && this.bodyComponent.columnGroupWidths.total !== width) {
+      this.bodyComponent.columns = [...this._internalColumns];
       this.bodyComponent.cd.markForCheck();
+    }
+
+    if (this.headerComponent && this.headerComponent._columnGroupWidths.total !== width) {
+      this.headerComponent.columns = [...this._internalColumns];
     }
 
     return columns;
