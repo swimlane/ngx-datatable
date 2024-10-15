@@ -335,7 +335,7 @@ export class DatatableComponent<TRow = any>
   /**
    * Css class overrides
    */
-  @Input() cssClasses: INgxDatatableConfig['cssClasses'] = {
+  @Input() cssClasses: Partial<INgxDatatableConfig['cssClasses']> = {
     sortAscending: 'datatable-icon-up',
     sortDescending: 'datatable-icon-down',
     sortUnset: 'datatable-icon-sort-unset',
@@ -352,7 +352,7 @@ export class DatatableComponent<TRow = any>
    * totalMessage     [default] = 'total'
    * selectedMessage  [default] = 'selected'
    */
-  @Input() messages: INgxDatatableConfig['messages'] = {
+  @Input() messages: Partial<INgxDatatableConfig['messages']> = {
     // Message to show when array is presented
     // but contains no values
     emptyMessage: 'No data to display',
