@@ -23,7 +23,6 @@ import {
   SortPropDir,
   SortType
 } from '../../types/public.types';
-import { translateXY } from '../../utils/translate';
 import { NgStyle } from '@angular/common';
 import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 import { TableColumn } from '../../types/table-column.type';
@@ -32,6 +31,7 @@ import {
   PinnedColumns,
   TargetChangedEvent
 } from '../../types/internal.types';
+import { translateXY } from '../../utils/translate';
 
 @Component({
   selector: 'datatable-header',
@@ -357,20 +357,12 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
 
   calcStylesByGroup(group: 'center' | 'right' | 'left'): NgStyle['ngStyle'] {
     const widths = this._columnGroupWidths;
-    const offsetX = this.offsetX;
 
     if (group === 'center') {
       return {
-        ...translateXY(offsetX * -1, 0),
-        width: `${widths[group]}px`
-      };
-    } else if (group === 'right') {
-      const totalDiff = widths.total - this.innerWidth;
-      const offset =
-        (totalDiff + (this.verticalScrollVisible ? this.scrollbarHelper.width : 0)) * -1;
-      return {
-        ...translateXY(offset, 0),
-        width: `${widths[group]}px`
+        ...translateXY(this.offsetX * -1, 0),
+        width: `${widths[group]}px`,
+        willChange: 'transform'
       };
     }
 

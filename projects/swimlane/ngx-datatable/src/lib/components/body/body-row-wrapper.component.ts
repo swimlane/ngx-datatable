@@ -32,9 +32,9 @@ import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive'
   template: `
     @if (groupHeader?.template) {
     <div
-      [style.height.px]="groupHeaderRowHeight"
       class="datatable-group-header"
-      [ngStyle]="getGroupHeaderStyle()"
+      [style.height.px]="groupHeaderRowHeight"
+      [style.width.px]="innerWidth"
     >
       <div class="datatable-group-cell">
         @if (groupHeader.checkboxable) {
@@ -187,14 +187,6 @@ export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit
   @HostListener('contextmenu', ['$event'])
   onContextmenu($event: MouseEvent): void {
     this.rowContextmenu.emit({ event: $event, row: this.row });
-  }
-
-  getGroupHeaderStyle(): NgStyle['ngStyle'] {
-    return {
-      'transform': 'translate3d(' + this.offsetX + 'px, 0px, 0px)',
-      'backface-visibility': 'hidden',
-      'width': this.innerWidth + 'px'
-    };
   }
 
   onCheckboxChange(groupSelected: boolean): void {

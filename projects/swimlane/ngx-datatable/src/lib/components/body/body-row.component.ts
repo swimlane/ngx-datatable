@@ -33,7 +33,7 @@ import { ColumnGroupWidth, PinnedColumns } from '../../types/internal.types';
     @for (colGroup of _columnsByPin; track colGroup.type; let i = $index) {
     <div
       class="datatable-row-{{ colGroup.type }} datatable-row-group"
-      [ngStyle]="_groupStyles[colGroup.type]"
+      [style.width.px]="_columnGroupWidths[colGroup.type]"
       [class.row-disabled]="disable$ ? (disable$ | async) : false"
     >
       @for (column of colGroup.columns; track column.$$id; let ii = $index) {
@@ -67,7 +67,6 @@ export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges
   @Input() set columns(val: TableColumn[]) {
     this._columns = val;
     this.recalculateColumns(val);
-    this.buildStylesByGroup();
   }
 
   get columns(): TableColumn[] {
@@ -82,7 +81,6 @@ export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges
 
     this._innerWidth = val;
     this.recalculateColumns();
-    this.buildStylesByGroup();
   }
 
   get innerWidth(): number {
@@ -104,7 +102,6 @@ export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges
   @Input()
   set offsetX(val: number) {
     this._offsetX = val;
-    this.buildStylesByGroup();
   }
   get offsetX() {
     return this._offsetX;
@@ -173,7 +170,7 @@ export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.verticalScrollVisible) {
-      this.buildStylesByGroup();
+      this.recalculateColumns();
     }
   }
 
@@ -181,39 +178,6 @@ export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges
     if (this._rowDiffer.diff(this.row)) {
       this.cd.markForCheck();
     }
-  }
-
-  buildStylesByGroup() {
-    this._groupStyles.left = this.calcStylesByGroup('left');
-    this._groupStyles.center = this.calcStylesByGroup('center');
-    this._groupStyles.right = this.calcStylesByGroup('right');
-    this.cd.markForCheck();
-  }
-
-  calcStylesByGroup(group: 'left' | 'right' | 'center') {
-    const widths = this._columnGroupWidths;
-    const offsetX = this.offsetX;
-
-    if (group === 'left') {
-      return {
-        width: `${widths[group]}px`,
-        ...translateXY(offsetX, 0)
-      };
-    } else if (group === 'right') {
-      const bodyWidth = this.innerWidth;
-      const totalDiff = widths.total - bodyWidth;
-      const offsetDiff = totalDiff - offsetX;
-      const offset =
-        (offsetDiff + (this.verticalScrollVisible ? this.scrollbarHelper.width : 0)) * -1;
-      return {
-        width: `${widths[group]}px`,
-        ...translateXY(offset, 0)
-      };
-    }
-
-    return {
-      width: `${widths[group]}px`
-    };
   }
 
   onActivate(event: ActivateEvent<TRow>, index: number): void {
