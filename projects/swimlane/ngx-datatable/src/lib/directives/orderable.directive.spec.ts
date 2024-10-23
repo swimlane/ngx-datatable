@@ -1,12 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import {
-  Component,
-  ElementRef,
-  Injector,
-  QueryList,
-  runInInjectionContext,
-  ViewChildren
-} from '@angular/core';
+import { Component, QueryList, ViewChildren } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { OrderableDirective } from './orderable.directive';
@@ -31,7 +24,6 @@ class TestFixtureComponent {
 describe('OrderableDirective', () => {
   let fixture: ComponentFixture<TestFixtureComponent>;
   let component: TestFixtureComponent;
-  let element;
 
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
@@ -44,7 +36,6 @@ describe('OrderableDirective', () => {
     TestBed.compileComponents().then(() => {
       fixture = TestBed.createComponent(TestFixtureComponent);
       component = fixture.componentInstance;
-      element = fixture.nativeElement;
       /* This is required in order to resolve the `ContentChildren`.
        *  If we don't go through at least on change detection cycle
        *  the `draggables` will be `undefined` and `ngOnDestroy` will

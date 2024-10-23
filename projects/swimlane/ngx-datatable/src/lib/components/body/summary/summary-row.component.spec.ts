@@ -1,5 +1,5 @@
-import { TestBed, ComponentFixture, waitForAsync } from '@angular/core/testing';
-import { DebugElement, PipeTransform } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { DataTableBodyRowComponent } from '../body-row.component';

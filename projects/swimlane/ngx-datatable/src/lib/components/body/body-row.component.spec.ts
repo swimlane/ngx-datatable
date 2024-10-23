@@ -6,7 +6,6 @@ import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 describe('DataTableBodyRowComponent', () => {
   let fixture: ComponentFixture<DataTableBodyRowComponent>;
   let component: DataTableBodyRowComponent;
-  let element: any;
 
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
@@ -20,7 +19,6 @@ describe('DataTableBodyRowComponent', () => {
     TestBed.compileComponents().then(() => {
       fixture = TestBed.createComponent(DataTableBodyRowComponent);
       component = fixture.componentInstance;
-      element = fixture.nativeElement;
     });
   }));
 

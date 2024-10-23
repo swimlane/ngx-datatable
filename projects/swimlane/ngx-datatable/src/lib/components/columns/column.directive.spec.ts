@@ -22,7 +22,6 @@ class TestFixtureComponent {
 describe('DataTableColumnDirective', () => {
   let fixture: ComponentFixture<TestFixtureComponent>;
   let component: TestFixtureComponent;
-  let element;
 
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
@@ -43,7 +42,6 @@ describe('DataTableColumnDirective', () => {
     TestBed.compileComponents().then(() => {
       fixture = TestBed.createComponent(TestFixtureComponent);
       component = fixture.componentInstance;
-      element = fixture.nativeElement;
     });
   }));
 

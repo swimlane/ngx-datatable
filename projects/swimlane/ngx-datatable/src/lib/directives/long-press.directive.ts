@@ -9,9 +9,8 @@ import {
   OnDestroy,
   Output
 } from '@angular/core';
-import { fromEvent, Observable, Subscription } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { MouseEvent } from '../events';
 import { TableColumn } from '../types/table-column.type';
 
 @Directive({ selector: '[long-press]' })

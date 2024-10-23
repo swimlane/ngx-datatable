@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { ColumnMode, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
 

@@ -1,11 +1,4 @@
-import {
-  AfterContentInit,
-  booleanAttribute,
-  Directive,
-  ElementRef,
-  inject,
-  Input
-} from '@angular/core';
+import { booleanAttribute, Directive, ElementRef, inject, Input } from '@angular/core';
 
 /**
  * Row Disable Directive

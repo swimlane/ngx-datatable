@@ -5,7 +5,6 @@ import { DataTablePagerComponent } from './pager.component';
 describe('DataTablePagerComponent', () => {
   let fixture;
   let pager: DataTablePagerComponent;
-  let element;
 
   // provide our implementations or mocks to the dependency injector
   beforeEach(() =>
@@ -19,7 +18,6 @@ describe('DataTablePagerComponent', () => {
 
     fixture = TestBed.createComponent(DataTablePagerComponent);
     pager = fixture.componentInstance;
-    element = fixture.nativeElement;
   }));
 
   describe('size', () => {

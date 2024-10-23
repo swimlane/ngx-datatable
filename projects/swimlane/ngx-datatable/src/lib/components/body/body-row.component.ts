@@ -18,10 +18,8 @@ import {
 
 import { columnGroupWidths, columnsByPin, columnsByPinArr } from '../../utils/column';
 import { Keys } from '../../utils/keys';
-import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 import { BehaviorSubject } from 'rxjs';
 import { ActivateEvent, RowOrGroup, TreeStatus } from '../../types/public.types';
-import { NgStyle } from '@angular/common';
 import { TableColumn } from '../../types/table-column.type';
 import { ColumnGroupWidth, PinnedColumns } from '../../types/internal.types';
 
@@ -60,7 +58,6 @@ import { ColumnGroupWidth, PinnedColumns } from '../../types/internal.types';
   `
 })
 export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges {
-  private scrollbarHelper = inject(ScrollbarHelper);
   private cd = inject(ChangeDetectorRef);
 
   @Input() set columns(val: TableColumn[]) {
@@ -157,11 +154,6 @@ export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges
   _offsetX: number;
   _columns: TableColumn[];
   _innerWidth: number;
-  _groupStyles: {
-    left: NgStyle['ngStyle'];
-    center: NgStyle['ngStyle'];
-    right: NgStyle['ngStyle'];
-  } = { left: {}, center: {}, right: {} };
 
   private _rowDiffer: KeyValueDiffer<keyof RowOrGroup<TRow>, any> = inject(KeyValueDiffers)
     .find({})

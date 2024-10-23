@@ -15,6 +15,7 @@
     "lib": ["es2022", "dom"],
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "noUnusedLocals": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
       "@swimlane/ngx-datatable": ["dist/swimlane/ngx-datatable"],

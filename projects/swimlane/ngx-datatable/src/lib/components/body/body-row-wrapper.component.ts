@@ -20,7 +20,6 @@ import {
   ViewChild
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { NgStyle } from '@angular/common';
 import { DatatableComponentToken } from '../../utils/table-token';
 import { Group, GroupContext, RowDetailContext, RowOrGroup } from '../../types/public.types';
 import { DatatableGroupHeaderDirective } from './body-group-header.directive';

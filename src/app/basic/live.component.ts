@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ColumnMode, DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
 
@@ -52,7 +52,7 @@ export class LiveDataComponent {
 
   ColumnMode = ColumnMode;
 
-  constructor(private cd: ChangeDetectorRef) {
+  constructor() {
     this.fetch(data => {
       this.rows = data.map(d => {
         d.updated = Date.now().toString();

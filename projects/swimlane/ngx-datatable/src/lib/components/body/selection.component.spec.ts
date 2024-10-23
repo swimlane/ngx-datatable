@@ -4,7 +4,6 @@ import { DataTableSelectionComponent } from './selection.component';
 describe('DataTableSelectionComponent', () => {
   let fixture: ComponentFixture<DataTableSelectionComponent>;
   let component: DataTableSelectionComponent;
-  let element;
 
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
@@ -17,7 +16,6 @@ describe('DataTableSelectionComponent', () => {
     TestBed.compileComponents().then(() => {
       fixture = TestBed.createComponent(DataTableSelectionComponent);
       component = fixture.componentInstance;
-      element = fixture.nativeElement;
     });
   }));
 

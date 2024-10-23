@@ -1,17 +1,21 @@
-import { TestBed, ComponentFixture, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DataTableRowWrapperComponent } from './body-row-wrapper.component';
-import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
+import { DatatableComponentToken } from '../../utils/table-token';
 
 describe('DataTableRowWrapperComponent', () => {
   let fixture: ComponentFixture<DataTableRowWrapperComponent>;
   let component: DataTableRowWrapperComponent;
-  let element;
 
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [DataTableRowWrapperComponent],
-      providers: [ScrollbarHelper]
+      providers: [
+        {
+          provide: DatatableComponentToken,
+          useValue: {}
+        }
+      ]
     });
   });
 
@@ -19,7 +23,6 @@ describe('DataTableRowWrapperComponent', () => {
     TestBed.compileComponents().then(() => {
       fixture = TestBed.createComponent(DataTableRowWrapperComponent);
       component = fixture.componentInstance;
-      element = fixture.nativeElement;
     });
   }));
 

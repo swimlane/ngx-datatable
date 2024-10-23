@@ -6,7 +6,6 @@ import {
   HostBinding,
   inject,
   Input,
-  NgZone,
   OnDestroy,
   OnInit,
   Output,

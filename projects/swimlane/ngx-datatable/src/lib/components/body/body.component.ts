@@ -584,13 +584,6 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
     // parameters as group paging parameters ie if limit 10 has been
     // specified treat it as 10 groups rather than 10 rows
     if (this.groupedRows) {
-      let maxRowsPerGroup = 3;
-      // if there is only one group set the maximum number of
-      // rows per group the same as the total number of rows
-      if (this.groupedRows.length === 1) {
-        maxRowsPerGroup = this.groupedRows[0].value.length;
-      }
-
       while (rowIndex < last && rowIndex < this.groupedRows.length) {
         // Add the groups into this page
         const group = this.groupedRows[rowIndex];
@@ -768,13 +761,6 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
   });
 
   /**
-   * Hides the loading indicator
-   */
-  hideIndicator(): void {
-    setTimeout(() => (this.loadingIndicator = false), 500);
-  }
-
-  /**
    * Updates the index of the rows in the viewport
    */
   updateIndexes(): void {
@@ -929,13 +915,6 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
   recalcLayout(): void {
     this.refreshRowHeightCache();
     this.updateIndexes();
-  }
-
-  /**
-   * Tracks the column
-   */
-  columnTrackingFn(index: number, column: any): any {
-    return column.$$id;
   }
 
   /**

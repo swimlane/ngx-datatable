@@ -8,7 +8,6 @@ import { DataTableBodyCellComponent } from './body-cell.component';
 describe('DataTableBodyCellComponent', () => {
   let fixture: ComponentFixture<DataTableBodyCellComponent>;
   let component: DataTableBodyCellComponent;
-  let element;
 
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
@@ -21,7 +20,6 @@ describe('DataTableBodyCellComponent', () => {
     TestBed.compileComponents().then(() => {
       fixture = TestBed.createComponent(DataTableBodyCellComponent);
       component = fixture.componentInstance;
-      element = fixture.nativeElement;
     });
   }));
 

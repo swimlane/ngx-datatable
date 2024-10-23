@@ -1,4 +1,4 @@
-import { TestBed, ComponentFixture, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { LongPressDirective } from './long-press.directive';
@@ -12,7 +12,6 @@ class TestFixtureComponent {}
 describe('LongPressDirective', () => {
   let fixture: ComponentFixture<TestFixtureComponent>;
   let component: TestFixtureComponent;
-  let element;
 
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
@@ -25,7 +24,6 @@ describe('LongPressDirective', () => {
     TestBed.compileComponents().then(() => {
       fixture = TestBed.createComponent(TestFixtureComponent);
       component = fixture.componentInstance;
-      element = fixture.nativeElement;
     });
   }));
 

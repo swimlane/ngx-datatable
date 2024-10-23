@@ -4,7 +4,6 @@ import { ProgressBarComponent } from './progress-bar.component';
 describe('ProgressBarComponent', () => {
   let fixture: ComponentFixture<ProgressBarComponent>;
   let component: ProgressBarComponent;
-  let element;
 
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
@@ -17,7 +16,6 @@ describe('ProgressBarComponent', () => {
     TestBed.compileComponents().then(() => {
       fixture = TestBed.createComponent(ProgressBarComponent);
       component = fixture.componentInstance;
-      element = fixture.nativeElement;
     });
   }));
 

@@ -71,7 +71,6 @@ export class ClientTreeComponent {
   }
 
   onTreeAction(event: any) {
-    const index = event.rowIndex;
     const row = event.row;
     if (row.treeStatus === 'collapsed') {
       row.treeStatus = 'expanded';
