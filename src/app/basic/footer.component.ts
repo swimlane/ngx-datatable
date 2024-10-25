@@ -26,7 +26,7 @@ import { Employee } from '../data.model';
         [headerHeight]="50"
         rowHeight="auto"
       >
-        <ngx-datatable-footer *ngIf="true">
+        <ngx-datatable-footer>
           <ng-template
             ngx-datatable-footer-template
             let-rowCount="rowCount"

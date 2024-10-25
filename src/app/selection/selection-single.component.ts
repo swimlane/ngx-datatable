@@ -49,10 +49,14 @@ import { Employee } from '../data.model';
       <div class="selected-column">
         <h4>Selections</h4>
         <ul>
-          <li *ngFor="let sel of selected">
-            {{ sel.name }}
-          </li>
-          <li *ngIf="!selected.length">No Selections</li>
+          @for (sel of selected; track sel) {
+            <li>
+              {{ sel.name }}
+            </li>
+          }
+          @if (!selected.length) {
+            <li>No Selections</li>
+          }
         </ul>
       </div>
     </div>

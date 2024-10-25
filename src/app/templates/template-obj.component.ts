@@ -33,16 +33,12 @@ import { Employee } from '../data.model';
       </ng-template>
 
       <ng-template #editTmpl let-row="row" let-value="value">
-        <img
-          *ngIf="value === 'male'"
-          width="150"
-          src="https://media.giphy.com/media/I8nepxWwlEuqI/giphy.gif"
-        />
-        <img
-          *ngIf="value === 'female'"
-          width="150"
-          src="https://media.giphy.com/media/sxSVG3XHf7yww/giphy.gif"
-        />
+        @if (value === 'male') {
+          <img width="150" src="https://media.giphy.com/media/I8nepxWwlEuqI/giphy.gif" />
+        }
+        @if (value === 'female') {
+          <img width="150" src="https://media.giphy.com/media/sxSVG3XHf7yww/giphy.gif" />
+        }
       </ng-template>
     </div>
   `

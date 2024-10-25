@@ -40,10 +40,18 @@ import { Employee } from '../data.model';
         >
           <ng-template ngx-datatable-tree-toggle let-tree="cellContext">
             <button [disabled]="tree.treeStatus === 'disabled'" (click)="tree.onTreeAction()">
-              <span *ngIf="tree.treeStatus === 'loading'"> ... </span>
-              <span *ngIf="tree.treeStatus === 'collapsed'"> ↑ </span>
-              <span *ngIf="tree.treeStatus === 'expanded'"> ↓ </span>
-              <span *ngIf="tree.treeStatus === 'disabled'"> ⃠ </span>
+              @if (tree.treeStatus === 'loading') {
+                <span> ... </span>
+              }
+              @if (tree.treeStatus === 'collapsed') {
+                <span> ↑ </span>
+              }
+              @if (tree.treeStatus === 'expanded') {
+                <span> ↓ </span>
+              }
+              @if (tree.treeStatus === 'disabled') {
+                <span> ⃠ </span>
+              }
             </button>
           </ng-template>
         </ngx-datatable-column>

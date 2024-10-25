@@ -26,22 +26,25 @@ import { Employee } from '../data.model';
           [footerHeight]="50"
           rowHeight="auto"
         >
-          <ngx-datatable-column *ngFor="let col of columns" [name]="col.name">
-          </ngx-datatable-column>
+          @for (col of columns; track col) {
+            <ngx-datatable-column [name]="col.name"> </ngx-datatable-column>
+          }
         </ngx-datatable>
       </div>
       <div class="selected-column">
         <h4>Available Columns</h4>
         <ul>
-          <li *ngFor="let col of allColumns">
-            <input
-              type="checkbox"
-              [id]="col.name"
-              (click)="toggle(col)"
-              [checked]="isChecked(col)"
-            />
-            <label [attr.for]="col.name">{{ col.name }}</label>
-          </li>
+          @for (col of allColumns; track col) {
+            <li>
+              <input
+                type="checkbox"
+                [id]="col.name"
+                (click)="toggle(col)"
+                [checked]="isChecked(col)"
+              />
+              <label [attr.for]="col.name">{{ col.name }}</label>
+            </li>
+          }
         </ul>
       </div>
     </div>

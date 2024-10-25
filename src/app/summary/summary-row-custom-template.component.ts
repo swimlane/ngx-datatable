@@ -29,9 +29,11 @@ import { Employee } from '../data.model';
       </ngx-datatable>
       <ng-template #nameSummaryCell let-row="row" let-value="value">
         <div class="name-container">
-          <div class="chip" *ngFor="let name of getNames()">
-            <span class="chip-content">{{ name }}</span>
-          </div>
+          @for (name of getNames(); track name) {
+            <div class="chip">
+              <span class="chip-content">{{ name }}</span>
+            </div>
+          }
         </div>
       </ng-template>
     </div>

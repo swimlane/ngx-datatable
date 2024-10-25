@@ -23,14 +23,21 @@ import { Employee } from '../data.model';
           demonstrates how you would access the <code>contextmenu</code> event to display your own
           custom context menu.
         </p>
-        <p *ngIf="rawEvent">
-          <strong>Mouse position:</strong> <code>(x: {{ rawEvent?.x }}, y: {{ rawEvent?.y }})</code>
-        </p>
-        <p *ngIf="contextmenuRow"><strong>Row:</strong> {{ contextmenuRow?.name }}</p>
-        <p *ngIf="contextmenuColumn">
-          <strong>Header:</strong> name: {{ contextmenuColumn?.name }} prop:
-          {{ contextmenuColumn?.prop }}
-        </p>
+        @if (rawEvent) {
+          <p>
+            <strong>Mouse position:</strong>
+            <code>(x: {{ rawEvent?.x }}, y: {{ rawEvent?.y }})</code>
+          </p>
+        }
+        @if (contextmenuRow) {
+          <p><strong>Row:</strong> {{ contextmenuRow?.name }}</p>
+        }
+        @if (contextmenuColumn) {
+          <p>
+            <strong>Header:</strong> name: {{ contextmenuColumn?.name }} prop:
+            {{ contextmenuColumn?.prop }}
+          </p>
+        }
       </div>
       <ngx-datatable
         class="material"
