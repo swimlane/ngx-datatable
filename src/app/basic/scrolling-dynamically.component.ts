@@ -87,7 +87,7 @@ import { Employee } from '../data.model';
     </div>
   `
 })
-export class ScollingDynamicallyComponent {
+export class ScrollingDynamicallyComponent {
   editing: Record<string, boolean> = {};
   rows: Employee[] = [];
 

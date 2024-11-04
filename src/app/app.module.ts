@@ -14,7 +14,7 @@ import { MultipleTablesComponent } from './basic/multiple.component';
 import { FullScreenComponent } from './basic/fullscreen.component';
 import { RowDetailsComponent } from './basic/row-detail.component';
 import { ResponsiveComponent } from './basic/responsive.component';
-import { FilterBarComponent } from './basic/filter.component';
+import { FilterComponent } from './basic/filter.component';
 import { TabsDemoComponent } from './basic/tabs.component';
 import { LiveDataComponent } from './basic/live.component';
 import { RxDemoComponent } from './basic/rx.component';
@@ -76,7 +76,7 @@ import { SummaryRowServerPagingComponent } from './summary/summary-row-server-pa
 import { SummaryRowInlineHtmlComponent } from './summary/summary-row-inline-html.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CommonModule } from '@angular/common';
-import { ScollingDynamicallyComponent } from './basic/scrolling-dynamically.component';
+import { ScrollingDynamicallyComponent } from './basic/scrolling-dynamically.component';
 import { DragDropComponent } from './drag-drop/drag-drop.component';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -91,7 +91,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     InlineEditComponent,
     VirtualScrollComponent,
     HorzVertScrollingComponent,
-    ScollingDynamicallyComponent,
+    ScrollingDynamicallyComponent,
     MultipleTablesComponent,
     RowDetailsComponent,
     ResponsiveComponent,
@@ -114,7 +114,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     ColumnForceComponent,
     ColumnPinningComponent,
     ColumnReorderComponent,
-    FilterBarComponent,
+    FilterComponent,
     VirtualPagingComponent,
     DarkThemeComponent,
     TabsDemoComponent,

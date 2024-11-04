@@ -39,7 +39,7 @@ import { Employee } from '../data.model';
     </div>
   `
 })
-export class FilterBarComponent {
+export class FilterComponent {
   rows: Employee[] = [];
 
   temp: Employee[] = [];

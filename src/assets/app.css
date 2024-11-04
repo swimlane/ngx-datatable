@@ -178,7 +178,7 @@ nav h4 a {
   color: #000;
 }
 
-content {
+main {
   margin-left: 200px;
   height: 100vh;
   display: block;
@@ -186,7 +186,7 @@ content {
   padding-bottom: 0px;
 }
 
-content h3 {
+main h3 {
   padding-left: 35px;
 }
 
