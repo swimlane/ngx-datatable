@@ -8,7 +8,7 @@ describe('ProgressBarComponent', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ProgressBarComponent]
+      imports: [ProgressBarComponent]
     });
   });
 

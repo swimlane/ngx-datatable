@@ -2,7 +2,10 @@ import { ContentChild, Directive, Input, numberAttribute, TemplateRef } from '@a
 import { DataTableFooterTemplateDirective } from './footer-template.directive';
 import { FooterContext } from '../../types/public.types';
 
-@Directive({ selector: 'ngx-datatable-footer' })
+@Directive({
+  selector: 'ngx-datatable-footer',
+  standalone: true
+})
 export class DatatableFooterDirective {
   @Input({ transform: numberAttribute }) footerHeight: number;
   @Input() totalMessage: string;

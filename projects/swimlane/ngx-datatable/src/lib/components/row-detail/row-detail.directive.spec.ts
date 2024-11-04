@@ -11,7 +11,9 @@ import { DatatableRowDetailTemplateDirective } from './row-detail-template.direc
     <ngx-datatable-row-detail id="t2">
       <ng-template ngx-datatable-row-detail-template></ng-template>
     </ngx-datatable-row-detail>
-  `
+  `,
+  imports: [DatatableRowDetailDirective, DatatableRowDetailTemplateDirective],
+  standalone: true
 })
 class TestFixtureComponent {}
 
@@ -22,7 +24,7 @@ describe('DatatableRowDetailDirective', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [
+      imports: [
         DatatableRowDetailDirective,
         DatatableRowDetailTemplateDirective,
         TestFixtureComponent

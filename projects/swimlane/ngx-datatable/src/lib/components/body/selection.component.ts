@@ -6,7 +6,8 @@ import { ActivateEvent, SelectionType } from '../../types/public.types';
 @Component({
   selector: 'datatable-selection',
   template: ` <ng-content></ng-content> `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true
 })
 export class DataTableSelectionComponent<TRow = any> {
   @Input() rows: TRow[];

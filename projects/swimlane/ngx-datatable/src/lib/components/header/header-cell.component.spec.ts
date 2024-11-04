@@ -8,7 +8,7 @@ describe('DataTableHeaderCellComponent', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [DataTableHeaderCellComponent]
+      imports: [DataTableHeaderCellComponent]
     });
   });
 

@@ -20,8 +20,10 @@ import { columnGroupWidths, columnsByPin, columnsByPinArr } from '../../utils/co
 import { Keys } from '../../utils/keys';
 import { BehaviorSubject } from 'rxjs';
 import { ActivateEvent, RowOrGroup, TreeStatus } from '../../types/public.types';
+import { AsyncPipe } from '@angular/common';
 import { TableColumn } from '../../types/table-column.type';
 import { ColumnGroupWidth, PinnedColumns } from '../../types/internal.types';
+import { DataTableBodyCellComponent } from './body-cell.component';
 
 @Component({
   selector: 'datatable-body-row',
@@ -55,7 +57,9 @@ import { ColumnGroupWidth, PinnedColumns } from '../../types/internal.types';
       }
     </div>
     }
-  `
+  `,
+  standalone: true,
+  imports: [DataTableBodyCellComponent, AsyncPipe]
 })
 export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges {
   private cd = inject(ChangeDetectorRef);

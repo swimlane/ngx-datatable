@@ -13,7 +13,9 @@ import { DataTableColumnDirective } from './column.directive';
       <ng-template></ng-template>
       <ng-template></ng-template>
     </ngx-datatable-column>
-  `
+  `,
+  imports: [DataTableColumnDirective],
+  standalone: true
 })
 class TestFixtureComponent {
   columnName: string;
@@ -26,7 +28,7 @@ describe('DataTableColumnDirective', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [DataTableColumnDirective, TestFixtureComponent],
+      imports: [DataTableColumnDirective, TestFixtureComponent],
       providers: [
         {
           provide: ColumnChangesService,

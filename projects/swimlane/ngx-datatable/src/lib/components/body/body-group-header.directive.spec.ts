@@ -12,7 +12,9 @@ import { DatatableGroupHeaderTemplateDirective } from './body-group-header-templ
     <ngx-datatable-group-header id="t2">
       <ng-template ngx-datatable-group-header-template></ng-template>
     </ngx-datatable-group-header>
-  `
+  `,
+  standalone: true,
+  imports: [DatatableGroupHeaderDirective, DatatableGroupHeaderTemplateDirective]
 })
 class TestFixtureComponent {}
 
@@ -23,7 +25,7 @@ describe('DatatableGroupHeaderDirective', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [
+      imports: [
         DatatableGroupHeaderDirective,
         DatatableGroupHeaderTemplateDirective,
         TestFixtureComponent

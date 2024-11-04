@@ -5,7 +5,9 @@ import { ResizeableDirective } from './resizeable.directive';
 
 @Component({
   selector: 'test-fixture-component',
-  template: ` <div resizeable></div> `
+  template: ` <div resizeable></div> `,
+  imports: [ResizeableDirective],
+  standalone: true
 })
 class TestFixtureComponent {}
 
@@ -16,7 +18,7 @@ describe('ResizeableDirective', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ResizeableDirective, TestFixtureComponent]
+      imports: [ResizeableDirective, TestFixtureComponent]
     });
   });
 

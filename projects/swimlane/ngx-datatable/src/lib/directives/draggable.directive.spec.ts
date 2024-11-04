@@ -6,7 +6,9 @@ import { DraggableDirective } from './draggable.directive';
 
 @Component({
   selector: 'test-fixture-component',
-  template: ` <div draggable></div> `
+  template: ` <div draggable></div> `,
+  imports: [DraggableDirective],
+  standalone: true
 })
 class TestFixtureComponent {}
 
@@ -18,7 +20,7 @@ describe('DraggableDirective', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [DraggableDirective, TestFixtureComponent]
+      imports: [DraggableDirective, TestFixtureComponent]
     });
   });
 

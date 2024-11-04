@@ -17,16 +17,16 @@ import { Page } from '../../types/internal.types';
         </a>
       </li>
       @for (pg of pages; track pg.number) {
-        <li
-          role="button"
-          [attr.aria-label]="'page ' + pg.number"
-          class="pages"
-          [class.active]="pg.number === page"
-        >
-          <a (click)="selectPage(pg.number)">
-            {{ pg.text }}
-          </a>
-        </li>
+      <li
+        role="button"
+        [attr.aria-label]="'page ' + pg.number"
+        class="pages"
+        [class.active]="pg.number === page"
+      >
+        <a (click)="selectPage(pg.number)">
+          {{ pg.text }}
+        </a>
+      </li>
       }
       <li [class.disabled]="!canNext()">
         <a role="button" aria-label="go to next page" (click)="nextPage()">
@@ -43,7 +43,8 @@ import { Page } from '../../types/internal.types';
   host: {
     class: 'datatable-pager'
   },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true
 })
 export class DataTablePagerComponent {
   @Input() pagerLeftArrowIcon: string;

@@ -1,6 +1,8 @@
 import { Component, Output, EventEmitter, ChangeDetectionStrategy, Input } from '@angular/core';
 import { DatatableFooterDirective } from './footer.directive';
 import { PagerPageEvent } from '../../types/public.types';
+import { DataTablePagerComponent } from './pager.component';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 @Component({
   selector: 'datatable-footer',
   template: `
@@ -10,43 +12,45 @@ import { PagerPageEvent } from '../../types/public.types';
       [style.height.px]="footerHeight"
     >
       @if (footerTemplate) {
-        <ng-template
-          [ngTemplateOutlet]="footerTemplate.template"
-          [ngTemplateOutletContext]="{
-            rowCount: rowCount,
-            pageSize: pageSize,
-            selectedCount: selectedCount,
-            curPage: curPage,
-            offset: offset
-          }"
-        >
-        </ng-template>
+      <ng-template
+        [ngTemplateOutlet]="footerTemplate.template"
+        [ngTemplateOutletContext]="{
+          rowCount: rowCount,
+          pageSize: pageSize,
+          selectedCount: selectedCount,
+          curPage: curPage,
+          offset: offset
+        }"
+      >
+      </ng-template>
       } @else {
-        <div class="page-count">
-          @if (selectedMessage) {
-            <span> {{ selectedCount?.toLocaleString() }} {{ selectedMessage }} / </span>
-          }
-          {{ rowCount?.toLocaleString() }} {{ totalMessage }}
-        </div>
-        <datatable-pager
-          [pagerLeftArrowIcon]="pagerLeftArrowIcon"
-          [pagerRightArrowIcon]="pagerRightArrowIcon"
-          [pagerPreviousIcon]="pagerPreviousIcon"
-          [pagerNextIcon]="pagerNextIcon"
-          [page]="curPage"
-          [size]="pageSize"
-          [count]="rowCount"
-          [hidden]="!isVisible"
-          (change)="page.emit($event)"
-        >
-        </datatable-pager>
+      <div class="page-count">
+        @if (selectedMessage) {
+        <span> {{ selectedCount?.toLocaleString() }} {{ selectedMessage }} / </span>
+        }
+        {{ rowCount?.toLocaleString() }} {{ totalMessage }}
+      </div>
+      <datatable-pager
+        [pagerLeftArrowIcon]="pagerLeftArrowIcon"
+        [pagerRightArrowIcon]="pagerRightArrowIcon"
+        [pagerPreviousIcon]="pagerPreviousIcon"
+        [pagerNextIcon]="pagerNextIcon"
+        [page]="curPage"
+        [size]="pageSize"
+        [count]="rowCount"
+        [hidden]="!isVisible"
+        (change)="page.emit($event)"
+      >
+      </datatable-pager>
       }
     </div>
   `,
   host: {
     class: 'datatable-footer'
   },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NgClass, NgTemplateOutlet, DataTablePagerComponent]
 })
 export class DataTableFooterComponent {
   @Input() footerHeight: number;

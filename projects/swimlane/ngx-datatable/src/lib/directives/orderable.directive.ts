@@ -27,7 +27,10 @@ interface OrderPosition {
   element: HTMLElement;
 }
 
-@Directive({ selector: '[orderable]' })
+@Directive({
+  selector: '[orderable]',
+  standalone: true
+})
 export class OrderableDirective implements AfterContentInit, OnDestroy {
   private document = inject(DOCUMENT);
 

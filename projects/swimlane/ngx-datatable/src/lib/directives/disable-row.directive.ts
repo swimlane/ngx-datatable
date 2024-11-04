@@ -11,7 +11,10 @@ import { booleanAttribute, Directive, ElementRef, inject, Input } from '@angular
  *  	<div [disabled]="false" disable-row >
  * 		</div>
  */
-@Directive({ selector: '[disable-row]' })
+@Directive({
+  selector: '[disable-row]',
+  standalone: true
+})
 export class DisableRowDirective {
   private element = inject(ElementRef);
   private _disabled = false;

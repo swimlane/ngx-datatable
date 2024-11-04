@@ -65,6 +65,10 @@ import {
   SortType,
   TreeStatus
 } from '../types/public.types';
+import { AsyncPipe } from '@angular/common';
+import { DataTableFooterComponent } from './footer/footer.component';
+import { VisibilityDirective } from '../directives/visibility.directive';
+import { ProgressBarComponent } from './body/progress-bar.component';
 
 @Component({
   selector: 'ngx-datatable',
@@ -80,6 +84,15 @@ import {
       provide: DatatableComponentToken,
       useExisting: DatatableComponent
     }
+  ],
+  standalone: true,
+  imports: [
+    VisibilityDirective,
+    DataTableHeaderComponent,
+    DataTableBodyComponent,
+    DataTableFooterComponent,
+    AsyncPipe,
+    ProgressBarComponent
   ]
 })
 export class DatatableComponent<TRow = any>

@@ -14,7 +14,9 @@ import { id } from '../utils/id';
       <div draggable [dragModel]="item"></div>
       }
     </div>
-  `
+  `,
+  imports: [OrderableDirective, DraggableDirective],
+  standalone: true
 })
 class TestFixtureComponent {
   draggables = [];
@@ -28,7 +30,7 @@ describe('OrderableDirective', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [OrderableDirective, TestFixtureComponent, DraggableDirective]
+      imports: [OrderableDirective, TestFixtureComponent, DraggableDirective]
     });
   });
 

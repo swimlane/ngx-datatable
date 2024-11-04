@@ -27,6 +27,8 @@ import {
   SortPropDir,
   TreeStatus
 } from '../../types/public.types';
+import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.component';
+import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
 
 @Component({
   selector: 'datatable-body-cell',
@@ -80,7 +82,9 @@ import {
     } @else { @if (ghostLoadingIndicator) {
     <ghost-loader [columns]="[column]" [pageSize]="1"></ghost-loader>
     } }
-  `
+  `,
+  standalone: true,
+  imports: [NgTemplateOutlet, DataTableGhostLoaderComponent, AsyncPipe]
 })
 export class DataTableBodyCellComponent<TRow extends { level?: number } = any>
   implements DoCheck, OnDestroy

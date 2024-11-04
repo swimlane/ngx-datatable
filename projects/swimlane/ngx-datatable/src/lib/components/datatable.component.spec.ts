@@ -7,6 +7,9 @@ import { NgxDatatableModule } from '../ngx-datatable.module';
 import { DatatableComponent } from './datatable.component';
 import { DataTableBodyRowComponent } from './body/body-row.component';
 import { DataTableBodyCellComponent } from './body/body-cell.component';
+import { DataTableColumnDirective } from './columns/column.directive';
+import { DataTableColumnCellDirective } from './columns/column-cell.directive';
+import { DataTableColumnHeaderDirective } from './columns/column-header.directive';
 
 let fixture: ComponentFixture<any>;
 let component: any;
@@ -399,7 +402,9 @@ describe('DatatableComponent With Custom Templates', () => {
 });
 
 @Component({
-  template: ` <ngx-datatable [columns]="columns" [rows]="rows" [sorts]="sorts"> </ngx-datatable> `
+  template: ` <ngx-datatable [columns]="columns" [rows]="rows" [sorts]="sorts"></ngx-datatable> `,
+  imports: [DatatableComponent],
+  standalone: true
 })
 class TestFixtureComponent {
   columns: any[] = [];
@@ -427,7 +432,14 @@ class TestFixtureComponent {
         </ng-template>
       </ngx-datatable-column>
     </ngx-datatable>
-  `
+  `,
+  imports: [
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    DataTableColumnHeaderDirective
+  ],
+  standalone: true
 })
 class TestFixtureComponentWithCustomTemplates {
   rows: any[] = [];
@@ -437,8 +449,7 @@ class TestFixtureComponentWithCustomTemplates {
 
 function setupTest(componentClass) {
   return TestBed.configureTestingModule({
-    declarations: [componentClass],
-    imports: [NgxDatatableModule],
+    imports: [NgxDatatableModule, componentClass],
     providers: [ColumnChangesService]
   })
     .compileComponents()

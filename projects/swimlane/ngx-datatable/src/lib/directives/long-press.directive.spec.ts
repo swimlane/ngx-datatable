@@ -5,7 +5,9 @@ import { LongPressDirective } from './long-press.directive';
 
 @Component({
   selector: 'test-fixture-component',
-  template: ` <div long-press></div> `
+  template: ` <div long-press></div> `,
+  imports: [LongPressDirective],
+  standalone: true
 })
 class TestFixtureComponent {}
 
@@ -16,7 +18,7 @@ describe('LongPressDirective', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LongPressDirective, TestFixtureComponent]
+      imports: [LongPressDirective, TestFixtureComponent]
     });
   });
 

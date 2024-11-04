@@ -9,6 +9,7 @@ import {
   TemplateRef,
   ViewContainerRef
 } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 
 /**
  * This component is passed as ng-template and rendered by BodyComponent.
@@ -22,17 +23,23 @@ import {
       [ngTemplateOutlet]="rowDef.rowDefInternal.rowTemplate"
       [ngTemplateOutletContext]="rowDef"
     />
-  }`
+  }`,
+  standalone: true,
+  imports: [NgTemplateOutlet]
 })
 export class DatatableRowDefComponent {
   rowDef = inject(RowDefToken);
 }
 
 @Directive({
-  selector: '[rowDef]'
+  selector: '[rowDef]',
+  standalone: true
 })
 export class DatatableRowDefDirective {
-  static ngTemplateContextGuard(_dir: DatatableRowDefDirective, ctx: unknown): ctx is RowDefContext {
+  static ngTemplateContextGuard(
+    _dir: DatatableRowDefDirective,
+    ctx: unknown
+  ): ctx is RowDefContext {
     return true;
   }
 }
@@ -41,7 +48,8 @@ export class DatatableRowDefDirective {
  * @internal To be used internally by ngx-datatable.
  */
 @Directive({
-  selector: '[rowDefInternal]'
+  selector: '[rowDefInternal]',
+  standalone: true
 })
 export class DatatableRowDefInternalDirective implements OnInit {
   vc = inject(ViewContainerRef);

@@ -21,7 +21,10 @@ import {
  * 		</div>
  *
  */
-@Directive({ selector: '[visibilityObserver]' })
+@Directive({
+  selector: '[visibilityObserver]',
+  standalone: true
+})
 export class VisibilityDirective implements OnInit, OnDestroy {
   private element = inject(ElementRef);
   private zone = inject(NgZone);

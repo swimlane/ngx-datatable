@@ -21,6 +21,7 @@ import {
   SortPropDir,
   SortType
 } from '../../types/public.types';
+import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
   selector: 'datatable-header-cell',
@@ -54,7 +55,9 @@ import {
   host: {
     class: 'datatable-header-cell'
   },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NgTemplateOutlet]
 })
 export class DataTableHeaderCellComponent implements OnInit {
   private cd = inject(ChangeDetectorRef);

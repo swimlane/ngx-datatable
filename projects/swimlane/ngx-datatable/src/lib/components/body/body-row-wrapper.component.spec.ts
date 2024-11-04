@@ -9,7 +9,7 @@ describe('DataTableRowWrapperComponent', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [DataTableRowWrapperComponent],
+      imports: [DataTableRowWrapperComponent],
       providers: [
         {
           provide: DatatableComponentToken,

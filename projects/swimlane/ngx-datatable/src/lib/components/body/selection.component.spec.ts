@@ -8,7 +8,7 @@ describe('DataTableSelectionComponent', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [DataTableSelectionComponent]
+      imports: [DataTableSelectionComponent]
     });
   });
 

@@ -31,6 +31,11 @@ import {
   PinnedColumns,
   TargetChangedEvent
 } from '../../types/internal.types';
+import { DraggableDirective } from '../../directives/draggable.directive';
+import { LongPressDirective } from '../../directives/long-press.directive';
+import { ResizeableDirective } from '../../directives/resizeable.directive';
+import { DataTableHeaderCellComponent } from './header-cell.component';
+import { OrderableDirective } from '../../directives/orderable.directive';
 
 @Component({
   selector: 'datatable-header',
@@ -88,7 +93,16 @@ import {
   host: {
     class: 'datatable-header'
   },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    OrderableDirective,
+    NgStyle,
+    DataTableHeaderCellComponent,
+    ResizeableDirective,
+    LongPressDirective,
+    DraggableDirective
+  ]
 })
 export class DataTableHeaderComponent implements OnDestroy, OnChanges {
   private cd = inject(ChangeDetectorRef);

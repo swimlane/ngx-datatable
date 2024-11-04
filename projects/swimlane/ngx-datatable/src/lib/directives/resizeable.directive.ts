@@ -17,7 +17,8 @@ import { fromEvent, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Directive({
-  selector: '[resizeable]'
+  selector: '[resizeable]',
+  standalone: true
 })
 export class ResizeableDirective implements OnDestroy, AfterViewInit {
   private renderer = inject(Renderer2);

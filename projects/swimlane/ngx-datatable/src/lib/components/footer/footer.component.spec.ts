@@ -1,12 +1,4 @@
-import {
-  Component,
-  DebugElement,
-  EventEmitter,
-  Input,
-  Output,
-  TemplateRef,
-  ViewChild
-} from '@angular/core';
+import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -36,14 +28,14 @@ describe('DataTableFooterComponent', () => {
       component.selectedCount = 1;
       page.detectChangesAndRunQueries();
 
-      // expect(page.datatableFooterInner.nativeElement).toHaveCssClass('selected-count');
+      expect(page.datatableFooterInner.nativeElement).toHaveCssClass('selected-count');
     });
 
     it('should not have `.selected-count` class if selectedMessage is not set', () => {
       component.selectedMessage = undefined;
       page.detectChangesAndRunQueries();
 
-      // expect(page.datatableFooterInner.nativeElement).not.toHaveCssClass('selected-count');
+      expect(page.datatableFooterInner.nativeElement).not.toHaveCssClass('selected-count');
     });
   });
 
@@ -254,7 +246,9 @@ describe('DataTableFooterComponent', () => {
         <li>offset {{ offset }}</li>
       </ul>
     </ng-template>
-  `
+  `,
+  imports: [DataTableFooterComponent],
+  standalone: true
 })
 class TestFixtureComponent {
   footerHeight: number;
@@ -283,29 +277,9 @@ class TestFixtureComponent {
   }
 }
 
-/**
- * we use a mock DataTablePagerComponent when testing
- * the DataTableFooterComponent
- */
-@Component({
-  selector: 'datatable-pager',
-  template: ''
-})
-class DataTablePagerComponentMock {
-  @Input() pagerLeftArrowIcon: string;
-  @Input() pagerRightArrowIcon: string;
-  @Input() pagerPreviousIcon: string;
-  @Input() pagerNextIcon: string;
-  @Input() page: number;
-  @Input() size: number;
-  @Input() count: number;
-
-  @Output() change: EventEmitter<any> = new EventEmitter();
-}
-
 function setupTest() {
   return TestBed.configureTestingModule({
-    declarations: [TestFixtureComponent, DataTableFooterComponent, DataTablePagerComponentMock]
+    imports: [TestFixtureComponent]
   })
     .compileComponents()
     .then(() => {

@@ -27,7 +27,7 @@ describe('DataTableSummaryRowComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [
+      imports: [
         DataTableSummaryRowComponent,
         DataTableBodyRowComponent,
         DataTableBodyCellComponent

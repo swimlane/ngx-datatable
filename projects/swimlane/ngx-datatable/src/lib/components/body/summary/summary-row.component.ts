@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, PipeTransform, TemplateRef } from '@angular/core';
 import { TableColumn, TableColumnProp } from '../../../types/table-column.type';
+import { DataTableBodyRowComponent } from '../body-row.component';
 
 export interface ISummaryColumn {
   summaryFunc?: (cells: any[]) => any;
@@ -30,21 +31,23 @@ function noopSumFunc(cells: any[]): void {
   selector: 'datatable-summary-row',
   template: `
     @if (summaryRow && _internalColumns) {
-      <datatable-body-row
-        tabindex="-1"
-        [innerWidth]="innerWidth"
-        [offsetX]="offsetX"
-        [columns]="_internalColumns"
-        [rowHeight]="rowHeight"
-        [row]="summaryRow"
-        [rowIndex]="-1"
-      >
-      </datatable-body-row>
+    <datatable-body-row
+      tabindex="-1"
+      [innerWidth]="innerWidth"
+      [offsetX]="offsetX"
+      [columns]="_internalColumns"
+      [rowHeight]="rowHeight"
+      [row]="summaryRow"
+      [rowIndex]="-1"
+    >
+    </datatable-body-row>
     }
   `,
   host: {
     class: 'datatable-summary-row'
-  }
+  },
+  standalone: true,
+  imports: [DataTableBodyRowComponent]
 })
 export class DataTableSummaryRowComponent implements OnChanges {
   @Input() rows: any[];

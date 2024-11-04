@@ -20,6 +20,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { NgTemplateOutlet } from '@angular/common';
 import { DatatableComponentToken } from '../../utils/table-token';
 import { Group, GroupContext, RowDetailContext, RowOrGroup } from '../../types/public.types';
 import { DatatableGroupHeaderDirective } from './body-group-header.directive';
@@ -66,7 +67,9 @@ import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive'
   `,
   host: {
     class: 'datatable-row-wrapper'
-  }
+  },
+  standalone: true,
+  imports: [NgTemplateOutlet]
 })
 export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit, OnChanges {
   @ViewChild('select') checkBoxInput!: ElementRef<HTMLInputElement>;

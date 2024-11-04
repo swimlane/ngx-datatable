@@ -13,7 +13,9 @@ import { VisibilityDirective } from './visibility.directive';
       }
     `
   ],
-  template: ` <div visibilityObserver></div> `
+  template: ` <div visibilityObserver></div> `,
+  imports: [VisibilityDirective],
+  standalone: true
 })
 class TestFixtureComponent {}
 
@@ -24,7 +26,7 @@ describe('VisibilityDirective', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [VisibilityDirective, TestFixtureComponent]
+      imports: [VisibilityDirective, TestFixtureComponent]
     });
   });
 

@@ -1,11 +1,14 @@
 import { ChangeDetectionStrategy, Component, Input, numberAttribute } from '@angular/core';
 import { TableColumn } from '../../../types/table-column.type';
+import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
   selector: `ghost-loader`,
   templateUrl: `./ghost-loader.component.html`,
   styleUrls: [`./ghost-loader.component.scss`],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NgTemplateOutlet]
 })
 export class DataTableGhostLoaderComponent {
   @Input() columns: TableColumn[];
