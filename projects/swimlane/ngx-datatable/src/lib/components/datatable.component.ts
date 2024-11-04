@@ -41,7 +41,6 @@ import { DataTableBodyComponent } from './body/body.component';
 import { DataTableHeaderComponent } from './header/header.component';
 import { ScrollbarHelper } from '../services/scrollbar-helper.service';
 import { ColumnChangesService } from '../services/column-changes.service';
-import { DimensionsHelper } from '../services/dimensions-helper.service';
 import { throttleable } from '../utils/throttle';
 import { adjustColumnWidths, forceFillColumnWidths } from '../utils/math';
 import { sortGroupedRows, sortRows } from '../utils/sort';
@@ -83,7 +82,8 @@ import { ProgressBarComponent } from './body/progress-bar.component';
     {
       provide: DatatableComponentToken,
       useExisting: DatatableComponent
-    }
+    },
+    ColumnChangesService
   ],
   standalone: true,
   imports: [
@@ -99,7 +99,6 @@ export class DatatableComponent<TRow = any>
   implements OnInit, DoCheck, AfterViewInit, AfterContentInit, OnDestroy
 {
   private scrollbarHelper = inject(ScrollbarHelper);
-  private dimensionsHelper = inject(DimensionsHelper);
   private cd = inject(ChangeDetectorRef);
   private columnChangesService = inject(ColumnChangesService);
   private configuration = inject<INgxDatatableConfig>('configuration' as any, { optional: true });
@@ -958,7 +957,7 @@ export class DatatableComponent<TRow = any>
    *
    */
   recalculateDims(): void {
-    const dims = this.dimensionsHelper.getDimensions(this.element);
+    const dims = this.element.getBoundingClientRect();
     this._innerWidth = Math.floor(dims.width);
 
     if (this.scrollbarV) {

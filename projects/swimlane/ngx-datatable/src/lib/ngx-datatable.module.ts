@@ -1,7 +1,4 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { ScrollbarHelper } from './services/scrollbar-helper.service';
-import { DimensionsHelper } from './services/dimensions-helper.service';
-import { ColumnChangesService } from './services/column-changes.service';
 import { DataTableFooterTemplateDirective } from './components/footer/footer-template.directive';
 import { DatatableComponent } from './components/datatable.component';
 import { DataTableColumnDirective } from './components/columns/column.directive';
@@ -40,7 +37,6 @@ import {
     DatatableRowDefComponent,
     DatatableRowDefDirective
   ],
-  providers: [ScrollbarHelper, DimensionsHelper, ColumnChangesService],
   exports: [
     DatatableComponent,
     DatatableRowDetailDirective,
