@@ -39,13 +39,10 @@ import {
   template: `
     @if (loadingIndicator) {
       <div class="custom-loading-indicator-wrapper">
-        <div class="custom-loading-content" #customIndicator>
+        <div class="custom-loading-content">
           <ng-content select="[loading-indicator]"></ng-content>
         </div>
       </div>
-      @if (!customIndicator?.hasChildNodes()) {
-        <datatable-progress></datatable-progress>
-      }
     }
     @if (ghostLoadingIndicator && (!rowCount || !virtualization || !scrollbarV)) {
       <ghost-loader
@@ -241,10 +238,7 @@ import {
           [style.width]="scrollbarH ? columnGroupWidths?.total + 'px' : '100%'"
           (scroll)="onBodyScroll($event)"
         >
-          @if (!customEmptyContent?.children.length) {
-            <div class="empty-row" [innerHTML]="emptyMessage"></div>
-          }
-          <div #customEmptyContent> <ng-content select="[empty-content]"></ng-content> </div
+          <ng-content select="[empty-content]"></ng-content
         ></datatable-scroller>
       }
     </datatable-selection>
@@ -267,7 +261,6 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
   @Input() externalPaging: boolean;
   @Input() rowHeight: number | 'auto' | ((row?: any) => number);
   @Input() offsetX: number;
-  @Input() emptyMessage: string;
   @Input() selectionType: SelectionType;
   @Input() selected: any[] = [];
   @Input() rowIdentity: any;

@@ -55,7 +55,6 @@
       [innerWidth]="_innerWidth"
       [bodyHeight]="bodyHeight"
       [selectionType]="selectionType"
-      [emptyMessage]="messages.emptyMessage"
       [rowIdentity]="rowIdentity"
       [rowClass]="rowClass"
       [selectCheck]="selectCheck"
@@ -75,8 +74,12 @@
       [rowDragEvents]="rowDragEvents"
       [rowDefTemplate]="rowDefTemplate"
     >
-      <ng-content select="[loading-indicator]" ngProjectAs="[loading-indicator]"></ng-content>
-      <ng-content select="[empty-content]" ngProjectAs="[empty-content]"></ng-content>
+      <ng-content select="[loading-indicator]" ngProjectAs="[loading-indicator]">
+        <datatable-progress></datatable-progress>
+      </ng-content>
+      <ng-content select="[empty-content]" ngProjectAs="[empty-content]">
+        <div class="empty-row" [innerHTML]="messages.emptyMessage"></div>
+      </ng-content>
     </datatable-body>
   </div>
   @if (footerHeight) {
