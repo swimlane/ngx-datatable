@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  computed,
   DoCheck,
   ElementRef,
   EventEmitter,
@@ -16,6 +17,7 @@ import {
   OnChanges,
   OnInit,
   Output,
+  signal,
   SimpleChanges,
   ViewChild
 } from '@angular/core';
@@ -43,7 +45,7 @@ import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive'
             <input
               #select
               type="checkbox"
-              [checked]="selectedGroupRows.length === group.value.length"
+              [checked]="selectedGroupRows().length === group().value.length"
               (change)="onCheckboxChange(select.checked)"
             />
           </label>
@@ -90,7 +92,7 @@ export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit
 
   @Input() rowIndex?: number;
 
-  selectedGroupRows: TRow[] = [];
+  selectedGroupRows = signal<TRow[]>([]);
 
   @Input({ transform: booleanAttribute }) expanded = false;
 
@@ -106,13 +108,11 @@ export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit
   private tableComponent = inject(DatatableComponentToken);
   private cd = inject(ChangeDetectorRef);
 
-  get group(): Group<TRow> {
+  protected group = computed(() => {
     if (typeof this.row === 'object' && 'value' in this.row) {
       return this.row;
-    } else {
-      throw new Error('Row is not a group');
     }
-  }
+  });
 
   ngOnInit(): void {
     if (this.disableCheck) {
@@ -174,15 +174,17 @@ export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit
     // if any of the row of this group is not present in `selected` rows array
     // mark group header checkbox state as indeterminate
     if (this.groupHeader?.checkboxable && this.selectedRowsDiffer.diff(this.selected)) {
-      const selectedRows = this.selected.filter(row => this.group.value.find(item => item === row));
+      const selectedRows = this.selected.filter(row =>
+        this.group()?.value.find(item => item === row)
+      );
       if (this.checkBoxInput) {
-        if (selectedRows.length && selectedRows.length !== this.group.value.length) {
+        if (selectedRows.length && selectedRows.length !== this.group()?.value.length) {
           this.checkBoxInput.nativeElement.indeterminate = true;
         } else {
           this.checkBoxInput.nativeElement.indeterminate = false;
         }
       }
-      this.selectedGroupRows = selectedRows;
+      this.selectedGroupRows.set(selectedRows);
     }
   }
 
@@ -193,10 +195,12 @@ export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit
 
   onCheckboxChange(groupSelected: boolean): void {
     // First remove all rows of this group from `selected`
-    this.selected = [...this.selected.filter(row => !this.group.value.find(item => item === row))];
+    this.selected = [
+      ...this.selected.filter(row => !this.group().value.find(item => item === row))
+    ];
     // If checkbox is checked then add all rows of this group in `selected`
     if (groupSelected) {
-      this.selected = [...this.selected, ...this.group.value];
+      this.selected = [...this.selected, ...this.group().value];
     }
     // Update `selected` of DatatableComponent with newly evaluated `selected`
     this.tableComponent.selected = [...this.selected];
