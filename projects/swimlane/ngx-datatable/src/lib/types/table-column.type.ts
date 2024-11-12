@@ -15,43 +15,31 @@ export type TableColumnProp = string | number;
 export interface TableColumn<TRow = any> {
   /**
    * Internal unique id
-   *
-   * @memberOf TableColumn
    */
   $$id?: string;
 
   /**
    * Internal for column width distributions
-   *
-   * @memberOf TableColumn
    */
   $$oldWidth?: number;
 
   /**
    * Internal for setColumnDefaults
-   *
-   * @memberOf TableColumn
    */
   $$valueGetter?: ValueGetter;
 
   /**
    * Determines if column is checkbox
-   *
-   * @memberOf TableColumn
    */
   checkboxable?: boolean;
 
   /**
    * Determines if the column is frozen to the left
-   *
-   * @memberOf TableColumn
    */
   frozenLeft?: boolean;
 
   /**
    * Determines if the column is frozen to the right
-   *
-   * @memberOf TableColumn
    */
   frozenRight?: boolean;
 
@@ -60,64 +48,46 @@ export interface TableColumn<TRow = any> {
    * API from http =//www.w3.org/TR/css3-flexbox/. Basically;
    * take any available extra width and distribute it proportionally
    * according to all columns' flexGrow values.
-   *
-   * @memberOf TableColumn
    */
   flexGrow?: number;
 
   /**
    * Min width of the column
-   *
-   * @memberOf TableColumn
    */
   minWidth?: number;
 
   /**
    * Max width of the column
-   *
-   * @memberOf TableColumn
    */
   maxWidth?: number;
 
   /**
    * The default width of the column, in pixels
-   *
-   * @memberOf TableColumn
    */
   width?: number;
 
   /**
    * Can the column be resized
-   *
-   * @memberOf TableColumn
    */
   resizeable?: boolean;
 
   /**
    * Custom sort comparator
-   *
-   * @memberOf TableColumn
    */
   comparator?: any;
 
   /**
    * Custom pipe transforms
-   *
-   * @memberOf TableColumn
    */
   pipe?: PipeTransform;
 
   /**
    * Can the column be sorted
-   *
-   * @memberOf TableColumn
    */
   sortable?: boolean;
 
   /**
    * Can the column be re-arranged by dragging
-   *
-   * @memberOf TableColumn
    */
   draggable?: boolean;
 
@@ -132,15 +102,11 @@ export interface TableColumn<TRow = any> {
 
   /**
    * Whether the column can automatically resize to fill space in the table.
-   *
-   * @memberOf TableColumn
    */
   canAutoResize?: boolean;
 
   /**
    * Column name or label
-   *
-   * @memberOf TableColumn
    */
   name?: string;
 
@@ -150,44 +116,31 @@ export interface TableColumn<TRow = any> {
    * `someField` or `some.field.nested`, 0 (numeric)
    *
    * If left blank, will use the name as camel case conversion
-   *
-   * @memberOf TableColumn
    */
   prop?: TableColumnProp;
 
   /**
    * Cell template ref
-   *
-   * @memberOf TableColumn
    */
   cellTemplate?: TemplateRef<CellContext<TRow>>;
 
   /**
    * Ghost Cell template ref
-   *
-   * @memberOf TableColumn
    */
   ghostCellTemplate?: TemplateRef<any>;
 
   /**
    * Header template ref
-   *
-   * @memberOf TableColumn
    */
   headerTemplate?: TemplateRef<HeaderCellContext>;
 
   /**
    * Tree toggle template ref
-   *
-   * @memberOf TableColumn
    */
   treeToggleTemplate?: any;
 
   /**
    * CSS Classes for the cell
-   *
-   *
-   * @memberOf TableColumn
    */
   cellClass?:
     | string
@@ -201,44 +154,31 @@ export interface TableColumn<TRow = any> {
 
   /**
    * CSS classes for the header
-   *
-   *
-   * @memberOf TableColumn
    */
   headerClass?: string | ((data: { column: TableColumn }) => string | Record<string, boolean>);
 
   /**
    * Header checkbox enabled
-   *
-   * @memberOf TableColumn
    */
   headerCheckboxable?: boolean;
 
   /**
    * Is tree displayed on this column
-   *
-   * @memberOf TableColumn
    */
   isTreeColumn?: boolean;
 
   /**
    * Width of the tree level indent
-   *
-   * @memberOf TableColumn
    */
   treeLevelIndent?: number;
 
   /**
    * Summary function
-   *
-   * @memberOf TableColumn
    */
   summaryFunc?: (cells: any[]) => any;
 
   /**
    * Summary cell template ref
-   *
-   * @memberOf TableColumn
    */
   summaryTemplate?: TemplateRef<any>;
 }

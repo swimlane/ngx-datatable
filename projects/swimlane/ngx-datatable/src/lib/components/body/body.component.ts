@@ -693,8 +693,6 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
    * heights of the rows before it (i.e. row0 and row1).
    *
    * @returns the CSS3 style to be applied
-   *
-   * @memberOf DataTableBodyComponent
    */
   rowsStyles = computed(() => {
     const rowsStyles: NgStyle['ngStyle'][] = [];
@@ -738,8 +736,6 @@ export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = a
    * see description for `rowsStyles` signal
    *
    * @returns the CSS3 style to be applied
-   *
-   * @memberOf DataTableBodyComponent
    */
   bottomSummaryRowsStyles = computed(() => {
     if (!this.scrollbarV || !this.rows || !this.rows.length || !this.rowsToRender()) {
