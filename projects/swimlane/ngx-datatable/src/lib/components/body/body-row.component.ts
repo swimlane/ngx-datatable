@@ -183,15 +183,15 @@ export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges
 
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
-    const keyCode = event.keyCode;
+    const key = event.key;
     const isTargetRow = event.target === this._element;
 
     const isAction =
-      keyCode === Keys.return ||
-      keyCode === Keys.down ||
-      keyCode === Keys.up ||
-      keyCode === Keys.left ||
-      keyCode === Keys.right;
+      key === Keys.return ||
+      key === Keys.down ||
+      key === Keys.up ||
+      key === Keys.left ||
+      key === Keys.right;
 
     const isCtrlA = event.key === 'a' && (event.ctrlKey || event.metaKey);
 
