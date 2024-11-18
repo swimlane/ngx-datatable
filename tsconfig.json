@@ -5,7 +5,6 @@
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
     "experimentalDecorators": true,
     "module": "es2020",
     "moduleResolution": "node",
@@ -16,7 +15,6 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "noUnusedLocals": true,
-    "allowSyntheticDefaultImports": true,
     "paths": {
       "@swimlane/ngx-datatable": ["dist/swimlane/ngx-datatable"],
       "@swimlane/ngx-datatable/*": ["dist/swimlane/ngx-datatable/*"]
