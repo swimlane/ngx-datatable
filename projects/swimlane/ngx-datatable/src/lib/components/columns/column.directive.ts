@@ -25,6 +25,7 @@ export class DataTableColumnDirective<TRow> implements TableColumn, OnChanges {
   private columnChangesService = inject(ColumnChangesService);
   @Input() name: string;
   @Input() prop: TableColumnProp;
+  @Input({ transform: booleanAttribute }) bindAsUnsafeHtml?: boolean;
   @Input({ transform: booleanAttribute }) frozenLeft: boolean;
   @Input({ transform: booleanAttribute }) frozenRight: boolean;
   @Input({ transform: numberAttribute }) flexGrow: number;

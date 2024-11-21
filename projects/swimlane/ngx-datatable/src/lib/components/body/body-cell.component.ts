@@ -68,9 +68,11 @@ import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
         [ngTemplateOutletContext]="{ cellContext: cellContext }"
       >
       </ng-template>
-      } } @if (!column.cellTemplate) {
+      } } @if (!column.cellTemplate) { @if (column.bindAsUnsafeHtml) {
       <span [title]="sanitizedValue" [innerHTML]="value"> </span>
       } @else {
+      <span [title]="sanitizedValue">{{ value }}</span>
+      } } @else {
       <ng-template
         #cellTemplate
         [ngTemplateOutlet]="column.cellTemplate"

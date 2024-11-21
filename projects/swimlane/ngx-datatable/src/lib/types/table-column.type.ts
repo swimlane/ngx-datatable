@@ -120,6 +120,14 @@ export interface TableColumn<TRow = any> {
   prop?: TableColumnProp;
 
   /**
+   * By default, the property is bound using normal data binding `<span>{{content}}</span>`.
+   * If this property is set to true, the property will be bound as `<span [innerHTML]="content" />`.
+   *
+   * **DANGER** If enabling this feature, make sure the source of the data is trusted. This can be a vector for HTML injection attacks.
+   */
+  bindAsUnsafeHtml?: boolean;
+
+  /**
    * Cell template ref
    */
   cellTemplate?: TemplateRef<CellContext<TRow>>;

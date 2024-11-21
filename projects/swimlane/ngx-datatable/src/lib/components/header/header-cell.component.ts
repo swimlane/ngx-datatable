@@ -44,8 +44,10 @@ import { NgTemplateOutlet } from '@angular/common';
       >
       </ng-template>
       } @else {
-      <span class="datatable-header-cell-wrapper">
-        <span class="datatable-header-cell-label draggable" (click)="onSort()" [innerHTML]="name">
+        <span class="datatable-header-cell-wrapper">
+          <span class="datatable-header-cell-label draggable" (click)="onSort()">
+            {{ name }}
+          </span>
         </span>
       </span>
       }
