@@ -34,6 +34,7 @@ import { Keys } from '../../utils/keys';
       <label class="datatable-checkbox">
         <input
           type="checkbox"
+          [attr.aria-label]="ariaRowCheckboxMessage"
           [disabled]="disabled"
           [checked]="isSelected"
           (click)="onCheckboxChange($event)"
@@ -193,6 +194,8 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
   get treeStatus(): TreeStatus | undefined {
     return this._treeStatus;
   }
+
+  @Input({ required: true }) ariaRowCheckboxMessage!: string;
 
   @Output() readonly activate = new EventEmitter<CellActiveEvent<TRow>>();
 

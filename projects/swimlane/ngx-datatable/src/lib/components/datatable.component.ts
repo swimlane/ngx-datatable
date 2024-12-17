@@ -369,7 +369,10 @@ export class DatatableComponent<TRow extends Row = any>
    *   ariaPreviousPageMessage: 'go to previous page',
    *   ariaPageNMessage: 'page',
    *   ariaNextPageMessage: 'go to next page',
-   *   ariaLastPageMessage: 'go to last page'
+   *   ariaLastPageMessage: 'go to last page',
+   *   ariaRowCheckboxMessage: 'Select row',
+   *   ariaHeaderCheckboxMessage: 'Select all rows',
+   *   ariaGroupHeaderCheckboxMessage: 'Select row group'
    * }
    * ```
    */

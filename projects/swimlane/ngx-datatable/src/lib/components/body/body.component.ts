@@ -107,6 +107,7 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
             [treeStatus]="row?.treeStatus"
             [draggable]="rowDraggable"
             [verticalScrollVisible]="verticalScrollVisible"
+            [ariaRowCheckboxMessage]="ariaRowCheckboxMessage"
             (treeAction)="onTreeAction(row)"
             (activate)="onActivate($event, index)"
             (drop)="drop($event, row, rowElement)"
@@ -146,6 +147,7 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
                 [expanded]="getRowExpanded(group)"
                 [rowIndex]="indexes().first + i"
                 [selected]="selected"
+                [ariaGroupHeaderCheckboxMessage]="ariaGroupHeaderCheckboxMessage"
                 (rowContextmenu)="rowContextmenu.emit($event)"
               >
                 @if (rowDefTemplate) {
@@ -265,6 +267,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   @Input() rowDraggable?: boolean;
   @Input() rowDragEvents!: EventEmitter<DragEventData>;
   @Input() disableRowCheck?: (row: TRow) => boolean | undefined;
+  @Input({ required: true }) ariaGroupHeaderCheckboxMessage!: string;
 
   @Input() set pageSize(val: number) {
     if (val !== this._pageSize) {
@@ -354,6 +357,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   }
 
   @Input() verticalScrollVisible = false;
+  @Input({ required: true }) ariaRowCheckboxMessage!: string;
 
   @Output() readonly scroll = new EventEmitter<ScrollEvent>();
   @Output() readonly page = new EventEmitter<number>();

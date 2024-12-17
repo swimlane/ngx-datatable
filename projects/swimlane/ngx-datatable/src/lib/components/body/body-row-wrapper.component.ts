@@ -44,6 +44,7 @@ import { DatatableGroupHeaderDirective } from './body-group-header.directive';
             <input
               #select
               type="checkbox"
+              [attr.aria-label]="ariaGroupHeaderCheckboxMessage"
               [checked]="selectedGroupRows().length === row.value.length"
               (change)="onCheckboxChange(select.checked, row)"
             />
@@ -96,6 +97,7 @@ export class DataTableRowWrapperComponent<TRow extends Row = any>
   readonly selectedGroupRows = signal<TRow[]>([]);
 
   @Input({ transform: booleanAttribute }) expanded = false;
+  @Input({ required: true }) ariaGroupHeaderCheckboxMessage!: string;
 
   context!: RowDetailContext<TRow> | GroupContext<TRow>;
 

@@ -21,6 +21,12 @@ export interface NgxDatatableMessages {
   ariaNextPageMessage: string;
   /** Pager screen reader message for the last page button */
   ariaLastPageMessage: string;
+  /** Row checkbox aria label */
+  ariaRowCheckboxMessage: string;
+  /** Header checkbox aria label */
+  ariaHeaderCheckboxMessage: string;
+  /** Group header checkbox aria label */
+  ariaGroupHeaderCheckboxMessage: string;
 }
 
 /** CSS classes for icons that override the default table icons. */

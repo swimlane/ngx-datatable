@@ -39,7 +39,12 @@ import { nextSortDir } from '../../utils/sort';
       </ng-template>
       } @if (isCheckboxable) {
       <label class="datatable-checkbox">
-        <input type="checkbox" [checked]="allRowsSelected" (change)="select.emit()" />
+        <input
+          type="checkbox"
+          [attr.aria-label]="ariaHeaderCheckboxMessage"
+          [checked]="allRowsSelected"
+          (change)="select.emit()"
+        />
       </label>
       } @if (column.headerTemplate) {
       <ng-template
@@ -85,6 +90,7 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
   @Input() targetMarkerTemplate?: TemplateRef<any>;
   @Input() targetMarkerContext: any;
   @Input() enableClearingSortState = false;
+  @Input() ariaHeaderCheckboxMessage!: string;
 
   _allRowsSelected?: boolean;
 
@@ -248,9 +254,7 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
 
   calcSortDir(sorts: SortPropDir[]): any {
     if (sorts && this.column) {
-      const sort = sorts.find((s: any) => {
-        return s.prop === this.column.prop;
-      });
+      const sort = sorts.find((s: any) => s.prop === this.column.prop);
 
       if (sort) {
         return sort.dir;
