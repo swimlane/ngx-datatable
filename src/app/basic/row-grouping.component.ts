@@ -135,7 +135,6 @@ import {
             let-rowHeight="rowHeight"
           >
             <input
-              autofocus
               (blur)="updateValue($event, 'comment', rowIndex)"
               type="text"
               name="comment"

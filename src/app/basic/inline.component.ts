@@ -35,16 +35,11 @@ import { Employee } from '../data.model';
             let-row="row"
           >
             @if (editing[rowIndex + '-name']) {
-              <input
-                autofocus
-                (blur)="updateValue($event, 'name', rowIndex)"
-                type="text"
-                [value]="value"
-              />
+            <input (blur)="updateValue($event, 'name', rowIndex)" type="text" [value]="value" />
             } @else {
-              <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true">
-                {{ value }}
-              </span>
+            <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true">
+              {{ value }}
+            </span>
             }
           </ng-template>
         </ngx-datatable-column>
@@ -56,19 +51,18 @@ import { Employee } from '../data.model';
             let-value="value"
           >
             @if (!editing[rowIndex + '-gender']) {
-              <span title="Double click to edit" (dblclick)="editing[rowIndex + '-gender'] = true">
-                {{ value }}
-              </span>
-            }
-            @if (editing[rowIndex + '-gender']) {
-              <select
-                (blur)="editing[rowIndex + '-gender'] = false"
-                (change)="updateValue($event, 'gender', rowIndex)"
-                [value]="value"
-              >
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select>
+            <span title="Double click to edit" (dblclick)="editing[rowIndex + '-gender'] = true">
+              {{ value }}
+            </span>
+            } @if (editing[rowIndex + '-gender']) {
+            <select
+              (blur)="editing[rowIndex + '-gender'] = false"
+              (change)="updateValue($event, 'gender', rowIndex)"
+              [value]="value"
+            >
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
             }
           </ng-template>
         </ngx-datatable-column>

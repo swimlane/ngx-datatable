@@ -35,7 +35,7 @@ import { Employee } from '../data.model';
         </ngx-datatable-column>
         <ngx-datatable-column name="Gender">
           <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
-            <span (click)="sort()">{{ column.name }}</span>
+            <span tabindex="1" (click)="sort()" (keyup)="sort()">{{ column.name }}</span>
           </ng-template>
           <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
             My name is: <i [innerHTML]="row['name']"></i> and <i>{{ value }}</i>
