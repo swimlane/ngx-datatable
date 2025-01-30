@@ -34,10 +34,10 @@ import { Employee } from '../data.model';
 
       <ng-template #editTmpl let-row="row" let-value="value">
         @if (value === 'male') {
-          <img width="150" src="https://media.giphy.com/media/I8nepxWwlEuqI/giphy.gif" />
+          <img width="150" src="https://media.giphy.com/media/I8nepxWwlEuqI/giphy.gif" alt="" />
         }
         @if (value === 'female') {
-          <img width="150" src="https://media.giphy.com/media/sxSVG3XHf7yww/giphy.gif" />
+          <img width="150" src="https://media.giphy.com/media/sxSVG3XHf7yww/giphy.gif" alt="" />
         }
       </ng-template>
     </div>
