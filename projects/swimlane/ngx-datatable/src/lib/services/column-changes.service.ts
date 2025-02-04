@@ -15,6 +15,6 @@ export class ColumnChangesService {
   }
 
   onInputChange(): void {
-    this.columnInputChanges.next();
+    this.columnInputChanges.next(undefined);
   }
 }
