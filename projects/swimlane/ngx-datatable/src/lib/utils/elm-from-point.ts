@@ -2,7 +2,7 @@ if (typeof document !== 'undefined' && !document.elementsFromPoint) {
   document.elementsFromPoint = elementsFromPoint;
 }
 
-/*tslint:disable*/
+/*eslint:disable*/
 /**
  * Polyfill for `elementsFromPoint`
  *
@@ -40,4 +40,4 @@ export function elementsFromPoint(x: number, y: number) {
   // return our results
   return elements;
 }
-/*tslint:enable*/
+/*eslint:enable*/

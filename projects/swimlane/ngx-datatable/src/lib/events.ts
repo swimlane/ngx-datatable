@@ -1,6 +1,6 @@
 declare let global: any;
 
-/* tslint:disable */
+/* eslint:disable */
 export const MouseEvent = (((typeof window !== 'undefined' && window) as any) || (global as any))
   .MouseEvent as MouseEvent;
 export const KeyboardEvent = (((typeof window !== 'undefined' && window) as any) || (global as any))

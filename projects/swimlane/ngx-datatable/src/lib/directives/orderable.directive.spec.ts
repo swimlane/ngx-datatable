@@ -24,22 +24,20 @@ describe('OrderableDirective', () => {
     });
   });
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.compileComponents().then(() => {
-        fixture = TestBed.createComponent(TestFixtureComponent);
-        component = fixture.componentInstance;
-        element = fixture.nativeElement;
+  beforeEach(waitForAsync(() => {
+    TestBed.compileComponents().then(() => {
+      fixture = TestBed.createComponent(TestFixtureComponent);
+      component = fixture.componentInstance;
+      element = fixture.nativeElement;
 
-        /* This is required in order to resolve the `ContentChildren`.
-         *  If we don't go through at least on change detection cycle
-         *  the `draggables` will be `undefined` and `ngOnDestroy` will
-         *  fail.
-         */
-        fixture.detectChanges();
-      });
-    })
-  );
+      /* This is required in order to resolve the `ContentChildren`.
+       *  If we don't go through at least on change detection cycle
+       *  the `draggables` will be `undefined` and `ngOnDestroy` will
+       *  fail.
+       */
+      fixture.detectChanges();
+    });
+  }));
 
   describe('fixture', () => {
     let directive: OrderableDirective;
@@ -75,7 +73,6 @@ describe('OrderableDirective', () => {
       }
 
       function newDraggable() {
-        // tslint:disable-next-line: no-object-literal-type-assertion
         const draggable = new DraggableDirective(<ElementRef>{});
 
         // used for the KeyValueDiffer

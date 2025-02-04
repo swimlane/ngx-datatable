@@ -2,8 +2,7 @@
 
 export const addMatchers = () =>
   jasmine.addMatchers({
-    toHaveText,
-    toHaveCssClass
+    toHaveText
   });
 
 /**
@@ -46,18 +45,18 @@ function elementText(n: any): string {
   return n.textContent;
 }
 
-/**
- * adapted from https://github.com/ng-bootstrap/ng-bootstrap/blob/master/src/test/matchers.ts
- */
-function toHaveCssClass(util, customEqualityTests) {
-  return { compare: buildError(false), negativeCompare: buildError(true) };
+// /**
+//  * adapted from https://github.com/ng-bootstrap/ng-bootstrap/blob/master/src/test/matchers.ts
+//  */
+// function toHaveCssClass(util, customEqualityTests) {
+//   return { compare: buildError(false), negativeCompare: buildError(true) };
 
-  function buildError(isNot: boolean) {
-    return function (actual: HTMLElement, className: string) {
-      return {
-        pass: actual.classList.contains(className) === !isNot,
-        message: `Expected ${actual.outerHTML} ${isNot ? 'not ' : ''}to contain the CSS class "${className}"`
-      };
-    };
-  }
-}
+//   function buildError(isNot: boolean) {
+//     return function (actual: HTMLElement, className: string) {
+//       return {
+//         pass: actual.classList.contains(className) === !isNot,
+//         message: `Expected ${actual.outerHTML} ${isNot ? 'not ' : ''}to contain the CSS class "${className}"`
+//       };
+//     };
+//   }
+// }

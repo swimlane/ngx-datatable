@@ -22,15 +22,13 @@ describe('DraggableDirective', () => {
     });
   });
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.compileComponents().then(() => {
-        fixture = TestBed.createComponent(TestFixtureComponent);
-        component = fixture.componentInstance;
-        element = fixture.nativeElement;
-      });
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.compileComponents().then(() => {
+      fixture = TestBed.createComponent(TestFixtureComponent);
+      component = fixture.componentInstance;
+      element = fixture.nativeElement;
+    });
+  }));
 
   describe('fixture', () => {
     let directive: DraggableDirective;
@@ -54,7 +52,6 @@ describe('DraggableDirective', () => {
         element.classList.add('draggable');
         mouseDown = <MouseEvent>{
           target: element,
-          // tslint:disable-next-line
           preventDefault: () => {}
         };
       });
@@ -74,7 +71,6 @@ describe('DraggableDirective', () => {
           directive.onMousedown(mouseDown);
           expect(directive.subscription).toBeTruthy();
 
-          // tslint:disable-next-line: no-object-literal-type-assertion
           directive.onMouseup(<MouseEvent>{});
 
           expect(directive.subscription).toBeUndefined();
@@ -88,7 +84,6 @@ describe('DraggableDirective', () => {
 
           expect(directive.subscription).toBeTruthy();
 
-          // tslint:disable-next-line: no-object-literal-type-assertion
           directive.onMouseup(<MouseEvent>{});
 
           expect(directive.subscription).toBeTruthy();
