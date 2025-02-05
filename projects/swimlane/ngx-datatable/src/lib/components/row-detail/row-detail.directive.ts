@@ -1,4 +1,4 @@
-import { Input, Output, EventEmitter, Directive, TemplateRef, ContentChild } from '@angular/core';
+import { ContentChild, Directive, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
 import { DatatableRowDetailTemplateDirective } from './row-detail-template.directive';
 import { RowDetailContext } from '../../types/public.types';
 

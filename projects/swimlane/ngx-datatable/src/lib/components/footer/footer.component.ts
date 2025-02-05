@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, ChangeDetectionStrategy, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { DatatableFooterDirective } from './footer.directive';
 import { PagerPageEvent } from '../../types/public.types';
 import { DataTablePagerComponent } from './pager.component';

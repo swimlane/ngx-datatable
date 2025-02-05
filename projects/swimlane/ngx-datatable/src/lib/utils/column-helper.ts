@@ -41,27 +41,27 @@ export function setColumnDefaults(columns: TableColumn[], defaultColumnWidth = 1
       column.name = ''; // Fixes IE and Edge displaying `null`
     }
 
-    if (!column.hasOwnProperty('resizeable')) {
+    if (!('resizeable' in column)) {
       column.resizeable = true;
     }
 
-    if (!column.hasOwnProperty('sortable')) {
+    if (!('sortable' in column)) {
       column.sortable = true;
     }
 
-    if (!column.hasOwnProperty('draggable')) {
+    if (!('draggable' in column)) {
       column.draggable = true;
     }
 
-    if (!column.hasOwnProperty('canAutoResize')) {
+    if (!('canAutoResize' in column)) {
       column.canAutoResize = true;
     }
 
-    if (!column.hasOwnProperty('width')) {
+    if (!('width' in column)) {
       column.width = defaultColumnWidth;
     }
 
-    if (!column.hasOwnProperty('isTreeColumn')) {
+    if (!('isTreeColumn' in column)) {
       column.isTreeColumn = false;
     } else {
       if (column.isTreeColumn && !treeColumnFound) {

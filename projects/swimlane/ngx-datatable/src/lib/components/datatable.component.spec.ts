@@ -439,6 +439,7 @@ class TestFixtureComponent {
     DataTableColumnHeaderDirective
   ]
 })
+// eslint-disable-next-line @angular-eslint/component-class-suffix
 class TestFixtureComponentWithCustomTemplates {
   rows: any[] = [];
   sorts: any[] = [];

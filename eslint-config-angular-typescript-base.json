@@ -21,7 +21,6 @@
         "allowStatic": true
       }
     ],
-    "@angular-eslint/use-component-view-encapsulation": "error",
     "brace-style": "off",
     "no-bitwise": "off",
     "comma-dangle": "off",
@@ -36,6 +35,7 @@
     "@angular-eslint/no-input-rename": "off",
     "@angular-eslint/directive-class-suffix": "off",
     "@angular-eslint/no-output-native": "off",
+    "@angular-eslint/use-component-view-encapsulation": "off",
     "@typescript-eslint/array-type": "error",
     "@typescript-eslint/brace-style": "off",
     "@typescript-eslint/comma-dangle": "off",

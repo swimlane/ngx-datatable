@@ -1,4 +1,4 @@
-import { TestBed, ComponentFixture, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DataTableHeaderCellComponent } from './header-cell.component';
 
 describe('DataTableHeaderCellComponent', () => {
