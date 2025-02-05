@@ -53,7 +53,7 @@
     "@angular-eslint/eslint-plugin-template": "^18.0.0",
     "@angular-eslint/schematics": "^18.0.0",
     "@angular-eslint/template-parser": "^18.0.0",
-    "@angular/cli": "18.2.14",
+    "@angular/cli": "^19.1.6",
     "@angular/compiler-cli": "^18.2.13",
     "@angular/language-service": "^18.2.13",
     "@swimlane/eslint-config": "^2.0.0",
