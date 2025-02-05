@@ -12,8 +12,7 @@ import { DatatableRowDetailTemplateDirective } from './row-detail-template.direc
       <ng-template ngx-datatable-row-detail-template></ng-template>
     </ngx-datatable-row-detail>
   `,
-  imports: [DatatableRowDetailDirective, DatatableRowDetailTemplateDirective],
-  standalone: true
+  imports: [DatatableRowDetailDirective, DatatableRowDetailTemplateDirective]
 })
 class TestFixtureComponent {}
 

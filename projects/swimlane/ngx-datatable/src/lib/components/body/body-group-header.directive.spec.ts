@@ -13,7 +13,6 @@ import { DatatableGroupHeaderTemplateDirective } from './body-group-header-templ
       <ng-template ngx-datatable-group-header-template></ng-template>
     </ngx-datatable-group-header>
   `,
-  standalone: true,
   imports: [DatatableGroupHeaderDirective, DatatableGroupHeaderTemplateDirective]
 })
 class TestFixtureComponent {}

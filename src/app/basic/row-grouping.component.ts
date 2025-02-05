@@ -144,7 +144,8 @@ import {
         </ngx-datatable-column>
       </ngx-datatable>
     </div>
-  `
+  `,
+  standalone: false
 })
 export class RowGroupingComponent {
   @ViewChild('myTable') table: DatatableComponent<GroupedEmployee>;

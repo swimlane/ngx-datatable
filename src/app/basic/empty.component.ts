@@ -29,7 +29,8 @@ import { ColumnMode, TableColumn } from 'projects/swimlane/ngx-datatable/src/pub
         >
       </ngx-datatable>
     </div>
-  `
+  `,
+  standalone: false
 })
 export class BasicEmptyComponent {
   columns: TableColumn[] = [

@@ -85,7 +85,6 @@ import { ProgressBarComponent } from './body/progress-bar.component';
     },
     ColumnChangesService
   ],
-  standalone: true,
   imports: [
     VisibilityDirective,
     DataTableHeaderComponent,

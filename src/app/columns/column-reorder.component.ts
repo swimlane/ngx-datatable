@@ -54,7 +54,8 @@ import { Employee } from '../data.model';
         </div>
       </ng-template>
     </div>
-  `
+  `,
+  standalone: false
 })
 export class ColumnReorderComponent {
   rows: Employee[] = [];

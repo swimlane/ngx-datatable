@@ -24,7 +24,6 @@ import { NgTemplateOutlet } from '@angular/common';
       [ngTemplateOutletContext]="rowDef"
     />
   }`,
-  standalone: true,
   imports: [NgTemplateOutlet]
 })
 export class DatatableRowDefComponent {

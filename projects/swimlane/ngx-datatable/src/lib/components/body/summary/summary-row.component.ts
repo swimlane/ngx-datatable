@@ -46,7 +46,6 @@ function noopSumFunc(cells: any[]): void {
   host: {
     class: 'datatable-summary-row'
   },
-  standalone: true,
   imports: [DataTableBodyRowComponent]
 })
 export class DataTableSummaryRowComponent implements OnChanges {

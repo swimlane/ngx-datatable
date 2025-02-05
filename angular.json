@@ -68,11 +68,16 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "ngx-datatable:build"
+            "buildTarget": "ngx-datatable:build",
+            "hmr": true
           },
           "configurations": {
             "production": {
               "buildTarget": "ngx-datatable:build:production"
+            },
+            "development": {
+              "buildTarget": "ngx-datatable:build:production",
+              "hmr": true
             }
           }
         },
@@ -136,8 +141,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "projects/swimlane/ngx-datatable/src/test.ts",
-            "tsConfig": "projects/swimlane/ngx-datatable/tsconfig.spec.json",
-            "karmaConfig": "projects/swimlane/ngx-datatable/karma.conf.js"
+            "tsConfig": "projects/swimlane/ngx-datatable/tsconfig.spec.json"
           }
         },
         "lint": {

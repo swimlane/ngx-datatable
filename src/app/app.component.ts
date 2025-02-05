@@ -19,7 +19,8 @@ import { RouterOutlet } from '@angular/router';
       provide: LocationStrategy,
       useClass: HashLocationStrategy
     }
-  ]
+  ],
+  standalone: false
 })
 export class AppComponent {
   version = packageInfo.version;

@@ -86,7 +86,8 @@ import { FullEmployee } from '../data.model';
       </ngx-datatable>
     </div>
   `,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: false
 })
 export class RowDetailsComponent {
   @ViewChild('myTable') table: DatatableComponent<FullEmployee>;

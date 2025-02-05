@@ -14,8 +14,7 @@ import { DataTableColumnDirective } from './column.directive';
       <ng-template></ng-template>
     </ngx-datatable-column>
   `,
-  imports: [DataTableColumnDirective],
-  standalone: true
+  imports: [DataTableColumnDirective]
 })
 class TestFixtureComponent {
   columnName: string;

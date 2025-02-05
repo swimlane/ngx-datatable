@@ -30,15 +30,16 @@ import { Employee } from '../data.model';
       <ng-template #nameSummaryCell let-row="row" let-value="value">
         <div class="name-container">
           @for (name of getNames(); track name) {
-            <div class="chip">
-              <span class="chip-content">{{ name }}</span>
-            </div>
+          <div class="chip">
+            <span class="chip-content">{{ name }}</span>
+          </div>
           }
         </div>
       </ng-template>
     </div>
   `,
-  styleUrls: ['./summary-row-custom-template.component.scss']
+  styleUrls: ['./summary-row-custom-template.component.scss'],
+  standalone: false
 })
 export class SummaryRowCustomTemplateComponent implements OnInit {
   rows: Employee[] = [];

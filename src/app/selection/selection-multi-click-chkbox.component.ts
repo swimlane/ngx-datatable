@@ -62,17 +62,17 @@ import { Employee } from '../data.model';
         </h4>
         <ul>
           @for (sel of selected; track sel) {
-            <li>
-              {{ sel.name }}
-            </li>
-          }
-          @if (!selected?.length) {
-            <li>No Selections</li>
+          <li>
+            {{ sel.name }}
+          </li>
+          } @if (!selected?.length) {
+          <li>No Selections</li>
           }
         </ul>
       </div>
     </div>
-  `
+  `,
+  standalone: false
 })
 export class MultiClickCheckboxSelectionComponent {
   rows: Employee[] = [];

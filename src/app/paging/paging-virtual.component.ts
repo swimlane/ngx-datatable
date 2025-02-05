@@ -52,7 +52,8 @@ interface PageInfo {
       </ngx-datatable>
     </div>
   `,
-  styleUrls: ['./paging-virtual.component.scss']
+  styleUrls: ['./paging-virtual.component.scss'],
+  standalone: false
 })
 export class VirtualPagingComponent {
   totalElements: number;

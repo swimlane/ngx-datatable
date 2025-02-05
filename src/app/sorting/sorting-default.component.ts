@@ -43,7 +43,8 @@ import { Employee } from '../data.model';
         <ngx-datatable-column name="Gender"> </ngx-datatable-column>
       </ngx-datatable>
     </div>
-  `
+  `,
+  standalone: false
 })
 export class DefaultSortingComponent implements OnInit {
   rows: Employee[] = [];

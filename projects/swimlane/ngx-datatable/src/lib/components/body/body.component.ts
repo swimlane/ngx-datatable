@@ -39,7 +39,6 @@ import { DataTableRowWrapperComponent } from './body-row-wrapper.component';
 import { DataTableSummaryRowComponent } from './summary/summary-row.component';
 import { DataTableSelectionComponent } from './selection.component';
 import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.component';
-import { ProgressBarComponent } from './progress-bar.component';
 
 @Component({
   selector: 'datatable-body',
@@ -254,9 +253,7 @@ import { ProgressBarComponent } from './progress-bar.component';
   host: {
     class: 'datatable-body'
   },
-  standalone: true,
   imports: [
-    ProgressBarComponent,
     DataTableGhostLoaderComponent,
     DataTableSelectionComponent,
     ScrollerComponent,

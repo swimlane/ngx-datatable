@@ -39,7 +39,8 @@ import { Employee } from '../data.model';
         <ngx-datatable-column name="Company"></ngx-datatable-column>
       </ngx-datatable>
     </div>
-  `
+  `,
+  standalone: false
 })
 export class LiveDataComponent {
   @ViewChild('mydatatable') mydatatable: DatatableComponent<Employee & { updated: string }>;

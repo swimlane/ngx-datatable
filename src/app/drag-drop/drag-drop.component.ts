@@ -35,7 +35,8 @@ import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
         </ng-template>
       </ngx-datatable>
     </div>
-  `
+  `,
+  standalone: false
 })
 export class DragDropComponent {
   rows = [];

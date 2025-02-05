@@ -33,7 +33,8 @@ import { Employee } from '../data.model';
       >
       </ngx-datatable>
     </div>
-  `
+  `,
+  standalone: false
 })
 export class BootstrapThemeComponent {
   rows: Employee[] = [];

@@ -247,8 +247,7 @@ describe('DataTableFooterComponent', () => {
       </ul>
     </ng-template>
   `,
-  imports: [DataTableFooterComponent],
-  standalone: true
+  imports: [DataTableFooterComponent]
 })
 class TestFixtureComponent {
   footerHeight: number;

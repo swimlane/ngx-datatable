@@ -55,7 +55,8 @@ export class MockServerResultsService {
       ></ngx-datatable>
     </div>
   `,
-  styleUrls: ['./scrolling-server.component.css']
+  styleUrls: ['./scrolling-server.component.css'],
+  standalone: false
 })
 export class ServerScrollingComponent {
   readonly headerHeight = 50;

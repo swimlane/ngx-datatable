@@ -70,7 +70,6 @@ import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive'
   host: {
     class: 'datatable-row-wrapper'
   },
-  standalone: true,
   imports: [NgTemplateOutlet]
 })
 export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit, OnChanges {

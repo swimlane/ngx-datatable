@@ -6,8 +6,7 @@ import { ResizeableDirective } from './resizeable.directive';
 @Component({
   selector: 'test-fixture-component',
   template: ` <div resizeable></div> `,
-  imports: [ResizeableDirective],
-  standalone: true
+  imports: [ResizeableDirective]
 })
 class TestFixtureComponent {}
 

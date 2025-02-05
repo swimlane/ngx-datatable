@@ -58,7 +58,6 @@ import { DataTableBodyCellComponent } from './body-cell.component';
     </div>
     }
   `,
-  standalone: true,
   imports: [DataTableBodyCellComponent, AsyncPipe]
 })
 export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges {

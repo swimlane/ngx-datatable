@@ -31,7 +31,8 @@ import { Employee } from '../data.model';
       >
       </ngx-datatable>
     </div>
-  `
+  `,
+  standalone: false
 })
 export class ServerSortingComponent {
   loading = false;

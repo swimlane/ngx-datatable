@@ -44,10 +44,9 @@ import { NgTemplateOutlet } from '@angular/common';
       >
       </ng-template>
       } @else {
-        <span class="datatable-header-cell-wrapper">
-          <span class="datatable-header-cell-label draggable" (click)="onSort()">
-            {{ name }}
-          </span>
+      <span class="datatable-header-cell-wrapper">
+        <span class="datatable-header-cell-label draggable" (click)="onSort()">
+          {{ name }}
         </span>
       </span>
       }
@@ -58,7 +57,6 @@ import { NgTemplateOutlet } from '@angular/common';
     class: 'datatable-header-cell'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [NgTemplateOutlet]
 })
 export class DataTableHeaderCellComponent implements OnInit {

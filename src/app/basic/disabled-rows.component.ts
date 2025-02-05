@@ -78,7 +78,8 @@ import { BehaviorSubject } from 'rxjs';
         </ngx-datatable>
       </div>
     </div>
-  `
+  `,
+  standalone: false
 })
 export class DisabledRowsComponent {
   rows: (FullEmployee & { isDisabled?: boolean })[] = [];

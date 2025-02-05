@@ -48,7 +48,8 @@ import { Employee } from '../data.model';
       </ngx-datatable>
     </div>
   `,
-  styleUrls: ['./summary-row-simple.component.scss']
+  styleUrls: ['./summary-row-simple.component.scss'],
+  standalone: false
 })
 export class SummaryRowSimpleComponent {
   rows: Employee[] = [];

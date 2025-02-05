@@ -41,16 +41,13 @@ import { Employee } from '../data.model';
           <ng-template ngx-datatable-tree-toggle let-tree="cellContext">
             <button [disabled]="tree.treeStatus === 'disabled'" (click)="tree.onTreeAction()">
               @if (tree.treeStatus === 'loading') {
-                <span> ... </span>
-              }
-              @if (tree.treeStatus === 'collapsed') {
-                <span> ↑ </span>
-              }
-              @if (tree.treeStatus === 'expanded') {
-                <span> ↓ </span>
-              }
-              @if (tree.treeStatus === 'disabled') {
-                <span> ⃠ </span>
+              <span> ... </span>
+              } @if (tree.treeStatus === 'collapsed') {
+              <span> ↑ </span>
+              } @if (tree.treeStatus === 'expanded') {
+              <span> ↓ </span>
+              } @if (tree.treeStatus === 'disabled') {
+              <span> ⃠ </span>
               }
             </button>
           </ng-template>
@@ -66,7 +63,8 @@ import { Employee } from '../data.model';
       </ngx-datatable>
     </div>
   `,
-  styles: ['.icon {height: 10px; width: 10px; }', '.disabled {opacity: 0.5; }']
+  styles: ['.icon {height: 10px; width: 10px; }', '.disabled {opacity: 0.5; }'],
+  standalone: false
 })
 export class FullScreenTreeComponent {
   rows: (Employee & { treeStatus: TreeStatus })[] = [];

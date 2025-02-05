@@ -28,7 +28,8 @@ import { Employee } from '../data.model';
       >
       </ngx-datatable>
     </div>
-  `
+  `,
+  standalone: false
 })
 export class BasicFixedComponent {
   rows: Employee[] = [];

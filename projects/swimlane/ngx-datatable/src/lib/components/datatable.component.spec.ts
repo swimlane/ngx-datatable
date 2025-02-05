@@ -403,8 +403,7 @@ describe('DatatableComponent With Custom Templates', () => {
 
 @Component({
   template: ` <ngx-datatable [columns]="columns" [rows]="rows" [sorts]="sorts"></ngx-datatable> `,
-  imports: [DatatableComponent],
-  standalone: true
+  imports: [DatatableComponent]
 })
 class TestFixtureComponent {
   columns: any[] = [];
@@ -438,8 +437,7 @@ class TestFixtureComponent {
     DataTableColumnDirective,
     DataTableColumnCellDirective,
     DataTableColumnHeaderDirective
-  ],
-  standalone: true
+  ]
 })
 class TestFixtureComponentWithCustomTemplates {
   rows: any[] = [];

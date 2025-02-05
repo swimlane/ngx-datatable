@@ -47,7 +47,8 @@ import { Employee } from '../data.model';
         </ngx-datatable-footer>
       </ngx-datatable>
     </div>
-  `
+  `,
+  standalone: false
 })
 export class FooterDemoComponent {
   rows: Employee[] = [];

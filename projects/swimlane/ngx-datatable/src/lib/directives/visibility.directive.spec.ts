@@ -14,8 +14,7 @@ import { VisibilityDirective } from './visibility.directive';
     `
   ],
   template: ` <div visibilityObserver></div> `,
-  imports: [VisibilityDirective],
-  standalone: true
+  imports: [VisibilityDirective]
 })
 class TestFixtureComponent {}
 

@@ -47,26 +47,27 @@ import { FullEmployee } from '../data.model';
         </div>
 
         @if (tab3) {
-          <div>
-            <h4>ngIf Table</h4>
-            <ngx-datatable
-              class="material"
-              [rows]="rows"
-              [columnMode]="ColumnMode.force"
-              [headerHeight]="50"
-              [footerHeight]="50"
-              [rowHeight]="50"
-              [scrollbarV]="true"
-            >
-              <ngx-datatable-column name="Name" [width]="200"></ngx-datatable-column>
-              <ngx-datatable-column name="Gender" [width]="300"></ngx-datatable-column>
-              <ngx-datatable-column name="Age" [width]="80"></ngx-datatable-column>
-            </ngx-datatable>
-          </div>
+        <div>
+          <h4>ngIf Table</h4>
+          <ngx-datatable
+            class="material"
+            [rows]="rows"
+            [columnMode]="ColumnMode.force"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [rowHeight]="50"
+            [scrollbarV]="true"
+          >
+            <ngx-datatable-column name="Name" [width]="200"></ngx-datatable-column>
+            <ngx-datatable-column name="Gender" [width]="300"></ngx-datatable-column>
+            <ngx-datatable-column name="Age" [width]="80"></ngx-datatable-column>
+          </ngx-datatable>
+        </div>
         }
       </div>
     </div>
-  `
+  `,
+  standalone: false
 })
 export class TabsDemoComponent {
   rows: FullEmployee[] = [];

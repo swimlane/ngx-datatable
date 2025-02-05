@@ -15,8 +15,7 @@ import { id } from '../utils/id';
       }
     </div>
   `,
-  imports: [OrderableDirective, DraggableDirective],
-  standalone: true
+  imports: [OrderableDirective, DraggableDirective]
 })
 class TestFixtureComponent {
   draggables = [];

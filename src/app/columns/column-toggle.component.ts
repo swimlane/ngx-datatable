@@ -27,7 +27,7 @@ import { Employee } from '../data.model';
           rowHeight="auto"
         >
           @for (col of columns; track col) {
-            <ngx-datatable-column [name]="col.name"> </ngx-datatable-column>
+          <ngx-datatable-column [name]="col.name"> </ngx-datatable-column>
           }
         </ngx-datatable>
       </div>
@@ -35,20 +35,21 @@ import { Employee } from '../data.model';
         <h4>Available Columns</h4>
         <ul>
           @for (col of allColumns; track col) {
-            <li>
-              <input
-                type="checkbox"
-                [id]="col.name"
-                (click)="toggle(col)"
-                [checked]="isChecked(col)"
-              />
-              <label [attr.for]="col.name">{{ col.name }}</label>
-            </li>
+          <li>
+            <input
+              type="checkbox"
+              [id]="col.name"
+              (click)="toggle(col)"
+              [checked]="isChecked(col)"
+            />
+            <label [attr.for]="col.name">{{ col.name }}</label>
+          </li>
           }
         </ul>
       </div>
     </div>
-  `
+  `,
+  standalone: false
 })
 export class ColumnToggleComponent {
   rows: Employee[] = [

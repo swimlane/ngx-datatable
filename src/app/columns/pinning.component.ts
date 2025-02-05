@@ -35,7 +35,8 @@ import { FullEmployee } from '../data.model';
         </ngx-datatable-column>
       </ngx-datatable>
     </div>
-  `
+  `,
+  standalone: false
 })
 export class ColumnPinningComponent {
   rows: FullEmployee[] = [];

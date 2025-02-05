@@ -112,7 +112,8 @@ import { FullEmployee } from '../data.model';
       columns will be hidden and will appear in the row detail view.
     </div>
   `,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: false
 })
 export class ResponsiveComponent {
   @ViewChild('myTable') table: DatatableComponent<FullEmployee>;

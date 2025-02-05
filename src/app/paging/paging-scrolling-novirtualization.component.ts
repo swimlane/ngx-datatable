@@ -39,7 +39,8 @@ import { Employee } from '../data.model';
       >
       </ngx-datatable>
     </div>
-  `
+  `,
+  standalone: false
 })
 export class PagingScrollingNoVirtualizationComponent implements OnInit {
   page: Page = {

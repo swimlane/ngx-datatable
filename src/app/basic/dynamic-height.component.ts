@@ -31,7 +31,8 @@ import { FullEmployee } from '../data.model';
         <ngx-datatable-column name="Row Height" prop="height"></ngx-datatable-column>
       </ngx-datatable>
     </div>
-  `
+  `,
+  standalone: false
 })
 export class DynamicHeightComponent {
   rows: FullEmployee[] = [];

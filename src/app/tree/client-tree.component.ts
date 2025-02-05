@@ -46,7 +46,8 @@ import { Employee } from '../data.model';
       </ngx-datatable>
     </div>
   `,
-  styles: ['.icon {height: 10px; width: 10px; }', '.disabled {opacity: 0.5; }']
+  styles: ['.icon {height: 10px; width: 10px; }', '.disabled {opacity: 0.5; }'],
+  standalone: false
 })
 export class ClientTreeComponent {
   rows: (Employee & { treeStatus: TreeStatus })[] = [];

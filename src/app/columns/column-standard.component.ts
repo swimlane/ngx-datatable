@@ -42,7 +42,8 @@ import { Employee } from '../data.model';
         </ngx-datatable-column>
       </ngx-datatable>
     </div>
-  `
+  `,
+  standalone: false
 })
 export class ColumnStandardComponent {
   rows: Employee[] = [];

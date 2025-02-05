@@ -40,7 +40,8 @@ import { FullEmployee } from '../data.model';
         <ngx-datatable-column name="Row Height" prop="height" [width]="80"> </ngx-datatable-column>
       </ngx-datatable>
     </div>
-  `
+  `,
+  standalone: false
 })
 export class VirtualScrollComponent {
   rows: FullEmployee[];

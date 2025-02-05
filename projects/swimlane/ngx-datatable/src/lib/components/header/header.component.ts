@@ -94,7 +94,6 @@ import { OrderableDirective } from '../../directives/orderable.directive';
     class: 'datatable-header'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     OrderableDirective,
     NgStyle,

@@ -36,14 +36,15 @@ import { Employee } from '../data.model';
       <ng-template #nameSummaryCell>
         <div class="name-container">
           @for (name of getNames(); track name) {
-            <div class="chip">
-              <span class="chip-content">{{ name }}</span>
-            </div>
+          <div class="chip">
+            <span class="chip-content">{{ name }}</span>
+          </div>
           }
         </div>
       </ng-template>
     </div>
-  `
+  `,
+  standalone: false
 })
 export class SummaryRowInlineHtmlComponent {
   rows: Employee[] = [];

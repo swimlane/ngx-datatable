@@ -85,7 +85,6 @@ import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
     <ghost-loader [columns]="[column]" [pageSize]="1"></ghost-loader>
     } }
   `,
-  standalone: true,
   imports: [NgTemplateOutlet, DataTableGhostLoaderComponent, AsyncPipe]
 })
 export class DataTableBodyCellComponent<TRow extends { level?: number } = any>

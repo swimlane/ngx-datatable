@@ -24,19 +24,17 @@ import { Employee } from '../data.model';
           custom context menu.
         </p>
         @if (rawEvent) {
-          <p>
-            <strong>Mouse position:</strong>
-            <code>(x: {{ rawEvent?.x }}, y: {{ rawEvent?.y }})</code>
-          </p>
-        }
-        @if (contextmenuRow) {
-          <p><strong>Row:</strong> {{ contextmenuRow?.name }}</p>
-        }
-        @if (contextmenuColumn) {
-          <p>
-            <strong>Header:</strong> name: {{ contextmenuColumn?.name }} prop:
-            {{ contextmenuColumn?.prop }}
-          </p>
+        <p>
+          <strong>Mouse position:</strong>
+          <code>(x: {{ rawEvent?.x }}, y: {{ rawEvent?.y }})</code>
+        </p>
+        } @if (contextmenuRow) {
+        <p><strong>Row:</strong> {{ contextmenuRow?.name }}</p>
+        } @if (contextmenuColumn) {
+        <p>
+          <strong>Header:</strong> name: {{ contextmenuColumn?.name }} prop:
+          {{ contextmenuColumn?.prop }}
+        </p>
         }
       </div>
       <ngx-datatable
@@ -51,7 +49,8 @@ import { Employee } from '../data.model';
       >
       </ngx-datatable>
     </div>
-  `
+  `,
+  standalone: false
 })
 export class ContextMenuDemoComponent {
   rows: Employee[] = [];
