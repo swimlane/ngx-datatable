@@ -10196,7 +10196,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"karma-coverage-istanbul-reporter@npm:~3.0.2":
+"karma-coverage-istanbul-reporter@npm:^3.0.3":
   version: 3.0.3
   resolution: "karma-coverage-istanbul-reporter@npm:3.0.3"
   dependencies:
@@ -11406,7 +11406,7 @@ __metadata:
     karma: "npm:6.4.0"
     karma-chrome-launcher: "npm:3.1.1"
     karma-coverage: "npm:2.2.0"
-    karma-coverage-istanbul-reporter: "npm:~3.0.2"
+    karma-coverage-istanbul-reporter: "npm:^3.0.3"
     karma-jasmine: "npm:5.1.0"
     karma-jasmine-html-reporter: "npm:2.0.0"
     ng-packagr: "npm:^18.0.0"

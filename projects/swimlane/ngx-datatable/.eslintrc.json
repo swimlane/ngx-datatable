@@ -1,14 +1,14 @@
 {
-  "extends": "../../.eslintrc.js",
+  "extends": "../../../.eslintrc.js",
   "ignorePatterns": [],
   "overrides": [
     {
       "files": ["*.ts"],
       "parserOptions": {
         "project": [
-          "projects/ngx-datatable/tsconfig.lib.json",
-          "projects/ngx-datatable/tsconfig.lib.prod.json",
-          "projects/ngx-datatable/tsconfig.spec.json"
+          "projects/swimlane/ngx-datatable/tsconfig.lib.json",
+          "projects/swimlane/ngx-datatable/tsconfig.lib.prod.json",
+          "projects/swimlane/ngx-datatable/tsconfig.spec.json"
         ]
       },
       "rules": {
