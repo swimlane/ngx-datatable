@@ -6,7 +6,8 @@ dist/
 build/
 coverage/
 .idea
-yarn.lock
 /.vscode
 *.tgz
 .angular
+.yarn
+package-lock.json
