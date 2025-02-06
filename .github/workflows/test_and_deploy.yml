@@ -1,13 +1,13 @@
 name: Build, Test, and Deploy
 
-on: [pull_request]
+on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4.2.0
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
