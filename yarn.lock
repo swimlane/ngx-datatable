@@ -2911,7 +2911,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@parcel/watcher@npm:2.5.1, @parcel/watcher@npm:^2.4.1":
+"@parcel/watcher@npm:^2.4.1":
   version: 2.5.1
   resolution: "@parcel/watcher@npm:2.5.1"
   dependencies:
@@ -3573,13 +3573,6 @@ __metadata:
     "@types/keygrip": "npm:*"
     "@types/node": "npm:*"
   checksum: 10c0/ce95c1968532af674185efd4092cbdec8d5d3bda72f729e512bf37fa77877f466ad4bd5f00fca299f94c6e3d2a3875744ae5a705ffc5113183f5e46b76d8846a
-  languageName: node
-  linkType: hard
-
-"@types/core-js@npm:^2":
-  version: 2.5.8
-  resolution: "@types/core-js@npm:2.5.8"
-  checksum: 10c0/9a9e3be8359b04f284889064a0ba9cdd5dcf0ea1c1626b0528dadea17f5b81a74ba7ce0ad887b6aedc55bd3a36a4f49f90c11b85fa62890269e60d33d047788b
   languageName: node
   linkType: hard
 
@@ -6247,7 +6240,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:2.6.12, core-js@npm:^2.4.0":
+"core-js@npm:^2.4.0":
   version: 2.6.12
   resolution: "core-js@npm:2.6.12"
   checksum: 10c0/00128efe427789120a06b819adc94cc72b96955acb331cb71d09287baf9bd37bebd191d91f1ee4939c893a050307ead4faea08876f09115112612b6a05684b63
@@ -9066,7 +9059,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:4.3.8":
+"husky@npm:^4.2.4":
   version: 4.3.8
   resolution: "husky@npm:4.3.8"
   dependencies:
@@ -11416,7 +11409,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"msgpackr-extract@npm:3.0.3, msgpackr-extract@npm:^3.0.2":
+"msgpackr-extract@npm:^3.0.2":
   version: 3.0.3
   resolution: "msgpackr-extract@npm:3.0.3"
   dependencies:
@@ -11662,10 +11655,8 @@ __metadata:
     "@angular/platform-browser": "npm:^19.1.4"
     "@angular/platform-browser-dynamic": "npm:^19.1.4"
     "@angular/router": "npm:^19.1.4"
-    "@parcel/watcher": "npm:2.5.1"
     "@swimlane/eslint-config": "npm:^2.0.0"
     "@swimlane/prettier-config-swimlane": "npm:^3.0.2"
-    "@types/core-js": "npm:^2"
     "@types/jasmine": "npm:4.3.0"
     "@types/node": "npm:16.11.59"
     "@typescript-eslint/eslint-plugin": "npm:8.23.0"
@@ -11674,10 +11665,8 @@ __metadata:
     "@typescript-eslint/utils": "npm:8.23.0"
     "@web/test-runner": "npm:^0.19.0"
     angular-cli-ghpages: "npm:^2.0.0"
-    core-js: "npm:2.6.12"
     cpx: "npm:^1.5.0"
     cross-env: "npm:^7.0.2"
-    esbuild: "npm:0.24.2"
     eslint: "npm:8.57.0"
     eslint-config-prettier: "npm:9.1.0"
     eslint-plugin-babel: "npm:5.3.1"
@@ -11687,7 +11676,7 @@ __metadata:
     eslint-plugin-no-only-tests: "npm:3.0.0"
     eslint-plugin-prefer-arrow: "npm:1.2.3"
     eslint-plugin-security: "npm:1.5.0"
-    husky: "npm:4.3.8"
+    husky: "npm:^4.2.4"
     jasmine: "npm:^3.5.0"
     jasmine-core: "npm:4.4.0"
     jasmine-spec-reporter: "npm:7.0.0"
@@ -11697,7 +11686,6 @@ __metadata:
     karma-coverage-istanbul-reporter: "npm:^3.0.3"
     karma-jasmine: "npm:5.1.0"
     karma-jasmine-html-reporter: "npm:2.0.0"
-    msgpackr-extract: "npm:3.0.3"
     ng-packagr: "npm:^19.0.0"
     npm-run-all: "npm:^4.1.5"
     prettier: "npm:2.7.1"
