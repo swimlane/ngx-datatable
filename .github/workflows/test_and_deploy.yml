@@ -25,31 +25,31 @@ jobs:
 
       - name: Build and package library
         run: |
-          yarn package --if-present
+          yarn package
         env:
           CI: true
 
       - name: Format
         run: |
-          yarn format:check --if-present
+          yarn format:check
         env:
           CI: true
 
       - name: Build
         run: |
-          yarn build --if-present
+          yarn build
         env:
           CI: true
 
       - name: Test
         run: |
-          yarn ci --if-present
+          yarn ci
         env:
           CI: true
 
       - name: Build Docs
         run: |
-          yarn build-docs --if-present
+          yarn build-docs
         env:
           CI: true
 
