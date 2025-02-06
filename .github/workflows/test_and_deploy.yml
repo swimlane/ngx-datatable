@@ -23,12 +23,6 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Build and package library
-        run: |
-          yarn package
-        env:
-          CI: true
-
       - name: Format
         run: |
           yarn format:check
