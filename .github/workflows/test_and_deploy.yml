@@ -9,41 +9,47 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set Node Version
-        uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: lts/iron
+          node-version: 20.17.0
 
-      - name: Install
-        uses: bahmutov/npm-install@v1
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install Yarn
+        run: corepack prepare yarn@4.5.1 --activate
+
+      - name: Install dependencies
+        run: yarn install --immutable
 
       - name: Build and package library
         run: |
-          npm run package --if-present
+          yarn package --if-present
         env:
           CI: true
 
       - name: Format
         run: |
-          npm run format:check --if-present
+          yarn format:check --if-present
         env:
           CI: true
 
       - name: Build
         run: |
-          npm run build --if-present
+          yarn build --if-present
         env:
           CI: true
 
       - name: Test
         run: |
-          npm run ci --if-present
+          yarn ci --if-present
         env:
           CI: true
 
       - name: Build Docs
         run: |
-          npm run build-docs --if-present
+          yarn build-docs --if-present
         env:
           CI: true
 
