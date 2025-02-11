@@ -153,7 +153,8 @@ nav {
   position: fixed;
   overflow-y: auto;
   font-size: 14px;
-  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 13px 19px 2px rgba(0, 0, 0, 0.14), 0 5px 24px 4px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 13px 19px 2px rgba(0, 0, 0, 0.14),
+    0 5px 24px 4px rgba(0, 0, 0, 0.12);
 }
 
 nav ul {
@@ -177,7 +178,7 @@ nav h4 a {
   color: #000;
 }
 
-content {
+main {
   margin-left: 200px;
   height: 100vh;
   display: block;
@@ -185,7 +186,7 @@ content {
   padding-bottom: 0px;
 }
 
-content h3 {
+main h3 {
   padding-left: 35px;
 }
 
