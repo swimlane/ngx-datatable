@@ -26,7 +26,7 @@
     "publish:lib": "npm publish ./dist/swimlane/ngx-datatable",
     "prepack": "yarn package",
     "pack": "npm pack ./dist/swimlane/ngx-datatable/",
-    "publish": "yarn publish:lib && yarn deploy-docs",
+    "publish": "yarn publish:lib",
     "prepublishOnly": "echo \"This is the workspace -- you probably meant run 'yarn publish'.\" && exit 1"
   },
   "private": true,
