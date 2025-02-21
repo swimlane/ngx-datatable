@@ -38,6 +38,31 @@ To use ngx-datatable in your project install it via [npm](https://www.npmjs.com/
 npm i @swimlane/ngx-datatable --save
 ```
 
+## Building
+
+Run `yarn build` to build the project. The build artifacts will be stored in the `dist/` directory.
+
+## Running tests
+
+- Run `yarn test` to execute the linter, prettier check, unit and end-to-end tests.
+
+## Release
+
+- Checkout master (`git checkout master`)
+- Pull master (`git pull`)
+- Refresh node modules (`yarn install --frozen-lockfile`)
+- Run tests (`yarn test`)
+- Examine log to determine next version (X.Y.Z)
+- Run `git checkout -b release/X.Y.Z`
+- Update version in `projects/swimlane/ngx-ui/package.json`.
+- Update changelog in `projects/swimlane/ngx-ui/CHANGELOG.md`
+- Run `yarn package` to build the package
+- Run `git commit -am "(release): X.Y.Z"`
+- Run `git tag X.Y.Z`
+- Run `git push origin HEAD --tags`
+- Run `yarn publish`
+- Submit PR
+
 ## Credits
 
 `ngx-datatable` is a [Swimlane](http://swimlane.com) open-source project; we believe in giving back to the open-source community by sharing some of the projects we build for our application. Swimlane is an automated cyber security operations and incident response platform that enables cyber security teams to leverage threat intelligence, speed up incident response and automate security operations.
