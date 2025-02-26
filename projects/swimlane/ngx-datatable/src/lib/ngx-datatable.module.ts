@@ -2,7 +2,6 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { DataTableFooterTemplateDirective } from './components/footer/footer-template.directive';
 import { DatatableComponent } from './components/datatable.component';
 import { DataTableColumnDirective } from './components/columns/column.directive';
-import { DataTablePagerComponent } from './components/footer/pager.component';
 import { DatatableRowDetailDirective } from './components/row-detail/row-detail.directive';
 import { DatatableGroupHeaderDirective } from './components/body/body-group-header.directive';
 import { DatatableRowDetailTemplateDirective } from './components/row-detail/row-detail-template.directive';
@@ -23,7 +22,6 @@ import {
     DataTableFooterTemplateDirective,
     DatatableComponent,
     DataTableColumnDirective,
-    DataTablePagerComponent,
     DatatableRowDetailDirective,
     DatatableGroupHeaderDirective,
     DatatableRowDetailTemplateDirective,
@@ -49,7 +47,6 @@ import {
     DataTableColumnCellTreeToggle,
     DataTableFooterTemplateDirective,
     DatatableFooterDirective,
-    DataTablePagerComponent,
     DatatableGroupHeaderTemplateDirective,
     DisableRowDirective,
     DatatableRowDefComponent,
