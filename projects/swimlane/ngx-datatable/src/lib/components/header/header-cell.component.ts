@@ -63,9 +63,9 @@ export class DataTableHeaderCellComponent implements OnInit {
   private cd = inject(ChangeDetectorRef);
 
   @Input() sortType: SortType;
-  @Input() sortAscendingIcon: string;
-  @Input() sortDescendingIcon: string;
-  @Input() sortUnsetIcon: string;
+  @Input() sortAscendingIcon?: string;
+  @Input() sortDescendingIcon?: string;
+  @Input() sortUnsetIcon?: string;
 
   @Input() isTarget: boolean;
   @Input() targetMarkerTemplate: TemplateRef<any>;
@@ -255,11 +255,11 @@ export class DataTableHeaderCellComponent implements OnInit {
       return;
     }
     if (sortDir === SortDirection.asc) {
-      return `sort-btn sort-asc ${this.sortAscendingIcon}`;
+      return `sort-btn sort-asc ${this.sortAscendingIcon ?? 'datatable-icon-up'}`;
     } else if (sortDir === SortDirection.desc) {
-      return `sort-btn sort-desc ${this.sortDescendingIcon}`;
+      return `sort-btn sort-desc ${this.sortDescendingIcon ?? 'datatable-icon-down'}`;
     } else {
-      return `sort-btn ${this.sortUnsetIcon}`;
+      return `sort-btn ${this.sortUnsetIcon ?? 'datatable-icon-sort-unset'}`;
     }
   }
 }

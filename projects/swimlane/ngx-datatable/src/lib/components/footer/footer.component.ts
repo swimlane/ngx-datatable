@@ -56,10 +56,10 @@ export class DataTableFooterComponent {
   @Input() rowCount: number;
   @Input() pageSize: number;
   @Input() offset: number;
-  @Input() pagerLeftArrowIcon: string;
-  @Input() pagerRightArrowIcon: string;
-  @Input() pagerPreviousIcon: string;
-  @Input() pagerNextIcon: string;
+  @Input() pagerLeftArrowIcon?: string;
+  @Input() pagerRightArrowIcon?: string;
+  @Input() pagerPreviousIcon?: string;
+  @Input() pagerNextIcon?: string;
   @Input() totalMessage: string;
   @Input() footerTemplate: DatatableFooterDirective;
 

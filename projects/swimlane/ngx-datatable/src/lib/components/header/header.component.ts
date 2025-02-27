@@ -107,9 +107,9 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
   private cd = inject(ChangeDetectorRef);
   private scrollbarHelper = inject(ScrollbarHelper);
 
-  @Input() sortAscendingIcon: string;
-  @Input() sortDescendingIcon: string;
-  @Input() sortUnsetIcon: string;
+  @Input() sortAscendingIcon?: string;
+  @Input() sortDescendingIcon?: string;
+  @Input() sortUnsetIcon?: string;
   @Input() scrollbarH: boolean;
   @Input() dealsWithGroup: boolean;
   @Input() targetMarkerTemplate: TemplateRef<unknown>;

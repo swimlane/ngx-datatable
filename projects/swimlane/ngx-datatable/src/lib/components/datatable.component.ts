@@ -349,15 +349,7 @@ export class DatatableComponent<TRow = any>
   /**
    * Css class overrides
    */
-  @Input() cssClasses: Partial<INgxDatatableConfig['cssClasses']> = {
-    sortAscending: 'datatable-icon-up',
-    sortDescending: 'datatable-icon-down',
-    sortUnset: 'datatable-icon-sort-unset',
-    pagerLeftArrow: 'datatable-icon-left',
-    pagerRightArrow: 'datatable-icon-right',
-    pagerPrevious: 'datatable-icon-prev',
-    pagerNext: 'datatable-icon-skip'
-  };
+  @Input() cssClasses: Partial<INgxDatatableConfig['cssClasses']> = {};
 
   /**
    * Message overrides for localization

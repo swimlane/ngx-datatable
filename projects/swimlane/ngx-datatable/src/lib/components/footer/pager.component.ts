@@ -8,12 +8,12 @@ import { Page } from '../../types/internal.types';
     <ul class="pager">
       <li [class.disabled]="!canPrevious()">
         <a role="button" aria-label="go to first page" (click)="selectPage(1)">
-          <i class="{{ pagerPreviousIcon }}"></i>
+          <i class="{{ pagerPreviousIcon ?? 'datatable-icon-prev' }}"></i>
         </a>
       </li>
       <li [class.disabled]="!canPrevious()">
         <a role="button" aria-label="go to previous page" (click)="prevPage()">
-          <i class="{{ pagerLeftArrowIcon }}"></i>
+          <i class="{{ pagerLeftArrowIcon ?? 'datatable-icon-left' }}"></i>
         </a>
       </li>
       @for (pg of pages; track pg.number) {
@@ -30,12 +30,12 @@ import { Page } from '../../types/internal.types';
       }
       <li [class.disabled]="!canNext()">
         <a role="button" aria-label="go to next page" (click)="nextPage()">
-          <i class="{{ pagerRightArrowIcon }}"></i>
+          <i class="{{ pagerRightArrowIcon ?? 'datatable-icon-right' }}"></i>
         </a>
       </li>
       <li [class.disabled]="!canNext()">
         <a role="button" aria-label="go to last page" (click)="selectPage(totalPages)">
-          <i class="{{ pagerNextIcon }}"></i>
+          <i class="{{ pagerNextIcon ?? 'datatable-icon-skip' }}"></i>
         </a>
       </li>
     </ul>
@@ -47,10 +47,10 @@ import { Page } from '../../types/internal.types';
   standalone: true
 })
 export class DataTablePagerComponent {
-  @Input() pagerLeftArrowIcon: string;
-  @Input() pagerRightArrowIcon: string;
-  @Input() pagerPreviousIcon: string;
-  @Input() pagerNextIcon: string;
+  @Input() pagerLeftArrowIcon?: string;
+  @Input() pagerRightArrowIcon?: string;
+  @Input() pagerPreviousIcon?: string;
+  @Input() pagerNextIcon?: string;
 
   @Input()
   set size(val: number) {
