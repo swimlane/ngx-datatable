@@ -18,7 +18,7 @@ import {
 import { ScrollerComponent } from './scroller.component';
 import { columnGroupWidths, columnsByPin } from '../../utils/column';
 import { RowHeightCache } from '../../utils/row-height-cache';
-import { NgStyle } from '@angular/common';
+import { NgStyle, NgTemplateOutlet } from '@angular/common';
 import { DatatableGroupHeaderDirective } from './body-group-header.directive';
 import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive';
 import { DataTableBodyRowComponent } from './body-row.component';
@@ -39,6 +39,7 @@ import { DataTableRowWrapperComponent } from './body-row-wrapper.component';
 import { DataTableSummaryRowComponent } from './summary/summary-row.component';
 import { DataTableSelectionComponent } from './selection.component';
 import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.component';
+import { DatatableBodyRowDirective } from './body-row.directive';
 
 @Component({
   selector: 'datatable-body',
@@ -90,6 +91,45 @@ import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.compo
             >
             </datatable-summary-row>
           }
+          <ng-template
+            ngx-datatable-body-row
+            #bodyRow
+            let-row="row"
+            let-rowIndex="index"
+            let-groupedRows="groupedRows"
+            let-disabled="disabled"
+          >
+            <datatable-body-row
+              role="row"
+              tabindex="-1"
+              #rowElement
+              [disabled]="disabled"
+              [isSelected]="selector.getRowSelected(row)"
+              [innerWidth]="innerWidth"
+              [columns]="columns"
+              [rowHeight]="getRowHeight(row)"
+              [row]="row"
+              [group]="groupedRows"
+              [rowIndex]="getRowIndex(row)"
+              [expanded]="getRowExpanded(row)"
+              [rowClass]="rowClass"
+              [displayCheck]="displayCheck"
+              [treeStatus]="row?.treeStatus"
+              [ghostLoadingIndicator]="ghostLoadingIndicator"
+              [draggable]="rowDraggable"
+              [verticalScrollVisible]="verticalScrollVisible"
+              (treeAction)="onTreeAction(row)"
+              (activate)="selector.onActivate($event, rowIndex ?? indexes().first + rowIndex)"
+              (drop)="drop($event, row, rowElement)"
+              (dragover)="dragOver($event, row)"
+              (dragenter)="dragEnter($event, row, rowElement)"
+              (dragleave)="dragLeave($event, row, rowElement)"
+              (dragstart)="drag($event, row, rowElement)"
+              (dragend)="dragEnd($event, row)"
+            >
+            </datatable-body-row>
+          </ng-template>
+
           @for (group of rowsToRender(); track rowTrackingFn(i, group); let i = $index) {
             @let disabled = isRow(group) && disableRowCheck && disableRowCheck(group);
             <!-- $any(group) is needed as the typing is broken and the feature as well. See #147. -->
@@ -115,109 +155,42 @@ import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.compo
             >
               @if (rowDefTemplate) {
                 <ng-container
-                  *rowDefInternal="{
-                    template: rowDefTemplate,
-                    rowTemplate: bodyRow,
-                    row: group,
-                    index: i
-                  }"
+                  *rowDefInternal="
+                    {
+                      template: rowDefTemplate,
+                      rowTemplate: bodyRow,
+                      row: group,
+                      index: i
+                    };
+                    disabled: disabled
+                  "
                 />
               } @else {
                 @if (isRow(group)) {
-                  <datatable-body-row
-                    role="row"
-                    tabindex="-1"
-                    #rowElement
-                    [disabled]="disabled"
-                    [isSelected]="selector.getRowSelected(group)"
-                    [innerWidth]="innerWidth"
-                    [columns]="columns"
-                    [rowHeight]="getRowHeight(group)"
-                    [row]="group"
-                    [rowIndex]="getRowIndex(group)"
-                    [expanded]="getRowExpanded(group)"
-                    [rowClass]="rowClass"
-                    [displayCheck]="displayCheck"
-                    [treeStatus]="group?.treeStatus"
-                    [ghostLoadingIndicator]="ghostLoadingIndicator"
-                    [draggable]="rowDraggable"
-                    [verticalScrollVisible]="verticalScrollVisible"
-                    (treeAction)="onTreeAction(group)"
-                    (activate)="selector.onActivate($event, indexes().first + i)"
-                    (drop)="drop($event, group, rowElement)"
-                    (dragover)="dragOver($event, group)"
-                    (dragenter)="dragEnter($event, group, rowElement)"
-                    (dragleave)="dragLeave($event, group, rowElement)"
-                    (dragstart)="drag($event, group, rowElement)"
-                    (dragend)="dragEnd($event, group)"
-                  >
-                  </datatable-body-row>
+                  <ng-container
+                    [ngTemplateOutlet]="bodyRow"
+                    [ngTemplateOutletContext]="{
+                      row: group,
+                      index: i,
+                      disabled
+                    }"
+                  ></ng-container>
                 }
               }
-
-              <ng-template #bodyRow>
-                @if (isRow(group)) {
-                  <datatable-body-row
-                    role="row"
-                    tabindex="-1"
-                    #rowElement
-                    [disabled]="disabled"
-                    [isSelected]="selector.getRowSelected(group)"
-                    [innerWidth]="innerWidth"
-                    [columns]="columns"
-                    [rowHeight]="getRowHeight(group)"
-                    [row]="group"
-                    [rowIndex]="getRowIndex(group)"
-                    [expanded]="getRowExpanded(group)"
-                    [rowClass]="rowClass"
-                    [displayCheck]="displayCheck"
-                    [treeStatus]="group?.treeStatus"
-                    [ghostLoadingIndicator]="ghostLoadingIndicator"
-                    [draggable]="rowDraggable"
-                    [verticalScrollVisible]="verticalScrollVisible"
-                    (treeAction)="onTreeAction(group)"
-                    (activate)="selector.onActivate($event, indexes().first + i)"
-                    (drop)="drop($event, group, rowElement)"
-                    (dragover)="dragOver($event, group)"
-                    (dragenter)="dragEnter($event, group, rowElement)"
-                    (dragleave)="dragLeave($event, group, rowElement)"
-                    (dragstart)="drag($event, group, rowElement)"
-                    (dragend)="dragEnd($event, group)"
-                  >
-                  </datatable-body-row>
-                }
-              </ng-template>
 
               @if (isGroup(group)) {
                 <!-- The row typecast is due to angular compiler acting weird. It is obvious that it is of type TRow, but the compiler does not understand. -->
                 @for (row of group.value; track rowTrackingFn(i, row); let i = $index) {
-                  @let rowInGroupDisabled = disableRowCheck && disableRowCheck(row);
-                  <datatable-body-row
-                    role="row"
-                    [disabled]="rowInGroupDisabled"
-                    tabindex="-1"
-                    #rowElement
-                    [isSelected]="selector.getRowSelected(row)"
-                    [innerWidth]="innerWidth"
-                    [columns]="columns"
-                    [rowHeight]="getRowHeight(row)"
-                    [row]="row"
-                    [group]="group.value"
-                    [rowIndex]="getRowIndex(row)"
-                    [expanded]="getRowExpanded(row)"
-                    [rowClass]="rowClass"
-                    [ghostLoadingIndicator]="ghostLoadingIndicator"
-                    [draggable]="rowDraggable"
-                    [verticalScrollVisible]="verticalScrollVisible"
-                    (activate)="selector.onActivate($event, i)"
-                    (drop)="drop($event, row, rowElement)"
-                    (dragover)="dragOver($event, row)"
-                    (dragenter)="dragEnter($event, row, rowElement)"
-                    (dragleave)="dragLeave($event, row, rowElement)"
-                    (dragstart)="drag($event, row, rowElement)"
-                    (dragend)="dragEnd($event, row)"
-                  >
-                  </datatable-body-row>
+                  @let disabled = disableRowCheck && disableRowCheck(row);
+                  <ng-container
+                    [ngTemplateOutlet]="bodyRow"
+                    [ngTemplateOutletContext]="{
+                      row,
+                      groupedRows: group?.value,
+                      index: i,
+                      disabled
+                    }"
+                  ></ng-container>
                 }
               }
             </datatable-row-wrapper>
@@ -264,7 +237,9 @@ import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.compo
     NgStyle,
     DatatableRowDefInternalDirective,
     DataTableBodyRowComponent,
-    DraggableDirective
+    DraggableDirective,
+    NgTemplateOutlet,
+    DatatableBodyRowDirective
   ]
 })
 export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, OnDestroy {
