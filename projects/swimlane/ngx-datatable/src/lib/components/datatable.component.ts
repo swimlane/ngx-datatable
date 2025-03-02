@@ -56,6 +56,7 @@ import {
   PageEvent,
   PagerPageEvent,
   ReorderEvent,
+  Row,
   RowOrGroup,
   ScrollEvent,
   SelectionType,
@@ -94,7 +95,7 @@ import { ProgressBarComponent } from './body/progress-bar.component';
     ProgressBarComponent
   ]
 })
-export class DatatableComponent<TRow = any>
+export class DatatableComponent<TRow extends Row = any>
   implements OnInit, DoCheck, AfterViewInit, AfterContentInit, OnDestroy
 {
   private scrollbarHelper = inject(ScrollbarHelper);

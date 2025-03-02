@@ -28,10 +28,10 @@ import {
   ActivateEvent,
   DragEventData,
   Group,
+  Row,
   RowOrGroup,
   ScrollEvent,
-  SelectionType,
-  TreeStatus
+  SelectionType
 } from '../../types/public.types';
 import { DraggableDirective } from '../../directives/draggable.directive';
 import { DatatableRowDefInternalDirective } from './body-row-def.component';
@@ -265,9 +265,7 @@ import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.compo
     DraggableDirective
   ]
 })
-export class DataTableBodyComponent<TRow extends { treeStatus?: TreeStatus } = any>
-  implements OnInit, OnDestroy
-{
+export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, OnDestroy {
   cd = inject(ChangeDetectorRef);
 
   @Input() rowDefTemplate?: TemplateRef<any>;

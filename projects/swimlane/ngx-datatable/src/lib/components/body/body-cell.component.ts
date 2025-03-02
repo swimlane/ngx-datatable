@@ -22,6 +22,7 @@ import { BehaviorSubject } from 'rxjs';
 import {
   ActivateEvent,
   CellContext,
+  Row,
   RowOrGroup,
   SortDirection,
   SortPropDir,
@@ -87,9 +88,7 @@ import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
   `,
   imports: [NgTemplateOutlet, DataTableGhostLoaderComponent, AsyncPipe]
 })
-export class DataTableBodyCellComponent<TRow extends { level?: number } = any>
-  implements DoCheck, OnDestroy
-{
+export class DataTableBodyCellComponent<TRow extends Row = any> implements DoCheck, OnDestroy {
   private cd = inject(ChangeDetectorRef);
 
   @Input() displayCheck: (row: RowOrGroup<TRow>, column: TableColumn, value: any) => boolean;

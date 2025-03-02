@@ -109,6 +109,16 @@ export interface RowDetailContext<TRow = any> {
   disableRow$?: Observable<boolean>;
 }
 
+/**
+ * Consumer provided rows should extend this interface
+ * to get access to implicit row properties which are set by the datatable if required.
+ */
+export interface Row {
+  [key: TableColumnProp]: any;
+  treeStatus?: TreeStatus;
+  level?: number;
+}
+
 export interface ReorderEvent {
   column: TableColumn;
   prevValue: number;
