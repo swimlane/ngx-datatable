@@ -23,7 +23,7 @@ export class DataTableSelectionComponent<TRow = any> {
 
   prevIndex: number;
 
-  selectRow(event: KeyboardEvent | MouseEvent, index: number, row: TRow): void {
+  selectRow(event: Event, index: number, row: TRow): void {
     if (!this.selectEnabled) {
       return;
     }
@@ -33,13 +33,22 @@ export class DataTableSelectionComponent<TRow = any> {
     const multiClick = this.selectionType === SelectionType.multiClick;
     let selected: TRow[] = [];
 
+    // TODO: this code needs cleanup. Casting it to KeyboardEvent is not correct as it could also be other types.
     if (multi || chkbox || multiClick) {
-      if (event.shiftKey) {
+      if ((event as KeyboardEvent).shiftKey) {
         selected = selectRowsBetween([], this.rows, index, this.prevIndex);
-      } else if ((event as KeyboardEvent).key === 'a' && (event.ctrlKey || event.metaKey)) {
+      } else if (
+        (event as KeyboardEvent).key === 'a' &&
+        ((event as KeyboardEvent).ctrlKey || (event as KeyboardEvent).metaKey)
+      ) {
         // select all rows except dummy rows which are added for ghostloader in case of virtual scroll
         selected = this.rows.filter(rowItem => !!rowItem);
-      } else if (event.ctrlKey || event.metaKey || multiClick || chkbox) {
+      } else if (
+        (event as KeyboardEvent).ctrlKey ||
+        (event as KeyboardEvent).metaKey ||
+        multiClick ||
+        chkbox
+      ) {
         selected = selectRows([...this.selected], row, this.getRowSelectedIdx.bind(this));
       } else {
         selected = selectRows([], row, this.getRowSelectedIdx.bind(this));
@@ -77,7 +86,10 @@ export class DataTableSelectionComponent<TRow = any> {
     } else if (type === 'keydown') {
       if ((event as KeyboardEvent).key === Keys.return) {
         this.selectRow(event, index, row);
-      } else if ((event as KeyboardEvent).key === 'a' && (event.ctrlKey || event.metaKey)) {
+      } else if (
+        (event as KeyboardEvent).key === 'a' &&
+        ((event as KeyboardEvent).ctrlKey || (event as KeyboardEvent).metaKey)
+      ) {
         this.selectRow(event, 0, this.rows[this.rows.length - 1]);
       } else {
         this.onKeyboardFocus(model);

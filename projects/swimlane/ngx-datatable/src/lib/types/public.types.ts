@@ -36,7 +36,7 @@ export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
 
 export interface ActivateEvent<TRow> {
   type: 'checkbox' | 'click' | 'dblclick' | 'keydown' | 'mouseenter';
-  event: MouseEvent | KeyboardEvent;
+  event: Event;
   row: TRow;
   group?: TRow[];
   rowHeight?: number;
