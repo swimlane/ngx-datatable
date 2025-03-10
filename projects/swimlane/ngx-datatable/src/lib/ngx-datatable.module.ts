@@ -74,9 +74,12 @@ export class NgxDatatableModule {
  */
 export interface INgxDatatableConfig {
   messages?: {
-    emptyMessage: string; // Message to show when array is presented, but contains no values
-    totalMessage: string; // Footer total message
-    selectedMessage: string; // Footer selected message
+    /** Message to show when the array is present but empty */
+    emptyMessage: string;
+    /** Footer total message */
+    totalMessage: string;
+    /** Footer selected message */
+    selectedMessage: string;
   };
   cssClasses?: {
     sortAscending: string;

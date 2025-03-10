@@ -355,21 +355,16 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * Message overrides for localization
    *
-   * emptyMessage     [default] = 'No data to display'
-   * totalMessage     [default] = 'total'
-   * selectedMessage  [default] = 'selected'
+   * @defaultValue
+   * ```
+   * {
+   *   emptyMessage: 'No data to display',
+   *   totalMessage: 'total',
+   *   selectedMessage: 'selected'
+   * }
+   * ```
    */
-  @Input() messages: Partial<INgxDatatableConfig['messages']> = {
-    // Message to show when array is presented
-    // but contains no values
-    emptyMessage: 'No data to display',
-
-    // Footer total message
-    totalMessage: 'total',
-
-    // Footer selected message
-    selectedMessage: 'selected'
-  };
+  @Input() messages: Partial<INgxDatatableConfig['messages']> = {};
 
   /**
    * A function which is called with the row and should return either:
