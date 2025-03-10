@@ -33,7 +33,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { INgxDatatableConfig } from '../ngx-datatable.module';
 import { groupRowsByParents, optionalGetterForProp } from '../utils/tree';
 import { TableColumn } from '../types/table-column.type';
-import { setColumnDefaults, translateTemplates } from '../utils/column-helper';
+import { setColumnDefaults } from '../utils/column-helper';
 import { DataTableColumnDirective } from './columns/column.directive';
 import { DatatableRowDetailDirective } from './row-detail/row-detail.directive';
 import { DatatableFooterDirective } from './footer/footer.directive';
@@ -789,9 +789,15 @@ export class DatatableComponent<TRow extends Row = any>
    */
   translateColumns(val: QueryList<DataTableColumnDirective<TRow>>) {
     if (val) {
-      const arr = val.toArray();
-      if (arr.length) {
-        this._internalColumns = translateTemplates(arr);
+      if (val.length) {
+        this._internalColumns = val.map(column => ({
+          ...column,
+          // explicitly call getters
+          headerTemplate: column.headerTemplate,
+          cellTemplate: column.cellTemplate,
+          summaryTemplate: column.summaryTemplate,
+          ghostCellTemplate: column.ghostCellTemplate
+        }));
         setColumnDefaults(this._internalColumns, this._defaultColumnWidth);
         this.recalculateColumns();
         if (!this.externalSorting && this.rows?.length) {

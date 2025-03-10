@@ -2,7 +2,6 @@ import { camelCase, deCamelCase } from './camel-case';
 import { id } from './id';
 import { getterForProp } from './column-prop-getters';
 import { TableColumn } from '../types/table-column.type';
-import { DataTableColumnDirective } from '../components/columns/column.directive';
 
 /**
  * Sets the column defaults
@@ -79,45 +78,4 @@ export function setColumnDefaults(columns: TableColumn[], defaultColumnWidth = 1
 
 export function isNullOrUndefined<T>(value: T | null | undefined): value is null | undefined {
   return value === null || value === undefined;
-}
-
-/**
- * Translates templates definitions to objects
- */
-export function translateTemplates<TRow>(
-  templates: DataTableColumnDirective<TRow>[]
-): TableColumn[] {
-  const result: TableColumn[] = [];
-  for (const temp of templates) {
-    const col: TableColumn = {};
-
-    const props = Object.getOwnPropertyNames(temp);
-    for (const prop of props) {
-      col[prop] = temp[prop];
-    }
-
-    if (temp.headerTemplate) {
-      col.headerTemplate = temp.headerTemplate;
-    }
-
-    if (temp.cellTemplate) {
-      col.cellTemplate = temp.cellTemplate;
-    }
-
-    if (temp.ghostCellTemplate) {
-      col.ghostCellTemplate = temp.ghostCellTemplate;
-    }
-
-    if (temp.summaryFunc) {
-      col.summaryFunc = temp.summaryFunc;
-    }
-
-    if (temp.summaryTemplate) {
-      col.summaryTemplate = temp.summaryTemplate;
-    }
-
-    result.push(col);
-  }
-
-  return result;
 }
