@@ -91,8 +91,8 @@ import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.compo
             </datatable-summary-row>
           }
           @for (group of rowsToRender(); track rowTrackingFn(i, group); let i = $index) {
+            @let disabled = isRow(group) && disableRowCheck && disableRowCheck(group);
             <datatable-row-wrapper
-              #rowWrapper
               [attr.hidden]="
                 ghostLoadingIndicator && (!rowCount || !virtualization || !scrollbarV) ? true : null
               "
@@ -105,7 +105,7 @@ import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.compo
               [detailRowHeight]="getDetailRowHeight(group && group[i], i)"
               [groupHeaderRowHeight]="getGroupHeaderRowHeight(group && group[i], i)"
               [row]="group"
-              [disableCheck]="disableRowCheck"
+              [disabled]="disabled"
               [expanded]="getRowExpanded(group)"
               [rowIndex]="getRowIndex(group && group[i])"
               [selected]="selected"
@@ -126,7 +126,7 @@ import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.compo
                     role="row"
                     tabindex="-1"
                     #rowElement
-                    [disable$]="rowWrapper.disable$"
+                    [disabled]="disabled"
                     [isSelected]="selector.getRowSelected(group)"
                     [innerWidth]="innerWidth"
                     [offsetX]="offsetX"
@@ -160,7 +160,7 @@ import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.compo
                     role="row"
                     tabindex="-1"
                     #rowElement
-                    [disable$]="rowWrapper.disable$"
+                    [disabled]="disabled"
                     [isSelected]="selector.getRowSelected(group)"
                     [innerWidth]="innerWidth"
                     [offsetX]="offsetX"
@@ -191,9 +191,10 @@ import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.compo
               @if (isGroup(group)) {
                 <!-- The row typecast is due to angular compiler acting weird. It is obvious that it is of type TRow, but the compiler does not understand. -->
                 @for (row of group.value; track rowTrackingFn(i, row); let i = $index) {
+                  @let rowInGroupDisabled = disableRowCheck && disableRowCheck(row);
                   <datatable-body-row
                     role="row"
-                    [disable$]="rowWrapper.disable$"
+                    [disabled]="rowInGroupDisabled"
                     tabindex="-1"
                     #rowElement
                     [isSelected]="selector.getRowSelected(row)"

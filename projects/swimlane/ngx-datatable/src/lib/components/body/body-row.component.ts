@@ -18,9 +18,7 @@ import {
 
 import { columnGroupWidths, columnsByPin, columnsByPinArr } from '../../utils/column';
 import { Keys } from '../../utils/keys';
-import { BehaviorSubject } from 'rxjs';
 import { ActivateEvent, RowOrGroup, TreeStatus } from '../../types/public.types';
-import { AsyncPipe } from '@angular/common';
 import { TableColumn } from '../../types/table-column.type';
 import { ColumnGroupWidth, PinnedColumns } from '../../types/internal.types';
 import { DataTableBodyCellComponent } from './body-cell.component';
@@ -29,11 +27,11 @@ import { DataTableBodyCellComponent } from './body-cell.component';
   selector: 'datatable-body-row',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    @for (colGroup of _columnsByPin; track colGroup.type; let i = $index) {
+    @for (colGroup of _columnsByPin; track colGroup.type) {
     <div
       class="datatable-row-{{ colGroup.type }} datatable-row-group"
       [style.width.px]="_columnGroupWidths[colGroup.type]"
-      [class.row-disabled]="disable$ ? (disable$ | async) : false"
+      [class.row-disabled]="disabled"
     >
       @for (column of colGroup.columns; track column.$$id; let ii = $index) {
       <datatable-body-cell
@@ -47,7 +45,7 @@ import { DataTableBodyCellComponent } from './body-cell.component';
         [column]="column"
         [rowHeight]="rowHeight"
         [displayCheck]="displayCheck"
-        [disable$]="disable$"
+        [disabled]="disabled"
         [treeStatus]="treeStatus"
         [ghostLoadingIndicator]="ghostLoadingIndicator"
         (activate)="onActivate($event, ii)"
@@ -58,7 +56,8 @@ import { DataTableBodyCellComponent } from './body-cell.component';
     </div>
     }
   `,
-  imports: [DataTableBodyCellComponent, AsyncPipe]
+  standalone: true,
+  imports: [DataTableBodyCellComponent]
 })
 export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges {
   private cd = inject(ChangeDetectorRef);
@@ -97,14 +96,7 @@ export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges
   @Input() ghostLoadingIndicator = false;
   @Input() verticalScrollVisible = false;
 
-  @Input() disable$: BehaviorSubject<boolean>;
-  @Input()
-  set offsetX(val: number) {
-    this._offsetX = val;
-  }
-  get offsetX() {
-    return this._offsetX;
-  }
+  @Input() disabled: boolean;
 
   @HostBinding('class')
   get cssClass() {
@@ -118,7 +110,7 @@ export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges
     if (this.rowIndex % 2 === 0) {
       cls += ' datatable-row-even';
     }
-    if (this.disable$ && this.disable$.value) {
+    if (this.disabled) {
       cls += ' row-disabled';
     }
 

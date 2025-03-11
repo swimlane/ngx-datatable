@@ -15,7 +15,6 @@ import {
 
 import { TableColumn } from '../../types/table-column.type';
 import { Keys } from '../../utils/keys';
-import { BehaviorSubject } from 'rxjs';
 import {
   ActivateEvent,
   CellContext,
@@ -26,7 +25,7 @@ import {
   TreeStatus
 } from '../../types/public.types';
 import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.component';
-import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
   selector: 'datatable-body-cell',
@@ -38,7 +37,7 @@ import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
       <label class="datatable-checkbox">
         <input
           type="checkbox"
-          [disabled]="disable$ | async"
+          [disabled]="disabled"
           [checked]="isSelected"
           (click)="onCheckboxChange($event)"
         />
@@ -79,20 +78,21 @@ import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
     <ghost-loader [columns]="[column]" [pageSize]="1"></ghost-loader>
     } }
   `,
-  imports: [NgTemplateOutlet, DataTableGhostLoaderComponent, AsyncPipe]
+  standalone: true,
+  imports: [NgTemplateOutlet, DataTableGhostLoaderComponent]
 })
 export class DataTableBodyCellComponent<TRow extends Row = any> implements DoCheck {
   private cd = inject(ChangeDetectorRef);
 
   @Input() displayCheck: (row: RowOrGroup<TRow>, column: TableColumn, value: any) => boolean;
 
-  _disable$: BehaviorSubject<boolean>;
-  @Input() set disable$(val: BehaviorSubject<boolean>) {
-    this._disable$ = val;
-    this.cellContext.disable$ = val;
+  @Input() set disabled(value: boolean) {
+    this.cellContext.disabled = value;
+    this._disabled = value;
   }
-  get disable$() {
-    return this._disable$;
+
+  get disabled(): boolean {
+    return this._disabled;
   }
 
   @Input() set group(group: TRow[]) {
@@ -235,7 +235,7 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
     if (!this.sortDir) {
       cls += ' sort-active';
     }
-    if (this.isFocused && !this.disable$?.value) {
+    if (this.isFocused && !this._disabled) {
       cls += ' active';
     }
     if (this.sortDir === SortDirection.asc) {
@@ -244,7 +244,7 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
     if (this.sortDir === SortDirection.desc) {
       cls += ' sort-desc';
     }
-    if (this.disable$?.value) {
+    if (this._disabled) {
       cls += ' row-disabled';
     }
 
@@ -292,6 +292,7 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
   private _expanded: boolean;
   private _element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
   private _treeStatus: TreeStatus;
+  private _disabled: boolean;
 
   constructor() {
     this.cellContext = {
@@ -305,7 +306,7 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
       isSelected: this.isSelected,
       rowIndex: this.rowIndex,
       treeStatus: this.treeStatus,
-      disable$: this.disable$,
+      disabled: this._disabled,
       onTreeAction: () => this.onTreeAction()
     };
   }
@@ -333,7 +334,7 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
     if (this.value !== value) {
       this.value = value;
       this.cellContext.value = value;
-      this.cellContext.disable$ = this.disable$;
+      this.cellContext.disabled = this._disabled;
       this.sanitizedValue = value !== null && value !== undefined ? this.stripHtml(value) : value;
       this.cd.markForCheck();
     }

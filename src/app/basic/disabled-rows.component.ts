@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ColumnMode, SelectionType } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { FullEmployee } from '../data.model';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'disabled-rows-demo',
@@ -34,7 +33,7 @@ import { BehaviorSubject } from 'rxjs';
               let-value="value"
               let-rowIndex="rowIndex"
               let-row="row"
-              let-disable$="disable$"
+              let-disabled="disabled"
               ngx-datatable-cell-template
             >
               {{ value }}
@@ -45,14 +44,14 @@ import { BehaviorSubject } from 'rxjs';
               let-value="value"
               let-rowIndex="rowIndex"
               let-row="row"
-              let-disable$="disable$"
+              let-disabled="disabled"
               ngx-datatable-cell-template
             >
               <select
                 [style.height]="'auto'"
                 [value]="value"
-                (change)="updateValue($event, 'gender', rowIndex, disable$)"
-                [disabled]="disable$ ? (disable$ | async) : false"
+                (change)="updateValue($event, 'gender', rowIndex)"
+                [disabled]="disabled"
                 [style.margin]="0"
               >
                 <option value="male">Male</option>
@@ -63,15 +62,15 @@ import { BehaviorSubject } from 'rxjs';
           <ngx-datatable-column name="Age">
             <ng-template
               let-row="row"
-              let-disable$="disable$"
+              let-disabled="disabled"
               let-rowIndex="rowIndex"
               let-value="value"
               ngx-datatable-cell-template
             >
-              <div [disabled]="disable$ | async" disable-row>
-                <input (blur)="updateValue($event, 'age', rowIndex, disable$)" [value]="value" />
+              <div [disabled]="disabled" disable-row>
+                <input (blur)="updateValue($event, 'age', rowIndex)" [value]="value" />
                 <br />
-                <button (click)="disableRow(rowIndex, disable$)">Disable row</button>
+                <button (click)="disableRow(rowIndex)">Disable row</button>
               </div>
             </ng-template>
           </ngx-datatable-column>
@@ -108,20 +107,19 @@ export class DisabledRowsComponent {
     return !(!row.isDisabled && row.age < 40);
   }
 
-  disableRow(rowIndex: number, disableRow$: BehaviorSubject<boolean>) {
+  disableRow(rowIndex: number) {
     this.rows[rowIndex].isDisabled = true;
     this.rows = [...this.rows];
-    disableRow$.next(true);
   }
 
-  updateValue(event, cell, rowIndex: number, disableRow$: BehaviorSubject<boolean>) {
+  updateValue(event, cell, rowIndex: number) {
     this.rows[rowIndex][cell] = event.target.value;
     this.rows = [...this.rows];
-    if (disableRow$ && cell === 'age' && this.rows[rowIndex][cell] > 40) {
-      disableRow$.next(true);
+    if (cell === 'age' && this.rows[rowIndex][cell] > 40) {
+      this.rows[rowIndex].isDisabled = true;
     }
-    if (disableRow$ && cell === 'gender' && this.rows[rowIndex][cell] === 'male') {
-      disableRow$.next(true);
+    if (cell === 'gender' && this.rows[rowIndex][cell] === 'male') {
+      this.rows[rowIndex].isDisabled = true;
     }
   }
 }

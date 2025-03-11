@@ -1,5 +1,4 @@
 import { TableColumn, TableColumnProp } from './table-column.type';
-import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface SortPropDir {
   dir: SortDirection | 'desc' | 'asc';
@@ -73,7 +72,7 @@ export interface CellContext<TRow = any> {
   isSelected: boolean;
   rowIndex: number;
   treeStatus: TreeStatus;
-  disable$: BehaviorSubject<boolean>;
+  disabled: boolean;
   onTreeAction: () => void;
   expanded?: boolean;
 }
@@ -106,7 +105,7 @@ export interface RowDetailContext<TRow = any> {
   row: TRow;
   expanded: boolean;
   rowIndex: number;
-  disableRow$?: Observable<boolean>;
+  disabled: boolean;
 }
 
 /**
