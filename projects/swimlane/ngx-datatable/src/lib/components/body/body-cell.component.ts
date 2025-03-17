@@ -84,7 +84,7 @@ import { NgTemplateOutlet } from '@angular/common';
 export class DataTableBodyCellComponent<TRow extends Row = any> implements DoCheck {
   private cd = inject(ChangeDetectorRef);
 
-  @Input() displayCheck: (row: RowOrGroup<TRow>, column: TableColumn, value: any) => boolean;
+  @Input() displayCheck: (row: TRow, column: TableColumn, value: any) => boolean;
 
   @Input() set disabled(value: boolean) {
     this.cellContext.disabled = value;

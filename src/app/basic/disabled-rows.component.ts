@@ -103,7 +103,7 @@ export class DisabledRowsComponent {
     req.send();
   }
 
-  isRowDisabled(row: FullEmployee & { isDisabled: boolean }) {
+  isRowDisabled(row: FullEmployee & { isDisabled?: boolean }) {
     return !(!row.isDisabled && row.age < 40);
   }
 

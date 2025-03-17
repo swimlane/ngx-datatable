@@ -71,11 +71,11 @@ export class ResizeableDirective implements OnDestroy, AfterViewInit {
       event.stopPropagation();
 
       const mouseup = fromEvent(document, 'mouseup');
-      this.subscription = mouseup.subscribe((ev: MouseEvent) => this.onMouseup());
+      this.subscription = mouseup.subscribe(() => this.onMouseup());
 
-      const mouseMoveSub = fromEvent(document, 'mousemove')
+      const mouseMoveSub = fromEvent<MouseEvent>(document, 'mousemove')
         .pipe(takeUntil(mouseup))
-        .subscribe((e: MouseEvent) => this.move(e, initialWidth, mouseDownScreenX));
+        .subscribe(e => this.move(e, initialWidth, mouseDownScreenX));
 
       this.subscription.add(mouseMoveSub);
     }

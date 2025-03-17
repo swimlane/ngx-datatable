@@ -16,18 +16,19 @@ export function emptyStringGetter(): string {
  * If prop == null, returns the emptyStringGetter.
  */
 export function getterForProp(prop: TableColumnProp): ValueGetter {
+  // TODO requires better typing which will also involve adjust TableColum. So postponing it.
   if (prop == null) {
     return emptyStringGetter;
   }
 
   if (typeof prop === 'number') {
-    return numericIndexGetter;
+    return numericIndexGetter as ValueGetter;
   } else {
     // deep or simple
     if (prop.indexOf('.') !== -1) {
-      return deepValueGetter;
+      return deepValueGetter as ValueGetter;
     } else {
-      return shallowValueGetter;
+      return shallowValueGetter as ValueGetter;
     }
   }
 }

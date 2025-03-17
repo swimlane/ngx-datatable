@@ -19,7 +19,8 @@
       "@swimlane/ngx-datatable": ["dist/swimlane/ngx-datatable"],
       "@swimlane/ngx-datatable/*": ["dist/swimlane/ngx-datatable/*"]
     },
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "strictFunctionTypes": true
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
