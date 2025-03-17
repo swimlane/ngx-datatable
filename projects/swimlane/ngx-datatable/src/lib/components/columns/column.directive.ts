@@ -30,7 +30,13 @@ export class DataTableColumnDirective<TRow> implements TableColumn, OnChanges {
   @Input({ transform: booleanAttribute }) frozenRight: boolean;
   @Input({ transform: numberAttribute }) flexGrow: number;
   @Input({ transform: booleanAttribute }) resizeable: boolean;
-  @Input() comparator: any;
+  @Input() comparator: (
+    valueA: any,
+    valueB: any,
+    rowA: TRow,
+    rowB: TRow,
+    sortDir: 'desc' | 'asc'
+  ) => number;
   @Input() pipe: PipeTransform;
   @Input({ transform: booleanAttribute }) sortable: boolean;
   @Input({ transform: booleanAttribute }) draggable: boolean;

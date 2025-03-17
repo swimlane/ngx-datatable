@@ -74,7 +74,13 @@ export interface TableColumn<TRow = any> {
   /**
    * Custom sort comparator
    */
-  comparator?: any;
+  comparator?: (
+    valueA: any,
+    valueB: any,
+    rowA: TRow,
+    rowB: TRow,
+    sortDir: 'desc' | 'asc'
+  ) => number;
 
   /**
    * Custom pipe transforms
