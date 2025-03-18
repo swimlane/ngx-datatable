@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {
   ColumnMode,
+  SelectEvent,
   SelectionType,
   TableColumn
 } from 'projects/swimlane/ngx-datatable/src/public-api';
@@ -64,7 +65,7 @@ export class CellSelectionComponent {
     req.send();
   }
 
-  onSelect(event) {
+  onSelect(event: SelectEvent<Employee>) {
     console.log('Event: select', event, this.selected);
   }
 

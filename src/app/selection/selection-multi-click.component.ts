@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {
   ColumnMode,
+  SelectEvent,
   SelectionType,
   TableColumn
 } from 'projects/swimlane/ngx-datatable/src/public-api';
@@ -86,7 +87,7 @@ export class MultiClickSelectionComponent {
     req.send();
   }
 
-  onSelect({ selected }) {
+  onSelect({ selected }: SelectEvent<Employee>) {
     console.log('Select Event', selected, this.selected);
 
     this.selected.splice(0, this.selected.length);

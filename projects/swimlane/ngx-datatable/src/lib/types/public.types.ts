@@ -166,6 +166,10 @@ export enum SelectionType {
   checkbox = 'checkbox'
 }
 
+export interface SelectEvent<TRow> {
+  selected: TRow[];
+}
+
 export type DragEventType =
   | 'drag'
   | 'dragend'

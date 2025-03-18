@@ -59,6 +59,7 @@ import {
   Row,
   RowOrGroup,
   ScrollEvent,
+  SelectEvent,
   SelectionType,
   SortEvent,
   SortPropDir,
@@ -478,7 +479,7 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * A cell or row was selected.
    */
-  @Output() select: EventEmitter<{ selected: TRow[] }> = new EventEmitter();
+  @Output() select = new EventEmitter<SelectEvent<TRow>>();
 
   /**
    * Column sort was invoked.
@@ -1253,7 +1254,7 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * A row was selected from body
    */
-  onBodySelect(event: { selected: TRow[] }): void {
+  onBodySelect(event: SelectEvent<TRow>): void {
     this.select.emit(event);
   }
 

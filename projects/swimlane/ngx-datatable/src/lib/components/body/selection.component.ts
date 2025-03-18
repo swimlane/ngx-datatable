@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { selectRows, selectRowsBetween } from '../../utils/selection';
 import { Keys } from '../../utils/keys';
-import { ActivateEvent, SelectionType } from '../../types/public.types';
+import { ActivateEvent, SelectEvent, SelectionType } from '../../types/public.types';
 
 @Component({
   selector: 'datatable-selection',
@@ -18,8 +18,8 @@ export class DataTableSelectionComponent<TRow = any> {
   @Input() selectCheck: (value: TRow, index: number, array: TRow[]) => boolean;
   @Input() disableCheck: (row: TRow) => boolean;
 
-  @Output() activate: EventEmitter<ActivateEvent<TRow>> = new EventEmitter();
-  @Output() select: EventEmitter<{ selected: TRow[] }> = new EventEmitter();
+  @Output() activate = new EventEmitter<ActivateEvent<TRow>>();
+  @Output() select = new EventEmitter<SelectEvent<TRow>>();
 
   prevIndex: number;
 
