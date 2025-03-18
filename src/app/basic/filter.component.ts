@@ -1,7 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
-import { DatatableComponent } from 'projects/swimlane/ngx-datatable/src/lib/components/datatable.component';
+import { Component, inject, ViewChild } from '@angular/core';
+import { DatatableComponent } from '../../../projects/swimlane/ngx-datatable/src/lib/components/datatable.component';
 import { ColumnMode, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'filter-demo',
@@ -50,25 +51,16 @@ export class FilterComponent {
 
   ColumnMode = ColumnMode;
 
+  private dataService = inject(DataService);
+
   constructor() {
-    this.fetch(data => {
+    this.dataService.load('company.json').subscribe(data => {
       // cache our list
       this.temp = [...data];
 
       // push our inital complete list
       this.rows = data;
     });
-  }
-
-  fetch(cb) {
-    const req = new XMLHttpRequest();
-    req.open('GET', `assets/data/company.json`);
-
-    req.onload = () => {
-      cb(JSON.parse(req.response));
-    };
-
-    req.send();
   }
 
   updateFilter(event) {

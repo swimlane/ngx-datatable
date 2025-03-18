@@ -1,8 +1,14 @@
+import { TreeStatus } from '../../projects/ngx-datatable/src/lib/types/public.types';
+
 export interface Employee {
   name: string;
   gender: string;
   company: string;
   age?: number;
+}
+
+export interface TreeEmployee extends Employee {
+  treeStatus: TreeStatus;
 }
 
 export interface FullEmployee {

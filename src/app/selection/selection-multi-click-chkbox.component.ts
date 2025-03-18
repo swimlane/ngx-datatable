@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   ColumnMode,
   SelectEvent,
   SelectionType
 } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'multi-click-chkbox-selection-demo',
@@ -85,21 +86,12 @@ export class MultiClickCheckboxSelectionComponent {
   ColumnMode = ColumnMode;
   SelectionType = SelectionType;
 
+  private dataService = inject(DataService);
+
   constructor() {
-    this.fetch(data => {
+    this.dataService.load('company.json').subscribe(data => {
       this.rows = data;
     });
-  }
-
-  fetch(cb) {
-    const req = new XMLHttpRequest();
-    req.open('GET', `assets/data/company.json`);
-
-    req.onload = () => {
-      cb(JSON.parse(req.response));
-    };
-
-    req.send();
   }
 
   onSelect({ selected }: SelectEvent<Employee>) {

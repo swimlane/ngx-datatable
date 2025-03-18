@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { ColumnMode, TreeStatus } from 'projects/swimlane/ngx-datatable/src/public-api';
-import { Employee } from '../data.model';
+import { Component, inject } from '@angular/core';
+import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { TreeEmployee } from '../data.model';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'client-side-tree-demo',
@@ -50,25 +51,14 @@ import { Employee } from '../data.model';
   standalone: false
 })
 export class ClientTreeComponent {
-  rows: (Employee & { treeStatus: TreeStatus })[] = [];
+  rows: TreeEmployee[] = [];
 
   ColumnMode = ColumnMode;
 
+  private dataService = inject(DataService);
+
   constructor() {
-    this.fetch(data => {
-      this.rows = data;
-    });
-  }
-
-  fetch(cb) {
-    const req = new XMLHttpRequest();
-    req.open('GET', `assets/data/company_tree.json`);
-
-    req.onload = () => {
-      cb(JSON.parse(req.response));
-    };
-
-    req.send();
+    this.dataService.load('company_tree.json').subscribe(data => (this.rows = data));
   }
 
   onTreeAction(event: any) {

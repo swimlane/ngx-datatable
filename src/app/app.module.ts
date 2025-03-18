@@ -80,6 +80,7 @@ import { ScrollingDynamicallyComponent } from './basic/scrolling-dynamically.com
 import { DragDropComponent } from './drag-drop/drag-drop.component';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { provideHttpClient } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -152,6 +153,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
       }
     })
   ],
+  providers: [provideHttpClient()],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

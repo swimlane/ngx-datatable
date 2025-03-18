@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { GroupedEmployee } from '../data.model';
 import {
   ColumnMode,
@@ -7,6 +7,7 @@ import {
   GroupToggleEvents,
   SelectionType
 } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'row-grouping-demo',
@@ -156,21 +157,12 @@ export class RowGroupingComponent {
   ColumnMode = ColumnMode;
   SelectionType = SelectionType;
 
+  private dataService = inject(DataService);
+
   constructor() {
-    this.fetch(data => {
+    this.dataService.load('forRowGrouping.json').subscribe(data => {
       this.rows = data;
     });
-  }
-
-  fetch(cb) {
-    const req = new XMLHttpRequest();
-    req.open('GET', `assets/data/forRowGrouping.json`);
-
-    req.onload = () => {
-      cb(JSON.parse(req.response));
-    };
-
-    req.send();
   }
 
   checkGroup(event, row, rowIndex, group) {
