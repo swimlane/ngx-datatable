@@ -33,4 +33,7 @@ export interface GroupedEmployee {
   age: number;
   comment?: string;
   groupcomment?: string;
+  startdate?: string;
+  enddate?: string;
+  groupstatus?: string;
 }

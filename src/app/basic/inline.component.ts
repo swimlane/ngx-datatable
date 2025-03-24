@@ -78,7 +78,7 @@ import { DataService } from '../data.service';
   standalone: false
 })
 export class InlineEditComponent {
-  editing = {};
+  editing: Record<string, boolean> = {};
   rows: Employee[] = [];
 
   ColumnMode = ColumnMode;
@@ -91,10 +91,10 @@ export class InlineEditComponent {
     });
   }
 
-  updateValue(event, cell, rowIndex: number) {
+  updateValue(event: Event, cell: 'name' | 'gender', rowIndex: number) {
     console.log('inline editing rowIndex', rowIndex);
     this.editing[rowIndex + '-' + cell] = false;
-    this.rows[rowIndex][cell] = event.target.value;
+    this.rows[rowIndex][cell] = (event.target as HTMLInputElement).value;
     this.rows = [...this.rows];
     console.log('UPDATED!', this.rows[rowIndex][cell]);
   }

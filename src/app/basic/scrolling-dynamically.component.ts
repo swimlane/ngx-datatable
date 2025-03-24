@@ -94,10 +94,10 @@ export class ScrollingDynamicallyComponent {
     });
   }
 
-  updateValue(event, cell, rowIndex) {
+  updateValue(event: Event, cell: 'gender' | 'name', rowIndex: number) {
     console.log('inline editing rowIndex', rowIndex);
     this.editing[rowIndex + '-' + cell] = false;
-    this.rows[rowIndex][cell] = event.target.value;
+    this.rows[rowIndex][cell] = (event.target as HTMLInputElement | HTMLSelectElement).value;
     this.rows = [...this.rows];
     console.log('UPDATED!', this.rows[rowIndex][cell]);
   }

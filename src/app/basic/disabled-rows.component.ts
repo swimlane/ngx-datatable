@@ -104,14 +104,16 @@ export class DisabledRowsComponent {
     this.rows = [...this.rows];
   }
 
-  updateValue(event, cell, rowIndex: number) {
-    this.rows[rowIndex][cell] = event.target.value;
+  updateValue(event: Event, cell: 'gender' | 'age', rowIndex: number) {
+    const target = event.target as HTMLInputElement;
     this.rows = [...this.rows];
     if (cell === 'age' && this.rows[rowIndex][cell] > 40) {
       this.rows[rowIndex].isDisabled = true;
+      this.rows[rowIndex].age = target.valueAsNumber;
     }
     if (cell === 'gender' && this.rows[rowIndex][cell] === 'male') {
       this.rows[rowIndex].isDisabled = true;
+      this.rows[rowIndex].gender = target.value;
     }
   }
 }

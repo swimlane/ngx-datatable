@@ -165,22 +165,23 @@ export class RowGroupingComponent {
     });
   }
 
-  checkGroup(event, row, rowIndex, group) {
+  checkGroup(event: Event, row: GroupedEmployee, rowIndex: number, group: GroupedEmployee[]) {
     let groupStatus = 'Pending';
     let expectedPaymentDealtWith = true;
+    const target = event.target as HTMLInputElement;
 
     row.exppayyes = 0;
     row.exppayno = 0;
     row.exppaypending = 0;
 
-    if (event.target.checked) {
-      if (event.target.value === '0') {
+    if (target.checked) {
+      if (target.value === '0') {
         // expected payment yes selected
         row.exppayyes = 1;
-      } else if (event.target.value === '1') {
+      } else if (target.value === '1') {
         // expected payment yes selected
         row.exppayno = 1;
-      } else if (event.target.value === '2') {
+      } else if (target.value === '2') {
         // expected payment yes selected
         row.exppaypending = 1;
       }
@@ -197,7 +198,7 @@ export class RowGroupingComponent {
           // Start dates and end dates match
           for (let index = 0; index < group.length; index++) {
             if (group[index].source !== row.source) {
-              if (event.target.value === '0') {
+              if (target.value === '0') {
                 // expected payment yes selected
                 group[index].exppayyes = 0;
                 group[index].exppaypending = 0;
@@ -272,10 +273,9 @@ export class RowGroupingComponent {
     group[0].groupstatus = groupStatus;
   }
 
-  updateValue(event, cell, rowIndex) {
-    const index = rowIndex.split('-')[1];
+  updateValue(event: Event, cell: 'comment', rowIndex: number) {
     this.editing[rowIndex + '-' + cell] = false;
-    this.rows[index][cell] = event.target.value;
+    this.rows[rowIndex][cell] = (event.target as HTMLInputElement).value;
     this.rows = [...this.rows];
   }
 

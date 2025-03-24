@@ -50,7 +50,7 @@ export class LiveDataComponent {
   rows: (Employee & { updated: string })[] = [];
   active = true;
   temp: (Employee & { updated: string })[] = [];
-  cols = ['name', 'gender', 'company'];
+  cols = ['name', 'gender', 'company'] as const;
 
   ColumnMode = ColumnMode;
 
