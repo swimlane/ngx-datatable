@@ -170,6 +170,20 @@ export interface SelectEvent<TRow> {
   selected: TRow[];
 }
 
+export interface ContextMenuEventBody<TRow> {
+  event: MouseEvent;
+  type: ContextmenuType.body;
+  content: RowOrGroup<TRow>;
+}
+
+export interface ContextMenuEvenHeader {
+  event: MouseEvent;
+  type: ContextmenuType.header;
+  content: TableColumn;
+}
+
+export type ContextMenuEvent<TRow> = ContextMenuEventBody<TRow> | ContextMenuEvenHeader;
+
 export type DragEventType =
   | 'drag'
   | 'dragend'

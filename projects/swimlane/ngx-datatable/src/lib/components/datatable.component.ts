@@ -50,6 +50,7 @@ import {
   ActivateEvent,
   ColumnMode,
   ColumnResizeEvent,
+  ContextMenuEvent,
   ContextmenuType,
   DragEventData,
   Group,
@@ -506,11 +507,7 @@ export class DatatableComponent<TRow extends Row = any>
    * type indicates whether the header or the body was clicked.
    * content contains either the column or the row that was clicked.
    */
-  @Output() tableContextmenu = new EventEmitter<{
-    event: MouseEvent;
-    type: ContextmenuType;
-    content: TableColumn | RowOrGroup<TRow>;
-  }>(false);
+  @Output() tableContextmenu = new EventEmitter<ContextMenuEvent<TRow>>(false);
 
   /**
    * A row was expanded ot collapsed for tree
