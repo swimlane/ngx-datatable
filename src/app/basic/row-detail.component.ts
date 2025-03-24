@@ -2,6 +2,7 @@ import { Component, inject, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   ColumnMode,
   DatatableComponent,
+  DetailToggleEvents,
   PageEvent
 } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { FullEmployee } from '../data.model';
@@ -123,7 +124,7 @@ export class RowDetailsComponent {
     this.table.rowDetail.toggleExpandRow(row);
   }
 
-  onDetailToggle(event) {
+  onDetailToggle(event: DetailToggleEvents<FullEmployee>) {
     console.log('Detail Toggled', event);
   }
 }

@@ -158,6 +158,18 @@ export interface AllGroupsToggleEvent {
 
 export type GroupToggleEvents<TRow> = GroupToggleEvent<TRow> | AllGroupsToggleEvent;
 
+export interface DetailToggleEvent<TRow> {
+  type: 'row';
+  value: TRow;
+}
+
+export interface AllDetailToggleEvent {
+  type: 'all';
+  value: boolean;
+}
+
+export type DetailToggleEvents<TRow> = DetailToggleEvent<TRow> | AllDetailToggleEvent;
+
 export enum SelectionType {
   single = 'single',
   multi = 'multi',
