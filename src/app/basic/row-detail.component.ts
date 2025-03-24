@@ -1,5 +1,9 @@
 import { Component, inject, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ColumnMode, DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
+import {
+  ColumnMode,
+  DatatableComponent,
+  PageEvent
+} from 'projects/swimlane/ngx-datatable/src/public-api';
 import { FullEmployee } from '../data.model';
 import { DataService } from '../data.service';
 
@@ -107,14 +111,14 @@ export class RowDetailsComponent {
     });
   }
 
-  onPage(event) {
+  onPage(event: PageEvent) {
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
       console.log('paged!', event);
     }, 100);
   }
 
-  toggleExpandRow(row) {
+  toggleExpandRow(row: FullEmployee) {
     console.log('Toggled Expand Row!', row);
     this.table.rowDetail.toggleExpandRow(row);
   }

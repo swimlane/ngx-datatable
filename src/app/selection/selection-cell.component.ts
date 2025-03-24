@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import {
+  ActivateEvent,
   ColumnMode,
   SelectEvent,
   SelectionType,
@@ -61,7 +62,7 @@ export class CellSelectionComponent {
     console.log('Event: select', event, this.selected);
   }
 
-  onActivate(event) {
+  onActivate(event: ActivateEvent<Employee>) {
     console.log('Event: activate', event);
   }
 }

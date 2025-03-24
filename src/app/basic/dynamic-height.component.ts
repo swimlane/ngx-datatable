@@ -36,7 +36,7 @@ import { DataService } from '../data.service';
   standalone: false
 })
 export class DynamicHeightComponent {
-  rows: FullEmployee[] = [];
+  rows: (FullEmployee & { height: number })[] = [];
   expanded = {};
   timeout: any;
 
@@ -52,7 +52,7 @@ export class DynamicHeightComponent {
     });
   }
 
-  getRowHeight(row) {
+  getRowHeight(row: FullEmployee & { height: number }) {
     console.log('ROW', row);
     if (!row) {
       return 50;

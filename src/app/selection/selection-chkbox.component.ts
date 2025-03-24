@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import {
+  ActivateEvent,
   ColumnMode,
   SelectEvent,
   SelectionType
@@ -100,7 +101,7 @@ export class CheckboxSelectionComponent {
     this.selected.push(...selected);
   }
 
-  onActivate(event) {
+  onActivate(event: ActivateEvent<Employee>) {
     console.log('Activate Event', event);
   }
 
@@ -116,7 +117,7 @@ export class CheckboxSelectionComponent {
     this.selected = [];
   }
 
-  displayCheck(row) {
+  displayCheck(row: Employee) {
     return row.name !== 'Ethel Price';
   }
 }

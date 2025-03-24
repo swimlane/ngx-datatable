@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import {
+  ActivateEvent,
   ColumnMode,
   SelectEvent,
   SelectionType,
@@ -87,7 +88,7 @@ export class SingleSelectionComponent {
     console.log('Select Event', selected, this.selected);
   }
 
-  onActivate(event) {
+  onActivate(event: ActivateEvent<Employee>) {
     console.log('Activate Event', event);
   }
 }

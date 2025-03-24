@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode, PageEvent } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { FullEmployee } from '../data.model';
 import { DataService } from '../data.service';
 
@@ -59,14 +59,14 @@ export class VirtualScrollComponent {
     });
   }
 
-  onPage(event) {
+  onPage(event: PageEvent) {
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
       console.log('paged!', event);
     }, 100);
   }
 
-  getRowHeight(row) {
+  getRowHeight(row: FullEmployee & { height: number }) {
     return row.height;
   }
 }

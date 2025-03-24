@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import {
+  ActivateEvent,
   ColumnMode,
   SelectEvent,
   SelectionType,
@@ -83,11 +84,11 @@ export class MultiDisableSelectionComponent {
     this.selected.push(...selected);
   }
 
-  onActivate(event) {
+  onActivate(event: ActivateEvent<Employee>) {
     console.log('Activate Event', event);
   }
 
-  checkSelectable(event) {
+  checkSelectable(event: Employee) {
     console.log('Checking if selectable', event);
     return event.name !== 'Ethel Price';
   }

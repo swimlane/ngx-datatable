@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ColumnMode, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode, SortEvent, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';
 
@@ -56,7 +56,7 @@ export class ServerSortingComponent {
     });
   }
 
-  onSort(event) {
+  onSort(event: SortEvent) {
     // event was triggered, start sort sequence
     console.log('Sort Event', event);
     this.loading = true;

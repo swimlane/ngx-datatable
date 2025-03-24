@@ -51,7 +51,7 @@ export class SortingComparatorComponent {
     });
   }
 
-  companyComparator(propA, propB) {
+  companyComparator(propA: string, propB: string) {
     console.log('Sorting Comparator', propA, propB);
 
     // Just a simple sort function comparisoins

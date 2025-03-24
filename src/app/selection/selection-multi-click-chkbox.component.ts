@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import {
+  ActivateEvent,
   ColumnMode,
   SelectEvent,
   SelectionType
@@ -101,7 +102,7 @@ export class MultiClickCheckboxSelectionComponent {
     this.selected.push(...selected);
   }
 
-  onActivate(event) {
+  onActivate(event: ActivateEvent<Employee>) {
     console.log('Activate Event', event);
   }
 
@@ -117,7 +118,7 @@ export class MultiClickCheckboxSelectionComponent {
     this.selected = [];
   }
 
-  allowSelection(row) {
+  allowSelection(row: Employee) {
     return row.name !== 'Beryl Rice';
   }
 }
