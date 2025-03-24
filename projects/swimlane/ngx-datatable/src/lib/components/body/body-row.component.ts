@@ -86,7 +86,7 @@ export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges
   }
 
   @Input() expanded: boolean;
-  @Input() rowClass?: (row: RowOrGroup<TRow>) => string | Record<string, boolean>;
+  @Input() rowClass?: (row: TRow) => string | Record<string, boolean>;
   @Input() row: TRow;
   @Input() group: TRow[];
   @Input() isSelected: boolean;

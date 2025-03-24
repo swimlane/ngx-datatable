@@ -372,7 +372,7 @@ export class DatatableComponent<TRow extends Row = any>
    * - a string: `"class-1 class-2`
    * - a Record<string, boolean>: `{ 'class-1': true, 'class-2': false }`
    */
-  @Input() rowClass: (row: Group<TRow> | TRow) => string | Record<string, boolean>;
+  @Input() rowClass: (row: TRow) => string | Record<string, boolean>;
 
   /**
    * A boolean/function you can use to check whether you want

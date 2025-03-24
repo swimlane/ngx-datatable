@@ -285,7 +285,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   @Input() selectCheck: (value: TRow, index: number, array: TRow[]) => boolean;
   @Input() displayCheck: (row: TRow, column: TableColumn, value?: any) => boolean;
   @Input() trackByProp: string;
-  @Input() rowClass: (row: RowOrGroup<TRow>) => string | Record<string, boolean>;
+  @Input() rowClass: (row: TRow) => string | Record<string, boolean>;
   @Input() groupedRows: Group<TRow>[];
   @Input() groupExpansionDefault: boolean;
   @Input() innerWidth: number;
