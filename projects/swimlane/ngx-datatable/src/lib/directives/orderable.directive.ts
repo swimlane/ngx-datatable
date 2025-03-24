@@ -163,10 +163,10 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
     }
   }
 
-  private createMapDiffs(): { [key: string]: DraggableDirective } {
+  private createMapDiffs(): Record<string, DraggableDirective> {
     return this.draggables.toArray().reduce((acc, curr) => {
       acc[curr.dragModel.$$id] = curr;
       return acc;
-    }, {});
+    }, {} as Record<string, DraggableDirective>);
   }
 }

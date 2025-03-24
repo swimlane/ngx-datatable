@@ -48,7 +48,7 @@ export function groupRowsByParents<TRow>(
   to?: OptionalValueGetter
 ): TRow[] {
   if (from && to) {
-    const nodeById = {};
+    const nodeById: Record<number, TreeNode> = {};
     const l = rows.length;
     let node: TreeNode | null = null;
 
