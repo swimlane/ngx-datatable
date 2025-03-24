@@ -93,6 +93,8 @@ import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.compo
           }
           @for (group of rowsToRender(); track rowTrackingFn(i, group); let i = $index) {
             @let disabled = isRow(group) && disableRowCheck && disableRowCheck(group);
+            <!-- $any(group) is needed as the typing is broken and the feature as well. See #147. -->
+            <!-- FIXME: This has to be revisited and fixed. -->
             <datatable-row-wrapper
               [attr.hidden]="
                 ghostLoadingIndicator && (!rowCount || !virtualization || !scrollbarV) ? true : null
@@ -103,12 +105,12 @@ import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.compo
               [rowDetail]="rowDetail"
               [groupHeader]="groupHeader"
               [offsetX]="offsetX"
-              [detailRowHeight]="getDetailRowHeight(group && group[i], i)"
-              [groupHeaderRowHeight]="getGroupHeaderRowHeight(group && group[i], i)"
+              [detailRowHeight]="getDetailRowHeight(group && $any(group)[i], i)"
+              [groupHeaderRowHeight]="getGroupHeaderRowHeight(group && $any(group)[i], i)"
               [row]="group"
               [disabled]="disabled"
               [expanded]="getRowExpanded(group)"
-              [rowIndex]="getRowIndex(group && group[i])"
+              [rowIndex]="getRowIndex(group && $any(group)[i])"
               [selected]="selected"
               (rowContextmenu)="rowContextmenu.emit($event)"
             >
@@ -451,7 +453,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
         return index;
       }
       if (this.trackByProp) {
-        return row[this.trackByProp];
+        return (row as any)[this.trackByProp];
       } else {
         const idx = this.getRowIndex(row);
         return idx;
