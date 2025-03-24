@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { FullEmployee } from '../data.model';
 import { DataService } from '../data.service';
 
@@ -59,9 +59,9 @@ export class RowCssComponent {
     };
   }
 
-  getCellClass({ row, column, value }): any {
+  getCellClass: TableColumn['cellClass'] = ({ row, column, value }) => {
     return {
       'is-female': value === 'female'
     };
-  }
+  };
 }
