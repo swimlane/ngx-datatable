@@ -39,34 +39,10 @@ export function columnGroupWidths(groups: TableColumnGroup, all: TableColumn[]):
 }
 
 /**
- * Calculates the total width of all columns and their groups
+ * Calculates the total width of all columns
  */
-export function columnTotalWidth(columns: TableColumn[], prop?: string) {
-  let totalWidth = 0;
-
-  if (columns) {
-    for (const c of columns) {
-      const has = prop && c[prop];
-      const width = has ? c[prop] : c.width;
-      totalWidth = totalWidth + parseFloat(width);
-    }
-  }
-
-  return totalWidth;
-}
-
-/**
- * Calculates the total width of all columns and their groups
- */
-export function columnsTotalWidth(columns: TableColumn[], prop?: keyof TableColumn) {
-  let totalWidth = 0;
-
-  for (const column of columns) {
-    const has = prop && column[prop];
-    totalWidth = totalWidth + (has ? column[prop] : column.width);
-  }
-
-  return totalWidth;
+export function columnTotalWidth(columns?: TableColumn[]) {
+  return columns?.reduce((total, column) => total + column.width, 0) ?? 0;
 }
 
 export function columnsByPinArr(val: TableColumn[]): PinnedColumns[] {
