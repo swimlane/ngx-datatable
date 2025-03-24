@@ -35,7 +35,7 @@ import { Employee } from '../data.model';
         [offset]="page.pageNumber"
         [limit]="page.size"
         [ghostLoadingIndicator]="isLoading > 0"
-        (page)="setPage($event)"
+        (page)="setPage($event.offset)"
       >
       </ngx-datatable>
     </div>
@@ -57,15 +57,15 @@ export class PagingScrollingNoVirtualizationComponent implements OnInit {
   constructor(private serverResultsService: MockServerResultsService) {}
 
   ngOnInit() {
-    this.setPage({ offset: 0 });
+    this.setPage(0);
   }
 
   /**
    * Populate the table with new data based on the page number
    * @param page The page to select
    */
-  setPage(pageInfo) {
-    this.page.pageNumber = pageInfo.offset;
+  setPage(page: number) {
+    this.page.pageNumber = page;
     this.isLoading++;
     this.serverResultsService.getResults(this.page).subscribe(pagedData => {
       this.isLoading--;

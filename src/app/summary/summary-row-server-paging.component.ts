@@ -33,7 +33,7 @@ import { Employee } from '../data.model';
         [count]="page.totalElements"
         [offset]="page.pageNumber"
         [limit]="page.size"
-        (page)="setPage($event)"
+        (page)="setPage($event.offset)"
       >
       </ngx-datatable>
     </div>
@@ -61,15 +61,15 @@ export class SummaryRowServerPagingComponent implements OnInit {
   constructor(private serverResultsService: MockServerResultsService) {}
 
   ngOnInit() {
-    this.setPage({ offset: 0 });
+    this.setPage(0);
   }
 
   /**
    * Populate the table with new data based on the page number
    * @param page The page to select
    */
-  setPage(pageInfo) {
-    this.page.pageNumber = pageInfo.offset;
+  setPage(page: number) {
+    this.page.pageNumber = page;
     this.serverResultsService.getResults(this.page).subscribe(pagedData => {
       this.page = pagedData.page;
       this.rows = pagedData.data;
