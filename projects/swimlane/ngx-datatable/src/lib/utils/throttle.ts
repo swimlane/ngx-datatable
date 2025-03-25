@@ -59,7 +59,7 @@ export function throttleable(duration: number, options?: any) {
           value: throttle(descriptor.value, duration, options)
         });
 
-        return this[key];
+        return target[key];
       }
     };
   };
