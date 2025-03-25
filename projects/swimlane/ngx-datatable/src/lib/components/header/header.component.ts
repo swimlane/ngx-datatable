@@ -26,11 +26,7 @@ import {
 import { NgStyle } from '@angular/common';
 import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 import { TableColumn } from '../../types/table-column.type';
-import {
-  OrderableReorderEvent,
-  PinnedColumns,
-  TargetChangedEvent
-} from '../../types/internal.types';
+import { PinnedColumns, TargetChangedEvent } from '../../types/internal.types';
 import { DraggableDirective } from '../../directives/draggable.directive';
 import { LongPressDirective } from '../../directives/long-press.directive';
 import { ResizeableDirective } from '../../directives/resizeable.directive';
@@ -266,15 +262,11 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
     };
   }
 
-  onColumnReordered({ prevIndex, newIndex, model }: OrderableReorderEvent): void {
-    const column = this.getColumn(newIndex);
+  onColumnReordered(event: ReorderEvent): void {
+    const column = this.getColumn(event.newValue);
     column.isTarget = false;
     column.targetMarkerContext = undefined;
-    this.reorder.emit({
-      column: model,
-      prevValue: prevIndex,
-      newValue: newIndex
-    });
+    this.reorder.emit(event);
   }
 
   onTargetChanged({ prevIndex, newIndex, initialIndex }: TargetChangedEvent): void {

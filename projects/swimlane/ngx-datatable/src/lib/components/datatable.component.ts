@@ -1136,7 +1136,8 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * The header triggered a column re-order event.
    */
-  onColumnReorder({ column, newValue, prevValue }: ReorderEvent): void {
+  onColumnReorder(event: ReorderEvent): void {
+    const { column, newValue, prevValue } = event;
     const cols = this._internalColumns.map(c => ({ ...c }));
 
     if (this.swapColumns) {
@@ -1161,11 +1162,7 @@ export class DatatableComponent<TRow extends Row = any>
 
     this._internalColumns = cols;
 
-    this.reorder.emit({
-      column,
-      newValue,
-      prevValue
-    });
+    this.reorder.emit(event);
   }
 
   /**

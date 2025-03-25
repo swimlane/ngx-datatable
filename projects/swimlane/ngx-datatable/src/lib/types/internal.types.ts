@@ -14,12 +14,6 @@ export interface ColumnGroupWidth {
   total: number;
 }
 
-export interface OrderableReorderEvent {
-  prevIndex: number;
-  newIndex: number;
-  model: TableColumn;
-}
-
 export interface TargetChangedEvent {
   newIndex?: number;
   prevIndex: number;
