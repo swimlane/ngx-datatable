@@ -1,5 +1,6 @@
 import { getterForProp } from './column-prop-getters';
 import { TableColumnProp } from '../types/table-column.type';
+import { Row } from '../types/public.types';
 
 export type OptionalValueGetter = (row: any) => any | undefined;
 export function optionalGetterForProp(prop: TableColumnProp): OptionalValueGetter {
@@ -42,17 +43,20 @@ export function optionalGetterForProp(prop: TableColumnProp): OptionalValueGette
  * @param rows
  *
  */
-export function groupRowsByParents<TRow>(
+export function groupRowsByParents<TRow extends Row>(
   rows: TRow[],
   from?: OptionalValueGetter,
   to?: OptionalValueGetter
 ): TRow[] {
   if (from && to) {
-    const nodeById: Record<number, TreeNode> = {};
+    const nodeById: Record<number, TreeNode<TRow>> = {};
     const l = rows.length;
-    let node: TreeNode | null = null;
+    let node: TreeNode<TRow> | null = null;
 
-    nodeById[0] = new TreeNode(); // that's the root node
+    nodeById[0] = new TreeNode<TRow>({
+      level: -1,
+      treeStatus: 'expanded'
+    } as unknown as TRow); // that's the root node, TODO: needs type that reflect this
 
     const uniqIDs = rows.reduce((arr, item) => {
       const toValue = to(item);
@@ -81,9 +85,7 @@ export function groupRowsByParents<TRow>(
     }
 
     let resolvedRows: any[] = [];
-    nodeById[0].flatten(function () {
-      resolvedRows = [...resolvedRows, this.row];
-    }, true);
+    nodeById[0].flatten(row => (resolvedRows = [...resolvedRows, row]));
 
     return resolvedRows;
   } else {
@@ -91,31 +93,23 @@ export function groupRowsByParents<TRow>(
   }
 }
 
-class TreeNode {
-  public row: any;
-  public parent: any;
-  public children: any[];
+class TreeNode<TRow extends Row> {
+  public row: TRow;
+  public parent: TreeNode<TRow>;
+  public children: TreeNode<TRow>[];
 
-  constructor(row: any | null = null) {
-    if (!row) {
-      row = {
-        level: -1,
-        treeStatus: 'expanded'
-      };
-    }
+  constructor(row: TRow) {
     this.row = row;
     this.parent = null;
     this.children = [];
   }
 
-  flatten(f: any, recursive: boolean) {
-    if (this.row['treeStatus'] === 'expanded') {
+  flatten(f: (child: TreeNode<TRow>) => void) {
+    if (this.row.treeStatus === 'expanded') {
       for (let i = 0, l = this.children.length; i < l; i++) {
         const child = this.children[i];
-        f.apply(child, Array.prototype.slice.call(arguments, 2));
-        if (recursive) {
-          child.flatten.apply(child, arguments);
-        }
+        f(child);
+        child.flatten(f);
       }
     }
   }
