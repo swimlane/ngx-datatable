@@ -12,8 +12,7 @@ import {
 } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { TableColumn } from '../types/table-column.type';
-import { DraggableDragEvent } from '../types/internal.types';
+import { DraggableDragEvent, TableColumnInternal } from '../types/internal.types';
 
 /**
  * Draggable Directive for Angular2
@@ -29,7 +28,7 @@ import { DraggableDragEvent } from '../types/internal.types';
 })
 export class DraggableDirective implements OnDestroy, OnChanges {
   @Input() dragEventTarget: any;
-  @Input() dragModel: TableColumn;
+  @Input() dragModel: TableColumnInternal;
   @Input({ transform: booleanAttribute }) dragX = true;
   @Input({ transform: booleanAttribute }) dragY = true;
 

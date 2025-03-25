@@ -1,14 +1,6 @@
-import { Component, Input, OnChanges, PipeTransform, TemplateRef } from '@angular/core';
-import { TableColumn, TableColumnProp } from '../../../types/table-column.type';
+import { Component, Input, OnChanges } from '@angular/core';
 import { DataTableBodyRowComponent } from '../body-row.component';
-
-export interface ISummaryColumn {
-  summaryFunc?: (cells: any[]) => any;
-  summaryTemplate?: TemplateRef<any>;
-
-  prop?: TableColumnProp;
-  pipe?: PipeTransform;
-}
+import { TableColumnInternal } from '../../../types/internal.types';
 
 function defaultSumFunc(cells: any[]): any {
   const cellsWithValues = cells.filter(cell => !!cell);
@@ -49,13 +41,13 @@ function noopSumFunc(cells: any[]): void {
 })
 export class DataTableSummaryRowComponent implements OnChanges {
   @Input() rows: any[];
-  @Input() columns: TableColumn[];
+  @Input() columns: TableColumnInternal[];
 
   @Input() rowHeight: number;
   @Input() offsetX: number;
   @Input() innerWidth: number;
 
-  _internalColumns: ISummaryColumn[];
+  _internalColumns: TableColumnInternal[];
   summaryRow: any = {};
 
   ngOnChanges() {
@@ -88,7 +80,7 @@ export class DataTableSummaryRowComponent implements OnChanges {
       });
   }
 
-  private getSummaryFunction(column: ISummaryColumn): (a: any[]) => any {
+  private getSummaryFunction(column: TableColumnInternal): (a: any[]) => any {
     if (column.summaryFunc === undefined) {
       return defaultSumFunc;
     } else if (column.summaryFunc === null) {

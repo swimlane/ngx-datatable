@@ -4,6 +4,7 @@ import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 import { DatatableComponentToken } from '../../utils/table-token';
 import { By } from '@angular/platform-browser';
 import { DataTableBodyRowComponent } from './body-row.component';
+import { toInternalColumn } from '../../utils/column-helper';
 
 describe('DataTableBodyComponent', () => {
   let fixture: ComponentFixture<DataTableBodyComponent>;
@@ -95,7 +96,7 @@ describe('DataTableBodyComponent', () => {
 
   describe('with disableCheck', () => {
     beforeEach(() => {
-      component.columns = [{ name: 'value', $$id: 'id', $$valueGetter: obj => obj.value }];
+      component.columns = toInternalColumn([{ name: 'value', prop: 'value' }]);
       component.disableRowCheck = (row: any) => row.disabled;
     });
 

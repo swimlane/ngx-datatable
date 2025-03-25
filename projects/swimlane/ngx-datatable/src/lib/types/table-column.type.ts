@@ -1,5 +1,4 @@
 import { PipeTransform, TemplateRef } from '@angular/core';
-import { ValueGetter } from '../utils/column-prop-getters';
 import { CellContext, HeaderCellContext } from './public.types';
 
 /**
@@ -13,21 +12,6 @@ export type TableColumnProp = string | number;
  * Column Type
  */
 export interface TableColumn<TRow = any> {
-  /**
-   * Internal unique id
-   */
-  $$id?: string;
-
-  /**
-   * Internal for column width distributions
-   */
-  $$oldWidth?: number;
-
-  /**
-   * Internal for setColumnDefaults
-   */
-  $$valueGetter?: ValueGetter;
-
   /**
    * Determines if column is checkbox
    */
@@ -96,15 +80,6 @@ export interface TableColumn<TRow = any> {
    * Can the column be re-arranged by dragging
    */
   draggable?: boolean;
-
-  /** @internal */
-  dragging?: boolean;
-
-  /** @internal */
-  isTarget?: boolean;
-
-  /** @internal */
-  targetMarkerContext?: any;
 
   /**
    * Whether the column can automatically resize to fill space in the table.
@@ -195,10 +170,4 @@ export interface TableColumn<TRow = any> {
    * Summary cell template ref
    */
   summaryTemplate?: TemplateRef<any>;
-}
-
-export interface TableColumnGroup {
-  left: TableColumn[];
-  center: TableColumn[];
-  right: TableColumn[];
 }

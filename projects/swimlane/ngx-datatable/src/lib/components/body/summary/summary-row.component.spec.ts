@@ -4,9 +4,10 @@ import { By } from '@angular/platform-browser';
 
 import { DataTableBodyRowComponent } from '../body-row.component';
 import { DataTableBodyCellComponent } from '../body-cell.component';
-import { DataTableSummaryRowComponent, ISummaryColumn } from './summary-row.component';
+import { DataTableSummaryRowComponent } from './summary-row.component';
 import { ScrollbarHelper } from '../../../services/scrollbar-helper.service';
-import { setColumnDefaults } from '../../../utils/column-helper';
+import { toInternalColumn } from '../../../utils/column-helper';
+import { TableColumnInternal } from '../../../types/internal.types';
 
 describe('DataTableSummaryRowComponent', () => {
   let fixture: ComponentFixture<DataTableSummaryRowComponent>;
@@ -14,15 +15,14 @@ describe('DataTableSummaryRowComponent', () => {
   let element: DebugElement;
 
   let rows: any[];
-  let columns: ISummaryColumn[];
+  let columns: TableColumnInternal[];
 
   beforeEach(() => {
     rows = [
       { col1: 10, col2: 20 },
       { col1: 1, col2: 30 }
     ];
-    columns = [{ prop: 'col1' }, { prop: 'col2' }];
-    setColumnDefaults(columns);
+    columns = toInternalColumn([{ prop: 'col1' }, { prop: 'col2' }]);
   });
 
   beforeEach(waitForAsync(() => {

@@ -14,9 +14,6 @@ import {
 } from '@angular/core';
 import { columnGroupWidths, columnsByPin, columnsByPinArr } from '../../utils/column';
 import {
-  ColumnResizeEvent,
-  InnerSortEvent,
-  ReorderEvent,
   SelectionType,
   SortDirection,
   SortEvent,
@@ -25,8 +22,14 @@ import {
 } from '../../types/public.types';
 import { NgStyle } from '@angular/common';
 import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
-import { TableColumn } from '../../types/table-column.type';
-import { PinnedColumns, TargetChangedEvent } from '../../types/internal.types';
+import {
+  ColumnResizeEventInternal,
+  InnerSortEvent,
+  PinnedColumns,
+  ReorderEventInternal,
+  TableColumnInternal,
+  TargetChangedEvent
+} from '../../types/internal.types';
 import { DraggableDirective } from '../../directives/draggable.directive';
 import { LongPressDirective } from '../../directives/long-press.directive';
 import { ResizeableDirective } from '../../directives/resizeable.directive';
@@ -149,7 +152,7 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
     return this._headerHeight;
   }
 
-  @Input() set columns(val: TableColumn[]) {
+  @Input() set columns(val: TableColumnInternal[]) {
     this._columns = val;
 
     const colsByPin = columnsByPin(val);
@@ -173,12 +176,15 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
     return this._offsetX;
   }
 
-  @Output() sort: EventEmitter<SortEvent> = new EventEmitter();
-  @Output() reorder: EventEmitter<ReorderEvent> = new EventEmitter();
-  @Output() resize: EventEmitter<ColumnResizeEvent> = new EventEmitter();
-  @Output() resizing: EventEmitter<ColumnResizeEvent> = new EventEmitter();
-  @Output() select: EventEmitter<void> = new EventEmitter();
-  @Output() columnContextmenu = new EventEmitter<{ event: MouseEvent; column: TableColumn }>(false);
+  @Output() sort = new EventEmitter<SortEvent>();
+  @Output() reorder = new EventEmitter<ReorderEventInternal>();
+  @Output() resize = new EventEmitter<ColumnResizeEventInternal>();
+  @Output() resizing = new EventEmitter<ColumnResizeEventInternal>();
+  @Output() select = new EventEmitter<void>();
+  @Output() columnContextmenu = new EventEmitter<{
+    event: MouseEvent;
+    column: TableColumnInternal;
+  }>(false);
 
   _columnsByPin: PinnedColumns[];
   _columnGroupWidths: any = {
@@ -186,7 +192,7 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
   };
   _innerWidth: number;
   _offsetX: number;
-  _columns: TableColumn[];
+  _columns: TableColumnInternal[];
   _headerHeight: string;
   _styleByGroup: {
     left: NgStyle['ngStyle'];
@@ -209,12 +215,12 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
     this.destroyed = true;
   }
 
-  onLongPressStart({ event, model }: { event: MouseEvent; model: TableColumn }) {
+  onLongPressStart({ event, model }: { event: MouseEvent; model: TableColumnInternal<unknown> }) {
     model.dragging = true;
     this.dragEventTarget = event;
   }
 
-  onLongPressEnd({ model }: { model: TableColumn }) {
+  onLongPressEnd({ model }: { model: TableColumnInternal<unknown> }) {
     this.dragEventTarget = undefined;
 
     // delay resetting so sort can be
@@ -241,15 +247,18 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
     return '100%';
   }
 
-  onColumnResized(width: number, column: TableColumn): void {
+  onColumnResized(width: number, column: TableColumnInternal<unknown>): void {
     this.resize.emit(this.makeResizeEvent(width, column));
   }
 
-  onColumnResizing(width: number, column: TableColumn): void {
+  onColumnResizing(width: number, column: TableColumnInternal<unknown>): void {
     this.resizing.emit(this.makeResizeEvent(width, column));
   }
 
-  private makeResizeEvent(width: number, column: TableColumn): ColumnResizeEvent {
+  private makeResizeEvent(
+    width: number,
+    column: TableColumnInternal<unknown>
+  ): ColumnResizeEventInternal {
     if (width <= column.minWidth) {
       width = column.minWidth;
     } else if (width >= column.maxWidth) {
@@ -262,7 +271,7 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
     };
   }
 
-  onColumnReordered(event: ReorderEvent): void {
+  onColumnReordered(event: ReorderEventInternal): void {
     const column = this.getColumn(event.newValue);
     column.isTarget = false;
     column.targetMarkerContext = undefined;
@@ -317,7 +326,7 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
   }
 
   calcNewSorts(
-    column: TableColumn,
+    column: TableColumnInternal,
     prevValue: SortDirection,
     newValue: SortDirection
   ): SortPropDir[] {

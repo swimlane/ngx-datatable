@@ -19,11 +19,10 @@ import { ScrollerComponent } from './scroller.component';
 import { columnGroupWidths, columnsByPin } from '../../utils/column';
 import { RowHeightCache } from '../../utils/row-height-cache';
 import { NgStyle } from '@angular/common';
-import { TableColumn } from '../../types/table-column.type';
 import { DatatableGroupHeaderDirective } from './body-group-header.directive';
 import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive';
 import { DataTableBodyRowComponent } from './body-row.component';
-import { ColumnGroupWidth } from '../../types/internal.types';
+import { ColumnGroupWidth, TableColumnInternal } from '../../types/internal.types';
 import {
   ActivateEvent,
   DragEventData,
@@ -283,7 +282,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   @Input() rowDetail: DatatableRowDetailDirective;
   @Input() groupHeader: DatatableGroupHeaderDirective;
   @Input() selectCheck: (value: TRow, index: number, array: TRow[]) => boolean;
-  @Input() displayCheck: (row: TRow, column: TableColumn, value?: any) => boolean;
+  @Input() displayCheck: (row: TRow, column: TableColumnInternal, value?: any) => boolean;
   @Input() trackByProp: string;
   @Input() rowClass: (row: TRow) => string | Record<string, boolean>;
   @Input() groupedRows: Group<TRow>[];
@@ -325,7 +324,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     return this._rows;
   }
 
-  @Input() set columns(val: TableColumn[]) {
+  @Input() set columns(val: TableColumnInternal[]) {
     if (val !== this._columns) {
       this._columns = val;
       this.updateColumnGroupWidths();
@@ -434,7 +433,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
 
   _rows: TRow[];
   _bodyHeight: string;
-  _columns: TableColumn[];
+  _columns: TableColumnInternal[];
   _rowCount: number;
   _offset: number;
   _pageSize: number;

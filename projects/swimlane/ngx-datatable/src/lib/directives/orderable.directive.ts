@@ -13,9 +13,12 @@ import {
 } from '@angular/core';
 import { DraggableDirective } from './draggable.directive';
 import { DOCUMENT } from '@angular/common';
-import { TableColumn } from '../types/table-column.type';
-import { DraggableDragEvent, TargetChangedEvent } from '../types/internal.types';
-import { ReorderEvent } from '../types/public.types';
+import {
+  DraggableDragEvent,
+  ReorderEventInternal,
+  TableColumnInternal,
+  TargetChangedEvent
+} from '../types/internal.types';
 
 interface OrderPosition {
   left: number;
@@ -31,7 +34,7 @@ interface OrderPosition {
 export class OrderableDirective implements AfterContentInit, OnDestroy {
   private document = inject(DOCUMENT);
 
-  @Output() reorder = new EventEmitter<ReorderEvent>();
+  @Output() reorder = new EventEmitter<ReorderEventInternal>();
   @Output() targetChanged = new EventEmitter<TargetChangedEvent>();
 
   @ContentChildren(DraggableDirective, { descendants: true })
@@ -138,7 +141,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
     element.style.left = 'auto';
   }
 
-  isTarget(model: TableColumn, event: MouseEvent) {
+  isTarget(model: TableColumnInternal, event: MouseEvent) {
     let i = 0;
     const x = event.x || event.clientX;
     const y = event.y || event.clientY;

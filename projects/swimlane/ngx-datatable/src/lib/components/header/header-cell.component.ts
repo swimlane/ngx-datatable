@@ -11,17 +11,16 @@ import {
   Output,
   TemplateRef
 } from '@angular/core';
-import { TableColumn } from '../../types/table-column.type';
 import { nextSortDir } from '../../utils/sort';
 import {
   HeaderCellContext,
-  InnerSortEvent,
   SelectionType,
   SortDirection,
   SortPropDir,
   SortType
 } from '../../types/public.types';
 import { NgTemplateOutlet } from '@angular/common';
+import { InnerSortEvent, TableColumnInternal } from '../../types/internal.types';
 
 @Component({
   selector: 'datatable-header-cell',
@@ -84,13 +83,13 @@ export class DataTableHeaderCellComponent implements OnInit {
 
   @Input() selectionType: SelectionType;
 
-  @Input() set column(column: TableColumn) {
+  @Input() set column(column: TableColumnInternal) {
     this._column = column;
     this.cellContext.column = column;
     this.cd.markForCheck();
   }
 
-  get column(): TableColumn {
+  get column(): TableColumnInternal {
     return this._column;
   }
 
@@ -110,9 +109,12 @@ export class DataTableHeaderCellComponent implements OnInit {
     return this._sorts;
   }
 
-  @Output() sort: EventEmitter<InnerSortEvent> = new EventEmitter();
-  @Output() select: EventEmitter<void> = new EventEmitter();
-  @Output() columnContextmenu = new EventEmitter<{ event: MouseEvent; column: TableColumn }>(false);
+  @Output() sort = new EventEmitter<InnerSortEvent>();
+  @Output() select = new EventEmitter<void>();
+  @Output() columnContextmenu = new EventEmitter<{
+    event: MouseEvent;
+    column: TableColumnInternal;
+  }>(false);
 
   @HostBinding('class')
   get columnCssClasses(): string {
@@ -187,7 +189,7 @@ export class DataTableHeaderCellComponent implements OnInit {
 
   cellContext: HeaderCellContext;
 
-  private _column: TableColumn;
+  private _column: TableColumnInternal;
   private _sorts: SortPropDir[];
 
   constructor() {

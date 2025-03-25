@@ -10,7 +10,7 @@ import {
   Output
 } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
-import { TableColumn } from '../types/table-column.type';
+import { TableColumnInternal } from '../types/internal.types';
 
 @Directive({
   selector: '[long-press]',
@@ -18,11 +18,11 @@ import { TableColumn } from '../types/table-column.type';
 })
 export class LongPressDirective implements OnDestroy {
   @Input({ transform: booleanAttribute }) pressEnabled = true;
-  @Input() pressModel: TableColumn;
+  @Input() pressModel: TableColumnInternal;
   @Input({ transform: numberAttribute }) duration = 500;
 
-  @Output() longPressStart = new EventEmitter<{ event: MouseEvent; model: TableColumn }>();
-  @Output() longPressEnd = new EventEmitter<{ model: TableColumn }>();
+  @Output() longPressStart = new EventEmitter<{ event: MouseEvent; model: TableColumnInternal }>();
+  @Output() longPressEnd = new EventEmitter<{ model: TableColumnInternal }>();
 
   pressing: boolean;
   isLongPressing: boolean;

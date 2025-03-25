@@ -1,10 +1,15 @@
-import { TableColumn, TableColumnGroup } from '../types/table-column.type';
-import { ColumnGroupWidth, PinnedColumns } from '../types/internal.types';
+import { TableColumn } from '../types/table-column.type';
+import {
+  ColumnGroupWidth,
+  PinnedColumns,
+  TableColumnGroup,
+  TableColumnInternal
+} from '../types/internal.types';
 
 /**
  * Returns the columns by pin.
  */
-export function columnsByPin(cols: TableColumn[]) {
+export function columnsByPin(cols: TableColumnInternal[]) {
   const ret: TableColumnGroup = {
     left: [],
     center: [],
@@ -45,7 +50,7 @@ export function columnTotalWidth(columns?: TableColumn[]) {
   return columns?.reduce((total, column) => total + column.width, 0) ?? 0;
 }
 
-export function columnsByPinArr(val: TableColumn[]): PinnedColumns[] {
+export function columnsByPinArr(val: TableColumnInternal[]): PinnedColumns[] {
   const colsByPin = columnsByPin(val);
   return [
     { type: 'left' as const, columns: colsByPin.left },

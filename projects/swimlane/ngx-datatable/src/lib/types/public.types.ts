@@ -10,13 +10,10 @@ export enum SortDirection {
   desc = 'desc'
 }
 
-export interface InnerSortEvent {
+export interface SortEvent {
   column: TableColumn;
   prevValue: SortDirection;
   newValue: SortDirection;
-}
-
-export interface SortEvent extends InnerSortEvent {
   sorts: SortPropDir[];
 }
 
