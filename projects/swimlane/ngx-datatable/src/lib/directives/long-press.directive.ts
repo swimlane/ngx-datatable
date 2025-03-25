@@ -10,7 +10,6 @@ import {
   Output
 } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { TableColumn } from '../types/table-column.type';
 
 @Directive({
@@ -22,17 +21,12 @@ export class LongPressDirective implements OnDestroy {
   @Input() pressModel: TableColumn;
   @Input({ transform: numberAttribute }) duration = 500;
 
-  @Output() longPressStart: EventEmitter<{ event: MouseEvent; model: TableColumn }> =
-    new EventEmitter();
-  @Output() longPressing: EventEmitter<{ event: MouseEvent; model: TableColumn }> =
-    new EventEmitter();
-  @Output() longPressEnd: EventEmitter<{ model: TableColumn }> = new EventEmitter();
+  @Output() longPressStart = new EventEmitter<{ event: MouseEvent; model: TableColumn }>();
+  @Output() longPressEnd = new EventEmitter<{ model: TableColumn }>();
 
   pressing: boolean;
   isLongPressing: boolean;
   timeout: any;
-  mouseX: number = 0;
-  mouseY: number = 0;
 
   subscription: Subscription;
 
@@ -59,14 +53,11 @@ export class LongPressDirective implements OnDestroy {
       return;
     }
 
-    this.mouseX = event.clientX;
-    this.mouseY = event.clientY;
-
     this.pressing = true;
     this.isLongPressing = false;
 
     const mouseup = fromEvent(document, 'mouseup');
-    this.subscription = mouseup.subscribe(() => this.onMouseup());
+    this.subscription = mouseup.subscribe(() => this.endPress());
 
     this.timeout = setTimeout(() => {
       this.isLongPressing = true;
@@ -74,40 +65,7 @@ export class LongPressDirective implements OnDestroy {
         event,
         model: this.pressModel
       });
-
-      this.subscription.add(
-        fromEvent<MouseEvent>(document, 'mousemove')
-          .pipe(takeUntil(mouseup))
-          .subscribe(mouseEvent => this.onMouseMove(mouseEvent))
-      );
-
-      this.loop(event);
     }, this.duration);
-
-    this.loop(event);
-  }
-
-  onMouseMove(event: MouseEvent): void {
-    if (this.pressing && !this.isLongPressing) {
-      const xThres = Math.abs(event.clientX - this.mouseX) > 10;
-      const yThres = Math.abs(event.clientY - this.mouseY) > 10;
-
-      if (xThres || yThres) {
-        this.endPress();
-      }
-    }
-  }
-
-  loop(event: MouseEvent): void {
-    if (this.isLongPressing) {
-      this.timeout = setTimeout(() => {
-        this.longPressing.emit({
-          event,
-          model: this.pressModel
-        });
-        this.loop(event);
-      }, 50);
-    }
   }
 
   endPress(): void {
@@ -119,10 +77,6 @@ export class LongPressDirective implements OnDestroy {
     this.longPressEnd.emit({
       model: this.pressModel
     });
-  }
-
-  onMouseup(): void {
-    this.endPress();
   }
 
   ngOnDestroy(): void {
