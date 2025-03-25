@@ -1,0 +1,36 @@
+:host-context(datatable-footer .selected-count) {
+  .datatable-pager {
+    flex: 1 1 60%;
+  }
+}
+
+:host {
+  flex: 1 1 80%;
+  text-align: right;
+}
+
+.pager,
+.pager li {
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  list-style: none;
+}
+
+.pager {
+  li,
+  li a {
+    outline: none;
+  }
+
+  li {
+    a {
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    &.disabled a {
+      cursor: not-allowed;
+    }
+  }
+}

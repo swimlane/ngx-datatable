@@ -1,0 +1,21 @@
+:host {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+
+.datatable-footer-inner {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.page-count {
+  flex: 1 1 20%;
+}
+
+.selected-count {
+  .page-count {
+    flex: 1 1 40%;
+  }
+}

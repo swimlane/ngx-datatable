@@ -48,6 +48,7 @@ import { NgClass, NgTemplateOutlet } from '@angular/common';
   host: {
     class: 'datatable-footer'
   },
+  styleUrl: './footer.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgClass, NgTemplateOutlet, DataTablePagerComponent]
 })

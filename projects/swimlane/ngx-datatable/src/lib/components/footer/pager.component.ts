@@ -43,6 +43,7 @@ import { Page } from '../../types/internal.types';
   host: {
     class: 'datatable-pager'
   },
+  styleUrl: './pager.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true
 })
