@@ -29,7 +29,7 @@ import {
 
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
 
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { INgxDatatableConfig } from '../ngx-datatable.module';
 import { groupRowsByParents, optionalGetterForProp } from '../utils/tree';
 import { TableColumn } from '../types/table-column.type';
@@ -66,7 +66,6 @@ import {
   SortType,
   TreeStatus
 } from '../types/public.types';
-import { AsyncPipe } from '@angular/common';
 import { DataTableFooterComponent } from './footer/footer.component';
 import { VisibilityDirective } from '../directives/visibility.directive';
 import { ProgressBarComponent } from './body/progress-bar.component';
@@ -98,7 +97,6 @@ import {
     DataTableHeaderComponent,
     DataTableBodyComponent,
     DataTableFooterComponent,
-    AsyncPipe,
     ProgressBarComponent
   ]
 })
@@ -686,7 +684,7 @@ export class DatatableComponent<TRow extends Row = any>
   bodyHeight: number;
   rowCount = 0;
 
-  _offsetX = new BehaviorSubject(0);
+  _offsetX = 0;
   _limit: number | undefined;
   _count = 0;
   _offset = 0;
@@ -997,9 +995,8 @@ export class DatatableComponent<TRow extends Row = any>
    * The body triggered a scroll event.
    */
   onBodyScroll(event: ScrollEvent): void {
-    this._offsetX.next(event.offsetX);
+    this._offsetX = event.offsetX;
     this.scroll.emit(event);
-    this.cd.detectChanges();
   }
 
   /**
