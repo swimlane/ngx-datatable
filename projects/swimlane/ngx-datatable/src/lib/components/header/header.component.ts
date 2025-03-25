@@ -92,6 +92,7 @@ import { OrderableDirective } from '../../directives/orderable.directive';
   host: {
     class: 'datatable-header'
   },
+  styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     OrderableDirective,

@@ -1,0 +1,67 @@
+:host {
+  position: relative;
+  display: inline-block;
+
+  &.sortable {
+    .datatable-header-cell-wrapper {
+      cursor: pointer;
+    }
+  }
+
+  &.longpress .datatable-header-cell-wrapper {
+    cursor: move;
+  }
+}
+
+.datatable-header-cell-template-wrap {
+  height: inherit;
+}
+
+.sort-btn {
+  line-height: 100%;
+  vertical-align: middle;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.resize-handle,
+.resize-handle--not-resizable {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  padding: 0 4px;
+  visibility: hidden;
+}
+
+.resize-handle {
+  cursor: ew-resize;
+
+  :host(.resizeable:hover) & {
+    visibility: visible;
+  }
+}
+
+.resize-handle--not-resizable {
+  :host(:hover) {
+    visibility: visible;
+  }
+}
+
+:host::ng-deep {
+  .targetMarker {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    &.dragFromLeft {
+      right: 0;
+    }
+
+    &.dragFromRight {
+      left: 0;
+    }
+  }
+}
