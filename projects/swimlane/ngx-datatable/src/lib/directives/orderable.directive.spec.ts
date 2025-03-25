@@ -26,24 +26,15 @@ describe('OrderableDirective', () => {
   let fixture: ComponentFixture<TestFixtureComponent>;
   let component: TestFixtureComponent;
 
-  // provide our implementations or mocks to the dependency injector
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [OrderableDirective, TestFixtureComponent, DraggableDirective]
-    });
-  });
-
   beforeEach(waitForAsync(() => {
-    TestBed.compileComponents().then(() => {
-      fixture = TestBed.createComponent(TestFixtureComponent);
-      component = fixture.componentInstance;
-      /* This is required in order to resolve the `ContentChildren`.
-       *  If we don't go through at least on change detection cycle
-       *  the `draggables` will be `undefined` and `ngOnDestroy` will
-       *  fail.
-       */
-      fixture.detectChanges();
-    });
+    fixture = TestBed.createComponent(TestFixtureComponent);
+    component = fixture.componentInstance;
+    /* This is required in order to resolve the `ContentChildren`.
+     *  If we don't go through at least on change detection cycle
+     *  the `draggables` will be `undefined` and `ngOnDestroy` will
+     *  fail.
+     */
+    fixture.detectChanges();
   }));
 
   describe('fixture', () => {

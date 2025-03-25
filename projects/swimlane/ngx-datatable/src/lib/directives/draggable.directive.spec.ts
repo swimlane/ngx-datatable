@@ -16,19 +16,10 @@ describe('DraggableDirective', () => {
   let component: TestFixtureComponent;
   let element: any;
 
-  // provide our implementations or mocks to the dependency injector
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [DraggableDirective, TestFixtureComponent]
-    });
-  });
-
   beforeEach(waitForAsync(() => {
-    TestBed.compileComponents().then(() => {
-      fixture = TestBed.createComponent(TestFixtureComponent);
-      component = fixture.componentInstance;
-      element = fixture.nativeElement;
-    });
+    fixture = TestBed.createComponent(TestFixtureComponent);
+    component = fixture.componentInstance;
+    element = fixture.nativeElement;
   }));
 
   describe('fixture', () => {

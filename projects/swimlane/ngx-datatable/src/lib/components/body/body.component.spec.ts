@@ -1,28 +1,23 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DataTableBodyComponent } from './body.component';
-import { DataTableBodyRowComponent } from './body-row.component';
 import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
-import { By } from '@angular/platform-browser';
 import { DatatableComponentToken } from '../../utils/table-token';
+import { By } from '@angular/platform-browser';
+import { DataTableBodyRowComponent } from './body-row.component';
 
 describe('DataTableBodyComponent', () => {
   let fixture: ComponentFixture<DataTableBodyComponent>;
   let component: DataTableBodyComponent;
 
   // provide our implementations or mocks to the dependency injector
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [DataTableBodyComponent],
       providers: [ScrollbarHelper, { provide: DatatableComponentToken, useValue: {} }]
-    });
+    }).compileComponents();
+    fixture = TestBed.createComponent(DataTableBodyComponent);
+    component = fixture.componentInstance;
   });
-
-  beforeEach(waitForAsync(() => {
-    TestBed.compileComponents().then(() => {
-      fixture = TestBed.createComponent(DataTableBodyComponent);
-      component = fixture.componentInstance;
-    });
-  }));
 
   describe('fixture', () => {
     it('should have a component instance', () => {

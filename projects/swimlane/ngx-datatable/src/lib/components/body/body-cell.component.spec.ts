@@ -9,25 +9,10 @@ describe('DataTableBodyCellComponent', () => {
   let fixture: ComponentFixture<DataTableBodyCellComponent>;
   let component: DataTableBodyCellComponent;
 
-  // provide our implementations or mocks to the dependency injector
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [DataTableBodyCellComponent]
-    });
-  });
-
   beforeEach(waitForAsync(() => {
-    TestBed.compileComponents().then(() => {
-      fixture = TestBed.createComponent(DataTableBodyCellComponent);
-      component = fixture.componentInstance;
-    });
+    fixture = TestBed.createComponent(DataTableBodyCellComponent);
+    component = fixture.componentInstance;
   }));
-
-  describe('fixture', () => {
-    it('should have a component instance', () => {
-      expect(component).toBeTruthy();
-    });
-  });
 
   describe('prop tests', () => {
     // verify there wasn't a mistake where the falsey 0 value

@@ -1,21 +1,34 @@
 import { Component } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-
-import { ColumnChangesService } from '../services/column-changes.service';
-import { NgxDatatableModule } from '../ngx-datatable.module';
 import { DatatableComponent } from './datatable.component';
 import { DataTableBodyRowComponent } from './body/body-row.component';
 import { DataTableBodyCellComponent } from './body/body-cell.component';
 import { DataTableColumnDirective } from './columns/column.directive';
 import { DataTableColumnCellDirective } from './columns/column-cell.directive';
 import { DataTableColumnHeaderDirective } from './columns/column-header.directive';
-
-let fixture: ComponentFixture<any>;
-let component: any;
+import { SortPropDir } from '../types/public.types';
+import { TableColumn } from '../types/table-column.type';
 
 describe('DatatableComponent', () => {
-  beforeEach(waitForAsync(() => setupTest(TestFixtureComponent)));
+  let fixture: ComponentFixture<TestFixtureComponent>;
+  let component: TestFixtureComponent;
+
+  @Component({
+    template: ` <ngx-datatable [columns]="columns" [rows]="rows" [sorts]="sorts"></ngx-datatable> `,
+    imports: [DatatableComponent],
+    standalone: true
+  })
+  class TestFixtureComponent {
+    columns: TableColumn[] = [];
+    rows: Record<string, any>[] = [];
+    sorts: any[] = [];
+  }
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(TestFixtureComponent);
+    component = fixture.componentInstance;
+  });
 
   it('should sort date values', () => {
     const initialRows = [
@@ -35,20 +48,20 @@ describe('DatatableComponent', () => {
     fixture.detectChanges();
 
     // sort by `birthDate` ascending
-    sortBy({ column: 1 });
+    sortBy({ column: 1 }, fixture);
     fixture.detectChanges();
 
-    expect(textContent({ row: 1, column: 1 })).toContain('1978', 'Ascending');
-    expect(textContent({ row: 2, column: 1 })).toContain('1980', 'Ascending');
-    expect(textContent({ row: 3, column: 1 })).toContain('1995', 'Ascending');
+    expect(textContent({ row: 1, column: 1 }, fixture)).toContain('1978');
+    expect(textContent({ row: 2, column: 1 }, fixture)).toContain('1980');
+    expect(textContent({ row: 3, column: 1 }, fixture)).toContain('1995');
 
     // sort by `birthDate` descending
-    sortBy({ column: 1 });
+    sortBy({ column: 1 }, fixture);
     fixture.detectChanges();
 
-    expect(textContent({ row: 1, column: 1 })).toContain('1995', 'Descending');
-    expect(textContent({ row: 2, column: 1 })).toContain('1980', 'Descending');
-    expect(textContent({ row: 3, column: 1 })).toContain('1978', 'Descending');
+    expect(textContent({ row: 1, column: 1 }, fixture)).toContain('1995');
+    expect(textContent({ row: 2, column: 1 }, fixture)).toContain('1980');
+    expect(textContent({ row: 3, column: 1 }, fixture)).toContain('1978');
   });
 
   it('should sort number values', () => {
@@ -65,20 +78,20 @@ describe('DatatableComponent', () => {
     fixture.detectChanges();
 
     // sort by `id` ascending
-    sortBy({ column: 1 });
+    sortBy({ column: 1 }, fixture);
     fixture.detectChanges();
 
-    expect(textContent({ row: 1, column: 1 })).toContain('5', 'Ascending');
-    expect(textContent({ row: 2, column: 1 })).toContain('12', 'Ascending');
-    expect(textContent({ row: 3, column: 1 })).toContain('20', 'Ascending');
+    expect(textContent({ row: 1, column: 1 }, fixture)).toContain('5');
+    expect(textContent({ row: 2, column: 1 }, fixture)).toContain('12');
+    expect(textContent({ row: 3, column: 1 }, fixture)).toContain('20');
 
     // sort by `id` descending
-    sortBy({ column: 1 });
+    sortBy({ column: 1 }, fixture);
     fixture.detectChanges();
 
-    expect(textContent({ row: 1, column: 1 })).toContain('20', 'Descending');
-    expect(textContent({ row: 2, column: 1 })).toContain('12', 'Descending');
-    expect(textContent({ row: 3, column: 1 })).toContain('5', 'Descending');
+    expect(textContent({ row: 1, column: 1 }, fixture)).toContain('20');
+    expect(textContent({ row: 2, column: 1 }, fixture)).toContain('12');
+    expect(textContent({ row: 3, column: 1 }, fixture)).toContain('5');
   });
 
   it('should sort string values', () => {
@@ -99,20 +112,20 @@ describe('DatatableComponent', () => {
     fixture.detectChanges();
 
     // sort by `product` ascending
-    sortBy({ column: 1 });
+    sortBy({ column: 1 }, fixture);
     fixture.detectChanges();
 
-    expect(textContent({ row: 1, column: 1 })).toContain('Bikes', 'Ascending');
-    expect(textContent({ row: 2, column: 1 })).toContain('Computers', 'Ascending');
-    expect(textContent({ row: 3, column: 1 })).toContain('Smartphones', 'Ascending');
+    expect(textContent({ row: 1, column: 1 }, fixture)).toContain('Bikes');
+    expect(textContent({ row: 2, column: 1 }, fixture)).toContain('Computers');
+    expect(textContent({ row: 3, column: 1 }, fixture)).toContain('Smartphones');
 
     // sort by `product` descending
-    sortBy({ column: 1 });
+    sortBy({ column: 1 }, fixture);
     fixture.detectChanges();
 
-    expect(textContent({ row: 1, column: 1 })).toContain('Smartphones', 'Descending');
-    expect(textContent({ row: 2, column: 1 })).toContain('Computers', 'Descending');
-    expect(textContent({ row: 3, column: 1 })).toContain('Bikes', 'Descending');
+    expect(textContent({ row: 1, column: 1 }, fixture)).toContain('Smartphones');
+    expect(textContent({ row: 2, column: 1 }, fixture)).toContain('Computers');
+    expect(textContent({ row: 3, column: 1 }, fixture)).toContain('Bikes');
   });
 
   it('should sort with a custom comparator', () => {
@@ -132,20 +145,20 @@ describe('DatatableComponent', () => {
     fixture.detectChanges();
 
     // sort by `product` ascending
-    sortBy({ column: 1 });
+    sortBy({ column: 1 }, fixture);
     fixture.detectChanges();
 
-    expect(textContent({ row: 1, column: 1 })).toContain('Cars', 'Ascending');
-    expect(textContent({ row: 2, column: 1 })).toContain('Bikes', 'Ascending');
-    expect(textContent({ row: 3, column: 1 })).toContain('Smartphones', 'Ascending');
+    expect(textContent({ row: 1, column: 1 }, fixture)).toContain('Cars');
+    expect(textContent({ row: 2, column: 1 }, fixture)).toContain('Bikes');
+    expect(textContent({ row: 3, column: 1 }, fixture)).toContain('Smartphones');
 
     // sort by `product` descending
-    sortBy({ column: 1 });
+    sortBy({ column: 1 }, fixture);
     fixture.detectChanges();
 
-    expect(textContent({ row: 1, column: 1 })).toContain('Smartphones', 'Descending');
-    expect(textContent({ row: 2, column: 1 })).toContain('Bikes', 'Descending');
-    expect(textContent({ row: 3, column: 1 })).toContain('Cars', 'Descending');
+    expect(textContent({ row: 1, column: 1 }, fixture)).toContain('Smartphones');
+    expect(textContent({ row: 2, column: 1 }, fixture)).toContain('Bikes');
+    expect(textContent({ row: 3, column: 1 }, fixture)).toContain('Cars');
   });
 
   it('should sort using a stable sorting algorithm', () => {
@@ -220,26 +233,26 @@ describe('DatatableComponent', () => {
     fixture.detectChanges();
 
     // sort by `name` ascending
-    sortBy({ column: 1 });
+    sortBy({ column: 1 }, fixture);
     fixture.detectChanges();
 
     // sort by `state` descending
-    sortBy({ column: 2 });
+    sortBy({ column: 2 }, fixture);
     fixture.detectChanges();
-    sortBy({ column: 2 });
+    sortBy({ column: 2 }, fixture);
     fixture.detectChanges();
 
-    expect(textContent({ row: 1, column: 1 })).toContain('amet');
-    expect(textContent({ row: 2, column: 1 })).toContain('dolor');
-    expect(textContent({ row: 3, column: 1 })).toContain('ipsum');
-    expect(textContent({ row: 4, column: 1 })).toContain('lorem');
-    expect(textContent({ row: 5, column: 1 })).toContain('maecennas');
-    expect(textContent({ row: 6, column: 1 })).toContain('sed');
-    expect(textContent({ row: 7, column: 1 })).toContain('foo');
-    expect(textContent({ row: 8, column: 1 })).toContain('bar');
-    expect(textContent({ row: 9, column: 1 })).toContain('cat');
-    expect(textContent({ row: 10, column: 1 })).toContain('sit');
-    expect(textContent({ row: 11, column: 1 })).toContain('man');
+    expect(textContent({ row: 1, column: 1 }, fixture)).toContain('amet');
+    expect(textContent({ row: 2, column: 1 }, fixture)).toContain('dolor');
+    expect(textContent({ row: 3, column: 1 }, fixture)).toContain('ipsum');
+    expect(textContent({ row: 4, column: 1 }, fixture)).toContain('lorem');
+    expect(textContent({ row: 5, column: 1 }, fixture)).toContain('maecennas');
+    expect(textContent({ row: 6, column: 1 }, fixture)).toContain('sed');
+    expect(textContent({ row: 7, column: 1 }, fixture)).toContain('foo');
+    expect(textContent({ row: 8, column: 1 }, fixture)).toContain('bar');
+    expect(textContent({ row: 9, column: 1 }, fixture)).toContain('cat');
+    expect(textContent({ row: 10, column: 1 }, fixture)).toContain('sit');
+    expect(textContent({ row: 11, column: 1 }, fixture)).toContain('man');
   });
 
   it('should sort correctly after push events', () => {
@@ -275,13 +288,13 @@ describe('DatatableComponent', () => {
     fixture.detectChanges();
 
     // sort by `state` descending
-    sortBy({ column: 2 });
+    sortBy({ column: 2 }, fixture);
     fixture.detectChanges();
-    sortBy({ column: 2 });
+    sortBy({ column: 2 }, fixture);
     fixture.detectChanges();
 
     // sort by `name` ascending
-    sortBy({ column: 1 });
+    sortBy({ column: 1 }, fixture);
     fixture.detectChanges();
 
     // mimic new `rows` data pushed to component
@@ -289,22 +302,22 @@ describe('DatatableComponent', () => {
     fixture.detectChanges();
 
     // sort by `state` descending
-    sortBy({ column: 2 });
+    sortBy({ column: 2 }, fixture);
     fixture.detectChanges();
-    sortBy({ column: 2 });
+    sortBy({ column: 2 }, fixture);
     fixture.detectChanges();
 
-    expect(textContent({ row: 1, column: 1 })).toContain('amet');
-    expect(textContent({ row: 2, column: 1 })).toContain('dolor');
-    expect(textContent({ row: 3, column: 1 })).toContain('ipsum');
-    expect(textContent({ row: 4, column: 1 })).toContain('lorem');
-    expect(textContent({ row: 5, column: 1 })).toContain('maecennas');
-    expect(textContent({ row: 6, column: 1 })).toContain('sed');
-    expect(textContent({ row: 7, column: 1 })).toContain('foo');
-    expect(textContent({ row: 8, column: 1 })).toContain('bar');
-    expect(textContent({ row: 9, column: 1 })).toContain('cat');
-    expect(textContent({ row: 10, column: 1 })).toContain('sit');
-    expect(textContent({ row: 11, column: 1 })).toContain('man');
+    expect(textContent({ row: 1, column: 1 }, fixture)).toContain('amet');
+    expect(textContent({ row: 2, column: 1 }, fixture)).toContain('dolor');
+    expect(textContent({ row: 3, column: 1 }, fixture)).toContain('ipsum');
+    expect(textContent({ row: 4, column: 1 }, fixture)).toContain('lorem');
+    expect(textContent({ row: 5, column: 1 }, fixture)).toContain('maecennas');
+    expect(textContent({ row: 6, column: 1 }, fixture)).toContain('sed');
+    expect(textContent({ row: 7, column: 1 }, fixture)).toContain('foo');
+    expect(textContent({ row: 8, column: 1 }, fixture)).toContain('bar');
+    expect(textContent({ row: 9, column: 1 }, fixture)).toContain('cat');
+    expect(textContent({ row: 10, column: 1 }, fixture)).toContain('sit');
+    expect(textContent({ row: 11, column: 1 }, fixture)).toContain('man');
   });
 
   it('should set offset to 0 when sorting by a column', () => {
@@ -326,9 +339,9 @@ describe('DatatableComponent', () => {
     datatableComponent.offset = 1;
 
     // sort by `id` descending
-    sortBy({ column: 1 });
+    sortBy({ column: 1 }, fixture);
     fixture.detectChanges();
-    sortBy({ column: 1 });
+    sortBy({ column: 1 }, fixture);
     fixture.detectChanges();
 
     expect(datatableComponent.offset).toBe(0);
@@ -344,50 +357,86 @@ describe('DatatableComponent', () => {
     component.columns = columns;
     fixture.detectChanges();
 
-    expect(textContent({ row: 1, column: 1 })).toContain('Hello');
-    expect(textContent({ row: 1, column: 2 })).toContain('123');
+    expect(textContent({ row: 1, column: 1 }, fixture)).toContain('Hello');
+    expect(textContent({ row: 1, column: 2 }, fixture)).toContain('123');
   });
 });
 
 describe('DatatableComponent With Custom Templates', () => {
-  beforeEach(waitForAsync(() => setupTest(TestFixtureComponentWithCustomTemplates)));
+  @Component({
+    template: `
+      <ngx-datatable [rows]="rows" [sorts]="sorts">
+        <ngx-datatable-column name="Id" prop="id">
+          <ng-template let-column="column" ngx-datatable-header-template>
+            {{ column.name }}
+          </ng-template>
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row.id }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column [prop]="columnTwoProp">
+          <ng-template let-column="column" ngx-datatable-header-template>
+            {{ column.name }}
+          </ng-template>
+          <ng-template let-row="row" let-column="column" ngx-datatable-cell-template>
+            {{ row[column.prop] }}
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    `,
+    imports: [
+      DatatableComponent,
+      DataTableColumnDirective,
+      DataTableColumnCellDirective,
+      DataTableColumnHeaderDirective
+    ],
+    standalone: true
+  })
+  // eslint-disable-next-line @angular-eslint/component-class-suffix
+  class TestFixtureComponentWithCustomTemplates {
+    rows: Record<string, any>[] = [];
+    sorts: SortPropDir[] = [];
+    columnTwoProp: string;
+  }
+
+  let fixture: ComponentFixture<TestFixtureComponentWithCustomTemplates>;
+  let component: TestFixtureComponentWithCustomTemplates;
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(TestFixtureComponentWithCustomTemplates);
+    component = fixture.componentRef.instance;
+  });
 
   it('should sort when the table is initially rendered if `sorts` are provided', () => {
-    const initialRows = [{ id: 5 }, { id: 20 }, { id: 12 }];
-
-    const sorts = [
+    component.rows = [{ id: 5 }, { id: 20 }, { id: 12 }];
+    component.sorts = [
       {
         prop: 'id',
-        dir: 'asc'
+        dir: 'asc' as const
       }
     ];
-
-    component.rows = initialRows;
-    component.sorts = sorts;
     fixture.detectChanges();
 
-    expect(textContent({ row: 1, column: 1 })).toContain('5', 'Ascending');
-    expect(textContent({ row: 2, column: 1 })).toContain('12', 'Ascending');
-    expect(textContent({ row: 3, column: 1 })).toContain('20', 'Ascending');
+    expect(textContent({ row: 1, column: 1 }, fixture)).toContain('5');
+    expect(textContent({ row: 2, column: 1 }, fixture)).toContain('12');
+    expect(textContent({ row: 3, column: 1 }, fixture)).toContain('20');
   });
 
   it('should reflect changes to input bindings of `ngx-datatable-column`', () => {
-    const initialRows = [
+    /**
+     * initially display `user` column as the second column in the table
+     */
+    component.rows = [
       { id: 5, user: 'Sam', age: 35 },
       { id: 20, user: 'Bob', age: 50 },
       { id: 12, user: 'Joe', age: 60 }
     ];
-
-    /**
-     * initially display `user` column as the second column in the table
-     */
-    component.rows = initialRows;
     component.columnTwoProp = 'user';
     fixture.detectChanges();
 
-    expect(textContent({ row: 1, column: 2 })).toContain('Sam', 'Displays user');
-    expect(textContent({ row: 2, column: 2 })).toContain('Bob', 'Displays user');
-    expect(textContent({ row: 3, column: 2 })).toContain('Joe', 'Displays user');
+    expect(textContent({ row: 1, column: 2 }, fixture)).toContain('Sam');
+    expect(textContent({ row: 2, column: 2 }, fixture)).toContain('Bob');
+    expect(textContent({ row: 3, column: 2 }, fixture)).toContain('Joe');
 
     /**
      * switch to displaying `age` column as the second column in the table
@@ -395,73 +444,16 @@ describe('DatatableComponent With Custom Templates', () => {
     component.columnTwoProp = 'age';
     fixture.detectChanges();
 
-    expect(textContent({ row: 1, column: 2 })).toContain('35', 'Displays age');
-    expect(textContent({ row: 2, column: 2 })).toContain('50', 'Displays age');
-    expect(textContent({ row: 3, column: 2 })).toContain('60', 'Displays age');
+    expect(textContent({ row: 1, column: 2 }, fixture)).toContain('35');
+    expect(textContent({ row: 2, column: 2 }, fixture)).toContain('50');
+    expect(textContent({ row: 3, column: 2 }, fixture)).toContain('60');
   });
 });
-
-@Component({
-  template: ` <ngx-datatable [columns]="columns" [rows]="rows" [sorts]="sorts"></ngx-datatable> `,
-  imports: [DatatableComponent]
-})
-class TestFixtureComponent {
-  columns: any[] = [];
-  rows: any[] = [];
-  sorts: any[] = [];
-}
-
-@Component({
-  template: `
-    <ngx-datatable [rows]="rows" [sorts]="sorts">
-      <ngx-datatable-column name="Id" prop="id">
-        <ng-template let-column="column" ngx-datatable-header-template>
-          {{ column.name }}
-        </ng-template>
-        <ng-template let-row="row" ngx-datatable-cell-template>
-          {{ row.id }}
-        </ng-template>
-      </ngx-datatable-column>
-      <ngx-datatable-column [prop]="columnTwoProp">
-        <ng-template let-column="column" ngx-datatable-header-template>
-          {{ column.name }}
-        </ng-template>
-        <ng-template let-row="row" let-column="column" ngx-datatable-cell-template>
-          {{ row[column.prop] }}
-        </ng-template>
-      </ngx-datatable-column>
-    </ngx-datatable>
-  `,
-  imports: [
-    DatatableComponent,
-    DataTableColumnDirective,
-    DataTableColumnCellDirective,
-    DataTableColumnHeaderDirective
-  ]
-})
-// eslint-disable-next-line @angular-eslint/component-class-suffix
-class TestFixtureComponentWithCustomTemplates {
-  rows: any[] = [];
-  sorts: any[] = [];
-  columnTwoProp: string;
-}
-
-function setupTest(componentClass) {
-  return TestBed.configureTestingModule({
-    imports: [NgxDatatableModule, componentClass],
-    providers: [ColumnChangesService]
-  })
-    .compileComponents()
-    .then(() => {
-      fixture = TestBed.createComponent(componentClass);
-      component = fixture.componentInstance;
-    });
-}
 
 /**
  * mimics the act of a user clicking a column to sort it
  */
-function sortBy({ column }: { column: number }) {
+function sortBy({ column }: { column: number }, fixture: ComponentFixture<unknown>) {
   const columnIndex = column - 1;
   const headerCellDe = fixture.debugElement.queryAll(By.css('datatable-header-cell'))[columnIndex];
   const de = headerCellDe.query(By.css('span:last-child'));
@@ -472,7 +464,10 @@ function sortBy({ column }: { column: number }) {
  * test helper function to return text content of a cell within the
  * body of the ngx-datatable component
  */
-function textContent({ row, column }: { row: number; column: number }) {
+function textContent(
+  { row, column }: { row: number; column: number },
+  fixture: ComponentFixture<unknown>
+) {
   const [rowIndex, columnIndex] = [row - 1, column - 1];
   const bodyRowDe = fixture.debugElement.queryAll(By.directive(DataTableBodyRowComponent))[
     rowIndex

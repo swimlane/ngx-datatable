@@ -6,16 +6,7 @@ describe('DataTablePagerComponent', () => {
   let fixture;
   let pager: DataTablePagerComponent;
 
-  // provide our implementations or mocks to the dependency injector
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      imports: [DataTablePagerComponent]
-    })
-  );
-
   beforeEach(waitForAsync(() => {
-    TestBed.compileComponents();
-
     fixture = TestBed.createComponent(DataTablePagerComponent);
     pager = fixture.componentInstance;
   }));

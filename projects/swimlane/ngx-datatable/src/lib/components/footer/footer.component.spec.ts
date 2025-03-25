@@ -13,7 +13,12 @@ let page: Page;
 describe('DataTableFooterComponent', () => {
   beforeAll(addMatchers);
 
-  beforeEach(waitForAsync(setupTest));
+  beforeEach(waitForAsync(() => {
+    fixture = TestBed.createComponent(TestFixtureComponent);
+    component = fixture.componentInstance;
+    page = new Page();
+    page.detectChangesAndRunQueries();
+  }));
 
   describe('div.datatable-footer-inner', () => {
     it(`should have a height`, () => {
@@ -274,19 +279,6 @@ class TestFixtureComponent {
   onPageEvent() {
     return;
   }
-}
-
-function setupTest() {
-  return TestBed.configureTestingModule({
-    imports: [TestFixtureComponent]
-  })
-    .compileComponents()
-    .then(() => {
-      fixture = TestBed.createComponent(TestFixtureComponent);
-      component = fixture.componentInstance;
-      page = new Page();
-      page.detectChangesAndRunQueries();
-    });
 }
 
 /**
