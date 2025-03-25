@@ -356,7 +356,7 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * Css class overrides
    */
-  @Input() cssClasses: Partial<INgxDatatableConfig['cssClasses']> = {};
+  @Input() cssClasses: Partial<Required<INgxDatatableConfig>['cssClasses']> = {};
 
   /**
    * Message overrides for localization
@@ -370,7 +370,7 @@ export class DatatableComponent<TRow extends Row = any>
    * }
    * ```
    */
-  @Input() messages: Partial<INgxDatatableConfig['messages']> = {};
+  @Input() messages: Partial<Required<INgxDatatableConfig>['messages']> = {};
 
   /**
    * A function which is called with the row and should return either:
