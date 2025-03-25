@@ -815,10 +815,11 @@ export class DatatableComponent<TRow extends Row = any>
 
     originalArray.forEach(item => {
       const key = item[groupBy];
-      if (!map.has(key)) {
+      const value = map.get(key);
+      if (!value) {
         map.set(key, [item]);
       } else {
-        map.get(key).push(item);
+        value.push(item);
       }
       i++;
     });
