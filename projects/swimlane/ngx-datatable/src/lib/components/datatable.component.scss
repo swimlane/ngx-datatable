@@ -12,8 +12,6 @@
   *,
   *:before,
   *:after {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
   }
 
@@ -39,7 +37,7 @@
   &.scroll-horz {
     .datatable-body {
       overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
+      -webkit-overflow-scrolling: touch; // Required for iOS optimization
     }
   }
 
@@ -90,17 +88,7 @@
   .datatable-body-row,
   .datatable-row-center,
   .datatable-header-inner {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
     display: flex;
-
-    flex-direction: row;
-    -webkit-flex-flow: row;
-    -moz-flex-flow: row;
-    -ms-flex-flow: row;
-    -o-flex-flow: row;
     flex-flow: row;
   }
 
@@ -155,18 +143,7 @@
     }
 
     .datatable-row-wrapper {
-      display: -webkit-box;
-      display: -moz-box;
-      display: -ms-flexbox;
-      display: -webkit-flex;
       display: flex;
-
-      -webkit-box-orient: vertical;
-      -webkit-box-direction: normal;
-      -webkit-flex-direction: column;
-      -moz-box-orient: vertical;
-      -moz-box-direction: normal;
-      -ms-flex-direction: column;
       flex-direction: column;
     }
 
@@ -174,10 +151,6 @@
       outline: none;
 
       > div {
-        display: -webkit-box;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
         display: flex;
       }
     }
