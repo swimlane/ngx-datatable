@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MockServerResultsService } from './mock-server-results-service';
 import { Page } from './model/page';
-import { ColumnMode } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ColumnMode, DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
 
 interface PageInfo {
@@ -53,7 +53,8 @@ interface PageInfo {
     </div>
   `,
   styleUrls: ['./paging-virtual.component.scss'],
-  standalone: false
+  standalone: true,
+  imports: [DatatableComponent]
 })
 export class VirtualPagingComponent {
   totalElements: number;

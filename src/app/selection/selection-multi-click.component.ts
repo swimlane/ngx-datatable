@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import {
   ActivateEvent,
   ColumnMode,
+  DatatableComponent,
   SelectEvent,
   SelectionType,
   TableColumn
@@ -60,7 +61,8 @@ import { DataService } from '../data.service';
       </div>
     </div>
   `,
-  standalone: false
+  standalone: true,
+  imports: [DatatableComponent]
 })
 export class MultiClickSelectionComponent {
   rows: Employee[] = [];

@@ -2,6 +2,8 @@ import { Component, inject } from '@angular/core';
 import {
   ActivateEvent,
   ColumnMode,
+  DataTableColumnDirective,
+  DatatableComponent,
   SelectEvent,
   SelectionType
 } from 'projects/swimlane/ngx-datatable/src/public-api';
@@ -78,7 +80,8 @@ import { DataService } from '../data.service';
       </div>
     </div>
   `,
-  standalone: false
+  standalone: true,
+  imports: [DatatableComponent, DataTableColumnDirective]
 })
 export class MultiClickCheckboxSelectionComponent {
   rows: Employee[] = [];

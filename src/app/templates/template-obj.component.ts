@@ -1,5 +1,9 @@
 import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
-import { ColumnMode, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
+import {
+  ColumnMode,
+  DatatableComponent,
+  TableColumn
+} from 'projects/swimlane/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';
 
@@ -42,7 +46,8 @@ import { DataService } from '../data.service';
       </ng-template>
     </div>
   `,
-  standalone: false
+  standalone: true,
+  imports: [DatatableComponent]
 })
 export class TemplateRefTemplatesComponent {
   @ViewChild('editTmpl', { static: true }) editTmpl: TemplateRef<any>;

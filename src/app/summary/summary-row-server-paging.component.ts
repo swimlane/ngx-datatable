@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MockServerResultsService } from '../paging/mock-server-results-service';
 import { Page } from '../paging/model/page';
-import { ColumnMode, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
+import {
+  ColumnMode,
+  DatatableComponent,
+  TableColumn
+} from 'projects/swimlane/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
 
 @Component({
@@ -38,7 +42,8 @@ import { Employee } from '../data.model';
       </ngx-datatable>
     </div>
   `,
-  standalone: false
+  standalone: true,
+  imports: [DatatableComponent]
 })
 export class SummaryRowServerPagingComponent implements OnInit {
   page: Page = {

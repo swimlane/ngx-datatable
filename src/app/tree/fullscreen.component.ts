@@ -1,5 +1,11 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { ColumnMode, TreeStatus } from 'projects/swimlane/ngx-datatable/src/public-api';
+import {
+  ColumnMode,
+  DataTableColumnCellTreeToggle,
+  DataTableColumnDirective,
+  DatatableComponent,
+  TreeStatus
+} from 'projects/swimlane/ngx-datatable/src/public-api';
 import { FullEmployee } from '../data.model';
 import { DataService } from '../data.service';
 
@@ -65,7 +71,8 @@ import { DataService } from '../data.service';
     </div>
   `,
   styles: ['.icon {height: 10px; width: 10px; }', '.disabled {opacity: 0.5; }'],
-  standalone: false
+  standalone: true,
+  imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellTreeToggle]
 })
 export class FullScreenTreeComponent {
   rows: (FullEmployee & { treeStatus: TreeStatus; parentId?: string })[] = [];

@@ -1,7 +1,12 @@
 import { Component, inject, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   ColumnMode,
+  DataTableColumnCellDirective,
+  DataTableColumnDirective,
+  DataTableColumnHeaderDirective,
   DatatableComponent,
+  DatatableRowDetailDirective,
+  DatatableRowDetailTemplateDirective,
   DetailToggleEvents,
   PageEvent
 } from 'projects/swimlane/ngx-datatable/src/public-api';
@@ -118,8 +123,17 @@ import { DataService } from '../data.service';
       columns will be hidden and will appear in the row detail view.
     </div>
   `,
+  // eslint-disable-next-line @angular-eslint/use-component-view-encapsulation
   encapsulation: ViewEncapsulation.None,
-  standalone: false
+  standalone: true,
+  imports: [
+    DatatableComponent,
+    DatatableRowDetailDirective,
+    DatatableRowDetailTemplateDirective,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    DataTableColumnHeaderDirective
+  ]
 })
 export class ResponsiveComponent {
   @ViewChild('myTable') table: DatatableComponent<FullEmployee>;

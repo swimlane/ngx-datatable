@@ -2,6 +2,10 @@ import { Component, inject } from '@angular/core';
 import {
   ActivateEvent,
   ColumnMode,
+  DataTableColumnCellDirective,
+  DataTableColumnDirective,
+  DataTableColumnHeaderDirective,
+  DatatableComponent,
   SelectEvent,
   SelectionType
 } from 'projects/swimlane/ngx-datatable/src/public-api';
@@ -88,7 +92,13 @@ import { DataService } from '../data.service';
       </div>
     </div>
   `,
-  standalone: false
+  standalone: true,
+  imports: [
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnHeaderDirective,
+    DataTableColumnCellDirective
+  ]
 })
 export class CustomCheckboxSelectionComponent {
   rows: Employee[] = [];

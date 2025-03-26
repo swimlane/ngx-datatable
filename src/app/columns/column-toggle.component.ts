@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { ColumnMode, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
+import {
+  ColumnMode,
+  DataTableColumnDirective,
+  DatatableComponent,
+  TableColumn
+} from 'projects/swimlane/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
 
 @Component({
@@ -49,7 +54,8 @@ import { Employee } from '../data.model';
       </div>
     </div>
   `,
-  standalone: false
+  standalone: true,
+  imports: [DatatableComponent, DataTableColumnDirective]
 })
 export class ColumnToggleComponent {
   rows: Employee[] = [

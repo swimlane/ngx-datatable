@@ -1,7 +1,11 @@
 import { Component, inject, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   ColumnMode,
+  DataTableColumnCellDirective,
+  DataTableColumnDirective,
   DatatableComponent,
+  DatatableRowDetailDirective,
+  DatatableRowDetailTemplateDirective,
   DetailToggleEvents,
   PageEvent
 } from 'projects/swimlane/ngx-datatable/src/public-api';
@@ -92,8 +96,16 @@ import { DataService } from '../data.service';
       </ngx-datatable>
     </div>
   `,
+  // eslint-disable-next-line @angular-eslint/use-component-view-encapsulation
   encapsulation: ViewEncapsulation.None,
-  standalone: false
+  standalone: true,
+  imports: [
+    DatatableComponent,
+    DatatableRowDetailDirective,
+    DatatableRowDetailTemplateDirective,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective
+  ]
 })
 export class RowDetailsComponent {
   @ViewChild('myTable') table: DatatableComponent<FullEmployee>;

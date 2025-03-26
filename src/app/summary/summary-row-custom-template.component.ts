@@ -1,5 +1,9 @@
 import { Component, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { ColumnMode, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
+import {
+  ColumnMode,
+  DatatableComponent,
+  TableColumn
+} from 'projects/swimlane/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';
 
@@ -40,7 +44,8 @@ import { DataService } from '../data.service';
     </div>
   `,
   styleUrls: ['./summary-row-custom-template.component.scss'],
-  standalone: false
+  standalone: true,
+  imports: [DatatableComponent]
 })
 export class SummaryRowCustomTemplateComponent implements OnInit {
   rows: Employee[] = [];

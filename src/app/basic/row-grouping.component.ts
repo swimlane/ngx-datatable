@@ -2,7 +2,11 @@ import { Component, inject, ViewChild } from '@angular/core';
 import { GroupedEmployee } from '../data.model';
 import {
   ColumnMode,
+  DataTableColumnCellDirective,
+  DataTableColumnDirective,
   DatatableComponent,
+  DatatableGroupHeaderDirective,
+  DatatableGroupHeaderTemplateDirective,
   Group,
   GroupToggleEvents,
   SelectionType
@@ -146,7 +150,14 @@ import { DataService } from '../data.service';
       </ngx-datatable>
     </div>
   `,
-  standalone: false
+  standalone: true,
+  imports: [
+    DatatableComponent,
+    DatatableGroupHeaderDirective,
+    DatatableGroupHeaderTemplateDirective,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective
+  ]
 })
 export class RowGroupingComponent {
   @ViewChild('myTable') table: DatatableComponent<GroupedEmployee>;

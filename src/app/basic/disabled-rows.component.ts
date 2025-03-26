@@ -1,5 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { ColumnMode, SelectionType } from 'projects/swimlane/ngx-datatable/src/public-api';
+import {
+  ColumnMode,
+  DataTableColumnCellDirective,
+  DataTableColumnDirective,
+  DatatableComponent,
+  DisableRowDirective,
+  SelectionType
+} from 'projects/swimlane/ngx-datatable/src/public-api';
 import { FullEmployee } from '../data.model';
 import { DataService } from '../data.service';
 
@@ -79,7 +86,13 @@ import { DataService } from '../data.service';
       </div>
     </div>
   `,
-  standalone: false
+  standalone: true,
+  imports: [
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    DisableRowDirective
+  ]
 })
 export class DisabledRowsComponent {
   rows: (FullEmployee & { isDisabled?: boolean })[] = [];

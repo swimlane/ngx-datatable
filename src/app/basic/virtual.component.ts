@@ -1,5 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { ColumnMode, PageEvent } from 'projects/swimlane/ngx-datatable/src/public-api';
+import {
+  ColumnMode,
+  DataTableColumnCellDirective,
+  DataTableColumnDirective,
+  DatatableComponent,
+  PageEvent
+} from 'projects/swimlane/ngx-datatable/src/public-api';
 import { FullEmployee } from '../data.model';
 import { DataService } from '../data.service';
 
@@ -42,7 +48,8 @@ import { DataService } from '../data.service';
       </ngx-datatable>
     </div>
   `,
-  standalone: false
+  standalone: true,
+  imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellDirective]
 })
 export class VirtualScrollComponent {
   rows: (FullEmployee & { height: number })[];
