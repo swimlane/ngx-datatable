@@ -67,7 +67,7 @@ export class DataTableHeaderCellComponent implements OnInit {
   @Input() sortDescendingIcon?: string;
   @Input() sortUnsetIcon?: string;
 
-  @Input() isTarget: boolean;
+  @Input() isTarget?: boolean;
   @Input() targetMarkerTemplate: TemplateRef<any>;
   @Input() targetMarkerContext: any;
   @Input() enableClearingSortState = false;
@@ -157,18 +157,18 @@ export class DataTableHeaderCellComponent implements OnInit {
   }
 
   @HostBinding('attr.title')
-  get name(): string {
+  get name(): string | undefined {
     // guaranteed to have a value by setColumnDefaults() in column-helper.ts
     return this.column.headerTemplate === undefined ? this.column.name : undefined;
   }
 
   @HostBinding('style.minWidth.px')
-  get minWidth(): number {
+  get minWidth(): number | undefined {
     return this.column.minWidth;
   }
 
   @HostBinding('style.maxWidth.px')
-  get maxWidth(): number {
+  get maxWidth(): number | undefined {
     return this.column.maxWidth;
   }
 
@@ -181,11 +181,11 @@ export class DataTableHeaderCellComponent implements OnInit {
     return this.column.sortable ? 0 : -1;
   }
 
-  get isCheckboxable(): boolean {
+  get isCheckboxable(): boolean | undefined {
     return this.column.headerCheckboxable;
   }
 
-  sortClass: string;
+  sortClass?: string;
   sortDir: SortDirection;
 
   cellContext: HeaderCellContext;
@@ -253,9 +253,9 @@ export class DataTableHeaderCellComponent implements OnInit {
     });
   }
 
-  calcSortClass(sortDir: SortDirection): string {
+  calcSortClass(sortDir: SortDirection): string | undefined {
     if (!this.cellContext.column.sortable) {
-      return;
+      return undefined;
     }
     if (sortDir === SortDirection.asc) {
       return `sort-btn sort-asc ${this.sortAscendingIcon ?? 'datatable-icon-up'}`;

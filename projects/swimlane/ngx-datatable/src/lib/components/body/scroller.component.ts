@@ -29,11 +29,11 @@ export class ScrollerComponent implements OnInit, OnDestroy {
 
   @HostBinding('style.height.px')
   @Input()
-  scrollHeight: number;
+  scrollHeight?: number;
 
   @HostBinding('style.width.px')
   @Input()
-  scrollWidth: number;
+  scrollWidth?: number;
 
   @Output() scroll: EventEmitter<any> = new EventEmitter();
 
@@ -82,7 +82,7 @@ export class ScrollerComponent implements OnInit, OnDestroy {
     let direction: string;
     if (this.scrollYPos < this.prevScrollYPos) {
       direction = 'down';
-    } else if (this.scrollYPos > this.prevScrollYPos) {
+    } else {
       direction = 'up';
     }
 

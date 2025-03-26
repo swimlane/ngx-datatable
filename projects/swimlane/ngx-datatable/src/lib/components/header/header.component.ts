@@ -260,9 +260,9 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
     width: number,
     column: TableColumnInternal<unknown>
   ): ColumnResizeEventInternal {
-    if (width <= column.minWidth) {
+    if (column.minWidth && width <= column.minWidth) {
       width = column.minWidth;
-    } else if (width >= column.maxWidth) {
+    } else if (column.maxWidth && width >= column.maxWidth) {
       width = column.maxWidth;
     }
     return {

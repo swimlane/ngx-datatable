@@ -439,8 +439,8 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   _pageSize: number;
   _offsetEvent = -1;
 
-  private _draggedRow: RowOrGroup<TRow>;
-  private _draggedRowElement: HTMLElement;
+  private _draggedRow?: RowOrGroup<TRow>;
+  private _draggedRowElement?: HTMLElement;
 
   /**
    * Creates an instance of DataTableBodyComponent.

@@ -90,7 +90,7 @@ export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges
   @Input() group: TRow[];
   @Input() isSelected: boolean;
   @Input() rowIndex: number;
-  @Input() displayCheck: (row: TRow, column: TableColumnInternal, value?: any) => boolean;
+  @Input() displayCheck?: (row: TRow, column: TableColumnInternal, value?: any) => boolean;
   @Input() treeStatus?: TreeStatus = 'collapsed';
   @Input() ghostLoadingIndicator = false;
   @Input() verticalScrollVisible = false;

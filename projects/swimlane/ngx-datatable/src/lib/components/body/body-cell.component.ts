@@ -84,7 +84,7 @@ import { TableColumnInternal } from '../../types/internal.types';
 export class DataTableBodyCellComponent<TRow extends Row = any> implements DoCheck {
   private cd = inject(ChangeDetectorRef);
 
-  @Input() displayCheck: (row: TRow, column: TableColumnInternal, value: any) => boolean;
+  @Input() displayCheck?: (row: TRow, column: TableColumnInternal, value: any) => boolean;
 
   @Input() set disabled(value: boolean) {
     this.cellContext.disabled = value;
@@ -179,7 +179,7 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
     return this._sorts;
   }
 
-  @Input() set treeStatus(status: TreeStatus) {
+  @Input() set treeStatus(status: TreeStatus | undefined) {
     if (
       status !== 'collapsed' &&
       status !== 'expanded' &&
@@ -257,12 +257,12 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
   }
 
   @HostBinding('style.minWidth.px')
-  get minWidth(): number {
+  get minWidth(): number | undefined {
     return this.column.minWidth;
   }
 
   @HostBinding('style.maxWidth.px')
-  get maxWidth(): number {
+  get maxWidth(): number | undefined {
     return this.column.maxWidth;
   }
 
@@ -277,7 +277,7 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
 
   sanitizedValue: string;
   value: any;
-  sortDir: SortDirection;
+  sortDir?: SortDirection;
   isFocused = false;
 
   cellContext: CellContext<TRow>;
@@ -421,16 +421,14 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
     });
   }
 
-  calcSortDir(sorts: SortPropDir[]): SortDirection {
+  calcSortDir(sorts: SortPropDir[]): SortDirection | undefined {
     if (!sorts) {
-      return;
+      return undefined;
     }
 
     const sort = sorts.find(s => s.prop === this.column.prop);
 
-    if (sort) {
-      return sort.dir as SortDirection;
-    }
+    return sort?.dir as SortDirection;
   }
 
   stripHtml(html: string): string {
