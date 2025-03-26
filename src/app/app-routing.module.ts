@@ -1,124 +1,268 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { BasicAutoComponent } from './basic/basic-auto.component';
-import { BasicFixedComponent } from './basic/basic-fixed.component';
-import { FullScreenComponent } from './basic/fullscreen.component';
-import { InlineEditComponent } from './basic/inline.component';
-import { VirtualScrollComponent } from './basic/virtual.component';
-import { ResponsiveComponent } from './basic/responsive.component';
-import { DynamicHeightComponent } from './basic/dynamic-height.component';
-import { PagingScrollingNoVirtualizationComponent } from './paging/paging-scrolling-novirtualization.component';
-import { ColumnFlexComponent } from './columns/column-flex.component';
-import { ColumnToggleComponent } from './columns/column-toggle.component';
-import { ColumnStandardComponent } from './columns/column-standard.component';
-import { ColumnForceComponent } from './columns/column-force.component';
-import { ColumnReorderComponent } from './columns/column-reorder.component';
-import { HorzVertScrollingComponent } from './basic/scrolling.component';
-import { MultipleTablesComponent } from './basic/multiple.component';
-import { RowDetailsComponent } from './basic/row-detail.component';
-import { LiveDataComponent } from './basic/live.component';
-import { RowCssComponent } from './basic/css.component';
-import { DragDropComponent } from './drag-drop/drag-drop.component';
-import { DisabledRowsComponent } from './basic/disabled-rows.component';
-import { FullScreenTreeComponent } from './tree/fullscreen.component';
-import { RowGroupingComponent } from './basic/row-grouping.component';
-import { ClientPagingComponent } from './paging/paging-client.component';
-import { ServerPagingComponent } from './paging/paging-server.component';
-import { ServerScrollingComponent } from './paging/scrolling-server.component';
-import { VirtualPagingComponent } from './paging/paging-virtual.component';
-import { ClientSortingComponent } from './sorting/sorting-client.component';
-import { DefaultSortingComponent } from './sorting/sorting-default.component';
-import { ServerSortingComponent } from './sorting/sorting-server.component';
-import { CellSelectionComponent } from './selection/selection-cell.component';
-import { SingleSelectionComponent } from './selection/selection-single.component';
-import { MultiSelectionComponent } from './selection/selection-multi.component';
-import { MultiClickSelectionComponent } from './selection/selection-multi-click.component';
-import { InlineTemplatesComponent } from './templates/template-dom.component';
-import { ColumnPinningComponent } from './columns/pinning.component';
-import { SummaryRowSimpleComponent } from './summary/summary-row-simple.component';
-import { SummaryRowCustomTemplateComponent } from './summary/summary-row-custom-template.component';
-import { SummaryRowServerPagingComponent } from './summary/summary-row-server-paging.component';
-import { SummaryRowInlineHtmlComponent } from './summary/summary-row-inline-html.component';
-import { ScrollingDynamicallyComponent } from './basic/scrolling-dynamically.component';
-import { FilterComponent } from './basic/filter.component';
-import { TabsDemoComponent } from './basic/tabs.component';
-import { RxDemoComponent } from './basic/rx.component';
-import { ContextMenuDemoComponent } from './basic/contextmenu.component';
-import { FooterDemoComponent } from './basic/footer.component';
-import { BasicEmptyComponent } from './basic/empty.component';
-import { DarkThemeComponent } from './basic/dark-theme.component';
-import { BootstrapThemeComponent } from './basic/bootstrap.component';
-import { ClientTreeComponent } from './tree/client-tree.component';
-import { SortingComparatorComponent } from './sorting/sorting-comparator.component';
-import { MultiDisableSelectionComponent } from './selection/selection-disabled.component';
-import { CheckboxSelectionComponent } from './selection/selection-chkbox.component';
-import { CustomCheckboxSelectionComponent } from './selection/selection-chkbox-template.component';
-import { MultiClickCheckboxSelectionComponent } from './selection/selection-multi-click-chkbox.component';
-import { TemplateRefTemplatesComponent } from './templates/template-obj.component';
+import { Routes } from '@angular/router';
 
-const routes: Routes = [
-  { path: '', component: BasicAutoComponent },
-  { path: 'basic-fixed', component: BasicFixedComponent },
-  { path: 'full-screen', component: FullScreenComponent },
-  { path: 'inline-edit', component: InlineEditComponent },
-  { path: 'virtual-scroll', component: VirtualScrollComponent },
-  { path: 'horz-vert-scrolling', component: HorzVertScrollingComponent },
-  { path: 'scrolling-dynamically', component: ScrollingDynamicallyComponent },
-  { path: 'multiple-tables', component: MultipleTablesComponent },
-  { path: 'row-details', component: RowDetailsComponent },
-  { path: 'responsive', component: ResponsiveComponent },
-  { path: 'filter', component: FilterComponent },
-  { path: 'hidden', component: TabsDemoComponent },
-  { path: 'live', component: LiveDataComponent },
-  { path: 'rx', component: RxDemoComponent },
-  { path: 'contextmenu', component: ContextMenuDemoComponent },
-  { path: 'css', component: RowCssComponent },
-  { path: 'dynamic', component: DynamicHeightComponent },
-  { path: 'footer', component: FooterDemoComponent },
-  { path: 'empty', component: BasicEmptyComponent },
-  { path: 'drag-drop', component: DragDropComponent },
-  { path: 'disabled', component: DisabledRowsComponent },
-  { path: 'dark', component: DarkThemeComponent, data: { dark: true } },
-  { path: 'bootstrap', component: BootstrapThemeComponent },
-  { path: 'fullscreen-tree', component: FullScreenTreeComponent },
-  { path: 'client-tree', component: ClientTreeComponent },
-  { path: 'row-grouping', component: RowGroupingComponent },
-  { path: 'client-paging', component: ClientPagingComponent },
-  { path: 'server-paging', component: ServerPagingComponent },
+export const routes: Routes = [
+  {
+    path: '',
+    loadComponent: () => import('./basic/basic-auto.component').then(c => c.BasicAutoComponent)
+  },
+  {
+    path: 'basic-fixed',
+    loadComponent: () => import('./basic/basic-fixed.component').then(c => c.BasicFixedComponent)
+  },
+  {
+    path: 'full-screen',
+    loadComponent: () => import('./basic/fullscreen.component').then(c => c.FullScreenComponent)
+  },
+  {
+    path: 'inline-edit',
+    loadComponent: () => import('./basic/inline.component').then(c => c.InlineEditComponent)
+  },
+  {
+    path: 'virtual-scroll',
+    loadComponent: () => import('./basic/virtual.component').then(c => c.VirtualScrollComponent)
+  },
+  {
+    path: 'horz-vert-scrolling',
+    loadComponent: () =>
+      import('./basic/scrolling.component').then(c => c.HorzVertScrollingComponent)
+  },
+  {
+    path: 'scrolling-dynamically',
+    loadComponent: () =>
+      import('./basic/scrolling-dynamically.component').then(c => c.ScrollingDynamicallyComponent)
+  },
+  {
+    path: 'multiple-tables',
+    loadComponent: () => import('./basic/multiple.component').then(c => c.MultipleTablesComponent)
+  },
+  {
+    path: 'row-details',
+    loadComponent: () => import('./basic/row-detail.component').then(c => c.RowDetailsComponent)
+  },
+  {
+    path: 'responsive',
+    loadComponent: () => import('./basic/responsive.component').then(c => c.ResponsiveComponent)
+  },
+  {
+    path: 'filter',
+    loadComponent: () => import('./basic/filter.component').then(c => c.FilterComponent)
+  },
+  {
+    path: 'hidden',
+    loadComponent: () => import('./basic/tabs.component').then(c => c.TabsDemoComponent)
+  },
+  {
+    path: 'live',
+    loadComponent: () => import('./basic/live.component').then(c => c.LiveDataComponent)
+  },
+  { path: 'rx', loadComponent: () => import('./basic/rx.component').then(c => c.RxDemoComponent) },
+  {
+    path: 'contextmenu',
+    loadComponent: () =>
+      import('./basic/contextmenu.component').then(c => c.ContextMenuDemoComponent)
+  },
+  {
+    path: 'css',
+    loadComponent: () => import('./basic/css.component').then(c => c.RowCssComponent)
+  },
+  {
+    path: 'dynamic',
+    loadComponent: () =>
+      import('./basic/dynamic-height.component').then(c => c.DynamicHeightComponent)
+  },
+  {
+    path: 'footer',
+    loadComponent: () => import('./basic/footer.component').then(c => c.FooterDemoComponent)
+  },
+  {
+    path: 'empty',
+    loadComponent: () => import('./basic/empty.component').then(c => c.BasicEmptyComponent)
+  },
+  {
+    path: 'drag-drop',
+    loadComponent: () => import('./drag-drop/drag-drop.component').then(c => c.DragDropComponent)
+  },
+  {
+    path: 'disabled',
+    loadComponent: () =>
+      import('./basic/disabled-rows.component').then(c => c.DisabledRowsComponent)
+  },
+  {
+    path: 'dark',
+    loadComponent: () => import('./basic/dark-theme.component').then(c => c.DarkThemeComponent),
+    data: { dark: true }
+  },
+  {
+    path: 'bootstrap',
+    loadComponent: () => import('./basic/bootstrap.component').then(c => c.BootstrapThemeComponent)
+  },
+  {
+    path: 'fullscreen-tree',
+    loadComponent: () => import('./tree/fullscreen.component').then(c => c.FullScreenTreeComponent)
+  },
+  {
+    path: 'client-tree',
+    loadComponent: () => import('./tree/client-tree.component').then(c => c.ClientTreeComponent)
+  },
+  {
+    path: 'row-grouping',
+    loadComponent: () => import('./basic/row-grouping.component').then(c => c.RowGroupingComponent)
+  },
+  {
+    path: 'client-paging',
+    loadComponent: () =>
+      import('./paging/paging-client.component').then(c => c.ClientPagingComponent)
+  },
+  {
+    path: 'server-paging',
+    loadComponent: () =>
+      import('./paging/paging-server.component').then(c => c.ServerPagingComponent)
+  },
   {
     path: 'paging-scrolling-novirtualization',
-    component: PagingScrollingNoVirtualizationComponent
+    loadComponent: () =>
+      import('./paging/paging-scrolling-novirtualization.component').then(
+        c => c.PagingScrollingNoVirtualizationComponent
+      )
   },
-  { path: 'server-scrolling', component: ServerScrollingComponent },
-  { path: 'virtual-paging', component: VirtualPagingComponent },
-  { path: 'client-sorting', component: ClientSortingComponent },
-  { path: 'default-sorting', component: DefaultSortingComponent },
-  { path: 'server-sorting', component: ServerSortingComponent },
-  { path: 'comparator-sorting', component: SortingComparatorComponent },
-  { path: 'cell-selection', component: CellSelectionComponent },
-  { path: 'single-selection', component: SingleSelectionComponent },
-  { path: 'multi-selection', component: MultiSelectionComponent },
-  { path: 'multi-click-selection', component: MultiClickSelectionComponent },
-  { path: 'multidisable-selection', component: MultiDisableSelectionComponent },
-  { path: 'chkbox-selection', component: CheckboxSelectionComponent },
-  { path: 'chkbox-selection-template', component: CustomCheckboxSelectionComponent },
-  { path: 'multi-click-chkbox-selection', component: MultiClickCheckboxSelectionComponent },
-  { path: 'templateref', component: TemplateRefTemplatesComponent },
-  { path: 'inline', component: InlineTemplatesComponent },
-  { path: 'flex', component: ColumnFlexComponent },
-  { path: 'toggle', component: ColumnToggleComponent },
-  { path: 'fixed', component: ColumnStandardComponent },
-  { path: 'force', component: ColumnForceComponent },
-  { path: 'pinning', component: ColumnPinningComponent },
-  { path: 'reorder', component: ColumnReorderComponent },
-  { path: 'simple-summary', component: SummaryRowSimpleComponent },
-  { path: 'custom-template-summary', component: SummaryRowCustomTemplateComponent },
-  { path: 'paging-summary', component: SummaryRowServerPagingComponent },
-  { path: 'inline-html-summary', component: SummaryRowInlineHtmlComponent }
+  {
+    path: 'server-scrolling',
+    loadComponent: () =>
+      import('./paging/scrolling-server.component').then(c => c.ServerScrollingComponent)
+  },
+  {
+    path: 'virtual-paging',
+    loadComponent: () =>
+      import('./paging/paging-virtual.component').then(c => c.VirtualPagingComponent)
+  },
+  {
+    path: 'client-sorting',
+    loadComponent: () =>
+      import('./sorting/sorting-client.component').then(c => c.ClientSortingComponent)
+  },
+  {
+    path: 'default-sorting',
+    loadComponent: () =>
+      import('./sorting/sorting-default.component').then(c => c.DefaultSortingComponent)
+  },
+  {
+    path: 'server-sorting',
+    loadComponent: () =>
+      import('./sorting/sorting-server.component').then(c => c.ServerSortingComponent)
+  },
+  {
+    path: 'comparator-sorting',
+    loadComponent: () =>
+      import('./sorting/sorting-comparator.component').then(c => c.SortingComparatorComponent)
+  },
+  {
+    path: 'cell-selection',
+    loadComponent: () =>
+      import('./selection/selection-cell.component').then(c => c.CellSelectionComponent)
+  },
+  {
+    path: 'single-selection',
+    loadComponent: () =>
+      import('./selection/selection-single.component').then(c => c.SingleSelectionComponent)
+  },
+  {
+    path: 'multi-selection',
+    loadComponent: () =>
+      import('./selection/selection-multi.component').then(c => c.MultiSelectionComponent)
+  },
+  {
+    path: 'multi-click-selection',
+    loadComponent: () =>
+      import('./selection/selection-multi-click.component').then(
+        c => c.MultiClickSelectionComponent
+      )
+  },
+  {
+    path: 'multidisable-selection',
+    loadComponent: () =>
+      import('./selection/selection-disabled.component').then(c => c.MultiDisableSelectionComponent)
+  },
+  {
+    path: 'chkbox-selection',
+    loadComponent: () =>
+      import('./selection/selection-chkbox.component').then(c => c.CheckboxSelectionComponent)
+  },
+  {
+    path: 'chkbox-selection-template',
+    loadComponent: () =>
+      import('./selection/selection-chkbox-template.component').then(
+        c => c.CustomCheckboxSelectionComponent
+      )
+  },
+  {
+    path: 'multi-click-chkbox-selection',
+    loadComponent: () =>
+      import('./selection/selection-multi-click-chkbox.component').then(
+        c => c.MultiClickCheckboxSelectionComponent
+      )
+  },
+  {
+    path: 'templateref',
+    loadComponent: () =>
+      import('./templates/template-obj.component').then(c => c.TemplateRefTemplatesComponent)
+  },
+  {
+    path: 'inline',
+    loadComponent: () =>
+      import('./templates/template-dom.component').then(c => c.InlineTemplatesComponent)
+  },
+  {
+    path: 'flex',
+    loadComponent: () => import('./columns/column-flex.component').then(c => c.ColumnFlexComponent)
+  },
+  {
+    path: 'toggle',
+    loadComponent: () =>
+      import('./columns/column-toggle.component').then(c => c.ColumnToggleComponent)
+  },
+  {
+    path: 'fixed',
+    loadComponent: () =>
+      import('./columns/column-standard.component').then(c => c.ColumnStandardComponent)
+  },
+  {
+    path: 'force',
+    loadComponent: () =>
+      import('./columns/column-force.component').then(c => c.ColumnForceComponent)
+  },
+  {
+    path: 'pinning',
+    loadComponent: () => import('./columns/pinning.component').then(c => c.ColumnPinningComponent)
+  },
+  {
+    path: 'reorder',
+    loadComponent: () =>
+      import('./columns/column-reorder.component').then(c => c.ColumnReorderComponent)
+  },
+  {
+    path: 'simple-summary',
+    loadComponent: () =>
+      import('./summary/summary-row-simple.component').then(c => c.SummaryRowSimpleComponent)
+  },
+  {
+    path: 'custom-template-summary',
+    loadComponent: () =>
+      import('./summary/summary-row-custom-template.component').then(
+        c => c.SummaryRowCustomTemplateComponent
+      )
+  },
+  {
+    path: 'paging-summary',
+    loadComponent: () =>
+      import('./summary/summary-row-server-paging.component').then(
+        c => c.SummaryRowServerPagingComponent
+      )
+  },
+  {
+    path: 'inline-html-summary',
+    loadComponent: () =>
+      import('./summary/summary-row-inline-html.component').then(
+        c => c.SummaryRowInlineHtmlComponent
+      )
+  }
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes, {})],
-  exports: [RouterModule]
-})
-export class AppRoutingModule {}
