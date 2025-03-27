@@ -2,6 +2,12 @@
   position: relative;
   display: inline-block;
 
+  :host-context(ngx-datatable.fixed-header) & {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   &.sortable {
     .datatable-header-cell-wrapper {
       cursor: pointer;

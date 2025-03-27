@@ -6,4 +6,8 @@
 .datatable-header-inner {
   align-items: stretch;
   -webkit-align-items: stretch;
+
+  :host-context(ngx-datatable.fixed-header) & {
+    white-space: nowrap;
+  }
 }
