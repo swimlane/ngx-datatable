@@ -1091,22 +1091,12 @@ export class DatatableComponent<TRow extends Row = any>
       return;
     }
 
-    let idx: number;
-    const cols = this._internalColumns.map((c, i) => {
-      c = { ...c };
-
-      if (c.$$id === column.$$id) {
-        idx = i;
-        c.width = newValue;
-
-        // set this so we can force the column
-        // width distribution to be to this value
-        c.$$oldWidth = newValue;
-      }
-
-      return c;
-    });
-
+    const idx = this._internalColumns.indexOf(column);
+    const cols = this._internalColumns.map(col => ({ ...col }));
+    cols[idx].width = newValue;
+    // set this so we can force the column
+    // width distribution to be to this value
+    cols[idx].$$oldWidth = newValue;
     this.recalculateColumns(cols, idx);
     this._internalColumns = cols;
 
