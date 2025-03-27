@@ -125,7 +125,8 @@ export interface ReorderEvent {
 export interface PageEvent {
   count: number;
   pageSize: number;
-  limit: number;
+  /** @deprecated Use {@link pageSize} instead. */
+  limit: number | undefined;
   offset: number;
 }
 

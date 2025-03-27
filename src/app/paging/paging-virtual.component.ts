@@ -1,15 +1,12 @@
 import { Component } from '@angular/core';
 import { MockServerResultsService } from './mock-server-results-service';
 import { Page } from './model/page';
-import { ColumnMode, DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
+import {
+  ColumnMode,
+  DatatableComponent,
+  PageEvent
+} from 'projects/swimlane/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
-
-interface PageInfo {
-  offset: number;
-  pageSize: number;
-  limit: number;
-  count: number;
-}
 
 @Component({
   selector: 'virtual-paging-demo',
@@ -71,7 +68,7 @@ export class VirtualPagingComponent {
     this.pageNumber = 0;
   }
 
-  setPage(pageInfo: PageInfo) {
+  setPage(pageInfo: PageEvent) {
     // Current page number is determined by last call to setPage
     // This is the page the UI is currently displaying
     // The current page is based on the UI pagesize and scroll position
