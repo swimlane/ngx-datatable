@@ -76,3 +76,11 @@ export interface TableColumnGroup {
   center: TableColumnInternal[];
   right: TableColumnInternal[];
 }
+
+/** Represents the index of a row. */
+export interface RowIndex {
+  /** Index of the row. If the row is inside a group, it will hold the index the group. */
+  index: number;
+  /** Index of a row inside a group. Only present if the row is inside a group. */
+  indexInGroup?: number;
+}

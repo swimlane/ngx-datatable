@@ -19,7 +19,12 @@ import {
 import { columnGroupWidths, columnsByPin, columnsByPinArr } from '../../utils/column';
 import { Keys } from '../../utils/keys';
 import { ActivateEvent, RowOrGroup, TreeStatus } from '../../types/public.types';
-import { ColumnGroupWidth, PinnedColumns, TableColumnInternal } from '../../types/internal.types';
+import {
+  ColumnGroupWidth,
+  PinnedColumns,
+  RowIndex,
+  TableColumnInternal
+} from '../../types/internal.types';
 import { DataTableBodyCellComponent } from './body-cell.component';
 
 @Component({
@@ -89,7 +94,7 @@ export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges
   @Input() row: TRow;
   @Input() group: TRow[];
   @Input() isSelected: boolean;
-  @Input() rowIndex: number;
+  @Input() rowIndex: RowIndex | undefined;
   @Input() displayCheck?: (row: TRow, column: TableColumnInternal, value?: any) => boolean;
   @Input() treeStatus?: TreeStatus = 'collapsed';
   @Input() ghostLoadingIndicator = false;
@@ -103,10 +108,10 @@ export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges
     if (this.isSelected) {
       cls += ' active';
     }
-    if (this.rowIndex % 2 !== 0) {
+    if (this.innerRowIndex % 2 !== 0) {
       cls += ' datatable-row-odd';
     }
-    if (this.rowIndex % 2 === 0) {
+    if (this.innerRowIndex % 2 === 0) {
       cls += ' datatable-row-even';
     }
     if (this.disabled) {
@@ -216,5 +221,10 @@ export class DataTableBodyRowComponent<TRow = any> implements DoCheck, OnChanges
 
   onTreeAction() {
     this.treeAction.emit();
+  }
+
+  /** Returns the row index, or if in a group, the index within a group. */
+  private get innerRowIndex(): number {
+    return this.rowIndex?.indexInGroup ?? this.rowIndex?.index ?? 0;
   }
 }

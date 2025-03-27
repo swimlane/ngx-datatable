@@ -68,6 +68,7 @@ export interface CellContext<TRow = any> {
   rowHeight: number;
   isSelected: boolean;
   rowIndex: number;
+  rowInGroupIndex?: number;
   treeStatus: TreeStatus;
   disabled: boolean;
   onTreeAction: () => void;
