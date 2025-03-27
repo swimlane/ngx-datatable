@@ -49,45 +49,24 @@ export function groupRowsByParents<TRow extends Row>(
   to?: OptionalValueGetter
 ): TRow[] {
   if (from && to) {
-    const nodeById: Record<number, TreeNode<TRow>> = {};
-    const l = rows.length;
-    let node: TreeNode<TRow> | null = null;
+    const treeRows = rows.map(row => new TreeNode(row));
+    const uniqIDs = new Map(treeRows.map(node => [to(node.row), node]));
 
-    nodeById[0] = new TreeNode<TRow>({
-      level: -1,
-      treeStatus: 'expanded'
-    } as unknown as TRow); // that's the root node, TODO: needs type that reflect this
-
-    const uniqIDs = rows.reduce((arr, item) => {
-      const toValue = to(item);
-      if (arr.indexOf(toValue) === -1) {
-        arr.push(toValue);
-      }
-      return arr;
-    }, []);
-
-    for (let i = 0; i < l; i++) {
-      // make TreeNode objects for each item
-      nodeById[to(rows[i])] = new TreeNode(rows[i]);
-    }
-
-    for (let i = 0; i < l; i++) {
-      // link all TreeNode objects
-      node = nodeById[to(rows[i])];
-      let parent = 0;
+    const rootNodes = treeRows.reduce((root, node) => {
       const fromValue = from(node.row);
-      if (!!fromValue && uniqIDs.indexOf(fromValue) > -1) {
-        parent = fromValue;
+      const parent = uniqIDs.get(fromValue);
+      if (parent) {
+        node.row.level = parent.row.level + 1;
+        node.parent = parent;
+        parent.children.push(node);
+      } else {
+        node.row.level = 1;
+        root.push(node);
       }
-      node.parent = nodeById[parent];
-      node.row['level'] = node.parent.row['level'] + 1;
-      node.parent.children.push(node);
-    }
+      return root;
+    }, [] as TreeNode<TRow>[]);
 
-    let resolvedRows: any[] = [];
-    nodeById[0].flatten(row => (resolvedRows = [...resolvedRows, row]));
-
-    return resolvedRows;
+    return rootNodes.flatMap(child => child.flatten());
   } else {
     return rows;
   }
@@ -95,7 +74,7 @@ export function groupRowsByParents<TRow extends Row>(
 
 class TreeNode<TRow extends Row> {
   public row: TRow;
-  public parent: TreeNode<TRow>;
+  public parent?: TreeNode<TRow>;
   public children: TreeNode<TRow>[];
 
   constructor(row: TRow) {
@@ -104,13 +83,11 @@ class TreeNode<TRow extends Row> {
     this.children = [];
   }
 
-  flatten(f: (child: TreeNode<TRow>) => void) {
+  flatten(): TRow[] {
     if (this.row.treeStatus === 'expanded') {
-      for (let i = 0, l = this.children.length; i < l; i++) {
-        const child = this.children[i];
-        f(child);
-        child.flatten(f);
-      }
+      return [this.row, ...this.children.flatMap(child => child.flatten())];
+    } else {
+      return [this.row];
     }
   }
 }
