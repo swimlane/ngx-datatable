@@ -60,6 +60,7 @@ import { DataTableBodyCellComponent } from './body-cell.component';
     </div>
     }
   `,
+  styleUrl: './body-row.component.scss',
   standalone: true,
   imports: [DataTableBodyCellComponent]
 })

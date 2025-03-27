@@ -124,35 +124,4 @@
   .datatable-row-group {
     position: relative;
   }
-
-  /**
-   * Body Styles
-   */
-  .datatable-body {
-    position: relative;
-    z-index: 10;
-    display: block;
-    overflow: hidden;
-
-    .datatable-scroll {
-      display: inline-block;
-    }
-
-    .datatable-row-detail {
-      overflow-y: hidden;
-    }
-
-    .datatable-row-wrapper {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .datatable-body-row {
-      outline: none;
-
-      > div {
-        display: flex;
-      }
-    }
-  }
 }

@@ -253,6 +253,8 @@ import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.compo
   host: {
     class: 'datatable-body'
   },
+  styleUrl: './body.component.scss',
+  standalone: true,
   imports: [
     DataTableGhostLoaderComponent,
     DataTableSelectionComponent,

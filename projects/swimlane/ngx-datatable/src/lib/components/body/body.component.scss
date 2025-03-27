@@ -1,0 +1,10 @@
+:host {
+  position: relative;
+  z-index: 10;
+  display: block;
+  overflow: hidden;
+}
+
+datatable-scroller {
+  display: inline-block;
+}
