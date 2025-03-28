@@ -2,7 +2,6 @@ import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { addMatchers } from '../../test';
 import { DataTablePagerComponent } from './pager.component';
 import { DataTableFooterComponent } from './footer.component';
 
@@ -11,8 +10,6 @@ let component: TestFixtureComponent;
 let page: Page;
 
 describe('DataTableFooterComponent', () => {
-  beforeAll(addMatchers);
-
   beforeEach(waitForAsync(() => {
     fixture = TestBed.createComponent(TestFixtureComponent);
     component = fixture.componentInstance;
@@ -33,14 +30,14 @@ describe('DataTableFooterComponent', () => {
       component.selectedCount = 1;
       page.detectChangesAndRunQueries();
 
-      expect(page.datatableFooterInner.nativeElement).toHaveCssClass('selected-count');
+      expect(page.datatableFooterInner.nativeElement).toHaveClass('selected-count');
     });
 
     it('should not have `.selected-count` class if selectedMessage is not set', () => {
       component.selectedMessage = undefined;
       page.detectChangesAndRunQueries();
 
-      expect(page.datatableFooterInner.nativeElement).not.toHaveCssClass('selected-count');
+      expect(page.datatableFooterInner.nativeElement).not.toHaveClass('selected-count');
     });
   });
 
@@ -203,11 +200,11 @@ describe('DataTableFooterComponent', () => {
       page.detectChangesAndRunQueries();
       const listItems = page.templateList.queryAll(By.css('li'));
 
-      expect(listItems[0].nativeElement).toHaveText('rowCount 12');
-      expect(listItems[1].nativeElement).toHaveText('pageSize 1');
-      expect(listItems[2].nativeElement).toHaveText('selectedCount 4');
-      expect(listItems[3].nativeElement).toHaveText('curPage 1');
-      expect(listItems[4].nativeElement).toHaveText('offset 0');
+      expect(listItems[0].nativeElement.innerHTML).toContain('rowCount 12');
+      expect(listItems[1].nativeElement.innerHTML).toContain('pageSize 1');
+      expect(listItems[2].nativeElement.innerHTML).toContain('selectedCount 4');
+      expect(listItems[3].nativeElement.innerHTML).toContain('curPage 1');
+      expect(listItems[4].nativeElement.innerHTML).toContain('offset 0');
     });
   });
 });
