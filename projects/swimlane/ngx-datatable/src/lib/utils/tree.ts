@@ -60,7 +60,7 @@ export function groupRowsByParents<TRow extends Row>(
         node.parent = parent;
         parent.children.push(node);
       } else {
-        node.row.level = 1;
+        node.row.level = 0;
         root.push(node);
       }
       return root;
