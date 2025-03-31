@@ -73,7 +73,7 @@ import { DatatableBodyRowDirective } from './body-row.directive';
       (select)="select.emit($event)"
       (activate)="activate.emit($event)"
     >
-      @if (rows?.length) {
+      @if (rows.length) {
         <datatable-scroller
           [scrollbarV]="scrollbarV"
           [scrollbarH]="scrollbarH"
@@ -316,9 +316,6 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     if (val !== this._offset) {
       this._offset = val;
       if (!this.scrollbarV || (this.scrollbarV && !this.virtualization)) {
-        if (!isNaN(this._offset) && this.ghostLoadingIndicator) {
-          this.rows = [];
-        }
         this.recalcLayout();
       }
     }
@@ -730,7 +727,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
    * @returns the CSS3 style to be applied
    */
   bottomSummaryRowsStyles = computed(() => {
-    if (!this.scrollbarV || !this.rows || !this.rows.length || !this.rowsToRender()) {
+    if (!this.scrollbarV || !this.rows.length || !this.rowsToRender()) {
       return null;
     }
 
@@ -789,7 +786,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     this.rowHeightsCache().clearCache();
 
     // Initialize the tree only if there are rows inside the tree.
-    if (this.rows && this.rows.length) {
+    if (this.rows.length) {
       const rowExpansions = new Set<TRow>();
       if (this.rowDetail) {
         for (const row of this.rows) {

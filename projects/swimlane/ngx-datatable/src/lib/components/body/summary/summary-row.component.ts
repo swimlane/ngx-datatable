@@ -51,7 +51,7 @@ export class DataTableSummaryRowComponent implements OnChanges {
   summaryRow: any = {};
 
   ngOnChanges() {
-    if (!this.columns || !this.rows) {
+    if (!this.columns.length || !this.rows.length) {
       return;
     }
     this.updateInternalColumns();

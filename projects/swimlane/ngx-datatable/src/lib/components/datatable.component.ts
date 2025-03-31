@@ -117,7 +117,7 @@ export class DatatableComponent<TRow extends Row = any>
    * Rows that are displayed in the table.
    */
   @Input() set rows(val: TRow[] | null | undefined) {
-    this._rows = val;
+    this._rows = val ?? [];
     // This will ensure that datatable detects changes on doing like this rows = [...rows];
     this.rowDiffer.diff([] as any);
     if (val) {
@@ -307,7 +307,7 @@ export class DatatableComponent<TRow extends Row = any>
     this._ghostLoadingIndicator = val;
     if (val && this.scrollbarV && !this.externalPaging) {
       // in case where we don't have predefined total page length
-      this.rows = [...(this.rows ?? []), undefined]; // undefined row will render ghost cell row at the end of the page
+      this.rows = [...this.rows, undefined]; // undefined row will render ghost cell row at the end of the page
     }
   }
   get ghostLoadingIndicator(): boolean {
@@ -688,9 +688,9 @@ export class DatatableComponent<TRow extends Row = any>
   _limit: number | undefined;
   _count = 0;
   _offset = 0;
-  _rows: TRow[] | null | undefined;
+  _rows: TRow[];
   _groupRowsBy: keyof TRow;
-  _internalRows: TRow[];
+  _internalRows: TRow[] = [];
   _internalColumns: TableColumnInternal<TRow>[];
   _columns: TableColumn[];
   _subscriptions: Subscription[] = [];
@@ -1052,10 +1052,6 @@ export class DatatableComponent<TRow extends Row = any>
    */
   calcRowCount(): number {
     if (!this.externalPaging) {
-      if (!this.rows) {
-        return 0;
-      }
-
       if (this.groupedRows) {
         return this.groupedRows.length;
       } else if (this.treeFromRelation != null && this.treeToRelation != null) {

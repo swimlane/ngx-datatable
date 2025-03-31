@@ -56,6 +56,7 @@ describe('DataTableSummaryRowComponent', () => {
 
   describe('Visibility', () => {
     it('should not be visible when there are no columns', () => {
+      component.columns = [];
       component.rows = rows;
       triggerChange();
       expect(element.query(By.css('datatable-body-row'))).toBeNull();
@@ -63,6 +64,7 @@ describe('DataTableSummaryRowComponent', () => {
 
     it('should not be visible when there are no rows', () => {
       component.columns = columns;
+      component.rows = [];
       triggerChange();
       expect(element.query(By.css('datatable-body-row'))).toBeNull();
     });
