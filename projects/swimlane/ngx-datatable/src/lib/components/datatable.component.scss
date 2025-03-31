@@ -32,16 +32,6 @@
   }
 
   /**
-   * Horizontal Scrolling Adjustments
-   */
-  &.scroll-horz {
-    .datatable-body {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch; // Required for iOS optimization
-    }
-  }
-
-  /**
    * Fixed row height adjustments
    */
   &.fixed-row {

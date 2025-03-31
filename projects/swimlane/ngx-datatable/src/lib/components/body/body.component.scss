@@ -3,6 +3,11 @@
   z-index: 10;
   display: block;
   overflow: hidden;
+
+  :host-context(ngx-datatable.scroll-horz) & {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; // Required for iOS optimization
+  }
 }
 
 datatable-scroller {
