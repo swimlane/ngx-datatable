@@ -1,6 +1,10 @@
 :host {
   outline: none;
 
+  :host-context(ngx-datatable.fixed-row) & {
+    white-space: nowrap;
+  }
+
   > div {
     display: flex;
   }

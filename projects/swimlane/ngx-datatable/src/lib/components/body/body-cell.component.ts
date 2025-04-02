@@ -78,6 +78,7 @@ import { RowIndex, TableColumnInternal } from '../../types/internal.types';
     <ghost-loader [columns]="[column]" [pageSize]="1"></ghost-loader>
     } }
   `,
+  styleUrl: './body-cell.component.scss',
   standalone: true,
   imports: [NgTemplateOutlet, DataTableGhostLoaderComponent]
 })

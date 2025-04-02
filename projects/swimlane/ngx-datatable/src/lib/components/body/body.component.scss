@@ -12,4 +12,8 @@
 
 datatable-scroller {
   display: block;
+
+  :host-context(ngx-datatable.fixed-row) & {
+    white-space: nowrap;
+  }
 }

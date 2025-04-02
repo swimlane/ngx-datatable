@@ -32,25 +32,6 @@
   }
 
   /**
-   * Fixed row height adjustments
-   */
-  &.fixed-row {
-    .datatable-scroll {
-      white-space: nowrap;
-
-      .datatable-body-row {
-        white-space: nowrap;
-
-        .datatable-body-cell {
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-        }
-      }
-    }
-  }
-
-  /**
    * Shared Styles
    */
   .datatable-body-row,
