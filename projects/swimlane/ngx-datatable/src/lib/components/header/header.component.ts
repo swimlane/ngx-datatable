@@ -46,7 +46,7 @@ import { OrderableDirective } from '../../directives/orderable.directive';
       [style.width.px]="_columnGroupWidths.total"
       class="datatable-header-inner"
     >
-      @for (colGroup of _columnsByPin; track colGroup.type) {
+      @for (colGroup of _columnsByPin; track colGroup.type) { @if (colGroup.columns.length) {
       <div [class]="'datatable-row-' + colGroup.type" [ngStyle]="_styleByGroup[colGroup.type]">
         @for (column of colGroup.columns; track column.$$id) {
         <datatable-header-cell
@@ -83,7 +83,7 @@ import { OrderableDirective } from '../../directives/orderable.directive';
         </datatable-header-cell>
         }
       </div>
-      }
+      } }
     </div>
   `,
   host: {

@@ -31,7 +31,7 @@ import { DataTableBodyCellComponent } from './body-cell.component';
   selector: 'datatable-body-row',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    @for (colGroup of _columnsByPin; track colGroup.type) {
+    @for (colGroup of _columnsByPin; track colGroup.type) { @if (colGroup.columns.length) {
     <div
       class="datatable-row-{{ colGroup.type }} datatable-row-group"
       [style.width.px]="_columnGroupWidths[colGroup.type]"
@@ -58,7 +58,7 @@ import { DataTableBodyCellComponent } from './body-cell.component';
       </datatable-body-cell>
       }
     </div>
-    }
+    } }
   `,
   styleUrl: './body-row.component.scss',
   standalone: true,
