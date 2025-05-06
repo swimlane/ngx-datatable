@@ -2,13 +2,10 @@
 
 ## HEAD (unreleased)
 
-## 21.0.0-alpha.1
+## 21.0.0
 
-- Fix: Add missing package files from deployment.
-
-## 21.0.0-alpha.0
-
-- Breaking: support for angular 19
+- Fix: Add missing package files from deployment
+- Breaking: support for angular 17-19
 
 ## 20.1.0
 

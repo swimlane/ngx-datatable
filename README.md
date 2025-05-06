@@ -55,7 +55,7 @@ Run `yarn build` to build the project. The build artifacts will be stored in the
 - Examine log to determine next version (X.Y.Z)
 - Run `git checkout -b release/X.Y.Z`
 - Update version in `projects/swimlane/ngx-datatable/package.json`.
-- Update changelog in `projects/swimlane/ngx-datatable/docs/CHANGELOG.md`
+- Update changelog in `docs/CHANGELOG.md`
 - Run `yarn package` to build the package
 - Run `git commit -am "(release): X.Y.Z"`
 - Run `git tag X.Y.Z`
