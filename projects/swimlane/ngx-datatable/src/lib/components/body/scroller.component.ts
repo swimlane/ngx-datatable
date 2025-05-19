@@ -9,7 +9,8 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  Renderer2
+  Renderer2,
+  HostListener
 } from '@angular/core';
 
 @Component({
@@ -34,6 +35,8 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   @HostBinding('style.width.px')
   @Input()
   scrollWidth: number;
+  /** Difference between inner width and offset width */
+  resizeDiff = 0;
 
   @Output() scroll: EventEmitter<any> = new EventEmitter();
 
@@ -45,6 +48,26 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   parentElement: HTMLElement;
 
   private _scrollEventListener: any = null;
+
+  /**
+   * Decrease scrollWidth by window scrollbar width.
+   *
+   * If browser window scrollbar appears, method reduces scrollWidth for a width of that scrollbar
+   */
+  @HostListener('window:resize')
+  onWindowResize() {
+    if (this.scrollbarV || this.scrollbarH) {
+      if (document.documentElement.scrollHeight !== document.documentElement.clientHeight) {
+        if (this.resizeDiff === 0) {
+          this.resizeDiff = window.innerWidth - document.body.offsetWidth;
+          this.scrollWidth = this.scrollWidth - this.resizeDiff;
+        }
+      } else {
+        this.scrollWidth = this.scrollWidth + this.resizeDiff;
+        this.resizeDiff = 0;
+      }
+    }
+  }
 
   ngOnInit(): void {
     // manual bind so we don't always listen
