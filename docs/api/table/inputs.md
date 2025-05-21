@@ -62,7 +62,23 @@ Static messages in the table you can override for localization.
   totalMessage: 'total',
 
   // Footer selected message
-  selectedMessage: 'selected'
+  selectedMessage: 'selected',
+
+  // Pager screen reader message for the first page button
+  ariaFirstPageMessage: 'go to first page',
+
+  // Pager screen reader message for the previous page button
+  ariaPreviousPageMessage: 'go to previous page',
+
+  // Pager screen reader message for the n-th page button.
+  // It will be rendered as: `{{ariaPageNMessage}} {{n}}`.
+  ariaPageNMessage: 'page',
+
+  // Pager screen reader message for the next page button
+  ariaNextPageMessage: 'go to next page',
+
+  // Pager screen reader message for the last page button
+  ariaLastPageMessage: 'go to last page'
 }
 ```
 

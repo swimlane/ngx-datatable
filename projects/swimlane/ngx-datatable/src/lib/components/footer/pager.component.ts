@@ -1,40 +1,63 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output
+} from '@angular/core';
 import { PagerPageEvent } from '../../types/public.types';
 import { Page } from '../../types/internal.types';
+import { DatatableComponent } from '../datatable.component';
 
 @Component({
   selector: 'datatable-pager',
   template: `
     <ul class="pager">
       <li [class.disabled]="!canPrevious()">
-        <a role="button" aria-label="go to first page" (click)="selectPage(1)">
+        <a
+          role="button"
+          [attr.aria-label]="messages.ariaFirstPageMessage ?? 'go to first page'"
+          (click)="selectPage(1)"
+        >
           <i class="{{ pagerPreviousIcon ?? 'datatable-icon-prev' }}"></i>
         </a>
       </li>
       <li [class.disabled]="!canPrevious()">
-        <a role="button" aria-label="go to previous page" (click)="prevPage()">
+        <a
+          role="button"
+          [attr.aria-label]="messages.ariaPreviousPageMessage ?? 'go to previous page'"
+          (click)="prevPage()"
+        >
           <i class="{{ pagerLeftArrowIcon ?? 'datatable-icon-left' }}"></i>
         </a>
       </li>
       @for (pg of pages; track pg.number) {
       <li
-        role="button"
-        [attr.aria-label]="'page ' + pg.number"
+        [attr.aria-label]="(messages.ariaPageNMessage ?? 'page') + ' ' + pg.number"
         class="pages"
         [class.active]="pg.number === page"
       >
-        <a (click)="selectPage(pg.number)">
+        <a role="button" (click)="selectPage(pg.number)">
           {{ pg.text }}
         </a>
       </li>
       }
       <li [class.disabled]="!canNext()">
-        <a role="button" aria-label="go to next page" (click)="nextPage()">
+        <a
+          role="button"
+          [attr.aria-label]="messages.ariaNextPageMessage ?? 'go to next page'"
+          (click)="nextPage()"
+        >
           <i class="{{ pagerRightArrowIcon ?? 'datatable-icon-right' }}"></i>
         </a>
       </li>
       <li [class.disabled]="!canNext()">
-        <a role="button" aria-label="go to last page" (click)="selectPage(totalPages)">
+        <a
+          role="button"
+          [attr.aria-label]="messages.ariaLastPageMessage ?? 'go to last page'"
+          (click)="selectPage(totalPages)"
+        >
           <i class="{{ pagerNextIcon ?? 'datatable-icon-skip' }}"></i>
         </a>
       </li>
@@ -47,6 +70,12 @@ import { Page } from '../../types/internal.types';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTablePagerComponent {
+  private dataTable = inject(DatatableComponent, { optional: true });
+
+  get messages(): DatatableComponent['messages'] {
+    return this.dataTable?.messages ?? {};
+  }
+
   @Input() pagerLeftArrowIcon?: string;
   @Input() pagerRightArrowIcon?: string;
   @Input() pagerPreviousIcon?: string;

@@ -1,9 +1,12 @@
-import { TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { DataTablePagerComponent } from './pager.component';
+import { By } from '@angular/platform-browser';
+import { ChangeDetectorRef, DebugElement } from '@angular/core';
+import type { DatatableComponent } from '../datatable.component';
 
 describe('DataTablePagerComponent', () => {
-  let fixture;
+  let fixture: ComponentFixture<DataTablePagerComponent>;
   let pager: DataTablePagerComponent;
 
   beforeEach(waitForAsync(() => {
@@ -240,6 +243,88 @@ describe('DataTablePagerComponent', () => {
     xit('should return empty array if specified page does not exist', () => {
       const pages = pager.calcPages(16);
       expect(pages.length).toEqual(0);
+    });
+  });
+
+  describe('localisation', () => {
+    let firstButton: DebugElement;
+    let previousButton: DebugElement;
+    let nextButton: DebugElement;
+    let lastButton: DebugElement;
+    let pageButtons: { button: DebugElement; page: number }[];
+    beforeEach(() => {
+      pager.size = 10;
+      pager.count = 100;
+      fixture.detectChanges();
+      [firstButton, previousButton, nextButton, lastButton] = fixture.debugElement
+        .queryAll(By.css('a[role=button]'))
+        .filter(it => !it.parent.classes['pages']);
+      pageButtons = fixture.debugElement
+        .queryAll(By.css('li.pages'))
+        .map((button, index) => ({ button, page: index + 1 }));
+    });
+
+    function ariaLabel(element: DebugElement): string | null {
+      return element?.attributes['aria-label'] ?? null;
+    }
+
+    describe('has default values without messages from table', () => {
+      it('first button', () => {
+        expect(ariaLabel(firstButton)).toEqual('go to first page');
+      });
+
+      it('previous button', () => {
+        expect(ariaLabel(previousButton)).toEqual('go to previous page');
+      });
+
+      it('next button', () => {
+        expect(ariaLabel(nextButton)).toEqual('go to next page');
+      });
+
+      it('last button', () => {
+        expect(ariaLabel(lastButton)).toEqual('go to last page');
+      });
+
+      it('page buttons', () => {
+        for (const { button, page } of pageButtons) {
+          expect(ariaLabel(button)).withContext(`${page} button`).toEqual(`page ${page}`);
+        }
+      });
+    });
+
+    describe('takes messages-overrides from table', () => {
+      function setMessages(messages: DatatableComponent['messages']) {
+        (pager as any).dataTable = { messages };
+        // do a change detection on the real changeDetectionRef
+        fixture.componentRef.injector.get(ChangeDetectorRef).detectChanges();
+      }
+
+      it('first button', () => {
+        setMessages({ ariaFirstPageMessage: 'link: first page' });
+        expect(ariaLabel(firstButton)).toEqual('link: first page');
+      });
+
+      it('previous button', () => {
+        setMessages({ ariaPreviousPageMessage: 'link: previous page' });
+        expect(ariaLabel(previousButton)).toEqual('link: previous page');
+      });
+
+      it('next button', () => {
+        setMessages({ ariaNextPageMessage: 'link: next page' });
+        expect(ariaLabel(nextButton)).toEqual('link: next page');
+      });
+
+      it('last button', () => {
+        setMessages({ ariaLastPageMessage: 'link: last page' });
+        expect(ariaLabel(lastButton)).toEqual('link: last page');
+      });
+
+      it('page buttons', () => {
+        setMessages({ ariaPageNMessage: 'link: page' });
+        for (const { button, page } of pageButtons) {
+          expect(ariaLabel(button)).withContext(`${page} button`).toEqual(`link: page ${page}`);
+        }
+      });
     });
   });
 });

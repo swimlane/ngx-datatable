@@ -364,7 +364,12 @@ export class DatatableComponent<TRow extends Row = any>
    * {
    *   emptyMessage: 'No data to display',
    *   totalMessage: 'total',
-   *   selectedMessage: 'selected'
+   *   selectedMessage: 'selected',
+   *   ariaFirstPageMessage: 'go to first page',
+   *   ariaPreviousPageMessage: 'go to previous page',
+   *   ariaPageNMessage: 'page',
+   *   ariaNextPageMessage: 'go to next page',
+   *   ariaLastPageMessage: 'go to last page'
    * }
    * ```
    */
