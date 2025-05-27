@@ -18,8 +18,7 @@ import { DataTableColumnGhostCellDirective } from './column-ghost-cell.directive
 import { CellContext, HeaderCellContext } from '../../types/public.types';
 
 @Directive({
-  selector: 'ngx-datatable-column',
-  standalone: true
+  selector: 'ngx-datatable-column'
 })
 export class DataTableColumnDirective<TRow> implements TableColumn, OnChanges {
   private columnChangesService = inject(ColumnChangesService);

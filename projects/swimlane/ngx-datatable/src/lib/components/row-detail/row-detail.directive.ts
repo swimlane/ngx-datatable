@@ -3,8 +3,7 @@ import { DatatableRowDetailTemplateDirective } from './row-detail-template.direc
 import { DetailToggleEvents, RowDetailContext } from '../../types/public.types';
 
 @Directive({
-  selector: 'ngx-datatable-row-detail',
-  standalone: true
+  selector: 'ngx-datatable-row-detail'
 })
 export class DatatableRowDetailDirective<TRow = any> {
   /**

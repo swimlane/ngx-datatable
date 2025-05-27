@@ -44,8 +44,7 @@ import { Page } from '../../types/internal.types';
     class: 'datatable-pager'
   },
   styleUrl: './pager.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTablePagerComponent {
   @Input() pagerLeftArrowIcon?: string;

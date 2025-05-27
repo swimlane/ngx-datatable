@@ -13,8 +13,7 @@ import { fromEvent, Subscription } from 'rxjs';
 import { TableColumnInternal } from '../types/internal.types';
 
 @Directive({
-  selector: '[long-press]',
-  standalone: true
+  selector: '[long-press]'
 })
 export class LongPressDirective implements OnDestroy {
   @Input({ transform: booleanAttribute }) pressEnabled = true;

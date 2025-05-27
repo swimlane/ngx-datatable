@@ -1,8 +1,7 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-  selector: '[ngx-datatable-ghost-cell-template]',
-  standalone: true
+  selector: '[ngx-datatable-ghost-cell-template]'
 })
 export class DataTableColumnGhostCellDirective {
   static ngTemplateContextGuard(

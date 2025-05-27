@@ -23,8 +23,7 @@ import { DraggableDragEvent, TableColumnInternal } from '../types/internal.types
  *
  */
 @Directive({
-  selector: '[draggable]',
-  standalone: true
+  selector: '[draggable]'
 })
 export class DraggableDirective implements OnDestroy, OnChanges {
   @Input() dragEventTarget: any;

@@ -2,8 +2,7 @@ import { Directive } from '@angular/core';
 import { Row } from '../../types/public.types';
 
 @Directive({
-  selector: '[ngx-datatable-body-row]',
-  standalone: true
+  selector: '[ngx-datatable-body-row]'
 })
 export class DatatableBodyRowDirective {
   static ngTemplateContextGuard<TRow extends Row = any>(

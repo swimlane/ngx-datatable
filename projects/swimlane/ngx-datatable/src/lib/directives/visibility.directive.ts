@@ -22,8 +22,7 @@ import {
  *
  */
 @Directive({
-  selector: '[visibilityObserver]',
-  standalone: true
+  selector: '[visibilityObserver]'
 })
 export class VisibilityDirective implements OnInit, OnDestroy {
   private element = inject(ElementRef);

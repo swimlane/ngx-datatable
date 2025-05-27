@@ -36,8 +36,7 @@ export class DatatableRowDefComponent {
 }
 
 @Directive({
-  selector: '[rowDef]',
-  standalone: true
+  selector: '[rowDef]'
 })
 export class DatatableRowDefDirective {
   static ngTemplateContextGuard(
@@ -52,8 +51,7 @@ export class DatatableRowDefDirective {
  * @internal To be used internally by ngx-datatable.
  */
 @Directive({
-  selector: '[rowDefInternal]',
-  standalone: true
+  selector: '[rowDefInternal]'
 })
 export class DatatableRowDefInternalDirective implements OnInit {
   vc = inject(ViewContainerRef);

@@ -2,8 +2,7 @@ import { Directive } from '@angular/core';
 import { RowDetailContext } from '../../types/public.types';
 
 @Directive({
-  selector: '[ngx-datatable-row-detail-template]',
-  standalone: true
+  selector: '[ngx-datatable-row-detail-template]'
 })
 export class DatatableRowDetailTemplateDirective {
   static ngTemplateContextGuard(

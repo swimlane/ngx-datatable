@@ -3,8 +3,7 @@ import { DatatableGroupHeaderTemplateDirective } from './body-group-header-templ
 import { Group, GroupContext, GroupToggleEvents } from '../../types/public.types';
 
 @Directive({
-  selector: 'ngx-datatable-group-header',
-  standalone: true
+  selector: 'ngx-datatable-group-header'
 })
 export class DatatableGroupHeaderDirective<TRow = any> {
   /**

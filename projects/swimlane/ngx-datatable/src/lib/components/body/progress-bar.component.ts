@@ -9,7 +9,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       </div>
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProgressBarComponent {}

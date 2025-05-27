@@ -2,8 +2,7 @@ import { Directive, inject, TemplateRef } from '@angular/core';
 import { CellContext } from '../../types/public.types';
 
 @Directive({
-  selector: '[ngx-datatable-cell-template]',
-  standalone: true
+  selector: '[ngx-datatable-cell-template]'
 })
 export class DataTableColumnCellDirective {
   template = inject<TemplateRef<CellContext>>(TemplateRef);
