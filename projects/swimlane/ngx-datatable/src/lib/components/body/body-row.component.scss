@@ -1,11 +1,13 @@
 :host {
+  display: flex;
   outline: none;
 
   :host-context(ngx-datatable.fixed-row) & {
     white-space: nowrap;
   }
+}
 
-  > div {
-    display: flex;
-  }
+.datatable-row-group {
+  display: flex;
+  position: relative;
 }

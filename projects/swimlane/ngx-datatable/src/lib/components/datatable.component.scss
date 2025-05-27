@@ -31,16 +31,6 @@
     }
   }
 
-  /**
-   * Shared Styles
-   */
-  .datatable-body-row,
-  .datatable-row-center,
-  .datatable-header-inner {
-    display: flex;
-    flex-flow: row;
-  }
-
   .datatable-body-cell,
   .datatable-header-cell {
     overflow-x: hidden;
@@ -51,26 +41,5 @@
     &:focus {
       outline: none;
     }
-  }
-
-  .datatable-row-left,
-  .datatable-row-right,
-  .datatable-group-header {
-    z-index: 9;
-    position: sticky !important;
-  }
-
-  .datatable-row-left,
-  .datatable-group-header {
-    left: 0;
-  }
-
-  .datatable-row-right {
-    right: 0;
-  }
-
-  .datatable-row-center,
-  .datatable-row-group {
-    position: relative;
   }
 }
