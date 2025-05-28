@@ -44,10 +44,8 @@ describe('DraggableDirective', () => {
 
       beforeEach(() => {
         element.classList.add('draggable');
-        mouseDown = <MouseEvent>{
-          target: element,
-          preventDefault: () => {}
-        };
+        mouseDown = new MouseEvent('mousedown');
+        Object.defineProperty(mouseDown, 'target', { value: element });
       });
 
       // or else the document:mouseup event can fire again when resizing.

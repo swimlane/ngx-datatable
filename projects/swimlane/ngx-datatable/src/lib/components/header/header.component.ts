@@ -133,7 +133,7 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
   @Input() reorderable: boolean;
   @Input() verticalScrollVisible = false;
 
-  dragEventTarget?: MouseEvent;
+  dragEventTarget?: MouseEvent | TouchEvent;
 
   @HostBinding('style.height')
   @Input()
@@ -212,7 +212,13 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
     this.destroyed = true;
   }
 
-  onLongPressStart({ event, model }: { event: MouseEvent; model: TableColumnInternal<unknown> }) {
+  onLongPressStart({
+    event,
+    model
+  }: {
+    event: MouseEvent | TouchEvent;
+    model: TableColumnInternal<unknown>;
+  }) {
     model.dragging = true;
     this.dragEventTarget = event;
   }

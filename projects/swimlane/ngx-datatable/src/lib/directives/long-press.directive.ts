@@ -2,47 +2,46 @@ import {
   booleanAttribute,
   Directive,
   EventEmitter,
-  HostBinding,
-  HostListener,
   Input,
   numberAttribute,
   OnDestroy,
-  Output
+  Output,
+  signal
 } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
 import { TableColumnInternal } from '../types/internal.types';
 
 @Directive({
-  selector: '[long-press]'
+  selector: '[long-press]',
+  host: {
+    '(touchstart)': 'onMouseDown($event)',
+    '(mousedown)': 'onMouseDown($event)',
+    '[class.press]': 'pressing()',
+    '[class.longpress]': 'isLongPressing()'
+  }
 })
 export class LongPressDirective implements OnDestroy {
   @Input({ transform: booleanAttribute }) pressEnabled = true;
   @Input() pressModel: TableColumnInternal;
   @Input({ transform: numberAttribute }) duration = 500;
 
-  @Output() longPressStart = new EventEmitter<{ event: MouseEvent; model: TableColumnInternal }>();
+  @Output() longPressStart = new EventEmitter<{
+    event: MouseEvent | TouchEvent;
+    model: TableColumnInternal;
+  }>();
   @Output() longPressEnd = new EventEmitter<{ model: TableColumnInternal }>();
 
-  pressing: boolean;
-  isLongPressing: boolean;
+  pressing = signal(false);
+  isLongPressing = signal(false);
   timeout: any;
 
   subscription: Subscription;
 
-  @HostBinding('class.press')
-  get press(): boolean {
-    return this.pressing;
-  }
+  onMouseDown(event: MouseEvent | TouchEvent): void {
+    const isMouse = event instanceof MouseEvent;
 
-  @HostBinding('class.longpress')
-  get isLongPress(): boolean {
-    return this.isLongPressing;
-  }
-
-  @HostListener('mousedown', ['$event'])
-  onMouseDown(event: MouseEvent): void {
     // don't do right/middle clicks
-    if (event.which !== 1 || !this.pressEnabled) {
+    if (!this.pressEnabled || (isMouse && event.button !== 0)) {
       return;
     }
 
@@ -52,14 +51,14 @@ export class LongPressDirective implements OnDestroy {
       return;
     }
 
-    this.pressing = true;
-    this.isLongPressing = false;
+    this.pressing.set(true);
+    this.isLongPressing.set(false);
 
-    const mouseup = fromEvent(document, 'mouseup');
+    const mouseup = fromEvent(document, isMouse ? 'mouseup' : 'touchend');
     this.subscription = mouseup.subscribe(() => this.endPress());
 
     this.timeout = setTimeout(() => {
-      this.isLongPressing = true;
+      this.isLongPressing.set(true);
       this.longPressStart.emit({
         event,
         model: this.pressModel
@@ -69,8 +68,8 @@ export class LongPressDirective implements OnDestroy {
 
   endPress(): void {
     clearTimeout(this.timeout);
-    this.isLongPressing = false;
-    this.pressing = false;
+    this.isLongPressing.set(false);
+    this.pressing.set(false);
     this._destroySubscription();
 
     this.longPressEnd.emit({

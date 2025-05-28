@@ -40,7 +40,7 @@ export interface Page {
 }
 
 export interface DraggableDragEvent {
-  event: MouseEvent;
+  event: MouseEvent | TouchEvent;
   element: HTMLElement;
   model: TableColumnInternal;
 }

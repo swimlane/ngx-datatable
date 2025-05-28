@@ -49,6 +49,19 @@
     visibility: visible;
   }
 }
+:host {
+  @media (hover: none) {
+    touch-action: none;
+
+    .resize-handle {
+      visibility: visible;
+    }
+
+    .datatable-header-cell-label.draggable {
+      user-select: none;
+    }
+  }
+}
 
 .resize-handle--not-resizable {
   :host(:hover) {

@@ -19,6 +19,7 @@ import {
   TableColumnInternal,
   TargetChangedEvent
 } from '../types/internal.types';
+import { getPositionFromEvent } from '../utils/events';
 
 interface OrderPosition {
   left: number;
@@ -140,11 +141,10 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
     element.style.left = 'auto';
   }
 
-  isTarget(model: TableColumnInternal, event: MouseEvent) {
+  isTarget(model: TableColumnInternal, event: MouseEvent | TouchEvent) {
     let i = 0;
-    const x = event.x || event.clientX;
-    const y = event.y || event.clientY;
-    const targets = this.document.elementsFromPoint(x, y);
+    const { clientX, clientY } = getPositionFromEvent(event);
+    const targets = this.document.elementsFromPoint(clientX, clientY);
 
     for (const id in this.positions) {
       // current column position which throws event.
