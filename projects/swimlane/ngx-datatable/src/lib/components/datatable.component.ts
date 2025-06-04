@@ -693,7 +693,7 @@ export class DatatableComponent<TRow extends Row = any>
   _limit: number | undefined;
   _count = 0;
   _offset = 0;
-  _rows: TRow[];
+  _rows: TRow[] = [];
   _groupRowsBy: keyof TRow;
   _internalRows: TRow[] = [];
   _internalColumns: TableColumnInternal<TRow>[];
