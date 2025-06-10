@@ -22,13 +22,6 @@
     .datatable-body {
       overflow-y: auto;
     }
-    &.virtualized {
-      .datatable-body {
-        .datatable-row-wrapper {
-          position: absolute;
-        }
-      }
-    }
   }
 
   .datatable-body-cell,

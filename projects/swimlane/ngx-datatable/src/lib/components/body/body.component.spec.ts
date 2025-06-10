@@ -144,20 +144,4 @@ describe('DataTableBodyComponent', () => {
       expect(rows[1].classes['row-disabled']).toBeTrue();
     });
   });
-
-  describe('Summary row', () => {
-    it('should not return custom styles for a bottom summary row if a scrollbar mode is off', () => {
-      const styles = component.bottomSummaryRowsStyles();
-      expect(styles).toBeFalsy();
-    });
-
-    it('should return custom styles for a bottom summary row if a scrollbar mode is on', () => {
-      component.rowHeight = 50;
-      component.scrollbarV = true;
-      component.virtualization = true;
-      component.rows = [{ num: 1 }, { num: 2 }, { num: 3 }, { num: 4 }];
-      const styles = component.bottomSummaryRowsStyles();
-      expect(styles).toBeDefined();
-    });
-  });
 });

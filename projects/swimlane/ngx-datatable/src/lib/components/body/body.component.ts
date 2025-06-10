@@ -18,7 +18,7 @@ import {
 import { ScrollerComponent } from './scroller.component';
 import { columnGroupWidths, columnsByPin } from '../../utils/column';
 import { RowHeightCache } from '../../utils/row-height-cache';
-import { NgStyle, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { DatatableGroupHeaderDirective } from './body-group-header.directive';
 import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive';
 import { DataTableBodyRowComponent } from './body-row.component';
@@ -118,83 +118,84 @@ import { Keys } from '../../utils/keys';
           </datatable-body-row>
         </ng-template>
 
-        @for (group of rowsToRender(); track rowTrackingFn(i, group); let i = $index) {
-          @let disabled = isRow(group) && disableRowCheck && disableRowCheck(group);
-          <!-- $any(group) is needed as the typing is broken and the feature as well. See #147. -->
-          <!-- FIXME: This has to be revisited and fixed. -->
-          <datatable-row-wrapper
-            [attr.hidden]="
-              ghostLoadingIndicator && (!rowCount || !virtualization || !scrollbarV) ? true : null
-            "
-            [groupedRows]="groupedRows"
-            [innerWidth]="innerWidth"
-            [ngStyle]="rowsStyles()[i]"
-            [rowDetail]="rowDetail"
-            [groupHeader]="groupHeader"
-            [offsetX]="offsetX"
-            [detailRowHeight]="getDetailRowHeight(group && $any(group)[i], i)"
-            [groupHeaderRowHeight]="getGroupHeaderRowHeight(group && $any(group)[i], i)"
-            [row]="group"
-            [disabled]="disabled"
-            [expanded]="getRowExpanded(group)"
-            [rowIndex]="getRowIndex(group && $any(group)[i])?.index ?? 0"
-            [selected]="selected"
-            (rowContextmenu)="rowContextmenu.emit($event)"
-          >
-            @if (rowDefTemplate) {
-              <ng-container
-                *rowDefInternal="
-                  {
-                    template: rowDefTemplate,
-                    rowTemplate: bodyRow,
-                    row: group,
-                    index: i
-                  };
-                  disabled: disabled
-                "
-              />
-            } @else {
-              @if (isRow(group)) {
+        <div [style.transform]="renderOffset()">
+          @for (group of rowsToRender(); track rowTrackingFn(i, group); let i = $index) {
+            @let disabled = isRow(group) && disableRowCheck && disableRowCheck(group);
+            <!-- $any(group) is needed as the typing is broken and the feature as well. See #147. -->
+            <!-- FIXME: This has to be revisited and fixed. -->
+            <datatable-row-wrapper
+              [attr.hidden]="
+                ghostLoadingIndicator && (!rowCount || !virtualization || !scrollbarV) ? true : null
+              "
+              [groupedRows]="groupedRows"
+              [innerWidth]="innerWidth"
+              [style.width]="groupedRows ? columnGroupWidths.total : undefined"
+              [rowDetail]="rowDetail"
+              [groupHeader]="groupHeader"
+              [offsetX]="offsetX"
+              [detailRowHeight]="getDetailRowHeight(group && $any(group)[i], i)"
+              [groupHeaderRowHeight]="getGroupHeaderRowHeight(group && $any(group)[i], i)"
+              [row]="group"
+              [disabled]="disabled"
+              [expanded]="getRowExpanded(group)"
+              [rowIndex]="getRowIndex(group && $any(group)[i])?.index ?? 0"
+              [selected]="selected"
+              (rowContextmenu)="rowContextmenu.emit($event)"
+            >
+              @if (rowDefTemplate) {
                 <ng-container
-                  [ngTemplateOutlet]="bodyRow"
-                  [ngTemplateOutletContext]="{
-                    row: group,
-                    index: i,
-                    disabled
-                  }"
-                ></ng-container>
+                  *rowDefInternal="
+                    {
+                      template: rowDefTemplate,
+                      rowTemplate: bodyRow,
+                      row: group,
+                      index: i
+                    };
+                    disabled: disabled
+                  "
+                />
+              } @else {
+                @if (isRow(group)) {
+                  <ng-container
+                    [ngTemplateOutlet]="bodyRow"
+                    [ngTemplateOutletContext]="{
+                      row: group,
+                      index: i,
+                      disabled
+                    }"
+                  ></ng-container>
+                }
               }
-            }
 
-            @if (isGroup(group)) {
-              <!-- The row typecast is due to angular compiler acting weird. It is obvious that it is of type TRow, but the compiler does not understand. -->
-              @for (row of group.value; track rowTrackingFn(i, row); let i = $index) {
-                @let disabled = disableRowCheck && disableRowCheck(row);
-                <ng-container
-                  [ngTemplateOutlet]="bodyRow"
-                  [ngTemplateOutletContext]="{
-                    row,
-                    groupedRows: group?.value,
-                    index: i,
-                    disabled
-                  }"
-                ></ng-container>
+              @if (isGroup(group)) {
+                <!-- The row typecast is due to angular compiler acting weird. It is obvious that it is of type TRow, but the compiler does not understand. -->
+                @for (row of group.value; track rowTrackingFn(i, row); let i = $index) {
+                  @let disabled = disableRowCheck && disableRowCheck(row);
+                  <ng-container
+                    [ngTemplateOutlet]="bodyRow"
+                    [ngTemplateOutletContext]="{
+                      row,
+                      groupedRows: group?.value,
+                      index: i,
+                      disabled
+                    }"
+                  ></ng-container>
+                }
               }
-            }
-          </datatable-row-wrapper>
-        }
-        @if (summaryRow && summaryPosition === 'bottom') {
-          <datatable-summary-row
-            role="row"
-            [ngStyle]="bottomSummaryRowsStyles()"
-            [rowHeight]="summaryHeight"
-            [innerWidth]="innerWidth"
-            [rows]="rows"
-            [columns]="columns"
-          >
-          </datatable-summary-row>
-        }
+            </datatable-row-wrapper>
+          }
+        </div>
       </datatable-scroller>
+      @if (summaryRow && summaryPosition === 'bottom') {
+        <datatable-summary-row
+          role="row"
+          [rowHeight]="summaryHeight"
+          [innerWidth]="innerWidth"
+          [rows]="rows"
+          [columns]="columns"
+        >
+        </datatable-summary-row>
+      }
     }
     @if (!rows?.length && !loadingIndicator && !ghostLoadingIndicator) {
       <datatable-scroller
@@ -219,7 +220,6 @@ import { Keys } from '../../utils/keys';
     ScrollerComponent,
     DataTableSummaryRowComponent,
     DataTableRowWrapperComponent,
-    NgStyle,
     DatatableRowDefInternalDirective,
     DataTableBodyRowComponent,
     DraggableDirective,
@@ -650,77 +650,18 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   };
 
   /**
-   * Calculates the styles for the row so that the rows can be moved in 2D space
-   * during virtual scroll inside the DOM.   In the below case the Y position is
-   * manipulated.   As an example, if the height of row 0 is 30 px and row 1 is
-   * 100 px then following styles are generated:
-   *
-   * transform: translate3d(0px, 0px, 0px);    ->  row0
-   * transform: translate3d(0px, 30px, 0px);   ->  row1
-   * transform: translate3d(0px, 130px, 0px);  ->  row2
-   *
-   * Row heights have to be calculated based on the row heights cache as we wont
-   * be able to determine which row is of what height before hand.  In the above
-   * case the positionY of the translate3d for row2 would be the sum of all the
-   * heights of the rows before it (i.e. row0 and row1).
-   *
-   * @returns the CSS3 style to be applied
+   * Calculates the offset of the rendered rows.
+   * As virtual rows are not shown, we have to move all rendered rows
+   * by the total size of previous non-rendered rows.
+   * If each row has a size of 10px and the first 10 rows are not rendered due to scroll,
+   * then we have a renderOffset of 100px.
    */
-  rowsStyles = computed(() => {
-    const rowsStyles: NgStyle['ngStyle'][] = [];
-    this.rowsToRender().forEach((rows, index) => {
-      const styles: NgStyle['ngStyle'] = {};
-
-      // only add styles for the group if there is a group
-      if (this.groupedRows) {
-        styles.width = this.columnGroupWidths.total;
-      }
-
-      if (this.scrollbarV && this.virtualization) {
-        let idx = 0;
-
-        if (Array.isArray(rows)) {
-          // Get the latest row rowindex in a group
-          const row = rows[rows.length - 1];
-          // The group row, which has always a numeric index
-          idx = row ? this.getRowIndex(row).index : 0;
-        } else {
-          if (rows) {
-            // normal rows always have a numeric index
-            idx = this.getRowIndex(rows).index;
-          } else {
-            // When ghost cells are enabled use index to get the position of them
-            idx = this.indexes().first + index;
-          }
-        }
-
-        // const pos = idx * rowHeight;
-        // The position of this row would be the sum of all row heights
-        // until the previous row position.
-        styles.transform = `translateY(${this.rowHeightsCache().query(idx - 1)}px)`;
-      }
-      rowsStyles.push(styles);
-    });
-    return rowsStyles;
-  });
-
-  /**
-   * Calculate bottom summary row offset for scrollbar mode.
-   * For more information about cache and offset calculation
-   * see description for `rowsStyles` signal
-   *
-   * @returns the CSS3 style to be applied
-   */
-  bottomSummaryRowsStyles = computed(() => {
-    if (!this.scrollbarV || !this.rows.length || !this.rowsToRender()) {
-      return null;
+  renderOffset = computed(() => {
+    if (this.scrollbarV && this.virtualization) {
+      return `translateY(${this.rowHeightsCache().query(this.indexes().first - 1)}px)`;
+    } else {
+      return '';
     }
-
-    const pos = this.rowHeightsCache().query(this.rows.length - 1);
-    return {
-      transform: `translateY(${pos}px)`,
-      position: 'absolute'
-    };
   });
 
   /**
