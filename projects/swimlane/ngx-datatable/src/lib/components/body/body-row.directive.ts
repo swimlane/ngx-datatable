@@ -12,6 +12,7 @@ export class DatatableBodyRowDirective {
     row: TRow;
     groupedRows: TRow[];
     index: number;
+    indexInGroup?: number;
     disabled: boolean;
   } {
     return true;

@@ -35,8 +35,8 @@ export class RowHeightCache {
       rowHeight,
       detailRowHeight,
       externalVirtual,
+      indexOffset,
       rowCount,
-      rowIndexes,
       rowExpansions
     } = details;
     const isFn = typeof rowHeight === 'function';
@@ -72,7 +72,7 @@ export class RowHeightCache {
       const expanded = rowExpansions.has(row);
       if (row && expanded) {
         if (isDetailFn) {
-          const index = rowIndexes.get(row);
+          const index = indexOffset + i;
           currentRowHeight += detailRowHeight(row, index);
         } else {
           currentRowHeight += detailRowHeight;
