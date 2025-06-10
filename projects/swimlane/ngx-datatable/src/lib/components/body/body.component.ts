@@ -37,9 +37,10 @@ import { DraggableDirective } from '../../directives/draggable.directive';
 import { DatatableRowDefInternalDirective } from './body-row-def.component';
 import { DataTableRowWrapperComponent } from './body-row-wrapper.component';
 import { DataTableSummaryRowComponent } from './summary/summary-row.component';
-import { DataTableSelectionComponent } from './selection.component';
 import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.component';
 import { DatatableBodyRowDirective } from './body-row.directive';
+import { selectRows, selectRowsBetween } from '../../utils/selection';
+import { Keys } from '../../utils/keys';
 
 @Component({
   selector: 'datatable-body',
@@ -61,166 +62,151 @@ import { DatatableBodyRowDirective } from './body-row.directive';
       >
       </ghost-loader>
     }
-    <datatable-selection
-      #selector
-      [selected]="selected"
-      [rows]="rows"
-      [selectCheck]="selectCheck"
-      [disableCheck]="disableRowCheck"
-      [selectEnabled]="selectEnabled"
-      [selectionType]="selectionType"
-      [rowIdentity]="rowIdentity"
-      (select)="select.emit($event)"
-      (activate)="activate.emit($event)"
-    >
-      @if (rows.length) {
-        <datatable-scroller
-          [scrollbarV]="scrollbarV"
-          [scrollbarH]="scrollbarH"
-          [scrollHeight]="scrollHeight()"
-          [scrollWidth]="columnGroupWidths?.total"
-          (scroll)="onBodyScroll($event)"
-        >
-          @if (summaryRow && summaryPosition === 'top') {
-            <datatable-summary-row
-              [rowHeight]="summaryHeight"
-              [offsetX]="offsetX"
-              [innerWidth]="innerWidth"
-              [rows]="rows"
-              [columns]="columns"
-            >
-            </datatable-summary-row>
-          }
-          <ng-template
-            ngx-datatable-body-row
-            #bodyRow
-            let-row="row"
-            let-rowIndex="index"
-            let-groupedRows="groupedRows"
-            let-disabled="disabled"
+    @if (rows.length) {
+      <datatable-scroller
+        [scrollbarV]="scrollbarV"
+        [scrollbarH]="scrollbarH"
+        [scrollHeight]="scrollHeight()"
+        [scrollWidth]="columnGroupWidths?.total"
+        (scroll)="onBodyScroll($event)"
+      >
+        @if (summaryRow && summaryPosition === 'top') {
+          <datatable-summary-row
+            [rowHeight]="summaryHeight"
+            [innerWidth]="innerWidth"
+            [rows]="rows"
+            [columns]="columns"
           >
-            <datatable-body-row
-              role="row"
-              tabindex="-1"
-              #rowElement
-              [disabled]="disabled"
-              [isSelected]="selector.getRowSelected(row)"
-              [innerWidth]="innerWidth"
-              [columns]="columns"
-              [rowHeight]="getRowHeight(row)"
-              [row]="row"
-              [group]="groupedRows"
-              [rowIndex]="getRowIndex(row)"
-              [expanded]="getRowExpanded(row)"
-              [rowClass]="rowClass"
-              [displayCheck]="displayCheck"
-              [treeStatus]="row?.treeStatus"
-              [ghostLoadingIndicator]="ghostLoadingIndicator"
-              [draggable]="rowDraggable"
-              [verticalScrollVisible]="verticalScrollVisible"
-              (treeAction)="onTreeAction(row)"
-              (activate)="selector.onActivate($event, rowIndex ?? indexes().first + rowIndex)"
-              (drop)="drop($event, row, rowElement)"
-              (dragover)="dragOver($event, row)"
-              (dragenter)="dragEnter($event, row, rowElement)"
-              (dragleave)="dragLeave($event, row, rowElement)"
-              (dragstart)="drag($event, row, rowElement)"
-              (dragend)="dragEnd($event, row)"
-            >
-            </datatable-body-row>
-          </ng-template>
-
-          @for (group of rowsToRender(); track rowTrackingFn(i, group); let i = $index) {
-            @let disabled = isRow(group) && disableRowCheck && disableRowCheck(group);
-            <!-- $any(group) is needed as the typing is broken and the feature as well. See #147. -->
-            <!-- FIXME: This has to be revisited and fixed. -->
-            <datatable-row-wrapper
-              [attr.hidden]="
-                ghostLoadingIndicator && (!rowCount || !virtualization || !scrollbarV) ? true : null
-              "
-              [groupedRows]="groupedRows"
-              [innerWidth]="innerWidth"
-              [ngStyle]="rowsStyles()[i]"
-              [rowDetail]="rowDetail"
-              [groupHeader]="groupHeader"
-              [offsetX]="offsetX"
-              [detailRowHeight]="getDetailRowHeight(group && $any(group)[i], i)"
-              [groupHeaderRowHeight]="getGroupHeaderRowHeight(group && $any(group)[i], i)"
-              [row]="group"
-              [disabled]="disabled"
-              [expanded]="getRowExpanded(group)"
-              [rowIndex]="getRowIndex(group && $any(group)[i])?.index ?? 0"
-              [selected]="selected"
-              (rowContextmenu)="rowContextmenu.emit($event)"
-            >
-              @if (rowDefTemplate) {
-                <ng-container
-                  *rowDefInternal="
-                    {
-                      template: rowDefTemplate,
-                      rowTemplate: bodyRow,
-                      row: group,
-                      index: i
-                    };
-                    disabled: disabled
-                  "
-                />
-              } @else {
-                @if (isRow(group)) {
-                  <ng-container
-                    [ngTemplateOutlet]="bodyRow"
-                    [ngTemplateOutletContext]="{
-                      row: group,
-                      index: i,
-                      disabled
-                    }"
-                  ></ng-container>
-                }
-              }
-
-              @if (isGroup(group)) {
-                <!-- The row typecast is due to angular compiler acting weird. It is obvious that it is of type TRow, but the compiler does not understand. -->
-                @for (row of group.value; track rowTrackingFn(i, row); let i = $index) {
-                  @let disabled = disableRowCheck && disableRowCheck(row);
-                  <ng-container
-                    [ngTemplateOutlet]="bodyRow"
-                    [ngTemplateOutletContext]="{
-                      row,
-                      groupedRows: group?.value,
-                      index: i,
-                      disabled
-                    }"
-                  ></ng-container>
-                }
-              }
-            </datatable-row-wrapper>
-          }
-          @if (summaryRow && summaryPosition === 'bottom') {
-            <datatable-summary-row
-              role="row"
-              [ngStyle]="bottomSummaryRowsStyles()"
-              [rowHeight]="summaryHeight"
-              [offsetX]="offsetX"
-              [innerWidth]="innerWidth"
-              [rows]="rows"
-              [columns]="columns"
-            >
-            </datatable-summary-row>
-          }
-        </datatable-scroller>
-      }
-      @if (!rows?.length && !loadingIndicator && !ghostLoadingIndicator) {
-        <datatable-scroller
-          [scrollbarV]="scrollbarV"
-          [scrollbarH]="scrollbarH"
-          [scrollHeight]="scrollHeight()"
-          [style.width]="scrollbarH ? columnGroupWidths?.total + 'px' : '100%'"
-          (scroll)="onBodyScroll($event)"
+          </datatable-summary-row>
+        }
+        <ng-template
+          ngx-datatable-body-row
+          #bodyRow
+          let-row="row"
+          let-rowIndex="index"
+          let-groupedRows="groupedRows"
+          let-disabled="disabled"
         >
-          <ng-content select="[empty-content]"></ng-content
-        ></datatable-scroller>
-      }
-    </datatable-selection>
+          <datatable-body-row
+            role="row"
+            tabindex="-1"
+            #rowElement
+            [disabled]="disabled"
+            [isSelected]="getRowSelected(row)"
+            [innerWidth]="innerWidth"
+            [columns]="columns"
+            [rowHeight]="getRowHeight(row)"
+            [row]="row"
+            [group]="groupedRows"
+            [rowIndex]="getRowIndex(row)"
+            [expanded]="getRowExpanded(row)"
+            [rowClass]="rowClass"
+            [displayCheck]="displayCheck"
+            [treeStatus]="row?.treeStatus"
+            [ghostLoadingIndicator]="ghostLoadingIndicator"
+            [draggable]="rowDraggable"
+            [verticalScrollVisible]="verticalScrollVisible"
+            (treeAction)="onTreeAction(row)"
+            (activate)="onActivate($event, rowIndex ?? indexes().first + rowIndex)"
+            (drop)="drop($event, row, rowElement)"
+            (dragover)="dragOver($event, row)"
+            (dragenter)="dragEnter($event, row, rowElement)"
+            (dragleave)="dragLeave($event, row, rowElement)"
+            (dragstart)="drag($event, row, rowElement)"
+            (dragend)="dragEnd($event, row)"
+          >
+          </datatable-body-row>
+        </ng-template>
+
+        @for (group of rowsToRender(); track rowTrackingFn(i, group); let i = $index) {
+          @let disabled = isRow(group) && disableRowCheck && disableRowCheck(group);
+          <!-- $any(group) is needed as the typing is broken and the feature as well. See #147. -->
+          <!-- FIXME: This has to be revisited and fixed. -->
+          <datatable-row-wrapper
+            [attr.hidden]="
+              ghostLoadingIndicator && (!rowCount || !virtualization || !scrollbarV) ? true : null
+            "
+            [groupedRows]="groupedRows"
+            [innerWidth]="innerWidth"
+            [ngStyle]="rowsStyles()[i]"
+            [rowDetail]="rowDetail"
+            [groupHeader]="groupHeader"
+            [offsetX]="offsetX"
+            [detailRowHeight]="getDetailRowHeight(group && $any(group)[i], i)"
+            [groupHeaderRowHeight]="getGroupHeaderRowHeight(group && $any(group)[i], i)"
+            [row]="group"
+            [disabled]="disabled"
+            [expanded]="getRowExpanded(group)"
+            [rowIndex]="getRowIndex(group && $any(group)[i])?.index ?? 0"
+            [selected]="selected"
+            (rowContextmenu)="rowContextmenu.emit($event)"
+          >
+            @if (rowDefTemplate) {
+              <ng-container
+                *rowDefInternal="
+                  {
+                    template: rowDefTemplate,
+                    rowTemplate: bodyRow,
+                    row: group,
+                    index: i
+                  };
+                  disabled: disabled
+                "
+              />
+            } @else {
+              @if (isRow(group)) {
+                <ng-container
+                  [ngTemplateOutlet]="bodyRow"
+                  [ngTemplateOutletContext]="{
+                    row: group,
+                    index: i,
+                    disabled
+                  }"
+                ></ng-container>
+              }
+            }
+
+            @if (isGroup(group)) {
+              <!-- The row typecast is due to angular compiler acting weird. It is obvious that it is of type TRow, but the compiler does not understand. -->
+              @for (row of group.value; track rowTrackingFn(i, row); let i = $index) {
+                @let disabled = disableRowCheck && disableRowCheck(row);
+                <ng-container
+                  [ngTemplateOutlet]="bodyRow"
+                  [ngTemplateOutletContext]="{
+                    row,
+                    groupedRows: group?.value,
+                    index: i,
+                    disabled
+                  }"
+                ></ng-container>
+              }
+            }
+          </datatable-row-wrapper>
+        }
+        @if (summaryRow && summaryPosition === 'bottom') {
+          <datatable-summary-row
+            role="row"
+            [ngStyle]="bottomSummaryRowsStyles()"
+            [rowHeight]="summaryHeight"
+            [innerWidth]="innerWidth"
+            [rows]="rows"
+            [columns]="columns"
+          >
+          </datatable-summary-row>
+        }
+      </datatable-scroller>
+    }
+    @if (!rows?.length && !loadingIndicator && !ghostLoadingIndicator) {
+      <datatable-scroller
+        [scrollbarV]="scrollbarV"
+        [scrollbarH]="scrollbarH"
+        [scrollHeight]="scrollHeight()"
+        [style.width]="scrollbarH ? columnGroupWidths?.total + 'px' : '100%'"
+        (scroll)="onBodyScroll($event)"
+      >
+        <ng-content select="[empty-content]"></ng-content
+      ></datatable-scroller>
+    }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
@@ -230,7 +216,6 @@ import { DatatableBodyRowDirective } from './body-row.directive';
   standalone: true,
   imports: [
     DataTableGhostLoaderComponent,
-    DataTableSelectionComponent,
     ScrollerComponent,
     DataTableSummaryRowComponent,
     DataTableRowWrapperComponent,
@@ -1012,6 +997,170 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   updateColumnGroupWidths() {
     const colsByPin = columnsByPin(this._columns);
     this.columnGroupWidths = columnGroupWidths(colsByPin, this._columns);
+  }
+
+  prevIndex: number;
+
+  selectRow(event: Event, index: number, row: TRow): void {
+    if (!this.selectEnabled) {
+      return;
+    }
+
+    const chkbox = this.selectionType === SelectionType.checkbox;
+    const multi = this.selectionType === SelectionType.multi;
+    const multiClick = this.selectionType === SelectionType.multiClick;
+    let selected: TRow[] = [];
+
+    // TODO: this code needs cleanup. Casting it to KeyboardEvent is not correct as it could also be other types.
+    if (multi || chkbox || multiClick) {
+      if ((event as KeyboardEvent).shiftKey) {
+        selected = selectRowsBetween([], this.rows, index, this.prevIndex);
+      } else if (
+        (event as KeyboardEvent).key === 'a' &&
+        ((event as KeyboardEvent).ctrlKey || (event as KeyboardEvent).metaKey)
+      ) {
+        // select all rows except dummy rows which are added for ghostloader in case of virtual scroll
+        selected = this.rows.filter(rowItem => !!rowItem);
+      } else if (
+        (event as KeyboardEvent).ctrlKey ||
+        (event as KeyboardEvent).metaKey ||
+        multiClick ||
+        chkbox
+      ) {
+        selected = selectRows([...this.selected], row, this.getRowSelectedIdx.bind(this));
+      } else {
+        selected = selectRows([], row, this.getRowSelectedIdx.bind(this));
+      }
+    } else {
+      selected = selectRows([], row, this.getRowSelectedIdx.bind(this));
+    }
+
+    if (typeof this.selectCheck === 'function') {
+      selected = selected.filter(this.selectCheck.bind(this));
+    }
+
+    if (typeof this.disableRowCheck === 'function') {
+      selected = selected.filter(rowData => !this.disableRowCheck(rowData));
+    }
+
+    this.selected.splice(0, this.selected.length);
+    this.selected.push(...selected);
+
+    this.prevIndex = index;
+
+    this.select.emit({
+      selected
+    });
+  }
+
+  onActivate(model: ActivateEvent<TRow>, index: number): void {
+    const { type, event, row } = model;
+    const chkbox = this.selectionType === SelectionType.checkbox;
+    const select =
+      (!chkbox && (type === 'click' || type === 'dblclick')) || (chkbox && type === 'checkbox');
+
+    if (select) {
+      this.selectRow(event, index, row);
+    } else if (type === 'keydown') {
+      if ((event as KeyboardEvent).key === Keys.return) {
+        this.selectRow(event, index, row);
+      } else if (
+        (event as KeyboardEvent).key === 'a' &&
+        ((event as KeyboardEvent).ctrlKey || (event as KeyboardEvent).metaKey)
+      ) {
+        this.selectRow(event, 0, this.rows[this.rows.length - 1]);
+      } else {
+        this.onKeyboardFocus(model);
+      }
+    }
+    this.activate.emit(model);
+  }
+
+  onKeyboardFocus(model: ActivateEvent<TRow>): void {
+    const { key } = model.event as KeyboardEvent;
+    const shouldFocus =
+      key === Keys.up || key === Keys.down || key === Keys.right || key === Keys.left;
+
+    if (shouldFocus) {
+      const isCellSelection = this.selectionType === SelectionType.cell;
+      if (typeof this.disableRowCheck === 'function') {
+        const isRowDisabled = this.disableRowCheck(model.row);
+        if (isRowDisabled) {
+          return;
+        }
+      }
+      if (!model.cellElement || !isCellSelection) {
+        this.focusRow(model.rowElement, key);
+      } else if (isCellSelection) {
+        this.focusCell(model.cellElement, model.rowElement, key, model.cellIndex);
+      }
+    }
+  }
+
+  focusRow(rowElement: HTMLElement, key: Keys): void {
+    const nextRowElement = this.getPrevNextRow(rowElement, key);
+    if (nextRowElement) {
+      nextRowElement.focus();
+    }
+  }
+
+  getPrevNextRow(rowElement: HTMLElement, key: Keys): any {
+    const parentElement = rowElement.parentElement;
+
+    if (parentElement) {
+      let focusElement: Element;
+      if (key === Keys.up) {
+        focusElement = parentElement.previousElementSibling;
+      } else if (key === Keys.down) {
+        focusElement = parentElement.nextElementSibling;
+      }
+
+      if (focusElement && focusElement.children.length) {
+        return focusElement.children[0];
+      }
+    }
+  }
+
+  focusCell(cellElement: HTMLElement, rowElement: HTMLElement, key: Keys, cellIndex: number): void {
+    let nextCellElement: Element;
+
+    if (key === Keys.left) {
+      nextCellElement = cellElement.previousElementSibling;
+    } else if (key === Keys.right) {
+      nextCellElement = cellElement.nextElementSibling;
+    } else if (key === Keys.up || key === Keys.down) {
+      const nextRowElement = this.getPrevNextRow(rowElement, key);
+      if (nextRowElement) {
+        const children = nextRowElement.getElementsByClassName('datatable-body-cell');
+        if (children.length) {
+          nextCellElement = children[cellIndex];
+        }
+      }
+    }
+
+    if (
+      nextCellElement &&
+      'focus' in nextCellElement &&
+      typeof nextCellElement.focus === 'function'
+    ) {
+      nextCellElement.focus();
+    }
+  }
+
+  getRowSelected(row: TRow): boolean {
+    return this.getRowSelectedIdx(row, this.selected) > -1;
+  }
+
+  getRowSelectedIdx(row: TRow, selected: any[]): number {
+    if (!selected || !selected.length) {
+      return -1;
+    }
+
+    const rowId = this.rowIdentity(row);
+    return selected.findIndex(r => {
+      const id = this.rowIdentity(r);
+      return id === rowId;
+    });
   }
 
   protected isGroup(row: RowOrGroup<TRow>[]): row is Group<TRow>[];
