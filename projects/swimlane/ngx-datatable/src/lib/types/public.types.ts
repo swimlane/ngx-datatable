@@ -52,13 +52,13 @@ export interface HeaderCellContext {
   selectFn: () => void;
 }
 
-export interface GroupContext<TRow = any> {
+export interface GroupContext<TRow extends Row = any> {
   group: Group<TRow>;
   expanded: boolean;
   rowIndex: number;
 }
 
-export interface CellContext<TRow = any> {
+export interface CellContext<TRow extends Row = any> {
   onCheckboxChangeFn: (event: Event) => void;
   activateFn: (event: ActivateEvent<TRow>) => void;
   row: TRow;
@@ -99,7 +99,7 @@ export interface Group<TRow> {
 /** Type for either a row or a group */
 export type RowOrGroup<TRow> = TRow | Group<TRow>;
 
-export interface RowDetailContext<TRow = any> {
+export interface RowDetailContext<TRow extends Row = any> {
   row: TRow;
   expanded: boolean;
   rowIndex: number;

@@ -23,7 +23,7 @@ import {
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { DatatableComponentToken } from '../../utils/table-token';
-import { Group, GroupContext, RowDetailContext, RowOrGroup } from '../../types/public.types';
+import { Group, GroupContext, Row, RowDetailContext, RowOrGroup } from '../../types/public.types';
 import { DatatableGroupHeaderDirective } from './body-group-header.directive';
 import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive';
 
@@ -73,7 +73,9 @@ import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive'
   standalone: true,
   imports: [NgTemplateOutlet]
 })
-export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit, OnChanges {
+export class DataTableRowWrapperComponent<TRow extends Row = any>
+  implements DoCheck, OnInit, OnChanges
+{
   @ViewChild('select') checkBoxInput!: ElementRef<HTMLInputElement>;
   @Input() innerWidth: number;
   @Input() rowDetail: DatatableRowDetailDirective;
@@ -161,7 +163,7 @@ export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit
     // mark group header checkbox state as indeterminate
     if (this.groupHeader?.checkboxable && this.selectedRowsDiffer.diff(this.selected)) {
       const selectedRows = this.selected.filter(row =>
-        this.group()?.value.find(item => item === row)
+        this.group()?.value.find((item: TRow) => item === row)
       );
       if (this.checkBoxInput) {
         if (selectedRows.length && selectedRows.length !== this.group()?.value.length) {
@@ -182,7 +184,7 @@ export class DataTableRowWrapperComponent<TRow = any> implements DoCheck, OnInit
   onCheckboxChange(groupSelected: boolean): void {
     // First remove all rows of this group from `selected`
     this.selected = [
-      ...this.selected.filter(row => !this.group().value.find(item => item === row))
+      ...this.selected.filter(row => !this.group().value.find((item: TRow) => item === row))
     ];
     // If checkbox is checked then add all rows of this group in `selected`
     if (groupSelected) {

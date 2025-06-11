@@ -1,11 +1,11 @@
 import { ContentChild, Directive, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
 import { DatatableRowDetailTemplateDirective } from './row-detail-template.directive';
-import { DetailToggleEvents, RowDetailContext } from '../../types/public.types';
+import { DetailToggleEvents, Row, RowDetailContext } from '../../types/public.types';
 
 @Directive({
   selector: 'ngx-datatable-row-detail'
 })
-export class DatatableRowDetailDirective<TRow = any> {
+export class DatatableRowDetailDirective<TRow extends Row = any> {
   /**
    * The detail row height is required especially
    * when virtual scroll is enabled.

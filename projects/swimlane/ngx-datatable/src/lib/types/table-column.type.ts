@@ -1,5 +1,5 @@
 import { PipeTransform, TemplateRef } from '@angular/core';
-import { CellContext, HeaderCellContext } from './public.types';
+import { CellContext, HeaderCellContext, Row } from './public.types';
 
 /**
  * Column property that indicates how to retrieve this column's
@@ -11,7 +11,7 @@ export type TableColumnProp = string | number;
 /**
  * Column Type
  */
-export interface TableColumn<TRow = any> {
+export interface TableColumn<TRow extends Row = any> {
   /**
    * Determines if column is checkbox
    */

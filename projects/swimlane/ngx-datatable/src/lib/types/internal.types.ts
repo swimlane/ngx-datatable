@@ -1,6 +1,6 @@
 import { TableColumn, TableColumnProp } from './table-column.type';
 import { ValueGetter } from '../utils/column-prop-getters';
-import { SortDirection } from './public.types';
+import { Row, SortDirection } from './public.types';
 
 export type PinDirection = 'left' | 'center' | 'right';
 
@@ -51,7 +51,7 @@ export interface InnerSortEvent {
   newValue: SortDirection;
 }
 
-export interface TableColumnInternal<TRow = any> extends TableColumn<TRow> {
+export interface TableColumnInternal<TRow extends Row = any> extends TableColumn<TRow> {
   /** Internal unique id */
   $$id: string;
 
