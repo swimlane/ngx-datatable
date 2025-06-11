@@ -50,12 +50,16 @@ import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive'
           </label>
         </div>
         }
-        <ng-template
-          [ngTemplateOutlet]="groupHeader.template"
-          [ngTemplateOutletContext]="groupContext"
-        >
+        <ng-template [ngTemplateOutlet]="groupHeader.template" [ngTemplateOutletContext]="context">
         </ng-template>
       </div>
+    </div>
+    } @if ((groupHeader?.template && expanded) || !groupHeader || !groupHeader.template) {
+    <ng-content> </ng-content>
+    } @if (rowDetail?.template && expanded) {
+    <div [style.height.px]="detailRowHeight" class="datatable-row-detail">
+      <ng-template [ngTemplateOutlet]="rowDetail.template" [ngTemplateOutletContext]="context">
+      </ng-template>
     </div>
     } @if ((groupHeader?.template && expanded) || !groupHeader || !groupHeader.template) {
     <ng-content> </ng-content>
@@ -98,8 +102,7 @@ export class DataTableRowWrapperComponent<TRow extends Row = any>
 
   @Input({ transform: booleanAttribute }) expanded = false;
 
-  groupContext?: GroupContext<TRow>;
-  rowContext?: RowDetailContext<TRow>;
+  context: RowDetailContext<TRow> | GroupContext<TRow>;
 
   private rowDiffer: KeyValueDiffer<keyof RowOrGroup<TRow>, any> = inject(KeyValueDiffers)
     .find({})
@@ -123,13 +126,13 @@ export class DataTableRowWrapperComponent<TRow extends Row = any>
     if (changes['row']) {
       // this component renders either a group header or a row. Never both.
       if (this.isGroup(this.row)) {
-        this.groupContext = {
+        this.context = {
           group: this.row,
           expanded: this.expanded,
           rowIndex: this.rowIndex
         };
       } else {
-        this.rowContext = {
+        this.context = {
           row: this.row,
           expanded: this.expanded,
           rowIndex: this.rowIndex,
@@ -138,22 +141,19 @@ export class DataTableRowWrapperComponent<TRow extends Row = any>
       }
     }
     if (changes['rowIndex']) {
-      (this.rowContext ?? this.groupContext).rowIndex = this.rowIndex;
+      this.context.rowIndex = this.rowIndex;
     }
     if (changes['expanded']) {
-      (this.groupContext ?? this.rowContext)!.expanded = this.expanded;
-      if (this.rowContext) {
-        this.rowContext.expanded = this.expanded;
-      }
+      this.context.expanded = this.expanded;
     }
   }
 
   ngDoCheck(): void {
     if (this.rowDiffer.diff(this.row)) {
-      if (this.isGroup(this.row)) {
-        this.groupContext.group = this.row;
+      if ('group' in this.context) {
+        this.context.group = this.row as Group<TRow>;
       } else {
-        this.rowContext.row = this.row;
+        this.context.row = this.row as TRow;
       }
       this.cd.markForCheck();
     }
