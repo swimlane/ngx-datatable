@@ -1006,7 +1006,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     const parentElement = rowElement.parentElement;
 
     if (parentElement) {
-      let focusElement: Element;
+      let focusElement: Element | null = null;
       if (key === Keys.up) {
         focusElement = parentElement.previousElementSibling;
       } else if (key === Keys.down) {
@@ -1020,7 +1020,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   }
 
   focusCell(cellElement: HTMLElement, rowElement: HTMLElement, key: Keys, cellIndex: number): void {
-    let nextCellElement: Element;
+    let nextCellElement: Element | null = null;
 
     if (key === Keys.left) {
       nextCellElement = cellElement.previousElementSibling;
