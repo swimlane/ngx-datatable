@@ -3,7 +3,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  computed,
   DoCheck,
   ElementRef,
   EventEmitter,
@@ -31,7 +30,7 @@ import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive'
   selector: 'datatable-row-wrapper',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    @if (groupHeader?.template) {
+    @if (isGroup(row) && groupHeader?.template) {
     <div
       class="datatable-group-header"
       [style.height.px]="groupHeaderRowHeight"
@@ -44,8 +43,8 @@ import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive'
             <input
               #select
               type="checkbox"
-              [checked]="selectedGroupRows().length === group().value.length"
-              (change)="onCheckboxChange(select.checked)"
+              [checked]="selectedGroupRows().length === row.value.length"
+              (change)="onCheckboxChange(select.checked, row)"
             />
           </label>
         </div>
@@ -59,13 +58,6 @@ import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive'
     } @if (rowDetail?.template && expanded) {
     <div [style.height.px]="detailRowHeight" class="datatable-row-detail">
       <ng-template [ngTemplateOutlet]="rowDetail.template" [ngTemplateOutletContext]="context">
-      </ng-template>
-    </div>
-    } @if ((groupHeader?.template && expanded) || !groupHeader || !groupHeader.template) {
-    <ng-content> </ng-content>
-    } @if (rowDetail?.template && expanded) {
-    <div [style.height.px]="detailRowHeight" class="datatable-row-detail">
-      <ng-template [ngTemplateOutlet]="rowDetail.template" [ngTemplateOutletContext]="rowContext">
       </ng-template>
     </div>
     }
@@ -112,12 +104,6 @@ export class DataTableRowWrapperComponent<TRow extends Row = any>
   private tableComponent = inject(DatatableComponentToken);
   private cd = inject(ChangeDetectorRef);
 
-  protected group = computed(() => {
-    if (typeof this.row === 'object' && 'value' in this.row) {
-      return this.row;
-    }
-  });
-
   ngOnInit(): void {
     this.selectedRowsDiffer = this.iterableDiffers.find(this.selected ?? []).create();
   }
@@ -161,12 +147,17 @@ export class DataTableRowWrapperComponent<TRow extends Row = any>
     // on currently selected rows to check if it is modified
     // if any of the row of this group is not present in `selected` rows array
     // mark group header checkbox state as indeterminate
-    if (this.groupHeader?.checkboxable && this.selectedRowsDiffer.diff(this.selected)) {
+    if (
+      this.isGroup(this.row) &&
+      this.groupHeader?.checkboxable &&
+      this.selectedRowsDiffer.diff(this.selected)
+    ) {
+      const thisRow = this.row;
       const selectedRows = this.selected.filter(row =>
-        this.group()?.value.find((item: TRow) => item === row)
+        thisRow.value.find((item: TRow) => item === row)
       );
       if (this.checkBoxInput) {
-        if (selectedRows.length && selectedRows.length !== this.group()?.value.length) {
+        if (selectedRows.length && selectedRows.length !== this.row.value.length) {
           this.checkBoxInput.nativeElement.indeterminate = true;
         } else {
           this.checkBoxInput.nativeElement.indeterminate = false;
@@ -181,14 +172,14 @@ export class DataTableRowWrapperComponent<TRow extends Row = any>
     this.rowContextmenu.emit({ event: $event, row: this.row });
   }
 
-  onCheckboxChange(groupSelected: boolean): void {
+  onCheckboxChange(groupSelected: boolean, group: Group<TRow>): void {
     // First remove all rows of this group from `selected`
     this.selected = [
-      ...this.selected.filter(row => !this.group().value.find((item: TRow) => item === row))
+      ...this.selected.filter(row => !group.value.find((item: TRow) => item === row))
     ];
     // If checkbox is checked then add all rows of this group in `selected`
     if (groupSelected) {
-      this.selected = [...this.selected, ...this.group().value];
+      this.selected = [...this.selected, ...group.value];
     }
     // Update `selected` of DatatableComponent with newly evaluated `selected`
     this.tableComponent.selected = [...this.selected];
