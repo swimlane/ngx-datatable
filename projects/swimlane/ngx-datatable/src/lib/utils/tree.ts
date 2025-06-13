@@ -44,12 +44,12 @@ export function optionalGetterForProp(prop: TableColumnProp): OptionalValueGette
  *
  */
 export function groupRowsByParents<TRow extends Row>(
-  rows: TRow[],
+  rows: (TRow | undefined)[],
   from?: OptionalValueGetter,
   to?: OptionalValueGetter
-): TRow[] {
+): (TRow | undefined)[] {
   if (from && to) {
-    const treeRows = rows.map(row => new TreeNode(row));
+    const treeRows = rows.filter(row => !!row).map(row => new TreeNode(row));
     const uniqIDs = new Map(treeRows.map(node => [to(node.row), node]));
 
     const rootNodes = treeRows.reduce((root, node) => {

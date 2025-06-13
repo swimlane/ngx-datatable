@@ -116,7 +116,7 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * Rows that are displayed in the table.
    */
-  @Input() set rows(val: TRow[] | null | undefined) {
+  @Input() set rows(val: (TRow | undefined)[] | null | undefined) {
     this._rows = val ?? [];
     // This will ensure that datatable detects changes on doing like this rows = [...rows];
     this.rowDiffer.diff([] as any);
@@ -128,7 +128,7 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * Gets the rows.
    */
-  get rows(): TRow[] {
+  get rows(): (TRow | undefined)[] {
     return this._rows;
   }
 
@@ -693,9 +693,9 @@ export class DatatableComponent<TRow extends Row = any>
   _limit: number | undefined;
   _count = 0;
   _offset = 0;
-  _rows: TRow[] = [];
+  _rows: (TRow | undefined)[] = [];
   _groupRowsBy: keyof TRow;
-  _internalRows: TRow[] = [];
+  _internalRows: (TRow | undefined)[] = [];
   _internalColumns: TableColumnInternal<TRow>[];
   _columns: TableColumn[];
   _subscriptions: Subscription[] = [];
@@ -811,12 +811,17 @@ export class DatatableComponent<TRow extends Row = any>
    * @param originalArray the original array passed via parameter
    * @param groupBy the key of the column to group the data by
    */
-  groupArrayBy(originalArray: TRow[], groupBy: keyof TRow) {
+  groupArrayBy(originalArray: (TRow | undefined)[], groupBy: keyof TRow) {
     // create a map to hold groups with their corresponding results
     const map = new Map<TRow[keyof TRow], TRow[]>();
     let i = 0;
 
     originalArray.forEach(item => {
+      if (!item) {
+        // skip undefined items
+        return;
+      }
+
       const key = item[groupBy];
       const value = map.get(key);
       if (!value) {
@@ -1206,14 +1211,16 @@ export class DatatableComponent<TRow extends Row = any>
 
       // do the opposite here
       if (!allSelected) {
-        this.selected.push(...this._internalRows.slice(first, last));
+        this.selected.push(...this._internalRows.slice(first, last).filter(row => !!row));
       }
     } else {
-      let relevantRows;
+      let relevantRows: TRow[];
       if (this.disableRowCheck) {
-        relevantRows = this.rows.filter(row => !this.disableRowCheck!(row));
+        relevantRows = this.rows.filter(
+          (row => row && !this.disableRowCheck!(row)) as (row: TRow | undefined) => row is TRow
+        );
       } else {
-        relevantRows = this.rows;
+        relevantRows = this.rows.filter(row => !!row);
       }
       // before we splice, chk if we currently have all selected
       const allSelected = this.selected.length === relevantRows.length;
@@ -1244,7 +1251,7 @@ export class DatatableComponent<TRow extends Row = any>
     const row = event.row;
     // TODO: For duplicated items this will not work
     const rowIndex = this._rows.findIndex(
-      r => r[this.treeToRelation] === event.row[this.treeToRelation]
+      r => r && r[this.treeToRelation] === event.row[this.treeToRelation]
     );
     this.treeAction.emit({ row, rowIndex });
   }

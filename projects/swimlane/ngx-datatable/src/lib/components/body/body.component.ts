@@ -277,14 +277,14 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     return this._pageSize;
   }
 
-  @Input() set rows(val: TRow[]) {
+  @Input() set rows(val: (TRow | undefined)[]) {
     if (val !== this._rows) {
       this._rows = val;
       this.recalcLayout();
     }
   }
 
-  get rows(): TRow[] {
+  get rows(): (TRow | undefined)[] {
     return this._rows;
   }
 
@@ -387,11 +387,11 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   offsetY = 0;
   indexes = signal<{ first: number; last: number }>({ first: 0, last: 0 });
   columnGroupWidths: ColumnGroupWidth;
-  rowTrackingFn: TrackByFunction<RowOrGroup<TRow>>;
+  rowTrackingFn: TrackByFunction<RowOrGroup<TRow> | undefined>;
   listener: any;
   rowExpansions: any[] = [];
 
-  _rows: TRow[];
+  _rows: (TRow | undefined)[];
   _bodyHeight: string;
   _columns: TableColumnInternal[];
   _rowCount: number;
@@ -541,7 +541,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   /**
    * Updates the rows in the view port
    */
-  updateRows(): RowOrGroup<TRow>[] {
+  updateRows(): (RowOrGroup<TRow> | undefined)[] {
     const { first, last } = this.indexes();
     // if grouprowsby has been specified treat row paging
     // parameters as group paging parameters ie if limit 10 has been
@@ -683,7 +683,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
       const rowExpansions = new Set<TRow>();
       if (this.rowDetail) {
         for (const row of this.rows) {
-          if (this.getRowExpanded(row)) {
+          if (row && this.getRowExpanded(row)) {
             rowExpansions.add(row);
           }
         }
@@ -1068,7 +1068,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     return !!this.groupedRows;
   }
 
-  protected isRow(row: RowOrGroup<TRow>): row is TRow {
+  protected isRow(row: RowOrGroup<TRow> | undefined): row is TRow {
     return !this.groupedRows;
   }
 }
