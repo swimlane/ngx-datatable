@@ -121,70 +121,76 @@ import { Keys } from '../../utils/keys';
 
         <div [style.transform]="renderOffset()">
           @for (group of rowsToRender(); track rowTrackingFn(i, group); let i = $index) {
-            @let disabled = isRow(group) && disableRowCheck && disableRowCheck(group);
-            <!-- $any(group) is needed as the typing is broken and the feature as well. See #147. -->
-            <!-- FIXME: This has to be revisited and fixed. -->
-            <datatable-row-wrapper
-              [attr.hidden]="
-                ghostLoadingIndicator && (!rowCount || !virtualization || !scrollbarV) ? true : null
-              "
-              [groupedRows]="groupedRows"
-              [innerWidth]="innerWidth"
-              [style.width]="groupedRows ? columnGroupWidths.total : undefined"
-              [rowDetail]="rowDetail"
-              [groupHeader]="groupHeader"
-              [offsetX]="offsetX"
-              [detailRowHeight]="getDetailRowHeight(group && $any(group)[i], i)"
-              [groupHeaderRowHeight]="getGroupHeaderRowHeight(group && $any(group)[i], i)"
-              [row]="group"
-              [disabled]="disabled"
-              [expanded]="getRowExpanded(group)"
-              [rowIndex]="indexes().first + i"
-              [selected]="selected"
-              (rowContextmenu)="rowContextmenu.emit($event)"
-            >
-              @if (rowDefTemplate) {
-                <ng-container
-                  *rowDefInternal="
-                    {
-                      template: rowDefTemplate,
-                      rowTemplate: bodyRow,
-                      row: group,
-                      index: i
-                    };
-                    disabled: disabled
-                  "
-                />
-              } @else {
-                @if (isRow(group)) {
+            @if (!group && ghostLoadingIndicator) {
+              <ghost-loader cellMode [columns]="columns" [pageSize]="1" [rowHeight]="rowHeight" />
+            } @else if (group) {
+              @let disabled = isRow(group) && disableRowCheck && disableRowCheck(group);
+              <!-- $any(group) is needed as the typing is broken and the feature as well. See #147. -->
+              <!-- FIXME: This has to be revisited and fixed. -->
+              <datatable-row-wrapper
+                [attr.hidden]="
+                  ghostLoadingIndicator && (!rowCount || !virtualization || !scrollbarV)
+                    ? true
+                    : null
+                "
+                [groupedRows]="groupedRows"
+                [innerWidth]="innerWidth"
+                [style.width]="groupedRows ? columnGroupWidths.total : undefined"
+                [rowDetail]="rowDetail"
+                [groupHeader]="groupHeader"
+                [offsetX]="offsetX"
+                [detailRowHeight]="getDetailRowHeight(group && $any(group)[i], i)"
+                [groupHeaderRowHeight]="getGroupHeaderRowHeight(group && $any(group)[i], i)"
+                [row]="group"
+                [disabled]="disabled"
+                [expanded]="getRowExpanded(group)"
+                [rowIndex]="indexes().first + i"
+                [selected]="selected"
+                (rowContextmenu)="rowContextmenu.emit($event)"
+              >
+                @if (rowDefTemplate) {
                   <ng-container
-                    [ngTemplateOutlet]="bodyRow"
-                    [ngTemplateOutletContext]="{
-                      row: group,
-                      index: indexes().first + i,
-                      disabled
-                    }"
-                  ></ng-container>
+                    *rowDefInternal="
+                      {
+                        template: rowDefTemplate,
+                        rowTemplate: bodyRow,
+                        row: group,
+                        index: i
+                      };
+                      disabled: disabled
+                    "
+                  />
+                } @else {
+                  @if (isRow(group)) {
+                    <ng-container
+                      [ngTemplateOutlet]="bodyRow"
+                      [ngTemplateOutletContext]="{
+                        row: group,
+                        index: indexes().first + i,
+                        disabled
+                      }"
+                    ></ng-container>
+                  }
                 }
-              }
 
-              @if (isGroup(group)) {
-                <!-- The row typecast is due to angular compiler acting weird. It is obvious that it is of type TRow, but the compiler does not understand. -->
-                @for (row of group.value; track rowTrackingFn($index, row)) {
-                  @let disabled = disableRowCheck && disableRowCheck(row);
-                  <ng-container
-                    [ngTemplateOutlet]="bodyRow"
-                    [ngTemplateOutletContext]="{
-                      row,
-                      groupedRows: group?.value,
-                      index: indexes().first + i,
-                      indexInGroup: $index,
-                      disabled
-                    }"
-                  ></ng-container>
+                @if (isGroup(group)) {
+                  <!-- The row typecast is due to angular compiler acting weird. It is obvious that it is of type TRow, but the compiler does not understand. -->
+                  @for (row of group.value; track rowTrackingFn($index, row)) {
+                    @let disabled = disableRowCheck && disableRowCheck(row);
+                    <ng-container
+                      [ngTemplateOutlet]="bodyRow"
+                      [ngTemplateOutletContext]="{
+                        row,
+                        groupedRows: group?.value,
+                        index: indexes().first + i,
+                        indexInGroup: $index,
+                        disabled
+                      }"
+                    ></ng-container>
+                  }
                 }
-              }
-            </datatable-row-wrapper>
+              </datatable-row-wrapper>
+            }
           }
         </div>
       </datatable-scroller>
@@ -207,8 +213,8 @@ import { Keys } from '../../utils/keys';
         [style.width]="scrollbarH ? columnGroupWidths?.total + 'px' : '100%'"
         (scroll)="onBodyScroll($event)"
       >
-        <ng-content select="[empty-content]"></ng-content
-      ></datatable-scroller>
+        <ng-content select="[empty-content]"></ng-content>
+      </datatable-scroller>
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

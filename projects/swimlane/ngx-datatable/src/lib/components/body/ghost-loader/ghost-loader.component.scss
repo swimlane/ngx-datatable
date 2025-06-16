@@ -23,6 +23,7 @@
 
   .ghost-element {
     display: flex;
+    align-items: center;
   }
 }
 
@@ -30,9 +31,7 @@
   position: sticky;
   top: 20px;
 
-  .ghost-loader {
-    .line {
-      margin: 0.9rem 1.2rem;
-    }
+  .ghost-cell {
+    padding-inline: 1.2rem;
   }
 }

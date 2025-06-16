@@ -23,7 +23,6 @@ import {
   SortPropDir,
   TreeStatus
 } from '../../types/public.types';
-import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.component';
 import { NgTemplateOutlet } from '@angular/common';
 import { RowIndex, TableColumnInternal } from '../../types/internal.types';
 
@@ -31,7 +30,6 @@ import { RowIndex, TableColumnInternal } from '../../types/internal.types';
   selector: 'datatable-body-cell',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    @if (row) {
     <div class="datatable-body-cell-label" [style.margin-left.px]="calcLeftMargin(column, row)">
       @if (column.checkboxable && (!displayCheck || displayCheck(row, column, value))) {
       <label class="datatable-checkbox">
@@ -74,13 +72,9 @@ import { RowIndex, TableColumnInternal } from '../../types/internal.types';
       </ng-template>
       }
     </div>
-    } @else { @if (ghostLoadingIndicator) {
-    <ghost-loader [columns]="[column]" [pageSize]="1"></ghost-loader>
-    } }
   `,
   styleUrl: './body-cell.component.scss',
-  standalone: true,
-  imports: [NgTemplateOutlet, DataTableGhostLoaderComponent]
+  imports: [NgTemplateOutlet]
 })
 export class DataTableBodyCellComponent<TRow extends Row = any> implements DoCheck {
   private cd = inject(ChangeDetectorRef);

@@ -1,13 +1,15 @@
-<div [style.height]="ghostBodyHeight + 'px'" class="ghost-loader ghost-cell-container">
+<div [style.height.px]="ghostBodyHeight" class="ghost-loader ghost-cell-container">
   @for (item of [].constructor(pageSize); track item) {
-    <div [style.height]="rowHeight + 'px'" class="ghost-element">
-      @for (col of columns; track col) {
-        @if (!col.ghostCellTemplate) {
-          <div class="line ghost-cell-strip" [style.width]="col?.width + 'px'"> </div>
-        } @else {
-          <ng-template [ngTemplateOutlet]="col.ghostCellTemplate"> </ng-template>
-        }
+  <div [style.height.px]="rowHeight" class="ghost-element" [class.datatable-body-row]="cellMode">
+    @for (col of columns; track col) {
+    <div class="ghost-cell" [class.datatable-body-cell]="cellMode" [style.width.px]="col.width">
+      @if (!col.ghostCellTemplate) {
+      <div class="line ghost-cell-strip"></div>
+      } @else {
+      <ng-template [ngTemplateOutlet]="col.ghostCellTemplate"></ng-template>
       }
     </div>
+    }
+  </div>
   }
 </div>
