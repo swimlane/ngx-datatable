@@ -360,7 +360,6 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   @Output() page = new EventEmitter<number>();
   @Output() activate = new EventEmitter<ActivateEvent<TRow>>();
   @Output() select = new EventEmitter<SelectEvent<TRow>>();
-  @Output() detailToggle = new EventEmitter<any>();
   @Output() rowContextmenu = new EventEmitter<{ event: MouseEvent; row: RowOrGroup<TRow> }>(false);
   @Output() treeAction: EventEmitter<{ row: TRow }> = new EventEmitter();
 
@@ -709,31 +708,12 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   }
 
   /**
-   * Gets the index for the view port
-   */
-  getAdjustedViewPortIndex(): number {
-    // Capture the row index of the first row that is visible on the viewport.
-    // If the scroll bar is just below the row which is highlighted then make that as the
-    // first index.
-    const viewPortFirstRowIndex = this.indexes().first;
-
-    if (this.scrollbarV && this.virtualization) {
-      const offsetScroll = this.rowHeightsCache().query(viewPortFirstRowIndex - 1);
-      return offsetScroll <= this.offsetY ? viewPortFirstRowIndex - 1 : viewPortFirstRowIndex;
-    }
-
-    return viewPortFirstRowIndex;
-  }
-
-  /**
    * Toggle the Expansion of the row i.e. if the row is expanded then it will
    * collapse and vice versa.   Note that the expanded status is stored as
    * a part of the row object itself as we have to preserve the expanded row
    * status in case of sorting and filtering of the row set.
    */
   toggleRowExpansion(row: TRow): void {
-    // Capture the row index of the first row that is visible on the viewport.
-    const viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
     const rowExpandedIdx = this.getRowExpandedIdx(row, this.rowExpansions);
     const expanded = rowExpandedIdx > -1;
 
@@ -748,11 +728,6 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     if (this.scrollbarV && this.virtualization) {
       this.refreshRowHeightCache();
     }
-
-    this.detailToggle.emit({
-      rows: [row],
-      currentIndex: viewPortFirstRowIndex
-    });
   }
 
   /**
@@ -762,8 +737,6 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     // clear prev expansions
     this.rowExpansions = [];
 
-    // Capture the row index of the first row that is visible on the viewport.
-    const viewPortFirstRowIndex = this.getAdjustedViewPortIndex();
     const rows = this.groupedRows ?? this.rows;
     if (expanded) {
       for (const row of rows) {
@@ -775,12 +748,6 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
       // Refresh the full row heights cache since every row was affected.
       this.recalcLayout();
     }
-
-    // Emit all rows that have been expanded.
-    this.detailToggle.emit({
-      rows: rows,
-      currentIndex: viewPortFirstRowIndex
-    });
   }
 
   /**

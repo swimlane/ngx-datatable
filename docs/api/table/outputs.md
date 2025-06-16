@@ -18,17 +18,6 @@ A cell or row was focused via keyboard or mouse click.
 }
 ```
 
-### `detailToggle`
-
-Row detail row was toggled.
-
-```
-{
-  rows
-  currentIndex
-}
-```
-
 ### `page`
 
 The table was paged either triggered by the pager or the body scroll.
