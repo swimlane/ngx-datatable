@@ -83,13 +83,6 @@ export function sortRows<TRow>(rows: TRow[], columns: TableColumn[], dirs: SortP
     return [...rows];
   }
 
-  /**
-   * record the row ordering of results from prior sort operations (if applicable)
-   * this is necessary to guarantee stable sorting behavior
-   */
-  const rowToIndexMap = new Map<TRow, number>();
-  rows.forEach((row, index) => rowToIndexMap.set(row, index));
-
   const temp = [...rows];
   const cols = columns.reduce((obj, col) => {
     if (col.comparator && typeof col.comparator === 'function') {
@@ -136,14 +129,7 @@ export function sortRows<TRow>(rows: TRow[], columns: TableColumn[], dirs: SortP
       }
     }
 
-    if (!(rowToIndexMap.has(rowA) && rowToIndexMap.has(rowB))) {
-      return 0;
-    }
-
-    /**
-     * all else being equal, preserve original order of the rows (stable sort)
-     */
-    return rowToIndexMap.get(rowA) < rowToIndexMap.get(rowB) ? -1 : 1;
+    return 0;
   });
 }
 
