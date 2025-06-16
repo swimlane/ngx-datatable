@@ -1,6 +1,7 @@
 import { getterForProp } from './column-prop-getters';
 import { Group, SortDirection, SortPropDir, SortType } from '../types/public.types';
-import { TableColumn, TableColumnProp } from '../types/table-column.type';
+import { TableColumnProp } from '../types/table-column.type';
+import { SortableTableColumnInternal, TableColumnInternal } from '../types/internal.types';
 
 /**
  * Gets the next sort direction
@@ -75,7 +76,11 @@ export function orderByComparator(a: any, b: any): number {
  * creates a shallow copy of the `rows` input and returns the sorted copy. this function
  * does not sort the `rows` argument in place
  */
-export function sortRows<TRow>(rows: TRow[], columns: TableColumn[], dirs: SortPropDir[]): TRow[] {
+export function sortRows<TRow>(
+  rows: TRow[],
+  columns: TableColumnInternal[],
+  dirs: SortPropDir[]
+): TRow[] {
   if (!rows) {
     return [];
   }
@@ -85,11 +90,11 @@ export function sortRows<TRow>(rows: TRow[], columns: TableColumn[], dirs: SortP
 
   const temp = [...rows];
   const cols = columns.reduce((obj, col) => {
-    if (col.comparator && typeof col.comparator === 'function') {
+    if (col.sortable) {
       obj[col.prop] = col.comparator;
     }
     return obj;
-  }, {} as Record<TableColumnProp, TableColumn['comparator']>);
+  }, {} as Record<TableColumnProp, SortableTableColumnInternal['comparator']>);
 
   // cache valueGetter and compareFn so that they
   // do not need to be looked-up in the sort function body
@@ -99,11 +104,11 @@ export function sortRows<TRow>(rows: TRow[], columns: TableColumn[], dirs: SortP
       prop,
       dir: dir.dir,
       valueGetter: getterForProp(prop),
-      compareFn: cols[prop] || orderByComparator
+      compareFn: cols[prop]
     };
   });
 
-  return temp.sort(function (rowA: any, rowB: any) {
+  return temp.sort((rowA: TRow, rowB: TRow) => {
     for (const cachedDir of cachedDirs) {
       // Get property and valuegetters for column to be sorted
       const { prop, valueGetter } = cachedDir;
@@ -135,7 +140,7 @@ export function sortRows<TRow>(rows: TRow[], columns: TableColumn[], dirs: SortP
 
 export function sortGroupedRows<TRow>(
   groupedRows: Group<TRow>[],
-  columns: TableColumn[],
+  columns: TableColumnInternal[],
   dirs: SortPropDir[],
   sortOnGroupHeader: SortPropDir
 ): Group<TRow>[] {

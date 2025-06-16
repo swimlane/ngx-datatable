@@ -5,8 +5,10 @@ import { TableColumn } from '../types/table-column.type';
 import { QueryList } from '@angular/core';
 import { DataTableColumnDirective } from '../components/columns/column.directive';
 import { TableColumnInternal } from '../types/internal.types';
+import { Row } from '../types/public.types';
+import { orderByComparator } from './sort';
 
-export function toInternalColumn<T>(
+export function toInternalColumn<T extends Row>(
   columns: TableColumn<T>[] | QueryList<DataTableColumnDirective<T>>,
   defaultColumnWidth = 150
 ): TableColumnInternal<T>[] {
@@ -27,6 +29,7 @@ export function toInternalColumn<T>(
       name: column.name ?? (prop ? deCamelCase(String(prop)) : ''),
       resizeable: column.resizeable ?? true,
       sortable: column.sortable ?? true,
+      comparator: column.comparator ?? orderByComparator,
       draggable: column.draggable ?? true,
       canAutoResize: column.canAutoResize ?? true,
       width: column.width ?? defaultColumnWidth,

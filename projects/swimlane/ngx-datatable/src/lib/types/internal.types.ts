@@ -51,7 +51,7 @@ export interface InnerSortEvent {
   newValue: SortDirection;
 }
 
-export interface TableColumnInternal<TRow extends Row = any> extends TableColumn<TRow> {
+export interface BaseTableColumnInternal<TRow extends Row = any> extends TableColumn<TRow> {
   /** Internal unique id */
   $$id: string;
 
@@ -66,10 +66,20 @@ export interface TableColumnInternal<TRow extends Row = any> extends TableColumn
   targetMarkerContext?: any;
 
   // Those properties are never null on the internal type:
-  prop: TableColumnProp;
   name: string;
   width: number;
 }
+
+export interface SortableTableColumnInternal<TRow extends Row = any>
+  extends BaseTableColumnInternal<TRow> {
+  comparator: Exclude<TableColumn['comparator'], undefined>;
+  prop: TableColumnProp;
+  sortable: true;
+}
+
+export type TableColumnInternal<TRow extends Row = any> =
+  | BaseTableColumnInternal<TRow>
+  | SortableTableColumnInternal<TRow>;
 
 export interface TableColumnGroup {
   left: TableColumnInternal[];
