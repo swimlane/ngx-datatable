@@ -128,6 +128,7 @@ export interface PageEvent {
   /** @deprecated Use {@link pageSize} instead. */
   limit: number | undefined;
   offset: number;
+  sorts: SortPropDir[];
 }
 
 export interface PagerPageEvent {

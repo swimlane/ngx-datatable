@@ -755,7 +755,8 @@ export class DatatableComponent<TRow extends Row = any>
           count: this.count,
           pageSize: this.pageSize,
           limit: this.limit,
-          offset: 0
+          offset: 0,
+          sorts: this.sorts
         });
       }
     });
@@ -996,7 +997,8 @@ export class DatatableComponent<TRow extends Row = any>
         count: this.count,
         pageSize: this.pageSize,
         limit: this.limit,
-        offset: this.offset
+        offset: this.offset,
+        sorts: this.sorts
       });
     }
   }
@@ -1020,7 +1022,8 @@ export class DatatableComponent<TRow extends Row = any>
       count: this.count,
       pageSize: this.pageSize,
       limit: this.limit,
-      offset: this.offset
+      offset: this.offset,
+      sorts: this.sorts
     });
 
     if (this.selectAllRowsOnPage) {
@@ -1191,7 +1194,8 @@ export class DatatableComponent<TRow extends Row = any>
       count: this.count,
       pageSize: this.pageSize,
       limit: this.limit,
-      offset: this.offset
+      offset: this.offset,
+      sorts: this.sorts
     });
     this.sort.emit(event);
   }
