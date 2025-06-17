@@ -41,7 +41,7 @@ export interface ActivateEvent<TRow> {
   cellElement?: HTMLElement;
   treeStatus?: TreeStatus;
   cellIndex?: number;
-  rowElement?: HTMLElement;
+  rowElement: HTMLElement;
 }
 
 export interface HeaderCellContext {

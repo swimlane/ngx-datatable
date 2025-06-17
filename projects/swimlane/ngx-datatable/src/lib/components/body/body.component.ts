@@ -962,7 +962,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
       }
       if (!model.cellElement || !isCellSelection) {
         this.focusRow(model.rowElement, key);
-      } else if (isCellSelection) {
+      } else if (isCellSelection && model.cellIndex) {
         this.focusCell(model.cellElement, model.rowElement, key, model.cellIndex);
       }
     }

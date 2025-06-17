@@ -1,6 +1,6 @@
 import { TableColumn, TableColumnProp } from './table-column.type';
 import { ValueGetter } from '../utils/column-prop-getters';
-import { Row, SortDirection } from './public.types';
+import { Row, SortDirection, TreeStatus } from './public.types';
 
 export type PinDirection = 'left' | 'center' | 'right';
 
@@ -49,6 +49,18 @@ export interface InnerSortEvent {
   column: TableColumnInternal;
   prevValue: SortDirection;
   newValue: SortDirection;
+}
+
+export interface CellActiveEvent<TRow> {
+  type: 'checkbox' | 'click' | 'dblclick' | 'keydown' | 'mouseenter';
+  event: Event;
+  row: TRow;
+  group?: TRow[];
+  rowHeight?: number;
+  column?: TableColumn;
+  value?: any;
+  cellElement?: HTMLElement;
+  treeStatus?: TreeStatus;
 }
 
 export interface BaseTableColumnInternal<TRow extends Row = any> extends TableColumn<TRow> {

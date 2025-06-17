@@ -24,7 +24,7 @@ import {
   TreeStatus
 } from '../../types/public.types';
 import { NgTemplateOutlet } from '@angular/common';
-import { RowIndex, TableColumnInternal } from '../../types/internal.types';
+import { CellActiveEvent, RowIndex, TableColumnInternal } from '../../types/internal.types';
 
 @Component({
   selector: 'datatable-body-cell',
@@ -197,7 +197,7 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
 
   @Input() ghostLoadingIndicator = false;
 
-  @Output() activate: EventEmitter<ActivateEvent<TRow>> = new EventEmitter();
+  @Output() activate = new EventEmitter<CellActiveEvent<TRow>>();
 
   @Output() treeAction: EventEmitter<any> = new EventEmitter();
 

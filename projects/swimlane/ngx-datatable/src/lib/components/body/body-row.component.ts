@@ -20,6 +20,7 @@ import { columnGroupWidths, columnsByPin, columnsByPinArr } from '../../utils/co
 import { Keys } from '../../utils/keys';
 import { ActivateEvent, Row, RowOrGroup, TreeStatus } from '../../types/public.types';
 import {
+  CellActiveEvent,
   ColumnGroupWidth,
   PinnedColumns,
   RowIndex,
@@ -170,10 +171,8 @@ export class DataTableBodyRowComponent<TRow extends Row = any> implements DoChec
     }
   }
 
-  onActivate(event: ActivateEvent<TRow>, index: number): void {
-    event.cellIndex = index;
-    event.rowElement = this._element;
-    this.activate.emit(event);
+  onActivate(event: CellActiveEvent<TRow>, index: number): void {
+    this.activate.emit({ ...event, rowElement: this._element, cellIndex: index });
   }
 
   @HostListener('keydown', ['$event'])
