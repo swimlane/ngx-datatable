@@ -1,4 +1,4 @@
-import { ContentChild, Directive, Input, numberAttribute, TemplateRef } from '@angular/core';
+import { ContentChild, Directive, Input, TemplateRef } from '@angular/core';
 import { DataTableFooterTemplateDirective } from './footer-template.directive';
 import { FooterContext } from '../../types/public.types';
 
@@ -6,14 +6,6 @@ import { FooterContext } from '../../types/public.types';
   selector: 'ngx-datatable-footer'
 })
 export class DatatableFooterDirective {
-  @Input({ transform: numberAttribute }) footerHeight: number;
-  @Input() totalMessage: string;
-  @Input() selectedMessage: string | boolean;
-  @Input() pagerLeftArrowIcon: string;
-  @Input() pagerRightArrowIcon: string;
-  @Input() pagerPreviousIcon: string;
-  @Input() pagerNextIcon: string;
-
   @Input('template')
   _templateInput: TemplateRef<FooterContext>;
 
