@@ -22,14 +22,14 @@ import { CellContext, HeaderCellContext } from '../../types/public.types';
 })
 export class DataTableColumnDirective<TRow> implements TableColumn, OnChanges {
   private columnChangesService = inject(ColumnChangesService);
-  @Input() name: string;
-  @Input() prop: TableColumnProp;
+  @Input() name?: string;
+  @Input() prop?: TableColumnProp;
   @Input({ transform: booleanAttribute }) bindAsUnsafeHtml?: boolean;
-  @Input({ transform: booleanAttribute }) frozenLeft: boolean;
-  @Input({ transform: booleanAttribute }) frozenRight: boolean;
-  @Input({ transform: numberAttribute }) flexGrow: number;
-  @Input({ transform: booleanAttribute }) resizeable: boolean;
-  @Input() comparator: (
+  @Input({ transform: booleanAttribute }) frozenLeft?: boolean;
+  @Input({ transform: booleanAttribute }) frozenRight?: boolean;
+  @Input({ transform: numberAttribute }) flexGrow?: number;
+  @Input({ transform: booleanAttribute }) resizeable?: boolean;
+  @Input() comparator?: (
     valueA: any,
     valueB: any,
     rowA: TRow,
@@ -37,15 +37,15 @@ export class DataTableColumnDirective<TRow> implements TableColumn, OnChanges {
     sortDir: 'desc' | 'asc'
   ) => number;
   @Input() pipe: PipeTransform;
-  @Input({ transform: booleanAttribute }) sortable: boolean;
-  @Input({ transform: booleanAttribute }) draggable: boolean;
-  @Input({ transform: booleanAttribute }) canAutoResize: boolean;
-  @Input({ transform: numberAttribute }) minWidth: number;
-  @Input({ transform: numberAttribute }) width: number;
-  @Input({ transform: numberAttribute }) maxWidth: number;
-  @Input({ transform: booleanAttribute }) checkboxable: boolean;
-  @Input({ transform: booleanAttribute }) headerCheckboxable: boolean;
-  @Input() headerClass:
+  @Input({ transform: booleanAttribute }) sortable?: boolean;
+  @Input({ transform: booleanAttribute }) draggable?: boolean;
+  @Input({ transform: booleanAttribute }) canAutoResize?: boolean;
+  @Input({ transform: numberAttribute }) minWidth?: number;
+  @Input({ transform: numberAttribute }) width?: number;
+  @Input({ transform: numberAttribute }) maxWidth?: number;
+  @Input({ transform: booleanAttribute }) checkboxable?: boolean;
+  @Input({ transform: booleanAttribute }) headerCheckboxable?: boolean;
+  @Input() headerClass?:
     | string
     | ((data: { column: TableColumn }) => string | Record<string, boolean>);
   @Input() cellClass?:
@@ -57,48 +57,48 @@ export class DataTableColumnDirective<TRow> implements TableColumn, OnChanges {
         value: any;
         rowHeight: number;
       }) => string | Record<string, boolean>);
-  @Input({ transform: booleanAttribute }) isTreeColumn: boolean;
-  @Input() treeLevelIndent: number;
-  @Input() summaryFunc: (cells: any[]) => any;
-  @Input() summaryTemplate: TemplateRef<any>;
+  @Input({ transform: booleanAttribute }) isTreeColumn?: boolean;
+  @Input() treeLevelIndent?: number;
+  @Input() summaryFunc?: (cells: any[]) => any;
+  @Input() summaryTemplate?: TemplateRef<any>;
 
   @Input('cellTemplate')
-  _cellTemplateInput: TemplateRef<CellContext<TRow>>;
+  _cellTemplateInput?: TemplateRef<CellContext<TRow>>;
 
   @ContentChild(DataTableColumnCellDirective, { read: TemplateRef, static: true })
-  _cellTemplateQuery: TemplateRef<CellContext<TRow>>;
+  _cellTemplateQuery?: TemplateRef<CellContext<TRow>>;
 
-  get cellTemplate(): TemplateRef<CellContext<TRow>> {
+  get cellTemplate(): TemplateRef<CellContext<TRow>> | undefined {
     return this._cellTemplateInput || this._cellTemplateQuery;
   }
 
   @Input('headerTemplate')
-  _headerTemplateInput: TemplateRef<HeaderCellContext>;
+  _headerTemplateInput?: TemplateRef<HeaderCellContext>;
 
   @ContentChild(DataTableColumnHeaderDirective, { read: TemplateRef, static: true })
-  _headerTemplateQuery: TemplateRef<HeaderCellContext>;
+  _headerTemplateQuery?: TemplateRef<HeaderCellContext>;
 
-  get headerTemplate(): TemplateRef<HeaderCellContext> {
+  get headerTemplate(): TemplateRef<HeaderCellContext> | undefined {
     return this._headerTemplateInput || this._headerTemplateQuery;
   }
 
   @Input('treeToggleTemplate')
-  _treeToggleTemplateInput: TemplateRef<any>;
+  _treeToggleTemplateInput?: TemplateRef<any>;
 
   @ContentChild(DataTableColumnCellTreeToggle, { read: TemplateRef, static: true })
-  _treeToggleTemplateQuery: TemplateRef<any>;
+  _treeToggleTemplateQuery?: TemplateRef<any>;
 
-  get treeToggleTemplate(): TemplateRef<any> {
+  get treeToggleTemplate(): TemplateRef<any> | undefined {
     return this._treeToggleTemplateInput || this._treeToggleTemplateQuery;
   }
 
   @Input('ghostCellTemplate')
-  _ghostCellTemplateInput: TemplateRef<void>;
+  _ghostCellTemplateInput?: TemplateRef<void>;
 
   @ContentChild(DataTableColumnGhostCellDirective, { read: TemplateRef, static: true })
-  _ghostCellTemplateQuery: TemplateRef<void>;
+  _ghostCellTemplateQuery?: TemplateRef<void>;
 
-  get ghostCellTemplate(): TemplateRef<void> {
+  get ghostCellTemplate(): TemplateRef<void> | undefined {
     return this._ghostCellTemplateInput || this._ghostCellTemplateQuery;
   }
 

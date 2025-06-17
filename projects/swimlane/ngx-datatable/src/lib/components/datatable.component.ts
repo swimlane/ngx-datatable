@@ -214,7 +214,7 @@ export class DatatableComponent<TRow extends Row = any>
    * The row height; which is necessary
    * to calculate the height for the lazy rendering.
    */
-  @Input() rowHeight: number | 'auto' | ((row?: TRow) => number) = 30;
+  @Input() rowHeight: number | 'auto' | ((row: TRow) => number) = 30;
 
   /**
    * Type of column width distribution formula.
