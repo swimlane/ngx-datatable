@@ -35,7 +35,7 @@ export class LongPressDirective implements OnDestroy {
   isLongPressing = signal(false);
   timeout: any;
 
-  subscription: Subscription;
+  subscription?: Subscription;
 
   onMouseDown(event: MouseEvent | TouchEvent): void {
     const isMouse = event instanceof MouseEvent;

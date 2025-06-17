@@ -82,13 +82,13 @@ export class DataTableRowWrapperComponent<TRow extends Row = any>
   @Input() row: RowOrGroup<TRow>;
   @Input() groupedRows: Group<TRow>[];
   @Input() selected: TRow[];
-  @Input() disabled: boolean;
+  @Input() disabled?: boolean;
   @Output() rowContextmenu = new EventEmitter<{
     event: MouseEvent;
     row: RowOrGroup<TRow>;
   }>(false);
 
-  @Input() rowIndex?: number;
+  @Input() rowIndex: number;
 
   selectedGroupRows = signal<TRow[]>([]);
 

@@ -163,8 +163,12 @@ export interface TableColumn<TRow extends Row = any> {
 
   /**
    * Summary function
+   *
+   * Null and undefined have different meanings:
+   *  - undefined will use the default summary function
+   *  - null will not compute a summary
    */
-  summaryFunc?: (cells: any[]) => any;
+  summaryFunc?: ((cells: any[]) => any) | null;
 
   /**
    * Summary cell template ref

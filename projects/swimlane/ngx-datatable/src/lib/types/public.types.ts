@@ -13,7 +13,7 @@ export enum SortDirection {
 export interface SortEvent {
   column: TableColumn;
   prevValue: SortDirection;
-  newValue: SortDirection;
+  newValue: SortDirection | undefined;
   sorts: SortPropDir[];
 }
 
@@ -103,7 +103,7 @@ export interface RowDetailContext<TRow extends Row = any> {
   row: TRow;
   expanded: boolean;
   rowIndex: number;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 /**

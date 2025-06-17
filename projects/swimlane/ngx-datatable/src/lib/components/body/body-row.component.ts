@@ -96,7 +96,7 @@ export class DataTableBodyRowComponent<TRow extends Row = any> implements DoChec
   @Input() row: TRow;
   @Input() group: TRow[];
   @Input() isSelected: boolean;
-  @Input() rowIndex: RowIndex | undefined;
+  @Input() rowIndex: RowIndex;
   @Input() displayCheck?: (row: TRow, column: TableColumnInternal, value?: any) => boolean;
   @Input() treeStatus?: TreeStatus = 'collapsed';
   @Input() ghostLoadingIndicator = false;

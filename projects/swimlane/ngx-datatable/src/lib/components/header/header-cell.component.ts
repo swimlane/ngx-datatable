@@ -207,7 +207,7 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
   private _column: TableColumnInternal;
   private _sorts: SortPropDir[];
   private element = inject(ElementRef).nativeElement;
-  private subscription: Subscription;
+  private subscription?: Subscription;
 
   constructor() {
     this.cellContext = {

@@ -1,4 +1,3 @@
-import { TableColumn } from '../types/table-column.type';
 import {
   ColumnGroupWidth,
   PinnedColumns,
@@ -34,7 +33,10 @@ export function columnsByPin(cols: TableColumnInternal[]) {
 /**
  * Returns the widths of all group sets of a column
  */
-export function columnGroupWidths(groups: TableColumnGroup, all: TableColumn[]): ColumnGroupWidth {
+export function columnGroupWidths(
+  groups: TableColumnGroup,
+  all: TableColumnInternal[]
+): ColumnGroupWidth {
   return {
     left: columnTotalWidth(groups.left),
     center: columnTotalWidth(groups.center),
@@ -46,7 +48,7 @@ export function columnGroupWidths(groups: TableColumnGroup, all: TableColumn[]):
 /**
  * Calculates the total width of all columns
  */
-export function columnTotalWidth(columns?: TableColumn[]) {
+export function columnTotalWidth(columns?: TableColumnInternal[]) {
   return columns?.reduce((total, column) => total + column.width, 0) ?? 0;
 }
 

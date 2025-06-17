@@ -38,7 +38,7 @@ export class DraggableDirective implements OnDestroy, OnChanges {
 
   element = inject(ElementRef).nativeElement;
   isDragging = false;
-  subscription: Subscription;
+  subscription?: Subscription;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (

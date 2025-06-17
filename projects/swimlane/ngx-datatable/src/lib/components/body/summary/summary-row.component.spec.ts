@@ -116,7 +116,7 @@ describe('DataTableSummaryRowComponent', () => {
 
       triggerChange();
 
-      expect(component.summaryRow.col1).toEqual(null);
+      expect(component.summaryRow.col1).toEqual(undefined);
     });
 
     it('should use provided summary function', () => {

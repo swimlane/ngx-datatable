@@ -71,7 +71,7 @@ function scaleColumns(colsByGroup: TableColumnGroup, maxWidth: number, totalFlex
   } while (remainingWidth !== 0);
 
   // Adjust for any remaining offset in computed widths vs maxWidth
-  const columns: TableColumn[] = Object.values(colsByGroup).reduce(
+  const columns: TableColumnInternal[] = Object.values(colsByGroup).reduce(
     (acc, col) => acc.concat(col),
     []
   );

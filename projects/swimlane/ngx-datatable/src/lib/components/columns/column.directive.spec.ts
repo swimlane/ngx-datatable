@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { ColumnChangesService } from '../../services/column-changes.service';
 import { DataTableColumnDirective } from './column.directive';
+import { Row } from '../../types/public.types';
 import Spy = jasmine.Spy;
 
 @Component({
@@ -33,7 +34,7 @@ describe('DataTableColumnDirective', () => {
   }));
 
   describe('fixture', () => {
-    let directive: DataTableColumnDirective<unknown>;
+    let directive: DataTableColumnDirective<Row>;
 
     beforeEach(() => {
       directive = fixture.debugElement
@@ -51,7 +52,7 @@ describe('DataTableColumnDirective', () => {
   });
 
   describe('directive #1', () => {
-    let directive: DataTableColumnDirective<unknown>;
+    let directive: DataTableColumnDirective<Row>;
 
     beforeEach(() => {
       directive = fixture.debugElement.query(By.css('#t1')).injector.get(DataTableColumnDirective);

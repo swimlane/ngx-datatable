@@ -42,7 +42,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
 
   positions: Record<string, OrderPosition>;
   differ: KeyValueDiffer<string, DraggableDirective> = inject(KeyValueDiffers).find({}).create();
-  lastDraggingIndex: number;
+  lastDraggingIndex?: number;
 
   ngAfterContentInit(): void {
     // HACK: Investigate Better Way
@@ -110,7 +110,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
     if (target) {
       if (this.lastDraggingIndex !== target.i) {
         this.targetChanged.emit({
-          prevIndex: this.lastDraggingIndex,
+          prevIndex: this.lastDraggingIndex!,
           newIndex: target.i,
           initialIndex: prevPos.index
         });
@@ -118,7 +118,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
       }
     } else if (this.lastDraggingIndex !== prevPos.index) {
       this.targetChanged.emit({
-        prevIndex: this.lastDraggingIndex,
+        prevIndex: this.lastDraggingIndex!,
         initialIndex: prevPos.index
       });
       this.lastDraggingIndex = prevPos.index;

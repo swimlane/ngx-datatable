@@ -46,9 +46,9 @@ export interface DraggableDragEvent {
 }
 
 export interface InnerSortEvent {
-  column: TableColumnInternal;
+  column: SortableTableColumnInternal;
   prevValue: SortDirection;
-  newValue: SortDirection;
+  newValue: SortDirection | undefined;
 }
 
 export interface CellActiveEvent<TRow> {
@@ -82,6 +82,11 @@ export interface BaseTableColumnInternal<TRow extends Row = any> extends TableCo
   width: number;
 }
 
+export interface StandardTableColumnInternal<TRow extends Row = any>
+  extends BaseTableColumnInternal<TRow> {
+  sortable?: false;
+}
+
 export interface SortableTableColumnInternal<TRow extends Row = any>
   extends BaseTableColumnInternal<TRow> {
   comparator: Exclude<TableColumn['comparator'], undefined>;
@@ -90,7 +95,7 @@ export interface SortableTableColumnInternal<TRow extends Row = any>
 }
 
 export type TableColumnInternal<TRow extends Row = any> =
-  | BaseTableColumnInternal<TRow>
+  | StandardTableColumnInternal<TRow>
   | SortableTableColumnInternal<TRow>;
 
 export interface TableColumnGroup {

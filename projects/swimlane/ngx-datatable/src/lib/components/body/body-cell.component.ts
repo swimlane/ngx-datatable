@@ -9,8 +9,7 @@ import {
   HostListener,
   inject,
   Input,
-  Output,
-  PipeTransform
+  Output
 } from '@angular/core';
 
 import { Keys } from '../../utils/keys';
@@ -315,11 +314,11 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
   checkValueUpdates(): void {
     let value = '';
 
-    if (!this.row || !this.column) {
+    if (!this.row || !this.column || this.column.prop == undefined) {
       value = '';
     } else {
       const val = this.column.$$valueGetter(this.row, this.column.prop);
-      const userPipe: PipeTransform = this.column.pipe;
+      const userPipe = this.column.pipe;
 
       if (userPipe) {
         value = userPipe.transform(val);
@@ -441,6 +440,6 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
 
   calcLeftMargin(column: TableColumnInternal, row: RowOrGroup<TRow>): number {
     const levelIndent = column.treeLevelIndent != null ? column.treeLevelIndent : 50;
-    return column.isTreeColumn ? (row as TRow).level * levelIndent : 0;
+    return column.isTreeColumn ? (row as TRow).level! * levelIndent : 0;
   }
 }

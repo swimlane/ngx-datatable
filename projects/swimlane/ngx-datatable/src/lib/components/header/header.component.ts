@@ -14,6 +14,7 @@ import {
 } from '@angular/core';
 import { columnGroupWidths, columnsByPin, columnsByPinArr } from '../../utils/column';
 import {
+  Row,
   SelectionType,
   SortDirection,
   SortEvent,
@@ -27,6 +28,7 @@ import {
   InnerSortEvent,
   PinnedColumns,
   ReorderEventInternal,
+  SortableTableColumnInternal,
   TableColumnInternal,
   TargetChangedEvent
 } from '../../types/internal.types';
@@ -217,13 +219,13 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
     model
   }: {
     event: MouseEvent | TouchEvent;
-    model: TableColumnInternal<unknown>;
+    model: TableColumnInternal<Row>;
   }) {
     model.dragging = true;
     this.dragEventTarget = event;
   }
 
-  onLongPressEnd({ model }: { model: TableColumnInternal<unknown> }) {
+  onLongPressEnd({ model }: { model: TableColumnInternal<Row> }) {
     this.dragEventTarget = undefined;
 
     // delay resetting so sort can be
@@ -260,7 +262,7 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
 
   private makeResizeEvent(
     width: number,
-    column: TableColumnInternal<unknown>
+    column: TableColumnInternal<Row>
   ): ColumnResizeEventInternal {
     if (column.minWidth && width <= column.minWidth) {
       width = column.minWidth;
@@ -329,9 +331,9 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
   }
 
   calcNewSorts(
-    column: TableColumnInternal,
+    column: SortableTableColumnInternal,
     prevValue: SortDirection,
-    newValue: SortDirection
+    newValue: SortDirection | undefined
   ): SortPropDir[] {
     let idx = 0;
 

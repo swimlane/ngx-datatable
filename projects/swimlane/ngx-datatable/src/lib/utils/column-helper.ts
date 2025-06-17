@@ -19,8 +19,10 @@ export function toInternalColumn<T extends Row>(
     // Only one column should hold the tree view,
     // Thus if multiple columns are provided with
     // isTreeColumn as true, we take only the first one
-    const isTreeColumn = column.isTreeColumn && !hasTreeColumn;
+    const isTreeColumn = !!column.isTreeColumn && !hasTreeColumn;
     hasTreeColumn = hasTreeColumn || isTreeColumn;
+    // TODO: add check if prop or name is provided if sorting is enabled.
+
     return {
       ...column,
       $$id: id(),
@@ -39,6 +41,6 @@ export function toInternalColumn<T extends Row>(
       cellTemplate: column.cellTemplate,
       summaryTemplate: column.summaryTemplate,
       ghostCellTemplate: column.ghostCellTemplate
-    };
+    } as TableColumnInternal; // TS cannot cast here
   });
 }

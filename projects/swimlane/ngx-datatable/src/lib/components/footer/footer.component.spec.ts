@@ -228,7 +228,7 @@ describe('DataTableFooterComponent', () => {
       [selectedCount]="selectedCount"
       [selectedMessage]="selectedMessage"
       [pagerNextIcon]="pagerNextIcon"
-      (page)="onPageEvent($event)"
+      (page)="onPageEvent()"
     >
     </datatable-footer>
 
@@ -261,9 +261,9 @@ class TestFixtureComponent {
   pagerPreviousIcon: string;
   pagerNextIcon: string;
   totalMessage: string;
-  footerTemplate: { template: TemplateRef<any> };
+  footerTemplate?: { template: TemplateRef<any> };
   selectedCount: number;
-  selectedMessage: string;
+  selectedMessage?: string;
 
   /**
    * establishes a reference to a test template that can

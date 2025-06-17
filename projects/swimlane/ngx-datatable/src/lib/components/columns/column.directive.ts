@@ -15,12 +15,12 @@ import { DataTableColumnCellTreeToggle } from './tree.directive';
 import { ColumnChangesService } from '../../services/column-changes.service';
 import { TableColumn, TableColumnProp } from '../../types/table-column.type';
 import { DataTableColumnGhostCellDirective } from './column-ghost-cell.directive';
-import { CellContext, HeaderCellContext } from '../../types/public.types';
+import { CellContext, HeaderCellContext, Row } from '../../types/public.types';
 
 @Directive({
   selector: 'ngx-datatable-column'
 })
-export class DataTableColumnDirective<TRow> implements TableColumn, OnChanges {
+export class DataTableColumnDirective<TRow extends Row> implements TableColumn, OnChanges {
   private columnChangesService = inject(ColumnChangesService);
   @Input() name?: string;
   @Input() prop?: TableColumnProp;

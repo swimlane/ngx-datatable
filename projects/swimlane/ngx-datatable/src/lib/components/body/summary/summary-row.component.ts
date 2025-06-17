@@ -16,7 +16,7 @@ function defaultSumFunc(cells: any[]): any {
 }
 
 function noopSumFunc(cells: any[]): void {
-  return null;
+  return;
 }
 
 @Component({
@@ -69,12 +69,12 @@ export class DataTableSummaryRowComponent implements OnChanges {
     this.summaryRow = {};
 
     this.columns
-      .filter(col => !col.summaryTemplate)
+      .filter(col => !col.summaryTemplate && col.prop)
       .forEach(col => {
-        const cellsFromSingleColumn = this.rows.map(row => row[col.prop]);
+        const cellsFromSingleColumn = this.rows.map(row => row[col.prop!]);
         const sumFunc = this.getSummaryFunction(col);
 
-        this.summaryRow[col.prop] = col.pipe
+        this.summaryRow[col.prop!] = col.pipe
           ? col.pipe.transform(sumFunc(cellsFromSingleColumn))
           : sumFunc(cellsFromSingleColumn);
       });

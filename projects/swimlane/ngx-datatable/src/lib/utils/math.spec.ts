@@ -141,7 +141,7 @@ describe('Math function', () => {
         adjustColumnWidths(cols, 40);
 
         for (const col of cols) {
-          expect(col.width - col.minWidth).toBeGreaterThanOrEqual(0);
+          expect(col.width - col.minWidth!).toBeGreaterThanOrEqual(0);
         }
       });
     });
