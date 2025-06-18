@@ -52,7 +52,6 @@ import { DataTableBodyCellComponent } from './body-cell.component';
         [displayCheck]="displayCheck"
         [disabled]="disabled"
         [treeStatus]="treeStatus"
-        [ghostLoadingIndicator]="ghostLoadingIndicator"
         (activate)="onActivate($event, ii)"
         (treeAction)="onTreeAction()"
       >
@@ -99,7 +98,6 @@ export class DataTableBodyRowComponent<TRow extends Row = any> implements DoChec
   @Input() rowIndex: RowIndex;
   @Input() displayCheck?: (row: TRow, column: TableColumnInternal, value?: any) => boolean;
   @Input() treeStatus?: TreeStatus = 'collapsed';
-  @Input() ghostLoadingIndicator = false;
   @Input() verticalScrollVisible = false;
 
   @Input() disabled: boolean;

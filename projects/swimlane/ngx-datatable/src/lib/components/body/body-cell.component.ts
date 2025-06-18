@@ -194,8 +194,6 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
     return this._treeStatus;
   }
 
-  @Input() ghostLoadingIndicator = false;
-
   @Output() activate = new EventEmitter<CellActiveEvent<TRow>>();
 
   @Output() treeAction: EventEmitter<any> = new EventEmitter();

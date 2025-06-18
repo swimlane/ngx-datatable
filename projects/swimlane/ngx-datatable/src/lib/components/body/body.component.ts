@@ -104,7 +104,6 @@ import { Keys } from '../../utils/keys';
             [rowClass]="rowClass"
             [displayCheck]="displayCheck"
             [treeStatus]="row?.treeStatus"
-            [ghostLoadingIndicator]="ghostLoadingIndicator"
             [draggable]="rowDraggable"
             [verticalScrollVisible]="verticalScrollVisible"
             (treeAction)="onTreeAction(row)"
