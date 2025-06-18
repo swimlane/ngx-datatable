@@ -14,8 +14,8 @@ import {
   HostListener,
   inject,
   Input,
-  IterableDiffer,
-  IterableDiffers,
+  KeyValueDiffer,
+  KeyValueDiffers,
   numberAttribute,
   OnDestroy,
   OnInit,
@@ -113,7 +113,7 @@ export class DatatableComponent<TRow = any>
   @Input() set rows(val: TRow[] | null | undefined) {
     this._rows = val;
     // This will ensure that datatable detects changes on doing like this rows = [...rows];
-    this.rowDiffer.diff([]);
+    this.rowDiffer.diff([] as any);
     if (val) {
       this._internalRows = [...val];
     }
@@ -690,11 +690,11 @@ export class DatatableComponent<TRow = any>
   }
 
   element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
+  rowDiffer: KeyValueDiffer<TRow, TRow> = inject(KeyValueDiffers).find([]).create();
   _innerWidth: number;
   pageSize: number;
   bodyHeight: number;
   rowCount = 0;
-  rowDiffer: IterableDiffer<TRow> = inject(IterableDiffers).find([]).create();
 
   _offsetX = new BehaviorSubject(0);
   _limit: number | undefined;
@@ -845,7 +845,7 @@ export class DatatableComponent<TRow = any>
    * Lifecycle hook that is called when Angular dirty checks a directive.
    */
   ngDoCheck(): void {
-    const rowDiffers = this.rowDiffer.diff(this.rows);
+    const rowDiffers = this.rowDiffer.diff(this.rows as any);
     if (rowDiffers || this.disableRowCheck) {
       // we don't sort again when ghost loader adds a dummy row
       if (!this.ghostLoadingIndicator && !this.externalSorting && this._internalColumns) {
