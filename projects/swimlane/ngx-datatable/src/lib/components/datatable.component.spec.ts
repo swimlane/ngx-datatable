@@ -379,7 +379,7 @@ describe('DatatableComponent With Custom Templates', () => {
             {{ column.name }}
           </ng-template>
           <ng-template let-row="row" let-column="column" ngx-datatable-cell-template>
-            {{ row[column.prop] }}
+            {{ row[column.prop!] }}
           </ng-template>
         </ngx-datatable-column>
       </ngx-datatable>
@@ -396,7 +396,7 @@ describe('DatatableComponent With Custom Templates', () => {
   class TestFixtureComponentWithCustomTemplates {
     rows: Record<string, any>[] = [];
     sorts: SortPropDir[] = [];
-    columnTwoProp: string;
+    columnTwoProp?: string;
   }
 
   let fixture: ComponentFixture<TestFixtureComponentWithCustomTemplates>;

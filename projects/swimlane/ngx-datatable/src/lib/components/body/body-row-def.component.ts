@@ -56,7 +56,7 @@ export class DatatableRowDefDirective {
 export class DatatableRowDefInternalDirective implements OnInit {
   vc = inject(ViewContainerRef);
 
-  @Input() rowDefInternal: RowDefContext;
+  @Input() rowDefInternal!: RowDefContext;
   @Input() rowDefInternalDisabled?: boolean;
 
   ngOnInit(): void {

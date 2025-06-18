@@ -27,9 +27,9 @@ import { DataService } from '../data.service';
           </a>
         </small>
         <small>
-          <a href="javascript:void(0)" (click)="table.rowDetail.expandAllRows()">Expand All</a>
+          <a href="javascript:void(0)" (click)="table.rowDetail!.expandAllRows()">Expand All</a>
           |
-          <a href="javascript:void(0)" (click)="table.rowDetail.collapseAllRows()">Collapse All</a>
+          <a href="javascript:void(0)" (click)="table.rowDetail!.collapseAllRows()">Collapse All</a>
         </small>
       </h3>
       <ngx-datatable
@@ -108,7 +108,7 @@ import { DataService } from '../data.service';
   ]
 })
 export class RowDetailsComponent {
-  @ViewChild('myTable') table: DatatableComponent<FullEmployee>;
+  @ViewChild('myTable') table!: DatatableComponent<FullEmployee>;
 
   rows: FullEmployee[] = [];
   expanded: any = {};
@@ -133,7 +133,7 @@ export class RowDetailsComponent {
 
   toggleExpandRow(row: FullEmployee) {
     console.log('Toggled Expand Row!', row);
-    this.table.rowDetail.toggleExpandRow(row);
+    this.table.rowDetail!.toggleExpandRow(row);
   }
 
   onDetailToggle(event: DetailToggleEvents<FullEmployee>) {

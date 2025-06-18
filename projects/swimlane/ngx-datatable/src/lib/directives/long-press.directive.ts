@@ -22,7 +22,7 @@ import { TableColumnInternal } from '../types/internal.types';
 })
 export class LongPressDirective implements OnDestroy {
   @Input({ transform: booleanAttribute }) pressEnabled = true;
-  @Input() pressModel: TableColumnInternal;
+  @Input() pressModel!: TableColumnInternal;
   @Input({ transform: numberAttribute }) duration = 500;
 
   @Output() longPressStart = new EventEmitter<{

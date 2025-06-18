@@ -40,14 +40,13 @@ function noopSumFunc(cells: any[]): void {
   imports: [DataTableBodyRowComponent]
 })
 export class DataTableSummaryRowComponent implements OnChanges {
-  @Input() rows: any[];
-  @Input() columns: TableColumnInternal[];
+  @Input() rows!: any[];
+  @Input() columns!: TableColumnInternal[];
 
-  @Input() rowHeight: number;
-  @Input() offsetX: number;
-  @Input() innerWidth: number;
+  @Input() rowHeight!: number;
+  @Input() innerWidth!: number;
 
-  _internalColumns: TableColumnInternal[];
+  _internalColumns!: TableColumnInternal[];
   summaryRow: any = {};
 
   ngOnChanges() {

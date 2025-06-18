@@ -108,9 +108,9 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
   @Input() sortAscendingIcon?: string;
   @Input() sortDescendingIcon?: string;
   @Input() sortUnsetIcon?: string;
-  @Input() scrollbarH: boolean;
-  @Input() dealsWithGroup: boolean;
-  @Input() targetMarkerTemplate: TemplateRef<unknown>;
+  @Input() scrollbarH?: boolean;
+  @Input() dealsWithGroup?: boolean;
+  @Input() targetMarkerTemplate?: TemplateRef<unknown>;
   @Input() enableClearingSortState = false;
 
   @Input() set innerWidth(val: number) {
@@ -128,11 +128,11 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
     return this._innerWidth;
   }
 
-  @Input() sorts: SortPropDir[];
-  @Input() sortType: SortType;
-  @Input() allRowsSelected: boolean;
-  @Input() selectionType: SelectionType;
-  @Input() reorderable: boolean;
+  @Input() sorts!: SortPropDir[];
+  @Input() sortType!: SortType;
+  @Input() allRowsSelected?: boolean;
+  @Input() selectionType?: SelectionType;
+  @Input() reorderable?: boolean;
   @Input() verticalScrollVisible = false;
 
   dragEventTarget?: MouseEvent | TouchEvent;
@@ -185,14 +185,14 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
     column: TableColumnInternal;
   }>(false);
 
-  _columnsByPin: PinnedColumns[];
+  _columnsByPin!: PinnedColumns[];
   _columnGroupWidths: any = {
     total: 100
   };
-  _innerWidth: number;
-  _offsetX: number;
-  _columns: TableColumnInternal[];
-  _headerHeight: string;
+  _innerWidth!: number;
+  _offsetX!: number;
+  _columns!: TableColumnInternal[];
+  _headerHeight!: string;
   _styleByGroup: {
     left: NgStyle['ngStyle'];
     center: NgStyle['ngStyle'];
@@ -332,7 +332,7 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
 
   calcNewSorts(
     column: SortableTableColumnInternal,
-    prevValue: SortDirection,
+    prevValue: SortDirection | undefined,
     newValue: SortDirection | undefined
   ): SortPropDir[] {
     let idx = 0;

@@ -52,7 +52,7 @@ import { DataService } from '../data.service';
   imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellDirective]
 })
 export class VirtualScrollComponent {
-  rows: (FullEmployee & { height: number })[];
+  rows: (FullEmployee & { height: number })[] = [];
   expanded = {};
   timeout: any;
 

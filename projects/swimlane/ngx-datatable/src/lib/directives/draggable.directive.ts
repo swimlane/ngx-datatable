@@ -28,7 +28,7 @@ import { getPositionFromEvent } from '../utils/events';
 })
 export class DraggableDirective implements OnDestroy, OnChanges {
   @Input() dragEventTarget: any;
-  @Input() dragModel: TableColumnInternal;
+  @Input() dragModel!: TableColumnInternal;
   @Input({ transform: booleanAttribute }) dragX = true;
   @Input({ transform: booleanAttribute }) dragY = true;
 

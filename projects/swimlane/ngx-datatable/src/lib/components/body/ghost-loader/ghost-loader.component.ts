@@ -16,9 +16,9 @@ import { TableColumnInternal } from '../../../types/internal.types';
   imports: [NgTemplateOutlet]
 })
 export class DataTableGhostLoaderComponent {
-  @Input() columns: TableColumnInternal[];
-  @Input({ transform: numberAttribute }) pageSize: number;
-  @Input() rowHeight: number | 'auto' | ((row?: any) => number);
+  @Input() columns!: TableColumnInternal[];
+  @Input({ transform: numberAttribute }) pageSize!: number;
+  @Input() rowHeight!: number | 'auto' | ((row?: any) => number);
   @Input({ transform: numberAttribute }) ghostBodyHeight?: number;
   @Input({ transform: booleanAttribute }) cellMode = false;
 }

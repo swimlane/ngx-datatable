@@ -12,7 +12,7 @@ export enum SortDirection {
 
 export interface SortEvent {
   column: TableColumn;
-  prevValue: SortDirection;
+  prevValue: SortDirection | undefined;
   newValue: SortDirection | undefined;
   sorts: SortPropDir[];
 }
@@ -46,9 +46,9 @@ export interface ActivateEvent<TRow> {
 
 export interface HeaderCellContext {
   column: TableColumn;
-  sortDir: SortDirection | 'asc' | 'desc';
+  sortDir: SortDirection | 'asc' | 'desc' | undefined;
   sortFn: () => void;
-  allRowsSelected: boolean;
+  allRowsSelected?: boolean;
   selectFn: () => void;
 }
 
@@ -62,15 +62,15 @@ export interface CellContext<TRow extends Row = any> {
   onCheckboxChangeFn: (event: Event) => void;
   activateFn: (event: ActivateEvent<TRow>) => void;
   row: TRow;
-  group: TRow[];
+  group?: TRow[];
   value: any;
   column: TableColumn;
   rowHeight: number;
-  isSelected: boolean;
+  isSelected?: boolean;
   rowIndex: number;
   rowInGroupIndex?: number;
-  treeStatus: TreeStatus;
-  disabled: boolean;
+  treeStatus?: TreeStatus;
+  disabled?: boolean;
   onTreeAction: () => void;
   expanded?: boolean;
 }

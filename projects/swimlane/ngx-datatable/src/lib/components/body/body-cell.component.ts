@@ -80,16 +80,16 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
 
   @Input() displayCheck?: (row: TRow, column: TableColumnInternal, value: any) => boolean;
 
-  @Input() set disabled(value: boolean) {
+  @Input() set disabled(value: boolean | undefined) {
     this.cellContext.disabled = value;
     this._disabled = value;
   }
 
-  get disabled(): boolean {
+  get disabled(): boolean | undefined {
     return this._disabled;
   }
 
-  @Input() set group(group: TRow[]) {
+  @Input() set group(group: TRow[] | undefined) {
     this._group = group;
     this.cellContext.group = group;
     this.checkValueUpdates();
@@ -111,23 +111,23 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
     return this._rowHeight;
   }
 
-  @Input() set isSelected(val: boolean) {
+  @Input() set isSelected(val: boolean | undefined) {
     this._isSelected = val;
     this.cellContext.isSelected = val;
     this.cd.markForCheck();
   }
 
-  get isSelected(): boolean {
+  get isSelected(): boolean | undefined {
     return this._isSelected;
   }
 
-  @Input() set expanded(val: boolean) {
+  @Input() set expanded(val: boolean | undefined) {
     this._expanded = val;
     this.cellContext.expanded = val;
     this.cd.markForCheck();
   }
 
-  get expanded(): boolean {
+  get expanded(): boolean | undefined {
     return this._expanded;
   }
 
@@ -190,7 +190,7 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
     this.cd.markForCheck();
   }
 
-  get treeStatus(): TreeStatus {
+  get treeStatus(): TreeStatus | undefined {
     return this._treeStatus;
   }
 
@@ -268,24 +268,24 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
     return height + 'px';
   }
 
-  sanitizedValue: string;
+  sanitizedValue!: string;
   value: any;
   sortDir?: SortDirection;
   isFocused = false;
 
   cellContext: CellContext<TRow>;
 
-  private _isSelected: boolean;
-  private _sorts: SortPropDir[];
-  private _column: TableColumnInternal;
-  private _row: TRow;
-  private _group: TRow[];
-  private _rowHeight: number;
-  private _rowIndex: RowIndex;
-  private _expanded: boolean;
+  private _isSelected?: boolean;
+  private _sorts!: SortPropDir[];
+  private _column!: TableColumnInternal;
+  private _row!: TRow;
+  private _group?: TRow[];
+  private _rowHeight!: number;
+  private _rowIndex!: RowIndex;
+  private _expanded?: boolean;
   private _element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
-  private _treeStatus: TreeStatus;
-  private _disabled: boolean;
+  private _treeStatus?: TreeStatus;
+  private _disabled?: boolean;
 
   constructor() {
     this.cellContext = {

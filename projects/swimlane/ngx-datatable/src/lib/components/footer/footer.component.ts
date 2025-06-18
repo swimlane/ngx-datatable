@@ -11,9 +11,9 @@ import { NgClass, NgTemplateOutlet } from '@angular/common';
       [ngClass]="{ 'selected-count': selectedMessage }"
       [style.height.px]="footerHeight"
     >
-      @if (footerTemplate) {
+      @if (footerTemplate?.template) {
       <ng-template
-        [ngTemplateOutlet]="footerTemplate.template"
+        [ngTemplateOutlet]="footerTemplate!.template!"
         [ngTemplateOutletContext]="{
           rowCount: rowCount,
           pageSize: pageSize,
@@ -53,15 +53,15 @@ import { NgClass, NgTemplateOutlet } from '@angular/common';
   imports: [NgClass, NgTemplateOutlet, DataTablePagerComponent]
 })
 export class DataTableFooterComponent {
-  @Input() footerHeight: number;
-  @Input() rowCount: number;
-  @Input() pageSize: number;
-  @Input() offset: number;
+  @Input() footerHeight!: number;
+  @Input() rowCount!: number;
+  @Input() pageSize!: number;
+  @Input() offset!: number;
   @Input() pagerLeftArrowIcon?: string;
   @Input() pagerRightArrowIcon?: string;
   @Input() pagerPreviousIcon?: string;
   @Input() pagerNextIcon?: string;
-  @Input() totalMessage: string;
+  @Input() totalMessage!: string;
   @Input() footerTemplate?: DatatableFooterDirective;
 
   @Input() selectedCount = 0;

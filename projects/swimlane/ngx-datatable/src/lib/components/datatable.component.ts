@@ -111,7 +111,7 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * Template for the target marker of drag target columns.
    */
-  @Input() targetMarkerTemplate: TemplateRef<unknown>;
+  @Input() targetMarkerTemplate?: TemplateRef<unknown>;
 
   /**
    * Rows that are displayed in the table.
@@ -135,7 +135,7 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * This attribute allows the user to set the name of the column to group the data with
    */
-  @Input() set groupRowsBy(val: keyof TRow) {
+  @Input() set groupRowsBy(val: keyof TRow | undefined) {
     if (val) {
       this._groupRowsBy = val;
       if (this._groupRowsBy) {
@@ -164,7 +164,7 @@ export class DatatableComponent<TRow extends Row = any>
    *    ]}
    *  ]
    */
-  @Input() groupedRows: Group<TRow>[];
+  @Input() groupedRows?: Group<TRow>[];
 
   /**
    * Columns to be displayed.
@@ -326,7 +326,7 @@ export class DatatableComponent<TRow extends Row = any>
    * For no selection pass a `falsey`.
    * Default value: `undefined`
    */
-  @Input() selectionType: SelectionType;
+  @Input() selectionType?: SelectionType;
 
   /**
    * Enable/Disable ability to re-order columns
@@ -380,7 +380,7 @@ export class DatatableComponent<TRow extends Row = any>
    * - a string: `"class-1 class-2`
    * - a Record<string, boolean>: `{ 'class-1': true, 'class-2': false }`
    */
-  @Input() rowClass: (row: TRow) => string | Record<string, boolean>;
+  @Input() rowClass?: (row: TRow) => string | Record<string, boolean>;
 
   /**
    * A boolean/function you can use to check whether you want
@@ -390,7 +390,7 @@ export class DatatableComponent<TRow extends Row = any>
    *      return selection !== 'Ethel Price';
    *    }
    */
-  @Input() selectCheck: (value: TRow, index: number, array: TRow[]) => boolean;
+  @Input() selectCheck?: (value: TRow, index: number, array: TRow[]) => boolean;
 
   /**
    * A function you can use to check whether you want
@@ -400,7 +400,7 @@ export class DatatableComponent<TRow extends Row = any>
    *      return row.name !== 'Ethel Price';
    *    }
    */
-  @Input() displayCheck: (row: TRow, column: TableColumn, value?: any) => boolean;
+  @Input() displayCheck?: (row: TRow, column: TableColumn, value?: any) => boolean;
 
   /**
    * A boolean you can use to set the detault behaviour of rows and groups
@@ -413,7 +413,7 @@ export class DatatableComponent<TRow extends Row = any>
    * Property to which you can use for custom tracking of rows.
    * Example: 'name'
    */
-  @Input() trackByProp: string;
+  @Input() trackByProp?: string;
 
   /**
    * Property to which you can use for determining select all
@@ -429,12 +429,12 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * Tree from relation
    */
-  @Input() treeFromRelation: string;
+  @Input() treeFromRelation?: string;
 
   /**
    * Tree to relation
    */
-  @Input() treeToRelation: string;
+  @Input() treeToRelation?: string;
 
   /**
    * A flag for switching summary row on / off
@@ -632,36 +632,36 @@ export class DatatableComponent<TRow extends Row = any>
    * Row Detail templates gathered from the ContentChild
    */
   @ContentChild(DatatableRowDetailDirective)
-  rowDetail: DatatableRowDetailDirective;
+  rowDetail?: DatatableRowDetailDirective;
 
   /**
    * Group Header templates gathered from the ContentChild
    */
   @ContentChild(DatatableGroupHeaderDirective)
-  groupHeader: DatatableGroupHeaderDirective;
+  groupHeader?: DatatableGroupHeaderDirective;
 
   /**
    * Footer template gathered from the ContentChild
    */
   @ContentChild(DatatableFooterDirective)
-  footer: DatatableFooterDirective;
+  footer?: DatatableFooterDirective;
 
   /**
    * Reference to the body component for manually
    * invoking functions on the body.
    */
   @ViewChild(DataTableBodyComponent)
-  bodyComponent: DataTableBodyComponent<TRow & { treeStatus?: TreeStatus }>;
+  bodyComponent!: DataTableBodyComponent<TRow & { treeStatus?: TreeStatus }>;
 
   /**
    * Reference to the header component for manually
    * invoking functions on the header.
    */
   @ViewChild(DataTableHeaderComponent)
-  headerComponent: DataTableHeaderComponent;
+  headerComponent!: DataTableHeaderComponent;
 
   @ViewChild(DataTableBodyComponent, { read: ElementRef })
-  private bodyElement: ElementRef<HTMLElement>;
+  private bodyElement!: ElementRef<HTMLElement>;
   @ContentChild(DatatableRowDefDirective, {
     read: TemplateRef
   })
@@ -694,10 +694,10 @@ export class DatatableComponent<TRow extends Row = any>
   _count = 0;
   _offset = 0;
   _rows: (TRow | undefined)[] = [];
-  _groupRowsBy: keyof TRow;
+  _groupRowsBy?: keyof TRow;
   _internalRows: (TRow | undefined)[] = [];
-  _internalColumns: TableColumnInternal<TRow>[];
-  _columns: TableColumn[];
+  _internalColumns!: TableColumnInternal<TRow>[];
+  _columns!: TableColumn[];
   _subscriptions: Subscription[] = [];
   _ghostLoadingIndicator = false;
   _defaultColumnWidth?: number;
@@ -780,7 +780,7 @@ export class DatatableComponent<TRow extends Row = any>
    *
    * (`fn(x) === fn(y)` instead of `x === y`)
    */
-  @Input() rowIdentity: (x: TRow | Group<TRow>) => unknown = x => {
+  @Input() rowIdentity: (x: RowOrGroup<TRow>) => unknown = x => {
     if (this._groupRowsBy) {
       // each group in groupedRows are stored as {key, value: [rows]},
       // where key is the groupRowsBy index
@@ -1255,7 +1255,7 @@ export class DatatableComponent<TRow extends Row = any>
     const row = event.row;
     // TODO: For duplicated items this will not work
     const rowIndex = this._rows.findIndex(
-      r => r && r[this.treeToRelation] === event.row[this.treeToRelation]
+      r => r && r[this.treeToRelation!] === event.row[this.treeToRelation!]
     );
     this.treeAction.emit({ row, rowIndex });
   }
@@ -1295,7 +1295,7 @@ export class DatatableComponent<TRow extends Row = any>
       const sortOnGroupHeader = this.sorts?.find(
         sortColumns => sortColumns.prop === this._groupRowsBy
       );
-      this.groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
+      this.groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy!);
       this.groupedRows = sortGroupedRows(
         this.groupedRows,
         this._internalColumns,

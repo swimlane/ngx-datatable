@@ -50,7 +50,7 @@ import { DataService } from '../data.service';
 export class SummaryRowCustomTemplateComponent implements OnInit {
   rows: Employee[] = [];
 
-  @ViewChild('nameSummaryCell') nameSummaryCell: TemplateRef<any>;
+  @ViewChild('nameSummaryCell') nameSummaryCell!: TemplateRef<any>;
 
   columns: TableColumn[] = [];
 

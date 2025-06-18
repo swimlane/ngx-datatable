@@ -136,7 +136,7 @@ import { DataService } from '../data.service';
   ]
 })
 export class ResponsiveComponent {
-  @ViewChild('myTable') table: DatatableComponent<FullEmployee>;
+  @ViewChild('myTable') table!: DatatableComponent<FullEmployee>;
 
   rows: FullEmployee[] = [];
   expanded: any = {};
@@ -161,7 +161,7 @@ export class ResponsiveComponent {
 
   toggleExpandRow(row: FullEmployee) {
     console.log('Toggled Expand Row!', row);
-    this.table.rowDetail.toggleExpandRow(row);
+    this.table.rowDetail!.toggleExpandRow(row);
   }
 
   onDetailToggle(event: DetailToggleEvents<FullEmployee>) {

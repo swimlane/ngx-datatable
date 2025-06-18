@@ -252,17 +252,17 @@ describe('DataTableFooterComponent', () => {
   imports: [DataTableFooterComponent]
 })
 class TestFixtureComponent {
-  footerHeight: number;
+  footerHeight = 0;
   rowCount = 100;
   pageSize = 1;
   offset = 0;
-  pagerLeftArrowIcon: string;
-  pagerRightArrowIcon: string;
-  pagerPreviousIcon: string;
-  pagerNextIcon: string;
-  totalMessage: string;
+  pagerLeftArrowIcon = '';
+  pagerRightArrowIcon = '';
+  pagerPreviousIcon = '';
+  pagerNextIcon = '';
+  totalMessage = '';
   footerTemplate?: { template: TemplateRef<any> };
-  selectedCount: number;
+  selectedCount = 0;
   selectedMessage?: string;
 
   /**
@@ -271,7 +271,7 @@ class TestFixtureComponent {
    * in these unit tests
    */
   @ViewChild('testTemplate', { read: TemplateRef, static: true })
-  testTemplate: TemplateRef<any>;
+  testTemplate!: TemplateRef<any>;
 
   onPageEvent() {
     return;
@@ -283,11 +283,11 @@ class TestFixtureComponent {
  * makes for cleaner testing
  */
 class Page {
-  datatableFooter: DebugElement;
-  datatableFooterInner: DebugElement;
-  templateList: DebugElement;
-  pageCount: DebugElement;
-  datatablePager: DebugElement;
+  datatableFooter!: DebugElement;
+  datatableFooterInner!: DebugElement;
+  templateList!: DebugElement;
+  pageCount!: DebugElement;
+  datatablePager!: DebugElement;
 
   detectChangesAndRunQueries() {
     fixture.detectChanges();

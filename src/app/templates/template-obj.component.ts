@@ -1,4 +1,4 @@
-import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import {
   ColumnMode,
   DatatableComponent,
@@ -49,9 +49,9 @@ import { DataService } from '../data.service';
   standalone: true,
   imports: [DatatableComponent]
 })
-export class TemplateRefTemplatesComponent {
-  @ViewChild('editTmpl', { static: true }) editTmpl: TemplateRef<any>;
-  @ViewChild('hdrTpl', { static: true }) hdrTpl: TemplateRef<any>;
+export class TemplateRefTemplatesComponent implements OnInit {
+  @ViewChild('editTmpl', { static: true }) editTmpl!: TemplateRef<any>;
+  @ViewChild('hdrTpl', { static: true }) hdrTpl!: TemplateRef<any>;
 
   rows: Employee[] = [];
   columns: TableColumn[] = [];

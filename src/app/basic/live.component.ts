@@ -49,7 +49,7 @@ import { DataService } from '../data.service';
   imports: [DatatableComponent, DataTableColumnDirective]
 })
 export class LiveDataComponent {
-  @ViewChild('mydatatable') mydatatable: DatatableComponent<Employee & { updated: string }>;
+  @ViewChild('mydatatable') mydatatable!: DatatableComponent<Employee & { updated: string }>;
 
   count = 50;
   rows: (Employee & { updated: string })[] = [];

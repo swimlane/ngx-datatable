@@ -238,32 +238,32 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   cd = inject(ChangeDetectorRef);
 
   @Input() rowDefTemplate?: TemplateRef<any>;
-  @Input() scrollbarV: boolean;
-  @Input() scrollbarH: boolean;
-  @Input() loadingIndicator: boolean;
-  @Input() ghostLoadingIndicator: boolean;
-  @Input() externalPaging: boolean;
-  @Input() rowHeight: number | 'auto' | ((row?: any) => number);
-  @Input() offsetX: number;
-  @Input() selectionType: SelectionType;
+  @Input() scrollbarV?: boolean;
+  @Input() scrollbarH?: boolean;
+  @Input() loadingIndicator?: boolean;
+  @Input() ghostLoadingIndicator?: boolean;
+  @Input() externalPaging?: boolean;
+  @Input() rowHeight!: number | 'auto' | ((row?: any) => number);
+  @Input() offsetX!: number;
+  @Input() selectionType?: SelectionType;
   @Input() selected: any[] = [];
-  @Input() rowIdentity: any;
-  @Input() rowDetail: DatatableRowDetailDirective;
-  @Input() groupHeader: DatatableGroupHeaderDirective;
-  @Input() selectCheck: (value: TRow, index: number, array: TRow[]) => boolean;
-  @Input() displayCheck: (row: TRow, column: TableColumnInternal, value?: any) => boolean;
-  @Input() trackByProp: string;
-  @Input() rowClass: (row: TRow) => string | Record<string, boolean>;
-  @Input() groupedRows: Group<TRow>[];
-  @Input() groupExpansionDefault: boolean;
-  @Input() innerWidth: number;
-  @Input() groupRowsBy: keyof TRow;
-  @Input() virtualization: boolean;
-  @Input() summaryRow: boolean;
-  @Input() summaryPosition: string;
-  @Input() summaryHeight: number;
-  @Input() rowDraggable: boolean;
-  @Input() rowDragEvents: EventEmitter<DragEventData>;
+  @Input() rowIdentity!: (x: RowOrGroup<TRow>) => unknown;
+  @Input() rowDetail?: DatatableRowDetailDirective;
+  @Input() groupHeader?: DatatableGroupHeaderDirective;
+  @Input() selectCheck?: (value: TRow, index: number, array: TRow[]) => boolean;
+  @Input() displayCheck?: (row: TRow, column: TableColumnInternal, value?: any) => boolean;
+  @Input() trackByProp?: string;
+  @Input() rowClass?: (row: TRow) => string | Record<string, boolean>;
+  @Input() groupedRows?: Group<TRow>[];
+  @Input() groupExpansionDefault?: boolean;
+  @Input() innerWidth!: number;
+  @Input() groupRowsBy?: keyof TRow;
+  @Input() virtualization?: boolean;
+  @Input() summaryRow?: boolean;
+  @Input() summaryPosition!: string;
+  @Input() summaryHeight!: number;
+  @Input() rowDraggable?: boolean;
+  @Input() rowDragEvents!: EventEmitter<DragEventData>;
   @Input() disableRowCheck?: (row: TRow) => boolean | undefined;
 
   @Input() set pageSize(val: number) {
@@ -362,7 +362,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   @Output() rowContextmenu = new EventEmitter<{ event: MouseEvent; row: RowOrGroup<TRow> }>(false);
   @Output() treeAction: EventEmitter<{ row: TRow }> = new EventEmitter();
 
-  @ViewChild(ScrollerComponent) scroller: ScrollerComponent;
+  @ViewChild(ScrollerComponent) scroller!: ScrollerComponent;
 
   /**
    * Returns if selection is enabled.
@@ -390,17 +390,17 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   rowHeightsCache = signal(new RowHeightCache());
   offsetY = 0;
   indexes = signal<{ first: number; last: number }>({ first: 0, last: 0 });
-  columnGroupWidths: ColumnGroupWidth;
+  columnGroupWidths!: ColumnGroupWidth;
   rowTrackingFn: TrackByFunction<RowOrGroup<TRow> | undefined>;
   listener: any;
   rowExpansions: any[] = [];
 
-  _rows: (TRow | undefined)[];
-  _bodyHeight: string;
-  _columns: TableColumnInternal[];
-  _rowCount: number;
-  _offset: number;
-  _pageSize: number;
+  _rows!: (TRow | undefined)[];
+  _bodyHeight!: string;
+  _columns!: TableColumnInternal[];
+  _rowCount!: number;
+  _offset!: number;
+  _pageSize!: number;
   _offsetEvent = -1;
 
   private _draggedRow?: RowOrGroup<TRow>;
@@ -762,7 +762,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
    */
   getRowExpanded(row: RowOrGroup<TRow>): boolean {
     if (this.rowExpansions.length === 0 && this.groupExpansionDefault) {
-      for (const group of this.groupedRows) {
+      for (const group of this.groupedRows!) {
         this.rowExpansions.push(group);
       }
     }
@@ -869,7 +869,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     this.columnGroupWidths = columnGroupWidths(colsByPin, this._columns);
   }
 
-  prevIndex: number;
+  prevIndex?: number;
 
   selectRow(event: Event, index: number, row: TRow): void {
     if (!this.selectEnabled) {
@@ -884,7 +884,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     // TODO: this code needs cleanup. Casting it to KeyboardEvent is not correct as it could also be other types.
     if (multi || chkbox || multiClick) {
       if ((event as KeyboardEvent).shiftKey) {
-        selected = selectRowsBetween([], this.rows, index, this.prevIndex);
+        selected = selectRowsBetween([], this.rows, index, this.prevIndex!);
       } else if (
         (event as KeyboardEvent).key === 'a' &&
         ((event as KeyboardEvent).ctrlKey || (event as KeyboardEvent).metaKey)

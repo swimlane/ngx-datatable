@@ -8,7 +8,7 @@ import { Employee } from '../data.model';
 
 const companyData = data as any[];
 
-class PagedData<T> {
+interface PagedData<T> {
   data: T[];
 }
 
@@ -65,7 +65,7 @@ export class ServerScrollingComponent {
   readonly pageLimit = 10;
 
   rows: Employee[] = [];
-  isLoading: boolean;
+  isLoading?: boolean;
 
   ColumnMode = ColumnMode;
 

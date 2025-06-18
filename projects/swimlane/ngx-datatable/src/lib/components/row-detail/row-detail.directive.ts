@@ -13,12 +13,12 @@ export class DatatableRowDetailDirective<TRow extends Row = any> {
   @Input() rowHeight: number | ((row?: TRow, index?: number) => number) = 0;
 
   @Input('template')
-  _templateInput: TemplateRef<RowDetailContext<TRow>>;
+  _templateInput?: TemplateRef<RowDetailContext<TRow>>;
 
   @ContentChild(DatatableRowDetailTemplateDirective, { read: TemplateRef, static: true })
-  _templateQuery: TemplateRef<RowDetailContext<TRow>>;
+  _templateQuery?: TemplateRef<RowDetailContext<TRow>>;
 
-  get template(): TemplateRef<RowDetailContext<TRow>> {
+  get template(): TemplateRef<RowDetailContext<TRow>> | undefined {
     return this._templateInput || this._templateQuery;
   }
 

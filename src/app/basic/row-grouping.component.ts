@@ -92,7 +92,8 @@ import { DataService } from '../data.service';
                 name="{{ rowIndex }}"
                 value="0"
                 class="expectedpayment"
-                (change)="checkGroup($event, row, rowIndex, group)"
+                [attr.aria-label]="'ex pay1' + rowIndex"
+                (change)="checkGroup($event, row, rowIndex, group!)"
                 [checked]="row.exppayyes === 1"
               />
             </label>
@@ -103,7 +104,8 @@ import { DataService } from '../data.service';
                 name="{{ rowIndex }}"
                 value="1"
                 class="expectedpayment2"
-                (change)="checkGroup($event, row, rowIndex, group)"
+                [attr.aria-label]="'ex pay2' + rowIndex"
+                (change)="checkGroup($event, row, rowIndex, group!)"
                 [checked]="row.exppayno === 1"
               />
             </label>
@@ -114,7 +116,8 @@ import { DataService } from '../data.service';
                 name="{{ rowIndex }}"
                 value="2"
                 class="expectedpayment3"
-                (change)="checkGroup($event, row, rowIndex, group)"
+                [attr.aria-label]="'ex pay3' + rowIndex"
+                (change)="checkGroup($event, row, rowIndex, group!)"
                 [checked]="row.exppaypending === 1"
               />
             </label>
@@ -160,7 +163,7 @@ import { DataService } from '../data.service';
   ]
 })
 export class RowGroupingComponent {
-  @ViewChild('myTable') table: DatatableComponent<GroupedEmployee>;
+  @ViewChild('myTable') table!: DatatableComponent<GroupedEmployee>;
 
   editing: Record<string, boolean> = {};
   rows: GroupedEmployee[] = [];
@@ -292,7 +295,7 @@ export class RowGroupingComponent {
 
   toggleExpandGroup(group: Group<GroupedEmployee>) {
     console.log('Toggled Expand Group!', group);
-    this.table.groupHeader.toggleExpandGroup(group);
+    this.table.groupHeader!.toggleExpandGroup(group);
   }
 
   onDetailToggle(event: GroupToggleEvents<GroupedEmployee>) {

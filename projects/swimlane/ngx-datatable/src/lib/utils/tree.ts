@@ -3,7 +3,7 @@ import { TableColumnProp } from '../types/table-column.type';
 import { Row } from '../types/public.types';
 
 export type OptionalValueGetter = ((row: any) => any) | undefined;
-export function optionalGetterForProp(prop: TableColumnProp): OptionalValueGetter {
+export function optionalGetterForProp(prop: TableColumnProp | undefined): OptionalValueGetter {
   return prop ? row => getterForProp(prop)(row, prop) : undefined;
 }
 

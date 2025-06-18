@@ -47,7 +47,7 @@ export interface DraggableDragEvent {
 
 export interface InnerSortEvent {
   column: SortableTableColumnInternal;
-  prevValue: SortDirection;
+  prevValue: SortDirection | undefined;
   newValue: SortDirection | undefined;
 }
 

@@ -37,7 +37,7 @@ import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive'
       [style.width.px]="innerWidth"
     >
       <div class="datatable-group-cell">
-        @if (groupHeader.checkboxable) {
+        @if (groupHeader!.checkboxable) {
         <div>
           <label class="datatable-checkbox">
             <input
@@ -49,7 +49,10 @@ import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive'
           </label>
         </div>
         }
-        <ng-template [ngTemplateOutlet]="groupHeader.template" [ngTemplateOutletContext]="context">
+        <ng-template
+          [ngTemplateOutlet]="groupHeader!.template!"
+          [ngTemplateOutletContext]="context"
+        >
         </ng-template>
       </div>
     </div>
@@ -57,7 +60,7 @@ import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive'
     <ng-content> </ng-content>
     } @if (rowDetail?.template && expanded) {
     <div [style.height.px]="detailRowHeight" class="datatable-row-detail">
-      <ng-template [ngTemplateOutlet]="rowDetail.template" [ngTemplateOutletContext]="context">
+      <ng-template [ngTemplateOutlet]="rowDetail!.template!" [ngTemplateOutletContext]="context">
       </ng-template>
     </div>
     }
@@ -73,34 +76,34 @@ export class DataTableRowWrapperComponent<TRow extends Row = any>
   implements DoCheck, OnInit, OnChanges
 {
   @ViewChild('select') checkBoxInput!: ElementRef<HTMLInputElement>;
-  @Input() innerWidth: number;
-  @Input() rowDetail: DatatableRowDetailDirective;
-  @Input() groupHeader: DatatableGroupHeaderDirective;
-  @Input() offsetX: number;
-  @Input() detailRowHeight: number;
-  @Input() groupHeaderRowHeight: number;
-  @Input() row: RowOrGroup<TRow>;
-  @Input() groupedRows: Group<TRow>[];
-  @Input() selected: TRow[];
+  @Input() innerWidth!: number;
+  @Input() rowDetail?: DatatableRowDetailDirective;
+  @Input() groupHeader?: DatatableGroupHeaderDirective;
+  @Input() offsetX!: number;
+  @Input() detailRowHeight!: number;
+  @Input() groupHeaderRowHeight!: number;
+  @Input() row!: RowOrGroup<TRow>;
+  @Input() groupedRows?: Group<TRow>[];
+  @Input() selected!: TRow[];
   @Input() disabled?: boolean;
   @Output() rowContextmenu = new EventEmitter<{
     event: MouseEvent;
     row: RowOrGroup<TRow>;
   }>(false);
 
-  @Input() rowIndex: number;
+  @Input() rowIndex!: number;
 
   selectedGroupRows = signal<TRow[]>([]);
 
   @Input({ transform: booleanAttribute }) expanded = false;
 
-  context: RowDetailContext<TRow> | GroupContext<TRow>;
+  context!: RowDetailContext<TRow> | GroupContext<TRow>;
 
   private rowDiffer: KeyValueDiffer<keyof RowOrGroup<TRow>, any> = inject(KeyValueDiffers)
     .find({})
     .create();
   private iterableDiffers = inject(IterableDiffers);
-  private selectedRowsDiffer: IterableDiffer<TRow>;
+  private selectedRowsDiffer!: IterableDiffer<TRow>;
   private tableComponent = inject(DatatableComponentToken);
   private cd = inject(ChangeDetectorRef);
 

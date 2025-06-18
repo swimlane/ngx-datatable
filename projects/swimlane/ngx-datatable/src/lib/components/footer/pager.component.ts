@@ -121,7 +121,7 @@ export class DataTablePagerComponent {
   _count = 0;
   _page = 1;
   _size = 0;
-  pages: Page[];
+  pages!: Page[];
 
   canPrevious(): boolean {
     return this.page > 1;

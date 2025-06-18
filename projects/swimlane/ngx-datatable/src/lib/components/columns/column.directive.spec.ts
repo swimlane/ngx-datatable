@@ -21,7 +21,7 @@ import Spy = jasmine.Spy;
   standalone: true
 })
 class TestFixtureComponent {
-  columnName: string;
+  columnName?: string;
 }
 
 describe('DataTableColumnDirective', () => {

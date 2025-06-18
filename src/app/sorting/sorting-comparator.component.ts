@@ -66,5 +66,7 @@ export class SortingComparatorComponent {
     if (propA.toLowerCase() > propB.toLowerCase()) {
       return 1;
     }
+
+    return 0;
   }
 }

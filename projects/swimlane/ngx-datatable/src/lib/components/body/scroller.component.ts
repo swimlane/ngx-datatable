@@ -23,8 +23,8 @@ import {
 export class ScrollerComponent implements OnInit, OnDestroy {
   private renderer = inject(Renderer2);
 
-  @Input() scrollbarV = false;
-  @Input() scrollbarH = false;
+  @Input() scrollbarV?: boolean;
+  @Input() scrollbarH?: boolean;
 
   @HostBinding('style.height.px')
   @Input()
@@ -41,7 +41,7 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   prevScrollYPos = 0;
   prevScrollXPos = 0;
   element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
-  parentElement: HTMLElement;
+  parentElement?: HTMLElement;
 
   private _scrollEventListener: any = null;
 
@@ -51,13 +51,13 @@ export class ScrollerComponent implements OnInit, OnDestroy {
       const renderer = this.renderer;
       this.parentElement = renderer.parentNode(this.element);
       this._scrollEventListener = this.onScrolled.bind(this);
-      this.parentElement.addEventListener('scroll', this._scrollEventListener);
+      this.parentElement?.addEventListener('scroll', this._scrollEventListener);
     }
   }
 
   ngOnDestroy(): void {
     if (this._scrollEventListener) {
-      this.parentElement.removeEventListener('scroll', this._scrollEventListener);
+      this.parentElement?.removeEventListener('scroll', this._scrollEventListener);
       this._scrollEventListener = null;
     }
   }

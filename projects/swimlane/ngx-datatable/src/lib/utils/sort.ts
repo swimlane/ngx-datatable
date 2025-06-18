@@ -8,7 +8,7 @@ import { SortableTableColumnInternal, TableColumnInternal } from '../types/inter
  */
 export function nextSortDir(
   sortType: SortType,
-  current: SortDirection | 'desc' | 'asc'
+  current: SortDirection | 'desc' | 'asc' | undefined
 ): SortDirection | undefined {
   if (sortType === SortType.single) {
     if (current === SortDirection.asc) {

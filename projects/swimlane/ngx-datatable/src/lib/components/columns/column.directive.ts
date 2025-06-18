@@ -36,7 +36,7 @@ export class DataTableColumnDirective<TRow extends Row> implements TableColumn, 
     rowB: TRow,
     sortDir: 'desc' | 'asc'
   ) => number;
-  @Input() pipe: PipeTransform;
+  @Input() pipe?: PipeTransform;
   @Input({ transform: booleanAttribute }) sortable?: boolean;
   @Input({ transform: booleanAttribute }) draggable?: boolean;
   @Input({ transform: booleanAttribute }) canAutoResize?: boolean;

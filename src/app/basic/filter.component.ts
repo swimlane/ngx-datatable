@@ -51,7 +51,7 @@ export class FilterComponent {
   temp: Employee[] = [];
 
   columns: TableColumn[] = [{ prop: 'name' }, { name: 'Company' }, { name: 'Gender' }];
-  @ViewChild(DatatableComponent) table: DatatableComponent<Employee>;
+  @ViewChild(DatatableComponent) table!: DatatableComponent<Employee>;
 
   ColumnMode = ColumnMode;
 

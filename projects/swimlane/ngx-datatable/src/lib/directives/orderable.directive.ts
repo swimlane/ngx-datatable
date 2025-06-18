@@ -38,9 +38,9 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
   @Output() targetChanged = new EventEmitter<TargetChangedEvent>();
 
   @ContentChildren(DraggableDirective, { descendants: true })
-  draggables: QueryList<DraggableDirective>;
+  draggables!: QueryList<DraggableDirective>;
 
-  positions: Record<string, OrderPosition>;
+  positions?: Record<string, OrderPosition>;
   differ: KeyValueDiffer<string, DraggableDirective> = inject(KeyValueDiffers).find({}).create();
   lastDraggingIndex?: number;
 
@@ -104,7 +104,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
   }
 
   onDragging({ element, model, event }: DraggableDragEvent): void {
-    const prevPos = this.positions[model.$$id];
+    const prevPos = this.positions![model.$$id];
     const target = this.isTarget(model, event);
 
     if (target) {
@@ -126,7 +126,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
   }
 
   onDragEnd({ element, model, event }: DraggableDragEvent): void {
-    const prevPos = this.positions[model.$$id];
+    const prevPos = this.positions![model.$$id];
 
     const target = this.isTarget(model, event);
     if (target) {

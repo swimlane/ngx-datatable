@@ -90,17 +90,17 @@ export class DataTableBodyRowComponent<TRow extends Row = any> implements DoChec
     return this._innerWidth;
   }
 
-  @Input() expanded: boolean;
+  @Input() expanded?: boolean;
   @Input() rowClass?: (row: TRow) => string | Record<string, boolean>;
-  @Input() row: TRow;
-  @Input() group: TRow[];
-  @Input() isSelected: boolean;
-  @Input() rowIndex: RowIndex;
+  @Input() row!: TRow;
+  @Input() group?: TRow[];
+  @Input() isSelected?: boolean;
+  @Input() rowIndex!: RowIndex;
   @Input() displayCheck?: (row: TRow, column: TableColumnInternal, value?: any) => boolean;
   @Input() treeStatus?: TreeStatus = 'collapsed';
   @Input() verticalScrollVisible = false;
 
-  @Input() disabled: boolean;
+  @Input() disabled?: boolean;
 
   @HostBinding('class')
   get cssClass() {
@@ -137,7 +137,7 @@ export class DataTableBodyRowComponent<TRow extends Row = any> implements DoChec
 
   @HostBinding('style.height.px')
   @Input()
-  rowHeight: number;
+  rowHeight!: number;
 
   @HostBinding('style.width.px')
   get columnsTotalWidths(): number {
@@ -148,10 +148,10 @@ export class DataTableBodyRowComponent<TRow extends Row = any> implements DoChec
   @Output() treeAction: EventEmitter<any> = new EventEmitter();
 
   _element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
-  _columnGroupWidths: ColumnGroupWidth;
-  _columnsByPin: PinnedColumns[];
-  _columns: TableColumnInternal[];
-  _innerWidth: number;
+  _columnGroupWidths!: ColumnGroupWidth;
+  _columnsByPin!: PinnedColumns[];
+  _columns!: TableColumnInternal[];
+  _innerWidth!: number;
 
   private _rowDiffer: KeyValueDiffer<keyof RowOrGroup<TRow>, any> = inject(KeyValueDiffers)
     .find({})

@@ -56,7 +56,7 @@ import { Employee } from '../data.model';
 export class VirtualPagingComponent {
   totalElements = 0;
   pageNumber: number;
-  rows: Employee[];
+  rows?: Employee[];
   cache: Record<string, boolean> = {};
   cachePageSize = 0;
 

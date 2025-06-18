@@ -32,7 +32,7 @@ import { getPositionFromEvent } from '../../utils/events';
     <div class="datatable-header-cell-template-wrap">
       @if (isTarget) {
       <ng-template
-        [ngTemplateOutlet]="targetMarkerTemplate"
+        [ngTemplateOutlet]="targetMarkerTemplate!"
         [ngTemplateOutletContext]="targetMarkerContext"
       >
       </ng-template>
@@ -74,17 +74,17 @@ import { getPositionFromEvent } from '../../utils/events';
 export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
   private cd = inject(ChangeDetectorRef);
 
-  @Input() sortType: SortType;
+  @Input() sortType!: SortType;
   @Input() sortAscendingIcon?: string;
   @Input() sortDescendingIcon?: string;
   @Input() sortUnsetIcon?: string;
 
   @Input() isTarget?: boolean;
-  @Input() targetMarkerTemplate: TemplateRef<any>;
+  @Input() targetMarkerTemplate?: TemplateRef<any>;
   @Input() targetMarkerContext: any;
   @Input() enableClearingSortState = false;
 
-  _allRowsSelected: boolean;
+  _allRowsSelected?: boolean;
 
   @Input() set allRowsSelected(value) {
     this._allRowsSelected = value;
@@ -94,7 +94,7 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
     return this._allRowsSelected;
   }
 
-  @Input() selectionType: SelectionType;
+  @Input() selectionType?: SelectionType;
 
   @Input() set column(column: TableColumnInternal) {
     this._column = column;
@@ -108,7 +108,7 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
 
   @HostBinding('style.height.px')
   @Input()
-  headerHeight: number;
+  headerHeight!: number;
 
   @Input() set sorts(val: SortPropDir[]) {
     this._sorts = val;
@@ -200,12 +200,12 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
   }
 
   sortClass?: string;
-  sortDir: SortDirection;
+  sortDir?: SortDirection;
 
   cellContext: HeaderCellContext;
 
-  private _column: TableColumnInternal;
-  private _sorts: SortPropDir[];
+  private _column!: TableColumnInternal;
+  private _sorts!: SortPropDir[];
   private element = inject(ElementRef).nativeElement;
   private subscription?: Subscription;
 
@@ -276,7 +276,7 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
     });
   }
 
-  calcSortClass(sortDir: SortDirection): string | undefined {
+  calcSortClass(sortDir: SortDirection | undefined): string | undefined {
     if (!this.cellContext.column.sortable) {
       return undefined;
     }
