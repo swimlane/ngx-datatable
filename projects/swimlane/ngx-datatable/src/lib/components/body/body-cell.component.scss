@@ -1,3 +1,9 @@
+@use '../shared';
+
+:host {
+  @include shared.cell-styles();
+}
+
 :host-context(ngx-datatable.fixed-row) :host {
   overflow: hidden;
   white-space: nowrap;

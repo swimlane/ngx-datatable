@@ -1,0 +1,26 @@
+@mixin pinned-columns() {
+  .datatable-row-left,
+  .datatable-row-right {
+    position: sticky;
+    z-index: 9;
+  }
+
+  .datatable-row-left {
+    left: 0;
+  }
+
+  .datatable-row-right {
+    right: 0;
+  }
+}
+
+@mixin cell-styles() {
+  overflow-x: hidden;
+  vertical-align: top;
+  display: inline-block;
+  line-height: 1.625;
+
+  &:focus {
+    outline: none;
+  }
+}

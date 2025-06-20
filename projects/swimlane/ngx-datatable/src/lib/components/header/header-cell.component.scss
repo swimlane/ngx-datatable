@@ -1,4 +1,8 @@
+@use '../shared';
+
 :host {
+  @include shared.cell-styles();
+
   position: relative;
   display: inline-block;
 
