@@ -30,6 +30,7 @@ import { NgClass, NgTemplateOutlet } from '@angular/common';
         }
         {{ rowCount?.toLocaleString() }} {{ totalMessage }}
       </div>
+      @if (isVisible) {
       <datatable-pager
         [pagerLeftArrowIcon]="pagerLeftArrowIcon"
         [pagerRightArrowIcon]="pagerRightArrowIcon"
@@ -38,11 +39,10 @@ import { NgClass, NgTemplateOutlet } from '@angular/common';
         [page]="curPage"
         [size]="pageSize"
         [count]="rowCount"
-        [hidden]="!isVisible"
         (change)="page.emit($event)"
       >
       </datatable-pager>
-      }
+      } }
     </div>
   `,
   host: {

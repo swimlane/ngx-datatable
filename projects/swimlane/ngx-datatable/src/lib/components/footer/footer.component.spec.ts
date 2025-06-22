@@ -158,19 +158,13 @@ describe('DataTableFooterComponent', () => {
       component.pageSize = 5;
       page.detectChangesAndRunQueries();
 
-      expect(page.datatablePager.nativeElement.hidden).toBe(
-        false,
-        'DataTablePagerComponent should be hidden'
-      );
+      expect(page.datatablePager).toBeTruthy();
 
       component.rowCount = 1;
       component.pageSize = 2;
       page.detectChangesAndRunQueries();
 
-      expect(page.datatablePager.nativeElement.hidden).toBe(
-        true,
-        'DataTablePagerComponent should not be hidden'
-      );
+      expect(page.datatablePager).toBeFalsy();
     });
   });
 
