@@ -30,7 +30,6 @@ import {
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
 
 import { Subscription } from 'rxjs';
-import { INgxDatatableConfig } from '../ngx-datatable.module';
 import { groupRowsByParents, optionalGetterForProp } from '../utils/tree';
 import { TableColumn } from '../types/table-column.type';
 import { DataTableColumnDirective } from './columns/column.directive';
@@ -75,6 +74,7 @@ import {
   ReorderEventInternal,
   TableColumnInternal
 } from '../types/internal.types';
+import { NGX_DATATABLE_CONFIG, NgxDatatableConfig } from '../ngx-datatable.config';
 
 @Component({
   selector: 'ngx-datatable',
@@ -106,7 +106,10 @@ export class DatatableComponent<TRow extends Row = any>
   private scrollbarHelper = inject(ScrollbarHelper);
   private cd = inject(ChangeDetectorRef);
   private columnChangesService = inject(ColumnChangesService);
-  private configuration = inject<INgxDatatableConfig>('configuration' as any, { optional: true });
+  private configuration =
+    inject(NGX_DATATABLE_CONFIG, { optional: true }) ??
+    // This is the old injection token for backward compatibility.
+    inject<NgxDatatableConfig>('configuration' as any, { optional: true });
 
   /**
    * Template for the target marker of drag target columns.
@@ -354,7 +357,7 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * Css class overrides
    */
-  @Input() cssClasses: Partial<Required<INgxDatatableConfig>['cssClasses']> = {};
+  @Input() cssClasses: Partial<Required<NgxDatatableConfig>['cssClasses']> = {};
 
   /**
    * Message overrides for localization
@@ -373,7 +376,7 @@ export class DatatableComponent<TRow extends Row = any>
    * }
    * ```
    */
-  @Input() messages: Partial<Required<INgxDatatableConfig>['messages']> = {};
+  @Input() messages: Partial<Required<NgxDatatableConfig>['messages']> = {};
 
   /**
    * A function which is called with the row and should return either:

@@ -16,6 +16,7 @@ import {
   DatatableRowDefComponent,
   DatatableRowDefDirective
 } from './components/body/body-row-def.component';
+import { AllPartial, NgxDatatableConfig, providedNgxDatatableConfig } from './ngx-datatable.config';
 
 @NgModule({
   imports: [
@@ -58,50 +59,12 @@ export class NgxDatatableModule {
    * Configure global configuration via INgxDatatableConfig
    * @param configuration
    */
-  static forRoot(configuration: INgxDatatableConfig): ModuleWithProviders<NgxDatatableModule> {
+  static forRoot(
+    configuration: AllPartial<NgxDatatableConfig>
+  ): ModuleWithProviders<NgxDatatableModule> {
     return {
       ngModule: NgxDatatableModule,
-      providers: [{ provide: 'configuration', useValue: configuration }]
+      providers: [providedNgxDatatableConfig(configuration)]
     };
   }
-}
-
-/**
- * Interface definition for INgxDatatableConfig global configuration
- */
-export interface INgxDatatableConfig {
-  messages?: {
-    /** Message to show when the array is present but empty */
-    emptyMessage: string;
-    /** Footer total message */
-    totalMessage: string;
-    /** Footer selected message */
-    selectedMessage: string;
-    /** Pager screen reader message for the first page button */
-    ariaFirstPageMessage: string;
-    /**
-     * Pager screen reader message for the n-th page button.
-     * It will be rendered as: `{{ariaPageNMessage}} {{n}}`.
-     */
-    ariaPageNMessage: string;
-    /** Pager screen reader message for the previous page button */
-    ariaPreviousPageMessage: string;
-    /** Pager screen reader message for the next page button */
-    ariaNextPageMessage: string;
-    /** Pager screen reader message for the last page button */
-    ariaLastPageMessage: string;
-  };
-  cssClasses?: {
-    sortAscending: string;
-    sortDescending: string;
-    sortUnset: string;
-    pagerLeftArrow: string;
-    pagerRightArrow: string;
-    pagerPrevious: string;
-    pagerNext: string;
-  };
-  headerHeight?: number;
-  footerHeight?: number;
-  rowHeight?: number;
-  defaultColumnWidth?: number;
 }

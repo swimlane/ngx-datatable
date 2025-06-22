@@ -24,3 +24,10 @@ export * from './lib/directives/disable-row.directive';
 // types
 export * from './lib/types/public.types';
 export * from './lib/types/table-column.type';
+
+export {
+  providedNgxDatatableConfig,
+  NgxDatatableConfig,
+  NgxDatatableMessages,
+  NgxDatatableCssClasses
+} from './lib/ngx-datatable.config';
