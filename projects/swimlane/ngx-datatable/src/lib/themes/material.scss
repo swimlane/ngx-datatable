@@ -86,6 +86,12 @@ $datatble-ghost-cell-animation-duration: 10s;
   background: $ngx-datatable-background;
   box-shadow: $ngx-datatable-box-shadow;
 
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
+
   &.striped {
     .datatable-row-odd {
       background: $ngx-datatable-row-odd-background;

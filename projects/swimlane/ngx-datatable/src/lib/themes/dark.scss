@@ -5,6 +5,12 @@
   color: #fff;
   font-size: 13px;
 
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
+
   .datatable-header {
     background: #181b24;
     color: #72809b;

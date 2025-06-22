@@ -17,6 +17,13 @@ $datatble-ghost-cell-animation-duration: 10s;
 .ngx-datatable.bootstrap {
   box-shadow: none;
   font-size: 13px;
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
+
   .datatable-header {
     height: unset !important;
     .datatable-header-cell {
