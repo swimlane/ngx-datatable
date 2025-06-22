@@ -18,6 +18,10 @@ datatable-scroller {
   }
 }
 
+:host-context(ngx-datatable.scroll-vertical) :host {
+  overflow-y: auto;
+}
+
 [hidden] {
   display: none !important;
 }

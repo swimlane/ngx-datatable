@@ -10,13 +10,4 @@
   *:after {
     box-sizing: border-box;
   }
-
-  /**
-   * Vertical Scrolling Adjustments
-   */
-  &.scroll-vertical {
-    .datatable-body {
-      overflow-y: auto;
-    }
-  }
 }
