@@ -21,7 +21,7 @@ import {
   SortPropDir,
   SortType
 } from '../../types/public.types';
-import { NgStyle } from '@angular/common';
+import { NgClass, NgStyle } from '@angular/common';
 import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 import {
   ColumnResizeEventInternal,
@@ -49,7 +49,11 @@ import { OrderableDirective } from '../../directives/orderable.directive';
       class="datatable-header-inner"
     >
       @for (colGroup of _columnsByPin; track colGroup.type) { @if (colGroup.columns.length) {
-      <div [class]="'datatable-row-' + colGroup.type" [ngStyle]="_styleByGroup[colGroup.type]">
+      <div
+        class="datatable-row-group"
+        [ngClass]="'datatable-row-' + colGroup.type"
+        [ngStyle]="_styleByGroup[colGroup.type]"
+      >
         @for (column of colGroup.columns; track column.$$id) {
         <datatable-header-cell
           role="columnheader"
@@ -98,7 +102,8 @@ import { OrderableDirective } from '../../directives/orderable.directive';
     NgStyle,
     DataTableHeaderCellComponent,
     LongPressDirective,
-    DraggableDirective
+    DraggableDirective,
+    NgClass
   ]
 })
 export class DataTableHeaderComponent implements OnDestroy, OnChanges {
