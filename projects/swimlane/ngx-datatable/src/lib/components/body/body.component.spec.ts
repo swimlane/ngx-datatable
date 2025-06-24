@@ -5,6 +5,8 @@ import { DatatableComponentToken } from '../../utils/table-token';
 import { By } from '@angular/platform-browser';
 import { DataTableBodyRowComponent } from './body-row.component';
 import { toInternalColumn } from '../../utils/column-helper';
+import { ScrollerComponent } from './scroller.component';
+import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.component';
 
 describe('DataTableBodyComponent', () => {
   let fixture: ComponentFixture<DataTableBodyComponent>;
@@ -91,6 +93,30 @@ describe('DataTableBodyComponent', () => {
       const expectedIndexes = { first: 0, last: 5 };
       component.updateIndexes();
       expect(component.indexes()).toEqual(expectedIndexes);
+    });
+
+    it('should render ghost rows based rowCount', () => {
+      component.trackByProp = 'num';
+      component.rows = [{ num: 1 }, { num: 2 }, { num: 3 }, { num: 4 }];
+      component.externalPaging = true;
+      component.scrollbarV = true;
+      component.virtualization = true;
+      component.rowHeight = 50;
+      component.ghostLoadingIndicator = true;
+      component.bodyHeight = 200;
+      component.pageSize = 5;
+      component.rowCount = 10;
+      component.offset = 0;
+      fixture.detectChanges();
+      expect(component.indexes()).toEqual({ first: 0, last: 5 });
+      fixture.debugElement
+        .query(By.directive(ScrollerComponent))
+        .triggerEventHandler('scroll', { scrollYPos: 250, scrollXPos: 0 });
+      fixture.detectChanges();
+      expect(component.indexes()).toEqual({ first: 5, last: 10 });
+      expect(fixture.debugElement.queryAll(By.directive(DataTableGhostLoaderComponent))).toHaveSize(
+        5
+      );
     });
   });
 
