@@ -1,4 +1,4 @@
-import { booleanAttribute, Directive, ElementRef, inject, Input } from '@angular/core';
+import { booleanAttribute, Directive, effect, ElementRef, inject, input } from '@angular/core';
 
 /**
  * Row Disable Directive
@@ -15,26 +15,27 @@ import { booleanAttribute, Directive, ElementRef, inject, Input } from '@angular
   selector: '[disable-row]'
 })
 export class DisableRowDirective {
-  private element = inject(ElementRef);
-  private _disabled = false;
-  @Input({ transform: booleanAttribute }) set disabled(val: boolean) {
-    this._disabled = val;
-    if (val) {
-      this.disableAllElements();
-    }
+  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+
+  readonly disabled = input(false, {
+    transform: booleanAttribute
+  });
+
+  constructor() {
+    effect(() => {
+      if (this.disabled()) {
+        this.disableAllElements();
+      }
+    });
   }
 
-  get disabled() {
-    return this._disabled;
-  }
-
-  disableAllElements() {
-    const el = this.element?.nativeElement;
-    if (!el) {
+  private disableAllElements() {
+    const hostElement = this.elementRef?.nativeElement;
+    if (!hostElement) {
       return;
     }
-    Array.from(el.querySelectorAll('*') as HTMLAllCollection).forEach(child => {
-      child?.setAttribute('disabled', '');
+    Array.from(hostElement.querySelectorAll<HTMLElement>('*')).forEach(child => {
+      child.setAttribute('disabled', '');
     });
   }
 }
