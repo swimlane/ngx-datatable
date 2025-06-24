@@ -23,8 +23,7 @@ import {
   QueryList,
   signal,
   TemplateRef,
-  ViewChild,
-  ViewEncapsulation
+  ViewChild
 } from '@angular/core';
 
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
@@ -80,7 +79,6 @@ import { NGX_DATATABLE_CONFIG, NgxDatatableConfig } from '../ngx-datatable.confi
   selector: 'ngx-datatable',
   templateUrl: './datatable.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   styleUrls: ['./datatable.component.scss'],
   host: {
     class: 'ngx-datatable'
