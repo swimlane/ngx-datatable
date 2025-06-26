@@ -1,4 +1,4 @@
-import { TreeStatus } from '../../projects/ngx-datatable/src/lib/types/public.types';
+import { TreeStatus } from '../../projects/swimlane/ngx-datatable/src/lib/types/public.types';
 
 export interface Employee {
   name: string;
