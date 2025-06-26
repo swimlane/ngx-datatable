@@ -130,7 +130,6 @@ import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.compo
                     [disabled]="disabled"
                     [isSelected]="selector.getRowSelected(group)"
                     [innerWidth]="innerWidth"
-                    [offsetX]="offsetX"
                     [columns]="columns"
                     [rowHeight]="getRowHeight(group)"
                     [row]="group"
@@ -164,7 +163,6 @@ import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.compo
                     [disabled]="disabled"
                     [isSelected]="selector.getRowSelected(group)"
                     [innerWidth]="innerWidth"
-                    [offsetX]="offsetX"
                     [columns]="columns"
                     [rowHeight]="getRowHeight(group)"
                     [row]="group"
@@ -200,7 +198,6 @@ import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.compo
                     #rowElement
                     [isSelected]="selector.getRowSelected(row)"
                     [innerWidth]="innerWidth"
-                    [offsetX]="offsetX"
                     [columns]="columns"
                     [rowHeight]="getRowHeight(row)"
                     [row]="row"

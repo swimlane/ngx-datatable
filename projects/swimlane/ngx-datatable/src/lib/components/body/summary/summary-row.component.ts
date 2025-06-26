@@ -34,7 +34,6 @@ function noopSumFunc(cells: any[]): void {
     <datatable-body-row
       tabindex="-1"
       [innerWidth]="innerWidth"
-      [offsetX]="offsetX"
       [columns]="_internalColumns"
       [rowHeight]="rowHeight"
       [row]="summaryRow"
