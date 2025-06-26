@@ -115,7 +115,7 @@ function scaleColumns(colsByGroup: TableColumnGroup, maxWidth: number, totalFlex
  *    the width should use the original width; not the newly proportioned widths.
  */
 export function forceFillColumnWidths(
-  allColumns: TableColumn[],
+  allColumns: TableColumnInternal[],
   expectedWidth: number,
   startIdx: number,
   allowBleed: boolean,
