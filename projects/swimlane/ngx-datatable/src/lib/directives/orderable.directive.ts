@@ -9,10 +9,11 @@ import {
   KeyValueDiffers,
   OnDestroy,
   Output,
-  QueryList
+  QueryList,
+  DOCUMENT
 } from '@angular/core';
 import { DraggableDirective } from './draggable.directive';
-import { DOCUMENT } from '@angular/common';
+
 import {
   DraggableDragEvent,
   ReorderEventInternal,
