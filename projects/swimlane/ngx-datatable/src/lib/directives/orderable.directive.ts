@@ -2,6 +2,7 @@ import {
   AfterContentInit,
   ContentChildren,
   Directive,
+  DOCUMENT,
   EventEmitter,
   inject,
   KeyValueChangeRecord,
@@ -9,8 +10,7 @@ import {
   KeyValueDiffers,
   OnDestroy,
   Output,
-  QueryList,
-  DOCUMENT
+  QueryList
 } from '@angular/core';
 import { DraggableDirective } from './draggable.directive';
 

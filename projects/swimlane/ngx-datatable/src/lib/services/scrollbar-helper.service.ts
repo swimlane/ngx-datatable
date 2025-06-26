@@ -1,4 +1,4 @@
-import { inject, Injectable, DOCUMENT } from '@angular/core';
+import { DOCUMENT, inject, Injectable } from '@angular/core';
 
 /**
  * Gets the width of the scrollbar.  Nesc for windows
