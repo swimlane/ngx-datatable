@@ -30,12 +30,7 @@ module.exports = {
       rules: {
         '@angular-eslint/no-attribute-decorator': 'error',
         '@angular-eslint/no-forward-ref': 'error',
-        '@angular-eslint/no-host-metadata-property': [
-          'error',
-          {
-            'allowStatic': true
-          }
-        ],
+        '@angular-eslint/no-host-metadata-property': 'off',
         'brace-style': 'off',
         'no-bitwise': 'off',
         'comma-dangle': 'off',
