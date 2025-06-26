@@ -4,7 +4,7 @@ import { environment } from './environments/environment';
 import { provideHttpClient } from '@angular/common/http';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppRoutingModule } from './app/app-routing.module';
-import { NgxDatatableModule } from 'projects/ngx-datatable/src/public-api';
+import { NgxDatatableModule } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { AppComponent } from './app/app.component';
 
 if (environment.production) {
