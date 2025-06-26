@@ -12,13 +12,13 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20.17.0
+          node-version: 22.16.0
 
       - name: Enable Corepack
         run: corepack enable
 
       - name: Install Yarn
-        run: corepack prepare yarn@4.5.1 --activate
+        run: corepack prepare yarn@4.9.2 --activate
 
       - name: Install dependencies
         run: yarn install --immutable
