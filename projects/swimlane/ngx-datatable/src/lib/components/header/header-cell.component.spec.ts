@@ -43,4 +43,26 @@ describe('DataTableHeaderCellComponent', () => {
     fixture.nativeElement.querySelector('.datatable-header-cell-label').dispatchEvent(event);
     expect(component.sort.emit).toHaveBeenCalled();
   });
+
+  it('should not render resize handle when showResizeHandle is false (last column)', () => {
+    fixture.componentRef.setInput('column', {
+      name: 'test',
+      resizeable: true
+    });
+    fixture.componentRef.setInput('showResizeHandle', false);
+    fixture.detectChanges();
+    const resizeHandle = fixture.nativeElement.querySelector('.resize-handle');
+    expect(resizeHandle).toBeNull();
+  });
+
+  it('should render resize handle when showResizeHandle is true', () => {
+    fixture.componentRef.setInput('column', {
+      name: 'test',
+      resizeable: true
+    });
+    fixture.componentRef.setInput('showResizeHandle', true);
+    fixture.detectChanges();
+    const resizeHandle = fixture.nativeElement.querySelector('.resize-handle');
+    expect(resizeHandle).not.toBeNull();
+  });
 });
