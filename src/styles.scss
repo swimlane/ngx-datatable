@@ -1,1 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+
+$datatable-pager-color: rgba(0, 0, 0, 0.64);
+
+@import '../projects/ngx-datatable/src/lib/themes/material';
+@import '../projects/ngx-datatable/src/lib/themes/dark';
+@import '../projects/ngx-datatable/src/lib/themes/bootstrap';

@@ -1,4 +1,4 @@
-import { Component, signal, ViewEncapsulation } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { HashLocationStrategy, Location, LocationStrategy } from '@angular/common';
 import packageInfo from 'projects/swimlane/ngx-datatable/package.json';
 import { RouterLink, RouterOutlet } from '@angular/router';
@@ -6,13 +6,6 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  encapsulation: ViewEncapsulation.None,
-  styleUrls: [
-    './app.component.scss',
-    '../../projects/swimlane/ngx-datatable/src/lib/themes/material.scss',
-    '../../projects/swimlane/ngx-datatable/src/lib/themes/dark.scss',
-    '../../projects/swimlane/ngx-datatable/src/lib/themes/bootstrap.scss'
-  ],
   providers: [
     Location,
     {
