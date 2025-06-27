@@ -1133,9 +1133,12 @@ export class DatatableComponent<TRow extends Row = any>
   onColumnReorder(event: ReorderEventInternal): void {
     const { column, newValue, prevValue } = event;
     const cols = this._internalColumns.map(c => ({ ...c }));
+    const prevCol = cols[newValue];
+    if (column.frozenLeft !== prevCol.frozenLeft || column.frozenRight !== prevCol.frozenRight) {
+      return;
+    }
 
     if (this.swapColumns) {
-      const prevCol = cols[newValue];
       cols[newValue] = column;
       cols[prevValue] = prevCol;
     } else {

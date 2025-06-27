@@ -448,6 +448,106 @@ describe('DatatableComponent With Custom Templates', () => {
   });
 });
 
+describe('DatatableComponent With Frozen columns', () => {
+  @Component({
+    template: `
+      <ngx-datatable [rows]="rows">
+        <ngx-datatable-column name="Name" [width]="300" [frozenLeft]="true"> </ngx-datatable-column>
+        <ngx-datatable-column name="Gender"> </ngx-datatable-column>
+        <ngx-datatable-column name="Age"> </ngx-datatable-column>
+        <ngx-datatable-column name="City" [width]="150" prop="address.city"> </ngx-datatable-column>
+        <ngx-datatable-column name="State" [width]="300" prop="address.state" [frozenRight]="true">
+        </ngx-datatable-column>
+      </ngx-datatable>
+    `,
+    imports: [
+      DatatableComponent,
+      DataTableColumnDirective,
+      DataTableColumnCellDirective,
+      DataTableColumnHeaderDirective
+    ]
+  })
+  // eslint-disable-next-line @angular-eslint/component-class-suffix
+  class TestFixtureComponentWithFrozenColumns {
+    rows = [
+      {
+        'id': 0,
+        'name': 'Ramsey Cummings',
+        'gender': 'male',
+        'age': 52,
+        'address': {
+          'state': 'South Carolina',
+          'city': 'Glendale'
+        }
+      },
+      {
+        'id': 1,
+        'name': 'Stefanie Huff',
+        'gender': 'female',
+        'age': 70,
+        'address': {
+          'state': 'Arizona',
+          'city': 'Beaverdale'
+        }
+      }
+    ];
+  }
+
+  let fixture: ComponentFixture<TestFixtureComponentWithFrozenColumns>;
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(TestFixtureComponentWithFrozenColumns);
+    fixture.detectChanges();
+  });
+
+  it('should not allow frozen left column to be moved to non frozen groups', () => {
+    const datatableComponent = fixture.debugElement.query(
+      By.directive(DatatableComponent)
+    ).componentInstance;
+
+    const column = datatableComponent.columnTemplates.get(0);
+    spyOn(datatableComponent.reorder, 'emit');
+
+    // Try to move 'Name' (frozenLeft) to index 2
+    datatableComponent.onColumnReorder({ prevValue: 0, newValue: 2, column });
+    fixture.detectChanges();
+    expect(datatableComponent.reorder.emit).not.toHaveBeenCalled();
+  });
+
+  it('should not allow frozen right column to be moved to non frozen groups', () => {
+    const datatableComponent = fixture.debugElement.query(
+      By.directive(DatatableComponent)
+    ).componentInstance;
+
+    const column = datatableComponent.columnTemplates.get(4);
+    spyOn(datatableComponent.reorder, 'emit');
+
+    // Try to move 'State' (frozenRight) to index 0 (should not move out of frozenRight group)
+    datatableComponent.onColumnReorder({ prevValue: 4, newValue: 0, column });
+    fixture.detectChanges();
+    expect(datatableComponent.reorder.emit).not.toHaveBeenCalled();
+  });
+
+  it('should not allow moving non-frozen columns into frozenLeft or frozenRight groups', () => {
+    const datatableComponent = fixture.debugElement.query(
+      By.directive(DatatableComponent)
+    ).componentInstance;
+
+    const genderColumn = datatableComponent.columnTemplates.get(1);
+    const cityColumn = datatableComponent.columnTemplates.get(3);
+    spyOn(datatableComponent.reorder, 'emit');
+
+    // Try to move 'Gender' (non-frozen) to index 0 (frozenLeft group)
+    datatableComponent.onColumnReorder({ prevValue: 1, newValue: 0, column: genderColumn });
+    fixture.detectChanges();
+    expect(datatableComponent.reorder.emit).not.toHaveBeenCalled();
+
+    // Try to move 'City' (non-frozen) to index 4 (frozenRight group)
+    datatableComponent.onColumnReorder({ prevValue: 3, newValue: 4, column: cityColumn });
+    fixture.detectChanges();
+    expect(datatableComponent.reorder.emit).not.toHaveBeenCalled();
+  });
+});
 /**
  * mimics the act of a user clicking a column to sort it
  */
