@@ -1,9 +1,5 @@
 import { Component, inject, ViewChild } from '@angular/core';
-import {
-  ColumnMode,
-  DatatableComponent,
-  TableColumn
-} from 'projects/swimlane/ngx-datatable/src/public-api';
+import { DatatableComponent, TableColumn } from 'projects/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';
 
@@ -32,7 +28,7 @@ import { DataService } from '../data.service';
         #table
         class="material"
         [columns]="columns"
-        [columnMode]="ColumnMode.force"
+        [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
         rowHeight="auto"
@@ -51,8 +47,6 @@ export class FilterComponent {
 
   columns: TableColumn[] = [{ prop: 'name' }, { name: 'Company' }, { name: 'Gender' }];
   @ViewChild(DatatableComponent) table!: DatatableComponent<Employee>;
-
-  ColumnMode = ColumnMode;
 
   private dataService = inject(DataService);
 

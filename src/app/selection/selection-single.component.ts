@@ -1,10 +1,8 @@
 import { Component, inject } from '@angular/core';
 import {
   ActivateEvent,
-  ColumnMode,
   DatatableComponent,
   SelectEvent,
-  SelectionType,
   TableColumn
 } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
@@ -36,14 +34,14 @@ import { DataService } from '../data.service';
         <ngx-datatable
           class="material"
           [rows]="rows"
-          [columnMode]="ColumnMode.force"
+          [columnMode]="'force'"
           [columns]="columns"
           [headerHeight]="50"
           [footerHeight]="50"
           rowHeight="auto"
           [limit]="5"
           [selected]="selected"
-          [selectionType]="SelectionType.single"
+          [selectionType]="'single'"
           (activate)="onActivate($event)"
           (select)="onSelect($event)"
         >
@@ -72,9 +70,6 @@ export class SingleSelectionComponent {
   selected: Employee[] = [];
 
   columns: TableColumn[] = [{ prop: 'name' }, { name: 'Company' }, { name: 'Gender' }];
-
-  ColumnMode = ColumnMode;
-  SelectionType = SelectionType;
 
   private dataService = inject(DataService);
 

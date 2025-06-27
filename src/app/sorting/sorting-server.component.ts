@@ -1,10 +1,5 @@
 import { Component, inject } from '@angular/core';
-import {
-  ColumnMode,
-  DatatableComponent,
-  SortEvent,
-  TableColumn
-} from 'projects/swimlane/ngx-datatable/src/public-api';
+import { DatatableComponent, SortEvent, TableColumn } from 'projects/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';
 
@@ -27,7 +22,7 @@ import { DataService } from '../data.service';
         class="material"
         [rows]="rows"
         [columns]="columns"
-        [columnMode]="ColumnMode.force"
+        [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
         rowHeight="auto"
@@ -50,8 +45,6 @@ export class ServerSortingComponent {
     { name: 'Name', sortable: true },
     { name: 'Gender', sortable: true }
   ];
-
-  ColumnMode = ColumnMode;
 
   private dataService = inject(DataService);
 

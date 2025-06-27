@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import {
-  ColumnMode,
   DataTableColumnCellDirective,
   DataTableColumnDirective,
   DatatableComponent
@@ -28,7 +27,7 @@ import { DataService } from '../data.service';
         class="material"
         [headerHeight]="50"
         [limit]="5"
-        [columnMode]="ColumnMode.force"
+        [columnMode]="'force'"
         [footerHeight]="50"
         rowHeight="auto"
         [rows]="rows"
@@ -85,8 +84,6 @@ import { DataService } from '../data.service';
 export class InlineEditComponent {
   editing: Record<string, boolean> = {};
   rows: Employee[] = [];
-
-  ColumnMode = ColumnMode;
 
   private dataService = inject(DataService);
 

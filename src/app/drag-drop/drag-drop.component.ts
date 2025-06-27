@@ -1,7 +1,6 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, inject } from '@angular/core';
 import {
-  ColumnMode,
   DatatableComponent,
   DatatableRowDefComponent,
   DatatableRowDefDirective
@@ -29,7 +28,7 @@ import { Employee } from '../data.model';
         [rows]="rows"
         [loadingIndicator]="loadingIndicator"
         [columns]="columns"
-        [columnMode]="ColumnMode.force"
+        [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
         rowHeight="auto"
@@ -61,8 +60,6 @@ export class DragDropComponent {
     { name: 'Gender', sortable: false },
     { name: 'Company', sortable: false }
   ];
-
-  ColumnMode = ColumnMode;
 
   private dataService = inject(DataService);
 

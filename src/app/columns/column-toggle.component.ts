@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import {
-  ColumnMode,
   DataTableColumnDirective,
   DatatableComponent,
   TableColumn
@@ -26,7 +25,7 @@ import { Employee } from '../data.model';
         <ngx-datatable
           class="material"
           [rows]="rows"
-          [columnMode]="ColumnMode.force"
+          [columnMode]="'force'"
           [headerHeight]="50"
           [footerHeight]="50"
           rowHeight="auto"
@@ -73,8 +72,6 @@ export class ColumnToggleComponent {
   columns: TableColumn[] = [{ name: 'Name' }, { name: 'Gender' }, { name: 'Company' }];
 
   allColumns: TableColumn[] = [{ name: 'Name' }, { name: 'Gender' }, { name: 'Company' }];
-
-  ColumnMode = ColumnMode;
 
   toggle(col: TableColumn) {
     const isChecked = this.isChecked(col);

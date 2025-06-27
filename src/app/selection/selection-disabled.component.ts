@@ -1,10 +1,8 @@
 import { Component, inject } from '@angular/core';
 import {
   ActivateEvent,
-  ColumnMode,
   DatatableComponent,
   SelectEvent,
-  SelectionType,
   TableColumn
 } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
@@ -29,7 +27,7 @@ import { DataService } from '../data.service';
         <ngx-datatable
           class="material"
           [rows]="rows"
-          [columnMode]="ColumnMode.force"
+          [columnMode]="'force'"
           [columns]="columns"
           [headerHeight]="50"
           [footerHeight]="50"
@@ -37,7 +35,7 @@ import { DataService } from '../data.service';
           [limit]="5"
           [selectCheck]="checkSelectable"
           [selected]="selected"
-          [selectionType]="SelectionType.multi"
+          [selectionType]="'multi'"
           (activate)="onActivate($event)"
           (select)="onSelect($event)"
         >
@@ -66,9 +64,6 @@ export class MultiDisableSelectionComponent {
   selected: Employee[] = [];
 
   columns: TableColumn[] = [{ prop: 'name' }, { name: 'Company' }, { name: 'Gender' }];
-
-  ColumnMode = ColumnMode;
-  SelectionType = SelectionType;
 
   private dataService = inject(DataService);
 

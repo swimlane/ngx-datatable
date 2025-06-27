@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import {
-  ColumnMode,
   DatatableComponent,
   DatatableFooterDirective,
   DataTableFooterTemplateDirective,
@@ -28,7 +27,7 @@ import { DataService } from '../data.service';
         class="material"
         [rows]="rows"
         [columns]="columns"
-        [columnMode]="ColumnMode.force"
+        [columnMode]="'force'"
         [footerHeight]="100"
         [headerHeight]="50"
         rowHeight="auto"
@@ -61,8 +60,6 @@ export class FooterDemoComponent {
   rows: Employee[] = [];
 
   columns: TableColumn[] = [{ prop: 'name' }, { name: 'Gender' }, { name: 'Company' }];
-
-  ColumnMode = ColumnMode;
 
   private dataService = inject(DataService);
 

@@ -5,10 +5,22 @@ export interface SortPropDir {
   prop: TableColumnProp;
 }
 
-export enum SortDirection {
-  asc = 'asc',
-  desc = 'desc'
-}
+/**
+ * @deprecated The constant `SortDirection` should no longer be used. Instead use the value directly:
+ * ```
+ * // old
+ * const sortDir: SortDirection = SortDirection.asc;
+ * // new
+ * const sortDir: SortDirection = 'asc';
+ * ```
+ */
+export const SortDirection = {
+  asc: 'asc',
+  desc: 'desc'
+} as const;
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export type SortDirection = typeof SortDirection[keyof typeof SortDirection];
 
 export interface SortEvent {
   column: TableColumn;
@@ -17,16 +29,40 @@ export interface SortEvent {
   sorts: SortPropDir[];
 }
 
-export enum SortType {
-  single = 'single',
-  multi = 'multi'
-}
+/**
+ * @deprecated The constant `SortType` should no longer be used. Instead use the value directly:
+ * ```
+ * // old
+ * const sortType: SortType = SortType.single;
+ * // new
+ * const sortType: SortType = 'single';
+ * ```
+ */
+export const SortType = {
+  single: 'single',
+  multi: 'multi'
+} as const;
 
-export enum ColumnMode {
-  standard = 'standard',
-  flex = 'flex',
-  force = 'force'
-}
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export type SortType = typeof SortType[keyof typeof SortType];
+
+/**
+ * @deprecated The constant `ColumnMode` should no longer be used. Instead use the value directly:
+ * ```
+ * // old
+ * <ngx-datatable [columnMode]="ColumnMode.force"></ngx-datatable>
+ * // new
+ * <ngx-datatable [columnMode]="'force'"></ngx-datatable>
+ * ```
+ */
+export const ColumnMode = {
+  standard: 'standard',
+  flex: 'flex',
+  force: 'force'
+} as const;
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export type ColumnMode = typeof ColumnMode[keyof typeof ColumnMode];
 
 export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
 
@@ -83,10 +119,22 @@ export interface FooterContext {
   offset: number;
 }
 
-export enum ContextmenuType {
-  header = 'header',
-  body = 'body'
-}
+/**
+ * @deprecated The constant `ContextmenuType` should no longer be used. Instead use the value directly:
+ * ```
+ * // old
+ * const contextmenuType: ContextmenuType = ContextmenuType.header;
+ * // new
+ * const contextmenuType: ContextmenuType = 'header';
+ * ```
+ */
+export const ContextmenuType = {
+  header: 'header',
+  body: 'body'
+} as const;
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export type ContextmenuType = typeof ContextmenuType[keyof typeof ContextmenuType];
 
 /** A Group row */
 export interface Group<TRow> {
@@ -170,13 +218,25 @@ export interface AllDetailToggleEvent {
 
 export type DetailToggleEvents<TRow> = DetailToggleEvent<TRow> | AllDetailToggleEvent;
 
-export enum SelectionType {
-  single = 'single',
-  multi = 'multi',
-  multiClick = 'multiClick',
-  cell = 'cell',
-  checkbox = 'checkbox'
-}
+/**
+ * @deprecated The constant `SelectionType` should no longer be used. Instead use the value directly:
+ * ```
+ * // old
+ * <ngx-datatable [selectionType]="SelectionType.multi"></ngx-datatable>
+ * // new
+ * <ngx-datatable [selectionType]="'multi'"></ngx-datatable>
+ * ```
+ */
+export const SelectionType = {
+  single: 'single',
+  multi: 'multi',
+  multiClick: 'multiClick',
+  cell: 'cell',
+  checkbox: 'checkbox'
+} as const;
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export type SelectionType = typeof SelectionType[keyof typeof SelectionType];
 
 export interface SelectEvent<TRow> {
   selected: TRow[];
@@ -184,13 +244,13 @@ export interface SelectEvent<TRow> {
 
 export interface ContextMenuEventBody<TRow> {
   event: MouseEvent;
-  type: ContextmenuType.body;
+  type: 'body';
   content: RowOrGroup<TRow>;
 }
 
 export interface ContextMenuEvenHeader {
   event: MouseEvent;
-  type: ContextmenuType.header;
+  type: 'header';
   content: TableColumn;
 }
 

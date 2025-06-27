@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import {
-  ColumnMode,
   DataTableColumnDirective,
   DatatableComponent
 } from 'projects/swimlane/ngx-datatable/src/public-api';
@@ -39,7 +38,7 @@ import { DataService } from '../data.service';
           <ngx-datatable
             class="material"
             [rows]="rows"
-            [columnMode]="ColumnMode.force"
+            [columnMode]="'force'"
             [headerHeight]="50"
             [footerHeight]="50"
             [rowHeight]="50"
@@ -57,7 +56,7 @@ import { DataService } from '../data.service';
           <ngx-datatable
             class="material"
             [rows]="rows"
-            [columnMode]="ColumnMode.force"
+            [columnMode]="'force'"
             [headerHeight]="50"
             [footerHeight]="50"
             [rowHeight]="50"
@@ -80,8 +79,6 @@ export class TabsDemoComponent {
   tab1 = true;
   tab2 = false;
   tab3 = false;
-
-  ColumnMode = ColumnMode;
 
   private dataService = inject(DataService);
 

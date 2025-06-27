@@ -1,10 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import {
-  ColumnMode,
-  DatatableComponent,
-  TableColumn
-} from 'projects/swimlane/ngx-datatable/src/public-api';
+import { DatatableComponent, TableColumn } from 'projects/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';
 import { AsyncPipe } from '@angular/common';
@@ -28,7 +24,7 @@ import { AsyncPipe } from '@angular/common';
         class="material striped"
         [rows]="rows | async"
         [columns]="columns"
-        [columnMode]="ColumnMode.force"
+        [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="50"
@@ -42,8 +38,6 @@ export class RxDemoComponent {
   rows: Observable<Employee[]>;
 
   columns: TableColumn[] = [{ name: 'Name' }, { name: 'Gender' }, { name: 'Company' }];
-
-  ColumnMode = ColumnMode;
 
   private dataService = inject(DataService);
 

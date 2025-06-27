@@ -1,14 +1,12 @@
 import { Component, inject } from '@angular/core';
 import {
   ActivateEvent,
-  ColumnMode,
   DataTableColumnCellDirective,
   DataTableColumnDirective,
   DataTableColumnHeaderDirective,
   DatatableComponent,
-  SelectEvent,
-  SelectionType
-} from 'projects/swimlane/ngx-datatable/src/public-api';
+  SelectEvent
+} from 'projects/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';
 
@@ -37,13 +35,13 @@ import { DataService } from '../data.service';
           style="width: 90%"
           class="material"
           [rows]="rows"
-          [columnMode]="ColumnMode.force"
+          [columnMode]="'force'"
           [headerHeight]="50"
           [footerHeight]="50"
           rowHeight="auto"
           [limit]="5"
           [selected]="selected"
-          [selectionType]="SelectionType.checkbox"
+          [selectionType]="'checkbox'"
           (activate)="onActivate($event)"
           (select)="onSelect($event)"
         >
@@ -102,9 +100,6 @@ import { DataService } from '../data.service';
 export class CustomCheckboxSelectionComponent {
   rows: Employee[] = [];
   selected: Employee[] = [];
-
-  ColumnMode = ColumnMode;
-  SelectionType = SelectionType;
 
   private dataService = inject(DataService);
 

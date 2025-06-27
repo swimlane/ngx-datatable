@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 
 import data from 'src/assets/data/company.json';
-import { ColumnMode, DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { DatatableComponent } from 'projects/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
 
 const companyData = data as any[];
@@ -45,7 +45,7 @@ export class MockServerResultsService {
         class="material server-scrolling-demo"
         [rows]="rows"
         [columns]="[{ name: 'Name' }, { name: 'Gender' }, { name: 'Company' }]"
-        [columnMode]="ColumnMode.force"
+        [columnMode]="'force'"
         [headerHeight]="headerHeight"
         [rowHeight]="rowHeight"
         [loadingIndicator]="isLoading"
@@ -65,8 +65,6 @@ export class ServerScrollingComponent {
 
   rows: Employee[] = [];
   isLoading?: boolean;
-
-  ColumnMode = ColumnMode;
 
   constructor(private serverResultsService: MockServerResultsService, private el: ElementRef) {}
 

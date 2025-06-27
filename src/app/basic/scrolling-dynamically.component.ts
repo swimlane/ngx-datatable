@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import {
-  ColumnMode,
   DataTableColumnCellDirective,
   DataTableColumnDirective,
   DatatableComponent
@@ -31,7 +30,7 @@ import { DataService } from '../data.service';
         [virtualization]="false"
         [scrollbarV]="true"
         [scrollbarVDynamic]="true"
-        [columnMode]="ColumnMode.force"
+        [columnMode]="'force'"
         [footerHeight]="50"
         rowHeight="auto"
         [rows]="rows"
@@ -88,8 +87,6 @@ import { DataService } from '../data.service';
 export class ScrollingDynamicallyComponent {
   editing: Record<string, boolean> = {};
   rows: Employee[] = [];
-
-  ColumnMode = ColumnMode;
 
   private dataService = inject(DataService);
 

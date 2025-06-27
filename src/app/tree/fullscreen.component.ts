@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import {
-  ColumnMode,
   DataTableColumnCellTreeToggle,
   DataTableColumnDirective,
   DatatableComponent,
@@ -27,7 +26,7 @@ import { DataService } from '../data.service';
       <ngx-datatable
         class="material fullscreen"
         style="top: 52px"
-        [columnMode]="ColumnMode.force"
+        [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="0"
         [rowHeight]="50"
@@ -76,8 +75,6 @@ import { DataService } from '../data.service';
 export class FullScreenTreeComponent {
   rows: (FullEmployee & { treeStatus: TreeStatus; parentId?: string })[] = [];
   lastIndex = 15;
-
-  ColumnMode = ColumnMode;
 
   constructor(private cd: ChangeDetectorRef, private dataService: DataService) {
     this.dataService.load('100k.json').subscribe(data => {

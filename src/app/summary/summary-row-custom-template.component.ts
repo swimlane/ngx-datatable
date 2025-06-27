@@ -1,9 +1,5 @@
 import { Component, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import {
-  ColumnMode,
-  DatatableComponent,
-  TableColumn
-} from 'projects/swimlane/ngx-datatable/src/public-api';
+import { DatatableComponent, TableColumn } from 'projects/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';
 
@@ -25,7 +21,7 @@ import { DataService } from '../data.service';
         class="material"
         [summaryRow]="true"
         [columns]="columns"
-        [columnMode]="ColumnMode.force"
+        [columnMode]="'force'"
         [headerHeight]="50"
         [rowHeight]="'auto'"
         [summaryHeight]="55"
@@ -52,8 +48,6 @@ export class SummaryRowCustomTemplateComponent implements OnInit {
   @ViewChild('nameSummaryCell') nameSummaryCell!: TemplateRef<any>;
 
   columns: TableColumn[] = [];
-
-  ColumnMode = ColumnMode;
 
   private dataService = inject(DataService);
 

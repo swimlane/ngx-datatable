@@ -1,6 +1,5 @@
 import { Component, inject, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
-  ColumnMode,
   DataTableColumnCellDirective,
   DataTableColumnDirective,
   DataTableColumnHeaderDirective,
@@ -51,7 +50,7 @@ import { DataService } from '../data.service';
       <ngx-datatable
         #myTable
         class="material expandable"
-        [columnMode]="ColumnMode.force"
+        [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="50"
@@ -140,8 +139,6 @@ export class ResponsiveComponent {
   rows: FullEmployee[] = [];
   expanded: any = {};
   timeout: any;
-
-  ColumnMode = ColumnMode;
 
   private dataService = inject(DataService);
 

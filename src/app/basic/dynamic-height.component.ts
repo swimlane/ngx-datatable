@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import {
-  ColumnMode,
   DataTableColumnDirective,
   DatatableComponent
 } from 'projects/swimlane/ngx-datatable/src/public-api';
@@ -25,7 +24,7 @@ import { DataService } from '../data.service';
       <ngx-datatable
         class="material"
         [rows]="rows"
-        [columnMode]="ColumnMode.force"
+        [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="getRowHeight"
@@ -43,8 +42,6 @@ export class DynamicHeightComponent {
   rows: (FullEmployee & { height: number })[] = [];
   expanded = {};
   timeout: any;
-
-  ColumnMode = ColumnMode;
 
   private dataService = inject(DataService);
 

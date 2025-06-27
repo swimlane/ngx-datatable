@@ -1,9 +1,5 @@
 import { Component, inject } from '@angular/core';
-import {
-  ColumnMode,
-  DatatableComponent,
-  TableColumn
-} from 'projects/swimlane/ngx-datatable/src/public-api';
+import { DatatableComponent, TableColumn } from 'projects/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';
 import { NgClass } from '@angular/common';
@@ -44,7 +40,7 @@ import { NgClass } from '@angular/common';
         [rows]="rows"
         [loadingIndicator]="loadingIndicator"
         [columns]="columns"
-        [columnMode]="ColumnMode.force"
+        [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
         rowHeight="auto"
@@ -74,8 +70,6 @@ export class ColumnReorderComponent {
     { name: 'Gender' },
     { name: 'Company', sortable: false }
   ];
-
-  ColumnMode = ColumnMode;
 
   private dataService = inject(DataService);
 

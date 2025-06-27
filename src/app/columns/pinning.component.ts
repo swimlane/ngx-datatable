@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import {
-  ColumnMode,
   DataTableColumnDirective,
   DatatableComponent
 } from 'projects/swimlane/ngx-datatable/src/public-api';
@@ -24,7 +23,7 @@ import { DataService } from '../data.service';
       </h3>
       <ngx-datatable
         class="material"
-        [columnMode]="ColumnMode.force"
+        [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="50"
@@ -45,8 +44,6 @@ import { DataService } from '../data.service';
 })
 export class ColumnPinningComponent {
   rows: FullEmployee[] = [];
-
-  ColumnMode = ColumnMode;
 
   private dataService = inject(DataService);
 

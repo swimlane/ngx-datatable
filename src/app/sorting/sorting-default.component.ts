@@ -1,6 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
 import {
-  ColumnMode,
   DataTableColumnCellDirective,
   DataTableColumnDirective,
   DatatableComponent
@@ -26,7 +25,7 @@ import { DataService } from '../data.service';
       <ngx-datatable
         class="material"
         [rows]="rows"
-        [columnMode]="ColumnMode.force"
+        [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="50"
@@ -54,8 +53,6 @@ import { DataService } from '../data.service';
 })
 export class DefaultSortingComponent implements OnInit {
   rows: Employee[] = [];
-
-  ColumnMode = ColumnMode;
 
   private dataService = inject(DataService);
 

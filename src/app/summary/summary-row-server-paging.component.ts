@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MockServerResultsService } from '../paging/mock-server-results-service';
 import { Page } from '../paging/model/page';
-import {
-  ColumnMode,
-  DatatableComponent,
-  TableColumn
-} from 'projects/swimlane/ngx-datatable/src/public-api';
+import { DatatableComponent, TableColumn } from 'projects/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
 
 @Component({
@@ -27,7 +23,7 @@ import { Employee } from '../data.model';
         class="material"
         [rows]="rows"
         [columns]="columns"
-        [columnMode]="ColumnMode.force"
+        [columnMode]="'force'"
         [headerHeight]="50"
         [summaryRow]="true"
         [summaryHeight]="55"
@@ -59,8 +55,6 @@ export class SummaryRowServerPagingComponent implements OnInit {
     { name: 'Gender', summaryFunc: () => this.getGenderSummary() },
     { name: 'Company', summaryFunc: () => null }
   ];
-
-  ColumnMode = ColumnMode;
 
   constructor(private serverResultsService: MockServerResultsService) {}
 

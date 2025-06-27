@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  ColumnMode,
-  DatatableComponent,
-  TableColumn
-} from 'projects/swimlane/ngx-datatable/src/public-api';
+import { DatatableComponent, TableColumn } from 'projects/ngx-datatable/src/public-api';
 
 @Component({
   selector: 'empty-demo',
@@ -24,7 +20,7 @@ import {
         class="material"
         [rows]="[]"
         [columns]="columns"
-        [columnMode]="ColumnMode.force"
+        [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
       >
@@ -42,5 +38,4 @@ export class BasicEmptyComponent {
     { name: 'Gender' },
     { name: 'Company', sortable: false }
   ];
-  ColumnMode = ColumnMode;
 }

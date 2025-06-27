@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
 import { MockServerResultsService } from './mock-server-results-service';
 import { Page } from './model/page';
-import {
-  ColumnMode,
-  DatatableComponent,
-  PageEvent
-} from 'projects/swimlane/ngx-datatable/src/public-api';
+import { DatatableComponent, PageEvent } from 'projects/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
 
 @Component({
@@ -32,7 +28,7 @@ import { Employee } from '../data.model';
           { name: 'Gender', sortable: false },
           { name: 'Company', sortable: false }
         ]"
-        [columnMode]="ColumnMode.force"
+        [columnMode]="'force'"
         [headerHeight]="50"
         [loadingIndicator]="isLoading > 0"
         [ghostLoadingIndicator]="isLoading > 0"
@@ -58,8 +54,6 @@ export class VirtualPagingComponent {
   rows?: Employee[];
   cache: Record<string, boolean> = {};
   cachePageSize = 0;
-
-  ColumnMode = ColumnMode;
 
   isLoading = 0;
 

@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import {
-  ColumnMode,
   ContextMenuEvent,
   DatatableComponent,
   TableColumn
@@ -47,7 +46,7 @@ import { DataService } from '../data.service';
         class="material"
         [rows]="rows"
         [columns]="columns"
-        [columnMode]="ColumnMode.force"
+        [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
         rowHeight="auto"
@@ -66,8 +65,6 @@ export class ContextMenuDemoComponent {
   rawEvent: any;
   contextmenuRow: any;
   contextmenuColumn: any;
-
-  ColumnMode = ColumnMode;
 
   private dataService = inject(DataService);
 

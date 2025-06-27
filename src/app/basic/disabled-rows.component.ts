@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import {
-  ColumnMode,
   DataTableColumnCellDirective,
   DataTableColumnDirective,
   DatatableComponent,
@@ -96,7 +95,6 @@ import { DataService } from '../data.service';
 export class DisabledRowsComponent {
   rows: (FullEmployee & { isDisabled?: boolean })[] = [];
 
-  ColumnMode = ColumnMode;
   SelectionType = SelectionType;
 
   private dataService = inject(DataService);

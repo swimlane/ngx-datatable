@@ -1,9 +1,5 @@
 import { Component, inject } from '@angular/core';
-import {
-  ColumnMode,
-  DatatableComponent,
-  TableColumn
-} from 'projects/swimlane/ngx-datatable/src/public-api';
+import { DatatableComponent, TableColumn } from 'projects/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';
 
@@ -44,7 +40,7 @@ import { DataService } from '../data.service';
         [summaryRow]="enableSummary"
         [summaryPosition]="summaryPosition"
         [columns]="columns"
-        [columnMode]="ColumnMode.force"
+        [columnMode]="'force'"
         [headerHeight]="50"
         rowHeight="auto"
         [summaryHeight]="55"
@@ -67,8 +63,6 @@ export class SummaryRowSimpleComponent {
 
   enableSummary = true;
   summaryPosition = 'top';
-
-  ColumnMode = ColumnMode;
 
   private dataService = inject(DataService);
 

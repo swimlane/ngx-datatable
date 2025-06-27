@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import {
-  ColumnMode,
   DataTableColumnCellDirective,
   DataTableColumnDirective,
   DataTableColumnHeaderDirective,
@@ -27,7 +26,7 @@ import { DataService } from '../data.service';
       <ngx-datatable
         class="material"
         [rows]="rows"
-        [columnMode]="ColumnMode.force"
+        [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
         rowHeight="auto"
@@ -69,8 +68,6 @@ import { DataService } from '../data.service';
 export class InlineTemplatesComponent {
   rows: Employee[] = [];
   joke = 'knock knock';
-
-  ColumnMode = ColumnMode;
 
   private dataService = inject(DataService);
 

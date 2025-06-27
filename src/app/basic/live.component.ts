@@ -1,6 +1,5 @@
 import { Component, inject, ViewChild } from '@angular/core';
 import {
-  ColumnMode,
   DataTableColumnDirective,
   DatatableComponent
 } from 'projects/swimlane/ngx-datatable/src/public-api';
@@ -33,7 +32,7 @@ import { DataService } from '../data.service';
         class="material"
         [headerHeight]="50"
         [limit]="5"
-        [columnMode]="ColumnMode.force"
+        [columnMode]="'force'"
         [footerHeight]="50"
         rowHeight="auto"
         [trackByProp]="'updated'"
@@ -55,8 +54,6 @@ export class LiveDataComponent {
   active = true;
   temp: (Employee & { updated: string })[] = [];
   cols = ['name', 'gender', 'company'] as const;
-
-  ColumnMode = ColumnMode;
 
   private dataService = inject(DataService);
 
