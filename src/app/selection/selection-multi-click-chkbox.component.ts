@@ -80,7 +80,6 @@ import { DataService } from '../data.service';
       </div>
     </div>
   `,
-  standalone: true,
   imports: [DatatableComponent, DataTableColumnDirective]
 })
 export class MultiClickCheckboxSelectionComponent {

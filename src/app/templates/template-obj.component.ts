@@ -46,7 +46,6 @@ import { DataService } from '../data.service';
       </ng-template>
     </div>
   `,
-  standalone: true,
   imports: [DatatableComponent]
 })
 export class TemplateRefTemplatesComponent implements OnInit {

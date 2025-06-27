@@ -34,7 +34,6 @@ import {
       </ngx-datatable>
     </div>
   `,
-  standalone: true,
   imports: [DatatableComponent]
 })
 export class BasicEmptyComponent {

@@ -221,7 +221,6 @@ import { Keys } from '../../utils/keys';
     class: 'datatable-body'
   },
   styleUrl: './body.component.scss',
-  standalone: true,
   imports: [
     DataTableGhostLoaderComponent,
     ScrollerComponent,

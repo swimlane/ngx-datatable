@@ -153,7 +153,6 @@ import { DataService } from '../data.service';
       </ngx-datatable>
     </div>
   `,
-  standalone: true,
   imports: [
     DatatableComponent,
     DatatableGroupHeaderDirective,

@@ -64,7 +64,6 @@ import { DataService } from '../data.service';
       </div>
     </div>
   `,
-  standalone: true,
   imports: [DatatableComponent]
 })
 export class MultiSelectionComponent {

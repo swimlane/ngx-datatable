@@ -61,7 +61,6 @@ import { DataTableBodyCellComponent } from './body-cell.component';
     } }
   `,
   styleUrl: './body-row.component.scss',
-  standalone: true,
   imports: [DataTableBodyCellComponent]
 })
 export class DataTableBodyRowComponent<TRow extends Row = any> implements DoCheck, OnChanges {

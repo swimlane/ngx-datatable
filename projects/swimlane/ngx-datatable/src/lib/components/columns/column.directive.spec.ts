@@ -17,8 +17,7 @@ import Spy = jasmine.Spy;
     </ngx-datatable-column>
   `,
   imports: [DataTableColumnDirective],
-  providers: [ColumnChangesService], // usually provided by the table.component
-  standalone: true
+  providers: [ColumnChangesService] // usually provided by the table.component
 })
 class TestFixtureComponent {
   columnName?: string;

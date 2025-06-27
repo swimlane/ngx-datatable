@@ -54,7 +54,6 @@ import { Employee } from '../data.model';
       </div>
     </div>
   `,
-  standalone: true,
   imports: [DatatableComponent, DataTableColumnDirective]
 })
 export class ColumnToggleComponent {

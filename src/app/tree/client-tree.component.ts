@@ -53,7 +53,6 @@ import { DataService } from '../data.service';
     </div>
   `,
   styles: ['.icon {height: 10px; width: 10px; }', '.disabled {opacity: 0.5; }'],
-  standalone: true,
   imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellDirective]
 })
 export class ClientTreeComponent {

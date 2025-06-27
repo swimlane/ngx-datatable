@@ -10,8 +10,7 @@ import { toInternalColumn } from '../../utils/column-helper';
 describe('DataTableBodyRowComponent', () => {
   @Component({
     template: ` <datatable-body-row [rowIndex]="rowIndex" [row]="row" [columns]="columns" /> `,
-    imports: [DataTableBodyRowComponent],
-    standalone: true
+    imports: [DataTableBodyRowComponent]
   })
   class TestHostComponent {
     rowIndex: RowIndex = { index: 0 };

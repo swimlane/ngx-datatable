@@ -56,7 +56,6 @@ export class MockServerResultsService {
     </div>
   `,
   styleUrls: ['./scrolling-server.component.css'],
-  standalone: true,
   imports: [DatatableComponent]
 })
 export class ServerScrollingComponent {

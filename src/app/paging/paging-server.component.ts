@@ -37,7 +37,6 @@ import { Employee } from '../data.model';
       </ngx-datatable>
     </div>
   `,
-  standalone: true,
   imports: [DatatableComponent]
 })
 export class ServerPagingComponent implements OnInit {

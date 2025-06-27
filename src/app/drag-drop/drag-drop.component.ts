@@ -43,7 +43,6 @@ import { Employee } from '../data.model';
       </ngx-datatable>
     </div>
   `,
-  standalone: true,
   imports: [
     DatatableComponent,
     CdkDropList,

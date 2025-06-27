@@ -43,7 +43,6 @@ import {
       </ngx-datatable>
     </div>
   `,
-  standalone: true,
   imports: [DatatableComponent, DataTableColumnDirective]
 })
 export class HorzVertScrollingComponent {

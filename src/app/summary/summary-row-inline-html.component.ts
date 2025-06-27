@@ -49,7 +49,6 @@ import { DataService } from '../data.service';
       </ng-template>
     </div>
   `,
-  standalone: true,
   imports: [DatatableComponent, DataTableColumnDirective]
 })
 export class SummaryRowInlineHtmlComponent {

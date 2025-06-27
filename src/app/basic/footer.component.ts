@@ -55,7 +55,6 @@ import { DataService } from '../data.service';
       </ngx-datatable>
     </div>
   `,
-  standalone: true,
   imports: [DatatableComponent, DatatableFooterDirective, DataTableFooterTemplateDirective]
 })
 export class FooterDemoComponent {
