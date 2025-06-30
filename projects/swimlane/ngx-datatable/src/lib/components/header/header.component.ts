@@ -112,7 +112,7 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
   private cd = inject(ChangeDetectorRef);
   private scrollbarHelper = inject(ScrollbarHelper);
 
-  lastColumnId = signal<string | null>(null);
+  readonly lastColumnId = signal<string | null>(null);
 
   @Input() sortAscendingIcon?: string;
   @Input() sortDescendingIcon?: string;
@@ -185,12 +185,12 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
     return this._offsetX;
   }
 
-  @Output() sort = new EventEmitter<SortEvent>();
-  @Output() reorder = new EventEmitter<ReorderEventInternal>();
-  @Output() resize = new EventEmitter<ColumnResizeEventInternal>();
-  @Output() resizing = new EventEmitter<ColumnResizeEventInternal>();
-  @Output() select = new EventEmitter<void>();
-  @Output() columnContextmenu = new EventEmitter<{
+  @Output() readonly sort = new EventEmitter<SortEvent>();
+  @Output() readonly reorder = new EventEmitter<ReorderEventInternal>();
+  @Output() readonly resize = new EventEmitter<ColumnResizeEventInternal>();
+  @Output() readonly resizing = new EventEmitter<ColumnResizeEventInternal>();
+  @Output() readonly select = new EventEmitter<void>();
+  @Output() readonly columnContextmenu = new EventEmitter<{
     event: MouseEvent;
     column: TableColumnInternal;
   }>(false);

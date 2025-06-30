@@ -478,56 +478,56 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * Body was scrolled typically in a `scrollbarV:true` scenario.
    */
-  @Output() scroll: EventEmitter<ScrollEvent> = new EventEmitter();
+  @Output() readonly scroll = new EventEmitter<ScrollEvent>();
 
   /**
    * A cell or row was focused via keyboard or mouse click.
    */
-  @Output() activate: EventEmitter<ActivateEvent<TRow>> = new EventEmitter();
+  @Output() readonly activate = new EventEmitter<ActivateEvent<TRow>>();
 
   /**
    * A cell or row was selected.
    */
-  @Output() select = new EventEmitter<SelectEvent<TRow>>();
+  @Output() readonly select = new EventEmitter<SelectEvent<TRow>>();
 
   /**
    * Column sort was invoked.
    */
-  @Output() sort: EventEmitter<SortEvent> = new EventEmitter();
+  @Output() readonly sort = new EventEmitter<SortEvent>();
 
   /**
    * The table was paged either triggered by the pager or the body scroll.
    */
-  @Output() page: EventEmitter<PageEvent> = new EventEmitter();
+  @Output() readonly page = new EventEmitter<PageEvent>();
 
   /**
    * Columns were re-ordered.
    */
-  @Output() reorder: EventEmitter<ReorderEvent> = new EventEmitter();
+  @Output() readonly reorder = new EventEmitter<ReorderEvent>();
 
   /**
    * Column was resized.
    */
-  @Output() resize: EventEmitter<ColumnResizeEvent> = new EventEmitter();
+  @Output() readonly resize = new EventEmitter<ColumnResizeEvent>();
 
   /**
    * The context menu was invoked on the table.
    * type indicates whether the header or the body was clicked.
    * content contains either the column or the row that was clicked.
    */
-  @Output() tableContextmenu = new EventEmitter<ContextMenuEvent<TRow>>(false);
+  @Output() readonly tableContextmenu = new EventEmitter<ContextMenuEvent<TRow>>(false);
 
   /**
    * A row was expanded ot collapsed for tree
    */
-  @Output() treeAction: EventEmitter<{ row: TRow; rowIndex: number }> = new EventEmitter();
+  @Output() readonly treeAction = new EventEmitter<{ row: TRow; rowIndex: number }>();
 
   /**
    * Emits HTML5 native drag events.
    * Only emits dragenter, dragover, drop events by default.
    * Set {@link rowDraggble} to true for dragstart and dragend.
    */
-  @Output() rowDragEvents: EventEmitter<DragEventData> = new EventEmitter();
+  @Output() readonly rowDragEvents = new EventEmitter<DragEventData>();
 
   /**
    * CSS class applied if the header height if fixed height.
@@ -707,7 +707,7 @@ export class DatatableComponent<TRow extends Row = any>
   // the column widths are initially calculated without vertical scroll offset
   // this makes horizontal scroll to appear on load even if columns can fit in view
   // this will be set to true once rows are available and rendered on UI
-  private _rowInitDone = signal(false);
+  private readonly _rowInitDone = signal(false);
 
   constructor() {
     // apply global settings from Module.forRoot

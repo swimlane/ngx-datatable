@@ -29,7 +29,7 @@ export class DatatableGroupHeaderDirective<TRow extends Row = any> {
   /**
    * Track toggling of group visibility
    */
-  @Output() toggle: EventEmitter<GroupToggleEvents<TRow>> = new EventEmitter();
+  @Output() readonly toggle = new EventEmitter<GroupToggleEvents<TRow>>();
 
   /**
    * Toggle the expansion of a group

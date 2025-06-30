@@ -67,7 +67,7 @@ export class DataTableFooterComponent {
   @Input() selectedCount = 0;
   @Input() selectedMessage?: string | boolean;
 
-  @Output() page: EventEmitter<PagerPageEvent> = new EventEmitter();
+  @Output() readonly page = new EventEmitter<PagerPageEvent>();
 
   get isVisible(): boolean {
     return this.rowCount / this.pageSize > 1;

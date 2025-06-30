@@ -354,12 +354,15 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
 
   @Input() verticalScrollVisible = false;
 
-  @Output() scroll = new EventEmitter<ScrollEvent>();
-  @Output() page = new EventEmitter<number>();
-  @Output() activate = new EventEmitter<ActivateEvent<TRow>>();
-  @Output() select = new EventEmitter<SelectEvent<TRow>>();
-  @Output() rowContextmenu = new EventEmitter<{ event: MouseEvent; row: RowOrGroup<TRow> }>(false);
-  @Output() treeAction: EventEmitter<{ row: TRow }> = new EventEmitter();
+  @Output() readonly scroll = new EventEmitter<ScrollEvent>();
+  @Output() readonly page = new EventEmitter<number>();
+  @Output() readonly activate = new EventEmitter<ActivateEvent<TRow>>();
+  @Output() readonly select = new EventEmitter<SelectEvent<TRow>>();
+  @Output() readonly rowContextmenu = new EventEmitter<{
+    event: MouseEvent;
+    row: RowOrGroup<TRow>;
+  }>(false);
+  @Output() readonly treeAction = new EventEmitter<{ row: TRow }>();
 
   @ViewChild(ScrollerComponent) scroller!: ScrollerComponent;
 
@@ -375,7 +378,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
    * based on the row heights cache for virtual scroll and virtualization. Other scenarios
    * calculate scroll height automatically (as height will be undefined).
    */
-  scrollHeight = computed(() => {
+  readonly scrollHeight = computed(() => {
     if (this.rowHeightsCache() && this.scrollbarV && this.virtualization && this.rowCount) {
       return this.rowHeightsCache().query(this.rowCount - 1);
     }
@@ -383,12 +386,12 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     return undefined;
   });
 
-  rowsToRender = computed(() => {
+  readonly rowsToRender = computed(() => {
     return this.updateRows();
   });
-  rowHeightsCache = signal(new RowHeightCache());
+  readonly rowHeightsCache = signal(new RowHeightCache());
   offsetY = 0;
-  indexes = signal<{ first: number; last: number }>({ first: 0, last: 0 });
+  readonly indexes = signal<{ first: number; last: number }>({ first: 0, last: 0 });
   columnGroupWidths!: ColumnGroupWidth;
   rowTrackingFn: TrackByFunction<RowOrGroup<TRow> | undefined>;
   listener: any;
@@ -627,7 +630,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
    * If each row has a size of 10px and the first 10 rows are not rendered due to scroll,
    * then we have a renderOffset of 100px.
    */
-  renderOffset = computed(() => {
+  readonly renderOffset = computed(() => {
     if (this.scrollbarV && this.virtualization) {
       return `translateY(${this.rowHeightsCache().query(this.indexes().first - 1)}px)`;
     } else {

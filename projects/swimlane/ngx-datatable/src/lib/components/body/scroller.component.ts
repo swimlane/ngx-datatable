@@ -34,7 +34,7 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   @Input()
   scrollWidth?: number;
 
-  @Output() scroll: EventEmitter<any> = new EventEmitter();
+  @Output() readonly scroll = new EventEmitter<any>();
 
   scrollYPos = 0;
   scrollXPos = 0;

@@ -35,8 +35,8 @@ interface OrderPosition {
 export class OrderableDirective implements AfterContentInit, OnDestroy {
   private document = inject(DOCUMENT);
 
-  @Output() reorder = new EventEmitter<ReorderEventInternal>();
-  @Output() targetChanged = new EventEmitter<TargetChangedEvent>();
+  @Output() readonly reorder = new EventEmitter<ReorderEventInternal>();
+  @Output() readonly targetChanged = new EventEmitter<TargetChangedEvent>();
 
   @ContentChildren(DraggableDirective, { descendants: true })
   draggables!: QueryList<DraggableDirective>;

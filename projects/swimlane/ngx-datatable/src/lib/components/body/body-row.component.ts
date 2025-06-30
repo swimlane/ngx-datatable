@@ -143,8 +143,8 @@ export class DataTableBodyRowComponent<TRow extends Row = any> implements DoChec
     return this._columnGroupWidths.total;
   }
 
-  @Output() activate: EventEmitter<ActivateEvent<TRow>> = new EventEmitter();
-  @Output() treeAction: EventEmitter<any> = new EventEmitter();
+  @Output() readonly activate = new EventEmitter<ActivateEvent<TRow>>();
+  @Output() readonly treeAction = new EventEmitter<any>();
 
   _element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
   _columnGroupWidths!: ColumnGroupWidth;

@@ -18,7 +18,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 export class AppComponent {
   version = packageInfo.version;
 
-  dark = signal(false);
+  readonly dark = signal(false);
 
   routeActivate(outlet: RouterOutlet): void {
     this.dark.set(outlet.activatedRoute.snapshot.data.dark);

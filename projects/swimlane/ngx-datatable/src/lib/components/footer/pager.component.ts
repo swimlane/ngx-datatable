@@ -116,7 +116,7 @@ export class DataTablePagerComponent {
     return Math.max(count || 0, 1);
   }
 
-  @Output() change: EventEmitter<PagerPageEvent> = new EventEmitter();
+  @Output() readonly change = new EventEmitter<PagerPageEvent>();
 
   _count = 0;
   _page = 1;
