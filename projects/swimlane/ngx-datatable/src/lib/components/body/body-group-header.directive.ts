@@ -23,7 +23,7 @@ export class DatatableGroupHeaderDirective<TRow extends Row = any> {
   _templateQuery?: TemplateRef<GroupContext<TRow>>;
 
   get template(): TemplateRef<GroupContext<TRow>> | undefined {
-    return this._templateInput || this._templateQuery;
+    return this._templateInput ?? this._templateQuery;
   }
 
   /**

@@ -156,6 +156,7 @@ export class DataTablePagerComponent {
     const maxSize = 5;
     const isMaxSized = maxSize < this.totalPages;
 
+    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
     page = page || this.page;
 
     if (isMaxSized) {

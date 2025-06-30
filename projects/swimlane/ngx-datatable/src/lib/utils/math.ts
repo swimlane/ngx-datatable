@@ -9,7 +9,7 @@ export function getTotalFlexGrow(columns: TableColumn[]) {
   let totalFlexGrow = 0;
 
   for (const c of columns) {
-    totalFlexGrow += c.flexGrow || 0;
+    totalFlexGrow += c.flexGrow ?? 0;
   }
 
   return totalFlexGrow;
@@ -148,8 +148,10 @@ export function forceFillColumnWidths(
     for (const column of columnsToResize) {
       // don't bleed if the initialRemainingWidth is same as verticalScrollWidth
       if (exceedsWindow && allowBleed && initialRemainingWidth !== -1 * verticalScrollWidth) {
-        column.width = column.$$oldWidth || column.width || defaultColWidth;
+        // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+        column.width = column.width || defaultColWidth;
       } else {
+        // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
         const newSize = (column.width || defaultColWidth) + additionWidthPerColumn;
 
         if (column.minWidth && newSize < column.minWidth) {
@@ -194,6 +196,7 @@ function getContentWidth(allColumns: TableColumn[], defaultColWidth: number = 15
   let contentWidth = 0;
 
   for (const column of allColumns) {
+    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
     contentWidth += column.width || defaultColWidth;
   }
 

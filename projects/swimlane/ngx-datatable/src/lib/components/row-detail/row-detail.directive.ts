@@ -19,7 +19,7 @@ export class DatatableRowDetailDirective<TRow extends Row = any> {
   _templateQuery?: TemplateRef<RowDetailContext<TRow>>;
 
   get template(): TemplateRef<RowDetailContext<TRow>> | undefined {
-    return this._templateInput || this._templateQuery;
+    return this._templateInput ?? this._templateQuery;
   }
 
   /**

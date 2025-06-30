@@ -13,6 +13,6 @@ export class DatatableFooterDirective {
   _templateQuery?: TemplateRef<FooterContext>;
 
   get template(): TemplateRef<FooterContext> | undefined {
-    return this._templateInput || this._templateQuery;
+    return this._templateInput ?? this._templateQuery;
   }
 }

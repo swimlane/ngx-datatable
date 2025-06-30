@@ -486,7 +486,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
       offset = 0;
     }
 
-    this.scroller.setOffset(offset || 0);
+    this.scroller.setOffset(offset ?? 0);
   }
 
   /**

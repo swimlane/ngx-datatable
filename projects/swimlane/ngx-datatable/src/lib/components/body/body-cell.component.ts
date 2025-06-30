@@ -437,7 +437,7 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
   }
 
   calcLeftMargin(column: TableColumnInternal, row: RowOrGroup<TRow>): number {
-    const levelIndent = column.treeLevelIndent != null ? column.treeLevelIndent : 50;
+    const levelIndent = column.treeLevelIndent ?? 50;
     return column.isTreeColumn ? (row as TRow).level! * levelIndent : 0;
   }
 }
