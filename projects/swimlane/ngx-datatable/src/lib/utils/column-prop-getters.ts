@@ -25,7 +25,7 @@ export function getterForProp(prop: TableColumnProp | undefined): ValueGetter {
     return numericIndexGetter as ValueGetter;
   } else {
     // deep or simple
-    if (prop.indexOf('.') !== -1) {
+    if (prop.includes('.')) {
       return deepValueGetter as ValueGetter;
     } else {
       return shallowValueGetter as ValueGetter;

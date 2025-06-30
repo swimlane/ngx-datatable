@@ -200,8 +200,8 @@ export class RowGroupingComponent {
     if (group.length === 2) {
       // There are only 2 lines in a group
       if (
-        ['Calculated', 'Funder'].indexOf(group[0].source!) > -1 &&
-        ['Calculated', 'Funder'].indexOf(group[1].source!) > -1
+        ['Calculated', 'Funder'].includes(group[0].source!) &&
+        ['Calculated', 'Funder'].includes(group[1].source!)
       ) {
         // Sources are funder and calculated
         if (group[0].startdate === group[1].startdate && group[0].enddate === group[1].enddate) {

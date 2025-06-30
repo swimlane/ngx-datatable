@@ -66,7 +66,7 @@ export class FilterComponent {
 
     // filter our data and update the rows
     this.rows = this.temp.filter(function (d) {
-      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.name.toLowerCase().includes(val) || !val;
     });
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
