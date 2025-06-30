@@ -41,11 +41,7 @@ export class DraggableDirective implements OnDestroy, OnChanges {
   subscription?: Subscription;
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (
-      changes.dragEventTarget &&
-      changes.dragEventTarget.currentValue &&
-      this.dragModel.dragging
-    ) {
+    if (changes.dragEventTarget?.currentValue && this.dragModel.dragging) {
       this.onMousedown(changes.dragEventTarget.currentValue);
     }
   }

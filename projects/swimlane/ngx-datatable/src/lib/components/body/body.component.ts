@@ -771,7 +771,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   }
 
   getRowExpandedIdx(row: RowOrGroup<TRow>, expanded: RowOrGroup<TRow>[]): number {
-    if (!expanded || !expanded.length) {
+    if (!expanded?.length) {
       return -1;
     }
 
@@ -985,7 +985,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
         focusElement = parentElement.nextElementSibling;
       }
 
-      if (focusElement && focusElement.children.length) {
+      if (focusElement?.children.length) {
         return focusElement.children[0];
       }
     }
@@ -1022,7 +1022,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   }
 
   getRowSelectedIdx(row: TRow, selected: any[]): number {
-    if (!selected || !selected.length) {
+    if (!selected?.length) {
       return -1;
     }
 

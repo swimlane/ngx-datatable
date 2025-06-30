@@ -84,7 +84,7 @@ export function sortRows<TRow>(
   if (!rows) {
     return [];
   }
-  if (!dirs || !dirs.length || !columns) {
+  if (!dirs?.length || !columns) {
     return [...rows];
   }
 

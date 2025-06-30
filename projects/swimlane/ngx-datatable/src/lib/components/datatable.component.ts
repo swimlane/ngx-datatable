@@ -1284,7 +1284,7 @@ export class DatatableComponent<TRow extends Row = any>
 
   private sortInternalRows(): void {
     // if there are no sort criteria we reset the rows with original rows
-    if (!this.sorts || !this.sorts?.length) {
+    if (!this.sorts?.length) {
       this._internalRows = this._rows;
       // if there is any tree relation then re-group rows accordingly
       if (this.treeFromRelation && this.treeToRelation) {
@@ -1295,7 +1295,7 @@ export class DatatableComponent<TRow extends Row = any>
         );
       }
     }
-    if (this.groupedRows && this.groupedRows.length) {
+    if (this.groupedRows?.length) {
       const sortOnGroupHeader = this.sorts?.find(
         sortColumns => sortColumns.prop === this._groupRowsBy
       );
