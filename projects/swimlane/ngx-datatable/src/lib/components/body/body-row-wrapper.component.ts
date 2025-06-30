@@ -106,10 +106,6 @@ export class DataTableRowWrapperComponent<TRow extends Row = any>
   private tableComponent = inject(DatatableComponentToken);
   private cd = inject(ChangeDetectorRef);
 
-  ngOnInit(): void {
-    this.selectedRowsDiffer = this.iterableDiffers.find(this.selected ?? []).create();
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['row']) {
       // this component renders either a group header or a row. Never both.
@@ -134,6 +130,10 @@ export class DataTableRowWrapperComponent<TRow extends Row = any>
     if (changes['expanded']) {
       this.context.expanded = this.expanded;
     }
+  }
+
+  ngOnInit(): void {
+    this.selectedRowsDiffer = this.iterableDiffers.find(this.selected ?? []).create();
   }
 
   ngDoCheck(): void {

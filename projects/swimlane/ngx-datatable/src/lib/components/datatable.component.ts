@@ -736,6 +736,55 @@ export class DatatableComponent<TRow extends Row = any>
     this.recalculate();
   }
 
+  /*
+   * Lifecycle hook that is called when Angular dirty checks a directive.
+   */
+  ngDoCheck(): void {
+    const rowDiffers = this.rowDiffer.diff(this.rows as any);
+    if (rowDiffers || this.disableRowCheck) {
+      // we don't sort again when ghost loader adds a dummy row
+      if (!this.ghostLoadingIndicator && !this.externalSorting && this._internalColumns) {
+        this.sortInternalRows();
+      } else {
+        this._internalRows = [...this.rows];
+      }
+
+      // auto group by parent on new update
+      this._internalRows = groupRowsByParents(
+        this._internalRows,
+        optionalGetterForProp(this.treeFromRelation),
+        optionalGetterForProp(this.treeToRelation)
+      );
+
+      if (this._groupRowsBy) {
+        // If a column has been specified in _groupRowsBy create a new array with the data grouped by that row
+        this.groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
+      }
+      if (rowDiffers) {
+        queueMicrotask(() => {
+          this._rowInitDone.set(true);
+          this.recalculate();
+          this.cd.markForCheck();
+        });
+      }
+
+      this.recalculatePages();
+      this.cd.markForCheck();
+    }
+  }
+
+  /**
+   * Lifecycle hook that is called after a component's
+   * content has been fully initialized.
+   */
+  ngAfterContentInit() {
+    if (this.columnTemplates.length) {
+      this.translateColumns(this.columnTemplates);
+    }
+    this._subscriptions.push(this.columnTemplates.changes.subscribe(v => this.translateColumns(v)));
+    this.listenForColumnInputChanges();
+  }
+
   /**
    * Lifecycle hook that is called after a component's
    * view has been fully initialized.
@@ -761,18 +810,6 @@ export class DatatableComponent<TRow extends Row = any>
         });
       }
     });
-  }
-
-  /**
-   * Lifecycle hook that is called after a component's
-   * content has been fully initialized.
-   */
-  ngAfterContentInit() {
-    if (this.columnTemplates.length) {
-      this.translateColumns(this.columnTemplates);
-    }
-    this._subscriptions.push(this.columnTemplates.changes.subscribe(v => this.translateColumns(v)));
-    this.listenForColumnInputChanges();
   }
 
   /**
@@ -838,43 +875,6 @@ export class DatatableComponent<TRow extends Row = any>
 
     // convert map back to a simple array of objects
     return Array.from(map, x => addGroup(x[0], x[1]));
-  }
-
-  /*
-   * Lifecycle hook that is called when Angular dirty checks a directive.
-   */
-  ngDoCheck(): void {
-    const rowDiffers = this.rowDiffer.diff(this.rows as any);
-    if (rowDiffers || this.disableRowCheck) {
-      // we don't sort again when ghost loader adds a dummy row
-      if (!this.ghostLoadingIndicator && !this.externalSorting && this._internalColumns) {
-        this.sortInternalRows();
-      } else {
-        this._internalRows = [...this.rows];
-      }
-
-      // auto group by parent on new update
-      this._internalRows = groupRowsByParents(
-        this._internalRows,
-        optionalGetterForProp(this.treeFromRelation),
-        optionalGetterForProp(this.treeToRelation)
-      );
-
-      if (this._groupRowsBy) {
-        // If a column has been specified in _groupRowsBy create a new array with the data grouped by that row
-        this.groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
-      }
-      if (rowDiffers) {
-        queueMicrotask(() => {
-          this._rowInitDone.set(true);
-          this.recalculate();
-          this.cd.markForCheck();
-        });
-      }
-
-      this.recalculatePages();
-      this.cd.markForCheck();
-    }
   }
 
   /**
