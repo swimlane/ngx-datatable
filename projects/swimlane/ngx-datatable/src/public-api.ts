@@ -25,6 +25,12 @@ export * from './lib/directives/disable-row.directive';
 export * from './lib/types/public.types';
 export * from './lib/types/table-column.type';
 
+// services
+export * from './lib/services/column-changes.service';
+
+// utilis
+export * from './lib/utils/column-helper';
+
 export {
   providedNgxDatatableConfig,
   NgxDatatableConfig,
