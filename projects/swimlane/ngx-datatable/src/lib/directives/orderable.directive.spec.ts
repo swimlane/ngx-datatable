@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/dot-notation */
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -57,13 +58,13 @@ describe('OrderableDirective', () => {
 
     describe('when a draggable is removed', () => {
       const checkAllSubscriptionsForActiveObservers = () => {
-        const subs = directive.draggables.map(d => {
-          expect(d.dragEnd.isStopped).toBe(false);
-          expect(d.dragStart.isStopped).toBe(false);
+        const subs = directive.draggables().map(d => {
+          expect(d.dragStart['listeners']).not.toHaveSize(0);
+          expect(d.dragEnd['listeners']).not.toHaveSize(0);
 
           return {
-            dragStart: d.dragStart.observers,
-            dragEnd: d.dragEnd.observers
+            dragStart: d.dragStart['listeners'],
+            dragEnd: d.dragEnd['listeners']
           };
         });
 
@@ -88,12 +89,12 @@ describe('OrderableDirective', () => {
         const unsubbed = component.draggableDirectives.toArray()[0];
         component.draggables.splice(0, 1);
 
-        expect(unsubbed.dragStart.isStopped).toBe(false);
-        expect(unsubbed.dragEnd.isStopped).toBe(false);
+        expect(unsubbed.dragStart['listeners']).not.toHaveSize(0);
+        expect(unsubbed.dragEnd['listeners']).not.toHaveSize(0);
         fixture.detectChanges();
 
-        expect(unsubbed.dragStart.isStopped).toBe(true);
-        expect(unsubbed.dragEnd.isStopped).toBe(true);
+        expect(unsubbed.dragStart['listeners']).toHaveSize(0);
+        expect(unsubbed.dragEnd['listeners']).toHaveSize(0);
       });
     });
   });

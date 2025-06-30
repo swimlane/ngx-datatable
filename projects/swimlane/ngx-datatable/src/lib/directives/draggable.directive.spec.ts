@@ -7,9 +7,21 @@ import { DraggableDirective } from './draggable.directive';
 @Component({
   selector: 'test-fixture-component',
   imports: [DraggableDirective],
-  template: ` <div draggable></div> `
+  template: ` <div draggable [dragModel]="model"></div> `
 })
-class TestFixtureComponent {}
+class TestFixtureComponent {
+  model: any = {
+    $$id: 'test',
+    prop: 'test',
+    draggable: true,
+    dragging: false,
+    resizeable: false,
+    width: 100,
+    minWidth: 50,
+    maxWidth: 200,
+    isTarget: false
+  } as any;
+}
 
 describe('DraggableDirective', () => {
   let fixture: ComponentFixture<TestFixtureComponent>;
@@ -20,6 +32,7 @@ describe('DraggableDirective', () => {
     fixture = TestBed.createComponent(TestFixtureComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
+    fixture.detectChanges();
   }));
 
   describe('fixture', () => {
@@ -72,7 +85,7 @@ describe('DraggableDirective', () => {
       describe('subscription should not be destroyed', () => {
         it('when onMouseup is called and not dragging', () => {
           directive.onMousedown(mouseDown);
-          directive.isDragging = false;
+          directive.isDragging.set(false);
 
           expect(directive.subscription).toBeTruthy();
 

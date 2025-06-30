@@ -1,14 +1,13 @@
 import {
   booleanAttribute,
   Directive,
+  effect,
   ElementRef,
-  EventEmitter,
   inject,
-  Input,
-  OnChanges,
+  input,
   OnDestroy,
-  Output,
-  SimpleChanges
+  output,
+  signal
 } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -20,91 +19,77 @@ import { getPositionFromEvent } from '../utils/events';
  * Draggable Directive for Angular2
  *
  * Inspiration:
- *   https://github.com/AngularClass/angular2-examples/blob/master/rx-draggable/directives/draggable.ts
+ *   https://github.com/AngularClass/angular-examples/blob/master/rx-draggable/directives/draggable.ts
  *   http://stackoverflow.com/questions/35662530/how-to-implement-drag-and-drop-in-angular2
  *
  */
 @Directive({
-  selector: '[draggable]'
+  selector: '[draggable]',
+  host: {
+    '[class.dragging]': 'isDragging()'
+  }
 })
-export class DraggableDirective implements OnDestroy, OnChanges {
-  @Input() dragEventTarget: any;
-  @Input() dragModel!: TableColumnInternal;
-  @Input({ transform: booleanAttribute }) dragX = true;
-  @Input({ transform: booleanAttribute }) dragY = true;
+export class DraggableDirective implements OnDestroy {
+  readonly element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
+  readonly dragModel = input.required<TableColumnInternal>();
+  readonly dragEventTarget = input<MouseEvent | TouchEvent>();
+  readonly dragX = input(true, { transform: booleanAttribute });
+  readonly dragY = input(true, { transform: booleanAttribute });
 
-  @Output() readonly dragStart = new EventEmitter<DraggableDragEvent>();
-  @Output() readonly dragging = new EventEmitter<DraggableDragEvent>();
-  @Output() readonly dragEnd = new EventEmitter<DraggableDragEvent>();
+  readonly dragStart = output<DraggableDragEvent>();
+  readonly dragging = output<DraggableDragEvent>();
+  readonly dragEnd = output<DraggableDragEvent>();
 
-  element = inject(ElementRef).nativeElement;
-  isDragging = false;
+  readonly isDragging = signal(false);
   subscription?: Subscription;
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.dragEventTarget?.currentValue && this.dragModel.dragging) {
-      this.onMousedown(changes.dragEventTarget.currentValue);
-    }
+  constructor() {
+    effect(() => {
+      const target = this.dragEventTarget();
+      const dragModel = this.dragModel();
+
+      if (target && dragModel) {
+        this.onMousedown(target);
+      }
+    });
   }
 
   ngOnDestroy(): void {
     this._destroySubscription();
   }
 
-  onMouseup(event: MouseEvent | TouchEvent): void {
-    if (!this.isDragging) {
+  onMousedown(event: MouseEvent | TouchEvent): void {
+    const isDraggableTarget = (event.target as HTMLElement).classList.contains('draggable');
+    if (!isDraggableTarget || (!this.dragX() && !this.dragY())) {
       return;
     }
 
-    this.isDragging = false;
-    this.element.classList.remove('dragging');
+    event.preventDefault();
+    this.isDragging.set(true);
 
-    if (this.subscription) {
-      this._destroySubscription();
-      this.dragEnd.emit({
-        event,
-        element: this.element,
-        model: this.dragModel
-      });
-    }
-  }
-
-  onMousedown(event: MouseEvent | TouchEvent): void {
+    const mouseDownPos = getPositionFromEvent(event);
     const isMouse = event instanceof MouseEvent;
-    // we only want to drag the inner header text
-    const isDragElm = (<HTMLElement>event.target).classList.contains('draggable');
 
-    if (isDragElm && (this.dragX || this.dragY)) {
-      event.preventDefault();
-      this.isDragging = true;
+    const mouseup$ = fromEvent<MouseEvent | TouchEvent>(document, isMouse ? 'mouseup' : 'touchend');
+    const mousemove$ = fromEvent<MouseEvent | TouchEvent>(
+      document,
+      isMouse ? 'mousemove' : 'touchmove'
+    ).pipe(takeUntil(mouseup$));
 
-      const mouseDownPos = getPositionFromEvent(event);
+    this._destroySubscription();
 
-      const mouseup = fromEvent<MouseEvent | TouchEvent>(
-        document,
-        isMouse ? 'mouseup' : 'touchend'
-      );
-      this.subscription = mouseup.subscribe(ev => this.onMouseup(ev));
+    this.subscription = mouseup$.subscribe(mouseUpEvent => this.onMouseup(mouseUpEvent));
+    this.subscription.add(mousemove$.subscribe(ev => this.move(ev, mouseDownPos)));
 
-      const mouseMoveSub = fromEvent<MouseEvent | TouchEvent>(
-        document,
-        isMouse ? 'mousemove' : 'touchmove'
-      )
-        .pipe(takeUntil(mouseup))
-        .subscribe(ev => this.move(ev, mouseDownPos));
-
-      this.subscription.add(mouseMoveSub);
-
-      this.dragStart.emit({
-        event,
-        element: this.element,
-        model: this.dragModel
-      });
-    }
+    this.dragStart.emit({
+      event,
+      element: this.element,
+      model: this.dragModel()
+    });
   }
 
   move(event: MouseEvent | TouchEvent, mouseDownPos: { clientX: number; clientY: number }): void {
-    if (!this.isDragging) {
+    if (!this.isDragging()) {
       return;
     }
 
@@ -112,19 +97,31 @@ export class DraggableDirective implements OnDestroy, OnChanges {
     const x = clientX - mouseDownPos.clientX;
     const y = clientY - mouseDownPos.clientY;
 
-    if (this.dragX) {
+    if (this.dragX()) {
       this.element.style.left = `${x}px`;
     }
-    if (this.dragY) {
+    if (this.dragY()) {
       this.element.style.top = `${y}px`;
     }
-
-    this.element.classList.add('dragging');
 
     this.dragging.emit({
       event,
       element: this.element,
-      model: this.dragModel
+      model: this.dragModel()
+    });
+  }
+
+  onMouseup(event: MouseEvent | TouchEvent): void {
+    if (!this.isDragging()) {
+      return;
+    }
+
+    this.isDragging.set(false);
+    this._destroySubscription();
+    this.dragEnd.emit({
+      event,
+      element: this.element,
+      model: this.dragModel()
     });
   }
 
