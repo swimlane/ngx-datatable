@@ -258,7 +258,7 @@ describe('DataTablePagerComponent', () => {
       fixture.detectChanges();
       [firstButton, previousButton, nextButton, lastButton] = fixture.debugElement
         .queryAll(By.css('a[role=button]'))
-        .filter(it => !it.parent!.classes['pages']);
+        .filter(it => !it.parent!.classes.pages);
       pageButtons = fixture.debugElement
         .queryAll(By.css('li.pages'))
         .map((button, index) => ({ button, page: index + 1 }));

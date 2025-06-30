@@ -108,7 +108,7 @@ export class DataTableRowWrapperComponent<TRow extends Row = any>
   private cd = inject(ChangeDetectorRef);
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['row']) {
+    if (changes.row) {
       // this component renders either a group header or a row. Never both.
       if (this.isGroup(this.row)) {
         this.context = {
@@ -125,10 +125,10 @@ export class DataTableRowWrapperComponent<TRow extends Row = any>
         };
       }
     }
-    if (changes['rowIndex']) {
+    if (changes.rowIndex) {
       this.context.rowIndex = this.rowIndex;
     }
-    if (changes['expanded']) {
+    if (changes.expanded) {
       this.context.expanded = this.expanded;
     }
   }
