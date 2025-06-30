@@ -2,8 +2,6 @@
 
 ## HEAD (unreleased)
 
-## 22.0.1-alpha.0
-
 - Enhancement: Exporting isNullOrUndefined function and ColumnChangesService service to be used externally.
 
 ## 22.0.0-alpha.0
