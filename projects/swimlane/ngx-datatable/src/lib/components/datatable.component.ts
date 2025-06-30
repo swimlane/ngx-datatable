@@ -740,7 +740,7 @@ export class DatatableComponent<TRow extends Row = any>
    * Lifecycle hook that is called when Angular dirty checks a directive.
    */
   ngDoCheck(): void {
-    const rowDiffers = this.rowDiffer.diff(this.rows as any);
+    const rowDiffers = this.rowDiffer.diff(this.rows);
     if (rowDiffers || this.disableRowCheck) {
       // we don't sort again when ghost loader adds a dummy row
       if (!this.ghostLoadingIndicator && !this.externalSorting && this._internalColumns) {
