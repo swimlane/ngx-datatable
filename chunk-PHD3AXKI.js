@@ -1,1 +1,0 @@
-import{a as n}from"./chunk-ZP5SW6CU.js";import{O as o,S as i}from"./chunk-R4PPA3OJ.js";var p=(()=>{let t=class t{constructor(){this.client=i(n)}load(e){return this.client.get(`assets/data/${e}`)}};t.\u0275fac=function(c){return new(c||t)},t.\u0275prov=o({token:t,factory:t.\u0275fac,providedIn:"root"});let r=t;return r})();export{p as a};
