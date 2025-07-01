@@ -7,22 +7,20 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'column-reorder-demo',
-  styles: [
-    `
-      .icon {
-        position: absolute;
-      }
-      .datatable-icon-down {
-        top: 0px;
-      }
-      .datatable-icon-up {
-        top: 40px;
-      }
-      .dragFromLeft .icon {
-        left: -13px;
-      }
-    `
-  ],
+  styles: `
+    .icon {
+      position: absolute;
+    }
+    .datatable-icon-down {
+      top: 0px;
+    }
+    .datatable-icon-up {
+      top: 40px;
+    }
+    .dragFromLeft .icon {
+      left: -13px;
+    }
+  `,
   template: `
     <div>
       <h3>

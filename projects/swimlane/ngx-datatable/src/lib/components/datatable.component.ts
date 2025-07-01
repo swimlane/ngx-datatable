@@ -78,7 +78,7 @@ import { DatatableRowDetailDirective } from './row-detail/row-detail.directive';
   selector: 'ngx-datatable',
   templateUrl: './datatable.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./datatable.component.scss'],
+  styleUrl: './datatable.component.scss',
   host: {
     class: 'ngx-datatable'
   },

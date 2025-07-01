@@ -50,7 +50,7 @@ import { DataService } from '../data.service';
       </ngx-datatable>
     </div>
   `,
-  styleUrls: ['./summary-row-simple.component.scss'],
+  styleUrl: './summary-row-simple.component.scss',
   imports: [DatatableComponent]
 })
 export class SummaryRowSimpleComponent {

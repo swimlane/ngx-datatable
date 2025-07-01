@@ -46,7 +46,7 @@ import { Page } from './model/page';
       </ngx-datatable>
     </div>
   `,
-  styleUrls: ['./paging-virtual.component.scss'],
+  styleUrl: './paging-virtual.component.scss',
   imports: [DatatableComponent]
 })
 export class VirtualPagingComponent {

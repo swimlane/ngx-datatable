@@ -12,7 +12,7 @@ import { TableColumnInternal } from '../../../types/internal.types';
 @Component({
   selector: `ghost-loader`,
   templateUrl: `./ghost-loader.component.html`,
-  styleUrls: [`./ghost-loader.component.scss`],
+  styleUrl: './ghost-loader.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgTemplateOutlet]
 })

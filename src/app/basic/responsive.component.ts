@@ -15,26 +15,24 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'responsive-demo',
-  styles: [
-    `
-      @media screen and (max-width: 800px) {
-        .desktop-hidden {
-          display: initial;
-        }
-        .mobile-hidden {
-          display: none;
-        }
+  styles: `
+    @media screen and (max-width: 800px) {
+      .desktop-hidden {
+        display: initial;
       }
-      @media screen and (min-width: 800px) {
-        .desktop-hidden {
-          display: none;
-        }
-        .mobile-hidden {
-          display: initial;
-        }
+      .mobile-hidden {
+        display: none;
       }
-    `
-  ],
+    }
+    @media screen and (min-width: 800px) {
+      .desktop-hidden {
+        display: none;
+      }
+      .mobile-hidden {
+        display: initial;
+      }
+    }
+  `,
   template: `
     <div>
       <h3>

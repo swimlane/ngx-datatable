@@ -40,7 +40,7 @@ import { DataService } from '../data.service';
       </ng-template>
     </div>
   `,
-  styleUrls: ['./summary-row-custom-template.component.scss'],
+  styleUrl: './summary-row-custom-template.component.scss',
   imports: [DatatableComponent]
 })
 export class SummaryRowCustomTemplateComponent implements OnInit {

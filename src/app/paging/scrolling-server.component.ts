@@ -55,7 +55,7 @@ export class MockServerResultsService {
       ></ngx-datatable>
     </div>
   `,
-  styleUrls: ['./scrolling-server.component.css'],
+  styleUrl: './scrolling-server.component.css',
   imports: [DatatableComponent]
 })
 export class ServerScrollingComponent implements OnInit {
