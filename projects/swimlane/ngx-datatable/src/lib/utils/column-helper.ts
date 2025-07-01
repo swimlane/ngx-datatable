@@ -9,10 +9,10 @@ import { getterForProp } from './column-prop-getters';
 import { id } from './id';
 import { orderByComparator } from './sort';
 
-export function toInternalColumn<T extends Row>(
+export const toInternalColumn = <T extends Row>(
   columns: TableColumn<T>[] | QueryList<DataTableColumnDirective<T>>,
   defaultColumnWidth = 150
-): TableColumnInternal<T>[] {
+): TableColumnInternal<T>[] => {
   let hasTreeColumn = false;
   // TS fails to infer the type here.
   return (columns as TableColumn<T>[]).map(column => {
@@ -45,8 +45,4 @@ export function toInternalColumn<T extends Row>(
       treeToggleTemplate: column.treeToggleTemplate
     } as TableColumnInternal; // TS cannot cast here
   });
-}
-
-export function isNullOrUndefined<T>(value: T | null | undefined): value is null | undefined {
-  return value === null || value === undefined;
-}
+};

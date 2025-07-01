@@ -3,7 +3,7 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { TableColumnInternal } from '../../../types/internal.types';
 import { DataTableBodyRowComponent } from '../body-row.component';
 
-function defaultSumFunc(cells: any[]): any {
+const defaultSumFunc = (cells: any[]): any => {
   const cellsWithValues = cells.filter(cell => !!cell);
 
   if (!cellsWithValues.length) {
@@ -14,11 +14,11 @@ function defaultSumFunc(cells: any[]): any {
   }
 
   return cellsWithValues.reduce((res, cell) => res + cell);
-}
+};
 
-function noopSumFunc(cells: any[]): void {
+const noopSumFunc = (cells: any[]): void => {
   return;
-}
+};
 
 @Component({
   selector: 'datatable-summary-row',

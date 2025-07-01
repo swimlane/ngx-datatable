@@ -6,10 +6,10 @@ import { getterForProp } from './column-prop-getters';
 /**
  * Gets the next sort direction
  */
-export function nextSortDir(
+export const nextSortDir = (
   sortType: SortType,
   current: SortDirection | 'desc' | 'asc' | undefined
-): SortDirection | undefined {
+): SortDirection | undefined => {
   if (sortType === SortType.single) {
     if (current === SortDirection.asc) {
       return SortDirection.desc;
@@ -27,13 +27,13 @@ export function nextSortDir(
     // avoid TS7030: Not all code paths return a value.
     return undefined;
   }
-}
+};
 
 /**
  * Adapted from fueld-ui on 6/216
  * https://github.com/FuelInteractive/fuel-ui/tree/master/src/pipes/OrderBy
  */
-export function orderByComparator(a: any, b: any): number {
+export const orderByComparator = (a: any, b: any): number => {
   if (a === null || typeof a === 'undefined') {
     a = 0;
   }
@@ -70,17 +70,17 @@ export function orderByComparator(a: any, b: any): number {
 
   // equal each other
   return 0;
-}
+};
 
 /**
  * creates a shallow copy of the `rows` input and returns the sorted copy. this function
  * does not sort the `rows` argument in place
  */
-export function sortRows<TRow>(
+export const sortRows = <TRow>(
   rows: TRow[],
   columns: TableColumnInternal[],
   dirs: SortPropDir[]
-): TRow[] {
+): TRow[] => {
   if (!rows) {
     return [];
   }
@@ -136,14 +136,14 @@ export function sortRows<TRow>(
 
     return 0;
   });
-}
+};
 
-export function sortGroupedRows<TRow>(
+export const sortGroupedRows = <TRow>(
   groupedRows: Group<TRow>[],
   columns: TableColumnInternal[],
   dirs: SortPropDir[],
   sortOnGroupHeader: SortPropDir | undefined
-): Group<TRow>[] {
+): Group<TRow>[] => {
   if (sortOnGroupHeader) {
     groupedRows = sortRows(groupedRows, columns, [
       {
@@ -153,4 +153,4 @@ export function sortGroupedRows<TRow>(
     ]);
   }
   return groupedRows.map(group => ({ ...group, value: sortRows(group.value, columns, dirs) }));
-}
+};

@@ -81,7 +81,7 @@ describe('DataTableHeaderComponent', () => {
   });
 });
 
-function createColumn(id: string, resizeable = true): TableColumnInternal {
+const createColumn = (id: string, resizeable = true): TableColumnInternal => {
   return {
     $$id: id,
     prop: id,
@@ -93,4 +93,4 @@ function createColumn(id: string, resizeable = true): TableColumnInternal {
     maxWidth: 200,
     isTarget: false
   } as any;
-}
+};

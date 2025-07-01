@@ -8,7 +8,7 @@ import {
 /**
  * Returns the columns by pin.
  */
-export function columnsByPin(cols: TableColumnInternal[]) {
+export const columnsByPin = (cols: TableColumnInternal[]) => {
   const ret: TableColumnGroup = {
     left: [],
     center: [],
@@ -28,35 +28,35 @@ export function columnsByPin(cols: TableColumnInternal[]) {
   }
 
   return ret;
-}
+};
 
 /**
  * Returns the widths of all group sets of a column
  */
-export function columnGroupWidths(
+export const columnGroupWidths = (
   groups: TableColumnGroup,
   all: TableColumnInternal[]
-): ColumnGroupWidth {
+): ColumnGroupWidth => {
   return {
     left: columnTotalWidth(groups.left),
     center: columnTotalWidth(groups.center),
     right: columnTotalWidth(groups.right),
     total: Math.floor(columnTotalWidth(all))
   };
-}
+};
 
 /**
  * Calculates the total width of all columns
  */
-export function columnTotalWidth(columns?: TableColumnInternal[]) {
+export const columnTotalWidth = (columns?: TableColumnInternal[]) => {
   return columns?.reduce((total, column) => total + column.width, 0) ?? 0;
-}
+};
 
-export function columnsByPinArr(val: TableColumnInternal[]): PinnedColumns[] {
+export const columnsByPinArr = (val: TableColumnInternal[]): PinnedColumns[] => {
   const colsByPin = columnsByPin(val);
   return [
     { type: 'left' as const, columns: colsByPin.left },
     { type: 'center' as const, columns: colsByPin.center },
     { type: 'right' as const, columns: colsByPin.right }
   ];
-}
+};

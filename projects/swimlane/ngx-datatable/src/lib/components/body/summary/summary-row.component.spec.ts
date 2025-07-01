@@ -43,10 +43,10 @@ describe('DataTableSummaryRowComponent', () => {
     fixture.detectChanges();
   });
 
-  function triggerChange() {
+  const triggerChange = () => {
     component.ngOnChanges();
     fixture.detectChanges();
-  }
+  };
 
   describe('fixture', () => {
     it('should have a component instance', () => {

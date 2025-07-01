@@ -74,9 +74,9 @@ export type INgxDatatableConfig = NgxDatatableConfig;
  *
  * @param overrides The overrides of the table configuration.
  */
-export function providedNgxDatatableConfig(overrides: AllPartial<NgxDatatableConfig>): Provider {
+export const providedNgxDatatableConfig = (overrides: AllPartial<NgxDatatableConfig>): Provider => {
   return {
     provide: NGX_DATATABLE_CONFIG,
     useValue: overrides
   };
-}
+};

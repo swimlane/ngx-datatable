@@ -264,9 +264,9 @@ describe('DataTablePagerComponent', () => {
         .map((button, index) => ({ button, page: index + 1 }));
     });
 
-    function ariaLabel(element: DebugElement): string | null {
+    const ariaLabel = (element: DebugElement): string | null => {
       return element?.attributes['aria-label'] ?? null;
-    }
+    };
 
     describe('has default values without messages from table', () => {
       it('first button', () => {
@@ -293,11 +293,11 @@ describe('DataTablePagerComponent', () => {
     });
 
     describe('takes messages-overrides from table', () => {
-      function setMessages(messages: DatatableComponent['messages']) {
+      const setMessages = (messages: DatatableComponent['messages']) => {
         (pager as any).dataTable = { messages };
         // do a change detection on the real changeDetectionRef
         fixture.componentRef.injector.get(ChangeDetectorRef).detectChanges();
-      }
+      };
 
       it('first button', () => {
         setMessages({ ariaFirstPageMessage: 'link: first page' });

@@ -56,7 +56,7 @@ describe('OrderableDirective', () => {
     });
 
     describe('when a draggable is removed', () => {
-      function checkAllSubscriptionsForActiveObservers() {
+      const checkAllSubscriptionsForActiveObservers = () => {
         const subs = directive.draggables.map(d => {
           expect(d.dragEnd.isStopped).toBe(false);
           expect(d.dragStart.isStopped).toBe(false);
@@ -71,11 +71,11 @@ describe('OrderableDirective', () => {
           expect(sub.dragStart.length).toBe(1);
           expect(sub.dragEnd.length).toBe(1);
         });
-      }
+      };
 
-      function newDraggable(name: string): TableColumnInternal {
+      const newDraggable = (name: string): TableColumnInternal => {
         return toInternalColumn([{ name }])[0];
-      }
+      };
 
       beforeEach(() => {
         component.draggables = [newDraggable('d1'), newDraggable('d2'), newDraggable('d3')];

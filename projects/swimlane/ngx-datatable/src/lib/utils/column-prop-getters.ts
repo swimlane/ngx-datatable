@@ -7,15 +7,15 @@ export type ValueGetter = (obj: any, prop: TableColumnProp) => any;
 /**
  * Always returns the empty string ''
  */
-export function emptyStringGetter(): string {
+export const emptyStringGetter = (): string => {
   return '';
-}
+};
 
 /**
  * Returns the appropriate getter function for this kind of prop.
  * If prop == null, returns the emptyStringGetter.
  */
-export function getterForProp(prop: TableColumnProp | undefined): ValueGetter {
+export const getterForProp = (prop: TableColumnProp | undefined): ValueGetter => {
   // TODO requires better typing which will also involve adjust TableColum. So postponing it.
   if (prop == null) {
     return emptyStringGetter;
@@ -31,7 +31,7 @@ export function getterForProp(prop: TableColumnProp | undefined): ValueGetter {
       return shallowValueGetter as ValueGetter;
     }
   }
-}
+};
 
 /**
  * Returns the value at this numeric index.
@@ -39,7 +39,7 @@ export function getterForProp(prop: TableColumnProp | undefined): ValueGetter {
  * @param index numeric index
  * @returns any or '' if invalid index
  */
-export function numericIndexGetter(row: any[], index: number): any {
+export const numericIndexGetter = (row: any[], index: number): any => {
   if (row == null) {
     return '';
   }
@@ -53,7 +53,7 @@ export function numericIndexGetter(row: any[], index: number): any {
     return '';
   }
   return value;
-}
+};
 
 /**
  * Returns the value of a field.
@@ -61,7 +61,7 @@ export function numericIndexGetter(row: any[], index: number): any {
  * @param obj object containing the field
  * @param fieldName field name string
  */
-export function shallowValueGetter(obj: any, fieldName: string): any {
+export const shallowValueGetter = (obj: any, fieldName: string): any => {
   if (obj == null) {
     return '';
   }
@@ -74,12 +74,12 @@ export function shallowValueGetter(obj: any, fieldName: string): any {
     return '';
   }
   return value;
-}
+};
 
 /**
  * Returns a deep object given a string. zoo['animal.type']
  */
-export function deepValueGetter(obj: any, path: string): any {
+export const deepValueGetter = (obj: any, path: string): any => {
   if (obj == null) {
     return '';
   }
@@ -109,4 +109,4 @@ export function deepValueGetter(obj: any, path: string): any {
   }
 
   return current;
-}
+};

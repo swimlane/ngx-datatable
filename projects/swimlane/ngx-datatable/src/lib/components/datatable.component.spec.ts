@@ -552,21 +552,21 @@ describe('DatatableComponent With Frozen columns', () => {
 /**
  * mimics the act of a user clicking a column to sort it
  */
-function sortBy({ column }: { column: number }, fixture: ComponentFixture<unknown>) {
+const sortBy = ({ column }: { column: number }, fixture: ComponentFixture<unknown>) => {
   const columnIndex = column - 1;
   const headerCellDe = fixture.debugElement.queryAll(By.css('datatable-header-cell'))[columnIndex];
   const de = headerCellDe.query(By.css('span:last-child'));
   de.triggerEventHandler('click', null);
-}
+};
 
 /**
  * test helper function to return text content of a cell within the
  * body of the ngx-datatable component
  */
-function textContent(
+const textContent = (
   { row, column }: { row: number; column: number },
   fixture: ComponentFixture<unknown>
-) {
+) => {
   const [rowIndex, columnIndex] = [row - 1, column - 1];
   const bodyRowDe = fixture.debugElement.queryAll(By.directive(DataTableBodyRowComponent))[
     rowIndex
@@ -574,4 +574,4 @@ function textContent(
   const bodyCellDe = bodyRowDe.queryAll(By.directive(DataTableBodyCellComponent))[columnIndex];
 
   return bodyCellDe.nativeElement.textContent;
-}
+};

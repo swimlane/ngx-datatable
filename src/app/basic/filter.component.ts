@@ -65,7 +65,7 @@ export class FilterComponent {
     const val = (event.target as HTMLInputElement).value.toLowerCase();
 
     // filter our data and update the rows
-    this.rows = this.temp.filter(function (d) {
+    this.rows = this.temp.filter(d => {
       return d.name.toLowerCase().includes(val) || !val;
     });
     // Whenever the filter changes, always go back to the first page
