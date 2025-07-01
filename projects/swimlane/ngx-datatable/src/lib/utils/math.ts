@@ -33,29 +33,31 @@ export function adjustColumnWidths(allColumns: TableColumnInternal[], expectedWi
  * Resizes columns based on the flexGrow property, while respecting manually set widths
  */
 function scaleColumns(colsByGroup: TableColumnGroup, maxWidth: number, totalFlexGrow: number) {
+  const columns = Object.values(colsByGroup).flat();
+  let remainingWidth = maxWidth;
+
   // calculate total width and flexgrow points for columns that can be resized
-  for (const column of Object.values(colsByGroup).flat()) {
+  for (const column of columns) {
     if (column.$$oldWidth) {
       // when manually resized, switch off auto-resize
       column.canAutoResize = false;
     }
     if (!column.canAutoResize) {
-      maxWidth -= column.width;
-      totalFlexGrow -= column.flexGrow ? column.flexGrow : 0;
+      remainingWidth -= column.width;
+      totalFlexGrow -= column.flexGrow ?? 0;
     } else {
       column.width = 0;
     }
   }
 
   const hasMinWidth: Record<TableColumnProp, boolean> = {};
-  let remainingWidth = maxWidth;
 
   // resize columns until no width is left to be distributed
   do {
     const widthPerFlexPoint = remainingWidth / totalFlexGrow;
     remainingWidth = 0;
 
-    for (const column of Object.values(colsByGroup).flat()) {
+    for (const column of columns) {
       // if the column can be resize and it hasn't reached its minimum width yet
       if (column.canAutoResize && !hasMinWidth[column.prop]) {
         const newWidth = column.width + column.flexGrow * widthPerFlexPoint;
@@ -71,11 +73,6 @@ function scaleColumns(colsByGroup: TableColumnGroup, maxWidth: number, totalFlex
   } while (remainingWidth !== 0);
 
   // Adjust for any remaining offset in computed widths vs maxWidth
-  const columns: TableColumnInternal[] = Object.values(colsByGroup).reduce(
-    (acc, col) => acc.concat(col),
-    []
-  );
-
   const totalWidthAchieved = columns.reduce((acc, col) => acc + col.width, 0);
   const delta = maxWidth - totalWidthAchieved;
 

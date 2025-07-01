@@ -1,5 +1,8 @@
+import { TableColumnInternal } from '../types/internal.types';
 import { toInternalColumn } from './column-helper';
+import { emptyStringGetter } from './column-prop-getters';
 import { adjustColumnWidths, forceFillColumnWidths } from './math';
+import { orderByComparator } from './sort';
 
 describe('Math function', () => {
   describe('forceFillColumnWidths', () => {
@@ -133,6 +136,47 @@ describe('Math function', () => {
         for (const col of cols) {
           expect(col.width - col.minWidth!).toBeGreaterThanOrEqual(0);
         }
+      });
+
+      it('should scale columns after resizing', () => {
+        const cols: TableColumnInternal[] = [
+          {
+            $$id: 'id1',
+            $$valueGetter: emptyStringGetter,
+            comparator: orderByComparator,
+            prop: 'id1',
+            sortable: false,
+            name: 'Column 1',
+            canAutoResize: true,
+            width: 100,
+            flexGrow: 1
+          },
+          {
+            $$id: 'id2',
+            $$valueGetter: emptyStringGetter,
+            $$oldWidth: 100,
+            comparator: orderByComparator,
+            prop: 'id2',
+            sortable: false,
+            name: 'Column 2',
+            canAutoResize: true,
+            width: 200
+          },
+          {
+            $$id: 'id3',
+            $$valueGetter: emptyStringGetter,
+            comparator: orderByComparator,
+            prop: 'id3',
+            sortable: false,
+            name: 'Column 3',
+            canAutoResize: true,
+            width: 100,
+            flexGrow: 2
+          }
+        ];
+
+        adjustColumnWidths(cols, 500);
+        expect(cols.map(c => c.width)).toEqual([100, 200, 200]);
       });
     });
   });
