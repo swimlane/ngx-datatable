@@ -1,4 +1,5 @@
 import { Directive } from '@angular/core';
+
 import { FooterContext } from '../../types/public.types';
 
 @Directive({

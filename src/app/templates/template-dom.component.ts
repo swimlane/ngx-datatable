@@ -4,7 +4,8 @@ import {
   DataTableColumnDirective,
   DataTableColumnHeaderDirective,
   DatatableComponent
-} from 'projects/swimlane/ngx-datatable/src/public-api';
+} from 'projects/ngx-datatable/src/public-api';
+
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';
 
@@ -16,7 +17,7 @@ import { DataService } from '../data.service';
         Expressive Templates
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/templates/template-dom.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/templates/template-dom.component.ts"
             target="_blank"
           >
             Source

@@ -1,5 +1,6 @@
 import { Component, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { DatatableComponent, TableColumn } from 'projects/ngx-datatable/src/public-api';
+
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';
 
@@ -11,7 +12,7 @@ import { DataService } from '../data.service';
         Summary Row with Custom Template
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/summary/summary-row-custom-template.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/summary/summary-row-custom-template.component.ts"
           >
             Source
           </a>

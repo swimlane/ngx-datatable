@@ -1,6 +1,7 @@
 import { ContentChild, Directive, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
-import { DatatableGroupHeaderTemplateDirective } from './body-group-header-template.directive';
+
 import { Group, GroupContext, GroupToggleEvents, Row } from '../../types/public.types';
+import { DatatableGroupHeaderTemplateDirective } from './body-group-header-template.directive';
 
 @Directive({
   selector: 'ngx-datatable-group-header'

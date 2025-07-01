@@ -1,12 +1,12 @@
-import { enableProdMode } from '@angular/core';
-
-import { environment } from './environments/environment';
 import { provideHttpClient } from '@angular/common/http';
+import { enableProdMode } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { routes } from './app/app-routing.module';
-import { providedNgxDatatableConfig } from 'projects/swimlane/ngx-datatable/src/public-api';
-import { AppComponent } from './app/app.component';
 import { provideRouter, withHashLocation } from '@angular/router';
+import { providedNgxDatatableConfig } from 'projects/ngx-datatable/src/public-api';
+
+import { routes } from './app/app-routing.module';
+import { AppComponent } from './app/app.component';
+import { environment } from './environments/environment';
 
 if (environment.production) {
   enableProdMode();

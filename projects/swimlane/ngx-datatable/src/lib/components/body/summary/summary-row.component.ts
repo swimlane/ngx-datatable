@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { DataTableBodyRowComponent } from '../body-row.component';
+
 import { TableColumnInternal } from '../../../types/internal.types';
+import { DataTableBodyRowComponent } from '../body-row.component';
 
 function defaultSumFunc(cells: any[]): any {
   const cellsWithValues = cells.filter(cell => !!cell);

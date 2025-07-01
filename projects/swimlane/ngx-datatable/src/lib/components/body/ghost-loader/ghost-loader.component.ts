@@ -1,3 +1,4 @@
+import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -5,7 +6,7 @@ import {
   Input,
   numberAttribute
 } from '@angular/core';
-import { NgTemplateOutlet } from '@angular/common';
+
 import { TableColumnInternal } from '../../../types/internal.types';
 
 @Component({

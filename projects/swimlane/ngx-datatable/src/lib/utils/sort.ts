@@ -1,7 +1,7 @@
-import { getterForProp } from './column-prop-getters';
+import { SortableTableColumnInternal, TableColumnInternal } from '../types/internal.types';
 import { Group, SortDirection, SortPropDir, SortType } from '../types/public.types';
 import { TableColumnProp } from '../types/table-column.type';
-import { SortableTableColumnInternal, TableColumnInternal } from '../types/internal.types';
+import { getterForProp } from './column-prop-getters';
 
 /**
  * Gets the next sort direction

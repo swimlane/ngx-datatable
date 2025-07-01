@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
 import { DraggableDragEvent, TableColumnInternal } from '../types/internal.types';
 import { getPositionFromEvent } from '../utils/events';
 

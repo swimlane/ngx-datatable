@@ -1,3 +1,4 @@
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -12,7 +13,7 @@ import {
   Output
 } from '@angular/core';
 
-import { Keys } from '../../utils/keys';
+import { CellActiveEvent, RowIndex, TableColumnInternal } from '../../types/internal.types';
 import {
   ActivateEvent,
   CellContext,
@@ -22,8 +23,7 @@ import {
   SortPropDir,
   TreeStatus
 } from '../../types/public.types';
-import { NgTemplateOutlet } from '@angular/common';
-import { CellActiveEvent, RowIndex, TableColumnInternal } from '../../types/internal.types';
+import { Keys } from '../../utils/keys';
 
 @Component({
   selector: 'datatable-body-cell',

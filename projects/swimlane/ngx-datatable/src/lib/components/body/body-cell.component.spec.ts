@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { numericIndexGetter } from '../../utils/column-prop-getters';
 import { toInternalColumn } from '../../utils/column-helper';
+import { numericIndexGetter } from '../../utils/column-prop-getters';
 import { DataTableBodyCellComponent } from './body-cell.component';
 
 describe('DataTableBodyCellComponent', () => {

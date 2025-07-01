@@ -1,9 +1,9 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
-import { DataTablePagerComponent } from './pager.component';
-import { By } from '@angular/platform-browser';
 import { ChangeDetectorRef, DebugElement } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+
 import type { DatatableComponent } from '../datatable.component';
+import { DataTablePagerComponent } from './pager.component';
 
 describe('DataTablePagerComponent', () => {
   let fixture: ComponentFixture<DataTablePagerComponent>;

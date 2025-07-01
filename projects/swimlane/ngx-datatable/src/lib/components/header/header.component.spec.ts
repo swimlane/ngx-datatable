@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DataTableHeaderComponent } from './header.component';
+
 import { TableColumnInternal } from '../../types/internal.types';
+import { DataTableHeaderComponent } from './header.component';
 
 describe('DataTableHeaderComponent', () => {
   let component: DataTableHeaderComponent;

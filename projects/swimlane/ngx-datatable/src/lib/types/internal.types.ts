@@ -1,6 +1,6 @@
-import { TableColumn, TableColumnProp } from './table-column.type';
 import { ValueGetter } from '../utils/column-prop-getters';
 import { Row, SortDirection, TreeStatus } from './public.types';
+import { TableColumn, TableColumnProp } from './table-column.type';
 
 export type PinDirection = 'left' | 'center' | 'right';
 

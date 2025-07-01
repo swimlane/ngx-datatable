@@ -4,9 +4,10 @@ import {
   DatatableComponent,
   DatatableRowDefComponent,
   DatatableRowDefDirective
-} from 'projects/swimlane/ngx-datatable/src/public-api';
-import { DataService } from '../data.service';
+} from 'projects/ngx-datatable/src/public-api';
+
 import { Employee } from '../data.model';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'drag-drop-demo',
@@ -16,7 +17,7 @@ import { Employee } from '../data.model';
         Drag Drop Using Angular CDK
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/drag-drop/drag-drop.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/drag-drop/drag-drop.component.ts"
             target="_blank"
           >
             Source

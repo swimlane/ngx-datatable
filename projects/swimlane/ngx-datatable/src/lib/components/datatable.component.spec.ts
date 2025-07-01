@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DatatableComponent } from './datatable.component';
-import { DataTableBodyRowComponent } from './body/body-row.component';
-import { DataTableBodyCellComponent } from './body/body-cell.component';
-import { DataTableColumnDirective } from './columns/column.directive';
-import { DataTableColumnCellDirective } from './columns/column-cell.directive';
-import { DataTableColumnHeaderDirective } from './columns/column-header.directive';
+
 import { SortPropDir } from '../types/public.types';
 import { TableColumn } from '../types/table-column.type';
+import { DataTableBodyCellComponent } from './body/body-cell.component';
+import { DataTableBodyRowComponent } from './body/body-row.component';
+import { DataTableColumnCellDirective } from './columns/column-cell.directive';
+import { DataTableColumnHeaderDirective } from './columns/column-header.directive';
+import { DataTableColumnDirective } from './columns/column.directive';
+import { DatatableComponent } from './datatable.component';
 
 describe('DatatableComponent', () => {
   let fixture: ComponentFixture<TestFixtureComponent>;

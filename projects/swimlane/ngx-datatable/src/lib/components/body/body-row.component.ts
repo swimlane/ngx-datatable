@@ -16,9 +16,6 @@ import {
   SimpleChanges
 } from '@angular/core';
 
-import { columnGroupWidths, columnsByPin, columnsByPinArr } from '../../utils/column';
-import { Keys } from '../../utils/keys';
-import { ActivateEvent, Row, RowOrGroup, TreeStatus } from '../../types/public.types';
 import {
   CellActiveEvent,
   ColumnGroupWidth,
@@ -26,6 +23,9 @@ import {
   RowIndex,
   TableColumnInternal
 } from '../../types/internal.types';
+import { ActivateEvent, Row, RowOrGroup, TreeStatus } from '../../types/public.types';
+import { columnGroupWidths, columnsByPin, columnsByPinArr } from '../../utils/column';
+import { Keys } from '../../utils/keys';
 import { DataTableBodyCellComponent } from './body-cell.component';
 
 @Component({

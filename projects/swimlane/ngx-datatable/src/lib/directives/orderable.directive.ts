@@ -1,3 +1,4 @@
+import { DOCUMENT } from '@angular/common';
 import {
   AfterContentInit,
   ContentChildren,
@@ -12,7 +13,6 @@ import {
   Output,
   QueryList
 } from '@angular/core';
-import { DraggableDirective } from './draggable.directive';
 
 import {
   DraggableDragEvent,
@@ -21,6 +21,7 @@ import {
   TargetChangedEvent
 } from '../types/internal.types';
 import { getPositionFromEvent } from '../utils/events';
+import { DraggableDirective } from './draggable.directive';
 
 interface OrderPosition {
   left: number;

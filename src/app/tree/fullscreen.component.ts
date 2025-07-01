@@ -4,7 +4,8 @@ import {
   DataTableColumnDirective,
   DatatableComponent,
   TreeStatus
-} from 'projects/swimlane/ngx-datatable/src/public-api';
+} from 'projects/ngx-datatable/src/public-api';
+
 import { FullEmployee } from '../data.model';
 import { DataService } from '../data.service';
 
@@ -16,7 +17,7 @@ import { DataService } from '../data.service';
         Full Screen
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/tree/fullscreen.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/tree/fullscreen.component.ts"
             target="_blank"
           >
             Source

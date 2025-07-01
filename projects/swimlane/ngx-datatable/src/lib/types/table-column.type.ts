@@ -1,4 +1,5 @@
 import { PipeTransform, TemplateRef } from '@angular/core';
+
 import { CellContext, HeaderCellContext, Row } from './public.types';
 
 /**

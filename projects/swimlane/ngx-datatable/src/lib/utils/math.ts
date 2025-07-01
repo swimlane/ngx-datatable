@@ -1,6 +1,6 @@
+import { TableColumnGroup, TableColumnInternal } from '../types/internal.types';
 import { TableColumn, TableColumnProp } from '../types/table-column.type';
 import { columnsByPin, columnTotalWidth } from './column';
-import { TableColumnGroup, TableColumnInternal } from '../types/internal.types';
 
 /**
  * Calculates the Total Flex Grow

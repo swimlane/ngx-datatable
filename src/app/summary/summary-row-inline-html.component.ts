@@ -2,7 +2,8 @@ import { Component, inject } from '@angular/core';
 import {
   DataTableColumnDirective,
   DatatableComponent
-} from 'projects/swimlane/ngx-datatable/src/public-api';
+} from 'projects/ngx-datatable/src/public-api';
+
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';
 
@@ -14,7 +15,7 @@ import { DataService } from '../data.service';
         Inline HTML template
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/summary/summary-row-inline-html.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/summary/summary-row-inline-html.component.ts"
           >
             Source
           </a>

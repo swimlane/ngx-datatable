@@ -6,8 +6,9 @@ import {
   Input,
   Output
 } from '@angular/core';
-import { PagerPageEvent } from '../../types/public.types';
+
 import { Page } from '../../types/internal.types';
+import { PagerPageEvent } from '../../types/public.types';
 import { DatatableComponent } from '../datatable.component';
 
 @Component({

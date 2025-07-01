@@ -19,7 +19,6 @@ export const SortDirection = {
   desc: 'desc'
 } as const;
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type SortDirection = typeof SortDirection[keyof typeof SortDirection];
 
 export interface SortEvent {
@@ -43,7 +42,6 @@ export const SortType = {
   multi: 'multi'
 } as const;
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type SortType = typeof SortType[keyof typeof SortType];
 
 /**
@@ -61,7 +59,6 @@ export const ColumnMode = {
   force: 'force'
 } as const;
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type ColumnMode = typeof ColumnMode[keyof typeof ColumnMode];
 
 export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
@@ -133,7 +130,6 @@ export const ContextmenuType = {
   body: 'body'
 } as const;
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type ContextmenuType = typeof ContextmenuType[keyof typeof ContextmenuType];
 
 /** A Group row */
@@ -235,7 +231,6 @@ export const SelectionType = {
   checkbox: 'checkbox'
 } as const;
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type SelectionType = typeof SelectionType[keyof typeof SelectionType];
 
 export interface SelectEvent<TRow> {

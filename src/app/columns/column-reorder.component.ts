@@ -1,8 +1,9 @@
+import { NgClass } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { DatatableComponent, TableColumn } from 'projects/ngx-datatable/src/public-api';
+
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';
-import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'column-reorder-demo',
@@ -28,7 +29,7 @@ import { NgClass } from '@angular/common';
         Reorder Column
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/columns/column-reorder.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/columns/column-reorder.component.ts"
             target="_blank"
           >
             Source

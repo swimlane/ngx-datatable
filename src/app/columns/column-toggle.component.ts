@@ -3,7 +3,8 @@ import {
   DataTableColumnDirective,
   DatatableComponent,
   TableColumn
-} from 'projects/swimlane/ngx-datatable/src/public-api';
+} from 'projects/ngx-datatable/src/public-api';
+
 import { Employee } from '../data.model';
 
 @Component({
@@ -14,7 +15,7 @@ import { Employee } from '../data.model';
         Column Toggling
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/columns/column-toggle.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/columns/column-toggle.component.ts"
             target="_blank"
           >
             Source
@@ -77,9 +78,7 @@ export class ColumnToggleComponent {
     const isChecked = this.isChecked(col);
 
     if (isChecked) {
-      this.columns = this.columns.filter(c => {
-        return c.name !== col.name;
-      });
+      this.columns = this.columns.filter(c => c.name !== col.name);
     } else {
       this.columns = [...this.columns, col];
     }

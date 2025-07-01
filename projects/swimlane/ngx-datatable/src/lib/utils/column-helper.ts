@@ -1,11 +1,12 @@
-import { camelCase, deCamelCase } from './camel-case';
-import { id } from './id';
-import { getterForProp } from './column-prop-getters';
-import { TableColumn } from '../types/table-column.type';
 import { QueryList } from '@angular/core';
+
 import { DataTableColumnDirective } from '../components/columns/column.directive';
 import { TableColumnInternal } from '../types/internal.types';
 import { Row } from '../types/public.types';
+import { TableColumn } from '../types/table-column.type';
+import { camelCase, deCamelCase } from './camel-case';
+import { getterForProp } from './column-prop-getters';
+import { id } from './id';
 import { orderByComparator } from './sort';
 
 export function toInternalColumn<T extends Row>(

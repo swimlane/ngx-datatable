@@ -4,7 +4,8 @@ import {
   DatatableFooterDirective,
   DataTableFooterTemplateDirective,
   TableColumn
-} from 'projects/swimlane/ngx-datatable/src/public-api';
+} from 'projects/ngx-datatable/src/public-api';
+
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';
 
@@ -16,7 +17,7 @@ import { DataService } from '../data.service';
         Custom Footer
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/footer.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/basic/footer.component.ts"
             target="_blank"
           >
             Source

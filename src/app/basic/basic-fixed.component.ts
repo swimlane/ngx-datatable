@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { DatatableComponent, TableColumn } from 'projects/ngx-datatable/src/public-api';
+
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';
 
@@ -11,7 +12,7 @@ import { DataService } from '../data.service';
         Fix Row Height
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/basic-fixed.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/basic/basic-fixed.component.ts"
             target="_blank"
           >
             Source

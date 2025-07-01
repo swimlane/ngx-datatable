@@ -1,12 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DataTableBodyComponent } from './body.component';
-import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
-import { DatatableComponentToken } from '../../utils/table-token';
 import { By } from '@angular/platform-browser';
-import { DataTableBodyRowComponent } from './body-row.component';
+
+import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 import { toInternalColumn } from '../../utils/column-helper';
-import { ScrollerComponent } from './scroller.component';
+import { DatatableComponentToken } from '../../utils/table-token';
+import { DataTableBodyRowComponent } from './body-row.component';
+import { DataTableBodyComponent } from './body.component';
 import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.component';
+import { ScrollerComponent } from './scroller.component';
 
 describe('DataTableBodyComponent', () => {
   let fixture: ComponentFixture<DataTableBodyComponent>;

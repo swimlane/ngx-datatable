@@ -1,5 +1,4 @@
 import { Component, inject, ViewChild } from '@angular/core';
-import { GroupedEmployee } from '../data.model';
 import {
   DataTableColumnCellDirective,
   DataTableColumnDirective,
@@ -8,7 +7,9 @@ import {
   DatatableGroupHeaderTemplateDirective,
   Group,
   GroupToggleEvents
-} from 'projects/swimlane/ngx-datatable/src/public-api';
+} from 'projects/ngx-datatable/src/public-api';
+
+import { GroupedEmployee } from '../data.model';
 import { DataService } from '../data.service';
 
 @Component({
@@ -19,7 +20,7 @@ import { DataService } from '../data.service';
         Row Grouping
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/row-grouping.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/basic/row-grouping.component.ts"
             target="_blank"
           >
             Source
@@ -54,7 +55,7 @@ import { DataService } from '../data.service';
           >
             <div style="padding-left:5px;height: 100%; display:flex;align-items: center;">
               <a
-                href="#"
+                href="javascript:void(0)"
                 [class.datatable-icon-right]="!expanded"
                 [class.datatable-icon-down]="expanded"
                 title="Expand/Collapse Group"
@@ -144,6 +145,7 @@ import { DataService } from '../data.service';
               (blur)="updateValue($event, 'comment', rowIndex)"
               type="text"
               name="comment"
+              aria-label="comment"
               [value]="value"
             />
           </ng-template>
@@ -204,6 +206,7 @@ export class RowGroupingComponent {
         // Sources are funder and calculated
         if (group[0].startdate === group[1].startdate && group[0].enddate === group[1].enddate) {
           // Start dates and end dates match
+          // eslint-disable-next-line @typescript-eslint/prefer-for-of
           for (let index = 0; index < group.length; index++) {
             if (group[index].source !== row.source) {
               if (target.value === '0') {
@@ -226,6 +229,7 @@ export class RowGroupingComponent {
         }
       }
     } else {
+      // eslint-disable-next-line @typescript-eslint/prefer-for-of
       for (let index = 0; index < group.length; index++) {
         if (
           group[index].exppayyes === 0 &&

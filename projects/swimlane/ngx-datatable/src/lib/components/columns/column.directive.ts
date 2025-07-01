@@ -9,13 +9,14 @@ import {
   PipeTransform,
   TemplateRef
 } from '@angular/core';
-import { DataTableColumnHeaderDirective } from './column-header.directive';
-import { DataTableColumnCellDirective } from './column-cell.directive';
-import { DataTableColumnCellTreeToggle } from './tree.directive';
+
 import { ColumnChangesService } from '../../services/column-changes.service';
-import { TableColumn, TableColumnProp } from '../../types/table-column.type';
-import { DataTableColumnGhostCellDirective } from './column-ghost-cell.directive';
 import { CellContext, HeaderCellContext, Row } from '../../types/public.types';
+import { TableColumn, TableColumnProp } from '../../types/table-column.type';
+import { DataTableColumnCellDirective } from './column-cell.directive';
+import { DataTableColumnGhostCellDirective } from './column-ghost-cell.directive';
+import { DataTableColumnHeaderDirective } from './column-header.directive';
+import { DataTableColumnCellTreeToggle } from './tree.directive';
 
 @Directive({
   selector: 'ngx-datatable-column'

@@ -1,3 +1,4 @@
+import { NgClass, NgStyle } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -13,16 +14,10 @@ import {
   SimpleChanges,
   TemplateRef
 } from '@angular/core';
-import { columnGroupWidths, columnsByPin, columnsByPinArr } from '../../utils/column';
-import {
-  Row,
-  SelectionType,
-  SortDirection,
-  SortEvent,
-  SortPropDir,
-  SortType
-} from '../../types/public.types';
-import { NgClass, NgStyle } from '@angular/common';
+
+import { DraggableDirective } from '../../directives/draggable.directive';
+import { LongPressDirective } from '../../directives/long-press.directive';
+import { OrderableDirective } from '../../directives/orderable.directive';
 import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 import {
   ColumnResizeEventInternal,
@@ -33,10 +28,16 @@ import {
   TableColumnInternal,
   TargetChangedEvent
 } from '../../types/internal.types';
-import { DraggableDirective } from '../../directives/draggable.directive';
-import { LongPressDirective } from '../../directives/long-press.directive';
+import {
+  Row,
+  SelectionType,
+  SortDirection,
+  SortEvent,
+  SortPropDir,
+  SortType
+} from '../../types/public.types';
+import { columnGroupWidths, columnsByPin, columnsByPinArr } from '../../utils/column';
 import { DataTableHeaderCellComponent } from './header-cell.component';
-import { OrderableDirective } from '../../directives/orderable.directive';
 
 @Component({
   selector: 'datatable-header',

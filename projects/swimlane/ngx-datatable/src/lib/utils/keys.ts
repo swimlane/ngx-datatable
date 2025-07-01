@@ -16,5 +16,4 @@ export const Keys = {
   right: 'ArrowRight'
 } as const;
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type Keys = typeof Keys[keyof typeof Keys];

@@ -1,3 +1,4 @@
+import { NgTemplateOutlet } from '@angular/common';
 import {
   Component,
   Directive,
@@ -9,7 +10,7 @@ import {
   TemplateRef,
   ViewContainerRef
 } from '@angular/core';
-import { NgTemplateOutlet } from '@angular/common';
+
 import { RowOrGroup } from '../../types/public.types';
 
 /**

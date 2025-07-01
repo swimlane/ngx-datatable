@@ -9,6 +9,7 @@ import {
   signal
 } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
+
 import { TableColumnInternal } from '../types/internal.types';
 
 @Directive({

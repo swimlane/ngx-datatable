@@ -3,7 +3,8 @@ import {
   DataTableColumnDirective,
   DatatableComponent,
   TableColumn
-} from 'projects/swimlane/ngx-datatable/src/public-api';
+} from 'projects/ngx-datatable/src/public-api';
+
 import { FullEmployee } from '../data.model';
 import { DataService } from '../data.service';
 
@@ -15,7 +16,7 @@ import { DataService } from '../data.service';
         Row/Header/Cell CSS Class Demo
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/css.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/basic/css.component.ts"
             target="_blank"
           >
             Source

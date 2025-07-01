@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { DatatableComponent } from 'projects/ngx-datatable/src/public-api';
+
+import { Employee } from '../data.model';
 import { MockServerResultsService } from './mock-server-results-service';
 import { Page } from './model/page';
-import { DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
-import { Employee } from '../data.model';
 
 @Component({
   selector: 'server-paging-demo',
@@ -13,7 +14,7 @@ import { Employee } from '../data.model';
         Server-side Paging
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/paging/paging-server.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/paging/paging-server.component.ts"
             target="_blank"
           >
             Source

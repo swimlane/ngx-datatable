@@ -2,7 +2,8 @@ import { Component, inject, ViewChild } from '@angular/core';
 import {
   DataTableColumnDirective,
   DatatableComponent
-} from 'projects/swimlane/ngx-datatable/src/public-api';
+} from 'projects/ngx-datatable/src/public-api';
+
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';
 
@@ -14,7 +15,7 @@ import { DataService } from '../data.service';
         Live Data Demo
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/live.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/basic/live.component.ts"
             target="_blank"
           >
             Source

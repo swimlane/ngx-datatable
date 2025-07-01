@@ -1,3 +1,4 @@
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -15,13 +16,8 @@ import {
   TrackByFunction,
   ViewChild
 } from '@angular/core';
-import { ScrollerComponent } from './scroller.component';
-import { columnGroupWidths, columnsByPin } from '../../utils/column';
-import { RowHeightCache } from '../../utils/row-height-cache';
-import { NgTemplateOutlet } from '@angular/common';
-import { DatatableGroupHeaderDirective } from './body-group-header.directive';
-import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive';
-import { DataTableBodyRowComponent } from './body-row.component';
+
+import { DraggableDirective } from '../../directives/draggable.directive';
 import { ColumnGroupWidth, TableColumnInternal } from '../../types/internal.types';
 import {
   ActivateEvent,
@@ -33,14 +29,19 @@ import {
   SelectEvent,
   SelectionType
 } from '../../types/public.types';
-import { DraggableDirective } from '../../directives/draggable.directive';
+import { columnGroupWidths, columnsByPin } from '../../utils/column';
+import { Keys } from '../../utils/keys';
+import { RowHeightCache } from '../../utils/row-height-cache';
+import { selectRows, selectRowsBetween } from '../../utils/selection';
+import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive';
+import { DatatableGroupHeaderDirective } from './body-group-header.directive';
 import { DatatableRowDefInternalDirective } from './body-row-def.component';
 import { DataTableRowWrapperComponent } from './body-row-wrapper.component';
-import { DataTableSummaryRowComponent } from './summary/summary-row.component';
-import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.component';
+import { DataTableBodyRowComponent } from './body-row.component';
 import { DatatableBodyRowDirective } from './body-row.directive';
-import { selectRows, selectRowsBetween } from '../../utils/selection';
-import { Keys } from '../../utils/keys';
+import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.component';
+import { ScrollerComponent } from './scroller.component';
+import { DataTableSummaryRowComponent } from './summary/summary-row.component';
 
 @Component({
   selector: 'datatable-body',

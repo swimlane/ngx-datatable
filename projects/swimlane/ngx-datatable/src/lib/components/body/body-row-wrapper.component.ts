@@ -1,3 +1,4 @@
+import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -20,11 +21,11 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
-import { NgTemplateOutlet } from '@angular/common';
-import { DatatableComponentToken } from '../../utils/table-token';
+
 import { Group, GroupContext, Row, RowDetailContext, RowOrGroup } from '../../types/public.types';
-import { DatatableGroupHeaderDirective } from './body-group-header.directive';
+import { DatatableComponentToken } from '../../utils/table-token';
 import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive';
+import { DatatableGroupHeaderDirective } from './body-group-header.directive';
 
 @Component({
   selector: 'datatable-row-wrapper',

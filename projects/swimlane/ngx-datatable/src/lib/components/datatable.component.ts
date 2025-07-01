@@ -25,24 +25,17 @@ import {
   TemplateRef,
   ViewChild
 } from '@angular/core';
-
-import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
-
 import { Subscription } from 'rxjs';
-import { groupRowsByParents, optionalGetterForProp } from '../utils/tree';
-import { TableColumn } from '../types/table-column.type';
-import { DataTableColumnDirective } from './columns/column.directive';
-import { DatatableRowDetailDirective } from './row-detail/row-detail.directive';
-import { DatatableFooterDirective } from './footer/footer.directive';
-import { DataTableBodyComponent } from './body/body.component';
-import { DataTableHeaderComponent } from './header/header.component';
-import { ScrollbarHelper } from '../services/scrollbar-helper.service';
+
+import { VisibilityDirective } from '../directives/visibility.directive';
+import { NGX_DATATABLE_CONFIG, NgxDatatableConfig } from '../ngx-datatable.config';
 import { ColumnChangesService } from '../services/column-changes.service';
-import { throttleable } from '../utils/throttle';
-import { adjustColumnWidths, forceFillColumnWidths } from '../utils/math';
-import { sortGroupedRows, sortRows } from '../utils/sort';
-import { DatatableRowDefDirective } from './body/body-row-def.component';
-import { DatatableComponentToken } from '../utils/table-token';
+import { ScrollbarHelper } from '../services/scrollbar-helper.service';
+import {
+  ColumnResizeEventInternal,
+  ReorderEventInternal,
+  TableColumnInternal
+} from '../types/internal.types';
 import {
   ActivateEvent,
   ColumnMode,
@@ -64,16 +57,22 @@ import {
   SortType,
   TreeStatus
 } from '../types/public.types';
-import { DataTableFooterComponent } from './footer/footer.component';
-import { VisibilityDirective } from '../directives/visibility.directive';
-import { ProgressBarComponent } from './body/progress-bar.component';
+import { TableColumn } from '../types/table-column.type';
 import { toInternalColumn } from '../utils/column-helper';
-import {
-  ColumnResizeEventInternal,
-  ReorderEventInternal,
-  TableColumnInternal
-} from '../types/internal.types';
-import { NGX_DATATABLE_CONFIG, NgxDatatableConfig } from '../ngx-datatable.config';
+import { adjustColumnWidths, forceFillColumnWidths } from '../utils/math';
+import { sortGroupedRows, sortRows } from '../utils/sort';
+import { DatatableComponentToken } from '../utils/table-token';
+import { throttleable } from '../utils/throttle';
+import { groupRowsByParents, optionalGetterForProp } from '../utils/tree';
+import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
+import { DatatableRowDefDirective } from './body/body-row-def.component';
+import { DataTableBodyComponent } from './body/body.component';
+import { ProgressBarComponent } from './body/progress-bar.component';
+import { DataTableColumnDirective } from './columns/column.directive';
+import { DataTableFooterComponent } from './footer/footer.component';
+import { DatatableFooterDirective } from './footer/footer.directive';
+import { DataTableHeaderComponent } from './header/header.component';
+import { DatatableRowDetailDirective } from './row-detail/row-detail.directive';
 
 @Component({
   selector: 'ngx-datatable',

@@ -1,9 +1,10 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { DatatableComponent, TableColumn } from 'projects/ngx-datatable/src/public-api';
 import { Observable } from 'rxjs';
-import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
+
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';
-import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'rx-demo',
@@ -13,7 +14,7 @@ import { AsyncPipe } from '@angular/common';
         RXjs Data
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/rx.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/basic/rx.component.ts"
             target="_blank"
           >
             Source

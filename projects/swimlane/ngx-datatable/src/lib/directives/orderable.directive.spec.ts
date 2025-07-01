@@ -1,11 +1,11 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Component, QueryList, ViewChildren } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { OrderableDirective } from './orderable.directive';
-import { DraggableDirective } from './draggable.directive';
 import { TableColumnInternal } from '../types/internal.types';
 import { toInternalColumn } from '../utils/column-helper';
+import { DraggableDirective } from './draggable.directive';
+import { OrderableDirective } from './orderable.directive';
 
 @Component({
   selector: 'test-fixture-component',

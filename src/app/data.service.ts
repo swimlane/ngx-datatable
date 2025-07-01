@@ -1,6 +1,7 @@
-import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
 import { Employee, FullEmployee, GroupedEmployee, TreeEmployee } from './data.model';
 
 @Injectable({

@@ -1,3 +1,4 @@
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -13,7 +14,9 @@ import {
   Output,
   TemplateRef
 } from '@angular/core';
-import { nextSortDir } from '../../utils/sort';
+import { fromEvent, Subscription, takeUntil } from 'rxjs';
+
+import { InnerSortEvent, TableColumnInternal } from '../../types/internal.types';
 import {
   HeaderCellContext,
   SelectionType,
@@ -21,10 +24,8 @@ import {
   SortPropDir,
   SortType
 } from '../../types/public.types';
-import { NgTemplateOutlet } from '@angular/common';
-import { InnerSortEvent, TableColumnInternal } from '../../types/internal.types';
-import { fromEvent, Subscription, takeUntil } from 'rxjs';
 import { getPositionFromEvent } from '../../utils/events';
+import { nextSortDir } from '../../utils/sort';
 
 @Component({
   selector: 'datatable-header-cell',

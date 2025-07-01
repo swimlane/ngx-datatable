@@ -4,7 +4,8 @@ import {
   DatatableComponent,
   SelectEvent,
   TableColumn
-} from 'projects/swimlane/ngx-datatable/src/public-api';
+} from 'projects/ngx-datatable/src/public-api';
+
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';
 
@@ -16,7 +17,7 @@ import { DataService } from '../data.service';
         Multi Click Selection
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/selection/selection-multi-click.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/selection/selection-multi-click.component.ts"
             target="_blank"
           >
             Source
@@ -29,7 +30,7 @@ import { DataService } from '../data.service';
         </div>
 
         <ngx-datatable
-          class="material"
+          class="material selection-row"
           [rows]="rows"
           [columnMode]="'force'"
           [columns]="columns"

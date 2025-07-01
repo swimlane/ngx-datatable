@@ -1,9 +1,9 @@
-import { Component, ElementRef, Injectable } from '@angular/core';
+import { Component, ElementRef, Injectable, OnInit } from '@angular/core';
+import { DatatableComponent } from 'projects/ngx-datatable/src/public-api';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
-
 import data from 'src/assets/data/company.json';
-import { DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
+
 import { Employee } from '../data.model';
 
 const companyData = data as any[];
@@ -19,7 +19,7 @@ interface PagedData<T> {
 export class MockServerResultsService {
   public getResults(offset: number, limit: number): Observable<PagedData<Employee>> {
     return of(companyData.slice(offset, offset + limit)).pipe(
-      delay(new Date(Date.now() + 500)),
+      delay(new Date(Date.now() + 1500)),
       map(d => ({ data: d }))
     );
   }
@@ -34,7 +34,7 @@ export class MockServerResultsService {
         Server-side Scrolling
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/paging/scrolling-server.component.ts"
+            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/paging/scrolling-server.component.ts"
             target="_blank"
           >
             Source
@@ -58,7 +58,7 @@ export class MockServerResultsService {
   styleUrls: ['./scrolling-server.component.css'],
   imports: [DatatableComponent]
 })
-export class ServerScrollingComponent {
+export class ServerScrollingComponent implements OnInit {
   readonly headerHeight = 50;
   readonly rowHeight = 50;
   readonly pageLimit = 10;

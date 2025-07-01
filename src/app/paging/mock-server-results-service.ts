@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
-import { PagedData } from './model/paged-data';
-import { Page } from './model/page';
-
 import companyData from 'src/assets/data/company.json';
+
 import { Employee } from '../data.model';
+import { Page } from './model/page';
+import { PagedData } from './model/paged-data';
 
 /**
  * A server used to mock a paged data result from a server

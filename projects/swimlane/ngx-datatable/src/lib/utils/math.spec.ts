@@ -1,6 +1,5 @@
-import { adjustColumnWidths, forceFillColumnWidths } from './math';
 import { toInternalColumn } from './column-helper';
-import { TableColumnInternal } from '../types/internal.types';
+import { adjustColumnWidths, forceFillColumnWidths } from './math';
 
 describe('Math function', () => {
   describe('forceFillColumnWidths', () => {
@@ -12,7 +11,7 @@ describe('Math function', () => {
           { prop: 'email', width: 250, canAutoResize: true }
         ];
 
-        forceFillColumnWidths(columns as TableColumnInternal[], 750, 1, true); // Column 2 expanded from 250 to 400
+        forceFillColumnWidths(columns, 750, 1, true); // Column 2 expanded from 250 to 400
 
         expect(columns[0].width).toBe(250); // Not changed
         expect(columns[1].width).toBe(400);
@@ -28,7 +27,7 @@ describe('Math function', () => {
           { prop: 'email', width: 250, canAutoResize: true }
         ];
 
-        forceFillColumnWidths(columns as TableColumnInternal[], 750, 1, true); // Column 2 contracted from 250 to 180
+        forceFillColumnWidths(columns, 750, 1, true); // Column 2 contracted from 250 to 180
 
         expect(columns[0].width).toBe(250); // Not changed
         expect(columns[1].width).toBe(180);
@@ -44,7 +43,6 @@ describe('Math function', () => {
           {
             prop: 'id1',
             width: 287,
-            maxWidth: undefined,
             minWidth: 175,
             flexGrow: 2,
             canAutoResize: true
@@ -52,7 +50,6 @@ describe('Math function', () => {
           {
             prop: 'id2',
             width: 215,
-            maxWidth: undefined,
             minWidth: 200,
             flexGrow: 1.5,
             canAutoResize: true
@@ -60,7 +57,6 @@ describe('Math function', () => {
           {
             prop: 'id3',
             width: 287,
-            maxWidth: undefined,
             minWidth: 150,
             flexGrow: 2,
             canAutoResize: true
@@ -68,7 +64,6 @@ describe('Math function', () => {
           {
             prop: 'id4',
             width: 175,
-            maxWidth: undefined,
             minWidth: 175,
             flexGrow: 1,
             canAutoResize: true
@@ -76,7 +71,6 @@ describe('Math function', () => {
           {
             prop: 'id5',
             width: 143,
-            maxWidth: undefined,
             minWidth: 120,
             flexGrow: 1,
             canAutoResize: true
@@ -96,7 +90,6 @@ describe('Math function', () => {
           {
             prop: 'id1',
             width: 100,
-            maxWidth: undefined,
             minWidth: 100,
             flexGrow: 1,
             canAutoResize: true
@@ -104,7 +97,6 @@ describe('Math function', () => {
           {
             prop: 'id2',
             width: 100,
-            maxWidth: undefined,
             minWidth: 100,
             flexGrow: 1,
             canAutoResize: true
@@ -123,7 +115,6 @@ describe('Math function', () => {
           {
             prop: 'id1',
             width: 0,
-            maxWidth: undefined,
             minWidth: 10,
             flexGrow: 3.0000000000000075,
             canAutoResize: true
@@ -131,7 +122,6 @@ describe('Math function', () => {
           {
             prop: 'id2',
             width: 0,
-            maxWidth: undefined,
             minWidth: 10,
             flexGrow: 1,
             canAutoResize: true

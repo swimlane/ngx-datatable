@@ -2,8 +2,8 @@ import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { DataTablePagerComponent } from './pager.component';
 import { DataTableFooterComponent } from './footer.component';
+import { DataTablePagerComponent } from './pager.component';
 
 let fixture: ComponentFixture<TestFixtureComponent>;
 let component: TestFixtureComponent;

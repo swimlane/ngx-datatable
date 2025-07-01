@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { FullEmployee } from '../data.model';
-import { DataService } from '../data.service';
 import {
   DataTableColumnDirective,
   DatatableComponent
 } from 'projects/swimlane/ngx-datatable/src/public-api';
+
+import { FullEmployee } from '../data.model';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'horz-vert-scrolling-demo',

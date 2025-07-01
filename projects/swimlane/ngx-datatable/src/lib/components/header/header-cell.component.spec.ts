@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { DataTableHeaderCellComponent } from './header-cell.component';
+
 import { TableColumnInternal } from '../../types/internal.types';
+import { DataTableHeaderCellComponent } from './header-cell.component';
 
 describe('DataTableHeaderCellComponent', () => {
   let fixture: ComponentFixture<DataTableHeaderCellComponent>;

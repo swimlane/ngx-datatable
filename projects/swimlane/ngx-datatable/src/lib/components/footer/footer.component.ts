@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { DatatableFooterDirective } from './footer.directive';
-import { PagerPageEvent } from '../../types/public.types';
-import { DataTablePagerComponent } from './pager.component';
 import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+
+import { PagerPageEvent } from '../../types/public.types';
+import { DatatableFooterDirective } from './footer.directive';
+import { DataTablePagerComponent } from './pager.component';
 @Component({
   selector: 'datatable-footer',
   template: `

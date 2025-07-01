@@ -1,6 +1,7 @@
 import { ContentChild, Directive, Input, TemplateRef } from '@angular/core';
-import { DataTableFooterTemplateDirective } from './footer-template.directive';
+
 import { FooterContext } from '../../types/public.types';
+import { DataTableFooterTemplateDirective } from './footer-template.directive';
 
 @Directive({
   selector: 'ngx-datatable-footer'

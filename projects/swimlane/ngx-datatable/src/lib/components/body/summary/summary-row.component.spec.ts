@@ -1,13 +1,13 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { DataTableBodyRowComponent } from '../body-row.component';
-import { DataTableBodyCellComponent } from '../body-cell.component';
-import { DataTableSummaryRowComponent } from './summary-row.component';
 import { ScrollbarHelper } from '../../../services/scrollbar-helper.service';
-import { toInternalColumn } from '../../../utils/column-helper';
 import { TableColumnInternal } from '../../../types/internal.types';
+import { toInternalColumn } from '../../../utils/column-helper';
+import { DataTableBodyCellComponent } from '../body-cell.component';
+import { DataTableBodyRowComponent } from '../body-row.component';
+import { DataTableSummaryRowComponent } from './summary-row.component';
 
 describe('DataTableSummaryRowComponent', () => {
   let fixture: ComponentFixture<DataTableSummaryRowComponent>;

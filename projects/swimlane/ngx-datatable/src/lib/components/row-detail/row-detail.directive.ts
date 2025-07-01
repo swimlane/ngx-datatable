@@ -1,6 +1,7 @@
 import { ContentChild, Directive, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
-import { DatatableRowDetailTemplateDirective } from './row-detail-template.directive';
+
 import { DetailToggleEvents, Row, RowDetailContext } from '../../types/public.types';
+import { DatatableRowDetailTemplateDirective } from './row-detail-template.directive';
 
 @Directive({
   selector: 'ngx-datatable-row-detail'
