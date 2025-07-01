@@ -44,8 +44,8 @@ import { Keys } from '../../utils/keys';
       <button
         class="datatable-tree-button"
         [disabled]="treeStatus === 'disabled'"
-        (click)="onTreeAction()"
         [attr.aria-label]="treeStatus"
+        (click)="onTreeAction()"
       >
         <span>
           @if (treeStatus === 'loading') {

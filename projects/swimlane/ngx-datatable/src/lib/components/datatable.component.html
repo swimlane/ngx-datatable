@@ -68,16 +68,16 @@
       [ariaGroupHeaderCheckboxMessage]="
         messages.ariaGroupHeaderCheckboxMessage ?? 'Select row group'
       "
+      [disableRowCheck]="disableRowCheck"
+      [rowDraggable]="rowDraggable"
+      [rowDragEvents]="rowDragEvents"
+      [rowDefTemplate]="rowDefTemplate"
       (page)="onBodyPage($event)"
       (activate)="activate.emit($event)"
       (rowContextmenu)="onRowContextmenu($event)"
       (select)="onBodySelect($event)"
       (scroll)="onBodyScroll($event)"
       (treeAction)="onTreeAction($event)"
-      [disableRowCheck]="disableRowCheck"
-      [rowDraggable]="rowDraggable"
-      [rowDragEvents]="rowDragEvents"
-      [rowDefTemplate]="rowDefTemplate"
     >
       <ng-content select="[loading-indicator]" ngProjectAs="[loading-indicator]">
         <datatable-progress></datatable-progress>

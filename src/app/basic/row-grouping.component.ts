@@ -43,9 +43,9 @@ import { DataService } from '../data.service';
       >
         <!-- Group Header Template -->
         <ngx-datatable-group-header
+          #myGroupHeader
           [rowHeight]="34"
           [checkboxable]="true"
-          #myGroupHeader
           (toggle)="onDetailToggle($event)"
         >
           <ng-template
@@ -56,9 +56,9 @@ import { DataService } from '../data.service';
             <div style="padding-left:5px;height: 100%; display:flex;align-items: center;">
               <a
                 href="javascript:void(0)"
+                title="Expand/Collapse Group"
                 [class.datatable-icon-right]="!expanded"
                 [class.datatable-icon-down]="expanded"
-                title="Expand/Collapse Group"
                 (click)="toggleExpandGroup(group)"
               >
                 <b>Age: {{ group ? group.value[0].age : '' }}</b>
@@ -71,53 +71,53 @@ import { DataService } from '../data.service';
         <ngx-datatable-column
           name="Exp. Pay."
           prop=""
+          editable="true"
           [headerCheckboxable]="true"
           [checkboxable]="true"
-          editable="true"
           [frozenLeft]="true"
           [sortable]="false"
         >
           <ng-template
-            ngx-datatable-cell-template
             let-rowIndex="rowIndex"
             let-value="value"
             let-row="row"
             let-group="group"
+            ngx-datatable-cell-template
           >
             <label for="ep1{{ rowIndex }}" class="datatable-checkbox">
               <input
-                type="checkbox"
                 id="ep1{{ rowIndex }}"
                 name="{{ rowIndex }}"
+                type="checkbox"
                 value="0"
                 class="expectedpayment"
                 [attr.aria-label]="'ex pay1' + rowIndex"
-                (change)="checkGroup($event, row, rowIndex, group!)"
                 [checked]="row.exppayyes === 1"
+                (change)="checkGroup($event, row, rowIndex, group!)"
               />
             </label>
             <label for="ep2{{ rowIndex }}" class="datatable-checkbox">
               <input
-                type="checkbox"
                 id="ep2{{ rowIndex }}"
                 name="{{ rowIndex }}"
+                type="checkbox"
                 value="1"
                 class="expectedpayment2"
                 [attr.aria-label]="'ex pay2' + rowIndex"
-                (change)="checkGroup($event, row, rowIndex, group!)"
                 [checked]="row.exppayno === 1"
+                (change)="checkGroup($event, row, rowIndex, group!)"
               />
             </label>
             <label for="ep3{{ rowIndex }}" class="datatable-checkbox">
               <input
-                type="checkbox"
                 id="ep3{{ rowIndex }}"
                 name="{{ rowIndex }}"
+                type="checkbox"
                 value="2"
                 class="expectedpayment3"
                 [attr.aria-label]="'ex pay3' + rowIndex"
-                (change)="checkGroup($event, row, rowIndex, group!)"
                 [checked]="row.exppaypending === 1"
+                (change)="checkGroup($event, row, rowIndex, group!)"
               />
             </label>
           </ng-template>
@@ -134,19 +134,19 @@ import { DataService } from '../data.service';
         <ngx-datatable-column name="Age" prop="age"></ngx-datatable-column>
         <ngx-datatable-column name="Comment" prop="comment">
           <ng-template
-            ngx-datatable-cell-template
             let-rowIndex="rowIndex"
             let-value="value"
             let-row="row"
             let-group="group"
             let-rowHeight="rowHeight"
+            ngx-datatable-cell-template
           >
             <input
-              (blur)="updateValue($event, 'comment', rowIndex)"
               type="text"
               name="comment"
               aria-label="comment"
               [value]="value"
+              (blur)="updateValue($event, 'comment', rowIndex)"
             />
           </ng-template>
         </ngx-datatable-column>

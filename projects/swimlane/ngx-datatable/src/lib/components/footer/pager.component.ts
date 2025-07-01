@@ -35,8 +35,8 @@ import { DatatableComponent } from '../datatable.component';
       </li>
       @for (pg of pages; track pg.number) {
       <li
-        [attr.aria-label]="(messages.ariaPageNMessage ?? 'page') + ' ' + pg.number"
         class="pages"
+        [attr.aria-label]="(messages.ariaPageNMessage ?? 'page') + ' ' + pg.number"
         [class.active]="pg.number === page"
       >
         <a role="button" (click)="selectPage(pg.number)">
@@ -176,7 +176,7 @@ export class DataTablePagerComponent {
     for (let num = startPage; num <= endPage; num++) {
       pages.push({
         number: num,
-        text: <string>(<any>num)
+        text: num.toString()
       });
     }
 

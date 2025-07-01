@@ -35,11 +35,11 @@ import { DataService } from '../data.service';
         <ngx-datatable
           style="width: 90%"
           class="material selection-row"
+          rowHeight="auto"
           [rows]="rows"
           [columnMode]="'force'"
           [headerHeight]="50"
           [footerHeight]="50"
-          rowHeight="auto"
           [limit]="5"
           [selected]="selected"
           [selectionType]="'checkbox'"
@@ -54,17 +54,17 @@ import { DataService } from '../data.service';
             [resizeable]="false"
           >
             <ng-template
-              ngx-datatable-header-template
               let-allRowsSelected="allRowsSelected"
               let-selectFn="selectFn"
+              ngx-datatable-header-template
             >
               <input type="checkbox" [checked]="allRowsSelected" (change)="selectFn()" />
             </ng-template>
             <ng-template
-              ngx-datatable-cell-template
               let-value="value"
               let-isSelected="isSelected"
               let-onCheckboxChangeFn="onCheckboxChangeFn"
+              ngx-datatable-cell-template
             >
               <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)" />
             </ng-template>

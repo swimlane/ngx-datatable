@@ -59,7 +59,7 @@ import { nextSortDir } from '../../utils/sort';
         </span>
       </span>
       }
-      <span (click)="onSort()" [class]="sortClass"> </span>
+      <span [class]="sortClass" (click)="onSort()"> </span>
     </div>
     @if (showResizeHandle) {
     <span

@@ -26,21 +26,21 @@ import { DataService } from '../data.service';
       </h3>
       <ngx-datatable
         class="material"
+        rowHeight="auto"
         [rows]="rows"
         [columns]="columns"
         [columnMode]="'force'"
         [footerHeight]="100"
         [headerHeight]="50"
-        rowHeight="auto"
       >
         <ngx-datatable-footer>
           <ng-template
-            ngx-datatable-footer-template
             let-rowCount="rowCount"
             let-pageSize="pageSize"
             let-selectedCount="selectedCount"
             let-curPage="curPage"
             let-offset="offset"
+            ngx-datatable-footer-template
           >
             <div style="padding: 5px 10px">
               <div><strong>Summary</strong>: Gender: Female</div>

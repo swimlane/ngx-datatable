@@ -45,10 +45,10 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
     <div
       role="row"
       orderable
+      class="datatable-header-inner"
+      [style.width.px]="_columnGroupWidths.total"
       (reorder)="onColumnReordered($event)"
       (targetChanged)="onTargetChanged($event)"
-      [style.width.px]="_columnGroupWidths.total"
-      class="datatable-header-inner"
     >
       @for (colGroup of _columnsByPin; track colGroup.type) { @if (colGroup.columns.length) {
       <div
@@ -59,14 +59,10 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
         @for (column of colGroup.columns; track column.$$id) {
         <datatable-header-cell
           role="columnheader"
-          (resize)="onColumnResized($event)"
-          (resizing)="onColumnResizing($event)"
           long-press
+          draggable
           [pressModel]="column"
           [pressEnabled]="reorderable && column.draggable"
-          (longPressStart)="onLongPressStart($event)"
-          (longPressEnd)="onLongPressEnd($event)"
-          draggable
           [dragX]="reorderable && column.draggable && column.dragging"
           [dragY]="false"
           [dragModel]="column"
@@ -86,6 +82,10 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
           [allRowsSelected]="allRowsSelected"
           [enableClearingSortState]="enableClearingSortState"
           [ariaHeaderCheckboxMessage]="ariaHeaderCheckboxMessage"
+          (resize)="onColumnResized($event)"
+          (resizing)="onColumnResizing($event)"
+          (longPressStart)="onLongPressStart($event)"
+          (longPressEnd)="onLongPressEnd($event)"
           (sort)="onSort($event)"
           (select)="select.emit($event)"
           (columnContextmenu)="columnContextmenu.emit($event)"

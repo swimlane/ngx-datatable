@@ -45,12 +45,12 @@ import { DataService } from '../data.service';
       </div>
       <ngx-datatable
         class="material"
+        rowHeight="auto"
         [rows]="rows"
         [columns]="columns"
         [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
-        rowHeight="auto"
         (tableContextmenu)="onTableContextMenu($event)"
       >
       </ngx-datatable>

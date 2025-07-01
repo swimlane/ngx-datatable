@@ -22,6 +22,7 @@ import { Page } from '../paging/model/page';
       </h3>
       <ngx-datatable
         class="material"
+        rowHeight="auto"
         [rows]="rows"
         [columns]="columns"
         [columnMode]="'force'"
@@ -29,7 +30,6 @@ import { Page } from '../paging/model/page';
         [summaryRow]="true"
         [summaryHeight]="55"
         [footerHeight]="50"
-        rowHeight="auto"
         [externalPaging]="true"
         [count]="page.totalElements"
         [offset]="page.pageNumber"

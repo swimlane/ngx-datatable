@@ -81,18 +81,18 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
           </datatable-summary-row>
         }
         <ng-template
-          ngx-datatable-body-row
           #bodyRow
           let-row="row"
           let-index="index"
           let-indexInGroup="indexInGroup"
           let-groupedRows="groupedRows"
           let-disabled="disabled"
+          ngx-datatable-body-row
         >
           <datatable-body-row
+            #rowElement
             role="row"
             tabindex="-1"
-            #rowElement
             [disabled]="disabled"
             [isSelected]="getRowSelected(row)"
             [innerWidth]="innerWidth"

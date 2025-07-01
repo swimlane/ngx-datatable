@@ -28,8 +28,8 @@ import { DataService } from '../data.service';
       <div>
         <ngx-datatable
           class="material"
-          [rows]="rows"
           columnMode="force"
+          [rows]="rows"
           [headerHeight]="50"
           [footerHeight]="0"
           [rowHeight]="80"
@@ -58,9 +58,9 @@ import { DataService } from '../data.service';
               <select
                 [style.height]="'auto'"
                 [value]="value"
-                (change)="updateValue($event, 'gender', rowIndex)"
                 [disabled]="disabled"
                 [style.margin]="0"
+                (change)="updateValue($event, 'gender', rowIndex)"
               >
                 <option value="male">Male</option>
                 <option value="female">Female</option>
@@ -75,8 +75,8 @@ import { DataService } from '../data.service';
               let-value="value"
               ngx-datatable-cell-template
             >
-              <div [disabled]="disabled" disable-row>
-                <input (blur)="updateValue($event, 'age', rowIndex)" [value]="value" />
+              <div disable-row [disabled]="disabled">
+                <input [value]="value" (blur)="updateValue($event, 'age', rowIndex)" />
                 <br />
                 <button (click)="disableRow(rowIndex)">Disable row</button>
               </div>

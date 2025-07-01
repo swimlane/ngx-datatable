@@ -3,7 +3,7 @@ import {
   DataTableColumnDirective,
   DatatableComponent,
   TableColumn
-} from 'projects/swimlane/ngx-datatable/src/public-api';
+} from 'projects/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
 
@@ -25,11 +25,11 @@ import { Employee } from '../data.model';
       <div style="float:left;width:75%">
         <ngx-datatable
           class="material"
+          rowHeight="auto"
           [rows]="rows"
           [columnMode]="'force'"
           [headerHeight]="50"
           [footerHeight]="50"
-          rowHeight="auto"
         >
           @for (col of columns; track col) {
           <ngx-datatable-column [name]="col.name"> </ngx-datatable-column>
@@ -44,8 +44,8 @@ import { Employee } from '../data.model';
             <input
               type="checkbox"
               [id]="col.name"
-              (click)="toggle(col)"
               [checked]="isChecked(col)"
+              (click)="toggle(col)"
             />
             <label [attr.for]="col.name">{{ col.name }}</label>
           </li>

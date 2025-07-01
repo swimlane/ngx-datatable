@@ -61,7 +61,7 @@ import { DatatableGroupHeaderDirective } from './body-group-header.directive';
     } @if ((groupHeader?.template && expanded) || !groupHeader || !groupHeader.template) {
     <ng-content> </ng-content>
     } @if (rowDetail?.template && expanded) {
-    <div [style.height.px]="detailRowHeight" class="datatable-row-detail">
+    <div class="datatable-row-detail" [style.height.px]="detailRowHeight">
       <ng-template [ngTemplateOutlet]="rowDetail!.template!" [ngTemplateOutletContext]="context">
       </ng-template>
     </div>

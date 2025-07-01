@@ -27,12 +27,12 @@ import { DataService } from '../data.service';
       <div style="float:left;width:75%">
         <ngx-datatable
           class="material selection-row"
+          rowHeight="auto"
           [rows]="rows"
           [columnMode]="'force'"
           [columns]="columns"
           [headerHeight]="50"
           [footerHeight]="50"
-          rowHeight="auto"
           [limit]="5"
           [selectCheck]="checkSelectable"
           [selected]="selected"

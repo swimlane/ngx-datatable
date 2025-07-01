@@ -23,12 +23,12 @@ import { Page } from './model/page';
       </h3>
       <ngx-datatable
         class="material"
+        rowHeight="auto"
         [rows]="rows"
         [columns]="[{ name: 'Name' }, { name: 'Gender' }, { name: 'Company' }]"
         [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
-        rowHeight="auto"
         [externalPaging]="true"
         [count]="page.totalElements"
         [offset]="page.pageNumber"

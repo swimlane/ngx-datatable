@@ -44,7 +44,7 @@ import { DataService } from '../data.service';
         (page)="onPage($event)"
       >
         <!-- Row Detail Template -->
-        <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow (toggle)="onDetailToggle($event)">
+        <ngx-datatable-row-detail #myDetailRow [rowHeight]="100" (toggle)="onDetailToggle($event)">
           <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
             <div style="padding-left:35px;">
               <div><strong>Address</strong></div>
@@ -64,9 +64,9 @@ import { DataService } from '../data.service';
           <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
             <a
               href="javascript:void(0)"
+              title="Expand/Collapse Row"
               [class.datatable-icon-right]="!expanded"
               [class.datatable-icon-down]="expanded"
-              title="Expand/Collapse Row"
               (click)="toggleExpandRow(row)"
             >
             </a>

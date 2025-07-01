@@ -21,6 +21,7 @@ import { DataService } from '../data.service';
       </h3>
       <ngx-datatable
         class="bootstrap"
+        rowHeight="auto"
         [rows]="rows"
         [loadingIndicator]="loadingIndicator"
         [columns]="columns"
@@ -30,7 +31,6 @@ import { DataService } from '../data.service';
         [summaryPosition]="'bottom'"
         [footerHeight]="40"
         [limit]="10"
-        rowHeight="auto"
         [reorderable]="reorderable"
       >
       </ngx-datatable>

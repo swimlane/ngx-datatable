@@ -25,10 +25,10 @@ import { DataService } from '../data.service';
       </h3>
       <ngx-datatable
         class="material"
+        rowHeight="auto"
         [columnMode]="'flex'"
         [headerHeight]="50"
         [footerHeight]="50"
-        rowHeight="auto"
         [treeFromRelation]="'manager'"
         [treeToRelation]="'name'"
         [rows]="rows"
