@@ -1,21 +1,20 @@
 /**
  * Throttle a function
  */
-export function throttle(func: any, wait: number, options?: any) {
+export const throttle = (func: any, wait: number, options?: any) => {
   options = options || {};
-  let context: any;
   let args: any;
   let result: any;
   let timeout: any = null;
   let previous = 0;
 
-  function later() {
+  const later = () => {
     previous = options.leading === false ? 0 : +new Date();
     timeout = null;
-    result = func.apply(context, args);
-  }
+    result = func(...args);
+  };
 
-  return function (this: any) {
+  return (...argsNew: any[]) => {
     const now = +new Date();
 
     if (!previous && options.leading === false) {
@@ -23,21 +22,20 @@ export function throttle(func: any, wait: number, options?: any) {
     }
 
     const remaining = wait - (now - previous);
-    context = this;
-    args = arguments;
+    args = argsNew;
 
     if (remaining <= 0) {
       clearTimeout(timeout);
       timeout = null;
       previous = now;
-      result = func.apply(context, args);
+      result = func(...args);
     } else if (!timeout && options.trailing !== false) {
       timeout = setTimeout(later, remaining);
     }
 
     return result;
   };
-}
+};
 
 /**
  * Throttle decorator
@@ -47,20 +45,20 @@ export function throttle(func: any, wait: number, options?: any) {
  *    myFn() { ... }
  *  }
  */
-export function throttleable(duration: number, options?: any) {
-  return function innerDecorator(target: any, key: PropertyKey, descriptor: PropertyDescriptor) {
+export const throttleable = (duration: number, options?: any) => {
+  return (target: any, key: PropertyKey, descriptor: PropertyDescriptor) => {
     return {
       configurable: true,
       enumerable: descriptor.enumerable,
-      get: function getter() {
+      get: function () {
         Object.defineProperty(this, key, {
           configurable: true,
           enumerable: descriptor.enumerable,
-          value: throttle(descriptor.value, duration, options)
+          value: throttle(descriptor.value.bind(this), duration, options)
         });
 
-        return target[key];
+        return (this as any)[key];
       }
     };
   };
-}
+};
