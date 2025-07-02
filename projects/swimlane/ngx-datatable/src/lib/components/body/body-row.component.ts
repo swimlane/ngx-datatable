@@ -35,7 +35,7 @@ import { DataTableBodyCellComponent } from './body-cell.component';
     @for (colGroup of _columnsByPin; track colGroup.type) {
       @if (colGroup.columns.length) {
         <div
-          class="datatable-row-{{ colGroup.type }} datatable-row-group"
+          [class]="'datatable-row-' + colGroup.type + ' datatable-row-group'"
           [style.width.px]="_columnGroupWidths[colGroup.type]"
           [class.row-disabled]="disabled"
         >

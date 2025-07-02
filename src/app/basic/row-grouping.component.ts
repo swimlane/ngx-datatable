@@ -91,37 +91,37 @@ import { DataService } from '../data.service';
             let-group="group"
             ngx-datatable-cell-template
           >
-            <label for="ep1{{ rowIndex }}" class="datatable-checkbox">
+            <label class="datatable-checkbox" [attr.for]="'ep1' + rowIndex">
               <input
-                id="ep1{{ rowIndex }}"
-                name="{{ rowIndex }}"
                 type="checkbox"
                 value="0"
                 class="expectedpayment"
+                [id]="'ep1' + rowIndex"
+                [name]="rowIndex"
                 [attr.aria-label]="'ex pay1' + rowIndex"
                 [checked]="row.exppayyes === 1"
                 (change)="checkGroup($event, row, rowIndex, group!)"
               />
             </label>
-            <label for="ep2{{ rowIndex }}" class="datatable-checkbox">
+            <label class="datatable-checkbox" [attr.for]="'ep2' + rowIndex">
               <input
-                id="ep2{{ rowIndex }}"
-                name="{{ rowIndex }}"
                 type="checkbox"
                 value="1"
                 class="expectedpayment2"
+                [id]="'ep2' + rowIndex"
+                [name]="rowIndex"
                 [attr.aria-label]="'ex pay2' + rowIndex"
                 [checked]="row.exppayno === 1"
                 (change)="checkGroup($event, row, rowIndex, group!)"
               />
             </label>
-            <label for="ep3{{ rowIndex }}" class="datatable-checkbox">
+            <label class="datatable-checkbox" [attr.for]="'ep3' + rowIndex">
               <input
-                id="ep3{{ rowIndex }}"
-                name="{{ rowIndex }}"
                 type="checkbox"
                 value="2"
                 class="expectedpayment3"
+                [id]="'ep3' + rowIndex"
+                [name]="rowIndex"
                 [attr.aria-label]="'ex pay3' + rowIndex"
                 [checked]="row.exppaypending === 1"
                 (change)="checkGroup($event, row, rowIndex, group!)"
