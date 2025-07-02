@@ -46,7 +46,11 @@ import { DataService } from '../data.service';
           [treeLevelIndent]="20"
         >
           <ng-template let-tree="cellContext" ngx-datatable-tree-toggle>
-            <button [disabled]="tree.treeStatus === 'disabled'" (click)="tree.onTreeAction()">
+            <button
+              type="button"
+              [disabled]="tree.treeStatus === 'disabled'"
+              (click)="tree.onTreeAction()"
+            >
               @if (tree.treeStatus === 'loading') {
               <span> ... </span>
               } @if (tree.treeStatus === 'collapsed') {

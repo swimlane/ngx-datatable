@@ -43,6 +43,7 @@ import { Keys } from '../../utils/keys';
       } @if (column.isTreeColumn) { @if (!column.treeToggleTemplate) {
       <button
         class="datatable-tree-button"
+        type="button"
         [disabled]="treeStatus === 'disabled'"
         [attr.aria-label]="treeStatus"
         (click)="onTreeAction()"

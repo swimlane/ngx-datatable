@@ -78,7 +78,7 @@ import { DataService } from '../data.service';
               <div disable-row [disabled]="disabled">
                 <input [value]="value" (blur)="updateValue($event, 'age', rowIndex)" />
                 <br />
-                <button (click)="disableRow(rowIndex)">Disable row</button>
+                <button type="button" (click)="disableRow(rowIndex)">Disable row</button>
               </div>
             </ng-template>
           </ngx-datatable-column>
