@@ -27,9 +27,9 @@ import { DataService } from '../data.service';
         #mydatatable
         class="material"
         rowHeight="auto"
+        columnMode="force"
         [headerHeight]="50"
         [limit]="5"
-        [columnMode]="'force'"
         [footerHeight]="50"
         [rows]="rows"
       >

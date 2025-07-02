@@ -25,7 +25,7 @@ import { DataService } from '../data.service';
       <ngx-datatable
         class="material fullscreen"
         style="top: 52px"
-        [columnMode]="'force'"
+        columnMode="force"
         [headerHeight]="50"
         [footerHeight]="0"
         [rowHeight]="50"

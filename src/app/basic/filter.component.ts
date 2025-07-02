@@ -29,8 +29,8 @@ import { DataService } from '../data.service';
         #table
         class="material"
         rowHeight="auto"
+        columnMode="force"
         [columns]="columns"
-        [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
         [limit]="10"

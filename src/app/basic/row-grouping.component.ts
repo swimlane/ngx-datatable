@@ -30,16 +30,16 @@ import { DataService } from '../data.service';
       <ngx-datatable
         #myTable
         class="material expandable"
+        groupRowsBy="age"
+        columnMode="force"
+        selectionType="checkbox"
         [rows]="rows"
-        [groupRowsBy]="'age'"
-        [columnMode]="'force'"
         [scrollbarH]="true"
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="40"
         [limit]="4"
         [groupExpansionDefault]="true"
-        [selectionType]="'checkbox'"
       >
         <!-- Group Header Template -->
         <ngx-datatable-group-header

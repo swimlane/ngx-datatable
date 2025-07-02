@@ -23,13 +23,13 @@ import { Page } from './model/page';
       </h3>
       <ngx-datatable
         class="material"
+        columnMode="force"
         [rows]="rows"
         [columns]="[
           { name: 'Name', sortable: false },
           { name: 'Gender', sortable: false },
           { name: 'Company', sortable: false }
         ]"
-        [columnMode]="'force'"
         [headerHeight]="50"
         [loadingIndicator]="isLoading > 0"
         [ghostLoadingIndicator]="isLoading > 0"

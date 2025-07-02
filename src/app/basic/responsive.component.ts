@@ -49,7 +49,7 @@ import { DataService } from '../data.service';
       <ngx-datatable
         #myTable
         class="material expandable"
-        [columnMode]="'force'"
+        columnMode="force"
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="50"

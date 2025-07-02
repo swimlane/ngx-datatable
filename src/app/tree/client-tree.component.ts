@@ -26,11 +26,11 @@ import { DataService } from '../data.service';
       <ngx-datatable
         class="material"
         rowHeight="auto"
-        [columnMode]="'flex'"
+        columnMode="flex"
+        treeFromRelation="manager"
+        treeToRelation="name"
         [headerHeight]="50"
         [footerHeight]="50"
-        [treeFromRelation]="'manager'"
-        [treeToRelation]="'name'"
         [rows]="rows"
         (treeAction)="onTreeAction($event)"
       >

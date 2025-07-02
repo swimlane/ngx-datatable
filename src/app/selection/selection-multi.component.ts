@@ -35,14 +35,14 @@ import { DataService } from '../data.service';
         <ngx-datatable
           class="material selection-row"
           rowHeight="auto"
+          columnMode="force"
+          selectionType="multi"
           [rows]="rows"
-          [columnMode]="'force'"
           [columns]="columns"
           [headerHeight]="50"
           [footerHeight]="50"
           [limit]="5"
           [selected]="selected"
-          [selectionType]="'multi'"
           (activate)="onActivate($event)"
           (select)="onSelect($event)"
         >

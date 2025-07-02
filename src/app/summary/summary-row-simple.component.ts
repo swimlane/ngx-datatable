@@ -31,18 +31,18 @@ import { DataService } from '../data.service';
         <div>
           <label for="position-select">Position</label>
           <select id="position-select" (change)="onPositionSelectChange($event)">
-            <option [value]="'top'">Top</option>
-            <option [value]="'bottom'">Bottom</option>
+            <option value="top">Top</option>
+            <option value="bottom">Bottom</option>
           </select>
         </div>
       </div>
       <ngx-datatable
         class="material"
         rowHeight="auto"
+        columnMode="force"
         [summaryRow]="enableSummary"
         [summaryPosition]="summaryPosition"
         [columns]="columns"
-        [columnMode]="'force'"
         [headerHeight]="50"
         [summaryHeight]="55"
         [rows]="rows"

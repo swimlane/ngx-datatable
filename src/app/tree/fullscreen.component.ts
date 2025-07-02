@@ -27,15 +27,15 @@ import { DataService } from '../data.service';
       <ngx-datatable
         class="material fullscreen"
         style="top: 52px"
-        [columnMode]="'force'"
+        columnMode="force"
+        treeFromRelation="parentId"
+        treeToRelation="id"
         [headerHeight]="50"
         [footerHeight]="0"
         [rowHeight]="50"
         [scrollbarV]="true"
         [scrollbarH]="true"
         [rows]="rows"
-        [treeFromRelation]="'parentId'"
-        [treeToRelation]="'id'"
         (treeAction)="onTreeAction($event)"
       >
         <ngx-datatable-column name="Id" [width]="80"></ngx-datatable-column>

@@ -23,9 +23,9 @@ import { Page } from '../paging/model/page';
       <ngx-datatable
         class="material"
         rowHeight="auto"
+        columnMode="force"
         [rows]="rows"
         [columns]="columns"
-        [columnMode]="'force'"
         [headerHeight]="50"
         [summaryRow]="true"
         [summaryHeight]="55"

@@ -32,11 +32,11 @@ import { DataService } from '../data.service';
         #mydatatable
         class="material"
         rowHeight="auto"
+        columnMode="force"
+        trackByProp="updated"
         [headerHeight]="50"
         [limit]="5"
-        [columnMode]="'force'"
         [footerHeight]="50"
-        [trackByProp]="'updated'"
         [rows]="rows"
       >
         <ngx-datatable-column name="Name"></ngx-datatable-column>

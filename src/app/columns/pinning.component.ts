@@ -24,7 +24,7 @@ import { DataService } from '../data.service';
       </h3>
       <ngx-datatable
         class="material"
-        [columnMode]="'force'"
+        columnMode="force"
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="50"

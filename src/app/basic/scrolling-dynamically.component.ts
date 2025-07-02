@@ -27,12 +27,12 @@ import { DataService } from '../data.service';
         #mydatatable
         class="material"
         rowHeight="auto"
+        columnMode="force"
         [headerHeight]="50"
         [limit]="5"
         [virtualization]="false"
         [scrollbarV]="true"
         [scrollbarVDynamic]="true"
-        [columnMode]="'force'"
         [footerHeight]="50"
         [rows]="rows"
       >

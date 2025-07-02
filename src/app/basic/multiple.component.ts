@@ -18,9 +18,9 @@ import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable
       </h3>
       <ngx-datatable
         class="material"
+        columnMode="force"
         [rows]="rows1"
         [columns]="columns1"
-        [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="0"
         [rowHeight]="100"

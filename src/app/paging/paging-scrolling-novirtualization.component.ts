@@ -24,9 +24,9 @@ import { Page } from './model/page';
       <ngx-datatable
         class="material"
         rowHeight="auto"
+        columnMode="force"
         [rows]="rows"
         [columns]="[{ name: 'Name' }, { name: 'Gender' }, { name: 'Company' }]"
-        [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
         [scrollbarV]="true"

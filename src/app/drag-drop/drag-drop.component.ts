@@ -28,17 +28,17 @@ import { DataService } from '../data.service';
         class="material"
         rowHeight="auto"
         cdkDropList
+        columnMode="force"
         [rows]="rows"
         [loadingIndicator]="loadingIndicator"
         [columns]="columns"
-        [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
         [reorderable]="reorderable"
         (cdkDropListDropped)="drop($event)"
       >
         <ng-template rowDef>
-          <datatable-row-def cdkDrag [cdkDragPreviewContainer]="'parent'" />
+          <datatable-row-def cdkDrag cdkDragPreviewContainer="parent" />
         </ng-template>
       </ngx-datatable>
     </div>

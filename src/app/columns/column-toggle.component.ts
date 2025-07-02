@@ -26,8 +26,8 @@ import { Employee } from '../data.model';
         <ngx-datatable
           class="material"
           rowHeight="auto"
+          columnMode="force"
           [rows]="rows"
-          [columnMode]="'force'"
           [headerHeight]="50"
           [footerHeight]="50"
         >
