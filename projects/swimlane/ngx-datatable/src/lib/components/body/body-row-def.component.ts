@@ -29,7 +29,7 @@ import { RowOrGroup } from '../../types/public.types';
   }`
 })
 export class DatatableRowDefComponent {
-  rowDef = inject(RowDefToken);
+  rowDef = inject(ROW_DEF_TOKEN);
   rowContext = {
     ...this.rowDef.rowDefInternal,
     disabled: this.rowDef.rowDefInternalDisabled
@@ -70,7 +70,7 @@ export class DatatableRowDefInternalDirective implements OnInit {
         injector: Injector.create({
           providers: [
             {
-              provide: RowDefToken,
+              provide: ROW_DEF_TOKEN,
               useValue: this
             }
           ]
@@ -79,10 +79,10 @@ export class DatatableRowDefInternalDirective implements OnInit {
     );
   }
 }
-const RowDefToken = new InjectionToken<DatatableRowDefInternalDirective>('RowDef');
-type RowDefContext = {
+const ROW_DEF_TOKEN = new InjectionToken<DatatableRowDefInternalDirective>('RowDef');
+interface RowDefContext {
   template: TemplateRef<unknown>;
   rowTemplate: TemplateRef<unknown>;
   row: RowOrGroup<unknown>;
   index: number;
-};
+}

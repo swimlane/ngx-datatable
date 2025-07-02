@@ -14,12 +14,13 @@ export interface SortPropDir {
  * const sortDir: SortDirection = 'asc';
  * ```
  */
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const SortDirection = {
   asc: 'asc',
   desc: 'desc'
 } as const;
 
-export type SortDirection = typeof SortDirection[keyof typeof SortDirection];
+export type SortDirection = (typeof SortDirection)[keyof typeof SortDirection];
 
 export interface SortEvent {
   column: TableColumn;
@@ -37,12 +38,13 @@ export interface SortEvent {
  * const sortType: SortType = 'single';
  * ```
  */
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const SortType = {
   single: 'single',
   multi: 'multi'
 } as const;
 
-export type SortType = typeof SortType[keyof typeof SortType];
+export type SortType = (typeof SortType)[keyof typeof SortType];
 
 /**
  * @deprecated The constant `ColumnMode` should no longer be used. Instead use the value directly:
@@ -53,13 +55,14 @@ export type SortType = typeof SortType[keyof typeof SortType];
  * <ngx-datatable [columnMode]="'force'"></ngx-datatable>
  * ```
  */
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const ColumnMode = {
   standard: 'standard',
   flex: 'flex',
   force: 'force'
 } as const;
 
-export type ColumnMode = typeof ColumnMode[keyof typeof ColumnMode];
+export type ColumnMode = (typeof ColumnMode)[keyof typeof ColumnMode];
 
 export type TreeStatus = 'collapsed' | 'expanded' | 'loading' | 'disabled';
 
@@ -125,12 +128,13 @@ export interface FooterContext {
  * const contextmenuType: ContextmenuType = 'header';
  * ```
  */
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const ContextmenuType = {
   header: 'header',
   body: 'body'
 } as const;
 
-export type ContextmenuType = typeof ContextmenuType[keyof typeof ContextmenuType];
+export type ContextmenuType = (typeof ContextmenuType)[keyof typeof ContextmenuType];
 
 /** A Group row */
 export interface Group<TRow> {
@@ -223,6 +227,7 @@ export type DetailToggleEvents<TRow> = DetailToggleEvent<TRow> | AllDetailToggle
  * <ngx-datatable [selectionType]="'multi'"></ngx-datatable>
  * ```
  */
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const SelectionType = {
   single: 'single',
   multi: 'multi',
@@ -231,7 +236,7 @@ export const SelectionType = {
   checkbox: 'checkbox'
 } as const;
 
-export type SelectionType = typeof SelectionType[keyof typeof SelectionType];
+export type SelectionType = (typeof SelectionType)[keyof typeof SelectionType];
 
 export interface SelectEvent<TRow> {
   selected: TRow[];

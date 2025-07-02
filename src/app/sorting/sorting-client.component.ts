@@ -1,9 +1,5 @@
 import { Component, inject } from '@angular/core';
-import {
-  DatatableComponent,
-  SortType,
-  TableColumn
-} from 'projects/swimlane/ngx-datatable/src/public-api';
+import { DatatableComponent, TableColumn } from 'projects/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';
@@ -27,9 +23,9 @@ import { DataService } from '../data.service';
       <ngx-datatable
         class="material"
         columnMode="force"
+        sortType="multi"
         [rows]="rows"
         [columns]="columns"
-        [sortType]="SortType.multi"
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="50"
@@ -42,8 +38,6 @@ export class ClientSortingComponent {
   rows: Employee[] = [];
 
   columns: TableColumn[] = [{ name: 'Company' }, { name: 'Name' }, { name: 'Gender' }];
-
-  SortType = SortType;
 
   private dataService = inject(DataService);
 

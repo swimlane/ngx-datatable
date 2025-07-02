@@ -23,7 +23,7 @@ import {
 } from '@angular/core';
 
 import { Group, GroupContext, Row, RowDetailContext, RowOrGroup } from '../../types/public.types';
-import { DatatableComponentToken } from '../../utils/table-token';
+import { DATATABLE_COMPONENT_TOKEN } from '../../utils/table-token';
 import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive';
 import { DatatableGroupHeaderDirective } from './body-group-header.directive';
 
@@ -109,7 +109,7 @@ export class DataTableRowWrapperComponent<TRow extends Row = any>
     .create();
   private iterableDiffers = inject(IterableDiffers);
   private selectedRowsDiffer!: IterableDiffer<TRow>;
-  private tableComponent = inject(DatatableComponentToken);
+  private tableComponent = inject(DATATABLE_COMPONENT_TOKEN);
   private cd = inject(ChangeDetectorRef);
 
   ngOnChanges(changes: SimpleChanges): void {

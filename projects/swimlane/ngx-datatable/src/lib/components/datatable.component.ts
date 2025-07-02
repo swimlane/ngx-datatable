@@ -61,7 +61,7 @@ import { TableColumn } from '../types/table-column.type';
 import { toInternalColumn } from '../utils/column-helper';
 import { adjustColumnWidths, forceFillColumnWidths } from '../utils/math';
 import { sortGroupedRows, sortRows } from '../utils/sort';
-import { DatatableComponentToken } from '../utils/table-token';
+import { DATATABLE_COMPONENT_TOKEN } from '../utils/table-token';
 import { throttleable } from '../utils/throttle';
 import { groupRowsByParents, optionalGetterForProp } from '../utils/tree';
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
@@ -91,7 +91,7 @@ import { DatatableRowDetailDirective } from './row-detail/row-detail.directive';
   },
   providers: [
     {
-      provide: DatatableComponentToken,
+      provide: DATATABLE_COMPONENT_TOKEN,
       useExisting: DatatableComponent
     },
     ColumnChangesService

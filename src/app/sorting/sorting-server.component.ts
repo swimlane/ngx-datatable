@@ -68,10 +68,10 @@ export class ServerSortingComponent {
       // your server would return the result for
       // you and you would just set the rows prop
       const sort = event.sorts[0];
-      type sortProp = 'company' | 'name' | 'gender';
+      type SortProp = 'company' | 'name' | 'gender';
       rows.sort(
         (a, b) =>
-          a[sort.prop as sortProp].localeCompare(b[sort.prop as sortProp]) *
+          a[sort.prop as SortProp].localeCompare(b[sort.prop as SortProp]) *
           (sort.dir === 'desc' ? -1 : 1)
       );
 

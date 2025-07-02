@@ -3,7 +3,7 @@ import { By } from '@angular/platform-browser';
 
 import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 import { toInternalColumn } from '../../utils/column-helper';
-import { DatatableComponentToken } from '../../utils/table-token';
+import { DATATABLE_COMPONENT_TOKEN } from '../../utils/table-token';
 import { DataTableBodyRowComponent } from './body-row.component';
 import { DataTableBodyComponent } from './body.component';
 import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.component';
@@ -17,7 +17,7 @@ describe('DataTableBodyComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [DataTableBodyComponent],
-      providers: [ScrollbarHelper, { provide: DatatableComponentToken, useValue: {} }]
+      providers: [ScrollbarHelper, { provide: DATATABLE_COMPONENT_TOKEN, useValue: {} }]
     }).compileComponents();
     fixture = TestBed.createComponent(DataTableBodyComponent);
     component = fixture.componentInstance;
