@@ -32,7 +32,7 @@ import { Employee } from '../data.model';
           [footerHeight]="50"
         >
           @for (col of columns; track col) {
-          <ngx-datatable-column [name]="col.name"> </ngx-datatable-column>
+          <ngx-datatable-column [name]="col.name" />
           }
         </ngx-datatable>
       </div>

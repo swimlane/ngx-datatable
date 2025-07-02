@@ -44,7 +44,7 @@ import { DataService } from '../data.service';
             <i [innerHTML]="row['name']"></i> and <i>{{ value }}</i>
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Row Height" prop="height" [width]="80"> </ngx-datatable-column>
+        <ngx-datatable-column name="Row Height" prop="height" [width]="80" />
       </ngx-datatable>
     </div>
   `,

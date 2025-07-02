@@ -16,7 +16,7 @@ describe('DatatableComponent', () => {
   let component: TestFixtureComponent;
 
   @Component({
-    template: ` <ngx-datatable [columns]="columns" [rows]="rows" [sorts]="sorts"></ngx-datatable> `,
+    template: ` <ngx-datatable [columns]="columns" [rows]="rows" [sorts]="sorts" /> `,
     imports: [DatatableComponent]
   })
   class TestFixtureComponent {
@@ -453,12 +453,16 @@ describe('DatatableComponent With Frozen columns', () => {
   @Component({
     template: `
       <ngx-datatable [rows]="rows">
-        <ngx-datatable-column name="Name" [width]="300" [frozenLeft]="true"> </ngx-datatable-column>
-        <ngx-datatable-column name="Gender"> </ngx-datatable-column>
-        <ngx-datatable-column name="Age"> </ngx-datatable-column>
-        <ngx-datatable-column name="City" prop="address.city" [width]="150"> </ngx-datatable-column>
-        <ngx-datatable-column name="State" prop="address.state" [width]="300" [frozenRight]="true">
-        </ngx-datatable-column>
+        <ngx-datatable-column name="Name" [width]="300" [frozenLeft]="true" />
+        <ngx-datatable-column name="Gender" />
+        <ngx-datatable-column name="Age" />
+        <ngx-datatable-column name="City" prop="address.city" [width]="150" />
+        <ngx-datatable-column
+          name="State"
+          prop="address.state"
+          [width]="300"
+          [frozenRight]="true"
+        />
       </ngx-datatable>
     `,
     imports: [

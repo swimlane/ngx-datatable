@@ -45,9 +45,9 @@ import { DataService } from '../data.service';
             [rowHeight]="50"
             [scrollbarV]="true"
           >
-            <ngx-datatable-column name="Name" [width]="200"></ngx-datatable-column>
-            <ngx-datatable-column name="Gender" [width]="300"></ngx-datatable-column>
-            <ngx-datatable-column name="Age" [width]="80"></ngx-datatable-column>
+            <ngx-datatable-column name="Name" [width]="200" />
+            <ngx-datatable-column name="Gender" [width]="300" />
+            <ngx-datatable-column name="Age" [width]="80" />
           </ngx-datatable>
         </div>
 
@@ -63,9 +63,9 @@ import { DataService } from '../data.service';
             [rowHeight]="50"
             [scrollbarV]="true"
           >
-            <ngx-datatable-column name="Name" [width]="200"></ngx-datatable-column>
-            <ngx-datatable-column name="Gender" [width]="300"></ngx-datatable-column>
-            <ngx-datatable-column name="Age" [width]="80"></ngx-datatable-column>
+            <ngx-datatable-column name="Name" [width]="200" />
+            <ngx-datatable-column name="Gender" [width]="300" />
+            <ngx-datatable-column name="Age" [width]="80" />
           </ngx-datatable>
         </div>
         }

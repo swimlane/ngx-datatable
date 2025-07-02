@@ -223,8 +223,7 @@ describe('DataTableFooterComponent', () => {
       [selectedMessage]="selectedMessage"
       [pagerNextIcon]="pagerNextIcon"
       (page)="onPageEvent()"
-    >
-    </datatable-footer>
+    />
 
     <ng-template
       #testTemplate

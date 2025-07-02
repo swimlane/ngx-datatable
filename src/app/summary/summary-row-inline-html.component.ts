@@ -31,12 +31,9 @@ import { DataService } from '../data.service';
         [headerHeight]="50"
         [rows]="rows"
       >
-        <ngx-datatable-column
-          prop="name"
-          [summaryTemplate]="nameSummaryCell"
-        ></ngx-datatable-column>
-        <ngx-datatable-column name="Gender" [summaryFunc]="summaryForGender"></ngx-datatable-column>
-        <ngx-datatable-column prop="age" [summaryFunc]="avgAge"></ngx-datatable-column>
+        <ngx-datatable-column prop="name" [summaryTemplate]="nameSummaryCell" />
+        <ngx-datatable-column name="Gender" [summaryFunc]="summaryForGender" />
+        <ngx-datatable-column prop="age" [summaryFunc]="avgAge" />
       </ngx-datatable>
       <ng-template #nameSummaryCell>
         <div class="name-container">

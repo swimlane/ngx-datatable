@@ -52,7 +52,7 @@ export class MockServerResultsService {
         [ghostLoadingIndicator]="isLoading"
         [scrollbarV]="true"
         (scroll)="onScroll($event.offsetY)"
-      ></ngx-datatable>
+      />
     </div>
   `,
   styleUrl: './scrolling-server.component.css',

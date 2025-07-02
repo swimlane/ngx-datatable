@@ -31,9 +31,9 @@ import { DataService } from '../data.service';
         [rowHeight]="getRowHeight"
         [scrollbarV]="true"
       >
-        <ngx-datatable-column name="Name"></ngx-datatable-column>
-        <ngx-datatable-column name="Gender"></ngx-datatable-column>
-        <ngx-datatable-column name="Row Height" prop="height"></ngx-datatable-column>
+        <ngx-datatable-column name="Name" />
+        <ngx-datatable-column name="Gender" />
+        <ngx-datatable-column name="Row Height" prop="height" />
       </ngx-datatable>
     </div>
   `,

@@ -69,9 +69,9 @@ import { DataService } from '../data.service';
               <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)" />
             </ng-template>
           </ngx-datatable-column>
-          <ngx-datatable-column name="Name"></ngx-datatable-column>
-          <ngx-datatable-column name="Gender"></ngx-datatable-column>
-          <ngx-datatable-column name="Company"></ngx-datatable-column>
+          <ngx-datatable-column name="Name" />
+          <ngx-datatable-column name="Gender" />
+          <ngx-datatable-column name="Company" />
         </ngx-datatable>
       </div>
 

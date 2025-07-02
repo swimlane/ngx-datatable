@@ -45,8 +45,7 @@ import { DataService } from '../data.service';
           [selected]="selected"
           (activate)="onActivate($event)"
           (select)="onSelect($event)"
-        >
-        </ngx-datatable>
+        />
       </div>
 
       <div class="selected-column">

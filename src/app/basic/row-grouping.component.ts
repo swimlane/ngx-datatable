@@ -123,15 +123,10 @@ import { DataService } from '../data.service';
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column
-          name="Source"
-          prop="source"
-          editable="false"
-          [frozenLeft]="true"
-        ></ngx-datatable-column>
-        <ngx-datatable-column name="Name" prop="name" editable="true"></ngx-datatable-column>
-        <ngx-datatable-column name="Gender" prop="gender"></ngx-datatable-column>
-        <ngx-datatable-column name="Age" prop="age"></ngx-datatable-column>
+        <ngx-datatable-column name="Source" prop="source" editable="false" [frozenLeft]="true" />
+        <ngx-datatable-column name="Name" prop="name" editable="true" />
+        <ngx-datatable-column name="Gender" prop="gender" />
+        <ngx-datatable-column name="Age" prop="age" />
         <ngx-datatable-column name="Comment" prop="comment">
           <ng-template
             let-rowIndex="rowIndex"

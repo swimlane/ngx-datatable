@@ -34,8 +34,7 @@ import { DataService } from '../data.service';
         [externalSorting]="true"
         [loadingIndicator]="loading"
         (sort)="onSort($event)"
-      >
-      </ngx-datatable>
+      />
     </div>
   `,
   imports: [DatatableComponent]

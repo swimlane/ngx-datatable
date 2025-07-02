@@ -35,8 +35,7 @@ import { Page } from '../paging/model/page';
         [offset]="page.pageNumber"
         [limit]="page.size"
         (page)="setPage($event.offset)"
-      >
-      </ngx-datatable>
+      />
     </div>
   `,
   imports: [DatatableComponent]

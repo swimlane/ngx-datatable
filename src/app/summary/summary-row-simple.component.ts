@@ -46,8 +46,7 @@ import { DataService } from '../data.service';
         [headerHeight]="50"
         [summaryHeight]="55"
         [rows]="rows"
-      >
-      </ngx-datatable>
+      />
     </div>
   `,
   styleUrl: './summary-row-simple.component.scss',

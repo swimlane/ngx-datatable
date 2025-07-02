@@ -11,10 +11,10 @@ import Spy = jasmine.Spy;
 @Component({
   selector: 'test-fixture-component',
   template: `
-    <ngx-datatable-column id="t1"></ngx-datatable-column>
+    <ngx-datatable-column id="t1" />
     <ngx-datatable-column id="t2" [name]="columnName">
-      <ng-template></ng-template>
-      <ng-template></ng-template>
+      <ng-template />
+      <ng-template />
     </ngx-datatable-column>
   `,
   imports: [DataTableColumnDirective],

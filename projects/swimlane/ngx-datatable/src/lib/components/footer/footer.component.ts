@@ -13,21 +13,34 @@ import { DataTablePagerComponent } from './pager.component';
       [style.height.px]="footerHeight"
     >
       @if (footerTemplate?.template) {
-      <ng-template
-        [ngTemplateOutlet]="footerTemplate!.template!"
-        [ngTemplateOutletContext]="{
-          rowCount: rowCount,
-          pageSize: pageSize,
-          selectedCount: selectedCount,
-          curPage: curPage,
-          offset: offset
-        }"
-      >
-      </ng-template>
+        <ng-template
+          [ngTemplateOutlet]="footerTemplate!.template!"
+          [ngTemplateOutletContext]="{
+            rowCount: rowCount,
+            pageSize: pageSize,
+            selectedCount: selectedCount,
+            curPage: curPage,
+            offset: offset
+          }"
+        />
       } @else {
-      <div class="page-count">
-        @if (selectedMessage) {
-        <span> {{ selectedCount?.toLocaleString() }} {{ selectedMessage }} / </span>
+        <div class="page-count">
+          @if (selectedMessage) {
+            <span> {{ selectedCount?.toLocaleString() }} {{ selectedMessage }} / </span>
+          }
+          {{ rowCount?.toLocaleString() }} {{ totalMessage }}
+        </div>
+        @if (isVisible) {
+          <datatable-pager
+            [pagerLeftArrowIcon]="pagerLeftArrowIcon"
+            [pagerRightArrowIcon]="pagerRightArrowIcon"
+            [pagerPreviousIcon]="pagerPreviousIcon"
+            [pagerNextIcon]="pagerNextIcon"
+            [page]="curPage"
+            [size]="pageSize"
+            [count]="rowCount"
+            (change)="page.emit($event)"
+          />
         }
         {{ rowCount?.toLocaleString() }} {{ totalMessage }}
       </div>

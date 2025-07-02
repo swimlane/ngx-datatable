@@ -31,8 +31,7 @@ const noopSumFunc = (cells: any[]): void => {
       [rowHeight]="rowHeight"
       [row]="summaryRow"
       [rowIndex]="{ index: -1 }"
-    >
-    </datatable-body-row>
+    />
     }
   `,
   host: {

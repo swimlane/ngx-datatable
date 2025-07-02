@@ -46,7 +46,7 @@ import { DataService } from '../data.service';
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="Gender"> </ngx-datatable-column>
+        <ngx-datatable-column name="Gender" />
       </ngx-datatable>
     </div>
   `,

@@ -54,11 +54,10 @@ import { DataService } from '../data.service';
             [resizeable]="false"
             [headerCheckboxable]="true"
             [checkboxable]="true"
-          >
-          </ngx-datatable-column>
-          <ngx-datatable-column name="Name"></ngx-datatable-column>
-          <ngx-datatable-column name="Gender"></ngx-datatable-column>
-          <ngx-datatable-column name="Company"></ngx-datatable-column>
+          />
+          <ngx-datatable-column name="Name" />
+          <ngx-datatable-column name="Gender" />
+          <ngx-datatable-column name="Company" />
         </ngx-datatable>
       </div>
 

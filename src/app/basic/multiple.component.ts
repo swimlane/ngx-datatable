@@ -24,8 +24,7 @@ import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable
         [headerHeight]="50"
         [footerHeight]="0"
         [rowHeight]="100"
-      >
-      </ngx-datatable>
+      />
       <br />
       <ngx-datatable
         class="material"
@@ -34,8 +33,7 @@ import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable
         [columns]="columns2"
         [headerHeight]="50"
         [footerHeight]="50"
-      >
-      </ngx-datatable>
+      />
     </div>
   `,
   imports: [DatatableComponent]

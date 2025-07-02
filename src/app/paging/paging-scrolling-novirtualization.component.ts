@@ -37,8 +37,7 @@ import { Page } from './model/page';
         [limit]="page.size"
         [ghostLoadingIndicator]="isLoading > 0"
         (page)="setPage($event.offset)"
-      >
-      </ngx-datatable>
+      />
     </div>
   `,
   imports: [DatatableComponent]

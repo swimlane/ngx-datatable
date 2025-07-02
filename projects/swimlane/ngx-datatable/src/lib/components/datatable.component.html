@@ -1,34 +1,33 @@
 <div visibilityObserver (visible)="recalculate()">
   <div role="table">
     @if (headerHeight) {
-    <datatable-header
-      role="rowgroup"
-      [sorts]="sorts"
-      [sortType]="sortType"
-      [scrollbarH]="scrollbarH"
-      [innerWidth]="_innerWidth"
-      [offsetX]="_offsetX"
-      [dealsWithGroup]="groupedRows !== undefined"
-      [columns]="_internalColumns"
-      [headerHeight]="headerHeight"
-      [reorderable]="reorderable"
-      [targetMarkerTemplate]="targetMarkerTemplate"
-      [sortAscendingIcon]="cssClasses.sortAscending"
-      [sortDescendingIcon]="cssClasses.sortDescending"
-      [sortUnsetIcon]="cssClasses.sortUnset"
-      [allRowsSelected]="allRowsSelected"
-      [selectionType]="selectionType"
-      [verticalScrollVisible]="verticalScrollVisible"
-      [enableClearingSortState]="enableClearingSortState"
-      [ariaHeaderCheckboxMessage]="messages.ariaHeaderCheckboxMessage ?? 'Select all rows'"
-      (sort)="onColumnSort($event)"
-      (resize)="onColumnResize($event)"
-      (resizing)="onColumnResizing($event)"
-      (reorder)="onColumnReorder($event)"
-      (select)="onHeaderSelect()"
-      (columnContextmenu)="onColumnContextmenu($event)"
-    >
-    </datatable-header>
+      <datatable-header
+        role="rowgroup"
+        [sorts]="sorts"
+        [sortType]="sortType"
+        [scrollbarH]="scrollbarH"
+        [innerWidth]="_innerWidth"
+        [offsetX]="_offsetX"
+        [dealsWithGroup]="groupedRows !== undefined"
+        [columns]="_internalColumns"
+        [headerHeight]="headerHeight"
+        [reorderable]="reorderable"
+        [targetMarkerTemplate]="targetMarkerTemplate"
+        [sortAscendingIcon]="cssClasses.sortAscending"
+        [sortDescendingIcon]="cssClasses.sortDescending"
+        [sortUnsetIcon]="cssClasses.sortUnset"
+        [allRowsSelected]="allRowsSelected"
+        [selectionType]="selectionType"
+        [verticalScrollVisible]="verticalScrollVisible"
+        [enableClearingSortState]="enableClearingSortState"
+        [ariaHeaderCheckboxMessage]="messages.ariaHeaderCheckboxMessage ?? 'Select all rows'"
+        (sort)="onColumnSort($event)"
+        (resize)="onColumnResize($event)"
+        (resizing)="onColumnResizing($event)"
+        (reorder)="onColumnReorder($event)"
+        (select)="onHeaderSelect()"
+        (columnContextmenu)="onColumnContextmenu($event)"
+      />
     }
     <datatable-body
       tabindex="0"
@@ -80,7 +79,7 @@
       (treeAction)="onTreeAction($event)"
     >
       <ng-content select="[loading-indicator]" ngProjectAs="[loading-indicator]">
-        <datatable-progress></datatable-progress>
+        <datatable-progress />
       </ng-content>
       <ng-content select="[empty-content]" ngProjectAs="[empty-content]">
         <div role="row">
@@ -94,21 +93,20 @@
     </datatable-body>
   </div>
   @if (footerHeight) {
-  <datatable-footer
-    [rowCount]="groupedRows !== undefined ? _internalRows.length : rowCount"
-    [pageSize]="pageSize"
-    [offset]="offset"
-    [footerHeight]="footerHeight"
-    [footerTemplate]="footer"
-    [totalMessage]="messages.totalMessage ?? 'total'"
-    [pagerLeftArrowIcon]="cssClasses.pagerLeftArrow"
-    [pagerRightArrowIcon]="cssClasses.pagerRightArrow"
-    [pagerPreviousIcon]="cssClasses.pagerPrevious"
-    [selectedCount]="selected.length"
-    [selectedMessage]="!!selectionType && (messages.selectedMessage ?? 'selected')"
-    [pagerNextIcon]="cssClasses.pagerNext"
-    (page)="onFooterPage($event)"
-  >
-  </datatable-footer>
+    <datatable-footer
+      [rowCount]="groupedRows !== undefined ? _internalRows.length : rowCount"
+      [pageSize]="pageSize"
+      [offset]="offset"
+      [footerHeight]="footerHeight"
+      [footerTemplate]="footer"
+      [totalMessage]="messages.totalMessage ?? 'total'"
+      [pagerLeftArrowIcon]="cssClasses.pagerLeftArrow"
+      [pagerRightArrowIcon]="cssClasses.pagerRightArrow"
+      [pagerPreviousIcon]="cssClasses.pagerPrevious"
+      [selectedCount]="selected.length"
+      [selectedMessage]="!!selectionType && (messages.selectedMessage ?? 'selected')"
+      [pagerNextIcon]="cssClasses.pagerNext"
+      (page)="onFooterPage($event)"
+    />
   }
 </div>

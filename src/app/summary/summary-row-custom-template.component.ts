@@ -27,8 +27,7 @@ import { DataService } from '../data.service';
         [headerHeight]="50"
         [summaryHeight]="55"
         [rows]="rows"
-      >
-      </ngx-datatable>
+      />
       <ng-template #nameSummaryCell let-row="row" let-value="value">
         <div class="name-container">
           @for (name of getNames(); track name) {

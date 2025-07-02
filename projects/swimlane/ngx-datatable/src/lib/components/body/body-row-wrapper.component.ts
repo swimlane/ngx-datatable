@@ -32,30 +32,41 @@ import { DatatableGroupHeaderDirective } from './body-group-header.directive';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (isGroup(row) && groupHeader?.template) {
-    <div
-      class="datatable-group-header"
-      [style.height.px]="groupHeaderRowHeight"
-      [style.width.px]="innerWidth"
-    >
-      <div class="datatable-group-cell">
-        @if (groupHeader!.checkboxable) {
-        <div>
-          <label class="datatable-checkbox">
-            <input
-              #select
-              type="checkbox"
-              [attr.aria-label]="ariaGroupHeaderCheckboxMessage"
-              [checked]="selectedGroupRows().length === row.value.length"
-              (change)="onCheckboxChange(select.checked, row)"
-            />
-          </label>
+      <div
+        class="datatable-group-header"
+        [style.height.px]="groupHeaderRowHeight"
+        [style.width.px]="innerWidth"
+      >
+        <div class="datatable-group-cell">
+          @if (groupHeader!.checkboxable) {
+            <div>
+              <label class="datatable-checkbox">
+                <input
+                  #select
+                  type="checkbox"
+                  [attr.aria-label]="ariaGroupHeaderCheckboxMessage"
+                  [checked]="selectedGroupRows().length === row.value.length"
+                  (change)="onCheckboxChange(select.checked, row)"
+                />
+              </label>
+            </div>
+          }
+          <ng-template
+            [ngTemplateOutlet]="groupHeader!.template!"
+            [ngTemplateOutletContext]="context"
+          />
         </div>
-        }
+      </div>
+    }
+    @if ((groupHeader?.template && expanded) || !groupHeader || !groupHeader.template) {
+      <ng-content />
+    }
+    @if (rowDetail?.template && expanded) {
+      <div class="datatable-row-detail" [style.height.px]="detailRowHeight">
         <ng-template
-          [ngTemplateOutlet]="groupHeader!.template!"
+          [ngTemplateOutlet]="rowDetail!.template!"
           [ngTemplateOutletContext]="context"
-        >
-        </ng-template>
+        />
       </div>
     </div>
     } @if ((groupHeader?.template && expanded) || !groupHeader || !groupHeader.template) {

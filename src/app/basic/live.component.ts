@@ -39,9 +39,9 @@ import { DataService } from '../data.service';
         [footerHeight]="50"
         [rows]="rows"
       >
-        <ngx-datatable-column name="Name"></ngx-datatable-column>
-        <ngx-datatable-column name="Gender"></ngx-datatable-column>
-        <ngx-datatable-column name="Company"></ngx-datatable-column>
+        <ngx-datatable-column name="Name" />
+        <ngx-datatable-column name="Gender" />
+        <ngx-datatable-column name="Company" />
       </ngx-datatable>
     </div>
   `,

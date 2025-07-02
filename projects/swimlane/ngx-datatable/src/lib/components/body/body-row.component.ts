@@ -32,31 +32,33 @@ import { DataTableBodyCellComponent } from './body-cell.component';
   selector: 'datatable-body-row',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    @for (colGroup of _columnsByPin; track colGroup.type) { @if (colGroup.columns.length) {
-    <div
-      class="datatable-row-{{ colGroup.type }} datatable-row-group"
-      [style.width.px]="_columnGroupWidths[colGroup.type]"
-      [class.row-disabled]="disabled"
-    >
-      @for (column of colGroup.columns; track column.$$id; let ii = $index) {
-      <datatable-body-cell
-        role="cell"
-        tabindex="-1"
-        [row]="row"
-        [group]="group"
-        [expanded]="expanded"
-        [isSelected]="isSelected"
-        [rowIndex]="rowIndex"
-        [column]="column"
-        [rowHeight]="rowHeight"
-        [displayCheck]="displayCheck"
-        [disabled]="disabled"
-        [treeStatus]="treeStatus"
-        [ariaRowCheckboxMessage]="ariaRowCheckboxMessage"
-        (activate)="onActivate($event, ii)"
-        (treeAction)="onTreeAction()"
-      >
-      </datatable-body-cell>
+    @for (colGroup of _columnsByPin; track colGroup.type) {
+      @if (colGroup.columns.length) {
+        <div
+          class="datatable-row-{{ colGroup.type }} datatable-row-group"
+          [style.width.px]="_columnGroupWidths[colGroup.type]"
+          [class.row-disabled]="disabled"
+        >
+          @for (column of colGroup.columns; track column.$$id; let ii = $index) {
+            <datatable-body-cell
+              role="cell"
+              tabindex="-1"
+              [row]="row"
+              [group]="group"
+              [expanded]="expanded"
+              [isSelected]="isSelected"
+              [rowIndex]="rowIndex"
+              [column]="column"
+              [rowHeight]="rowHeight"
+              [displayCheck]="displayCheck"
+              [disabled]="disabled"
+              [treeStatus]="treeStatus"
+              [ariaRowCheckboxMessage]="ariaRowCheckboxMessage"
+              (activate)="onActivate($event, ii)"
+              (treeAction)="onTreeAction()"
+            />
+          }
+        </div>
       }
     </div>
     } }

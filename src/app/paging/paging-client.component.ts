@@ -28,8 +28,7 @@ import { DataService } from '../data.service';
         [headerHeight]="50"
         [footerHeight]="50"
         [limit]="10"
-      >
-      </ngx-datatable>
+      />
     </div>
   `,
   imports: [DatatableComponent]

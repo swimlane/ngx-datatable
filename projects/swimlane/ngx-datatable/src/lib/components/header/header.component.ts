@@ -50,47 +50,49 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
       (reorder)="onColumnReordered($event)"
       (targetChanged)="onTargetChanged($event)"
     >
-      @for (colGroup of _columnsByPin; track colGroup.type) { @if (colGroup.columns.length) {
-      <div
-        class="datatable-row-group"
-        [ngClass]="'datatable-row-' + colGroup.type"
-        [ngStyle]="_styleByGroup[colGroup.type]"
-      >
-        @for (column of colGroup.columns; track column.$$id) {
-        <datatable-header-cell
-          role="columnheader"
-          long-press
-          draggable
-          [pressModel]="column"
-          [pressEnabled]="reorderable && column.draggable"
-          [dragX]="reorderable && column.draggable && column.dragging"
-          [dragY]="false"
-          [dragModel]="column"
-          [dragEventTarget]="dragEventTarget"
-          [headerHeight]="headerHeight"
-          [isTarget]="column.isTarget"
-          [targetMarkerTemplate]="targetMarkerTemplate"
-          [targetMarkerContext]="column.targetMarkerContext"
-          [column]="column"
-          [showResizeHandle]="lastColumnId() !== column.$$id && column.resizeable"
-          [sortType]="sortType"
-          [sorts]="sorts"
-          [selectionType]="selectionType"
-          [sortAscendingIcon]="sortAscendingIcon"
-          [sortDescendingIcon]="sortDescendingIcon"
-          [sortUnsetIcon]="sortUnsetIcon"
-          [allRowsSelected]="allRowsSelected"
-          [enableClearingSortState]="enableClearingSortState"
-          [ariaHeaderCheckboxMessage]="ariaHeaderCheckboxMessage"
-          (resize)="onColumnResized($event)"
-          (resizing)="onColumnResizing($event)"
-          (longPressStart)="onLongPressStart($event)"
-          (longPressEnd)="onLongPressEnd($event)"
-          (sort)="onSort($event)"
-          (select)="select.emit($event)"
-          (columnContextmenu)="columnContextmenu.emit($event)"
-        >
-        </datatable-header-cell>
+      @for (colGroup of _columnsByPin; track colGroup.type) {
+        @if (colGroup.columns.length) {
+          <div
+            class="datatable-row-group"
+            [ngClass]="'datatable-row-' + colGroup.type"
+            [ngStyle]="_styleByGroup[colGroup.type]"
+          >
+            @for (column of colGroup.columns; track column.$$id) {
+              <datatable-header-cell
+                role="columnheader"
+                long-press
+                draggable
+                [pressModel]="column"
+                [pressEnabled]="reorderable && column.draggable"
+                [dragX]="reorderable && column.draggable && column.dragging"
+                [dragY]="false"
+                [dragModel]="column"
+                [dragEventTarget]="dragEventTarget"
+                [headerHeight]="headerHeight"
+                [isTarget]="column.isTarget"
+                [targetMarkerTemplate]="targetMarkerTemplate"
+                [targetMarkerContext]="column.targetMarkerContext"
+                [column]="column"
+                [showResizeHandle]="lastColumnId() !== column.$$id && column.resizeable"
+                [sortType]="sortType"
+                [sorts]="sorts"
+                [selectionType]="selectionType"
+                [sortAscendingIcon]="sortAscendingIcon"
+                [sortDescendingIcon]="sortDescendingIcon"
+                [sortUnsetIcon]="sortUnsetIcon"
+                [allRowsSelected]="allRowsSelected"
+                [enableClearingSortState]="enableClearingSortState"
+                [ariaHeaderCheckboxMessage]="ariaHeaderCheckboxMessage"
+                (resize)="onColumnResized($event)"
+                (resizing)="onColumnResizing($event)"
+                (longPressStart)="onLongPressStart($event)"
+                (longPressEnd)="onLongPressEnd($event)"
+                (sort)="onSort($event)"
+                (select)="select.emit($event)"
+                (columnContextmenu)="columnContextmenu.emit($event)"
+              />
+            }
+          </div>
         }
       </div>
       } }

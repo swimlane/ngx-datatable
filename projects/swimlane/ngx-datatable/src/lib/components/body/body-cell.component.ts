@@ -62,15 +62,16 @@ import { Keys } from '../../utils/keys';
       <ng-template
         [ngTemplateOutlet]="column.treeToggleTemplate"
         [ngTemplateOutletContext]="{ cellContext: cellContext }"
-      >
-      </ng-template>
+      />
       } } @if (!column.cellTemplate) { @if (column.bindAsUnsafeHtml) {
       <span [title]="sanitizedValue" [innerHTML]="value"> </span>
       } @else {
       <span [title]="sanitizedValue">{{ value }}</span>
       } } @else {
-      <ng-template [ngTemplateOutlet]="column.cellTemplate" [ngTemplateOutletContext]="cellContext">
-      </ng-template>
+      <ng-template
+        [ngTemplateOutlet]="column.cellTemplate"
+        [ngTemplateOutletContext]="cellContext"
+      />
       }
     </div>
   `,

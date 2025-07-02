@@ -32,8 +32,7 @@ import { DataService } from '../data.service';
         [footerHeight]="40"
         [limit]="10"
         [reorderable]="reorderable"
-      >
-      </ngx-datatable>
+      />
     </div>
   `,
   imports: [DatatableComponent]

@@ -32,15 +32,11 @@ import { DataService } from '../data.service';
         [scrollbarV]="true"
         [scrollbarH]="true"
       >
-        <ngx-datatable-column name="Name" [width]="300"></ngx-datatable-column>
-        <ngx-datatable-column name="Gender"></ngx-datatable-column>
-        <ngx-datatable-column name="Age"></ngx-datatable-column>
-        <ngx-datatable-column name="City" prop="address.city" [width]="300"></ngx-datatable-column>
-        <ngx-datatable-column
-          name="State"
-          prop="address.state"
-          [width]="300"
-        ></ngx-datatable-column>
+        <ngx-datatable-column name="Name" [width]="300" />
+        <ngx-datatable-column name="Gender" />
+        <ngx-datatable-column name="Age" />
+        <ngx-datatable-column name="City" prop="address.city" [width]="300" />
+        <ngx-datatable-column name="State" prop="address.state" [width]="300" />
       </ngx-datatable>
     </div>
   `,

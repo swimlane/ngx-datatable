@@ -35,8 +35,7 @@ import { nextSortDir } from '../../utils/sort';
       <ng-template
         [ngTemplateOutlet]="targetMarkerTemplate!"
         [ngTemplateOutletContext]="targetMarkerContext"
-      >
-      </ng-template>
+      />
       } @if (isCheckboxable) {
       <label class="datatable-checkbox">
         <input
@@ -50,8 +49,7 @@ import { nextSortDir } from '../../utils/sort';
       <ng-template
         [ngTemplateOutlet]="column.headerTemplate"
         [ngTemplateOutletContext]="cellContext"
-      >
-      </ng-template>
+      />
       } @else {
       <span class="datatable-header-cell-wrapper">
         <span class="datatable-header-cell-label draggable" (click)="onSort()">

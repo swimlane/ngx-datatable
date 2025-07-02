@@ -46,8 +46,7 @@ import { DataService } from '../data.service';
         [reorderable]="reorderable"
         [swapColumns]="swapColumns"
         [targetMarkerTemplate]="targetMarkerTemplate"
-      >
-      </ngx-datatable>
+      />
       <ng-template #targetMarkerTemplate let-class="class">
         <div [ngClass]="class">
           <div class="icon datatable-icon-down"></div>
