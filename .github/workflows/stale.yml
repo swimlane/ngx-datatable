@@ -9,7 +9,7 @@ jobs:
   stale:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/stale@v3
+      - uses: actions/stale@v9
         with:
           # A full list of config options can be found at: https://github.com/actions/stale/blob/main/action.yml
           days-before-stale: 60
