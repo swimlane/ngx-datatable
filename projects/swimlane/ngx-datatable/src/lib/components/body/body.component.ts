@@ -162,7 +162,7 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
         <div [style.transform]="renderOffset()">
           @for (group of rowsToRender(); track rowTrackingFn(i, group); let i = $index) {
             @if (!group && ghostLoadingIndicator()) {
-              <ghost-loader cellMode [columns]="columns" [pageSize]="1" [rowHeight]="rowHeight()" />
+              <ghost-loader [columns]="columns" [pageSize]="1" [rowHeight]="rowHeight()" />
             } @else if (group) {
               @let disableRowCheck = this.disableRowCheck();
               @let disabled = isRow(group) && disableRowCheck && disableRowCheck(group);

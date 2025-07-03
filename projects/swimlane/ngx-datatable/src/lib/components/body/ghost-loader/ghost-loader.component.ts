@@ -1,11 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  input,
-  numberAttribute
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, numberAttribute, input } from '@angular/core';
 
 import { TableColumnInternal } from '../../../types/internal.types';
 
@@ -21,5 +15,13 @@ export class DataTableGhostLoaderComponent {
   readonly pageSize = input.required<number, unknown>({ transform: numberAttribute });
   readonly rowHeight = input.required<number | 'auto' | ((row?: any) => number)>();
   readonly ghostBodyHeight = input<number, unknown>(undefined, { transform: numberAttribute });
-  readonly cellMode = input(false, { transform: booleanAttribute });
+
+  protected readonly rowHeightComputed = () => {
+    const rowHeight = this.rowHeight();
+    if (typeof rowHeight === 'function') {
+      // If rowHeight is a function, we cannot determine a fixed height here.
+      return 'auto';
+    }
+    return rowHeight === 'auto' ? 'auto' : rowHeight + 'px';
+  };
 }
