@@ -75,18 +75,16 @@ export class MultiDisableSelectionComponent {
   }
 
   onSelect({ selected }: SelectEvent<Employee>) {
-    console.log('Select Event', selected, this.selected);
-
     this.selected.splice(0, this.selected.length);
     this.selected.push(...selected);
   }
 
   onActivate(event: ActivateEvent<Employee>) {
+    // eslint-disable-next-line no-console
     console.log('Activate Event', event);
   }
 
   checkSelectable(event: Employee) {
-    console.log('Checking if selectable', event);
     return event.name !== 'Ethel Price';
   }
 }

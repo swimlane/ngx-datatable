@@ -66,6 +66,7 @@ export class VirtualScrollComponent {
   onPage(event: PageEvent) {
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
+      // eslint-disable-next-line no-console
       console.log('paged!', event);
     }, 100);
   }

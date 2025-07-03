@@ -82,10 +82,12 @@ export class SingleSelectionComponent {
   }
 
   onSelect({ selected }: SelectEvent<Employee>) {
+    // eslint-disable-next-line no-console
     console.log('Select Event', selected, this.selected);
   }
 
   onActivate(event: ActivateEvent<Employee>) {
+    // eslint-disable-next-line no-console
     console.log('Activate Event', event);
   }
 }

@@ -56,10 +56,12 @@ export class CellSelectionComponent {
   }
 
   onSelect(event: SelectEvent<Employee>) {
+    // eslint-disable-next-line no-console
     console.log('Event: select', event, this.selected);
   }
 
   onActivate(event: ActivateEvent<Employee>) {
+    // eslint-disable-next-line no-console
     console.log('Event: activate', event);
   }
 }

@@ -224,7 +224,6 @@ export class RowGroupingComponent {
             ) {
               expectedPaymentDealtWith = false;
             }
-            console.log('expectedPaymentDealtWith', expectedPaymentDealtWith);
           }
         }
       }
@@ -238,7 +237,6 @@ export class RowGroupingComponent {
         ) {
           expectedPaymentDealtWith = false;
         }
-        console.log('expectedPaymentDealtWith', expectedPaymentDealtWith);
       }
     }
 
@@ -250,8 +248,6 @@ export class RowGroupingComponent {
           rowFilter.exppaypending === 0 && rowFilter.exppayyes === 0 && rowFilter.exppayno === 0
       ).length === 0
     ) {
-      console.log('expected payment dealt with');
-
       // check if can set the group status
       const numberOfExpPayYes = group.filter(rowFilter => rowFilter.exppayyes === 1).length;
       const numberOfSourceFunder = group.filter(
@@ -263,11 +259,6 @@ export class RowGroupingComponent {
       const numberOfSourceManual = group.filter(
         rowFilter => rowFilter.exppayyes === 1 && rowFilter.source === 'Manual'
       ).length;
-
-      console.log('numberOfExpPayYes', numberOfExpPayYes);
-      console.log('numberOfSourceFunder', numberOfSourceFunder);
-      console.log('numberOfSourceCalculated', numberOfSourceCalculated);
-      console.log('numberOfSourceManual', numberOfSourceManual);
 
       if (numberOfExpPayYes > 0) {
         if (numberOfExpPayYes === numberOfSourceFunder) {
@@ -283,6 +274,8 @@ export class RowGroupingComponent {
     }
 
     group[0].groupstatus = groupStatus;
+    // eslint-disable-next-line no-console
+    console.log('expectedPaymentDealtWith', expectedPaymentDealtWith);
   }
 
   updateValue(event: Event, cell: 'comment', rowIndex: number) {
@@ -292,11 +285,11 @@ export class RowGroupingComponent {
   }
 
   toggleExpandGroup(group: Group<GroupedEmployee>) {
-    console.log('Toggled Expand Group!', group);
     this.table.groupHeader!.toggleExpandGroup(group);
   }
 
   onDetailToggle(event: GroupToggleEvents<GroupedEmployee>) {
+    // eslint-disable-next-line no-console
     console.log('Detail Toggled', event);
   }
 }

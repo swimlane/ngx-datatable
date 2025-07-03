@@ -78,13 +78,12 @@ export class MultiClickSelectionComponent {
   }
 
   onSelect({ selected }: SelectEvent<Employee>) {
-    console.log('Select Event', selected, this.selected);
-
     this.selected.splice(0, this.selected.length);
     this.selected.push(...selected);
   }
 
   onActivate(event: ActivateEvent<TableColumn>) {
+    // eslint-disable-next-line no-console
     console.log('Activate Event', event);
   }
 }

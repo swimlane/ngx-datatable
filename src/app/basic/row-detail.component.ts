@@ -124,16 +124,17 @@ export class RowDetailsComponent {
   onPage(event: PageEvent) {
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
+      // eslint-disable-next-line no-console
       console.log('paged!', event);
     }, 100);
   }
 
   toggleExpandRow(row: FullEmployee) {
-    console.log('Toggled Expand Row!', row);
     this.table.rowDetail!.toggleExpandRow(row);
   }
 
   onDetailToggle(event: DetailToggleEvents<FullEmployee>) {
+    // eslint-disable-next-line no-console
     console.log('Detail Toggled', event);
   }
 }
