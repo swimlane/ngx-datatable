@@ -125,6 +125,7 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
               @let disabled = isRow(group) && disableRowCheck && disableRowCheck(group);
               <!-- $any(group) is needed as the typing is broken and the feature as well. See #147. -->
               <!-- FIXME: This has to be revisited and fixed. -->
+              <!-- eslint-disable  @angular-eslint/template/no-any -->
               <datatable-row-wrapper
                 [attr.hidden]="
                   ghostLoadingIndicator && (!rowCount || !virtualization || !scrollbarV)

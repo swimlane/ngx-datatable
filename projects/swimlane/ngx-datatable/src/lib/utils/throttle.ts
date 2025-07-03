@@ -2,7 +2,7 @@
  * Throttle a function
  */
 export const throttle = (func: any, wait: number, options?: any) => {
-  options = options || {};
+  options ??= {};
   let args: any;
   let result: any;
   let timeout: any = null;

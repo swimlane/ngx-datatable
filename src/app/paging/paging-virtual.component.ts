@@ -100,9 +100,7 @@ export class VirtualPagingComponent {
 
       // Create array to store data if missing
       // The array should have the correct number of with "holes" for missing data
-      if (!this.rows) {
-        this.rows = new Array<Employee>(this.totalElements || 0);
-      }
+      this.rows ??= new Array<Employee>(this.totalElements || 0);
 
       // Calc starting row offset
       // This is the position to insert the new data
