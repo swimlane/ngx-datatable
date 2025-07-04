@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import {
   DataTableColumnCellTreeToggle,
   DataTableColumnDirective,
@@ -79,11 +79,10 @@ import { DataService } from '../data.service';
 export class FullScreenTreeComponent {
   rows: (FullEmployee & { treeStatus: TreeStatus; parentId?: string })[] = [];
   lastIndex = 15;
+  private cd = inject(ChangeDetectorRef);
+  private dataService = inject(DataService);
 
-  constructor(
-    private cd: ChangeDetectorRef,
-    private dataService: DataService
-  ) {
+  constructor() {
     this.dataService.load('100k.json').subscribe(data => {
       data = data.slice(1, this.lastIndex);
       this.rows = data.map(d => ({

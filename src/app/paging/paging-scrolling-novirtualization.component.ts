@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { Component, inject, OnInit } from '@angular/core';
+import { DatatableComponent } from 'projects/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
 import { MockServerResultsService } from './mock-server-results-service';
@@ -52,8 +52,7 @@ export class PagingScrollingNoVirtualizationComponent implements OnInit {
   rows: Employee[] = [];
 
   isLoading = 0;
-
-  constructor(private serverResultsService: MockServerResultsService) {}
+  private serverResultsService = inject(MockServerResultsService);
 
   ngOnInit() {
     this.setPage(0);

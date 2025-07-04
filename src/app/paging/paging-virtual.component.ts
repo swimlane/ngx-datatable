@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { DatatableComponent, PageEvent } from 'projects/swimlane/ngx-datatable/src/public-api';
+import { Component, inject } from '@angular/core';
+import { DatatableComponent, PageEvent } from 'projects/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
 import { MockServerResultsService } from './mock-server-results-service';
@@ -51,16 +51,14 @@ import { Page } from './model/page';
 })
 export class VirtualPagingComponent {
   totalElements = 0;
-  pageNumber: number;
+  pageNumber = 0;
   rows?: Employee[];
   cache: Record<string, boolean> = {};
   cachePageSize = 0;
 
   isLoading = 0;
 
-  constructor(private serverResultsService: MockServerResultsService) {
-    this.pageNumber = 0;
-  }
+  private serverResultsService = inject(MockServerResultsService);
 
   setPage(pageInfo: PageEvent) {
     // Current page number is determined by last call to setPage
