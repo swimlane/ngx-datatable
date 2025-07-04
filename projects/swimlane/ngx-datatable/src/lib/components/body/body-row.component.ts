@@ -63,7 +63,14 @@ import { DataTableBodyCellComponent } from './body-cell.component';
     }
   `,
   styleUrl: './body-row.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class]': 'cssClass',
+    '[class.active]': 'isSelected',
+    '[class.datatable-row-odd]': 'innerRowIndex % 2 !== 0',
+    '[class.datatable-row-even]': 'innerRowIndex % 2 === 0',
+    '[class.row-disabled]': 'disabled'
+  }
 })
 export class DataTableBodyRowComponent<TRow extends Row = any> implements DoCheck, OnChanges {
   private cd = inject(ChangeDetectorRef);
@@ -104,21 +111,8 @@ export class DataTableBodyRowComponent<TRow extends Row = any> implements DoChec
 
   @Input() disabled?: boolean;
 
-  @HostBinding('class')
   get cssClass() {
     let cls = 'datatable-body-row';
-    if (this.isSelected) {
-      cls += ' active';
-    }
-    if (this.innerRowIndex % 2 !== 0) {
-      cls += ' datatable-row-odd';
-    }
-    if (this.innerRowIndex % 2 === 0) {
-      cls += ' datatable-row-even';
-    }
-    if (this.disabled) {
-      cls += ' row-disabled';
-    }
 
     if (this.rowClass) {
       const res = this.rowClass(this.row);
@@ -224,7 +218,7 @@ export class DataTableBodyRowComponent<TRow extends Row = any> implements DoChec
   }
 
   /** Returns the row index, or if in a group, the index within a group. */
-  private get innerRowIndex(): number {
+  protected get innerRowIndex(): number {
     return this.rowIndex?.indexInGroup ?? this.rowIndex?.index ?? 0;
   }
 }
