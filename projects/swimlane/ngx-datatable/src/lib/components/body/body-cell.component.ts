@@ -14,15 +14,7 @@ import {
 } from '@angular/core';
 
 import { CellActiveEvent, RowIndex, TableColumnInternal } from '../../types/internal.types';
-import {
-  ActivateEvent,
-  CellContext,
-  Row,
-  RowOrGroup,
-  SortDirection,
-  SortPropDir,
-  TreeStatus
-} from '../../types/public.types';
+import { ActivateEvent, CellContext, Row, RowOrGroup, TreeStatus } from '../../types/public.types';
 import { Keys } from '../../utils/keys';
 
 @Component({
@@ -176,15 +168,6 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
     return this._row;
   }
 
-  @Input() set sorts(val: SortPropDir[]) {
-    this._sorts = val;
-    this.sortDir = this.calcSortDir(val);
-  }
-
-  get sorts(): SortPropDir[] {
-    return this._sorts;
-  }
-
   @Input() set treeStatus(status: TreeStatus | undefined) {
     if (
       status !== 'collapsed' &&
@@ -238,17 +221,8 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
         }
       }
     }
-    if (!this.sortDir) {
-      cls += ' sort-active';
-    }
     if (this.isFocused && !this._disabled) {
       cls += ' active';
-    }
-    if (this.sortDir === SortDirection.asc) {
-      cls += ' sort-asc';
-    }
-    if (this.sortDir === SortDirection.desc) {
-      cls += ' sort-desc';
     }
     if (this._disabled) {
       cls += ' row-disabled';
@@ -283,13 +257,11 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
 
   sanitizedValue!: string;
   value: any;
-  sortDir?: SortDirection;
   isFocused = false;
 
   cellContext: CellContext<TRow>;
 
   private _isSelected?: boolean;
-  private _sorts!: SortPropDir[];
   private _column!: TableColumnInternal;
   private _row!: TRow;
   private _group?: TRow[];
@@ -426,16 +398,6 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
       cellElement: this._element,
       treeStatus: 'collapsed'
     });
-  }
-
-  calcSortDir(sorts: SortPropDir[]): SortDirection | undefined {
-    if (!sorts) {
-      return undefined;
-    }
-
-    const sort = sorts.find(s => s.prop === this.column.prop);
-
-    return sort?.dir as SortDirection;
   }
 
   stripHtml(html: string): string {
