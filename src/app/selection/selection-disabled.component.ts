@@ -50,8 +50,7 @@ import { DataService } from '../data.service';
             <li>
               {{ sel.name }}
             </li>
-          }
-          @if (!selected.length) {
+          } @empty {
             <li>No Selections</li>
           }
         </ul>
