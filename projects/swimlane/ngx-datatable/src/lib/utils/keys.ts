@@ -1,19 +1,6 @@
-/**
- * @deprecated The constant `Keys` should no longer be used. Instead use the value directly:
- * ```
- * // old
- * const keys: Keys = Keys.up;
- * // new
- * const keys: Keys = 'up';
- * ```
- */
-export const Keys = {
-  up: 'ArrowUp',
-  down: 'ArrowDown',
-  return: 'Enter',
-  escape: 'Escape',
-  left: 'ArrowLeft',
-  right: 'ArrowRight'
-} as const;
-
-export type Keys = typeof Keys[keyof typeof Keys];
+export const ARROW_UP = 'ArrowUp';
+export const ARROW_DOWN = 'ArrowDown';
+export const ENTER = 'Enter';
+export const ESCAPE = 'Escape';
+export const ARROW_LEFT = 'ArrowLeft';
+export const ARROW_RIGHT = 'ArrowRight';

@@ -25,7 +25,7 @@ import {
 } from '../../types/internal.types';
 import { ActivateEvent, Row, RowOrGroup, TreeStatus } from '../../types/public.types';
 import { columnGroupWidths, columnsByPin, columnsByPinArr } from '../../utils/column';
-import { Keys } from '../../utils/keys';
+import { ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, ARROW_UP, ENTER } from '../../utils/keys';
 import { DataTableBodyCellComponent } from './body-cell.component';
 
 @Component({
@@ -175,11 +175,11 @@ export class DataTableBodyRowComponent<TRow extends Row = any> implements DoChec
     const isTargetRow = event.target === this._element;
 
     const isAction =
-      key === Keys.return ||
-      key === Keys.down ||
-      key === Keys.up ||
-      key === Keys.left ||
-      key === Keys.right;
+      key === ENTER ||
+      key === ARROW_DOWN ||
+      key === ARROW_UP ||
+      key === ARROW_LEFT ||
+      key === ARROW_RIGHT;
 
     const isCtrlA = event.key === 'a' && (event.ctrlKey || event.metaKey);
 

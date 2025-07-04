@@ -15,7 +15,7 @@ import {
 
 import { CellActiveEvent, RowIndex, TableColumnInternal } from '../../types/internal.types';
 import { ActivateEvent, CellContext, Row, RowOrGroup, TreeStatus } from '../../types/public.types';
-import { Keys } from '../../utils/keys';
+import { ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, ARROW_UP, ENTER } from '../../utils/keys';
 
 @Component({
   selector: 'datatable-body-cell',
@@ -363,11 +363,11 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
     const isTargetCell = event.target === this._element;
 
     const isAction =
-      key === Keys.return ||
-      key === Keys.down ||
-      key === Keys.up ||
-      key === Keys.left ||
-      key === Keys.right;
+      key === ENTER ||
+      key === ARROW_DOWN ||
+      key === ARROW_UP ||
+      key === ARROW_LEFT ||
+      key === ARROW_RIGHT;
 
     if (isAction && isTargetCell) {
       event.preventDefault();

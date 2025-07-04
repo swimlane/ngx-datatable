@@ -30,7 +30,7 @@ import {
   SelectionType
 } from '../../types/public.types';
 import { columnGroupWidths, columnsByPin } from '../../utils/column';
-import { Keys } from '../../utils/keys';
+import { ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, ARROW_UP, ENTER } from '../../utils/keys';
 import { RowHeightCache } from '../../utils/row-height-cache';
 import { selectRows, selectRowsBetween } from '../../utils/selection';
 import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive';
@@ -936,7 +936,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     if (select) {
       this.selectRow(event, index, row);
     } else if (type === 'keydown') {
-      if ((event as KeyboardEvent).key === Keys.return) {
+      if ((event as KeyboardEvent).key === ENTER) {
         this.selectRow(event, index, row);
       } else if (
         (event as KeyboardEvent).key === 'a' &&
@@ -953,7 +953,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   onKeyboardFocus(model: ActivateEvent<TRow>): void {
     const { key } = model.event as KeyboardEvent;
     const shouldFocus =
-      key === Keys.up || key === Keys.down || key === Keys.right || key === Keys.left;
+      key === ARROW_UP || key === ARROW_DOWN || key === ARROW_RIGHT || key === ARROW_LEFT;
 
     if (shouldFocus) {
       const isCellSelection = this.selectionType === SelectionType.cell;
@@ -971,21 +971,21 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     }
   }
 
-  focusRow(rowElement: HTMLElement, key: Keys): void {
+  focusRow(rowElement: HTMLElement, key: string): void {
     const nextRowElement = this.getPrevNextRow(rowElement, key);
     if (nextRowElement) {
       nextRowElement.focus();
     }
   }
 
-  getPrevNextRow(rowElement: HTMLElement, key: Keys): any {
+  getPrevNextRow(rowElement: HTMLElement, key: string): any {
     const parentElement = rowElement.parentElement;
 
     if (parentElement) {
       let focusElement: Element | null = null;
-      if (key === Keys.up) {
+      if (key === ARROW_UP) {
         focusElement = parentElement.previousElementSibling;
-      } else if (key === Keys.down) {
+      } else if (key === ARROW_DOWN) {
         focusElement = parentElement.nextElementSibling;
       }
 
@@ -995,14 +995,19 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     }
   }
 
-  focusCell(cellElement: HTMLElement, rowElement: HTMLElement, key: Keys, cellIndex: number): void {
+  focusCell(
+    cellElement: HTMLElement,
+    rowElement: HTMLElement,
+    key: string,
+    cellIndex: number
+  ): void {
     let nextCellElement: Element | null = null;
 
-    if (key === Keys.left) {
+    if (key === ARROW_LEFT) {
       nextCellElement = cellElement.previousElementSibling;
-    } else if (key === Keys.right) {
+    } else if (key === ARROW_RIGHT) {
       nextCellElement = cellElement.nextElementSibling;
-    } else if (key === Keys.up || key === Keys.down) {
+    } else if (key === ARROW_UP || key === ARROW_DOWN) {
       const nextRowElement = this.getPrevNextRow(rowElement, key);
       if (nextRowElement) {
         const children = nextRowElement.getElementsByClassName('datatable-body-cell');
