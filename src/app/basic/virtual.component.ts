@@ -11,6 +11,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'virtual-scroll-demo',
+  imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellDirective],
   template: `
     <div>
       <h3>
@@ -47,8 +48,7 @@ import { DataService } from '../data.service';
         <ngx-datatable-column name="Row Height" prop="height" [width]="80" />
       </ngx-datatable>
     </div>
-  `,
-  imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellDirective]
+  `
 })
 export class VirtualScrollComponent {
   rows: (FullEmployee & { height: number })[] = [];

@@ -6,6 +6,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'filter-demo',
+  imports: [DatatableComponent],
   template: `
     <div>
       <h3>
@@ -37,8 +38,7 @@ import { DataService } from '../data.service';
         [rows]="rows"
       />
     </div>
-  `,
-  imports: [DatatableComponent]
+  `
 })
 export class FilterComponent {
   rows: Employee[] = [];

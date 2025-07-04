@@ -11,6 +11,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'full-screen-tree-demo',
+  imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellTreeToggle],
   template: `
     <div>
       <h3>
@@ -52,13 +53,16 @@ import { DataService } from '../data.service';
               (click)="tree.onTreeAction()"
             >
               @if (tree.treeStatus === 'loading') {
-              <span> ... </span>
-              } @if (tree.treeStatus === 'collapsed') {
-              <span> ↑ </span>
-              } @if (tree.treeStatus === 'expanded') {
-              <span> ↓ </span>
-              } @if (tree.treeStatus === 'disabled') {
-              <span> ⃠ </span>
+                <span> ... </span>
+              }
+              @if (tree.treeStatus === 'collapsed') {
+                <span> ↑ </span>
+              }
+              @if (tree.treeStatus === 'expanded') {
+                <span> ↓ </span>
+              }
+              @if (tree.treeStatus === 'disabled') {
+                <span> ⃠ </span>
               }
             </button>
           </ng-template>
@@ -70,14 +74,16 @@ import { DataService } from '../data.service';
       </ngx-datatable>
     </div>
   `,
-  styles: ['.icon {height: 10px; width: 10px; }', '.disabled {opacity: 0.5; }'],
-  imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellTreeToggle]
+  styles: ['.icon {height: 10px; width: 10px; }', '.disabled {opacity: 0.5; }']
 })
 export class FullScreenTreeComponent {
   rows: (FullEmployee & { treeStatus: TreeStatus; parentId?: string })[] = [];
   lastIndex = 15;
 
-  constructor(private cd: ChangeDetectorRef, private dataService: DataService) {
+  constructor(
+    private cd: ChangeDetectorRef,
+    private dataService: DataService
+  ) {
     this.dataService.load('100k.json').subscribe(data => {
       data = data.slice(1, this.lastIndex);
       this.rows = data.map(d => ({

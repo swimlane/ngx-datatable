@@ -10,6 +10,7 @@ import Spy = jasmine.Spy;
 
 @Component({
   selector: 'test-fixture-component',
+  imports: [DataTableColumnDirective],
   template: `
     <ngx-datatable-column id="t1" />
     <ngx-datatable-column id="t2" [name]="columnName">
@@ -17,7 +18,6 @@ import Spy = jasmine.Spy;
       <ng-template />
     </ngx-datatable-column>
   `,
-  imports: [DataTableColumnDirective],
   providers: [ColumnChangesService] // usually provided by the table.component
 })
 class TestFixtureComponent {

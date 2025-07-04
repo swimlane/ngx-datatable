@@ -7,20 +7,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'column-reorder-demo',
-  styles: `
-    .icon {
-      position: absolute;
-    }
-    .datatable-icon-down {
-      top: 0px;
-    }
-    .datatable-icon-up {
-      top: 40px;
-    }
-    .dragFromLeft .icon {
-      left: -13px;
-    }
-  `,
+  imports: [DatatableComponent, NgClass],
   template: `
     <div>
       <h3>
@@ -55,7 +42,20 @@ import { DataService } from '../data.service';
       </ng-template>
     </div>
   `,
-  imports: [DatatableComponent, NgClass]
+  styles: `
+    .icon {
+      position: absolute;
+    }
+    .datatable-icon-down {
+      top: 0px;
+    }
+    .datatable-icon-up {
+      top: 40px;
+    }
+    .dragFromLeft .icon {
+      left: -13px;
+    }
+  `
 })
 export class ColumnReorderComponent {
   rows: Employee[] = [];

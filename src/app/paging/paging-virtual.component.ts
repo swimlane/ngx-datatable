@@ -7,7 +7,7 @@ import { Page } from './model/page';
 
 @Component({
   selector: 'virtual-paging-demo',
-  providers: [MockServerResultsService],
+  imports: [DatatableComponent],
   template: `
     <div>
       <h3>
@@ -47,7 +47,7 @@ import { Page } from './model/page';
     </div>
   `,
   styleUrl: './paging-virtual.component.scss',
-  imports: [DatatableComponent]
+  providers: [MockServerResultsService]
 })
 export class VirtualPagingComponent {
   totalElements = 0;

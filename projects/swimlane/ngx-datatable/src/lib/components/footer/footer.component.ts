@@ -6,6 +6,7 @@ import { DatatableFooterDirective } from './footer.directive';
 import { DataTablePagerComponent } from './pager.component';
 @Component({
   selector: 'datatable-footer',
+  imports: [NgClass, NgTemplateOutlet, DataTablePagerComponent],
   template: `
     <div
       class="datatable-footer-inner"
@@ -45,12 +46,11 @@ import { DataTablePagerComponent } from './pager.component';
       }
     </div>
   `,
-  host: {
-    class: 'datatable-footer'
-  },
   styleUrl: './footer.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgClass, NgTemplateOutlet, DataTablePagerComponent]
+  host: {
+    class: 'datatable-footer'
+  }
 })
 export class DataTableFooterComponent {
   @Input() footerHeight!: number;

@@ -9,6 +9,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'column-pinning-demo',
+  imports: [DatatableComponent, DataTableColumnDirective],
   template: `
     <div>
       <h3>
@@ -44,8 +45,7 @@ import { DataService } from '../data.service';
         />
       </ngx-datatable>
     </div>
-  `,
-  imports: [DatatableComponent, DataTableColumnDirective]
+  `
 })
 export class ColumnPinningComponent {
   rows: FullEmployee[] = [];

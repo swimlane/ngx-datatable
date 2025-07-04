@@ -6,6 +6,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'comparator-sorting-demo',
+  imports: [DatatableComponent],
   template: `
     <div>
       <h3>
@@ -29,8 +30,7 @@ import { DataService } from '../data.service';
         [footerHeight]="50"
       />
     </div>
-  `,
-  imports: [DatatableComponent]
+  `
 })
 export class SortingComparatorComponent {
   rows: Employee[] = [];

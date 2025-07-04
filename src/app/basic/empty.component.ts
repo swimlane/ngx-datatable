@@ -3,6 +3,7 @@ import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable
 
 @Component({
   selector: 'empty-demo',
+  imports: [DatatableComponent],
   template: `
     <div>
       <h3>
@@ -29,8 +30,7 @@ import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable
         >
       </ngx-datatable>
     </div>
-  `,
-  imports: [DatatableComponent]
+  `
 })
 export class BasicEmptyComponent {
   columns: TableColumn[] = [

@@ -45,6 +45,17 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
 
 @Component({
   selector: 'datatable-body',
+  imports: [
+    DataTableGhostLoaderComponent,
+    ScrollerComponent,
+    DataTableSummaryRowComponent,
+    DataTableRowWrapperComponent,
+    DatatableRowDefInternalDirective,
+    DataTableBodyRowComponent,
+    DraggableDirective,
+    NgTemplateOutlet,
+    DatatableBodyRowDirective
+  ],
   template: `
     @if (loadingIndicator) {
       <div class="custom-loading-indicator-wrapper">
@@ -215,22 +226,11 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
       </datatable-scroller>
     }
   `,
+  styleUrl: './body.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'datatable-body'
-  },
-  styleUrl: './body.component.scss',
-  imports: [
-    DataTableGhostLoaderComponent,
-    ScrollerComponent,
-    DataTableSummaryRowComponent,
-    DataTableRowWrapperComponent,
-    DatatableRowDefInternalDirective,
-    DataTableBodyRowComponent,
-    DraggableDirective,
-    NgTemplateOutlet,
-    DatatableBodyRowDirective
-  ]
+  }
 })
 export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, OnDestroy {
   cd = inject(ChangeDetectorRef);

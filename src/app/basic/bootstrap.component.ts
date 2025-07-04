@@ -6,6 +6,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'basic-bootstrap-theme-demo',
+  imports: [DatatableComponent],
   template: `
     <div>
       <h3>
@@ -34,8 +35,7 @@ import { DataService } from '../data.service';
         [reorderable]="reorderable"
       />
     </div>
-  `,
-  imports: [DatatableComponent]
+  `
 })
 export class BootstrapThemeComponent {
   rows: Employee[] = [];

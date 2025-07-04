@@ -27,7 +27,7 @@ export class MockServerResultsService {
 
 @Component({
   selector: 'server-scrolling-demo',
-  providers: [MockServerResultsService],
+  imports: [DatatableComponent],
   template: `
     <div>
       <h3>
@@ -56,7 +56,7 @@ export class MockServerResultsService {
     </div>
   `,
   styleUrl: './scrolling-server.component.css',
-  imports: [DatatableComponent]
+  providers: [MockServerResultsService]
 })
 export class ServerScrollingComponent implements OnInit {
   readonly headerHeight = 50;
@@ -66,7 +66,10 @@ export class ServerScrollingComponent implements OnInit {
   rows: Employee[] = [];
   isLoading?: boolean;
 
-  constructor(private serverResultsService: MockServerResultsService, private el: ElementRef) {}
+  constructor(
+    private serverResultsService: MockServerResultsService,
+    private el: ElementRef
+  ) {}
 
   ngOnInit() {
     this.onScroll(0);

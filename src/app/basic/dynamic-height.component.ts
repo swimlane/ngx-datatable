@@ -9,6 +9,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'dynamic-height-demo',
+  imports: [DatatableComponent, DataTableColumnDirective],
   template: `
     <div>
       <h3>
@@ -36,8 +37,7 @@ import { DataService } from '../data.service';
         <ngx-datatable-column name="Row Height" prop="height" />
       </ngx-datatable>
     </div>
-  `,
-  imports: [DatatableComponent, DataTableColumnDirective]
+  `
 })
 export class DynamicHeightComponent {
   rows: (FullEmployee & { height: number })[] = [];

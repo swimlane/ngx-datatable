@@ -29,7 +29,7 @@ import { DatatableGroupHeaderDirective } from './body-group-header.directive';
 
 @Component({
   selector: 'datatable-row-wrapper',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [NgTemplateOutlet],
   template: `
     @if (isGroup(row) && groupHeader?.template) {
       <div
@@ -70,11 +70,11 @@ import { DatatableGroupHeaderDirective } from './body-group-header.directive';
       </div>
     }
   `,
+  styleUrl: './body-row-wrapper.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'datatable-row-wrapper'
-  },
-  styleUrl: './body-row-wrapper.component.scss',
-  imports: [NgTemplateOutlet]
+  }
 })
 export class DataTableRowWrapperComponent<TRow extends Row = any>
   implements DoCheck, OnInit, OnChanges

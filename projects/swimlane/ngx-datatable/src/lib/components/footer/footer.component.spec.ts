@@ -208,6 +208,7 @@ describe('DataTableFooterComponent', () => {
  * test host component
  */
 @Component({
+  imports: [DataTableFooterComponent],
   template: `
     <datatable-footer
       [rowCount]="rowCount"
@@ -241,8 +242,7 @@ describe('DataTableFooterComponent', () => {
         <li>offset {{ offset }}</li>
       </ul>
     </ng-template>
-  `,
-  imports: [DataTableFooterComponent]
+  `
 })
 class TestFixtureComponent {
   footerHeight = 0;

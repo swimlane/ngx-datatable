@@ -6,6 +6,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'basic-auto-demo',
+  imports: [DatatableComponent],
   template: `
     <div>
       <h3>
@@ -31,8 +32,7 @@ import { DataService } from '../data.service';
         [reorderable]="reorderable"
       />
     </div>
-  `,
-  imports: [DatatableComponent]
+  `
 })
 export class BasicAutoComponent {
   rows: Employee[] = [];

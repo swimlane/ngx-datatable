@@ -6,6 +6,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'client-paging-demo',
+  imports: [DatatableComponent],
   template: `
     <div>
       <h3>
@@ -30,8 +31,7 @@ import { DataService } from '../data.service';
         [limit]="10"
       />
     </div>
-  `,
-  imports: [DatatableComponent]
+  `
 })
 export class ClientPagingComponent {
   rows: Employee[] = [];

@@ -3,6 +3,7 @@ import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable
 
 @Component({
   selector: 'multiple-tables-demo',
+  imports: [DatatableComponent],
   template: `
     <div>
       <h3>
@@ -35,8 +36,7 @@ import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable
         [footerHeight]="50"
       />
     </div>
-  `,
-  imports: [DatatableComponent]
+  `
 })
 export class MultipleTablesComponent {
   columns1: TableColumn[] = [{ prop: 'name' }, { name: 'Gender' }, { name: 'Company' }];

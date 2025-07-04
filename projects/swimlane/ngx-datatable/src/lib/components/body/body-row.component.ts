@@ -30,7 +30,7 @@ import { DataTableBodyCellComponent } from './body-cell.component';
 
 @Component({
   selector: 'datatable-body-row',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [DataTableBodyCellComponent],
   template: `
     @for (colGroup of _columnsByPin; track colGroup.type) {
       @if (colGroup.columns.length) {
@@ -63,7 +63,7 @@ import { DataTableBodyCellComponent } from './body-cell.component';
     }
   `,
   styleUrl: './body-row.component.scss',
-  imports: [DataTableBodyCellComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableBodyRowComponent<TRow extends Row = any> implements DoCheck, OnChanges {
   private cd = inject(ChangeDetectorRef);

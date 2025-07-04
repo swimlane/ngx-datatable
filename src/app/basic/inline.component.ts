@@ -10,6 +10,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'inline-edit-demo',
+  imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellDirective],
   template: `
     <div>
       <h3>
@@ -41,11 +42,11 @@ import { DataService } from '../data.service';
             ngx-datatable-cell-template
           >
             @if (editing[rowIndex + '-name']) {
-            <input type="text" [value]="value" (blur)="updateValue($event, 'name', rowIndex)" />
+              <input type="text" [value]="value" (blur)="updateValue($event, 'name', rowIndex)" />
             } @else {
-            <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true">
-              {{ value }}
-            </span>
+              <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true">
+                {{ value }}
+              </span>
             }
           </ng-template>
         </ngx-datatable-column>
@@ -57,18 +58,19 @@ import { DataService } from '../data.service';
             ngx-datatable-cell-template
           >
             @if (!editing[rowIndex + '-gender']) {
-            <span title="Double click to edit" (dblclick)="editing[rowIndex + '-gender'] = true">
-              {{ value }}
-            </span>
-            } @if (editing[rowIndex + '-gender']) {
-            <select
-              [value]="value"
-              (blur)="editing[rowIndex + '-gender'] = false"
-              (change)="updateValue($event, 'gender', rowIndex)"
-            >
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
+              <span title="Double click to edit" (dblclick)="editing[rowIndex + '-gender'] = true">
+                {{ value }}
+              </span>
+            }
+            @if (editing[rowIndex + '-gender']) {
+              <select
+                [value]="value"
+                (blur)="editing[rowIndex + '-gender'] = false"
+                (change)="updateValue($event, 'gender', rowIndex)"
+              >
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
             }
           </ng-template>
         </ngx-datatable-column>
@@ -79,8 +81,7 @@ import { DataService } from '../data.service';
         </ngx-datatable-column>
       </ngx-datatable>
     </div>
-  `,
-  imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellDirective]
+  `
 })
 export class InlineEditComponent {
   editing: Record<string, boolean> = {};

@@ -6,6 +6,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'summary-row-custom-template-demo',
+  imports: [DatatableComponent],
   template: `
     <div>
       <h3>
@@ -31,16 +32,15 @@ import { DataService } from '../data.service';
       <ng-template #nameSummaryCell let-row="row" let-value="value">
         <div class="name-container">
           @for (name of getNames(); track name) {
-          <div class="chip">
-            <span class="chip-content">{{ name }}</span>
-          </div>
+            <div class="chip">
+              <span class="chip-content">{{ name }}</span>
+            </div>
           }
         </div>
       </ng-template>
     </div>
   `,
-  styleUrl: './summary-row-custom-template.component.scss',
-  imports: [DatatableComponent]
+  styleUrl: './summary-row-custom-template.component.scss'
 })
 export class SummaryRowCustomTemplateComponent implements OnInit {
   rows: Employee[] = [];

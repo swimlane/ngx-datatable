@@ -14,6 +14,13 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'row-grouping-demo',
+  imports: [
+    DatatableComponent,
+    DatatableGroupHeaderDirective,
+    DatatableGroupHeaderTemplateDirective,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective
+  ],
   template: `
     <div>
       <h3>
@@ -147,14 +154,7 @@ import { DataService } from '../data.service';
         </ngx-datatable-column>
       </ngx-datatable>
     </div>
-  `,
-  imports: [
-    DatatableComponent,
-    DatatableGroupHeaderDirective,
-    DatatableGroupHeaderTemplateDirective,
-    DataTableColumnDirective,
-    DataTableColumnCellDirective
-  ]
+  `
 })
 export class RowGroupingComponent {
   @ViewChild('myTable') table!: DatatableComponent<GroupedEmployee>;

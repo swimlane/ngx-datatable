@@ -10,6 +10,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'client-side-tree-demo',
+  imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellDirective],
   template: `
     <div>
       <h3>
@@ -52,8 +53,7 @@ import { DataService } from '../data.service';
       </ngx-datatable>
     </div>
   `,
-  styles: ['.icon {height: 10px; width: 10px; }', '.disabled {opacity: 0.5; }'],
-  imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellDirective]
+  styles: ['.icon {height: 10px; width: 10px; }', '.disabled {opacity: 0.5; }']
 })
 export class ClientTreeComponent {
   rows: TreeEmployee[] = [];

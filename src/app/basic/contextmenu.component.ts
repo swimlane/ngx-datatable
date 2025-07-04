@@ -10,6 +10,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'contextmenu-demo',
+  imports: [DatatableComponent],
   template: `
     <div>
       <h3>
@@ -30,17 +31,19 @@ import { DataService } from '../data.service';
           custom context menu.
         </p>
         @if (rawEvent) {
-        <p>
-          <strong>Mouse position:</strong>
-          <code>(x: {{ rawEvent?.x }}, y: {{ rawEvent?.y }})</code>
-        </p>
-        } @if (contextmenuRow) {
-        <p><strong>Row:</strong> {{ contextmenuRow?.name }}</p>
-        } @if (contextmenuColumn) {
-        <p>
-          <strong>Header:</strong> name: {{ contextmenuColumn?.name }} prop:
-          {{ contextmenuColumn?.prop }}
-        </p>
+          <p>
+            <strong>Mouse position:</strong>
+            <code>(x: {{ rawEvent?.x }}, y: {{ rawEvent?.y }})</code>
+          </p>
+        }
+        @if (contextmenuRow) {
+          <p><strong>Row:</strong> {{ contextmenuRow?.name }}</p>
+        }
+        @if (contextmenuColumn) {
+          <p>
+            <strong>Header:</strong> name: {{ contextmenuColumn?.name }} prop:
+            {{ contextmenuColumn?.prop }}
+          </p>
         }
       </div>
       <ngx-datatable
@@ -54,8 +57,7 @@ import { DataService } from '../data.service';
         (tableContextmenu)="onTableContextMenu($event)"
       />
     </div>
-  `,
-  imports: [DatatableComponent]
+  `
 })
 export class ContextMenuDemoComponent {
   rows: Employee[] = [];

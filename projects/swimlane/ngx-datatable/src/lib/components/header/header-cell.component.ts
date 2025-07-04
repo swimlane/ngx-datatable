@@ -29,51 +29,53 @@ import { nextSortDir } from '../../utils/sort';
 
 @Component({
   selector: 'datatable-header-cell',
+  imports: [NgTemplateOutlet],
   template: `
     <div class="datatable-header-cell-template-wrap">
       @if (isTarget) {
-      <ng-template
-        [ngTemplateOutlet]="targetMarkerTemplate!"
-        [ngTemplateOutletContext]="targetMarkerContext"
-      />
-      } @if (isCheckboxable) {
-      <label class="datatable-checkbox">
-        <input
-          type="checkbox"
-          [attr.aria-label]="ariaHeaderCheckboxMessage"
-          [checked]="allRowsSelected"
-          (change)="select.emit()"
+        <ng-template
+          [ngTemplateOutlet]="targetMarkerTemplate!"
+          [ngTemplateOutletContext]="targetMarkerContext"
         />
-      </label>
-      } @if (column.headerTemplate) {
-      <ng-template
-        [ngTemplateOutlet]="column.headerTemplate"
-        [ngTemplateOutletContext]="cellContext"
-      />
+      }
+      @if (isCheckboxable) {
+        <label class="datatable-checkbox">
+          <input
+            type="checkbox"
+            [attr.aria-label]="ariaHeaderCheckboxMessage"
+            [checked]="allRowsSelected"
+            (change)="select.emit()"
+          />
+        </label>
+      }
+      @if (column.headerTemplate) {
+        <ng-template
+          [ngTemplateOutlet]="column.headerTemplate"
+          [ngTemplateOutletContext]="cellContext"
+        />
       } @else {
-      <span class="datatable-header-cell-wrapper">
-        <span class="datatable-header-cell-label draggable" (click)="onSort()">
-          {{ name }}
+        <span class="datatable-header-cell-wrapper">
+          <span class="datatable-header-cell-label draggable" (click)="onSort()">
+            {{ name }}
+          </span>
         </span>
-      </span>
       }
       <span [class]="sortClass" (click)="onSort()"> </span>
     </div>
     @if (showResizeHandle) {
-    <span
-      class="resize-handle"
-      (mousedown)="onMousedown($event)"
-      (touchstart)="onMousedown($event)"
-    ></span>
+      <span
+        class="resize-handle"
+        (mousedown)="onMousedown($event)"
+        (touchstart)="onMousedown($event)"
+      ></span>
     }
   `,
+  styleUrl: './header-cell.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     'class': 'datatable-header-cell',
     '[attr.resizeable]': 'showResizeHandle'
-  },
-  styleUrl: './header-cell.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgTemplateOutlet]
+  }
 })
 export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
   private cd = inject(ChangeDetectorRef);

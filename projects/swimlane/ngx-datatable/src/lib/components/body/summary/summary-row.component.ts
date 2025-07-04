@@ -22,22 +22,22 @@ const noopSumFunc = (cells: any[]): void => {
 
 @Component({
   selector: 'datatable-summary-row',
+  imports: [DataTableBodyRowComponent],
   template: `
     @if (summaryRow && _internalColumns) {
-    <datatable-body-row
-      tabindex="-1"
-      [innerWidth]="innerWidth"
-      [columns]="_internalColumns"
-      [rowHeight]="rowHeight"
-      [row]="summaryRow"
-      [rowIndex]="{ index: -1 }"
-    />
+      <datatable-body-row
+        tabindex="-1"
+        [innerWidth]="innerWidth"
+        [columns]="_internalColumns"
+        [rowHeight]="rowHeight"
+        [row]="summaryRow"
+        [rowIndex]="{ index: -1 }"
+      />
     }
   `,
   host: {
     class: 'datatable-summary-row'
-  },
-  imports: [DataTableBodyRowComponent]
+  }
 })
 export class DataTableSummaryRowComponent implements OnChanges {
   @Input() rows!: any[];

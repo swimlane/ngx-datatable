@@ -7,7 +7,7 @@ import { Page } from '../paging/model/page';
 
 @Component({
   selector: 'summary-row-server-paging-demo',
-  providers: [MockServerResultsService],
+  imports: [DatatableComponent],
   template: `
     <div>
       <h3>
@@ -38,7 +38,7 @@ import { Page } from '../paging/model/page';
       />
     </div>
   `,
-  imports: [DatatableComponent]
+  providers: [MockServerResultsService]
 })
 export class SummaryRowServerPagingComponent implements OnInit {
   page: Page = {

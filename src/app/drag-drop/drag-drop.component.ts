@@ -11,6 +11,13 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'drag-drop-demo',
+  imports: [
+    DatatableComponent,
+    CdkDropList,
+    DatatableRowDefDirective,
+    DatatableRowDefComponent,
+    CdkDrag
+  ],
   template: `
     <div>
       <h3>
@@ -42,14 +49,7 @@ import { DataService } from '../data.service';
         </ng-template>
       </ngx-datatable>
     </div>
-  `,
-  imports: [
-    DatatableComponent,
-    CdkDropList,
-    DatatableRowDefDirective,
-    DatatableRowDefComponent,
-    CdkDrag
-  ]
+  `
 })
 export class DragDropComponent {
   rows: Employee[] = [];

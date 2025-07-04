@@ -41,6 +41,14 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
 
 @Component({
   selector: 'datatable-header',
+  imports: [
+    OrderableDirective,
+    NgStyle,
+    DataTableHeaderCellComponent,
+    LongPressDirective,
+    DraggableDirective,
+    NgClass
+  ],
   template: `
     <div
       role="row"
@@ -97,19 +105,11 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
       }
     </div>
   `,
-  host: {
-    class: 'datatable-header'
-  },
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    OrderableDirective,
-    NgStyle,
-    DataTableHeaderCellComponent,
-    LongPressDirective,
-    DraggableDirective,
-    NgClass
-  ]
+  host: {
+    class: 'datatable-header'
+  }
 })
 export class DataTableHeaderComponent implements OnDestroy, OnChanges {
   private cd = inject(ChangeDetectorRef);

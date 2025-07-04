@@ -10,6 +10,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'column-flex-demo',
+  imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellDirective],
   template: `
     <div>
       <h3>
@@ -48,8 +49,7 @@ import { DataService } from '../data.service';
         </ngx-datatable-column>
       </ngx-datatable>
     </div>
-  `,
-  imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellDirective]
+  `
 })
 export class ColumnFlexComponent {
   rows: Employee[] = [];

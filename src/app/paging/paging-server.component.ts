@@ -7,7 +7,7 @@ import { Page } from './model/page';
 
 @Component({
   selector: 'server-paging-demo',
-  providers: [MockServerResultsService],
+  imports: [DatatableComponent],
   template: `
     <div>
       <h3>
@@ -37,7 +37,7 @@ import { Page } from './model/page';
       />
     </div>
   `,
-  imports: [DatatableComponent]
+  providers: [MockServerResultsService]
 })
 export class ServerPagingComponent implements OnInit {
   page: Page = {

@@ -8,6 +8,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'rx-demo',
+  imports: [DatatableComponent, AsyncPipe],
   template: `
     <div>
       <h3>
@@ -31,8 +32,7 @@ import { DataService } from '../data.service';
         [rowHeight]="50"
       />
     </div>
-  `,
-  imports: [DatatableComponent, AsyncPipe]
+  `
 })
 export class RxDemoComponent {
   rows: Observable<Employee[]>;

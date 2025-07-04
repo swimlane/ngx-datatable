@@ -9,6 +9,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'tabs-demo',
+  imports: [DatatableComponent, DataTableColumnDirective],
   template: `
     <div>
       <h3>
@@ -52,27 +53,26 @@ import { DataService } from '../data.service';
         </div>
 
         @if (tab3) {
-        <div>
-          <h4>ngIf Table</h4>
-          <ngx-datatable
-            class="material"
-            columnMode="force"
-            [rows]="rows"
-            [headerHeight]="50"
-            [footerHeight]="50"
-            [rowHeight]="50"
-            [scrollbarV]="true"
-          >
-            <ngx-datatable-column name="Name" [width]="200" />
-            <ngx-datatable-column name="Gender" [width]="300" />
-            <ngx-datatable-column name="Age" [width]="80" />
-          </ngx-datatable>
-        </div>
+          <div>
+            <h4>ngIf Table</h4>
+            <ngx-datatable
+              class="material"
+              columnMode="force"
+              [rows]="rows"
+              [headerHeight]="50"
+              [footerHeight]="50"
+              [rowHeight]="50"
+              [scrollbarV]="true"
+            >
+              <ngx-datatable-column name="Name" [width]="200" />
+              <ngx-datatable-column name="Gender" [width]="300" />
+              <ngx-datatable-column name="Age" [width]="80" />
+            </ngx-datatable>
+          </div>
         }
       </div>
     </div>
-  `,
-  imports: [DatatableComponent, DataTableColumnDirective]
+  `
 })
 export class TabsDemoComponent {
   rows: FullEmployee[] = [];

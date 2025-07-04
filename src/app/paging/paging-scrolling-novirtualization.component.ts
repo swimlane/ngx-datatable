@@ -7,7 +7,7 @@ import { Page } from './model/page';
 
 @Component({
   selector: 'paging-scrolling-novirtualization-demo',
-  providers: [MockServerResultsService],
+  imports: [DatatableComponent],
   template: `
     <div>
       <h3>
@@ -40,7 +40,7 @@ import { Page } from './model/page';
       />
     </div>
   `,
-  imports: [DatatableComponent]
+  providers: [MockServerResultsService]
 })
 export class PagingScrollingNoVirtualizationComponent implements OnInit {
   page: Page = {

@@ -12,6 +12,12 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'disabled-rows-demo',
+  imports: [
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    DisableRowDirective
+  ],
   template: `
     <div>
       <h3>
@@ -85,13 +91,7 @@ import { DataService } from '../data.service';
         </ngx-datatable>
       </div>
     </div>
-  `,
-  imports: [
-    DatatableComponent,
-    DataTableColumnDirective,
-    DataTableColumnCellDirective,
-    DisableRowDirective
-  ]
+  `
 })
 export class DisabledRowsComponent {
   rows: (FullEmployee & { isDisabled?: boolean })[] = [];

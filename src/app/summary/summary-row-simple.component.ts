@@ -6,6 +6,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'summary-row-simple-demo',
+  imports: [DatatableComponent],
   template: `
     <div>
       <h3>
@@ -49,8 +50,7 @@ import { DataService } from '../data.service';
       />
     </div>
   `,
-  styleUrl: './summary-row-simple.component.scss',
-  imports: [DatatableComponent]
+  styleUrl: './summary-row-simple.component.scss'
 })
 export class SummaryRowSimpleComponent {
   rows: Employee[] = [];

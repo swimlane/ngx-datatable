@@ -9,14 +9,14 @@ import { OrderableDirective } from './orderable.directive';
 
 @Component({
   selector: 'test-fixture-component',
+  imports: [OrderableDirective, DraggableDirective],
   template: `
     <div orderable>
       @for (item of draggables; track $index) {
-      <div draggable [dragModel]="item"></div>
+        <div draggable [dragModel]="item"></div>
       }
     </div>
-  `,
-  imports: [OrderableDirective, DraggableDirective]
+  `
 })
 class TestFixtureComponent {
   draggables: TableColumnInternal[] = [];

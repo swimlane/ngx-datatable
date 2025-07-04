@@ -11,6 +11,12 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'inline-templates-demo',
+  imports: [
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnHeaderDirective,
+    DataTableColumnCellDirective
+  ],
   template: `
     <div>
       <h3>
@@ -58,13 +64,7 @@ import { DataService } from '../data.service';
         </ngx-datatable-column>
       </ngx-datatable>
     </div>
-  `,
-  imports: [
-    DatatableComponent,
-    DataTableColumnDirective,
-    DataTableColumnHeaderDirective,
-    DataTableColumnCellDirective
-  ]
+  `
 })
 export class InlineTemplatesComponent {
   rows: Employee[] = [];

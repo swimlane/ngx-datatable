@@ -9,6 +9,7 @@ import { Employee } from '../data.model';
 
 @Component({
   selector: 'column-toggle-demo',
+  imports: [DatatableComponent, DataTableColumnDirective],
   template: `
     <div>
       <h3>
@@ -32,7 +33,7 @@ import { Employee } from '../data.model';
           [footerHeight]="50"
         >
           @for (col of columns; track col) {
-          <ngx-datatable-column [name]="col.name" />
+            <ngx-datatable-column [name]="col.name" />
           }
         </ngx-datatable>
       </div>
@@ -40,21 +41,20 @@ import { Employee } from '../data.model';
         <h4>Available Columns</h4>
         <ul>
           @for (col of allColumns; track col) {
-          <li>
-            <input
-              type="checkbox"
-              [id]="col.name"
-              [checked]="isChecked(col)"
-              (click)="toggle(col)"
-            />
-            <label [attr.for]="col.name">{{ col.name }}</label>
-          </li>
+            <li>
+              <input
+                type="checkbox"
+                [id]="col.name"
+                [checked]="isChecked(col)"
+                (click)="toggle(col)"
+              />
+              <label [attr.for]="col.name">{{ col.name }}</label>
+            </li>
           }
         </ul>
       </div>
     </div>
-  `,
-  imports: [DatatableComponent, DataTableColumnDirective]
+  `
 })
 export class ColumnToggleComponent {
   rows: Employee[] = [

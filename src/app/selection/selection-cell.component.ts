@@ -11,6 +11,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'cell-selection-demo',
+  imports: [DatatableComponent],
   template: `
     <div>
       <h3>
@@ -38,8 +39,7 @@ import { DataService } from '../data.service';
         (activate)="onActivate($event)"
       />
     </div>
-  `,
-  imports: [DatatableComponent]
+  `
 })
 export class CellSelectionComponent {
   rows: Employee[] = [];

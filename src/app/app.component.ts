@@ -5,6 +5,7 @@ import packageInfo from 'projects/swimlane/ngx-datatable/package.json';
 
 @Component({
   selector: 'app-root',
+  imports: [RouterLink, RouterOutlet],
   templateUrl: './app.component.html',
   providers: [
     Location,
@@ -12,8 +13,7 @@ import packageInfo from 'projects/swimlane/ngx-datatable/package.json';
       provide: LocationStrategy,
       useClass: HashLocationStrategy
     }
-  ],
-  imports: [RouterLink, RouterOutlet]
+  ]
 })
 export class AppComponent {
   version = packageInfo.version;

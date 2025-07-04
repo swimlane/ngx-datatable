@@ -15,24 +15,14 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'responsive-demo',
-  styles: `
-    @media screen and (max-width: 800px) {
-      .desktop-hidden {
-        display: initial;
-      }
-      .mobile-hidden {
-        display: none;
-      }
-    }
-    @media screen and (min-width: 800px) {
-      .desktop-hidden {
-        display: none;
-      }
-      .mobile-hidden {
-        display: initial;
-      }
-    }
-  `,
+  imports: [
+    DatatableComponent,
+    DatatableRowDetailDirective,
+    DatatableRowDetailTemplateDirective,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    DataTableColumnHeaderDirective
+  ],
   template: `
     <div>
       <h3>
@@ -121,16 +111,26 @@ import { DataService } from '../data.service';
       columns will be hidden and will appear in the row detail view.
     </div>
   `,
+  styles: `
+    @media screen and (max-width: 800px) {
+      .desktop-hidden {
+        display: initial;
+      }
+      .mobile-hidden {
+        display: none;
+      }
+    }
+    @media screen and (min-width: 800px) {
+      .desktop-hidden {
+        display: none;
+      }
+      .mobile-hidden {
+        display: initial;
+      }
+    }
+  `,
   // eslint-disable-next-line @angular-eslint/use-component-view-encapsulation
-  encapsulation: ViewEncapsulation.None,
-  imports: [
-    DatatableComponent,
-    DatatableRowDetailDirective,
-    DatatableRowDetailTemplateDirective,
-    DataTableColumnDirective,
-    DataTableColumnCellDirective,
-    DataTableColumnHeaderDirective
-  ]
+  encapsulation: ViewEncapsulation.None
 })
 export class ResponsiveComponent {
   @ViewChild('myTable') table!: DatatableComponent<FullEmployee>;

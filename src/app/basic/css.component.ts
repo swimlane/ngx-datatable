@@ -10,6 +10,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'row-css-demo',
+  imports: [DatatableComponent, DataTableColumnDirective],
   template: `
     <div>
       <h3>
@@ -37,8 +38,7 @@ import { DataService } from '../data.service';
         <ngx-datatable-column name="Age" />
       </ngx-datatable>
     </div>
-  `,
-  imports: [DatatableComponent, DataTableColumnDirective]
+  `
 })
 export class RowCssComponent {
   rows: FullEmployee[] = [];

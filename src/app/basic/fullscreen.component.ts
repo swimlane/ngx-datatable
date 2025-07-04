@@ -9,6 +9,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'full-screen-demo',
+  imports: [DatatableComponent, DataTableColumnDirective],
   template: `
     <div>
       <h3>
@@ -41,8 +42,7 @@ import { DataService } from '../data.service';
         <ngx-datatable-column name="State" prop="address.state" [width]="300" />
       </ngx-datatable>
     </div>
-  `,
-  imports: [DatatableComponent, DataTableColumnDirective]
+  `
 })
 export class FullScreenComponent {
   rows: FullEmployee[] = [];

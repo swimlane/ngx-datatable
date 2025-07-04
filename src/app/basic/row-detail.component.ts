@@ -14,6 +14,13 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'row-details-demo',
+  imports: [
+    DatatableComponent,
+    DatatableRowDetailDirective,
+    DatatableRowDetailTemplateDirective,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective
+  ],
   template: `
     <div>
       <h3>
@@ -97,14 +104,7 @@ import { DataService } from '../data.service';
     </div>
   `,
   // eslint-disable-next-line @angular-eslint/use-component-view-encapsulation
-  encapsulation: ViewEncapsulation.None,
-  imports: [
-    DatatableComponent,
-    DatatableRowDetailDirective,
-    DatatableRowDetailTemplateDirective,
-    DataTableColumnDirective,
-    DataTableColumnCellDirective
-  ]
+  encapsulation: ViewEncapsulation.None
 })
 export class RowDetailsComponent {
   @ViewChild('myTable') table!: DatatableComponent<FullEmployee>;

@@ -11,6 +11,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'footer-demo',
+  imports: [DatatableComponent, DatatableFooterDirective, DataTableFooterTemplateDirective],
   template: `
     <div>
       <h3>
@@ -54,8 +55,7 @@ import { DataService } from '../data.service';
         </ngx-datatable-footer>
       </ngx-datatable>
     </div>
-  `,
-  imports: [DatatableComponent, DatatableFooterDirective, DataTableFooterTemplateDirective]
+  `
 })
 export class FooterDemoComponent {
   rows: Employee[] = [];

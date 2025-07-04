@@ -76,9 +76,16 @@ import { DatatableRowDetailDirective } from './row-detail/row-detail.directive';
 
 @Component({
   selector: 'ngx-datatable',
+  imports: [
+    VisibilityDirective,
+    DataTableHeaderComponent,
+    DataTableBodyComponent,
+    DataTableFooterComponent,
+    ProgressBarComponent
+  ],
   templateUrl: './datatable.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './datatable.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'ngx-datatable'
   },
@@ -88,13 +95,6 @@ import { DatatableRowDetailDirective } from './row-detail/row-detail.directive';
       useExisting: DatatableComponent
     },
     ColumnChangesService
-  ],
-  imports: [
-    VisibilityDirective,
-    DataTableHeaderComponent,
-    DataTableBodyComponent,
-    DataTableFooterComponent,
-    ProgressBarComponent
   ]
 })
 export class DatatableComponent<TRow extends Row = any>

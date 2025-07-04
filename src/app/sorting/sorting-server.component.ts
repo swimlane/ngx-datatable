@@ -10,6 +10,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'server-sorting-demo',
+  imports: [DatatableComponent],
   template: `
     <div>
       <h3>
@@ -36,8 +37,7 @@ import { DataService } from '../data.service';
         (sort)="onSort($event)"
       />
     </div>
-  `,
-  imports: [DatatableComponent]
+  `
 })
 export class ServerSortingComponent {
   loading = false;

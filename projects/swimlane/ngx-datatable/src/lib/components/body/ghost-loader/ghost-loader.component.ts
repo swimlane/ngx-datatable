@@ -11,10 +11,10 @@ import { TableColumnInternal } from '../../../types/internal.types';
 
 @Component({
   selector: 'ghost-loader',
+  imports: [NgTemplateOutlet],
   templateUrl: './ghost-loader.component.html',
   styleUrl: './ghost-loader.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgTemplateOutlet]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableGhostLoaderComponent {
   @Input() columns!: TableColumnInternal[];

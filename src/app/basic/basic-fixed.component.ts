@@ -6,6 +6,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'basic-fixed-demo',
+  imports: [DatatableComponent],
   template: `
     <div>
       <h3>
@@ -29,8 +30,7 @@ import { DataService } from '../data.service';
         [rowHeight]="50"
       />
     </div>
-  `,
-  imports: [DatatableComponent]
+  `
 })
 export class BasicFixedComponent {
   rows: Employee[] = [];

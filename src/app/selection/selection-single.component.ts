@@ -11,6 +11,7 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'single-selection-demo',
+  imports: [DatatableComponent],
   template: `
     <div>
       <h3>
@@ -52,17 +53,17 @@ import { DataService } from '../data.service';
         <h4>Selections</h4>
         <ul>
           @for (sel of selected; track sel) {
-          <li>
-            {{ sel.name }}
-          </li>
-          } @if (!selected.length) {
-          <li>No Selections</li>
+            <li>
+              {{ sel.name }}
+            </li>
+          }
+          @if (!selected.length) {
+            <li>No Selections</li>
           }
         </ul>
       </div>
     </div>
-  `,
-  imports: [DatatableComponent]
+  `
 })
 export class SingleSelectionComponent {
   rows: Employee[] = [];
