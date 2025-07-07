@@ -15,10 +15,10 @@ import {
 @Component({
   selector: 'datatable-scroller',
   template: ` <ng-content /> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'datatable-scroll'
-  },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  }
 })
 export class ScrollerComponent implements OnInit, OnDestroy {
   private renderer = inject(Renderer2);

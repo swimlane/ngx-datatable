@@ -64,11 +64,11 @@ import { DatatableComponent } from '../datatable.component';
       </li>
     </ul>
   `,
+  styleUrl: './pager.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'datatable-pager'
-  },
-  styleUrl: './pager.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  }
 })
 export class DataTablePagerComponent {
   private dataTable = inject(DatatableComponent, { optional: true });

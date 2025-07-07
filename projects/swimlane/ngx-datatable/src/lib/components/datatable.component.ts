@@ -85,17 +85,17 @@ import { DatatableRowDetailDirective } from './row-detail/row-detail.directive';
   ],
   templateUrl: './datatable.component.html',
   styleUrl: './datatable.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    class: 'ngx-datatable'
-  },
   providers: [
     {
       provide: DATATABLE_COMPONENT_TOKEN,
       useExisting: DatatableComponent
     },
     ColumnChangesService
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'ngx-datatable'
+  }
 })
 export class DatatableComponent<TRow extends Row = any>
   implements OnInit, DoCheck, AfterViewInit, AfterContentInit, OnDestroy
