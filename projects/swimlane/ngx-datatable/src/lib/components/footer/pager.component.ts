@@ -1,18 +1,30 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  inject,
-  Input,
-  Output
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 
 import { Page } from '../../types/internal.types';
-import { PagerPageEvent } from '../../types/public.types';
+import { DATATABLE_COMPONENT_TOKEN } from '../../utils/table-token';
 import { DatatableComponent } from '../datatable.component';
 
+/**
+ * Use this component to construct custom table footer with standard pagination.
+ *
+ * It must be used inside the `ngx-datatable-footer`
+ *
+ * @example
+ * ```html
+ *
+ * <ngx-datatable>
+ *   ...
+ *   <ngx-datatable-footer>
+ *     <ng-template>
+ *        <app-custom-content />
+ *        <ngx-datatable-pager />
+ *     </ng-template>
+ *   </ngx-datatable-footer>
+ * </ngx-datatable>
+ * ```
+ */
 @Component({
-  selector: 'datatable-pager',
+  selector: 'ngx-datatable-pager',
   template: `
     <ul class="pager">
       <li [class.disabled]="!canPrevious()">
@@ -22,7 +34,7 @@ import { DatatableComponent } from '../datatable.component';
           [attr.aria-label]="messages.ariaFirstPageMessage ?? 'go to first page'"
           (click)="selectPage(1)"
         >
-          <i [class]="pagerPreviousIcon ?? 'datatable-icon-prev'"></i>
+          <i [class]="pagerPreviousIcon() ?? 'datatable-icon-prev'"></i>
         </a>
       </li>
       <li [class.disabled]="!canPrevious()">
@@ -32,14 +44,14 @@ import { DatatableComponent } from '../datatable.component';
           [attr.aria-label]="messages.ariaPreviousPageMessage ?? 'go to previous page'"
           (click)="prevPage()"
         >
-          <i [class]="pagerLeftArrowIcon ?? 'datatable-icon-left'"></i>
+          <i [class]="pagerLeftArrowIcon() ?? 'datatable-icon-left'"></i>
         </a>
       </li>
-      @for (pg of pages; track pg.number) {
+      @for (pg of pages(); track pg.number) {
         <li
           class="pages"
           [attr.aria-label]="(messages.ariaPageNMessage ?? 'page') + ' ' + pg.number"
-          [class.active]="pg.number === page"
+          [class.active]="pg.number === page()"
         >
           <a tabindex="0" role="button" (click)="selectPage(pg.number)">
             {{ pg.text }}
@@ -53,7 +65,7 @@ import { DatatableComponent } from '../datatable.component';
           [attr.aria-label]="messages.ariaNextPageMessage ?? 'go to next page'"
           (click)="nextPage()"
         >
-          <i [class]="pagerRightArrowIcon ?? 'datatable-icon-right'"></i>
+          <i [class]="pagerRightArrowIcon() ?? 'datatable-icon-right'"></i>
         </a>
       </li>
       <li [class.disabled]="!canNext()">
@@ -61,9 +73,9 @@ import { DatatableComponent } from '../datatable.component';
           tabindex="0"
           role="button"
           [attr.aria-label]="messages.ariaLastPageMessage ?? 'go to last page'"
-          (click)="selectPage(totalPages)"
+          (click)="selectPage(totalPages())"
         >
-          <i [class]="pagerNextIcon ?? 'datatable-icon-skip'"></i>
+          <i [class]="pagerNextIcon() ?? 'datatable-icon-skip'"></i>
         </a>
       </li>
     </ul>
@@ -74,95 +86,44 @@ import { DatatableComponent } from '../datatable.component';
     class: 'datatable-pager'
   }
 })
-export class DataTablePagerComponent {
-  private dataTable = inject(DatatableComponent, { optional: true });
+export class DatatablePagerComponent {
+  // We cannot inject the footer directly as it is not part of the injector when used in a template.
+  // But the table always is.
+  // Ideally we can one day fetch those attributes from a global state, but for now this is fine.
+  private datatable = inject(DATATABLE_COMPONENT_TOKEN);
 
-  get messages(): DatatableComponent['messages'] {
-    return this.dataTable?.messages ?? {};
+  protected get messages(): DatatableComponent['messages'] {
+    return this.datatable?.messages ?? {};
   }
 
-  @Input() pagerLeftArrowIcon?: string;
-  @Input() pagerRightArrowIcon?: string;
-  @Input() pagerPreviousIcon?: string;
-  @Input() pagerNextIcon?: string;
+  protected readonly page = computed(() => this.datatable._footerComponent()!.curPage());
+  protected readonly pageSize = computed(() => this.datatable._footerComponent()!.pageSize());
+  protected readonly count = computed(() => this.datatable._footerComponent()!.rowCount());
+  protected readonly pagerNextIcon = computed(() =>
+    this.datatable._footerComponent()!.pagerNextIcon()
+  );
+  protected readonly pagerRightArrowIcon = computed(() =>
+    this.datatable._footerComponent()!.pagerRightArrowIcon()
+  );
+  protected readonly pagerLeftArrowIcon = computed(() =>
+    this.datatable._footerComponent()!.pagerLeftArrowIcon()
+  );
+  protected readonly pagerPreviousIcon = computed(() =>
+    this.datatable._footerComponent()!.pagerPreviousIcon()
+  );
 
-  @Input()
-  set size(val: number) {
-    this._size = val;
-    this.pages = this.calcPages();
-  }
+  protected readonly totalPages = computed(() => {
+    return Math.max((this.pageSize() < 1 ? 1 : Math.ceil(this.count() / this.pageSize())) || 0, 1);
+  });
 
-  get size(): number {
-    return this._size;
-  }
-
-  @Input()
-  set count(val: number) {
-    this._count = val;
-    this.pages = this.calcPages();
-  }
-
-  get count(): number {
-    return this._count;
-  }
-
-  @Input()
-  set page(val: number) {
-    this._page = val;
-    this.pages = this.calcPages();
-  }
-
-  get page(): number {
-    return this._page;
-  }
-
-  get totalPages(): number {
-    const count = this.size < 1 ? 1 : Math.ceil(this.count / this.size);
-    return Math.max(count || 0, 1);
-  }
-
-  @Output() readonly change = new EventEmitter<PagerPageEvent>();
-
-  _count = 0;
-  _page = 1;
-  _size = 0;
-  pages!: Page[];
-
-  canPrevious(): boolean {
-    return this.page > 1;
-  }
-
-  canNext(): boolean {
-    return this.page < this.totalPages;
-  }
-
-  prevPage(): void {
-    this.selectPage(this.page - 1);
-  }
-
-  nextPage(): void {
-    this.selectPage(this.page + 1);
-  }
-
-  selectPage(page: number): void {
-    if (page > 0 && page <= this.totalPages && page !== this.page) {
-      this.page = page;
-
-      this.change.emit({
-        page
-      });
-    }
-  }
-
-  calcPages(page?: number): Page[] {
+  protected readonly pages = computed(() => {
     const pages: Page[] = [];
     let startPage = 1;
-    let endPage = this.totalPages;
+    let endPage = this.totalPages();
     const maxSize = 5;
-    const isMaxSized = maxSize < this.totalPages;
+    const isMaxSized = maxSize < this.totalPages();
 
-    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-    page = page || this.page;
+    const page = this.page();
 
     if (isMaxSized) {
       startPage = page - Math.floor(maxSize / 2);
@@ -170,10 +131,10 @@ export class DataTablePagerComponent {
 
       if (startPage < 1) {
         startPage = 1;
-        endPage = Math.min(startPage + maxSize - 1, this.totalPages);
-      } else if (endPage > this.totalPages) {
-        startPage = Math.max(this.totalPages - maxSize + 1, 1);
-        endPage = this.totalPages;
+        endPage = Math.min(startPage + maxSize - 1, this.totalPages());
+      } else if (endPage > this.totalPages()) {
+        startPage = Math.max(this.totalPages() - maxSize + 1, 1);
+        endPage = this.totalPages();
       }
     }
 
@@ -185,5 +146,23 @@ export class DataTablePagerComponent {
     }
 
     return pages;
+  });
+
+  protected readonly canPrevious = computed(() => this.page() > 1);
+
+  protected readonly canNext = computed(() => this.page() < this.totalPages());
+
+  protected prevPage(): void {
+    this.selectPage(this.page() - 1);
+  }
+
+  protected nextPage(): void {
+    this.selectPage(this.page() + 1);
+  }
+
+  protected selectPage(page: number): void {
+    if (page > 0 && page <= this.totalPages() && page !== this.page()) {
+      this.datatable._footerComponent()!.page.emit({ page });
+    }
   }
 }

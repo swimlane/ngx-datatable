@@ -3,11 +3,11 @@ import { ChangeDetectionStrategy, Component, computed, input, output, Signal } f
 
 import { FooterContext, PagerPageEvent } from '../../types/public.types';
 import { DatatableFooterDirective } from './footer.directive';
-import { DataTablePagerComponent } from './pager.component';
+import { DatatablePagerComponent } from './pager.component';
 
 @Component({
   selector: 'datatable-footer',
-  imports: [NgClass, NgTemplateOutlet, DataTablePagerComponent],
+  imports: [NgClass, NgTemplateOutlet, DatatablePagerComponent],
   template: `
     <div
       class="datatable-footer-inner"
@@ -27,16 +27,7 @@ import { DataTablePagerComponent } from './pager.component';
           {{ rowCount()?.toLocaleString() }} {{ totalMessage() }}
         </div>
         @if (isVisible()) {
-          <datatable-pager
-            [pagerLeftArrowIcon]="pagerLeftArrowIcon()"
-            [pagerRightArrowIcon]="pagerRightArrowIcon()"
-            [pagerPreviousIcon]="pagerPreviousIcon()"
-            [pagerNextIcon]="pagerNextIcon()"
-            [page]="curPage()"
-            [size]="pageSize()"
-            [count]="rowCount()"
-            (change)="page.emit($event)"
-          />
+          <ngx-datatable-pager />
         }
       }
     </div>

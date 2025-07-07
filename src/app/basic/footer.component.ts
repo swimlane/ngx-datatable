@@ -3,7 +3,8 @@ import {
   DatatableComponent,
   DatatableFooterDirective,
   DataTableFooterTemplateDirective,
-  TableColumn
+  TableColumn,
+  DatatablePagerComponent
 } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
@@ -11,7 +12,12 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'footer-demo',
-  imports: [DatatableComponent, DatatableFooterDirective, DataTableFooterTemplateDirective],
+  imports: [
+    DatatableComponent,
+    DatatableFooterDirective,
+    DataTableFooterTemplateDirective,
+    DatatablePagerComponent
+  ],
   template: `
     <div>
       <h3>
@@ -51,6 +57,7 @@ import { DataService } from '../data.service';
                 {{ offset }}</div
               >
             </div>
+            <ngx-datatable-pager />
           </ng-template>
         </ngx-datatable-footer>
       </ngx-datatable>

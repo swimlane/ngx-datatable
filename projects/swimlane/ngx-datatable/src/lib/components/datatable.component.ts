@@ -23,6 +23,7 @@ import {
   QueryList,
   signal,
   TemplateRef,
+  viewChild,
   ViewChild
 } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -705,6 +706,12 @@ export class DatatableComponent<TRow extends Row = any>
   _subscriptions: Subscription[] = [];
   _ghostLoadingIndicator = false;
   _defaultColumnWidth?: number;
+  /**
+   * To have this available for all components.
+   * The Footer itself is not available in the injection context in templates,
+   * so we need to get if from here until we have a state service.
+   */
+  readonly _footerComponent = viewChild(DataTableFooterComponent);
   protected verticalScrollVisible = false;
   // In case horizontal scroll is enabled
   // the column widths are initially calculated without vertical scroll offset

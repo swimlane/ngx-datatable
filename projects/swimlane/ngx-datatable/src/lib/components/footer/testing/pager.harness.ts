@@ -1,7 +1,7 @@
 import { ComponentHarness, parallel } from '@angular/cdk/testing';
 
 export class PagerHarness extends ComponentHarness {
-  static readonly hostSelector = 'datatable-pager';
+  static readonly hostSelector = 'ngx-datatable-pager';
 
   private pages = this.locatorForAll('.pages a');
   private previous = this.locatorFor('li:has([aria-label="go to previous page"])');

@@ -14,6 +14,7 @@ import { DataTableColumnCellTreeToggle } from './components/columns/tree.directi
 import { DatatableComponent } from './components/datatable.component';
 import { DataTableFooterTemplateDirective } from './components/footer/footer-template.directive';
 import { DatatableFooterDirective } from './components/footer/footer.directive';
+import { DatatablePagerComponent } from './components/footer/pager.component';
 import { DatatableRowDetailTemplateDirective } from './components/row-detail/row-detail-template.directive';
 import { DatatableRowDetailDirective } from './components/row-detail/row-detail.directive';
 import { DisableRowDirective } from './directives/disable-row.directive';
@@ -32,6 +33,7 @@ import { AllPartial, NgxDatatableConfig, providedNgxDatatableConfig } from './ng
     DataTableColumnGhostCellDirective,
     DataTableColumnCellTreeToggle,
     DatatableFooterDirective,
+    DatatablePagerComponent,
     DatatableGroupHeaderTemplateDirective,
     DisableRowDirective,
     DatatableRowDefComponent,
@@ -49,6 +51,7 @@ import { AllPartial, NgxDatatableConfig, providedNgxDatatableConfig } from './ng
     DataTableColumnCellTreeToggle,
     DataTableFooterTemplateDirective,
     DatatableFooterDirective,
+    DatatablePagerComponent,
     DatatableGroupHeaderTemplateDirective,
     DisableRowDirective,
     DatatableRowDefComponent,

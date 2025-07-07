@@ -1,101 +1,120 @@
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, ChangeDetectorRef, DebugElement } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, DebugElement, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { DATATABLE_COMPONENT_TOKEN } from '../../utils/table-token';
 import type { DatatableComponent } from '../datatable.component';
-import { DataTablePagerComponent } from './pager.component';
+import { DatatablePagerComponent } from './pager.component';
 import { PagerHarness } from './testing/pager.harness';
 
 describe('DataTablePagerComponent', () => {
-  let fixture: ComponentFixture<DataTablePagerComponent>;
-  let pager: DataTablePagerComponent;
+  let fixture: ComponentFixture<DatatablePagerComponent>;
+  let pager: DatatablePagerComponent;
   let harness: PagerHarness;
+  const footer = {
+    curPage: signal(0),
+    pageSize: signal(1),
+    rowCount: signal(0),
+    pagerNextIcon: signal(''),
+    pagerRightArrowIcon: signal(''),
+    pagerLeftArrowIcon: signal(''),
+    pagerPreviousIcon: signal(''),
+    page: { emit: ({ page }: { page: number }) => footer.curPage.set(page) }
+  };
 
   beforeEach(async () => {
-    TestBed.overrideComponent(DataTablePagerComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
+    TestBed.overrideComponent(DatatablePagerComponent, {
+      set: {
+        changeDetection: ChangeDetectionStrategy.Default,
+        providers: [
+          {
+            provide: DATATABLE_COMPONENT_TOKEN,
+            useValue: { _footerComponent: signal(footer) }
+          }
+        ]
+      }
     });
-    fixture = TestBed.createComponent(DataTablePagerComponent);
+    fixture = TestBed.createComponent(DatatablePagerComponent);
     pager = fixture.componentInstance;
     harness = await TestbedHarnessEnvironment.harnessForFixture(fixture, PagerHarness);
   });
 
   describe('totalPages', () => {
     it('should calculate totalPages', async () => {
-      pager.size = 10;
-      pager.count = 28;
+      footer.pageSize.set(10);
+      footer.rowCount.set(28);
       expect(await harness.pageCount()).toEqual(3);
     });
 
     it('should have 1 page if size is 0', async () => {
-      pager.size = 0;
-      pager.count = 28;
+      footer.pageSize.set(0);
+      footer.rowCount.set(28);
       expect(await harness.pageCount()).toEqual(1);
     });
 
     it('should have 1 page if count is 0', async () => {
-      pager.size = 10;
-      pager.count = 0;
+      footer.pageSize.set(10);
+      footer.rowCount.set(0);
       expect(await harness.pageCount()).toEqual(1);
     });
   });
 
   describe('canPrevious()', () => {
     beforeEach(() => {
-      pager.size = 10;
-      pager.count = 100;
+      footer.pageSize.set(10);
+      footer.rowCount.set(100);
     });
 
     it('should return true if not on first page', async () => {
-      pager.page = 2;
+      footer.curPage.set(2);
       expect(await harness.hasPrevious()).toBeTrue();
     });
 
     it('should return false if on first page', async () => {
-      pager.page = 1;
+      footer.curPage.set(1);
       expect(await harness.hasPrevious()).toBeFalse();
     });
   });
 
   describe('canNext()', () => {
     beforeEach(() => {
-      pager.size = 10;
-      pager.count = 100;
+      footer.pageSize.set(10);
+      footer.rowCount.set(100);
     });
 
     it('should return true if not on last page', async () => {
-      pager.page = 2;
+      footer.curPage.set(2);
       expect(await harness.hasNext()).toBeTrue();
     });
 
     it('should return false if on last page', async () => {
-      pager.page = 10;
+      footer.curPage.set(10);
       expect(await harness.hasNext()).toBeFalse();
     });
   });
 
   describe('prevPage()', () => {
     beforeEach(() => {
-      pager.size = 10;
-      pager.count = 100;
+      footer.pageSize.set(10);
+      footer.rowCount.set(100);
     });
 
     it('should set current page to previous page', async () => {
-      pager.page = 2;
+      footer.curPage.set(2);
       await harness.clickPrevious();
       expect(await harness.currentPage()).toEqual(1);
     });
 
     it('should emit change event', async () => {
-      spyOn(pager.change, 'emit');
-      pager.page = 2;
+      spyOn(footer.page, 'emit');
+      footer.curPage.set(2);
       await harness.clickPrevious();
-      expect(pager.change.emit).toHaveBeenCalledWith({ page: 1 });
+      expect(footer.page.emit).toHaveBeenCalledWith({ page: 1 });
     });
 
     it('should not change page if already on first page', async () => {
-      pager.page = 1;
+      footer.curPage.set(1);
       await harness.clickPrevious();
       expect(await harness.currentPage()).toEqual(1);
     });
@@ -103,25 +122,25 @@ describe('DataTablePagerComponent', () => {
 
   describe('nextPage()', () => {
     beforeEach(() => {
-      pager.size = 10;
-      pager.count = 100;
+      footer.pageSize.set(10);
+      footer.rowCount.set(100);
     });
 
     it('should set current page to next page', async () => {
-      pager.page = 2;
+      footer.curPage.set(2);
       await harness.clickNext();
       expect(await harness.currentPage()).toEqual(3);
     });
 
     it('should emit change event', async () => {
-      spyOn(pager.change, 'emit');
-      pager.page = 2;
+      spyOn(footer.page, 'emit');
+      footer.curPage.set(2);
       await harness.clickNext();
-      expect(pager.change.emit).toHaveBeenCalledWith({ page: 3 });
+      expect(footer.page.emit).toHaveBeenCalledWith({ page: 3 });
     });
 
     it('should not change page if already on last page', async () => {
-      pager.page = 10;
+      footer.curPage.set(10);
       await harness.clickNext();
       expect(await harness.currentPage()).toEqual(10);
     });
@@ -129,9 +148,9 @@ describe('DataTablePagerComponent', () => {
 
   describe('selectPage()', () => {
     beforeEach(() => {
-      pager.size = 10;
-      pager.count = 100;
-      pager.page = 1;
+      footer.pageSize.set(10);
+      footer.rowCount.set(100);
+      footer.curPage.set(1);
     });
 
     describe('with a new page', () => {
@@ -141,26 +160,26 @@ describe('DataTablePagerComponent', () => {
       });
 
       it('should emit change event', async () => {
-        spyOn(pager.change, 'emit');
+        spyOn(footer.page, 'emit');
         await harness.clickPage(3);
-        expect(pager.change.emit).toHaveBeenCalledWith({ page: 3 });
+        expect(footer.page.emit).toHaveBeenCalledWith({ page: 3 });
       });
     });
 
     describe('with the current page', () => {
       it('should not emit change event', async () => {
-        spyOn(pager.change, 'emit');
-        await harness.clickPage(pager.page);
-        expect(pager.change.emit).not.toHaveBeenCalled();
+        spyOn(footer.page, 'emit');
+        await harness.clickPage(footer.curPage());
+        expect(footer.page.emit).not.toHaveBeenCalled();
       });
     });
   });
 
   describe('calcPages()', () => {
     beforeEach(() => {
-      pager.size = 10;
-      pager.count = 73;
-      pager.page = 1;
+      footer.pageSize.set(10);
+      footer.rowCount.set(73);
+      footer.curPage.set(1);
     });
 
     it('should return array with max 5 pages to display', async () => {
@@ -168,12 +187,12 @@ describe('DataTablePagerComponent', () => {
     });
 
     it('should return array with available pages to display', async () => {
-      pager.count = 30;
+      footer.rowCount.set(30);
       expect(await harness.pageRange()).toEqual('1-3');
     });
 
     it('should return array containing specified page', async () => {
-      pager.page = 6;
+      footer.curPage.set(6);
       expect(await harness.pageRange()).toEqual('4-8');
     });
   });
@@ -185,8 +204,8 @@ describe('DataTablePagerComponent', () => {
     let lastButton: DebugElement;
     let pageButtons: { button: DebugElement; page: number }[];
     beforeEach(() => {
-      pager.size = 10;
-      pager.count = 100;
+      footer.pageSize.set(10);
+      footer.rowCount.set(100);
       fixture.detectChanges();
       [firstButton, previousButton, nextButton, lastButton] = fixture.debugElement
         .queryAll(By.css('a[role=button]'))
@@ -202,7 +221,7 @@ describe('DataTablePagerComponent', () => {
 
     describe('takes messages-overrides from table', () => {
       const setMessages = (messages: DatatableComponent['messages']) => {
-        (pager as any).dataTable = { messages };
+        (pager as any).datatable = { messages };
         // do a change detection on the real changeDetectionRef
         fixture.componentRef.injector.get(ChangeDetectorRef).detectChanges();
       };
