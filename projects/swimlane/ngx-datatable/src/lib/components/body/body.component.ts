@@ -17,7 +17,6 @@ import {
   ViewChild
 } from '@angular/core';
 
-import { DraggableDirective } from '../../directives/draggable.directive';
 import { ColumnGroupWidth, TableColumnInternal } from '../../types/internal.types';
 import {
   ActivateEvent,
@@ -52,7 +51,6 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
     DataTableRowWrapperComponent,
     DatatableRowDefInternalDirective,
     DataTableBodyRowComponent,
-    DraggableDirective,
     NgTemplateOutlet,
     DatatableBodyRowDirective
   ],
