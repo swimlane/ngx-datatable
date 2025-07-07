@@ -1,45 +1,40 @@
 import { NgClass, NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output, Signal } from '@angular/core';
 
-import { PagerPageEvent } from '../../types/public.types';
+import { FooterContext, PagerPageEvent } from '../../types/public.types';
 import { DatatableFooterDirective } from './footer.directive';
 import { DataTablePagerComponent } from './pager.component';
+
 @Component({
   selector: 'datatable-footer',
   imports: [NgClass, NgTemplateOutlet, DataTablePagerComponent],
   template: `
     <div
       class="datatable-footer-inner"
-      [ngClass]="{ 'selected-count': selectedMessage }"
-      [style.height.px]="footerHeight"
+      [ngClass]="{ 'selected-count': selectedMessage() }"
+      [style.height.px]="footerHeight()"
     >
-      @if (footerTemplate?.template) {
+      @if (footerTemplate()?.template) {
         <ng-template
-          [ngTemplateOutlet]="footerTemplate!.template!"
-          [ngTemplateOutletContext]="{
-            rowCount: rowCount,
-            pageSize: pageSize,
-            selectedCount: selectedCount,
-            curPage: curPage,
-            offset: offset
-          }"
+          [ngTemplateOutlet]="footerTemplate()!.template!"
+          [ngTemplateOutletContext]="templateContext()"
         />
       } @else {
         <div class="page-count">
-          @if (selectedMessage) {
-            <span> {{ selectedCount?.toLocaleString() }} {{ selectedMessage }} / </span>
+          @if (selectedMessage()) {
+            <span> {{ selectedCount()?.toLocaleString() }} {{ selectedMessage() }} / </span>
           }
-          {{ rowCount?.toLocaleString() }} {{ totalMessage }}
+          {{ rowCount()?.toLocaleString() }} {{ totalMessage() }}
         </div>
-        @if (isVisible) {
+        @if (isVisible()) {
           <datatable-pager
-            [pagerLeftArrowIcon]="pagerLeftArrowIcon"
-            [pagerRightArrowIcon]="pagerRightArrowIcon"
-            [pagerPreviousIcon]="pagerPreviousIcon"
-            [pagerNextIcon]="pagerNextIcon"
-            [page]="curPage"
-            [size]="pageSize"
-            [count]="rowCount"
+            [pagerLeftArrowIcon]="pagerLeftArrowIcon()"
+            [pagerRightArrowIcon]="pagerRightArrowIcon()"
+            [pagerPreviousIcon]="pagerPreviousIcon()"
+            [pagerNextIcon]="pagerNextIcon()"
+            [page]="curPage()"
+            [size]="pageSize()"
+            [count]="rowCount()"
             (change)="page.emit($event)"
           />
         }
@@ -53,27 +48,29 @@ import { DataTablePagerComponent } from './pager.component';
   }
 })
 export class DataTableFooterComponent {
-  @Input() footerHeight!: number;
-  @Input() rowCount!: number;
-  @Input() pageSize!: number;
-  @Input() offset!: number;
-  @Input() pagerLeftArrowIcon?: string;
-  @Input() pagerRightArrowIcon?: string;
-  @Input() pagerPreviousIcon?: string;
-  @Input() pagerNextIcon?: string;
-  @Input() totalMessage!: string;
-  @Input() footerTemplate?: DatatableFooterDirective;
+  readonly footerHeight = input.required<number>();
+  readonly rowCount = input.required<number>();
+  readonly pageSize = input.required<number>();
+  readonly offset = input.required<number>();
+  readonly pagerLeftArrowIcon = input<string | undefined>();
+  readonly pagerRightArrowIcon = input<string | undefined>();
+  readonly pagerPreviousIcon = input<string | undefined>();
+  readonly pagerNextIcon = input<string | undefined>();
+  readonly totalMessage = input.required<string>();
+  readonly footerTemplate = input<DatatableFooterDirective | undefined>();
 
-  @Input() selectedCount = 0;
-  @Input() selectedMessage?: string | boolean;
+  readonly selectedCount = input(0);
+  readonly selectedMessage = input<string | boolean | undefined>(undefined);
 
-  @Output() readonly page = new EventEmitter<PagerPageEvent>();
+  readonly page = output<PagerPageEvent>();
 
-  get isVisible(): boolean {
-    return this.rowCount / this.pageSize > 1;
-  }
-
-  get curPage(): number {
-    return this.offset + 1;
-  }
+  readonly isVisible = computed(() => this.rowCount() / this.pageSize() > 1);
+  readonly curPage = computed(() => this.offset() + 1);
+  readonly templateContext: Signal<FooterContext> = computed(() => ({
+    rowCount: this.rowCount(),
+    pageSize: this.pageSize(),
+    selectedCount: this.selectedCount(),
+    curPage: this.curPage(),
+    offset: this.offset()
+  }));
 }
