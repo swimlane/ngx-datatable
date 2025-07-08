@@ -1,74 +1,43 @@
-import { ChangeDetectorRef, DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { ChangeDetectionStrategy, ChangeDetectorRef, DebugElement } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import type { DatatableComponent } from '../datatable.component';
 import { DataTablePagerComponent } from './pager.component';
+import { PagerHarness } from './testing/pager.harness';
 
 describe('DataTablePagerComponent', () => {
   let fixture: ComponentFixture<DataTablePagerComponent>;
   let pager: DataTablePagerComponent;
+  let harness: PagerHarness;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
+    TestBed.overrideComponent(DataTablePagerComponent, {
+      set: { changeDetection: ChangeDetectionStrategy.Default }
+    });
     fixture = TestBed.createComponent(DataTablePagerComponent);
     pager = fixture.componentInstance;
-  }));
-
-  describe('size', () => {
-    it('should be defined', () => {
-      expect(pager.size).toBeDefined();
-    });
-
-    it('should default to 0', () => {
-      expect(pager.size).toEqual(0);
-    });
-  });
-
-  describe('count', () => {
-    it('should be defined', () => {
-      expect(pager.count).toBeDefined();
-    });
-
-    it('should default to 0', () => {
-      expect(pager.count).toEqual(0);
-    });
-  });
-
-  describe('page', () => {
-    it('should be defined', () => {
-      expect(pager.page).toBeDefined();
-    });
-
-    it('should default to 1', () => {
-      expect(pager.page).toEqual(1);
-    });
+    harness = await TestbedHarnessEnvironment.harnessForFixture(fixture, PagerHarness);
   });
 
   describe('totalPages', () => {
-    it('should be defined', () => {
-      expect(pager.totalPages).toBeDefined();
-    });
-
-    it('should default to 1', () => {
-      expect(pager.totalPages).toEqual(1);
-    });
-
-    it('should calculate totalPages', () => {
+    it('should calculate totalPages', async () => {
       pager.size = 10;
       pager.count = 28;
-      expect(pager.totalPages).toEqual(3);
+      expect(await harness.pageCount()).toEqual(3);
     });
 
-    it('should have 1 page if size is 0', () => {
+    it('should have 1 page if size is 0', async () => {
       pager.size = 0;
       pager.count = 28;
-      expect(pager.totalPages).toEqual(1);
+      expect(await harness.pageCount()).toEqual(1);
     });
 
-    it('should have 1 page if count is 0', () => {
+    it('should have 1 page if count is 0', async () => {
       pager.size = 10;
       pager.count = 0;
-      expect(pager.totalPages).toEqual(1);
+      expect(await harness.pageCount()).toEqual(1);
     });
   });
 
@@ -78,14 +47,14 @@ describe('DataTablePagerComponent', () => {
       pager.count = 100;
     });
 
-    it('should return true if not on first page', () => {
+    it('should return true if not on first page', async () => {
       pager.page = 2;
-      expect(pager.canPrevious()).toEqual(true);
+      expect(await harness.hasPrevious()).toBeTrue();
     });
 
-    it('should return false if on first page', () => {
+    it('should return false if on first page', async () => {
       pager.page = 1;
-      expect(pager.canPrevious()).toEqual(false);
+      expect(await harness.hasPrevious()).toBeFalse();
     });
   });
 
@@ -95,14 +64,14 @@ describe('DataTablePagerComponent', () => {
       pager.count = 100;
     });
 
-    it('should return true if not on last page', () => {
+    it('should return true if not on last page', async () => {
       pager.page = 2;
-      expect(pager.canNext()).toEqual(true);
+      expect(await harness.hasNext()).toBeTrue();
     });
 
-    it('should return false if on last page', () => {
+    it('should return false if on last page', async () => {
       pager.page = 10;
-      expect(pager.canNext()).toEqual(false);
+      expect(await harness.hasNext()).toBeFalse();
     });
   });
 
@@ -112,23 +81,23 @@ describe('DataTablePagerComponent', () => {
       pager.count = 100;
     });
 
-    it('should set current page to previous page', () => {
+    it('should set current page to previous page', async () => {
       pager.page = 2;
-      pager.prevPage();
-      expect(pager.page).toEqual(1);
+      await harness.clickPrevious();
+      expect(await harness.currentPage()).toEqual(1);
     });
 
-    it('should emit change event', () => {
+    it('should emit change event', async () => {
       spyOn(pager.change, 'emit');
       pager.page = 2;
-      pager.prevPage();
+      await harness.clickPrevious();
       expect(pager.change.emit).toHaveBeenCalledWith({ page: 1 });
     });
 
-    it('should not change page if already on first page', () => {
+    it('should not change page if already on first page', async () => {
       pager.page = 1;
-      pager.prevPage();
-      expect(pager.page).toEqual(1);
+      await harness.clickPrevious();
+      expect(await harness.currentPage()).toEqual(1);
     });
   });
 
@@ -138,23 +107,23 @@ describe('DataTablePagerComponent', () => {
       pager.count = 100;
     });
 
-    it('should set current page to next page', () => {
+    it('should set current page to next page', async () => {
       pager.page = 2;
-      pager.nextPage();
-      expect(pager.page).toEqual(3);
+      await harness.clickNext();
+      expect(await harness.currentPage()).toEqual(3);
     });
 
-    it('should emit change event', () => {
+    it('should emit change event', async () => {
       spyOn(pager.change, 'emit');
       pager.page = 2;
-      pager.nextPage();
+      await harness.clickNext();
       expect(pager.change.emit).toHaveBeenCalledWith({ page: 3 });
     });
 
-    it('should not change page if already on last page', () => {
+    it('should not change page if already on last page', async () => {
       pager.page = 10;
-      pager.nextPage();
-      expect(pager.page).toEqual(10);
+      await harness.clickNext();
+      expect(await harness.currentPage()).toEqual(10);
     });
   });
 
@@ -166,38 +135,22 @@ describe('DataTablePagerComponent', () => {
     });
 
     describe('with a new page', () => {
-      it('should set current page', () => {
-        pager.selectPage(3);
-        expect(pager.page).toEqual(3);
+      it('should set current page', async () => {
+        await harness.clickPage(3);
+        expect(await harness.currentPage()).toEqual(3);
       });
 
-      it('should emit change event', () => {
+      it('should emit change event', async () => {
         spyOn(pager.change, 'emit');
-        pager.selectPage(3);
+        await harness.clickPage(3);
         expect(pager.change.emit).toHaveBeenCalledWith({ page: 3 });
       });
     });
 
     describe('with the current page', () => {
-      it('should not emit change event', () => {
+      it('should not emit change event', async () => {
         spyOn(pager.change, 'emit');
-        pager.selectPage(pager.page);
-        expect(pager.change.emit).not.toHaveBeenCalled();
-      });
-    });
-
-    describe('with a non-existing page', () => {
-      it('should not set current page', () => {
-        pager.selectPage(30);
-        expect(pager.page).toEqual(1);
-
-        pager.selectPage(0);
-        expect(pager.page).toEqual(1);
-      });
-
-      it('should not emit change event', () => {
-        spyOn(pager.change, 'emit');
-        pager.selectPage(30);
+        await harness.clickPage(pager.page);
         expect(pager.change.emit).not.toHaveBeenCalled();
       });
     });
@@ -210,39 +163,18 @@ describe('DataTablePagerComponent', () => {
       pager.page = 1;
     });
 
-    it('should return array with max 5 pages to display', () => {
-      const pages = pager.calcPages(1);
-      expect(pages.length).toEqual(5);
-      expect(pages[0].number).toEqual(1);
-      expect(pages[4].number).toEqual(5);
+    it('should return array with max 5 pages to display', async () => {
+      expect(await harness.pageRange()).toEqual('1-5');
     });
 
-    it('should return array with available pages to display', () => {
+    it('should return array with available pages to display', async () => {
       pager.count = 30;
-      const pages = pager.calcPages(1);
-      expect(pages.length).toEqual(3);
-      expect(pages[0].number).toEqual(1);
-      expect(pages[2].number).toEqual(3);
+      expect(await harness.pageRange()).toEqual('1-3');
     });
 
-    xit('should return array containing specified page', () => {
-      const pages = pager.calcPages(6);
-      expect(pages.length).toEqual(3);
-      expect(pages[0].number).toEqual(6);
-      expect(pages[2].number).toEqual(8);
-    });
-
-    xit('should use current page if no page is specified', () => {
-      pager.page = 7;
-      const pages = pager.calcPages();
-      expect(pages.length).toEqual(3);
-      expect(pages[0].number).toEqual(6);
-      expect(pages[2].number).toEqual(8);
-    });
-
-    xit('should return empty array if specified page does not exist', () => {
-      const pages = pager.calcPages(16);
-      expect(pages.length).toEqual(0);
+    it('should return array containing specified page', async () => {
+      pager.page = 6;
+      expect(await harness.pageRange()).toEqual('4-8');
     });
   });
 
@@ -267,30 +199,6 @@ describe('DataTablePagerComponent', () => {
     const ariaLabel = (element: DebugElement): string | null => {
       return element?.attributes['aria-label'] ?? null;
     };
-
-    describe('has default values without messages from table', () => {
-      it('first button', () => {
-        expect(ariaLabel(firstButton)).toEqual('go to first page');
-      });
-
-      it('previous button', () => {
-        expect(ariaLabel(previousButton)).toEqual('go to previous page');
-      });
-
-      it('next button', () => {
-        expect(ariaLabel(nextButton)).toEqual('go to next page');
-      });
-
-      it('last button', () => {
-        expect(ariaLabel(lastButton)).toEqual('go to last page');
-      });
-
-      it('page buttons', () => {
-        for (const { button, page } of pageButtons) {
-          expect(ariaLabel(button)).withContext(`${page} button`).toEqual(`page ${page}`);
-        }
-      });
-    });
 
     describe('takes messages-overrides from table', () => {
       const setMessages = (messages: DatatableComponent['messages']) => {

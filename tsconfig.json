@@ -27,5 +27,6 @@
     "strictInjectionParameters": true,
     "strictTemplates": true,
     "enableIvy": true
-  }
+  },
+  "exclude": ["testing/**/*.ts"]
 }
