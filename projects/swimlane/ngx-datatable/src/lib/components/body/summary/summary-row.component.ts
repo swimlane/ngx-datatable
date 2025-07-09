@@ -46,8 +46,8 @@ export class DataTableSummaryRowComponent implements OnChanges {
   @Input() rowHeight!: number;
   @Input() innerWidth!: number;
 
-  _internalColumns!: TableColumnInternal[];
-  summaryRow: any = {};
+  protected _internalColumns!: TableColumnInternal[];
+  protected summaryRow: any = {};
 
   ngOnChanges() {
     if (!this.columns.length || !this.rows.length) {
