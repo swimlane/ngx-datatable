@@ -1,4 +1,4 @@
-import { ContentChild, Directive, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
+import { computed, contentChild, Directive, input, output, TemplateRef } from '@angular/core';
 
 import { DetailToggleEvents, Row, RowDetailContext } from '../../types/public.types';
 import { DatatableRowDetailTemplateDirective } from './row-detail-template.directive';
@@ -11,22 +11,24 @@ export class DatatableRowDetailDirective<TRow extends Row = any> {
    * The detail row height is required especially
    * when virtual scroll is enabled.
    */
-  @Input() rowHeight: number | ((row?: TRow, index?: number) => number) = 0;
+  readonly rowHeight = input<number | ((row?: TRow, index?: number) => number)>(0);
 
-  @Input('template')
-  _templateInput?: TemplateRef<RowDetailContext<TRow>>;
+  readonly _templateInput = input<TemplateRef<RowDetailContext<TRow>>>(undefined, {
+    alias: 'template'
+  });
 
-  @ContentChild(DatatableRowDetailTemplateDirective, { read: TemplateRef, static: true })
-  _templateQuery?: TemplateRef<RowDetailContext<TRow>>;
+  readonly _templateQuery = contentChild(DatatableRowDetailTemplateDirective, {
+    read: TemplateRef
+  });
 
-  get template(): TemplateRef<RowDetailContext<TRow>> | undefined {
-    return this._templateInput ?? this._templateQuery;
-  }
+  readonly template = computed<TemplateRef<RowDetailContext<TRow>> | undefined>(() => {
+    return this._templateInput() ?? this._templateQuery();
+  });
 
   /**
    * Row detail row visbility was toggled.
    */
-  @Output() readonly toggle = new EventEmitter<DetailToggleEvents<TRow>>();
+  readonly toggle = output<DetailToggleEvents<TRow>>();
 
   /**
    * Toggle the expansion of the row

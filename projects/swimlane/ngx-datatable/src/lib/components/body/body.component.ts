@@ -609,7 +609,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     if (!this.rowDetail) {
       return 0;
     }
-    const rowHeight = this.rowDetail.rowHeight;
+    const rowHeight = this.rowDetail.rowHeight();
     return typeof rowHeight === 'function' ? rowHeight(row, index) : (rowHeight as number);
   };
 

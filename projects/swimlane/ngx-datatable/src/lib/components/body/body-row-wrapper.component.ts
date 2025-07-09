@@ -61,12 +61,10 @@ import { DatatableGroupHeaderDirective } from './body-group-header.directive';
     @if ((groupHeader?.template && expanded) || !groupHeader || !groupHeader.template) {
       <ng-content />
     }
-    @if (rowDetail?.template && expanded) {
+    @let rowDetailTemplate = rowDetail?.template();
+    @if (rowDetailTemplate && expanded) {
       <div class="datatable-row-detail" [style.height.px]="detailRowHeight">
-        <ng-template
-          [ngTemplateOutlet]="rowDetail!.template!"
-          [ngTemplateOutletContext]="context"
-        />
+        <ng-template [ngTemplateOutlet]="rowDetailTemplate" [ngTemplateOutletContext]="context" />
       </div>
     }
   `,
