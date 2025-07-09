@@ -1,11 +1,10 @@
 import {
   booleanAttribute,
   Directive,
-  EventEmitter,
-  Input,
+  input,
   numberAttribute,
   OnDestroy,
-  Output,
+  output,
   signal
 } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
@@ -22,19 +21,19 @@ import { TableColumnInternal } from '../types/internal.types';
   }
 })
 export class LongPressDirective implements OnDestroy {
-  @Input({ transform: booleanAttribute }) pressEnabled = true;
-  @Input() pressModel!: TableColumnInternal;
-  @Input({ transform: numberAttribute }) duration = 500;
+  readonly pressEnabled = input(true, { transform: booleanAttribute });
+  readonly pressModel = input.required<TableColumnInternal>();
+  readonly duration = input(500, { transform: numberAttribute });
 
-  @Output() readonly longPressStart = new EventEmitter<{
+  readonly longPressStart = output<{
     event: MouseEvent | TouchEvent;
     model: TableColumnInternal;
   }>();
-  @Output() readonly longPressEnd = new EventEmitter<{ model: TableColumnInternal }>();
+  readonly longPressEnd = output<{ model: TableColumnInternal }>();
 
   readonly pressing = signal(false);
   readonly isLongPressing = signal(false);
-  timeout: any;
+  timeout?: number;
 
   subscription?: Subscription;
 
@@ -42,7 +41,7 @@ export class LongPressDirective implements OnDestroy {
     const isMouse = event instanceof MouseEvent;
 
     // don't do right/middle clicks
-    if (!this.pressEnabled || (isMouse && event.button !== 0)) {
+    if (!this.pressEnabled() || (isMouse && event.button !== 0)) {
       return;
     }
 
@@ -58,32 +57,35 @@ export class LongPressDirective implements OnDestroy {
     const mouseup = fromEvent(document, isMouse ? 'mouseup' : 'touchend');
     this.subscription = mouseup.subscribe(() => this.endPress());
 
-    this.timeout = setTimeout(() => {
+    this.timeout = window.setTimeout(() => {
       this.isLongPressing.set(true);
       this.longPressStart.emit({
         event,
-        model: this.pressModel
+        model: this.pressModel()
       });
-    }, this.duration);
+    }, this.duration());
   }
 
   endPress(): void {
-    clearTimeout(this.timeout);
     this.isLongPressing.set(false);
     this.pressing.set(false);
     this._destroySubscription();
 
     this.longPressEnd.emit({
-      model: this.pressModel
+      model: this.pressModel()
     });
   }
 
   ngOnDestroy(): void {
-    clearTimeout(this.timeout);
     this._destroySubscription();
   }
 
   private _destroySubscription(): void {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+      this.timeout = undefined;
+    }
+
     if (this.subscription) {
       this.subscription.unsubscribe();
       this.subscription = undefined;
