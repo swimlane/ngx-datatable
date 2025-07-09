@@ -1,13 +1,12 @@
 import {
   Directive,
   ElementRef,
-  EventEmitter,
-  HostBinding,
   inject,
   NgZone,
   OnDestroy,
   OnInit,
-  Output
+  output,
+  signal
 } from '@angular/core';
 
 /**
@@ -22,18 +21,20 @@ import {
  *
  */
 @Directive({
-  selector: '[visibilityObserver]'
+  selector: '[visibilityObserver]',
+  host: {
+    '[class.visible]': 'isVisible()'
+  }
 })
 export class VisibilityDirective implements OnInit, OnDestroy {
   private element = inject(ElementRef);
   private zone = inject(NgZone);
 
-  @HostBinding('class.visible')
-  isVisible = false;
+  readonly isVisible = signal(false);
 
-  @Output() readonly visible = new EventEmitter<any>();
+  readonly visible = output<boolean>();
 
-  timeout: any;
+  timeout?: number;
 
   ngOnInit(): void {
     this.runCheck();
@@ -46,13 +47,13 @@ export class VisibilityDirective implements OnInit, OnDestroy {
   onVisibilityChange(): void {
     // trigger zone recalc for columns
     this.zone.run(() => {
-      this.isVisible = true;
+      this.isVisible.set(true);
       this.visible.emit(true);
     });
   }
 
   runCheck(): void {
-    const check = () => {
+    const check = (): void => {
       // https://davidwalsh.name/offsetheight-visibility
       const { offsetHeight, offsetWidth } = this.element.nativeElement;
 
@@ -62,11 +63,11 @@ export class VisibilityDirective implements OnInit, OnDestroy {
       } else {
         clearTimeout(this.timeout);
         this.zone.runOutsideAngular(() => {
-          this.timeout = setTimeout(() => check(), 50);
+          this.timeout = window.setTimeout(() => check(), 50);
         });
       }
     };
 
-    this.timeout = setTimeout(() => check());
+    this.timeout = window.setTimeout(() => check());
   }
 }
