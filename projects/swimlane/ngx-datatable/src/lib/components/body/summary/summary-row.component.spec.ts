@@ -1,18 +1,17 @@
-import { DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { ComponentRef } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ScrollbarHelper } from '../../../services/scrollbar-helper.service';
 import { TableColumnInternal } from '../../../types/internal.types';
 import { toInternalColumn } from '../../../utils/column-helper';
-import { DataTableBodyCellComponent } from '../body-cell.component';
-import { DataTableBodyRowComponent } from '../body-row.component';
 import { DataTableSummaryRowComponent } from './summary-row.component';
+import { SummaryHarness } from './testing/summary.harness';
 
 describe('DataTableSummaryRowComponent', () => {
   let fixture: ComponentFixture<DataTableSummaryRowComponent>;
   let component: DataTableSummaryRowComponent;
-  let element: DebugElement;
+  let componentRef: ComponentRef<DataTableSummaryRowComponent>;
+  let harness: SummaryHarness;
 
   let rows: any[];
   let columns: TableColumnInternal[];
@@ -25,28 +24,19 @@ describe('DataTableSummaryRowComponent', () => {
     columns = toInternalColumn([{ prop: 'col1' }, { prop: 'col2' }]);
   });
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        DataTableSummaryRowComponent,
-        DataTableBodyRowComponent,
-        DataTableBodyCellComponent
-      ],
-      providers: [ScrollbarHelper]
-    }).compileComponents();
-  }));
-
-  beforeEach(() => {
+  beforeEach(async () => {
     fixture = TestBed.createComponent(DataTableSummaryRowComponent);
-    component = fixture.componentInstance;
-    element = fixture.debugElement;
-    fixture.detectChanges();
-  });
 
-  const triggerChange = () => {
-    component.ngOnChanges();
-    fixture.detectChanges();
-  };
+    // Set required inputs before creating harness and detecting changes
+    fixture.componentRef.setInput('columns', columns);
+    fixture.componentRef.setInput('rows', rows);
+    fixture.componentRef.setInput('rowHeight', 30);
+    fixture.componentRef.setInput('innerWidth', 100);
+
+    harness = await TestbedHarnessEnvironment.harnessForFixture(fixture, SummaryHarness);
+    component = fixture.componentInstance;
+    componentRef = fixture.componentRef;
+  });
 
   describe('fixture', () => {
     it('should have a component instance', () => {
@@ -55,71 +45,85 @@ describe('DataTableSummaryRowComponent', () => {
   });
 
   describe('Visibility', () => {
-    it('should not be visible when there are no columns', () => {
-      component.columns = [];
-      component.rows = rows;
-      triggerChange();
-      expect(element.query(By.css('datatable-body-row'))).toBeNull();
+    it('should not be visible when there are no columns', async () => {
+      componentRef.setInput('columns', []);
+      componentRef.setInput('rows', rows);
+      expect(await harness.hasSummaryRow()).toBeFalse();
     });
 
-    it('should not be visible when there are no rows', () => {
-      component.columns = columns;
-      component.rows = [];
-      triggerChange();
-      expect(element.query(By.css('datatable-body-row'))).toBeNull();
+    it('should not be visible when there are no rows', async () => {
+      componentRef.setInput('columns', columns);
+      componentRef.setInput('rows', []);
+      expect(await harness.hasSummaryRow()).toBeFalse();
     });
 
-    it('should be visible when there are rows and columns', () => {
-      component.columns = columns;
-      component.rows = rows;
-      triggerChange();
-      expect(element.query(By.css('datatable-body-row'))).not.toBeNull();
+    it('should be visible when there are rows and columns', async () => {
+      componentRef.setInput('columns', columns);
+      componentRef.setInput('rows', rows);
+      expect(await harness.hasSummaryRow()).toBeTrue();
     });
   });
 
   describe('Computing', () => {
     beforeEach(() => {
-      component.columns = columns;
-      component.rows = rows;
-      triggerChange();
+      componentRef.setInput('columns', columns);
+      componentRef.setInput('rows', rows);
     });
 
     describe('Default Summary Function', () => {
-      it('should be used when no other provided', () => {
-        expect(component.summaryRow.col1).toEqual(rows[0].col1 + rows[1].col1);
-        expect(component.summaryRow.col2).toEqual(rows[0].col2 + rows[1].col2);
+      it('should be used when no other provided', async () => {
+        const col1Text = await harness.getSummaryRowCellText(0);
+        const col2Text = await harness.getSummaryRowCellText(1);
+
+        expect(col1Text).toBe((rows[0].col1 + rows[1].col1).toString());
+        expect(col2Text).toBe((rows[0].col2 + rows[1].col2).toString());
       });
 
-      it('should works with empty row', () => {
-        component.rows = [{ col1: null, col2: undefined }, { col1: null }];
+      it('should works with empty row', async () => {
+        componentRef.setInput('rows', [{ col1: null, col2: undefined }, { col1: null }]);
 
-        triggerChange();
+        const col1Text = await harness.getSummaryRowCellText(0);
+        const col2Text = await harness.getSummaryRowCellText(1);
 
-        expect(component.summaryRow.col1).toBeNull();
-        expect(component.summaryRow.col2).toBeNull();
+        expect(col1Text).toBe('');
+        expect(col2Text).toBe('');
       });
 
-      it('should not compute a result if there are non-number cells', () => {
-        component.rows = [
+      it('should not compute a result if there are non-number cells', async () => {
+        componentRef.setInput('rows', [
           { col1: 'aaa', col2: 'xxx' },
           { col1: 'bbb', col2: 34 }
-        ];
+        ]);
 
-        triggerChange();
-        expect(component.summaryRow.col1).toEqual(null);
-        expect(component.summaryRow.col2).toEqual(null);
+        const col1Text = await harness.getSummaryRowCellText(0);
+        const col2Text = await harness.getSummaryRowCellText(1);
+
+        expect(col1Text).toBe('');
+        expect(col2Text).toBe('');
+      });
+
+      it('should not compute a result if there are non-number cells', async () => {
+        componentRef.setInput('rows', [
+          { col1: 'aaa', col2: 'xxx' },
+          { col1: 'bbb', col2: 34 }
+        ]);
+
+        const col1Text = await harness.getSummaryRowCellText(0);
+        const col2Text = await harness.getSummaryRowCellText(1);
+
+        expect(col1Text).toBe('');
+        expect(col2Text).toBe('');
       });
     });
 
-    it('should not compute if null is set as a summary function', () => {
+    it('should not compute if null is set as a summary function', async () => {
       columns[0].summaryFunc = null;
-
-      triggerChange();
-
-      expect(component.summaryRow.col1).toEqual(undefined);
+      componentRef.setInput('columns', [...columns]);
+      const col1Text = await harness.getSummaryRowCellText(0);
+      expect(col1Text).toBe('');
     });
 
-    it('should use provided summary function', () => {
+    it('should use provided summary function', async () => {
       const sum1 = 22;
       const sum2 = 'test sum';
       const spy1 = jasmine.createSpy('spy1').and.returnValue(sum1);
@@ -127,7 +131,10 @@ describe('DataTableSummaryRowComponent', () => {
       columns[0].summaryFunc = spy1;
       columns[1].summaryFunc = spy2;
 
-      triggerChange();
+      componentRef.setInput('columns', [...columns]);
+
+      const col1Text = await harness.getSummaryRowCellText(0);
+      const col2Text = await harness.getSummaryRowCellText(1);
 
       expect(spy1.calls.any()).toBeTruthy();
       expect(spy2.calls.any()).toBeTruthy();
@@ -135,20 +142,23 @@ describe('DataTableSummaryRowComponent', () => {
       expect(spy1.calls.mostRecent().args[0]).toEqual([rows[0].col1, rows[1].col1]);
       expect(spy2.calls.mostRecent().args[0]).toEqual([rows[0].col2, rows[1].col2]);
 
-      expect(component.summaryRow.col1).toEqual(sum1);
-      expect(component.summaryRow.col2).toEqual(sum2);
+      expect(col1Text).toBe(sum1.toString());
+      expect(col2Text).toBe(sum2.toString());
     });
 
     describe('Pipe', () => {
-      it('should use provided pipe', () => {
+      it('should use provided pipe', async () => {
         const transformed = '$22';
         const transformSpy = jasmine.createSpy('transform').and.returnValue(transformed);
 
         columns[0].pipe = { transform: transformSpy };
-        triggerChange();
+        componentRef.setInput('columns', [...columns]);
+        fixture.detectChanges();
+
+        const col1Text = await harness.getSummaryRowCellText(0);
 
         expect(transformSpy.calls.any()).toBeTruthy();
-        expect(component.summaryRow.col1).toEqual(transformed);
+        expect(col1Text).toBe(transformed);
       });
     });
   });
