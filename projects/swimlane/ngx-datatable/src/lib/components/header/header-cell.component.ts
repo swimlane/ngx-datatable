@@ -1,23 +1,27 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   ElementRef,
-  EventEmitter,
-  HostBinding,
   HostListener,
   inject,
-  Input,
   OnDestroy,
   OnInit,
-  Output,
-  TemplateRef
+  TemplateRef,
+  input,
+  output,
+  numberAttribute,
+  computed,
+  booleanAttribute
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { DragEvent, DraggableDirective } from '../../directives/draggable.directive';
-import { InnerSortEvent, TableColumnInternal } from '../../types/internal.types';
+import {
+  InnerSortEvent,
+  SortableTableColumnInternal,
+  TableColumnInternal
+} from '../../types/internal.types';
 import {
   HeaderCellContext,
   SelectionType,
@@ -32,37 +36,38 @@ import { nextSortDir } from '../../utils/sort';
   imports: [NgTemplateOutlet, DraggableDirective],
   template: `
     <div class="datatable-header-cell-template-wrap">
-      @if (isTarget) {
+      @if (isTarget()) {
         <ng-template
-          [ngTemplateOutlet]="targetMarkerTemplate!"
-          [ngTemplateOutletContext]="targetMarkerContext"
+          [ngTemplateOutlet]="targetMarkerTemplate()!"
+          [ngTemplateOutletContext]="targetMarkerContext()"
         />
       }
-      @if (isCheckboxable) {
+      @if (isCheckboxable()) {
         <label class="datatable-checkbox">
           <input
             type="checkbox"
-            [attr.aria-label]="ariaHeaderCheckboxMessage"
-            [checked]="allRowsSelected"
+            [attr.aria-label]="ariaHeaderCheckboxMessage()"
+            [checked]="allRowsSelected()"
             (change)="select.emit()"
           />
         </label>
       }
+      @let column = this.column();
       @if (column.headerTemplate) {
         <ng-template
           [ngTemplateOutlet]="column.headerTemplate"
-          [ngTemplateOutletContext]="cellContext"
+          [ngTemplateOutletContext]="cellContext()"
         />
       } @else {
         <span class="datatable-header-cell-wrapper">
           <span class="datatable-header-cell-label draggable" (click)="onSort()">
-            {{ name }}
+            {{ name() }}
           </span>
         </span>
       }
-      <span [class]="sortClass" (click)="onSort()"> </span>
+      <span [class]="sortClass()" (click)="onSort()"> </span>
     </div>
-    @if (showResizeHandle) {
+    @if (showResizeHandle()) {
       <span
         class="resize-handle"
         draggable
@@ -75,88 +80,60 @@ import { nextSortDir } from '../../utils/sort';
   styleUrl: './header-cell.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    'class': 'datatable-header-cell',
-    '[attr.resizeable]': 'showResizeHandle'
+    '[attr.resizeable]': 'showResizeHandle()',
+    '[attr.title]': 'name()',
+    '[attr.tabindex]': 'column().sortable ? 0 : -1',
+    '[class]': 'columnCssClasses()',
+    '[style.height.px]': 'headerHeight()',
+    '[style.minWidth.px]': 'column().minWidth',
+    '[style.maxWidth.px]': 'column().maxWidth',
+    '[style.width.px]': 'column().width'
   }
 })
 export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
-  private cd = inject(ChangeDetectorRef);
+  readonly sortType = input.required<SortType>();
+  readonly sortAscendingIcon = input<string>();
+  readonly sortDescendingIcon = input<string>();
+  readonly sortUnsetIcon = input<string>();
 
-  @Input() sortType!: SortType;
-  @Input() sortAscendingIcon?: string;
-  @Input() sortDescendingIcon?: string;
-  @Input() sortUnsetIcon?: string;
+  readonly isTarget = input<boolean>();
+  readonly showResizeHandle = input<boolean | undefined>(true);
+  readonly targetMarkerTemplate = input<TemplateRef<any>>();
+  readonly targetMarkerContext = input<any>();
+  readonly enableClearingSortState = input(false);
+  readonly ariaHeaderCheckboxMessage = input.required<string>();
+  readonly allRowsSelected = input(false, { transform: booleanAttribute });
+  readonly selectionType = input<SelectionType>();
+  readonly column = input.required<TableColumnInternal>();
+  readonly headerHeight = input.required<number, number>({
+    transform: numberAttribute
+  });
+  readonly sorts = input<SortPropDir[]>([]);
 
-  @Input() isTarget?: boolean;
-  @Input() showResizeHandle?: boolean = true;
-  @Input() targetMarkerTemplate?: TemplateRef<any>;
-  @Input() targetMarkerContext: any;
-  @Input() enableClearingSortState = false;
-  @Input() ariaHeaderCheckboxMessage!: string;
-
-  _allRowsSelected?: boolean;
-
-  @Input() set allRowsSelected(value) {
-    this._allRowsSelected = value;
-    this.cellContext.allRowsSelected = value;
-  }
-  get allRowsSelected() {
-    return this._allRowsSelected;
-  }
-
-  @Input() selectionType?: SelectionType;
-
-  @Input() set column(column: TableColumnInternal) {
-    this._column = column;
-    this.cellContext.column = column;
-    this.cd.markForCheck();
-  }
-
-  get column(): TableColumnInternal {
-    return this._column;
-  }
-
-  @HostBinding('style.height.px')
-  @Input()
-  headerHeight!: number;
-
-  @Input() set sorts(val: SortPropDir[]) {
-    this._sorts = val;
-    this.sortDir = this.calcSortDir(val);
-    this.cellContext.sortDir = this.sortDir;
-    this.sortClass = this.calcSortClass(this.sortDir);
-    this.cd.markForCheck();
-  }
-
-  get sorts(): SortPropDir[] {
-    return this._sorts;
-  }
-
-  @Output() readonly sort = new EventEmitter<InnerSortEvent>();
-  @Output() readonly select = new EventEmitter<void>();
-  @Output() readonly columnContextmenu = new EventEmitter<{
+  readonly sort = output<InnerSortEvent>();
+  readonly select = output<void>();
+  readonly columnContextmenu = output<{
     event: MouseEvent;
     column: TableColumnInternal;
-  }>(false);
-  @Output() readonly resize = new EventEmitter<{ width: number; column: TableColumnInternal }>();
-  @Output() readonly resizing = new EventEmitter<{ width: number; column: TableColumnInternal }>();
+  }>();
+  readonly resize = output<{ width: number; column: TableColumnInternal }>();
+  readonly resizing = output<{ width: number; column: TableColumnInternal }>();
 
-  @HostBinding('class')
-  get columnCssClasses(): string {
+  protected readonly columnCssClasses = computed(() => {
     let cls = 'datatable-header-cell';
-
-    if (this.column.sortable) {
+    const column = this.column();
+    if (column.sortable) {
       cls += ' sortable';
     }
-    if (this.showResizeHandle) {
+    if (this.showResizeHandle()) {
       cls += ' resizeable';
     }
-    if (this.column.headerClass) {
-      if (typeof this.column.headerClass === 'string') {
-        cls += ' ' + this.column.headerClass;
-      } else if (typeof this.column.headerClass === 'function') {
-        const res = this.column.headerClass({
-          column: this.column
+    if (column.headerClass) {
+      if (typeof column.headerClass === 'string') {
+        cls += ' ' + column.headerClass;
+      } else if (typeof column.headerClass === 'function') {
+        const res = column.headerClass({
+          column
         });
 
         if (typeof res === 'string') {
@@ -172,68 +149,46 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
       }
     }
 
-    const sortDir = this.sortDir;
+    const sortDir = this.sortDir();
     if (sortDir) {
       cls += ` sort-active sort-${sortDir}`;
     }
 
     return cls;
-  }
+  });
 
-  @HostBinding('attr.title')
-  get name(): string | undefined {
+  protected readonly name = computed(() => {
     // guaranteed to have a value by setColumnDefaults() in column-helper.ts
-    return this.column.headerTemplate === undefined ? this.column.name : undefined;
-  }
+    return this.column().headerTemplate === undefined ? this.column().name : undefined;
+  });
 
-  @HostBinding('style.minWidth.px')
-  get minWidth(): number | undefined {
-    return this.column.minWidth;
-  }
+  protected readonly isCheckboxable = computed(() => this.column().headerCheckboxable);
 
-  @HostBinding('style.maxWidth.px')
-  get maxWidth(): number | undefined {
-    return this.column.maxWidth;
-  }
+  protected readonly sortClass = computed<string | undefined>(() => {
+    return this.calcSortClass(this.sortDir());
+  });
+  private readonly sortDir = computed<SortDirection | undefined>(() => {
+    return this.calcSortDir(this.sorts());
+  });
 
-  @HostBinding('style.width.px')
-  get width(): number {
-    return this.column.width;
-  }
-
-  @HostBinding('tabindex') get tabindex(): number {
-    return this.column.sortable ? 0 : -1;
-  }
-
-  get isCheckboxable(): boolean | undefined {
-    return this.column.headerCheckboxable;
-  }
-
-  sortClass?: string;
-  sortDir?: SortDirection;
-
-  cellContext: HeaderCellContext;
+  protected readonly cellContext = computed<HeaderCellContext>(() => {
+    return {
+      column: this.column(),
+      sortDir: this.sortDir(),
+      sortFn: () => this.onSort(),
+      allRowsSelected: this.allRowsSelected(),
+      selectFn: () => this.select.emit()
+    };
+  });
 
   private initialWidth?: number;
-  private _column!: TableColumnInternal;
-  private _sorts!: SortPropDir[];
   private element = inject(ElementRef).nativeElement;
   private subscription?: Subscription;
 
-  constructor() {
-    this.cellContext = {
-      column: this.column,
-      sortDir: this.sortDir,
-      sortFn: () => this.onSort(),
-      allRowsSelected: this.allRowsSelected,
-      selectFn: () => this.select.emit()
-    };
-  }
-
   @HostListener('contextmenu', ['$event'])
   onContextmenu($event: MouseEvent): void {
-    this.columnContextmenu.emit({ event: $event, column: this.column });
-    if (this.column.draggable) {
+    this.columnContextmenu.emit({ event: $event, column: this.column() });
+    if (this.column().draggable) {
       $event.preventDefault();
     }
   }
@@ -244,9 +199,8 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.sortClass = this.calcSortClass(this.sortDir);
     // If there is already a default sort then start the counter with 1.
-    if (this.sortDir) {
+    if (this.sortDir()) {
       this.totalSortStatesApplied = 1;
     }
   }
@@ -256,8 +210,8 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
   }
 
   calcSortDir(sorts: SortPropDir[]): any {
-    if (sorts && this.column) {
-      const sort = sorts.find((s: any) => s.prop === this.column.prop);
+    if (sorts && this.column()) {
+      const sort = sorts.find((s: any) => s.prop === this.column().prop);
 
       if (sort) {
         return sort.dir;
@@ -267,34 +221,34 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
   // Counter to reset sort once user sort asc and desc.
   private totalSortStatesApplied = 0;
   onSort(): void {
-    if (!this.column.sortable) {
+    if (!this.column().sortable) {
       return;
     }
 
     this.totalSortStatesApplied++;
-    let newValue = nextSortDir(this.sortType, this.sortDir);
+    let newValue = nextSortDir(this.sortType(), this.sortDir());
     // User has done both direction sort so we reset the next sort.
-    if (this.enableClearingSortState && this.totalSortStatesApplied === 3) {
+    if (this.enableClearingSortState() && this.totalSortStatesApplied === 3) {
       newValue = undefined;
       this.totalSortStatesApplied = 0;
     }
     this.sort.emit({
-      column: this.column,
-      prevValue: this.sortDir,
+      column: this.column() as SortableTableColumnInternal<any>,
+      prevValue: this.sortDir(),
       newValue
     });
   }
 
   calcSortClass(sortDir: SortDirection | undefined): string | undefined {
-    if (!this.cellContext.column.sortable) {
+    if (!this.cellContext().column.sortable) {
       return undefined;
     }
     if (sortDir === SortDirection.asc) {
-      return `sort-btn sort-asc ${this.sortAscendingIcon ?? 'datatable-icon-up'}`;
+      return `sort-btn sort-asc ${this.sortAscendingIcon() ?? 'datatable-icon-up'}`;
     } else if (sortDir === SortDirection.desc) {
-      return `sort-btn sort-desc ${this.sortDescendingIcon ?? 'datatable-icon-down'}`;
+      return `sort-btn sort-desc ${this.sortDescendingIcon() ?? 'datatable-icon-down'}`;
     } else {
-      return `sort-btn ${this.sortUnsetIcon ?? 'datatable-icon-sort-unset'}`;
+      return `sort-btn ${this.sortUnsetIcon() ?? 'datatable-icon-sort-unset'}`;
     }
   }
 
@@ -303,11 +257,14 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
   }
 
   protected onMouseup(): void {
-    this.resize.emit({ width: this.element.clientWidth, column: this.column });
+    this.resize.emit({ width: this.element.clientWidth, column: this.column() });
   }
 
   protected move({ currentX, initialX }: DragEvent): void {
-    this.resizing.emit({ width: this.initialWidth! + (currentX - initialX), column: this.column });
+    this.resizing.emit({
+      width: this.initialWidth! + (currentX - initialX),
+      column: this.column()
+    });
   }
 
   private destroySubscription(): void {

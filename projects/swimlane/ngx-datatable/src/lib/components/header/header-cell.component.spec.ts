@@ -18,6 +18,9 @@ describe('DataTableHeaderCellComponent', () => {
 
   beforeEach(waitForAsync(async () => {
     fixture = TestBed.createComponent(DataTableHeaderCellComponent);
+    fixture.componentRef.setInput('ariaHeaderCheckboxMessage', 'Select All');
+    fixture.componentRef.setInput('sortType', 'single');
+    fixture.componentRef.setInput('headerHeight', '48');
     component = fixture.componentInstance;
     fixture.componentRef.setInput('column', {
       name: 'test',
