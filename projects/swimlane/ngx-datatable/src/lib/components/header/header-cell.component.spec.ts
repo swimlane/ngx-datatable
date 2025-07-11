@@ -1,70 +1,153 @@
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { AfterViewInit, Component, TemplateRef, viewChild } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { TableColumnInternal } from '../../types/internal.types';
+import {
+  InnerSortEvent,
+  SortableTableColumnInternal,
+  TableColumnInternal
+} from '../../types/internal.types';
+import { toInternalColumn } from '../../utils/column-helper';
 import { DataTableHeaderCellComponent } from './header-cell.component';
+import { HeaderCellHarness } from './testing/header-cell.harnes';
 
 describe('DataTableHeaderCellComponent', () => {
   let fixture: ComponentFixture<DataTableHeaderCellComponent>;
   let component: DataTableHeaderCellComponent;
+  let harness: HeaderCellHarness;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(waitForAsync(async () => {
     fixture = TestBed.createComponent(DataTableHeaderCellComponent);
     component = fixture.componentInstance;
-  }));
-
-  it('should emit new width on resize', fakeAsync(() => {
     fixture.componentRef.setInput('column', {
       name: 'test',
-      resizeable: true
+      prop: 'test',
+      resizeable: true,
+      sortable: true
     });
+    fixture.componentRef.setInput('sortType', 'single');
+    fixture.componentRef.setInput('headerHeight', 50);
+    fixture.componentRef.setInput('ariaHeaderCheckboxMessage', 'Select all rows');
+    fixture.componentInstance.sort.subscribe(sort => {
+      fixture.componentRef.setInput('sorts', [
+        {
+          prop: sort.column.name,
+          dir: sort.newValue
+        }
+      ]);
+    });
+    harness = await TestbedHarnessEnvironment.harnessForFixture(fixture, HeaderCellHarness);
+  }));
+
+  it('should emit new width on resize', async () => {
     spyOn(component.resizing, 'emit');
-    fixture.detectChanges();
-    const initialWidth = fixture.nativeElement.clientWidth;
-    const event = new MouseEvent('mousedown');
-    fixture.nativeElement.querySelector('.resize-handle').dispatchEvent(event);
-    tick();
-    const mouseMoveEvent = new MouseEvent('mousemove', { clientX: 100 });
-    document.dispatchEvent(mouseMoveEvent);
-    const mouseUpEvent = new MouseEvent('mouseup');
-    document.dispatchEvent(mouseUpEvent);
+    const initialWidth = await harness.cellWidth();
+    await harness.resizeCell(0, 100);
     const newWidth = 100 + initialWidth;
     expect(component.resizing.emit).toHaveBeenCalledWith({
       width: newWidth,
-      column: { name: 'test', resizeable: true } as TableColumnInternal<any>
+      column: {
+        name: 'test',
+        prop: 'test',
+        resizeable: true,
+        sortable: true
+      } as TableColumnInternal<any>
     });
-  }));
+  });
 
-  it('should emit sort event', () => {
-    fixture.componentRef.setInput('column', {
-      prop: 'test',
-      sortable: true
-    });
+  it('should emit sort event', async () => {
     spyOn(component.sort, 'emit');
-    fixture.detectChanges();
-    const event = new MouseEvent('click');
-    fixture.nativeElement.querySelector('.datatable-header-cell-label').dispatchEvent(event);
+    await harness.applySort();
     expect(component.sort.emit).toHaveBeenCalled();
   });
 
-  it('should not render resize handle when showResizeHandle is false (last column)', () => {
-    fixture.componentRef.setInput('column', {
-      name: 'test',
-      resizeable: true
-    });
+  it('should not render resize handle when showResizeHandle is false (last column)', async () => {
     fixture.componentRef.setInput('showResizeHandle', false);
-    fixture.detectChanges();
-    const resizeHandle = fixture.nativeElement.querySelector('.resize-handle');
-    expect(resizeHandle).toBeNull();
+    expect(await harness.hasResizeHandle()).toBe(false);
   });
 
-  it('should render resize handle when showResizeHandle is true', () => {
+  it('should render resize handle when showResizeHandle is true', async () => {
+    fixture.componentRef.setInput('showResizeHandle', true);
+    expect(await harness.hasResizeHandle()).toBe(true);
+  });
+
+  it('should emit select when checkbox is clicked', async () => {
     fixture.componentRef.setInput('column', {
       name: 'test',
-      resizeable: true
+      headerCheckboxable: true
     });
-    fixture.componentRef.setInput('showResizeHandle', true);
+    spyOn(component.select, 'emit');
+    await harness.selectAllRows();
+    expect(component.select.emit).toHaveBeenCalled();
+  });
+
+  it('should toggle sort direction on sort button click', async () => {
+    await harness.applySort();
+    expect(await harness.getSortDirection()).toBe('asc');
+    await harness.applySort();
+    expect(await harness.getSortDirection()).toBe('desc');
+  });
+
+  it('should sort on enter key press', async () => {
+    spyOn(component.sort, 'emit');
+    await harness.applySort(true);
+    expect(component.sort.emit).toHaveBeenCalled();
+  });
+});
+
+@Component({
+  imports: [DataTableHeaderCellComponent],
+  template: `<datatable-header-cell
+      sortType="single"
+      headerHeight="50"
+      [column]="column"
+      (sort)="sort($event)"
+    />
+    <ng-template #headerCellTemplate let-sort="sortFn" let-column="column">
+      <span class="custom-header">Custom Header for {{ column.name }}</span>
+      <button class="custom-sort-button" type="button" (click)="sort($event)"
+        >Custom sort button</button
+      >
+    </ng-template> `
+})
+class TestHeaderCellComponent implements AfterViewInit {
+  column: TableColumnInternal<any> = toInternalColumn([
+    {
+      name: 'test',
+      sortable: true
+    }
+  ])[0];
+
+  readonly headerCellTemplate = viewChild('headerCellTemplate', { read: TemplateRef<any> });
+
+  sort(event: InnerSortEvent) {}
+
+  ngAfterViewInit() {
+    this.column = { ...this.column, headerTemplate: this.headerCellTemplate() };
+  }
+}
+
+describe('DataTableHeaderCellComponent with template', () => {
+  let fixture: ComponentFixture<TestHeaderCellComponent>;
+  let harness: HeaderCellHarness;
+
+  beforeEach(waitForAsync(async () => {
+    fixture = TestBed.createComponent(TestHeaderCellComponent);
+    harness = await TestbedHarnessEnvironment.harnessForFixture(fixture, HeaderCellHarness);
+  }));
+
+  it('should render custom header template', async () => {
     fixture.detectChanges();
-    const resizeHandle = fixture.nativeElement.querySelector('.resize-handle');
-    expect(resizeHandle).not.toBeNull();
+    expect(await harness.getHeaderCellText()).toContain('Custom Header for test');
+  });
+
+  it('should call sort function on custom button click', async () => {
+    spyOn(fixture.componentInstance, 'sort');
+    await harness.clickCustomSortButton();
+    expect(fixture.componentInstance.sort).toHaveBeenCalledWith({
+      column: fixture.componentInstance.column as SortableTableColumnInternal<any>,
+      prevValue: undefined,
+      newValue: 'asc'
+    });
   });
 });

@@ -12,5 +12,10 @@ export const getPositionFromEvent = (
   screenX: number;
   screenY: number;
 } => {
-  return event instanceof MouseEvent ? (event as MouseEvent) : (event.changedTouches[0] as Touch);
+  return event instanceof MouseEvent ||
+    event.type === 'mousedown' ||
+    event.type === 'mouseup' ||
+    event.type === 'mousemove'
+    ? (event as MouseEvent)
+    : (event.changedTouches[0] as Touch);
 };
