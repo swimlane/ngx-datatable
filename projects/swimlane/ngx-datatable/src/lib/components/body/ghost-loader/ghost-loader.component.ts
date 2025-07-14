@@ -3,8 +3,8 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
-  Input,
-  numberAttribute
+  numberAttribute,
+  input
 } from '@angular/core';
 
 import { TableColumnInternal } from '../../../types/internal.types';
@@ -17,9 +17,9 @@ import { TableColumnInternal } from '../../../types/internal.types';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableGhostLoaderComponent {
-  @Input() columns!: TableColumnInternal[];
-  @Input({ transform: numberAttribute }) pageSize!: number;
-  @Input() rowHeight!: number | 'auto' | ((row?: any) => number);
-  @Input({ transform: numberAttribute }) ghostBodyHeight?: number;
-  @Input({ transform: booleanAttribute }) cellMode = false;
+  readonly columns = input.required<TableColumnInternal[]>();
+  readonly pageSize = input.required<number, unknown>({ transform: numberAttribute });
+  readonly rowHeight = input.required<number | 'auto' | ((row?: any) => number)>();
+  readonly ghostBodyHeight = input<number, unknown>(undefined, { transform: numberAttribute });
+  readonly cellMode = input(false, { transform: booleanAttribute });
 }

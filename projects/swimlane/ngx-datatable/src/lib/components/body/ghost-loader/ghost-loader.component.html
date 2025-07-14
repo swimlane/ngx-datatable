@@ -1,8 +1,16 @@
-<div class="ghost-loader ghost-cell-container" [style.height.px]="ghostBodyHeight">
-  @for (item of [].constructor(pageSize); track $index) {
-    <div class="ghost-element" [style.height.px]="rowHeight" [class.datatable-body-row]="cellMode">
-      @for (col of columns; track col) {
-        <div class="ghost-cell" [class.datatable-body-cell]="cellMode" [style.width.px]="col.width">
+<div class="ghost-loader ghost-cell-container" [style.height.px]="ghostBodyHeight()">
+  @for (item of [].constructor(pageSize()); track $index) {
+    <div
+      class="ghost-element"
+      [style.height.px]="rowHeight()"
+      [class.datatable-body-row]="cellMode()"
+    >
+      @for (col of columns(); track col) {
+        <div
+          class="ghost-cell"
+          [class.datatable-body-cell]="cellMode()"
+          [style.width.px]="col.width"
+        >
           @if (!col.ghostCellTemplate) {
             <div class="line ghost-cell-strip"></div>
           } @else {

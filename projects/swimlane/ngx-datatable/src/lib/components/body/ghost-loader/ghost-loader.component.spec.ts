@@ -29,7 +29,7 @@ describe('DataTableGhostLoaderComponent', () => {
   it('should create ghost cells for each column', async () => {
     const cellCount = await loaderHarness.getGhostCellCount();
     expect(cellCount).toBe(
-      fixture.componentInstance.columns.length * fixture.componentInstance.pageSize
+      fixture.componentInstance.columns().length * fixture.componentInstance.pageSize()
     );
   });
 });
