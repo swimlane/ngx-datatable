@@ -1,4 +1,4 @@
-import { ContentChild, Directive, Input, TemplateRef } from '@angular/core';
+import { Directive, TemplateRef, input, contentChild, computed } from '@angular/core';
 
 import { FooterContext } from '../../types/public.types';
 import { DataTableFooterTemplateDirective } from './footer-template.directive';
@@ -7,13 +7,11 @@ import { DataTableFooterTemplateDirective } from './footer-template.directive';
   selector: 'ngx-datatable-footer'
 })
 export class DatatableFooterDirective {
-  @Input('template')
-  _templateInput?: TemplateRef<FooterContext>;
+  readonly _templateInput = input<TemplateRef<FooterContext>>(undefined, { alias: 'template' });
 
-  @ContentChild(DataTableFooterTemplateDirective, { read: TemplateRef })
-  _templateQuery?: TemplateRef<FooterContext>;
+  private readonly _templateQuery = contentChild(DataTableFooterTemplateDirective, {
+    read: TemplateRef
+  });
 
-  get template(): TemplateRef<FooterContext> | undefined {
-    return this._templateInput ?? this._templateQuery;
-  }
+  readonly template = computed(() => this._templateInput() ?? this._templateQuery());
 }

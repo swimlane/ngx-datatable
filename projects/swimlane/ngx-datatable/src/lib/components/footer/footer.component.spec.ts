@@ -1,4 +1,4 @@
-import { Component, DebugElement, TemplateRef, viewChild, ViewChild } from '@angular/core';
+import { Component, DebugElement, Signal, TemplateRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -180,7 +180,7 @@ class TestFixtureComponent {
   pagerPreviousIcon = '';
   pagerNextIcon = '';
   totalMessage = '';
-  footerTemplate?: { template: TemplateRef<any> };
+  footerTemplate?: { template: Signal<TemplateRef<any>> };
   selectedCount = 0;
   selectedMessage?: string;
 
@@ -189,8 +189,7 @@ class TestFixtureComponent {
    * selectively be passed to the DatatableFooterComponent
    * in these unit tests
    */
-  @ViewChild('testTemplate', { read: TemplateRef, static: true })
-  testTemplate!: TemplateRef<any>;
+  readonly testTemplate = viewChild.required('testTemplate', { read: TemplateRef });
 
   // Used to mimic the DatatableComponent
   readonly _footerComponent = viewChild(DataTableFooterComponent);

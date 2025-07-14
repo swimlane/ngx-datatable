@@ -14,9 +14,10 @@ import { DatatablePagerComponent } from './pager.component';
       [ngClass]="{ 'selected-count': selectedMessage() }"
       [style.height.px]="footerHeight()"
     >
-      @if (footerTemplate()?.template) {
+      @let footerTemplate = this.footerTemplate()?.template();
+      @if (footerTemplate) {
         <ng-template
-          [ngTemplateOutlet]="footerTemplate()!.template!"
+          [ngTemplateOutlet]="footerTemplate"
           [ngTemplateOutletContext]="templateContext()"
         />
       } @else {
@@ -56,9 +57,9 @@ export class DataTableFooterComponent {
 
   readonly page = output<PagerPageEvent>();
 
-  readonly isVisible = computed(() => this.rowCount() / this.pageSize() > 1);
+  protected readonly isVisible = computed(() => this.rowCount() / this.pageSize() > 1);
   readonly curPage = computed(() => this.offset() + 1);
-  readonly templateContext: Signal<FooterContext> = computed(() => ({
+  protected readonly templateContext: Signal<FooterContext> = computed(() => ({
     rowCount: this.rowCount(),
     pageSize: this.pageSize(),
     selectedCount: this.selectedCount(),
