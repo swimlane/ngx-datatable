@@ -17,6 +17,7 @@ import { DatatableComponent } from '../datatable.component';
     <ul class="pager">
       <li [class.disabled]="!canPrevious()">
         <a
+          tabindex="0"
           role="button"
           [attr.aria-label]="messages.ariaFirstPageMessage ?? 'go to first page'"
           (click)="selectPage(1)"
@@ -26,6 +27,7 @@ import { DatatableComponent } from '../datatable.component';
       </li>
       <li [class.disabled]="!canPrevious()">
         <a
+          tabindex="0"
           role="button"
           [attr.aria-label]="messages.ariaPreviousPageMessage ?? 'go to previous page'"
           (click)="prevPage()"
@@ -39,13 +41,14 @@ import { DatatableComponent } from '../datatable.component';
           [attr.aria-label]="(messages.ariaPageNMessage ?? 'page') + ' ' + pg.number"
           [class.active]="pg.number === page"
         >
-          <a role="button" (click)="selectPage(pg.number)">
+          <a tabindex="0" role="button" (click)="selectPage(pg.number)">
             {{ pg.text }}
           </a>
         </li>
       }
       <li [class.disabled]="!canNext()">
         <a
+          tabindex="0"
           role="button"
           [attr.aria-label]="messages.ariaNextPageMessage ?? 'go to next page'"
           (click)="nextPage()"
@@ -55,6 +58,7 @@ import { DatatableComponent } from '../datatable.component';
       </li>
       <li [class.disabled]="!canNext()">
         <a
+          tabindex="0"
           role="button"
           [attr.aria-label]="messages.ariaLastPageMessage ?? 'go to last page'"
           (click)="selectPage(totalPages)"
