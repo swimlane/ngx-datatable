@@ -60,6 +60,7 @@ import {
 import { TableColumn } from '../types/table-column.type';
 import { toInternalColumn } from '../utils/column-helper';
 import { adjustColumnWidths, forceFillColumnWidths } from '../utils/math';
+import { numberOrUndefinedAttribute } from '../utils/number-or-undefined-attribute';
 import { sortGroupedRows, sortRows } from '../utils/sort';
 import { DATATABLE_COMPONENT_TOKEN } from '../utils/table-token';
 import { throttleable } from '../utils/throttle';
@@ -250,7 +251,7 @@ export class DatatableComponent<TRow extends Row = any>
    * The page size to be shown.
    * Default value: `undefined`
    */
-  @Input({ transform: numberAttribute }) set limit(val: number | undefined) {
+  @Input({ transform: numberOrUndefinedAttribute }) set limit(val: number | undefined) {
     this._limit = val;
 
     // recalculate sizes/etc
