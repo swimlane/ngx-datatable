@@ -6,6 +6,10 @@
   position: relative;
   display: inline-block;
 
+  &.dragging {
+    pointer-events: none;
+  }
+
   :host-context(ngx-datatable.fixed-header) & {
     white-space: nowrap;
     overflow: hidden;

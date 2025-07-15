@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 
 import { TableColumnInternal } from '../../types/internal.types';
 import { DataTableHeaderCellComponent } from './header-cell.component';
@@ -12,7 +12,7 @@ describe('DataTableHeaderCellComponent', () => {
     component = fixture.componentInstance;
   }));
 
-  it('should emit new width on resize', () => {
+  it('should emit new width on resize', fakeAsync(() => {
     fixture.componentRef.setInput('column', {
       name: 'test',
       resizeable: true
@@ -22,7 +22,8 @@ describe('DataTableHeaderCellComponent', () => {
     const initialWidth = fixture.nativeElement.clientWidth;
     const event = new MouseEvent('mousedown');
     fixture.nativeElement.querySelector('.resize-handle').dispatchEvent(event);
-    const mouseMoveEvent = new MouseEvent('mousemove', { screenX: 100 });
+    tick();
+    const mouseMoveEvent = new MouseEvent('mousemove', { clientX: 100 });
     document.dispatchEvent(mouseMoveEvent);
     const mouseUpEvent = new MouseEvent('mouseup');
     document.dispatchEvent(mouseUpEvent);
@@ -31,7 +32,7 @@ describe('DataTableHeaderCellComponent', () => {
       width: newWidth,
       column: { name: 'test', resizeable: true } as TableColumnInternal<any>
     });
-  });
+  }));
 
   it('should emit sort event', () => {
     fixture.componentRef.setInput('column', {

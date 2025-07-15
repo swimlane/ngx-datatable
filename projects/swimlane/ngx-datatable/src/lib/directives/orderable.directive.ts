@@ -17,13 +17,11 @@ import {
 import { startWith } from 'rxjs';
 
 import {
-  DraggableDragEvent,
   ReorderEventInternal,
   TableColumnInternal,
   TargetChangedEvent
 } from '../types/internal.types';
-import { getPositionFromEvent } from '../utils/events';
-import { DraggableDirective } from './draggable.directive';
+import { DragEvent, DraggableDirective } from './draggable.directive';
 
 interface OrderPosition {
   left: number;
@@ -61,7 +59,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
     effect(() => {
       const diffMap = this.draggables().reduce(
         (acc, curr) => {
-          acc[curr.dragModel().$$id] = curr;
+          acc[curr.dragModel()!.$$id] = curr;
           return acc;
         },
         {} as Record<string, DraggableDirective>
@@ -99,10 +97,16 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
       return;
     }
     const subs = this.subscriptions.get(key) ?? [];
+    let currentEvent: DragEvent;
     subs.push(
       currentValue.dragStart.subscribe(() => this.onDragStart()),
-      currentValue.dragging.subscribe(e => this.onDragging(e)),
-      currentValue.dragEnd.subscribe(e => this.onDragEnd(e))
+      currentValue.dragMove.subscribe(e => {
+        currentEvent = e;
+        this.onDragging(e, currentValue.dragModel()!, currentValue.element);
+      }),
+      currentValue.dragEnd.subscribe(() =>
+        this.onDragEnd(currentEvent!, currentValue.dragModel()!, currentValue.element)
+      )
     );
     this.subscriptions.set(key, subs);
   };
@@ -127,7 +131,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
     this.draggables().forEach((draggable, idx) => {
       const elm = draggable.element;
       const left = parseInt(elm.offsetLeft.toString(), 10);
-      positions[draggable.dragModel().$$id] = {
+      positions[draggable.dragModel()!.$$id] = {
         left,
         right: left + parseInt(elm.offsetWidth.toString(), 10),
         index: idx,
@@ -137,12 +141,16 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
     this.positions = positions;
   }
 
-  onDragging({ model, event }: DraggableDragEvent): void {
+  onDragging(
+    { currentX, currentY, initialX }: DragEvent,
+    model: TableColumnInternal,
+    element: HTMLElement
+  ): void {
     if (!this.positions) {
       return;
     }
     const prevPos = this.positions[model.$$id];
-    const target = this.isTarget(model, event);
+    const target = this.isTarget(model, currentX, currentY);
     if (target) {
       if (this.lastDraggingIndex !== target.index) {
         this.targetChanged.emit({
@@ -159,14 +167,20 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
       });
       this.lastDraggingIndex = prevPos.index;
     }
+
+    requestAnimationFrame(() => (element.style.left = `${currentX - initialX}px`));
   }
 
-  onDragEnd({ element, model, event }: DraggableDragEvent): void {
+  onDragEnd(
+    { currentX, currentY }: DragEvent,
+    model: TableColumnInternal,
+    element: HTMLElement
+  ): void {
     if (!this.positions) {
       return;
     }
     const prevPos = this.positions[model.$$id];
-    const target = this.isTarget(model, event);
+    const target = this.isTarget(model, currentX, currentY);
     if (target) {
       this.reorder.emit({
         prevValue: prevPos.index,
@@ -180,12 +194,12 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
 
   isTarget(
     model: TableColumnInternal,
-    event: MouseEvent | TouchEvent
+    clientX: number,
+    clientY: number
   ): { pos: OrderPosition; index: number } | undefined {
     if (!this.positions) {
       return undefined;
     }
-    const { clientX, clientY } = getPositionFromEvent(event);
     const elementsAtPoint = this.document.elementsFromPoint(clientX, clientY);
     return Object.entries(this.positions).reduce<{ pos: OrderPosition; index: number } | undefined>(
       (acc, [id, pos], idx) => {

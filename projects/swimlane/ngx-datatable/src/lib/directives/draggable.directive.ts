@@ -1,151 +1,136 @@
+import { DOCUMENT } from '@angular/common';
 import {
   booleanAttribute,
+  computed,
   Directive,
-  effect,
   ElementRef,
   inject,
   input,
+  numberAttribute,
   OnDestroy,
   output,
   signal
 } from '@angular/core';
-import { fromEvent, Subscription } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
-import { DraggableDragEvent, TableColumnInternal } from '../types/internal.types';
-import { getPositionFromEvent } from '../utils/events';
+import { TableColumnInternal } from '../types/internal.types';
 
-/**
- * Draggable Directive for Angular2
- *
- * Inspiration:
- *   https://github.com/AngularClass/angular-examples/blob/master/rx-draggable/directives/draggable.ts
- *   http://stackoverflow.com/questions/35662530/how-to-implement-drag-and-drop-in-angular2
- *
- */
+export interface DragEvent {
+  initialX: number;
+  initialY: number;
+  currentX: number;
+  currentY: number;
+}
+
 @Directive({
   selector: '[draggable]',
   host: {
-    '[class.dragging]': 'isDragging()'
+    '[class.draggable]': 'enabled()',
+    '[class.dragging]': 'isDragging()',
+    '[class.longpress]': 'isLongPressing()',
+    '(mousedown)': 'mousedown($event)',
+    '(touchstart)': 'touchstart($event)'
   }
 })
 export class DraggableDirective implements OnDestroy {
+  private document = inject(DOCUMENT);
   readonly element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
-  readonly dragModel = input.required<TableColumnInternal>();
-  readonly dragEventTarget = input<MouseEvent | TouchEvent>();
-  readonly dragX = input(true, { transform: booleanAttribute });
-  readonly dragY = input(true, { transform: booleanAttribute });
 
-  readonly dragStart = output<DraggableDragEvent>();
-  readonly dragging = output<DraggableDragEvent>();
-  readonly dragEnd = output<DraggableDragEvent>();
+  readonly dragModel = input<TableColumnInternal>();
+  readonly dragStartDelay = input(0, { transform: numberAttribute });
+  readonly enabled = input(true, { transform: booleanAttribute, alias: 'draggable' });
+  readonly dragMove = output<DragEvent>();
+  readonly dragEnd = output<void>();
+  readonly dragStart = output<void>();
 
-  readonly isDragging = signal(false);
-  subscription?: Subscription;
-
-  private frameId?: number;
-  private last?: { x: number; y: number };
-
-  constructor() {
-    effect(() => {
-      const target = this.dragEventTarget();
-      const dragModel = this.dragModel();
-
-      if (target && dragModel) {
-        this.onMousedown(target);
-      }
-    });
-  }
+  private timeoutId?: number;
+  private touchId?: number;
+  private readonly startX = signal<number | undefined>(undefined);
+  private readonly startY = signal<number | undefined>(undefined);
+  protected readonly isLongPressing = computed(
+    () => this.dragStartDelay() !== 0 && this.isDragging()
+  );
+  protected readonly isDragging = computed(() => this.startX() !== undefined);
 
   ngOnDestroy(): void {
-    this._destroySubscription();
+    clearTimeout(this.timeoutId);
   }
 
-  onMousedown(event: MouseEvent | TouchEvent): void {
-    const isDraggableTarget = (event.target as HTMLElement).classList.contains('draggable');
-    if (!isDraggableTarget || (!this.dragX() && !this.dragY())) {
+  protected mousedown(event: MouseEvent): void {
+    if (!this.enabled()) {
       return;
     }
-
+    event.stopPropagation();
     event.preventDefault();
-    this.isDragging.set(true);
 
-    const mouseDownPos = getPositionFromEvent(event);
-    const isMouse = event instanceof MouseEvent;
-
-    const mouseup$ = fromEvent<MouseEvent | TouchEvent>(document, isMouse ? 'mouseup' : 'touchend');
-    const mousemove$ = fromEvent<MouseEvent | TouchEvent>(
-      document,
-      isMouse ? 'mousemove' : 'touchmove'
-    ).pipe(takeUntil(mouseup$));
-
-    this._destroySubscription();
-
-    this.subscription = mouseup$.subscribe(mouseUpEvent => this.onMouseup(mouseUpEvent));
-    this.subscription.add(mousemove$.subscribe(ev => this.move(ev, mouseDownPos)));
-
-    this.dragStart.emit({
-      event,
-      element: this.element,
-      model: this.dragModel()
+    this.document.addEventListener('mouseup', this.ending);
+    this.delay(this.dragStartDelay()).then(() => {
+      this.document.addEventListener('mousemove', this.mousemove);
+      this.starting(event.clientX, event.clientY);
     });
   }
 
-  move(event: MouseEvent | TouchEvent, mouseDownPos: { clientX: number; clientY: number }): void {
-    if (!this.isDragging()) {
+  private mousemove = (event: MouseEvent): void => this.moving(event.clientX, event.clientY);
+
+  protected touchstart(event: TouchEvent): void {
+    if (!this.enabled()) {
       return;
     }
+    event.stopPropagation();
+    event.preventDefault();
+    const touch = event.touches.item(0)!;
+    this.touchId = touch.identifier;
 
-    const { clientX, clientY } = getPositionFromEvent(event);
-    const x = clientX - mouseDownPos.clientX;
-    const y = clientY - mouseDownPos.clientY;
-
-    this.last = { x, y };
-
-    this.frameId ??= requestAnimationFrame(() => this.updatePosition());
-
-    this.dragging.emit({
-      event,
-      element: this.element,
-      model: this.dragModel()
+    this.document.addEventListener('touchend', this.ending);
+    this.delay(this.dragStartDelay()).then(() => {
+      this.document.addEventListener('touchmove', this.touchmove);
+      this.starting(touch.clientX, touch.clientY);
     });
   }
 
-  onMouseup(event: MouseEvent | TouchEvent): void {
-    if (!this.isDragging()) {
-      return;
+  private touchmove = (event: TouchEvent): void => {
+    const touchMove = this.findTouch(event)!;
+    if (touchMove) {
+      this.moving(touchMove.clientX, touchMove.clientY);
     }
+  };
 
-    this.isDragging.set(false);
-    this._destroySubscription();
-    this.dragEnd.emit({
-      event,
-      element: this.element,
-      model: this.dragModel()
+  private starting(clientX: number, clientY: number): void {
+    this.startX.set(clientX);
+    this.startY.set(clientY);
+    this.dragStart.emit();
+  }
+
+  private moving(clientX: number, clientY: number): void {
+    this.dragMove.emit({
+      initialX: this.startX()!,
+      initialY: this.startY()!,
+      currentX: clientX,
+      currentY: clientY
     });
   }
 
-  private updatePosition(): void {
-    this.frameId = undefined;
-    if (!this.last) {
-      return;
+  private ending = (): void => {
+    const dragged = this.isDragging();
+    this.document.removeEventListener('mousemove', this.mousemove);
+    this.document.removeEventListener('touchmove', this.touchmove);
+    this.document.removeEventListener('mouseup', this.ending);
+    this.document.removeEventListener('touchend', this.ending);
+    this.touchId = undefined;
+    this.startX.set(undefined);
+    this.startY.set(undefined);
+    clearTimeout(this.timeoutId);
+    // This function is also called if the long press was aborted before the delay.
+    // In that case, we don't want to emit dragEnd.
+    if (dragged) {
+      this.dragEnd.emit();
     }
-    if (this.dragX()) {
-      this.element.style.left = `${this.last.x}px`;
-    }
-    if (this.dragY()) {
-      this.element.style.top = `${this.last.y}px`;
-    }
+  };
+
+  private findTouch(event: TouchEvent): Touch | undefined {
+    return Array.from(event.touches).find(touch => touch.identifier === this.touchId);
   }
 
-  private _destroySubscription(): void {
-    if (this.frameId) {
-      cancelAnimationFrame(this.frameId);
-    }
-
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-      this.subscription = undefined;
-    }
+  private delay(ms: number): Promise<void> {
+    return new Promise(resolve => (this.timeoutId = window.setTimeout(() => resolve(), ms)));
   }
 }

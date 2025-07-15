@@ -16,7 +16,6 @@ import {
 } from '@angular/core';
 
 import { DraggableDirective } from '../../directives/draggable.directive';
-import { LongPressDirective } from '../../directives/long-press.directive';
 import { OrderableDirective } from '../../directives/orderable.directive';
 import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 import {
@@ -41,14 +40,7 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
 
 @Component({
   selector: 'datatable-header',
-  imports: [
-    OrderableDirective,
-    NgStyle,
-    DataTableHeaderCellComponent,
-    LongPressDirective,
-    DraggableDirective,
-    NgClass
-  ],
+  imports: [OrderableDirective, NgStyle, DataTableHeaderCellComponent, NgClass, DraggableDirective],
   template: `
     <div
       role="row"
@@ -68,14 +60,9 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
             @for (column of colGroup.columns; track column.$$id) {
               <datatable-header-cell
                 role="columnheader"
-                long-press
-                draggable
-                [pressModel]="column"
-                [pressEnabled]="reorderable && column.draggable"
-                [dragX]="reorderable && column.draggable && column.dragging"
-                [dragY]="false"
+                dragStartDelay="500"
+                [draggable]="reorderable && column.draggable"
                 [dragModel]="column"
-                [dragEventTarget]="dragEventTarget"
                 [headerHeight]="headerHeight"
                 [isTarget]="column.isTarget"
                 [targetMarkerTemplate]="targetMarkerTemplate"
@@ -93,8 +80,6 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
                 [ariaHeaderCheckboxMessage]="ariaHeaderCheckboxMessage"
                 (resize)="onColumnResized($event)"
                 (resizing)="onColumnResizing($event)"
-                (longPressStart)="onLongPressStart($event)"
-                (longPressEnd)="onLongPressEnd($event)"
                 (sort)="onSort($event)"
                 (select)="select.emit($event)"
                 (columnContextmenu)="columnContextmenu.emit($event)"

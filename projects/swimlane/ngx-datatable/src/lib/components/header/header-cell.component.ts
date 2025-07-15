@@ -14,8 +14,9 @@ import {
   Output,
   TemplateRef
 } from '@angular/core';
-import { fromEvent, Subscription, takeUntil } from 'rxjs';
+import { Subscription } from 'rxjs';
 
+import { DragEvent, DraggableDirective } from '../../directives/draggable.directive';
 import { InnerSortEvent, TableColumnInternal } from '../../types/internal.types';
 import {
   HeaderCellContext,
@@ -24,12 +25,11 @@ import {
   SortPropDir,
   SortType
 } from '../../types/public.types';
-import { getPositionFromEvent } from '../../utils/events';
 import { nextSortDir } from '../../utils/sort';
 
 @Component({
   selector: 'datatable-header-cell',
-  imports: [NgTemplateOutlet],
+  imports: [NgTemplateOutlet, DraggableDirective],
   template: `
     <div class="datatable-header-cell-template-wrap">
       @if (isTarget) {
@@ -65,8 +65,10 @@ import { nextSortDir } from '../../utils/sort';
     @if (showResizeHandle) {
       <span
         class="resize-handle"
-        (mousedown)="onMousedown($event)"
-        (touchstart)="onMousedown($event)"
+        draggable
+        (dragStart)="onMousedown()"
+        (dragMove)="move($event)"
+        (dragEnd)="onMouseup()"
       ></span>
     }
   `,
@@ -212,6 +214,7 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
 
   cellContext: HeaderCellContext;
 
+  private initialWidth?: number;
   private _column!: TableColumnInternal;
   private _sorts!: SortPropDir[];
   private element = inject(ElementRef).nativeElement;
@@ -295,40 +298,16 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
     }
   }
 
-  protected onMousedown(event: MouseEvent | TouchEvent): void {
-    const isMouse = event instanceof MouseEvent;
-    const initialWidth = this.element.clientWidth;
-    const { screenX } = getPositionFromEvent(event);
-    event.stopPropagation();
-
-    const mouseup = fromEvent<MouseEvent | TouchEvent>(document, isMouse ? 'mouseup' : 'touchend');
-    this.subscription = mouseup.subscribe(() => this.onMouseup());
-
-    const mouseMoveSub = fromEvent<MouseEvent | TouchEvent>(
-      document,
-      isMouse ? 'mousemove' : 'touchmove'
-    )
-      .pipe(takeUntil(mouseup))
-      .subscribe((e: MouseEvent | TouchEvent) => this.move(e, initialWidth, screenX));
-
-    this.subscription.add(mouseMoveSub);
+  protected onMousedown(): void {
+    this.initialWidth = this.element.clientWidth;
   }
 
-  private onMouseup(): void {
-    if (this.subscription && !this.subscription.closed) {
-      this.destroySubscription();
-      this.resize.emit({ width: this.element.clientWidth, column: this.column });
-    }
+  protected onMouseup(): void {
+    this.resize.emit({ width: this.element.clientWidth, column: this.column });
   }
 
-  private move(
-    event: MouseEvent | TouchEvent,
-    initialWidth: number,
-    mouseDownScreenX: number
-  ): void {
-    const movementX = getPositionFromEvent(event).screenX - mouseDownScreenX;
-    const newWidth = initialWidth + movementX;
-    this.resizing.emit({ width: newWidth, column: this.column });
+  protected move({ currentX, initialX }: DragEvent): void {
+    this.resizing.emit({ width: this.initialWidth! + (currentX - initialX), column: this.column });
   }
 
   private destroySubscription(): void {

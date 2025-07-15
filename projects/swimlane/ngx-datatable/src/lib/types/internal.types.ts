@@ -39,12 +39,6 @@ export interface Page {
   text: string;
 }
 
-export interface DraggableDragEvent {
-  event: MouseEvent | TouchEvent;
-  element: HTMLElement;
-  model: TableColumnInternal;
-}
-
 export interface InnerSortEvent {
   column: SortableTableColumnInternal;
   prevValue: SortDirection | undefined;

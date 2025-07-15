@@ -1,99 +1,135 @@
-import { Component } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { Component, signal } from '@angular/core';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
-import { DraggableDirective } from './draggable.directive';
+import { DragEvent, DraggableDirective } from './draggable.directive';
+import { DraggableHarness } from './testing/draggable.harness';
+
+import Spy = jasmine.Spy;
 
 @Component({
   selector: 'test-fixture-component',
   imports: [DraggableDirective],
-  template: ` <div draggable [dragModel]="model"></div> `
+  template: `
+    <div
+      [draggable]="enabled()"
+      [dragStartDelay]="dragStartDelay()"
+      (dragStart)="dragStart()"
+      (dragEnd)="dragEnd()"
+      (dragMove)="dragMove($event)"
+    ></div>
+  `
 })
 class TestFixtureComponent {
-  model: any = {
-    $$id: 'test',
-    prop: 'test',
-    draggable: true,
-    dragging: false,
-    resizeable: false,
-    width: 100,
-    minWidth: 50,
-    maxWidth: 200,
-    isTarget: false
-  } as any;
+  readonly dragStartDelay = signal(0);
+  readonly enabled = signal(true);
+
+  dragStart(): void {}
+
+  dragEnd(): void {}
+
+  dragMove(event: DragEvent): void {}
 }
 
 describe('DraggableDirective', () => {
   let fixture: ComponentFixture<TestFixtureComponent>;
   let component: TestFixtureComponent;
-  let element: any;
+  let harness: DraggableHarness;
+  let dragStartSpy: Spy<() => void>;
+  let dragEndSpy: Spy<() => void>;
+  let dragMoveSpy: Spy<(event: DragEvent) => void>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     fixture = TestBed.createComponent(TestFixtureComponent);
     component = fixture.componentInstance;
-    element = fixture.nativeElement;
-    fixture.detectChanges();
+    harness = await TestbedHarnessEnvironment.harnessForFixture(fixture, DraggableHarness);
+    dragStartSpy = spyOn(component, 'dragStart');
+    dragEndSpy = spyOn(component, 'dragEnd');
+    dragMoveSpy = spyOn(component, 'dragMove');
+  });
+
+  it('should fire mouse drag events', fakeAsync(() => async () => {
+    await harness.mouseDown(0);
+    tick(); // Skip the delay of 0ms
+    expect(dragStartSpy).toHaveBeenCalled();
+    await harness.mouseMove(100);
+    expect(dragMoveSpy).toHaveBeenCalledWith(
+      jasmine.objectContaining({ currentX: 100, initialX: 0 })
+    );
+    await harness.mouseMove(200);
+    expect(dragMoveSpy).toHaveBeenCalledWith(
+      jasmine.objectContaining({ currentX: 200, initialX: 0 })
+    );
+    await harness.mouseUp();
+    expect(dragEndSpy).toHaveBeenCalled();
+    await harness.mouseMove(200);
+    expect(dragMoveSpy).toHaveBeenCalledTimes(2);
   }));
 
-  describe('fixture', () => {
-    let directive: DraggableDirective;
+  it('should fire touch drag events', fakeAsync(() => async () => {
+    await harness.touchStart(0);
+    tick(); // Skip the delay of 0ms
+    expect(dragStartSpy).toHaveBeenCalled();
+    await harness.touchMove(100);
+    expect(dragMoveSpy).toHaveBeenCalledWith(
+      jasmine.objectContaining({ currentX: 100, initialX: 0 })
+    );
+    await harness.touchMove(200);
+    expect(dragMoveSpy).toHaveBeenCalledWith(
+      jasmine.objectContaining({ currentX: 200, initialX: 0 })
+    );
+    await harness.touchEnd();
+    expect(dragEndSpy).toHaveBeenCalled();
+    await harness.touchMove(200);
+    expect(dragMoveSpy).toHaveBeenCalledTimes(2);
+  }));
 
+  it('should not start mouse dragging if disabled', fakeAsync(() => async () => {
+    component.enabled.set(false);
+    await harness.mouseDown(0);
+    await harness.mouseMove(1);
+    await harness.mouseUp();
+    tick(); // Skip the delay of 0ms
+    expect(dragStartSpy).not.toHaveBeenCalled();
+    expect(dragEndSpy).not.toHaveBeenCalled();
+    expect(dragMoveSpy).not.toHaveBeenCalled();
+  }));
+
+  it('should not start touch dragging if disabled', fakeAsync(() => async () => {
+    component.enabled.set(false);
+    await harness.touchStart(0);
+    await harness.touchMove(1);
+    await harness.touchEnd();
+    tick(); // Skip the delay of 0ms
+    expect(dragStartSpy).not.toHaveBeenCalled();
+    expect(dragEndSpy).not.toHaveBeenCalled();
+    expect(dragMoveSpy).not.toHaveBeenCalled();
+  }));
+
+  describe('with delay', () => {
     beforeEach(() => {
-      directive = fixture.debugElement
-        .query(By.directive(DraggableDirective))
-        .injector.get(DraggableDirective);
+      component.dragStartDelay.set(100);
     });
 
-    it('should have a component instance', () => {
-      expect(component).toBeTruthy();
-    });
+    it('should start dragging after the specified delay', fakeAsync(() => async () => {
+      await harness.touchStart(0);
+      tick(100);
+      expect(dragStartSpy).toHaveBeenCalled();
+    }));
 
-    it('should have DraggableDirective directive', () => {
-      expect(directive).toBeTruthy();
-    });
+    it('should skip dragging if not pressed long enough', fakeAsync(() => async () => {
+      await harness.mouseDown(0);
+      tick(50);
+      await harness.mouseUp();
+      expect(dragStartSpy).not.toHaveBeenCalled();
+      expect(dragEndSpy).not.toHaveBeenCalled();
+    }));
 
-    describe('mouse event', () => {
-      let mouseDown: MouseEvent;
-
-      beforeEach(() => {
-        element.classList.add('draggable');
-        mouseDown = new MouseEvent('mousedown');
-        Object.defineProperty(mouseDown, 'target', { value: element });
-      });
-
-      // or else the document:mouseup event can fire again when resizing.
-      describe('subscription should be destroyed', () => {
-        it('when ngOnDestroy is called', () => {
-          directive.onMousedown(mouseDown);
-          expect(directive.subscription).toBeTruthy();
-
-          directive.ngOnDestroy();
-
-          expect(directive.subscription).toBeUndefined();
-        });
-
-        it('when onMouseup called and dragging', () => {
-          directive.onMousedown(mouseDown);
-          expect(directive.subscription).toBeTruthy();
-
-          directive.onMouseup(<MouseEvent>{});
-
-          expect(directive.subscription).toBeUndefined();
-        });
-      });
-
-      describe('subscription should not be destroyed', () => {
-        it('when onMouseup is called and not dragging', () => {
-          directive.onMousedown(mouseDown);
-          directive.isDragging.set(false);
-
-          expect(directive.subscription).toBeTruthy();
-
-          directive.onMouseup(<MouseEvent>{});
-
-          expect(directive.subscription).toBeTruthy();
-        });
-      });
-    });
+    it('should not start dragging if waiting for the delay', fakeAsync(() => async () => {
+      await harness.mouseDown(0);
+      tick(50);
+      await harness.mouseMove(100);
+      expect(dragMoveSpy).not.toHaveBeenCalled();
+    }));
   });
 });
