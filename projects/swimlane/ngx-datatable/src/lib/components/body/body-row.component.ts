@@ -16,6 +16,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 
+import { NgxDatatableConfig } from '../../ngx-datatable.config';
 import {
   CellActiveEvent,
   ColumnGroupWidth,
@@ -54,6 +55,7 @@ import { DataTableBodyCellComponent } from './body-cell.component';
               [disabled]="disabled"
               [treeStatus]="treeStatus"
               [ariaRowCheckboxMessage]="ariaRowCheckboxMessage"
+              [cssClasses]="cssClasses"
               (activate)="onActivate($event, ii)"
               (treeAction)="onTreeAction()"
             />
@@ -110,6 +112,7 @@ export class DataTableBodyRowComponent<TRow extends Row = any> implements DoChec
   @Input() ariaRowCheckboxMessage!: string;
 
   @Input() disabled?: boolean;
+  @Input({ required: true }) cssClasses!: Partial<Required<NgxDatatableConfig>['cssClasses']>;
 
   get cssClass() {
     let cls = 'datatable-body-row';

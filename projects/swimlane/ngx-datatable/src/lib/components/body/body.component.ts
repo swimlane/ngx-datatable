@@ -17,6 +17,7 @@ import {
   ViewChild
 } from '@angular/core';
 
+import { NgxDatatableConfig } from '../../ngx-datatable.config';
 import { ColumnGroupWidth, TableColumnInternal } from '../../types/internal.types';
 import {
   ActivateEvent,
@@ -115,6 +116,7 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
             [draggable]="rowDraggable"
             [verticalScrollVisible]="verticalScrollVisible"
             [ariaRowCheckboxMessage]="ariaRowCheckboxMessage"
+            [cssClasses]="cssClasses"
             (treeAction)="onTreeAction(row)"
             (activate)="onActivate($event, index)"
             (drop)="drop($event, row, rowElement)"
@@ -352,6 +354,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
 
   @Input() verticalScrollVisible = false;
   @Input({ required: true }) ariaRowCheckboxMessage!: string;
+  @Input({ required: true }) cssClasses!: Partial<Required<NgxDatatableConfig>['cssClasses']>;
 
   @Output() readonly scroll = new EventEmitter<ScrollEvent>();
   @Output() readonly page = new EventEmitter<number>();

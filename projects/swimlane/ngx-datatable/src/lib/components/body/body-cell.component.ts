@@ -13,6 +13,7 @@ import {
   Output
 } from '@angular/core';
 
+import { NgxDatatableConfig } from '../../ngx-datatable.config';
 import { CellActiveEvent, RowIndex, TableColumnInternal } from '../../types/internal.types';
 import { ActivateEvent, CellContext, Row, RowOrGroup, TreeStatus } from '../../types/public.types';
 import { ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, ARROW_UP, ENTER } from '../../utils/keys';
@@ -44,13 +45,13 @@ import { ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, ARROW_UP, ENTER } from '../../util
           >
             <span>
               @if (treeStatus === 'loading') {
-                <i class="icon datatable-icon-collapse"></i>
+                <i [class]="cssClasses.treeStatusLoading ?? 'icon datatable-icon-collapse'"></i>
               }
               @if (treeStatus === 'collapsed') {
-                <i class="icon datatable-icon-up"></i>
+                <i [class]="cssClasses.treeStatusCollapsed ?? 'icon datatable-icon-up'"></i>
               }
               @if (treeStatus === 'expanded' || treeStatus === 'disabled') {
-                <i class="icon datatable-icon-down"></i>
+                <i [class]="cssClasses.treeStatusExpanded ?? 'icon datatable-icon-down'"></i>
               }
             </span>
           </button>
@@ -189,6 +190,7 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
   }
 
   @Input({ required: true }) ariaRowCheckboxMessage!: string;
+  @Input({ required: true }) cssClasses!: Partial<Required<NgxDatatableConfig>['cssClasses']>;
 
   @Output() readonly activate = new EventEmitter<CellActiveEvent<TRow>>();
 

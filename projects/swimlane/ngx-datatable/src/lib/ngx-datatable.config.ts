@@ -38,6 +38,9 @@ export interface NgxDatatableCssClasses {
   pagerRightArrow: string;
   pagerPrevious: string;
   pagerNext: string;
+  treeStatusLoading: string;
+  treeStatusExpanded: string;
+  treeStatusCollapsed: string;
 }
 
 /**
