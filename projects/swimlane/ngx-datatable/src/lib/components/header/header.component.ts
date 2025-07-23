@@ -46,6 +46,7 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
       role="row"
       orderable
       class="datatable-header-inner"
+      [class.horizontal-overflow]="innerWidth < _columnGroupWidths.total"
       [style.width.px]="_columnGroupWidths.total"
       (reorder)="onColumnReordered($event)"
       (targetChanged)="onTargetChanged($event)"

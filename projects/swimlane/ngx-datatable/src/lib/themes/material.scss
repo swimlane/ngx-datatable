@@ -9,16 +9,18 @@
   $ngx-datatable-selected-active-background: yellow;
   $ngx-datatable-selected-active-background-hover: rgba(yellow, 0.2);
 
-  @import '~@swimlane/ngx-datatable/index.css';
-  @import '~@swimlane/ngx-datatable/themes/material.scss';
-  @import '~@swimlane/ngx-datatable/assets/icons.css';
+  @import '~@siemens/ngx-datatable/index.css';
+  @import '~@siemens/ngx-datatable/themes/material.scss';
+  @import '~@siemens/ngx-datatable/assets/icons.css';
 
 That's all.
 */
 
 // common datatable colors
 $ngx-datatable-background: #fff !default;
-$ngx-datatable-box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+$ngx-datatable-box-shadow:
+  0 5px 5px -3px rgba(0, 0, 0, 0.2),
+  0 8px 10px 1px rgba(0, 0, 0, 0.14),
   0 3px 14px 2px rgba(0, 0, 0, 0.12) !default;
 $ngx-datatable-row-odd-background: #eee !default;
 
@@ -87,8 +89,8 @@ $datatble-ghost-cell-animation-duration: 10s;
   box-shadow: $ngx-datatable-box-shadow;
 
   *,
-  *:before,
-  *:after {
+  *::before,
+  *::after {
     box-sizing: border-box;
   }
 
@@ -178,18 +180,20 @@ $datatble-ghost-cell-animation-duration: 10s;
 	 * Shared Styles
 	 */
   .empty-row {
-    height: 50px;
-    text-align: left;
-    padding: 0.5rem 1.2rem;
+    block-size: 50px;
+    text-align: start;
+    padding-block: 0.5rem;
+    padding-inline: 1.2rem;
     vertical-align: top;
-    border-top: 0;
+    border-block-start: 0;
   }
 
   .loading-row {
-    text-align: left;
-    padding: 0.5rem 1.2rem;
+    text-align: start;
+    padding-block: 0.5rem;
+    padding-inline: 1.2rem;
     vertical-align: top;
-    border-top: 0;
+    border-block-start: 0;
   }
 
   /**
@@ -197,18 +201,20 @@ $datatble-ghost-cell-animation-duration: 10s;
 	 */
   .datatable-header,
   .datatable-body {
-    .datatable-row-left {
-      background-color: $ngx-datatable-background;
-      background-position: 100% 0;
-      background-repeat: repeat-y;
-      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQIHWPSkNeSBmJhTQVtbiDNCgASagIIuJX8OgAAAABJRU5ErkJggg==);
-    }
+    .horizontal-overflow {
+      .datatable-row-left {
+        background-color: $ngx-datatable-background;
+        background-position: 100% 0;
+        background-repeat: repeat-y;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQIHWPSkNeSBmJhTQVtbiDNCgASagIIuJX8OgAAAABJRU5ErkJggg==');
+      }
 
-    .datatable-row-right {
-      background-position: 0 0;
-      background-color: $ngx-datatable-background;
-      background-repeat: repeat-y;
-      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQI12PQkNdi1VTQ5gbSwkAsDQARLAIGtOSFUAAAAABJRU5ErkJggg==);
+      .datatable-row-right {
+        background-position: 0 0;
+        background-color: $ngx-datatable-background;
+        background-repeat: repeat-y;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQI12PQkNdi1VTQ5gbSwkAsDQARLAIGtOSFUAAAAABJRU5ErkJggg==');
+      }
     }
   }
 
@@ -216,14 +222,19 @@ $datatble-ghost-cell-animation-duration: 10s;
 	 * Header Styles
 	 */
   .datatable-header {
-    border-bottom: 1px solid $datatable-header-border-bottom-color;
+    border-block-end: 1px solid $datatable-header-border-bottom-color;
+
+    .datatable-row-left,
+    .datatable-row-right {
+      background-color: $datatable-header-cell-background;
+    }
 
     .datatable-header-cell {
       flex-shrink: 0;
-      text-align: left;
-      padding: 0.9rem 1.2rem;
+      text-align: start;
+      padding-block: 0.9rem;
+      padding-inline: 1.2rem;
       font-weight: 400;
-      background-color: $datatable-header-cell-background;
       color: $datatable-header-cell-color;
       vertical-align: bottom;
       font-size: 12px;
@@ -235,7 +246,9 @@ $datatble-ghost-cell-animation-duration: 10s;
 
       &.longpress {
         .draggable::after {
-          transition: transform 400ms ease, opacity 400ms ease;
+          transition:
+            transform 400ms ease,
+            opacity 400ms ease;
           opacity: 0.5;
           transform: scale(1);
         }
@@ -244,11 +257,12 @@ $datatble-ghost-cell-animation-duration: 10s;
       .draggable::after {
         content: ' ';
         position: absolute;
-        top: 50%;
-        left: 50%;
-        margin: -30px 0 0 -30px;
-        height: 60px;
-        width: 60px;
+        inset-block-start: 50%;
+        inset-inline-start: 50%;
+        margin-block: -30px 0;
+        margin-inline: -30px 0;
+        block-size: 60px;
+        inline-size: 60px;
         background: #eee;
         border-radius: 100%;
         opacity: 1;
@@ -260,13 +274,13 @@ $datatble-ghost-cell-animation-duration: 10s;
 
       &.dragging {
         .resize-handle {
-          border-right: none;
+          border-inline-end: none;
         }
       }
     }
 
     .resize-handle {
-      border-right: solid 1px $datatable-header-resize-handle-color;
+      border-inline-end: solid 1px $datatable-header-resize-handle-color;
     }
   }
 
@@ -283,8 +297,8 @@ $datatble-ghost-cell-animation-duration: 10s;
 
     .datatable-group-header {
       background: $datatable-group-header-background;
-      border-bottom: solid 1px $datatable-group-header-border-bottom-color;
-      border-top: solid 1px $datatable-group-header-border-top-color;
+      border-block-end: solid 1px $datatable-group-header-border-bottom-color;
+      border-block-start: solid 1px $datatable-group-header-border-top-color;
 
       .datatable-group-cell {
         padding-inline-start: 1.2rem;
@@ -297,16 +311,17 @@ $datatble-ghost-cell-animation-duration: 10s;
     }
 
     .datatable-body-row {
-      border-bottom: 1px solid $datatable-body-row-border-bottom-color;
+      border-block-end: 1px solid $datatable-body-row-border-bottom-color;
 
       .datatable-body-cell {
         flex-shrink: 0;
-        text-align: left;
-        padding: 0.9rem 1.2rem;
+        text-align: start;
+        padding-block: 0.9rem;
+        padding-inline: 1.2rem;
         vertical-align: top;
-        border-top: 0;
+        border-block-start: 0;
         color: $datatable-body-cell-color;
-        transition: width 0.3s ease;
+        transition: inline-size 0.3s ease;
         font-size: 14px;
         font-weight: 400;
 
@@ -320,19 +335,19 @@ $datatble-ghost-cell-animation-duration: 10s;
     .progress-linear {
       display: block;
       position: sticky;
-      width: 100%;
-      height: 0;
+      inline-size: 100%;
+      block-size: 0;
       z-index: 999;
       padding: 0;
       margin: 0;
-      top: 0;
+      inset-block-start: 0;
 
       .container {
         display: block;
         position: relative;
         overflow: hidden;
-        width: 100%;
-        height: 5px;
+        inline-size: 100%;
+        block-size: 5px;
         transform: translate(0, 0) scale(1, 1);
         background-color: rgb(170, 209, 249);
 
@@ -345,22 +360,22 @@ $datatble-ghost-cell-animation-duration: 10s;
           background-color: rgb(16, 108, 200);
 
           position: absolute;
-          left: 0;
-          top: 0;
-          bottom: 0;
-          width: 100%;
-          height: 5px;
+          inset-inline-start: 0;
+          inset-block: 0;
+          inline-size: 100%;
+          block-size: 5px;
         }
       }
     }
 
     .custom-loading-indicator-wrapper {
       position: sticky;
-      top: 0;
-      height: 0;
+      inset-block-start: 0;
+      block-size: 0;
       z-index: 999;
+
       .custom-loading-content {
-        width: 100%;
+        inline-size: 100%;
         background-color: $ngx-datatable-default-background;
       }
     }
@@ -370,26 +385,28 @@ $datatble-ghost-cell-animation-duration: 10s;
 	 * Footer Styles
 	 */
   .datatable-footer {
-    border-top: 1px solid $datatable-footer-border-top-color;
+    border-block-start: 1px solid $datatable-footer-border-top-color;
     font-size: 12px;
     font-weight: 400;
     color: $datatable-footer-cell-color;
 
     .page-count {
       line-height: 50px;
-      height: 50px;
-      padding: 0 1.2rem;
+      block-size: 50px;
+      padding-block: 0;
+      padding-inline: 1.2rem;
     }
 
     .datatable-pager {
-      margin: 0 10px;
+      margin-block: 0;
+      margin-inline: 10px;
 
       li {
         vertical-align: middle;
 
         &.disabled a {
-          color: $datatable-pager-disabled-color !important;
-          background-color: $datatable-pager-disabled-background !important;
+          color: $datatable-pager-disabled-color !important; // stylelint-disable-line declaration-no-important
+          background-color: $datatable-pager-disabled-background !important; // stylelint-disable-line declaration-no-important
         }
 
         &.active a {
@@ -399,12 +416,14 @@ $datatble-ghost-cell-animation-duration: 10s;
       }
 
       a {
-        height: 22px;
-        min-width: 24px;
+        block-size: 22px;
+        min-inline-size: 24px;
         line-height: 22px;
-        padding: 0 6px;
+        padding-block: 0;
+        padding-inline: 6px;
         border-radius: 3px;
-        margin: 6px 3px;
+        margin-block: 6px;
+        margin-inline: 3px;
         text-align: center;
         vertical-align: top;
         color: $datatable-pager-color;
@@ -423,7 +442,8 @@ $datatble-ghost-cell-animation-duration: 10s;
       .datatable-icon-prev {
         font-size: 20px;
         line-height: 20px;
-        padding: 0 3px;
+        padding-block: 0;
+        padding-inline: 3px;
       }
     }
   }
@@ -458,36 +478,37 @@ $datatble-ghost-cell-animation-duration: 10s;
 
   input[type='checkbox'] {
     position: relative;
-    margin: 0 1rem 0 0;
+    margin-block: 0;
+    margin-inline: 0 1rem;
     cursor: pointer;
     outline: none;
 
-    &:before {
+    &::before {
       transition: all 0.3s ease-in-out;
       content: '';
       position: absolute;
-      left: 0;
+      inset-inline-start: 0;
       z-index: 1;
-      width: 1rem;
-      height: 1rem;
+      inline-size: 1rem;
+      block-size: 1rem;
       border: 2px solid #f2f2f2;
     }
 
-    &:checked:before {
+    &:checked::before {
       transform: rotate(-45deg);
-      height: 0.5rem;
+      block-size: 0.5rem;
       border-color: #009688;
-      border-top-style: none;
-      border-right-style: none;
+      border-block-start-style: none;
+      border-inline-end-style: none;
     }
 
-    &:after {
+    &::after {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 1rem;
-      height: 1rem;
+      inset-block-start: 0;
+      inset-inline-start: 0;
+      inline-size: 1rem;
+      block-size: 1rem;
       background: #fff;
       cursor: pointer;
     }

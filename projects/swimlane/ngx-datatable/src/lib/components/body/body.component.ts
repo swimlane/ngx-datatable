@@ -78,6 +78,7 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
         [scrollbarH]="scrollbarH"
         [scrollHeight]="scrollHeight()"
         [scrollWidth]="columnGroupWidths?.total"
+        [class.horizontal-overflow]="innerWidth < (columnGroupWidths?.total ?? 0)"
         (scroll)="onBodyScroll($event)"
       >
         @if (summaryRow && summaryPosition === 'top') {
