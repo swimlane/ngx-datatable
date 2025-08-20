@@ -2,6 +2,12 @@
 
 ## HEAD (unreleased)
 
+## 22.0.0
+
+- Enhancement: Added support for Angular 20
+- Enhancement: Exporting isNullOrUndefined function and ColumnChangesService service to be used externally.
+- Breaking: Removed support for Angular 17 and earlier versions
+
 ## 22.0.0-alpha.1
 
 - Enhancement: Exporting isNullOrUndefined function and ColumnChangesService service to be used externally.
