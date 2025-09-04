@@ -79,7 +79,8 @@ export const orderByComparator = (a: any, b: any): number => {
 export const sortRows = <TRow>(
   rows: TRow[],
   columns: TableColumnInternal[],
-  dirs: SortPropDir[]
+  dirs: SortPropDir[],
+  sortOnGroupHeader?: SortPropDir
 ): TRow[] => {
   if (!rows) {
     return [];
@@ -99,12 +100,14 @@ export const sortRows = <TRow>(
   // cache valueGetter and compareFn so that they
   // do not need to be looked-up in the sort function body
   const cachedDirs = dirs.map(dir => {
-    const prop = dir.prop;
+    // When sorting on group header, override prop to 'key'
+    const prop = sortOnGroupHeader?.prop === dir.prop ? 'key' : dir.prop;
+    const compareFn = cols[dir.prop];
     return {
       prop,
       dir: dir.dir,
       valueGetter: getterForProp(prop),
-      compareFn: cols[prop]
+      compareFn
     };
   });
 
@@ -145,12 +148,7 @@ export const sortGroupedRows = <TRow>(
   sortOnGroupHeader: SortPropDir | undefined
 ): Group<TRow>[] => {
   if (sortOnGroupHeader) {
-    groupedRows = sortRows(groupedRows, columns, [
-      {
-        dir: sortOnGroupHeader.dir,
-        prop: 'key'
-      }
-    ]);
+    groupedRows = sortRows(groupedRows, columns, dirs, sortOnGroupHeader);
   }
   return groupedRows.map(group => ({ ...group, value: sortRows(group.value, columns, dirs) }));
 };
