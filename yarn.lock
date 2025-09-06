@@ -7928,9 +7928,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:54.3.1":
-  version: 54.3.1
-  resolution: "eslint-plugin-jsdoc@npm:54.3.1"
+"eslint-plugin-jsdoc@npm:54.4.0":
+  version: 54.4.0
+  resolution: "eslint-plugin-jsdoc@npm:54.4.0"
   dependencies:
     "@es-joy/jsdoccomment": "npm:~0.53.0"
     are-docs-informative: "npm:^0.0.2"
@@ -7944,7 +7944,7 @@ __metadata:
     spdx-expression-parse: "npm:^4.0.0"
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0 || ^9.0.0
-  checksum: 10c0/9f7af9c775359c987793a19daa619369317ace90b388c93e80f8158c0c885679dc881356c522404bba8859e27739595379fecd30efd4a3384b42204384b66842
+  checksum: 10c0/b0957304d0041dd545781ab235b61cf653b66ff2bb43987f17d3ad0d6631d79e2e469f420b13c907b27f229f8277f7f0db74d69c8531fe7a747e43cac611a5f5
   languageName: node
   linkType: hard
 
@@ -12131,7 +12131,7 @@ __metadata:
     eslint-plugin-babel: "npm:5.3.1"
     eslint-plugin-cypress: "npm:^3.3.0"
     eslint-plugin-import: "npm:2.29.1"
-    eslint-plugin-jsdoc: "npm:54.3.1"
+    eslint-plugin-jsdoc: "npm:54.4.0"
     eslint-plugin-no-only-tests: "npm:3.0.0"
     eslint-plugin-prefer-arrow: "npm:1.2.3"
     eslint-plugin-security: "npm:1.5.0"
