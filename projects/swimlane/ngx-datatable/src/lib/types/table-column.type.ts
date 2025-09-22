@@ -175,4 +175,9 @@ export interface TableColumn<TRow extends Row = any> {
    * Summary cell template ref
    */
   summaryTemplate?: TemplateRef<any>;
+
+  /**
+   * Column will not render on UI if set to true.
+   */
+  hidden?: boolean;
 }

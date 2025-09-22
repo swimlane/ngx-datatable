@@ -1,4 +1,5 @@
-import { Component, inject, ViewChild, ViewEncapsulation } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, inject, ViewChild, ViewEncapsulation, signal } from '@angular/core';
 import {
   DataTableColumnCellDirective,
   DataTableColumnDirective,
@@ -63,12 +64,12 @@ import { DataService } from '../data.service';
           [sortable]="false"
           [draggable]="false"
           [canAutoResize]="false"
+          [hidden]="!isMobile()"
         >
           <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
             <a
-              href="#"
+              href="javascript:void(0)"
               title="Expand/Collapse Row"
-              class="desktop-hidden"
               [class.datatable-icon-right]="!expanded"
               [class.datatable-icon-down]="expanded"
               (click)="toggleExpandRow(row)"
@@ -83,23 +84,23 @@ import { DataService } from '../data.service';
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="Gender" [flexGrow]="1">
+        <ngx-datatable-column name="Gender" [flexGrow]="1" [hidden]="isMobile()">
           <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
-            <span class="mobile-hidden">{{ column.name }}</span>
+            <span>{{ column.name }}</span>
           </ng-template>
 
           <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-            <span class="mobile-hidden">{{ value }}</span>
+            <span>{{ value }}</span>
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="Age" [flexGrow]="1">
+        <ngx-datatable-column name="Age" [flexGrow]="1" [hidden]="isMobile()">
           <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
-            <span class="mobile-hidden">{{ column.name }}</span>
+            <span>{{ column.name }}</span>
           </ng-template>
 
           <ng-template let-value="value" ngx-datatable-cell-template>
-            <span class="mobile-hidden">{{ value }}</span>
+            <span>{{ value }}</span>
           </ng-template>
         </ngx-datatable-column>
       </ngx-datatable>
@@ -138,12 +139,20 @@ export class ResponsiveComponent {
   rows: FullEmployee[] = [];
   expanded: any = {};
   timeout: any;
+  protected readonly isMobile = signal(false);
 
   private dataService = inject(DataService);
+  private breakpointObserver = inject(BreakpointObserver);
 
   constructor() {
     this.dataService.load('100k.json').subscribe(data => {
       this.rows = data;
+    });
+
+    // Subscribe to mobile breakpoint changes
+    this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small]).subscribe(result => {
+      this.isMobile.set(result.matches);
+      this.table?.rowDetail?.collapseAllRows();
     });
   }
 
