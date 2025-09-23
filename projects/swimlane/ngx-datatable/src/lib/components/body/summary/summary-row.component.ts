@@ -29,7 +29,7 @@ const noopSumFunc = (cells: any[]): void => {
     @if (summaryRow && _internalColumns.length) {
       <datatable-body-row
         tabindex="-1"
-        [innerWidth]="innerWidth()"
+        ariaRowCheckboxMessage=""
         [columns]="_internalColumns"
         [rowHeight]="rowHeight()"
         [row]="summaryRow"

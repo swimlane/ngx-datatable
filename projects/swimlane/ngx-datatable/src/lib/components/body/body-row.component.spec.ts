@@ -11,7 +11,16 @@ import { DataTableBodyRowComponent } from './body-row.component';
 describe('DataTableBodyRowComponent', () => {
   @Component({
     imports: [DataTableBodyRowComponent],
-    template: ` <datatable-body-row [rowIndex]="rowIndex" [row]="row" [columns]="columns" /> `
+    template: `
+      <datatable-body-row
+        ariaRowCheckboxMessage=""
+        cssClasses=""
+        [rowHeight]="40"
+        [rowIndex]="rowIndex"
+        [row]="row"
+        [columns]="columns"
+      />
+    `
   })
   class TestHostComponent {
     rowIndex: RowIndex = { index: 0 };

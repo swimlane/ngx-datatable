@@ -4,26 +4,18 @@ import {
   Component,
   DoCheck,
   ElementRef,
-  EventEmitter,
   HostBinding,
   HostListener,
   inject,
-  Input,
   KeyValueDiffer,
   KeyValueDiffers,
-  OnChanges,
-  Output,
-  SimpleChanges
+  input,
+  computed,
+  output
 } from '@angular/core';
 
 import { NgxDatatableConfig } from '../../ngx-datatable.config';
-import {
-  CellActiveEvent,
-  ColumnGroupWidth,
-  PinnedColumns,
-  RowIndex,
-  TableColumnInternal
-} from '../../types/internal.types';
+import { CellActiveEvent, RowIndex, TableColumnInternal } from '../../types/internal.types';
 import { ActivateEvent, Row, RowOrGroup, TreeStatus } from '../../types/public.types';
 import { columnGroupWidths, columnsByPin, columnsByPinArr } from '../../utils/column';
 import { ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, ARROW_UP, ENTER } from '../../utils/keys';
@@ -33,29 +25,29 @@ import { DataTableBodyCellComponent } from './body-cell.component';
   selector: 'datatable-body-row',
   imports: [DataTableBodyCellComponent],
   template: `
-    @for (colGroup of _columnsByPin; track colGroup.type) {
+    @for (colGroup of _columnsByPin(); track colGroup.type) {
       @if (colGroup.columns.length) {
         <div
           [class]="'datatable-row-' + colGroup.type + ' datatable-row-group'"
-          [style.width.px]="_columnGroupWidths[colGroup.type]"
-          [class.row-disabled]="disabled"
+          [style.width.px]="_columnGroupWidths()[colGroup.type]"
+          [class.row-disabled]="disabled()"
         >
           @for (column of colGroup.columns; track column.$$id; let ii = $index) {
             <datatable-body-cell
               role="cell"
               tabindex="-1"
-              [row]="row"
-              [group]="group"
-              [expanded]="expanded"
-              [isSelected]="isSelected"
-              [rowIndex]="rowIndex"
+              [row]="row()"
+              [group]="group()"
+              [expanded]="expanded()"
+              [isSelected]="isSelected()"
+              [rowIndex]="rowIndex()"
               [column]="column"
-              [rowHeight]="rowHeight"
-              [displayCheck]="displayCheck"
-              [disabled]="disabled"
-              [treeStatus]="treeStatus"
-              [ariaRowCheckboxMessage]="ariaRowCheckboxMessage"
-              [cssClasses]="cssClasses"
+              [rowHeight]="rowHeight()"
+              [displayCheck]="displayCheck()"
+              [disabled]="disabled()"
+              [treeStatus]="treeStatus()"
+              [ariaRowCheckboxMessage]="ariaRowCheckboxMessage()"
+              [cssClasses]="cssClasses()"
               (activate)="onActivate($event, ii)"
               (treeAction)="onTreeAction()"
             />
@@ -67,58 +59,37 @@ import { DataTableBodyCellComponent } from './body-cell.component';
   styleUrl: './body-row.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[class]': 'cssClass',
-    '[class.active]': 'isSelected',
-    '[class.datatable-row-odd]': 'innerRowIndex % 2 !== 0',
-    '[class.datatable-row-even]': 'innerRowIndex % 2 === 0',
-    '[class.row-disabled]': 'disabled'
+    '[class]': 'cssClass()',
+    '[class.active]': 'isSelected()',
+    '[class.datatable-row-odd]': 'innerRowIndex() % 2 !== 0',
+    '[class.datatable-row-even]': 'innerRowIndex() % 2 === 0',
+    '[class.row-disabled]': 'disabled()',
+    '[style.height.px]': 'rowHeight()'
   }
 })
-export class DataTableBodyRowComponent<TRow extends Row = any> implements DoCheck, OnChanges {
+export class DataTableBodyRowComponent<TRow extends Row = any> implements DoCheck {
   private cd = inject(ChangeDetectorRef);
 
-  @Input() set columns(val: TableColumnInternal[]) {
-    this._columns = val;
-    this.recalculateColumns(val);
-  }
+  readonly columns = input.required<TableColumnInternal[]>();
+  readonly expanded = input<boolean>();
+  readonly rowClass = input<(row: TRow) => string | Record<string, boolean>>();
+  readonly row = input.required<TRow>();
+  readonly group = input<TRow[]>();
+  readonly isSelected = input<boolean>();
+  readonly rowIndex = input.required<RowIndex>();
+  readonly displayCheck = input<(row: TRow, column: TableColumnInternal, value?: any) => boolean>();
+  readonly treeStatus = input<TreeStatus | undefined>('collapsed');
+  readonly ariaRowCheckboxMessage = input.required<string>();
 
-  get columns(): TableColumnInternal[] {
-    return this._columns;
-  }
+  readonly disabled = input<boolean>();
+  readonly cssClasses = input.required<Partial<Required<NgxDatatableConfig>['cssClasses']>>();
 
-  @Input() set innerWidth(val: number) {
-    if (this._columns) {
-      const colByPin = columnsByPin(this._columns);
-      this._columnGroupWidths = columnGroupWidths(colByPin, this._columns);
-    }
-
-    this._innerWidth = val;
-    this.recalculateColumns();
-  }
-
-  get innerWidth(): number {
-    return this._innerWidth;
-  }
-
-  @Input() expanded?: boolean;
-  @Input() rowClass?: (row: TRow) => string | Record<string, boolean>;
-  @Input() row!: TRow;
-  @Input() group?: TRow[];
-  @Input() isSelected?: boolean;
-  @Input() rowIndex!: RowIndex;
-  @Input() displayCheck?: (row: TRow, column: TableColumnInternal, value?: any) => boolean;
-  @Input() treeStatus?: TreeStatus = 'collapsed';
-  @Input() verticalScrollVisible = false;
-  @Input() ariaRowCheckboxMessage!: string;
-
-  @Input() disabled?: boolean;
-  @Input({ required: true }) cssClasses!: Partial<Required<NgxDatatableConfig>['cssClasses']>;
-
-  get cssClass() {
+  protected readonly cssClass = computed(() => {
     let cls = 'datatable-body-row';
 
-    if (this.rowClass) {
-      const res = this.rowClass(this.row);
+    const rowClass = this.rowClass();
+    if (rowClass) {
+      const res = rowClass(this.row());
       if (typeof res === 'string') {
         cls += ` ${res}`;
       } else if (typeof res === 'object') {
@@ -132,38 +103,33 @@ export class DataTableBodyRowComponent<TRow extends Row = any> implements DoChec
     }
 
     return cls;
-  }
+  });
 
-  @HostBinding('style.height.px')
-  @Input()
-  rowHeight!: number;
+  readonly rowHeight = input.required<number>();
 
   @HostBinding('style.width.px')
   get columnsTotalWidths(): number {
-    return this._columnGroupWidths.total;
+    return this._columnGroupWidths().total;
   }
 
-  @Output() readonly activate = new EventEmitter<ActivateEvent<TRow>>();
-  @Output() readonly treeAction = new EventEmitter<any>();
+  readonly activate = output<ActivateEvent<TRow>>();
+  readonly treeAction = output<void>();
 
   _element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
-  _columnGroupWidths!: ColumnGroupWidth;
-  _columnsByPin!: PinnedColumns[];
-  _columns!: TableColumnInternal[];
-  _innerWidth!: number;
+  readonly _columnGroupWidths = computed(() => {
+    const colsByPin = columnsByPin(this.columns());
+    return columnGroupWidths(colsByPin, this.columns());
+  });
+  readonly _columnsByPin = computed(() => {
+    return columnsByPinArr(this.columns());
+  });
 
   private _rowDiffer: KeyValueDiffer<keyof RowOrGroup<TRow>, any> = inject(KeyValueDiffers)
     .find({})
     .create();
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.verticalScrollVisible) {
-      this.recalculateColumns();
-    }
-  }
-
   ngDoCheck(): void {
-    if (this._rowDiffer.diff(this.row)) {
+    if (this._rowDiffer.diff(this.row())) {
       this.cd.markForCheck();
     }
   }
@@ -193,7 +159,7 @@ export class DataTableBodyRowComponent<TRow extends Row = any> implements DoChec
       this.activate.emit({
         type: 'keydown',
         event,
-        row: this.row,
+        row: this.row(),
         rowElement: this._element
       });
     }
@@ -204,16 +170,9 @@ export class DataTableBodyRowComponent<TRow extends Row = any> implements DoChec
     this.activate.emit({
       type: 'mouseenter',
       event,
-      row: this.row,
+      row: this.row(),
       rowElement: this._element
     });
-  }
-
-  recalculateColumns(val: TableColumnInternal<TRow>[] = this.columns): void {
-    this._columns = val;
-    const colsByPin = columnsByPin(this._columns);
-    this._columnsByPin = columnsByPinArr(this._columns);
-    this._columnGroupWidths = columnGroupWidths(colsByPin, this._columns);
   }
 
   onTreeAction() {
@@ -221,7 +180,8 @@ export class DataTableBodyRowComponent<TRow extends Row = any> implements DoChec
   }
 
   /** Returns the row index, or if in a group, the index within a group. */
-  protected get innerRowIndex(): number {
-    return this.rowIndex?.indexInGroup ?? this.rowIndex?.index ?? 0;
-  }
+  protected readonly innerRowIndex = computed(() => {
+    const rowIndex = this.rowIndex();
+    return rowIndex?.indexInGroup ?? rowIndex?.index ?? 0;
+  });
 }
