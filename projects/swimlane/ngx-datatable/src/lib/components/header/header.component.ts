@@ -59,34 +59,32 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
             [ngStyle]="_styleByGroup[colGroup.type]"
           >
             @for (column of colGroup.columns; track column.$$id) {
-              @if (!column.hidden) {
-                <datatable-header-cell
-                  role="columnheader"
-                  dragStartDelay="500"
-                  [draggable]="reorderable && column.draggable"
-                  [dragModel]="column"
-                  [headerHeight]="headerHeight"
-                  [isTarget]="column.isTarget"
-                  [targetMarkerTemplate]="targetMarkerTemplate"
-                  [targetMarkerContext]="column.targetMarkerContext"
-                  [column]="column"
-                  [showResizeHandle]="lastColumnId() !== column.$$id && column.resizeable"
-                  [sortType]="sortType"
-                  [sorts]="sorts"
-                  [selectionType]="selectionType"
-                  [sortAscendingIcon]="sortAscendingIcon"
-                  [sortDescendingIcon]="sortDescendingIcon"
-                  [sortUnsetIcon]="sortUnsetIcon"
-                  [allRowsSelected]="allRowsSelected"
-                  [enableClearingSortState]="enableClearingSortState"
-                  [ariaHeaderCheckboxMessage]="ariaHeaderCheckboxMessage"
-                  (resize)="onColumnResized($event)"
-                  (resizing)="onColumnResizing($event)"
-                  (sort)="onSort($event)"
-                  (select)="select.emit($event)"
-                  (columnContextmenu)="columnContextmenu.emit($event)"
-                />
-              }
+              <datatable-header-cell
+                role="columnheader"
+                dragStartDelay="500"
+                [draggable]="reorderable && column.draggable"
+                [dragModel]="column"
+                [headerHeight]="headerHeight"
+                [isTarget]="column.isTarget"
+                [targetMarkerTemplate]="targetMarkerTemplate"
+                [targetMarkerContext]="column.targetMarkerContext"
+                [column]="column"
+                [showResizeHandle]="lastColumnId() !== column.$$id && column.resizeable"
+                [sortType]="sortType"
+                [sorts]="sorts"
+                [selectionType]="selectionType"
+                [sortAscendingIcon]="sortAscendingIcon"
+                [sortDescendingIcon]="sortDescendingIcon"
+                [sortUnsetIcon]="sortUnsetIcon"
+                [allRowsSelected]="allRowsSelected"
+                [enableClearingSortState]="enableClearingSortState"
+                [ariaHeaderCheckboxMessage]="ariaHeaderCheckboxMessage"
+                (resize)="onColumnResized($event)"
+                (resizing)="onColumnResizing($event)"
+                (sort)="onSort($event)"
+                (select)="select.emit($event)"
+                (columnContextmenu)="columnContextmenu.emit($event)"
+              />
             }
           </div>
         }

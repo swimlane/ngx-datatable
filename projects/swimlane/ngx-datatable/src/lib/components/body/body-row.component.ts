@@ -41,26 +41,24 @@ import { DataTableBodyCellComponent } from './body-cell.component';
           [class.row-disabled]="disabled"
         >
           @for (column of colGroup.columns; track column.$$id; let ii = $index) {
-            @if (!column.hidden) {
-              <datatable-body-cell
-                role="cell"
-                tabindex="-1"
-                [row]="row"
-                [group]="group"
-                [expanded]="expanded"
-                [isSelected]="isSelected"
-                [rowIndex]="rowIndex"
-                [column]="column"
-                [rowHeight]="rowHeight"
-                [displayCheck]="displayCheck"
-                [disabled]="disabled"
-                [treeStatus]="treeStatus"
-                [ariaRowCheckboxMessage]="ariaRowCheckboxMessage"
-                [cssClasses]="cssClasses"
-                (activate)="onActivate($event, ii)"
-                (treeAction)="onTreeAction()"
-              />
-            }
+            <datatable-body-cell
+              role="cell"
+              tabindex="-1"
+              [row]="row"
+              [group]="group"
+              [expanded]="expanded"
+              [isSelected]="isSelected"
+              [rowIndex]="rowIndex"
+              [column]="column"
+              [rowHeight]="rowHeight"
+              [displayCheck]="displayCheck"
+              [disabled]="disabled"
+              [treeStatus]="treeStatus"
+              [ariaRowCheckboxMessage]="ariaRowCheckboxMessage"
+              [cssClasses]="cssClasses"
+              (activate)="onActivate($event, ii)"
+              (treeAction)="onTreeAction()"
+            />
           }
         </div>
       }

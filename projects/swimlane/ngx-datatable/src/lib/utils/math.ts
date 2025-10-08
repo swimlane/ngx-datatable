@@ -38,10 +38,6 @@ const scaleColumns = (colsByGroup: TableColumnGroup, maxWidth: number, totalFlex
 
   // calculate total width and flexgrow points for columns that can be resized
   for (const column of columns) {
-    if (column.hidden) {
-      column.width = 0;
-      continue;
-    }
     if (column.$$oldWidth) {
       // when manually resized, switch off auto-resize
       column.canAutoResize = false;
@@ -62,10 +58,6 @@ const scaleColumns = (colsByGroup: TableColumnGroup, maxWidth: number, totalFlex
     remainingWidth = 0;
 
     for (const column of columns) {
-      if (column.hidden) {
-        column.width = 0;
-        continue;
-      }
       // if the column can be resize and it hasn't reached its minimum width yet
       if (column.canAutoResize && !hasMinWidth[column.prop]) {
         const newWidth = column.width + column.flexGrow * widthPerFlexPoint;
@@ -90,10 +82,6 @@ const scaleColumns = (colsByGroup: TableColumnGroup, maxWidth: number, totalFlex
 
   // adjust the first column that can be auto-resized respecting the min/max widths
   for (const col of columns.filter(c => c.canAutoResize).sort((a, b) => a.width - b.width)) {
-    if (col.hidden) {
-      col.width = 0;
-      continue;
-    }
     if (
       (delta > 0 && (!col.maxWidth || col.width + delta <= col.maxWidth)) ||
       (delta < 0 && (!col.minWidth || col.width + delta >= col.minWidth))
@@ -155,10 +143,6 @@ export const forceFillColumnWidths = (
     exceedsWindow = contentWidth >= expectedWidth;
 
     for (const column of columnsToResize) {
-      if (column.hidden) {
-        column.width = 0;
-        continue;
-      }
       // don't bleed if the initialRemainingWidth is same as verticalScrollWidth
       if (exceedsWindow && allowBleed && initialRemainingWidth !== -1 * verticalScrollWidth) {
         // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
@@ -212,9 +196,6 @@ const getContentWidth = (allColumns: TableColumn[], defaultColWidth = 150): numb
   let contentWidth = 0;
 
   for (const column of allColumns) {
-    if (column.hidden) {
-      continue;
-    }
     // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
     contentWidth += column.width || defaultColWidth;
   }

@@ -62,7 +62,6 @@ export class DataTableColumnDirective<TRow extends Row> implements TableColumn, 
   @Input() treeLevelIndent?: number;
   @Input() summaryFunc?: (cells: any[]) => any;
   @Input() summaryTemplate?: TemplateRef<any>;
-  @Input({ transform: booleanAttribute }) hidden?: boolean;
 
   @Input('cellTemplate')
   _cellTemplateInput?: TemplateRef<CellContext<TRow>>;
