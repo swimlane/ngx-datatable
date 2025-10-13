@@ -61,8 +61,7 @@ import { DataService } from '../data.service';
               <span title="Double click to edit" (dblclick)="editing[rowIndex + '-gender'] = true">
                 {{ value }}
               </span>
-            }
-            @if (editing[rowIndex + '-gender']) {
+            } @else {
               <select
                 [value]="value"
                 (blur)="editing[rowIndex + '-gender'] = false"
