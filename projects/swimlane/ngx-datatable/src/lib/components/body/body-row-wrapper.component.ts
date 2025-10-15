@@ -175,14 +175,15 @@ export class DataTableRowWrapperComponent<TRow extends Row = any> implements DoC
   }
 
   onCheckboxChange(groupSelected: boolean, group: Group<TRow>): void {
-    // First remove all rows of this group from `selected`
-    let selected = [
-      ...this.selected().filter(row => !group.value.find((item: TRow) => item === row))
-    ];
-    // If checkbox is checked then add all rows of this group in `selected`
-    if (groupSelected) {
-      selected = [...this.selected(), ...group.value];
-    }
+    const selectedSet = new Set(this.selected());
+    group.value.forEach((item: TRow) => {
+      if (groupSelected) {
+        selectedSet.add(item);
+      } else {
+        selectedSet.delete(item);
+      }
+    });
+    const selected = Array.from(selectedSet);
     // Update `selected` of DatatableComponent with newly evaluated `selected`
     this.tableComponent.selected = [...selected];
     // Emit select event with updated values
