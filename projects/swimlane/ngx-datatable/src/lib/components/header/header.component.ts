@@ -214,32 +214,6 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
     this.destroyed = true;
   }
 
-  onLongPressStart({
-    event,
-    model
-  }: {
-    event: MouseEvent | TouchEvent;
-    model: TableColumnInternal<Row>;
-  }) {
-    model.dragging = true;
-    this.dragEventTarget = event;
-  }
-
-  onLongPressEnd({ model }: { model: TableColumnInternal<Row> }) {
-    this.dragEventTarget = undefined;
-
-    // delay resetting so sort can be
-    // prevented if we were dragging
-    setTimeout(() => {
-      // datatable component creates copies from columns on reorder
-      // set dragging to false on new objects
-      const column = this._columns.find(c => c.$$id === model.$$id);
-      if (column && 'dragging' in column) {
-        column.dragging = false;
-      }
-    }, 5);
-  }
-
   @HostBinding('style.width')
   get headerWidth(): string {
     if (this.scrollbarH) {
