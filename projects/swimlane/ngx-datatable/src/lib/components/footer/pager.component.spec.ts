@@ -1,5 +1,11 @@
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, ChangeDetectorRef, DebugElement, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  DebugElement,
+  signal,
+  WritableSignal
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -8,22 +14,34 @@ import type { DatatableComponent } from '../datatable.component';
 import { DatatablePagerComponent } from './pager.component';
 import { PagerHarness } from './testing/pager.harness';
 
+interface MockFooter {
+  curPage: WritableSignal<number>;
+  pageSize: WritableSignal<number>;
+  rowCount: WritableSignal<number>;
+  pagerNextIcon: WritableSignal<string | undefined>;
+  pagerRightArrowIcon: WritableSignal<string | undefined>;
+  pagerLeftArrowIcon: WritableSignal<string | undefined>;
+  pagerPreviousIcon: WritableSignal<string | undefined>;
+  page: { emit: (event: { page: number }) => void };
+}
+
 describe('DataTablePagerComponent', () => {
   let fixture: ComponentFixture<DatatablePagerComponent>;
   let pager: DatatablePagerComponent;
   let harness: PagerHarness;
-  const footer = {
-    curPage: signal(0),
-    pageSize: signal(1),
-    rowCount: signal(0),
-    pagerNextIcon: signal(''),
-    pagerRightArrowIcon: signal(''),
-    pagerLeftArrowIcon: signal(''),
-    pagerPreviousIcon: signal(''),
-    page: { emit: ({ page }: { page: number }) => footer.curPage.set(page) }
-  };
+  let footer: MockFooter;
 
   beforeEach(async () => {
+    footer = {
+      curPage: signal(0),
+      pageSize: signal(1),
+      rowCount: signal(0),
+      pagerNextIcon: signal(''),
+      pagerRightArrowIcon: signal(''),
+      pagerLeftArrowIcon: signal(''),
+      pagerPreviousIcon: signal(''),
+      page: { emit: ({ page }: { page: number }) => footer.curPage.set(page) }
+    };
     TestBed.overrideComponent(DatatablePagerComponent, {
       set: {
         changeDetection: ChangeDetectionStrategy.Default,
