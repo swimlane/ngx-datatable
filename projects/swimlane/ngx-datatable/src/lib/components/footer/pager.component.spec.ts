@@ -18,6 +18,7 @@ interface MockFooter {
   curPage: WritableSignal<number>;
   pageSize: WritableSignal<number>;
   rowCount: WritableSignal<number>;
+  groupCount: WritableSignal<number | undefined>;
   pagerNextIcon: WritableSignal<string | undefined>;
   pagerRightArrowIcon: WritableSignal<string | undefined>;
   pagerLeftArrowIcon: WritableSignal<string | undefined>;
@@ -36,6 +37,7 @@ describe('DataTablePagerComponent', () => {
       curPage: signal(0),
       pageSize: signal(1),
       rowCount: signal(0),
+      groupCount: signal<number | undefined>(undefined),
       pagerNextIcon: signal(''),
       pagerRightArrowIcon: signal(''),
       pagerLeftArrowIcon: signal(''),
@@ -75,6 +77,13 @@ describe('DataTablePagerComponent', () => {
       footer.pageSize.set(10);
       footer.rowCount.set(0);
       expect(await harness.pageCount()).toEqual(1);
+    });
+
+    it('should prefer using groupCount if available', async () => {
+      footer.pageSize.set(10);
+      footer.rowCount.set(28);
+      footer.groupCount.set(53);
+      expect(await harness.pageCount()).toEqual(5);
     });
   });
 

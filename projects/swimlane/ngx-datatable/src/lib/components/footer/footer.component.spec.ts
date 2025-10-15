@@ -136,6 +136,7 @@ describe('DataTableFooterComponent', () => {
   template: `
     <datatable-footer
       [rowCount]="rowCount"
+      [groupCount]="undefined"
       [pageSize]="pageSize"
       [offset]="offset"
       [footerHeight]="footerHeight"

@@ -96,6 +96,7 @@
   @if (footerHeight) {
     <datatable-footer
       [rowCount]="groupedRows !== undefined ? _internalRows.length : rowCount"
+      [groupCount]="groupedRows !== undefined ? rowCount : undefined"
       [pageSize]="pageSize"
       [offset]="offset"
       [footerHeight]="footerHeight"

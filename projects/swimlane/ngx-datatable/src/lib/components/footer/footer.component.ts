@@ -41,6 +41,7 @@ import { DatatablePagerComponent } from './pager.component';
 export class DataTableFooterComponent {
   readonly footerHeight = input.required<number>();
   readonly rowCount = input.required<number>();
+  readonly groupCount = input.required<number | undefined>();
   readonly pageSize = input.required<number>();
   readonly offset = input.required<number>();
   readonly pagerLeftArrowIcon = input<string | undefined>();

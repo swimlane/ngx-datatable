@@ -98,7 +98,11 @@ export class DatatablePagerComponent {
 
   protected readonly page = computed(() => this.datatable._footerComponent()!.curPage());
   protected readonly pageSize = computed(() => this.datatable._footerComponent()!.pageSize());
-  protected readonly count = computed(() => this.datatable._footerComponent()!.rowCount());
+  protected readonly count = computed(
+    () =>
+      this.datatable._footerComponent()!.groupCount() ??
+      this.datatable._footerComponent()!.rowCount()
+  );
   protected readonly pagerNextIcon = computed(() =>
     this.datatable._footerComponent()!.pagerNextIcon()
   );
