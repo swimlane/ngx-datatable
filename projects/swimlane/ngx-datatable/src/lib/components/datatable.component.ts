@@ -14,8 +14,8 @@ import {
   HostListener,
   inject,
   Input,
-  KeyValueDiffer,
-  KeyValueDiffers,
+  IterableDiffer,
+  IterableDiffers,
   numberAttribute,
   OnDestroy,
   OnInit,
@@ -120,9 +120,11 @@ export class DatatableComponent<TRow extends Row = any>
    */
   @Input() set rows(val: (TRow | undefined)[] | null | undefined) {
     this._rows = val ?? [];
-    // This will ensure that datatable detects changes on doing like this rows = [...rows];
-    this.rowDiffer.diff([] as any);
     if (val) {
+      // This will ensure that datatable detects changes on doing like this rows = [...rows];
+      if (val.length) {
+        this.rowDiffer.diff([]);
+      }
       this._internalRows = [...val];
     }
   }
@@ -454,7 +456,7 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * A property holds a summary row position: top/bottom
    */
-  @Input() summaryPosition: string = 'top';
+  @Input() summaryPosition = 'top';
 
   /**
    * A function you can use to check whether you want
@@ -539,7 +541,7 @@ export class DatatableComponent<TRow extends Row = any>
   @HostBinding('class.fixed-header')
   get isFixedHeader(): boolean {
     const headerHeight: number | string = this.headerHeight;
-    return typeof headerHeight === 'string' ? <string>headerHeight !== 'auto' : true;
+    return typeof headerHeight === 'string' ? (headerHeight as string) !== 'auto' : true;
   }
 
   /**
@@ -684,15 +686,15 @@ export class DatatableComponent<TRow extends Row = any>
       allRowsSelected = this.selected.length === rowsOnPage;
     }
 
-    return this.selected && this.rows && this.rows.length !== 0 && allRowsSelected;
+    return this.selected && this.rows?.length !== 0 && allRowsSelected;
   }
 
   element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
-  rowDiffer: KeyValueDiffer<TRow, TRow> = inject(KeyValueDiffers).find([]).create();
-  _innerWidth: number;
-  pageSize: number;
-  bodyHeight: number;
+  _innerWidth!: number;
+  pageSize!: number;
+  bodyHeight!: number;
   rowCount = 0;
+  rowDiffer: IterableDiffer<TRow | undefined> = inject(IterableDiffers).find([]).create();
 
   _offsetX = 0;
   _limit: number | undefined;
@@ -750,7 +752,7 @@ export class DatatableComponent<TRow extends Row = any>
    * Lifecycle hook that is called when Angular dirty checks a directive.
    */
   ngDoCheck(): void {
-    const rowDiffers = this.rowDiffer.diff(this.rows as any);
+    const rowDiffers = this.rowDiffer.diff(this.rows);
     if (rowDiffers || this.disableRowCheck) {
       // we don't sort again when ghost loader adds a dummy row
       if (!this.ghostLoadingIndicator && !this.externalSorting && this._internalColumns) {
@@ -766,7 +768,7 @@ export class DatatableComponent<TRow extends Row = any>
         optionalGetterForProp(this.treeToRelation)
       );
 
-      if (this._groupRowsBy) {
+      if (this._groupRowsBy && rowDiffers) {
         // If a column has been specified in _groupRowsBy create a new array with the data grouped by that row
         this.groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
       }
@@ -947,11 +949,15 @@ export class DatatableComponent<TRow extends Row = any>
       adjustColumnWidths(columns, width);
     }
 
-    if (this.bodyComponent && this.bodyComponent.columnGroupWidths.total !== width) {
-      this.bodyComponent.columns = [...this._internalColumns];
+    // The type of width is wrong here.
+    // It can also be undefined, thus the eslint-rule must be disabled.
+    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+    if (this.bodyComponent && this.bodyComponent.columnGroupWidths().total !== width) {
+      this._internalColumns = [...this._internalColumns];
       this.bodyComponent.cd.markForCheck();
     }
 
+    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
     if (this.headerComponent && this.headerComponent._columnGroupWidths.total !== width) {
       this.headerComponent.columns = [...this._internalColumns];
     }

@@ -1,3 +1,4 @@
+import { EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -20,6 +21,16 @@ describe('DataTableBodyComponent', () => {
       providers: [ScrollbarHelper, { provide: DATATABLE_COMPONENT_TOKEN, useValue: {} }]
     }).compileComponents();
     fixture = TestBed.createComponent(DataTableBodyComponent);
+    fixture.componentRef.setInput('rowDragEvents', new EventEmitter<any>());
+    fixture.componentRef.setInput('innerWidth', 400);
+    fixture.componentRef.setInput('rowIdentity', (row: any) => row);
+    fixture.componentRef.setInput('summaryPosition', 'top');
+    fixture.componentRef.setInput('summaryHeight', 50);
+    fixture.componentRef.setInput('ariaGroupHeaderCheckboxMessage', 'Select all rows');
+    fixture.componentRef.setInput('ariaRowCheckboxMessage', 'Select row');
+    fixture.componentRef.setInput('cssClasses', {});
+    fixture.componentRef.setInput('rowHeight', 'auto');
+    fixture.componentRef.setInput('offsetX', 0);
     component = fixture.componentInstance;
   });
 
@@ -31,8 +42,8 @@ describe('DataTableBodyComponent', () => {
 
   describe('Paging', () => {
     it('should have correct indexes for normal paging with rows > pageSize', () => {
-      component.externalPaging = false;
-      component.rows = [
+      fixture.componentRef.setInput('externalPaging', false);
+      fixture.componentRef.setInput('rows', [
         { num: 1 },
         { num: 2 },
         { num: 3 },
@@ -43,29 +54,29 @@ describe('DataTableBodyComponent', () => {
         { num: 8 },
         { num: 9 },
         { num: 10 }
-      ];
-      component.pageSize = 10;
-      component.offset = 1;
-      component.rowCount = 20;
+      ]);
+      fixture.componentRef.setInput('pageSize', 10);
+      fixture.componentRef.setInput('offset', 1);
+      fixture.componentRef.setInput('rowCount', 20);
       const expectedIndexes = { first: 10, last: 20 };
       component.updateIndexes();
       expect(component.indexes()).toEqual(expectedIndexes);
     });
 
     it('should have correct indexes for normal paging with rows < pageSize', () => {
-      component.externalPaging = false;
-      component.rows = [{ num: 1 }, { num: 2 }, { num: 3 }, { num: 4 }];
-      component.pageSize = 5;
-      component.offset = 1;
-      component.rowCount = 9;
+      fixture.componentRef.setInput('externalPaging', false);
+      fixture.componentRef.setInput('rows', [{ num: 1 }, { num: 2 }, { num: 3 }, { num: 4 }]);
+      fixture.componentRef.setInput('pageSize', 5);
+      fixture.componentRef.setInput('offset', 1);
+      fixture.componentRef.setInput('rowCount', 9);
       const expectedIndexes = { first: 5, last: 9 };
       component.updateIndexes();
       expect(component.indexes()).toEqual(expectedIndexes);
     });
 
     it('should have correct indexes for external paging with rows > pageSize', () => {
-      component.externalPaging = true;
-      component.rows = [
+      fixture.componentRef.setInput('externalPaging', true);
+      fixture.componentRef.setInput('rows', [
         { num: 1 },
         { num: 2 },
         { num: 3 },
@@ -76,38 +87,39 @@ describe('DataTableBodyComponent', () => {
         { num: 8 },
         { num: 9 },
         { num: 10 }
-      ];
-      component.pageSize = 10;
-      component.offset = 1;
-      component.rowCount = 20;
+      ]);
+      fixture.componentRef.setInput('pageSize', 10);
+      fixture.componentRef.setInput('offset', 1);
+      fixture.componentRef.setInput('rowCount', 20);
       const expectedIndexes = { first: 0, last: 10 };
       component.updateIndexes();
       expect(component.indexes()).toEqual(expectedIndexes);
     });
 
     it('should have correct indexes for external paging with rows < pageSize', () => {
-      component.externalPaging = true;
-      component.rows = [{ num: 1 }, { num: 2 }, { num: 3 }, { num: 4 }];
-      component.pageSize = 5;
-      component.offset = 1;
-      component.rowCount = 9;
+      fixture.componentRef.setInput('externalPaging', true);
+      fixture.componentRef.setInput('rows', [{ num: 1 }, { num: 2 }, { num: 3 }, { num: 4 }]);
+      fixture.componentRef.setInput('pageSize', 5);
+      fixture.componentRef.setInput('offset', 1);
+      fixture.componentRef.setInput('rowCount', 9);
       const expectedIndexes = { first: 0, last: 5 };
       component.updateIndexes();
       expect(component.indexes()).toEqual(expectedIndexes);
     });
 
     it('should render ghost rows based rowCount', () => {
-      component.trackByProp = 'num';
-      component.rows = [{ num: 1 }, { num: 2 }, { num: 3 }, { num: 4 }];
-      component.externalPaging = true;
-      component.scrollbarV = true;
-      component.virtualization = true;
-      component.rowHeight = 50;
-      component.ghostLoadingIndicator = true;
-      component.bodyHeight = 200;
-      component.pageSize = 5;
-      component.rowCount = 10;
-      component.offset = 0;
+      fixture.componentRef.setInput('trackByProp', 'num');
+      fixture.componentRef.setInput('rows', [{ num: 1 }, { num: 2 }, { num: 3 }, { num: 4 }]);
+      fixture.componentRef.setInput('columns', toInternalColumn([{ name: 'num', prop: 'num' }]));
+      fixture.componentRef.setInput('externalPaging', true);
+      fixture.componentRef.setInput('scrollbarV', true);
+      fixture.componentRef.setInput('virtualization', true);
+      fixture.componentRef.setInput('rowHeight', 50);
+      fixture.componentRef.setInput('ghostLoadingIndicator', true);
+      fixture.componentRef.setInput('bodyHeight', 200);
+      fixture.componentRef.setInput('pageSize', 5);
+      fixture.componentRef.setInput('rowCount', 10);
+      fixture.componentRef.setInput('offset', 0);
       fixture.detectChanges();
       expect(component.indexes()).toEqual({ first: 0, last: 5 });
       fixture.debugElement
@@ -123,27 +135,30 @@ describe('DataTableBodyComponent', () => {
 
   describe('with disableCheck', () => {
     beforeEach(() => {
-      component.columns = toInternalColumn([{ name: 'value', prop: 'value' }]);
-      component.disableRowCheck = (row: any) => row.disabled;
+      fixture.componentRef.setInput(
+        'columns',
+        toInternalColumn([{ name: 'value', prop: 'value' }])
+      );
+      fixture.componentRef.setInput('disableRowCheck', (row: any) => row.disabled);
     });
 
     it('should disable rows', () => {
-      component.rows = [
+      fixture.componentRef.setInput('rows', [
         { value: '1', disabled: false },
         { value: '2', disabled: true }
-      ];
-      component.rowCount = 2;
-      component.pageSize = 2;
-      component.offset = 0;
+      ]);
+      fixture.componentRef.setInput('rowCount', 2);
+      fixture.componentRef.setInput('pageSize', 2);
+      fixture.componentRef.setInput('offset', 0);
       component.updateIndexes();
       fixture.detectChanges();
       let rows = fixture.debugElement.queryAll(By.directive(DataTableBodyRowComponent));
       expect(rows[0].classes['row-disabled']).toBeFalsy();
       expect(rows[1].classes['row-disabled']).toBeTrue();
-      component.rows = [
+      fixture.componentRef.setInput('rows', [
         { value: '1', disabled: true },
         { value: '2', disabled: false }
-      ];
+      ]);
       fixture.detectChanges();
       rows = fixture.debugElement.queryAll(By.directive(DataTableBodyRowComponent));
       expect(rows[0].classes['row-disabled']).toBeTrue();
@@ -151,7 +166,7 @@ describe('DataTableBodyComponent', () => {
     });
 
     it('should disable grouped rows', () => {
-      component.groupedRows = [
+      fixture.componentRef.setInput('groupedRows', [
         {
           key: 'g1',
           value: [
@@ -159,11 +174,11 @@ describe('DataTableBodyComponent', () => {
             { value: '2', disabled: true }
           ]
         }
-      ];
-      component.rows = ['dummy'];
-      component.rowCount = 2;
-      component.pageSize = 2;
-      component.offset = 0;
+      ]);
+      fixture.componentRef.setInput('rows', ['dummy']);
+      fixture.componentRef.setInput('rowCount', 2);
+      fixture.componentRef.setInput('pageSize', 2);
+      fixture.componentRef.setInput('offset', 0);
       component.updateIndexes();
       fixture.detectChanges();
       const rows = fixture.debugElement.queryAll(By.directive(DataTableBodyRowComponent));

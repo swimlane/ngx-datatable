@@ -10,15 +10,20 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  Output,
   signal,
   TemplateRef,
   TrackByFunction,
-  ViewChild
+  ViewChild,
+  input,
+  booleanAttribute,
+  model,
+  output,
+  SimpleChanges,
+  OnChanges
 } from '@angular/core';
 
 import { NgxDatatableConfig } from '../../ngx-datatable.config';
-import { ColumnGroupWidth, TableColumnInternal } from '../../types/internal.types';
+import { TableColumnInternal } from '../../types/internal.types';
 import {
   ActivateEvent,
   DragEventData,
@@ -56,35 +61,41 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
     DatatableBodyRowDirective
   ],
   template: `
-    @if (loadingIndicator) {
+    @if (loadingIndicator()) {
       <div class="custom-loading-indicator-wrapper">
         <div class="custom-loading-content">
           <ng-content select="[loading-indicator]" />
         </div>
       </div>
     }
-    @if (ghostLoadingIndicator && (!rowCount || !virtualization || !scrollbarV)) {
+    @let scrollbarV = this.scrollbarV();
+    @let columns = this.columns();
+    @let columnGroupWidths = this.columnGroupWidths();
+    @let bodyHeight = this._bodyHeight();
+    @let rows = this.rows();
+    @let rowCount = this.rowCount();
+    @if (ghostLoadingIndicator() && (!rowCount || !virtualization() || !scrollbarV)) {
       <ghost-loader
         class="ghost-overlay"
         [columns]="columns"
-        [pageSize]="pageSize"
-        [rowHeight]="rowHeight"
+        [pageSize]="pageSize()"
+        [rowHeight]="rowHeight()"
         [ghostBodyHeight]="bodyHeight"
       />
     }
     @if (rows.length) {
       <datatable-scroller
         [scrollbarV]="scrollbarV"
-        [scrollbarH]="scrollbarH"
+        [scrollbarH]="scrollbarH()"
         [scrollHeight]="scrollHeight()"
         [scrollWidth]="columnGroupWidths?.total"
-        [class.horizontal-overflow]="innerWidth < (columnGroupWidths?.total ?? 0)"
+        [class.horizontal-overflow]="innerWidth() < (columnGroupWidths?.total ?? 0)"
         (scroll)="onBodyScroll($event)"
       >
-        @if (summaryRow && summaryPosition === 'top') {
+        @if (summaryRow() && summaryPosition() === 'top') {
           <datatable-summary-row
-            [rowHeight]="summaryHeight"
-            [innerWidth]="innerWidth"
+            [rowHeight]="summaryHeight()"
+            [innerWidth]="innerWidth()"
             [rows]="rows"
             [columns]="columns"
           />
@@ -110,12 +121,12 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
             [group]="groupedRows"
             [rowIndex]="{ index: index, indexInGroup: indexInGroup }"
             [expanded]="getRowExpanded(row)"
-            [rowClass]="rowClass"
-            [displayCheck]="displayCheck"
+            [rowClass]="rowClass()"
+            [displayCheck]="displayCheck()"
             [treeStatus]="row?.treeStatus"
-            [draggable]="rowDraggable"
-            [ariaRowCheckboxMessage]="ariaRowCheckboxMessage"
-            [cssClasses]="cssClasses"
+            [draggable]="rowDraggable()"
+            [ariaRowCheckboxMessage]="ariaRowCheckboxMessage()"
+            [cssClasses]="cssClasses()"
             (treeAction)="onTreeAction(row)"
             (activate)="onActivate($event, index)"
             (drop)="drop($event, row, rowElement)"
@@ -129,35 +140,37 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
 
         <div [style.transform]="renderOffset()">
           @for (group of rowsToRender(); track rowTrackingFn(i, group); let i = $index) {
-            @if (!group && ghostLoadingIndicator) {
-              <ghost-loader cellMode [columns]="columns" [pageSize]="1" [rowHeight]="rowHeight" />
+            @if (!group && ghostLoadingIndicator()) {
+              <ghost-loader cellMode [columns]="columns" [pageSize]="1" [rowHeight]="rowHeight()" />
             } @else if (group) {
+              @let disableRowCheck = this.disableRowCheck();
               @let disabled = isRow(group) && disableRowCheck && disableRowCheck(group);
               <!-- $any(group) is needed as the typing is broken and the feature as well. See #147. -->
               <!-- FIXME: This has to be revisited and fixed. -->
               <!-- eslint-disable  @angular-eslint/template/no-any -->
               <datatable-row-wrapper
                 [attr.hidden]="
-                  ghostLoadingIndicator && (!rowCount || !virtualization || !scrollbarV)
+                  ghostLoadingIndicator() && (!rowCount || !virtualization() || !scrollbarV)
                     ? true
                     : null
                 "
-                [groupedRows]="groupedRows"
-                [innerWidth]="innerWidth"
-                [style.width]="groupedRows ? columnGroupWidths.total : undefined"
-                [rowDetail]="rowDetail"
-                [groupHeader]="groupHeader"
-                [offsetX]="offsetX"
+                [groupedRows]="groupedRows()"
+                [innerWidth]="innerWidth()"
+                [style.width]="groupedRows() ? columnGroupWidths.total : undefined"
+                [rowDetail]="rowDetail()"
+                [groupHeader]="groupHeader()"
+                [offsetX]="offsetX()"
                 [detailRowHeight]="getDetailRowHeight(group && $any(group)[i], i)"
                 [groupHeaderRowHeight]="getGroupHeaderRowHeight(group && $any(group)[i], i)"
                 [row]="group"
                 [disabled]="disabled"
                 [expanded]="getRowExpanded(group)"
                 [rowIndex]="indexes().first + i"
-                [selected]="selected"
-                [ariaGroupHeaderCheckboxMessage]="ariaGroupHeaderCheckboxMessage"
+                [selected]="selected()"
+                [ariaGroupHeaderCheckboxMessage]="ariaGroupHeaderCheckboxMessage()"
                 (rowContextmenu)="rowContextmenu.emit($event)"
               >
+                @let rowDefTemplate = this.rowDefTemplate();
                 @if (rowDefTemplate) {
                   <ng-container
                     *rowDefInternal="
@@ -182,6 +195,7 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
                     />
                   }
                 }
+
                 @if (isGroup(group)) {
                   <!-- The row typecast is due to angular compiler acting weird. It is obvious that it is of type TRow, but the compiler does not understand. -->
                   @for (row of group.value; track rowTrackingFn($index, row)) {
@@ -203,22 +217,22 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
           }
         </div>
       </datatable-scroller>
-      @if (summaryRow && summaryPosition === 'bottom') {
+      @if (summaryRow() && summaryPosition() === 'bottom') {
         <datatable-summary-row
           role="row"
-          [rowHeight]="summaryHeight"
-          [innerWidth]="innerWidth"
+          [rowHeight]="summaryHeight()"
+          [innerWidth]="innerWidth()"
           [rows]="rows"
           [columns]="columns"
         />
       }
     }
-    @if (!rows?.length && !loadingIndicator && !ghostLoadingIndicator) {
+    @if (!rows?.length && !loadingIndicator() && !ghostLoadingIndicator()) {
       <datatable-scroller
         [scrollbarV]="scrollbarV"
-        [scrollbarH]="scrollbarH"
+        [scrollbarH]="scrollbarH()"
         [scrollHeight]="scrollHeight()"
-        [style.width]="scrollbarH ? columnGroupWidths?.total + 'px' : '100%'"
+        [style.width]="scrollbarH() ? columnGroupWidths?.total + 'px' : '100%'"
         (scroll)="onBodyScroll($event)"
       >
         <ng-content select="[empty-content]" />
@@ -228,142 +242,79 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
   styleUrl: './body.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'datatable-body'
+    class: 'datatable-body',
+    '[style.height]': '_bodyHeight()'
   }
 })
-export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, OnDestroy {
+export class DataTableBodyComponent<TRow extends Row = any>
+  implements OnInit, OnDestroy, OnChanges
+{
   cd = inject(ChangeDetectorRef);
 
-  @Input() rowDefTemplate?: TemplateRef<any>;
-  @Input() scrollbarV?: boolean;
-  @Input() scrollbarH?: boolean;
-  @Input() loadingIndicator?: boolean;
-  @Input() ghostLoadingIndicator?: boolean;
-  @Input() externalPaging?: boolean;
-  @Input() rowHeight!: number | 'auto' | ((row?: any) => number);
-  @Input() offsetX!: number;
-  @Input() selectionType?: SelectionType;
-  @Input() selected: any[] = [];
-  @Input() rowIdentity!: (x: RowOrGroup<TRow>) => unknown;
-  @Input() rowDetail?: DatatableRowDetailDirective;
-  @Input() groupHeader?: DatatableGroupHeaderDirective;
-  @Input() selectCheck?: (value: TRow, index: number, array: TRow[]) => boolean;
-  @Input() displayCheck?: (row: TRow, column: TableColumnInternal, value?: any) => boolean;
-  @Input() trackByProp?: string;
-  @Input() rowClass?: (row: TRow) => string | Record<string, boolean>;
-  @Input() groupedRows?: Group<TRow>[];
+  readonly rowDefTemplate = input<TemplateRef<any>>();
+  readonly scrollbarV = input(false, { transform: booleanAttribute });
+  readonly scrollbarH = input<boolean>();
+  readonly loadingIndicator = input<boolean>();
+  readonly ghostLoadingIndicator = input<boolean>();
+  readonly externalPaging = input<boolean>();
+  readonly rowHeight = input.required<number | 'auto' | ((row?: any) => number)>();
+  readonly offsetX = model.required<number>();
+  readonly selectionType = input<SelectionType>();
+  readonly selected = input<any[]>([]);
+  readonly rowIdentity = input.required<(x: RowOrGroup<TRow>) => unknown>();
+  readonly rowDetail = input<DatatableRowDetailDirective>();
+  readonly groupHeader = input<DatatableGroupHeaderDirective>();
+  readonly selectCheck = input<(value: TRow, index: number, array: TRow[]) => boolean>();
+  readonly displayCheck = input<(row: TRow, column: TableColumnInternal, value?: any) => boolean>();
+  readonly trackByProp = input<string>();
+  readonly rowClass = input<(row: TRow) => string | Record<string, boolean>>();
+  readonly groupedRows = input<Group<TRow>[]>();
+  // TODO: Find a better way to handle default expansion state with signal input
   @Input() groupExpansionDefault?: boolean;
-  @Input() innerWidth!: number;
-  @Input() groupRowsBy?: keyof TRow;
-  @Input() virtualization?: boolean;
-  @Input() summaryRow?: boolean;
-  @Input() summaryPosition!: string;
-  @Input() summaryHeight!: number;
-  @Input() rowDraggable?: boolean;
-  @Input() rowDragEvents!: EventEmitter<DragEventData>;
-  @Input() disableRowCheck?: (row: TRow) => boolean | undefined;
-  @Input({ required: true }) ariaGroupHeaderCheckboxMessage!: string;
+  readonly innerWidth = input.required<number>();
+  readonly groupRowsBy = input<keyof TRow>();
+  readonly virtualization = input<boolean>();
+  readonly summaryRow = input<boolean>();
+  readonly summaryPosition = input.required<string>();
+  readonly summaryHeight = input.required<number>();
+  readonly rowDraggable = input<boolean>();
+  readonly rowDragEvents = input.required<EventEmitter<DragEventData>>();
+  readonly disableRowCheck = input<(row: TRow) => boolean | undefined>();
+  readonly ariaGroupHeaderCheckboxMessage = input.required<string>();
 
-  @Input() set pageSize(val: number) {
-    if (val !== this._pageSize) {
-      this._pageSize = val;
-      this.recalcLayout();
+  readonly pageSize = input.required<number>();
 
-      // Emits the page event if page size has been changed
-      this._offsetEvent = -1;
-      this.updatePage('up');
-      this.updatePage('down');
-    }
-  }
+  readonly rows = input.required<(TRow | undefined)[]>();
 
-  get pageSize(): number {
-    return this._pageSize;
-  }
+  readonly columns = input.required<TableColumnInternal[]>();
 
-  @Input() set rows(val: (TRow | undefined)[]) {
-    if (val !== this._rows) {
-      this._rows = val;
-      this.recalcLayout();
-    }
-  }
+  readonly offset = input<number>(0);
 
-  get rows(): (TRow | undefined)[] {
-    return this._rows;
-  }
-
-  @Input() set columns(val: TableColumnInternal[]) {
-    if (val !== this._columns) {
-      this._columns = val;
-      this.updateColumnGroupWidths();
-    }
-  }
-
-  get columns(): any[] {
-    return this._columns;
-  }
-
-  @Input() set offset(val: number) {
-    if (val !== this._offset) {
-      this._offset = val;
-      if (!this.scrollbarV || (this.scrollbarV && !this.virtualization)) {
-        this.recalcLayout();
-      }
-    }
-  }
-
-  get offset(): number {
-    return this._offset;
-  }
-
-  @Input() set rowCount(val: number) {
-    if (val !== this._rowCount) {
-      this._rowCount = val;
-      this.recalcLayout();
-    }
-  }
-
-  get rowCount(): number {
-    return this._rowCount;
-  }
+  readonly rowCount = input<number>(0);
 
   @HostBinding('style.width')
   get bodyWidth(): string {
-    if (this.scrollbarH) {
-      return this.innerWidth + 'px';
+    if (this.scrollbarH()) {
+      return this.innerWidth() + 'px';
     } else {
       return '100%';
     }
   }
 
-  @Input()
-  @HostBinding('style.height')
-  set bodyHeight(val: number | string) {
-    if (this.scrollbarV) {
-      this._bodyHeight = val + 'px';
-    } else {
-      this._bodyHeight = 'auto';
-    }
+  readonly bodyHeight = input<string | number>();
+  readonly verticalScrollVisible = input(false);
+  readonly ariaRowCheckboxMessage = input.required<string>();
+  readonly cssClasses = input.required<Partial<Required<NgxDatatableConfig>['cssClasses']>>();
 
-    this.recalcLayout();
-  }
-
-  get bodyHeight() {
-    return this._bodyHeight;
-  }
-
-  @Input() verticalScrollVisible = false;
-  @Input({ required: true }) ariaRowCheckboxMessage!: string;
-  @Input({ required: true }) cssClasses!: Partial<Required<NgxDatatableConfig>['cssClasses']>;
-
-  @Output() readonly scroll = new EventEmitter<ScrollEvent>();
-  @Output() readonly page = new EventEmitter<number>();
-  @Output() readonly activate = new EventEmitter<ActivateEvent<TRow>>();
-  @Output() readonly select = new EventEmitter<SelectEvent<TRow>>();
-  @Output() readonly rowContextmenu = new EventEmitter<{
+  readonly scroll = output<ScrollEvent>();
+  readonly page = output<number>();
+  readonly activate = output<ActivateEvent<TRow>>();
+  readonly select = output<SelectEvent<TRow>>();
+  readonly rowContextmenu = output<{
     event: MouseEvent;
     row: RowOrGroup<TRow>;
-  }>(false);
-  @Output() readonly treeAction = new EventEmitter<{ row: TRow }>();
+  }>();
+  readonly treeAction = output<{ row: TRow }>();
 
   @ViewChild(ScrollerComponent) scroller!: ScrollerComponent;
 
@@ -371,7 +322,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
    * Returns if selection is enabled.
    */
   get selectEnabled(): boolean {
-    return !!this.selectionType;
+    return !!this.selectionType();
   }
 
   /**
@@ -380,8 +331,8 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
    * calculate scroll height automatically (as height will be undefined).
    */
   readonly scrollHeight = computed(() => {
-    if (this.rowHeightsCache() && this.scrollbarV && this.virtualization && this.rowCount) {
-      return this.rowHeightsCache().query(this.rowCount - 1);
+    if (this.rowHeightsCache() && this.scrollbarV() && this.virtualization() && this.rowCount()) {
+      return this.rowHeightsCache().query(this.rowCount() - 1);
     }
     // avoid TS7030: Not all code paths return a value.
     return undefined;
@@ -393,17 +344,22 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   readonly rowHeightsCache = signal(new RowHeightCache());
   offsetY = 0;
   readonly indexes = signal<{ first: number; last: number }>({ first: 0, last: 0 });
-  columnGroupWidths!: ColumnGroupWidth;
+  readonly columnGroupWidths = computed(() => {
+    const colsByPin = columnsByPin(this.columns());
+    return columnGroupWidths(colsByPin, this.columns());
+  });
   rowTrackingFn: TrackByFunction<RowOrGroup<TRow> | undefined>;
   listener: any;
   rowExpansions: any[] = [];
 
   _rows!: (TRow | undefined)[];
-  _bodyHeight!: string;
-  _columns!: TableColumnInternal[];
-  _rowCount!: number;
-  _offset!: number;
-  _pageSize!: number;
+  readonly _bodyHeight = computed(() => {
+    if (this.scrollbarV()) {
+      return this.bodyHeight() + 'px';
+    } else {
+      return 'auto';
+    }
+  });
   _offsetEvent = -1;
 
   private _draggedRow?: RowOrGroup<TRow>;
@@ -415,29 +371,49 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   constructor() {
     // declare fn here so we can get access to the `this` property
     this.rowTrackingFn = (index, row) => {
-      if (this.ghostLoadingIndicator) {
+      if (this.ghostLoadingIndicator()) {
         return index;
       }
-      if (this.trackByProp && row) {
-        return (row as any)[this.trackByProp];
+      const trackByProp = this.trackByProp();
+      if (trackByProp && row) {
+        return (row as any)[trackByProp];
+      } else if (row && this.isGroup(row)) {
+        return row.key ?? index;
       } else {
         return row ?? index;
       }
     };
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.bodyHeight || changes.rows || changes.rowCount || changes.pageSize) {
+      this.recalcLayout();
+      if (changes.pageSize) {
+        this._offsetEvent = -1;
+        this.updatePage('up');
+        this.updatePage('down');
+      }
+    } else if (changes.offset) {
+      if (!this.scrollbarV() || (this.scrollbarV() && !this.virtualization())) {
+        this.recalcLayout();
+      }
+    }
+  }
+
   /**
    * Called after the constructor, initializing input properties
    */
   ngOnInit(): void {
-    if (this.rowDetail) {
-      this.listener = this.rowDetail.toggle.subscribe(
-        ({ type, value }: { type: string; value: any }) => this.toggleStateChange(type, value)
+    const rowDetail = this.rowDetail();
+    if (rowDetail) {
+      this.listener = rowDetail.toggle.subscribe(({ type, value }: { type: string; value: any }) =>
+        this.toggleStateChange(type, value)
       );
     }
 
-    if (this.groupHeader) {
-      this.listener = this.groupHeader.toggle.subscribe(
+    const groupHeader = this.groupHeader();
+    if (groupHeader) {
+      this.listener = groupHeader.toggle.subscribe(
         ({ type, value }: { type: string; value: any }) => {
           // Remove default expansion state once user starts manual toggle.
           this.groupExpansionDefault = false;
@@ -465,7 +441,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
    * Called once, before the instance is destroyed.
    */
   ngOnDestroy(): void {
-    if (this.rowDetail || this.groupHeader) {
+    if (this.rowDetail() || this.groupHeader()) {
       this.listener.unsubscribe();
     }
   }
@@ -479,11 +455,12 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
       return;
     }
 
-    if (this.scrollbarV && this.virtualization && offset) {
+    const virtualization = this.virtualization();
+    if (this.scrollbarV() && virtualization && offset) {
       // First get the row Index that we need to move to.
-      const rowIndex = this.pageSize * offset;
+      const rowIndex = this.pageSize() * offset;
       offset = this.rowHeightsCache().query(rowIndex - 1);
-    } else if (this.scrollbarV && !this.virtualization) {
+    } else if (this.scrollbarV() && !virtualization) {
       offset = 0;
     }
 
@@ -500,7 +477,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
 
     // if scroll change, trigger update
     // this is mainly used for header cell positions
-    if (this.offsetY !== scrollYPos || this.offsetX !== scrollXPos) {
+    if (this.offsetY !== scrollYPos || this.offsetX() !== scrollXPos) {
       this.scroll.emit({
         offsetY: scrollYPos,
         offsetX: scrollXPos
@@ -508,7 +485,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     }
 
     this.offsetY = scrollYPos;
-    this.offsetX = scrollXPos;
+    this.offsetX.set(scrollXPos);
 
     this.updateIndexes();
     this.updatePage(event.direction);
@@ -519,7 +496,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
    * Updates the page given a direction.
    */
   updatePage(direction: string): void {
-    let offset = this.indexes().first / this.pageSize;
+    let offset = this.indexes().first / this.pageSize();
     const scrollInBetween = !Number.isInteger(offset);
     if (direction === 'up') {
       offset = Math.ceil(offset);
@@ -530,13 +507,13 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     if (direction !== undefined && !isNaN(offset) && offset !== this._offsetEvent) {
       this._offsetEvent = offset;
       // if scroll was done by mouse drag make sure previous row and next row data is also fetched if its not fetched
-      if (scrollInBetween && this.scrollbarV && this.virtualization && this.externalPaging) {
-        const upRow = this.rows[this.indexes().first - 1];
+      if (scrollInBetween && this.scrollbarV() && this.virtualization() && this.externalPaging()) {
+        const upRow = this.rows()[this.indexes().first - 1];
         if (!upRow && direction === 'up') {
           this.page.emit(offset - 1);
         }
 
-        const downRow = this.rows[this.indexes().first + this.pageSize];
+        const downRow = this.rows()[this.indexes().first + this.pageSize()];
         if (!downRow && direction === 'down') {
           this.page.emit(offset + 1);
         }
@@ -553,9 +530,10 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     // if grouprowsby has been specified treat row paging
     // parameters as group paging parameters ie if limit 10 has been
     // specified treat it as 10 groups rather than 10 rows
-    const rows = this.groupedRows
-      ? this.groupedRows.slice(first, Math.min(last, this.groupedRows.length))
-      : this.rows.slice(first, Math.min(last, this.rowCount));
+    const groupedRows = this.groupedRows();
+    const rows = groupedRows
+      ? groupedRows.slice(first, Math.min(last, groupedRows.length))
+      : this.rows().slice(first, Math.min(last, this.rowCount()));
 
     rows.length = last - first;
     return rows;
@@ -566,11 +544,12 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
    */
   getRowHeight(row: RowOrGroup<TRow>): number {
     // if its a function return it
-    if (typeof this.rowHeight === 'function') {
-      return this.rowHeight(row);
+    const rowHeight = this.rowHeight();
+    if (typeof rowHeight === 'function') {
+      return rowHeight(row);
     }
 
-    return this.rowHeight as number;
+    return rowHeight as number;
   }
 
   /**
@@ -608,19 +587,20 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
    * Get the height of the detail row.
    */
   getDetailRowHeight = (row?: TRow, index?: number): number => {
-    if (!this.rowDetail) {
+    const rowDetail = this.rowDetail();
+    if (!rowDetail) {
       return 0;
     }
-    const rowHeight = this.rowDetail.rowHeight();
+    const rowHeight = rowDetail.rowHeight();
     return typeof rowHeight === 'function' ? rowHeight(row, index) : (rowHeight as number);
   };
 
   getGroupHeaderRowHeight = (row?: any, index?: any): number => {
-    if (!this.groupHeader) {
+    const groupHeader = this.groupHeader();
+    if (!groupHeader) {
       return 0;
     }
-    const rowHeight =
-      this.groupHeader?.rowHeight === 0 ? this.rowHeight : this.groupHeader?.rowHeight;
+    const rowHeight = groupHeader?.rowHeight === 0 ? this.rowHeight() : groupHeader?.rowHeight;
     return typeof rowHeight === 'function' ? rowHeight(row, index) : (rowHeight as number);
   };
 
@@ -632,7 +612,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
    * then we have a renderOffset of 100px.
    */
   readonly renderOffset = computed(() => {
-    if (this.scrollbarV && this.virtualization) {
+    if (this.scrollbarV() && this.virtualization()) {
       return `translateY(${this.rowHeightsCache().query(this.indexes().first - 1)}px)`;
     } else {
       return '';
@@ -646,27 +626,27 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     let first = 0;
     let last = 0;
 
-    if (this.scrollbarV) {
-      if (this.virtualization) {
+    if (this.scrollbarV()) {
+      if (this.virtualization()) {
         // Calculation of the first and last indexes will be based on where the
         // scrollY position would be at.  The last index would be the one
         // that shows up inside the view port the last.
-        const height = parseInt(this._bodyHeight, 10);
+        const height = parseInt(this._bodyHeight(), 10);
         first = this.rowHeightsCache().getRowIndex(this.offsetY);
         last = this.rowHeightsCache().getRowIndex(height + this.offsetY) + 1;
       } else {
         // If virtual rows are not needed
         // We render all in one go
         first = 0;
-        last = this.rowCount;
+        last = this.rowCount();
       }
     } else {
       // The server is handling paging and will pass an array that begins with the
       // element at a specified offset.  first should always be 0 with external paging.
-      if (!this.externalPaging) {
-        first = Math.max(this.offset * this.pageSize, 0);
+      if (!this.externalPaging()) {
+        first = Math.max(this.offset() * this.pageSize(), 0);
       }
-      last = Math.min(first + this.pageSize, this.rowCount);
+      last = Math.min(first + this.pageSize(), this.rowCount());
     }
 
     this.indexes.set({ first, last });
@@ -677,7 +657,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
    * when the entire row array state has changed.
    */
   refreshRowHeightCache(): void {
-    if (!this.scrollbarV || (this.scrollbarV && !this.virtualization)) {
+    if (!this.scrollbarV() || (this.scrollbarV() && !this.virtualization())) {
       return;
     }
 
@@ -687,10 +667,10 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     this.rowHeightsCache().clearCache();
 
     // Initialize the tree only if there are rows inside the tree.
-    if (this.rows.length) {
+    if (this.rows().length) {
       const rowExpansions = new Set<TRow>();
-      if (this.rowDetail) {
-        for (const row of this.rows) {
+      if (this.rowDetail()) {
+        for (const row of this.rows()) {
           if (row && this.getRowExpanded(row)) {
             rowExpansions.add(row);
           }
@@ -698,12 +678,12 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
       }
 
       this.rowHeightsCache().initCache({
-        rows: this.rows,
-        rowHeight: this.rowHeight,
+        rows: this.rows(),
+        rowHeight: this.rowHeight(),
         detailRowHeight: this.getDetailRowHeight,
-        externalVirtual: this.scrollbarV && this.externalPaging,
+        externalVirtual: this.scrollbarV() && this.externalPaging(),
         indexOffset: this.indexes().first,
-        rowCount: this.rowCount,
+        rowCount: this.rowCount(),
         rowExpansions
       });
       this.rowHeightsCache.set(Object.create(this.rowHeightsCache()));
@@ -728,7 +708,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     }
 
     // If the detailRowHeight is auto --> only in case of non-virtualized scroll
-    if (this.scrollbarV && this.virtualization) {
+    if (this.scrollbarV() && this.virtualization()) {
       this.refreshRowHeightCache();
     }
   }
@@ -740,14 +720,14 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     // clear prev expansions
     this.rowExpansions = [];
 
-    const rows = this.groupedRows ?? this.rows;
+    const rows = this.groupedRows() ?? this.rows();
     if (expanded) {
       for (const row of rows) {
         this.rowExpansions.push(row);
       }
     }
 
-    if (this.scrollbarV) {
+    if (this.scrollbarV()) {
       // Refresh the full row heights cache since every row was affected.
       this.recalcLayout();
     }
@@ -766,7 +746,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
    */
   getRowExpanded(row: RowOrGroup<TRow>): boolean {
     if (this.rowExpansions.length === 0 && this.groupExpansionDefault) {
-      for (const group of this.groupedRows!) {
+      for (const group of this.groupedRows()!) {
         this.rowExpansions.push(group);
       }
     }
@@ -779,9 +759,9 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
       return -1;
     }
 
-    const rowId = this.rowIdentity(row);
+    const rowId = this.rowIdentity()(row);
     return expanded.findIndex(r => {
-      const id = this.rowIdentity(r);
+      const id = this.rowIdentity()(r);
       return id === rowId;
     });
   }
@@ -792,7 +772,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
 
   dragOver(event: DragEvent, dropRow: RowOrGroup<TRow>) {
     event.preventDefault();
-    this.rowDragEvents.emit({
+    this.rowDragEvents().emit({
       event,
       srcElement: this._draggedRowElement!,
       eventType: 'dragover',
@@ -804,7 +784,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   drag(event: DragEvent, dragRow: RowOrGroup<TRow>, rowComponent: DataTableBodyRowComponent<TRow>) {
     this._draggedRow = dragRow;
     this._draggedRowElement = rowComponent._element;
-    this.rowDragEvents.emit({
+    this.rowDragEvents().emit({
       event,
       srcElement: this._draggedRowElement,
       eventType: 'dragstart',
@@ -814,7 +794,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
 
   drop(event: DragEvent, dropRow: RowOrGroup<TRow>, rowComponent: DataTableBodyRowComponent<TRow>) {
     event.preventDefault();
-    this.rowDragEvents.emit({
+    this.rowDragEvents().emit({
       event,
       srcElement: this._draggedRowElement!,
       targetElement: rowComponent._element,
@@ -830,7 +810,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     rowComponent: DataTableBodyRowComponent<TRow>
   ) {
     event.preventDefault();
-    this.rowDragEvents.emit({
+    this.rowDragEvents().emit({
       event,
       srcElement: this._draggedRowElement!,
       targetElement: rowComponent._element,
@@ -846,7 +826,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     rowComponent: DataTableBodyRowComponent<TRow>
   ) {
     event.preventDefault();
-    this.rowDragEvents.emit({
+    this.rowDragEvents().emit({
       event,
       srcElement: this._draggedRowElement!,
       targetElement: rowComponent._element,
@@ -858,7 +838,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
 
   dragEnd(event: DragEvent, dragRow: RowOrGroup<TRow>) {
     event.preventDefault();
-    this.rowDragEvents.emit({
+    this.rowDragEvents().emit({
       event,
       srcElement: this._draggedRowElement!,
       eventType: 'dragend',
@@ -868,11 +848,6 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     this._draggedRowElement = undefined;
   }
 
-  updateColumnGroupWidths() {
-    const colsByPin = columnsByPin(this._columns);
-    this.columnGroupWidths = columnGroupWidths(colsByPin, this._columns);
-  }
-
   prevIndex?: number;
 
   selectRow(event: Event, index: number, row: TRow): void {
@@ -880,28 +855,28 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
       return;
     }
 
-    const chkbox = this.selectionType === SelectionType.checkbox;
-    const multi = this.selectionType === SelectionType.multi;
-    const multiClick = this.selectionType === SelectionType.multiClick;
+    const chkbox = this.selectionType() === SelectionType.checkbox;
+    const multi = this.selectionType() === SelectionType.multi;
+    const multiClick = this.selectionType() === SelectionType.multiClick;
     let selected: TRow[] = [];
 
     // TODO: this code needs cleanup. Casting it to KeyboardEvent is not correct as it could also be other types.
     if (multi || chkbox || multiClick) {
       if ((event as KeyboardEvent).shiftKey) {
-        selected = selectRowsBetween([], this.rows, index, this.prevIndex!);
+        selected = selectRowsBetween([], this.rows(), index, this.prevIndex!);
       } else if (
         (event as KeyboardEvent).key === 'a' &&
         ((event as KeyboardEvent).ctrlKey || (event as KeyboardEvent).metaKey)
       ) {
         // select all rows except dummy rows which are added for ghostloader in case of virtual scroll
-        selected = this.rows.filter(rowItem => !!rowItem);
+        selected = this.rows().filter(rowItem => !!rowItem);
       } else if (
         (event as KeyboardEvent).ctrlKey ||
         (event as KeyboardEvent).metaKey ||
         multiClick ||
         chkbox
       ) {
-        selected = selectRows([...this.selected], row, this.getRowSelectedIdx.bind(this));
+        selected = selectRows([...this.selected()], row, this.getRowSelectedIdx.bind(this));
       } else {
         selected = selectRows([], row, this.getRowSelectedIdx.bind(this));
       }
@@ -909,16 +884,18 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
       selected = selectRows([], row, this.getRowSelectedIdx.bind(this));
     }
 
-    if (typeof this.selectCheck === 'function') {
-      selected = selected.filter(this.selectCheck.bind(this));
+    const selectCheck = this.selectCheck();
+    if (typeof selectCheck === 'function') {
+      selected = selected.filter(selectCheck.bind(this));
     }
 
-    if (typeof this.disableRowCheck === 'function') {
-      selected = selected.filter(rowData => !this.disableRowCheck!(rowData));
+    if (typeof this.disableRowCheck() === 'function') {
+      selected = selected.filter(rowData => !this.disableRowCheck()!(rowData));
     }
 
-    this.selected.splice(0, this.selected.length);
-    this.selected.push(...selected);
+    const selectedValue = this.selected();
+    this.selected().splice(0, selectedValue.length);
+    selectedValue.push(...selected);
 
     this.prevIndex = index;
 
@@ -927,9 +904,9 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     });
   }
 
-  onActivate(model: ActivateEvent<TRow>, index: number): void {
-    const { type, event, row } = model;
-    const chkbox = this.selectionType === SelectionType.checkbox;
+  onActivate(modelObject: ActivateEvent<TRow>, index: number): void {
+    const { type, event, row } = modelObject;
+    const chkbox = this.selectionType() === SelectionType.checkbox;
     const select =
       (!chkbox && (type === 'click' || type === 'dblclick')) || (chkbox && type === 'checkbox');
 
@@ -944,29 +921,30 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
       ) {
         this.selectRow(event, 0, row); // The row property is ignored in this case. So we can pass anything.
       } else {
-        this.onKeyboardFocus(model);
+        this.onKeyboardFocus(modelObject);
       }
     }
-    this.activate.emit(model);
+    this.activate.emit(modelObject);
   }
 
-  onKeyboardFocus(model: ActivateEvent<TRow>): void {
-    const { key } = model.event as KeyboardEvent;
+  onKeyboardFocus(modelObject: ActivateEvent<TRow>): void {
+    const { key } = modelObject.event as KeyboardEvent;
     const shouldFocus =
       key === ARROW_UP || key === ARROW_DOWN || key === ARROW_RIGHT || key === ARROW_LEFT;
 
     if (shouldFocus) {
-      const isCellSelection = this.selectionType === SelectionType.cell;
-      if (typeof this.disableRowCheck === 'function') {
-        const isRowDisabled = this.disableRowCheck(model.row);
+      const isCellSelection = this.selectionType() === SelectionType.cell;
+      const disableRowCheck = this.disableRowCheck();
+      if (typeof disableRowCheck === 'function') {
+        const isRowDisabled = disableRowCheck(modelObject.row);
         if (isRowDisabled) {
           return;
         }
       }
-      if (!model.cellElement || !isCellSelection) {
-        this.focusRow(model.rowElement, key);
-      } else if (isCellSelection && model.cellIndex !== undefined) {
-        this.focusCell(model.cellElement, model.rowElement, key, model.cellIndex);
+      if (!modelObject.cellElement || !isCellSelection) {
+        this.focusRow(modelObject.rowElement, key);
+      } else if (isCellSelection && modelObject.cellIndex !== undefined) {
+        this.focusCell(modelObject.cellElement, modelObject.rowElement, key, modelObject.cellIndex);
       }
     }
   }
@@ -1027,7 +1005,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   }
 
   getRowSelected(row: TRow): boolean {
-    return this.getRowSelectedIdx(row, this.selected) > -1;
+    return this.getRowSelectedIdx(row, this.selected()) > -1;
   }
 
   getRowSelectedIdx(row: TRow, selected: any[]): number {
@@ -1035,9 +1013,9 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
       return -1;
     }
 
-    const rowId = this.rowIdentity(row);
+    const rowId = this.rowIdentity()(row);
     return selected.findIndex(r => {
-      const id = this.rowIdentity(r);
+      const id = this.rowIdentity()(r);
       return id === rowId;
     });
   }
@@ -1046,10 +1024,10 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   protected isGroup(row: RowOrGroup<TRow>): row is Group<TRow>;
 
   protected isGroup(row: RowOrGroup<TRow> | RowOrGroup<TRow>[]): boolean {
-    return !!this.groupedRows;
+    return !!this.groupedRows();
   }
 
   protected isRow(row: RowOrGroup<TRow> | undefined): row is TRow {
-    return !this.groupedRows;
+    return !this.groupedRows();
   }
 }
