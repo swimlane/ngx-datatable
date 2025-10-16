@@ -276,7 +276,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   readonly groupHeader = input<DatatableGroupHeaderDirective>();
   readonly selectCheck = input<(value: TRow, index: number, array: TRow[]) => boolean>();
   readonly displayCheck = input<(row: TRow, column: TableColumn, value?: any) => boolean>();
-  readonly trackByProp = input<string>();
+  readonly trackByProp = input<keyof TRow>();
   readonly rowClass = input<(row: TRow) => string | Record<string, boolean>>();
   readonly groupedRows = input<Group<TRow>[]>();
   // TODO: Find a better way to handle default expansion state with signal input
@@ -391,8 +391,8 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
         return index;
       }
       const trackByProp = this.trackByProp();
-      if (trackByProp && row) {
-        return (row as any)[trackByProp];
+      if (trackByProp && row && this.isRow(row)) {
+        return row[trackByProp];
       } else if (row && this.isGroup(row)) {
         return row.key ?? index;
       } else {
