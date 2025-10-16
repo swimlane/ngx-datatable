@@ -559,9 +559,8 @@ export class DataTableBodyComponent<TRow extends Row = any>
     let rowHeight = 0;
 
     if (group.value) {
-      // eslint-disable-next-line @typescript-eslint/prefer-for-of
-      for (let index = 0; index < group.value.length; index++) {
-        rowHeight += this.getRowAndDetailHeight(group.value[index]);
+      for (const row of group.value) {
+        rowHeight += this.getRowAndDetailHeight(row);
       }
     }
 
@@ -624,7 +623,7 @@ export class DataTableBodyComponent<TRow extends Row = any>
    */
   updateIndexes(): void {
     let first = 0;
-    let last = 0;
+    let last = this.rowCount();
 
     if (this.scrollbarV()) {
       if (this.virtualization()) {
@@ -634,11 +633,6 @@ export class DataTableBodyComponent<TRow extends Row = any>
         const height = parseInt(this._bodyHeight(), 10);
         first = this.rowHeightsCache().getRowIndex(this.offsetY);
         last = this.rowHeightsCache().getRowIndex(height + this.offsetY) + 1;
-      } else {
-        // If virtual rows are not needed
-        // We render all in one go
-        first = 0;
-        last = this.rowCount();
       }
     } else {
       // The server is handling paging and will pass an array that begins with the
