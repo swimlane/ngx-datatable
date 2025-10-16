@@ -2,39 +2,44 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  EventEmitter,
-  HostBinding,
   inject,
-  Input,
   OnDestroy,
   OnInit,
-  Output,
-  Renderer2
+  Renderer2,
+  input,
+  booleanAttribute,
+  output
 } from '@angular/core';
+
+export interface ScrollEventInternal {
+  direction: string;
+  scrollYPos: number;
+  scrollXPos: number;
+}
 
 @Component({
   selector: 'datatable-scroller',
   template: ` <ng-content /> `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'datatable-scroll'
+    class: 'datatable-scroll',
+    '[style.height.px]': 'scrollHeight()',
+    '[style.width.px]': 'scrollWidth()'
   }
 })
 export class ScrollerComponent implements OnInit, OnDestroy {
   private renderer = inject(Renderer2);
 
-  @Input() scrollbarV?: boolean;
-  @Input() scrollbarH?: boolean;
+  readonly scrollbarV = input(false, {
+    transform: booleanAttribute
+  });
+  readonly scrollbarH = input(false, {
+    transform: booleanAttribute
+  });
+  readonly scrollHeight = input<number>();
+  readonly scrollWidth = input<number>();
 
-  @HostBinding('style.height.px')
-  @Input()
-  scrollHeight?: number;
-
-  @HostBinding('style.minWidth.px')
-  @Input()
-  scrollWidth?: number;
-
-  @Output() readonly scroll = new EventEmitter<any>();
+  readonly scroll = output<ScrollEventInternal>();
 
   scrollYPos = 0;
   scrollXPos = 0;
@@ -47,7 +52,7 @@ export class ScrollerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // manual bind so we don't always listen
-    if (this.scrollbarV || this.scrollbarH) {
+    if (this.scrollbarV() || this.scrollbarH()) {
       const renderer = this.renderer;
       this.parentElement = renderer.parentNode(this.element);
       this._scrollEventListener = this.onScrolled.bind(this);
