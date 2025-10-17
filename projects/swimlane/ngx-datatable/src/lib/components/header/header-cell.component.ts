@@ -1,24 +1,23 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  booleanAttribute,
   ChangeDetectionStrategy,
   Component,
-  computed,
   ElementRef,
   HostListener,
   inject,
-  input,
-  numberAttribute,
   OnDestroy,
   OnInit,
+  TemplateRef,
+  input,
   output,
-  TemplateRef
+  computed,
+  booleanAttribute
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import {
-  DatatableDraggableDirective,
-  DragEvent
+  DragEvent,
+  DatatableDraggableDirective
 } from '../../directives/datatable-draggable.directive';
 import {
   InnerSortEvent,
@@ -87,7 +86,7 @@ import { nextSortDir } from '../../utils/sort';
     '[attr.title]': 'name()',
     '[attr.tabindex]': 'column().sortable ? 0 : -1',
     '[class]': 'columnCssClasses()',
-    '[style.height.px]': 'headerHeight()',
+    '[style.height]': 'headerHeight() === "auto" ? "auto" : headerHeight() + "px"',
     '[style.minWidth.px]': 'column().minWidth',
     '[style.maxWidth.px]': 'column().maxWidth',
     '[style.width.px]': 'column().width'
@@ -108,9 +107,7 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
   readonly allRowsSelected = input(false, { transform: booleanAttribute });
   readonly selectionType = input<SelectionType>();
   readonly column = input.required<TableColumnInternal>();
-  readonly headerHeight = input.required<number, number>({
-    transform: numberAttribute
-  });
+  readonly headerHeight = input.required<'auto' | number>();
   readonly sorts = input<SortPropDir[]>([]);
 
   readonly sort = output<InnerSortEvent>();

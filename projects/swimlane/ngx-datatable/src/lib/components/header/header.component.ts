@@ -3,16 +3,14 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
-  HostBinding,
   inject,
-  Input,
   OnChanges,
   OnDestroy,
-  Output,
-  signal,
   SimpleChanges,
-  TemplateRef
+  TemplateRef,
+  input,
+  computed,
+  output
 } from '@angular/core';
 
 import { DatatableDraggableDirective } from '../../directives/datatable-draggable.directive';
@@ -52,7 +50,7 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
       role="row"
       orderable
       class="datatable-header-inner"
-      [class.horizontal-overflow]="innerWidth < _columnGroupWidths.total"
+      [class.horizontal-overflow]="innerWidth() < _columnGroupWidths.total"
       [style.width.px]="_columnGroupWidths.total"
       (reorder)="onColumnReordered($event)"
       (targetChanged)="onTargetChanged($event)"
@@ -68,23 +66,23 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
               <datatable-header-cell
                 role="columnheader"
                 dragStartDelay="500"
-                [datatableDraggable]="reorderable && column.draggable"
+                [datatableDraggable]="reorderable() && column.draggable"
                 [dragModel]="column"
-                [headerHeight]="headerHeight"
+                [headerHeight]="headerHeight()"
                 [isTarget]="column.isTarget"
-                [targetMarkerTemplate]="targetMarkerTemplate"
+                [targetMarkerTemplate]="targetMarkerTemplate()"
                 [targetMarkerContext]="column.targetMarkerContext"
                 [column]="column"
                 [showResizeHandle]="lastColumnId() !== column.$$id && column.resizeable"
-                [sortType]="sortType"
-                [sorts]="sorts"
-                [selectionType]="selectionType"
-                [sortAscendingIcon]="sortAscendingIcon"
-                [sortDescendingIcon]="sortDescendingIcon"
-                [sortUnsetIcon]="sortUnsetIcon"
-                [allRowsSelected]="allRowsSelected"
-                [enableClearingSortState]="enableClearingSortState"
-                [ariaHeaderCheckboxMessage]="ariaHeaderCheckboxMessage"
+                [sortType]="sortType()"
+                [sorts]="sorts()"
+                [selectionType]="selectionType()"
+                [sortAscendingIcon]="sortAscendingIcon()"
+                [sortDescendingIcon]="sortDescendingIcon()"
+                [sortUnsetIcon]="sortUnsetIcon()"
+                [allRowsSelected]="allRowsSelected()"
+                [enableClearingSortState]="enableClearingSortState()"
+                [ariaHeaderCheckboxMessage]="ariaHeaderCheckboxMessage()"
                 (resize)="onColumnResized($event)"
                 (resizing)="onColumnResizing($event)"
                 (sort)="onSort($event)"
@@ -100,105 +98,53 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'datatable-header'
+    class: 'datatable-header',
+    '[style.height.px]': 'headerHeight()',
+    '[style.width]': 'headerWidth()'
   }
 })
 export class DataTableHeaderComponent implements OnDestroy, OnChanges {
   private cd = inject(ChangeDetectorRef);
   private scrollbarHelper = inject(ScrollbarHelper);
 
-  readonly lastColumnId = signal<string | null>(null);
+  readonly lastColumnId = computed(() => this.columns().at(-1)?.$$id);
 
-  @Input() sortAscendingIcon?: string;
-  @Input() sortDescendingIcon?: string;
-  @Input() sortUnsetIcon?: string;
-  @Input() scrollbarH?: boolean;
-  @Input() dealsWithGroup?: boolean;
-  @Input() targetMarkerTemplate?: TemplateRef<unknown>;
-  @Input() enableClearingSortState = false;
-
-  @Input() set innerWidth(val: number) {
-    this._innerWidth = val;
-    setTimeout(() => {
-      if (this._columns) {
-        const colByPin = columnsByPin(this._columns);
-        this._columnGroupWidths = columnGroupWidths(colByPin, this._columns);
-        this.setStylesByGroup();
-      }
-    });
-  }
-
-  get innerWidth(): number {
-    return this._innerWidth;
-  }
-
-  @Input() sorts!: SortPropDir[];
-  @Input() sortType!: SortType;
-  @Input() allRowsSelected?: boolean;
-  @Input() selectionType?: SelectionType;
-  @Input() reorderable?: boolean;
-  @Input() verticalScrollVisible = false;
-  @Input() ariaHeaderCheckboxMessage!: string;
+  readonly sortAscendingIcon = input<string>();
+  readonly sortDescendingIcon = input<string>();
+  readonly sortUnsetIcon = input<string>();
+  readonly scrollbarH = input<boolean>();
+  readonly dealsWithGroup = input<boolean>();
+  readonly targetMarkerTemplate = input<TemplateRef<unknown>>();
+  readonly enableClearingSortState = input(false);
+  readonly innerWidth = input.required<number>();
+  readonly sorts = input.required<SortPropDir[]>();
+  readonly sortType = input.required<SortType>();
+  readonly allRowsSelected = input<boolean>();
+  readonly selectionType = input<SelectionType>();
+  readonly reorderable = input<boolean>();
+  readonly verticalScrollVisible = input(false);
+  readonly ariaHeaderCheckboxMessage = input.required<string>();
 
   dragEventTarget?: MouseEvent | TouchEvent;
 
-  @HostBinding('style.height')
-  @Input()
-  set headerHeight(val: number | 'auto') {
-    if (val !== 'auto') {
-      this._headerHeight = `${val}px`;
-    } else {
-      this._headerHeight = val;
-    }
-  }
+  readonly headerHeight = input.required<'auto' | number>();
+  readonly columns = input.required<TableColumnInternal[]>();
+  readonly offsetX = input<number>();
 
-  get headerHeight(): any {
-    return this._headerHeight;
-  }
-
-  @Input() set columns(val: TableColumnInternal[]) {
-    this._columns = val;
-    this.lastColumnId.set(val.length ? val[val.length - 1].$$id : null);
-
-    const colsByPin = columnsByPin(val);
-    this._columnsByPin = columnsByPinArr(val);
-    setTimeout(() => {
-      this._columnGroupWidths = columnGroupWidths(colsByPin, val);
-      this.setStylesByGroup();
-    });
-  }
-
-  get columns(): any[] {
-    return this._columns;
-  }
-
-  @Input()
-  set offsetX(val: number) {
-    this._offsetX = val;
-    this.setStylesByGroup();
-  }
-  get offsetX() {
-    return this._offsetX;
-  }
-
-  @Output() readonly sort = new EventEmitter<SortEvent>();
-  @Output() readonly reorder = new EventEmitter<ReorderEventInternal>();
-  @Output() readonly resize = new EventEmitter<ColumnResizeEventInternal>();
-  @Output() readonly resizing = new EventEmitter<ColumnResizeEventInternal>();
-  @Output() readonly select = new EventEmitter<void>();
-  @Output() readonly columnContextmenu = new EventEmitter<{
+  readonly sort = output<SortEvent>();
+  readonly reorder = output<ReorderEventInternal>();
+  readonly resize = output<ColumnResizeEventInternal>();
+  readonly resizing = output<ColumnResizeEventInternal>();
+  readonly select = output<void>();
+  readonly columnContextmenu = output<{
     event: MouseEvent;
     column: TableColumnInternal;
-  }>(false);
+  }>();
 
   _columnsByPin!: PinnedColumns[];
   _columnGroupWidths: any = {
     total: 100
   };
-  _innerWidth!: number;
-  _offsetX!: number;
-  _columns!: TableColumnInternal[];
-  _headerHeight!: string;
   _styleByGroup: {
     left: NgStyle['ngStyle'];
     center: NgStyle['ngStyle'];
@@ -214,23 +160,35 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
         this.cd.detectChanges();
       }
     }
+
+    if (changes.offsetX) {
+      this.setStylesByGroup();
+    }
+
+    if (changes.columns || changes.innerWidth) {
+      const colsByPin = columnsByPin(this.columns());
+      this._columnsByPin = columnsByPinArr(this.columns());
+      //setTimeout(() => {
+      this._columnGroupWidths = columnGroupWidths(colsByPin, this.columns());
+      this.setStylesByGroup();
+      //});
+    }
   }
 
   ngOnDestroy(): void {
     this.destroyed = true;
   }
 
-  @HostBinding('style.width')
-  get headerWidth(): string {
-    if (this.scrollbarH) {
-      const width = this.verticalScrollVisible
-        ? this.innerWidth - this.scrollbarHelper.width
-        : this.innerWidth;
+  readonly headerWidth = computed(() => {
+    if (this.scrollbarH()) {
+      const width = this.verticalScrollVisible()
+        ? this.innerWidth() - this.scrollbarHelper.width
+        : this.innerWidth();
       return width + 'px';
     }
 
     return '100%';
-  }
+  });
 
   onColumnResized({ width, column }: { width: number; column: TableColumnInternal }): void {
     this.resize.emit(this.makeResizeEvent(width, column));
@@ -317,11 +275,7 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
   ): SortPropDir[] {
     let idx = 0;
 
-    if (!this.sorts) {
-      this.sorts = [];
-    }
-
-    const sorts = this.sorts.map((s, i) => {
+    const sorts = this.sorts().map((s, i) => {
       s = { ...s };
       if (s.prop === column.prop) {
         idx = i;
@@ -334,8 +288,8 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
     } else if (prevValue) {
       sorts[idx].dir = newValue;
     } else {
-      if (this.sortType === SortType.single) {
-        sorts.splice(0, this.sorts.length);
+      if (this.sortType() === SortType.single) {
+        sorts.splice(0, this.sorts().length);
       }
 
       sorts.push({ dir: newValue, prop: column.prop });
@@ -358,7 +312,7 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
 
     if (group === 'center') {
       return {
-        transform: `translateX(${this.offsetX * -1}px)`,
+        transform: `translateX(${(this.offsetX() ?? 0) * -1}px)`,
         width: `${widths[group]}px`,
         willChange: 'transform'
       };
