@@ -1,0 +1,9 @@
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.datatable-group-header {
+  inset-inline-start: 0;
+  position: sticky;
+}

@@ -26,8 +26,10 @@ import { NgxDatatableConfig } from '../../ngx-datatable.config';
 import { TableColumnInternal } from '../../types/internal.types';
 import {
   ActivateEvent,
+  DetailToggleEvents,
   DragEventData,
   Group,
+  GroupToggleEvents,
   Row,
   RowOrGroup,
   ScrollEvent,
@@ -39,6 +41,7 @@ import { RowHeightCache } from '../../utils/row-height-cache';
 import { selectRows, selectRowsBetween } from '../../utils/selection';
 import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive';
 import { DatatableGroupHeaderDirective } from './body-group-header.directive';
+import { DataTableGroupWrapperComponent } from './body-group-wrapper.component';
 import { DatatableRowDefInternalDirective } from './body-row-def.component';
 import { DataTableRowWrapperComponent } from './body-row-wrapper.component';
 import { DataTableBodyRowComponent } from './body-row.component';
@@ -57,7 +60,8 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
     DatatableRowDefInternalDirective,
     DataTableBodyRowComponent,
     NgTemplateOutlet,
-    DatatableBodyRowDirective
+    DatatableBodyRowDirective,
+    DataTableGroupWrapperComponent
   ],
   template: `
     @if (loadingIndicator()) {
@@ -108,33 +112,50 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
           let-disabled="disabled"
           ngx-datatable-body-row
         >
-          <datatable-body-row
-            #rowElement
-            role="row"
-            tabindex="-1"
-            [disabled]="disabled"
-            [isSelected]="getRowSelected(row)"
-            [columns]="columns"
-            [rowHeight]="getRowHeight(row)"
+          <datatable-row-wrapper
+            [attr.hidden]="
+              ghostLoadingIndicator() && (!rowCount || !virtualization() || !scrollbarV)
+                ? true
+                : null
+            "
+            [innerWidth]="innerWidth()"
+            [rowDetail]="rowDetail()"
+            [detailRowHeight]="getDetailRowHeight(row, index)"
             [row]="row"
-            [group]="groupedRows"
-            [rowIndex]="{ index: index, indexInGroup: indexInGroup }"
+            [disabled]="disabled"
             [expanded]="getRowExpanded(row)"
-            [rowClass]="rowClass()"
-            [displayCheck]="displayCheck()"
-            [treeStatus]="row?.treeStatus"
-            [draggable]="rowDraggable()"
-            [ariaRowCheckboxMessage]="ariaRowCheckboxMessage()"
-            [cssClasses]="cssClasses()"
-            (treeAction)="onTreeAction(row)"
-            (activate)="onActivate($event, index)"
-            (drop)="drop($event, row, rowElement)"
-            (dragover)="dragOver($event, row)"
-            (dragenter)="dragEnter($event, row, rowElement)"
-            (dragleave)="dragLeave($event, row, rowElement)"
-            (dragstart)="drag($event, row, rowElement)"
-            (dragend)="dragEnd($event, row)"
-          />
+            [rowIndex]="indexes().first + index"
+            [ariaGroupHeaderCheckboxMessage]="ariaGroupHeaderCheckboxMessage()"
+            (rowContextmenu)="rowContextmenu.emit($event)"
+          >
+            <datatable-body-row
+              #rowElement
+              role="row"
+              tabindex="-1"
+              [disabled]="disabled"
+              [isSelected]="getRowSelected(row)"
+              [columns]="columns"
+              [rowHeight]="getRowHeight(row)"
+              [row]="row"
+              [group]="groupedRows"
+              [rowIndex]="{ index: index, indexInGroup: indexInGroup }"
+              [expanded]="getRowExpanded(row)"
+              [rowClass]="rowClass()"
+              [displayCheck]="displayCheck()"
+              [treeStatus]="row?.treeStatus"
+              [draggable]="rowDraggable()"
+              [ariaRowCheckboxMessage]="ariaRowCheckboxMessage()"
+              [cssClasses]="cssClasses()"
+              (treeAction)="onTreeAction(row)"
+              (activate)="onActivate($event, index)"
+              (drop)="drop($event, row, rowElement)"
+              (dragover)="dragOver($event, row)"
+              (dragenter)="dragEnter($event, row, rowElement)"
+              (dragleave)="dragLeave($event, row, rowElement)"
+              (dragstart)="drag($event, row, rowElement)"
+              (dragend)="dragEnd($event, row)"
+            />
+          </datatable-row-wrapper>
         </ng-template>
 
         <div [style.transform]="renderOffset()">
@@ -144,59 +165,51 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
             } @else if (group) {
               @let disableRowCheck = this.disableRowCheck();
               @let disabled = isRow(group) && disableRowCheck && disableRowCheck(group);
-              <!-- $any(group) is needed as the typing is broken and the feature as well. See #147. -->
-              <!-- FIXME: This has to be revisited and fixed. -->
-              <!-- eslint-disable  @angular-eslint/template/no-any -->
-              <datatable-row-wrapper
-                [attr.hidden]="
-                  ghostLoadingIndicator() && (!rowCount || !virtualization() || !scrollbarV)
-                    ? true
-                    : null
-                "
-                [groupedRows]="groupedRows()"
-                [innerWidth]="innerWidth()"
-                [style.width]="groupedRows() ? columnGroupWidths.total : undefined"
-                [rowDetail]="rowDetail()"
-                [groupHeader]="groupHeader()"
-                [offsetX]="offsetX()"
-                [detailRowHeight]="getDetailRowHeight(group && $any(group)[i], i)"
-                [groupHeaderRowHeight]="getGroupHeaderRowHeight(group && $any(group)[i], i)"
-                [row]="group"
-                [disabled]="disabled"
-                [expanded]="getRowExpanded(group)"
-                [rowIndex]="indexes().first + i"
-                [selected]="selected()"
-                [ariaGroupHeaderCheckboxMessage]="ariaGroupHeaderCheckboxMessage()"
-                (rowContextmenu)="rowContextmenu.emit($event)"
-              >
-                @let rowDefTemplate = this.rowDefTemplate();
-                @if (rowDefTemplate) {
+              @let rowDefTemplate = this.rowDefTemplate();
+              @if (rowDefTemplate) {
+                <ng-container
+                  *rowDefInternal="
+                    {
+                      template: rowDefTemplate,
+                      rowTemplate: bodyRow,
+                      row: group,
+                      index: i
+                    };
+                    disabled: disabled
+                  "
+                />
+              } @else {
+                @if (isRow(group)) {
                   <ng-container
-                    *rowDefInternal="
-                      {
-                        template: rowDefTemplate,
-                        rowTemplate: bodyRow,
-                        row: group,
-                        index: i
-                      };
-                      disabled: disabled
-                    "
+                    [ngTemplateOutlet]="bodyRow"
+                    [ngTemplateOutletContext]="{
+                      row: group,
+                      index: indexes().first + i,
+                      disabled
+                    }"
                   />
-                } @else {
-                  @if (isRow(group)) {
-                    <ng-container
-                      [ngTemplateOutlet]="bodyRow"
-                      [ngTemplateOutletContext]="{
-                        row: group,
-                        index: indexes().first + i,
-                        disabled
-                      }"
-                    />
-                  }
                 }
+              }
 
-                @if (isGroup(group)) {
-                  <!-- The row typecast is due to angular compiler acting weird. It is obvious that it is of type TRow, but the compiler does not understand. -->
+              @if (isGroup(group)) {
+                <datatable-group-wrapper
+                  [group]="group"
+                  [attr.hidden]="
+                    ghostLoadingIndicator() && (!rowCount || !virtualization() || !scrollbarV)
+                      ? true
+                      : null
+                  "
+                  [innerWidth]="innerWidth()"
+                  [style.width]="groupedRows() ? columnGroupWidths.total : undefined"
+                  [groupHeader]="groupHeader()"
+                  [groupHeaderRowHeight]="getGroupHeaderRowHeight(group, i)"
+                  [disabled]="disabled"
+                  [expanded]="getGroupExpanded(group)"
+                  [rowIndex]="indexes().first + i"
+                  [selected]="selected()"
+                  [ariaGroupHeaderCheckboxMessage]="ariaGroupHeaderCheckboxMessage()"
+                  (groupSelectedChange)="groupSelectedChange($event, group)"
+                >
                   @for (row of group.value; track rowTrackingFn($index, row)) {
                     @let disabled = disableRowCheck && disableRowCheck(row);
                     <ng-container
@@ -210,8 +223,8 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
                       }"
                     />
                   }
-                }
-              </datatable-row-wrapper>
+                </datatable-group-wrapper>
+              }
             }
           }
         </div>
@@ -259,7 +272,7 @@ export class DataTableBodyComponent<TRow extends Row = any>
   readonly rowHeight = input.required<number | 'auto' | ((row?: any) => number)>();
   readonly offsetX = model.required<number>();
   readonly selectionType = input<SelectionType>();
-  readonly selected = model<any[]>([]);
+  readonly selected = model<TRow[]>([]);
   readonly rowIdentity = input.required<(x: RowOrGroup<TRow>) => unknown>();
   readonly rowDetail = input<DatatableRowDetailDirective>();
   readonly groupHeader = input<DatatableGroupHeaderDirective>();
@@ -348,7 +361,8 @@ export class DataTableBodyComponent<TRow extends Row = any>
   });
   rowTrackingFn: TrackByFunction<RowOrGroup<TRow> | undefined>;
   listener: any;
-  rowExpansions: any[] = [];
+  rowExpansions: TRow[] = [];
+  groupExpansions: Group<TRow>[] = [];
 
   _rows!: (TRow | undefined)[];
   readonly _bodyHeight = computed(() => {
@@ -404,25 +418,34 @@ export class DataTableBodyComponent<TRow extends Row = any>
   ngOnInit(): void {
     const rowDetail = this.rowDetail();
     if (rowDetail) {
-      this.listener = rowDetail.toggle.subscribe(({ type, value }: { type: string; value: any }) =>
-        this.toggleStateChange(type, value)
-      );
+      this.listener = rowDetail.toggle.subscribe(event => this.rowToggleStateChange(event));
     }
 
     const groupHeader = this.groupHeader();
     if (groupHeader) {
-      this.listener = groupHeader.toggle.subscribe(
-        ({ type, value }: { type: string; value: any }) => {
-          // Remove default expansion state once user starts manual toggle.
-          this.groupExpansionDefault = false;
-          this.toggleStateChange(type, value);
-        }
-      );
+      this.listener = groupHeader.toggle.subscribe(event => {
+        // Remove default expansion state once user starts manual toggle.
+        this.groupExpansionDefault = false;
+        this.groupToggleStateChange(event);
+      });
     }
   }
 
-  private toggleStateChange(type: string, value: any) {
-    if (type === 'group' || type === 'row') {
+  private groupToggleStateChange({ type, value }: GroupToggleEvents<TRow>) {
+    if (type === 'group') {
+      this.toggleGroupExpansion(value);
+    }
+    if (type === 'all') {
+      this.toggleAllGroups(value);
+    }
+
+    // Refresh rows after toggle
+    this.updateIndexes();
+    this.cd.markForCheck();
+  }
+
+  private rowToggleStateChange({ type, value }: DetailToggleEvents<TRow>) {
+    if (type === 'row') {
       this.toggleRowExpansion(value);
     }
     if (type === 'all') {
@@ -430,7 +453,6 @@ export class DataTableBodyComponent<TRow extends Row = any>
     }
 
     // Refresh rows after toggle
-    // Fixes #883
     this.updateIndexes();
     this.cd.markForCheck();
   }
@@ -689,7 +711,7 @@ export class DataTableBodyComponent<TRow extends Row = any>
    * status in case of sorting and filtering of the row set.
    */
   toggleRowExpansion(row: TRow): void {
-    const rowExpandedIdx = this.getRowExpandedIdx(row, this.rowExpansions);
+    const rowExpandedIdx = this.getExpandedIdx(row, this.rowExpansions);
     const expanded = rowExpandedIdx > -1;
 
     // Update the toggled row and update thive nevere heights in the cache.
@@ -705,6 +727,23 @@ export class DataTableBodyComponent<TRow extends Row = any>
     }
   }
 
+  toggleGroupExpansion(row: Group<TRow>): void {
+    const groupExpandedIdx = this.getExpandedIdx(row, this.groupExpansions);
+    const expanded = groupExpandedIdx > -1;
+
+    // Update the toggled row and update thive nevere heights in the cache.
+    if (expanded) {
+      this.groupExpansions.splice(groupExpandedIdx, 1);
+    } else {
+      this.groupExpansions.push(row);
+    }
+
+    // If the detailRowHeight is auto --> only in case of non-virtualized scroll
+    if (this.scrollbarV() && this.virtualization()) {
+      this.refreshRowHeightCache();
+    }
+  }
+
   /**
    * Expand/Collapse all the rows no matter what their state is.
    */
@@ -712,10 +751,30 @@ export class DataTableBodyComponent<TRow extends Row = any>
     // clear prev expansions
     this.rowExpansions = [];
 
-    const rows = this.groupedRows() ?? this.rows();
+    const rows = this.rows();
     if (expanded) {
       for (const row of rows) {
-        this.rowExpansions.push(row);
+        this.rowExpansions.push(row!);
+      }
+    }
+
+    if (this.scrollbarV()) {
+      // Refresh the full row heights cache since every row was affected.
+      this.recalcLayout();
+    }
+  }
+
+  /**
+   * Expand/Collapse all the groups no matter what their state is.
+   */
+  toggleAllGroups(expanded: boolean): void {
+    // clear prev expansions
+    this.groupExpansions = [];
+
+    const groups = this.groupedRows()!;
+    if (expanded) {
+      for (const group of groups) {
+        this.groupExpansions.push(group);
       }
     }
 
@@ -736,17 +795,21 @@ export class DataTableBodyComponent<TRow extends Row = any>
   /**
    * Returns if the row was expanded and set default row expansion when row expansion is empty
    */
-  getRowExpanded(row: RowOrGroup<TRow>): boolean {
-    if (this.rowExpansions.length === 0 && this.groupExpansionDefault) {
-      for (const group of this.groupedRows()!) {
-        this.rowExpansions.push(group);
+  getRowExpanded(row: TRow): boolean {
+    return this.getExpandedIdx(row, this.rowExpansions) > -1;
+  }
+
+  getGroupExpanded(group: Group<TRow>): boolean {
+    if (this.groupExpansions.length === 0 && this.groupExpansionDefault) {
+      for (const g of this.groupedRows()!) {
+        this.groupExpansions.push(g);
       }
     }
 
-    return this.getRowExpandedIdx(row, this.rowExpansions) > -1;
+    return this.getExpandedIdx(group, this.groupExpansions) > -1;
   }
 
-  getRowExpandedIdx(row: RowOrGroup<TRow>, expanded: RowOrGroup<TRow>[]): number {
+  getExpandedIdx(row: RowOrGroup<TRow>, expanded: RowOrGroup<TRow>[]): number {
     if (!expanded?.length) {
       return -1;
     }
@@ -912,6 +975,16 @@ export class DataTableBodyComponent<TRow extends Row = any>
     this.activate.emit(modelObject);
   }
 
+  groupSelectedChange(selected: boolean, group: Group<TRow>): void {
+    const selectedSet = new Set(this.selected());
+    if (selected) {
+      group.value.forEach(row => selectedSet.add(row));
+    } else {
+      group.value.forEach(row => selectedSet.delete(row));
+    }
+    this.selected.set(Array.from(selectedSet));
+  }
+
   onKeyboardFocus(modelObject: ActivateEvent<TRow>): void {
     const { key } = modelObject.event as KeyboardEvent;
     const shouldFocus =
@@ -1004,8 +1077,8 @@ export class DataTableBodyComponent<TRow extends Row = any>
       return id === rowId;
     });
   }
-
   protected isGroup(row: RowOrGroup<TRow>[]): row is Group<TRow>[];
+
   protected isGroup(row: RowOrGroup<TRow>): row is Group<TRow>;
 
   protected isGroup(row: RowOrGroup<TRow> | RowOrGroup<TRow>[]): boolean {

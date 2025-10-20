@@ -175,6 +175,7 @@ describe('DataTableBodyComponent', () => {
           ]
         }
       ]);
+      fixture.componentRef.setInput('groupExpansionDefault', true);
       fixture.componentRef.setInput('rows', ['dummy']);
       fixture.componentRef.setInput('rowCount', 2);
       fixture.componentRef.setInput('pageSize', 2);
@@ -184,6 +185,75 @@ describe('DataTableBodyComponent', () => {
       const rows = fixture.debugElement.queryAll(By.directive(DataTableBodyRowComponent));
       expect(rows[0].classes['row-disabled']).toBeFalsy();
       expect(rows[1].classes['row-disabled']).toBeTrue();
+    });
+  });
+
+  describe('with row grouping and row details', () => {
+    it('should expand group and then expand row details within the group', () => {
+      const row1 = { value: '1', id: 1 };
+      const row2 = { value: '2', id: 2 };
+      const group = {
+        key: 'g1',
+        value: [row1, row2]
+      };
+
+      fixture.componentRef.setInput(
+        'columns',
+        toInternalColumn([{ name: 'value', prop: 'value' }])
+      );
+      fixture.componentRef.setInput('groupedRows', [group]);
+      fixture.componentRef.setInput('groupExpansionDefault', false);
+      fixture.componentRef.setInput('rows', ['dummy']);
+      fixture.componentRef.setInput('rowCount', 2);
+      fixture.componentRef.setInput('pageSize', 2);
+      fixture.componentRef.setInput('offset', 0);
+      fixture.componentRef.setInput('rowIdentity', (row: any) => row.id ?? row.key);
+
+      component.updateIndexes();
+      fixture.detectChanges();
+
+      // Initially, group should be collapsed
+      expect(component.getGroupExpanded(group)).toBeFalse();
+      expect(component.rowExpansions).toHaveSize(0);
+
+      // Expand the group
+      component.toggleGroupExpansion(group);
+      fixture.detectChanges();
+
+      expect(component.getGroupExpanded(group)).toBeTrue();
+      expect(component.groupExpansions).toHaveSize(1);
+      expect(component.groupExpansions[0]).toBe(group);
+
+      // Now expand row detail for the first row in the group
+      component.toggleRowExpansion(row1);
+      fixture.detectChanges();
+
+      expect(component.getRowExpanded(row1)).toBeTrue();
+      expect(component.rowExpansions).toHaveSize(1);
+      expect(component.rowExpansions[0]).toBe(row1);
+
+      // Group should still be expanded
+      expect(component.getGroupExpanded(group)).toBeTrue();
+
+      // Expand row detail for the second row as well
+      component.toggleRowExpansion(row2);
+      fixture.detectChanges();
+
+      expect(component.getRowExpanded(row2)).toBeTrue();
+      expect(component.rowExpansions).toHaveSize(2);
+      expect(component.rowExpansions).toContain(row1);
+      expect(component.rowExpansions).toContain(row2);
+
+      // Collapse the first row detail
+      component.toggleRowExpansion(row1);
+      fixture.detectChanges();
+
+      expect(component.getRowExpanded(row1)).toBeFalse();
+      expect(component.rowExpansions).toHaveSize(1);
+      expect(component.rowExpansions[0]).toBe(row2);
+
+      // Group should still be expanded
+      expect(component.getGroupExpanded(group)).toBeTrue();
     });
   });
 });
