@@ -1264,8 +1264,9 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * A row was selected from body
    */
-  onBodySelect(event: SelectEvent<TRow>): void {
-    this.select.emit(event);
+  onBodySelect(selected: TRow[]): void {
+    this.selected.splice(0, this.selected.length, ...selected);
+    this.select.emit({ selected });
   }
 
   /**

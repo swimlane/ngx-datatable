@@ -3,20 +3,16 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  computed,
   DoCheck,
-  ElementRef,
   HostListener,
   inject,
   input,
-  IterableDiffer,
-  IterableDiffers,
   KeyValueDiffer,
   KeyValueDiffers,
   linkedSignal,
-  OnInit,
   output,
-  signal,
-  viewChild
+  signal
 } from '@angular/core';
 
 import { Group, GroupContext, Row, RowDetailContext, RowOrGroup } from '../../types/public.types';
@@ -44,7 +40,8 @@ import { DatatableGroupHeaderDirective } from './body-group-header.directive';
                   #select
                   type="checkbox"
                   [attr.aria-label]="ariaGroupHeaderCheckboxMessage()"
-                  [checked]="selectedGroupRows().length === row.value.length"
+                  [checked]="checked()"
+                  [indeterminate]="indeterminate()"
                   (change)="onCheckboxChange(select.checked, row)"
                 />
               </label>
@@ -73,8 +70,7 @@ import { DatatableGroupHeaderDirective } from './body-group-header.directive';
     class: 'datatable-row-wrapper'
   }
 })
-export class DataTableRowWrapperComponent<TRow extends Row = any> implements DoCheck, OnInit {
-  readonly checkBoxInput = viewChild<ElementRef<HTMLInputElement>>('select');
+export class DataTableRowWrapperComponent<TRow extends Row = any> implements DoCheck {
   readonly innerWidth = input.required<number>();
   readonly rowDetail = input<DatatableRowDetailDirective>();
   readonly groupHeader = input<DatatableGroupHeaderDirective>();
@@ -114,17 +110,18 @@ export class DataTableRowWrapperComponent<TRow extends Row = any> implements DoC
       };
     }
   });
+  readonly selectedRowsOfGroup = computed(() =>
+    (this.row() as Group<TRow>).value.filter(row => this.selected().includes(row))
+  );
+  readonly checked = computed(
+    () => this.selectedRowsOfGroup().length === (this.row() as Group<TRow>).value.length
+  );
+  readonly indeterminate = computed(() => this.selectedRowsOfGroup().length > 0 && !this.checked());
 
   private rowDiffer: KeyValueDiffer<keyof RowOrGroup<TRow>, any> = inject(KeyValueDiffers)
     .find({})
     .create();
-  private iterableDiffers = inject(IterableDiffers);
-  private selectedRowsDiffer!: IterableDiffer<TRow>;
   private tableComponent = inject(DATATABLE_COMPONENT_TOKEN);
-
-  ngOnInit(): void {
-    this.selectedRowsDiffer = this.iterableDiffers.find(this.selected() ?? []).create();
-  }
 
   ngDoCheck(): void {
     const row = this.row();
@@ -143,29 +140,6 @@ export class DataTableRowWrapperComponent<TRow extends Row = any> implements DoC
           disabled: this.disabled()
         });
       }
-    }
-    // When groupheader is used with chechbox we use iterableDiffer
-    // on currently selected rows to check if it is modified
-    // if any of the row of this group is not present in `selected` rows array
-    // mark group header checkbox state as indeterminate
-    if (
-      this.isGroup(row) &&
-      this.groupHeader()?.checkboxable &&
-      this.selectedRowsDiffer.diff(this.selected())
-    ) {
-      const thisRow = row;
-      const selectedRows = this.selected().filter(rowItem =>
-        thisRow.value.find((item: TRow) => item === rowItem)
-      );
-      const checkBoxInput = this.checkBoxInput();
-      if (checkBoxInput) {
-        if (selectedRows.length && selectedRows.length !== row.value.length) {
-          checkBoxInput.nativeElement.indeterminate = true;
-        } else {
-          checkBoxInput.nativeElement.indeterminate = false;
-        }
-      }
-      this.selectedGroupRows.set(selectedRows);
     }
   }
 
@@ -187,9 +161,7 @@ export class DataTableRowWrapperComponent<TRow extends Row = any> implements DoC
     // Update `selected` of DatatableComponent with newly evaluated `selected`
     this.tableComponent.selected = [...selected];
     // Emit select event with updated values
-    this.tableComponent.onBodySelect({
-      selected: [...selected]
-    });
+    this.tableComponent.onBodySelect(this.tableComponent.selected);
   }
 
   isGroup(row: RowOrGroup<TRow>): row is Group<TRow> {

@@ -8,8 +8,8 @@ import {
   EventEmitter,
   HostBinding,
   inject,
-  input,
   Input,
+  input,
   model,
   OnChanges,
   OnDestroy,
@@ -31,7 +31,6 @@ import {
   Row,
   RowOrGroup,
   ScrollEvent,
-  SelectEvent,
   SelectionType
 } from '../../types/public.types';
 import { columnGroupWidths, columnsByPin } from '../../utils/column';
@@ -242,7 +241,7 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
   styleUrl: './body.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    'class': 'datatable-body',
+    class: 'datatable-body',
     '[style.height]': '_bodyHeight()'
   }
 })
@@ -260,7 +259,7 @@ export class DataTableBodyComponent<TRow extends Row = any>
   readonly rowHeight = input.required<number | 'auto' | ((row?: any) => number)>();
   readonly offsetX = model.required<number>();
   readonly selectionType = input<SelectionType>();
-  readonly selected = input<any[]>([]);
+  readonly selected = model<any[]>([]);
   readonly rowIdentity = input.required<(x: RowOrGroup<TRow>) => unknown>();
   readonly rowDetail = input<DatatableRowDetailDirective>();
   readonly groupHeader = input<DatatableGroupHeaderDirective>();
@@ -309,7 +308,6 @@ export class DataTableBodyComponent<TRow extends Row = any>
   readonly scroll = output<ScrollEvent>();
   readonly page = output<number>();
   readonly activate = output<ActivateEvent<TRow>>();
-  readonly select = output<SelectEvent<TRow>>();
   readonly rowContextmenu = output<{
     event: MouseEvent;
     row: RowOrGroup<TRow>;
@@ -887,15 +885,8 @@ export class DataTableBodyComponent<TRow extends Row = any>
       selected = selected.filter(rowData => !this.disableRowCheck()!(rowData));
     }
 
-    const selectedValue = this.selected();
-    this.selected().splice(0, selectedValue.length);
-    selectedValue.push(...selected);
-
+    this.selected.set(selected);
     this.prevIndex = index;
-
-    this.select.emit({
-      selected
-    });
   }
 
   onActivate(modelObject: ActivateEvent<TRow>, index: number): void {
