@@ -230,7 +230,7 @@ export class DatatableComponent<TRow extends Row = any>
    * The minimum header height in pixels.
    * Pass a falsey for no header
    */
-  @Input({ transform: numberAttribute }) headerHeight = 30;
+  @Input() headerHeight: number | 'auto' = 30;
 
   /**
    * The minimum footer height in pixels.
@@ -667,8 +667,12 @@ export class DatatableComponent<TRow extends Row = any>
   @ViewChild(DataTableHeaderComponent)
   headerComponent!: DataTableHeaderComponent;
 
+  @ViewChild(DataTableHeaderComponent, { read: ElementRef })
+  headerElement?: ElementRef<HTMLElement>;
+
   @ViewChild(DataTableBodyComponent, { read: ElementRef })
   private bodyElement!: ElementRef<HTMLElement>;
+
   @ContentChild(DatatableRowDefDirective, {
     read: TemplateRef
   })
@@ -976,8 +980,8 @@ export class DatatableComponent<TRow extends Row = any>
 
     if (this.scrollbarV) {
       let height = dims.height;
-      if (this.headerHeight) {
-        height = height - this.headerHeight;
+      if (this.headerElement) {
+        height = height - this.headerElement.nativeElement.getBoundingClientRect().height;
       }
       if (this.footerHeight) {
         height = height - this.footerHeight;

@@ -144,7 +144,7 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
 
   @HostBinding('style.height')
   @Input()
-  set headerHeight(val: any) {
+  set headerHeight(val: number | 'auto') {
     if (val !== 'auto') {
       this._headerHeight = `${val}px`;
     } else {
