@@ -847,9 +847,9 @@ export class DataTableBodyComponent<TRow extends Row = any>
       return;
     }
 
-    const chkbox = this.selectionType() === SelectionType.checkbox;
-    const multi = this.selectionType() === SelectionType.multi;
-    const multiClick = this.selectionType() === SelectionType.multiClick;
+    const chkbox = this.selectionType() === 'checkbox';
+    const multi = this.selectionType() === 'multi';
+    const multiClick = this.selectionType() === 'multiClick';
     let selected: TRow[] = [];
 
     // TODO: this code needs cleanup. Casting it to KeyboardEvent is not correct as it could also be other types.
@@ -891,7 +891,7 @@ export class DataTableBodyComponent<TRow extends Row = any>
 
   onActivate(modelObject: ActivateEvent<TRow>, index: number): void {
     const { type, event, row } = modelObject;
-    const chkbox = this.selectionType() === SelectionType.checkbox;
+    const chkbox = this.selectionType() === 'checkbox';
     const select =
       (!chkbox && (type === 'click' || type === 'dblclick')) || (chkbox && type === 'checkbox');
 
@@ -918,7 +918,7 @@ export class DataTableBodyComponent<TRow extends Row = any>
       key === ARROW_UP || key === ARROW_DOWN || key === ARROW_RIGHT || key === ARROW_LEFT;
 
     if (shouldFocus) {
-      const isCellSelection = this.selectionType() === SelectionType.cell;
+      const isCellSelection = this.selectionType() === 'cell';
       const disableRowCheck = this.disableRowCheck();
       if (typeof disableRowCheck === 'function') {
         const isRowDisabled = disableRowCheck(modelObject.row);

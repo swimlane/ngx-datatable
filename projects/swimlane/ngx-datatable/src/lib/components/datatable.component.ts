@@ -593,7 +593,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   @HostBinding('class.checkbox-selection')
   get isCheckboxSelection(): boolean {
-    return this.selectionType === SelectionType.checkbox;
+    return this.selectionType === 'checkbox';
   }
 
   /**
@@ -601,7 +601,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   @HostBinding('class.cell-selection')
   get isCellSelection(): boolean {
-    return this.selectionType === SelectionType.cell;
+    return this.selectionType === 'cell';
   }
 
   /**
@@ -609,7 +609,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   @HostBinding('class.single-selection')
   get isSingleSelection(): boolean {
-    return this.selectionType === SelectionType.single;
+    return this.selectionType === 'single';
   }
 
   /**
@@ -617,7 +617,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   @HostBinding('class.multi-selection')
   get isMultiSelection(): boolean {
-    return this.selectionType === SelectionType.multi;
+    return this.selectionType === 'multi';
   }
 
   /**
@@ -625,7 +625,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   @HostBinding('class.multi-click-selection')
   get isMultiClickSelection(): boolean {
-    return this.selectionType === SelectionType.multiClick;
+    return this.selectionType === 'multiClick';
   }
 
   /**
