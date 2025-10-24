@@ -214,23 +214,23 @@ describe('DataTableBodyComponent', () => {
 
       // Initially, group should be collapsed
       expect(component.getGroupExpanded(group)).toBeFalse();
-      expect(component.rowExpansions).toHaveSize(0);
+      expect(component.rowExpansions()).toHaveSize(0);
 
       // Expand the group
       component.toggleGroupExpansion(group);
       fixture.detectChanges();
 
       expect(component.getGroupExpanded(group)).toBeTrue();
-      expect(component.groupExpansions).toHaveSize(1);
-      expect(component.groupExpansions[0]).toBe(group);
+      expect(component.groupExpansions()).toHaveSize(1);
+      expect(component.groupExpansions()[0]).toBe(group);
 
       // Now expand row detail for the first row in the group
       component.toggleRowExpansion(row1);
       fixture.detectChanges();
 
       expect(component.getRowExpanded(row1)).toBeTrue();
-      expect(component.rowExpansions).toHaveSize(1);
-      expect(component.rowExpansions[0]).toBe(row1);
+      expect(component.rowExpansions()).toHaveSize(1);
+      expect(component.rowExpansions()[0]).toBe(row1);
 
       // Group should still be expanded
       expect(component.getGroupExpanded(group)).toBeTrue();
@@ -240,17 +240,17 @@ describe('DataTableBodyComponent', () => {
       fixture.detectChanges();
 
       expect(component.getRowExpanded(row2)).toBeTrue();
-      expect(component.rowExpansions).toHaveSize(2);
-      expect(component.rowExpansions).toContain(row1);
-      expect(component.rowExpansions).toContain(row2);
+      expect(component.rowExpansions()).toHaveSize(2);
+      expect(component.rowExpansions()).toContain(row1);
+      expect(component.rowExpansions()).toContain(row2);
 
       // Collapse the first row detail
       component.toggleRowExpansion(row1);
       fixture.detectChanges();
 
       expect(component.getRowExpanded(row1)).toBeFalse();
-      expect(component.rowExpansions).toHaveSize(1);
-      expect(component.rowExpansions[0]).toBe(row2);
+      expect(component.rowExpansions()).toHaveSize(1);
+      expect(component.rowExpansions()[0]).toBe(row2);
 
       // Group should still be expanded
       expect(component.getGroupExpanded(group)).toBeTrue();
