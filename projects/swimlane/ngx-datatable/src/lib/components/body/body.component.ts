@@ -5,13 +5,13 @@ import {
   ChangeDetectorRef,
   Component,
   computed,
+  DestroyRef,
   EventEmitter,
   inject,
   Input,
   input,
   model,
   OnChanges,
-  OnDestroy,
   OnInit,
   output,
   signal,
@@ -258,9 +258,7 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
     '[style.width]': '_bodyWidth()'
   }
 })
-export class DataTableBodyComponent<TRow extends Row = any>
-  implements OnInit, OnDestroy, OnChanges
-{
+export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, OnChanges {
   cd = inject(ChangeDetectorRef);
 
   readonly rowDefTemplate = input<TemplateRef<any>>();
@@ -351,7 +349,7 @@ export class DataTableBodyComponent<TRow extends Row = any>
     return columnGroupWidths(colsByPin, this.columns());
   });
   rowTrackingFn: TrackByFunction<RowOrGroup<TRow> | undefined>;
-  listener: any;
+  destroyRef = inject(DestroyRef);
   rowExpansions: TRow[] = [];
   groupExpansions: Group<TRow>[] = [];
 
@@ -416,16 +414,18 @@ export class DataTableBodyComponent<TRow extends Row = any>
   ngOnInit(): void {
     const rowDetail = this.rowDetail();
     if (rowDetail) {
-      this.listener = rowDetail.toggle.subscribe(event => this.rowToggleStateChange(event));
+      const listener = rowDetail.toggle.subscribe(event => this.rowToggleStateChange(event));
+      this.destroyRef.onDestroy(() => listener.unsubscribe());
     }
 
     const groupHeader = this.groupHeader();
     if (groupHeader) {
-      this.listener = groupHeader.toggle.subscribe(event => {
+      const listener = groupHeader.toggle.subscribe(event => {
         // Remove default expansion state once user starts manual toggle.
         this.groupExpansionDefault = false;
         this.groupToggleStateChange(event);
       });
+      this.destroyRef.onDestroy(() => listener.unsubscribe());
     }
   }
 
@@ -453,15 +453,6 @@ export class DataTableBodyComponent<TRow extends Row = any>
     // Refresh rows after toggle
     this.updateIndexes();
     this.cd.markForCheck();
-  }
-
-  /**
-   * Called once, before the instance is destroyed.
-   */
-  ngOnDestroy(): void {
-    if (this.rowDetail() || this.groupHeader()) {
-      this.listener.unsubscribe();
-    }
   }
 
   /**
