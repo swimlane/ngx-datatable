@@ -7,7 +7,7 @@
  * https://github.com/mikolalysenko/fenwick-tree
  *
  */
-export class RowHeightCache {
+export class RowHeightCache<TRow> {
   /**
    * Tree Array stores the cumulative information of the row heights to perform efficient
    * range queries and updates.  Currently the tree is initialized to the base row
@@ -24,12 +24,16 @@ export class RowHeightCache {
 
   /**
    * Initialize the Fenwick tree with row Heights.
-   *
-   * @param rows The array of rows which contain the expanded status.
-   * @param rowHeight The row height.
-   * @param detailRowHeight The detail row height.
    */
-  initCache(details: any): void {
+  initCache(details: {
+    rows: TRow[];
+    rowHeight: number | 'auto' | ((row: TRow) => number);
+    detailRowHeight: number | ((row: TRow, index: number) => number);
+    externalVirtual: boolean | undefined;
+    indexOffset: number;
+    rowCount: number;
+    rowExpansions: Set<TRow>;
+  }): void {
     const {
       rows,
       rowHeight,
@@ -42,7 +46,7 @@ export class RowHeightCache {
     const isFn = typeof rowHeight === 'function';
     const isDetailFn = typeof detailRowHeight === 'function';
 
-    if (!isFn && isNaN(rowHeight)) {
+    if (rowHeight === 'auto' || (!isFn && isNaN(rowHeight))) {
       throw new Error(`Row Height cache initialization failed. Please ensure that 'rowHeight' is a
         valid number or function value: (${rowHeight}) when 'scrollbarV' is enabled.`);
     }
@@ -62,21 +66,13 @@ export class RowHeightCache {
 
     for (let i = 0; i < n; ++i) {
       const row = rows[i];
-      let currentRowHeight = rowHeight;
-      if (isFn) {
-        currentRowHeight = rowHeight(row);
-      }
+      let currentRowHeight = isFn ? rowHeight(row) : rowHeight;
 
       // Add the detail row height to the already expanded rows.
       // This is useful for the table that goes through a filter or sort.
       const expanded = rowExpansions.has(row);
       if (row && expanded) {
-        if (isDetailFn) {
-          const index = indexOffset + i;
-          currentRowHeight += detailRowHeight(row, index);
-        } else {
-          currentRowHeight += detailRowHeight;
-        }
+        currentRowHeight += isDetailFn ? detailRowHeight(row, indexOffset + i) : detailRowHeight;
       }
 
       this.update(i, currentRowHeight);

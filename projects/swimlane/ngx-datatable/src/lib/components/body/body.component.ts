@@ -642,8 +642,8 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
    * Refreshes the full Row Height cache.  Should be used
    * when the entire row array state has changed.
    */
-  computeRowHeightsCache(): RowHeightCache {
-    const cache = new RowHeightCache();
+  computeRowHeightsCache(): RowHeightCache<TRow> {
+    const cache = new RowHeightCache<TRow>();
     if (!this.scrollbarV() || (this.scrollbarV() && !this.virtualization())) {
       return cache;
     }
@@ -651,7 +651,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     // Initialize the tree only if there are rows inside the tree.
     if (this.rows().length) {
       cache.initCache({
-        rows: this.rows(),
+        rows: this.rows() as TRow[], // TODO: RowHeightCache does not support grouping
         rowHeight: this.rowHeight(),
         detailRowHeight: this.getDetailRowHeight,
         externalVirtual: this.scrollbarV() && this.externalPaging(),
