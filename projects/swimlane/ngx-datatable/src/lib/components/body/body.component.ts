@@ -575,36 +575,6 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   }
 
   /**
-   * @param group the group with all rows
-   */
-  getGroupHeight(group: Group<TRow>): number {
-    let rowHeight = 0;
-
-    if (group.value) {
-      for (const row of group.value) {
-        rowHeight += this.getRowAndDetailHeight(row);
-      }
-    }
-
-    return rowHeight;
-  }
-
-  /**
-   * Calculate row height based on the expanded state of the row.
-   */
-  getRowAndDetailHeight(row: TRow): number {
-    let rowHeight = this.getRowHeight(row);
-    const expanded = this.getRowExpanded(row);
-
-    // Adding detail row height if its expanded.
-    if (expanded) {
-      rowHeight += this.getDetailRowHeight(row);
-    }
-
-    return rowHeight;
-  }
-
-  /**
    * Get the height of the detail row.
    */
   getDetailRowHeight = (row?: TRow, index?: number): number => {
