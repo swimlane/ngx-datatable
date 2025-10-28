@@ -23,7 +23,7 @@ import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive'
     <ng-content />
     @let rowDetailTemplate = rowDetail()?.template();
     @if (rowDetailTemplate && expanded()) {
-      <div class="datatable-row-detail" [style.height.px]="detailRowHeight()">
+      <div class="datatable-row-detail" [style.height.px]="detailsRowHeight()">
         <ng-template [ngTemplateOutlet]="rowDetailTemplate" [ngTemplateOutletContext]="context()" />
       </div>
     }
@@ -37,7 +37,7 @@ import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive'
 export class DataTableRowWrapperComponent<TRow extends Row = any> implements DoCheck {
   readonly innerWidth = input.required<number>();
   readonly rowDetail = input<DatatableRowDetailDirective>();
-  readonly detailRowHeight = input.required<number>();
+  readonly detailRowHeightFn = input.required<(row?: TRow, index?: number) => number>();
   readonly row = input.required<TRow>();
   readonly disabled = input<boolean>();
   readonly rowContextmenu = output<{
@@ -50,6 +50,7 @@ export class DataTableRowWrapperComponent<TRow extends Row = any> implements DoC
   readonly expanded = input(false, { transform: booleanAttribute });
   readonly ariaGroupHeaderCheckboxMessage = input.required<string>();
 
+  readonly detailsRowHeight = computed(() => this.detailRowHeightFn()(this.row(), this.rowIndex()));
   readonly context = computed<RowDetailContext<TRow>>(() => {
     this.rowDiffedCount(); // This allows us to get re-evaluated when the row was mutated internally.
     return {

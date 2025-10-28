@@ -121,7 +121,7 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
             "
             [innerWidth]="innerWidth()"
             [rowDetail]="rowDetail()"
-            [detailRowHeight]="getDetailRowHeight(row, index)"
+            [detailRowHeightFn]="detailRowHeightFn()"
             [row]="row"
             [disabled]="disabled"
             [expanded]="getRowExpanded(row)"
@@ -338,6 +338,15 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     }
     // avoid TS7030: Not all code paths return a value.
     return undefined;
+  });
+
+  readonly detailRowHeightFn = computed(() => {
+    const rowDetail = this.rowDetail();
+    if (!rowDetail) {
+      return () => 0;
+    }
+    const rowHeight = rowDetail.rowHeight();
+    return typeof rowHeight === 'function' ? rowHeight : () => rowHeight;
   });
 
   readonly rowsToRender = computed(() => {
@@ -566,18 +575,6 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     return rowHeight as number;
   }
 
-  /**
-   * Get the height of the detail row.
-   */
-  getDetailRowHeight = (row?: TRow, index?: number): number => {
-    const rowDetail = this.rowDetail();
-    if (!rowDetail) {
-      return 0;
-    }
-    const rowHeight = rowDetail.rowHeight();
-    return typeof rowHeight === 'function' ? rowHeight(row, index) : (rowHeight as number);
-  };
-
   getGroupHeaderRowHeight = (row?: any, index?: any): number => {
     const groupHeader = this.groupHeader();
     if (!groupHeader) {
@@ -645,7 +642,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
       cache.initCache({
         rows: this.rows() as TRow[], // TODO: RowHeightCache does not support grouping
         rowHeight: this.rowHeight(),
-        detailRowHeight: this.getDetailRowHeight,
+        detailRowHeight: this.detailRowHeightFn(),
         externalVirtual: this.scrollbarV() && this.externalPaging(),
         indexOffset: this.externalPaging() ? this.offset() * this.pageSize() : 0,
         rowCount: this.rowCount(),
