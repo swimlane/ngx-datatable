@@ -655,7 +655,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
         rowHeight: this.rowHeight(),
         detailRowHeight: this.getDetailRowHeight,
         externalVirtual: this.scrollbarV() && this.externalPaging(),
-        indexOffset: this.indexes().first,
+        indexOffset: this.externalPaging() ? this.offset() * this.pageSize() : 0,
         rowCount: this.rowCount(),
         rowExpansions: new Set<TRow>(this.rowDetail() ? this.rowExpansions() : [])
       });
