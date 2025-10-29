@@ -344,8 +344,8 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     return this.updateRows();
   });
   readonly rowHeightsCache = computed(() => this.computeRowHeightsCache());
-  offsetY = 0;
-  readonly indexes = signal<{ first: number; last: number }>({ first: 0, last: 0 });
+  readonly offsetY = signal(0);
+  readonly indexes = computed(() => this.computeIndexes());
   readonly columnGroupWidths = computed(() => {
     const colsByPin = columnsByPin(this.columns());
     return columnGroupWidths(colsByPin, this.columns());
@@ -398,15 +398,10 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.bodyHeight || changes.rows || changes.rowCount || changes.pageSize) {
-      this.recalcLayout();
       if (changes.pageSize) {
         this._offsetEvent = -1;
         this.updatePage('up');
         this.updatePage('down');
-      }
-    } else if (changes.offset) {
-      if (!this.scrollbarV() || (this.scrollbarV() && !this.virtualization())) {
-        this.recalcLayout();
       }
     }
   }
@@ -451,7 +446,6 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     }
 
     // Refresh rows after toggle
-    this.updateIndexes();
     this.cd.markForCheck();
   }
 
@@ -464,7 +458,6 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     }
 
     // Refresh rows after toggle
-    this.updateIndexes();
     this.cd.markForCheck();
   }
 
@@ -499,17 +492,16 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
 
     // if scroll change, trigger update
     // this is mainly used for header cell positions
-    if (this.offsetY !== scrollYPos || this.offsetX() !== scrollXPos) {
+    if (this.offsetY() !== scrollYPos || this.offsetX() !== scrollXPos) {
       this.scroll.emit({
         offsetY: scrollYPos,
         offsetX: scrollXPos
       });
     }
 
-    this.offsetY = scrollYPos;
+    this.offsetY.set(scrollYPos);
     this.offsetX.set(scrollXPos);
 
-    this.updateIndexes();
     this.updatePage(event.direction);
     this.cd.detectChanges();
   }
@@ -613,7 +605,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   /**
    * Updates the index of the rows in the viewport
    */
-  updateIndexes(): void {
+  computeIndexes(): { first: number; last: number } {
     let first = 0;
     let last = this.rowCount();
 
@@ -623,8 +615,8 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
         // scrollY position would be at.  The last index would be the one
         // that shows up inside the view port the last.
         const height = parseInt(this._bodyHeight(), 10);
-        first = this.rowHeightsCache().getRowIndex(this.offsetY);
-        last = this.rowHeightsCache().getRowIndex(height + this.offsetY) + 1;
+        first = this.rowHeightsCache().getRowIndex(this.offsetY());
+        last = this.rowHeightsCache().getRowIndex(height + this.offsetY()) + 1;
       }
     } else {
       // The server is handling paging and will pass an array that begins with the
@@ -635,7 +627,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
       last = Math.min(first + this.pageSize(), this.rowCount());
     }
 
-    this.indexes.set({ first, last });
+    return { first, last };
   }
 
   /**
@@ -705,11 +697,6 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   toggleAllRows(expanded: boolean): void {
     // TODO requires fixing. This still does not work with groups.
     this.rowExpansions.set(expanded ? [...(this.rows() as any)] : []);
-
-    if (this.scrollbarV()) {
-      // Refresh the full row heights cache since every row was affected.
-      this.recalcLayout();
-    }
   }
 
   /**
@@ -717,18 +704,6 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
    */
   toggleAllGroups(expanded: boolean): void {
     this.groupExpansions.set(expanded ? [...this.groupedRows()!] : []);
-
-    if (this.scrollbarV()) {
-      // Refresh the full row heights cache since every row was affected.
-      this.recalcLayout();
-    }
-  }
-
-  /**
-   * Recalculates the table
-   */
-  recalcLayout(): void {
-    this.updateIndexes();
   }
 
   /**

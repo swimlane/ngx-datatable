@@ -59,7 +59,6 @@ describe('DataTableBodyComponent', () => {
       fixture.componentRef.setInput('offset', 1);
       fixture.componentRef.setInput('rowCount', 20);
       const expectedIndexes = { first: 10, last: 20 };
-      component.updateIndexes();
       expect(component.indexes()).toEqual(expectedIndexes);
     });
 
@@ -70,7 +69,6 @@ describe('DataTableBodyComponent', () => {
       fixture.componentRef.setInput('offset', 1);
       fixture.componentRef.setInput('rowCount', 9);
       const expectedIndexes = { first: 5, last: 9 };
-      component.updateIndexes();
       expect(component.indexes()).toEqual(expectedIndexes);
     });
 
@@ -92,7 +90,6 @@ describe('DataTableBodyComponent', () => {
       fixture.componentRef.setInput('offset', 1);
       fixture.componentRef.setInput('rowCount', 20);
       const expectedIndexes = { first: 0, last: 10 };
-      component.updateIndexes();
       expect(component.indexes()).toEqual(expectedIndexes);
     });
 
@@ -103,7 +100,6 @@ describe('DataTableBodyComponent', () => {
       fixture.componentRef.setInput('offset', 1);
       fixture.componentRef.setInput('rowCount', 9);
       const expectedIndexes = { first: 0, last: 5 };
-      component.updateIndexes();
       expect(component.indexes()).toEqual(expectedIndexes);
     });
 
@@ -150,7 +146,6 @@ describe('DataTableBodyComponent', () => {
       fixture.componentRef.setInput('rowCount', 2);
       fixture.componentRef.setInput('pageSize', 2);
       fixture.componentRef.setInput('offset', 0);
-      component.updateIndexes();
       fixture.detectChanges();
       let rows = fixture.debugElement.queryAll(By.directive(DataTableBodyRowComponent));
       expect(rows[0].classes['row-disabled']).toBeFalsy();
@@ -180,7 +175,6 @@ describe('DataTableBodyComponent', () => {
       fixture.componentRef.setInput('rowCount', 2);
       fixture.componentRef.setInput('pageSize', 2);
       fixture.componentRef.setInput('offset', 0);
-      component.updateIndexes();
       fixture.detectChanges();
       const rows = fixture.debugElement.queryAll(By.directive(DataTableBodyRowComponent));
       expect(rows[0].classes['row-disabled']).toBeFalsy();
@@ -209,7 +203,6 @@ describe('DataTableBodyComponent', () => {
       fixture.componentRef.setInput('offset', 0);
       fixture.componentRef.setInput('rowIdentity', (row: any) => row.id ?? row.key);
 
-      component.updateIndexes();
       fixture.detectChanges();
 
       // Initially, group should be collapsed
