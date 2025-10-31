@@ -13,6 +13,7 @@ import {
   HostBinding,
   HostListener,
   inject,
+  input,
   Input,
   IterableDiffer,
   IterableDiffers,
@@ -113,7 +114,7 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * Template for the target marker of drag target columns.
    */
-  @Input() targetMarkerTemplate?: TemplateRef<unknown>;
+  readonly targetMarkerTemplate = input<TemplateRef<unknown>>();
 
   /**
    * Rows that are displayed in the table.
@@ -199,7 +200,7 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * Enable vertical scrollbars
    */
-  @Input({ transform: booleanAttribute }) scrollbarV = false;
+  readonly scrollbarV = input(false, { transform: booleanAttribute });
 
   /**
    * Enable vertical scrollbars dynamically on demand.
@@ -207,12 +208,12 @@ export class DatatableComponent<TRow extends Row = any>
    * Width that is gained when no scrollbar is needed
    * is added to the inner table width.
    */
-  @Input({ transform: booleanAttribute }) scrollbarVDynamic = false;
+  readonly scrollbarVDynamic = input(false, { transform: booleanAttribute });
 
   /**
    * Enable horz scrollbars
    */
-  @Input({ transform: booleanAttribute }) scrollbarH = false;
+  readonly scrollbarH = input(false, { transform: booleanAttribute });
 
   /**
    * The row height; which is necessary
@@ -224,7 +225,7 @@ export class DatatableComponent<TRow extends Row = any>
    * Type of column width distribution formula.
    * Example: flex, force, standard
    */
-  @Input() columnMode: ColumnMode | keyof typeof ColumnMode = ColumnMode.standard;
+  readonly columnMode = input<ColumnMode | keyof typeof ColumnMode>(ColumnMode.standard);
 
   /**
    * The minimum header height in pixels.
@@ -242,13 +243,13 @@ export class DatatableComponent<TRow extends Row = any>
    * If the table should use external paging
    * otherwise its assumed that all data is preloaded.
    */
-  @Input({ transform: booleanAttribute }) externalPaging = false;
+  readonly externalPaging = input(false, { transform: booleanAttribute });
 
   /**
    * If the table should use external sorting or
    * the built-in basic sorting.
    */
-  @Input({ transform: booleanAttribute }) externalSorting = false;
+  readonly externalSorting = input(false, { transform: booleanAttribute });
 
   /**
    * The page size to be shown.
@@ -301,7 +302,7 @@ export class DatatableComponent<TRow extends Row = any>
    * Show the linear loading bar.
    * Default value: `false`
    */
-  @Input({ transform: booleanAttribute }) loadingIndicator = false;
+  readonly loadingIndicator = input(false, { transform: booleanAttribute });
 
   /**
    * Show ghost loaders on each cell.
@@ -309,7 +310,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   @Input({ transform: booleanAttribute }) set ghostLoadingIndicator(val: boolean) {
     this._ghostLoadingIndicator = val;
-    if (val && this.scrollbarV && !this.externalPaging) {
+    if (val && this.scrollbarV() && !this.externalPaging()) {
       // in case where we don't have predefined total page length
       this.rows = [...this.rows, undefined]; // undefined row will render ghost cell row at the end of the page
     }
@@ -330,24 +331,24 @@ export class DatatableComponent<TRow extends Row = any>
    * For no selection pass a `falsey`.
    * Default value: `undefined`
    */
-  @Input() selectionType?: SelectionType;
+  readonly selectionType = input<SelectionType>();
 
   /**
    * Enable/Disable ability to re-order columns
    * by dragging them.
    */
-  @Input({ transform: booleanAttribute }) reorderable = true;
+  readonly reorderable = input(true, { transform: booleanAttribute });
 
   /**
    * Swap columns on re-order columns or
    * move them.
    */
-  @Input({ transform: booleanAttribute }) swapColumns = true;
+  readonly swapColumns = input(true, { transform: booleanAttribute });
 
   /**
    * The type of sorting
    */
-  @Input() sortType: SortType = SortType.single;
+  readonly sortType = input<SortType>('single');
 
   /**
    * Array of sorted columns by property and type.
@@ -387,7 +388,7 @@ export class DatatableComponent<TRow extends Row = any>
    * - a string: `"class-1 class-2`
    * - a Record<string, boolean>: `{ 'class-1': true, 'class-2': false }`
    */
-  @Input() rowClass?: (row: TRow) => string | Record<string, boolean>;
+  readonly rowClass = input<(row: TRow) => string | Record<string, boolean>>();
 
   /**
    * A boolean/function you can use to check whether you want
@@ -397,7 +398,7 @@ export class DatatableComponent<TRow extends Row = any>
    *      return selection !== 'Ethel Price';
    *    }
    */
-  @Input() selectCheck?: (value: TRow, index: number, array: TRow[]) => boolean;
+  readonly selectCheck = input<(value: TRow, index: number, array: TRow[]) => boolean>();
 
   /**
    * A function you can use to check whether you want
@@ -407,56 +408,56 @@ export class DatatableComponent<TRow extends Row = any>
    *      return row.name !== 'Ethel Price';
    *    }
    */
-  @Input() displayCheck?: (row: TRow, column: TableColumn, value?: any) => boolean;
+  readonly displayCheck = input<(row: TRow, column: TableColumn, value?: any) => boolean>();
 
   /**
    * A boolean you can use to set the detault behaviour of rows and groups
    * whether they will start expanded or not. If ommited the default is NOT expanded.
    *
    */
-  @Input({ transform: booleanAttribute }) groupExpansionDefault = false;
+  readonly groupExpansionDefault = input(false, { transform: booleanAttribute });
 
   /**
    * Property to which you can use for custom tracking of rows.
    * Example: 'name'
    */
-  @Input() trackByProp?: string;
+  readonly trackByProp = input<string>();
 
   /**
    * Property to which you can use for determining select all
    * rows on current page or not.
    */
-  @Input({ transform: booleanAttribute }) selectAllRowsOnPage = false;
+  readonly selectAllRowsOnPage = input(false, { transform: booleanAttribute });
 
   /**
    * A flag for row virtualization on / off
    */
-  @Input({ transform: booleanAttribute }) virtualization = true;
+  readonly virtualization = input(true, { transform: booleanAttribute });
 
   /**
    * Tree from relation
    */
-  @Input() treeFromRelation?: string;
+  readonly treeFromRelation = input<string>();
 
   /**
    * Tree to relation
    */
-  @Input() treeToRelation?: string;
+  readonly treeToRelation = input<string>();
 
   /**
    * A flag for switching summary row on / off
    */
-  @Input({ transform: booleanAttribute }) summaryRow = false;
+  readonly summaryRow = input(false, { transform: booleanAttribute });
 
   /**
    * A height of summary row
    */
-  @Input({ transform: numberAttribute }) summaryHeight = 30;
+  readonly summaryHeight = input(30, { transform: numberAttribute });
 
   /**
    * A property holds a summary row position: top/bottom
    */
-  @Input() summaryPosition = 'top';
+  readonly summaryPosition = input('top');
 
   /**
    * A function you can use to check whether you want
@@ -466,20 +467,20 @@ export class DatatableComponent<TRow extends Row = any>
    *      return row.name !== 'Ethel Price';
    *    }
    */
-  @Input() disableRowCheck?: (row: TRow) => boolean;
+  readonly disableRowCheck = input<(row: TRow) => boolean>();
 
   /**
    * A flag to enable drag behavior of native HTML5 drag and drop API on rows.
    * If set to true, {@link rowDragEvents} will emit dragstart and dragend events.
    */
-  @Input({ transform: booleanAttribute }) rowDraggable = false;
+  readonly rowDraggable = input(false, { transform: booleanAttribute });
 
   /**
    * A flag to controll behavior of sort states.
    * By default sort on column toggles between ascending and descending without getting removed.
    * Set true to clear sorting of column after performing ascending and descending sort on that column.
    */
-  @Input({ transform: booleanAttribute }) enableClearingSortState = false;
+  readonly enableClearingSortState = input(false, { transform: booleanAttribute });
 
   /**
    * Body was scrolled typically in a `scrollbarV:true` scenario.
@@ -531,7 +532,7 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * Emits HTML5 native drag events.
    * Only emits dragenter, dragover, drop events by default.
-   * Set {@link rowDraggble} to true for dragstart and dragend.
+   * Set {@link rowDraggable} to true for dragstart and dragend.
    */
   @Output() readonly rowDragEvents = new EventEmitter<DragEventData>();
 
@@ -559,7 +560,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   @HostBinding('class.scroll-vertical')
   get isVertScroll(): boolean {
-    return this.scrollbarV;
+    return this.scrollbarV();
   }
 
   /**
@@ -568,7 +569,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   @HostBinding('class.virtualized')
   get isVirtualized(): boolean {
-    return this.virtualization;
+    return this.virtualization();
   }
 
   /**
@@ -577,7 +578,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   @HostBinding('class.scroll-horz')
   get isHorScroll(): boolean {
-    return this.scrollbarH;
+    return this.scrollbarH();
   }
 
   /**
@@ -585,7 +586,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   @HostBinding('class.selectable')
   get isSelectable(): boolean {
-    return this.selectionType !== undefined;
+    return this.selectionType() !== undefined;
   }
 
   /**
@@ -593,7 +594,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   @HostBinding('class.checkbox-selection')
   get isCheckboxSelection(): boolean {
-    return this.selectionType === 'checkbox';
+    return this.selectionType() === 'checkbox';
   }
 
   /**
@@ -601,7 +602,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   @HostBinding('class.cell-selection')
   get isCellSelection(): boolean {
-    return this.selectionType === 'cell';
+    return this.selectionType() === 'cell';
   }
 
   /**
@@ -609,7 +610,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   @HostBinding('class.single-selection')
   get isSingleSelection(): boolean {
-    return this.selectionType === 'single';
+    return this.selectionType() === 'single';
   }
 
   /**
@@ -617,7 +618,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   @HostBinding('class.multi-selection')
   get isMultiSelection(): boolean {
-    return this.selectionType === 'multi';
+    return this.selectionType() === 'multi';
   }
 
   /**
@@ -625,7 +626,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   @HostBinding('class.multi-click-selection')
   get isMultiClickSelection(): boolean {
-    return this.selectionType === 'multiClick';
+    return this.selectionType() === 'multiClick';
   }
 
   /**
@@ -684,7 +685,7 @@ export class DatatableComponent<TRow extends Row = any>
   get allRowsSelected(): boolean {
     let allRowsSelected = this.rows && this.selected && this.selected.length === this.rows.length;
 
-    if (this.bodyComponent && this.selectAllRowsOnPage) {
+    if (this.bodyComponent && this.selectAllRowsOnPage()) {
       const indexes = this.bodyComponent.indexes;
       const rowsOnPage = indexes().last - indexes().first;
       allRowsSelected = this.selected.length === rowsOnPage;
@@ -757,9 +758,9 @@ export class DatatableComponent<TRow extends Row = any>
    */
   ngDoCheck(): void {
     const rowDiffers = this.rowDiffer.diff(this.rows);
-    if (rowDiffers || this.disableRowCheck) {
+    if (rowDiffers || this.disableRowCheck()) {
       // we don't sort again when ghost loader adds a dummy row
-      if (!this.ghostLoadingIndicator && !this.externalSorting && this._internalColumns) {
+      if (!this.ghostLoadingIndicator && !this.externalSorting() && this._internalColumns) {
         this.sortInternalRows();
       } else {
         this._internalRows = [...this.rows];
@@ -768,8 +769,8 @@ export class DatatableComponent<TRow extends Row = any>
       // auto group by parent on new update
       this._internalRows = groupRowsByParents(
         this._internalRows,
-        optionalGetterForProp(this.treeFromRelation),
-        optionalGetterForProp(this.treeToRelation)
+        optionalGetterForProp(this.treeFromRelation()),
+        optionalGetterForProp(this.treeToRelation())
       );
 
       if (this._groupRowsBy && rowDiffers) {
@@ -816,7 +817,7 @@ export class DatatableComponent<TRow extends Row = any>
       this.recalculate();
 
       // emit page for virtual server-side kickoff
-      if (this.externalPaging && this.scrollbarV) {
+      if (this.externalPaging() && this.scrollbarV()) {
         this.page.emit({
           count: this.count,
           pageSize: this.pageSize,
@@ -852,7 +853,7 @@ export class DatatableComponent<TRow extends Row = any>
       if (val.length) {
         this._internalColumns = toInternalColumn(val, this._defaultColumnWidth);
         this.recalculateColumns();
-        if (!this.externalSorting && this.rows?.length) {
+        if (!this.externalSorting() && this.rows?.length) {
           this.sortInternalRows();
         }
         this.cd.markForCheck();
@@ -926,7 +927,7 @@ export class DatatableComponent<TRow extends Row = any>
   recalculateColumns(
     columns: TableColumnInternal[] = this._internalColumns,
     forceIdx = -1,
-    allowBleed: boolean = this.scrollbarH
+    allowBleed: boolean = this.scrollbarH()
   ): TableColumn[] | undefined {
     let width = this._innerWidth;
     if (!columns || !width) {
@@ -934,13 +935,13 @@ export class DatatableComponent<TRow extends Row = any>
     }
     const bodyElement = this.bodyElement?.nativeElement;
     this.verticalScrollVisible = bodyElement?.scrollHeight > bodyElement?.clientHeight;
-    if (this.scrollbarV || this.scrollbarVDynamic) {
+    if (this.scrollbarV() || this.scrollbarVDynamic()) {
       width =
         width -
         (this.verticalScrollVisible || !this._rowInitDone() ? this.scrollbarHelper.width : 0);
     }
 
-    if (this.columnMode === ColumnMode.force) {
+    if (this.columnMode() === ColumnMode.force) {
       forceFillColumnWidths(
         columns,
         width,
@@ -949,7 +950,7 @@ export class DatatableComponent<TRow extends Row = any>
         this._defaultColumnWidth,
         this.scrollbarHelper.width
       );
-    } else if (this.columnMode === ColumnMode.flex) {
+    } else if (this.columnMode() === ColumnMode.flex) {
       adjustColumnWidths(columns, width);
     }
 
@@ -978,7 +979,7 @@ export class DatatableComponent<TRow extends Row = any>
     const dims = this.element.getBoundingClientRect();
     this._innerWidth = Math.floor(dims.width);
 
-    if (this.scrollbarV) {
+    if (this.scrollbarV()) {
       let height = dims.height;
       if (this.headerElement) {
         height = height - this.headerElement.nativeElement.getBoundingClientRect().height;
@@ -1007,7 +1008,7 @@ export class DatatableComponent<TRow extends Row = any>
     // Avoid pagination caming from body events like scroll when the table
     // has no virtualization and the external paging is enable.
     // This means, let's the developer handle pagination by my him(her) self
-    if (this.externalPaging && !this.virtualization) {
+    if (this.externalPaging() && !this.virtualization()) {
       return;
     }
 
@@ -1047,7 +1048,7 @@ export class DatatableComponent<TRow extends Row = any>
       sorts: this.sorts
     });
 
-    if (this.selectAllRowsOnPage) {
+    if (this.selectAllRowsOnPage()) {
       this.selected = [];
       this.select.emit({
         selected: this.selected
@@ -1062,7 +1063,7 @@ export class DatatableComponent<TRow extends Row = any>
     // Keep the page size constant even if the row has been expanded.
     // This is because an expanded row is still considered to be a child of
     // the original row.  Hence calculation would use rowHeight only.
-    if (this.scrollbarV && this.virtualization) {
+    if (this.scrollbarV() && this.virtualization()) {
       const size = Math.ceil(this.bodyHeight / (this.rowHeight as number));
       return Math.max(size, 0);
     }
@@ -1085,10 +1086,10 @@ export class DatatableComponent<TRow extends Row = any>
    * Calculates the row count.
    */
   calcRowCount(): number {
-    if (!this.externalPaging) {
+    if (!this.externalPaging()) {
       if (this.groupedRows) {
         return this.groupedRows.length;
-      } else if (this.treeFromRelation != null && this.treeToRelation != null) {
+      } else if (this.treeFromRelation() != null && this.treeToRelation() != null) {
         return this._internalRows.length;
       } else {
         return this.rows.length;
@@ -1158,7 +1159,7 @@ export class DatatableComponent<TRow extends Row = any>
       return;
     }
 
-    if (this.swapColumns) {
+    if (this.swapColumns()) {
       cols[newValue] = column;
       cols[prevValue] = prevCol;
     } else {
@@ -1187,7 +1188,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   onColumnSort(event: SortEvent): void {
     // clean selected rows
-    if (this.selectAllRowsOnPage) {
+    if (this.selectAllRowsOnPage()) {
       this.selected = [];
       this.select.emit({
         selected: this.selected
@@ -1198,7 +1199,7 @@ export class DatatableComponent<TRow extends Row = any>
 
     // this could be optimized better since it will resort
     // the rows again on the 'push' detection...
-    if (this.externalSorting === false) {
+    if (!this.externalSorting()) {
       // don't use normal setter so we don't resort
       this.sortInternalRows();
     }
@@ -1206,8 +1207,8 @@ export class DatatableComponent<TRow extends Row = any>
     // auto group by parent on new update
     this._internalRows = groupRowsByParents(
       this._internalRows,
-      optionalGetterForProp(this.treeFromRelation),
-      optionalGetterForProp(this.treeToRelation)
+      optionalGetterForProp(this.treeFromRelation()),
+      optionalGetterForProp(this.treeToRelation())
     );
 
     // Always go to first page when sorting to see the newly sorted data
@@ -1228,7 +1229,7 @@ export class DatatableComponent<TRow extends Row = any>
    * Toggle all row selection
    */
   onHeaderSelect(): void {
-    if (this.bodyComponent && this.selectAllRowsOnPage) {
+    if (this.bodyComponent && this.selectAllRowsOnPage()) {
       // before we splice, chk if we currently have all selected
       const first = this.bodyComponent.indexes().first;
       const last = this.bodyComponent.indexes().last;
@@ -1243,9 +1244,10 @@ export class DatatableComponent<TRow extends Row = any>
       }
     } else {
       let relevantRows: TRow[];
-      if (this.disableRowCheck) {
+      const disableRowCheckFn = this.disableRowCheck();
+      if (disableRowCheckFn) {
         relevantRows = this.rows.filter(
-          (row => row && !this.disableRowCheck!(row)) as (row: TRow | undefined) => row is TRow
+          (row => row && !disableRowCheckFn(row)) as (row: TRow | undefined) => row is TRow
         );
       } else {
         relevantRows = this.rows.filter(row => !!row);
@@ -1279,9 +1281,8 @@ export class DatatableComponent<TRow extends Row = any>
   onTreeAction(event: { row: TRow }) {
     const row = event.row;
     // TODO: For duplicated items this will not work
-    const rowIndex = this._rows.findIndex(
-      r => r && r[this.treeToRelation!] === event.row[this.treeToRelation!]
-    );
+    const treeToRel = this.treeToRelation();
+    const rowIndex = this._rows.findIndex(r => r && r[treeToRel!] === event.row[treeToRel!]);
     this.treeAction.emit({ row, rowIndex });
   }
 
@@ -1308,11 +1309,11 @@ export class DatatableComponent<TRow extends Row = any>
     if (!this.sorts?.length) {
       this._internalRows = this._rows;
       // if there is any tree relation then re-group rows accordingly
-      if (this.treeFromRelation && this.treeToRelation) {
+      if (this.treeFromRelation() && this.treeToRelation()) {
         this._internalRows = groupRowsByParents(
           this._internalRows,
-          optionalGetterForProp(this.treeFromRelation),
-          optionalGetterForProp(this.treeToRelation)
+          optionalGetterForProp(this.treeFromRelation()),
+          optionalGetterForProp(this.treeToRelation())
         );
       }
     }
