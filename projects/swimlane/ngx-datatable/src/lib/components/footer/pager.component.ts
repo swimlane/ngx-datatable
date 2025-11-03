@@ -92,8 +92,8 @@ export class DatatablePagerComponent {
   // Ideally we can one day fetch those attributes from a global state, but for now this is fine.
   private datatable = inject(DATATABLE_COMPONENT_TOKEN);
 
-  protected get messages(): DatatableComponent['messages'] {
-    return this.datatable?.messages ?? {};
+  protected get messages(): ReturnType<DatatableComponent['messages']> {
+    return this.datatable?.messages() ?? {};
   }
 
   protected readonly page = computed(() => this.datatable._footerComponent()!.curPage());

@@ -8,9 +8,9 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { DatatableComponent } from '@siemens/ngx-datatable';
 
 import { DATATABLE_COMPONENT_TOKEN } from '../../utils/table-token';
-import type { DatatableComponent } from '../datatable.component';
 import { DatatablePagerComponent } from './pager.component';
 import { PagerHarness } from './testing/pager.harness';
 
@@ -28,9 +28,9 @@ interface MockFooter {
 
 describe('DataTablePagerComponent', () => {
   let fixture: ComponentFixture<DatatablePagerComponent>;
-  let pager: DatatablePagerComponent;
   let harness: PagerHarness;
   let footer: MockFooter;
+  let messages: WritableSignal<ReturnType<DatatableComponent['messages']>>;
 
   beforeEach(async () => {
     footer = {
@@ -44,19 +44,19 @@ describe('DataTablePagerComponent', () => {
       pagerPreviousIcon: signal(''),
       page: { emit: ({ page }: { page: number }) => footer.curPage.set(page) }
     };
+    messages = signal({});
     TestBed.overrideComponent(DatatablePagerComponent, {
       set: {
         changeDetection: ChangeDetectionStrategy.Default,
         providers: [
           {
             provide: DATATABLE_COMPONENT_TOKEN,
-            useValue: { _footerComponent: signal(footer) }
+            useValue: { _footerComponent: signal(footer), messages }
           }
         ]
       }
     });
     fixture = TestBed.createComponent(DatatablePagerComponent);
-    pager = fixture.componentInstance;
     harness = await TestbedHarnessEnvironment.harnessForFixture(fixture, PagerHarness);
   });
 
@@ -247,8 +247,8 @@ describe('DataTablePagerComponent', () => {
     };
 
     describe('takes messages-overrides from table', () => {
-      const setMessages = (messages: DatatableComponent['messages']) => {
-        (pager as any).datatable = { messages };
+      const setMessages = (overrides: ReturnType<DatatableComponent['messages']>) => {
+        messages.set(overrides);
         // do a change detection on the real changeDetectionRef
         fixture.componentRef.injector.get(ChangeDetectorRef).detectChanges();
       };

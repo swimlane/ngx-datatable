@@ -1,6 +1,6 @@
 <div visibilityObserver (visible)="recalculate()">
   <div role="table">
-    @if (headerHeight) {
+    @if (headerHeight()) {
       <datatable-header
         role="rowgroup"
         [sorts]="sorts"
@@ -10,17 +10,17 @@
         [offsetX]="_offsetX"
         [dealsWithGroup]="groupedRows !== undefined"
         [columns]="_internalColumns"
-        [headerHeight]="headerHeight"
+        [headerHeight]="headerHeight()"
         [reorderable]="reorderable()"
         [targetMarkerTemplate]="targetMarkerTemplate()"
-        [sortAscendingIcon]="cssClasses.sortAscending"
-        [sortDescendingIcon]="cssClasses.sortDescending"
-        [sortUnsetIcon]="cssClasses.sortUnset"
+        [sortAscendingIcon]="cssClasses().sortAscending"
+        [sortDescendingIcon]="cssClasses().sortDescending"
+        [sortUnsetIcon]="cssClasses().sortUnset"
         [allRowsSelected]="allRowsSelected"
         [selectionType]="selectionType()"
         [verticalScrollVisible]="verticalScrollVisible"
         [enableClearingSortState]="enableClearingSortState()"
-        [ariaHeaderCheckboxMessage]="messages.ariaHeaderCheckboxMessage ?? 'Select all rows'"
+        [ariaHeaderCheckboxMessage]="messages().ariaHeaderCheckboxMessage ?? 'Select all rows'"
         (sort)="onColumnSort($event)"
         (resize)="onColumnResize($event)"
         (resizing)="onColumnResizing($event)"
@@ -42,7 +42,7 @@
       [loadingIndicator]="loadingIndicator()"
       [ghostLoadingIndicator]="ghostLoadingIndicator"
       [externalPaging]="externalPaging()"
-      [rowHeight]="rowHeight"
+      [rowHeight]="rowHeight()"
       [rowCount]="rowCount"
       [offset]="offset"
       [trackByProp]="trackByProp()"
@@ -62,15 +62,15 @@
       [summaryHeight]="summaryHeight()"
       [summaryPosition]="summaryPosition()"
       [verticalScrollVisible]="verticalScrollVisible"
-      [ariaRowCheckboxMessage]="messages.ariaRowCheckboxMessage ?? 'Select row'"
+      [ariaRowCheckboxMessage]="messages().ariaRowCheckboxMessage ?? 'Select row'"
       [ariaGroupHeaderCheckboxMessage]="
-        messages.ariaGroupHeaderCheckboxMessage ?? 'Select row group'
+        messages().ariaGroupHeaderCheckboxMessage ?? 'Select row group'
       "
       [disableRowCheck]="disableRowCheck()"
       [rowDraggable]="rowDraggable()"
       [rowDragEvents]="rowDragEvents"
       [rowDefTemplate]="rowDefTemplate"
-      [cssClasses]="cssClasses"
+      [cssClasses]="cssClasses()"
       [(selected)]="selected"
       (page)="onBodyPage($event)"
       (activate)="activate.emit($event)"
@@ -87,27 +87,27 @@
           <div
             role="cell"
             class="empty-row"
-            [innerHTML]="messages.emptyMessage ?? 'No data to display'"
+            [innerHTML]="messages().emptyMessage ?? 'No data to display'"
           ></div>
         </div>
       </ng-content>
     </datatable-body>
   </div>
-  @if (footerHeight) {
+  @if (footerHeight()) {
     <datatable-footer
       [rowCount]="groupedRows !== undefined ? _internalRows.length : rowCount"
       [groupCount]="groupedRows !== undefined ? rowCount : undefined"
       [pageSize]="pageSize"
       [offset]="offset"
-      [footerHeight]="footerHeight"
+      [footerHeight]="footerHeight()"
       [footerTemplate]="footer"
-      [totalMessage]="messages.totalMessage ?? 'total'"
-      [pagerLeftArrowIcon]="cssClasses.pagerLeftArrow"
-      [pagerRightArrowIcon]="cssClasses.pagerRightArrow"
-      [pagerPreviousIcon]="cssClasses.pagerPrevious"
+      [totalMessage]="messages().totalMessage ?? 'total'"
+      [pagerLeftArrowIcon]="cssClasses().pagerLeftArrow"
+      [pagerRightArrowIcon]="cssClasses().pagerRightArrow"
+      [pagerPreviousIcon]="cssClasses().pagerPrevious"
       [selectedCount]="selected().length"
-      [selectedMessage]="!!selectionType() && (messages.selectedMessage ?? 'selected')"
-      [pagerNextIcon]="cssClasses.pagerNext"
+      [selectedMessage]="!!selectionType() && (messages().selectedMessage ?? 'selected')"
+      [pagerNextIcon]="cssClasses().pagerNext"
       (page)="onFooterPage($event)"
     />
   }

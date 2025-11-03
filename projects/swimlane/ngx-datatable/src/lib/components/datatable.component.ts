@@ -219,7 +219,9 @@ export class DatatableComponent<TRow extends Row = any>
    * The row height; which is necessary
    * to calculate the height for the lazy rendering.
    */
-  @Input() rowHeight: number | 'auto' | ((row: TRow) => number) = 30;
+  readonly rowHeight = input<number | 'auto' | ((row: TRow) => number)>(
+    this.configuration?.rowHeight ?? 30
+  );
 
   /**
    * Type of column width distribution formula.
@@ -231,13 +233,15 @@ export class DatatableComponent<TRow extends Row = any>
    * The minimum header height in pixels.
    * Pass a falsey for no header
    */
-  @Input() headerHeight: number | 'auto' = 30;
+  readonly headerHeight = input<number | 'auto'>(this.configuration?.headerHeight ?? 30);
 
   /**
    * The minimum footer height in pixels.
    * Pass falsey for no footer
    */
-  @Input({ transform: numberAttribute }) footerHeight = 0;
+  readonly footerHeight = input(this.configuration?.footerHeight ?? 0, {
+    transform: numberAttribute
+  });
 
   /**
    * If the table should use external paging
@@ -359,7 +363,9 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * Css class overrides
    */
-  @Input() cssClasses: Partial<Required<NgxDatatableConfig>['cssClasses']> = {};
+  readonly cssClasses = input<Partial<Required<NgxDatatableConfig>['cssClasses']>>(
+    this.configuration?.cssClasses ?? {}
+  );
 
   /**
    * Message overrides for localization
@@ -381,7 +387,9 @@ export class DatatableComponent<TRow extends Row = any>
    * }
    * ```
    */
-  @Input() messages: Partial<Required<NgxDatatableConfig>['messages']> = {};
+  readonly messages = input<Partial<Required<NgxDatatableConfig>['messages']>>(
+    this.configuration?.messages ?? {}
+  );
 
   /**
    * A function which is called with the row and should return either:
@@ -554,7 +562,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   @HostBinding('class.fixed-header')
   get isFixedHeader(): boolean {
-    const headerHeight: number | string = this.headerHeight;
+    const headerHeight: number | string = this.headerHeight();
     return typeof headerHeight === 'string' ? (headerHeight as string) !== 'auto' : true;
   }
 
@@ -564,7 +572,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   @HostBinding('class.fixed-row')
   get isFixedRow(): boolean {
-    return this.rowHeight !== 'auto';
+    return this.rowHeight() !== 'auto';
   }
 
   /**
@@ -726,7 +734,7 @@ export class DatatableComponent<TRow extends Row = any>
   _columns!: TableColumn[];
   _subscriptions: Subscription[] = [];
   _ghostLoadingIndicator = false;
-  _defaultColumnWidth?: number;
+  _defaultColumnWidth = this.configuration?.defaultColumnWidth ?? 150;
   /**
    * To have this available for all components.
    * The Footer itself is not available in the injection context in templates,
@@ -739,22 +747,6 @@ export class DatatableComponent<TRow extends Row = any>
   // this makes horizontal scroll to appear on load even if columns can fit in view
   // this will be set to true once rows are available and rendered on UI
   private readonly _rowInitDone = signal(false);
-
-  constructor() {
-    // apply global settings from Module.forRoot
-    if (this.configuration) {
-      if (this.configuration.messages) {
-        this.messages = { ...this.configuration.messages };
-      }
-      if (this.configuration.cssClasses) {
-        this.cssClasses = { ...this.configuration.cssClasses };
-      }
-      this.headerHeight = this.configuration.headerHeight ?? this.headerHeight;
-      this.footerHeight = this.configuration.footerHeight ?? this.footerHeight;
-      this.rowHeight = this.configuration.rowHeight ?? this.rowHeight;
-      this._defaultColumnWidth = this.configuration.defaultColumnWidth ?? 150;
-    }
-  }
 
   /**
    * Lifecycle hook that is called after data-bound
@@ -998,8 +990,8 @@ export class DatatableComponent<TRow extends Row = any>
       if (this.headerElement) {
         height = height - this.headerElement.nativeElement.getBoundingClientRect().height;
       }
-      if (this.footerHeight) {
-        height = height - this.footerHeight;
+      if (this.footerHeight()) {
+        height = height - this.footerHeight();
       }
       this.bodyHeight = height;
     }
@@ -1078,7 +1070,7 @@ export class DatatableComponent<TRow extends Row = any>
     // This is because an expanded row is still considered to be a child of
     // the original row.  Hence calculation would use rowHeight only.
     if (this.scrollbarV() && this.virtualization()) {
-      const size = Math.ceil(this.bodyHeight / (this.rowHeight as number));
+      const size = Math.ceil(this.bodyHeight / (this.rowHeight() as number));
       return Math.max(size, 0);
     }
 

@@ -1,4 +1,4 @@
-import { Component, DebugElement, Signal, TemplateRef, viewChild } from '@angular/core';
+import { Component, DebugElement, signal, Signal, TemplateRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -183,6 +183,7 @@ class TestFixtureComponent {
   footerTemplate?: { template: Signal<TemplateRef<any>> };
   selectedCount = 0;
   selectedMessage?: string;
+  readonly messages = signal({});
 
   /**
    * establishes a reference to a test template that can
