@@ -238,6 +238,7 @@ export const SelectionType = {
 
 export type SelectionType = (typeof SelectionType)[keyof typeof SelectionType];
 
+/** @deprecated. Use two-way binding instead. See {@link DatatableComponent.select} */
 export interface SelectEvent<TRow> {
   selected: TRow[];
 }

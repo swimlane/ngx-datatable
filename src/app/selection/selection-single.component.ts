@@ -1,10 +1,5 @@
 import { Component, inject } from '@angular/core';
-import {
-  ActivateEvent,
-  DatatableComponent,
-  SelectEvent,
-  TableColumn
-} from 'projects/swimlane/ngx-datatable/src/public-api';
+import { ActivateEvent, DatatableComponent, TableColumn } from '@siemens/ngx-datatable';
 
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';
@@ -43,9 +38,9 @@ import { DataService } from '../data.service';
           [headerHeight]="50"
           [footerHeight]="50"
           [limit]="5"
-          [selected]="selected"
+          [(selected)]="selected"
           (activate)="onActivate($event)"
-          (select)="onSelect($event)"
+          (selectedChange)="onSelect($event)"
         />
       </div>
 
@@ -80,9 +75,9 @@ export class SingleSelectionComponent {
     });
   }
 
-  onSelect({ selected }: SelectEvent<Employee>) {
+  onSelect(employees: Employee[]) {
     // eslint-disable-next-line no-console
-    console.log('Select Event', selected, this.selected);
+    console.log('Select Event', employees);
   }
 
   onActivate(event: ActivateEvent<Employee>) {

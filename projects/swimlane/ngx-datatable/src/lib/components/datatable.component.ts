@@ -16,6 +16,7 @@ import {
   Input,
   IterableDiffer,
   IterableDiffers,
+  model,
   numberAttribute,
   OnDestroy,
   OnInit,
@@ -194,7 +195,7 @@ export class DatatableComponent<TRow extends Row = any>
    * represented as selected in the grid.
    * Default value: `[]`
    */
-  @Input() selected: TRow[] = [];
+  readonly selected = model<TRow[]>([]);
 
   /**
    * Enable vertical scrollbars
@@ -493,6 +494,19 @@ export class DatatableComponent<TRow extends Row = any>
 
   /**
    * A cell or row was selected.
+   * @deprecated Use two-way binding on `selected` instead.
+   *
+   * Before:
+   * ```html
+   * <ngx-datatable [selected]="mySelection" (select)="onSelect($event)"></ngx-datatable>
+   * ```
+   *
+   * After:
+   * ```html
+   * <ngx-datatable [selected]="mySelection" (selectedChange)="onSelect({selected: $event})"></ngx-datatable>
+   * <!-- or -->
+   * <ngx-datatable [(selected)]="mySelection"></ngx-datatable>
+   * ```
    */
   readonly select = output<SelectEvent<TRow>>();
 
@@ -682,15 +696,16 @@ export class DatatableComponent<TRow extends Row = any>
    * Returns if all rows are selected.
    */
   get allRowsSelected(): boolean {
-    let allRowsSelected = this.rows && this.selected && this.selected.length === this.rows.length;
+    const selected = this.selected();
+    let allRowsSelected = this.rows && selected && selected.length === this.rows.length;
 
     if (this.bodyComponent && this.selectAllRowsOnPage()) {
       const indexes = this.bodyComponent.indexes;
       const rowsOnPage = indexes().last - indexes().first;
-      allRowsSelected = this.selected.length === rowsOnPage;
+      allRowsSelected = selected.length === rowsOnPage;
     }
 
-    return this.selected && this.rows?.length !== 0 && allRowsSelected;
+    return selected && this.rows?.length !== 0 && allRowsSelected;
   }
 
   element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
@@ -1048,9 +1063,9 @@ export class DatatableComponent<TRow extends Row = any>
     });
 
     if (this.selectAllRowsOnPage()) {
-      this.selected = [];
+      this.selected.set([]);
       this.select.emit({
-        selected: this.selected
+        selected: this.selected()
       });
     }
   }
@@ -1188,9 +1203,9 @@ export class DatatableComponent<TRow extends Row = any>
   onColumnSort(event: SortEvent): void {
     // clean selected rows
     if (this.selectAllRowsOnPage()) {
-      this.selected = [];
+      this.selected.set([]);
       this.select.emit({
-        selected: this.selected
+        selected: this.selected()
       });
     }
 
@@ -1232,14 +1247,13 @@ export class DatatableComponent<TRow extends Row = any>
       // before we splice, chk if we currently have all selected
       const first = this.bodyComponent.indexes().first;
       const last = this.bodyComponent.indexes().last;
-      const allSelected = this.selected.length === last - first;
-
-      // remove all existing either way
-      this.selected = [];
+      const allSelected = this.selected().length === last - first;
 
       // do the opposite here
       if (!allSelected) {
-        this.selected.push(...this._internalRows.slice(first, last).filter(row => !!row));
+        this.selected.set(this._internalRows.slice(first, last).filter(row => !!row) as TRow[]);
+      } else {
+        this.selected.set([]);
       }
     } else {
       let relevantRows: TRow[];
@@ -1252,17 +1266,17 @@ export class DatatableComponent<TRow extends Row = any>
         relevantRows = this.rows.filter(row => !!row);
       }
       // before we splice, chk if we currently have all selected
-      const allSelected = this.selected.length === relevantRows.length;
-      // remove all existing either way
-      this.selected = [];
+      const allSelected = this.selected().length === relevantRows.length;
       // do the opposite here
       if (!allSelected) {
-        this.selected.push(...relevantRows);
+        this.selected.set(relevantRows);
+      } else {
+        this.selected.set([]);
       }
     }
 
     this.select.emit({
-      selected: this.selected
+      selected: this.selected()
     });
   }
 
@@ -1270,7 +1284,6 @@ export class DatatableComponent<TRow extends Row = any>
    * A row was selected from body
    */
   onBodySelect(selected: TRow[]): void {
-    this.selected.splice(0, this.selected.length, ...selected);
     this.select.emit({ selected });
   }
 
