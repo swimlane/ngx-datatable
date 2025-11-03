@@ -16,14 +16,14 @@ import { DatatableGroupHeaderDirective } from './body-group-header.directive';
   imports: [NgTemplateOutlet],
   template: `
     @let groupHeader = this.groupHeader();
-    @if (groupHeader && groupHeader.template) {
+    @if (groupHeader && groupHeader.template()) {
       <div
         class="datatable-group-header"
         [style.height.px]="groupHeaderRowHeight()"
         [style.width.px]="innerWidth()"
       >
         <div class="datatable-group-cell">
-          @if (groupHeader.checkboxable) {
+          @if (groupHeader.checkboxable()) {
             <div>
               <label class="datatable-checkbox">
                 <input
@@ -38,7 +38,7 @@ import { DatatableGroupHeaderDirective } from './body-group-header.directive';
             </div>
           }
           <ng-template
-            [ngTemplateOutlet]="groupHeader.template"
+            [ngTemplateOutlet]="groupHeader.template()"
             [ngTemplateOutletContext]="context()"
           />
         </div>

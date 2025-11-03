@@ -580,7 +580,8 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     if (!groupHeader) {
       return 0;
     }
-    const rowHeight = groupHeader?.rowHeight === 0 ? this.rowHeight() : groupHeader?.rowHeight;
+    const rowHeightValue = groupHeader?.rowHeight();
+    const rowHeight = rowHeightValue === 0 ? this.rowHeight() : rowHeightValue;
     return typeof rowHeight === 'function' ? rowHeight(row, index) : (rowHeight as number);
   };
 

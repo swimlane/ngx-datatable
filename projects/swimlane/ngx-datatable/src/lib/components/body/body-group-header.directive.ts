@@ -1,4 +1,4 @@
-import { ContentChild, Directive, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
+import { Directive, TemplateRef, input, output, contentChild, computed } from '@angular/core';
 
 import { Group, GroupContext, GroupToggleEvents, Row } from '../../types/public.types';
 import { DatatableGroupHeaderTemplateDirective } from './body-group-header-template.directive';
@@ -10,27 +10,27 @@ export class DatatableGroupHeaderDirective<TRow extends Row = any> {
   /**
    * Row height is required when virtual scroll is enabled.
    */
-  @Input() rowHeight: number | ((group?: Group<TRow>, index?: number) => number) = 0;
+  readonly rowHeight = input<number | ((group?: Group<TRow>, index?: number) => number)>(0);
 
   /**
    * Show checkbox at group header to select all rows of the group.
    */
-  @Input() checkboxable = false;
+  readonly checkboxable = input(false);
 
-  @Input('template')
-  _templateInput?: TemplateRef<GroupContext<TRow>>;
+  readonly _templateInput = input<TemplateRef<GroupContext<TRow>>>(undefined, {
+    alias: 'template'
+  });
 
-  @ContentChild(DatatableGroupHeaderTemplateDirective, { read: TemplateRef, static: true })
-  _templateQuery?: TemplateRef<GroupContext<TRow>>;
+  readonly _templateQuery = contentChild(DatatableGroupHeaderTemplateDirective, {
+    read: TemplateRef
+  });
 
-  get template(): TemplateRef<GroupContext<TRow>> | undefined {
-    return this._templateInput ?? this._templateQuery;
-  }
+  readonly template = computed(() => this._templateInput() ?? this._templateQuery() ?? null);
 
   /**
    * Track toggling of group visibility
    */
-  @Output() readonly toggle = new EventEmitter<GroupToggleEvents<TRow>>();
+  readonly toggle = output<GroupToggleEvents<TRow>>();
 
   /**
    * Toggle the expansion of a group
