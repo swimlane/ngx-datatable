@@ -963,7 +963,7 @@ export class DatatableComponent<TRow extends Row = any>
     }
 
     // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-    if (this.headerComponent && this.headerComponent._columnGroupWidths.total !== width) {
+    if (this.headerComponent && this.headerComponent._columnGroupWidths().total !== width) {
       this._internalColumns = [...this._internalColumns];
     }
 

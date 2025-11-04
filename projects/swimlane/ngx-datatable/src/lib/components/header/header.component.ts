@@ -1,16 +1,12 @@
 import { NgClass, NgStyle } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  computed,
   inject,
+  TemplateRef,
   input,
-  OnChanges,
-  OnDestroy,
-  output,
-  SimpleChanges,
-  TemplateRef
+  computed,
+  output
 } from '@angular/core';
 
 import { DatatableDraggableDirective } from '../../directives/datatable-draggable.directive';
@@ -19,7 +15,6 @@ import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 import {
   ColumnResizeEventInternal,
   InnerSortEvent,
-  PinnedColumns,
   ReorderEventInternal,
   SortableTableColumnInternal,
   TableColumnInternal,
@@ -46,6 +41,7 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
     DatatableDraggableDirective
   ],
   template: `
+    @let _columnGroupWidths = this._columnGroupWidths();
     <div
       role="row"
       orderable
@@ -55,12 +51,12 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
       (reorder)="onColumnReordered($event)"
       (targetChanged)="onTargetChanged($event)"
     >
-      @for (colGroup of _columnsByPin; track colGroup.type) {
+      @for (colGroup of _columnsByPin(); track colGroup.type) {
         @if (colGroup.columns.length) {
           <div
             class="datatable-row-group"
             [ngClass]="'datatable-row-' + colGroup.type"
-            [ngStyle]="_styleByGroup[colGroup.type]"
+            [ngStyle]="_styleByGroup()[colGroup.type]"
           >
             @for (column of colGroup.columns; track column.$$id) {
               <datatable-header-cell
@@ -98,13 +94,12 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    'class': 'datatable-header',
+    class: 'datatable-header',
     '[style.height.px]': 'headerHeight()',
     '[style.width]': 'headerWidth()'
   }
 })
-export class DataTableHeaderComponent implements OnDestroy, OnChanges {
-  private cd = inject(ChangeDetectorRef);
+export class DataTableHeaderComponent {
   private scrollbarHelper = inject(ScrollbarHelper);
 
   readonly lastColumnId = computed(() => this.columns().at(-1)?.$$id);
@@ -125,8 +120,6 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
   readonly verticalScrollVisible = input(false);
   readonly ariaHeaderCheckboxMessage = input.required<string>();
 
-  dragEventTarget?: MouseEvent | TouchEvent;
-
   readonly headerHeight = input.required<'auto' | number>();
   readonly columns = input.required<TableColumnInternal[]>();
   readonly offsetX = input<number>();
@@ -141,43 +134,20 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
     column: TableColumnInternal;
   }>();
 
-  _columnsByPin!: PinnedColumns[];
-  _columnGroupWidths: any = {
-    total: 100
-  };
-  _styleByGroup: {
-    left: NgStyle['ngStyle'];
-    center: NgStyle['ngStyle'];
-    right: NgStyle['ngStyle'];
-  } = { left: {}, center: {}, right: {} };
-
-  private destroyed = false;
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.verticalScrollVisible) {
-      this._styleByGroup.right = this.calcStylesByGroup('right');
-      if (!this.destroyed) {
-        this.cd.detectChanges();
-      }
-    }
-
-    if (changes.offsetX) {
-      this.setStylesByGroup();
-    }
-
-    if (changes.columns || changes.innerWidth) {
-      const colsByPin = columnsByPin(this.columns());
-      this._columnsByPin = columnsByPinArr(this.columns());
-      //setTimeout(() => {
-      this._columnGroupWidths = columnGroupWidths(colsByPin, this.columns());
-      this.setStylesByGroup();
-      //});
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.destroyed = true;
-  }
+  readonly _columnsByPin = computed(() => {
+    return columnsByPinArr(this.columns());
+  });
+  readonly _columnGroupWidths = computed(() => {
+    const colsByPin = columnsByPin(this.columns());
+    return columnGroupWidths(colsByPin, this.columns());
+  });
+  readonly _styleByGroup = computed(() => {
+    return {
+      left: this.calcStylesByGroup('left'),
+      center: this.calcStylesByGroup('center'),
+      right: this.calcStylesByGroup('right')
+    };
+  });
 
   readonly headerWidth = computed(() => {
     if (this.scrollbarH()) {
@@ -240,17 +210,18 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
   }
 
   getColumn(index: number): any {
-    const leftColumnCount = this._columnsByPin[0].columns.length;
+    const _columnsByPin = this._columnsByPin();
+    const leftColumnCount = _columnsByPin[0].columns.length;
     if (index < leftColumnCount) {
-      return this._columnsByPin[0].columns[index];
+      return _columnsByPin[0].columns[index];
     }
 
-    const centerColumnCount = this._columnsByPin[1].columns.length;
+    const centerColumnCount = _columnsByPin[1].columns.length;
     if (index < leftColumnCount + centerColumnCount) {
-      return this._columnsByPin[1].columns[index - leftColumnCount];
+      return _columnsByPin[1].columns[index - leftColumnCount];
     }
 
-    return this._columnsByPin[2].columns[index - leftColumnCount - centerColumnCount];
+    return _columnsByPin[2].columns[index - leftColumnCount - centerColumnCount];
   }
 
   onSort({ column, prevValue, newValue }: InnerSortEvent): void {
@@ -298,17 +269,8 @@ export class DataTableHeaderComponent implements OnDestroy, OnChanges {
     return sorts;
   }
 
-  setStylesByGroup() {
-    this._styleByGroup.left = this.calcStylesByGroup('left');
-    this._styleByGroup.center = this.calcStylesByGroup('center');
-    this._styleByGroup.right = this.calcStylesByGroup('right');
-    if (!this.destroyed) {
-      this.cd.detectChanges();
-    }
-  }
-
   calcStylesByGroup(group: 'center' | 'right' | 'left'): NgStyle['ngStyle'] {
-    const widths = this._columnGroupWidths;
+    const widths = this._columnGroupWidths();
 
     if (group === 'center') {
       return {
