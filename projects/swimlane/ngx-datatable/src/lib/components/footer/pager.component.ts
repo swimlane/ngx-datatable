@@ -27,56 +27,62 @@ import { DatatableComponent } from '../datatable.component';
   selector: 'ngx-datatable-pager',
   template: `
     <ul class="pager">
-      <li [class.disabled]="!canPrevious()">
-        <a
-          tabindex="0"
-          role="button"
+      <li>
+        <button
+          type="button"
+          class="page-button"
+          [disabled]="!canPrevious()"
           [attr.aria-label]="messages.ariaFirstPageMessage ?? 'go to first page'"
           (click)="selectPage(1)"
         >
           <i [class]="pagerPreviousIcon() ?? 'datatable-icon-prev'"></i>
-        </a>
+        </button>
       </li>
-      <li [class.disabled]="!canPrevious()">
-        <a
-          tabindex="0"
-          role="button"
+      <li>
+        <button
+          type="button"
+          class="page-button"
+          [disabled]="!canPrevious()"
           [attr.aria-label]="messages.ariaPreviousPageMessage ?? 'go to previous page'"
           (click)="prevPage()"
         >
           <i [class]="pagerLeftArrowIcon() ?? 'datatable-icon-left'"></i>
-        </a>
+        </button>
       </li>
       @for (pg of pages(); track pg.number) {
-        <li
-          class="pages"
-          [attr.aria-label]="(messages.ariaPageNMessage ?? 'page') + ' ' + pg.number"
-          [class.active]="pg.number === page()"
-        >
-          <a tabindex="0" role="button" (click)="selectPage(pg.number)">
+        <li class="pages">
+          <button
+            type="button"
+            class="page-button"
+            [class.active]="pg.number === page()"
+            [attr.aria-label]="(messages.ariaPageNMessage ?? 'page') + ' ' + pg.number"
+            (click)="selectPage(pg.number)"
+          >
             {{ pg.text }}
-          </a>
+          </button>
         </li>
       }
-      <li [class.disabled]="!canNext()">
-        <a
-          tabindex="0"
-          role="button"
+      <li>
+        <button
+          type="button"
+          class="page-button"
+          [disabled]="!canNext()"
           [attr.aria-label]="messages.ariaNextPageMessage ?? 'go to next page'"
           (click)="nextPage()"
         >
           <i [class]="pagerRightArrowIcon() ?? 'datatable-icon-right'"></i>
-        </a>
+        </button>
       </li>
-      <li [class.disabled]="!canNext()">
-        <a
-          tabindex="0"
-          role="button"
+      <li>
+        <button
+          type="button"
+          class="page-button"
+          [disabled]="!canNext()"
           [attr.aria-label]="messages.ariaLastPageMessage ?? 'go to last page'"
           (click)="selectPage(totalPages())"
         >
           <i [class]="pagerNextIcon() ?? 'datatable-icon-skip'"></i>
-        </a>
+        </button>
       </li>
     </ul>
   `,

@@ -401,21 +401,7 @@ $datatble-ghost-cell-animation-duration: 10s;
       margin-block: 0;
       margin-inline: 10px;
 
-      li {
-        vertical-align: middle;
-
-        &.disabled a {
-          color: $datatable-pager-disabled-color !important; // stylelint-disable-line declaration-no-important
-          background-color: $datatable-pager-disabled-background !important; // stylelint-disable-line declaration-no-important
-        }
-
-        &.active a {
-          background-color: $datatable-pager-active-background;
-          font-weight: bold;
-        }
-      }
-
-      a {
+      .page-button {
         block-size: 22px;
         min-inline-size: 24px;
         line-height: 22px;
@@ -425,14 +411,24 @@ $datatble-ghost-cell-animation-duration: 10s;
         margin-block: 6px;
         margin-inline: 3px;
         text-align: center;
-        vertical-align: top;
         color: $datatable-pager-color;
         text-decoration: none;
-        vertical-align: bottom;
+        border: 0;
+        background: none;
 
         &:hover {
           color: $datatable-pager-color-hover;
           background-color: $datatable-pager-background-hover;
+        }
+
+        &.active {
+          background-color: $datatable-pager-active-background;
+          font-weight: bold;
+        }
+
+        &:disabled {
+          color: $datatable-pager-disabled-color;
+          background-color: $datatable-pager-disabled-background;
         }
       }
 
@@ -440,10 +436,11 @@ $datatble-ghost-cell-animation-duration: 10s;
       .datatable-icon-skip,
       .datatable-icon-right,
       .datatable-icon-prev {
+        display: inline-block;
+        vertical-align: middle;
         font-size: 20px;
         line-height: 20px;
         padding-block: 0;
-        padding-inline: 3px;
       }
     }
   }

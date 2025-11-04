@@ -6,8 +6,8 @@
   font-size: 13px;
 
   *,
-  *:before,
-  *:after {
+  *::before,
+  *::after {
     box-sizing: border-box;
   }
 
@@ -17,8 +17,9 @@
 
     .datatable-header-cell {
       flex-shrink: 0;
-      text-align: left;
-      padding: 0.5rem 1.2rem;
+      text-align: start;
+      padding-block: 0.5rem;
+      padding-inline: 1.2rem;
       font-weight: bold;
 
       .datatable-header-cell-label {
@@ -31,12 +32,13 @@
     background: #1a1e28;
 
     .datatable-body-row {
-      border-top: 1px solid #2f3646;
+      border-block-start: 1px solid #2f3646;
 
       .datatable-body-cell {
         flex-shrink: 0;
-        text-align: left;
-        padding: 0.5rem 1.2rem;
+        text-align: start;
+        padding-block: 0.5rem;
+        padding-inline: 1.2rem;
         vertical-align: top;
       }
 
@@ -56,13 +58,15 @@
         color: #fff;
       }
     }
+
     .custom-loading-indicator-wrapper {
       position: sticky;
-      top: 0;
-      height: 0;
+      inset-block-start: 0;
+      block-size: 0;
       z-index: 999;
+
       .custom-loading-content {
-        width: 100%;
+        inline-size: 100%;
         background-color: #1a1e28;
       }
     }
@@ -71,52 +75,61 @@
   .datatable-footer {
     background: #232837;
     color: #72809b;
-    margin-top: -1px;
+    margin-block-start: -1px;
 
     .page-count {
       line-height: 50px;
-      height: 50px;
-      padding: 0 1.2rem;
+      block-size: 50px;
+      padding-block: 0;
+      padding-inline: 1.2rem;
     }
 
     .datatable-pager {
-      margin: 0 10px;
+      margin-block: 0;
+      margin-inline: 10px;
       vertical-align: top;
 
       ul {
         li {
-          margin: 10px 0px;
-
-          &:not(.disabled) {
-            &.active a,
-            &:hover a {
-              background-color: #455066;
-              font-weight: bold;
-            }
-          }
+          margin-block: 10px;
+          margin-inline: 0;
         }
       }
 
-      a {
-        height: 22px;
-        min-width: 24px;
+      .page-button {
+        block-size: 22px;
+        min-inline-size: 24px;
         line-height: 22px;
         padding: 0;
         border-radius: 3px;
-        margin: 0 3px;
+        margin-block: 0;
+        margin-inline: 3px;
         text-align: center;
         text-decoration: none;
         vertical-align: bottom;
         color: #72809b;
+        border: 0;
+        background: none;
+
+        &:not(:disabled) {
+          &.active,
+          &:hover {
+            background-color: #455066;
+            font-weight: bold;
+          }
+        }
       }
 
       .datatable-icon-left,
       .datatable-icon-skip,
       .datatable-icon-right,
       .datatable-icon-prev {
+        display: inline-block;
+        vertical-align: middle;
         font-size: 18px;
         line-height: 27px;
-        padding: 0 3px;
+        padding-block: 0;
+        padding-inline: 3px;
       }
     }
   }

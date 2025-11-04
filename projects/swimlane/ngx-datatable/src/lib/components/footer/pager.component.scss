@@ -17,15 +17,11 @@
   list-style: none;
 }
 
-.pager {
-  li {
-    a {
-      cursor: pointer;
-      display: inline-block;
-    }
+.page-button {
+  cursor: pointer;
+  display: inline-block;
 
-    &.disabled a {
-      cursor: not-allowed;
-    }
+  &:disabled {
+    cursor: not-allowed;
   }
 }

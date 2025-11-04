@@ -19,105 +19,128 @@ $datatble-ghost-cell-animation-duration: 10s;
   font-size: 13px;
 
   *,
-  *:before,
-  *:after {
+  *::before,
+  *::after {
     box-sizing: border-box;
   }
 
   .datatable-header {
-    height: unset !important;
+    block-size: unset !important; // stylelint-disable-line declaration-no-important
+
     .datatable-header-cell {
       flex-shrink: 0;
       vertical-align: bottom;
       padding: 0.75rem;
-      border-bottom: 1px solid #d1d4d7;
+      border-block-end: 1px solid #d1d4d7;
+
       .datatable-header-cell-label {
         line-height: 24px;
       }
     }
   }
+
   .datatable-body {
     .datatable-body-row {
       vertical-align: top;
-      border-top: 1px solid #d1d4d7;
+      border-block-start: 1px solid #d1d4d7;
+
       &.datatable-row-even {
         background-color: rgba(0, 0, 0, 0.05);
       }
+
       &.active {
         background-color: #1483ff;
         color: #fff;
       }
+
       .datatable-body-cell {
         flex-shrink: 0;
         padding: 0.75rem;
-        text-align: left;
+        text-align: start;
         vertical-align: top;
       }
     }
+
     .empty-row {
       $alert-padding-y: 0.75rem !default;
       $alert-padding-x: 1.25rem !default;
       position: relative;
-      padding: $alert-padding-y $alert-padding-x;
-      margin-bottom: 0;
+      padding-block: $alert-padding-y;
+      padding-inline: $alert-padding-x;
+      margin-block-end: 0;
     }
+
     .custom-loading-indicator-wrapper {
       position: sticky;
-      top: 0;
-      height: 0;
+      inset-block-start: 0;
+      block-size: 0;
       z-index: 999;
+
       .custom-loading-content {
-        width: 100%;
+        inline-size: 100%;
         background-color: #fff;
       }
     }
   }
+
   .datatable-footer {
     background: #424242;
     color: #ededed;
-    margin-top: -1px;
+    margin-block-start: -1px;
+
     .page-count {
       line-height: 50px;
-      height: 50px;
-      padding: 0 1.2rem;
+      block-size: 50px;
+      padding-block: 0;
+      padding-inline: 1.2rem;
     }
+
     .datatable-pager {
-      margin: 0 10px;
+      margin-block: 0;
+      margin-inline: 10px;
       vertical-align: top;
+
       ul {
         li {
-          margin: 10px 0px;
-          &:not(.disabled) {
-            &.active,
-            &:hover {
-              a {
-                background-color: #545454;
-                font-weight: bold;
-              }
-            }
-          }
+          margin-block: 10px;
+          margin-inline: 0;
         }
       }
-      a {
-        height: 22px;
-        min-width: 24px;
+
+      .page-button {
+        block-size: 22px;
+        min-inline-size: 24px;
         line-height: 22px;
         padding: 0;
         border-radius: 3px;
-        margin: 0 3px;
+        margin-block: 0;
+        margin-inline: 3px;
         text-align: center;
         vertical-align: top;
         text-decoration: none;
-        vertical-align: bottom;
         color: #ededed;
+        border: 0;
+        background: none;
+
+        &:not(:disabled) {
+          &.active,
+          &:hover {
+            background-color: #545454;
+            font-weight: bold;
+          }
+        }
       }
+
       .datatable-icon-left,
       .datatable-icon-skip,
       .datatable-icon-right,
       .datatable-icon-prev {
+        display: inline-block;
+        vertical-align: middle;
         font-size: 18px;
         line-height: 27px;
-        padding: 0 3px;
+        padding-block: 0;
+        padding-inline: 3px;
       }
     }
   }

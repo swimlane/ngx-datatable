@@ -190,6 +190,9 @@ describe('DataTablePagerComponent', () => {
         spyOn(footer.page, 'emit');
         await harness.clickPage(3);
         expect(footer.page.emit).toHaveBeenCalledWith({ page: 3 });
+
+        await harness.clickPage(4);
+        expect(footer.page.emit).toHaveBeenCalledWith({ page: 4 });
       });
     });
 
@@ -235,7 +238,7 @@ describe('DataTablePagerComponent', () => {
       footer.rowCount.set(100);
       fixture.detectChanges();
       [firstButton, previousButton, nextButton, lastButton] = fixture.debugElement
-        .queryAll(By.css('a[role=button]'))
+        .queryAll(By.css('.page-button'))
         .filter(it => !it.parent!.classes.pages);
       pageButtons = fixture.debugElement
         .queryAll(By.css('li.pages'))

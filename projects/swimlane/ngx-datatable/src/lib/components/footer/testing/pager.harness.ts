@@ -3,12 +3,10 @@ import { ComponentHarness, parallel } from '@angular/cdk/testing';
 export class PagerHarness extends ComponentHarness {
   static readonly hostSelector = 'ngx-datatable-pager';
 
-  private pages = this.locatorForAll('.pages a');
-  private previous = this.locatorFor('li:has([aria-label="go to previous page"])');
+  private pages = this.locatorForAll('.pages .page-button');
   private previousButton = this.locatorFor('[aria-label="go to previous page"]');
-  private next = this.locatorFor('li:has([aria-label="go to next page"])');
   private nextButton = this.locatorFor('[aria-label="go to next page"]');
-  private currentPageElement = this.locatorFor('.pages.active');
+  private currentPageElement = this.locatorFor('.pages .active');
 
   /** Returns the amount of currently rendered page buttons. */
   async pageCount() {
@@ -22,14 +20,14 @@ export class PagerHarness extends ComponentHarness {
   }
 
   async hasPrevious() {
-    return this.previous()
-      .then(previous => previous.hasClass('disabled'))
+    return this.previousButton()
+      .then(previous => previous.getProperty('disabled'))
       .then(disabled => !disabled);
   }
 
   async hasNext() {
-    return this.next()
-      .then(next => next.hasClass('disabled'))
+    return this.nextButton()
+      .then(next => next.getProperty('disabled'))
       .then(disabled => !disabled);
   }
 
