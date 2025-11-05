@@ -5,10 +5,10 @@ import {
   inject,
   InjectionToken,
   Injector,
-  Input,
   OnInit,
   TemplateRef,
-  ViewContainerRef
+  ViewContainerRef,
+  input
 } from '@angular/core';
 
 import { RowOrGroup } from '../../types/public.types';
@@ -21,9 +21,9 @@ import { RowOrGroup } from '../../types/public.types';
 @Component({
   selector: 'datatable-row-def',
   imports: [NgTemplateOutlet],
-  template: `@if (rowDef.rowDefInternal.rowTemplate) {
+  template: `@if (rowDef.rowDefInternal().rowTemplate) {
     <ng-container
-      [ngTemplateOutlet]="rowDef.rowDefInternal.rowTemplate"
+      [ngTemplateOutlet]="rowDef.rowDefInternal().rowTemplate"
       [ngTemplateOutletContext]="rowContext"
     />
   }`
@@ -31,8 +31,8 @@ import { RowOrGroup } from '../../types/public.types';
 export class DatatableRowDefComponent {
   rowDef = inject(ROW_DEF_TOKEN);
   rowContext = {
-    ...this.rowDef.rowDefInternal,
-    disabled: this.rowDef.rowDefInternalDisabled
+    ...this.rowDef.rowDefInternal(),
+    disabled: this.rowDef.rowDefInternalDisabled()
   };
 }
 
@@ -57,14 +57,14 @@ export class DatatableRowDefDirective {
 export class DatatableRowDefInternalDirective implements OnInit {
   vc = inject(ViewContainerRef);
 
-  @Input() rowDefInternal!: RowDefContext;
-  @Input() rowDefInternalDisabled?: boolean;
+  readonly rowDefInternal = input.required<RowDefContext>();
+  readonly rowDefInternalDisabled = input<boolean>();
 
   ngOnInit(): void {
     this.vc.createEmbeddedView(
-      this.rowDefInternal.template,
+      this.rowDefInternal().template,
       {
-        ...this.rowDefInternal
+        ...this.rowDefInternal()
       },
       {
         injector: Injector.create({
