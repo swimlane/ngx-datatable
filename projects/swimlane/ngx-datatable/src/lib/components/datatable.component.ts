@@ -9,7 +9,6 @@ import {
   ContentChildren,
   DoCheck,
   ElementRef,
-  EventEmitter,
   HostBinding,
   HostListener,
   inject,
@@ -20,7 +19,7 @@ import {
   numberAttribute,
   OnDestroy,
   OnInit,
-  Output,
+  output,
   QueryList,
   signal,
   TemplateRef,
@@ -485,56 +484,56 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * Body was scrolled typically in a `scrollbarV:true` scenario.
    */
-  @Output() readonly scroll = new EventEmitter<ScrollEvent>();
+  readonly scroll = output<ScrollEvent>();
 
   /**
    * A cell or row was focused via keyboard or mouse click.
    */
-  @Output() readonly activate = new EventEmitter<ActivateEvent<TRow>>();
+  readonly activate = output<ActivateEvent<TRow>>();
 
   /**
    * A cell or row was selected.
    */
-  @Output() readonly select = new EventEmitter<SelectEvent<TRow>>();
+  readonly select = output<SelectEvent<TRow>>();
 
   /**
    * Column sort was invoked.
    */
-  @Output() readonly sort = new EventEmitter<SortEvent>();
+  readonly sort = output<SortEvent>();
 
   /**
    * The table was paged either triggered by the pager or the body scroll.
    */
-  @Output() readonly page = new EventEmitter<PageEvent>();
+  readonly page = output<PageEvent>();
 
   /**
    * Columns were re-ordered.
    */
-  @Output() readonly reorder = new EventEmitter<ReorderEvent>();
+  readonly reorder = output<ReorderEvent>();
 
   /**
    * Column was resized.
    */
-  @Output() readonly resize = new EventEmitter<ColumnResizeEvent>();
+  readonly resize = output<ColumnResizeEvent>();
 
   /**
    * The context menu was invoked on the table.
    * type indicates whether the header or the body was clicked.
    * content contains either the column or the row that was clicked.
    */
-  @Output() readonly tableContextmenu = new EventEmitter<ContextMenuEvent<TRow>>(false);
+  readonly tableContextmenu = output<ContextMenuEvent<TRow>>();
 
   /**
    * A row was expanded ot collapsed for tree
    */
-  @Output() readonly treeAction = new EventEmitter<{ row: TRow; rowIndex: number }>();
+  readonly treeAction = output<{ row: TRow; rowIndex: number }>();
 
   /**
    * Emits HTML5 native drag events.
    * Only emits dragenter, dragover, drop events by default.
    * Set {@link rowDraggable} to true for dragstart and dragend.
    */
-  @Output() readonly rowDragEvents = new EventEmitter<DragEventData>();
+  readonly rowDragEvents = output<DragEventData>();
 
   /**
    * CSS class applied if the header height if fixed height.
