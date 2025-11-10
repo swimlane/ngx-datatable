@@ -510,7 +510,7 @@ describe('DatatableComponent With Frozen columns', () => {
       By.directive(DatatableComponent)
     ).componentInstance;
 
-    const column = datatableComponent.columnTemplates.get(0);
+    const column = datatableComponent.columnTemplates()[0];
     spyOn(datatableComponent.reorder, 'emit');
 
     // Try to move 'Name' (frozenLeft) to index 2
@@ -524,7 +524,7 @@ describe('DatatableComponent With Frozen columns', () => {
       By.directive(DatatableComponent)
     ).componentInstance;
 
-    const column = datatableComponent.columnTemplates.get(4);
+    const column = datatableComponent.columnTemplates()[4];
     spyOn(datatableComponent.reorder, 'emit');
 
     // Try to move 'State' (frozenRight) to index 0 (should not move out of frozenRight group)
@@ -534,21 +534,28 @@ describe('DatatableComponent With Frozen columns', () => {
   });
 
   it('should not allow moving non-frozen columns into frozenLeft or frozenRight groups', () => {
-    const datatableComponent = fixture.debugElement.query(
-      By.directive(DatatableComponent)
-    ).componentInstance;
+    const datatableComponent = fixture.debugElement.query(By.directive(DatatableComponent))
+      .componentInstance as DatatableComponent;
 
-    const genderColumn = datatableComponent.columnTemplates.get(1);
-    const cityColumn = datatableComponent.columnTemplates.get(3);
+    const genderColumn = datatableComponent.columnTemplates()[1];
+    const cityColumn = datatableComponent.columnTemplates()[3];
     spyOn(datatableComponent.reorder, 'emit');
 
     // Try to move 'Gender' (non-frozen) to index 0 (frozenLeft group)
-    datatableComponent.onColumnReorder({ prevValue: 1, newValue: 0, column: genderColumn });
+    datatableComponent.onColumnReorder({
+      prevValue: 1,
+      newValue: 0,
+      column: genderColumn.column() as any
+    });
     fixture.detectChanges();
     expect(datatableComponent.reorder.emit).not.toHaveBeenCalled();
 
     // Try to move 'City' (non-frozen) to index 4 (frozenRight group)
-    datatableComponent.onColumnReorder({ prevValue: 3, newValue: 4, column: cityColumn });
+    datatableComponent.onColumnReorder({
+      prevValue: 3,
+      newValue: 4,
+      column: cityColumn.column() as any
+    });
     fixture.detectChanges();
     expect(datatableComponent.reorder.emit).not.toHaveBeenCalled();
   });

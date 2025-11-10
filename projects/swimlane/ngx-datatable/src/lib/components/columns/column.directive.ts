@@ -1,16 +1,15 @@
 import {
   booleanAttribute,
-  ContentChild,
+  computed,
+  contentChild,
   Directive,
-  inject,
-  Input,
+  input,
   numberAttribute,
-  OnChanges,
   PipeTransform,
+  Signal,
   TemplateRef
 } from '@angular/core';
 
-import { ColumnChangesService } from '../../services/column-changes.service';
 import { CellContext, HeaderCellContext, Row } from '../../types/public.types';
 import { TableColumn, TableColumnProp } from '../../types/table-column.type';
 import { DataTableColumnCellDirective } from './column-cell.directive';
@@ -21,35 +20,47 @@ import { DataTableColumnCellTreeToggle } from './tree.directive';
 @Directive({
   selector: 'ngx-datatable-column'
 })
-export class DataTableColumnDirective<TRow extends Row> implements TableColumn, OnChanges {
-  private columnChangesService = inject(ColumnChangesService);
-  @Input() name?: string;
-  @Input() prop?: TableColumnProp;
-  @Input({ transform: booleanAttribute }) bindAsUnsafeHtml?: boolean;
-  @Input({ transform: booleanAttribute }) frozenLeft?: boolean;
-  @Input({ transform: booleanAttribute }) frozenRight?: boolean;
-  @Input({ transform: numberAttribute }) flexGrow?: number;
-  @Input({ transform: booleanAttribute }) resizeable?: boolean;
-  @Input() comparator?: (
-    valueA: any,
-    valueB: any,
-    rowA: TRow,
-    rowB: TRow,
-    sortDir: 'desc' | 'asc'
-  ) => number;
-  @Input() pipe?: PipeTransform;
-  @Input({ transform: booleanAttribute }) sortable?: boolean;
-  @Input({ transform: booleanAttribute }) draggable?: boolean;
-  @Input({ transform: booleanAttribute }) canAutoResize?: boolean;
-  @Input({ transform: numberAttribute }) minWidth?: number;
-  @Input({ transform: numberAttribute }) width?: number;
-  @Input({ transform: numberAttribute }) maxWidth?: number;
-  @Input({ transform: booleanAttribute }) checkboxable?: boolean;
-  @Input({ transform: booleanAttribute }) headerCheckboxable?: boolean;
-  @Input() headerClass?:
-    | string
-    | ((data: { column: TableColumn }) => string | Record<string, boolean>);
-  @Input() cellClass?:
+export class DataTableColumnDirective<TRow extends Row> {
+  readonly name = input<string>();
+  readonly prop = input<TableColumnProp>();
+  readonly bindAsUnsafeHtml = input(false, { transform: booleanAttribute });
+  readonly frozenLeft = input(false, { transform: booleanAttribute });
+  readonly frozenRight = input(false, { transform: booleanAttribute });
+  readonly flexGrow = input<number, number | string | undefined>(undefined, {
+    transform: numberAttribute
+  });
+  readonly resizeable = input<boolean, boolean | string | undefined>(undefined, {
+    transform: booleanAttribute
+  });
+  readonly comparator = input<
+    | ((valueA: any, valueB: any, rowA: TRow, rowB: TRow, sortDir: 'desc' | 'asc') => number)
+    | undefined
+  >();
+  readonly pipe = input<PipeTransform | undefined>();
+  readonly sortable = input<boolean, boolean | string | undefined>(undefined, {
+    transform: booleanAttribute
+  });
+  readonly draggable = input<boolean, boolean | string | undefined>(undefined, {
+    transform: booleanAttribute
+  });
+  readonly canAutoResize = input<boolean, boolean | string | undefined>(undefined, {
+    transform: booleanAttribute
+  });
+  readonly minWidth = input<number, number | string | undefined>(undefined, {
+    transform: numberAttribute
+  });
+  readonly width = input<number, number | string | undefined>(undefined, {
+    transform: numberAttribute
+  });
+  readonly maxWidth = input<number, number | string | undefined>(undefined, {
+    transform: numberAttribute
+  });
+  readonly checkboxable = input(false, { transform: booleanAttribute });
+  readonly headerCheckboxable = input(false, { transform: booleanAttribute });
+  readonly headerClass = input<
+    string | ((data: { column: TableColumn }) => string | Record<string, boolean>) | undefined
+  >();
+  readonly cellClass = input<
     | string
     | ((data: {
         row: TRow;
@@ -57,59 +68,70 @@ export class DataTableColumnDirective<TRow extends Row> implements TableColumn, 
         column: TableColumn<TRow>;
         value: any;
         rowHeight: number;
-      }) => string | Record<string, boolean>);
-  @Input({ transform: booleanAttribute }) isTreeColumn?: boolean;
-  @Input() treeLevelIndent?: number;
-  @Input() summaryFunc?: (cells: any[]) => any;
-  @Input() summaryTemplate?: TemplateRef<any>;
+      }) => string | Record<string, boolean>)
+    | undefined
+  >();
+  readonly isTreeColumn = input(false, { transform: booleanAttribute });
+  readonly treeLevelIndent = input<number | undefined>();
+  readonly summaryFunc = input<((cells: any[]) => any) | undefined>();
+  readonly summaryTemplate = input<TemplateRef<any> | undefined>();
 
-  @Input('cellTemplate')
-  _cellTemplateInput?: TemplateRef<CellContext<TRow>>;
+  readonly cellTemplateInput = input<TemplateRef<CellContext<TRow>> | undefined>(undefined, {
+    alias: 'cellTemplate'
+  });
+  readonly cellTemplateQuery = contentChild(DataTableColumnCellDirective, { read: TemplateRef });
 
-  @ContentChild(DataTableColumnCellDirective, { read: TemplateRef, static: true })
-  _cellTemplateQuery?: TemplateRef<CellContext<TRow>>;
+  readonly headerTemplateInput = input<TemplateRef<HeaderCellContext> | undefined>(undefined, {
+    alias: 'headerTemplate'
+  });
+  readonly headerTemplateQuery = contentChild(DataTableColumnHeaderDirective, {
+    read: TemplateRef
+  });
 
-  get cellTemplate(): TemplateRef<CellContext<TRow>> | undefined {
-    return this._cellTemplateInput ?? this._cellTemplateQuery;
-  }
+  readonly treeToggleTemplateInput = input<TemplateRef<any> | undefined>(undefined, {
+    alias: 'treeToggleTemplate'
+  });
+  readonly treeToggleTemplateQuery = contentChild(DataTableColumnCellTreeToggle, {
+    read: TemplateRef
+  });
 
-  @Input('headerTemplate')
-  _headerTemplateInput?: TemplateRef<HeaderCellContext>;
+  readonly ghostCellTemplateInput = input<TemplateRef<void> | undefined>(undefined, {
+    alias: 'ghostCellTemplate'
+  });
+  readonly ghostCellTemplateQuery = contentChild(DataTableColumnGhostCellDirective, {
+    read: TemplateRef
+  });
 
-  @ContentChild(DataTableColumnHeaderDirective, { read: TemplateRef, static: true })
-  _headerTemplateQuery?: TemplateRef<HeaderCellContext>;
-
-  get headerTemplate(): TemplateRef<HeaderCellContext> | undefined {
-    return this._headerTemplateInput ?? this._headerTemplateQuery;
-  }
-
-  @Input('treeToggleTemplate')
-  _treeToggleTemplateInput?: TemplateRef<any>;
-
-  @ContentChild(DataTableColumnCellTreeToggle, { read: TemplateRef, static: true })
-  _treeToggleTemplateQuery?: TemplateRef<any>;
-
-  get treeToggleTemplate(): TemplateRef<any> | undefined {
-    return this._treeToggleTemplateInput ?? this._treeToggleTemplateQuery;
-  }
-
-  @Input('ghostCellTemplate')
-  _ghostCellTemplateInput?: TemplateRef<void>;
-
-  @ContentChild(DataTableColumnGhostCellDirective, { read: TemplateRef, static: true })
-  _ghostCellTemplateQuery?: TemplateRef<void>;
-
-  get ghostCellTemplate(): TemplateRef<void> | undefined {
-    return this._ghostCellTemplateInput ?? this._ghostCellTemplateQuery;
-  }
-
-  private isFirstChange = true;
-
-  ngOnChanges() {
-    if (this.isFirstChange) {
-      this.isFirstChange = false;
-    } else {
-      this.columnChangesService.onInputChange();
-    }
-  }
+  /**
+   * Computed property that returns the column configuration as a TableColumn object
+   */
+  readonly column: Signal<TableColumn<TRow>> = computed(() => ({
+    name: this.name(),
+    prop: this.prop(),
+    bindAsUnsafeHtml: this.bindAsUnsafeHtml(),
+    frozenLeft: this.frozenLeft(),
+    frozenRight: this.frozenRight(),
+    flexGrow: this.flexGrow(),
+    resizeable: this.resizeable(),
+    comparator: this.comparator(),
+    pipe: this.pipe(),
+    sortable: this.sortable(),
+    draggable: this.draggable(),
+    canAutoResize: this.canAutoResize(),
+    minWidth: this.minWidth(),
+    width: this.width(),
+    maxWidth: this.maxWidth(),
+    checkboxable: this.checkboxable(),
+    headerCheckboxable: this.headerCheckboxable(),
+    headerClass: this.headerClass(),
+    cellClass: this.cellClass(),
+    isTreeColumn: this.isTreeColumn(),
+    treeLevelIndent: this.treeLevelIndent(),
+    summaryFunc: this.summaryFunc(),
+    summaryTemplate: this.summaryTemplate(),
+    cellTemplate: this.cellTemplateInput() ?? this.cellTemplateQuery(),
+    headerTemplate: this.headerTemplateInput() ?? this.headerTemplateQuery(),
+    treeToggleTemplate: this.treeToggleTemplateInput() ?? this.treeToggleTemplateQuery(),
+    ghostCellTemplate: this.ghostCellTemplateInput() ?? this.ghostCellTemplateQuery()
+  }));
 }

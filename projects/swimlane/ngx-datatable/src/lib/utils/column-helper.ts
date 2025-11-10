@@ -1,6 +1,3 @@
-import { QueryList } from '@angular/core';
-
-import { DataTableColumnDirective } from '../components/columns/column.directive';
 import { TableColumnInternal } from '../types/internal.types';
 import { Row } from '../types/public.types';
 import { TableColumn } from '../types/table-column.type';
@@ -10,7 +7,7 @@ import { id } from './id';
 import { orderByComparator } from './sort';
 
 export const toInternalColumn = <T extends Row>(
-  columns: TableColumn<T>[] | QueryList<DataTableColumnDirective<T>>,
+  columns: TableColumn<T>[],
   defaultColumnWidth = 150
 ): TableColumnInternal<T>[] => {
   let hasTreeColumn = false;

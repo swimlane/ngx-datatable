@@ -1,13 +1,13 @@
 import {
-  AfterContentInit,
   AfterViewInit,
   booleanAttribute,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChild,
-  ContentChildren,
+  contentChildren,
   DoCheck,
+  effect,
   ElementRef,
   HostBinding,
   HostListener,
@@ -21,9 +21,9 @@ import {
   OnDestroy,
   OnInit,
   output,
-  QueryList,
   signal,
   TemplateRef,
+  untracked,
   viewChild,
   ViewChild
 } from '@angular/core';
@@ -31,7 +31,6 @@ import { Subscription } from 'rxjs';
 
 import { VisibilityDirective } from '../directives/visibility.directive';
 import { NGX_DATATABLE_CONFIG, NgxDatatableConfig } from '../ngx-datatable.config';
-import { ColumnChangesService } from '../services/column-changes.service';
 import { ScrollbarHelper } from '../services/scrollbar-helper.service';
 import {
   ColumnResizeEventInternal,
@@ -92,8 +91,7 @@ import { DatatableRowDetailDirective } from './row-detail/row-detail.directive';
     {
       provide: DATATABLE_COMPONENT_TOKEN,
       useExisting: DatatableComponent
-    },
-    ColumnChangesService
+    }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
@@ -101,11 +99,10 @@ import { DatatableRowDetailDirective } from './row-detail/row-detail.directive';
   }
 })
 export class DatatableComponent<TRow extends Row = any>
-  implements OnInit, DoCheck, AfterViewInit, AfterContentInit, OnDestroy
+  implements OnInit, DoCheck, AfterViewInit, OnDestroy
 {
   private scrollbarHelper = inject(ScrollbarHelper);
   private cd = inject(ChangeDetectorRef);
-  private columnChangesService = inject(ColumnChangesService);
   private configuration =
     inject(NGX_DATATABLE_CONFIG, { optional: true }) ??
     // This is the old injection token for backward compatibility.
@@ -654,8 +651,8 @@ export class DatatableComponent<TRow extends Row = any>
    * Column templates gathered from `ContentChildren`
    * if described in your markup.
    */
-  @ContentChildren(DataTableColumnDirective)
-  columnTemplates!: QueryList<DataTableColumnDirective<TRow>>;
+  readonly columnTemplates =
+    contentChildren<DataTableColumnDirective<TRow>>(DataTableColumnDirective);
 
   /**
    * Row Detail templates gathered from the ContentChild
@@ -748,6 +745,16 @@ export class DatatableComponent<TRow extends Row = any>
   // this will be set to true once rows are available and rendered on UI
   private readonly _rowInitDone = signal(false);
 
+  constructor() {
+    // Effect to handle column template changes
+    // TODO: This should be a computed signal.
+    effect(() => {
+      const columns = this.columnTemplates().map(c => c.column());
+      // Ensure that we do not listen to other properties (yet).
+      untracked(() => this.translateColumns(columns));
+    });
+  }
+
   /**
    * Lifecycle hook that is called after data-bound
    * properties of a directive are initialized.
@@ -798,18 +805,6 @@ export class DatatableComponent<TRow extends Row = any>
 
   /**
    * Lifecycle hook that is called after a component's
-   * content has been fully initialized.
-   */
-  ngAfterContentInit() {
-    if (this.columnTemplates.length) {
-      this.translateColumns(this.columnTemplates);
-    }
-    this._subscriptions.push(this.columnTemplates.changes.subscribe(v => this.translateColumns(v)));
-    this.listenForColumnInputChanges();
-  }
-
-  /**
-   * Lifecycle hook that is called after a component's
    * view has been fully initialized.
    */
   ngAfterViewInit(): void {
@@ -854,16 +849,14 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * Translates the templates to the column objects
    */
-  translateColumns(val: QueryList<DataTableColumnDirective<TRow>>) {
-    if (val) {
-      if (val.length) {
-        this._internalColumns = toInternalColumn(val, this._defaultColumnWidth);
-        this.recalculateColumns();
-        if (!this.externalSorting() && this.rows?.length) {
-          this.sortInternalRows();
-        }
-        this.cd.markForCheck();
+  translateColumns(columns: TableColumn<TRow>[]) {
+    if (columns.length) {
+      this._internalColumns = toInternalColumn(columns, this._defaultColumnWidth);
+      this.recalculateColumns();
+      if (!this.externalSorting() && this.rows?.length) {
+        this.sortInternalRows();
       }
+      this.cd.markForCheck();
     }
   }
 
@@ -1292,20 +1285,6 @@ export class DatatableComponent<TRow extends Row = any>
 
   ngOnDestroy() {
     this._subscriptions.forEach(subscription => subscription.unsubscribe());
-  }
-
-  /**
-   * listen for changes to input bindings of all DataTableColumnDirective and
-   * trigger the columnTemplates.changes observable to emit
-   */
-  private listenForColumnInputChanges(): void {
-    this._subscriptions.push(
-      this.columnChangesService.columnInputChanges$.subscribe(() => {
-        if (this.columnTemplates) {
-          this.columnTemplates.notifyOnChanges();
-        }
-      })
-    );
   }
 
   private sortInternalRows(): void {
