@@ -3,7 +3,7 @@
     @if (headerHeight()) {
       <datatable-header
         role="rowgroup"
-        [sorts]="sorts"
+        [sorts]="sorts()"
         [sortType]="sortType()"
         [scrollbarH]="scrollbarH()"
         [innerWidth]="_innerWidth"

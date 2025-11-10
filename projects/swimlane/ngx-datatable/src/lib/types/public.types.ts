@@ -22,6 +22,7 @@ export const SortDirection = {
 
 export type SortDirection = (typeof SortDirection)[keyof typeof SortDirection];
 
+/** @deprecated See {@link DatatableComponent.sort} */
 export interface SortEvent {
   column: TableColumn;
   prevValue: SortDirection | undefined;
