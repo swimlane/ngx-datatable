@@ -309,16 +309,7 @@ export class DatatableComponent<TRow extends Row = any>
    * Show ghost loaders on each cell.
    * Default value: `false`
    */
-  @Input({ transform: booleanAttribute }) set ghostLoadingIndicator(val: boolean) {
-    this._ghostLoadingIndicator = val;
-    if (val && this.scrollbarV() && !this.externalPaging()) {
-      // in case where we don't have predefined total page length
-      this.rows = [...this.rows, undefined]; // undefined row will render ghost cell row at the end of the page
-    }
-  }
-  get ghostLoadingIndicator(): boolean {
-    return this._ghostLoadingIndicator;
-  }
+  readonly ghostLoadingIndicator = input(false, { transform: booleanAttribute });
 
   /**
    * Type of row selection. Options are:
@@ -742,7 +733,6 @@ export class DatatableComponent<TRow extends Row = any>
   _internalColumns!: TableColumnInternal<TRow>[];
   _columns!: TableColumn[];
   _subscriptions: Subscription[] = [];
-  _ghostLoadingIndicator = false;
   _defaultColumnWidth = this.configuration?.defaultColumnWidth ?? 150;
   /**
    * To have this available for all components.
@@ -765,6 +755,18 @@ export class DatatableComponent<TRow extends Row = any>
       // Ensure that we do not listen to other properties (yet).
       untracked(() => this.translateColumns(columns));
     });
+
+    // Effect to handle ghost loading indicator changes
+    effect(() => {
+      const ghostLoading = this.ghostLoadingIndicator();
+      // Use untracked to only subscribe to ghostLoadingIndicator changes
+      untracked(() => {
+        if (ghostLoading && this.scrollbarV() && !this.externalPaging()) {
+          // in case where we don't have predefined total page length
+          this.rows = [...this.rows, undefined]; // undefined row will render ghost cell row at the end of the page
+        }
+      });
+    });
   }
 
   /**
@@ -785,7 +787,7 @@ export class DatatableComponent<TRow extends Row = any>
     const rowDiffers = this.rowDiffer.diff(this.rows);
     if (rowDiffers || this.disableRowCheck()) {
       // we don't sort again when ghost loader adds a dummy row
-      if (!this.ghostLoadingIndicator && !this.externalSorting() && this._internalColumns) {
+      if (!this.ghostLoadingIndicator() && !this.externalSorting() && this._internalColumns) {
         this.sortInternalRows();
       } else {
         this._internalRows = [...this.rows];
