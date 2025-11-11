@@ -256,37 +256,15 @@ export class DatatableComponent<TRow extends Row = any>
    * The page size to be shown.
    * Default value: `undefined`
    */
-  @Input({ transform: numberOrUndefinedAttribute }) set limit(val: number | undefined) {
-    this._limit = val;
-
-    // recalculate sizes/etc
-    this.recalculate();
-  }
-
-  /**
-   * Gets the limit.
-   */
-  get limit(): number | undefined {
-    return this._limit;
-  }
+  readonly limit = input(undefined, {
+    transform: numberOrUndefinedAttribute
+  });
 
   /**
    * The total count of all rows.
    * Default value: `0`
    */
-  @Input({ transform: numberAttribute }) set count(val: number) {
-    this._count = val;
-
-    // recalculate sizes/etc
-    this.recalculate();
-  }
-
-  /**
-   * Gets the count.
-   */
-  get count(): number {
-    return this._count;
-  }
+  readonly count = input(0, { transform: numberAttribute });
 
   /**
    * The current offset ( page - 1 ) shown.
@@ -724,8 +702,6 @@ export class DatatableComponent<TRow extends Row = any>
   rowDiffer: IterableDiffer<TRow | undefined> = inject(IterableDiffers).find([]).create();
 
   _offsetX = 0;
-  _limit: number | undefined;
-  _count = 0;
   _offset = 0;
   _rows: (TRow | undefined)[] = [];
   _groupRowsBy?: keyof TRow;
@@ -766,6 +742,15 @@ export class DatatableComponent<TRow extends Row = any>
           this.rows = [...this.rows, undefined]; // undefined row will render ghost cell row at the end of the page
         }
       });
+    });
+
+    // Effect to handle recalculate when limit or count changes
+    effect(() => {
+      // Track limit and count changes
+      this.limit();
+      this.count();
+      // Recalculate without tracking other signals
+      untracked(() => this.recalculate());
     });
   }
 
@@ -834,9 +819,9 @@ export class DatatableComponent<TRow extends Row = any>
       // emit page for virtual server-side kickoff
       if (this.externalPaging() && this.scrollbarV()) {
         this.page.emit({
-          count: this.count,
+          count: this.count(),
           pageSize: this.pageSize,
-          limit: this.limit,
+          limit: this.limit(),
           offset: 0,
           sorts: this.sorts()
         });
@@ -1029,9 +1014,9 @@ export class DatatableComponent<TRow extends Row = any>
 
     if (!isNaN(this.offset)) {
       this.page.emit({
-        count: this.count,
+        count: this.count(),
         pageSize: this.pageSize,
-        limit: this.limit,
+        limit: this.limit(),
         offset: this.offset,
         sorts: this.sorts()
       });
@@ -1054,9 +1039,9 @@ export class DatatableComponent<TRow extends Row = any>
     this.bodyComponent.updateOffsetY(this.offset);
 
     this.page.emit({
-      count: this.count,
+      count: this.count(),
       pageSize: this.pageSize,
-      limit: this.limit,
+      limit: this.limit(),
       offset: this.offset,
       sorts: this.sorts()
     });
@@ -1082,8 +1067,9 @@ export class DatatableComponent<TRow extends Row = any>
     }
 
     // if limit is passed, we are paging
-    if (this.limit !== undefined) {
-      return this.limit;
+    const limit = this.limit();
+    if (limit !== undefined) {
+      return limit;
     }
 
     // otherwise use row length
@@ -1109,7 +1095,7 @@ export class DatatableComponent<TRow extends Row = any>
       }
     }
 
-    return this.count;
+    return this.count();
   }
 
   /**
@@ -1229,9 +1215,9 @@ export class DatatableComponent<TRow extends Row = any>
     this.bodyComponent.updateOffsetY(this.offset);
     // Emit the page object with updated offset value
     this.page.emit({
-      count: this.count,
+      count: this.count(),
       pageSize: this.pageSize,
-      limit: this.limit,
+      limit: this.limit(),
       offset: this.offset,
       sorts: this.sorts()
     });
