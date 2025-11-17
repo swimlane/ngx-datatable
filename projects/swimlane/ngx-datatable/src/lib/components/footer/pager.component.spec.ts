@@ -8,11 +8,11 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DatatableComponent } from '@siemens/ngx-datatable';
 
 import { DATATABLE_COMPONENT_TOKEN } from '../../utils/table-token';
 import { DatatablePagerComponent } from './pager.component';
 import { PagerHarness } from './testing/pager.harness';
+import { DatatableComponent } from '../datatable.component';
 
 interface MockFooter {
   curPage: WritableSignal<number>;

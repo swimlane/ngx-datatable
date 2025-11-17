@@ -1,5 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { ActivateEvent, DatatableComponent, TableColumn } from '@siemens/ngx-datatable';
+import {
+  ActivateEvent,
+  DatatableComponent,
+  TableColumn
+} from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';

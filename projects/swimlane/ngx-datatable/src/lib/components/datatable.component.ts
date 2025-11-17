@@ -16,6 +16,7 @@ import {
   Input,
   IterableDiffer,
   IterableDiffers,
+  linkedSignal,
   model,
   numberAttribute,
   OnDestroy,
@@ -171,21 +172,7 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * Columns to be displayed.
    */
-  @Input() set columns(val: TableColumn[]) {
-    if (val) {
-      this._internalColumns = toInternalColumn(val, this._defaultColumnWidth);
-      this.recalculateColumns();
-    }
-
-    this._columns = val;
-  }
-
-  /**
-   * Get the columns.
-   */
-  get columns(): TableColumn[] {
-    return this._columns;
-  }
+  readonly columns = input<TableColumn[]>();
 
   /**
    * List of row objects that should be
@@ -706,8 +693,18 @@ export class DatatableComponent<TRow extends Row = any>
   _rows: (TRow | undefined)[] = [];
   _groupRowsBy?: keyof TRow;
   _internalRows: (TRow | undefined)[] = [];
-  _internalColumns!: TableColumnInternal<TRow>[];
-  _columns!: TableColumn[];
+  // TODO: consider removing internal modifications of the columns.
+  // This requires a different strategy for certain properties like width.
+  readonly _internalColumns = linkedSignal(() =>
+    this.recalculateColumns(
+      toInternalColumn(
+        this.columnTemplates().length
+          ? this.columnTemplates().map(c => c.column())
+          : (this.columns() ?? []),
+        this._defaultColumnWidth
+      )
+    )
+  );
   _subscriptions: Subscription[] = [];
   _defaultColumnWidth = this.configuration?.defaultColumnWidth ?? 150;
   /**
@@ -750,7 +747,7 @@ export class DatatableComponent<TRow extends Row = any>
       this.limit();
       this.count();
       // Recalculate without tracking other signals
-      untracked(() => this.recalculate());
+      untracked(() => this.recalculateDims());
     });
   }
 
@@ -772,7 +769,11 @@ export class DatatableComponent<TRow extends Row = any>
     const rowDiffers = this.rowDiffer.diff(this.rows);
     if (rowDiffers || this.disableRowCheck()) {
       // we don't sort again when ghost loader adds a dummy row
-      if (!this.ghostLoadingIndicator() && !this.externalSorting() && this._internalColumns) {
+      if (
+        !this.ghostLoadingIndicator() &&
+        !this.externalSorting() &&
+        this._internalColumns().length
+      ) {
         this.sortInternalRows();
       } else {
         this._internalRows = [...this.rows];
@@ -850,8 +851,6 @@ export class DatatableComponent<TRow extends Row = any>
    */
   translateColumns(columns: TableColumn<TRow>[]) {
     if (columns.length) {
-      this._internalColumns = toInternalColumn(columns, this._defaultColumnWidth);
-      this.recalculateColumns();
       if (!this.externalSorting() && this.rows?.length) {
         this.sortInternalRows();
       }
@@ -905,7 +904,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   recalculate(): void {
     this.recalculateDims();
-    this.recalculateColumns();
+    this._internalColumns.set(this.recalculateColumns(this._internalColumns().slice()));
     this.cd.markForCheck();
   }
 
@@ -923,13 +922,13 @@ export class DatatableComponent<TRow extends Row = any>
    * distribution mode and scrollbar offsets.
    */
   recalculateColumns(
-    columns: TableColumnInternal[] = this._internalColumns,
+    columns: TableColumnInternal[],
     forceIdx = -1,
     allowBleed: boolean = this.scrollbarH()
-  ): TableColumn[] | undefined {
+  ): TableColumnInternal[] {
     let width = this._innerWidth;
-    if (!columns || !width) {
-      return undefined;
+    if (!width) {
+      return [];
     }
     const bodyElement = this.bodyElement?.nativeElement;
     this.verticalScrollVisible = bodyElement?.scrollHeight > bodyElement?.clientHeight;
@@ -950,19 +949,6 @@ export class DatatableComponent<TRow extends Row = any>
       );
     } else if (this.columnMode() === ColumnMode.flex) {
       adjustColumnWidths(columns, width);
-    }
-
-    // The type of width is wrong here.
-    // It can also be undefined, thus the eslint-rule must be disabled.
-    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-    if (this.bodyComponent && this.bodyComponent.columnGroupWidths().total !== width) {
-      this._internalColumns = [...this._internalColumns];
-      this.bodyComponent.cd.markForCheck();
-    }
-
-    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-    if (this.headerComponent && this.headerComponent._columnGroupWidths().total !== width) {
-      this._internalColumns = [...this._internalColumns];
     }
 
     return columns;
@@ -1121,14 +1107,13 @@ export class DatatableComponent<TRow extends Row = any>
       return;
     }
 
-    const idx = this._internalColumns.indexOf(column);
-    const cols = this._internalColumns.map(col => ({ ...col }));
+    const idx = this._internalColumns().indexOf(column);
+    const cols = this._internalColumns().map(col => ({ ...col }));
     cols[idx].width = newValue;
     // set this so we can force the column
     // width distribution to be to this value
     cols[idx].$$oldWidth = newValue;
-    this.recalculateColumns(cols, idx);
-    this._internalColumns = cols;
+    this._internalColumns.set(this.recalculateColumns(cols, idx));
 
     this.resize.emit({
       column,
@@ -1143,8 +1128,8 @@ export class DatatableComponent<TRow extends Row = any>
     }
     column.width = newValue;
     column.$$oldWidth = newValue;
-    const idx = this._internalColumns.indexOf(column);
-    this.recalculateColumns(this._internalColumns, idx);
+    const idx = this._internalColumns().indexOf(column);
+    this._internalColumns.set(this.recalculateColumns(this._internalColumns().slice(), idx));
   }
 
   /**
@@ -1152,7 +1137,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   onColumnReorder(event: ReorderEventInternal): void {
     const { column, newValue, prevValue } = event;
-    const cols = this._internalColumns.map(c => ({ ...c }));
+    const cols = this._internalColumns().map(c => ({ ...c }));
     const prevCol = cols[newValue];
     if (column.frozenLeft !== prevCol.frozenLeft || column.frozenRight !== prevCol.frozenRight) {
       return;
@@ -1177,7 +1162,7 @@ export class DatatableComponent<TRow extends Row = any>
       }
     }
 
-    this._internalColumns = cols;
+    this._internalColumns.set(cols);
 
     this.reorder.emit(event);
   }
@@ -1307,13 +1292,13 @@ export class DatatableComponent<TRow extends Row = any>
       this.groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy!);
       this.groupedRows = sortGroupedRows(
         this.groupedRows,
-        this._internalColumns,
+        this._internalColumns(),
         this.sorts(),
         sortOnGroupHeader
       );
       this._internalRows = [...this._internalRows];
     } else {
-      this._internalRows = sortRows(this._internalRows, this._internalColumns, this.sorts());
+      this._internalRows = sortRows(this._internalRows, this._internalColumns(), this.sorts());
     }
   }
 }
