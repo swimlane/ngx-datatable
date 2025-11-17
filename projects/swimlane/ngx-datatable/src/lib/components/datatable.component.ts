@@ -4,6 +4,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  computed,
   ContentChild,
   contentChildren,
   DoCheck,
@@ -117,23 +118,7 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * Rows that are displayed in the table.
    */
-  @Input() set rows(val: (TRow | undefined)[] | null | undefined) {
-    this._rows = val ?? [];
-    if (val) {
-      // This will ensure that datatable detects changes on doing like this rows = [...rows];
-      if (val.length) {
-        this.rowDiffer.diff([]);
-      }
-      this._internalRows = [...val];
-    }
-  }
-
-  /**
-   * Gets the rows.
-   */
-  get rows(): (TRow | undefined)[] {
-    return this._rows;
-  }
+  readonly rows = input<(TRow | undefined)[] | null | undefined>();
 
   /**
    * This attribute allows the user to set the name of the column to group the data with
@@ -143,7 +128,7 @@ export class DatatableComponent<TRow extends Row = any>
       this._groupRowsBy = val;
       if (this._groupRowsBy) {
         // creates a new array with the data grouped
-        this.groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
+        this.groupedRows = this.groupArrayBy(this.rows() ?? [], this._groupRowsBy);
       }
     }
   }
@@ -670,7 +655,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   get allRowsSelected(): boolean {
     const selected = this.selected();
-    let allRowsSelected = this.rows && selected && selected.length === this.rows.length;
+    let allRowsSelected = this.rows() && selected && selected.length === this.rows()!.length;
 
     if (this.bodyComponent && this.selectAllRowsOnPage()) {
       const indexes = this.bodyComponent.indexes;
@@ -678,7 +663,7 @@ export class DatatableComponent<TRow extends Row = any>
       allRowsSelected = selected.length === rowsOnPage;
     }
 
-    return selected && this.rows?.length !== 0 && allRowsSelected;
+    return !!(selected && this.rows()?.length !== 0 && allRowsSelected);
   }
 
   element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
@@ -687,12 +672,36 @@ export class DatatableComponent<TRow extends Row = any>
   bodyHeight!: number;
   rowCount = 0;
   rowDiffer: IterableDiffer<TRow | undefined> = inject(IterableDiffers).find([]).create();
+  /** This counter is increased, when the rowDiffer detects a change. This will cause an update of _internalRows. */
+  private readonly _rowDiffCount = signal(0);
 
   _offsetX = 0;
   _offset = 0;
-  _rows: (TRow | undefined)[] = [];
   _groupRowsBy?: keyof TRow;
-  _internalRows: (TRow | undefined)[] = [];
+  readonly _internalRows = computed(() => {
+    this._rowDiffCount(); // to trigger recalculation when row differ detects a change
+    let rows = this.rows()?.slice() ?? [];
+
+    const sorts = this.sorts();
+    if (sorts.length && !this.externalSorting()) {
+      rows = sortRows(rows, this._internalColumns(), this.sorts());
+    }
+
+    if (this.treeFromRelation() && this.treeToRelation()) {
+      rows = groupRowsByParents(
+        rows,
+        optionalGetterForProp(this.treeFromRelation()),
+        optionalGetterForProp(this.treeToRelation())
+      );
+    }
+
+    if (this.ghostLoadingIndicator() && this.scrollbarV() && !this.externalPaging()) {
+      // in case where we don't have predefined total page length
+      rows.push(undefined); // undefined row will render ghost cell row at the end of the page
+    }
+
+    return rows;
+  });
   // TODO: consider removing internal modifications of the columns.
   // This requires a different strategy for certain properties like width.
   readonly _internalColumns = linkedSignal(() =>
@@ -721,26 +730,7 @@ export class DatatableComponent<TRow extends Row = any>
   private readonly _rowInitDone = signal(false);
 
   constructor() {
-    // Effect to handle column template changes
     // TODO: This should be a computed signal.
-    effect(() => {
-      const columns = this.columnTemplates().map(c => c.column());
-      // Ensure that we do not listen to other properties (yet).
-      untracked(() => this.translateColumns(columns));
-    });
-
-    // Effect to handle ghost loading indicator changes
-    effect(() => {
-      const ghostLoading = this.ghostLoadingIndicator();
-      // Use untracked to only subscribe to ghostLoadingIndicator changes
-      untracked(() => {
-        if (ghostLoading && this.scrollbarV() && !this.externalPaging()) {
-          // in case where we don't have predefined total page length
-          this.rows = [...this.rows, undefined]; // undefined row will render ghost cell row at the end of the page
-        }
-      });
-    });
-
     // Effect to handle recalculate when limit or count changes
     effect(() => {
       // Track limit and count changes
@@ -748,6 +738,12 @@ export class DatatableComponent<TRow extends Row = any>
       this.count();
       // Recalculate without tracking other signals
       untracked(() => this.recalculateDims());
+    });
+    // Recalculates the rowCount when internal rows change
+    // TODO: This should be a computed signal.
+    effect(() => {
+      this._internalRows();
+      this.rowCount = untracked(() => this.calcRowCount());
     });
   }
 
@@ -766,8 +762,9 @@ export class DatatableComponent<TRow extends Row = any>
    * Lifecycle hook that is called when Angular dirty checks a directive.
    */
   ngDoCheck(): void {
-    const rowDiffers = this.rowDiffer.diff(this.rows);
+    const rowDiffers = this.rowDiffer.diff(this.rows());
     if (rowDiffers || this.disableRowCheck()) {
+      this._rowDiffCount.update(count => count + 1);
       // we don't sort again when ghost loader adds a dummy row
       if (
         !this.ghostLoadingIndicator() &&
@@ -775,20 +772,11 @@ export class DatatableComponent<TRow extends Row = any>
         this._internalColumns().length
       ) {
         this.sortInternalRows();
-      } else {
-        this._internalRows = [...this.rows];
       }
-
-      // auto group by parent on new update
-      this._internalRows = groupRowsByParents(
-        this._internalRows,
-        optionalGetterForProp(this.treeFromRelation()),
-        optionalGetterForProp(this.treeToRelation())
-      );
 
       if (this._groupRowsBy && rowDiffers) {
         // If a column has been specified in _groupRowsBy create a new array with the data grouped by that row
-        this.groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
+        this.groupedRows = this.groupArrayBy(this.rows() ?? [], this._groupRowsBy);
       }
       if (rowDiffers) {
         queueMicrotask(() => {
@@ -845,18 +833,6 @@ export class DatatableComponent<TRow extends Row = any>
       return x;
     }
   };
-
-  /**
-   * Translates the templates to the column objects
-   */
-  translateColumns(columns: TableColumn<TRow>[]) {
-    if (columns.length) {
-      if (!this.externalSorting() && this.rows?.length) {
-        this.sortInternalRows();
-      }
-      this.cd.markForCheck();
-    }
-  }
 
   /**
    * Creates a map with the data grouped by the user choice of grouping index
@@ -1059,12 +1035,7 @@ export class DatatableComponent<TRow extends Row = any>
     }
 
     // otherwise use row length
-    if (this.rows) {
-      return this.rows.length;
-    }
-
-    // other empty :(
-    return 0;
+    return this.rows()?.length ?? 0;
   }
 
   /**
@@ -1074,10 +1045,8 @@ export class DatatableComponent<TRow extends Row = any>
     if (!this.externalPaging()) {
       if (this.groupedRows) {
         return this.groupedRows.length;
-      } else if (this.treeFromRelation() != null && this.treeToRelation() != null) {
-        return this._internalRows.length;
       } else {
-        return this.rows.length;
+        return this._internalRows().length;
       }
     }
 
@@ -1188,13 +1157,6 @@ export class DatatableComponent<TRow extends Row = any>
       this.sortInternalRows();
     }
 
-    // auto group by parent on new update
-    this._internalRows = groupRowsByParents(
-      this._internalRows,
-      optionalGetterForProp(this.treeFromRelation()),
-      optionalGetterForProp(this.treeToRelation())
-    );
-
     // Always go to first page when sorting to see the newly sorted data
     this.offset = 0;
     this.bodyComponent.updateOffsetY(this.offset);
@@ -1221,7 +1183,11 @@ export class DatatableComponent<TRow extends Row = any>
 
       // do the opposite here
       if (!allSelected) {
-        this.selected.set(this._internalRows.slice(first, last).filter(row => !!row) as TRow[]);
+        this.selected.set(
+          this._internalRows()
+            .slice(first, last)
+            .filter(row => !!row) as TRow[]
+        );
       } else {
         this.selected.set([]);
       }
@@ -1229,11 +1195,11 @@ export class DatatableComponent<TRow extends Row = any>
       let relevantRows: TRow[];
       const disableRowCheckFn = this.disableRowCheck();
       if (disableRowCheckFn) {
-        relevantRows = this.rows.filter(
+        relevantRows = (this.rows() ?? []).filter(
           (row => row && !disableRowCheckFn(row)) as (row: TRow | undefined) => row is TRow
         );
       } else {
-        relevantRows = this.rows.filter(row => !!row);
+        relevantRows = (this.rows() ?? []).filter(row => !!row);
       }
       // before we splice, chk if we currently have all selected
       const allSelected = this.selected().length === relevantRows.length;
@@ -1264,7 +1230,9 @@ export class DatatableComponent<TRow extends Row = any>
     const row = event.row;
     // TODO: For duplicated items this will not work
     const treeToRel = this.treeToRelation();
-    const rowIndex = this._rows.findIndex(r => r && r[treeToRel!] === event.row[treeToRel!]);
+    const rowIndex = (this.rows() ?? []).findIndex(
+      r => r && r[treeToRel!] === event.row[treeToRel!]
+    );
     this.treeAction.emit({ row, rowIndex });
   }
 
@@ -1273,32 +1241,17 @@ export class DatatableComponent<TRow extends Row = any>
   }
 
   private sortInternalRows(): void {
-    // if there are no sort criteria we reset the rows with original rows
-    if (!this.sorts()?.length) {
-      this._internalRows = this._rows;
-      // if there is any tree relation then re-group rows accordingly
-      if (this.treeFromRelation() && this.treeToRelation()) {
-        this._internalRows = groupRowsByParents(
-          this._internalRows,
-          optionalGetterForProp(this.treeFromRelation()),
-          optionalGetterForProp(this.treeToRelation())
-        );
-      }
-    }
     if (this.groupedRows?.length) {
       const sortOnGroupHeader = this.sorts()?.find(
         sortColumns => sortColumns.prop === this._groupRowsBy
       );
-      this.groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy!);
+      this.groupedRows = this.groupArrayBy(this.rows() ?? [], this._groupRowsBy!);
       this.groupedRows = sortGroupedRows(
         this.groupedRows,
         this._internalColumns(),
         this.sorts(),
         sortOnGroupHeader
       );
-      this._internalRows = [...this._internalRows];
-    } else {
-      this._internalRows = sortRows(this._internalRows, this._internalColumns(), this.sorts());
     }
   }
 }

@@ -242,10 +242,10 @@ describe('DatatableComponent', () => {
     sortBy({ column: 2 }, fixture);
     fixture.detectChanges();
 
-    expect(textContent({ row: 1, column: 1 }, fixture)).toContain('amet');
-    expect(textContent({ row: 2, column: 1 }, fixture)).toContain('dolor');
-    expect(textContent({ row: 3, column: 1 }, fixture)).toContain('ipsum');
-    expect(textContent({ row: 4, column: 1 }, fixture)).toContain('lorem');
+    expect(textContent({ row: 1, column: 1 }, fixture)).toContain('dolor');
+    expect(textContent({ row: 2, column: 1 }, fixture)).toContain('ipsum');
+    expect(textContent({ row: 3, column: 1 }, fixture)).toContain('lorem');
+    expect(textContent({ row: 4, column: 1 }, fixture)).toContain('amet');
     expect(textContent({ row: 5, column: 1 }, fixture)).toContain('maecennas');
     expect(textContent({ row: 6, column: 1 }, fixture)).toContain('sed');
     expect(textContent({ row: 7, column: 1 }, fixture)).toContain('foo');
@@ -307,10 +307,10 @@ describe('DatatableComponent', () => {
     sortBy({ column: 2 }, fixture);
     fixture.detectChanges();
 
-    expect(textContent({ row: 1, column: 1 }, fixture)).toContain('amet');
-    expect(textContent({ row: 2, column: 1 }, fixture)).toContain('dolor');
-    expect(textContent({ row: 3, column: 1 }, fixture)).toContain('ipsum');
-    expect(textContent({ row: 4, column: 1 }, fixture)).toContain('lorem');
+    expect(textContent({ row: 1, column: 1 }, fixture)).toContain('dolor');
+    expect(textContent({ row: 2, column: 1 }, fixture)).toContain('ipsum');
+    expect(textContent({ row: 3, column: 1 }, fixture)).toContain('lorem');
+    expect(textContent({ row: 4, column: 1 }, fixture)).toContain('amet');
     expect(textContent({ row: 5, column: 1 }, fixture)).toContain('maecennas');
     expect(textContent({ row: 6, column: 1 }, fixture)).toContain('sed');
     expect(textContent({ row: 7, column: 1 }, fixture)).toContain('foo');

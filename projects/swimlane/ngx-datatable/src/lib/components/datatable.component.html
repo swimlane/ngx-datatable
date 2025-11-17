@@ -34,7 +34,7 @@
       role="rowgroup"
       [groupRowsBy]="groupRowsBy"
       [groupedRows]="groupedRows"
-      [rows]="_internalRows"
+      [rows]="_internalRows()"
       [groupExpansionDefault]="groupExpansionDefault()"
       [scrollbarV]="scrollbarV()"
       [scrollbarH]="scrollbarH()"
@@ -95,7 +95,7 @@
   </div>
   @if (footerHeight()) {
     <datatable-footer
-      [rowCount]="groupedRows !== undefined ? _internalRows.length : rowCount"
+      [rowCount]="groupedRows !== undefined ? _internalRows().length : rowCount"
       [groupCount]="groupedRows !== undefined ? rowCount : undefined"
       [pageSize]="pageSize"
       [offset]="offset"
