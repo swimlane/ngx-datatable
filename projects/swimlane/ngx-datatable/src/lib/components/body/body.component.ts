@@ -284,7 +284,6 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   // TODO: Find a better way to handle default expansion state with signal input
   @Input() groupExpansionDefault?: boolean;
   readonly innerWidth = input.required<number>();
-  readonly groupRowsBy = input<keyof TRow>();
   readonly virtualization = input<boolean>();
   readonly summaryRow = input<boolean>();
   readonly summaryPosition = input.required<string>();

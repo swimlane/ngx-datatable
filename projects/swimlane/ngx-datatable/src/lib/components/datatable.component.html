@@ -8,7 +8,7 @@
         [scrollbarH]="scrollbarH()"
         [innerWidth]="_innerWidth"
         [offsetX]="_offsetX"
-        [dealsWithGroup]="groupedRows !== undefined"
+        [dealsWithGroup]="_internalGroupedRows() !== undefined"
         [columns]="_internalColumns()"
         [headerHeight]="headerHeight()"
         [reorderable]="reorderable()"
@@ -32,8 +32,7 @@
     <datatable-body
       tabindex="0"
       role="rowgroup"
-      [groupRowsBy]="groupRowsBy"
-      [groupedRows]="groupedRows"
+      [groupedRows]="_internalGroupedRows()"
       [rows]="_internalRows()"
       [groupExpansionDefault]="groupExpansionDefault()"
       [scrollbarV]="scrollbarV()"
@@ -95,8 +94,8 @@
   </div>
   @if (footerHeight()) {
     <datatable-footer
-      [rowCount]="groupedRows !== undefined ? _internalRows().length : rowCount"
-      [groupCount]="groupedRows !== undefined ? rowCount : undefined"
+      [rowCount]="_internalGroupedRows() !== undefined ? _internalRows().length : rowCount"
+      [groupCount]="_internalGroupedRows() !== undefined ? rowCount : undefined"
       [pageSize]="pageSize"
       [offset]="offset"
       [footerHeight]="footerHeight()"

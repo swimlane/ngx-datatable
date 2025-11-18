@@ -123,19 +123,7 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * This attribute allows the user to set the name of the column to group the data with
    */
-  @Input() set groupRowsBy(val: keyof TRow | undefined) {
-    if (val) {
-      this._groupRowsBy = val;
-      if (this._groupRowsBy) {
-        // creates a new array with the data grouped
-        this.groupedRows = this.groupArrayBy(this.rows() ?? [], this._groupRowsBy);
-      }
-    }
-  }
-
-  get groupRowsBy() {
-    return this._groupRowsBy;
-  }
+  readonly groupRowsBy = input<keyof TRow>();
 
   /**
    * This attribute allows the user to set a grouped array in the following format:
@@ -152,7 +140,7 @@ export class DatatableComponent<TRow extends Row = any>
    *    ]}
    *  ]
    */
-  @Input() groupedRows?: Group<TRow>[];
+  readonly groupedRows = input<Group<TRow>[]>();
 
   /**
    * Columns to be displayed.
@@ -677,7 +665,6 @@ export class DatatableComponent<TRow extends Row = any>
 
   _offsetX = 0;
   _offset = 0;
-  _groupRowsBy?: keyof TRow;
   readonly _internalRows = computed(() => {
     this._rowDiffCount(); // to trigger recalculation when row differ detects a change
     let rows = this.rows()?.slice() ?? [];
@@ -702,6 +689,36 @@ export class DatatableComponent<TRow extends Row = any>
 
     return rows;
   });
+
+  readonly _internalGroupedRows = computed(() => {
+    let groupedRows = this.groupedRows();
+    const groupRowsBy = this.groupRowsBy();
+
+    if (!groupedRows && groupRowsBy) {
+      this._rowDiffCount(); // to trigger recalculation when row differ detects a change
+      groupedRows = this.groupArrayBy(this.rows() ?? [], groupRowsBy);
+    }
+
+    if (!groupedRows) {
+      // return here to prevent subscription to sorts when no grouping
+      return undefined;
+    }
+
+    const sorts = this.sorts();
+    if (sorts.length && !this.externalSorting()) {
+      if (groupedRows?.length) {
+        groupedRows = sortGroupedRows(
+          groupedRows,
+          this._internalColumns(),
+          sorts,
+          sorts.find(sortColumns => sortColumns.prop === groupRowsBy)
+        );
+      }
+    }
+
+    return groupedRows;
+  });
+
   // TODO: consider removing internal modifications of the columns.
   // This requires a different strategy for certain properties like width.
   readonly _internalColumns = linkedSignal(() =>
@@ -765,19 +782,6 @@ export class DatatableComponent<TRow extends Row = any>
     const rowDiffers = this.rowDiffer.diff(this.rows());
     if (rowDiffers || this.disableRowCheck()) {
       this._rowDiffCount.update(count => count + 1);
-      // we don't sort again when ghost loader adds a dummy row
-      if (
-        !this.ghostLoadingIndicator() &&
-        !this.externalSorting() &&
-        this._internalColumns().length
-      ) {
-        this.sortInternalRows();
-      }
-
-      if (this._groupRowsBy && rowDiffers) {
-        // If a column has been specified in _groupRowsBy create a new array with the data grouped by that row
-        this.groupedRows = this.groupArrayBy(this.rows() ?? [], this._groupRowsBy);
-      }
       if (rowDiffers) {
         queueMicrotask(() => {
           this._rowInitDone.set(true);
@@ -825,7 +829,7 @@ export class DatatableComponent<TRow extends Row = any>
    * (`fn(x) === fn(y)` instead of `x === y`)
    */
   @Input() rowIdentity: (x: RowOrGroup<TRow>) => unknown = x => {
-    if (this._groupRowsBy) {
+    if (this.groupRowsBy()) {
       // each group in groupedRows are stored as {key, value: [rows]},
       // where key is the groupRowsBy index
       return (x as Group<TRow>).key ?? x;
@@ -1043,8 +1047,9 @@ export class DatatableComponent<TRow extends Row = any>
    */
   calcRowCount(): number {
     if (!this.externalPaging()) {
-      if (this.groupedRows) {
-        return this.groupedRows.length;
+      const groupedRows = this._internalGroupedRows();
+      if (groupedRows) {
+        return groupedRows.length;
       } else {
         return this._internalRows().length;
       }
@@ -1150,13 +1155,6 @@ export class DatatableComponent<TRow extends Row = any>
 
     this.sorts.set(event.sorts);
 
-    // this could be optimized better since it will resort
-    // the rows again on the 'push' detection...
-    if (!this.externalSorting()) {
-      // don't use normal setter so we don't resort
-      this.sortInternalRows();
-    }
-
     // Always go to first page when sorting to see the newly sorted data
     this.offset = 0;
     this.bodyComponent.updateOffsetY(this.offset);
@@ -1238,20 +1236,5 @@ export class DatatableComponent<TRow extends Row = any>
 
   ngOnDestroy() {
     this._subscriptions.forEach(subscription => subscription.unsubscribe());
-  }
-
-  private sortInternalRows(): void {
-    if (this.groupedRows?.length) {
-      const sortOnGroupHeader = this.sorts()?.find(
-        sortColumns => sortColumns.prop === this._groupRowsBy
-      );
-      this.groupedRows = this.groupArrayBy(this.rows() ?? [], this._groupRowsBy!);
-      this.groupedRows = sortGroupedRows(
-        this.groupedRows,
-        this._internalColumns(),
-        this.sorts(),
-        sortOnGroupHeader
-      );
-    }
   }
 }
