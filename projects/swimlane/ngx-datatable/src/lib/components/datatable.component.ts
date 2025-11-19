@@ -655,9 +655,18 @@ export class DatatableComponent<TRow extends Row = any>
   }
 
   element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
-  _innerWidth!: number;
+  readonly _innerWidth = computed(() => this.dimensions().width);
   pageSize!: number;
-  bodyHeight!: number;
+  readonly bodyHeight = computed(() => {
+    if (this.scrollbarV()) {
+      let height = this.dimensions().height;
+      if (this.headerElement) {
+        height = height - this.headerElement.nativeElement.getBoundingClientRect().height;
+      }
+      return height - this.footerHeight();
+    }
+    return 0;
+  });
   rowCount = 0;
   rowDiffer: IterableDiffer<TRow | undefined> = inject(IterableDiffers).find([]).create();
   /** This counter is increased, when the rowDiffer detects a change. This will cause an update of _internalRows. */
@@ -745,6 +754,7 @@ export class DatatableComponent<TRow extends Row = any>
   // this makes horizontal scroll to appear on load even if columns can fit in view
   // this will be set to true once rows are available and rendered on UI
   private readonly _rowInitDone = signal(false);
+  private readonly dimensions = signal<Pick<DOMRect, 'width' | 'height'>>({ height: 0, width: 0 });
 
   constructor() {
     // TODO: This should be a computed signal.
@@ -906,7 +916,7 @@ export class DatatableComponent<TRow extends Row = any>
     forceIdx = -1,
     allowBleed: boolean = this.scrollbarH()
   ): TableColumnInternal[] {
-    let width = this._innerWidth;
+    let width = this._innerWidth();
     if (!width) {
       return [];
     }
@@ -941,18 +951,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   recalculateDims(): void {
     const dims = this.element.getBoundingClientRect();
-    this._innerWidth = Math.floor(dims.width);
-
-    if (this.scrollbarV()) {
-      let height = dims.height;
-      if (this.headerElement) {
-        height = height - this.headerElement.nativeElement.getBoundingClientRect().height;
-      }
-      if (this.footerHeight()) {
-        height = height - this.footerHeight();
-      }
-      this.bodyHeight = height;
-    }
+    this.dimensions.set(dims);
 
     this.recalculatePages();
   }
@@ -1028,7 +1027,7 @@ export class DatatableComponent<TRow extends Row = any>
     // This is because an expanded row is still considered to be a child of
     // the original row.  Hence calculation would use rowHeight only.
     if (this.scrollbarV() && this.virtualization()) {
-      const size = Math.ceil(this.bodyHeight / (this.rowHeight() as number));
+      const size = Math.ceil(this.bodyHeight() / (this.rowHeight() as number));
       return Math.max(size, 0);
     }
 
