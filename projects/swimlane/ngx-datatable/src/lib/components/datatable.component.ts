@@ -6,6 +6,7 @@ import {
   Component,
   computed,
   ContentChild,
+  contentChild,
   contentChildren,
   DoCheck,
   effect,
@@ -26,8 +27,7 @@ import {
   signal,
   TemplateRef,
   untracked,
-  viewChild,
-  ViewChild
+  viewChild
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
@@ -609,34 +609,27 @@ export class DatatableComponent<TRow extends Row = any>
 
   /**
    * Footer template gathered from the ContentChild
+   * @internal
    */
-  @ContentChild(DatatableFooterDirective)
-  footer?: DatatableFooterDirective;
+  readonly _footer = contentChild(DatatableFooterDirective);
 
-  /**
-   * Reference to the body component for manually
-   * invoking functions on the body.
-   */
-  @ViewChild(DataTableBodyComponent)
-  bodyComponent!: DataTableBodyComponent<TRow & { treeStatus?: TreeStatus }>;
+  private readonly _bodyComponent =
+    viewChild.required<DataTableBodyComponent<TRow & { treeStatus?: TreeStatus }>>(
+      DataTableBodyComponent
+    );
 
-  /**
-   * Reference to the header component for manually
-   * invoking functions on the header.
-   */
-  @ViewChild(DataTableHeaderComponent)
-  headerComponent!: DataTableHeaderComponent;
+  private readonly _headerElement = viewChild(DataTableHeaderComponent, {
+    read: ElementRef<HTMLElement>
+  });
 
-  @ViewChild(DataTableHeaderComponent, { read: ElementRef })
-  headerElement?: ElementRef<HTMLElement>;
+  private readonly _bodyElement = viewChild.required(DataTableBodyComponent, {
+    read: ElementRef<HTMLElement>
+  });
 
-  @ViewChild(DataTableBodyComponent, { read: ElementRef })
-  private bodyElement!: ElementRef<HTMLElement>;
-
-  @ContentChild(DatatableRowDefDirective, {
+  /** @internal */
+  readonly _rowDefTemplate = contentChild(DatatableRowDefDirective, {
     read: TemplateRef
-  })
-  rowDefTemplate?: TemplateRef<any>;
+  });
 
   /**
    * Returns if all rows are selected.
@@ -645,9 +638,9 @@ export class DatatableComponent<TRow extends Row = any>
     const selected = this.selected();
     let allRowsSelected = this.rows() && selected && selected.length === this.rows()!.length;
 
-    if (this.bodyComponent && this.selectAllRowsOnPage()) {
-      const indexes = this.bodyComponent.indexes;
-      const rowsOnPage = indexes().last - indexes().first;
+    if (this.selectAllRowsOnPage()) {
+      const { first, last } = this._bodyComponent().indexes();
+      const rowsOnPage = last - first;
       allRowsSelected = selected.length === rowsOnPage;
     }
 
@@ -660,8 +653,9 @@ export class DatatableComponent<TRow extends Row = any>
   readonly bodyHeight = computed(() => {
     if (this.scrollbarV()) {
       let height = this.dimensions().height;
-      if (this.headerElement) {
-        height = height - this.headerElement.nativeElement.getBoundingClientRect().height;
+      const headerElement = this._headerElement();
+      if (headerElement) {
+        height = height - headerElement.nativeElement.getBoundingClientRect().height;
       }
       return height - this.footerHeight();
     }
@@ -913,8 +907,8 @@ export class DatatableComponent<TRow extends Row = any>
     if (!width) {
       return [];
     }
-    const bodyElement = this.bodyElement?.nativeElement;
-    this.verticalScrollVisible = bodyElement?.scrollHeight > bodyElement?.clientHeight;
+    const { scrollHeight, clientHeight } = this._bodyElement().nativeElement;
+    this.verticalScrollVisible = scrollHeight > clientHeight;
     if (this.scrollbarV() || this.scrollbarVDynamic()) {
       width =
         width -
@@ -984,7 +978,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   onFooterPage(event: PagerPageEvent) {
     this.offset = event.page - 1;
-    this.bodyComponent.updateOffsetY(this.offset);
+    this._bodyComponent().updateOffsetY(this.offset);
 
     this.page.emit({
       count: this.count(),
@@ -1139,7 +1133,7 @@ export class DatatableComponent<TRow extends Row = any>
 
     // Always go to first page when sorting to see the newly sorted data
     this.offset = 0;
-    this.bodyComponent.updateOffsetY(this.offset);
+    this._bodyComponent().updateOffsetY(this.offset);
     // Emit the page object with updated offset value
     this.page.emit({
       count: this.count(),
@@ -1155,10 +1149,9 @@ export class DatatableComponent<TRow extends Row = any>
    * Toggle all row selection
    */
   onHeaderSelect(): void {
-    if (this.bodyComponent && this.selectAllRowsOnPage()) {
+    if (this.selectAllRowsOnPage()) {
       // before we splice, chk if we currently have all selected
-      const first = this.bodyComponent.indexes().first;
-      const last = this.bodyComponent.indexes().last;
+      const { first, last } = this._bodyComponent().indexes();
       const allSelected = this.selected().length === last - first;
 
       // do the opposite here
