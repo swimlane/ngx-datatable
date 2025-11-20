@@ -46,7 +46,7 @@
       [offset]="offset"
       [trackByProp]="trackByProp()"
       [columns]="_internalColumns()"
-      [pageSize]="pageSize"
+      [pageSize]="pageSize()"
       [offsetX]="_offsetX"
       [rowDetail]="rowDetail"
       [groupHeader]="groupHeader"
@@ -96,7 +96,7 @@
     <datatable-footer
       [rowCount]="_internalGroupedRows() !== undefined ? _internalRows().length : rowCount"
       [groupCount]="_internalGroupedRows() !== undefined ? rowCount : undefined"
-      [pageSize]="pageSize"
+      [pageSize]="pageSize()"
       [offset]="offset"
       [footerHeight]="footerHeight()"
       [footerTemplate]="footer"

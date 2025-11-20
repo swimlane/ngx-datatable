@@ -234,7 +234,7 @@ export class DatatableComponent<TRow extends Row = any>
     this._offset = val;
   }
   get offset(): number {
-    return Math.max(Math.min(this._offset, Math.ceil(this.rowCount / this.pageSize) - 1), 0);
+    return Math.max(Math.min(this._offset, Math.ceil(this.rowCount / this.pageSize()) - 1), 0);
   }
 
   /**
@@ -656,7 +656,7 @@ export class DatatableComponent<TRow extends Row = any>
 
   element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
   readonly _innerWidth = computed(() => this.dimensions().width);
-  pageSize!: number;
+  readonly pageSize = computed(() => this.calcPageSize());
   readonly bodyHeight = computed(() => {
     if (this.scrollbarV()) {
       let height = this.dimensions().height;
@@ -823,7 +823,7 @@ export class DatatableComponent<TRow extends Row = any>
       if (this.externalPaging() && this.scrollbarV()) {
         this.page.emit({
           count: this.count(),
-          pageSize: this.pageSize,
+          pageSize: this.pageSize(),
           limit: this.limit(),
           offset: 0,
           sorts: this.sorts()
@@ -960,7 +960,6 @@ export class DatatableComponent<TRow extends Row = any>
    * Recalculates the pages after a update.
    */
   recalculatePages(): void {
-    this.pageSize = this.calcPageSize();
     this.rowCount = this.calcRowCount();
   }
 
@@ -980,7 +979,7 @@ export class DatatableComponent<TRow extends Row = any>
     if (!isNaN(this.offset)) {
       this.page.emit({
         count: this.count(),
-        pageSize: this.pageSize,
+        pageSize: this.pageSize(),
         limit: this.limit(),
         offset: this.offset,
         sorts: this.sorts()
@@ -1005,7 +1004,7 @@ export class DatatableComponent<TRow extends Row = any>
 
     this.page.emit({
       count: this.count(),
-      pageSize: this.pageSize,
+      pageSize: this.pageSize(),
       limit: this.limit(),
       offset: this.offset,
       sorts: this.sorts()
@@ -1160,7 +1159,7 @@ export class DatatableComponent<TRow extends Row = any>
     // Emit the page object with updated offset value
     this.page.emit({
       count: this.count(),
-      pageSize: this.pageSize,
+      pageSize: this.pageSize(),
       limit: this.limit(),
       offset: this.offset,
       sorts: this.sorts()
