@@ -838,7 +838,7 @@ export class DatatableComponent<TRow extends Row = any>
    *
    * (`fn(x) === fn(y)` instead of `x === y`)
    */
-  @Input() rowIdentity: (x: RowOrGroup<TRow>) => unknown = x => {
+  readonly rowIdentity = input<(x: RowOrGroup<TRow>) => unknown>(x => {
     if (this.groupRowsBy()) {
       // each group in groupedRows are stored as {key, value: [rows]},
       // where key is the groupRowsBy index
@@ -846,7 +846,7 @@ export class DatatableComponent<TRow extends Row = any>
     } else {
       return x;
     }
-  };
+  });
 
   /**
    * Creates a map with the data grouped by the user choice of grouping index
