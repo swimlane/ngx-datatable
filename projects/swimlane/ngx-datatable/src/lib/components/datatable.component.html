@@ -42,7 +42,7 @@
       [ghostLoadingIndicator]="ghostLoadingIndicator()"
       [externalPaging]="externalPaging()"
       [rowHeight]="rowHeight()"
-      [rowCount]="rowCount"
+      [rowCount]="rowCount()"
       [offset]="offset"
       [trackByProp]="trackByProp()"
       [columns]="_internalColumns()"
@@ -94,8 +94,8 @@
   </div>
   @if (footerHeight()) {
     <datatable-footer
-      [rowCount]="_internalGroupedRows() !== undefined ? _internalRows().length : rowCount"
-      [groupCount]="_internalGroupedRows() !== undefined ? rowCount : undefined"
+      [rowCount]="_internalGroupedRows() !== undefined ? _internalRows().length : rowCount()"
+      [groupCount]="_internalGroupedRows() !== undefined ? rowCount() : undefined"
       [pageSize]="pageSize()"
       [offset]="offset"
       [footerHeight]="footerHeight()"
