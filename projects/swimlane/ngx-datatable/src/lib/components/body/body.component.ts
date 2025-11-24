@@ -131,8 +131,6 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
           >
             <datatable-body-row
               #rowElement
-              role="row"
-              tabindex="-1"
               [disabled]="disabled"
               [isSelected]="getRowSelected(row)"
               [columns]="columns"
@@ -232,7 +230,6 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
       </datatable-scroller>
       @if (summaryRow() && summaryPosition() === 'bottom') {
         <datatable-summary-row
-          role="row"
           [rowHeight]="summaryHeight()"
           [innerWidth]="innerWidth()"
           [rows]="rows"

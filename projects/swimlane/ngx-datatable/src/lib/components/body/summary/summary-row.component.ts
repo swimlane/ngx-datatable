@@ -28,7 +28,6 @@ const noopSumFunc = (cells: any[]): void => {
     @let _internalColumns = this._internalColumns();
     @if (summaryRow && _internalColumns.length) {
       <datatable-body-row
-        tabindex="-1"
         ariaRowCheckboxMessage=""
         [columns]="_internalColumns"
         [rowHeight]="rowHeight()"

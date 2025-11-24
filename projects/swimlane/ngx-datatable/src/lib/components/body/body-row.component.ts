@@ -59,6 +59,8 @@ import { DataTableBodyCellComponent } from './body-cell.component';
   styleUrl: './body-row.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
+    role: 'row',
+    tabindex: '-1',
     '[class]': 'cssClass()',
     '[class.active]': 'isSelected()',
     '[class.datatable-row-odd]': 'innerRowIndex() % 2 !== 0',
