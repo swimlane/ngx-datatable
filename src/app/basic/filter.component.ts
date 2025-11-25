@@ -68,6 +68,6 @@ export class FilterComponent {
       return d.name.toLowerCase().includes(val) || !val;
     });
     // Whenever the filter changes, always go back to the first page
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 }

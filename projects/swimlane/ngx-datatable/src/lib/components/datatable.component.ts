@@ -15,7 +15,6 @@ import {
   HostListener,
   inject,
   input,
-  Input,
   IterableDiffer,
   IterableDiffers,
   linkedSignal,
@@ -230,12 +229,7 @@ export class DatatableComponent<TRow extends Row = any>
    * The current offset ( page - 1 ) shown.
    * Default value: `0`
    */
-  @Input({ transform: numberAttribute }) set offset(val: number) {
-    this._offset = val;
-  }
-  get offset(): number {
-    return Math.max(Math.min(this._offset, Math.ceil(this.rowCount() / this.pageSize()) - 1), 0);
-  }
+  readonly offset = model<number>(0);
 
   /**
    * Show the linear loading bar.
@@ -667,7 +661,6 @@ export class DatatableComponent<TRow extends Row = any>
   private readonly _rowDiffCount = signal(0);
 
   _offsetX = 0;
-  _offset = 0;
   readonly _internalRows = computed(() => {
     this._rowDiffCount(); // to trigger recalculation when row differ detects a change
     let rows = this.rows()?.slice() ?? [];
@@ -734,6 +727,18 @@ export class DatatableComponent<TRow extends Row = any>
       )
     )
   );
+
+  /**
+   * Computed signal that returns the corrected offset value.
+   * It ensures the offset is within valid bounds based on rowCount and pageSize.
+   */
+  readonly correctedOffset = computed(() => {
+    const offset = this.offset();
+    const rowCount = this.rowCount();
+    const pageSize = this.pageSize();
+    return Math.max(Math.min(offset, Math.ceil(rowCount / pageSize) - 1), 0);
+  });
+
   _subscriptions: Subscription[] = [];
   _defaultColumnWidth = this.configuration?.defaultColumnWidth ?? 150;
   /**
@@ -952,14 +957,14 @@ export class DatatableComponent<TRow extends Row = any>
       return;
     }
 
-    this.offset = offset;
+    this.offset.set(offset);
 
-    if (!isNaN(this.offset)) {
+    if (!isNaN(this.correctedOffset())) {
       this.page.emit({
         count: this.count(),
         pageSize: this.pageSize(),
         limit: this.limit(),
-        offset: this.offset,
+        offset: this.correctedOffset(),
         sorts: this.sorts()
       });
     }
@@ -977,14 +982,14 @@ export class DatatableComponent<TRow extends Row = any>
    * The footer triggered a page event.
    */
   onFooterPage(event: PagerPageEvent) {
-    this.offset = event.page - 1;
-    this._bodyComponent().updateOffsetY(this.offset);
+    this.offset.set(event.page - 1);
+    this._bodyComponent().updateOffsetY(this.correctedOffset());
 
     this.page.emit({
       count: this.count(),
       pageSize: this.pageSize(),
       limit: this.limit(),
-      offset: this.offset,
+      offset: this.correctedOffset(),
       sorts: this.sorts()
     });
 
@@ -1132,14 +1137,14 @@ export class DatatableComponent<TRow extends Row = any>
     this.sorts.set(event.sorts);
 
     // Always go to first page when sorting to see the newly sorted data
-    this.offset = 0;
-    this._bodyComponent().updateOffsetY(this.offset);
+    this.offset.set(0);
+    this._bodyComponent().updateOffsetY(this.correctedOffset());
     // Emit the page object with updated offset value
     this.page.emit({
       count: this.count(),
       pageSize: this.pageSize(),
       limit: this.limit(),
-      offset: this.offset,
+      offset: this.correctedOffset(),
       sorts: this.sorts()
     });
     this.sort.emit(event);
