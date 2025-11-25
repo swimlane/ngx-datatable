@@ -634,7 +634,7 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * Returns if all rows are selected.
    */
-  get allRowsSelected(): boolean {
+  readonly allRowsSelected = computed(() => {
     const selected = this.selected();
     let allRowsSelected = this.rows() && selected && selected.length === this.rows()!.length;
 
@@ -645,7 +645,7 @@ export class DatatableComponent<TRow extends Row = any>
     }
 
     return !!(selected && this.rows()?.length !== 0 && allRowsSelected);
-  }
+  });
 
   element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
   readonly _innerWidth = computed(() => this.dimensions().width);
