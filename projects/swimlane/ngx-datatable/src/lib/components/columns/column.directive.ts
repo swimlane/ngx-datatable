@@ -33,8 +33,7 @@ export class DataTableColumnDirective<TRow extends Row> {
     transform: booleanAttribute
   });
   readonly comparator = input<
-    | ((valueA: any, valueB: any, rowA: TRow, rowB: TRow, sortDir: 'desc' | 'asc') => number)
-    | undefined
+    ((valueA: any, valueB: any, rowA: TRow, rowB: TRow) => number) | undefined
   >();
   readonly pipe = input<PipeTransform | undefined>();
   readonly sortable = input<boolean, boolean | string | undefined>(undefined, {

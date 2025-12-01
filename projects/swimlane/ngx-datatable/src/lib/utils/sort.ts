@@ -128,8 +128,8 @@ export const sortRows = <TRow>(
       // direction enable more complex sort logic.
       const comparison =
         cachedDir.dir !== SortDirection.desc
-          ? cachedDir.compareFn(propA, propB, rowA, rowB, cachedDir.dir)
-          : -cachedDir.compareFn(propA, propB, rowA, rowB, cachedDir.dir);
+          ? cachedDir.compareFn(propA, propB, rowA, rowB)
+          : -cachedDir.compareFn(propA, propB, rowA, rowB);
 
       // Don't return 0 yet in case of needing to sort by next property
       if (comparison !== 0) {
