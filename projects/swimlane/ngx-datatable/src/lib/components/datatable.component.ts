@@ -11,7 +11,6 @@ import {
   DoCheck,
   effect,
   ElementRef,
-  HostBinding,
   HostListener,
   inject,
   input,
@@ -96,7 +95,18 @@ import { DatatableRowDetailDirective } from './row-detail/row-detail.directive';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'ngx-datatable'
+    class: 'ngx-datatable',
+    '[class.fixed-header]': '_isFixedHeader()',
+    '[class.fixed-row]': 'rowHeight() !== "auto"',
+    '[class.scroll-vertical]': 'scrollbarV()',
+    '[class.virtualized]': 'virtualization()',
+    '[class.scroll-horz]': 'scrollbarH()',
+    '[class.selectable]': 'selectionType() !== undefined',
+    '[class.checkbox-selection]': 'selectionType() === "checkbox"',
+    '[class.cell-selection]': 'selectionType() === "cell"',
+    '[class.single-selection]': 'selectionType() === "single"',
+    '[class.multi-selection]': 'selectionType() === "multi"',
+    '[class.multi-click-selection]': 'selectionType() === "multiClick"'
   }
 })
 export class DatatableComponent<TRow extends Row = any>
@@ -490,99 +500,6 @@ export class DatatableComponent<TRow extends Row = any>
   readonly rowDragEvents = output<DragEventData>();
 
   /**
-   * CSS class applied if the header height if fixed height.
-   */
-  @HostBinding('class.fixed-header')
-  get isFixedHeader(): boolean {
-    const headerHeight: number | string = this.headerHeight();
-    return typeof headerHeight === 'string' ? (headerHeight as string) !== 'auto' : true;
-  }
-
-  /**
-   * CSS class applied to the root element if
-   * the row heights are fixed heights.
-   */
-  @HostBinding('class.fixed-row')
-  get isFixedRow(): boolean {
-    return this.rowHeight() !== 'auto';
-  }
-
-  /**
-   * CSS class applied to root element if
-   * vertical scrolling is enabled.
-   */
-  @HostBinding('class.scroll-vertical')
-  get isVertScroll(): boolean {
-    return this.scrollbarV();
-  }
-
-  /**
-   * CSS class applied to root element if
-   * virtualization is enabled.
-   */
-  @HostBinding('class.virtualized')
-  get isVirtualized(): boolean {
-    return this.virtualization();
-  }
-
-  /**
-   * CSS class applied to the root element
-   * if the horziontal scrolling is enabled.
-   */
-  @HostBinding('class.scroll-horz')
-  get isHorScroll(): boolean {
-    return this.scrollbarH();
-  }
-
-  /**
-   * CSS class applied to root element is selectable.
-   */
-  @HostBinding('class.selectable')
-  get isSelectable(): boolean {
-    return this.selectionType() !== undefined;
-  }
-
-  /**
-   * CSS class applied to root is checkbox selection.
-   */
-  @HostBinding('class.checkbox-selection')
-  get isCheckboxSelection(): boolean {
-    return this.selectionType() === 'checkbox';
-  }
-
-  /**
-   * CSS class applied to root if cell selection.
-   */
-  @HostBinding('class.cell-selection')
-  get isCellSelection(): boolean {
-    return this.selectionType() === 'cell';
-  }
-
-  /**
-   * CSS class applied to root if single select.
-   */
-  @HostBinding('class.single-selection')
-  get isSingleSelection(): boolean {
-    return this.selectionType() === 'single';
-  }
-
-  /**
-   * CSS class added to root element if mulit select
-   */
-  @HostBinding('class.multi-selection')
-  get isMultiSelection(): boolean {
-    return this.selectionType() === 'multi';
-  }
-
-  /**
-   * CSS class added to root element if mulit click select
-   */
-  @HostBinding('class.multi-click-selection')
-  get isMultiClickSelection(): boolean {
-    return this.selectionType() === 'multiClick';
-  }
-
-  /**
    * Column templates gathered from `ContentChildren`
    * if described in your markup.
    */
@@ -644,6 +561,10 @@ export class DatatableComponent<TRow extends Row = any>
   element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
   readonly _innerWidth = computed(() => this.dimensions().width);
   readonly pageSize = computed(() => this.calcPageSize());
+  readonly _isFixedHeader = computed(() => {
+    const headerHeight: number | string = this.headerHeight();
+    return typeof headerHeight === 'string' ? (headerHeight as string) !== 'auto' : true;
+  });
   readonly bodyHeight = computed(() => {
     if (this.scrollbarV()) {
       let height = this.dimensions().height;
