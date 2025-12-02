@@ -64,7 +64,6 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
                 dragStartDelay="500"
                 [datatableDraggable]="reorderable() && column.draggable"
                 [dragModel]="column"
-                [headerHeight]="headerHeight()"
                 [isTarget]="column.isTarget"
                 [targetMarkerTemplate]="targetMarkerTemplate()"
                 [targetMarkerContext]="column.targetMarkerContext"

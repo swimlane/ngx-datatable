@@ -20,7 +20,6 @@ describe('DataTableHeaderCellComponent', () => {
     fixture = TestBed.createComponent(DataTableHeaderCellComponent);
     fixture.componentRef.setInput('ariaHeaderCheckboxMessage', 'Select All');
     fixture.componentRef.setInput('sortType', 'single');
-    fixture.componentRef.setInput('headerHeight', '48');
     component = fixture.componentInstance;
     fixture.componentRef.setInput('column', {
       name: 'test',
@@ -100,12 +99,7 @@ describe('DataTableHeaderCellComponent', () => {
 
 @Component({
   imports: [DataTableHeaderCellComponent],
-  template: `<datatable-header-cell
-      sortType="single"
-      headerHeight="50"
-      [column]="column"
-      (sort)="sort($event)"
-    />
+  template: `<datatable-header-cell sortType="single" [column]="column" (sort)="sort($event)" />
     <ng-template #headerCellTemplate let-sort="sortFn" let-column="column">
       <span class="custom-header">Custom Header for {{ column.name }}</span>
       <button class="custom-sort-button" type="button" (click)="sort($event)"
