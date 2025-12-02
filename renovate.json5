@@ -19,6 +19,7 @@
       datasourceTemplate: "docker"
     }
   ],
+  rebaseWhen: "conflicted",
   packageRules: [
     {
       description: [
