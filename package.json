@@ -48,7 +48,7 @@
     "@angular-devkit/build-angular": "^20.0.4",
     "@angular-devkit/core": "^20.0.4",
     "@angular-devkit/schematics": "^20.0.4",
-    "@angular-eslint/builder": "^20.1.1",
+    "@angular-eslint/builder": "20.7.0",
     "@angular-eslint/eslint-plugin": "^20.1.1",
     "@angular-eslint/eslint-plugin-template": "^20.1.1",
     "@angular-eslint/schematics": "^20.1.1",
