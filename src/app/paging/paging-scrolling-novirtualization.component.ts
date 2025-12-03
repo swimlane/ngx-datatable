@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
@@ -21,6 +21,9 @@ import { Page } from './model/page';
           </a>
         </small>
       </h3>
+      @let rows = this.rows();
+      @let page = this.page();
+      @let isLoading = this.isLoading();
       <ngx-datatable
         class="material"
         rowHeight="auto"
@@ -43,15 +46,15 @@ import { Page } from './model/page';
   providers: [MockServerResultsService]
 })
 export class PagingScrollingNoVirtualizationComponent implements OnInit {
-  page: Page = {
+  readonly page = signal<Page>({
     pageNumber: 0,
     size: 20,
     totalElements: 0,
     totalPages: 0
-  };
-  rows: Employee[] = [];
+  });
+  readonly rows = signal<Employee[]>([]);
 
-  isLoading = 0;
+  readonly isLoading = signal(0);
   private serverResultsService = inject(MockServerResultsService);
 
   ngOnInit() {
@@ -63,12 +66,12 @@ export class PagingScrollingNoVirtualizationComponent implements OnInit {
    * @param page The page to select
    */
   setPage(page: number) {
-    this.page.pageNumber = page;
-    this.isLoading++;
-    this.serverResultsService.getResults(this.page).subscribe(pagedData => {
-      this.isLoading--;
-      this.page = pagedData.page;
-      this.rows = pagedData.data;
+    this.page.update(currentPage => ({ ...currentPage, pageNumber: page }));
+    this.isLoading.update(v => v + 1);
+    this.serverResultsService.getResults(this.page()).subscribe(pagedData => {
+      this.isLoading.update(v => v - 1);
+      this.page.set(pagedData.page);
+      this.rows.set(pagedData.data);
     });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { DatatableComponent, PageEvent } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
@@ -21,6 +21,9 @@ import { Page } from './model/page';
           </a>
         </small>
       </h3>
+      @let isLoading = this.isLoading();
+      @let totalElements = this.totalElements();
+      @let rows = this.rows();
       <ngx-datatable
         class="material"
         columnMode="force"
@@ -50,13 +53,13 @@ import { Page } from './model/page';
   providers: [MockServerResultsService]
 })
 export class VirtualPagingComponent {
-  totalElements = 0;
+  readonly totalElements = signal(0);
   pageNumber = 0;
-  rows?: Employee[];
+  readonly rows = signal<Employee[] | undefined>(undefined);
   cache: Record<string, boolean> = {};
   cachePageSize = 0;
 
-  isLoading = 0;
+  readonly isLoading = signal(0);
 
   private serverResultsService = inject(MockServerResultsService);
 
@@ -90,31 +93,31 @@ export class VirtualPagingComponent {
     this.cache[page.pageNumber] = true;
 
     // Counter of pending API calls
-    this.isLoading++;
+    this.isLoading.update(v => v + 1);
 
     this.serverResultsService.getResults(page).subscribe(pagedData => {
       // Update total count
-      this.totalElements = pagedData.page.totalElements;
+      this.totalElements.set(pagedData.page.totalElements);
 
       // Create array to store data if missing
       // The array should have the correct number of with "holes" for missing data
-      this.rows ??= new Array<Employee>(this.totalElements || 0);
+      const currentRows = this.rows() ?? new Array<Employee>(this.totalElements() || 0);
 
       // Calc starting row offset
       // This is the position to insert the new data
       const start = pagedData.page.pageNumber * pagedData.page.size;
 
       // Copy existing data
-      const rows = [...this.rows];
+      const rows = [...currentRows];
 
       // Insert new rows into correct position
       rows.splice(start, pagedData.page.size, ...pagedData.data);
 
       // Set rows to our new rows for display
-      this.rows = rows;
+      this.rows.set(rows);
 
       // Decrement the counter of pending API calls
-      this.isLoading--;
+      this.isLoading.update(v => v - 1);
     });
   }
 }

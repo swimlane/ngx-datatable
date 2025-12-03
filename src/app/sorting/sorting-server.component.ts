@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   DatatableComponent,
   SortPropDir,
@@ -28,21 +28,21 @@ import { DataService } from '../data.service';
         class="material"
         rowHeight="auto"
         columnMode="force"
-        [rows]="rows"
+        [rows]="rows()"
         [columns]="columns"
         [headerHeight]="50"
         [footerHeight]="50"
         [externalSorting]="true"
-        [loadingIndicator]="loading"
+        [loadingIndicator]="loading()"
         (sortsChange)="onSort($event)"
       />
     </div>
   `
 })
 export class ServerSortingComponent {
-  loading = false;
+  readonly loading = signal(false);
 
-  rows: Employee[] = [];
+  readonly rows = signal<Employee[]>([]);
 
   columns: TableColumn[] = [
     { name: 'Company', sortable: true },
@@ -53,17 +53,15 @@ export class ServerSortingComponent {
   private dataService = inject(DataService);
 
   constructor() {
-    this.dataService.load('company.json').subscribe(data => {
-      this.rows = data.splice(0, 20);
-    });
+    this.dataService.load('company.json').subscribe(data => this.rows.set(data.splice(0, 20)));
   }
 
   onSort(event: SortPropDir[]) {
     // event was triggered, start sort sequence
-    this.loading = true;
+    this.loading.set(true);
     // emulate a server request with a timeout
     setTimeout(() => {
-      const rows = [...this.rows];
+      const rows = [...this.rows()];
       // this is only for demo purposes, normally
       // your server would return the result for
       // you and you would just set the rows prop
@@ -75,8 +73,8 @@ export class ServerSortingComponent {
           (sort.dir === 'desc' ? -1 : 1)
       );
 
-      this.rows = rows;
-      this.loading = false;
+      this.rows.set(rows);
+      this.loading.set(false);
     }, 1000);
   }
 }

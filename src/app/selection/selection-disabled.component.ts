@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   ActivateEvent,
   DatatableComponent,
@@ -26,6 +26,7 @@ import { DataService } from '../data.service';
         </small>
       </h3>
       <div style="float:left;width:75%">
+        @let rows = this.rows();
         <ngx-datatable
           class="material selection-row"
           rowHeight="auto"
@@ -59,7 +60,7 @@ import { DataService } from '../data.service';
   `
 })
 export class MultiDisableSelectionComponent {
-  rows: Employee[] = [];
+  readonly rows = signal<Employee[]>([]);
 
   selected: Employee[] = [];
 
@@ -68,9 +69,7 @@ export class MultiDisableSelectionComponent {
   private dataService = inject(DataService);
 
   constructor() {
-    this.dataService.load('company.json').subscribe(data => {
-      this.rows = data;
-    });
+    this.dataService.load('company.json').subscribe(data => this.rows.set(data));
   }
 
   onSelect({ selected }: SelectEvent<Employee>) {

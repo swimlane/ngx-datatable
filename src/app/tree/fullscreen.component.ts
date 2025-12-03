@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   DataTableColumnCellTreeToggle,
   DataTableColumnDirective,
@@ -25,6 +25,7 @@ import { DataService } from '../data.service';
           </a>
         </small>
       </h3>
+      @let rows = this.rows();
       <ngx-datatable
         class="material fullscreen"
         style="top: 52px"
@@ -77,18 +78,19 @@ import { DataService } from '../data.service';
   styles: ['.icon {height: 10px; width: 10px; }', '.disabled {opacity: 0.5; }']
 })
 export class FullScreenTreeComponent {
-  rows: (FullEmployee & { treeStatus: TreeStatus; parentId?: string })[] = [];
+  readonly rows = signal<(FullEmployee & { treeStatus: TreeStatus; parentId?: string })[]>([]);
   lastIndex = 15;
-  private cd = inject(ChangeDetectorRef);
   private dataService = inject(DataService);
 
   constructor() {
     this.dataService.load('100k.json').subscribe(data => {
       data = data.slice(1, this.lastIndex);
-      this.rows = data.map(d => ({
-        ...d,
-        treeStatus: 'collapsed' as const
-      }));
+      this.rows.set(
+        data.map(d => ({
+          ...d,
+          treeStatus: 'collapsed' as const
+        }))
+      );
     });
   }
 
@@ -104,13 +106,11 @@ export class FullScreenTreeComponent {
         }));
         this.lastIndex = this.lastIndex + 3;
         row.treeStatus = 'expanded';
-        this.rows = [...this.rows, ...newData];
-        this.cd.detectChanges();
+        this.rows.set([...this.rows(), ...newData]);
       });
     } else {
       row.treeStatus = 'collapsed';
-      this.rows = [...this.rows];
-      this.cd.detectChanges();
+      this.rows.set([...this.rows()]);
     }
   }
 }

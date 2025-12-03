@@ -1,5 +1,5 @@
 import { provideHttpClient } from '@angular/common/http';
-import { enableProdMode } from '@angular/core';
+import { enableProdMode, provideZonelessChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter, withHashLocation } from '@angular/router';
 import { providedNgxDatatableConfig } from 'projects/swimlane/ngx-datatable/src/public-api';
@@ -14,6 +14,7 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
+    provideZonelessChangeDetection(),
     providedNgxDatatableConfig({
       messages: {
         emptyMessage: 'No data to display', // Message to show when array is presented, but contains no values

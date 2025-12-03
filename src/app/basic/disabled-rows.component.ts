@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   DataTableColumnCellDirective,
   DataTableColumnDirective,
@@ -34,7 +34,7 @@ import { DataService } from '../data.service';
         <ngx-datatable
           class="material"
           columnMode="force"
-          [rows]="rows"
+          [rows]="rows()"
           [headerHeight]="50"
           [footerHeight]="0"
           [rowHeight]="80"
@@ -93,14 +93,12 @@ import { DataService } from '../data.service';
   `
 })
 export class DisabledRowsComponent {
-  rows: (FullEmployee & { isDisabled?: boolean })[] = [];
+  readonly rows = signal<(FullEmployee & { isDisabled?: boolean })[]>([]);
 
   private dataService = inject(DataService);
 
   constructor() {
-    this.dataService.load('100k.json').subscribe(data => {
-      this.rows = data;
-    });
+    this.dataService.load('100k.json').subscribe(data => this.rows.set(data));
   }
 
   isRowDisabled(row: FullEmployee & { isDisabled?: boolean }) {
@@ -108,20 +106,22 @@ export class DisabledRowsComponent {
   }
 
   disableRow(rowIndex: number) {
-    this.rows[rowIndex].isDisabled = true;
-    this.rows = [...this.rows];
+    const currentRows = this.rows();
+    currentRows[rowIndex].isDisabled = true;
+    this.rows.set([...currentRows]);
   }
 
   updateValue(event: Event, cell: 'gender' | 'age', rowIndex: number) {
     const target = event.target as HTMLInputElement;
-    this.rows = [...this.rows];
-    if (cell === 'age' && this.rows[rowIndex][cell] > 40) {
-      this.rows[rowIndex].isDisabled = true;
-      this.rows[rowIndex].age = target.valueAsNumber;
+    const currentRows = this.rows();
+    if (cell === 'age' && currentRows[rowIndex][cell] > 40) {
+      currentRows[rowIndex].isDisabled = true;
+      currentRows[rowIndex].age = target.valueAsNumber;
     }
-    if (cell === 'gender' && this.rows[rowIndex][cell] === 'male') {
-      this.rows[rowIndex].isDisabled = true;
-      this.rows[rowIndex].gender = target.value;
+    if (cell === 'gender' && currentRows[rowIndex][cell] === 'male') {
+      currentRows[rowIndex].isDisabled = true;
+      currentRows[rowIndex].gender = target.value;
     }
+    this.rows.set([...currentRows]);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
@@ -20,6 +20,7 @@ import { DataService } from '../data.service';
           </a>
         </small>
       </h3>
+      @let rows = this.rows();
       <ngx-datatable
         class="material"
         rowHeight="auto"
@@ -34,13 +35,11 @@ import { DataService } from '../data.service';
   `
 })
 export class ClientPagingComponent {
-  rows: Employee[] = [];
+  readonly rows = signal<Employee[]>([]);
 
   private dataService = inject(DataService);
 
   constructor() {
-    this.dataService.load('company.json').subscribe(data => {
-      this.rows = data;
-    });
+    this.dataService.load('company.json').subscribe(data => this.rows.set(data));
   }
 }

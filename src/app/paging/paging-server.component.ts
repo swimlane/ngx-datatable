@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
@@ -21,11 +21,12 @@ import { Page } from './model/page';
           </a>
         </small>
       </h3>
+      @let page = this.page();
       <ngx-datatable
         class="material"
         rowHeight="auto"
         columnMode="force"
-        [rows]="rows"
+        [rows]="rows()"
         [columns]="[{ name: 'Name' }, { name: 'Gender' }, { name: 'Company' }]"
         [headerHeight]="50"
         [footerHeight]="50"
@@ -40,13 +41,13 @@ import { Page } from './model/page';
   providers: [MockServerResultsService]
 })
 export class ServerPagingComponent implements OnInit {
-  page: Page = {
+  readonly page = signal<Page>({
     pageNumber: 0,
     size: 20,
     totalElements: 0,
     totalPages: 0
-  };
-  rows: Employee[] = [];
+  });
+  readonly rows = signal<Employee[]>([]);
   private serverResultsService = inject(MockServerResultsService);
 
   ngOnInit() {
@@ -58,10 +59,10 @@ export class ServerPagingComponent implements OnInit {
    * @param page The page to select
    */
   setPage(page: number) {
-    this.page.pageNumber = page;
-    this.serverResultsService.getResults(this.page).subscribe(pagedData => {
-      this.page = pagedData.page;
-      this.rows = pagedData.data;
+    this.page.update(currentPage => ({ ...currentPage, pageNumber: page }));
+    this.serverResultsService.getResults(this.page()).subscribe(pagedData => {
+      this.page.set(pagedData.page);
+      this.rows.set(pagedData.data);
     });
   }
 }

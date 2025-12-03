@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   DataTableColumnCellDirective,
   DataTableColumnDirective,
@@ -25,6 +25,7 @@ import { DataService } from '../data.service';
           </a>
         </small>
       </h3>
+      @let rows = this.rows();
       <ngx-datatable
         class="material"
         columnMode="force"
@@ -51,16 +52,18 @@ import { DataService } from '../data.service';
   `
 })
 export class VirtualScrollComponent {
-  rows: (FullEmployee & { height: number })[] = [];
+  readonly rows = signal<(FullEmployee & { height: number })[]>([]);
   expanded = {};
   timeout: any;
 
   private dataService = inject(DataService);
 
   constructor() {
-    this.dataService.load('100k.json').subscribe(data => {
-      this.rows = data.map(row => ({ ...row, height: Math.floor(Math.random() * 80) + 50 }));
-    });
+    this.dataService
+      .load('100k.json')
+      .subscribe(data =>
+        this.rows.set(data.map(row => ({ ...row, height: Math.floor(Math.random() * 80) + 50 })))
+      );
   }
 
   onPage(event: PageEvent) {

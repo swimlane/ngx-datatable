@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, Injectable, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, Injectable, OnInit, signal } from '@angular/core';
 import { DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
@@ -41,6 +41,8 @@ export class MockServerResultsService {
           </a>
         </small>
       </h3>
+      @let rows = this.rows();
+      @let isLoading = this.isLoading();
       <ngx-datatable
         class="material server-scrolling-demo"
         columnMode="force"
@@ -63,8 +65,8 @@ export class ServerScrollingComponent implements OnInit {
   readonly rowHeight = 50;
   readonly pageLimit = 10;
 
-  rows: Employee[] = [];
-  isLoading?: boolean;
+  readonly rows = signal<Employee[]>([]);
+  readonly isLoading = signal<boolean | undefined>(undefined);
 
   private serverResultsService = inject(MockServerResultsService);
   private el = inject(ElementRef);
@@ -78,12 +80,12 @@ export class ServerScrollingComponent implements OnInit {
     const viewHeight = this.el.nativeElement.getBoundingClientRect().height - this.headerHeight;
 
     // check if we scrolled to the end of the viewport
-    if (!this.isLoading && offsetY + viewHeight >= this.rows.length * this.rowHeight) {
+    if (!this.isLoading() && offsetY + viewHeight >= this.rows().length * this.rowHeight) {
       // total number of results to load
       let limit = this.pageLimit;
 
       // check if we haven't fetched any results yet
-      if (this.rows.length === 0) {
+      if (this.rows().length === 0) {
         // calculate the number of rows that fit within viewport
         const pageSize = Math.ceil(viewHeight / this.rowHeight);
 
@@ -99,12 +101,12 @@ export class ServerScrollingComponent implements OnInit {
     // set the loading flag, which serves two purposes:
     // 1) it prevents the same page from being loaded twice
     // 2) it enables display of the loading indicator
-    this.isLoading = true;
+    this.isLoading.set(true);
 
-    this.serverResultsService.getResults(this.rows.length, limit).subscribe(results => {
-      const rows = [...this.rows, ...results.data];
-      this.rows = rows;
-      this.isLoading = false;
+    this.serverResultsService.getResults(this.rows().length, limit).subscribe(results => {
+      const rows = [...this.rows(), ...results.data];
+      this.rows.set(rows);
+      this.isLoading.set(false);
     });
   }
 }

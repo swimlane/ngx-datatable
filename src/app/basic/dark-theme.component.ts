@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
@@ -20,6 +20,8 @@ import { DataService } from '../data.service';
           </a>
         </small>
       </h3>
+      @let rows = this.rows();
+      @let loadingIndicator = this.loadingIndicator();
       <ngx-datatable
         class="dark"
         rowHeight="auto"
@@ -37,8 +39,8 @@ import { DataService } from '../data.service';
   `
 })
 export class DarkThemeComponent {
-  rows: Employee[] = [];
-  loadingIndicator = true;
+  readonly rows = signal<Employee[]>([]);
+  readonly loadingIndicator = signal(true);
   reorderable = true;
 
   columns: TableColumn[] = [
@@ -51,10 +53,8 @@ export class DarkThemeComponent {
 
   constructor() {
     this.dataService.load('company.json').subscribe(data => {
-      this.rows = data;
-      setTimeout(() => {
-        this.loadingIndicator = false;
-      }, 1500);
+      this.rows.set(data);
+      setTimeout(() => this.loadingIndicator.set(false), 1500);
     });
   }
 

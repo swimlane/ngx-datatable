@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   DataTableColumnDirective,
   DatatableComponent
@@ -31,7 +31,7 @@ import { DataService } from '../data.service';
         [rowHeight]="50"
         [scrollbarV]="true"
         [scrollbarH]="true"
-        [rows]="rows"
+        [rows]="rows()"
       >
         <ngx-datatable-column name="Name" [width]="300" [frozenLeft]="true" />
         <ngx-datatable-column name="Gender" />
@@ -48,13 +48,11 @@ import { DataService } from '../data.service';
   `
 })
 export class ColumnPinningComponent {
-  rows: FullEmployee[] = [];
+  readonly rows = signal<FullEmployee[]>([]);
 
   private dataService = inject(DataService);
 
   constructor() {
-    this.dataService.load('100k.json').subscribe(data => {
-      this.rows = data;
-    });
+    this.dataService.load('100k.json').subscribe(data => this.rows.set(data));
   }
 }

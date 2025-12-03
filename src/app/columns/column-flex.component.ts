@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   DataTableColumnCellDirective,
   DataTableColumnDirective,
@@ -24,6 +24,7 @@ import { DataService } from '../data.service';
           </a>
         </small>
       </h3>
+      @let rows = this.rows();
       <ngx-datatable
         class="material"
         rowHeight="auto"
@@ -52,13 +53,11 @@ import { DataService } from '../data.service';
   `
 })
 export class ColumnFlexComponent {
-  rows: Employee[] = [];
+  readonly rows = signal<Employee[]>([]);
 
   private dataService = inject(DataService);
 
   constructor() {
-    this.dataService.load('company.json').subscribe(data => {
-      this.rows = data.splice(0, 5);
-    });
+    this.dataService.load('company.json').subscribe(data => this.rows.set(data.splice(0, 5)));
   }
 }

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   ActivateEvent,
   DataTableColumnDirective,
@@ -31,6 +31,7 @@ import { DataService } from '../data.service';
         </small>
       </h3>
       <div style="float:left;width:75%">
+        @let rows = this.rows();
         <ngx-datatable
           style="width: 90%"
           class="material selection-row"
@@ -80,15 +81,13 @@ import { DataService } from '../data.service';
   `
 })
 export class CheckboxSelectionComponent {
-  rows: Employee[] = [];
+  readonly rows = signal<Employee[]>([]);
   selected: Employee[] = [];
 
   private dataService = inject(DataService);
 
   constructor() {
-    this.dataService.load('company.json').subscribe(data => {
-      this.rows = data;
-    });
+    this.dataService.load('company.json').subscribe(data => this.rows.set(data));
   }
 
   onSelect({ selected }: SelectEvent<Employee>) {
@@ -102,11 +101,11 @@ export class CheckboxSelectionComponent {
   }
 
   add() {
-    this.selected.push(this.rows[1], this.rows[3]);
+    this.selected.push(this.rows()[1], this.rows()[3]);
   }
 
   update() {
-    this.selected = [this.rows[1], this.rows[3]];
+    this.selected = [this.rows()[1], this.rows()[3]];
   }
 
   remove() {

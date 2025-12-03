@@ -1,5 +1,5 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   DatatableComponent,
   DatatableRowDefComponent,
@@ -36,8 +36,8 @@ import { DataService } from '../data.service';
         rowHeight="auto"
         cdkDropList
         columnMode="force"
-        [rows]="rows"
-        [loadingIndicator]="loadingIndicator"
+        [rows]="rows()"
+        [loadingIndicator]="loadingIndicator()"
         [columns]="columns"
         [headerHeight]="50"
         [footerHeight]="50"
@@ -52,8 +52,8 @@ import { DataService } from '../data.service';
   `
 })
 export class DragDropComponent {
-  rows: Employee[] = [];
-  loadingIndicator = true;
+  readonly rows = signal<Employee[]>([]);
+  readonly loadingIndicator = signal<boolean>(true);
   reorderable = true;
 
   columns = [
@@ -66,15 +66,18 @@ export class DragDropComponent {
 
   constructor() {
     this.dataService.load('company.json').subscribe(data => {
-      this.rows = data;
+      this.rows.set(data);
       setTimeout(() => {
-        this.loadingIndicator = false;
+        this.loadingIndicator.set(false);
       }, 1500);
     });
   }
 
   drop(event: CdkDragDrop<any>) {
-    moveItemInArray(this.rows, event.previousIndex, event.currentIndex);
-    this.rows = [...this.rows];
+    this.rows.update(currentRows => {
+      const updatedRows = [...currentRows];
+      moveItemInArray(updatedRows, event.previousIndex, event.currentIndex);
+      return updatedRows;
+    });
   }
 }

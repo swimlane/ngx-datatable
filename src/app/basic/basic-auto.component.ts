@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
@@ -25,8 +25,8 @@ import { DataService } from '../data.service';
         rowHeight="auto"
         columnMode="force"
         [rowDraggable]="true"
-        [rows]="rows"
-        [loadingIndicator]="loadingIndicator"
+        [rows]="rows()"
+        [loadingIndicator]="loadingIndicator()"
         [columns]="columns"
         [headerHeight]="50"
         [footerHeight]="50"
@@ -36,8 +36,8 @@ import { DataService } from '../data.service';
   `
 })
 export class BasicAutoComponent {
-  rows: Employee[] = [];
-  loadingIndicator = true;
+  readonly rows = signal<Employee[]>([]);
+  readonly loadingIndicator = signal(true);
   reorderable = true;
 
   columns: TableColumn[] = [
@@ -50,10 +50,8 @@ export class BasicAutoComponent {
 
   constructor() {
     this.dataService.load('company.json').subscribe(data => {
-      this.rows = data;
-      setTimeout(() => {
-        this.loadingIndicator = false;
-      }, 1500);
+      this.rows.set(data);
+      setTimeout(() => this.loadingIndicator.set(false), 1500);
     });
   }
 }

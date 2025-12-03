@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
 import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
@@ -20,6 +20,7 @@ import { DataService } from '../data.service';
           </a>
         </small>
       </h3>
+      @let rows = this.rows();
       <ngx-datatable
         class="material"
         rowHeight="auto"
@@ -49,15 +50,13 @@ export class TemplateRefTemplatesComponent implements OnInit {
   @ViewChild('editTmpl', { static: true }) editTmpl!: TemplateRef<any>;
   @ViewChild('hdrTpl', { static: true }) hdrTpl!: TemplateRef<any>;
 
-  rows: Employee[] = [];
+  readonly rows = signal<Employee[]>([]);
   columns: TableColumn[] = [];
 
   private dataService = inject(DataService);
 
   constructor() {
-    this.dataService.load('company.json').subscribe(data => {
-      this.rows = data.splice(0, 5);
-    });
+    this.dataService.load('company.json').subscribe(data => this.rows.set(data.splice(0, 5)));
   }
 
   ngOnInit() {

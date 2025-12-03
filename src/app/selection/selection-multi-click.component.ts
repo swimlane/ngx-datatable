@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   ActivateEvent,
   DatatableComponent,
@@ -30,6 +30,7 @@ import { DataService } from '../data.service';
           <p>This demonstrates multi selection table, where any click event causes a selection.</p>
         </div>
 
+        @let rows = this.rows();
         <ngx-datatable
           class="material selection-row"
           rowHeight="auto"
@@ -62,7 +63,7 @@ import { DataService } from '../data.service';
   `
 })
 export class MultiClickSelectionComponent {
-  rows: Employee[] = [];
+  readonly rows = signal<Employee[]>([]);
 
   selected: Employee[] = [];
 
@@ -71,9 +72,7 @@ export class MultiClickSelectionComponent {
   private dataService = inject(DataService);
 
   constructor() {
-    this.dataService.load('company.json').subscribe(data => {
-      this.rows = data;
-    });
+    this.dataService.load('company.json').subscribe(data => this.rows.set(data));
   }
 
   onSelect({ selected }: SelectEvent<Employee>) {

@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, inject, signal, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   DataTableColumnCellDirective,
   DataTableColumnDirective,
@@ -39,6 +39,7 @@ import { DataService } from '../data.service';
           <a href="javascript:void(0)" (click)="table.rowDetail!.collapseAllRows()">Collapse All</a>
         </small>
       </h3>
+      @let rows = this.rows();
       <ngx-datatable
         #myTable
         class="material expandable"
@@ -109,16 +110,14 @@ import { DataService } from '../data.service';
 export class RowDetailsComponent {
   @ViewChild('myTable') table!: DatatableComponent<FullEmployee>;
 
-  rows: FullEmployee[] = [];
+  readonly rows = signal<FullEmployee[]>([]);
   expanded: any = {};
   timeout: any;
 
   private dataService = inject(DataService);
 
   constructor() {
-    this.dataService.load('100k.json').subscribe(data => {
-      this.rows = data;
-    });
+    this.dataService.load('100k.json').subscribe(data => this.rows.set(data));
   }
 
   onPage(event: PageEvent) {

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   ActivateEvent,
   DatatableComponent,
@@ -25,6 +25,7 @@ import { DataService } from '../data.service';
           </a>
         </small>
       </h3>
+      @let rows = this.rows();
       <ngx-datatable
         class="material selection-cell"
         columnMode="force"
@@ -42,7 +43,7 @@ import { DataService } from '../data.service';
   `
 })
 export class CellSelectionComponent {
-  rows: Employee[] = [];
+  readonly rows = signal<Employee[]>([]);
   selected: Employee[] = [];
   columns: TableColumn[] = [{ prop: 'name' }, { name: 'Company' }, { name: 'Gender' }];
 
@@ -50,7 +51,7 @@ export class CellSelectionComponent {
 
   constructor() {
     this.dataService.load('company.json').subscribe(data => {
-      this.rows = data;
+      this.rows.set(data);
     });
   }
 
