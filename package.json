@@ -53,7 +53,7 @@
     "@angular-eslint/eslint-plugin-template": "^20.1.1",
     "@angular-eslint/schematics": "^20.1.1",
     "@angular-eslint/template-parser": "^20.1.1",
-    "@angular/cli": "20.3.12",
+    "@angular/cli": "20.3.13",
     "@angular/compiler-cli": "20.3.15",
     "@angular/language-service": "20.3.15",
     "@swimlane/eslint-config": "^2.0.0",
