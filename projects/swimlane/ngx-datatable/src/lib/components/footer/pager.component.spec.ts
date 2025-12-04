@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   DebugElement,
+  provideZonelessChangeDetection,
   signal,
   WritableSignal
 } from '@angular/core';
@@ -45,6 +46,9 @@ describe('DataTablePagerComponent', () => {
       page: { emit: ({ page }: { page: number }) => footer.curPage.set(page) }
     };
     messages = signal({});
+    TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()]
+    });
     TestBed.overrideComponent(DatatablePagerComponent, {
       set: {
         changeDetection: ChangeDetectionStrategy.Default,
@@ -233,10 +237,10 @@ describe('DataTablePagerComponent', () => {
     let nextButton: DebugElement;
     let lastButton: DebugElement;
     let pageButtons: { button: DebugElement; page: number }[];
-    beforeEach(() => {
+    beforeEach(async () => {
       footer.pageSize.set(10);
       footer.rowCount.set(100);
-      fixture.detectChanges();
+      await fixture.whenStable();
       [firstButton, previousButton, nextButton, lastButton] = fixture.debugElement
         .queryAll(By.css('.page-button'))
         .filter(it => !it.parent!.classes.pages);

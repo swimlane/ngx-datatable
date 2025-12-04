@@ -1,4 +1,4 @@
-import { Component, signal, viewChild } from '@angular/core';
+import { Component, provideZonelessChangeDetection, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DatatableComponent } from '../datatable.component';
@@ -68,35 +68,36 @@ describe('DatatableRowDetailDirective', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TestFixtureComponent]
+      imports: [TestFixtureComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestFixtureComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
     table = component.table();
   });
 
-  it('should stop calling rowHeight for collapsed details', () => {
+  it('should stop calling rowHeight for collapsed details', async () => {
     // Expand first and second rows
     table.rowDetail!.toggleExpandRow(component.rows()[0]);
     table.rowDetail!.toggleExpandRow(component.rows()[1]);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     // Collapse the first row
     table.rowDetail!.toggleExpandRow(component.rows()[0]);
     component.detailRowHeight.calls.reset();
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     expect(component.detailRowHeight).toHaveBeenCalledWith(component.rows()[1], 1);
   });
 
-  it('should call rowHeight with correct indices after expandAllRows', () => {
+  it('should call rowHeight with correct indices after expandAllRows', async () => {
     component.detailRowHeight.calls.reset();
 
     // Expand all rows
     table.rowDetail!.expandAllRows();
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     expect(component.detailRowHeight).toHaveBeenCalledWith(component.rows()[0], 0);
     expect(component.detailRowHeight).toHaveBeenCalledWith(component.rows()[1], 1);

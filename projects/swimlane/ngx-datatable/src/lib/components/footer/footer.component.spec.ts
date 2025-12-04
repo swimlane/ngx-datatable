@@ -1,5 +1,13 @@
-import { Component, DebugElement, signal, Signal, TemplateRef, viewChild } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  Component,
+  DebugElement,
+  provideZonelessChangeDetection,
+  signal,
+  Signal,
+  TemplateRef,
+  viewChild
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { DATATABLE_COMPONENT_TOKEN } from '../../utils/table-token';
@@ -10,112 +18,115 @@ let component: TestFixtureComponent;
 let page: Page;
 
 describe('DataTableFooterComponent', () => {
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
+    TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()]
+    });
     fixture = TestBed.createComponent(TestFixtureComponent);
     component = fixture.componentInstance;
     page = new Page();
-    page.detectChangesAndRunQueries();
-  }));
+    await page.detectChangesAndRunQueries();
+  });
 
   describe('div.datatable-footer-inner', () => {
-    it(`should have a height`, () => {
-      component.footerHeight = 123;
-      page.detectChangesAndRunQueries();
+    it(`should have a height`, async () => {
+      component.footerHeight.set(123);
+      await page.detectChangesAndRunQueries();
 
       expect(page.datatableFooterInner.nativeElement.style.height).toEqual('123px');
     });
 
-    it('should have `.selected-count` class when selectedMessage is set', () => {
-      component.selectedMessage = 'selected';
-      component.selectedCount = 1;
-      page.detectChangesAndRunQueries();
+    it('should have `.selected-count` class when selectedMessage is set', async () => {
+      component.selectedMessage.set('selected');
+      component.selectedCount.set(1);
+      await page.detectChangesAndRunQueries();
 
       expect(page.datatableFooterInner.nativeElement).toHaveClass('selected-count');
     });
 
-    it('should not have `.selected-count` class if selectedMessage is not set', () => {
-      component.selectedMessage = undefined;
-      page.detectChangesAndRunQueries();
+    it('should not have `.selected-count` class if selectedMessage is not set', async () => {
+      component.selectedMessage.set(undefined);
+      await page.detectChangesAndRunQueries();
 
       expect(page.datatableFooterInner.nativeElement).not.toHaveClass('selected-count');
     });
   });
 
   describe('when there is no template', () => {
-    it('should not render a template', () => {
-      component.footerTemplate = undefined;
-      page.detectChangesAndRunQueries();
+    it('should not render a template', async () => {
+      component.footerTemplate.set(undefined);
+      await page.detectChangesAndRunQueries();
 
       expect(page.templateList).toBeNull();
     });
 
-    it('should display the selected count and total if selectedMessage set', () => {
-      component.footerTemplate = undefined;
-      component.selectedMessage = 'selected';
-      component.selectedCount = 7;
-      component.rowCount = 10;
-      component.totalMessage = 'total';
-      page.detectChangesAndRunQueries();
+    it('should display the selected count and total if selectedMessage set', async () => {
+      component.footerTemplate.set(undefined);
+      component.selectedMessage.set('selected');
+      component.selectedCount.set(7);
+      component.rowCount.set(10);
+      component.totalMessage.set('total');
+      await page.detectChangesAndRunQueries();
 
       expect(page.pageCount.nativeElement.innerText).toEqual('7 selected / 10 total');
     });
 
-    it('should display only the total if selectedMessage is not set', () => {
-      component.footerTemplate = undefined;
-      component.selectedMessage = undefined;
-      component.rowCount = 100;
-      component.totalMessage = 'total';
-      page.detectChangesAndRunQueries();
+    it('should display only the total if selectedMessage is not set', async () => {
+      component.footerTemplate.set(undefined);
+      component.selectedMessage.set(undefined);
+      component.rowCount.set(100);
+      component.totalMessage.set('total');
+      await page.detectChangesAndRunQueries();
 
       expect(page.pageCount.nativeElement.innerText).toEqual('100 total');
     });
 
-    it('should render a DataTablePagerComponent', () => {
-      component.footerTemplate = undefined;
-      page.detectChangesAndRunQueries();
+    it('should render a DataTablePagerComponent', async () => {
+      component.footerTemplate.set(undefined);
+      await page.detectChangesAndRunQueries();
 
       expect(page.datatablePager).not.toBeNull();
     });
 
-    it('should show & hide the DataTablePagerComponent', () => {
-      component.rowCount = 200;
-      component.pageSize = 5;
-      page.detectChangesAndRunQueries();
+    it('should show & hide the DataTablePagerComponent', async () => {
+      component.rowCount.set(200);
+      component.pageSize.set(5);
+      await page.detectChangesAndRunQueries();
 
       expect(page.datatablePager).toBeTruthy();
 
-      component.rowCount = 1;
-      component.pageSize = 2;
-      page.detectChangesAndRunQueries();
+      component.rowCount.set(1);
+      component.pageSize.set(2);
+      await page.detectChangesAndRunQueries();
 
       expect(page.datatablePager).toBeFalsy();
     });
   });
 
   describe('when there is a template', () => {
-    it('should not render div.page-count or DatatablePagerComponent', () => {
-      component.footerTemplate = { template: component.testTemplate };
-      page.detectChangesAndRunQueries();
+    it('should not render div.page-count or DatatablePagerComponent', async () => {
+      component.footerTemplate.set({ template: component.testTemplate });
+      await page.detectChangesAndRunQueries();
 
       expect(page.pageCount).toBeNull();
       expect(page.datatablePager).toBeNull();
     });
 
-    it('should render the template', () => {
-      page.detectChangesAndRunQueries();
-      component.footerTemplate = { template: component.testTemplate };
-      page.detectChangesAndRunQueries();
+    it('should render the template', async () => {
+      await page.detectChangesAndRunQueries();
+      component.footerTemplate.set({ template: component.testTemplate });
+      await page.detectChangesAndRunQueries();
 
       expect(page.templateList).not.toBeNull();
     });
 
-    it('should give the template proper context', () => {
-      component.footerTemplate = { template: component.testTemplate };
-      component.rowCount = 12;
-      component.pageSize = 1;
-      component.selectedCount = 4;
-      component.offset = 0;
-      page.detectChangesAndRunQueries();
+    it('should give the template proper context', async () => {
+      component.footerTemplate.set({ template: component.testTemplate });
+      component.rowCount.set(12);
+      component.pageSize.set(1);
+      component.selectedCount.set(4);
+      component.offset.set(0);
+      await page.detectChangesAndRunQueries();
       const listItems = page.templateList.queryAll(By.css('li'));
 
       expect(listItems[0].nativeElement.innerHTML).toContain('rowCount 12');
@@ -135,19 +146,19 @@ describe('DataTableFooterComponent', () => {
   imports: [DataTableFooterComponent],
   template: `
     <datatable-footer
-      [rowCount]="rowCount"
+      [rowCount]="rowCount()"
       [groupCount]="undefined"
-      [pageSize]="pageSize"
-      [offset]="offset"
-      [footerHeight]="footerHeight"
-      [footerTemplate]="footerTemplate"
-      [totalMessage]="totalMessage"
-      [pagerLeftArrowIcon]="pagerLeftArrowIcon"
-      [pagerRightArrowIcon]="pagerRightArrowIcon"
-      [pagerPreviousIcon]="pagerPreviousIcon"
-      [selectedCount]="selectedCount"
-      [selectedMessage]="selectedMessage"
-      [pagerNextIcon]="pagerNextIcon"
+      [pageSize]="pageSize()"
+      [offset]="offset()"
+      [footerHeight]="footerHeight()"
+      [footerTemplate]="footerTemplate()"
+      [totalMessage]="totalMessage()"
+      [pagerLeftArrowIcon]="pagerLeftArrowIcon()"
+      [pagerRightArrowIcon]="pagerRightArrowIcon()"
+      [pagerPreviousIcon]="pagerPreviousIcon()"
+      [selectedCount]="selectedCount()"
+      [selectedMessage]="selectedMessage()"
+      [pagerNextIcon]="pagerNextIcon()"
       (page)="onPageEvent()"
     />
 
@@ -171,18 +182,18 @@ describe('DataTableFooterComponent', () => {
   providers: [{ provide: DATATABLE_COMPONENT_TOKEN, useExisting: TestFixtureComponent }]
 })
 class TestFixtureComponent {
-  footerHeight = 0;
-  rowCount = 100;
-  pageSize = 1;
-  offset = 0;
-  pagerLeftArrowIcon = '';
-  pagerRightArrowIcon = '';
-  pagerPreviousIcon = '';
-  pagerNextIcon = '';
-  totalMessage = '';
-  footerTemplate?: { template: Signal<TemplateRef<any>> };
-  selectedCount = 0;
-  selectedMessage?: string;
+  readonly footerHeight = signal(0);
+  readonly rowCount = signal(100);
+  readonly pageSize = signal(1);
+  readonly offset = signal(0);
+  readonly pagerLeftArrowIcon = signal('');
+  readonly pagerRightArrowIcon = signal('');
+  readonly pagerPreviousIcon = signal('');
+  readonly pagerNextIcon = signal('');
+  readonly totalMessage = signal('');
+  readonly footerTemplate = signal<{ template: Signal<TemplateRef<any>> } | undefined>(undefined);
+  readonly selectedCount = signal(0);
+  readonly selectedMessage = signal<string | undefined>(undefined);
   readonly messages = signal({});
 
   /**
@@ -211,8 +222,8 @@ class Page {
   pageCount!: DebugElement;
   datatablePager!: DebugElement;
 
-  detectChangesAndRunQueries() {
-    fixture.detectChanges();
+  async detectChangesAndRunQueries() {
+    await fixture.whenStable();
 
     const de = fixture.debugElement;
 

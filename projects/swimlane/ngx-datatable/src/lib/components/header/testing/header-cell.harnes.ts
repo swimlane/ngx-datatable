@@ -22,9 +22,10 @@ export class HeaderCellHarness extends ComponentHarness {
   }
 
   async resizeCell(startPosX: number, pixelToResize: number): Promise<void> {
-    const resizeHandle = await this.cellResizeHandle();
+    const resizeHandle = await this.cellResizeHandle()!;
     if (resizeHandle) {
       await resizeHandle.dispatchEvent('mousedown', { clientX: startPosX, screenX: startPosX });
+      await new Promise(resolve => setTimeout(resolve));
       const mouseMove = new MouseEvent('mousemove', {
         clientX: startPosX + pixelToResize,
         screenX: startPosX + pixelToResize

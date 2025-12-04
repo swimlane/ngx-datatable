@@ -1,5 +1,5 @@
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ComponentRef } from '@angular/core';
+import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TableColumnInternal } from '../../../types/internal.types';
@@ -25,6 +25,9 @@ describe('DataTableSummaryRowComponent', () => {
   });
 
   beforeEach(async () => {
+    TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()]
+    });
     fixture = TestBed.createComponent(DataTableSummaryRowComponent);
 
     // Set required inputs before creating harness and detecting changes
@@ -153,7 +156,7 @@ describe('DataTableSummaryRowComponent', () => {
 
         columns[0].pipe = { transform: transformSpy };
         componentRef.setInput('columns', [...columns]);
-        fixture.detectChanges();
+        await fixture.whenStable();
 
         const col1Text = await harness.getSummaryRowCellText(0);
 

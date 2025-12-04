@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/dot-notation */
-import { Component, QueryList, ViewChildren } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  Component,
+  provideZonelessChangeDetection,
+  QueryList,
+  signal,
+  ViewChildren
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { TableColumnInternal } from '../types/internal.types';
@@ -13,14 +19,14 @@ import { OrderableDirective } from './orderable.directive';
   imports: [OrderableDirective, DatatableDraggableDirective],
   template: `
     <div orderable>
-      @for (item of draggables; track $index) {
+      @for (item of draggables(); track $index) {
         <div datatableDraggable [dragModel]="item"></div>
       }
     </div>
   `
 })
 class TestFixtureComponent {
-  draggables: TableColumnInternal[] = [];
+  readonly draggables = signal<TableColumnInternal[]>([]);
   @ViewChildren(DatatableDraggableDirective)
   draggableDirectives!: QueryList<DatatableDraggableDirective>;
 }
@@ -29,7 +35,10 @@ describe('OrderableDirective', () => {
   let fixture: ComponentFixture<TestFixtureComponent>;
   let component: TestFixtureComponent;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
+    TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()]
+    });
     fixture = TestBed.createComponent(TestFixtureComponent);
     component = fixture.componentInstance;
     /* This is required in order to resolve the `ContentChildren`.
@@ -37,8 +46,8 @@ describe('OrderableDirective', () => {
      *  the `draggables` will be `undefined` and `ngOnDestroy` will
      *  fail.
      */
-    fixture.detectChanges();
-  }));
+    await fixture.whenStable();
+  });
 
   describe('fixture', () => {
     let directive: OrderableDirective;
@@ -79,20 +88,20 @@ describe('OrderableDirective', () => {
         return toInternalColumn([{ name }])[0];
       };
 
-      beforeEach(() => {
-        component.draggables = [newDraggable('d1'), newDraggable('d2'), newDraggable('d3')];
-        fixture.detectChanges();
+      beforeEach(async () => {
+        component.draggables.set([newDraggable('d1'), newDraggable('d2'), newDraggable('d3')]);
+        await fixture.whenStable();
 
         checkAllSubscriptionsForActiveObservers();
       });
 
-      it('then dragStart and dragEnd are unsubscribed from the removed draggable', () => {
+      it('then dragStart and dragEnd are unsubscribed from the removed draggable', async () => {
         const unsubbed = component.draggableDirectives.toArray()[0];
-        component.draggables.splice(0, 1);
+        component.draggables.update(items => items.slice(1));
 
         expect(unsubbed.dragStart['listeners']).not.toHaveSize(0);
         expect(unsubbed.dragEnd['listeners']).not.toHaveSize(0);
-        fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(unsubbed.dragStart['listeners']).toHaveSize(0);
         expect(unsubbed.dragEnd['listeners']).toHaveSize(0);

@@ -1,6 +1,13 @@
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { AfterViewInit, Component, TemplateRef, viewChild } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  AfterViewInit,
+  Component,
+  provideZonelessChangeDetection,
+  signal,
+  TemplateRef,
+  viewChild
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import {
   InnerSortEvent,
@@ -16,7 +23,10 @@ describe('DataTableHeaderCellComponent', () => {
   let component: DataTableHeaderCellComponent;
   let harness: HeaderCellHarness;
 
-  beforeEach(waitForAsync(async () => {
+  beforeEach(async () => {
+    TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()]
+    });
     fixture = TestBed.createComponent(DataTableHeaderCellComponent);
     fixture.componentRef.setInput('ariaHeaderCheckboxMessage', 'Select All');
     fixture.componentRef.setInput('sortType', 'single');
@@ -28,7 +38,6 @@ describe('DataTableHeaderCellComponent', () => {
       sortable: true
     });
     fixture.componentRef.setInput('sortType', 'single');
-    fixture.componentRef.setInput('headerHeight', 50);
     fixture.componentRef.setInput('ariaHeaderCheckboxMessage', 'Select all rows');
     fixture.componentInstance.sort.subscribe(sort => {
       fixture.componentRef.setInput('sorts', [
@@ -39,13 +48,14 @@ describe('DataTableHeaderCellComponent', () => {
       ]);
     });
     harness = await TestbedHarnessEnvironment.harnessForFixture(fixture, HeaderCellHarness);
-  }));
+  });
 
   it('should emit new width on resize', async () => {
     spyOn(component.resizing, 'emit');
     const initialWidth = await harness.cellWidth();
     await harness.resizeCell(0, 100);
     const newWidth = 100 + initialWidth;
+    await fixture.whenStable();
     expect(component.resizing.emit).toHaveBeenCalledWith({
       width: newWidth,
       column: {
@@ -99,7 +109,7 @@ describe('DataTableHeaderCellComponent', () => {
 
 @Component({
   imports: [DataTableHeaderCellComponent],
-  template: `<datatable-header-cell sortType="single" [column]="column" (sort)="sort($event)" />
+  template: `<datatable-header-cell sortType="single" [column]="column()" (sort)="sort($event)" />
     <ng-template #headerCellTemplate let-sort="sortFn" let-column="column">
       <span class="custom-header">Custom Header for {{ column.name }}</span>
       <button class="custom-sort-button" type="button" (click)="sort($event)"
@@ -108,19 +118,21 @@ describe('DataTableHeaderCellComponent', () => {
     </ng-template> `
 })
 class TestHeaderCellComponent implements AfterViewInit {
-  column: TableColumnInternal<any> = toInternalColumn([
-    {
-      name: 'test',
-      sortable: true
-    }
-  ])[0];
+  readonly column = signal<TableColumnInternal<any>>(
+    toInternalColumn([
+      {
+        name: 'test',
+        sortable: true
+      }
+    ])[0]
+  );
 
   readonly headerCellTemplate = viewChild('headerCellTemplate', { read: TemplateRef<any> });
 
   sort(event: InnerSortEvent) {}
 
   ngAfterViewInit() {
-    this.column = { ...this.column, headerTemplate: this.headerCellTemplate() };
+    this.column.set({ ...this.column(), headerTemplate: this.headerCellTemplate() });
   }
 }
 
@@ -128,13 +140,16 @@ describe('DataTableHeaderCellComponent with template', () => {
   let fixture: ComponentFixture<TestHeaderCellComponent>;
   let harness: HeaderCellHarness;
 
-  beforeEach(waitForAsync(async () => {
+  beforeEach(async () => {
+    TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()]
+    });
     fixture = TestBed.createComponent(TestHeaderCellComponent);
     harness = await TestbedHarnessEnvironment.harnessForFixture(fixture, HeaderCellHarness);
-  }));
+  });
 
   it('should render custom header template', async () => {
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(await harness.getHeaderCellText()).toContain('Custom Header for test');
   });
 
@@ -142,7 +157,7 @@ describe('DataTableHeaderCellComponent with template', () => {
     spyOn(fixture.componentInstance, 'sort');
     await harness.clickCustomSortButton();
     expect(fixture.componentInstance.sort).toHaveBeenCalledWith({
-      column: fixture.componentInstance.column as SortableTableColumnInternal<any>,
+      column: fixture.componentInstance.column() as SortableTableColumnInternal<any>,
       prevValue: undefined,
       newValue: 'asc'
     });

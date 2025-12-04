@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { Component, provideZonelessChangeDetection, signal } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { Row } from '../../types/public.types';
@@ -10,24 +10,27 @@ import { DataTableColumnDirective } from './column.directive';
   imports: [DataTableColumnDirective],
   template: `
     <ngx-datatable-column id="t1" />
-    <ngx-datatable-column id="t2" [name]="columnName">
+    <ngx-datatable-column id="t2" [name]="columnName()">
       <ng-template />
       <ng-template />
     </ngx-datatable-column>
   `
 })
 class TestFixtureComponent {
-  columnName?: string;
+  readonly columnName = signal<string | undefined>(undefined);
 }
 
 describe('DataTableColumnDirective', () => {
   let fixture: ComponentFixture<TestFixtureComponent>;
   let component: TestFixtureComponent;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
+    TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()]
+    });
     fixture = TestBed.createComponent(TestFixtureComponent);
     component = fixture.componentInstance;
-  }));
+  });
 
   describe('fixture', () => {
     let directive: DataTableColumnDirective<Row>;
@@ -50,12 +53,12 @@ describe('DataTableColumnDirective', () => {
   describe('directive #1', () => {
     let directive: DataTableColumnDirective<Row>;
 
-    beforeEach(() => {
+    beforeEach(async () => {
       directive = fixture.debugElement.query(By.css('#t1')).injector.get(DataTableColumnDirective);
+      await fixture.whenStable();
     });
 
     it('should have undefined inputs by default', () => {
-      fixture.detectChanges();
       expect(directive.name()).toBeUndefined();
       expect(directive.prop()).toBeUndefined();
       expect(directive.frozenRight()).toBe(false);
@@ -75,18 +78,18 @@ describe('DataTableColumnDirective', () => {
   });
 
   describe('directive #2', () => {
-    it('should update name signal when input changes', () => {
+    it('should update name signal when input changes', async () => {
       const directive = fixture.debugElement
         .query(By.css('#t2'))
         .injector.get(DataTableColumnDirective);
 
-      component.columnName = 'Column A';
-      fixture.detectChanges();
+      component.columnName.set('Column A');
+      await fixture.whenStable();
 
       expect(directive.name()).toBe('Column A');
 
-      component.columnName = 'Column B';
-      fixture.detectChanges();
+      component.columnName.set('Column B');
+      await fixture.whenStable();
 
       expect(directive.name()).toBe('Column B');
     });

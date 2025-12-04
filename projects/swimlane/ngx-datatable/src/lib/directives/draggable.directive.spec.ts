@@ -1,6 +1,6 @@
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, signal } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { Component, provideZonelessChangeDetection, signal } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DatatableDraggableDirective, DragEvent } from './datatable-draggable.directive';
 import { DraggableHarness } from './testing/draggable.harness';
@@ -12,7 +12,7 @@ import Spy = jasmine.Spy;
   imports: [DatatableDraggableDirective],
   template: `
     <div
-      [draggable]="enabled()"
+      [datatableDraggable]="enabled()"
       [dragStartDelay]="dragStartDelay()"
       (dragStart)="dragStart()"
       (dragEnd)="dragEnd()"
@@ -40,17 +40,23 @@ describe('DraggableDirective', () => {
   let dragMoveSpy: Spy<(event: DragEvent) => void>;
 
   beforeEach(async () => {
+    TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()]
+    });
     fixture = TestBed.createComponent(TestFixtureComponent);
     component = fixture.componentInstance;
-    harness = await TestbedHarnessEnvironment.harnessForFixture(fixture, DraggableHarness);
+    const loader = TestbedHarnessEnvironment.loader(fixture);
+    harness = await loader.getHarness(DraggableHarness);
     dragStartSpy = spyOn(component, 'dragStart');
     dragEndSpy = spyOn(component, 'dragEnd');
     dragMoveSpy = spyOn(component, 'dragMove');
   });
 
-  it('should fire mouse drag events', fakeAsync(() => async () => {
+  it('should fire mouse drag events', async () => {
+    jasmine.clock().install();
     await harness.mouseDown(0);
-    tick(); // Skip the delay of 0ms
+    jasmine.clock().tick(0); // Skip the delay of 0ms
+    await fixture.whenStable();
     expect(dragStartSpy).toHaveBeenCalled();
     await harness.mouseMove(100);
     expect(dragMoveSpy).toHaveBeenCalledWith(
@@ -64,11 +70,14 @@ describe('DraggableDirective', () => {
     expect(dragEndSpy).toHaveBeenCalled();
     await harness.mouseMove(200);
     expect(dragMoveSpy).toHaveBeenCalledTimes(2);
-  }));
+    jasmine.clock().uninstall();
+  });
 
-  it('should fire touch drag events', fakeAsync(() => async () => {
+  it('should fire touch drag events', async () => {
+    jasmine.clock().install();
     await harness.touchStart(0);
-    tick(); // Skip the delay of 0ms
+    jasmine.clock().tick(0); // Skip the delay of 0ms
+    await fixture.whenStable();
     expect(dragStartSpy).toHaveBeenCalled();
     await harness.touchMove(100);
     expect(dragMoveSpy).toHaveBeenCalledWith(
@@ -82,54 +91,67 @@ describe('DraggableDirective', () => {
     expect(dragEndSpy).toHaveBeenCalled();
     await harness.touchMove(200);
     expect(dragMoveSpy).toHaveBeenCalledTimes(2);
-  }));
+    jasmine.clock().uninstall();
+  });
 
-  it('should not start mouse dragging if disabled', fakeAsync(() => async () => {
+  it('should not start mouse dragging if disabled', async () => {
+    jasmine.clock().install();
     component.enabled.set(false);
     await harness.mouseDown(0);
     await harness.mouseMove(1);
     await harness.mouseUp();
-    tick(); // Skip the delay of 0ms
+    jasmine.clock().tick(0); // Skip the delay of 0ms
     expect(dragStartSpy).not.toHaveBeenCalled();
     expect(dragEndSpy).not.toHaveBeenCalled();
     expect(dragMoveSpy).not.toHaveBeenCalled();
-  }));
+    jasmine.clock().uninstall();
+  });
 
-  it('should not start touch dragging if disabled', fakeAsync(() => async () => {
+  it('should not start touch dragging if disabled', async () => {
+    jasmine.clock().install();
     component.enabled.set(false);
     await harness.touchStart(0);
     await harness.touchMove(1);
     await harness.touchEnd();
-    tick(); // Skip the delay of 0ms
+    jasmine.clock().tick(0); // Skip the delay of 0ms
     expect(dragStartSpy).not.toHaveBeenCalled();
     expect(dragEndSpy).not.toHaveBeenCalled();
     expect(dragMoveSpy).not.toHaveBeenCalled();
-  }));
+    jasmine.clock().uninstall();
+  });
 
   describe('with delay', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       component.dragStartDelay.set(100);
+      await fixture.whenStable();
     });
 
-    it('should start dragging after the specified delay', fakeAsync(() => async () => {
+    it('should start dragging after the specified delay', async () => {
+      jasmine.clock().install();
       await harness.touchStart(0);
-      tick(100);
+      jasmine.clock().tick(100);
+      await fixture.whenStable();
       expect(dragStartSpy).toHaveBeenCalled();
-    }));
+      jasmine.clock().uninstall();
+    });
 
-    it('should skip dragging if not pressed long enough', fakeAsync(() => async () => {
+    it('should skip dragging if not pressed long enough', async () => {
+      jasmine.clock().install();
       await harness.mouseDown(0);
-      tick(50);
+      jasmine.clock().tick(50);
       await harness.mouseUp();
       expect(dragStartSpy).not.toHaveBeenCalled();
       expect(dragEndSpy).not.toHaveBeenCalled();
-    }));
+      jasmine.clock().uninstall();
+    });
 
-    it('should not start dragging if waiting for the delay', fakeAsync(() => async () => {
+    it('should not start dragging if waiting for the delay', async () => {
+      jasmine.clock().install();
       await harness.mouseDown(0);
-      tick(50);
+      jasmine.clock().tick(50);
       await harness.mouseMove(100);
       expect(dragMoveSpy).not.toHaveBeenCalled();
-    }));
+      jasmine.clock().uninstall();
+    });
   });
 });

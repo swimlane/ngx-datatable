@@ -1,4 +1,4 @@
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -18,7 +18,11 @@ describe('DataTableBodyComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [DataTableBodyComponent],
-      providers: [ScrollbarHelper, { provide: DATATABLE_COMPONENT_TOKEN, useValue: {} }]
+      providers: [
+        ScrollbarHelper,
+        { provide: DATATABLE_COMPONENT_TOKEN, useValue: {} },
+        provideZonelessChangeDetection()
+      ]
     }).compileComponents();
     fixture = TestBed.createComponent(DataTableBodyComponent);
     fixture.componentRef.setInput('rowDragEvents', new EventEmitter<any>());
@@ -103,7 +107,7 @@ describe('DataTableBodyComponent', () => {
       expect(component.indexes()).toEqual(expectedIndexes);
     });
 
-    it('should render ghost rows based rowCount', () => {
+    it('should render ghost rows based rowCount', async () => {
       fixture.componentRef.setInput('trackByProp', 'num');
       fixture.componentRef.setInput('rows', [{ num: 1 }, { num: 2 }, { num: 3 }, { num: 4 }]);
       fixture.componentRef.setInput('columns', toInternalColumn([{ name: 'num', prop: 'num' }]));
@@ -116,12 +120,12 @@ describe('DataTableBodyComponent', () => {
       fixture.componentRef.setInput('pageSize', 5);
       fixture.componentRef.setInput('rowCount', 10);
       fixture.componentRef.setInput('offset', 0);
-      fixture.detectChanges();
+      await fixture.whenStable();
       expect(component.indexes()).toEqual({ first: 0, last: 5 });
       fixture.debugElement
         .query(By.directive(ScrollerComponent))
         .triggerEventHandler('scroll', { scrollYPos: 250, scrollXPos: 0 });
-      fixture.detectChanges();
+      await fixture.whenStable();
       expect(component.indexes()).toEqual({ first: 5, last: 10 });
       expect(fixture.debugElement.queryAll(By.directive(DataTableGhostLoaderComponent))).toHaveSize(
         5
@@ -138,7 +142,7 @@ describe('DataTableBodyComponent', () => {
       fixture.componentRef.setInput('disableRowCheck', (row: any) => row.disabled);
     });
 
-    it('should disable rows', () => {
+    it('should disable rows', async () => {
       fixture.componentRef.setInput('rows', [
         { value: '1', disabled: false },
         { value: '2', disabled: true }
@@ -146,7 +150,7 @@ describe('DataTableBodyComponent', () => {
       fixture.componentRef.setInput('rowCount', 2);
       fixture.componentRef.setInput('pageSize', 2);
       fixture.componentRef.setInput('offset', 0);
-      fixture.detectChanges();
+      await fixture.whenStable();
       let rows = fixture.debugElement.queryAll(By.directive(DataTableBodyRowComponent));
       expect(rows[0].classes['row-disabled']).toBeFalsy();
       expect(rows[1].classes['row-disabled']).toBeTrue();
@@ -154,13 +158,13 @@ describe('DataTableBodyComponent', () => {
         { value: '1', disabled: true },
         { value: '2', disabled: false }
       ]);
-      fixture.detectChanges();
+      await fixture.whenStable();
       rows = fixture.debugElement.queryAll(By.directive(DataTableBodyRowComponent));
       expect(rows[0].classes['row-disabled']).toBeTrue();
       expect(rows[1].classes['row-disabled']).toBeFalsy();
     });
 
-    it('should disable grouped rows', () => {
+    it('should disable grouped rows', async () => {
       fixture.componentRef.setInput('groupedRows', [
         {
           key: 'g1',
@@ -175,7 +179,7 @@ describe('DataTableBodyComponent', () => {
       fixture.componentRef.setInput('rowCount', 2);
       fixture.componentRef.setInput('pageSize', 2);
       fixture.componentRef.setInput('offset', 0);
-      fixture.detectChanges();
+      await fixture.whenStable();
       const rows = fixture.debugElement.queryAll(By.directive(DataTableBodyRowComponent));
       expect(rows[0].classes['row-disabled']).toBeFalsy();
       expect(rows[1].classes['row-disabled']).toBeTrue();
@@ -183,7 +187,7 @@ describe('DataTableBodyComponent', () => {
   });
 
   describe('with row grouping and row details', () => {
-    it('should expand group and then expand row details within the group', () => {
+    it('should expand group and then expand row details within the group', async () => {
       const row1 = { value: '1', id: 1 };
       const row2 = { value: '2', id: 2 };
       const group = {
@@ -203,7 +207,7 @@ describe('DataTableBodyComponent', () => {
       fixture.componentRef.setInput('offset', 0);
       fixture.componentRef.setInput('rowIdentity', (row: any) => row.id ?? row.key);
 
-      fixture.detectChanges();
+      await fixture.whenStable();
 
       // Initially, group should be collapsed
       expect(component.getGroupExpanded(group)).toBeFalse();
@@ -211,7 +215,7 @@ describe('DataTableBodyComponent', () => {
 
       // Expand the group
       component.toggleGroupExpansion(group);
-      fixture.detectChanges();
+      await fixture.whenStable();
 
       expect(component.getGroupExpanded(group)).toBeTrue();
       expect(component.groupExpansions()).toHaveSize(1);
@@ -219,7 +223,7 @@ describe('DataTableBodyComponent', () => {
 
       // Now expand row detail for the first row in the group
       component.toggleRowExpansion(row1);
-      fixture.detectChanges();
+      await fixture.whenStable();
 
       expect(component.getRowExpanded(row1)).toBeTrue();
       expect(component.rowExpansions()).toHaveSize(1);
@@ -230,7 +234,7 @@ describe('DataTableBodyComponent', () => {
 
       // Expand row detail for the second row as well
       component.toggleRowExpansion(row2);
-      fixture.detectChanges();
+      await fixture.whenStable();
 
       expect(component.getRowExpanded(row2)).toBeTrue();
       expect(component.rowExpansions()).toHaveSize(2);
@@ -239,7 +243,7 @@ describe('DataTableBodyComponent', () => {
 
       // Collapse the first row detail
       component.toggleRowExpansion(row1);
-      fixture.detectChanges();
+      await fixture.whenStable();
 
       expect(component.getRowExpanded(row1)).toBeFalse();
       expect(component.rowExpansions()).toHaveSize(1);
