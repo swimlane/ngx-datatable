@@ -34,6 +34,7 @@ import { Page } from './model/page';
         [count]="page.totalElements"
         [offset]="page.pageNumber"
         [limit]="page.size"
+        [loadingIndicator]="loading()"
         (page)="setPage($event.offset)"
       />
     </div>
@@ -48,6 +49,7 @@ export class ServerPagingComponent implements OnInit {
     totalPages: 0
   });
   readonly rows = signal<Employee[]>([]);
+  readonly loading = signal(false);
   private serverResultsService = inject(MockServerResultsService);
 
   ngOnInit() {
@@ -60,9 +62,11 @@ export class ServerPagingComponent implements OnInit {
    */
   setPage(page: number) {
     this.page.update(currentPage => ({ ...currentPage, pageNumber: page }));
+    this.loading.set(true);
     this.serverResultsService.getResults(this.page()).subscribe(pagedData => {
       this.page.set(pagedData.page);
       this.rows.set(pagedData.data);
+      this.loading.set(false);
     });
   }
 }
