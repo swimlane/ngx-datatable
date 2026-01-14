@@ -1,6 +1,7 @@
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import type { Mock } from 'vitest';
 
 import { DatatableDraggableDirective, DragEvent } from './datatable-draggable.directive';
@@ -114,6 +115,44 @@ describe('DraggableDirective', () => {
     expect(dragEndSpy).not.toHaveBeenCalled();
     expect(dragMoveSpy).not.toHaveBeenCalled();
     vi.useRealTimers();
+  });
+
+  it('should detach pointer listeners when disabled', async () => {
+    component.enabled.set(false);
+    await fixture.whenStable();
+
+    const hostElement = fixture.debugElement.query(By.css('div')).nativeElement as HTMLElement;
+    const addEventListenerSpy = vi.spyOn(hostElement, 'addEventListener');
+    const removeEventListenerSpy = vi.spyOn(hostElement, 'removeEventListener');
+
+    try {
+      component.enabled.set(true);
+      await fixture.whenStable();
+
+      const addEventCalls = addEventListenerSpy.mock.calls.filter(
+        ([type]) => type === 'mousedown' || type === 'touchstart'
+      );
+      expect(addEventCalls).toHaveLength(2);
+
+      component.enabled.set(false);
+      await fixture.whenStable();
+
+      const removeEventCalls = removeEventListenerSpy.mock.calls.filter(
+        ([type]) => type === 'mousedown' || type === 'touchstart'
+      );
+      expect(removeEventCalls).toHaveLength(2);
+
+      addEventCalls.forEach(([type, handler]) => {
+        expect(
+          removeEventCalls.some(
+            ([removedType, removedHandler]) => removedType === type && removedHandler === handler
+          )
+        ).toBe(true);
+      });
+    } finally {
+      addEventListenerSpy.mockRestore();
+      removeEventListenerSpy.mockRestore();
+    }
   });
 
   describe('with delay', () => {

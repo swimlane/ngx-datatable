@@ -4,6 +4,7 @@ import {
   Directive,
   DOCUMENT,
   ElementRef,
+  effect,
   inject,
   input,
   numberAttribute,
@@ -26,9 +27,7 @@ export interface DragEvent {
   host: {
     '[class.draggable]': 'enabled()',
     '[class.dragging]': 'isDragging()',
-    '[class.longpress]': 'isLongPressing()',
-    '(mousedown)': 'mousedown($event)',
-    '(touchstart)': 'touchstart($event)'
+    '[class.longpress]': 'isLongPressing()'
   }
 })
 export class DatatableDraggableDirective implements OnDestroy {
@@ -50,12 +49,30 @@ export class DatatableDraggableDirective implements OnDestroy {
     () => this.dragStartDelay() !== 0 && this.isDragging()
   );
   protected readonly isDragging = computed(() => this.startX() !== undefined);
+  private removePointerListeners?: () => void;
+
+  constructor() {
+    effect(() => {
+      if (this.enabled()) {
+        this.element.addEventListener('mousedown', this.mousedown);
+        this.element.addEventListener('touchstart', this.touchstart);
+        this.removePointerListeners = () => {
+          this.element.removeEventListener('mousedown', this.mousedown);
+          this.element.removeEventListener('touchstart', this.touchstart);
+        };
+      } else {
+        this.removePointerListeners?.();
+        this.removePointerListeners = undefined;
+      }
+    });
+  }
 
   ngOnDestroy(): void {
     clearTimeout(this.timeoutId);
+    this.removePointerListeners?.();
   }
 
-  protected mousedown(event: MouseEvent): void {
+  protected readonly mousedown = (event: MouseEvent): void => {
     if (!this.enabled()) {
       return;
     }
@@ -67,11 +84,11 @@ export class DatatableDraggableDirective implements OnDestroy {
       this.document.addEventListener('mousemove', this.mousemove);
       this.starting(event.clientX, event.clientY);
     });
-  }
+  };
 
   private mousemove = (event: MouseEvent): void => this.moving(event.clientX, event.clientY);
 
-  protected touchstart(event: TouchEvent): void {
+  protected readonly touchstart = (event: TouchEvent): void => {
     if (!this.enabled()) {
       return;
     }
@@ -85,7 +102,7 @@ export class DatatableDraggableDirective implements OnDestroy {
       this.document.addEventListener('touchmove', this.touchmove);
       this.starting(touch.clientX, touch.clientY);
     });
-  }
+  };
 
   private touchmove = (event: TouchEvent): void => {
     const touchMove = this.findTouch(event)!;
