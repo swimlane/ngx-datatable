@@ -36,6 +36,7 @@ export class DatatableRowDefComponent {
 }
 
 @Directive({
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[rowDef]'
 })
 export class DatatableRowDefDirective {
@@ -51,6 +52,7 @@ export class DatatableRowDefDirective {
  * @internal To be used internally by ngx-datatable.
  */
 @Directive({
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[rowDefInternal]'
 })
 export class DatatableRowDefInternalDirective implements OnInit {

@@ -3,6 +3,7 @@ import { DatatableGroupHeaderTemplateDirective } from './body-group-header-templ
 import { Group, GroupContext, GroupToggleEvents, Row } from '../../types/public.types';
 
 @Directive({
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'ngx-datatable-group-header'
 })
 export class DatatableGroupHeaderDirective<TRow extends Row = any> {

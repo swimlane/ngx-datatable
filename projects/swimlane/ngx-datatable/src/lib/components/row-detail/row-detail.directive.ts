@@ -3,6 +3,7 @@ import { DatatableRowDetailTemplateDirective } from './row-detail-template.direc
 import { DetailToggleEvents, Row, RowDetailContext } from '../../types/public.types';
 
 @Directive({
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'ngx-datatable-row-detail'
 })
 export class DatatableRowDetailDirective<TRow extends Row = any> {
