@@ -1,3 +1,8 @@
+@use './ghost' as ghost;
+@use './rows' as rows;
+
+$datatable-disable-row-text-color: #83888e !default;
+
 $datatable-ghost-cell-container-background: #fff !default;
 
 $datatable-ghost-cell-strip-background: #dee2e5 !default;
@@ -9,12 +14,19 @@ $datatable-ghost-cell-strip-background-image: linear-gradient(
   transparent
 ) !default;
 $datatable-ghost-cell-strip-radius: 0 !default;
-$datatble-ghost-cell-animation-duration: 10s;
-
-@import './ghost';
-@import './rows';
+$datatable-ghost-cell-animation-duration: 10s;
 
 .ngx-datatable.bootstrap {
+  @include ghost.ghost-cell-styles(
+    $datatable-ghost-cell-container-background,
+    $datatable-ghost-cell-strip-background,
+    $datatable-ghost-cell-strip-background-image,
+    $datatable-ghost-cell-strip-radius,
+    $datatable-ghost-cell-animation-duration
+  );
+
+  @include rows.row-disabled-styles($datatable-disable-row-text-color);
+
   box-shadow: none;
   font-size: 13px;
 

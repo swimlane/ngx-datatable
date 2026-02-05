@@ -8,9 +8,9 @@ include that in your application `themes/material.css` and add the CSS class `ma
 This is a simple way to apply the style of the demo.
 
 ```scss
-@import '~@swimlane/ngx-datatable/index.css';
-@import '~@swimlane/ngx-datatable/themes/material.scss';
-@import '~@swimlane/ngx-datatable/assets/icons.css';
+@use '~@swimlane/ngx-datatable/index.css';
+@use '~@swimlane/ngx-datatable/themes/material.scss';
+@use '~@swimlane/ngx-datatable/assets/icons.css';
 ```
 
 You can just add above to your `scss` file and then specify the class of your ngx-datatable to `<ngx-datatable class="material">`
@@ -18,13 +18,10 @@ You can just add above to your `scss` file and then specify the class of your ng
 ## CSS Classes
 
 - `ngx-datatable`: Master Table class
-
   - `fixed-header`: The header is fixed on the table
 
 - `datatable-header`: Header row class
-
   - `datatable-header-cell`: Header cell class
-
     - `resizeable`: Cell resizeable class
     - `sortable`: Cell drag/drop sortable class
     - `longpress`: Cell long-press activated
@@ -37,10 +34,8 @@ You can just add above to your `scss` file and then specify the class of your ng
     - `draggable`: Header cell draggable class
 
 - `datatable-body-row`: Body row class
-
   - `datatable-row-even`: Odd row class
   - `datatable-row-odd`: Even row class
-
     - `datatable-body-cell`: Body cell class
       - `sort-active`: Sort active on column
       - `sort-asc`: Sort active on column with ascending applied

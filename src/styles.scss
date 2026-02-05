@@ -1,7 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 
-$datatable-pager-color: rgba(0, 0, 0, 0.64);
-
-@import '../projects/swimlane/ngx-datatable/src/lib/themes/material';
-@import '../projects/swimlane/ngx-datatable/src/lib/themes/dark';
-@import '../projects/swimlane/ngx-datatable/src/lib/themes/bootstrap';
+@use '../projects/swimlane/ngx-datatable/src/lib/themes/material';
+@use '../projects/swimlane/ngx-datatable/src/lib/themes/dark';
+@use '../projects/swimlane/ngx-datatable/src/lib/themes/bootstrap';
