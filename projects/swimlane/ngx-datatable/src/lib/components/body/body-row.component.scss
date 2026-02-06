@@ -1,3 +1,5 @@
+@use '../shared';
+
 :host {
   display: flex;
   outline: none;
@@ -11,3 +13,5 @@
   display: flex;
   position: relative;
 }
+
+@include shared.pinned-columns();
