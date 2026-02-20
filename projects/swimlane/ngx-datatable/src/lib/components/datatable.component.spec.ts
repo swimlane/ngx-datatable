@@ -2,7 +2,7 @@ import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { SortPropDir } from '../types/public.types';
+import { ColumnMode, SortPropDir } from '../types/public.types';
 import { TableColumn } from '../types/table-column.type';
 import { DataTableBodyCellComponent } from './body/body-cell.component';
 import { DataTableBodyRowComponent } from './body/body-row.component';
@@ -10,6 +10,7 @@ import { DataTableColumnCellDirective } from './columns/column-cell.directive';
 import { DataTableColumnHeaderDirective } from './columns/column-header.directive';
 import { DataTableColumnDirective } from './columns/column.directive';
 import { DatatableComponent } from './datatable.component';
+import { DataTableHeaderCellComponent } from './header/header-cell.component';
 
 describe('DatatableComponent', () => {
   let fixture: ComponentFixture<TestFixtureComponent>;
@@ -17,12 +18,24 @@ describe('DatatableComponent', () => {
 
   @Component({
     imports: [DatatableComponent],
-    template: ` <ngx-datatable [columns]="columns()" [rows]="rows()" [sorts]="sorts()" /> `
+    template: `
+      <ngx-datatable
+        [columns]="columns()"
+        [rows]="rows()"
+        [sorts]="sorts()"
+        [columnMode]="columnMode()"
+      />
+    `,
+    host: {
+      '[style.inline-size.px]': 'size()'
+    }
   })
   class TestFixtureComponent {
     readonly columns = signal<TableColumn[]>([]);
     readonly rows = signal<Record<string, any>[]>([]);
     readonly sorts = signal<any[]>([]);
+    readonly columnMode = signal<ColumnMode>('standard');
+    readonly size = signal<number>(400);
   }
 
   beforeEach(() => {
@@ -352,6 +365,31 @@ describe('DatatableComponent', () => {
 
     expect(textContent({ row: 1, column: 1 }, fixture)).toContain('Hello');
     expect(textContent({ row: 1, column: 2 }, fixture)).toContain('123');
+  });
+
+  it('should maintain proportional column sizes on window resize after column resize', async () => {
+    component.columns.set([
+      { prop: 'A', width: 100 },
+      { prop: 'B', width: 100 },
+      { prop: 'C', width: 100 },
+      { prop: 'D', width: 100 }
+    ]);
+    component.columnMode.set('force');
+    await fixture.whenStable();
+    const headerCells = fixture.debugElement.queryAll(By.directive(DataTableHeaderCellComponent));
+    const cellSizes = () => headerCells.map(cell => cell.nativeElement.clientWidth);
+    headerCells[1].triggerEventHandler('resize', {
+      width: 150,
+      column: headerCells[1].componentInstance.column()
+    });
+
+    await fixture.whenStable();
+    expect(cellSizes()).toEqual([100, 150, 75, 75]);
+    component.size.set(300);
+    await fixture.whenStable();
+    fixture.debugElement.query(By.directive(DatatableComponent)).componentInstance.recalculate();
+    await fixture.whenStable();
+    expect(cellSizes()).toEqual([75, 125, 50, 50]);
   });
 });
 

@@ -20,7 +20,6 @@ import {
   model,
   numberAttribute,
   OnDestroy,
-  OnInit,
   output,
   signal,
   TemplateRef,
@@ -110,7 +109,7 @@ import { DatatableRowDetailDirective } from './row-detail/row-detail.directive';
   }
 })
 export class DatatableComponent<TRow extends Row = any>
-  implements OnInit, DoCheck, AfterViewInit, OnDestroy
+  implements DoCheck, AfterViewInit, OnDestroy
 {
   private scrollbarHelper = inject(ScrollbarHelper);
   private cd = inject(ChangeDetectorRef);
@@ -639,13 +638,11 @@ export class DatatableComponent<TRow extends Row = any>
   // TODO: consider removing internal modifications of the columns.
   // This requires a different strategy for certain properties like width.
   readonly _internalColumns = linkedSignal(() =>
-    this.recalculateColumns(
-      toInternalColumn(
-        this.columnTemplates().length
-          ? this.columnTemplates().map(c => c.column())
-          : (this.columns() ?? []),
-        this._defaultColumnWidth
-      )
+    toInternalColumn(
+      this.columnTemplates().length
+        ? this.columnTemplates().map(c => c.column())
+        : (this.columns() ?? []),
+      this._defaultColumnWidth
     )
   );
 
@@ -686,17 +683,8 @@ export class DatatableComponent<TRow extends Row = any>
       // Recalculate without tracking other signals
       untracked(() => this.recalculateDims());
     });
-  }
 
-  /**
-   * Lifecycle hook that is called after data-bound
-   * properties of a directive are initialized.
-   */
-  ngOnInit(): void {
-    // need to call this immediatly to size
-    // if the table is hidden the visibility
-    // listener will invoke this itself upon show
-    this.recalculate();
+    effect(() => this.recalculateColumns());
   }
 
   /*
@@ -807,8 +795,6 @@ export class DatatableComponent<TRow extends Row = any>
    */
   recalculate(): void {
     this.recalculateDims();
-    this._internalColumns.set(this.recalculateColumns(this._internalColumns().slice()));
-    this.cd.markForCheck();
   }
 
   /**
@@ -825,11 +811,11 @@ export class DatatableComponent<TRow extends Row = any>
    * distribution mode and scrollbar offsets.
    */
   recalculateColumns(
-    columns: TableColumnInternal[],
     forceIdx = -1,
     allowBleed: boolean = this.scrollbarH()
   ): TableColumnInternal[] {
     let width = this._innerWidth();
+    const columns = this._internalColumns();
     if (!width) {
       return [];
     }
@@ -843,7 +829,7 @@ export class DatatableComponent<TRow extends Row = any>
 
     // TODO: this is a temporary workaround to avoid signal writes in a computed.
     // Later, a computed adjustedWidth has to be added to the internal column to avoid this.
-    queueMicrotask(() => {
+    untracked(() => {
       if (this.columnMode() === ColumnMode.force) {
         forceFillColumnWidths(
           columns,
@@ -998,12 +984,12 @@ export class DatatableComponent<TRow extends Row = any>
     }
 
     const idx = this._internalColumns().indexOf(column);
-    const cols = this._internalColumns().map(col => ({ ...col }));
+    const cols = this._internalColumns();
     cols[idx].width.set(newValue);
     // set this so we can force the column
     // width distribution to be to this value
     cols[idx].$$oldWidth = newValue;
-    this._internalColumns.set(this.recalculateColumns(cols, idx));
+    this.recalculateColumns(idx);
 
     this.resize.emit({
       column: toPublicColumn(column),
@@ -1019,7 +1005,7 @@ export class DatatableComponent<TRow extends Row = any>
     column.width.set(newValue);
     column.$$oldWidth = newValue;
     const idx = this._internalColumns().indexOf(column);
-    this._internalColumns.set(this.recalculateColumns(this._internalColumns().slice(), idx));
+    this.recalculateColumns(idx);
   }
 
   /**
