@@ -49,7 +49,7 @@ export const columnGroupWidths = (
  * Calculates the total width of all columns
  */
 export const columnTotalWidth = (columns?: TableColumnInternal[]) => {
-  return columns?.reduce((total, column) => total + column.width, 0) ?? 0;
+  return columns?.reduce((total, column) => total + column.width(), 0) ?? 0;
 };
 
 export const columnsByPinArr = (val: TableColumnInternal[]): PinnedColumns[] => {

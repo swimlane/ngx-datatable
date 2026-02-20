@@ -29,6 +29,7 @@ import {
   SortType
 } from '../../types/public.types';
 import { columnGroupWidths, columnsByPin, columnsByPinArr } from '../../utils/column';
+import { toPublicColumn } from '../../utils/column-helper';
 import { DataTableHeaderCellComponent } from './header-cell.component';
 
 @Component({
@@ -171,7 +172,7 @@ export class DataTableHeaderComponent {
     }
     return {
       column,
-      prevValue: column.width,
+      prevValue: column.width(),
       newValue: width
     };
   }
@@ -225,7 +226,7 @@ export class DataTableHeaderComponent {
     const sorts = this.calcNewSorts(column, prevValue, newValue);
     this.sort.emit({
       sorts,
-      column,
+      column: toPublicColumn(column),
       prevValue,
       newValue
     });

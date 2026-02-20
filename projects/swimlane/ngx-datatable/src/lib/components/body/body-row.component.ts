@@ -17,6 +17,7 @@ import {
 import { NgxDatatableConfig } from '../../ngx-datatable.config';
 import { CellActiveEvent, RowIndex, TableColumnInternal } from '../../types/internal.types';
 import { ActivateEvent, Row, RowOrGroup, TreeStatus } from '../../types/public.types';
+import { TableColumn } from '../../types/table-column.type';
 import { columnGroupWidths, columnsByPin, columnsByPinArr } from '../../utils/column';
 import { ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, ARROW_UP, ENTER } from '../../utils/keys';
 import { DataTableBodyCellComponent } from './body-cell.component';
@@ -79,7 +80,7 @@ export class DataTableBodyRowComponent<TRow extends Row = any> implements DoChec
   readonly group = input<TRow[]>();
   readonly isSelected = input<boolean>();
   readonly rowIndex = input.required<RowIndex>();
-  readonly displayCheck = input<(row: TRow, column: TableColumnInternal, value?: any) => boolean>();
+  readonly displayCheck = input<(row: TRow, column: TableColumn, value?: any) => boolean>();
   readonly treeStatus = input<TreeStatus | undefined>('collapsed');
   readonly ariaRowCheckboxMessage = input.required<string>();
 

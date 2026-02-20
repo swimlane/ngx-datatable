@@ -1,3 +1,5 @@
+import { signal } from '@angular/core';
+
 import { TableColumnInternal } from '../types/internal.types';
 import { Row } from '../types/public.types';
 import { TableColumn } from '../types/table-column.type';
@@ -32,7 +34,7 @@ export const toInternalColumn = <T extends Row>(
       comparator: column.comparator ?? orderByComparator,
       draggable: column.draggable ?? true,
       canAutoResize: column.canAutoResize ?? true,
-      width: column.width ?? defaultColumnWidth,
+      width: signal(column.width ?? defaultColumnWidth),
       isTreeColumn,
       // in case of the directive, those are getters, so call them explicitly.
       headerTemplate: column.headerTemplate,
@@ -42,4 +44,36 @@ export const toInternalColumn = <T extends Row>(
       treeToggleTemplate: column.treeToggleTemplate
     } as TableColumnInternal; // TS cannot cast here
   });
+};
+
+export const toPublicColumn = (column: TableColumnInternal): TableColumn => {
+  return {
+    checkboxable: column.checkboxable,
+    frozenLeft: column.frozenLeft,
+    frozenRight: column.frozenRight,
+    flexGrow: column.flexGrow,
+    minWidth: column.minWidth,
+    maxWidth: column.maxWidth,
+    width: column.width(),
+    resizeable: column.resizeable,
+    comparator: column.comparator,
+    pipe: column.pipe,
+    sortable: column.sortable,
+    draggable: column.draggable,
+    canAutoResize: column.canAutoResize,
+    name: column.name,
+    prop: column.prop,
+    bindAsUnsafeHtml: column.bindAsUnsafeHtml,
+    cellTemplate: column.cellTemplate,
+    ghostCellTemplate: column.ghostCellTemplate,
+    headerTemplate: column.headerTemplate,
+    treeToggleTemplate: column.treeToggleTemplate,
+    cellClass: column.cellClass,
+    headerClass: column.headerClass,
+    headerCheckboxable: column.headerCheckboxable,
+    isTreeColumn: column.isTreeColumn,
+    treeLevelIndent: column.treeLevelIndent,
+    summaryFunc: column.summaryFunc,
+    summaryTemplate: column.summaryTemplate
+  };
 };

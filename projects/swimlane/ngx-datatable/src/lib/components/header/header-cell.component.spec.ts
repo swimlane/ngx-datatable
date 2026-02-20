@@ -25,7 +25,8 @@ describe('DataTableHeaderCellComponent', () => {
       name: 'test',
       prop: 'test',
       resizeable: true,
-      sortable: true
+      sortable: true,
+      width: signal(0)
     });
     fixture.componentRef.setInput('sortType', 'single');
     fixture.componentRef.setInput('ariaHeaderCheckboxMessage', 'Select all rows');
@@ -52,7 +53,8 @@ describe('DataTableHeaderCellComponent', () => {
         name: 'test',
         prop: 'test',
         resizeable: true,
-        sortable: true
+        sortable: true,
+        width: expect.any(Function)
       } as TableColumnInternal<any>
     });
   });
@@ -76,7 +78,8 @@ describe('DataTableHeaderCellComponent', () => {
   it('should emit select when checkbox is clicked', async () => {
     fixture.componentRef.setInput('column', {
       name: 'test',
-      headerCheckboxable: true
+      headerCheckboxable: true,
+      width: signal(0)
     });
     vi.spyOn(component.select, 'emit');
     await harness.selectAllRows();

@@ -1,3 +1,5 @@
+import { WritableSignal } from '@angular/core';
+
 import { ValueGetter } from '../utils/column-prop-getters';
 import { Row, SortDirection, TreeStatus } from './public.types';
 import { TableColumn, TableColumnProp } from './table-column.type';
@@ -57,7 +59,8 @@ export interface CellActiveEvent<TRow> {
   treeStatus?: TreeStatus;
 }
 
-export interface BaseTableColumnInternal<TRow extends Row = any> extends TableColumn<TRow> {
+export interface BaseTableColumnInternal<TRow extends Row = any>
+  extends Omit<TableColumn<TRow>, 'width'> {
   /** Internal unique id */
   $$id: string;
 
@@ -73,18 +76,17 @@ export interface BaseTableColumnInternal<TRow extends Row = any> extends TableCo
 
   // Those properties are never null on the internal type:
   name: string;
-  width: number;
+  width: WritableSignal<number>;
+  prop: TableColumnProp;
 }
 
-export interface StandardTableColumnInternal<
-  TRow extends Row = any
-> extends BaseTableColumnInternal<TRow> {
+export interface StandardTableColumnInternal<TRow extends Row = any>
+  extends BaseTableColumnInternal<TRow> {
   sortable?: false;
 }
 
-export interface SortableTableColumnInternal<
-  TRow extends Row = any
-> extends BaseTableColumnInternal<TRow> {
+export interface SortableTableColumnInternal<TRow extends Row = any>
+  extends BaseTableColumnInternal<TRow> {
   comparator: Exclude<TableColumn['comparator'], undefined>;
   prop: TableColumnProp;
   sortable: true;

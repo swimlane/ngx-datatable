@@ -36,6 +36,7 @@ import {
   ScrollEvent,
   SelectionType
 } from '../../types/public.types';
+import { TableColumn } from '../../types/table-column.type';
 import { columnGroupWidths, columnsByPin } from '../../utils/column';
 import { ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, ARROW_UP, ENTER } from '../../utils/keys';
 import { RowHeightCache } from '../../utils/row-height-cache';
@@ -274,7 +275,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   readonly rowDetail = input<DatatableRowDetailDirective>();
   readonly groupHeader = input<DatatableGroupHeaderDirective>();
   readonly selectCheck = input<(value: TRow, index: number, array: TRow[]) => boolean>();
-  readonly displayCheck = input<(row: TRow, column: TableColumnInternal, value?: any) => boolean>();
+  readonly displayCheck = input<(row: TRow, column: TableColumn, value?: any) => boolean>();
   readonly trackByProp = input<string>();
   readonly rowClass = input<(row: TRow) => string | Record<string, boolean>>();
   readonly groupedRows = input<Group<TRow>[]>();

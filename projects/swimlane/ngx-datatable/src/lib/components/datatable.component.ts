@@ -59,7 +59,7 @@ import {
   TreeStatus
 } from '../types/public.types';
 import { TableColumn } from '../types/table-column.type';
-import { toInternalColumn } from '../utils/column-helper';
+import { toInternalColumn, toPublicColumn } from '../utils/column-helper';
 import { adjustColumnWidths, forceFillColumnWidths } from '../utils/math';
 import { numberOrUndefinedAttribute } from '../utils/number-or-undefined-attribute';
 import { sortGroupedRows, sortRows } from '../utils/sort';
@@ -841,18 +841,22 @@ export class DatatableComponent<TRow extends Row = any>
         (this.verticalScrollVisible || !this._rowInitDone() ? this.scrollbarHelper.width : 0);
     }
 
-    if (this.columnMode() === ColumnMode.force) {
-      forceFillColumnWidths(
-        columns,
-        width,
-        forceIdx,
-        allowBleed,
-        this._defaultColumnWidth,
-        this.scrollbarHelper.width
-      );
-    } else if (this.columnMode() === ColumnMode.flex) {
-      adjustColumnWidths(columns, width);
-    }
+    // TODO: this is a temporary workaround to avoid signal writes in a computed.
+    // Later, a computed adjustedWidth has to be added to the internal column to avoid this.
+    queueMicrotask(() => {
+      if (this.columnMode() === ColumnMode.force) {
+        forceFillColumnWidths(
+          columns,
+          width,
+          forceIdx,
+          allowBleed,
+          this._defaultColumnWidth,
+          this.scrollbarHelper.width
+        );
+      } else if (this.columnMode() === ColumnMode.flex) {
+        adjustColumnWidths(columns, width);
+      }
+    });
 
     return columns;
   }
@@ -963,8 +967,12 @@ export class DatatableComponent<TRow extends Row = any>
   /**
    * The header triggered a contextmenu event.
    */
-  onColumnContextmenu({ event, column }: { event: MouseEvent; column: TableColumn }): void {
-    this.tableContextmenu.emit({ event, type: ContextmenuType.header, content: column });
+  onColumnContextmenu({ event, column }: { event: MouseEvent; column: TableColumnInternal }): void {
+    this.tableContextmenu.emit({
+      event,
+      type: ContextmenuType.header,
+      content: toPublicColumn(column)
+    });
   }
 
   /**
@@ -985,14 +993,14 @@ export class DatatableComponent<TRow extends Row = any>
 
     const idx = this._internalColumns().indexOf(column);
     const cols = this._internalColumns().map(col => ({ ...col }));
-    cols[idx].width = newValue;
+    cols[idx].width.set(newValue);
     // set this so we can force the column
     // width distribution to be to this value
     cols[idx].$$oldWidth = newValue;
     this._internalColumns.set(this.recalculateColumns(cols, idx));
 
     this.resize.emit({
-      column,
+      column: toPublicColumn(column),
       newValue,
       prevValue
     });
@@ -1002,7 +1010,7 @@ export class DatatableComponent<TRow extends Row = any>
     if (column === undefined) {
       return;
     }
-    column.width = newValue;
+    column.width.set(newValue);
     column.$$oldWidth = newValue;
     const idx = this._internalColumns().indexOf(column);
     this._internalColumns.set(this.recalculateColumns(this._internalColumns().slice(), idx));
@@ -1040,7 +1048,7 @@ export class DatatableComponent<TRow extends Row = any>
 
     this._internalColumns.set(cols);
 
-    this.reorder.emit(event);
+    this.reorder.emit({ ...event, column: toPublicColumn(event.column) });
   }
 
   /**

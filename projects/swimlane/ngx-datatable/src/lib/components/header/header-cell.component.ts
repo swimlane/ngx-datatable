@@ -31,6 +31,7 @@ import {
   SortPropDir,
   SortType
 } from '../../types/public.types';
+import { toPublicColumn } from '../../utils/column-helper';
 import { nextSortDir } from '../../utils/sort';
 
 @Component({
@@ -88,7 +89,7 @@ import { nextSortDir } from '../../utils/sort';
     '[class]': 'columnCssClasses()',
     '[style.minWidth.px]': 'column().minWidth',
     '[style.maxWidth.px]': 'column().maxWidth',
-    '[style.width.px]': 'column().width'
+    '[style.width.px]': 'column().width()'
   }
 })
 export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
@@ -131,7 +132,7 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
         cls += ' ' + column.headerClass;
       } else if (typeof column.headerClass === 'function') {
         const res = column.headerClass({
-          column
+          column: toPublicColumn(column)
         });
 
         if (typeof res === 'string') {
@@ -171,7 +172,7 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
 
   protected readonly cellContext = computed<HeaderCellContext>(() => {
     return {
-      column: this.column(),
+      column: toPublicColumn(this.column()),
       sortDir: this.sortDir(),
       sortFn: () => this.onSort(),
       allRowsSelected: this.allRowsSelected(),

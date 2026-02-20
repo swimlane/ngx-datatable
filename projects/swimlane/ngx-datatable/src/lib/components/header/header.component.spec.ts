@@ -85,7 +85,7 @@ describe('DataTableHeaderComponent', () => {
 
     componentRef.instance.resizing.subscribe(event => {
       const { column, newValue } = event;
-      column.width = newValue;
+      column.width.set(newValue);
       componentRef.setInput('columns', [...componentRef.instance.columns()]);
     });
 

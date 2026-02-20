@@ -5,7 +5,7 @@ import { columnsByPin, columnTotalWidth } from './column';
 /**
  * Calculates the Total Flex Grow
  */
-export const getTotalFlexGrow = (columns: TableColumn[]) => {
+export const getTotalFlexGrow = (columns: TableColumnInternal[]) => {
   let totalFlexGrow = 0;
 
   for (const c of columns) {
@@ -33,7 +33,7 @@ export const adjustColumnWidths = (allColumns: TableColumnInternal[], expectedWi
  * Resizes columns based on the flexGrow property, while respecting manually set widths
  */
 const scaleColumns = (colsByGroup: TableColumnGroup, maxWidth: number, totalFlexGrow: number) => {
-  const columns = Object.values(colsByGroup).flat();
+  const columns: TableColumnInternal[] = Object.values(colsByGroup).flat();
   let remainingWidth = maxWidth;
 
   // calculate total width and flexgrow points for columns that can be resized
@@ -43,10 +43,10 @@ const scaleColumns = (colsByGroup: TableColumnGroup, maxWidth: number, totalFlex
       column.canAutoResize = false;
     }
     if (!column.canAutoResize) {
-      remainingWidth -= column.width;
+      remainingWidth -= column.width();
       totalFlexGrow -= column.flexGrow ?? 0;
     } else {
-      column.width = 0;
+      column.width.set(0);
     }
   }
 
@@ -60,20 +60,20 @@ const scaleColumns = (colsByGroup: TableColumnGroup, maxWidth: number, totalFlex
     for (const column of columns) {
       // if the column can be resize and it hasn't reached its minimum width yet
       if (column.canAutoResize && !hasMinWidth[column.prop]) {
-        const newWidth = column.width + column.flexGrow * widthPerFlexPoint;
+        const newWidth = column.width() + (column.flexGrow ?? 0) * widthPerFlexPoint;
         if (column.minWidth !== undefined && newWidth < column.minWidth) {
           remainingWidth += newWidth - column.minWidth;
-          column.width = column.minWidth;
+          column.width.set(column.minWidth);
           hasMinWidth[column.prop] = true;
         } else {
-          column.width = newWidth;
+          column.width.set(newWidth);
         }
       }
     }
   } while (remainingWidth !== 0);
 
   // Adjust for any remaining offset in computed widths vs maxWidth
-  const totalWidthAchieved = columns.reduce((acc, col) => acc + col.width, 0);
+  const totalWidthAchieved = columns.reduce((acc, col) => acc + col.width(), 0);
   const delta = maxWidth - totalWidthAchieved;
 
   if (delta === 0) {
@@ -81,12 +81,12 @@ const scaleColumns = (colsByGroup: TableColumnGroup, maxWidth: number, totalFlex
   }
 
   // adjust the first column that can be auto-resized respecting the min/max widths
-  for (const col of columns.filter(c => c.canAutoResize).sort((a, b) => a.width - b.width)) {
+  for (const col of columns.filter(c => c.canAutoResize).sort((a, b) => a.width() - b.width())) {
     if (
-      (delta > 0 && (!col.maxWidth || col.width + delta <= col.maxWidth)) ||
-      (delta < 0 && (!col.minWidth || col.width + delta >= col.minWidth))
+      (delta > 0 && (!col.maxWidth || col.width() + delta <= col.maxWidth)) ||
+      (delta < 0 && (!col.minWidth || col.width() + delta >= col.minWidth))
     ) {
-      col.width += delta;
+      col.width.update(value => value + delta);
       break;
     }
   }
@@ -145,24 +145,22 @@ export const forceFillColumnWidths = (
     for (const column of columnsToResize) {
       // don't bleed if the initialRemainingWidth is same as verticalScrollWidth
       if (exceedsWindow && allowBleed && initialRemainingWidth !== -1 * verticalScrollWidth) {
-        // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-        column.width = column.width || defaultColWidth;
+        column.width.update(value => value || defaultColWidth);
       } else {
-        // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-        const newSize = (column.width || defaultColWidth) + additionWidthPerColumn;
+        const newSize = (column.width() || defaultColWidth) + additionWidthPerColumn;
 
         if (column.minWidth && newSize < column.minWidth) {
-          column.width = column.minWidth;
+          column.width.set(column.minWidth);
           columnsProcessed.push(column);
         } else if (column.maxWidth && newSize > column.maxWidth) {
-          column.width = column.maxWidth;
+          column.width.set(column.maxWidth);
           columnsProcessed.push(column);
         } else {
-          column.width = newSize;
+          column.width.set(newSize);
         }
       }
 
-      column.width = Math.max(0, column.width);
+      column.width.update(value => Math.max(0, value));
     }
 
     contentWidth = getContentWidth(allColumns, defaultColWidth);
@@ -180,8 +178,8 @@ export const forceFillColumnWidths = (
  * Remove the processed columns from the current active columns.
  */
 const removeProcessedColumns = (
-  columnsToResize: TableColumn[],
-  columnsProcessed: TableColumn[]
+  columnsToResize: TableColumnInternal[],
+  columnsProcessed: TableColumnInternal[]
 ) => {
   for (const column of columnsProcessed) {
     const index = columnsToResize.indexOf(column);
@@ -192,12 +190,11 @@ const removeProcessedColumns = (
 /**
  * Gets the width of the columns
  */
-const getContentWidth = (allColumns: TableColumn[], defaultColWidth = 150): number => {
+const getContentWidth = (allColumns: TableColumnInternal[], defaultColWidth = 150): number => {
   let contentWidth = 0;
 
   for (const column of allColumns) {
-    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-    contentWidth += column.width || defaultColWidth;
+    contentWidth += column.width() || defaultColWidth;
   }
 
   return contentWidth;
