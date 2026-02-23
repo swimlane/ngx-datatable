@@ -30,7 +30,7 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   @Input()
   scrollHeight?: number;
 
-  @HostBinding('style.width.px')
+  @HostBinding('style.minWidth.px')
   @Input()
   scrollWidth?: number;
 
