@@ -23,9 +23,9 @@ import { DatatablePagerComponent } from './pager.component';
       } @else {
         <div class="page-count">
           @if (selectedMessage()) {
-            <span> {{ selectedCount()?.toLocaleString() }} {{ selectedMessage() }} / </span>
+            <span> {{ selectedCount().toLocaleString() }} {{ selectedMessage() }} / </span>
           }
-          {{ rowCount()?.toLocaleString() }} {{ totalMessage() }}
+          {{ rowCount().toLocaleString() }} {{ totalMessage() }}
         </div>
         @if (isVisible()) {
           <ngx-datatable-pager />
