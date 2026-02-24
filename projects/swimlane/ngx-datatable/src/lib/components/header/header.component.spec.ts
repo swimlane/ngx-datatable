@@ -249,7 +249,7 @@ describe('DataTableHeaderComponent', () => {
     vi.useRealTimers();
   });
 
-  it('should translate only center group columns when offsetX is provided', async () => {
+  it('should not apply translateX to center group (scroll sync via native scrollLeft)', async () => {
     componentRef.setInput(
       'columns',
       toInternalColumn([
@@ -259,15 +259,14 @@ describe('DataTableHeaderComponent', () => {
         { prop: 'col4', name: 'Column 4', width: 200, frozenRight: true }
       ])
     );
+
     const leftGroupStyle = await harness.getTransformStyle('left');
     expect(leftGroupStyle).toBe('width: 100px;');
-    componentRef.setInput('offsetX', 100);
-
-    expect(await harness.getTransformStyle('left')).toBe(leftGroupStyle);
 
     const centerGroupStyle = await harness.getTransformStyle('center');
-    expect(centerGroupStyle).toContain('translateX(-100px)');
+    expect(centerGroupStyle).toBe('width: 350px;');
 
-    expect(await harness.getTransformStyle('right')).toBe('width: 200px;');
+    const rightGroupStyle = await harness.getTransformStyle('right');
+    expect(rightGroupStyle).toBe('width: 200px;');
   });
 });

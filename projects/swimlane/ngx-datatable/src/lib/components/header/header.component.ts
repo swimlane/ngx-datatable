@@ -115,7 +115,6 @@ export class DataTableHeaderComponent {
 
   readonly headerHeight = input.required<'auto' | number>();
   readonly columns = input.required<TableColumnInternal[]>();
-  readonly offsetX = input<number>();
 
   readonly sort = output<SortEvent>();
   readonly reorder = output<ReorderEventInternal>();
@@ -264,14 +263,6 @@ export class DataTableHeaderComponent {
 
   calcStylesByGroup(group: 'center' | 'right' | 'left'): NgStyle['ngStyle'] {
     const widths = this._columnGroupWidths();
-
-    if (group === 'center') {
-      return {
-        transform: `translateX(${(this.offsetX() ?? 0) * -1}px)`,
-        width: `${widths[group]}px`,
-        willChange: 'transform'
-      };
-    }
 
     return {
       width: `${widths[group]}px`

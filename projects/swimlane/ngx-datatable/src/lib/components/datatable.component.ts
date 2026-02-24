@@ -901,6 +901,12 @@ export class DatatableComponent<TRow extends Row = any>
   onBodyScroll(event: ScrollEvent): void {
     this._offsetX = event.offsetX;
     this.scroll.emit(event);
+
+    // Sync header scroll position directly via DOM to avoid Angular CD lag
+    const headerEl = this._headerElement()?.nativeElement;
+    if (headerEl) {
+      headerEl.scrollLeft = event.offsetX;
+    }
   }
 
   /**
