@@ -110,7 +110,6 @@ export class FullScreenTreeComponent {
       });
     } else {
       row.treeStatus = 'collapsed';
-      this.rows.set([...this.rows()]);
     }
   }
 }
