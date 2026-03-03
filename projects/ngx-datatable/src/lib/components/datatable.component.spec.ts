@@ -355,6 +355,81 @@ describe('DatatableComponent', () => {
   });
 });
 
+describe('DatatableComponent With Tree', () => {
+  @Component({
+    imports: [DatatableComponent],
+    template: `
+      <ngx-datatable
+        [treeFromRelation]="treeFromRelation()"
+        [treeToRelation]="treeToRelation()"
+        [columns]="columns()"
+        [rows]="rows()"
+        (treeAction)="onTreeAction($event)"
+      />
+    `
+  })
+  // eslint-disable-next-line @angular-eslint/component-class-suffix
+  class TestFixtureComponentWithTree {
+    readonly columns = signal<TableColumn[]>([]);
+    readonly rows = signal<Record<string, any>[]>([]);
+    readonly treeFromRelation = signal('manager');
+    readonly treeToRelation = signal('name');
+
+    onTreeAction(event: { row: Record<string, any> }) {
+      const row = event.row;
+      if (row.treeStatus === 'collapsed') {
+        row.treeStatus = 'expanded';
+      } else {
+        row.treeStatus = 'collapsed';
+      }
+    }
+  }
+
+  let fixture: ComponentFixture<TestFixtureComponentWithTree>;
+  let component: TestFixtureComponentWithTree;
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(TestFixtureComponentWithTree);
+    component = fixture.componentInstance;
+  });
+
+  it('should expand and collapse tree rows on user click', async () => {
+    const treeFromRelation = 'manager' as const;
+    const treeToRelation = 'name' as const;
+    const initialRows = [
+      { [treeToRelation]: 'Boss', [treeFromRelation]: null, treeStatus: 'collapsed' },
+      { [treeToRelation]: 'Alice', [treeFromRelation]: 'Boss' },
+      { [treeToRelation]: 'Bob', [treeFromRelation]: 'Boss' },
+      { [treeToRelation]: 'Lead', [treeFromRelation]: null, treeStatus: 'collapsed' },
+      { [treeToRelation]: 'Evan', [treeFromRelation]: 'Lead' }
+    ];
+    const columns = [{ prop: 'name', name: 'Name', isTreeColumn: true }];
+
+    component.treeFromRelation.set(treeFromRelation);
+    component.treeToRelation.set(treeToRelation);
+    component.rows.set(initialRows);
+    component.columns.set(columns);
+    await fixture.whenStable();
+
+    expect(bodyRowCount(fixture)).toBe(2);
+    expect(textContent({ row: 1, column: 1 }, fixture)).toContain('Boss');
+    expect(textContent({ row: 2, column: 1 }, fixture)).toContain('Lead');
+
+    toggleTreeRow(1, fixture);
+    await fixture.whenStable();
+
+    expect(bodyRowCount(fixture)).toBe(4);
+    expect(textContent({ row: 2, column: 1 }, fixture)).toContain('Alice');
+    expect(textContent({ row: 3, column: 1 }, fixture)).toContain('Bob');
+
+    toggleTreeRow(1, fixture);
+    await fixture.whenStable();
+
+    expect(bodyRowCount(fixture)).toBe(2);
+    expect(textContent({ row: 2, column: 1 }, fixture)).toContain('Lead');
+  });
+});
+
 describe('DatatableComponent With Custom Templates', () => {
   @Component({
     imports: [
@@ -586,4 +661,14 @@ const textContent = (
   const bodyCellDe = bodyRowDe.queryAll(By.directive(DataTableBodyCellComponent))[columnIndex];
 
   return bodyCellDe.nativeElement.textContent;
+};
+
+const bodyRowCount = (fixture: ComponentFixture<unknown>) =>
+  fixture.debugElement.queryAll(By.directive(DataTableBodyRowComponent)).length;
+
+const toggleTreeRow = (row: number, fixture: ComponentFixture<unknown>) => {
+  const rowIndex = row - 1;
+  const bodyRow = fixture.debugElement.queryAll(By.directive(DataTableBodyRowComponent))[rowIndex];
+  const treeButton = bodyRow.query(By.css('.datatable-tree-button'));
+  treeButton.triggerEventHandler('click', null);
 };

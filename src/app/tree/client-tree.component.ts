@@ -71,6 +71,5 @@ export class ClientTreeComponent {
     } else {
       row.treeStatus = 'collapsed';
     }
-    this.rows = [...this.rows];
   }
 }

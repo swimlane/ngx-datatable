@@ -1140,6 +1140,7 @@ export class DatatableComponent<TRow extends Row = any>
     const rowIndex = (this.rows() ?? []).findIndex(
       r => r && r[treeToRel!] === event.row[treeToRel!]
     );
+    this._rowDiffCount.update(v => v + 1);
     this.treeAction.emit({ row, rowIndex });
   }
 
