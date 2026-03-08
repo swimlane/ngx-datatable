@@ -1,4 +1,5 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, viewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   DataTableColumnCellDirective,
   DataTableColumnDirective,
@@ -11,7 +12,12 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'virtual-scroll-demo',
-  imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellDirective],
+  imports: [
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    FormsModule
+  ],
   template: `
     <div>
       <h3>
@@ -25,6 +31,18 @@ import { DataService } from '../data.service';
           </a>
         </small>
       </h3>
+
+      <form class="info" (ngSubmit)="scroll()">
+        <label for="target-index">Target Index</label>
+        <input
+          type="number"
+          id="target-index"
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="scrollTarget"
+        />
+        <button type="submit">Scroll</button>
+      </form>
+
       @let rows = this.rows();
       <ngx-datatable
         class="material"
@@ -53,10 +71,12 @@ import { DataService } from '../data.service';
 })
 export class VirtualScrollComponent {
   readonly rows = signal<(FullEmployee & { height: number })[]>([]);
+  readonly scrollTarget = signal(0);
   expanded = {};
   timeout: any;
 
   private dataService = inject(DataService);
+  private readonly datatable = viewChild.required(DatatableComponent);
 
   constructor() {
     this.dataService
@@ -76,5 +96,12 @@ export class VirtualScrollComponent {
 
   getRowHeight(row: FullEmployee & { height: number }) {
     return row.height;
+  }
+
+  protected scroll(): void {
+    const row = this.rows()[this.scrollTarget()];
+    if (row) {
+      this.datatable().scrollToRow(row, 'smooth');
+    }
   }
 }

@@ -1139,4 +1139,36 @@ export class DatatableComponent<TRow extends Row = any>
   ngOnDestroy() {
     this._subscriptions.forEach(subscription => subscription.unsubscribe());
   }
+
+  scrollToRow(row: TRow, behavior?: ScrollBehavior): void {
+    if (!this.scrollbarV()) {
+      throw new Error('Vertical scrolling is not enabled.');
+    }
+
+    const index = this._internalRows().indexOf(row);
+    if (index === -1) {
+      throw new Error(`Row not found: ${row}`);
+    }
+
+    // TODO: We could / should add support for all those cases below.
+    if (this._internalGroupedRows()?.length) {
+      throw new Error('Scrolling is not supported with grouped rows.');
+    }
+
+    if (this.treeToRelation()) {
+      throw new Error('Scrolling is not supported with tree data.');
+    }
+
+    if (this.limit()) {
+      throw new Error('Scrolling is not supported with limit');
+    }
+
+    if (!this.virtualization()) {
+      throw new Error('Scrolling is not supported without virtualization.');
+    }
+
+    // Here we have ensured, that we have only one page and the row exists and virtualization is active.
+    // Now we just need to scroll to that row.
+    this._bodyComponent().scrollToIndex(index, behavior);
+  }
 }

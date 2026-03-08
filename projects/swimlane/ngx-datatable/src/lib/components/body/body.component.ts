@@ -559,6 +559,10 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
     return rows;
   }
 
+  scrollToIndex(index: number, behavior?: ScrollBehavior): void {
+    this.scroller.scrollTo(this.rowHeightsCache().query(index - 1), behavior);
+  }
+
   /**
    * Get the row height
    */
