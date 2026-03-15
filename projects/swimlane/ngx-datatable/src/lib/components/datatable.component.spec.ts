@@ -355,7 +355,7 @@ describe('DatatableComponent', () => {
   });
 });
 
-describe('DatatableComponent With Tree', () => {
+describe('DatatableComponent with Tree', () => {
   @Component({
     imports: [DatatableComponent],
     template: `
