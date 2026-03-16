@@ -406,8 +406,7 @@ describe('DatatableComponent with Tree', () => {
       />
     `
   })
-  // eslint-disable-next-line @angular-eslint/component-class-suffix
-  class TestFixtureComponentWithTree {
+  class TestFixtureWithTreeComponent {
     readonly columns = signal<TableColumn[]>([]);
     readonly rows = signal<Record<string, any>[]>([]);
     readonly treeFromRelation = signal('manager');
@@ -423,11 +422,11 @@ describe('DatatableComponent with Tree', () => {
     }
   }
 
-  let fixture: ComponentFixture<TestFixtureComponentWithTree>;
-  let component: TestFixtureComponentWithTree;
+  let fixture: ComponentFixture<TestFixtureWithTreeComponent>;
+  let component: TestFixtureWithTreeComponent;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestFixtureComponentWithTree);
+    fixture = TestBed.createComponent(TestFixtureWithTreeComponent);
     component = fixture.componentInstance;
   });
 
@@ -497,18 +496,17 @@ describe('DatatableComponent With Custom Templates', () => {
       </ngx-datatable>
     `
   })
-  // eslint-disable-next-line @angular-eslint/component-class-suffix
-  class TestFixtureComponentWithCustomTemplates {
+  class TestFixtureWithCustomTemplatesComponent {
     readonly rows = signal<Record<string, any>[]>([]);
     readonly sorts = signal<SortPropDir[]>([]);
     readonly columnTwoProp = signal<string | undefined>(undefined);
   }
 
-  let fixture: ComponentFixture<TestFixtureComponentWithCustomTemplates>;
-  let component: TestFixtureComponentWithCustomTemplates;
+  let fixture: ComponentFixture<TestFixtureWithCustomTemplatesComponent>;
+  let component: TestFixtureWithCustomTemplatesComponent;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestFixtureComponentWithCustomTemplates);
+    fixture = TestBed.createComponent(TestFixtureWithCustomTemplatesComponent);
     component = fixture.componentRef.instance;
   });
 
@@ -573,8 +571,7 @@ describe('DatatableComponent With Frozen columns', () => {
       </ngx-datatable>
     `
   })
-  // eslint-disable-next-line @angular-eslint/component-class-suffix
-  class TestFixtureComponentWithFrozenColumns {
+  class TestFixtureWithFrozenColumnsComponent {
     readonly rows = signal([
       {
         'id': 0,
@@ -599,10 +596,10 @@ describe('DatatableComponent With Frozen columns', () => {
     ]);
   }
 
-  let fixture: ComponentFixture<TestFixtureComponentWithFrozenColumns>;
+  let fixture: ComponentFixture<TestFixtureWithFrozenColumnsComponent>;
 
   beforeEach(async () => {
-    fixture = TestBed.createComponent(TestFixtureComponentWithFrozenColumns);
+    fixture = TestBed.createComponent(TestFixtureWithFrozenColumnsComponent);
     await fixture.whenStable();
   });
 
