@@ -51,26 +51,55 @@ describe('Client-side Scrolling – DatatableComponent.scrollToRow', () => {
     bodyEl = fixture.debugElement.query(By.css('datatable-body')).nativeElement as HTMLElement;
   });
 
-  describe('Happy path', () => {
+  describe('With virtualization', () => {
     it('should scroll to the first row (offset 0)', () => {
       datatable.scrollToRow(rowsSig()[0]);
-      expect(bodyEl.scrollTop).toBe(expectedOffset(0));
+      expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(0));
     });
 
     it('should scroll to the last row', () => {
       datatable.scrollToRow(rowsSig()[49]);
-      expect(bodyEl.scrollTop).toBe(expectedOffset(49));
+      expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(49));
     });
 
     it('should scroll to a middle row', () => {
       datatable.scrollToRow(rowsSig()[9]);
-      expect(bodyEl.scrollTop).toBe(expectedOffset(9));
+      expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(9));
     });
 
     it('should use instant behavior when specified', () => {
       const scrollToSpy = vi.spyOn(bodyEl, 'scrollTo');
       datatable.scrollToRow(rowsSig()[9], 'instant');
       expect(scrollToSpy).toHaveBeenCalledWith({ top: expectedOffset(9), behavior: 'instant' });
+    });
+  });
+
+  describe('Without virtualization', () => {
+    beforeEach(async () => {
+      virtualization.set(false);
+      await fixture.whenStable();
+    });
+
+    it('should scroll to the first row (offset 0)', () => {
+      datatable.scrollToRow(rowsSig()[0]);
+      expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(0));
+    });
+
+    it('should scroll to the last row', () => {
+      datatable.scrollToRow(rowsSig()[49]);
+      expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(49));
+    });
+
+    it('should scroll to a middle row', () => {
+      datatable.scrollToRow(rowsSig()[9]);
+      expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(9));
+    });
+
+    it('should use smooth behavior when specified', () => {
+      const rowWrappers = bodyEl.querySelectorAll('datatable-row-wrapper');
+      const scrollIntoViewSpy = vi.spyOn(rowWrappers[9], 'scrollIntoView');
+      datatable.scrollToRow(rowsSig()[9], 'smooth');
+      expect(scrollIntoViewSpy).toHaveBeenCalledWith({ behavior: 'smooth', block: 'start' });
     });
   });
 
@@ -113,15 +142,6 @@ describe('Client-side Scrolling – DatatableComponent.scrollToRow', () => {
 
       expect(() => datatable.scrollToRow(rowsSig()[0])).toThrowError(
         'Scrolling is not supported with limit'
-      );
-    });
-
-    it('should throw when virtualization is false', async () => {
-      virtualization.set(false);
-      await fixture.whenStable();
-
-      expect(() => datatable.scrollToRow(rowsSig()[0])).toThrowError(
-        'Scrolling is not supported without virtualization.'
       );
     });
   });

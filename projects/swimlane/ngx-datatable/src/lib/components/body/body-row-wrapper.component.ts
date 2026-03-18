@@ -5,6 +5,7 @@ import {
   Component,
   computed,
   DoCheck,
+  ElementRef,
   HostListener,
   inject,
   input,
@@ -65,12 +66,17 @@ export class DataTableRowWrapperComponent<TRow extends Row = any> implements DoC
   readonly rowDiffedCount = signal(0);
 
   private rowDiffer = inject(KeyValueDiffers).find({}).create<keyof RowOrGroup<TRow>, any>();
+  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
   ngDoCheck(): void {
     const row = this.row();
     if (this.rowDiffer.diff(row)) {
       this.rowDiffedCount.update(count => count + 1);
     }
+  }
+
+  scrollIntoView(behavior?: ScrollBehavior): void {
+    this.elementRef.nativeElement.scrollIntoView({ behavior, block: 'start' });
   }
 
   @HostListener('contextmenu', ['$event'])

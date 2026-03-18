@@ -1155,11 +1155,7 @@ export class DatatableComponent<TRow extends Row = any>
       throw new Error('Scrolling is not supported with limit');
     }
 
-    if (!this.virtualization()) {
-      throw new Error('Scrolling is not supported without virtualization.');
-    }
-
-    // Here we have ensured, that we have only one page and the row exists and virtualization is active.
+    // Here we have ensured, that we have only one page and the row exists.
     // Now we just need to scroll to that row.
     this._bodyComponent().scrollToIndex(index, behavior);
   }

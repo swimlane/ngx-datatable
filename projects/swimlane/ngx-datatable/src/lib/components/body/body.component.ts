@@ -20,6 +20,7 @@ import {
   TemplateRef,
   TrackByFunction,
   untracked,
+  viewChildren,
   ViewChild
 } from '@angular/core';
 
@@ -316,6 +317,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   readonly treeAction = output<{ row: TRow }>();
 
   @ViewChild(ScrollerComponent) scroller!: ScrollerComponent;
+  private readonly rowWrappers = viewChildren(DataTableRowWrapperComponent);
 
   /**
    * Returns if selection is enabled.
@@ -560,7 +562,11 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   }
 
   scrollToIndex(index: number, behavior?: ScrollBehavior): void {
-    this.scroller.scrollTo(this.rowHeightsCache().query(index - 1), behavior);
+    if (this.virtualization()) {
+      this.scroller.scrollTo(this.rowHeightsCache().query(index - 1), behavior);
+    } else {
+      this.rowWrappers()[index]?.scrollIntoView(behavior);
+    }
   }
 
   /**
