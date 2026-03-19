@@ -83,10 +83,16 @@ import { nextSortDir } from '../../utils/sort';
   styleUrl: './header-cell.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
+    class: 'datatable-header-cell',
     '[attr.resizeable]': 'showResizeHandle()',
     '[attr.title]': 'name()',
     '[attr.tabindex]': 'column().sortable ? 0 : -1',
     '[class]': 'columnCssClasses()',
+    '[class.sortable]': 'column().sortable',
+    '[class.resizeable]': 'showResizeHandle()',
+    '[class.sort-active]': 'sortDir()',
+    '[class.sort-asc]': 'sortDir() === "asc"',
+    '[class.sort-desc]': 'sortDir() === "desc"',
     '[style.minWidth.px]': 'column().minWidth',
     '[style.maxWidth.px]': 'column().maxWidth',
     '[style.width.px]': 'column().width()'
@@ -119,41 +125,14 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
   readonly resizing = output<{ width: number; column: TableColumnInternal }>();
 
   protected readonly columnCssClasses = computed(() => {
-    let cls = 'datatable-header-cell';
     const column = this.column();
-    if (column.sortable) {
-      cls += ' sortable';
+    if (!column.headerClass) {
+      return [];
     }
-    if (this.showResizeHandle()) {
-      cls += ' resizeable';
+    if (typeof column.headerClass === 'string') {
+      return column.headerClass;
     }
-    if (column.headerClass) {
-      if (typeof column.headerClass === 'string') {
-        cls += ' ' + column.headerClass;
-      } else if (typeof column.headerClass === 'function') {
-        const res = column.headerClass({
-          column: toPublicColumn(column)
-        });
-
-        if (typeof res === 'string') {
-          cls += ' ' + res;
-        } else if (typeof res === 'object') {
-          const keys = Object.keys(res);
-          for (const k of keys) {
-            if (res[k] === true) {
-              cls += ` ${k}`;
-            }
-          }
-        }
-      }
-    }
-
-    const sortDir = this.sortDir();
-    if (sortDir) {
-      cls += ` sort-active sort-${sortDir}`;
-    }
-
-    return cls;
+    return column.headerClass({ column: toPublicColumn(column) });
   });
 
   protected readonly name = computed(() => {
@@ -163,10 +142,10 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
 
   protected readonly isCheckboxable = computed(() => this.column().headerCheckboxable);
 
-  protected readonly sortClass = computed<string | undefined>(() => {
+  protected readonly sortClass = computed<string[] | undefined>(() => {
     return this.calcSortClass(this.sortDir());
   });
-  private readonly sortDir = computed<SortDirection | undefined>(() => {
+  protected readonly sortDir = computed<SortDirection | undefined>(() => {
     return this.calcSortDir(this.sorts());
   });
 
@@ -238,16 +217,16 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
     });
   }
 
-  calcSortClass(sortDir: SortDirection | undefined): string | undefined {
+  calcSortClass(sortDir: SortDirection | undefined): string[] | undefined {
     if (!this.cellContext().column.sortable) {
       return undefined;
     }
     if (sortDir === SortDirection.asc) {
-      return `sort-btn sort-asc ${this.sortAscendingIcon() ?? 'datatable-icon-up'}`;
+      return ['sort-btn', 'sort-asc', this.sortAscendingIcon() ?? 'datatable-icon-up'];
     } else if (sortDir === SortDirection.desc) {
-      return `sort-btn sort-desc ${this.sortDescendingIcon() ?? 'datatable-icon-down'}`;
+      return ['sort-btn', 'sort-desc', this.sortDescendingIcon() ?? 'datatable-icon-down'];
     } else {
-      return `sort-btn ${this.sortUnsetIcon() ?? 'datatable-icon-sort-unset'}`;
+      return ['sort-btn', this.sortUnsetIcon() ?? 'datatable-icon-sort-unset'];
     }
   }
 

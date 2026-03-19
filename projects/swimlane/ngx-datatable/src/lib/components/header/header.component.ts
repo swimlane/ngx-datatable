@@ -49,7 +49,8 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
       @for (colGroup of _columnsByPin(); track colGroup.type) {
         @if (colGroup.columns.length) {
           <div
-            [class]="['datatable-row-group', 'datatable-row-' + colGroup.type]"
+            class="datatable-row-group"
+            [class]="'datatable-row-' + colGroup.type"
             [ngStyle]="_styleByGroup()[colGroup.type]"
           >
             @for (column of colGroup.columns; track column.$$id) {

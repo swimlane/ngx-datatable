@@ -2,15 +2,15 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  computed,
   DoCheck,
   ElementRef,
   HostBinding,
   HostListener,
   inject,
-  input,
   KeyValueDiffer,
   KeyValueDiffers,
+  input,
+  computed,
   output
 } from '@angular/core';
 
@@ -29,7 +29,8 @@ import { DataTableBodyCellComponent } from './body-cell.component';
     @for (colGroup of _columnsByPin(); track colGroup.type) {
       @if (colGroup.columns.length) {
         <div
-          [class]="'datatable-row-' + colGroup.type + ' datatable-row-group'"
+          class="datatable-row-group"
+          [class]="'datatable-row-' + colGroup.type"
           [style.width.px]="_columnGroupWidths()[colGroup.type]"
           [class.row-disabled]="disabled()"
         >
@@ -60,8 +61,9 @@ import { DataTableBodyCellComponent } from './body-cell.component';
   styleUrl: './body-row.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    'role': 'row',
-    'tabindex': '-1',
+    class: 'datatable-body-row',
+    role: 'row',
+    tabindex: '-1',
     '[class]': 'cssClass()',
     '[class.active]': 'isSelected()',
     '[class.datatable-row-odd]': 'innerRowIndex() % 2 !== 0',
@@ -88,24 +90,8 @@ export class DataTableBodyRowComponent<TRow extends Row = any> implements DoChec
   readonly cssClasses = input.required<Partial<Required<NgxDatatableConfig>['cssClasses']>>();
 
   protected readonly cssClass = computed(() => {
-    let cls = 'datatable-body-row';
-
     const rowClass = this.rowClass();
-    if (rowClass) {
-      const res = rowClass(this.row());
-      if (typeof res === 'string') {
-        cls += ` ${res}`;
-      } else if (typeof res === 'object') {
-        const keys = Object.keys(res);
-        for (const k of keys) {
-          if (res[k] === true) {
-            cls += ` ${k}`;
-          }
-        }
-      }
-    }
-
-    return cls;
+    return rowClass ? rowClass(this.row()) : [];
   });
 
   readonly rowHeight = input.required<number>();

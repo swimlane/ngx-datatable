@@ -85,7 +85,10 @@ import { ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, ARROW_UP, ENTER } from '../../util
   styleUrl: './body-cell.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
+    class: 'datatable-body-cell',
     '[class]': 'columnCssClasses()',
+    '[class.active]': 'isFocused() && !disabled()',
+    '[class.row-disabled]': 'disabled()',
     '[style.width.px]': 'column().width()',
     '[style.minWidth.px]': 'column().minWidth',
     '[style.maxWidth.px]': 'column().maxWidth',
@@ -129,40 +132,20 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
   protected readonly publicColumn = computed(() => toPublicColumn(this.column()));
 
   protected readonly columnCssClasses = computed(() => {
-    let cls = 'datatable-body-cell';
     const column = this.column();
-    if (column.cellClass) {
-      if (typeof column.cellClass === 'string') {
-        cls += ' ' + column.cellClass;
-      } else if (typeof column.cellClass === 'function') {
-        const res = column.cellClass({
-          row: this.row,
-          group: this.group(),
-          column: this.publicColumn(),
-          value: this.value(),
-          rowHeight: this.rowHeight()
-        });
-
-        if (typeof res === 'string') {
-          cls += ' ' + res;
-        } else if (typeof res === 'object') {
-          const keys = Object.keys(res);
-          for (const k of keys) {
-            if (res[k] === true) {
-              cls += ` ${k}`;
-            }
-          }
-        }
-      }
+    if (!column.cellClass) {
+      return [];
     }
-    if (this.isFocused() && !this.disabled()) {
-      cls += ' active';
+    if (typeof column.cellClass === 'string') {
+      return column.cellClass;
     }
-    if (this.disabled()) {
-      cls += ' row-disabled';
-    }
-
-    return cls;
+    return column.cellClass({
+      row: this.row(),
+      group: this.group(),
+      column: this.publicColumn(),
+      value: this.value(),
+      rowHeight: this.rowHeight()
+    });
   });
 
   protected readonly height = computed(() => {
@@ -197,7 +180,7 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
     };
   });
 
-  private readonly isFocused = signal(false);
+  protected readonly isFocused = signal(false);
   private _element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
 
   ngDoCheck(): void {
