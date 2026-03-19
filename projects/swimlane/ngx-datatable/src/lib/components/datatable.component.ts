@@ -41,7 +41,6 @@ import {
   ColumnMode,
   ColumnResizeEvent,
   ContextMenuEvent,
-  ContextmenuType,
   DragEventData,
   Group,
   PageEvent,
@@ -192,7 +191,7 @@ export class DatatableComponent<TRow extends Row = any>
    * Type of column width distribution formula.
    * Example: flex, force, standard
    */
-  readonly columnMode = input<ColumnMode | keyof typeof ColumnMode>(ColumnMode.standard);
+  readonly columnMode = input<ColumnMode | keyof typeof ColumnMode>('standard');
 
   /**
    * The minimum header height in pixels.
@@ -822,7 +821,7 @@ export class DatatableComponent<TRow extends Row = any>
     // TODO: this is a temporary workaround to avoid signal writes in a computed.
     // Later, a computed adjustedWidth has to be added to the internal column to avoid this.
     untracked(() => {
-      if (this.columnMode() === ColumnMode.force) {
+      if (this.columnMode() === 'force') {
         forceFillColumnWidths(
           columns,
           width,
@@ -831,7 +830,7 @@ export class DatatableComponent<TRow extends Row = any>
           this._defaultColumnWidth,
           this.scrollbarHelper.width
         );
-      } else if (this.columnMode() === ColumnMode.flex) {
+      } else if (this.columnMode() === 'flex') {
         adjustColumnWidths(columns, width);
       }
     });
@@ -954,7 +953,7 @@ export class DatatableComponent<TRow extends Row = any>
   onColumnContextmenu({ event, column }: { event: MouseEvent; column: TableColumnInternal }): void {
     this.tableContextmenu.emit({
       event,
-      type: ContextmenuType.header,
+      type: 'header',
       content: toPublicColumn(column)
     });
   }
@@ -963,7 +962,7 @@ export class DatatableComponent<TRow extends Row = any>
    * The body triggered a contextmenu event.
    */
   onRowContextmenu({ event, row }: { event: MouseEvent; row: RowOrGroup<TRow> }): void {
-    this.tableContextmenu.emit({ event, type: ContextmenuType.body, content: row });
+    this.tableContextmenu.emit({ event, type: 'body', content: row });
   }
 
   /**

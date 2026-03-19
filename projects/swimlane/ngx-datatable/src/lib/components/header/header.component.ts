@@ -252,7 +252,7 @@ export class DataTableHeaderComponent {
     } else if (prevValue) {
       sorts[idx].dir = newValue;
     } else {
-      if (this.sortType() === SortType.single) {
+      if (this.sortType() === 'single') {
         sorts.splice(0, this.sorts().length);
       }
 

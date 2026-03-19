@@ -10,18 +10,18 @@ export const nextSortDir = (
   sortType: SortType,
   current: SortDirection | 'desc' | 'asc' | undefined
 ): SortDirection | undefined => {
-  if (sortType === SortType.single) {
-    if (current === SortDirection.asc) {
-      return SortDirection.desc;
+  if (sortType === 'single') {
+    if (current === 'asc') {
+      return 'desc';
     } else {
-      return SortDirection.asc;
+      return 'asc';
     }
   } else {
     if (!current) {
-      return SortDirection.asc;
-    } else if (current === SortDirection.asc) {
-      return SortDirection.desc;
-    } else if (current === SortDirection.desc) {
+      return 'asc';
+    } else if (current === 'asc') {
+      return 'desc';
+    } else if (current === 'desc') {
       return undefined;
     }
     // avoid TS7030: Not all code paths return a value.
@@ -131,7 +131,7 @@ export const sortRows = <TRow>(
       // as additional parameters are silently ignored. The whole row and sort
       // direction enable more complex sort logic.
       const comparison =
-        cachedDir.dir !== SortDirection.desc
+        cachedDir.dir !== 'desc'
           ? cachedDir.compareFn(propA, propB, rowA, rowB)
           : -cachedDir.compareFn(propA, propB, rowA, rowB);
 

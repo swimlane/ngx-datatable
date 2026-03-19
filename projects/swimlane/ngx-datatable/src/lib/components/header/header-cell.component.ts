@@ -221,9 +221,9 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
     if (!this.cellContext().column.sortable) {
       return undefined;
     }
-    if (sortDir === SortDirection.asc) {
+    if (sortDir === 'asc') {
       return ['sort-btn', 'sort-asc', this.sortAscendingIcon() ?? 'datatable-icon-up'];
-    } else if (sortDir === SortDirection.desc) {
+    } else if (sortDir === 'desc') {
       return ['sort-btn', 'sort-desc', this.sortDescendingIcon() ?? 'datatable-icon-down'];
     } else {
       return ['sort-btn', this.sortUnsetIcon() ?? 'datatable-icon-sort-unset'];
