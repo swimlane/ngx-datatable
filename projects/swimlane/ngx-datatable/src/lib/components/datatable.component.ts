@@ -666,11 +666,6 @@ export class DatatableComponent<TRow extends Row = any>
    */
   readonly _footerComponent = viewChild(DataTableFooterComponent);
   protected verticalScrollVisible = false;
-  // In case horizontal scroll is enabled
-  // the column widths are initially calculated without vertical scroll offset
-  // this makes horizontal scroll to appear on load even if columns can fit in view
-  // this will be set to true once rows are available and rendered on UI
-  private readonly _rowInitDone = signal(false);
   private readonly dimensions = signal<Pick<DOMRect, 'width' | 'height'>>({ height: 0, width: 0 });
 
   constructor() {
@@ -696,7 +691,6 @@ export class DatatableComponent<TRow extends Row = any>
       this._rowDiffCount.update(count => count + 1);
       if (rowDiffers) {
         queueMicrotask(() => {
-          this._rowInitDone.set(true);
           this.recalculate();
           this.cd.markForCheck();
         });
@@ -822,9 +816,7 @@ export class DatatableComponent<TRow extends Row = any>
     const { scrollHeight, clientHeight } = this._bodyElement().nativeElement;
     this.verticalScrollVisible = scrollHeight > clientHeight;
     if (this.scrollbarV() || this.scrollbarVDynamic()) {
-      width =
-        width -
-        (this.verticalScrollVisible || !this._rowInitDone() ? this.scrollbarHelper.width : 0);
+      width = width - (this.verticalScrollVisible ? this.scrollbarHelper.width : 0);
     }
 
     // TODO: this is a temporary workaround to avoid signal writes in a computed.
