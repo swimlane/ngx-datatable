@@ -5,6 +5,14 @@ import { By } from '@angular/platform-browser';
 import { TableColumn } from '../../types/table-column.type';
 import { DatatableComponent } from '../datatable.component';
 
+interface TreeRow {
+  id: number;
+  parentId: number | null;
+  name: string;
+  treeStatus?: 'expanded' | 'collapsed' | 'disabled';
+  level?: number;
+}
+
 const ROW_HEIGHT = 40;
 const expectedOffset = (index: number): number => index * ROW_HEIGHT;
 
@@ -21,6 +29,7 @@ describe('Client-side Scrolling – DatatableComponent.scrollToRow', () => {
   let virtualization: WritableSignal<boolean>;
   let limit: WritableSignal<number | undefined>;
   let groupRowsBy: WritableSignal<string | undefined>;
+  let treeFromRelation: WritableSignal<string | undefined>;
   let treeToRelation: WritableSignal<string | undefined>;
 
   beforeEach(async () => {
@@ -31,6 +40,7 @@ describe('Client-side Scrolling – DatatableComponent.scrollToRow', () => {
     virtualization = signal(true);
     limit = signal(undefined);
     groupRowsBy = signal(undefined);
+    treeFromRelation = signal(undefined);
     treeToRelation = signal(undefined);
 
     fixture = TestBed.createComponent(DatatableComponent, {
@@ -42,6 +52,7 @@ describe('Client-side Scrolling – DatatableComponent.scrollToRow', () => {
         inputBinding('virtualization', virtualization),
         inputBinding('limit', limit),
         inputBinding('groupRowsBy', groupRowsBy),
+        inputBinding('treeFromRelation', treeFromRelation),
         inputBinding('treeToRelation', treeToRelation)
       ]
     });
@@ -201,21 +212,85 @@ describe('Client-side Scrolling – DatatableComponent.scrollToRow', () => {
       );
     });
 
-    it('should throw when treeToRelation is set', async () => {
-      treeToRelation.set('parentId');
-      await fixture.whenStable();
-
-      expect(() => datatable.scrollToRow(rowsSig()[0])).toThrowError(
-        'Scrolling is not supported with tree data.'
-      );
-    });
-
     it('should throw when a page limit is set', async () => {
       limit.set(10);
       await fixture.whenStable();
 
       expect(() => datatable.scrollToRow(rowsSig()[0])).toThrowError(
         'Scrolling is not supported with limit'
+      );
+    });
+  });
+
+  describe('With tree mode', () => {
+    let treeRows: TreeRow[];
+
+    /**
+     * Tree structure:
+     *
+     *  Row 1 (id=1, root, collapsed)
+     *    Row 2 (id=2, parentId=1, collapsed)
+     *      Row 4 (id=4, parentId=2, leaf)
+     *    Row 3 (id=3, parentId=1, leaf)
+     *  Row 5 (id=5, root, collapsed)
+     *    Row 6 (id=6, parentId=5, leaf)
+     */
+    beforeEach(async () => {
+      treeRows = [
+        { id: 1, parentId: null, name: 'Row 1', treeStatus: 'collapsed' },
+        { id: 2, parentId: 1, name: 'Row 2', treeStatus: 'collapsed' },
+        { id: 3, parentId: 1, name: 'Row 3', treeStatus: 'disabled' },
+        { id: 4, parentId: 2, name: 'Row 4', treeStatus: 'disabled' },
+        { id: 5, parentId: null, name: 'Row 5', treeStatus: 'collapsed' },
+        { id: 6, parentId: 5, name: 'Row 6', treeStatus: 'disabled' }
+      ];
+      rowsSig.set(treeRows);
+      treeFromRelation.set('parentId');
+      treeToRelation.set('id');
+      await fixture.whenStable();
+    });
+
+    it('should scroll to deeply nested child when all ancestors expanded', async () => {
+      treeRows[0].treeStatus = 'expanded';
+      treeRows[1].treeStatus = 'expanded';
+      rowsSig.set([...treeRows]);
+      await fixture.whenStable();
+
+      // Tree order: Row1 (idx 0), Row2 (idx 1), Row4 (idx 2), Row3 (idx 3), Row5 (idx 4)
+      datatable.scrollToRow(treeRows[3]);
+      expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(2));
+    });
+
+    it('should use specified scroll behavior in tree mode', async () => {
+      // Expand Row 1 so its children are visible
+      treeRows[0].treeStatus = 'expanded';
+      rowsSig.set([...treeRows]);
+      await fixture.whenStable();
+
+      const scrollToSpy = vi.spyOn(bodyEl, 'scrollTo');
+      datatable.scrollToRow(treeRows[2], { behavior: 'instant' });
+      expect(scrollToSpy).toHaveBeenCalledWith({ top: expectedOffset(2), behavior: 'instant' });
+    });
+
+    it('should call expandToRow for a non-visible child row', async () => {
+      datatable.scrollToRow(treeRows[3]);
+      await fixture.whenStable();
+
+      // expandToRow should expand the ancestors needed to reveal the target leaf row,
+      // but must not flip the leaf itself away from 'disabled'.
+      expect(treeRows[0].treeStatus).toBe('expanded');
+      expect(treeRows[1].treeStatus).toBe('expanded');
+      expect(treeRows[3].treeStatus).toBe('disabled');
+      // Due to the tree structure, row[3] is rendered at position 2
+      expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(2));
+    });
+
+    it('should throw when scrollbarV is false in tree mode', async () => {
+      scrollbarV.set(false);
+      await fixture.whenStable();
+
+      expect(() => datatable.scrollToRow(treeRows[0])).toThrowError(
+        'Vertical scrolling is not enabled.'
       );
     });
   });

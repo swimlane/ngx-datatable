@@ -64,7 +64,7 @@ import { numberOrUndefinedAttribute } from '../utils/number-or-undefined-attribu
 import { sortGroupedRows, sortRows } from '../utils/sort';
 import { DATATABLE_COMPONENT_TOKEN } from '../utils/table-token';
 import { throttleable } from '../utils/throttle';
-import { groupRowsByParents, optionalGetterForProp } from '../utils/tree';
+import { expandToRow, groupRowsByParents, optionalGetterForProp } from '../utils/tree';
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
 import { DatatableRowDefDirective } from './body/body-row-def.component';
 import { DataTableBodyComponent } from './body/body.component';
@@ -1158,26 +1158,50 @@ export class DatatableComponent<TRow extends Row = any>
       throw new Error('Vertical scrolling is not enabled.');
     }
 
-    const index = this._internalRows().indexOf(row);
-    if (index === -1) {
-      throw new Error(`Row not found: ${row}`);
-    }
-
     // TODO: We could / should add support for all those cases below.
     if (this._internalGroupedRows()?.length) {
       throw new Error('Scrolling is not supported with grouped rows.');
-    }
-
-    if (this.treeToRelation()) {
-      throw new Error('Scrolling is not supported with tree data.');
     }
 
     if (this.limit()) {
       throw new Error('Scrolling is not supported with limit');
     }
 
+    if (this.treeFromRelation() && this.treeToRelation()) {
+      this.scrollToRowTree(row, options);
+      return;
+    }
+
+    const index = this._internalRows().indexOf(row);
+    if (index === -1) {
+      throw new Error(`Row not found: ${row}`);
+    }
+
     // Here we have ensured, that we have only one page and the row exists.
     // Now we just need to scroll to that row.
     this._bodyComponent().scrollToIndex(index, options);
+  }
+
+  private scrollToRowTree(row: TRow, options?: ScrollToRowOptions, afterExpand = false): void {
+    const index = this._internalRows().indexOf(row);
+
+    if (index !== -1) {
+      this._bodyComponent().scrollToIndex(index, options);
+      return;
+    }
+
+    if (afterExpand) {
+      throw new Error(`Row not found: ${row}`);
+    }
+
+    expandToRow(
+      row,
+      this.rows() ?? [],
+      optionalGetterForProp(this.treeFromRelation()),
+      optionalGetterForProp(this.treeToRelation())
+    );
+    this._rowDiffCount.update(v => v + 1);
+    // We need a microTask here to let Angular update the DOM
+    queueMicrotask(() => this.scrollToRowTree(row, options, true));
   }
 }

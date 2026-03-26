@@ -90,3 +90,30 @@ class TreeNode<TRow extends Row> {
     }
   }
 }
+
+export const expandToRow = <TRow extends Row>(
+  targetRow: TRow,
+  rows: (TRow | undefined)[],
+  from?: OptionalValueGetter,
+  to?: OptionalValueGetter
+) => {
+  if (from && to) {
+    const uniqIDs = new Map(rows.filter(row => !!row).map(node => [to(node), node]));
+    const visitedRowIds = new Set<unknown>();
+    let currentRow: TRow | undefined = targetRow;
+
+    while (currentRow) {
+      const currentRowId = to(currentRow);
+      if (visitedRowIds.has(currentRowId)) {
+        // cycle detected, abort to avoid an infinite loop
+        break;
+      }
+      visitedRowIds.add(currentRowId);
+
+      if (currentRow.treeStatus === 'collapsed') {
+        currentRow.treeStatus = 'expanded';
+      }
+      currentRow = uniqIDs.get(from(currentRow));
+    }
+  }
+};
