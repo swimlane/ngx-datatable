@@ -145,6 +145,7 @@ describe('Math function', () => {
           {
             $$id: 'id1',
             $$valueGetter: emptyStringGetter,
+            $$originalColumn: {},
             comparator: orderByComparator,
             prop: 'id1',
             sortable: false,
@@ -156,6 +157,7 @@ describe('Math function', () => {
           {
             $$id: 'id2',
             $$valueGetter: emptyStringGetter,
+            $$originalColumn: {},
             $$oldWidth: 100,
             comparator: orderByComparator,
             prop: 'id2',
@@ -167,6 +169,7 @@ describe('Math function', () => {
           {
             $$id: 'id3',
             $$valueGetter: emptyStringGetter,
+            $$originalColumn: {},
             comparator: orderByComparator,
             prop: 'id3',
             sortable: false,

@@ -367,6 +367,31 @@ describe('DatatableComponent', () => {
     expect(textContent({ row: 1, column: 2 }, fixture)).toContain('123');
   });
 
+  it('should keep custom column properties', async () => {
+    const initialRows = [{ id: 1 }, { id: 2 }];
+
+    const columns: (TableColumn & { customProp?: string })[] = [
+      {
+        prop: 'id',
+        customProp: 'myCustomValue'
+      }
+    ];
+
+    component.rows.set(initialRows);
+    component.columns.set(columns);
+    await fixture.whenStable();
+
+    const headerCell: any = fixture.debugElement.query(
+      By.directive(DataTableHeaderCellComponent)
+    ).componentInstance;
+    expect(headerCell.cellContext().column.customProp).toBe('myCustomValue');
+
+    const bodyCell: any = fixture.debugElement.query(
+      By.directive(DataTableBodyCellComponent)
+    ).componentInstance;
+    expect(bodyCell.publicColumn().customProp).toBe('myCustomValue');
+  });
+
   it('should maintain proportional column sizes on window resize after column resize', async () => {
     component.columns.set([
       { prop: 'A', width: 100 },

@@ -70,6 +70,9 @@ export interface BaseTableColumnInternal<TRow extends Row = any>
   /** Internal for setColumnDefaults */
   $$valueGetter: ValueGetter;
 
+  /** Reference to the original input column provided by the consumer */
+  $$originalColumn: TableColumn<TRow>;
+
   dragging?: boolean;
   isTarget?: boolean;
   targetMarkerContext?: any;

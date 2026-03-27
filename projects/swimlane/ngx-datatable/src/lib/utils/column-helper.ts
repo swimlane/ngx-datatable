@@ -26,6 +26,7 @@ export const toInternalColumn = <T extends Row>(
     return {
       ...column,
       $$id: id(),
+      $$originalColumn: column,
       $$valueGetter: getterForProp(prop),
       prop,
       name: column.name ?? (prop ? deCamelCase(String(prop)) : ''),
@@ -48,6 +49,7 @@ export const toInternalColumn = <T extends Row>(
 
 export const toPublicColumn = (column: TableColumnInternal): TableColumn => {
   return {
+    ...column.$$originalColumn,
     checkboxable: column.checkboxable,
     frozenLeft: column.frozenLeft,
     frozenRight: column.frozenRight,
