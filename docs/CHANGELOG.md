@@ -2,6 +2,8 @@
 
 ## HEAD (unreleased)
 
+## 23.0.1
+
 - Fix: Fixing scroller Issue in datatable when multiple columns are there in datatable
 
 ## 22.0.0
