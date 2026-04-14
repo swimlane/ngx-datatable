@@ -22,6 +22,7 @@ import {
  *
  */
 @Directive({
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[visibilityObserver]'
 })
 export class VisibilityDirective implements OnInit, OnDestroy {

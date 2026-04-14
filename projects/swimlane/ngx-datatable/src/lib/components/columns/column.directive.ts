@@ -18,6 +18,7 @@ import { DataTableColumnGhostCellDirective } from './column-ghost-cell.directive
 import { CellContext, HeaderCellContext, Row } from '../../types/public.types';
 
 @Directive({
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'ngx-datatable-column'
 })
 export class DataTableColumnDirective<TRow extends Row> implements TableColumn, OnChanges {

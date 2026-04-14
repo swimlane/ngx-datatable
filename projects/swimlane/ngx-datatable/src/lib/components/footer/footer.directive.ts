@@ -3,6 +3,7 @@ import { DataTableFooterTemplateDirective } from './footer-template.directive';
 import { FooterContext } from '../../types/public.types';
 
 @Directive({
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'ngx-datatable-footer'
 })
 export class DatatableFooterDirective {

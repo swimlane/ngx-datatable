@@ -25,7 +25,7 @@
           {
             "type": "attribute",
             "prefix": "",
-            "style": "camelCase"
+            "style": "kebab-case"
           }
         ]
       }
