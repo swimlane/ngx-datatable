@@ -8,9 +8,9 @@ include that in your application `themes/material.css` and add the CSS class `ma
 This is a simple way to apply the style of the demo.
 
 ```scss
-@import '~@swimlane/ngx-datatable/index.css';
-@import '~@swimlane/ngx-datatable/themes/material.scss';
-@import '~@swimlane/ngx-datatable/assets/icons.css';
+@use '@swimlane/ngx-datatable/index.css';
+@use '@swimlane/ngx-datatable/themes/material';
+@use '@swimlane/ngx-datatable/assets/icons.css';
 ```
 
 You can just add above to your `scss` file and then specify the class of your ngx-datatable to `<ngx-datatable class="material">`
