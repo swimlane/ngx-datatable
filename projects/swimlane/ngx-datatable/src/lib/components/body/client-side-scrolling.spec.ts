@@ -69,7 +69,7 @@ describe('Client-side Scrolling – DatatableComponent.scrollToRow', () => {
 
     it('should use instant behavior when specified', () => {
       const scrollToSpy = vi.spyOn(bodyEl, 'scrollTo');
-      datatable.scrollToRow(rowsSig()[9], 'instant');
+      datatable.scrollToRow(rowsSig()[9], { behavior: 'instant' });
       expect(scrollToSpy).toHaveBeenCalledWith({ top: expectedOffset(9), behavior: 'instant' });
     });
   });
@@ -98,7 +98,7 @@ describe('Client-side Scrolling – DatatableComponent.scrollToRow', () => {
     it('should use smooth behavior when specified', () => {
       const rowWrappers = bodyEl.querySelectorAll('datatable-row-wrapper');
       const scrollIntoViewSpy = vi.spyOn(rowWrappers[9], 'scrollIntoView');
-      datatable.scrollToRow(rowsSig()[9], 'smooth');
+      datatable.scrollToRow(rowsSig()[9], { behavior: 'smooth' });
       expect(scrollIntoViewSpy).toHaveBeenCalledWith({ behavior: 'smooth', block: 'start' });
     });
   });

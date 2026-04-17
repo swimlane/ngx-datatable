@@ -49,6 +49,7 @@ import {
   Row,
   RowOrGroup,
   ScrollEvent,
+  ScrollToRowOptions,
   SelectEvent,
   SelectionType,
   SortEvent,
@@ -1132,7 +1133,7 @@ export class DatatableComponent<TRow extends Row = any>
     this._subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
-  scrollToRow(row: TRow, behavior?: ScrollBehavior): void {
+  scrollToRow(row: TRow, options?: ScrollToRowOptions): void {
     if (!this.scrollbarV()) {
       throw new Error('Vertical scrolling is not enabled.');
     }
@@ -1157,6 +1158,6 @@ export class DatatableComponent<TRow extends Row = any>
 
     // Here we have ensured, that we have only one page and the row exists.
     // Now we just need to scroll to that row.
-    this._bodyComponent().scrollToIndex(index, behavior);
+    this._bodyComponent().scrollToIndex(index, options);
   }
 }

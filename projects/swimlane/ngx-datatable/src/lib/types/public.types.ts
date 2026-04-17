@@ -258,6 +258,11 @@ export interface ContextMenuEvenHeader {
 
 export type ContextMenuEvent<TRow> = ContextMenuEventBody<TRow> | ContextMenuEvenHeader;
 
+export interface ScrollToRowOptions {
+  behavior?: ScrollBehavior;
+  block?: Extract<ScrollLogicalPosition, 'start'>;
+}
+
 export type DragEventType =
   | 'drag'
   | 'dragend'

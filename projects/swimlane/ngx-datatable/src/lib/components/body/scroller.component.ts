@@ -11,6 +11,8 @@ import {
   Renderer2
 } from '@angular/core';
 
+import { ScrollToRowOptions } from '../../types/public.types';
+
 export interface ScrollEventInternal {
   direction: string;
   scrollYPos: number;
@@ -73,9 +75,9 @@ export class ScrollerComponent implements OnInit, OnDestroy {
     }
   }
 
-  scrollTo(top: number, behavior?: ScrollBehavior): void {
+  scrollTo(top: number, options?: ScrollToRowOptions): void {
     if (this.parentElement) {
-      this.parentElement.scrollTo({ top, behavior });
+      this.parentElement.scrollTo({ top, behavior: options?.behavior });
     }
   }
 

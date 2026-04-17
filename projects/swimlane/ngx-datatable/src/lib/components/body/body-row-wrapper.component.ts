@@ -14,7 +14,7 @@ import {
   signal
 } from '@angular/core';
 
-import { Row, RowDetailContext, RowOrGroup } from '../../types/public.types';
+import { Row, RowDetailContext, RowOrGroup, ScrollToRowOptions } from '../../types/public.types';
 import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive';
 
 @Component({
@@ -75,8 +75,11 @@ export class DataTableRowWrapperComponent<TRow extends Row = any> implements DoC
     }
   }
 
-  scrollIntoView(behavior?: ScrollBehavior): void {
-    this.elementRef.nativeElement.scrollIntoView({ behavior, block: 'start' });
+  scrollIntoView(options?: ScrollToRowOptions): void {
+    this.elementRef.nativeElement.scrollIntoView({
+      behavior: options?.behavior,
+      block: options?.block ?? 'start'
+    });
   }
 
   @HostListener('contextmenu', ['$event'])

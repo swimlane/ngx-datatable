@@ -101,7 +101,7 @@ export class VirtualScrollComponent {
   protected scroll(): void {
     const row = this.rows()[this.scrollTarget()];
     if (row) {
-      this.datatable().scrollToRow(row, 'smooth');
+      this.datatable().scrollToRow(row, { behavior: 'smooth' });
     }
   }
 }
