@@ -117,6 +117,8 @@ export class DataTableBodyRowComponent<TRow extends Row = any> implements DoChec
       cls += ' row-disabled';
     }
 
+    cls += ' datatable-row-level-' + (this.row?.level ?? 0);
+
     if (this.rowClass) {
       const res = this.rowClass(this.row);
       if (typeof res === 'string') {
