@@ -460,6 +460,7 @@ export class DatatableComponent<TRow extends Row = any>
    * <ngx-datatable [sorts]="mySorts" (sortsChange)="onSort({sorts: $event})"></ngx-datatable>
    * <!-- or -->
    * <ngx-datatable [(sorts)]="mySorts"></ngx-datatable>
+   * ```
    */
   readonly sort = output<SortEvent>();
 
