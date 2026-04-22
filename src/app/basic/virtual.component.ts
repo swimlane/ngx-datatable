@@ -40,6 +40,13 @@ import { DataService } from '../data.service';
           [ngModelOptions]="{ standalone: true }"
           [(ngModel)]="scrollTarget"
         />
+        <label for="target-block">Block</label>
+        <select id="target-block" [ngModelOptions]="{ standalone: true }" [(ngModel)]="scrollBlock">
+          <option value="start">start</option>
+          <option value="center">center</option>
+          <option value="end">end</option>
+          <option value="nearest">nearest</option>
+        </select>
         <button type="submit">Scroll</button>
       </form>
 
@@ -72,6 +79,7 @@ import { DataService } from '../data.service';
 export class VirtualScrollComponent {
   readonly rows = signal<(FullEmployee & { height: number })[]>([]);
   readonly scrollTarget = signal(0);
+  readonly scrollBlock = signal<ScrollLogicalPosition>('start');
   expanded = {};
   timeout: any;
 
@@ -101,7 +109,7 @@ export class VirtualScrollComponent {
   protected scroll(): void {
     const row = this.rows()[this.scrollTarget()];
     if (row) {
-      this.datatable().scrollToRow(row, { behavior: 'smooth' });
+      this.datatable().scrollToRow(row, { behavior: 'smooth', block: this.scrollBlock() });
     }
   }
 }

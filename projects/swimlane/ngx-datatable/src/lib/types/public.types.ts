@@ -260,7 +260,7 @@ export type ContextMenuEvent<TRow> = ContextMenuEventBody<TRow> | ContextMenuEve
 
 export interface ScrollToRowOptions {
   behavior?: ScrollBehavior;
-  block?: Extract<ScrollLogicalPosition, 'start'>;
+  block?: ScrollLogicalPosition;
 }
 
 export type DragEventType =

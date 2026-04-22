@@ -564,7 +564,38 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
 
   scrollToIndex(index: number, options?: ScrollToRowOptions): void {
     if (this.virtualization()) {
-      this.scroller.scrollTo(this.rowHeightsCache().query(index - 1), options);
+      const cache = this.rowHeightsCache();
+      const rowTop = cache.query(index - 1);
+      const rowBottom = cache.query(index);
+      const rowHeight = rowBottom - rowTop;
+      const viewportHeight = this.scroller.parentElement?.clientHeight ?? 0;
+      const currentScrollTop = this.scroller.parentElement?.scrollTop ?? 0;
+      const block = options?.block ?? 'start';
+
+      let top: number;
+      switch (block) {
+        case 'center':
+          top = rowTop - Math.max(0, (viewportHeight - rowHeight) / 2);
+          break;
+        case 'end':
+          top = rowBottom - viewportHeight;
+          break;
+        case 'nearest':
+          if (rowTop < currentScrollTop) {
+            top = rowTop;
+          } else if (rowBottom > currentScrollTop + viewportHeight) {
+            top = rowBottom - viewportHeight;
+          } else {
+            top = currentScrollTop;
+          }
+          break;
+        case 'start':
+        default:
+          top = rowTop;
+          break;
+      }
+
+      this.scroller.scrollTo(Math.max(0, top), options);
     } else {
       this.rowWrappers()[index]?.scrollIntoView(options);
     }
