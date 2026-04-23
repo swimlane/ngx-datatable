@@ -130,6 +130,7 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
             [expanded]="getRowExpanded(row)"
             [rowIndex]="indexes().first + index"
             [ariaGroupHeaderCheckboxMessage]="ariaGroupHeaderCheckboxMessage()"
+            [checkRowPropertyChanges]="checkRowPropertyChanges()"
             (rowContextmenu)="rowContextmenu.emit($event)"
           >
             <datatable-body-row
@@ -148,6 +149,7 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
               [draggable]="rowDraggable()"
               [ariaRowCheckboxMessage]="ariaRowCheckboxMessage()"
               [cssClasses]="cssClasses()"
+              [checkRowPropertyChanges]="checkRowPropertyChanges()"
               (treeAction)="onTreeAction(row)"
               (activate)="onActivate($event, index)"
               (drop)="drop($event, row, rowElement)"
@@ -292,6 +294,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   readonly rowDragEvents = input.required<OutputEmitterRef<DragEventData>>();
   readonly disableRowCheck = input<(row: TRow) => boolean | undefined>();
   readonly ariaGroupHeaderCheckboxMessage = input.required<string>();
+  readonly checkRowPropertyChanges = input(true, { transform: booleanAttribute });
 
   readonly pageSize = input.required<number>();
 

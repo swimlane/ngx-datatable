@@ -420,6 +420,26 @@ export class DatatableComponent<TRow extends Row = any>
   readonly enableClearingSortState = input(false, { transform: booleanAttribute });
 
   /**
+   * Controls whether the datatable runs an {@link IterableDiffer} against the
+   * `rows` input on every change detection cycle to detect additions, removals
+   * and reorderings that happen in-place on the same array reference.
+   *
+   * Enabled by default. Set to `false` as a performance optimization when you
+   * always pass a new `rows` array reference on updates.
+   */
+  readonly checkRowListChanges = input(true, { transform: booleanAttribute });
+
+  /**
+   * Controls whether each rendered row runs a {@link KeyValueDiffer} against
+   * its row object on every change detection cycle to detect in-place property
+   * mutations (e.g. `row.name = 'new'` without replacing the row reference).
+   *
+   * Enabled by default. Set to `false` as a performance optimization when row
+   * objects are treated as immutable.
+   */
+  readonly checkRowPropertyChanges = input(true, { transform: booleanAttribute });
+
+  /**
    * Body was scrolled typically in a `scrollbarV:true` scenario.
    */
   readonly scroll = output<ScrollEvent>();
@@ -687,7 +707,7 @@ export class DatatableComponent<TRow extends Row = any>
    * Lifecycle hook that is called when Angular dirty checks a directive.
    */
   ngDoCheck(): void {
-    const rowDiffers = this.rowDiffer.diff(this.rows());
+    const rowDiffers = this.checkRowListChanges() ? this.rowDiffer.diff(this.rows()) : null;
     if (rowDiffers || this.disableRowCheck()) {
       this._rowDiffCount.update(count => count + 1);
       if (rowDiffers) {
@@ -930,7 +950,7 @@ export class DatatableComponent<TRow extends Row = any>
     }
 
     // otherwise use row length
-    return this.rows()?.length ?? 0;
+    return this._internalRows().length;
   }
 
   /**

@@ -11,6 +11,7 @@ import {
   input,
   KeyValueDiffer,
   KeyValueDiffers,
+  booleanAttribute,
   output
 } from '@angular/core';
 
@@ -88,6 +89,7 @@ export class DataTableBodyRowComponent<TRow extends Row = any> implements DoChec
 
   readonly disabled = input<boolean>();
   readonly cssClasses = input.required<Partial<Required<NgxDatatableConfig>['cssClasses']>>();
+  readonly checkRowPropertyChanges = input(true, { transform: booleanAttribute });
 
   protected readonly cssClass = computed(() => {
     const rowClass = this.rowClass();
@@ -118,6 +120,9 @@ export class DataTableBodyRowComponent<TRow extends Row = any> implements DoChec
     .create();
 
   ngDoCheck(): void {
+    if (!this.checkRowPropertyChanges()) {
+      return;
+    }
     if (this._rowDiffer.diff(this.row())) {
       this.cd.markForCheck();
     }

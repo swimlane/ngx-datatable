@@ -50,6 +50,7 @@ export class DataTableRowWrapperComponent<TRow extends Row = any> implements DoC
 
   readonly expanded = input(false, { transform: booleanAttribute });
   readonly ariaGroupHeaderCheckboxMessage = input.required<string>();
+  readonly checkRowPropertyChanges = input(true, { transform: booleanAttribute });
 
   readonly detailsRowHeight = computed(() => this.detailRowHeightFn()(this.row(), this.rowIndex()));
   readonly context = computed<RowDetailContext<TRow>>(() => {
@@ -69,6 +70,9 @@ export class DataTableRowWrapperComponent<TRow extends Row = any> implements DoC
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
   ngDoCheck(): void {
+    if (!this.checkRowPropertyChanges()) {
+      return;
+    }
     const row = this.row();
     if (this.rowDiffer.diff(row)) {
       this.rowDiffedCount.update(count => count + 1);
