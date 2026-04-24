@@ -13,7 +13,7 @@ import { FullEmployee } from '../data.model';
 import { DataService } from '../data.service';
 
 @Component({
-  selector: 'row-details-demo',
+  selector: 'row-detail-demo',
   imports: [
     DatatableComponent,
     DatatableRowDetailDirective,
@@ -24,7 +24,7 @@ import { DataService } from '../data.service';
   template: `
     <div>
       <h3>
-        Row Detail Demo
+        Row Detail
         <small>
           <a
             href="https://github.com/siemens/ngx-datatable/blob/main/src/app/basic/row-detail.component.ts"
@@ -107,7 +107,7 @@ import { DataService } from '../data.service';
   // eslint-disable-next-line @angular-eslint/use-component-view-encapsulation
   encapsulation: ViewEncapsulation.None
 })
-export class RowDetailsComponent {
+export class RowDetailComponent {
   @ViewChild('myTable') table!: DatatableComponent<FullEmployee>;
 
   readonly rows = signal<FullEmployee[]>([]);

@@ -5,7 +5,7 @@ import { Employee } from '../data.model';
 import { DataService } from '../data.service';
 
 @Component({
-  selector: 'basic-dark-theme-demo',
+  selector: 'dark-theme-demo',
   imports: [DatatableComponent],
   template: `
     <div>

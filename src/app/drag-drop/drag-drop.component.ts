@@ -21,7 +21,7 @@ import { DataService } from '../data.service';
   template: `
     <div>
       <h3>
-        Drag Drop Using Angular CDK
+        Drag Drop
         <small>
           <a
             href="https://github.com/siemens/ngx-datatable/blob/main/src/app/drag-drop/drag-drop.component.ts"

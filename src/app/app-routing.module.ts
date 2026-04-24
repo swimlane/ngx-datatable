@@ -3,266 +3,285 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./basic/basic-auto.component').then(c => c.BasicAutoComponent)
+    loadComponent: () =>
+      import('./basic/fluid-row-height.component').then(c => c.FluidRowHeightComponent)
   },
+  // Basic
   {
-    path: 'basic-fixed',
-    loadComponent: () => import('./basic/basic-fixed.component').then(c => c.BasicFixedComponent)
+    path: '10k-rows',
+    loadComponent: () => import('./basic/10k-rows.component').then(c => c.TenKRowsComponent)
   },
   {
     path: 'full-screen',
-    loadComponent: () => import('./basic/fullscreen.component').then(c => c.FullScreenComponent)
+    loadComponent: () => import('./basic/full-screen.component').then(c => c.FullScreenComponent)
   },
   {
-    path: 'inline-edit',
-    loadComponent: () => import('./basic/inline.component').then(c => c.InlineEditComponent)
-  },
-  {
-    path: 'virtual-scroll',
-    loadComponent: () => import('./basic/virtual.component').then(c => c.VirtualScrollComponent)
+    path: 'inline-editing',
+    loadComponent: () =>
+      import('./basic/inline-editing.component').then(c => c.InlineEditingComponent)
   },
   {
     path: 'horz-vert-scrolling',
     loadComponent: () =>
-      import('./basic/scrolling.component').then(c => c.HorzVertScrollingComponent)
+      import('./basic/horz-vert-scrolling.component').then(c => c.HorzVertScrollingComponent)
   },
   {
-    path: 'scrolling-dynamically',
+    path: 'vert-dynamic-scrolling',
     loadComponent: () =>
-      import('./basic/scrolling-dynamically.component').then(c => c.ScrollingDynamicallyComponent)
+      import('./basic/vert-dynamic-scrolling.component').then(c => c.VertDynamicScrollingComponent)
   },
   {
     path: 'multiple-tables',
-    loadComponent: () => import('./basic/multiple.component').then(c => c.MultipleTablesComponent)
+    loadComponent: () =>
+      import('./basic/multiple-tables.component').then(c => c.MultipleTablesComponent)
   },
   {
-    path: 'row-details',
-    loadComponent: () => import('./basic/row-detail.component').then(c => c.RowDetailsComponent)
+    path: 'filtering',
+    loadComponent: () => import('./basic/filtering.component').then(c => c.FilteringComponent)
+  },
+  {
+    path: 'hidden-on-load',
+    loadComponent: () =>
+      import('./basic/hidden-on-load.component').then(c => c.HiddenOnLoadComponent)
+  },
+  {
+    path: 'live-data',
+    loadComponent: () => import('./basic/live-data.component').then(c => c.LiveDataComponent)
+  },
+  {
+    path: 'rxjs',
+    loadComponent: () => import('./basic/rxjs.component').then(c => c.RxjsComponent)
+  },
+  {
+    path: 'context-menu',
+    loadComponent: () => import('./basic/context-menu.component').then(c => c.ContextMenuComponent)
+  },
+  {
+    path: 'css-classes',
+    loadComponent: () => import('./basic/css-classes.component').then(c => c.CssClassesComponent)
+  },
+  {
+    path: 'footer-template',
+    loadComponent: () =>
+      import('./basic/footer-template.component').then(c => c.FooterTemplateComponent)
+  },
+  {
+    path: 'empty-template',
+    loadComponent: () =>
+      import('./basic/empty-template.component').then(c => c.EmptyTemplateComponent)
+  },
+  {
+    path: 'drag-drop',
+    loadComponent: () => import('./drag-drop/drag-drop.component').then(c => c.DragDropComponent)
+  },
+  // Themes
+  {
+    path: 'dark-theme',
+    loadComponent: () => import('./basic/dark-theme.component').then(c => c.DarkThemeComponent),
+    data: { dark: true }
+  },
+  {
+    path: 'bootstrap-theme',
+    loadComponent: () =>
+      import('./basic/bootstrap-theme.component').then(c => c.BootstrapThemeComponent)
+  },
+  // Tree
+  {
+    path: 'full-screen-tree',
+    loadComponent: () =>
+      import('./tree/full-screen-tree.component').then(c => c.FullScreenTreeComponent)
+  },
+  {
+    path: 'client-side-tree',
+    loadComponent: () =>
+      import('./tree/client-side-tree.component').then(c => c.ClientSideTreeComponent)
+  },
+  // Rows
+  {
+    path: 'row-grouping',
+    loadComponent: () => import('./basic/row-grouping.component').then(c => c.RowGroupingComponent)
+  },
+  {
+    path: 'fixed-row-height',
+    loadComponent: () =>
+      import('./basic/fixed-row-height.component').then(c => c.FixedRowHeightComponent)
+  },
+  {
+    path: 'dynamic-row-height',
+    loadComponent: () =>
+      import('./basic/dynamic-row-height.component').then(c => c.DynamicRowHeightComponent)
+  },
+  {
+    path: 'row-detail',
+    loadComponent: () => import('./basic/row-detail.component').then(c => c.RowDetailComponent)
   },
   {
     path: 'responsive',
     loadComponent: () => import('./basic/responsive.component').then(c => c.ResponsiveComponent)
   },
   {
-    path: 'filter',
-    loadComponent: () => import('./basic/filter.component').then(c => c.FilterComponent)
-  },
-  {
-    path: 'hidden',
-    loadComponent: () => import('./basic/tabs.component').then(c => c.TabsDemoComponent)
-  },
-  {
-    path: 'live',
-    loadComponent: () => import('./basic/live.component').then(c => c.LiveDataComponent)
-  },
-  { path: 'rx', loadComponent: () => import('./basic/rx.component').then(c => c.RxDemoComponent) },
-  {
-    path: 'contextmenu',
-    loadComponent: () =>
-      import('./basic/contextmenu.component').then(c => c.ContextMenuDemoComponent)
-  },
-  {
-    path: 'css',
-    loadComponent: () => import('./basic/css.component').then(c => c.RowCssComponent)
-  },
-  {
-    path: 'dynamic',
-    loadComponent: () =>
-      import('./basic/dynamic-height.component').then(c => c.DynamicHeightComponent)
-  },
-  {
-    path: 'footer',
-    loadComponent: () => import('./basic/footer.component').then(c => c.FooterDemoComponent)
-  },
-  {
-    path: 'empty',
-    loadComponent: () => import('./basic/empty.component').then(c => c.BasicEmptyComponent)
-  },
-  {
-    path: 'drag-drop',
-    loadComponent: () => import('./drag-drop/drag-drop.component').then(c => c.DragDropComponent)
-  },
-  {
     path: 'disabled',
+    loadComponent: () => import('./basic/disabled.component').then(c => c.DisabledComponent)
+  },
+  // Paging
+  {
+    path: 'client-side-paging',
     loadComponent: () =>
-      import('./basic/disabled-rows.component').then(c => c.DisabledRowsComponent)
+      import('./paging/client-side-paging.component').then(c => c.ClientSidePagingComponent)
   },
   {
-    path: 'dark',
-    loadComponent: () => import('./basic/dark-theme.component').then(c => c.DarkThemeComponent),
-    data: { dark: true }
-  },
-  {
-    path: 'bootstrap',
-    loadComponent: () => import('./basic/bootstrap.component').then(c => c.BootstrapThemeComponent)
-  },
-  {
-    path: 'fullscreen-tree',
-    loadComponent: () => import('./tree/fullscreen.component').then(c => c.FullScreenTreeComponent)
-  },
-  {
-    path: 'client-tree',
-    loadComponent: () => import('./tree/client-tree.component').then(c => c.ClientTreeComponent)
-  },
-  {
-    path: 'row-grouping',
-    loadComponent: () => import('./basic/row-grouping.component').then(c => c.RowGroupingComponent)
-  },
-  {
-    path: 'client-paging',
+    path: 'server-side-paging',
     loadComponent: () =>
-      import('./paging/paging-client.component').then(c => c.ClientPagingComponent)
+      import('./paging/server-side-paging.component').then(c => c.ServerSidePagingComponent)
   },
   {
-    path: 'server-paging',
+    path: 'scrolling-no-virtual',
     loadComponent: () =>
-      import('./paging/paging-server.component').then(c => c.ServerPagingComponent)
+      import('./paging/scrolling-no-virtual.component').then(c => c.ScrollingNoVirtualComponent)
   },
   {
-    path: 'paging-scrolling-novirtualization',
+    path: 'scrolling-server-side',
     loadComponent: () =>
-      import('./paging/paging-scrolling-novirtualization.component').then(
-        c => c.PagingScrollingNoVirtualizationComponent
-      )
+      import('./paging/scrolling-server-side.component').then(c => c.ScrollingServerSideComponent)
   },
   {
-    path: 'server-scrolling',
+    path: 'virtual-server-side',
     loadComponent: () =>
-      import('./paging/scrolling-server.component').then(c => c.ServerScrollingComponent)
+      import('./paging/virtual-server-side.component').then(c => c.VirtualServerSideComponent)
+  },
+  // Sorting
+  {
+    path: 'client-side-sorting',
+    loadComponent: () =>
+      import('./sorting/client-side-sorting.component').then(c => c.ClientSideSortingComponent)
   },
   {
-    path: 'virtual-paging',
+    path: 'default-sort',
     loadComponent: () =>
-      import('./paging/paging-virtual.component').then(c => c.VirtualPagingComponent)
+      import('./sorting/default-sort.component').then(c => c.DefaultSortComponent)
   },
   {
-    path: 'client-sorting',
+    path: 'server-side-sorting',
     loadComponent: () =>
-      import('./sorting/sorting-client.component').then(c => c.ClientSortingComponent)
+      import('./sorting/server-side-sorting.component').then(c => c.ServerSideSortingComponent)
   },
   {
-    path: 'default-sorting',
-    loadComponent: () =>
-      import('./sorting/sorting-default.component').then(c => c.DefaultSortingComponent)
+    path: 'comparator',
+    loadComponent: () => import('./sorting/comparator.component').then(c => c.ComparatorComponent)
   },
-  {
-    path: 'server-sorting',
-    loadComponent: () =>
-      import('./sorting/sorting-server.component').then(c => c.ServerSortingComponent)
-  },
-  {
-    path: 'comparator-sorting',
-    loadComponent: () =>
-      import('./sorting/sorting-comparator.component').then(c => c.SortingComparatorComponent)
-  },
+  // Selection
   {
     path: 'cell-selection',
     loadComponent: () =>
-      import('./selection/selection-cell.component').then(c => c.CellSelectionComponent)
+      import('./selection/cell-selection.component').then(c => c.CellSelectionComponent)
   },
   {
-    path: 'single-selection',
+    path: 'single-row-selection',
     loadComponent: () =>
-      import('./selection/selection-single.component').then(c => c.SingleSelectionComponent)
+      import('./selection/single-row-selection.component').then(c => c.SingleRowSelectionComponent)
   },
   {
-    path: 'multi-selection',
+    path: 'multi-row-selection',
     loadComponent: () =>
-      import('./selection/selection-multi.component').then(c => c.MultiSelectionComponent)
+      import('./selection/multi-row-selection.component').then(c => c.MultiRowSelectionComponent)
   },
   {
-    path: 'multi-click-selection',
+    path: 'multi-click-row-selection',
     loadComponent: () =>
-      import('./selection/selection-multi-click.component').then(
-        c => c.MultiClickSelectionComponent
+      import('./selection/multi-click-row-selection.component').then(
+        c => c.MultiClickRowSelectionComponent
       )
   },
   {
-    path: 'multidisable-selection',
+    path: 'disable-selection-callback',
     loadComponent: () =>
-      import('./selection/selection-disabled.component').then(c => c.MultiDisableSelectionComponent)
+      import('./selection/disable-selection-callback.component').then(
+        c => c.DisableSelectionCallbackComponent
+      )
   },
   {
-    path: 'chkbox-selection',
+    path: 'checkbox-selection',
     loadComponent: () =>
-      import('./selection/selection-chkbox.component').then(c => c.CheckboxSelectionComponent)
+      import('./selection/checkbox-selection.component').then(c => c.CheckboxSelectionComponent)
   },
   {
-    path: 'chkbox-selection-template',
+    path: 'custom-checkbox-selection',
     loadComponent: () =>
-      import('./selection/selection-chkbox-template.component').then(
+      import('./selection/custom-checkbox-selection.component').then(
         c => c.CustomCheckboxSelectionComponent
       )
   },
   {
-    path: 'multi-click-chkbox-selection',
+    path: 'multi-click-and-checkbox-selection',
     loadComponent: () =>
-      import('./selection/selection-multi-click-chkbox.component').then(
-        c => c.MultiClickCheckboxSelectionComponent
+      import('./selection/multi-click-and-checkbox-selection.component').then(
+        c => c.MultiClickAndCheckboxSelectionComponent
       )
   },
+  // Templates
   {
-    path: 'templateref',
+    path: 'inline-template',
     loadComponent: () =>
-      import('./templates/template-obj.component').then(c => c.TemplateRefTemplatesComponent)
+      import('./templates/inline-template.component').then(c => c.InlineTemplateComponent)
   },
   {
-    path: 'inline',
+    path: 'template-ref',
     loadComponent: () =>
-      import('./templates/template-dom.component').then(c => c.InlineTemplatesComponent)
+      import('./templates/template-ref.component').then(c => c.TemplateRefComponent)
+  },
+  // Column
+  {
+    path: 'flex-column',
+    loadComponent: () => import('./columns/flex-column.component').then(c => c.FlexColumnComponent)
   },
   {
-    path: 'flex',
-    loadComponent: () => import('./columns/column-flex.component').then(c => c.ColumnFlexComponent)
-  },
-  {
-    path: 'toggle',
+    path: 'column-toggling',
     loadComponent: () =>
-      import('./columns/column-toggle.component').then(c => c.ColumnToggleComponent)
+      import('./columns/column-toggling.component').then(c => c.ColumnTogglingComponent)
   },
   {
-    path: 'fixed',
+    path: 'fixed-column',
     loadComponent: () =>
-      import('./columns/column-standard.component').then(c => c.ColumnStandardComponent)
+      import('./columns/fixed-column.component').then(c => c.FixedColumnComponent)
   },
   {
-    path: 'force',
+    path: 'force-column',
     loadComponent: () =>
-      import('./columns/column-force.component').then(c => c.ColumnForceComponent)
+      import('./columns/force-column.component').then(c => c.ForceColumnComponent)
   },
   {
-    path: 'pinning',
-    loadComponent: () => import('./columns/pinning.component').then(c => c.ColumnPinningComponent)
+    path: 'column-pinning',
+    loadComponent: () =>
+      import('./columns/column-pinning.component').then(c => c.ColumnPinningComponent)
   },
   {
-    path: 'reorder',
+    path: 'column-reorder',
     loadComponent: () =>
       import('./columns/column-reorder.component').then(c => c.ColumnReorderComponent)
   },
+  // Summary Row
   {
     path: 'simple-summary',
     loadComponent: () =>
-      import('./summary/summary-row-simple.component').then(c => c.SummaryRowSimpleComponent)
+      import('./summary/simple-summary.component').then(c => c.SimpleSummaryComponent)
   },
   {
     path: 'custom-template-summary',
     loadComponent: () =>
-      import('./summary/summary-row-custom-template.component').then(
-        c => c.SummaryRowCustomTemplateComponent
+      import('./summary/custom-template-summary.component').then(
+        c => c.CustomTemplateSummaryComponent
       )
   },
   {
-    path: 'paging-summary',
+    path: 'server-side-paging-summary',
     loadComponent: () =>
-      import('./summary/summary-row-server-paging.component').then(
-        c => c.SummaryRowServerPagingComponent
+      import('./summary/server-side-paging-summary.component').then(
+        c => c.ServerSidePagingSummaryComponent
       )
   },
   {
     path: 'inline-html-summary',
     loadComponent: () =>
-      import('./summary/summary-row-inline-html.component').then(
-        c => c.SummaryRowInlineHtmlComponent
-      )
+      import('./summary/inline-html-summary.component').then(c => c.InlineHtmlSummaryComponent)
   }
 ];

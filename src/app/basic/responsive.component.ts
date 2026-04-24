@@ -26,7 +26,7 @@ import { DataService } from '../data.service';
   template: `
     <div>
       <h3>
-        Responsive Demo
+        Responsive
         <small>
           <a
             href="https://github.com/siemens/ngx-datatable/blob/main/src/app/basic/responsive.component.ts"
