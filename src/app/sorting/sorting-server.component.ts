@@ -60,21 +60,24 @@ export class ServerSortingComponent {
     // event was triggered, start sort sequence
     this.loading.set(true);
     // emulate a server request with a timeout
-    setTimeout(() => {
-      const rows = [...this.rows()];
-      // this is only for demo purposes, normally
-      // your server would return the result for
-      // you and you would just set the rows prop
-      const sort = event[0];
-      type SortProp = 'company' | 'name' | 'gender';
-      rows.sort(
-        (a, b) =>
-          a[sort.prop as SortProp].localeCompare(b[sort.prop as SortProp]) *
-          (sort.dir === 'desc' ? -1 : 1)
-      );
+    setTimeout(
+      () => {
+        const rows = [...this.rows()];
+        // this is only for demo purposes, normally
+        // your server would return the result for
+        // you and you would just set the rows prop
+        const sort = event[0];
+        type SortProp = 'company' | 'name' | 'gender';
+        rows.sort(
+          (a, b) =>
+            a[sort.prop as SortProp].localeCompare(b[sort.prop as SortProp]) *
+            (sort.dir === 'desc' ? -1 : 1)
+        );
 
-      this.rows.set(rows);
-      this.loading.set(false);
-    }, 1000);
+        this.rows.set(rows);
+        this.loading.set(false);
+      },
+      window.navigator.webdriver ? 0 : 1000
+    );
   }
 }

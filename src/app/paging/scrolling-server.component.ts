@@ -19,7 +19,7 @@ interface PagedData<T> {
 export class MockServerResultsService {
   public getResults(offset: number, limit: number): Observable<PagedData<Employee>> {
     return of(companyData.slice(offset, offset + limit)).pipe(
-      delay(new Date(Date.now() + 1500)),
+      delay(window.navigator.webdriver ? 0 : 1500),
       map(d => ({ data: d }))
     );
   }
