@@ -163,7 +163,7 @@ export class DataTableBodyRowComponent<TRow extends Row = any> implements DoChec
   }
 
   ngDoCheck(): void {
-    if (this._rowDiffer.diff(this.row)) {
+    if (this._rowDiffer && this._rowDiffer.diff(this.row)) {
       this.cd.markForCheck();
     }
   }
