@@ -547,7 +547,7 @@ export class DatatableComponent<TRow extends Row = any>
    */
   readonly allRowsSelected = computed(() => {
     const selected = this.selected();
-    let allRowsSelected = this.rows() && selected && selected.length === this.rows()!.length;
+    let allRowsSelected = selected.length === this.rows()?.length;
 
     if (this.selectAllRowsOnPage()) {
       const { first, last } = this._bodyComponent().indexes();
