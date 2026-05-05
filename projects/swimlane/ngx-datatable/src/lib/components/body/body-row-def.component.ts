@@ -5,10 +5,10 @@ import {
   inject,
   InjectionToken,
   Injector,
+  input,
   OnInit,
   TemplateRef,
-  ViewContainerRef,
-  input
+  ViewContainerRef
 } from '@angular/core';
 
 import { RowOrGroup } from '../../types/public.types';

@@ -1,4 +1,4 @@
-import { Directive, TemplateRef, input, contentChild, computed } from '@angular/core';
+import { computed, contentChild, Directive, input, TemplateRef } from '@angular/core';
 
 import { FooterContext } from '../../types/public.types';
 import { DataTableFooterTemplateDirective } from './footer-template.directive';

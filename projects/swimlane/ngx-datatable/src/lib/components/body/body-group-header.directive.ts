@@ -1,4 +1,4 @@
-import { Directive, TemplateRef, input, output, contentChild, computed } from '@angular/core';
+import { computed, contentChild, Directive, input, output, TemplateRef } from '@angular/core';
 
 import { Group, GroupContext, GroupToggleEvents, Row } from '../../types/public.types';
 import { DatatableGroupHeaderTemplateDirective } from './body-group-header-template.directive';
