@@ -6,7 +6,6 @@ import { numberAttribute } from '@angular/core';
  * @param value
  */
 // Must be a function.
-// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function numberOrUndefinedAttribute(value: unknown | undefined): number | undefined {
   if (value === undefined) {
     return undefined;
