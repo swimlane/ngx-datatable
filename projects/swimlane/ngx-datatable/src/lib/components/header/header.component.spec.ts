@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideZonelessChangeDetection } from '@angular/core';
 import { TableColumnInternal } from '../../types/internal.types';
 import { DataTableHeaderComponent } from './header.component';
 
@@ -9,6 +9,7 @@ describe('DataTableHeaderComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()],
       imports: [DataTableHeaderComponent]
     });
     fixture = TestBed.createComponent(DataTableHeaderComponent);
