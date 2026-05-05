@@ -1,0 +1,8 @@
+.server-scrolling-demo {
+  height: calc(100vh - 110px);
+}
+
+::ng-deep .progress-linear {
+  position: fixed !important;
+  bottom: 0px;
+}

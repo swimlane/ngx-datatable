@@ -1,4 +1,5 @@
 import {
+  booleanAttribute,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -11,7 +12,6 @@ import {
   input,
   KeyValueDiffer,
   KeyValueDiffers,
-  booleanAttribute,
   output
 } from '@angular/core';
 
