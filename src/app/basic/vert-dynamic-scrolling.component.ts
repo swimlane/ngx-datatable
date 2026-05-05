@@ -17,7 +17,7 @@ import { DataService } from '../data.service';
         Vert Dynamic Scrolling
         <small>
           <a
-            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/basic/vert-dynamic-scrolling.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/vert-dynamic-scrolling.component.ts"
             target="_blank"
           >
             Source

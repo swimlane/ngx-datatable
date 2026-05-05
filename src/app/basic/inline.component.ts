@@ -9,7 +9,7 @@ import { Employee } from '../data.model';
 import { DataService } from '../data.service';
 
 @Component({
-  selector: 'inline-editing-demo',
+  selector: 'inline-edit-demo',
   imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellDirective],
   template: `
     <div>
@@ -17,7 +17,7 @@ import { DataService } from '../data.service';
         Inline Editing
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/inline-editing.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/inline.component.ts"
             target="_blank"
           >
             Source
@@ -82,7 +82,7 @@ import { DataService } from '../data.service';
     </div>
   `
 })
-export class InlineEditingComponent {
+export class InlineEditComponent {
   editing: Record<string, boolean> = {};
   rows: Employee[] = [];
 

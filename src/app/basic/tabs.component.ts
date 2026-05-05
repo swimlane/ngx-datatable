@@ -8,15 +8,15 @@ import { FullEmployee } from '../data.model';
 import { DataService } from '../data.service';
 
 @Component({
-  selector: 'hidden-on-load-demo',
+  selector: 'tabs-demo',
   imports: [DatatableComponent, DataTableColumnDirective],
   template: `
     <div>
       <h3>
-        Hidden On Load
+        Hidden By Default
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/hidden-on-load.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/tabs.component.ts"
             target="_blank"
           >
             Source
@@ -74,7 +74,7 @@ import { DataService } from '../data.service';
     </div>
   `
 })
-export class HiddenOnLoadComponent {
+export class TabsDemoComponent {
   rows: FullEmployee[] = [];
 
   tab1 = true;

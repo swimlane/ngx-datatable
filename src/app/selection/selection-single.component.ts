@@ -2,7 +2,6 @@ import { Component, inject, signal } from '@angular/core';
 import {
   ActivateEvent,
   DatatableComponent,
-  SelectEvent,
   TableColumn
 } from 'projects/swimlane/ngx-datatable/src/public-api';
 
@@ -10,15 +9,15 @@ import { Employee } from '../data.model';
 import { DataService } from '../data.service';
 
 @Component({
-  selector: 'disable-selection-callback-demo',
+  selector: 'single-selection-demo',
   imports: [DatatableComponent],
   template: `
     <div>
       <h3>
-        Disable Selection Callback
+        Single Row Selection
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/selection/disable-selection-callback.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/selection/selection-single.component.ts"
             target="_blank"
           >
             Source
@@ -26,21 +25,27 @@ import { DataService } from '../data.service';
         </small>
       </h3>
       <div style="float:left;width:75%">
+        <div class="info">
+          <p
+            >This demonstrates a simple single selection table with the 3rd row selected by
+            default.</p
+          >
+        </div>
+
         @let rows = this.rows();
         <ngx-datatable
           class="material selection-row"
           rowHeight="auto"
           columnMode="force"
-          selectionType="multi"
+          selectionType="single"
           [rows]="rows"
           [columns]="columns"
           [headerHeight]="50"
           [footerHeight]="50"
           [limit]="5"
-          [selectCheck]="checkSelectable"
-          [selected]="selected"
+          [(selected)]="selected"
           (activate)="onActivate($event)"
-          (select)="onSelect($event)"
+          (selectedChange)="onSelect($event)"
         />
       </div>
 
@@ -59,7 +64,7 @@ import { DataService } from '../data.service';
     </div>
   `
 })
-export class DisableSelectionCallbackComponent {
+export class SingleSelectionComponent {
   readonly rows = signal<Employee[]>([]);
 
   selected: Employee[] = [];
@@ -69,20 +74,19 @@ export class DisableSelectionCallbackComponent {
   private dataService = inject(DataService);
 
   constructor() {
-    this.dataService.load('company.json').subscribe(data => this.rows.set(data));
+    this.dataService.load('company.json').subscribe(data => {
+      this.selected = [data[2]];
+      this.rows.set(data);
+    });
   }
 
-  onSelect({ selected }: SelectEvent<Employee>) {
-    this.selected.splice(0, this.selected.length);
-    this.selected.push(...selected);
+  onSelect(employees: Employee[]) {
+    // eslint-disable-next-line no-console
+    console.log('Select Event', employees);
   }
 
   onActivate(event: ActivateEvent<Employee>) {
     // eslint-disable-next-line no-console
     console.log('Activate Event', event);
-  }
-
-  checkSelectable(event: Employee) {
-    return event.name !== 'Ethel Price';
   }
 }

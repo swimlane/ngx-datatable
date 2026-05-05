@@ -13,7 +13,7 @@ import { DataService } from '../data.service';
         Filtering
         <small>
           <a
-            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/basic/filtering.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/filtering.component.ts"
             target="_blank"
           >
             Source

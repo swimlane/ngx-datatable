@@ -24,7 +24,7 @@ import { DataService } from '../data.service';
         10k Rows
         <small>
           <a
-            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/basic/10k-rows.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/10k-rows.component.ts"
             target="_blank"
           >
             Source

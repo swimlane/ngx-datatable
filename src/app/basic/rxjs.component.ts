@@ -15,7 +15,7 @@ import { DataService } from '../data.service';
         RxJS
         <small>
           <a
-            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/basic/rxjs.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/rxjs.component.ts"
             target="_blank"
           >
             Source

@@ -17,7 +17,7 @@ import { DataService } from '../data.service';
         Single Row Selection
         <small>
           <a
-            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/selection/single-row-selection.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/selection/single-row-selection.component.ts"
             target="_blank"
           >
             Source

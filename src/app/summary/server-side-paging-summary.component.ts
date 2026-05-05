@@ -14,7 +14,7 @@ import { Page } from '../paging/model/page';
         Server-side Paging Summary
         <small>
           <a
-            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/summary/server-side-paging-summary.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/summary/server-side-paging-summary.component.ts"
           >
             Source
           </a>

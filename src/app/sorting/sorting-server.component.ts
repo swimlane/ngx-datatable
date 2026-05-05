@@ -9,7 +9,7 @@ import { Employee } from '../data.model';
 import { DataService } from '../data.service';
 
 @Component({
-  selector: 'server-side-sorting-demo',
+  selector: 'server-sorting-demo',
   imports: [DatatableComponent],
   template: `
     <div>
@@ -17,7 +17,7 @@ import { DataService } from '../data.service';
         Server-side Sorting
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/sorting/server-side-sorting.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/sorting/sorting-server.component.ts"
             target="_blank"
           >
             Source
@@ -39,7 +39,7 @@ import { DataService } from '../data.service';
     </div>
   `
 })
-export class ServerSideSortingComponent {
+export class ServerSortingComponent {
   readonly loading = signal(false);
 
   readonly rows = signal<Employee[]>([]);

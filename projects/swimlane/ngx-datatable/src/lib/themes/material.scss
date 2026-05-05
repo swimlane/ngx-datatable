@@ -9,8 +9,8 @@
   $ngx-datatable-selected-active-background: yellow;
   $ngx-datatable-selected-active-background-hover: rgba(yellow, 0.2);
 
-  @use '~@siemens/ngx-datatable/themes/material.scss';
-  @import '~@siemens/ngx-datatable/assets/icons.css';
+  @use '~@swimlane/ngx-datatable/themes/material.scss';
+  @import '~@swimlane/ngx-datatable/assets/icons.css';
 
 That's all.
 */

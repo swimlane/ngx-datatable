@@ -17,7 +17,7 @@ import { DataService } from '../data.service';
         Force Column
         <small>
           <a
-            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/columns/force-column.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/columns/force-column.component.ts"
             target="_blank"
           >
             Source

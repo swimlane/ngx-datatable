@@ -27,7 +27,7 @@ import { DataService } from '../data.service';
         Row Grouping
         <small>
           <a
-            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/basic/row-grouping.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/row-grouping.component.ts"
             target="_blank"
           >
             Source

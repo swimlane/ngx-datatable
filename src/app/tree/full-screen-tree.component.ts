@@ -18,7 +18,7 @@ import { DataService } from '../data.service';
         Full Screen Tree
         <small>
           <a
-            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/tree/full-screen-tree.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/tree/full-screen-tree.component.ts"
             target="_blank"
           >
             Source

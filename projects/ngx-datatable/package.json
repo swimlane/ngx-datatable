@@ -1,5 +1,5 @@
 {
-  "name": "@siemens/ngx-datatable",
+  "name": "@swimlane/ngx-datatable",
   "version": "25.0.0",
   "description": "ngx-datatable is an Angular table grid component for presenting large and complex data.",
   "publishConfig": {
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siemens/ngx-datatable.git"
+    "url": "git+https://github.com/swimlane/ngx-datatable.git"
   },
   "keywords": [
     "angularjs",
@@ -26,10 +26,10 @@
     "grid",
     "table"
   ],
-  "author": "Siemens",
+  "author": "Swimlane",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/siemens/ngx-datatable/issues"
+    "url": "https://github.com/swimlane/ngx-datatable/issues"
   },
-  "homepage": "https://github.com/siemens/ngx-datatable#readme"
+  "homepage": "https://github.com/swimlane/ngx-datatable#readme"
 }

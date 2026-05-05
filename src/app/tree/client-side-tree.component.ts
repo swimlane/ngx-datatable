@@ -17,7 +17,7 @@ import { DataService } from '../data.service';
         Client Side Tree
         <small>
           <a
-            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/tree/client-side-tree.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/tree/client-side-tree.component.ts"
             target="_blank"
           >
             Source

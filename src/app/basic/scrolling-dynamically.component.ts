@@ -9,15 +9,15 @@ import { Employee } from '../data.model';
 import { DataService } from '../data.service';
 
 @Component({
-  selector: 'inline-editing-demo',
+  selector: 'scrolling-dynamically-demo',
   imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellDirective],
   template: `
     <div>
       <h3>
-        Inline Editing
+        Dynamic Vertical Scrolling
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/inline-editing.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/scrolling-dynamically.component.ts"
             target="_blank"
           >
             Source
@@ -31,6 +31,9 @@ import { DataService } from '../data.service';
         columnMode="force"
         [headerHeight]="50"
         [limit]="5"
+        [virtualization]="false"
+        [scrollbarV]="true"
+        [scrollbarVDynamic]="true"
         [footerHeight]="50"
         [rows]="rows"
       >
@@ -82,7 +85,7 @@ import { DataService } from '../data.service';
     </div>
   `
 })
-export class InlineEditingComponent {
+export class ScrollingDynamicallyComponent {
   editing: Record<string, boolean> = {};
   rows: Employee[] = [];
 
@@ -90,13 +93,13 @@ export class InlineEditingComponent {
 
   constructor() {
     this.dataService.load('company.json').subscribe(data => {
-      this.rows = data;
+      this.rows = data.slice(0, 5);
     });
   }
 
-  updateValue(event: Event, cell: 'name' | 'gender', rowIndex: number) {
+  updateValue(event: Event, cell: 'gender' | 'name', rowIndex: number) {
     this.editing[rowIndex + '-' + cell] = false;
-    this.rows[rowIndex][cell] = (event.target as HTMLInputElement).value;
+    this.rows[rowIndex][cell] = (event.target as HTMLInputElement | HTMLSelectElement).value;
     this.rows = [...this.rows];
   }
 }

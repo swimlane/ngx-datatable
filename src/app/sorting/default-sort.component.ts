@@ -17,7 +17,7 @@ import { DataService } from '../data.service';
         Default Sort
         <small>
           <a
-            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/sorting/default-sort.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/sorting/default-sort.component.ts"
             target="_blank"
           >
             Source

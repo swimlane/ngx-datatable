@@ -27,7 +27,7 @@ import { DataService } from '../data.service';
         Row Detail
         <small>
           <a
-            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/basic/row-detail.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/basic/row-detail.component.ts"
             target="_blank"
           >
             Source

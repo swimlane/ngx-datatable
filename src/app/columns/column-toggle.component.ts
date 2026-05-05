@@ -8,7 +8,7 @@ import {
 import { Employee } from '../data.model';
 
 @Component({
-  selector: 'column-toggling-demo',
+  selector: 'column-toggle-demo',
   imports: [DatatableComponent, DataTableColumnDirective],
   template: `
     <div>
@@ -16,7 +16,7 @@ import { Employee } from '../data.model';
         Column Toggling
         <small>
           <a
-            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/columns/column-toggling.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/columns/column-toggle.component.ts"
             target="_blank"
           >
             Source
@@ -56,7 +56,7 @@ import { Employee } from '../data.model';
     </div>
   `
 })
-export class ColumnTogglingComponent {
+export class ColumnToggleComponent {
   rows: Employee[] = [
     {
       name: 'Claudine Neal',

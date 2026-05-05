@@ -13,7 +13,7 @@ import { DataService } from '../data.service';
         Column Reorder
         <small>
           <a
-            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/columns/column-reorder.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/columns/column-reorder.component.ts"
             target="_blank"
           >
             Source

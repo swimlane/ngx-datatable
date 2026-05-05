@@ -13,7 +13,7 @@ import { DataService } from '../data.service';
         Simple Summary
         <small>
           <a
-            href="https://github.com/siemens/ngx-datatable/blob/main/src/app/summary/simple-summary.component.ts"
+            href="https://github.com/swimlane/ngx-datatable/blob/master/src/app/summary/simple-summary.component.ts"
           >
             Source
           </a>
