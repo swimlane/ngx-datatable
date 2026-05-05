@@ -60,7 +60,7 @@ module.exports = {
         '@angular-eslint/directive-class-suffix': 'off',
         '@angular-eslint/no-output-native': 'off',
         '@angular-eslint/use-component-view-encapsulation': 'off',
-        '@angular-eslint/template/prefer-self-closing-tags': 'off',
+        '@angular-eslint/template/prefer-self-closing-tags': 'error',
         '@typescript-eslint/array-type': 'error',
         '@typescript-eslint/brace-style': 'off',
         '@typescript-eslint/comma-dangle': 'off',
@@ -120,7 +120,7 @@ module.exports = {
       files: ['*.html'],
       extends: ['plugin:@angular-eslint/template/recommended'],
       rules: {
-        '@angular-eslint/template/prefer-self-closing-tags': 'off'
+        '@angular-eslint/template/prefer-self-closing-tags': 'error'
       }
     }
   ]
