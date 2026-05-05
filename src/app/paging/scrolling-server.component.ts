@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 
 import data from 'src/assets/data/company.json';
-import { DatatableComponent } from 'projects/ngx-datatable/src/public-api';
+import { DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
 
 const companyData = data as any[];

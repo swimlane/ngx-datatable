@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MockServerResultsService } from './mock-server-results-service';
 import { Page } from './model/page';
-import { DatatableComponent } from 'projects/ngx-datatable/src/public-api';
+import { DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { Employee } from '../data.model';
 
 @Component({
