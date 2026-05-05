@@ -14,7 +14,7 @@ describe('Math function', () => {
           { prop: 'email', width: 250, canAutoResize: true }
         ];
 
-        forceFillColumnWidths(columns, 750, 1, true); // Column 2 expanded from 250 to 400
+        forceFillColumnWidths(columns as any, 750, 1, true); // Column 2 expanded from 250 to 400
 
         expect(columns[0].width).toBe(250); // Not changed
         expect(columns[1].width).toBe(400);
@@ -30,7 +30,7 @@ describe('Math function', () => {
           { prop: 'email', width: 250, canAutoResize: true }
         ];
 
-        forceFillColumnWidths(columns, 750, 1, true); // Column 2 contracted from 250 to 180
+        forceFillColumnWidths(columns as any, 750, 1, true); // Column 2 contracted from 250 to 180
 
         expect(columns[0].width).toBe(250); // Not changed
         expect(columns[1].width).toBe(180);
