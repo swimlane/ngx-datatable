@@ -3,8 +3,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  numberAttribute,
-  input
+  input,
+  numberAttribute
 } from '@angular/core';
 
 import { TableColumnInternal } from '../../../types/internal.types';
