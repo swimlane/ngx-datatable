@@ -2,15 +2,15 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  computed,
   DoCheck,
   ElementRef,
   HostBinding,
   HostListener,
   inject,
+  input,
   KeyValueDiffer,
   KeyValueDiffers,
-  input,
-  computed,
   output
 } from '@angular/core';
 

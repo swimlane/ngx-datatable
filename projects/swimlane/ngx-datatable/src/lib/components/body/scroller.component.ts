@@ -1,14 +1,14 @@
 import {
+  booleanAttribute,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
   inject,
+  input,
   OnDestroy,
   OnInit,
-  Renderer2,
-  input,
-  booleanAttribute,
-  output
+  output,
+  Renderer2
 } from '@angular/core';
 
 export interface ScrollEventInternal {
@@ -22,7 +22,7 @@ export interface ScrollEventInternal {
   template: ` <ng-content /> `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'datatable-scroll',
+    'class': 'datatable-scroll',
     '[style.height.px]': 'scrollHeight()',
     '[style.width.px]': 'scrollWidth()'
   }

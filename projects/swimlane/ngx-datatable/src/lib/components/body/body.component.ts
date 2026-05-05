@@ -1,5 +1,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
+  booleanAttribute,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -7,19 +8,18 @@ import {
   EventEmitter,
   HostBinding,
   inject,
+  input,
   Input,
+  model,
+  OnChanges,
   OnDestroy,
   OnInit,
+  output,
   signal,
+  SimpleChanges,
   TemplateRef,
   TrackByFunction,
-  ViewChild,
-  input,
-  booleanAttribute,
-  model,
-  output,
-  SimpleChanges,
-  OnChanges
+  ViewChild
 } from '@angular/core';
 
 import { NgxDatatableConfig } from '../../ngx-datatable.config';
@@ -242,7 +242,7 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
   styleUrl: './body.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'datatable-body',
+    'class': 'datatable-body',
     '[style.height]': '_bodyHeight()'
   }
 })

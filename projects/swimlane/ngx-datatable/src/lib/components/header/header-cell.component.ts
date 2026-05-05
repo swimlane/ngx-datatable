@@ -1,18 +1,18 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
+  booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  computed,
   ElementRef,
   HostListener,
   inject,
+  input,
+  numberAttribute,
   OnDestroy,
   OnInit,
-  TemplateRef,
-  input,
   output,
-  numberAttribute,
-  computed,
-  booleanAttribute
+  TemplateRef
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 

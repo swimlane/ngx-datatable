@@ -7,19 +7,19 @@ import {
   ElementRef,
   HostListener,
   inject,
+  input,
   IterableDiffer,
   IterableDiffers,
   KeyValueDiffer,
   KeyValueDiffers,
+  linkedSignal,
   OnInit,
-  signal,
-  input,
   output,
-  viewChild,
-  linkedSignal
+  signal,
+  viewChild
 } from '@angular/core';
 
-import { Group, Row, RowOrGroup, RowDetailContext, GroupContext } from '../../types/public.types';
+import { Group, GroupContext, Row, RowDetailContext, RowOrGroup } from '../../types/public.types';
 import { DATATABLE_COMPONENT_TOKEN } from '../../utils/table-token';
 import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive';
 import { DatatableGroupHeaderDirective } from './body-group-header.directive';
