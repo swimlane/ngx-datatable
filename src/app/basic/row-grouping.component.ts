@@ -7,7 +7,7 @@ import {
   DatatableGroupHeaderTemplateDirective,
   Group,
   GroupToggleEvents
-} from 'projects/ngx-datatable/src/public-api';
+} from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { GroupedEmployee } from '../data.model';
 import { DataService } from '../data.service';

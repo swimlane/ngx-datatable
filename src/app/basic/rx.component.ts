@@ -1,6 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { DatatableComponent, TableColumn } from 'projects/ngx-datatable/src/public-api';
+import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { Observable } from 'rxjs';
 
 import { Employee } from '../data.model';

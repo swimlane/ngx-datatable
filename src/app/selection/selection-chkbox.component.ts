@@ -4,7 +4,7 @@ import {
   DataTableColumnDirective,
   DatatableComponent,
   SelectEvent
-} from 'projects/ngx-datatable/src/public-api';
+} from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';

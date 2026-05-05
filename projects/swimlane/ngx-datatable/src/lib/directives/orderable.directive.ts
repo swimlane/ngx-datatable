@@ -3,7 +3,6 @@ import {
   AfterContentInit,
   ContentChildren,
   Directive,
-  DOCUMENT,
   EventEmitter,
   inject,
   KeyValueChangeRecord,

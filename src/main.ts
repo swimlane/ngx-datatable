@@ -2,7 +2,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { enableProdMode } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter, withHashLocation } from '@angular/router';
-import { providedNgxDatatableConfig } from 'projects/ngx-datatable/src/public-api';
+import { providedNgxDatatableConfig } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { routes } from './app/app-routing.module';
 import { AppComponent } from './app/app.component';

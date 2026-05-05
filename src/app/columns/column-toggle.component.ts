@@ -3,7 +3,7 @@ import {
   DataTableColumnDirective,
   DatatableComponent,
   TableColumn
-} from 'projects/ngx-datatable/src/public-api';
+} from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
 

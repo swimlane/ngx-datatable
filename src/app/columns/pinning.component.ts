@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import {
   DataTableColumnDirective,
   DatatableComponent
-} from 'projects/ngx-datatable/src/public-api';
+} from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { FullEmployee } from '../data.model';
 import { DataService } from '../data.service';

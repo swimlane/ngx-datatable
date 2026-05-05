@@ -1,7 +1,7 @@
 import { HashLocationStrategy, Location, LocationStrategy } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import packageInfo from 'projects/ngx-datatable/package.json';
+import packageInfo from 'projects/swimlane/ngx-datatable/package.json';
 
 @Component({
   selector: 'app-root',
