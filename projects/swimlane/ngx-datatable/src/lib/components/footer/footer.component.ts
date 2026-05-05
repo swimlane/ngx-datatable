@@ -42,21 +42,7 @@ import { DataTablePagerComponent } from './pager.component';
             (change)="page.emit($event)"
           />
         }
-        {{ rowCount?.toLocaleString() }} {{ totalMessage }}
-      </div>
-      @if (isVisible) {
-      <datatable-pager
-        [pagerLeftArrowIcon]="pagerLeftArrowIcon"
-        [pagerRightArrowIcon]="pagerRightArrowIcon"
-        [pagerPreviousIcon]="pagerPreviousIcon"
-        [pagerNextIcon]="pagerNextIcon"
-        [page]="curPage"
-        [size]="pageSize"
-        [count]="rowCount"
-        (change)="page.emit($event)"
-      >
-      </datatable-pager>
-      } }
+      }
     </div>
   `,
   host: {

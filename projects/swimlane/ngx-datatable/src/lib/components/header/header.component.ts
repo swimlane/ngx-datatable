@@ -94,8 +94,7 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
             }
           </div>
         }
-      </div>
-      } }
+      }
     </div>
   `,
   host: {

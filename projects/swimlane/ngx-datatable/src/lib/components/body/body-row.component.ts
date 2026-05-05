@@ -60,8 +60,7 @@ import { DataTableBodyCellComponent } from './body-cell.component';
           }
         </div>
       }
-    </div>
-    } }
+    }
   `,
   styleUrl: './body-row.component.scss',
   imports: [DataTableBodyCellComponent]
