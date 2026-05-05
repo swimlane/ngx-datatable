@@ -7928,9 +7928,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:51.3.3":
-  version: 51.3.3
-  resolution: "eslint-plugin-jsdoc@npm:51.3.3"
+"eslint-plugin-jsdoc@npm:51.3.4":
+  version: 51.3.4
+  resolution: "eslint-plugin-jsdoc@npm:51.3.4"
   dependencies:
     "@es-joy/jsdoccomment": "npm:~0.52.0"
     are-docs-informative: "npm:^0.0.2"
@@ -7944,7 +7944,7 @@ __metadata:
     spdx-expression-parse: "npm:^4.0.0"
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0 || ^9.0.0
-  checksum: 10c0/ff3f6a930ac6e158299d5b805102699baf74895c52e9716f91c6b8a511a018ea728045d0ddf04afb0a406e71eacd27dd419eb9a6f08b577f9694624b6e73c1f7
+  checksum: 10c0/59e5aa972bdd1bd4e2ca2796ed4455dff1069044abc028621e107aa4b0cbb62ce09554c8e7c2ff3a44a1cbd551e54b6970adc420ba3a89adc6236b94310a81ff
   languageName: node
   linkType: hard
 
@@ -10820,12 +10820,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"karma-chrome-launcher@npm:3.1.1":
-  version: 3.1.1
-  resolution: "karma-chrome-launcher@npm:3.1.1"
+"karma-chrome-launcher@npm:~3.2.0":
+  version: 3.2.0
+  resolution: "karma-chrome-launcher@npm:3.2.0"
   dependencies:
     which: "npm:^1.2.1"
-  checksum: 10c0/eed6046c7c7fb08912ef5f82beff58072c4b06bea6936cacb4d820a4ee5d207b902420aff370cbcef27a0344c36bed2505883a49b3fe246b58965fc54ba16a94
+  checksum: 10c0/0cec1ae7d922110dc29cee36389d597157c82f019c8917259f9fa93d1f5ee8e19141c2eb74bfe30797cdb3adbc51a6b65fd18a9ebc1527c725c4acf62cd46d04
   languageName: node
   linkType: hard
 
@@ -12131,7 +12131,7 @@ __metadata:
     eslint-plugin-babel: "npm:5.3.1"
     eslint-plugin-cypress: "npm:^3.3.0"
     eslint-plugin-import: "npm:2.29.1"
-    eslint-plugin-jsdoc: "npm:51.3.3"
+    eslint-plugin-jsdoc: "npm:51.3.4"
     eslint-plugin-no-only-tests: "npm:3.0.0"
     eslint-plugin-prefer-arrow: "npm:1.2.3"
     eslint-plugin-security: "npm:1.5.0"
@@ -12140,7 +12140,7 @@ __metadata:
     jasmine-core: "npm:~5.8.0"
     jasmine-spec-reporter: "npm:~7.0.0"
     karma: "npm:~6.4.4"
-    karma-chrome-launcher: "npm:3.1.1"
+    karma-chrome-launcher: "npm:~3.2.0"
     karma-coverage: "npm:2.2.0"
     karma-coverage-istanbul-reporter: "npm:^3.0.3"
     karma-jasmine: "npm:5.1.0"
