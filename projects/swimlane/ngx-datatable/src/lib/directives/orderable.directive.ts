@@ -1,8 +1,8 @@
-import { DOCUMENT } from '@angular/common';
 import {
   AfterContentInit,
   ContentChildren,
   Directive,
+  DOCUMENT,
   effect,
   inject,
   KeyValueChangeRecord,

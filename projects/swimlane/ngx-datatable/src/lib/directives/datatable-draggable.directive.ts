@@ -1,8 +1,8 @@
-import { DOCUMENT } from '@angular/common';
 import {
   booleanAttribute,
   computed,
   Directive,
+  DOCUMENT,
   ElementRef,
   inject,
   input,
