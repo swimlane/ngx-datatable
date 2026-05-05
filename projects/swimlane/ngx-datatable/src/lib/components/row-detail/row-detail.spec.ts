@@ -1,10 +1,10 @@
 import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DataTableColumnDirective } from '@siemens/ngx-datatable';
 
 import { DatatableComponent } from '../datatable.component';
 import { DatatableRowDetailTemplateDirective } from './row-detail-template.directive';
 import { DatatableRowDetailDirective } from './row-detail.directive';
+import { DataTableColumnDirective } from '../columns/column.directive';
 
 describe('DatatableRowDetailDirective', () => {
   let fixture: ComponentFixture<TestFixtureComponent>;

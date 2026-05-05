@@ -1,23 +1,23 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
+  booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  computed,
   ElementRef,
   HostListener,
   inject,
+  input,
   OnDestroy,
   OnInit,
-  TemplateRef,
-  input,
   output,
-  computed,
-  booleanAttribute
+  TemplateRef
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import {
-  DragEvent,
-  DatatableDraggableDirective
+  DatatableDraggableDirective,
+  DragEvent
 } from '../../directives/datatable-draggable.directive';
 import {
   InnerSortEvent,

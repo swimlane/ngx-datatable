@@ -255,7 +255,7 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
   styleUrl: './body.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'datatable-body',
+    'class': 'datatable-body',
     '[style.height]': '_bodyHeight()',
     '[style.width]': '_bodyWidth()'
   }

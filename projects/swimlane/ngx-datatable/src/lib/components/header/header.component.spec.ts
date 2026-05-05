@@ -13,11 +13,17 @@ describe('DataTableHeaderComponent', () => {
     });
     fixture = TestBed.createComponent(DataTableHeaderComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('columns', []);
+    fixture.componentRef.setInput('innerWidth', 200);
+    fixture.componentRef.setInput('sorts', []);
+    fixture.componentRef.setInput('sortType', 'single');
+    fixture.componentRef.setInput('headerHeight', 50);
+    fixture.componentRef.setInput('ariaHeaderCheckboxMessage', 'Select all rows');
   });
 
   it('should not show resize handle for last column', () => {
     const columns = [createColumn('a'), createColumn('b'), createColumn('c')];
-    component.columns = columns;
+    fixture.componentRef.setInput('columns', columns);
     fixture.detectChanges();
 
     const lastId = component.lastColumnId();
@@ -43,7 +49,7 @@ describe('DataTableHeaderComponent', () => {
 
   it('should show resize handle only if resizeable is true', () => {
     const columns = [createColumn('a', true), createColumn('b', false), createColumn('c', true)];
-    component.columns = columns;
+    fixture.componentRef.setInput('columns', columns);
     fixture.detectChanges();
 
     const lastId = component.lastColumnId();
@@ -65,7 +71,7 @@ describe('DataTableHeaderComponent', () => {
 
   it('should handle single column (no resize handle)', () => {
     const columns = [createColumn('only')];
-    component.columns = columns;
+    fixture.componentRef.setInput('columns', columns);
     fixture.detectChanges();
 
     const lastId = component.lastColumnId();

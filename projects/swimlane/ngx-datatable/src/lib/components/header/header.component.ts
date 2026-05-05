@@ -3,14 +3,14 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  computed,
   inject,
+  input,
   OnChanges,
   OnDestroy,
+  output,
   SimpleChanges,
-  TemplateRef,
-  input,
-  computed,
-  output
+  TemplateRef
 } from '@angular/core';
 
 import { DatatableDraggableDirective } from '../../directives/datatable-draggable.directive';
@@ -98,7 +98,7 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'datatable-header',
+    'class': 'datatable-header',
     '[style.height.px]': 'headerHeight()',
     '[style.width]': 'headerWidth()'
   }
