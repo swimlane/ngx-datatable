@@ -12,10 +12,13 @@ describe('DataTableGhostLoaderComponent', () => {
 
   beforeEach(async () => {
     fixture = TestBed.createComponent(DataTableGhostLoaderComponent);
-    fixture.componentRef.setInput('columns', [
-      { prop: 'col1', width: 100 },
-      { prop: 'col2', width: 200 }
-    ]);
+    fixture.componentRef.setInput(
+      'columns',
+      toInternalColumn([
+        { prop: 'col1', width: 100 },
+        { prop: 'col2', width: 200 }
+      ])
+    );
     fixture.componentRef.setInput('pageSize', 10);
     fixture.componentRef.setInput('rowHeight', 30);
     loaderHarness = await TestbedHarnessEnvironment.harnessForFixture(fixture, GhostLoaderHarness);

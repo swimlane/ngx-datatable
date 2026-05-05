@@ -1,5 +1,5 @@
 import { TableColumnGroup, TableColumnInternal } from '../types/internal.types';
-import { TableColumn, TableColumnProp } from '../types/table-column.type';
+import { TableColumnProp } from '../types/table-column.type';
 import { columnsByPin, columnTotalWidth } from './column';
 
 /**
@@ -125,7 +125,7 @@ export const forceFillColumnWidths = (
 
   for (const column of columnsToResize) {
     if (!column.$$oldWidth) {
-      column.$$oldWidth = column.width;
+      column.$$oldWidth = column.width();
     }
   }
 

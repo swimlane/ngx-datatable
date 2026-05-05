@@ -2,7 +2,7 @@
   @for (item of [].constructor(pageSize()); track $index) {
     <div class="ghost-element datatable-body-row" [style.height]="rowHeightComputed()">
       @for (col of columns(); track col) {
-        <div class="ghost-cell datatable-body-cell" [style.width.px]="col.width">
+        <div class="ghost-cell datatable-body-cell" [style.width.px]="col.width()">
           @if (!col.ghostCellTemplate) {
             <div class="line ghost-cell-strip"></div>
           } @else {
