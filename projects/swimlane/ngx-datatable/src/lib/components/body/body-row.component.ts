@@ -2,15 +2,15 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  computed,
   DoCheck,
   ElementRef,
   HostBinding,
   HostListener,
   inject,
+  input,
   KeyValueDiffer,
   KeyValueDiffers,
-  input,
-  computed,
   output
 } from '@angular/core';
 
@@ -61,9 +61,9 @@ import { DataTableBodyCellComponent } from './body-cell.component';
   styleUrl: './body-row.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'datatable-body-row',
-    role: 'row',
-    tabindex: '-1',
+    'class': 'datatable-body-row',
+    'role': 'row',
+    'tabindex': '-1',
     '[class]': 'cssClass()',
     '[class.active]': 'isSelected()',
     '[class.datatable-row-odd]': 'innerRowIndex() % 2 !== 0',

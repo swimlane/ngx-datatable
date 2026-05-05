@@ -8,8 +8,8 @@ import {
   DestroyRef,
   effect,
   inject,
-  Input,
   input,
+  Input,
   model,
   OnChanges,
   OnInit,
@@ -20,8 +20,8 @@ import {
   TemplateRef,
   TrackByFunction,
   untracked,
-  viewChildren,
-  ViewChild
+  ViewChild,
+  viewChildren
 } from '@angular/core';
 
 import { NgxDatatableConfig } from '../../ngx-datatable.config';

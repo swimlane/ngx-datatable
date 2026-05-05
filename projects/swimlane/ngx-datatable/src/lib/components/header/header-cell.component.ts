@@ -83,7 +83,7 @@ import { nextSortDir } from '../../utils/sort';
   styleUrl: './header-cell.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'datatable-header-cell',
+    'class': 'datatable-header-cell',
     '[attr.resizeable]': 'showResizeHandle()',
     '[attr.title]': 'name()',
     '[attr.tabindex]': 'column().sortable ? 0 : -1',

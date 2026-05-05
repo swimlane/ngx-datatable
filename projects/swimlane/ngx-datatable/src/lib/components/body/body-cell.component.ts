@@ -85,7 +85,7 @@ import { ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, ARROW_UP, ENTER } from '../../util
   styleUrl: './body-cell.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'datatable-body-cell',
+    'class': 'datatable-body-cell',
     '[class]': 'columnCssClasses()',
     '[class.active]': 'isFocused() && !disabled()',
     '[class.row-disabled]': 'disabled()',
