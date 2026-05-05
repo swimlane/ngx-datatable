@@ -1,10 +1,10 @@
-import { Component, provideZonelessChangeDetection, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DataTableColumnDirective } from '../columns/column.directive';
 
 import { DatatableComponent } from '../datatable.component';
 import { DatatableRowDetailTemplateDirective } from './row-detail-template.directive';
 import { DatatableRowDetailDirective } from './row-detail.directive';
-import { DataTableColumnDirective } from '../columns/column.directive';
 
 describe('DatatableRowDetailDirective', () => {
   let fixture: ComponentFixture<TestFixtureComponent>;
@@ -59,7 +59,7 @@ describe('DatatableRowDetailDirective', () => {
     readonly externalPaging = signal<boolean>(false);
     readonly offset = signal<number>(0);
 
-    detailRowHeight = jasmine.createSpy('detailRowHeight').and.returnValue(100);
+    detailRowHeight = vi.fn().mockReturnValue(100);
 
     onDetailToggle(_event: any) {
       // Handle toggle event
@@ -67,11 +67,6 @@ describe('DatatableRowDetailDirective', () => {
   }
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [TestFixtureComponent],
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
-
     fixture = TestBed.createComponent(TestFixtureComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
@@ -86,14 +81,14 @@ describe('DatatableRowDetailDirective', () => {
 
     // Collapse the first row
     table.rowDetail!.toggleExpandRow(component.rows()[0]);
-    component.detailRowHeight.calls.reset();
+    component.detailRowHeight.mockClear();
     await fixture.whenStable();
 
     expect(component.detailRowHeight).toHaveBeenCalledWith(component.rows()[1], 1);
   });
 
   it('should call rowHeight with correct indices after expandAllRows', async () => {
-    component.detailRowHeight.calls.reset();
+    component.detailRowHeight.mockClear();
 
     // Expand all rows
     table.rowDetail!.expandAllRows();

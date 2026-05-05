@@ -1,11 +1,5 @@
 /* eslint-disable @typescript-eslint/dot-notation */
-import {
-  Component,
-  provideZonelessChangeDetection,
-  QueryList,
-  signal,
-  ViewChildren
-} from '@angular/core';
+import { Component, QueryList, signal, ViewChildren } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -36,9 +30,6 @@ describe('OrderableDirective', () => {
   let component: TestFixtureComponent;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()]
-    });
     fixture = TestBed.createComponent(TestFixtureComponent);
     component = fixture.componentInstance;
     /* This is required in order to resolve the `ContentChildren`.
@@ -69,8 +60,8 @@ describe('OrderableDirective', () => {
     describe('when a draggable is removed', () => {
       const checkAllSubscriptionsForActiveObservers = () => {
         const subs = directive.draggables().map(d => {
-          expect(d.dragStart['listeners']).not.toHaveSize(0);
-          expect(d.dragEnd['listeners']).not.toHaveSize(0);
+          expect(d.dragStart['listeners']).not.toHaveLength(0);
+          expect(d.dragEnd['listeners']).not.toHaveLength(0);
 
           return {
             dragStart: d.dragStart['listeners'],
@@ -99,12 +90,12 @@ describe('OrderableDirective', () => {
         const unsubbed = component.draggableDirectives.toArray()[0];
         component.draggables.update(items => items.slice(1));
 
-        expect(unsubbed.dragStart['listeners']).not.toHaveSize(0);
-        expect(unsubbed.dragEnd['listeners']).not.toHaveSize(0);
+        expect(unsubbed.dragStart['listeners']).not.toHaveLength(0);
+        expect(unsubbed.dragEnd['listeners']).not.toHaveLength(0);
         await fixture.whenStable();
 
-        expect(unsubbed.dragStart['listeners']).toHaveSize(0);
-        expect(unsubbed.dragEnd['listeners']).toHaveSize(0);
+        expect(unsubbed.dragStart['listeners']).toHaveLength(0);
+        expect(unsubbed.dragEnd['listeners']).toHaveLength(0);
       });
     });
   });

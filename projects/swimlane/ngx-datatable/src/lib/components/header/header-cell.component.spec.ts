@@ -1,12 +1,5 @@
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import {
-  AfterViewInit,
-  Component,
-  provideZonelessChangeDetection,
-  signal,
-  TemplateRef,
-  viewChild
-} from '@angular/core';
+import { AfterViewInit, Component, signal, TemplateRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import {
@@ -24,9 +17,6 @@ describe('DataTableHeaderCellComponent', () => {
   let harness: HeaderCellHarness;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()]
-    });
     fixture = TestBed.createComponent(DataTableHeaderCellComponent);
     fixture.componentRef.setInput('ariaHeaderCheckboxMessage', 'Select All');
     fixture.componentRef.setInput('sortType', 'single');
@@ -51,7 +41,7 @@ describe('DataTableHeaderCellComponent', () => {
   });
 
   it('should emit new width on resize', async () => {
-    spyOn(component.resizing, 'emit');
+    vi.spyOn(component.resizing, 'emit');
     const initialWidth = await harness.cellWidth();
     await harness.resizeCell(0, 100);
     const newWidth = 100 + initialWidth;
@@ -68,7 +58,7 @@ describe('DataTableHeaderCellComponent', () => {
   });
 
   it('should emit sort event', async () => {
-    spyOn(component.sort, 'emit');
+    vi.spyOn(component.sort, 'emit');
     await harness.applySort();
     expect(component.sort.emit).toHaveBeenCalled();
   });
@@ -88,7 +78,7 @@ describe('DataTableHeaderCellComponent', () => {
       name: 'test',
       headerCheckboxable: true
     });
-    spyOn(component.select, 'emit');
+    vi.spyOn(component.select, 'emit');
     await harness.selectAllRows();
     expect(component.select.emit).toHaveBeenCalled();
   });
@@ -101,7 +91,7 @@ describe('DataTableHeaderCellComponent', () => {
   });
 
   it('should sort on enter key press', async () => {
-    spyOn(component.sort, 'emit');
+    vi.spyOn(component.sort, 'emit');
     await harness.applySort(true);
     expect(component.sort.emit).toHaveBeenCalled();
   });
@@ -109,13 +99,20 @@ describe('DataTableHeaderCellComponent', () => {
 
 @Component({
   imports: [DataTableHeaderCellComponent],
-  template: `<datatable-header-cell sortType="single" [column]="column()" (sort)="sort($event)" />
+  template: `
+    <datatable-header-cell
+      sortType="single"
+      ariaHeaderCheckboxMessage="checked"
+      [column]="column()"
+      (sort)="sort($event)"
+    />
     <ng-template #headerCellTemplate let-sort="sortFn" let-column="column">
       <span class="custom-header">Custom Header for {{ column.name }}</span>
-      <button class="custom-sort-button" type="button" (click)="sort($event)"
-        >Custom sort button</button
-      >
-    </ng-template> `
+      <button class="custom-sort-button" type="button" (click)="sort($event)">
+        Custom sort button
+      </button>
+    </ng-template>
+  `
 })
 class TestHeaderCellComponent implements AfterViewInit {
   readonly column = signal<TableColumnInternal<any>>(
@@ -141,9 +138,6 @@ describe('DataTableHeaderCellComponent with template', () => {
   let harness: HeaderCellHarness;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()]
-    });
     fixture = TestBed.createComponent(TestHeaderCellComponent);
     harness = await TestbedHarnessEnvironment.harnessForFixture(fixture, HeaderCellHarness);
   });
@@ -154,7 +148,7 @@ describe('DataTableHeaderCellComponent with template', () => {
   });
 
   it('should call sort function on custom button click', async () => {
-    spyOn(fixture.componentInstance, 'sort');
+    vi.spyOn(fixture.componentInstance, 'sort');
     await harness.clickCustomSortButton();
     expect(fixture.componentInstance.sort).toHaveBeenCalledWith({
       column: fixture.componentInstance.column() as SortableTableColumnInternal<any>,

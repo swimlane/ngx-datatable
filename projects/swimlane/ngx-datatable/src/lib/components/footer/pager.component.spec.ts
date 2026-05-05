@@ -3,17 +3,16 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   DebugElement,
-  provideZonelessChangeDetection,
   signal,
   WritableSignal
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { DatatableComponent } from '../datatable.component';
 
 import { DATATABLE_COMPONENT_TOKEN } from '../../utils/table-token';
 import { DatatablePagerComponent } from './pager.component';
 import { PagerHarness } from './testing/pager.harness';
-import { DatatableComponent } from '../datatable.component';
 
 interface MockFooter {
   curPage: WritableSignal<number>;
@@ -24,7 +23,9 @@ interface MockFooter {
   pagerRightArrowIcon: WritableSignal<string | undefined>;
   pagerLeftArrowIcon: WritableSignal<string | undefined>;
   pagerPreviousIcon: WritableSignal<string | undefined>;
-  page: { emit: (event: { page: number }) => void };
+  page: {
+    emit: (event: { page: number }) => void;
+  };
 }
 
 describe('DataTablePagerComponent', () => {
@@ -46,9 +47,6 @@ describe('DataTablePagerComponent', () => {
       page: { emit: ({ page }: { page: number }) => footer.curPage.set(page) }
     };
     messages = signal({});
-    TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()]
-    });
     TestBed.overrideComponent(DatatablePagerComponent, {
       set: {
         changeDetection: ChangeDetectionStrategy.Default,
@@ -99,12 +97,12 @@ describe('DataTablePagerComponent', () => {
 
     it('should return true if not on first page', async () => {
       footer.curPage.set(2);
-      expect(await harness.hasPrevious()).toBeTrue();
+      expect(await harness.hasPrevious()).toBe(true);
     });
 
     it('should return false if on first page', async () => {
       footer.curPage.set(1);
-      expect(await harness.hasPrevious()).toBeFalse();
+      expect(await harness.hasPrevious()).toBe(false);
     });
   });
 
@@ -116,12 +114,12 @@ describe('DataTablePagerComponent', () => {
 
     it('should return true if not on last page', async () => {
       footer.curPage.set(2);
-      expect(await harness.hasNext()).toBeTrue();
+      expect(await harness.hasNext()).toBe(true);
     });
 
     it('should return false if on last page', async () => {
       footer.curPage.set(10);
-      expect(await harness.hasNext()).toBeFalse();
+      expect(await harness.hasNext()).toBe(false);
     });
   });
 
@@ -138,7 +136,7 @@ describe('DataTablePagerComponent', () => {
     });
 
     it('should emit change event', async () => {
-      spyOn(footer.page, 'emit');
+      vi.spyOn(footer.page, 'emit');
       footer.curPage.set(2);
       await harness.clickPrevious();
       expect(footer.page.emit).toHaveBeenCalledWith({ page: 1 });
@@ -164,7 +162,7 @@ describe('DataTablePagerComponent', () => {
     });
 
     it('should emit change event', async () => {
-      spyOn(footer.page, 'emit');
+      vi.spyOn(footer.page, 'emit');
       footer.curPage.set(2);
       await harness.clickNext();
       expect(footer.page.emit).toHaveBeenCalledWith({ page: 3 });
@@ -191,7 +189,7 @@ describe('DataTablePagerComponent', () => {
       });
 
       it('should emit change event', async () => {
-        spyOn(footer.page, 'emit');
+        vi.spyOn(footer.page, 'emit');
         await harness.clickPage(3);
         expect(footer.page.emit).toHaveBeenCalledWith({ page: 3 });
 
@@ -202,7 +200,7 @@ describe('DataTablePagerComponent', () => {
 
     describe('with the current page', () => {
       it('should not emit change event', async () => {
-        spyOn(footer.page, 'emit');
+        vi.spyOn(footer.page, 'emit');
         await harness.clickPage(footer.curPage());
         expect(footer.page.emit).not.toHaveBeenCalled();
       });
@@ -236,7 +234,10 @@ describe('DataTablePagerComponent', () => {
     let previousButton: DebugElement;
     let nextButton: DebugElement;
     let lastButton: DebugElement;
-    let pageButtons: { button: DebugElement; page: number }[];
+    let pageButtons: {
+      button: DebugElement;
+      page: number;
+    }[];
     beforeEach(async () => {
       footer.pageSize.set(10);
       footer.rowCount.set(100);
@@ -281,10 +282,10 @@ describe('DataTablePagerComponent', () => {
       });
 
       // FIXME: Test is flakey/broken and should be replaced
-      xit('page buttons', () => {
+      it.skip('page buttons', () => {
         setMessages({ ariaPageNMessage: 'link: page' });
         for (const { button, page } of pageButtons) {
-          expect(ariaLabel(button)).withContext(`${page} button`).toEqual(`link: page ${page}`);
+          expect(ariaLabel(button), `${page} button`).toEqual(`link: page ${page}`);
         }
       });
     });

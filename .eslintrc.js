@@ -42,13 +42,7 @@ module.exports = {
         'no-duplicate-imports': 'error',
         'no-redeclare': 'off',
         'no-underscore-dangle': 'off',
-        '@angular-eslint/directive-selector': [
-          'error',
-          {
-            'type': 'attribute',
-            'style': 'camelCase'
-          }
-        ],
+        '@angular-eslint/directive-selector': 'off',
         '@angular-eslint/component-selector': [
           'error',
           {

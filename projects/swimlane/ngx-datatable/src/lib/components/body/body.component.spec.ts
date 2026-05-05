@@ -1,4 +1,4 @@
-import { EventEmitter, provideZonelessChangeDetection } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -16,14 +16,9 @@ describe('DataTableBodyComponent', () => {
 
   // provide our implementations or mocks to the dependency injector
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [DataTableBodyComponent],
-      providers: [
-        ScrollbarHelper,
-        { provide: DATATABLE_COMPONENT_TOKEN, useValue: {} },
-        provideZonelessChangeDetection()
-      ]
-    }).compileComponents();
+    TestBed.configureTestingModule({
+      providers: [ScrollbarHelper, { provide: DATATABLE_COMPONENT_TOKEN, useValue: {} }]
+    });
     fixture = TestBed.createComponent(DataTableBodyComponent);
     fixture.componentRef.setInput('rowDragEvents', new EventEmitter<any>());
     fixture.componentRef.setInput('innerWidth', 400);
@@ -127,9 +122,9 @@ describe('DataTableBodyComponent', () => {
         .triggerEventHandler('scroll', { scrollYPos: 250, scrollXPos: 0 });
       await fixture.whenStable();
       expect(component.indexes()).toEqual({ first: 5, last: 10 });
-      expect(fixture.debugElement.queryAll(By.directive(DataTableGhostLoaderComponent))).toHaveSize(
-        5
-      );
+      expect(
+        fixture.debugElement.queryAll(By.directive(DataTableGhostLoaderComponent))
+      ).toHaveLength(5);
     });
   });
 
@@ -153,14 +148,14 @@ describe('DataTableBodyComponent', () => {
       await fixture.whenStable();
       let rows = fixture.debugElement.queryAll(By.directive(DataTableBodyRowComponent));
       expect(rows[0].classes['row-disabled']).toBeFalsy();
-      expect(rows[1].classes['row-disabled']).toBeTrue();
+      expect(rows[1].classes['row-disabled']).toBe(true);
       fixture.componentRef.setInput('rows', [
         { value: '1', disabled: true },
         { value: '2', disabled: false }
       ]);
       await fixture.whenStable();
       rows = fixture.debugElement.queryAll(By.directive(DataTableBodyRowComponent));
-      expect(rows[0].classes['row-disabled']).toBeTrue();
+      expect(rows[0].classes['row-disabled']).toBe(true);
       expect(rows[1].classes['row-disabled']).toBeFalsy();
     });
 
@@ -182,7 +177,7 @@ describe('DataTableBodyComponent', () => {
       await fixture.whenStable();
       const rows = fixture.debugElement.queryAll(By.directive(DataTableBodyRowComponent));
       expect(rows[0].classes['row-disabled']).toBeFalsy();
-      expect(rows[1].classes['row-disabled']).toBeTrue();
+      expect(rows[1].classes['row-disabled']).toBe(true);
     });
   });
 
@@ -210,34 +205,34 @@ describe('DataTableBodyComponent', () => {
       await fixture.whenStable();
 
       // Initially, group should be collapsed
-      expect(component.getGroupExpanded(group)).toBeFalse();
-      expect(component.rowExpansions()).toHaveSize(0);
+      expect(component.getGroupExpanded(group)).toBe(false);
+      expect(component.rowExpansions()).toHaveLength(0);
 
       // Expand the group
       component.toggleGroupExpansion(group);
       await fixture.whenStable();
 
-      expect(component.getGroupExpanded(group)).toBeTrue();
-      expect(component.groupExpansions()).toHaveSize(1);
+      expect(component.getGroupExpanded(group)).toBe(true);
+      expect(component.groupExpansions()).toHaveLength(1);
       expect(component.groupExpansions()[0]).toBe(group);
 
       // Now expand row detail for the first row in the group
       component.toggleRowExpansion(row1);
       await fixture.whenStable();
 
-      expect(component.getRowExpanded(row1)).toBeTrue();
-      expect(component.rowExpansions()).toHaveSize(1);
+      expect(component.getRowExpanded(row1)).toBe(true);
+      expect(component.rowExpansions()).toHaveLength(1);
       expect(component.rowExpansions()[0]).toBe(row1);
 
       // Group should still be expanded
-      expect(component.getGroupExpanded(group)).toBeTrue();
+      expect(component.getGroupExpanded(group)).toBe(true);
 
       // Expand row detail for the second row as well
       component.toggleRowExpansion(row2);
       await fixture.whenStable();
 
-      expect(component.getRowExpanded(row2)).toBeTrue();
-      expect(component.rowExpansions()).toHaveSize(2);
+      expect(component.getRowExpanded(row2)).toBe(true);
+      expect(component.rowExpansions()).toHaveLength(2);
       expect(component.rowExpansions()).toContain(row1);
       expect(component.rowExpansions()).toContain(row2);
 
@@ -245,12 +240,12 @@ describe('DataTableBodyComponent', () => {
       component.toggleRowExpansion(row1);
       await fixture.whenStable();
 
-      expect(component.getRowExpanded(row1)).toBeFalse();
-      expect(component.rowExpansions()).toHaveSize(1);
+      expect(component.getRowExpanded(row1)).toBe(false);
+      expect(component.rowExpansions()).toHaveLength(1);
       expect(component.rowExpansions()[0]).toBe(row2);
 
       // Group should still be expanded
-      expect(component.getGroupExpanded(group)).toBeTrue();
+      expect(component.getGroupExpanded(group)).toBe(true);
     });
   });
 });

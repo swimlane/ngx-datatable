@@ -15,5 +15,5 @@
     "enableResourceInlining": true,
     "compilationMode": "partial"
   },
-  "exclude": ["src/test.ts", "**/*.spec.ts"]
+  "exclude": ["src/**/*.spec.ts"]
 }

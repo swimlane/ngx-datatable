@@ -2,9 +2,9 @@
   "extends": "../../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../../out-tsc/spec",
-    "types": ["jasmine"],
-    "lib": ["dom", "es2022"]
+    "types": ["vitest/globals"],
+    "lib": ["dom", "es2022"],
+    "typeRoots": ["../../../node_modules/@types", "../../../node_modules"]
   },
-  "files": ["src/test.ts"],
-  "include": ["**/*.spec.ts", "**/*.d.ts"]
+  "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
 }

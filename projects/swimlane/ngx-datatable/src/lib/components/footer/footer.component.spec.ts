@@ -1,17 +1,11 @@
-import {
-  Component,
-  DebugElement,
-  provideZonelessChangeDetection,
-  signal,
-  Signal,
-  TemplateRef,
-  viewChild
-} from '@angular/core';
+import { Component, DebugElement, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { DATATABLE_COMPONENT_TOKEN } from '../../utils/table-token';
+import { DataTableFooterTemplateDirective } from './footer-template.directive';
 import { DataTableFooterComponent } from './footer.component';
+import { DatatableFooterDirective } from './footer.directive';
 
 let fixture: ComponentFixture<TestFixtureComponent>;
 let component: TestFixtureComponent;
@@ -19,9 +13,6 @@ let page: Page;
 
 describe('DataTableFooterComponent', () => {
   beforeEach(async () => {
-    TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()]
-    });
     fixture = TestBed.createComponent(TestFixtureComponent);
     component = fixture.componentInstance;
     page = new Page();
@@ -41,14 +32,18 @@ describe('DataTableFooterComponent', () => {
       component.selectedCount.set(1);
       await page.detectChangesAndRunQueries();
 
-      expect(page.datatableFooterInner.nativeElement).toHaveClass('selected-count');
+      expect(page.datatableFooterInner.nativeElement.classList.contains('selected-count')).toBe(
+        true
+      );
     });
 
     it('should not have `.selected-count` class if selectedMessage is not set', async () => {
       component.selectedMessage.set(undefined);
       await page.detectChangesAndRunQueries();
 
-      expect(page.datatableFooterInner.nativeElement).not.toHaveClass('selected-count');
+      expect(page.datatableFooterInner.nativeElement.classList.contains('selected-count')).toBe(
+        false
+      );
     });
   });
 
@@ -105,7 +100,7 @@ describe('DataTableFooterComponent', () => {
 
   describe('when there is a template', () => {
     it('should not render div.page-count or DatatablePagerComponent', async () => {
-      component.footerTemplate.set({ template: component.testTemplate });
+      component.footerTemplate.set(component.footerTemplateDirective());
       await page.detectChangesAndRunQueries();
 
       expect(page.pageCount).toBeNull();
@@ -114,14 +109,14 @@ describe('DataTableFooterComponent', () => {
 
     it('should render the template', async () => {
       await page.detectChangesAndRunQueries();
-      component.footerTemplate.set({ template: component.testTemplate });
+      component.footerTemplate.set(component.footerTemplateDirective());
       await page.detectChangesAndRunQueries();
 
       expect(page.templateList).not.toBeNull();
     });
 
     it('should give the template proper context', async () => {
-      component.footerTemplate.set({ template: component.testTemplate });
+      component.footerTemplate.set(component.footerTemplateDirective());
       component.rowCount.set(12);
       component.pageSize.set(1);
       component.selectedCount.set(4);
@@ -143,7 +138,7 @@ describe('DataTableFooterComponent', () => {
  * test host component
  */
 @Component({
-  imports: [DataTableFooterComponent],
+  imports: [DataTableFooterComponent, DatatableFooterDirective, DataTableFooterTemplateDirective],
   template: `
     <datatable-footer
       [rowCount]="rowCount()"
@@ -162,22 +157,25 @@ describe('DataTableFooterComponent', () => {
       (page)="onPageEvent()"
     />
 
-    <ng-template
-      #testTemplate
-      let-rowCount="rowCount"
-      let-pageSize="pageSize"
-      let-selectedCount="selectedCount"
-      let-curPage="curPage"
-      let-offset="offset"
-    >
-      <ul id="template-list">
-        <li>rowCount {{ rowCount }}</li>
-        <li>pageSize {{ pageSize }}</li>
-        <li>selectedCount {{ selectedCount }}</li>
-        <li>curPage {{ curPage }}</li>
-        <li>offset {{ offset }}</li>
-      </ul>
-    </ng-template>
+    <ngx-datatable-footer>
+      <ng-template
+        #testTemplate
+        let-rowCount="rowCount"
+        let-pageSize="pageSize"
+        let-selectedCount="selectedCount"
+        let-curPage="curPage"
+        let-offset="offset"
+        ngx-datatable-footer-template
+      >
+        <ul id="template-list">
+          <li>rowCount {{ rowCount }}</li>
+          <li>pageSize {{ pageSize }}</li>
+          <li>selectedCount {{ selectedCount }}</li>
+          <li>curPage {{ curPage }}</li>
+          <li>offset {{ offset }}</li>
+        </ul>
+      </ng-template>
+    </ngx-datatable-footer>
   `,
   providers: [{ provide: DATATABLE_COMPONENT_TOKEN, useExisting: TestFixtureComponent }]
 })
@@ -191,7 +189,7 @@ class TestFixtureComponent {
   readonly pagerPreviousIcon = signal('');
   readonly pagerNextIcon = signal('');
   readonly totalMessage = signal('');
-  readonly footerTemplate = signal<{ template: Signal<TemplateRef<any>> } | undefined>(undefined);
+  readonly footerTemplate = signal<DatatableFooterDirective | undefined>(undefined);
   readonly selectedCount = signal(0);
   readonly selectedMessage = signal<string | undefined>(undefined);
   readonly messages = signal({});
@@ -201,7 +199,7 @@ class TestFixtureComponent {
    * selectively be passed to the DatatableFooterComponent
    * in these unit tests
    */
-  readonly testTemplate = viewChild.required('testTemplate', { read: TemplateRef });
+  readonly footerTemplateDirective = viewChild.required(DatatableFooterDirective);
 
   // Used to mimic the DatatableComponent
   readonly _footerComponent = viewChild(DataTableFooterComponent);

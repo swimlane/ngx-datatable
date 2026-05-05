@@ -1,14 +1,8 @@
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import {
-  AfterViewInit,
-  Component,
-  provideZonelessChangeDetection,
-  signal,
-  TemplateRef,
-  viewChild
-} from '@angular/core';
+import { Component, computed, TemplateRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { toInternalColumn } from '../../../utils/column-helper';
 import { DataTableGhostLoaderComponent } from './ghost-loader.component';
 import { GhostLoaderHarness } from './testing/ghost-loader.harness';
 
@@ -17,9 +11,6 @@ describe('DataTableGhostLoaderComponent', () => {
   let loaderHarness: GhostLoaderHarness;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()]
-    });
     fixture = TestBed.createComponent(DataTableGhostLoaderComponent);
     fixture.componentRef.setInput('columns', [
       { prop: 'col1', width: 100 },
@@ -47,24 +38,17 @@ describe('DataTableGhostLoaderComponent', () => {
 @Component({
   selector: 'test-ghost-loader',
   imports: [DataTableGhostLoaderComponent],
-  template: `<ghost-loader pageSize="1" rowHeight="30" [columns]="columns()" />
+  template: `<ghost-loader pageSize="1" [rowHeight]="30" [columns]="columns()" />
     <ng-template #customGhostCell><div>custom ghost cell</div></ng-template>`
 })
-class TestGhostLoaderComponent implements AfterViewInit {
-  readonly columns = signal([
-    { prop: 'col1', width: 100 },
-    { prop: 'col2', width: 200 }
-  ]);
-  readonly ghostTemplate = viewChild('customGhostCell', { read: TemplateRef });
-
-  ngAfterViewInit() {
-    this.columns.set(
-      this.columns().map(col => ({
-        ...col,
-        ghostCellTemplate: this.ghostTemplate()
-      }))
-    );
-  }
+class TestGhostLoaderComponent {
+  readonly columns = computed(() =>
+    toInternalColumn([
+      { prop: 'col1', width: 100, ghostCellTemplate: this.ghostTemplate() },
+      { prop: 'col2', width: 200 }
+    ])
+  );
+  readonly ghostTemplate = viewChild.required('customGhostCell', { read: TemplateRef });
 }
 
 describe('with custom template', () => {
@@ -72,9 +56,6 @@ describe('with custom template', () => {
   let loaderHarness: GhostLoaderHarness;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()]
-    });
     fixture = TestBed.createComponent(TestGhostLoaderComponent);
     loaderHarness = await TestbedHarnessEnvironment.harnessForFixture(fixture, GhostLoaderHarness);
   });

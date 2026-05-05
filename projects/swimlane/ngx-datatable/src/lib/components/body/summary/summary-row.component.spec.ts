@@ -1,5 +1,5 @@
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TableColumnInternal } from '../../../types/internal.types';
@@ -9,7 +9,6 @@ import { SummaryHarness } from './testing/summary.harness';
 
 describe('DataTableSummaryRowComponent', () => {
   let fixture: ComponentFixture<DataTableSummaryRowComponent>;
-  let component: DataTableSummaryRowComponent;
   let componentRef: ComponentRef<DataTableSummaryRowComponent>;
   let harness: SummaryHarness;
 
@@ -25,9 +24,6 @@ describe('DataTableSummaryRowComponent', () => {
   });
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()]
-    });
     fixture = TestBed.createComponent(DataTableSummaryRowComponent);
 
     // Set required inputs before creating harness and detecting changes
@@ -37,33 +33,26 @@ describe('DataTableSummaryRowComponent', () => {
     fixture.componentRef.setInput('innerWidth', 100);
 
     harness = await TestbedHarnessEnvironment.harnessForFixture(fixture, SummaryHarness);
-    component = fixture.componentInstance;
     componentRef = fixture.componentRef;
-  });
-
-  describe('fixture', () => {
-    it('should have a component instance', () => {
-      expect(component).toBeTruthy();
-    });
   });
 
   describe('Visibility', () => {
     it('should not be visible when there are no columns', async () => {
       componentRef.setInput('columns', []);
       componentRef.setInput('rows', rows);
-      expect(await harness.hasSummaryRow()).toBeFalse();
+      expect(await harness.hasSummaryRow()).toBe(false);
     });
 
     it('should not be visible when there are no rows', async () => {
       componentRef.setInput('columns', columns);
       componentRef.setInput('rows', []);
-      expect(await harness.hasSummaryRow()).toBeFalse();
+      expect(await harness.hasSummaryRow()).toBe(false);
     });
 
     it('should be visible when there are rows and columns', async () => {
       componentRef.setInput('columns', columns);
       componentRef.setInput('rows', rows);
-      expect(await harness.hasSummaryRow()).toBeTrue();
+      expect(await harness.hasSummaryRow()).toBe(true);
     });
   });
 
@@ -129,8 +118,8 @@ describe('DataTableSummaryRowComponent', () => {
     it('should use provided summary function', async () => {
       const sum1 = 22;
       const sum2 = 'test sum';
-      const spy1 = jasmine.createSpy('spy1').and.returnValue(sum1);
-      const spy2 = jasmine.createSpy('spy2').and.returnValue(sum2);
+      const spy1 = vi.fn().mockReturnValue(sum1);
+      const spy2 = vi.fn().mockReturnValue(sum2);
       columns[0].summaryFunc = spy1;
       columns[1].summaryFunc = spy2;
 
@@ -139,11 +128,11 @@ describe('DataTableSummaryRowComponent', () => {
       const col1Text = await harness.getSummaryRowCellText(0);
       const col2Text = await harness.getSummaryRowCellText(1);
 
-      expect(spy1.calls.any()).toBeTruthy();
-      expect(spy2.calls.any()).toBeTruthy();
+      expect(vi.mocked(spy1)).toHaveBeenCalled();
+      expect(vi.mocked(spy2)).toHaveBeenCalled();
 
-      expect(spy1.calls.mostRecent().args[0]).toEqual([rows[0].col1, rows[1].col1]);
-      expect(spy2.calls.mostRecent().args[0]).toEqual([rows[0].col2, rows[1].col2]);
+      expect(vi.mocked(spy1).mock.lastCall![0]).toEqual([rows[0].col1, rows[1].col1]);
+      expect(vi.mocked(spy2).mock.lastCall![0]).toEqual([rows[0].col2, rows[1].col2]);
 
       expect(col1Text).toBe(sum1.toString());
       expect(col2Text).toBe(sum2.toString());
@@ -152,7 +141,7 @@ describe('DataTableSummaryRowComponent', () => {
     describe('Pipe', () => {
       it('should use provided pipe', async () => {
         const transformed = '$22';
-        const transformSpy = jasmine.createSpy('transform').and.returnValue(transformed);
+        const transformSpy = vi.fn().mockReturnValue(transformed);
 
         columns[0].pipe = { transform: transformSpy };
         componentRef.setInput('columns', [...columns]);
@@ -160,7 +149,7 @@ describe('DataTableSummaryRowComponent', () => {
 
         const col1Text = await harness.getSummaryRowCellText(0);
 
-        expect(transformSpy.calls.any()).toBeTruthy();
+        expect(vi.mocked(transformSpy)).toHaveBeenCalled();
         expect(col1Text).toBe(transformed);
       });
     });

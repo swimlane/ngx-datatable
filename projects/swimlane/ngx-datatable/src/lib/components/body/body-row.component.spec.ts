@@ -1,10 +1,9 @@
-import { Component, provideZonelessChangeDetection, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 import { RowIndex } from '../../types/internal.types';
-import { TableColumn } from '../../types/table-column.type';
 import { toInternalColumn } from '../../utils/column-helper';
 import { DataTableBodyRowComponent } from './body-row.component';
 
@@ -14,7 +13,7 @@ describe('DataTableBodyRowComponent', () => {
     template: `
       <datatable-body-row
         ariaRowCheckboxMessage=""
-        cssClasses=""
+        [cssClasses]="{}"
         [rowHeight]="40"
         [rowIndex]="rowIndex()"
         [row]="row()"
@@ -25,22 +24,16 @@ describe('DataTableBodyRowComponent', () => {
   class TestHostComponent {
     readonly rowIndex = signal<RowIndex>({ index: 0 });
     readonly row = signal<any>({ prop: 'value' });
-    readonly columns = signal<TableColumn[]>(toInternalColumn([{ prop: 'prop' }]));
+    readonly columns = signal(toInternalColumn([{ prop: 'prop' }]));
   }
 
   let fixture: ComponentFixture<TestHostComponent>;
   let component: TestHostComponent;
 
-  // provide our implementations or mocks to the dependency injector
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [ScrollbarHelper, provideZonelessChangeDetection()]
-    });
-  });
-
   beforeEach(async () => {
-    await TestBed.compileComponents();
+    TestBed.configureTestingModule({
+      providers: [ScrollbarHelper]
+    });
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
   });

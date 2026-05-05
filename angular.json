@@ -134,14 +134,23 @@
           "configurations": {
             "production": {
               "tsConfig": "projects/swimlane/ngx-datatable/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/swimlane/ngx-datatable/tsconfig.lib.json"
             }
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/swimlane/ngx-datatable/tsconfig.spec.json",
-            "karmaConfig": "projects/swimlane/ngx-datatable/karma.conf.js"
+            "browsers": ["chromium"]
+          },
+          "configurations": {
+            "ci": {
+              "browsers": ["chromiumheadless"],
+              "watch": false
+            }
           }
         },
         "lint": {

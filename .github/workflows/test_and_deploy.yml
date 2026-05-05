@@ -29,6 +29,9 @@ jobs:
         env:
           CI: true
 
+      - name: Install chromium
+        run: npx playwright install --with-deps chromium
+
       - name: Test
         run: |
           yarn ci

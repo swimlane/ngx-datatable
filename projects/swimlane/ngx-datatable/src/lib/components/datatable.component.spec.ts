@@ -1,4 +1,4 @@
-import { Component, provideZonelessChangeDetection, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -26,9 +26,6 @@ describe('DatatableComponent', () => {
   }
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()]
-    });
     fixture = TestBed.createComponent(TestFixtureComponent);
     component = fixture.componentInstance;
   });
@@ -137,9 +134,7 @@ describe('DatatableComponent', () => {
     const columns = [
       {
         prop: 'product',
-        comparator: (productA: string, productB: string) => {
-          return productA.length - productB.length;
-        }
+        comparator: (productA: string, productB: string) => productA.length - productB.length
       }
     ];
 
@@ -222,9 +217,7 @@ describe('DatatableComponent', () => {
     const columns = [
       {
         prop: 'name',
-        comparator: (nameA: string, nameB: string) => {
-          return nameA.length - nameB.length;
-        }
+        comparator: (nameA: string, nameB: string) => nameA.length - nameB.length
       },
       {
         prop: 'state'
@@ -277,9 +270,7 @@ describe('DatatableComponent', () => {
     const columns = [
       {
         prop: 'name',
-        comparator: (nameA: string, nameB: string) => {
-          return nameA.length - nameB.length;
-        }
+        comparator: (nameA: string, nameB: string) => nameA.length - nameB.length
       },
       {
         prop: 'state'
@@ -404,9 +395,6 @@ describe('DatatableComponent With Custom Templates', () => {
   let component: TestFixtureComponentWithCustomTemplates;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()]
-    });
     fixture = TestBed.createComponent(TestFixtureComponentWithCustomTemplates);
     component = fixture.componentRef.instance;
   });
@@ -501,9 +489,6 @@ describe('DatatableComponent With Frozen columns', () => {
   let fixture: ComponentFixture<TestFixtureComponentWithFrozenColumns>;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()]
-    });
     fixture = TestBed.createComponent(TestFixtureComponentWithFrozenColumns);
     await fixture.whenStable();
   });
@@ -514,7 +499,7 @@ describe('DatatableComponent With Frozen columns', () => {
     ).componentInstance;
 
     const column = datatableComponent.columnTemplates()[0];
-    spyOn(datatableComponent.reorder, 'emit');
+    vi.spyOn(datatableComponent.reorder, 'emit');
 
     // Try to move 'Name' (frozenLeft) to index 2
     datatableComponent.onColumnReorder({ prevValue: 0, newValue: 2, column });
@@ -528,7 +513,7 @@ describe('DatatableComponent With Frozen columns', () => {
     ).componentInstance;
 
     const column = datatableComponent.columnTemplates()[4];
-    spyOn(datatableComponent.reorder, 'emit');
+    vi.spyOn(datatableComponent.reorder, 'emit');
 
     // Try to move 'State' (frozenRight) to index 0 (should not move out of frozenRight group)
     datatableComponent.onColumnReorder({ prevValue: 4, newValue: 0, column });
@@ -542,7 +527,7 @@ describe('DatatableComponent With Frozen columns', () => {
 
     const genderColumn = datatableComponent.columnTemplates()[1];
     const cityColumn = datatableComponent.columnTemplates()[3];
-    spyOn(datatableComponent.reorder, 'emit');
+    vi.spyOn(datatableComponent.reorder, 'emit');
 
     // Try to move 'Gender' (non-frozen) to index 0 (frozenLeft group)
     datatableComponent.onColumnReorder({
@@ -566,7 +551,14 @@ describe('DatatableComponent With Frozen columns', () => {
 /**
  * mimics the act of a user clicking a column to sort it
  */
-const sortBy = ({ column }: { column: number }, fixture: ComponentFixture<unknown>) => {
+const sortBy = (
+  {
+    column
+  }: {
+    column: number;
+  },
+  fixture: ComponentFixture<unknown>
+) => {
   const columnIndex = column - 1;
   const headerCellDe = fixture.debugElement.queryAll(By.css('datatable-header-cell'))[columnIndex];
   const de = headerCellDe.query(By.css('span:last-child'));
@@ -578,7 +570,13 @@ const sortBy = ({ column }: { column: number }, fixture: ComponentFixture<unknow
  * body of the ngx-datatable component
  */
 const textContent = (
-  { row, column }: { row: number; column: number },
+  {
+    row,
+    column
+  }: {
+    row: number;
+    column: number;
+  },
   fixture: ComponentFixture<unknown>
 ) => {
   const [rowIndex, columnIndex] = [row - 1, column - 1];
