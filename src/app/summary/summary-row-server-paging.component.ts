@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { DatatableComponent, TableColumn } from 'projects/ngx-datatable/src/public-api';
+import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
 import { MockServerResultsService } from '../paging/mock-server-results-service';
