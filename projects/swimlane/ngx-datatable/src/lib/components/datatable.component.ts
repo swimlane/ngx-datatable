@@ -95,7 +95,7 @@ import { DatatableRowDetailDirective } from './row-detail/row-detail.directive';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'ngx-datatable',
+    'class': 'ngx-datatable',
     '[class.fixed-header]': '_isFixedHeader()',
     '[class.fixed-row]': 'rowHeight() !== "auto"',
     '[class.scroll-vertical]': 'scrollbarV()',
