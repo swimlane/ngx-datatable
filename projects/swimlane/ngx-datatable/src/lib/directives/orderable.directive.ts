@@ -21,7 +21,7 @@ import {
   TableColumnInternal,
   TargetChangedEvent
 } from '../types/internal.types';
-import { DragEvent, DraggableDirective } from './draggable.directive';
+import { DatatableDraggableDirective, DragEvent } from './datatable-draggable.directive';
 
 interface OrderPosition {
   left: number;
@@ -42,15 +42,15 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
   // This should be contentChildren() query, but there is an open Angular issue with signal queries (https://github.com/angular/angular/issues/59067)
   // This problem causes the orderable directive to fail because the contentChildren query is resolved too early.
   // At that state, the input is not yet set, resulting in a NG0950 error.
-  @ContentChildren(DraggableDirective, { descendants: true })
-  draggablesQueryList!: QueryList<DraggableDirective>;
+  @ContentChildren(DatatableDraggableDirective, { descendants: true })
+  draggablesQueryList!: QueryList<DatatableDraggableDirective>;
 
-  readonly draggables = signal<DraggableDirective[]>([]);
+  readonly draggables = signal<DatatableDraggableDirective[]>([]);
 
   readonly subscriptions = new Map<string, OutputRefSubscription[]>();
 
   positions?: Record<string, OrderPosition>;
-  readonly differ: KeyValueDiffer<string, DraggableDirective> = inject(KeyValueDiffers)
+  readonly differ: KeyValueDiffer<string, DatatableDraggableDirective> = inject(KeyValueDiffers)
     .find({})
     .create();
   lastDraggingIndex?: number;
@@ -62,7 +62,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
           acc[curr.dragModel()!.$$id] = curr;
           return acc;
         },
-        {} as Record<string, DraggableDirective>
+        {} as Record<string, DatatableDraggableDirective>
       );
 
       this.updateSubscriptions(diffMap);
@@ -79,7 +79,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
     this.subscriptions.forEach(subList => subList.forEach(sub => sub.unsubscribe()));
   }
 
-  updateSubscriptions(diffMap: Record<string, DraggableDirective>): void {
+  updateSubscriptions(diffMap: Record<string, DatatableDraggableDirective>): void {
     const differResult = this.differ.diff(diffMap);
     if (!differResult) {
       return;
@@ -89,7 +89,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
   }
 
   private subscribeToDraggable = (
-    record: KeyValueChangeRecord<string, DraggableDirective>
+    record: KeyValueChangeRecord<string, DatatableDraggableDirective>
   ): void => {
     this.unsubscribeFromDraggable(record);
     const { key, currentValue } = record;
@@ -112,7 +112,7 @@ export class OrderableDirective implements AfterContentInit, OnDestroy {
   };
 
   private unsubscribeFromDraggable = (
-    record: KeyValueChangeRecord<string, DraggableDirective>
+    record: KeyValueChangeRecord<string, DatatableDraggableDirective>
   ): void => {
     const { key, previousValue } = record;
     if (!previousValue) {

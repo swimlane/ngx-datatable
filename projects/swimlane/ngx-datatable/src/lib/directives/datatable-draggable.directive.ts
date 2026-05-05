@@ -22,7 +22,7 @@ export interface DragEvent {
 }
 
 @Directive({
-  selector: '[draggable]',
+  selector: '[datatableDraggable]',
   host: {
     '[class.draggable]': 'enabled()',
     '[class.dragging]': 'isDragging()',
@@ -31,13 +31,13 @@ export interface DragEvent {
     '(touchstart)': 'touchstart($event)'
   }
 })
-export class DraggableDirective implements OnDestroy {
+export class DatatableDraggableDirective implements OnDestroy {
   private document = inject(DOCUMENT);
   readonly element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
 
   readonly dragModel = input<TableColumnInternal>();
   readonly dragStartDelay = input(0, { transform: numberAttribute });
-  readonly enabled = input(true, { transform: booleanAttribute, alias: 'draggable' });
+  readonly enabled = input(true, { transform: booleanAttribute, alias: 'datatableDraggable' });
   readonly dragMove = output<DragEvent>();
   readonly dragEnd = output<void>();
   readonly dragStart = output<void>();

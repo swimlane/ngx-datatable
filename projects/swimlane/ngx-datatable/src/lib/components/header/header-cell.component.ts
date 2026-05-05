@@ -16,7 +16,10 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { DragEvent, DraggableDirective } from '../../directives/draggable.directive';
+import {
+  DatatableDraggableDirective,
+  DragEvent
+} from '../../directives/datatable-draggable.directive';
 import {
   InnerSortEvent,
   SortableTableColumnInternal,
@@ -33,7 +36,7 @@ import { nextSortDir } from '../../utils/sort';
 
 @Component({
   selector: 'datatable-header-cell',
-  imports: [NgTemplateOutlet, DraggableDirective],
+  imports: [NgTemplateOutlet, DatatableDraggableDirective],
   template: `
     <div class="datatable-header-cell-template-wrap">
       @if (isTarget()) {
@@ -70,7 +73,7 @@ import { nextSortDir } from '../../utils/sort';
     @if (showResizeHandle()) {
       <span
         class="resize-handle"
-        draggable
+        datatableDraggable
         (dragStart)="onMousedown()"
         (dragMove)="move($event)"
         (dragEnd)="onMouseup()"

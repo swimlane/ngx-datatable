@@ -24,6 +24,7 @@ import { DataService } from '../data.service';
         class="material"
         rowHeight="auto"
         columnMode="force"
+        [rowDraggable]="true"
         [rows]="rows"
         [loadingIndicator]="loadingIndicator"
         [columns]="columns"

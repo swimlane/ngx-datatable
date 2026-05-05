@@ -5,23 +5,24 @@ import { By } from '@angular/platform-browser';
 
 import { TableColumnInternal } from '../types/internal.types';
 import { toInternalColumn } from '../utils/column-helper';
-import { DraggableDirective } from './draggable.directive';
+import { DatatableDraggableDirective } from './datatable-draggable.directive';
 import { OrderableDirective } from './orderable.directive';
 
 @Component({
   selector: 'test-fixture-component',
-  imports: [OrderableDirective, DraggableDirective],
+  imports: [OrderableDirective, DatatableDraggableDirective],
   template: `
     <div orderable>
       @for (item of draggables; track $index) {
-        <div draggable [dragModel]="item"></div>
+        <div datatableDraggable [dragModel]="item"></div>
       }
     </div>
   `
 })
 class TestFixtureComponent {
   draggables: TableColumnInternal[] = [];
-  @ViewChildren(DraggableDirective) draggableDirectives!: QueryList<DraggableDirective>;
+  @ViewChildren(DatatableDraggableDirective)
+  draggableDirectives!: QueryList<DatatableDraggableDirective>;
 }
 
 describe('OrderableDirective', () => {

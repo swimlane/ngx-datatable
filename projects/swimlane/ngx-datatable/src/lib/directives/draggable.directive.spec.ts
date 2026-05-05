@@ -2,14 +2,14 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { Component, signal } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
-import { DragEvent, DraggableDirective } from './draggable.directive';
+import { DatatableDraggableDirective, DragEvent } from './datatable-draggable.directive';
 import { DraggableHarness } from './testing/draggable.harness';
 
 import Spy = jasmine.Spy;
 
 @Component({
   selector: 'test-fixture-component',
-  imports: [DraggableDirective],
+  imports: [DatatableDraggableDirective],
   template: `
     <div
       [draggable]="enabled()"

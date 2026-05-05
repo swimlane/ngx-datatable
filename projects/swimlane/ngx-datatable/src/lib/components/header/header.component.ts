@@ -15,7 +15,7 @@ import {
   TemplateRef
 } from '@angular/core';
 
-import { DraggableDirective } from '../../directives/draggable.directive';
+import { DatatableDraggableDirective } from '../../directives/datatable-draggable.directive';
 import { OrderableDirective } from '../../directives/orderable.directive';
 import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 import {
@@ -40,7 +40,13 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
 
 @Component({
   selector: 'datatable-header',
-  imports: [OrderableDirective, NgStyle, DataTableHeaderCellComponent, NgClass, DraggableDirective],
+  imports: [
+    OrderableDirective,
+    NgStyle,
+    DataTableHeaderCellComponent,
+    NgClass,
+    DatatableDraggableDirective
+  ],
   template: `
     <div
       role="row"
@@ -62,7 +68,7 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
               <datatable-header-cell
                 role="columnheader"
                 dragStartDelay="500"
-                [draggable]="reorderable && column.draggable"
+                [datatableDraggable]="reorderable && column.draggable"
                 [dragModel]="column"
                 [headerHeight]="headerHeight"
                 [isTarget]="column.isTarget"
