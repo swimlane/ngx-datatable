@@ -1,4 +1,4 @@
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input, output, Signal } from '@angular/core';
 
 import { FooterContext, PagerPageEvent } from '../../types/public.types';
@@ -7,11 +7,11 @@ import { DatatablePagerComponent } from './pager.component';
 
 @Component({
   selector: 'datatable-footer',
-  imports: [NgClass, NgTemplateOutlet, DatatablePagerComponent],
+  imports: [NgTemplateOutlet, DatatablePagerComponent],
   template: `
     <div
       class="datatable-footer-inner"
-      [ngClass]="{ 'selected-count': selectedMessage() }"
+      [class.selected-count]="selectedMessage()"
       [style.height.px]="footerHeight()"
     >
       @let footerTemplate = this.footerTemplate()?.template();

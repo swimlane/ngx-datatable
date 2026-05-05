@@ -1,12 +1,12 @@
-import { NgClass, NgStyle } from '@angular/common';
+import { NgStyle } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   inject,
+  TemplateRef,
   input,
-  output,
-  TemplateRef
+  computed,
+  output
 } from '@angular/core';
 
 import { DatatableDraggableDirective } from '../../directives/datatable-draggable.directive';
@@ -33,13 +33,7 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
 
 @Component({
   selector: 'datatable-header',
-  imports: [
-    OrderableDirective,
-    NgStyle,
-    DataTableHeaderCellComponent,
-    NgClass,
-    DatatableDraggableDirective
-  ],
+  imports: [OrderableDirective, NgStyle, DataTableHeaderCellComponent, DatatableDraggableDirective],
   template: `
     @let _columnGroupWidths = this._columnGroupWidths();
     <div
@@ -54,8 +48,7 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
       @for (colGroup of _columnsByPin(); track colGroup.type) {
         @if (colGroup.columns.length) {
           <div
-            class="datatable-row-group"
-            [ngClass]="'datatable-row-' + colGroup.type"
+            [class]="['datatable-row-group', 'datatable-row-' + colGroup.type]"
             [ngStyle]="_styleByGroup()[colGroup.type]"
           >
             @for (column of colGroup.columns; track column.$$id) {
@@ -93,7 +86,7 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    'class': 'datatable-header',
+    class: 'datatable-header',
     '[style.height.px]': 'headerHeight()',
     '[style.width]': 'headerWidth()'
   }
