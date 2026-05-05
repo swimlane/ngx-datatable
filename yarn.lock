@@ -10509,13 +10509,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jasmine-core@npm:4.4.0":
-  version: 4.4.0
-  resolution: "jasmine-core@npm:4.4.0"
-  checksum: 10c0/5394e1bff0418618031b2afa82238b6b72e3f2354977bc09c77b8ee71ac3ee230d8f0c79195ff5f494149f03f3ac5acbaa5e1f28c25ab862fbaf4c14334c2a83
-  languageName: node
-  linkType: hard
-
 "jasmine-core@npm:^4.1.0":
   version: 4.6.1
   resolution: "jasmine-core@npm:4.6.1"
@@ -10537,7 +10530,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jasmine-spec-reporter@npm:7.0.0":
+"jasmine-core@npm:~5.8.0":
+  version: 5.8.0
+  resolution: "jasmine-core@npm:5.8.0"
+  checksum: 10c0/9b1b7937b97ccc01468ba90953658e990d813d7cb275ea15c229b02ac2a42ca6b6469fc2342e0673917859f715213dc05a50419f56a0f603e31904b8b5aa83aa
+  languageName: node
+  linkType: hard
+
+"jasmine-spec-reporter@npm:~7.0.0":
   version: 7.0.0
   resolution: "jasmine-spec-reporter@npm:7.0.0"
   dependencies:
@@ -12125,8 +12125,8 @@ __metadata:
     eslint-plugin-security: "npm:1.5.0"
     husky: "npm:^4.2.4"
     jasmine: "npm:^3.99.0"
-    jasmine-core: "npm:4.4.0"
-    jasmine-spec-reporter: "npm:7.0.0"
+    jasmine-core: "npm:~5.8.0"
+    jasmine-spec-reporter: "npm:~7.0.0"
     karma: "npm:~6.4.4"
     karma-chrome-launcher: "npm:3.1.1"
     karma-coverage: "npm:2.2.0"
