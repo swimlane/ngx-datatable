@@ -51,6 +51,7 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   parentElement?: HTMLElement;
 
   private _scrollEventListener: any = null;
+  private _scrollRafId: number | null = null;
 
   ngOnInit(): void {
     // manual bind so we don't always listen
@@ -63,6 +64,10 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (this._scrollRafId !== null) {
+      cancelAnimationFrame(this._scrollRafId);
+      this._scrollRafId = null;
+    }
     if (this._scrollEventListener) {
       this.parentElement?.removeEventListener('scroll', this._scrollEventListener);
       this._scrollEventListener = null;
@@ -82,10 +87,16 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   }
 
   onScrolled(event: MouseEvent): void {
+    if (this._scrollRafId !== null) {
+      return;
+    }
     const dom: Element = event.currentTarget as Element;
-    this.scrollYPos = dom.scrollTop;
-    this.scrollXPos = dom.scrollLeft;
-    this.updateOffset();
+    this._scrollRafId = requestAnimationFrame(() => {
+      this._scrollRafId = null;
+      this.scrollYPos = dom.scrollTop;
+      this.scrollXPos = dom.scrollLeft;
+      this.updateOffset();
+    });
   }
 
   updateOffset(): void {
