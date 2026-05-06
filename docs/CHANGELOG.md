@@ -2,6 +2,9 @@
 
 ## HEAD (unreleased)
 
+- Enhancement: Added support for Angular 21
+- Breaking: Removed support for Angular 18 and earlier versions
+
 ## 23.0.1
 
 - Fix: Fixing scroller Issue in datatable when multiple columns are there in datatable
