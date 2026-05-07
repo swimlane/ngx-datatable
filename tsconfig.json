@@ -18,7 +18,8 @@
       "@swimlane/ngx-datatable/*": ["dist/swimlane/ngx-datatable/*"]
     },
     "useDefineForClassFields": false,
-    "strictFunctionTypes": true
+    "strictFunctionTypes": true,
+    "types": ["vitest/globals", "node"]
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
