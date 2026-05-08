@@ -1,6 +1,6 @@
 {
   "name": "@swimlane/ngx-datatable",
-  "version": "25.0.0",
+  "version": "24.0.0-alpha.0",
   "description": "ngx-datatable is an Angular table grid component for presenting large and complex data.",
   "publishConfig": {
     "access": "public"
