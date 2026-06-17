@@ -58,7 +58,7 @@
     "@angular/compiler-cli": "21.2.9",
     "@angular/language-service": "21.2.9",
     "@swimlane/eslint-config": "^2.0.0",
-    "@swimlane/prettier-config-swimlane": "4.0.0-alpha.0",
+    "@swimlane/prettier-config-swimlane": "4.0.0",
     "@types/node": "^24.0.0",
     "@typescript-eslint/eslint-plugin": "8.23.0",
     "@typescript-eslint/parser": "8.23.0",
