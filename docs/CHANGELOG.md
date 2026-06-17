@@ -2,6 +2,11 @@
 
 ## HEAD (unreleased)
 
+## 24.0.0
+
+- Enhancement: Added support for Angular 21
+- Breaking: Removed support for Angular 18 and earlier versions
+
 ## 24.0.0-alpha.0
 
 - Enhancement: Added support for Angular 21
