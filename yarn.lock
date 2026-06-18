@@ -5059,12 +5059,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swimlane/prettier-config-swimlane@npm:4.0.0-alpha.0":
-  version: 4.0.0-alpha.0
-  resolution: "@swimlane/prettier-config-swimlane@npm:4.0.0-alpha.0"
+"@swimlane/prettier-config-swimlane@npm:4.0.0":
+  version: 4.0.0
+  resolution: "@swimlane/prettier-config-swimlane@npm:4.0.0"
   peerDependencies:
     prettier: 3.3.3
-  checksum: 10c0/f552c95628010d6f1aaa8dbd094136b22fe1f643085c8e5b7b64443c741fb5287cecdcb426f0d7c47db57a7b562d4c698357532fb45c6b402b91088050a86f3d
+  checksum: 10c0/e0a99fd4f71e1c4bc6cf9e3e5aa9ad0c82004f1b2e0ff3eeabf64b380faf230fb47db8c7858c09b50c3d90741b8e289ab92a7b97234115e468243b565bc5ab41
   languageName: node
   linkType: hard
 
@@ -14011,7 +14011,7 @@ __metadata:
     "@angular/platform-browser-dynamic": "npm:21.2.9"
     "@angular/router": "npm:21.2.9"
     "@swimlane/eslint-config": "npm:^2.0.0"
-    "@swimlane/prettier-config-swimlane": "npm:4.0.0-alpha.0"
+    "@swimlane/prettier-config-swimlane": "npm:4.0.0"
     "@types/node": "npm:^24.0.0"
     "@typescript-eslint/eslint-plugin": "npm:8.23.0"
     "@typescript-eslint/parser": "npm:8.23.0"
