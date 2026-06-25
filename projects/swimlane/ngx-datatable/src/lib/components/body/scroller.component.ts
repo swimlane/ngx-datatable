@@ -26,7 +26,7 @@ export interface ScrollEventInternal {
   host: {
     'class': 'datatable-scroll',
     '[style.height.px]': 'scrollHeight()',
-    '[style.width.px]': 'scrollWidth()'
+    '[style.minWidth.px]': 'scrollWidth()'
   }
 })
 export class ScrollerComponent implements OnInit, OnDestroy {
