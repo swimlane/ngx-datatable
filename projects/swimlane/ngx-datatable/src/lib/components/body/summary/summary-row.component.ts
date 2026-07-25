@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
 import { TableColumnInternal } from '../../../types/internal.types';
 import { DataTableBodyRowComponent } from '../body-row.component';
@@ -37,6 +37,7 @@ const noopSumFunc = (cells: any[]): void => {
       />
     }
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     class: 'datatable-summary-row'
   }

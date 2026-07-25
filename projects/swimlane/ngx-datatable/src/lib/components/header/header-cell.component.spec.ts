@@ -1,6 +1,13 @@
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { AfterViewInit, Component, signal, TemplateRef, viewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  signal,
+  TemplateRef,
+  viewChild
+} from '@angular/core';
+import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 
 import {
   InnerSortEvent,
@@ -17,8 +24,11 @@ describe('DataTableHeaderCellComponent', () => {
   let harness: HeaderCellHarness;
 
   beforeEach(async () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: ComponentFixtureAutoDetect, useValue: false }]
+    });
     fixture = TestBed.createComponent(DataTableHeaderCellComponent);
-    fixture.componentRef.setInput('ariaHeaderCheckboxMessage', 'Select All');
+    fixture.componentRef.setInput('ariaHeaderCheckboxMessage', 'Select all rows');
     fixture.componentRef.setInput('sortType', 'single');
     component = fixture.componentInstance;
     fixture.componentRef.setInput('column', {
@@ -28,8 +38,6 @@ describe('DataTableHeaderCellComponent', () => {
       sortable: true,
       width: signal(0)
     });
-    fixture.componentRef.setInput('sortType', 'single');
-    fixture.componentRef.setInput('ariaHeaderCheckboxMessage', 'Select all rows');
     fixture.componentInstance.sort.subscribe(sort => {
       fixture.componentRef.setInput('sorts', [
         {
@@ -38,6 +46,7 @@ describe('DataTableHeaderCellComponent', () => {
         }
       ]);
     });
+    fixture.autoDetectChanges();
     harness = await TestbedHarnessEnvironment.harnessForFixture(fixture, HeaderCellHarness);
   });
 
@@ -102,6 +111,7 @@ describe('DataTableHeaderCellComponent', () => {
 
 @Component({
   imports: [DataTableHeaderCellComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <datatable-header-cell
       sortType="single"

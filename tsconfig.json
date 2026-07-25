@@ -13,6 +13,7 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "noUnusedLocals": true,
+    "ignoreDeprecations": "6.0",
     "paths": {
       "@swimlane/ngx-datatable": ["dist/swimlane/ngx-datatable"],
       "@swimlane/ngx-datatable/*": ["dist/swimlane/ngx-datatable/*"]

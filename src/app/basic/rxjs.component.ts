@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { Observable } from 'rxjs';
 
@@ -9,6 +9,7 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'rxjs-demo',
   imports: [DatatableComponent, AsyncPipe],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>

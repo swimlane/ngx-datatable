@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import {
   DataTableColumnCellDirective,
   DataTableColumnDirective,
@@ -53,6 +53,7 @@ import { DataService } from '../data.service';
       </ngx-datatable>
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: ['.icon {height: 10px; width: 10px; }', '.disabled {opacity: 0.5; }']
 })
 export class ClientSideTreeComponent {

@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
   ActivateEvent,
   DataTableColumnCellDirective,
@@ -19,6 +19,7 @@ import { DataService } from '../data.service';
     DataTableColumnHeaderDirective,
     DataTableColumnCellDirective
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>

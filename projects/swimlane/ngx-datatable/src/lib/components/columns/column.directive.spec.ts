@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -8,6 +8,7 @@ import { DataTableColumnDirective } from './column.directive';
 @Component({
   selector: 'test-fixture-component',
   imports: [DataTableColumnDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <ngx-datatable-column id="t1" />
     <ngx-datatable-column id="t2" [name]="columnName()">

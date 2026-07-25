@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import {
   ContextMenuEvent,
   DatatableComponent,
@@ -11,6 +11,7 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'context-menu-demo',
   imports: [DatatableComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>

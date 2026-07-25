@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
@@ -7,6 +7,7 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'client-side-paging-demo',
   imports: [DatatableComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>

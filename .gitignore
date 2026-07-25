@@ -12,3 +12,5 @@ coverage/
 .angular
 .yarn
 package-lock.json
+.vitest-attachments/
+**/__screenshots__/

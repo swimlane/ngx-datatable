@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { DatatableComponent, PageEvent } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
@@ -50,6 +50,7 @@ import { Page } from './model/page';
     </div>
   `,
   styleUrl: './virtual-server-side.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [MockServerResultsService]
 })
 export class VirtualServerSideComponent {

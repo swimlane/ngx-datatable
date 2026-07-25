@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import {
   DataTableColumnDirective,
   DatatableComponent
@@ -10,6 +10,7 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'tabs-demo',
   imports: [DatatableComponent, DataTableColumnDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>

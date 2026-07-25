@@ -1,4 +1,11 @@
-import { Component, inject, signal, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  ViewChild,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import {
   DataTableColumnCellDirective,
   DataTableColumnDirective,
@@ -131,6 +138,7 @@ import { DataService } from '../data.service';
     }
   `,
   // eslint-disable-next-line @angular-eslint/use-component-view-encapsulation
+  changeDetection: ChangeDetectionStrategy.Eager,
   encapsulation: ViewEncapsulation.None
 })
 export class ResponsiveComponent {

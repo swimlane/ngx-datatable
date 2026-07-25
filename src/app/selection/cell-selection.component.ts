@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
   ActivateEvent,
   DatatableComponent,
@@ -12,6 +12,7 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'cell-selection-demo',
   imports: [DatatableComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>

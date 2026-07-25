@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   DataTableColumnCellDirective,
   DataTableColumnDirective,
@@ -11,6 +11,7 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'default-sort-demo',
   imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>

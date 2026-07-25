@@ -1,4 +1,11 @@
-import { Component, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
@@ -40,6 +47,7 @@ import { DataService } from '../data.service';
       </ng-template>
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './custom-template-summary.component.scss'
 })
 export class CustomTemplateSummaryComponent implements OnInit {

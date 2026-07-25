@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import {
   DatatableComponent,
   DatatableFooterDirective,
@@ -18,6 +18,7 @@ import { DataService } from '../data.service';
     DataTableFooterTemplateDirective,
     DatatablePagerComponent
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>

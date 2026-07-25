@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -17,6 +17,7 @@ describe('DatatableComponent', () => {
   let component: TestFixtureComponent;
 
   @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [DatatableComponent],
     template: `
       <ngx-datatable
@@ -41,6 +42,7 @@ describe('DatatableComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TestFixtureComponent);
     component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
   it('should sort date values', async () => {
@@ -420,6 +422,7 @@ describe('DatatableComponent', () => {
 
 describe('DatatableComponent with Tree', () => {
   @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [DatatableComponent],
     template: `
       <ngx-datatable
@@ -453,6 +456,7 @@ describe('DatatableComponent with Tree', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TestFixtureWithTreeComponent);
     component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
   it('should expand and collapse tree rows on user click', async () => {
@@ -494,6 +498,7 @@ describe('DatatableComponent with Tree', () => {
 
 describe('DatatableComponent With Custom Templates', () => {
   @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
       DatatableComponent,
       DataTableColumnDirective,
@@ -532,6 +537,7 @@ describe('DatatableComponent With Custom Templates', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestFixtureWithCustomTemplatesComponent);
+    fixture.detectChanges();
     component = fixture.componentRef.instance;
   });
 
@@ -580,6 +586,7 @@ describe('DatatableComponent With Custom Templates', () => {
 
 describe('DatatableComponent With Frozen columns', () => {
   @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [DatatableComponent, DataTableColumnDirective],
     template: `
       <ngx-datatable [rows]="rows()">
@@ -625,6 +632,7 @@ describe('DatatableComponent With Frozen columns', () => {
 
   beforeEach(async () => {
     fixture = TestBed.createComponent(TestFixtureWithFrozenColumnsComponent);
+    fixture.detectChanges();
     await fixture.whenStable();
   });
 

@@ -1,4 +1,4 @@
-import { Component, DebugElement, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -177,6 +177,7 @@ describe('DataTableFooterComponent', () => {
       </ng-template>
     </ngx-datatable-footer>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [{ provide: DATATABLE_COMPONENT_TOKEN, useExisting: TestFixtureComponent }]
 })
 class TestFixtureComponent {
@@ -221,6 +222,7 @@ class Page {
   datatablePager!: DebugElement;
 
   async detectChangesAndRunQueries() {
+    fixture.detectChanges();
     await fixture.whenStable();
 
     const de = fixture.debugElement;

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
@@ -43,6 +43,7 @@ import { Page } from './model/page';
       />
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [MockServerResultsService]
 })
 export class ScrollingNoVirtualComponent implements OnInit {

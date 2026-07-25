@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
   ActivateEvent,
   DataTableColumnDirective,
@@ -12,6 +12,7 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'multi-click-and-checkbox-selection-demo',
   imports: [DatatableComponent, DataTableColumnDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>

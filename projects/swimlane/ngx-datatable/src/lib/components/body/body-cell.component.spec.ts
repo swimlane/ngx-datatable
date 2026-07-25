@@ -1,6 +1,14 @@
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, ComponentRef, computed, signal, TemplateRef, viewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ComponentRef,
+  computed,
+  signal,
+  TemplateRef,
+  viewChild
+} from '@angular/core';
+import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 
 import { toInternalColumn } from '../../utils/column-helper';
 import { numericIndexGetter } from '../../utils/column-prop-getters';
@@ -10,6 +18,7 @@ import { BodyCellHarness } from './testing/body-cell.harness';
 @Component({
   selector: 'mock-cell-template',
   imports: [DataTableBodyCellComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<ng-template #template let-row="row">Custom Cell Template {{ row.id }} </ng-template>
     <datatable-body-cell
       ariaRowCheckboxMessage="checkbox message"
@@ -36,6 +45,9 @@ describe('DataTableBodyCellComponent', () => {
   let harness: BodyCellHarness;
 
   beforeEach(async () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: ComponentFixtureAutoDetect, useValue: false }]
+    });
     fixture = TestBed.createComponent(DataTableBodyCellComponent);
     component = fixture.componentRef;
     component.setInput('row', ['Hello']);
@@ -46,6 +58,7 @@ describe('DataTableBodyCellComponent', () => {
       treeStatusExpanded: 'icon datatable-icon-down',
       treeStatusCollapsed: 'icon datatable-icon-up'
     });
+    fixture.autoDetectChanges();
     harness = await TestbedHarnessEnvironment.harnessForFixture(fixture, BodyCellHarness);
   });
 

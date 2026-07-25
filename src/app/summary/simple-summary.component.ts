@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
@@ -50,6 +50,7 @@ import { DataService } from '../data.service';
       />
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './simple-summary.component.scss'
 })
 export class SimpleSummaryComponent {
