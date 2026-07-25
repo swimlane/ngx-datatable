@@ -2,6 +2,7 @@ import {
   Component,
   inject,
   OnInit,
+  signal,
   TemplateRef,
   ViewChild,
   ChangeDetectionStrategy
@@ -34,7 +35,7 @@ import { DataService } from '../data.service';
         [columns]="columns"
         [headerHeight]="50"
         [summaryHeight]="55"
-        [rows]="rows"
+        [rows]="rows()"
       />
       <ng-template #nameSummaryCell let-row="row" let-value="value">
         <div class="name-container">
@@ -51,7 +52,7 @@ import { DataService } from '../data.service';
   styleUrl: './custom-template-summary.component.scss'
 })
 export class CustomTemplateSummaryComponent implements OnInit {
-  rows: Employee[] = [];
+  readonly rows = signal<Employee[]>([]);
 
   @ViewChild('nameSummaryCell') nameSummaryCell!: TemplateRef<any>;
 
@@ -61,7 +62,7 @@ export class CustomTemplateSummaryComponent implements OnInit {
 
   constructor() {
     this.dataService.load('company.json').subscribe(data => {
-      this.rows = data.splice(0, 5);
+      this.rows.set(data.splice(0, 5));
     });
   }
 
@@ -78,7 +79,9 @@ export class CustomTemplateSummaryComponent implements OnInit {
   }
 
   getNames(): string[] {
-    return this.rows.map(row => row.name).map(fullName => fullName.split(' ')[1]);
+    return this.rows()
+      .map(row => row.name)
+      .map(fullName => fullName.split(' ')[1]);
   }
 
   private summaryForGender(cells: string[]) {

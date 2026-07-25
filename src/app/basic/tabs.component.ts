@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
   DataTableColumnDirective,
   DatatableComponent
@@ -41,7 +41,7 @@ import { DataService } from '../data.service';
           <ngx-datatable
             class="material"
             columnMode="force"
-            [rows]="rows"
+            [rows]="rows()"
             [headerHeight]="50"
             [footerHeight]="50"
             [rowHeight]="50"
@@ -59,7 +59,7 @@ import { DataService } from '../data.service';
             <ngx-datatable
               class="material"
               columnMode="force"
-              [rows]="rows"
+              [rows]="rows()"
               [headerHeight]="50"
               [footerHeight]="50"
               [rowHeight]="50"
@@ -76,7 +76,7 @@ import { DataService } from '../data.service';
   `
 })
 export class TabsDemoComponent {
-  rows: FullEmployee[] = [];
+  readonly rows = signal<FullEmployee[]>([]);
 
   tab1 = true;
   tab2 = false;
@@ -86,7 +86,7 @@ export class TabsDemoComponent {
 
   constructor() {
     this.dataService.load('100k.json').subscribe(data => {
-      this.rows = data;
+      this.rows.set(data);
     });
   }
 }

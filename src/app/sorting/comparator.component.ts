@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
@@ -25,7 +25,7 @@ import { DataService } from '../data.service';
         class="material"
         rowHeight="auto"
         columnMode="force"
-        [rows]="rows"
+        [rows]="rows()"
         [columns]="columns"
         [headerHeight]="50"
         [footerHeight]="50"
@@ -34,7 +34,7 @@ import { DataService } from '../data.service';
   `
 })
 export class ComparatorComponent {
-  rows: Employee[] = [];
+  readonly rows = signal<Employee[]>([]);
 
   columns: TableColumn[] = [
     { name: 'Company', comparator: this.companyComparator.bind(this) },
@@ -46,7 +46,7 @@ export class ComparatorComponent {
 
   constructor() {
     this.dataService.load('company.json').subscribe(data => {
-      this.rows = data.splice(0, 20);
+      this.rows.set(data.splice(0, 20));
     });
   }
 

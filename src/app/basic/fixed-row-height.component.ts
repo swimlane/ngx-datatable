@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
@@ -24,7 +24,7 @@ import { DataService } from '../data.service';
       <ngx-datatable
         class="material striped"
         columnMode="force"
-        [rows]="rows"
+        [rows]="rows()"
         [columns]="columns"
         [headerHeight]="50"
         [footerHeight]="50"
@@ -34,14 +34,14 @@ import { DataService } from '../data.service';
   `
 })
 export class FixedRowHeightComponent {
-  rows: Employee[] = [];
+  readonly rows = signal<Employee[]>([]);
   columns: TableColumn[] = [{ prop: 'name' }, { name: 'Company' }, { name: 'Gender' }];
 
   private dataService = inject(DataService);
 
   constructor() {
     this.dataService.load('company.json').subscribe(data => {
-      this.rows = data;
+      this.rows.set(data);
     });
   }
 }

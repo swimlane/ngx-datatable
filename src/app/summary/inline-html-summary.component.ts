@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
   DataTableColumnDirective,
   DatatableComponent
@@ -31,7 +31,7 @@ import { DataService } from '../data.service';
         [summaryPosition]="summaryPosition"
         [summaryHeight]="100"
         [headerHeight]="50"
-        [rows]="rows"
+        [rows]="rows()"
       >
         <ngx-datatable-column prop="name" [summaryTemplate]="nameSummaryCell" />
         <ngx-datatable-column name="Gender" [summaryFunc]="summaryForGender" />
@@ -50,7 +50,7 @@ import { DataService } from '../data.service';
   `
 })
 export class InlineHtmlSummaryComponent {
-  rows: Employee[] = [];
+  readonly rows = signal<Employee[]>([]);
 
   enableSummary = true;
   summaryPosition = 'top';
@@ -59,12 +59,14 @@ export class InlineHtmlSummaryComponent {
 
   constructor() {
     this.dataService.load('company.json').subscribe(data => {
-      this.rows = data.splice(0, 5);
+      this.rows.set(data.splice(0, 5));
     });
   }
 
   getNames(): string[] {
-    return this.rows.map(row => row.name).map(fullName => fullName.split(' ')[1]);
+    return this.rows()
+      .map(row => row.name)
+      .map(fullName => fullName.split(' ')[1]);
   }
 
   summaryForGender(cells: string[]) {

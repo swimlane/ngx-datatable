@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
   DatatableComponent,
   DatatableFooterDirective,
@@ -36,7 +36,7 @@ import { DataService } from '../data.service';
         class="material"
         rowHeight="auto"
         columnMode="force"
-        [rows]="rows"
+        [rows]="rows()"
         [columns]="columns"
         [footerHeight]="100"
         [headerHeight]="50"
@@ -66,7 +66,7 @@ import { DataService } from '../data.service';
   `
 })
 export class FooterTemplateComponent {
-  rows: Employee[] = [];
+  readonly rows = signal<Employee[]>([]);
 
   columns: TableColumn[] = [{ prop: 'name' }, { name: 'Gender' }, { name: 'Company' }];
 
@@ -74,7 +74,7 @@ export class FooterTemplateComponent {
 
   constructor() {
     this.dataService.load('company.json').subscribe(data => {
-      this.rows = data.splice(0, 5);
+      this.rows.set(data.splice(0, 5));
     });
   }
 }

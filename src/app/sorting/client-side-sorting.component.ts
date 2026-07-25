@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
@@ -25,7 +25,7 @@ import { DataService } from '../data.service';
         class="material"
         columnMode="force"
         sortType="multi"
-        [rows]="rows"
+        [rows]="rows()"
         [columns]="columns"
         [headerHeight]="50"
         [footerHeight]="50"
@@ -36,7 +36,7 @@ import { DataService } from '../data.service';
   `
 })
 export class ClientSideSortingComponent {
-  rows: Employee[] = [];
+  readonly rows = signal<Employee[]>([]);
 
   columns: TableColumn[] = [{ name: 'Company' }, { name: 'Name' }, { name: 'Gender' }];
 
@@ -44,7 +44,7 @@ export class ClientSideSortingComponent {
 
   constructor() {
     this.dataService.load('company.json').subscribe(data => {
-      this.rows = data;
+      this.rows.set(data);
     });
   }
 }

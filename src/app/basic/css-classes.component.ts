@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
   DataTableColumnDirective,
   DatatableComponent,
@@ -28,7 +28,7 @@ import { DataService } from '../data.service';
       <ngx-datatable
         class="material"
         columnMode="force"
-        [rows]="rows"
+        [rows]="rows()"
         [headerHeight]="50"
         [rowHeight]="50"
         [rowClass]="getRowClass"
@@ -42,14 +42,14 @@ import { DataService } from '../data.service';
   `
 })
 export class CssClassesComponent {
-  rows: FullEmployee[] = [];
+  readonly rows = signal<FullEmployee[]>([]);
   expanded = {};
 
   private dataService = inject(DataService);
 
   constructor() {
     this.dataService.load('100k.json').subscribe(data => {
-      this.rows = data.splice(0, 50);
+      this.rows.set(data.splice(0, 50));
     });
   }
 
