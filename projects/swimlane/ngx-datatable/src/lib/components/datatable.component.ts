@@ -69,6 +69,7 @@ import { DatatableGroupHeaderDirective } from './body/body-group-header.directiv
 import { DatatableRowDefDirective } from './body/body-row-def.component';
 import { DataTableBodyComponent } from './body/body.component';
 import { ProgressBarComponent } from './body/progress-bar.component';
+import { DatatableSummaryRowDirective } from './body/summary/summary-row.directive';
 import { DataTableColumnDirective } from './columns/column.directive';
 import { DataTableFooterComponent } from './footer/footer.component';
 import { DatatableFooterDirective } from './footer/footer.directive';
@@ -541,6 +542,11 @@ export class DatatableComponent<TRow extends Row = any>
    */
   @ContentChild(DatatableGroupHeaderDirective)
   groupHeader?: DatatableGroupHeaderDirective;
+
+  /**
+   * Custom summary row template gathered from the ContentChild
+   */
+  readonly summaryRowDirective = contentChild(DatatableSummaryRowDirective);
 
   /**
    * Footer template gathered from the ContentChild

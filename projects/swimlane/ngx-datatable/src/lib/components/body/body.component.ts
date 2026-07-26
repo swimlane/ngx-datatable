@@ -99,12 +99,14 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
         [class.horizontal-overflow]="innerWidth() < (columnGroupWidths?.total ?? 0)"
         (scroll)="onBodyScroll($event)"
       >
-        @if (summaryRow() && summaryPosition() === 'top') {
+        @if ((summaryRow() || summaryRowTemplate()) && summaryPosition() === 'top') {
           <datatable-summary-row
+            [class.sticky]="summaryRowTemplate()"
             [rowHeight]="summaryHeight()"
             [innerWidth]="innerWidth()"
             [rows]="rows"
             [columns]="columns"
+            [template]="summaryRowTemplate()"
           />
         }
         <ng-template
@@ -233,12 +235,13 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
           }
         </div>
       </datatable-scroller>
-      @if (summaryRow() && summaryPosition() === 'bottom') {
+      @if ((summaryRow() || summaryRowTemplate()) && summaryPosition() === 'bottom') {
         <datatable-summary-row
           [rowHeight]="summaryHeight()"
           [innerWidth]="innerWidth()"
           [rows]="rows"
           [columns]="columns"
+          [template]="summaryRowTemplate()"
         />
       }
     }
@@ -290,6 +293,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   readonly summaryRow = input<boolean>();
   readonly summaryPosition = input.required<string>();
   readonly summaryHeight = input.required<number>();
+  readonly summaryRowTemplate = input<TemplateRef<void>>();
   readonly rowDraggable = input<boolean>();
   readonly rowDragEvents = input.required<OutputEmitterRef<DragEventData>>();
   readonly disableRowCheck = input<(row: TRow) => boolean | undefined>();

@@ -1,5 +1,5 @@
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ComponentRef } from '@angular/core';
+import { Component, ComponentRef, TemplateRef, viewChild } from '@angular/core';
 import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 
 import { TableColumnInternal } from '../../../types/internal.types';
@@ -156,5 +156,41 @@ describe('DataTableSummaryRowComponent', () => {
         expect(col1Text).toBe(transformed);
       });
     });
+  });
+});
+
+@Component({
+  imports: [DataTableSummaryRowComponent],
+  template: `
+    <datatable-summary-row
+      [rows]="rows"
+      [columns]="columns"
+      [rowHeight]="30"
+      [innerWidth]="100"
+      [template]="tpl()"
+    />
+    <ng-template #summaryTpl>
+      <span class="custom-content">Custom summary content</span>
+    </ng-template>
+  `
+})
+class TestHostComponent {
+  rows = [{ col1: 10 }];
+  columns: TableColumnInternal[] = toInternalColumn([{ prop: 'col1' }]);
+  readonly tpl = viewChild<TemplateRef<void>>('summaryTpl');
+}
+
+describe('DataTableSummaryRowComponent with template', () => {
+  let fixture: ComponentFixture<TestHostComponent>;
+
+  beforeEach(async () => {
+    fixture = TestBed.createComponent(TestHostComponent);
+    await fixture.whenStable();
+  });
+
+  it('should render custom template content instead of computed columns', () => {
+    const el: HTMLElement = fixture.nativeElement;
+    expect(el.querySelector('.custom-content')?.textContent).toBe('Custom summary content');
+    expect(el.querySelector('datatable-body-row')).toBeNull();
   });
 });

@@ -6,6 +6,7 @@ import {
   DatatableRowDefComponent,
   DatatableRowDefDirective
 } from './components/body/body-row-def.component';
+import { DatatableSummaryRowDirective } from './components/body/summary/summary-row.directive';
 import { DataTableColumnCellDirective } from './components/columns/column-cell.directive';
 import { DataTableColumnGhostCellDirective } from './components/columns/column-ghost-cell.directive';
 import { DataTableColumnHeaderDirective } from './components/columns/column-header.directive';
@@ -37,7 +38,8 @@ import { AllPartial, NgxDatatableConfig, providedNgxDatatableConfig } from './ng
     DatatableGroupHeaderTemplateDirective,
     DisableRowDirective,
     DatatableRowDefComponent,
-    DatatableRowDefDirective
+    DatatableRowDefDirective,
+    DatatableSummaryRowDirective
   ],
   exports: [
     DatatableComponent,
@@ -55,7 +57,8 @@ import { AllPartial, NgxDatatableConfig, providedNgxDatatableConfig } from './ng
     DatatableGroupHeaderTemplateDirective,
     DisableRowDirective,
     DatatableRowDefComponent,
-    DatatableRowDefDirective
+    DatatableRowDefDirective,
+    DatatableSummaryRowDirective
   ]
 })
 export class NgxDatatableModule {
