@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import {
   DataTableColumnDirective,
   DatatableComponent,
@@ -11,6 +11,7 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'summary-row-actions-demo',
   imports: [DatatableComponent, DataTableColumnDirective, DatatableSummaryRowDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>

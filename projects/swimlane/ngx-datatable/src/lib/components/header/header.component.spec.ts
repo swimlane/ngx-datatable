@@ -31,6 +31,10 @@ describe('DataTableHeaderComponent', () => {
     componentRef = fixture.componentRef;
   });
 
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it('should render with given column headers', async () => {
     componentRef.setInput(
       'columns',
@@ -55,7 +59,6 @@ describe('DataTableHeaderComponent', () => {
     // there is setTimeout in columns setter so we need to wait for it
     vi.advanceTimersByTime(0);
     expect(await harness.getHeaderRowWidth()).toBeCloseTo(500);
-    vi.useRealTimers();
   });
 
   it('should place header cells based on column pinning group', async () => {
@@ -250,8 +253,6 @@ describe('DataTableHeaderComponent', () => {
     expect(await harness.getColumnName(0)).toBe('Column 2');
     expect(await harness.getColumnName(1)).toBe('Column 1');
     expect(await harness.getColumnName(2)).toBe('Column 3');
-
-    vi.useRealTimers();
   });
 
   it('should not apply translateX to center group (scroll sync via native scrollLeft)', async () => {
