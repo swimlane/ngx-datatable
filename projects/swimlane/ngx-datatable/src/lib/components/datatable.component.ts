@@ -485,7 +485,7 @@ export class DatatableComponent<TRow extends Row = any>
    *
    * When using `(sort)`/`(sortsChange)` and `(page)` together (typically for server-side paging),
    * subscribe only to `(page)` and read {@link PageEvent.sorts} from the event payload instead.
-   * `(page)` emits on both page changes and sort changes.
+   * `(page)` emits on both page and sort changes.
    */
   readonly sort = output<SortEvent>();
 
