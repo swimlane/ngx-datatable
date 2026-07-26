@@ -256,4 +256,55 @@ describe('DataTableBodyComponent', () => {
       expect(component.getGroupExpanded(group)).toBe(true);
     });
   });
+
+  describe('selectRow', () => {
+    const rows = [
+      { id: 1, name: 'Ethel' },
+      { id: 2, name: 'Claudine' },
+      { id: 3, name: 'Beryl' },
+      { id: 4, name: 'Wilder' },
+      { id: 5, name: 'Georgina' }
+    ];
+
+    beforeEach(() => {
+      fixture.componentRef.setInput('rows', rows);
+      fixture.componentRef.setInput('rowCount', rows.length);
+      fixture.componentRef.setInput('pageSize', rows.length);
+      fixture.componentRef.setInput('offset', 0);
+      fixture.componentRef.setInput('selectionType', 'multi');
+      fixture.componentRef.setInput('selected', []);
+    });
+
+    it('should keep prior ctrl-selected rows when shift-clicking a range', () => {
+      // Regression for https://github.com/swimlane/ngx-datatable/issues/582
+      // 1. Click Georgina (idx 4)
+      component.selectRow(new MouseEvent('click'), 4, rows[4]);
+      expect(component.selected()).toEqual([rows[4]]);
+
+      // 2. Ctrl-click Beryl (idx 2) - extends selection, becomes new anchor
+      component.selectRow(new MouseEvent('click', { ctrlKey: true }), 2, rows[2]);
+      expect(component.selected()).toEqual([rows[4], rows[2]]);
+
+      // 3. Shift-click Ethel (idx 0) - range from last anchor (Beryl, idx 2) to Ethel (idx 0)
+      component.selectRow(new MouseEvent('click', { shiftKey: true }), 0, rows[0]);
+
+      const selected = component.selected();
+      // Georgina must still be selected (the bug)
+      expect(selected).toContain(rows[4]);
+      // Range Beryl..Ethel must be selected
+      expect(selected).toContain(rows[2]);
+      expect(selected).toContain(rows[1]);
+      expect(selected).toContain(rows[0]);
+      // No duplicates (Beryl was already selected before shift-click)
+      expect(selected.length).toBe(new Set(selected).size);
+    });
+
+    it('should not throw when shift is the very first click', () => {
+      expect(() =>
+        component.selectRow(new MouseEvent('click', { shiftKey: true }), 2, rows[2])
+      ).not.toThrow();
+      // First-ever shift-click without a prior anchor selects just the clicked row.
+      expect(component.selected()).toEqual([rows[2]]);
+    });
+  });
 });
