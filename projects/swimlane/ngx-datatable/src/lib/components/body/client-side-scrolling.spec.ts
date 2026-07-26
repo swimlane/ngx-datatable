@@ -275,7 +275,7 @@ describe('Client-side Scrolling – DatatableComponent.scrollToRow', () => {
 
     it('should call expandToRow for a non-visible child row', async () => {
       datatable.scrollToRow(treeRows[3]);
-      await fixture.whenStable();
+      await vi.waitFor(() => expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(2)));
 
       // expandToRow should expand the ancestors needed to reveal the target leaf row,
       // but must not flip the leaf itself away from 'disabled'.
@@ -293,6 +293,42 @@ describe('Client-side Scrolling – DatatableComponent.scrollToRow', () => {
       expect(() => datatable.scrollToRow(treeRows[0])).toThrowError(
         'Vertical scrolling is not enabled.'
       );
+    });
+
+    it('should scroll past the original scrollHeight after expanding a parent with many children', async () => {
+      // Build a tree where expanding Row 1 reveals 30 new children. Before expansion,
+      // the visible row count is small (5 roots) and the scroll container therefore has
+      // a scrollHeight equal to ~5 rows. After expansion the rendered DOM grows to
+      // ~35 rows, so the scroll container's scrollHeight must be large enough to reach
+      // the deeply nested target row.
+      const manyChildren: TreeRow[] = Array.from({ length: 30 }, (_, i) => ({
+        id: 100 + i,
+        parentId: 1,
+        name: `Child ${i}`,
+        treeStatus: 'disabled'
+      }));
+      const largeTree: TreeRow[] = [
+        { id: 1, parentId: null, name: 'Row 1', treeStatus: 'collapsed' },
+        ...manyChildren,
+        { id: 2, parentId: null, name: 'Row 2', treeStatus: 'disabled' },
+        { id: 3, parentId: null, name: 'Row 3', treeStatus: 'disabled' },
+        { id: 4, parentId: null, name: 'Row 4', treeStatus: 'disabled' },
+        { id: 5, parentId: null, name: 'Row 5', treeStatus: 'disabled' }
+      ];
+      rowsSig.set(largeTree);
+      await fixture.whenStable();
+
+      // Constrain the viewport so a scrollTop > 0 is required to reveal the target row.
+      bodyEl.style.height = '200px';
+      await fixture.whenStable();
+
+      // Pick the last child of Row 1 – it is not visible yet (Row 1 is collapsed) and
+      // its rendered position is well beyond the pre-expansion scrollHeight.
+      const target = manyChildren[manyChildren.length - 1];
+      datatable.scrollToRow(target, { block: 'start' });
+
+      // Tree order after expansion: Row 1, Child 0..29, Row 2..5 → target index = 30.
+      await vi.waitFor(() => expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(30)));
     });
   });
 });

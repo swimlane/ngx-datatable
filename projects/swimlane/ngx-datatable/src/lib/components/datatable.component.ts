@@ -1207,7 +1207,7 @@ export class DatatableComponent<TRow extends Row = any>
       optionalGetterForProp(this.treeToRelation())
     );
     this._rowDiffCount.update(v => v + 1);
-    // We need a microTask here to let Angular update the DOM
-    queueMicrotask(() => this.scrollToRowTree(row, options, true));
+    // We need a setTimeout to wait until the DOM was updated
+    setTimeout(() => this.scrollToRowTree(row, options, true));
   }
 }
