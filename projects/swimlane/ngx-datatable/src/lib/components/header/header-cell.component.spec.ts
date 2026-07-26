@@ -216,13 +216,13 @@ describe('DataTableHeaderCellComponent - custom sort icons', () => {
     await harness.applySort();
     await fixture.whenStable();
 
-    const sortBtn = fixture.nativeElement.querySelector('.sort-btn');
+    const sortBtn: HTMLElement = fixture.nativeElement.querySelector('.sort-btn');
 
-    expect(sortBtn).toHaveClass('sort-btn');
-    expect(sortBtn).toHaveClass('sort-asc');
-    expect(sortBtn).toHaveClass('icon');
-    expect(sortBtn).toHaveClass('up');
-    expect(sortBtn).not.toHaveClass('datatable-icon-up');
+    expect(sortBtn.classList.contains('sort-btn')).toBe(true);
+    expect(sortBtn.classList.contains('sort-asc')).toBe(true);
+    expect(sortBtn.classList.contains('icon')).toBe(true);
+    expect(sortBtn.classList.contains('up')).toBe(true);
+    expect(sortBtn.classList.contains('datatable-icon-up')).toBe(false);
   });
 
   it('should apply custom sortDescendingIcon class when toggling to descending sort', async () => {
@@ -231,11 +231,11 @@ describe('DataTableHeaderCellComponent - custom sort icons', () => {
     await harness.applySort();
     await fixture.whenStable();
 
-    const sortButton = fixture.nativeElement.querySelector('.sort-btn');
-    expect(sortButton).toHaveClass('sort-btn');
-    expect(sortButton).toHaveClass('sort-desc');
-    expect(sortButton).toHaveClass('icon');
-    expect(sortButton).toHaveClass('down');
-    expect(sortButton).not.toHaveClass('datatable-icon-down');
+    const sortButton: HTMLElement = fixture.nativeElement.querySelector('.sort-btn');
+    expect(sortButton.classList.contains('sort-btn')).toBe(true);
+    expect(sortButton.classList.contains('sort-desc')).toBe(true);
+    expect(sortButton.classList.contains('icon')).toBe(true);
+    expect(sortButton.classList.contains('down')).toBe(true);
+    expect(sortButton.classList.contains('datatable-icon-down')).toBe(false);
   });
 });
