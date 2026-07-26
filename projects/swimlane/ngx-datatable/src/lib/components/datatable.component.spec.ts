@@ -584,6 +584,113 @@ describe('DatatableComponent With Custom Templates', () => {
   });
 });
 
+describe('DatatableComponent With Ghost Loading', () => {
+  @Component({
+    imports: [DatatableComponent],
+    template: `
+      <ngx-datatable
+        columnMode="force"
+        [rows]="rows()"
+        [columns]="columns()"
+        [scrollbarV]="scrollbarV()"
+        [ghostLoadingIndicator]="ghostLoadingIndicator()"
+        [rowHeight]="rowHeight()"
+        [headerHeight]="headerHeight()"
+      />
+    `,
+    host: {
+      '[style.inline-size.px]': 'size()',
+      '[style.block-size.px]': 'height()'
+    }
+  })
+  class TestFixtureWithGhostLoadingComponent {
+    readonly columns = signal<TableColumn[]>([{ prop: 'name' }]);
+    readonly rows = signal<Record<string, any>[]>([]);
+    readonly scrollbarV = signal(true);
+    readonly ghostLoadingIndicator = signal(false);
+    readonly rowHeight = signal(50);
+    readonly headerHeight = signal(50);
+    readonly size = signal(400);
+    readonly height = signal(600);
+  }
+
+  let fixture: ComponentFixture<TestFixtureWithGhostLoadingComponent>;
+  let component: TestFixtureWithGhostLoadingComponent;
+  let datatable: DatatableComponent;
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(TestFixtureWithGhostLoadingComponent);
+    component = fixture.componentInstance;
+    datatable = fixture.debugElement.query(By.directive(DatatableComponent)).componentInstance;
+  });
+
+  it('should push enough undefined rows to fill pageSize when ghost loading with no data', async () => {
+    component.ghostLoadingIndicator.set(true);
+    component.scrollbarV.set(true);
+    component.rows.set([]);
+    await fixture.whenStable();
+
+    const internalRows = datatable._internalRows();
+    const pageSize = datatable.pageSize();
+    const undefinedCount = internalRows.filter(r => r === undefined).length;
+
+    expect(undefinedCount).toBe(Math.max(pageSize, 1));
+  });
+
+  it('should push only one undefined row when data already fills the viewport', async () => {
+    const rows = Array.from({ length: 20 }, (_, i) => ({ name: `Row ${i}` }));
+    component.rows.set(rows);
+    await fixture.whenStable();
+
+    component.ghostLoadingIndicator.set(true);
+    await fixture.whenStable();
+
+    const internalRows = datatable._internalRows();
+    const undefinedCount = internalRows.filter(r => r === undefined).length;
+
+    expect(undefinedCount).toBe(1);
+    expect(internalRows.length).toBe(rows.length + 1);
+  });
+
+  it('should push enough undefined rows to fill remaining viewport when partial data is loaded', async () => {
+    component.ghostLoadingIndicator.set(true);
+    component.scrollbarV.set(true);
+    await fixture.whenStable();
+
+    const pageSize = datatable.pageSize();
+    const partialRows = Array.from({ length: 3 }, (_, i) => ({ name: `Row ${i}` }));
+    component.rows.set(partialRows);
+    await fixture.whenStable();
+
+    const internalRows = datatable._internalRows();
+    const undefinedCount = internalRows.filter(r => r === undefined).length;
+
+    expect(undefinedCount).toBe(Math.max(pageSize - partialRows.length, 1));
+    expect(internalRows.length).toBe(partialRows.length + undefinedCount);
+  });
+
+  it('should not add undefined rows when ghostLoadingIndicator is false', async () => {
+    component.ghostLoadingIndicator.set(false);
+    await fixture.whenStable();
+
+    const internalRows = datatable._internalRows();
+    const undefinedCount = internalRows.filter(r => r === undefined).length;
+
+    expect(undefinedCount).toBe(0);
+  });
+
+  it('should not add undefined rows when scrollbarV is false', async () => {
+    component.ghostLoadingIndicator.set(true);
+    component.scrollbarV.set(false);
+    await fixture.whenStable();
+
+    const internalRows = datatable._internalRows();
+    const undefinedCount = internalRows.filter(r => r === undefined).length;
+
+    expect(undefinedCount).toBe(0);
+  });
+});
+
 describe('DatatableComponent With Frozen columns', () => {
   @Component({
     changeDetection: ChangeDetectionStrategy.Eager,

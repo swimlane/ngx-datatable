@@ -585,6 +585,10 @@ export class DatatableComponent<TRow extends Row = any>
   element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
   readonly _innerWidth = computed(() => this.dimensions().width);
   readonly pageSize = computed(() => this.calcPageSize());
+  private readonly viewportRowCount = computed(() => {
+    const size = Math.ceil(this.bodyHeight() / (this.rowHeight() as number));
+    return Math.max(size, 0);
+  });
   readonly _isFixedHeader = computed(() => {
     const headerHeight: number | string = this.headerHeight();
     return typeof headerHeight === 'string' ? (headerHeight as string) !== 'auto' : true;
@@ -624,8 +628,10 @@ export class DatatableComponent<TRow extends Row = any>
     }
 
     if (this.ghostLoadingIndicator() && this.scrollbarV() && !this.externalPaging()) {
-      // in case where we don't have predefined total page length
-      rows.push(undefined); // undefined row will render ghost cell row at the end of the page
+      const ghostRowCount = Math.max(this.viewportRowCount() - rows.length, 1);
+      for (let i = 0; i < ghostRowCount; i++) {
+        rows.push(undefined);
+      }
     }
 
     return rows;
@@ -939,12 +945,8 @@ export class DatatableComponent<TRow extends Row = any>
    * Recalculates the sizes of the page
    */
   calcPageSize(): number {
-    // Keep the page size constant even if the row has been expanded.
-    // This is because an expanded row is still considered to be a child of
-    // the original row.  Hence calculation would use rowHeight only.
     if (this.scrollbarV() && this.virtualization()) {
-      const size = Math.ceil(this.bodyHeight() / (this.rowHeight() as number));
-      return Math.max(size, 0);
+      return this.viewportRowCount();
     }
 
     // if limit is passed, we are paging
