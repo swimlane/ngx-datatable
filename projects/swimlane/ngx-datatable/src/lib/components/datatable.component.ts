@@ -482,6 +482,10 @@ export class DatatableComponent<TRow extends Row = any>
    * <!-- or -->
    * <ngx-datatable [(sorts)]="mySorts"></ngx-datatable>
    * ```
+   *
+   * When using `(sort)/(sortsChange)` and `(page)` together (typically server-side paging),
+   * subscribe only to `(page)` and read {@link PageEvent.sorts} from the event payload instead.
+   * `(page)` emits on both page changes and sort changes.
    */
   readonly sort = output<SortEvent>();
 
