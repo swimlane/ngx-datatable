@@ -142,9 +142,9 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
 
   protected readonly isCheckboxable = computed(() => this.column().headerCheckboxable);
 
-  protected readonly sortClass = computed<string[] | undefined>(() => {
-    return this.calcSortClass(this.sortDir());
-  });
+  protected readonly sortClass = computed<string | undefined>(() =>
+    this.calcSortClass(this.sortDir())
+  );
   protected readonly sortDir = computed<SortDirection | undefined>(() => {
     return this.calcSortDir(this.sorts());
   });
@@ -217,16 +217,20 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
     });
   }
 
-  calcSortClass(sortDir: SortDirection | undefined): string[] | undefined {
+  calcSortClass(sortDir: SortDirection | undefined): string | undefined {
     if (!this.cellContext().column.sortable) {
       return undefined;
     }
-    if (sortDir === 'asc') {
-      return ['sort-btn', 'sort-asc', this.sortAscendingIcon() ?? 'datatable-icon-up'];
-    } else if (sortDir === 'desc') {
-      return ['sort-btn', 'sort-desc', this.sortDescendingIcon() ?? 'datatable-icon-down'];
-    } else {
-      return ['sort-btn', this.sortUnsetIcon() ?? 'datatable-icon-sort-unset'];
+
+    const base = 'sort-btn';
+
+    switch (sortDir) {
+      case 'asc':
+        return `${base} sort-asc ${this.sortAscendingIcon() ?? 'datatable-icon-up'}`;
+      case 'desc':
+        return `${base} sort-desc ${this.sortDescendingIcon() ?? 'datatable-icon-down'}`;
+      default:
+        return `${base} ${this.sortUnsetIcon() ?? 'datatable-icon-sort-unset'}`;
     }
   }
 
