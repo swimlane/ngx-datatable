@@ -98,12 +98,11 @@ describe('Client-side Scrolling – DatatableComponent.scrollToRow', () => {
       beforeEach(async () => {
         // Force a deterministic viewport height so block calculations are predictable.
         fixture.nativeElement.style.height = '200px';
-        // Refresh the measured dimensions so `bodyHeight()` (which scrollToIndex
-        // relies on) reflects the forced height.
-        datatable.recalculate();
-        await fixture.whenStable();
         body = fixture.debugElement.query(By.directive(DataTableBodyComponent))
           .componentInstance as DataTableBodyComponent;
+        // The host ResizeObserver measures the new height asynchronously; poll
+        // until `bodyHeight()` (which scrollToIndex relies on) reflects it.
+        await expect.poll(() => body.bodyHeight()).toBeGreaterThan(100);
       });
 
       it('should scroll to start by default', () => {

@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  afterNextRender,
   booleanAttribute,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -11,7 +12,6 @@ import {
   DoCheck,
   effect,
   ElementRef,
-  HostListener,
   inject,
   input,
   IterableDiffer,
@@ -70,7 +70,6 @@ import { adjustColumnWidths, forceFillColumnWidths } from '../utils/math';
 import { numberOrUndefinedAttribute } from '../utils/number-or-undefined-attribute';
 import { sortGroupedRows, sortRows } from '../utils/sort';
 import { DATATABLE_COMPONENT_TOKEN } from '../utils/table-token';
-import { throttleable } from '../utils/throttle';
 import { expandToRow, groupRowsByParents, optionalGetterForProp } from '../utils/tree';
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
 import { DatatableRowDefDirective } from './body/body-row-def.component';
@@ -731,18 +730,28 @@ export class DatatableComponent<TRow extends Row = any>
   protected verticalScrollVisible = false;
   private readonly dimensions = signal<Pick<DOMRect, 'width' | 'height'>>({ height: 0, width: 0 });
 
-  constructor() {
-    // TODO: This should be a computed signal.
-    // Effect to handle recalculate when limit or count changes
-    effect(() => {
-      // Track limit and count changes
-      this.limit();
-      this.count();
-      // Recalculate without tracking other signals
-      untracked(() => this.recalculateDims());
-    });
+  /** Re-measures the table whenever the host element's size changes. */
+  private resizeObserver?: ResizeObserver;
 
+  /** Pending debounce timer for the {@link resizeObserver} callback. */
+  private resizeDebounce?: ReturnType<typeof setTimeout>;
+
+  constructor() {
     effect(() => this.recalculateColumns());
+
+    afterNextRender(() => {
+      this.resizeObserver = new ResizeObserver(entries => {
+        const borderBox = entries[entries.length - 1]?.borderBoxSize?.[0];
+        if (!borderBox) {
+          return;
+        }
+        clearTimeout(this.resizeDebounce);
+        this.resizeDebounce = setTimeout(() => {
+          this.dimensions.set({ width: borderBox.inlineSize, height: borderBox.blockSize });
+        }, 5);
+      });
+      this.resizeObserver.observe(this.element);
+    });
   }
 
   /*
@@ -752,13 +761,6 @@ export class DatatableComponent<TRow extends Row = any>
     const rowDiffers = this.checkRowListChanges() ? this.rowDiffer.diff(this.rows()) : null;
     if (rowDiffers || this.disableRowCheck()) {
       this._rowDiffCount.update(count => count + 1);
-      if (rowDiffers) {
-        queueMicrotask(() => {
-          this.recalculate();
-          this.cd.markForCheck();
-        });
-      }
-
       this.cd.markForCheck();
     }
   }
@@ -768,26 +770,18 @@ export class DatatableComponent<TRow extends Row = any>
    * view has been fully initialized.
    */
   ngAfterViewInit(): void {
-    // this has to be done to prevent the change detection
-    // tree from freaking out because we are readjusting
-    if (typeof requestAnimationFrame === 'undefined') {
-      return;
-    }
-
-    requestAnimationFrame(() => {
-      this.recalculate();
-
-      // emit page for virtual server-side kickoff
-      if (this.externalPaging() && this.scrollbarV()) {
+    // emit page for virtual server-side kickoff
+    if (this.externalPaging() && this.scrollbarV()) {
+      queueMicrotask(() =>
         this.page.emit({
           count: this.count(),
           pageSize: this.pageSize(),
           limit: this.limit(),
           offset: 0,
           sorts: this.sorts()
-        });
-      }
-    });
+        })
+      );
+    }
   }
 
   /**
@@ -840,28 +834,16 @@ export class DatatableComponent<TRow extends Row = any>
   }
 
   /**
-   * Recalc's the sizes of the grid.
-   *
-   * Updated automatically on changes to:
-   *
-   *  - Columns
-   *  - Rows
-   *  - Paging related
-   *
-   * Also can be manually invoked or upon window resize.
+   * @deprecated No-op. Dimensions are kept current by a `ResizeObserver` on the
+   * host element; this will be removed in a future release.
    */
-  recalculate(): void {
-    this.recalculateDims();
-  }
+  recalculate(): void {}
 
   /**
-   * Window resize handler to update sizes.
+   * @deprecated No-op. The `window:resize` listener was replaced by a
+   * `ResizeObserver`; this will be removed in a future release.
    */
-  @HostListener('window:resize')
-  @throttleable(5)
-  onWindowResize(): void {
-    this.recalculate();
-  }
+  onWindowResize(): void {}
 
   /**
    * Recalulcates the column widths based on column width
@@ -902,14 +884,10 @@ export class DatatableComponent<TRow extends Row = any>
   }
 
   /**
-   * Recalculates the dimensions of the table size.
-   * Internally calls the page size and row count calcs too.
-   *
+   * @deprecated No-op. Dimensions are kept current by a `ResizeObserver` on the
+   * host element; this will be removed in a future release.
    */
-  recalculateDims(): void {
-    const dims = this.element.getBoundingClientRect();
-    this.dimensions.set(dims);
-  }
+  recalculateDims(): void {}
 
   /**
    * Body triggered a page event.
@@ -1181,6 +1159,8 @@ export class DatatableComponent<TRow extends Row = any>
   }
 
   ngOnDestroy() {
+    this.resizeObserver?.disconnect();
+    clearTimeout(this.resizeDebounce);
     this._subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
