@@ -29,7 +29,6 @@ import {
 import { Subscription } from 'rxjs';
 
 import { ScrollContainerDirective } from '../directives/scroll-container.directive';
-import { VisibilityDirective } from '../directives/visibility.directive';
 import { NGX_DATATABLE_CONFIG, NgxDatatableConfig } from '../ngx-datatable.config';
 import { ScrollbarHelper } from '../services/scrollbar-helper.service';
 import {
@@ -84,7 +83,6 @@ import { DatatableRowDetailDirective } from './row-detail/row-detail.directive';
 @Component({
   selector: 'ngx-datatable',
   imports: [
-    VisibilityDirective,
     ScrollContainerDirective,
     DataTableHeaderComponent,
     DataTableBodyComponent,
