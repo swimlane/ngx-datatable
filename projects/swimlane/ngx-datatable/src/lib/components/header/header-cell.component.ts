@@ -93,10 +93,7 @@ import { nextSortDir } from '../../utils/sort';
     '[class.resizeable]': 'showResizeHandle()',
     '[class.sort-active]': 'sortDir()',
     '[class.sort-asc]': 'sortDir() === "asc"',
-    '[class.sort-desc]': 'sortDir() === "desc"',
-    '[style.minWidth.px]': 'column().minWidth',
-    '[style.maxWidth.px]': 'column().maxWidth',
-    '[style.width.px]': 'column().width()'
+    '[class.sort-desc]': 'sortDir() === "desc"'
   }
 })
 export class DataTableHeaderCellComponent implements OnInit, OnDestroy {

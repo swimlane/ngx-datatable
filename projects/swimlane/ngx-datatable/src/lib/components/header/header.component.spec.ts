@@ -4,6 +4,7 @@ import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/
 import { By } from '@angular/platform-browser';
 import { vi } from 'vitest';
 
+import { columnsByPinArr, gridColumnTemplate } from '../../utils/column';
 import { toInternalColumn } from '../../utils/column-helper';
 import { DataTableHeaderComponent } from './header.component';
 import { HeaderHarness } from './testing/header.harness';
@@ -12,6 +13,14 @@ describe('DataTableHeaderComponent', () => {
   let fixture: ComponentFixture<DataTableHeaderComponent>;
   let componentRef: ComponentRef<DataTableHeaderComponent>;
   let harness: HeaderHarness;
+
+  const applyMockGridTemplate = (): void => {
+    fixture.nativeElement.style.width = 'max-content';
+    fixture.nativeElement.style.setProperty(
+      '--ngx-datatable-grid-template-columns',
+      gridColumnTemplate(columnsByPinArr(componentRef.instance.columns()))
+    );
+  };
 
   beforeEach(async () => {
     // Delay auto-detect until required inputs are set (avoids NG0950).
@@ -55,6 +64,7 @@ describe('DataTableHeaderComponent', () => {
         { prop: 'col2', name: 'Column 2', width: 200 }
       ])
     );
+    applyMockGridTemplate();
     // there is setTimeout in columns setter so we need to wait for it
     vi.advanceTimersByTime(0);
     expect(await harness.getHeaderRowWidth()).toBeCloseTo(500);
@@ -94,6 +104,7 @@ describe('DataTableHeaderComponent', () => {
       const { column, newValue } = event;
       column.width.set(newValue);
       componentRef.setInput('columns', [...componentRef.instance.columns()]);
+      applyMockGridTemplate();
     });
 
     const initialWidth = await harness.getColumnWidth(0);

@@ -59,7 +59,12 @@ import {
   TreeStatus
 } from '../types/public.types';
 import { TableColumn } from '../types/table-column.type';
-import { columnGroupWidths, columnsByPin } from '../utils/column';
+import {
+  columnGroupWidths,
+  columnsByPin,
+  columnsByPinArr,
+  gridColumnTemplate
+} from '../utils/column';
 import { toInternalColumn, toPublicColumn } from '../utils/column-helper';
 import { adjustColumnWidths, forceFillColumnWidths } from '../utils/math';
 import { numberOrUndefinedAttribute } from '../utils/number-or-undefined-attribute';
@@ -687,6 +692,16 @@ export class DatatableComponent<TRow extends Row = any>
         : (this.columns() ?? []),
       this._defaultColumnWidth
     )
+  );
+
+  /**
+   * The shared `grid-template-columns` definition for the combined css-grid.
+   * It is exposed once as a custom property on the scroll container so the
+   * header and every body row align to the same column tracks via `var()`,
+   * instead of each row binding its own (identical) template string.
+   */
+  readonly _gridTemplateColumns = computed(() =>
+    gridColumnTemplate(columnsByPinArr(this._internalColumns()))
   );
 
   /**

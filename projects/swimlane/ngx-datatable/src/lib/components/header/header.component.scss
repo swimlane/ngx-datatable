@@ -9,8 +9,8 @@
 }
 
 .datatable-header-inner {
-  display: flex;
-  min-inline-size: max-content;
+  display: grid;
+  grid-template-columns: var(--ngx-datatable-grid-template-columns);
 
   :host-context(ngx-datatable.fixed-header) & {
     white-space: nowrap;
@@ -18,7 +18,8 @@
 }
 
 .datatable-row-group {
-  display: flex;
+  display: grid;
+  grid-template-columns: subgrid;
 }
 
 @include shared.pinned-columns();

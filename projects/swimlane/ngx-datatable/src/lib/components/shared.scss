@@ -16,6 +16,7 @@
 
 @mixin cell-styles() {
   overflow-x: hidden;
+  min-inline-size: 0;
   vertical-align: top;
   display: inline-block;
   line-height: 1.625;

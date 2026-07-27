@@ -3,13 +3,9 @@
     datatableScrollContainer
     role="table"
     class="datatable-grid"
+    [style.--ngx-datatable-grid-template-columns]="_gridTemplateColumns()"
     [style.scroll-padding-block-start.px]="_isFixedHeader() ? headerHeight() : null"
   >
-    <!-- TODO: remove the explicit width.
-          This is a temporary solution which is needed to keep the current behavior if columns exceed their width.
-          This happens if padding + content is bigger than the defined width.
-          See the checkbox examples.
-    -->
     @if (headerHeight()) {
       <datatable-header
         role="rowgroup"
@@ -29,7 +25,6 @@
         [verticalScrollVisible]="verticalScrollVisible"
         [enableClearingSortState]="enableClearingSortState()"
         [ariaHeaderCheckboxMessage]="messages().ariaHeaderCheckboxMessage ?? 'Select all rows'"
-        [style.width.px]="totalColumnGroupWidths()"
         (sort)="onColumnSort($event)"
         (resize)="onColumnResize($event)"
         (resizing)="onColumnResizing($event)"
@@ -80,7 +75,6 @@
       [rowDragEvents]="rowDragEvents"
       [rowDefTemplate]="_rowDefTemplate()"
       [cssClasses]="cssClasses()"
-      [style.width.px]="totalColumnGroupWidths()"
       [(selected)]="selected"
       (page)="onBodyPage($event)"
       (activate)="activate.emit($event)"

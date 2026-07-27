@@ -31,7 +31,7 @@ import { DataTableBodyCellComponent } from './body-cell.component';
         <div
           class="datatable-row-group"
           [class]="'datatable-row-' + colGroup.type"
-          [style.width.px]="_columnGroupWidths()[colGroup.type]"
+          [style.grid-column]="'span ' + colGroup.columns.length"
           [class.row-disabled]="disabled()"
         >
           @for (column of colGroup.columns; track column.$$id; let ii = $index) {
