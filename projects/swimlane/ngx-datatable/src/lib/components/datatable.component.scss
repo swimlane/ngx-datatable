@@ -14,7 +14,7 @@
 
 .datatable-grid {
   display: grid;
-  grid-template-columns: var(--ngx-datatable-grid-template-columns);
+  grid-template-columns: var(--ngx-datatable-grid-template-columns, auto);
   grid-template-rows: auto 1fr;
   position: relative;
   max-inline-size: 100%;
