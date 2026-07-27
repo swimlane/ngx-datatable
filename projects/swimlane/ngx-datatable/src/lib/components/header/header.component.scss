@@ -2,7 +2,10 @@
 
 :host {
   display: block;
-  overflow: hidden;
+  grid-area: header;
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 11;
 }
 
 .datatable-header-inner {

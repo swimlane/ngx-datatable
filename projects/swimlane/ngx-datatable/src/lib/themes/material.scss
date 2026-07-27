@@ -232,6 +232,7 @@ $datatable-ghost-cell-animation-duration: 10s;
 	 * Header Styles
 	 */
   .datatable-header {
+    background-color: $datatable-header-cell-background;
     border-block-end: 1px solid $datatable-header-border-bottom-color;
 
     .datatable-row-left,

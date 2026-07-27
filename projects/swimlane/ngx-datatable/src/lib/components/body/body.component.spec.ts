@@ -2,6 +2,7 @@ import { EventEmitter } from '@angular/core';
 import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { ScrollContainerDirective } from '../../directives/scroll-container.directive';
 import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 import { toInternalColumn } from '../../utils/column-helper';
 import { DATATABLE_COMPONENT_TOKEN } from '../../utils/table-token';
@@ -9,6 +10,19 @@ import { DataTableBodyRowComponent } from './body-row.component';
 import { DataTableBodyComponent } from './body.component';
 import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.component';
 import { ScrollerComponent } from './scroller.component';
+
+/**
+ * The body is rendered in isolation here, without the surrounding `role="table"`
+ * grid that normally carries {@link ScrollContainerDirective}, so the scroller's
+ * required injection is satisfied with a no-op stub.
+ */
+const scrollContainerStub: Partial<ScrollContainerDirective> = {
+  scrollTop: 0,
+  verticalScrollVisible: false,
+  setScrollTop: () => {},
+  scrollTo: () => {},
+  listenToScroll: () => () => {}
+};
 
 describe('DataTableBodyComponent', () => {
   let fixture: ComponentFixture<DataTableBodyComponent>;
@@ -20,6 +34,7 @@ describe('DataTableBodyComponent', () => {
       providers: [
         ScrollbarHelper,
         { provide: DATATABLE_COMPONENT_TOKEN, useValue: {} },
+        { provide: ScrollContainerDirective, useValue: scrollContainerStub },
         { provide: ComponentFixtureAutoDetect, useValue: false }
       ]
     });

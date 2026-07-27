@@ -1,5 +1,10 @@
-<div visibilityObserver (visible)="recalculate()">
-  <div role="table">
+<div class="datatable-wrapper" visibilityObserver (visible)="recalculate()">
+  <div
+    datatableScrollContainer
+    role="table"
+    class="datatable-grid"
+    [style.scroll-padding-block-start.px]="_isFixedHeader() ? headerHeight() : null"
+  >
     @if (headerHeight()) {
       <datatable-header
         role="rowgroup"

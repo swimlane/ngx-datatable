@@ -2,12 +2,8 @@
   position: relative;
   z-index: 10;
   display: block;
-  overflow: hidden;
-
-  :host-context(ngx-datatable.scroll-horz) & {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch; // Required for iOS optimization
-  }
+  grid-area: body;
+  min-block-size: 0;
 }
 
 datatable-scroller {
@@ -16,10 +12,6 @@ datatable-scroller {
   :host-context(ngx-datatable.fixed-row) & {
     white-space: nowrap;
   }
-}
-
-:host-context(ngx-datatable.scroll-vertical) :host {
-  overflow-y: auto;
 }
 
 [hidden] {

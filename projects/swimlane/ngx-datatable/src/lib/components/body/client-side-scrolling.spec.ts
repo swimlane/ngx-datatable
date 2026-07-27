@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { TableColumn } from '../../types/table-column.type';
 import { DatatableComponent } from '../datatable.component';
+import { DataTableBodyComponent } from './body.component';
 
 interface TreeRow {
   id: number;
@@ -19,7 +20,7 @@ const expectedOffset = (index: number): number => index * ROW_HEIGHT;
 describe('Client-side Scrolling – DatatableComponent.scrollToRow', () => {
   let fixture: ComponentFixture<DatatableComponent>;
   let datatable: DatatableComponent;
-  /** The datatable-body element, which is the scrollable container. */
+  /** The `role="table"` grid element, which is the scrollable container. */
   let bodyEl: HTMLElement;
 
   let columnsSig: WritableSignal<TableColumn[]>;
@@ -60,7 +61,7 @@ describe('Client-side Scrolling – DatatableComponent.scrollToRow', () => {
     await fixture.whenStable();
 
     datatable = fixture.componentInstance;
-    bodyEl = fixture.debugElement.query(By.css('datatable-body')).nativeElement as HTMLElement;
+    bodyEl = fixture.debugElement.query(By.css('[role="table"]')).nativeElement as HTMLElement;
   });
 
   describe('With virtualization', () => {
@@ -86,39 +87,48 @@ describe('Client-side Scrolling – DatatableComponent.scrollToRow', () => {
     });
 
     describe('block option', () => {
-      /** Body viewport height established by the test harness. */
-      let viewportHeight: number;
+      let body: DataTableBodyComponent;
+      /** The viewport height scrollToIndex uses (grid height minus header band). */
+      const viewportHeight = (): number => body.bodyHeight() as number;
+      // The browser snaps the applied scroll offset to a physical pixel (the
+      // sticky header is sub-pixel tall), so the read-back drifts <1px from the
+      // computed target. Assert with a sub-pixel tolerance.
+      const PIXEL_PRECISION = 0;
 
       beforeEach(async () => {
         // Force a deterministic viewport height so block calculations are predictable.
-        bodyEl.style.height = '200px';
+        fixture.nativeElement.style.height = '200px';
+        // Refresh the measured dimensions so `bodyHeight()` (which scrollToIndex
+        // relies on) reflects the forced height.
+        datatable.recalculate();
         await fixture.whenStable();
-        viewportHeight = bodyEl.clientHeight;
+        body = fixture.debugElement.query(By.directive(DataTableBodyComponent))
+          .componentInstance as DataTableBodyComponent;
       });
 
       it('should scroll to start by default', () => {
         datatable.scrollToRow(rowsSig()[20]);
-        expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(20));
+        expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(20), PIXEL_PRECISION);
       });
 
       it('should scroll with block: "start"', () => {
         datatable.scrollToRow(rowsSig()[20], { block: 'start' });
-        expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(20));
+        expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(20), PIXEL_PRECISION);
       });
 
       it('should scroll with block: "center"', () => {
         datatable.scrollToRow(rowsSig()[20], { block: 'center' });
         const expected = Math.max(
           0,
-          expectedOffset(20) - Math.max(0, (viewportHeight - ROW_HEIGHT) / 2)
+          expectedOffset(20) - Math.max(0, (viewportHeight() - ROW_HEIGHT) / 2)
         );
-        expect(bodyEl.scrollTop).toBeCloseTo(expected);
+        expect(bodyEl.scrollTop).toBeCloseTo(expected, PIXEL_PRECISION);
       });
 
       it('should scroll with block: "end"', () => {
         datatable.scrollToRow(rowsSig()[20], { block: 'end' });
-        const expected = Math.max(0, expectedOffset(21) - viewportHeight);
-        expect(bodyEl.scrollTop).toBeCloseTo(expected);
+        const expected = Math.max(0, expectedOffset(21) - viewportHeight());
+        expect(bodyEl.scrollTop).toBeCloseTo(expected, PIXEL_PRECISION);
       });
 
       it('should clamp negative tops to 0 (e.g. block: "end" on first row)', () => {
@@ -130,21 +140,21 @@ describe('Client-side Scrolling – DatatableComponent.scrollToRow', () => {
         it('should scroll up to row top when row is above the viewport', () => {
           bodyEl.scrollTop = expectedOffset(30);
           datatable.scrollToRow(rowsSig()[5], { block: 'nearest' });
-          expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(5));
+          expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(5), PIXEL_PRECISION);
         });
 
         it('should scroll down so row bottom aligns when row is below the viewport', () => {
           bodyEl.scrollTop = 0;
           datatable.scrollToRow(rowsSig()[49], { block: 'nearest' });
-          const expected = Math.max(0, expectedOffset(50) - viewportHeight);
-          expect(bodyEl.scrollTop).toBeCloseTo(expected);
+          const expected = Math.max(0, expectedOffset(50) - viewportHeight());
+          expect(bodyEl.scrollTop).toBeCloseTo(expected, PIXEL_PRECISION);
         });
 
         it('should not change scroll position when row is already fully visible', () => {
           const currentTop = expectedOffset(2);
           bodyEl.scrollTop = currentTop;
           datatable.scrollToRow(rowsSig()[3], { block: 'nearest' });
-          expect(bodyEl.scrollTop).toBeCloseTo(currentTop);
+          expect(bodyEl.scrollTop).toBeCloseTo(currentTop, PIXEL_PRECISION);
         });
       });
     });

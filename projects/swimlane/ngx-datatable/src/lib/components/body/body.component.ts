@@ -260,9 +260,7 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
   styleUrl: './body.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    'class': 'datatable-body',
-    '[style.height]': '_bodyHeight()',
-    '[style.width]': '_bodyWidth()'
+    class: 'datatable-body'
   }
 })
 export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, OnChanges {
@@ -372,13 +370,6 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   readonly groupExpansions = signal<Group<TRow>[]>([]);
 
   _rows!: (TRow | undefined)[];
-  readonly _bodyWidth = computed(() => {
-    if (this.scrollbarH()) {
-      return this.innerWidth() + 'px';
-    } else {
-      return '100%';
-    }
-  });
   readonly _bodyHeight = computed(() => {
     if (this.scrollbarV()) {
       return this.bodyHeight() + 'px';
@@ -581,8 +572,9 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
       const rowTop = cache.query(index - 1);
       const rowBottom = cache.query(index);
       const rowHeight = rowBottom - rowTop;
-      const viewportHeight = scroller.parentElement?.clientHeight ?? 0;
-      const currentScrollTop = scroller.parentElement?.scrollTop ?? 0;
+      // virtualization always provides a numeric bodyHeight
+      const viewportHeight = this.bodyHeight() as number;
+      const currentScrollTop = scroller.scrollTop;
       const block = options?.block ?? 'start';
 
       let top: number;

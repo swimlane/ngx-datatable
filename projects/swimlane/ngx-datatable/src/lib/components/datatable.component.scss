@@ -1,7 +1,35 @@
 :host {
   display: block;
   overflow: hidden;
-  justify-content: center;
   position: relative;
   transform: translate3d(0, 0, 0);
+}
+
+.datatable-wrapper {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+  min-block-size: 0;
+}
+
+.datatable-grid {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    'header'
+    'body';
+  position: relative;
+  max-inline-size: 100%;
+  min-block-size: 0;
+}
+
+:host(.scroll-horz) .datatable-grid {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; // Required for iOS optimization
+}
+
+:host(.scroll-vertical) .datatable-grid {
+  overflow-y: auto;
+  flex: 1 1 0;
 }

@@ -28,6 +28,7 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
+import { ScrollContainerDirective } from '../directives/scroll-container.directive';
 import { VisibilityDirective } from '../directives/visibility.directive';
 import { NGX_DATATABLE_CONFIG, NgxDatatableConfig } from '../ngx-datatable.config';
 import { ScrollbarHelper } from '../services/scrollbar-helper.service';
@@ -80,6 +81,7 @@ import { DatatableRowDetailDirective } from './row-detail/row-detail.directive';
   selector: 'ngx-datatable',
   imports: [
     VisibilityDirective,
+    ScrollContainerDirective,
     DataTableHeaderComponent,
     DataTableBodyComponent,
     DataTableFooterComponent,
@@ -563,9 +565,11 @@ export class DatatableComponent<TRow extends Row = any>
     read: ElementRef<HTMLElement>
   });
 
-  private readonly _bodyElement = viewChild.required(DataTableBodyComponent, {
-    read: ElementRef<HTMLElement>
-  });
+  /**
+   * The `role="table"` element. This is the css-grid that owns both the
+   * horizontal and vertical scroll (Option A: single scroll container).
+   */
+  private readonly _scrollContainer = viewChild.required(ScrollContainerDirective);
 
   /** @internal */
   readonly _rowDefTemplate = contentChild(DatatableRowDefDirective, {
@@ -850,8 +854,7 @@ export class DatatableComponent<TRow extends Row = any>
     if (!width) {
       return [];
     }
-    const { scrollHeight, clientHeight } = this._bodyElement().nativeElement;
-    this.verticalScrollVisible = scrollHeight > clientHeight;
+    this.verticalScrollVisible = this._scrollContainer().verticalScrollVisible;
     if (this.scrollbarV() || this.scrollbarVDynamic()) {
       width = width - (this.verticalScrollVisible ? this.scrollbarHelper.width : 0);
     }
@@ -916,12 +919,6 @@ export class DatatableComponent<TRow extends Row = any>
   onBodyScroll(event: ScrollEvent): void {
     this._offsetX = event.offsetX;
     this.scroll.emit(event);
-
-    // Sync header scroll position directly via DOM to avoid Angular CD lag
-    const headerEl = this._headerElement()?.nativeElement;
-    if (headerEl) {
-      headerEl.scrollLeft = event.offsetX;
-    }
   }
 
   /**

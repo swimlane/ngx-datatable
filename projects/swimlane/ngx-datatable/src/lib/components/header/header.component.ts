@@ -3,7 +3,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  inject,
   input,
   output,
   TemplateRef
@@ -11,7 +10,6 @@ import {
 
 import { DatatableDraggableDirective } from '../../directives/datatable-draggable.directive';
 import { OrderableDirective } from '../../directives/orderable.directive';
-import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 import {
   ColumnResizeEventInternal,
   InnerSortEvent,
@@ -88,14 +86,11 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    'class': 'datatable-header',
-    '[style.height.px]': 'headerHeight()',
-    '[style.width]': 'headerWidth()'
+    class: 'datatable-header',
+    '[style.height.px]': 'headerHeight()'
   }
 })
 export class DataTableHeaderComponent {
-  private scrollbarHelper = inject(ScrollbarHelper);
-
   readonly lastColumnId = computed(() => this.columns().at(-1)?.$$id);
 
   readonly sortAscendingIcon = input<string>();
@@ -140,17 +135,6 @@ export class DataTableHeaderComponent {
       center: this.calcStylesByGroup('center'),
       right: this.calcStylesByGroup('right')
     };
-  });
-
-  readonly headerWidth = computed(() => {
-    if (this.scrollbarH()) {
-      const width = this.verticalScrollVisible()
-        ? this.innerWidth() - this.scrollbarHelper.width
-        : this.innerWidth();
-      return width + 'px';
-    }
-
-    return '100%';
   });
 
   onColumnResized({ width, column }: { width: number; column: TableColumnInternal }): void {
