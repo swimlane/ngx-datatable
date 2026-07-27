@@ -55,7 +55,7 @@ import { DataService } from '../data.service';
           (select)="onSelect($event)"
         >
           <ngx-datatable-column
-            [width]="30"
+            [width]="40"
             [sortable]="false"
             [canAutoResize]="false"
             [draggable]="false"

@@ -51,7 +51,7 @@ import { DataService } from '../data.service';
           </ng-template>
         }
         <ngx-datatable-column
-          [width]="30"
+          [width]="40"
           [sortable]="false"
           [canAutoResize]="false"
           [draggable]="false"
