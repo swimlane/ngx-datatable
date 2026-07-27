@@ -418,6 +418,72 @@ describe('DatatableComponent', () => {
     await fixture.whenStable();
     expect(cellSizes()).toEqual([75, 125, 50, 50]);
   });
+
+  it('should distribute initial column widths by flexGrow in flex mode', async () => {
+    component.columns.set([
+      { prop: 'A', width: 100, flexGrow: 1 },
+      { prop: 'B', width: 100, flexGrow: 2 },
+      { prop: 'C', width: 100, flexGrow: 1 }
+    ]);
+    component.columnMode.set('flex');
+    await fixture.whenStable();
+    const headerCells = fixture.debugElement.queryAll(By.directive(DataTableHeaderCellComponent));
+    const cellSizes = () => headerCells.map(cell => cell.nativeElement.clientWidth);
+
+    // 400px split across flexGrow [1, 2, 1] => 100 / 200 / 100
+    expect(cellSizes()).toEqual([100, 200, 100]);
+  });
+
+  it('should redistribute remaining width across the other flex columns after a column resize', async () => {
+    component.columns.set([
+      { prop: 'A', width: 100, flexGrow: 1 },
+      { prop: 'B', width: 100, flexGrow: 2 },
+      { prop: 'C', width: 100, flexGrow: 1 }
+    ]);
+    component.columnMode.set('flex');
+    await fixture.whenStable();
+    const headerCells = fixture.debugElement.queryAll(By.directive(DataTableHeaderCellComponent));
+    const cellSizes = () => headerCells.map(cell => cell.nativeElement.clientWidth);
+
+    expect(cellSizes()).toEqual([100, 200, 100]);
+
+    // Resize the second column to 160. The resized column is pinned to its new
+    // width and the remaining 240px is split across A/C by flexGrow (1:1).
+    headerCells[1].triggerEventHandler('resize', {
+      width: 160,
+      column: headerCells[1].componentInstance.column()
+    });
+    await fixture.whenStable();
+    expect(cellSizes()).toEqual([120, 160, 120]);
+  });
+
+  it('should keep a manually resized column fixed while rescaling the rest on window resize in flex mode', async () => {
+    component.columns.set([
+      { prop: 'A', width: 100, flexGrow: 1 },
+      { prop: 'B', width: 100, flexGrow: 2 },
+      { prop: 'C', width: 100, flexGrow: 1 }
+    ]);
+    component.columnMode.set('flex');
+    await fixture.whenStable();
+    const headerCells = fixture.debugElement.queryAll(By.directive(DataTableHeaderCellComponent));
+    const cellSizes = () => headerCells.map(cell => cell.nativeElement.clientWidth);
+
+    headerCells[1].triggerEventHandler('resize', {
+      width: 160,
+      column: headerCells[1].componentInstance.column()
+    });
+    await fixture.whenStable();
+    expect(cellSizes()).toEqual([120, 160, 120]);
+
+    // Shrink the table to 280px. Unlike force mode, the manually resized
+    // column stays at 160px and only the flex columns rescale: the remaining
+    // 120px is split across A/C by flexGrow (1:1).
+    component.size.set(280);
+    await fixture.whenStable();
+    fixture.debugElement.query(By.directive(DatatableComponent)).componentInstance.recalculate();
+    await fixture.whenStable();
+    expect(cellSizes()).toEqual([60, 160, 60]);
+  });
 });
 
 describe('DatatableComponent with Tree', () => {
