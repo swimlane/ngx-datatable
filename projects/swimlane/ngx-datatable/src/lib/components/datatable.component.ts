@@ -1,6 +1,6 @@
 import {
-  AfterViewInit,
   afterNextRender,
+  AfterViewInit,
   booleanAttribute,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
