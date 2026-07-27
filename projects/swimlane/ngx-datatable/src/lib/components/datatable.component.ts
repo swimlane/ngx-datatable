@@ -51,7 +51,6 @@ import {
   RowOrGroup,
   ScrollEvent,
   ScrollToRowOptions,
-  SelectEvent,
   SelectionType,
   SortEvent,
   SortPropDir,
@@ -457,24 +456,6 @@ export class DatatableComponent<TRow extends Row = any>
    * A cell or row was focused via keyboard or mouse click.
    */
   readonly activate = output<ActivateEvent<TRow>>();
-
-  /**
-   * A cell or row was selected.
-   * @deprecated Use two-way binding on `selected` instead.
-   *
-   * Before:
-   * ```html
-   * <ngx-datatable [selected]="mySelection" (select)="onSelect($event)"></ngx-datatable>
-   * ```
-   *
-   * After:
-   * ```html
-   * <ngx-datatable [selected]="mySelection" (selectedChange)="onSelect({selected: $event})"></ngx-datatable>
-   * <!-- or -->
-   * <ngx-datatable [(selected)]="mySelection"></ngx-datatable>
-   * ```
-   */
-  readonly select = output<SelectEvent<TRow>>();
 
   /**
    * The table was paged either triggered by the pager or the body scroll.
@@ -916,9 +897,6 @@ export class DatatableComponent<TRow extends Row = any>
 
     if (this.selectAllRowsOnPage()) {
       this.selected.set([]);
-      this.select.emit({
-        selected: this.selected()
-      });
     }
   }
 
@@ -1050,9 +1028,6 @@ export class DatatableComponent<TRow extends Row = any>
     // clean selected rows
     if (this.selectAllRowsOnPage()) {
       this.selected.set([]);
-      this.select.emit({
-        selected: this.selected()
-      });
     }
 
     this.sorts.set(event.sorts);
@@ -1108,17 +1083,6 @@ export class DatatableComponent<TRow extends Row = any>
         this.selected.set([]);
       }
     }
-
-    this.select.emit({
-      selected: this.selected()
-    });
-  }
-
-  /**
-   * A row was selected from body
-   */
-  onBodySelect(selected: TRow[]): void {
-    this.select.emit({ selected });
   }
 
   /**

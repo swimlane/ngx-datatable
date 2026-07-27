@@ -2,8 +2,7 @@ import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/cor
 import {
   ActivateEvent,
   DataTableColumnDirective,
-  DatatableComponent,
-  SelectEvent
+  DatatableComponent
 } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
@@ -47,7 +46,7 @@ import { DataService } from '../data.service';
           [selectAllRowsOnPage]="false"
           [displayCheck]="displayCheck"
           (activate)="onActivate($event)"
-          (select)="onSelect($event)"
+          (selectedChange)="onSelect($event)"
         >
           <ngx-datatable-column
             [width]="40"
@@ -91,7 +90,7 @@ export class CheckboxSelectionComponent {
     this.dataService.load('company.json').subscribe(data => this.rows.set(data));
   }
 
-  onSelect({ selected }: SelectEvent<Employee>) {
+  onSelect(selected: Employee[]) {
     this.selected.splice(0, this.selected.length);
     this.selected.push(...selected);
   }
