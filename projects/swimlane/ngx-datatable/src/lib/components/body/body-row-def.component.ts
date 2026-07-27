@@ -28,7 +28,14 @@ import { RowOrGroup } from '../../types/public.types';
       [ngTemplateOutlet]="rowDef.rowDefInternal().rowTemplate"
       [ngTemplateOutletContext]="rowContext"
     />
-  }`
+  }`,
+  styles: `
+    :host {
+      display: grid;
+      grid-template-columns: subgrid;
+      grid-column: 1 / -1;
+    }
+  `
 })
 export class DatatableRowDefComponent {
   rowDef = inject(ROW_DEF_TOKEN);

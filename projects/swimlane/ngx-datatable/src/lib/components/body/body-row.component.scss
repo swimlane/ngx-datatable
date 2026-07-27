@@ -2,7 +2,8 @@
 
 :host {
   display: grid;
-  grid-template-columns: var(--ngx-datatable-grid-template-columns);
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
   grid-template-rows: minmax(0, 1fr);
   outline: none;
 

@@ -158,7 +158,7 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
           </datatable-row-wrapper>
         </ng-template>
 
-        <div [style.transform]="renderOffset()">
+        <div class="datatable-row-render-wrapper" [style.transform]="renderOffset()">
           @for (group of rowsToRender(); track rowTrackingFn(i, group); let i = $index) {
             @if (!group && ghostLoadingIndicator()) {
               <ghost-loader [columns]="columns" [pageSize]="1" [rowHeight]="rowHeight()" />

@@ -14,11 +14,8 @@
 
 .datatable-grid {
   display: grid;
-  grid-template-columns: auto;
+  grid-template-columns: var(--ngx-datatable-grid-template-columns);
   grid-template-rows: auto 1fr;
-  grid-template-areas:
-    'header'
-    'body';
   position: relative;
   max-inline-size: 100%;
   min-block-size: 0;
@@ -32,4 +29,8 @@
 :host(.scroll-vertical) .datatable-grid {
   overflow-y: auto;
   flex: 1 1 0;
+}
+
+.datatable-empty-row {
+  grid-column: 1 / -1;
 }

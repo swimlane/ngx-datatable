@@ -13,7 +13,7 @@ describe('DataTableBodyRowComponent', () => {
     changeDetection: ChangeDetectionStrategy.Eager,
     imports: [DataTableBodyRowComponent],
     template: `
-      <div [style.--ngx-datatable-grid-template-columns]="gridTemplate()">
+      <div style="display: grid" [style.grid-template-columns]="gridTemplate()">
         <datatable-body-row
           ariaRowCheckboxMessage=""
           [cssClasses]="{}"

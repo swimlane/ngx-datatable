@@ -1,17 +1,28 @@
 :host {
   position: relative;
   z-index: 10;
-  display: block;
-  grid-area: body;
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  grid-row: 2;
   min-block-size: 0;
 }
 
-datatable-scroller {
-  display: block;
+datatable-scroller,
+.datatable-row-render-wrapper {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  align-content: start;
 
   :host-context(ngx-datatable.fixed-row) & {
     white-space: nowrap;
   }
+}
+
+.custom-loading-indicator-wrapper,
+ghost-loader {
+  grid-column: 1 / -1;
 }
 
 [hidden] {

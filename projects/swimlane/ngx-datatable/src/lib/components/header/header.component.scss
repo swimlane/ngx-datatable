@@ -1,8 +1,10 @@
 @use '../shared';
 
 :host {
-  display: block;
-  grid-area: header;
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  grid-row: 1;
   position: sticky;
   inset-block-start: 0;
   z-index: 11;
@@ -10,7 +12,8 @@
 
 .datatable-header-inner {
   display: grid;
-  grid-template-columns: var(--ngx-datatable-grid-template-columns);
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
 
   :host-context(ngx-datatable.fixed-header) & {
     white-space: nowrap;

@@ -16,9 +16,8 @@ describe('DataTableHeaderComponent', () => {
 
   const applyMockGridTemplate = (): void => {
     fixture.nativeElement.style.width = 'max-content';
-    fixture.nativeElement.style.setProperty(
-      '--ngx-datatable-grid-template-columns',
-      gridColumnTemplate(columnsByPinArr(componentRef.instance.columns()))
+    fixture.nativeElement.style.gridTemplateColumns = gridColumnTemplate(
+      columnsByPinArr(componentRef.instance.columns())
     );
   };
 
