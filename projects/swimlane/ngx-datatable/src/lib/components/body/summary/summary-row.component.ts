@@ -58,7 +58,6 @@ export class DataTableSummaryRowComponent {
   readonly columns = input.required<TableColumnInternal[]>();
 
   readonly rowHeight = input.required<number>();
-  readonly innerWidth = input.required<number>();
   readonly template = input<TemplateRef<void>>();
 
   protected readonly _internalColumns = computed(() => {

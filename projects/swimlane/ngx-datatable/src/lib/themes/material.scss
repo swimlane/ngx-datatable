@@ -209,9 +209,9 @@ $datatable-ghost-cell-animation-duration: 10s;
   /**
 	 * Global Row Styles
 	 */
-  .datatable-header,
-  .datatable-body {
-    .horizontal-overflow {
+  &.horizontal-overflow {
+    .datatable-header,
+    .datatable-body {
       .datatable-row-left {
         background-color: $ngx-datatable-background;
         background-position: 100% 0;

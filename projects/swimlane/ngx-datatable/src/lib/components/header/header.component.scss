@@ -10,6 +10,7 @@
 
 .datatable-header-inner {
   display: flex;
+  min-inline-size: max-content;
 
   :host-context(ngx-datatable.fixed-header) & {
     white-space: nowrap;

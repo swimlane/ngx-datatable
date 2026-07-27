@@ -39,7 +39,6 @@ import {
   SelectionType
 } from '../../types/public.types';
 import { TableColumn } from '../../types/table-column.type';
-import { columnGroupWidths, columnsByPin } from '../../utils/column';
 import { ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, ARROW_UP, ENTER } from '../../utils/keys';
 import { RowHeightCache } from '../../utils/row-height-cache';
 import { selectRows, selectRowsBetween } from '../../utils/selection';
@@ -77,7 +76,6 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
     }
     @let scrollbarV = this.scrollbarV();
     @let columns = this.columns();
-    @let columnGroupWidths = this.columnGroupWidths();
     @let bodyHeight = this._bodyHeight();
     @let rows = this.rows();
     @let rowCount = this.rowCount();
@@ -95,15 +93,12 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
         [scrollbarV]="scrollbarV"
         [scrollbarH]="scrollbarH()"
         [scrollHeight]="scrollHeight()"
-        [scrollWidth]="columnGroupWidths.total"
-        [class.horizontal-overflow]="innerWidth() < columnGroupWidths.total"
         (scroll)="onBodyScroll($event)"
       >
         @if ((summaryRow() || summaryRowTemplate()) && summaryPosition() === 'top') {
           <datatable-summary-row
             [class.sticky]="summaryRowTemplate()"
             [rowHeight]="summaryHeight()"
-            [innerWidth]="innerWidth()"
             [rows]="rows"
             [columns]="columns"
             [template]="summaryRowTemplate()"
@@ -124,7 +119,6 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
                 ? true
                 : null
             "
-            [innerWidth]="innerWidth()"
             [rowDetail]="rowDetail()"
             [detailRowHeightFn]="detailRowHeightFn()"
             [row]="row"
@@ -205,8 +199,6 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
                       ? true
                       : null
                   "
-                  [innerWidth]="innerWidth()"
-                  [style.width]="groupedRows() ? columnGroupWidths.total : undefined"
                   [groupHeader]="groupHeader()"
                   [groupHeaderRowHeight]="getGroupHeaderRowHeight(group, i)"
                   [disabled]="disabled"
@@ -238,7 +230,6 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
       @if ((summaryRow() || summaryRowTemplate()) && summaryPosition() === 'bottom') {
         <datatable-summary-row
           [rowHeight]="summaryHeight()"
-          [innerWidth]="innerWidth()"
           [rows]="rows"
           [columns]="columns"
           [template]="summaryRowTemplate()"
@@ -250,7 +241,6 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
         [scrollbarV]="scrollbarV"
         [scrollbarH]="scrollbarH()"
         [scrollHeight]="scrollHeight()"
-        [style.width]="scrollbarH() ? columnGroupWidths?.total + 'px' : '100%'"
         (scroll)="onBodyScroll($event)"
       >
         <ng-content select="[empty-content]" />
@@ -286,7 +276,6 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   readonly groupedRows = input<Group<TRow>[]>();
   // TODO: Find a better way to handle default expansion state with signal input
   @Input() groupExpansionDefault?: boolean;
-  readonly innerWidth = input.required<number>();
   readonly virtualization = input<boolean>();
   readonly summaryRow = input<boolean>();
   readonly summaryPosition = input.required<string>();
@@ -360,10 +349,6 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   readonly rowHeightsCache = computed(() => this.computeRowHeightsCache());
   readonly offsetY = signal(0);
   readonly indexes = computed(() => this.computeIndexes());
-  readonly columnGroupWidths = computed(() => {
-    const colsByPin = columnsByPin(this.columns());
-    return columnGroupWidths(colsByPin, this.columns());
-  });
   rowTrackingFn: TrackByFunction<RowOrGroup<TRow> | undefined>;
   destroyRef = inject(DestroyRef);
   readonly rowExpansions = signal<TRow[]>([]);

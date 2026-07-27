@@ -59,6 +59,7 @@ import {
   TreeStatus
 } from '../types/public.types';
 import { TableColumn } from '../types/table-column.type';
+import { columnGroupWidths, columnsByPin } from '../utils/column';
 import { toInternalColumn, toPublicColumn } from '../utils/column-helper';
 import { adjustColumnWidths, forceFillColumnWidths } from '../utils/math';
 import { numberOrUndefinedAttribute } from '../utils/number-or-undefined-attribute';
@@ -108,7 +109,8 @@ import { DatatableRowDetailDirective } from './row-detail/row-detail.directive';
     '[class.cell-selection]': 'selectionType() === "cell"',
     '[class.single-selection]': 'selectionType() === "single"',
     '[class.multi-selection]': 'selectionType() === "multi"',
-    '[class.multi-click-selection]': 'selectionType() === "multiClick"'
+    '[class.multi-click-selection]': 'selectionType() === "multiClick"',
+    '[class.horizontal-overflow]': '_innerWidth() < totalColumnGroupWidths()'
   }
 })
 export class DatatableComponent<TRow extends Row = any>
@@ -696,6 +698,11 @@ export class DatatableComponent<TRow extends Row = any>
     const rowCount = this.rowCount();
     const pageSize = this.pageSize();
     return Math.max(Math.min(offset, Math.ceil(rowCount / pageSize) - 1), 0);
+  });
+
+  readonly totalColumnGroupWidths = computed(() => {
+    const colsByPin = columnsByPin(this._internalColumns());
+    return columnGroupWidths(colsByPin, this._internalColumns()).total;
   });
 
   _subscriptions: Subscription[] = [];

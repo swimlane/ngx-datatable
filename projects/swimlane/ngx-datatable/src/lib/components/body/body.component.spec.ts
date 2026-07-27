@@ -40,7 +40,6 @@ describe('DataTableBodyComponent', () => {
     });
     fixture = TestBed.createComponent(DataTableBodyComponent);
     fixture.componentRef.setInput('rowDragEvents', new EventEmitter<any>());
-    fixture.componentRef.setInput('innerWidth', 400);
     fixture.componentRef.setInput('rowIdentity', (row: any) => row);
     fixture.componentRef.setInput('summaryPosition', 'top');
     fixture.componentRef.setInput('summaryHeight', 50);

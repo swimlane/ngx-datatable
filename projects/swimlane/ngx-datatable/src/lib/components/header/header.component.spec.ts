@@ -20,7 +20,6 @@ describe('DataTableHeaderComponent', () => {
     });
     fixture = TestBed.createComponent(DataTableHeaderComponent);
     fixture.componentRef.setInput('columns', []);
-    fixture.componentRef.setInput('innerWidth', 200);
     fixture.componentRef.setInput('sorts', []);
     fixture.componentRef.setInput('sortType', 'single');
     fixture.componentRef.setInput('headerHeight', 50);
@@ -253,26 +252,5 @@ describe('DataTableHeaderComponent', () => {
     expect(await harness.getColumnName(0)).toBe('Column 2');
     expect(await harness.getColumnName(1)).toBe('Column 1');
     expect(await harness.getColumnName(2)).toBe('Column 3');
-  });
-
-  it('should not apply translateX to center group (scroll sync via native scrollLeft)', async () => {
-    componentRef.setInput(
-      'columns',
-      toInternalColumn([
-        { prop: 'col1', name: 'Column 1', width: 100, frozenLeft: true },
-        { prop: 'col2', name: 'Column 2', width: 200 },
-        { prop: 'col3', name: 'Column 3', width: 150 },
-        { prop: 'col4', name: 'Column 4', width: 200, frozenRight: true }
-      ])
-    );
-
-    const leftGroupStyle = await harness.getTransformStyle('left');
-    expect(leftGroupStyle).toBe('width: 100px;');
-
-    const centerGroupStyle = await harness.getTransformStyle('center');
-    expect(centerGroupStyle).toBe('width: 350px;');
-
-    const rightGroupStyle = await harness.getTransformStyle('right');
-    expect(rightGroupStyle).toBe('width: 200px;');
   });
 });

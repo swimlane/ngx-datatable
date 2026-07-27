@@ -6,7 +6,6 @@ import {
   computed,
   DoCheck,
   ElementRef,
-  HostBinding,
   HostListener,
   inject,
   input,
@@ -97,11 +96,6 @@ export class DataTableBodyRowComponent<TRow extends Row = any> implements DoChec
   });
 
   readonly rowHeight = input.required<number>();
-
-  @HostBinding('style.width.px')
-  get columnsTotalWidths(): number {
-    return this._columnGroupWidths().total;
-  }
 
   readonly activate = output<ActivateEvent<TRow>>();
   readonly treeAction = output<void>();

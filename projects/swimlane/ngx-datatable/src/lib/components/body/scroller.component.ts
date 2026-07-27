@@ -24,8 +24,7 @@ export interface ScrollEventInternal {
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     'class': 'datatable-scroll',
-    '[style.height.px]': 'scrollHeight()',
-    '[style.minWidth.px]': 'scrollWidth()'
+    '[style.height.px]': 'scrollHeight()'
   }
 })
 export class ScrollerComponent implements OnInit, OnDestroy {
@@ -38,7 +37,6 @@ export class ScrollerComponent implements OnInit, OnDestroy {
     transform: booleanAttribute
   });
   readonly scrollHeight = input<number>();
-  readonly scrollWidth = input<number>();
 
   readonly scroll = output<ScrollEventInternal>();
 

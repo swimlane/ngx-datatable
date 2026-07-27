@@ -5,13 +5,17 @@
     class="datatable-grid"
     [style.scroll-padding-block-start.px]="_isFixedHeader() ? headerHeight() : null"
   >
+    <!-- TODO: remove the explicit width.
+          This is a temporary solution which is needed to keep the current behavior if columns exceed their width.
+          This happens if padding + content is bigger than the defined width.
+          See the checkbox examples.
+    -->
     @if (headerHeight()) {
       <datatable-header
         role="rowgroup"
         [sorts]="sorts()"
         [sortType]="sortType()"
         [scrollbarH]="scrollbarH()"
-        [innerWidth]="_innerWidth()"
         [dealsWithGroup]="_internalGroupedRows() !== undefined"
         [columns]="_internalColumns()"
         [headerHeight]="headerHeight()"
@@ -25,6 +29,7 @@
         [verticalScrollVisible]="verticalScrollVisible"
         [enableClearingSortState]="enableClearingSortState()"
         [ariaHeaderCheckboxMessage]="messages().ariaHeaderCheckboxMessage ?? 'Select all rows'"
+        [style.width.px]="totalColumnGroupWidths()"
         (sort)="onColumnSort($event)"
         (resize)="onColumnResize($event)"
         (resizing)="onColumnResizing($event)"
@@ -54,7 +59,6 @@
       [offsetX]="_offsetX"
       [rowDetail]="rowDetail"
       [groupHeader]="groupHeader"
-      [innerWidth]="_innerWidth()"
       [bodyHeight]="bodyHeight()"
       [selectionType]="selectionType()"
       [rowIdentity]="rowIdentity()"
@@ -76,6 +80,7 @@
       [rowDragEvents]="rowDragEvents"
       [rowDefTemplate]="_rowDefTemplate()"
       [cssClasses]="cssClasses()"
+      [style.width.px]="totalColumnGroupWidths()"
       [(selected)]="selected"
       (page)="onBodyPage($event)"
       (activate)="activate.emit($event)"
