@@ -477,28 +477,6 @@ export class DatatableComponent<TRow extends Row = any>
   readonly select = output<SelectEvent<TRow>>();
 
   /**
-   * Column sort was invoked.
-   * @deprecated Use two-way binding on `sorts` instead.
-   *
-   * Before:
-   * ```html
-   * <ngx-datatable [sorts]="mySorts" (sort)="onSort($event)"></ngx-datatable>
-   * ```
-   *
-   * After:
-   * ```html
-   * <ngx-datatable [sorts]="mySorts" (sortsChange)="onSort({sorts: $event})"></ngx-datatable>
-   * <!-- or -->
-   * <ngx-datatable [(sorts)]="mySorts"></ngx-datatable>
-   * ```
-   *
-   * When using `(sort)`/`(sortsChange)` and `(page)` together (typically for server-side paging),
-   * subscribe only to `(page)` and read {@link PageEvent.sorts} from the event payload instead.
-   * `(page)` emits on both page and sort changes.
-   */
-  readonly sort = output<SortEvent>();
-
-  /**
    * The table was paged either triggered by the pager or the body scroll.
    */
   readonly page = output<PageEvent>();
@@ -1090,7 +1068,6 @@ export class DatatableComponent<TRow extends Row = any>
       offset: this.correctedOffset(),
       sorts: this.sorts()
     });
-    this.sort.emit(event);
   }
 
   /**
