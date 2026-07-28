@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
   DataTableColumnCellDirective,
   DataTableColumnDirective,
@@ -11,6 +11,7 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'flex-column-demo',
   imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>

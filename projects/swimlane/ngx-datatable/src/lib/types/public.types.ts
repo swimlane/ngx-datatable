@@ -14,7 +14,7 @@ export interface SortPropDir {
  * const sortDir: SortDirection = 'asc';
  * ```
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 export const SortDirection = {
   asc: 'asc',
   desc: 'desc'
@@ -39,7 +39,7 @@ export interface SortEvent {
  * const sortType: SortType = 'single';
  * ```
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 export const SortType = {
   single: 'single',
   multi: 'multi'
@@ -56,7 +56,7 @@ export type SortType = (typeof SortType)[keyof typeof SortType];
  * <ngx-datatable [columnMode]="'force'"></ngx-datatable>
  * ```
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 export const ColumnMode = {
   standard: 'standard',
   flex: 'flex',
@@ -129,7 +129,7 @@ export interface FooterContext {
  * const contextmenuType: ContextmenuType = 'header';
  * ```
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 export const ContextmenuType = {
   header: 'header',
   body: 'body'
@@ -228,7 +228,7 @@ export type DetailToggleEvents<TRow> = DetailToggleEvent<TRow> | AllDetailToggle
  * <ngx-datatable [selectionType]="'multi'"></ngx-datatable>
  * ```
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 export const SelectionType = {
   single: 'single',
   multi: 'multi',

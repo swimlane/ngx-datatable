@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
   DataTableColumnDirective,
   DatatableComponent
@@ -10,6 +10,7 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'horz-vert-scrolling-demo',
   imports: [DatatableComponent, DataTableColumnDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>
@@ -26,7 +27,7 @@ import { DataService } from '../data.service';
       <ngx-datatable
         class="material"
         columnMode="force"
-        [rows]="rows"
+        [rows]="rows()"
         [headerHeight]="50"
         [footerHeight]="0"
         [rowHeight]="50"
@@ -43,13 +44,13 @@ import { DataService } from '../data.service';
   `
 })
 export class HorzVertScrollingComponent {
-  rows: FullEmployee[] = [];
+  readonly rows = signal<FullEmployee[]>([]);
 
   private dataService = inject(DataService);
 
   constructor() {
     this.dataService.load('100k.json').subscribe(data => {
-      this.rows = data;
+      this.rows.set(data);
     });
   }
 }

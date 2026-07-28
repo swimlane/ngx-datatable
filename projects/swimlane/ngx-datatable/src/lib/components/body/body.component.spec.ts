@@ -1,5 +1,5 @@
 import { EventEmitter } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
@@ -17,7 +17,11 @@ describe('DataTableBodyComponent', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      providers: [ScrollbarHelper, { provide: DATATABLE_COMPONENT_TOKEN, useValue: {} }]
+      providers: [
+        ScrollbarHelper,
+        { provide: DATATABLE_COMPONENT_TOKEN, useValue: {} },
+        { provide: ComponentFixtureAutoDetect, useValue: false }
+      ]
     });
     fixture = TestBed.createComponent(DataTableBodyComponent);
     fixture.componentRef.setInput('rowDragEvents', new EventEmitter<any>());
@@ -30,6 +34,10 @@ describe('DataTableBodyComponent', () => {
     fixture.componentRef.setInput('cssClasses', {});
     fixture.componentRef.setInput('rowHeight', 'auto');
     fixture.componentRef.setInput('offsetX', 0);
+    fixture.componentRef.setInput('pageSize', 0);
+    fixture.componentRef.setInput('rows', []);
+    fixture.componentRef.setInput('columns', []);
+    fixture.autoDetectChanges();
     component = fixture.componentInstance;
   });
 

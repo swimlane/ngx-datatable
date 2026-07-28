@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
   DataTableColumnDirective,
   DatatableComponent
@@ -10,6 +10,7 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'hidden-on-load-demo',
   imports: [DatatableComponent, DataTableColumnDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>
@@ -40,7 +41,7 @@ import { DataService } from '../data.service';
           <ngx-datatable
             class="material"
             columnMode="force"
-            [rows]="rows"
+            [rows]="rows()"
             [headerHeight]="50"
             [footerHeight]="50"
             [rowHeight]="50"
@@ -58,7 +59,7 @@ import { DataService } from '../data.service';
             <ngx-datatable
               class="material"
               columnMode="force"
-              [rows]="rows"
+              [rows]="rows()"
               [headerHeight]="50"
               [footerHeight]="50"
               [rowHeight]="50"
@@ -75,7 +76,7 @@ import { DataService } from '../data.service';
   `
 })
 export class HiddenOnLoadComponent {
-  rows: FullEmployee[] = [];
+  readonly rows = signal<FullEmployee[]>([]);
 
   tab1 = true;
   tab2 = false;
@@ -85,7 +86,7 @@ export class HiddenOnLoadComponent {
 
   constructor() {
     this.dataService.load('100k.json').subscribe(data => {
-      this.rows = data;
+      this.rows.set(data);
     });
   }
 }

@@ -128,7 +128,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "tsConfig": "projects/swimlane/ngx-datatable/tsconfig.lib.json",
             "project": "projects/swimlane/ngx-datatable/ng-package.json"
@@ -146,7 +146,8 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/swimlane/ngx-datatable/tsconfig.spec.json",
-            "browsers": ["chromium"]
+            "browsers": ["chromium"],
+            "setupFiles": ["projects/swimlane/ngx-datatable/src/test-setup.ts"]
           },
           "configurations": {
             "ci": {

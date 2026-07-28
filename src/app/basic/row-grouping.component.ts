@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, signal, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {
   DataTableColumnCellDirective,
   DataTableColumnDirective,
@@ -21,6 +21,7 @@ import { DataService } from '../data.service';
     DataTableColumnDirective,
     DataTableColumnCellDirective
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>
@@ -40,7 +41,7 @@ import { DataService } from '../data.service';
         groupRowsBy="age"
         columnMode="force"
         selectionType="checkbox"
-        [rows]="rows"
+        [rows]="rows()"
         [scrollbarH]="true"
         [headerHeight]="50"
         [footerHeight]="50"
@@ -160,13 +161,13 @@ export class RowGroupingComponent {
   @ViewChild('myTable') table!: DatatableComponent<GroupedEmployee>;
 
   editing: Record<string, boolean> = {};
-  rows: GroupedEmployee[] = [];
+  readonly rows = signal<GroupedEmployee[]>([]);
 
   private dataService = inject(DataService);
 
   constructor() {
     this.dataService.load('forRowGrouping.json').subscribe(data => {
-      this.rows = data;
+      this.rows.set(data);
     });
   }
 
@@ -271,12 +272,14 @@ export class RowGroupingComponent {
     group[0].groupstatus = groupStatus;
     // eslint-disable-next-line no-console
     console.log('expectedPaymentDealtWith', expectedPaymentDealtWith);
+    this.rows.set([...this.rows()]);
   }
 
   updateValue(event: Event, cell: 'comment', rowIndex: number) {
     this.editing[rowIndex + '-' + cell] = false;
-    this.rows[rowIndex][cell] = (event.target as HTMLInputElement).value;
-    this.rows = [...this.rows];
+    const rows = this.rows();
+    rows[rowIndex][cell] = (event.target as HTMLInputElement).value;
+    this.rows.set([...rows]);
   }
 
   toggleExpandGroup(group: Group<GroupedEmployee>) {

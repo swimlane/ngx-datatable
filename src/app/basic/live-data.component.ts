@@ -1,4 +1,4 @@
-import { Component, inject, signal, ViewChild } from '@angular/core';
+import { Component, inject, signal, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {
   DataTableColumnDirective,
   DatatableComponent
@@ -10,6 +10,7 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'live-data-demo',
   imports: [DatatableComponent, DataTableColumnDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>

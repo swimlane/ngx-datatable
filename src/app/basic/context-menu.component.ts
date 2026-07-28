@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
   ContextMenuEvent,
   DatatableComponent,
@@ -11,6 +11,7 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'context-menu-demo',
   imports: [DatatableComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>
@@ -50,7 +51,7 @@ import { DataService } from '../data.service';
         class="material"
         rowHeight="auto"
         columnMode="force"
-        [rows]="rows"
+        [rows]="rows()"
         [columns]="columns"
         [headerHeight]="50"
         [footerHeight]="50"
@@ -60,7 +61,7 @@ import { DataService } from '../data.service';
   `
 })
 export class ContextMenuComponent {
-  rows: Employee[] = [];
+  readonly rows = signal<Employee[]>([]);
 
   columns: TableColumn[] = [{ prop: 'name' }, { name: 'Gender' }, { name: 'Company' }];
 
@@ -72,7 +73,7 @@ export class ContextMenuComponent {
 
   constructor() {
     this.dataService.load('company.json').subscribe(data => {
-      this.rows = data;
+      this.rows.set(data);
     });
   }
 

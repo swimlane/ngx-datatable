@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -9,6 +9,7 @@ import { DataTableBodyRowComponent } from './body-row.component';
 
 describe('DataTableBodyRowComponent', () => {
   @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [DataTableBodyRowComponent],
     template: `
       <datatable-body-row
@@ -36,6 +37,7 @@ describe('DataTableBodyRowComponent', () => {
     });
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
   it('should apply odd/event without groups', async () => {

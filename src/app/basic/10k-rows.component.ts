@@ -1,4 +1,4 @@
-import { Component, inject, signal, viewChild } from '@angular/core';
+import { Component, inject, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   DataTableColumnCellDirective,
@@ -18,6 +18,7 @@ import { DataService } from '../data.service';
     DataTableColumnCellDirective,
     FormsModule
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>

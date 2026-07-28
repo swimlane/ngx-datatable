@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
   DataTableColumnCellTreeToggle,
   DataTableColumnDirective,
@@ -75,6 +75,7 @@ import { DataService } from '../data.service';
       </ngx-datatable>
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: ['.icon {height: 10px; width: 10px; }', '.disabled {opacity: 0.5; }']
 })
 export class FullScreenTreeComponent {

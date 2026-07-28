@@ -1,4 +1,12 @@
-import { Component, ElementRef, inject, Injectable, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  Injectable,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { DatatableComponent } from 'projects/swimlane/ngx-datatable/src/public-api';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
@@ -58,6 +66,7 @@ export class MockServerResultsService {
     </div>
   `,
   styleUrl: './scrolling-server.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [MockServerResultsService]
 })
 export class ServerScrollingComponent implements OnInit {

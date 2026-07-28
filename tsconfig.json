@@ -13,9 +13,10 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "noUnusedLocals": true,
+    "ignoreDeprecations": "6.0",
     "paths": {
-      "@swimlane/ngx-datatable": ["dist/swimlane/ngx-datatable"],
-      "@swimlane/ngx-datatable/*": ["dist/swimlane/ngx-datatable/*"]
+      "@swimlane/ngx-datatable": ["projects/swimlane/ngx-datatable/src/public-api"],
+      "@swimlane/ngx-datatable/*": ["projects/swimlane/ngx-datatable/src/*"]
     },
     "useDefineForClassFields": false,
     "strictFunctionTypes": true,

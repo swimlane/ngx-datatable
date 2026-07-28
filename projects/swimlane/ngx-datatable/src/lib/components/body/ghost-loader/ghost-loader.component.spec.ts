@@ -1,6 +1,12 @@
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, computed, TemplateRef, viewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  TemplateRef,
+  viewChild
+} from '@angular/core';
+import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 
 import { toInternalColumn } from '../../../utils/column-helper';
 import { DataTableGhostLoaderComponent } from './ghost-loader.component';
@@ -11,6 +17,9 @@ describe('DataTableGhostLoaderComponent', () => {
   let loaderHarness: GhostLoaderHarness;
 
   beforeEach(async () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: ComponentFixtureAutoDetect, useValue: false }]
+    });
     fixture = TestBed.createComponent(DataTableGhostLoaderComponent);
     fixture.componentRef.setInput(
       'columns',
@@ -21,6 +30,7 @@ describe('DataTableGhostLoaderComponent', () => {
     );
     fixture.componentRef.setInput('pageSize', 10);
     fixture.componentRef.setInput('rowHeight', 30);
+    fixture.autoDetectChanges();
     loaderHarness = await TestbedHarnessEnvironment.harnessForFixture(fixture, GhostLoaderHarness);
   });
 
@@ -41,6 +51,7 @@ describe('DataTableGhostLoaderComponent', () => {
 @Component({
   selector: 'test-ghost-loader',
   imports: [DataTableGhostLoaderComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<ghost-loader pageSize="1" [rowHeight]="30" [columns]="columns()" />
     <ng-template #customGhostCell><div>custom ghost cell</div></ng-template>`
 })

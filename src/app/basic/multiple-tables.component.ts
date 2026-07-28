@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 @Component({
   selector: 'multiple-tables-demo',
   imports: [DatatableComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>

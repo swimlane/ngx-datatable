@@ -1,5 +1,5 @@
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import type { Mock } from 'vitest';
@@ -10,6 +10,7 @@ import { DraggableHarness } from './testing/draggable.harness';
 @Component({
   selector: 'test-fixture-component',
   imports: [DatatableDraggableDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div
       [datatableDraggable]="enabled()"

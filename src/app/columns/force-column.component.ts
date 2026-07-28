@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
   DataTableColumnCellDirective,
   DataTableColumnDirective,
@@ -11,6 +11,7 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'force-column-demo',
   imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>
@@ -30,7 +31,7 @@ import { DataService } from '../data.service';
         columnMode="force"
         [headerHeight]="50"
         [footerHeight]="50"
-        [rows]="rows"
+        [rows]="rows()"
       >
         <ngx-datatable-column name="Name" [width]="100">
           <ng-template let-value="value" ngx-datatable-cell-template>
@@ -52,13 +53,13 @@ import { DataService } from '../data.service';
   `
 })
 export class ForceColumnComponent {
-  rows: Employee[] = [];
+  readonly rows = signal<Employee[]>([]);
 
   private dataService = inject(DataService);
 
   constructor() {
     this.dataService.load('company.json').subscribe(data => {
-      this.rows = data.splice(0, 5);
+      this.rows.set(data.splice(0, 5));
     });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DataTableColumnDirective } from '../columns/column.directive';
 
@@ -17,6 +17,7 @@ describe('DatatableRowDetailDirective', () => {
   }
 
   @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
       DatatableComponent,
       DatatableRowDetailDirective,
@@ -69,6 +70,7 @@ describe('DatatableRowDetailDirective', () => {
   beforeEach(async () => {
     fixture = TestBed.createComponent(TestFixtureComponent);
     component = fixture.componentInstance;
+    fixture.detectChanges();
     await fixture.whenStable();
     table = component.table();
   });

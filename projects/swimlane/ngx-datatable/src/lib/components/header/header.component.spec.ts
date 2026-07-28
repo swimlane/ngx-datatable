@@ -1,6 +1,6 @@
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentRef } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { vi } from 'vitest';
 
@@ -14,6 +14,10 @@ describe('DataTableHeaderComponent', () => {
   let harness: HeaderHarness;
 
   beforeEach(async () => {
+    // Delay auto-detect until required inputs are set (avoids NG0950).
+    TestBed.configureTestingModule({
+      providers: [{ provide: ComponentFixtureAutoDetect, useValue: false }]
+    });
     fixture = TestBed.createComponent(DataTableHeaderComponent);
     fixture.componentRef.setInput('columns', []);
     fixture.componentRef.setInput('innerWidth', 200);
@@ -21,6 +25,7 @@ describe('DataTableHeaderComponent', () => {
     fixture.componentRef.setInput('sortType', 'single');
     fixture.componentRef.setInput('headerHeight', 50);
     fixture.componentRef.setInput('ariaHeaderCheckboxMessage', 'Select all rows');
+    fixture.autoDetectChanges();
 
     harness = await TestbedHarnessEnvironment.harnessForFixture(fixture, HeaderHarness);
     componentRef = fixture.componentRef;

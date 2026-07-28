@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
   DataTableColumnCellDirective,
   DataTableColumnDirective,
@@ -11,6 +11,7 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'default-sort-demo',
   imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>
@@ -27,7 +28,7 @@ import { DataService } from '../data.service';
       <ngx-datatable
         class="material"
         columnMode="force"
-        [rows]="rows"
+        [rows]="rows()"
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="50"
@@ -53,13 +54,13 @@ import { DataService } from '../data.service';
   `
 })
 export class DefaultSortComponent implements OnInit {
-  rows: Employee[] = [];
+  readonly rows = signal<Employee[]>([]);
 
   private dataService = inject(DataService);
 
   ngOnInit() {
     this.dataService.load('company.json').subscribe(data => {
-      this.rows = data;
+      this.rows.set(data);
     });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
@@ -39,6 +39,7 @@ import { Page } from '../paging/model/page';
       />
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [MockServerResultsService]
 })
 export class ServerSidePagingSummaryComponent implements OnInit {

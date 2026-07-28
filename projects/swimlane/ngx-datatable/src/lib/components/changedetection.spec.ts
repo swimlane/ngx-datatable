@@ -42,6 +42,7 @@ describe('DatatableComponent change-detection inputs', () => {
         inputBinding('checkRowPropertyChanges', checkRowPropertyChanges)
       ]
     });
+    fixture.detectChanges();
     await fixture.whenStable();
   });
 

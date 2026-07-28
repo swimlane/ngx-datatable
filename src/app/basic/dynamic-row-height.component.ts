@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
   DataTableColumnDirective,
   DatatableComponent
@@ -10,6 +10,7 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'dynamic-row-height-demo',
   imports: [DatatableComponent, DataTableColumnDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>
@@ -26,7 +27,7 @@ import { DataService } from '../data.service';
       <ngx-datatable
         class="material"
         columnMode="force"
-        [rows]="rows"
+        [rows]="rows()"
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="getRowHeight"
@@ -40,7 +41,7 @@ import { DataService } from '../data.service';
   `
 })
 export class DynamicRowHeightComponent {
-  rows: (FullEmployee & { height: number })[] = [];
+  readonly rows = signal<(FullEmployee & { height: number })[]>([]);
   expanded = {};
   timeout: any;
 
@@ -48,9 +49,9 @@ export class DynamicRowHeightComponent {
 
   constructor() {
     this.dataService.load('100k.json').subscribe(data => {
-      this.rows = data
-        .splice(0, 100)
-        .map(d => ({ ...d, height: Math.floor(Math.random() * 80) + 50 }));
+      this.rows.set(
+        data.splice(0, 100).map(d => ({ ...d, height: Math.floor(Math.random() * 80) + 50 }))
+      );
     });
   }
 

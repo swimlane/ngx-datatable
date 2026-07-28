@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
   DataTableColumnCellDirective,
   DataTableColumnDirective,
@@ -32,7 +32,7 @@ import { DataService } from '../data.service';
         treeToRelation="name"
         [headerHeight]="50"
         [footerHeight]="50"
-        [rows]="rows"
+        [rows]="rows()"
         (treeAction)="onTreeAction($event)"
       >
         <ngx-datatable-column name="Name" [flexGrow]="3" [isTreeColumn]="true">
@@ -53,15 +53,16 @@ import { DataService } from '../data.service';
       </ngx-datatable>
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: ['.icon {height: 10px; width: 10px; }', '.disabled {opacity: 0.5; }']
 })
 export class ClientSideTreeComponent {
-  rows: TreeEmployee[] = [];
+  readonly rows = signal<TreeEmployee[]>([]);
 
   private dataService = inject(DataService);
 
   constructor() {
-    this.dataService.load('company_tree.json').subscribe(data => (this.rows = data));
+    this.dataService.load('company_tree.json').subscribe(data => this.rows.set(data));
   }
 
   onTreeAction(event: any) {
@@ -71,5 +72,6 @@ export class ClientSideTreeComponent {
     } else {
       row.treeStatus = 'collapsed';
     }
+    this.rows.set([...this.rows()]);
   }
 }

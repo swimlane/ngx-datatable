@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
   DataTableColumnCellDirective,
   DataTableColumnDirective,
@@ -11,6 +11,7 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'inline-edit-demo',
   imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>
@@ -32,7 +33,7 @@ import { DataService } from '../data.service';
         [headerHeight]="50"
         [limit]="5"
         [footerHeight]="50"
-        [rows]="rows"
+        [rows]="rows()"
       >
         <ngx-datatable-column name="Name">
           <ng-template
@@ -84,19 +85,20 @@ import { DataService } from '../data.service';
 })
 export class InlineEditComponent {
   editing: Record<string, boolean> = {};
-  rows: Employee[] = [];
+  readonly rows = signal<Employee[]>([]);
 
   private dataService = inject(DataService);
 
   constructor() {
     this.dataService.load('company.json').subscribe(data => {
-      this.rows = data;
+      this.rows.set(data);
     });
   }
 
   updateValue(event: Event, cell: 'name' | 'gender', rowIndex: number) {
     this.editing[rowIndex + '-' + cell] = false;
-    this.rows[rowIndex][cell] = (event.target as HTMLInputElement).value;
-    this.rows = [...this.rows];
+    const rows = this.rows();
+    rows[rowIndex][cell] = (event.target as HTMLInputElement).value;
+    this.rows.set([...rows]);
   }
 }

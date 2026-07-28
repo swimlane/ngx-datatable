@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
   DatatableComponent,
   SortPropDir,
@@ -11,6 +11,7 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'server-side-sorting-demo',
   imports: [DatatableComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>

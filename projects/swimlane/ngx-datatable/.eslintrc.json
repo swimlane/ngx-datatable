@@ -1,27 +1,5 @@
 {
-  "extends": "../../../.eslintrc.js",
-  "ignorePatterns": [],
-  "overrides": [
-    {
-      "files": ["*.ts"],
-      "parserOptions": {
-        "project": [
-          "projects/swimlane/ngx-datatable/tsconfig.lib.json",
-          "projects/swimlane/ngx-datatable/tsconfig.lib.prod.json",
-          "projects/swimlane/ngx-datatable/tsconfig.spec.json"
-        ]
-      },
-      "rules": {
-        "@angular-eslint/component-selector": [
-          "error",
-          {
-            "type": "element",
-            "prefix": "",
-            "style": "kebab-case"
-          }
-        ],
-        "@angular-eslint/directive-selector": "off"
-      }
-    }
-  ]
+  "root": true,
+  "ignorePatterns": ["!**/*"],
+  "overrides": []
 }

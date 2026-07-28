@@ -1,5 +1,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   Directive,
   inject,
@@ -21,6 +22,7 @@ import { RowOrGroup } from '../../types/public.types';
 @Component({
   selector: 'datatable-row-def',
   imports: [NgTemplateOutlet],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `@if (rowDef.rowDefInternal().rowTemplate) {
     <ng-container
       [ngTemplateOutlet]="rowDef.rowDefInternal().rowTemplate"

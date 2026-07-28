@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
   DataTableColumnCellDirective,
   DataTableColumnDirective,
@@ -11,6 +11,7 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'fixed-column-demo',
   imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>
@@ -28,7 +29,7 @@ import { DataService } from '../data.service';
         class="material"
         rowHeight="auto"
         columnMode="standard"
-        [rows]="rows"
+        [rows]="rows()"
         [headerHeight]="50"
         [footerHeight]="50"
       >
@@ -52,13 +53,13 @@ import { DataService } from '../data.service';
   `
 })
 export class FixedColumnComponent {
-  rows: Employee[] = [];
+  readonly rows = signal<Employee[]>([]);
 
   private dataService = inject(DataService);
 
   constructor() {
     this.dataService.load('company.json').subscribe(data => {
-      this.rows = data.splice(0, 5);
+      this.rows.set(data.splice(0, 5));
     });
   }
 }

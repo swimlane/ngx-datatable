@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { DatatableComponent, TableColumn } from 'projects/swimlane/ngx-datatable/src/public-api';
 
 import { Employee } from '../data.model';
@@ -46,14 +46,15 @@ import { DataService } from '../data.service';
         [columns]="columns"
         [headerHeight]="50"
         [summaryHeight]="55"
-        [rows]="rows"
+        [rows]="rows()"
       />
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './simple-summary.component.scss'
 })
 export class SimpleSummaryComponent {
-  rows: Employee[] = [];
+  readonly rows = signal<Employee[]>([]);
 
   columns: TableColumn[] = [
     { prop: 'name' },
@@ -68,7 +69,7 @@ export class SimpleSummaryComponent {
 
   constructor() {
     this.dataService.load('company.json').subscribe(data => {
-      this.rows = data.splice(0, 5);
+      this.rows.set(data.splice(0, 5));
     });
   }
 

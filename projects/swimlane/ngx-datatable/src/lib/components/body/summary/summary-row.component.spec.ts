@@ -1,6 +1,6 @@
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentRef } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 
 import { TableColumnInternal } from '../../../types/internal.types';
 import { toInternalColumn } from '../../../utils/column-helper';
@@ -24,13 +24,16 @@ describe('DataTableSummaryRowComponent', () => {
   });
 
   beforeEach(async () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: ComponentFixtureAutoDetect, useValue: false }]
+    });
     fixture = TestBed.createComponent(DataTableSummaryRowComponent);
 
-    // Set required inputs before creating harness and detecting changes
     fixture.componentRef.setInput('columns', columns);
     fixture.componentRef.setInput('rows', rows);
     fixture.componentRef.setInput('rowHeight', 30);
     fixture.componentRef.setInput('innerWidth', 100);
+    fixture.autoDetectChanges();
 
     harness = await TestbedHarnessEnvironment.harnessForFixture(fixture, SummaryHarness);
     componentRef = fixture.componentRef;

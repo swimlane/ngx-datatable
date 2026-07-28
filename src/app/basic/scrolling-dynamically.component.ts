@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
   DataTableColumnCellDirective,
   DataTableColumnDirective,
@@ -11,6 +11,7 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'scrolling-dynamically-demo',
   imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h3>
@@ -35,7 +36,7 @@ import { DataService } from '../data.service';
         [scrollbarV]="true"
         [scrollbarVDynamic]="true"
         [footerHeight]="50"
-        [rows]="rows"
+        [rows]="rows()"
       >
         <ngx-datatable-column name="Name">
           <ng-template
@@ -87,19 +88,20 @@ import { DataService } from '../data.service';
 })
 export class ScrollingDynamicallyComponent {
   editing: Record<string, boolean> = {};
-  rows: Employee[] = [];
+  readonly rows = signal<Employee[]>([]);
 
   private dataService = inject(DataService);
 
   constructor() {
     this.dataService.load('company.json').subscribe(data => {
-      this.rows = data.slice(0, 5);
+      this.rows.set(data.slice(0, 5));
     });
   }
 
   updateValue(event: Event, cell: 'gender' | 'name', rowIndex: number) {
     this.editing[rowIndex + '-' + cell] = false;
-    this.rows[rowIndex][cell] = (event.target as HTMLInputElement | HTMLSelectElement).value;
-    this.rows = [...this.rows];
+    const rows = this.rows();
+    rows[rowIndex][cell] = (event.target as HTMLInputElement | HTMLSelectElement).value;
+    this.rows.set([...rows]);
   }
 }

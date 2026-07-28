@@ -56,6 +56,7 @@ describe('Client-side Scrolling – DatatableComponent.scrollToRow', () => {
         inputBinding('treeToRelation', treeToRelation)
       ]
     });
+    fixture.detectChanges();
     await fixture.whenStable();
 
     datatable = fixture.componentInstance;
