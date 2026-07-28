@@ -1,12 +1,17 @@
-<div visibilityObserver (visible)="recalculate()">
-  <div role="table">
+<div class="datatable-wrapper">
+  <div
+    datatableScrollContainer
+    role="table"
+    class="datatable-grid"
+    [style.--ngx-datatable-grid-template-columns]="_gridTemplateColumns()"
+    [style.scroll-padding-block-start.px]="_isFixedHeader() ? headerHeight() : null"
+  >
     @if (headerHeight()) {
       <datatable-header
         role="rowgroup"
         [sorts]="sorts()"
         [sortType]="sortType()"
         [scrollbarH]="scrollbarH()"
-        [innerWidth]="_innerWidth()"
         [dealsWithGroup]="_internalGroupedRows() !== undefined"
         [columns]="_internalColumns()"
         [headerHeight]="headerHeight()"
@@ -49,7 +54,6 @@
       [offsetX]="_offsetX"
       [rowDetail]="rowDetail"
       [groupHeader]="groupHeader"
-      [innerWidth]="_innerWidth()"
       [bodyHeight]="bodyHeight()"
       [selectionType]="selectionType()"
       [rowIdentity]="rowIdentity()"
@@ -59,6 +63,7 @@
       [summaryRow]="summaryRow()"
       [summaryHeight]="summaryHeight()"
       [summaryPosition]="summaryPosition()"
+      [summaryRowTemplate]="summaryRowDirective()?.template"
       [verticalScrollVisible]="verticalScrollVisible"
       [ariaRowCheckboxMessage]="messages().ariaRowCheckboxMessage ?? 'Select row'"
       [ariaGroupHeaderCheckboxMessage]="
@@ -74,7 +79,6 @@
       (page)="onBodyPage($event)"
       (activate)="activate.emit($event)"
       (rowContextmenu)="onRowContextmenu($event)"
-      (selectedChange)="onBodySelect($event)"
       (scroll)="onBodyScroll($event)"
       (treeAction)="onTreeAction($event)"
     >
@@ -82,7 +86,7 @@
         <datatable-progress />
       </ng-content>
       <ng-content select="[empty-content]" ngProjectAs="[empty-content]">
-        <div role="row">
+        <div role="row" class="datatable-empty-row">
           <div
             role="cell"
             class="empty-row"

@@ -3,9 +3,12 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  inputBinding,
+  outputBinding,
   signal,
   TemplateRef,
-  viewChild
+  viewChild,
+  WritableSignal
 } from '@angular/core';
 import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 
@@ -14,6 +17,7 @@ import {
   SortableTableColumnInternal,
   TableColumnInternal
 } from '../../types/internal.types';
+import { SortPropDir } from '../../types/public.types';
 import { toInternalColumn } from '../../utils/column-helper';
 import { DataTableHeaderCellComponent } from './header-cell.component';
 import { HeaderCellHarness } from './testing/header-cell.harnes';
@@ -168,5 +172,70 @@ describe('DataTableHeaderCellComponent with template', () => {
       prevValue: undefined,
       newValue: 'asc'
     });
+  });
+});
+
+describe('DataTableHeaderCellComponent - custom sort icons', () => {
+  let fixture: ComponentFixture<DataTableHeaderCellComponent>;
+  let harness: HeaderCellHarness;
+  let sorts: WritableSignal<SortPropDir[]>;
+  const column = signal({
+    name: 'test',
+    prop: 'test',
+    sortable: true,
+    resizeable: false,
+    width: signal(20)
+  });
+  const sortAscendingIcon = signal('icon up');
+  const sortDescendingIcon = signal('icon down');
+
+  beforeEach(async () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: ComponentFixtureAutoDetect, useValue: false }]
+    });
+    sorts = signal<SortPropDir[]>([]);
+    fixture = TestBed.createComponent(DataTableHeaderCellComponent, {
+      bindings: [
+        inputBinding('sortType', () => 'single'),
+        inputBinding('ariaHeaderCheckboxMessage', () => 'Select All'),
+        inputBinding('sortAscendingIcon', sortAscendingIcon),
+        inputBinding('sortDescendingIcon', sortDescendingIcon),
+        inputBinding('column', column),
+        inputBinding('sorts', sorts),
+        inputBinding('showResizeHandle', () => false),
+        outputBinding('sort', (event: InnerSortEvent) => {
+          sorts.set([{ prop: event.column.prop!, dir: event.newValue! }]);
+        })
+      ]
+    });
+    fixture.autoDetectChanges();
+    harness = await TestbedHarnessEnvironment.harnessForFixture(fixture, HeaderCellHarness);
+  });
+
+  it('should apply custom sortAscendingIcon class when toggling to ascending sort', async () => {
+    await harness.applySort();
+    await fixture.whenStable();
+
+    const sortBtn: HTMLElement = fixture.nativeElement.querySelector('.sort-btn');
+
+    expect(sortBtn.classList.contains('sort-btn')).toBe(true);
+    expect(sortBtn.classList.contains('sort-asc')).toBe(true);
+    expect(sortBtn.classList.contains('icon')).toBe(true);
+    expect(sortBtn.classList.contains('up')).toBe(true);
+    expect(sortBtn.classList.contains('datatable-icon-up')).toBe(false);
+  });
+
+  it('should apply custom sortDescendingIcon class when toggling to descending sort', async () => {
+    await harness.applySort();
+    await fixture.whenStable();
+    await harness.applySort();
+    await fixture.whenStable();
+
+    const sortButton: HTMLElement = fixture.nativeElement.querySelector('.sort-btn');
+    expect(sortButton.classList.contains('sort-btn')).toBe(true);
+    expect(sortButton.classList.contains('sort-desc')).toBe(true);
+    expect(sortButton.classList.contains('icon')).toBe(true);
+    expect(sortButton.classList.contains('down')).toBe(true);
+    expect(sortButton.classList.contains('datatable-icon-down')).toBe(false);
   });
 });

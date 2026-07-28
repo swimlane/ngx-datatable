@@ -1,14 +1,42 @@
-import { EventEmitter } from '@angular/core';
+import { Component, EventEmitter, TemplateRef, viewChild } from '@angular/core';
 import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { ScrollContainerDirective } from '../../directives/scroll-container.directive';
 import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 import { toInternalColumn } from '../../utils/column-helper';
 import { DATATABLE_COMPONENT_TOKEN } from '../../utils/table-token';
+import { DatatableRowDefComponent, DatatableRowDefDirective } from './body-row-def.component';
 import { DataTableBodyRowComponent } from './body-row.component';
 import { DataTableBodyComponent } from './body.component';
 import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.component';
 import { ScrollerComponent } from './scroller.component';
+
+@Component({
+  selector: 'row-def-template-host',
+  imports: [DatatableRowDefDirective, DatatableRowDefComponent],
+  template: `
+    <ng-template #tpl rowDef>
+      <datatable-row-def />
+    </ng-template>
+  `
+})
+class RowDefTemplateHost {
+  readonly tpl = viewChild.required<TemplateRef<unknown>>('tpl');
+}
+
+/**
+ * The body is rendered in isolation here, without the surrounding `role="table"`
+ * grid that normally carries {@link ScrollContainerDirective}, so the scroller's
+ * required injection is satisfied with a no-op stub.
+ */
+const scrollContainerStub: Partial<ScrollContainerDirective> = {
+  scrollTop: 0,
+  verticalScrollVisible: false,
+  setScrollTop: () => {},
+  scrollTo: () => {},
+  listenToScroll: () => () => {}
+};
 
 describe('DataTableBodyComponent', () => {
   let fixture: ComponentFixture<DataTableBodyComponent>;
@@ -20,12 +48,12 @@ describe('DataTableBodyComponent', () => {
       providers: [
         ScrollbarHelper,
         { provide: DATATABLE_COMPONENT_TOKEN, useValue: {} },
+        { provide: ScrollContainerDirective, useValue: scrollContainerStub },
         { provide: ComponentFixtureAutoDetect, useValue: false }
       ]
     });
     fixture = TestBed.createComponent(DataTableBodyComponent);
     fixture.componentRef.setInput('rowDragEvents', new EventEmitter<any>());
-    fixture.componentRef.setInput('innerWidth', 400);
     fixture.componentRef.setInput('rowIdentity', (row: any) => row);
     fixture.componentRef.setInput('summaryPosition', 'top');
     fixture.componentRef.setInput('summaryHeight', 50);
@@ -133,6 +161,45 @@ describe('DataTableBodyComponent', () => {
       expect(
         fixture.debugElement.queryAll(By.directive(DataTableGhostLoaderComponent))
       ).toHaveLength(5);
+    });
+
+    it('should pass auto height to ghost overlay when scrollbarV is false', async () => {
+      fixture.componentRef.setInput('columns', toInternalColumn([{ name: 'num', prop: 'num' }]));
+      fixture.componentRef.setInput('scrollbarV', false);
+      fixture.componentRef.setInput('virtualization', false);
+      fixture.componentRef.setInput('rowHeight', 50);
+      fixture.componentRef.setInput('ghostLoadingIndicator', true);
+      fixture.componentRef.setInput('pageSize', 5);
+      fixture.componentRef.setInput('rowCount', 0);
+      fixture.componentRef.setInput('rows', []);
+      await fixture.whenStable();
+
+      const overlay = fixture.debugElement.query(By.css('ghost-loader.ghost-overlay'));
+      expect(overlay.componentInstance.ghostBodyHeight()).toBe('auto');
+      expect(
+        (overlay.nativeElement as HTMLElement).querySelector<HTMLElement>('.ghost-cell-container')!
+          .style.height
+      ).toBe('auto');
+    });
+
+    it('should pass pixel height to ghost overlay when scrollbarV is true', async () => {
+      fixture.componentRef.setInput('columns', toInternalColumn([{ name: 'num', prop: 'num' }]));
+      fixture.componentRef.setInput('scrollbarV', true);
+      fixture.componentRef.setInput('virtualization', false);
+      fixture.componentRef.setInput('rowHeight', 50);
+      fixture.componentRef.setInput('ghostLoadingIndicator', true);
+      fixture.componentRef.setInput('bodyHeight', 200);
+      fixture.componentRef.setInput('pageSize', 5);
+      fixture.componentRef.setInput('rowCount', 0);
+      fixture.componentRef.setInput('rows', []);
+      await fixture.whenStable();
+
+      const overlay = fixture.debugElement.query(By.css('ghost-loader.ghost-overlay'));
+      expect(overlay.componentInstance.ghostBodyHeight()).toBe('200px');
+      expect(
+        (overlay.nativeElement as HTMLElement).querySelector<HTMLElement>('.ghost-cell-container')!
+          .style.height
+      ).toBe('200px');
     });
   });
 
@@ -254,6 +321,89 @@ describe('DataTableBodyComponent', () => {
 
       // Group should still be expanded
       expect(component.getGroupExpanded(group)).toBe(true);
+    });
+  });
+
+  describe('selectRow', () => {
+    const rows = [
+      { id: 1, name: 'Ethel' },
+      { id: 2, name: 'Claudine' },
+      { id: 3, name: 'Beryl' },
+      { id: 4, name: 'Wilder' },
+      { id: 5, name: 'Georgina' }
+    ];
+
+    beforeEach(() => {
+      fixture.componentRef.setInput('rows', rows);
+      fixture.componentRef.setInput('rowCount', rows.length);
+      fixture.componentRef.setInput('pageSize', rows.length);
+      fixture.componentRef.setInput('offset', 0);
+      fixture.componentRef.setInput('selectionType', 'multi');
+      fixture.componentRef.setInput('selected', []);
+    });
+
+    it('should keep prior ctrl-selected rows when shift-clicking a range', () => {
+      // Regression for https://github.com/swimlane/ngx-datatable/issues/582
+      // 1. Click Georgina (idx 4)
+      component.selectRow(new MouseEvent('click'), 4, rows[4]);
+      expect(component.selected()).toEqual([rows[4]]);
+
+      // 2. Ctrl-click Beryl (idx 2) - extends selection, becomes new anchor
+      component.selectRow(new MouseEvent('click', { ctrlKey: true }), 2, rows[2]);
+      expect(component.selected()).toEqual([rows[4], rows[2]]);
+
+      // 3. Shift-click Ethel (idx 0) - range from last anchor (Beryl, idx 2) to Ethel (idx 0)
+      component.selectRow(new MouseEvent('click', { shiftKey: true }), 0, rows[0]);
+
+      const selected = component.selected();
+      // Georgina must still be selected (the bug)
+      expect(selected).toContain(rows[4]);
+      // Range Beryl..Ethel must be selected
+      expect(selected).toContain(rows[2]);
+      expect(selected).toContain(rows[1]);
+      expect(selected).toContain(rows[0]);
+      // No duplicates (Beryl was already selected before shift-click)
+      expect(selected.length).toBe(new Set(selected).size);
+    });
+
+    it('should not throw when shift is the very first click', () => {
+      expect(() =>
+        component.selectRow(new MouseEvent('click', { shiftKey: true }), 2, rows[2])
+      ).not.toThrow();
+      // First-ever shift-click without a prior anchor selects just the clicked row.
+      expect(component.selected()).toEqual([rows[2]]);
+    });
+  });
+
+  describe('rowDef virtualization index', () => {
+    it('should pass absolute row index into custom rowDef rows after scroll', async () => {
+      const rowDefHost = TestBed.createComponent(RowDefTemplateHost);
+      rowDefHost.detectChanges();
+
+      const rows = Array.from({ length: 20 }, (_, i) => ({ num: i }));
+      fixture.componentRef.setInput('rowDefTemplate', rowDefHost.componentInstance.tpl());
+      fixture.componentRef.setInput('rows', rows);
+      fixture.componentRef.setInput('columns', toInternalColumn([{ name: 'num', prop: 'num' }]));
+      fixture.componentRef.setInput('scrollbarV', true);
+      fixture.componentRef.setInput('virtualization', true);
+      fixture.componentRef.setInput('rowHeight', 50);
+      fixture.componentRef.setInput('bodyHeight', 200);
+      fixture.componentRef.setInput('pageSize', 5);
+      fixture.componentRef.setInput('rowCount', rows.length);
+      fixture.componentRef.setInput('offset', 0);
+      await fixture.whenStable();
+
+      fixture.debugElement
+        .query(By.directive(ScrollerComponent))
+        .triggerEventHandler('scroll', { scrollYPos: 250, scrollXPos: 0 });
+      await fixture.whenStable();
+
+      expect(component.indexes().first).toBe(5);
+
+      const bodyRows = fixture.debugElement.queryAll(By.directive(DataTableBodyRowComponent));
+      expect(bodyRows.length).toBeGreaterThan(0);
+      // Same index is forwarded to onActivate → selectRow; viewport-local i=0 must be absolute 5.
+      expect(bodyRows[0].componentInstance.rowIndex().index).toBe(5);
     });
   });
 });

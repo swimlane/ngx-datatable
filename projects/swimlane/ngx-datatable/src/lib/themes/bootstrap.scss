@@ -3,6 +3,8 @@
 
 $datatable-disable-row-text-color: #83888e !default;
 
+$datatable-header-background: #fff !default;
+
 $datatable-ghost-cell-container-background: #fff !default;
 
 $datatable-ghost-cell-strip-background: #dee2e5 !default;
@@ -37,6 +39,7 @@ $datatable-ghost-cell-animation-duration: 10s;
   }
 
   .datatable-header {
+    background-color: $datatable-header-background;
     block-size: unset !important; // stylelint-disable-line declaration-no-important
 
     .datatable-header-cell {

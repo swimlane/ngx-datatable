@@ -46,6 +46,19 @@ describe('DataTableGhostLoaderComponent', () => {
       fixture.componentInstance.columns().length * fixture.componentInstance.pageSize()
     );
   });
+
+  it('should apply CSS ghostBodyHeight values including auto', async () => {
+    const container = (): HTMLElement =>
+      fixture.nativeElement.querySelector('.ghost-cell-container');
+
+    fixture.componentRef.setInput('ghostBodyHeight', 'auto');
+    await fixture.whenStable();
+    expect(container().style.height).toBe('auto');
+
+    fixture.componentRef.setInput('ghostBodyHeight', '200px');
+    await fixture.whenStable();
+    expect(container().style.height).toBe('200px');
+  });
 });
 
 @Component({

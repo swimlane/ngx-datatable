@@ -17,11 +17,7 @@ import { DatatableGroupHeaderDirective } from './body-group-header.directive';
   template: `
     @let groupHeader = this.groupHeader();
     @if (groupHeader && groupHeader.template()) {
-      <div
-        class="datatable-group-header"
-        [style.height.px]="groupHeaderRowHeight()"
-        [style.width.px]="innerWidth()"
-      >
+      <div class="datatable-group-header" [style.height.px]="groupHeaderRowHeight()">
         <div class="datatable-group-cell">
           @if (groupHeader.checkboxable()) {
             <div>
@@ -55,7 +51,6 @@ import { DatatableGroupHeaderDirective } from './body-group-header.directive';
   }
 })
 export class DataTableGroupWrapperComponent<TRow extends Row = any> {
-  readonly innerWidth = input.required<number>();
   readonly groupHeader = input.required<DatatableGroupHeaderDirective | undefined>();
   readonly groupHeaderRowHeight = input.required<number>();
   readonly group = input.required<Group<TRow>>();

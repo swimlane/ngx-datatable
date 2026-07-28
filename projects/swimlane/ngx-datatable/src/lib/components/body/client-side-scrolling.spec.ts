@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { TableColumn } from '../../types/table-column.type';
 import { DatatableComponent } from '../datatable.component';
+import { DataTableBodyComponent } from './body.component';
 
 interface TreeRow {
   id: number;
@@ -19,7 +20,7 @@ const expectedOffset = (index: number): number => index * ROW_HEIGHT;
 describe('Client-side Scrolling – DatatableComponent.scrollToRow', () => {
   let fixture: ComponentFixture<DatatableComponent>;
   let datatable: DatatableComponent;
-  /** The datatable-body element, which is the scrollable container. */
+  /** The `role="table"` grid element, which is the scrollable container. */
   let bodyEl: HTMLElement;
 
   let columnsSig: WritableSignal<TableColumn[]>;
@@ -60,7 +61,7 @@ describe('Client-side Scrolling – DatatableComponent.scrollToRow', () => {
     await fixture.whenStable();
 
     datatable = fixture.componentInstance;
-    bodyEl = fixture.debugElement.query(By.css('datatable-body')).nativeElement as HTMLElement;
+    bodyEl = fixture.debugElement.query(By.css('[role="table"]')).nativeElement as HTMLElement;
   });
 
   describe('With virtualization', () => {
@@ -86,39 +87,47 @@ describe('Client-side Scrolling – DatatableComponent.scrollToRow', () => {
     });
 
     describe('block option', () => {
-      /** Body viewport height established by the test harness. */
-      let viewportHeight: number;
+      let body: DataTableBodyComponent;
+      /** The viewport height scrollToIndex uses (grid height minus header band). */
+      const viewportHeight = (): number => body.bodyHeight() as number;
+      // The browser snaps the applied scroll offset to a physical pixel (the
+      // sticky header is sub-pixel tall), so the read-back drifts <1px from the
+      // computed target. Assert with a sub-pixel tolerance.
+      const PIXEL_PRECISION = 0;
 
       beforeEach(async () => {
         // Force a deterministic viewport height so block calculations are predictable.
-        bodyEl.style.height = '200px';
-        await fixture.whenStable();
-        viewportHeight = bodyEl.clientHeight;
+        fixture.nativeElement.style.height = '200px';
+        body = fixture.debugElement.query(By.directive(DataTableBodyComponent))
+          .componentInstance as DataTableBodyComponent;
+        // The host ResizeObserver measures the new height asynchronously; poll
+        // until `bodyHeight()` (which scrollToIndex relies on) reflects it.
+        await expect.poll(() => body.bodyHeight()).toBeGreaterThan(100);
       });
 
       it('should scroll to start by default', () => {
         datatable.scrollToRow(rowsSig()[20]);
-        expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(20));
+        expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(20), PIXEL_PRECISION);
       });
 
       it('should scroll with block: "start"', () => {
         datatable.scrollToRow(rowsSig()[20], { block: 'start' });
-        expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(20));
+        expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(20), PIXEL_PRECISION);
       });
 
       it('should scroll with block: "center"', () => {
         datatable.scrollToRow(rowsSig()[20], { block: 'center' });
         const expected = Math.max(
           0,
-          expectedOffset(20) - Math.max(0, (viewportHeight - ROW_HEIGHT) / 2)
+          expectedOffset(20) - Math.max(0, (viewportHeight() - ROW_HEIGHT) / 2)
         );
-        expect(bodyEl.scrollTop).toBeCloseTo(expected);
+        expect(bodyEl.scrollTop).toBeCloseTo(expected, PIXEL_PRECISION);
       });
 
       it('should scroll with block: "end"', () => {
         datatable.scrollToRow(rowsSig()[20], { block: 'end' });
-        const expected = Math.max(0, expectedOffset(21) - viewportHeight);
-        expect(bodyEl.scrollTop).toBeCloseTo(expected);
+        const expected = Math.max(0, expectedOffset(21) - viewportHeight());
+        expect(bodyEl.scrollTop).toBeCloseTo(expected, PIXEL_PRECISION);
       });
 
       it('should clamp negative tops to 0 (e.g. block: "end" on first row)', () => {
@@ -130,21 +139,21 @@ describe('Client-side Scrolling – DatatableComponent.scrollToRow', () => {
         it('should scroll up to row top when row is above the viewport', () => {
           bodyEl.scrollTop = expectedOffset(30);
           datatable.scrollToRow(rowsSig()[5], { block: 'nearest' });
-          expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(5));
+          expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(5), PIXEL_PRECISION);
         });
 
         it('should scroll down so row bottom aligns when row is below the viewport', () => {
           bodyEl.scrollTop = 0;
           datatable.scrollToRow(rowsSig()[49], { block: 'nearest' });
-          const expected = Math.max(0, expectedOffset(50) - viewportHeight);
-          expect(bodyEl.scrollTop).toBeCloseTo(expected);
+          const expected = Math.max(0, expectedOffset(50) - viewportHeight());
+          expect(bodyEl.scrollTop).toBeCloseTo(expected, PIXEL_PRECISION);
         });
 
         it('should not change scroll position when row is already fully visible', () => {
           const currentTop = expectedOffset(2);
           bodyEl.scrollTop = currentTop;
           datatable.scrollToRow(rowsSig()[3], { block: 'nearest' });
-          expect(bodyEl.scrollTop).toBeCloseTo(currentTop);
+          expect(bodyEl.scrollTop).toBeCloseTo(currentTop, PIXEL_PRECISION);
         });
       });
     });
@@ -275,7 +284,7 @@ describe('Client-side Scrolling – DatatableComponent.scrollToRow', () => {
 
     it('should call expandToRow for a non-visible child row', async () => {
       datatable.scrollToRow(treeRows[3]);
-      await fixture.whenStable();
+      await vi.waitFor(() => expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(2)));
 
       // expandToRow should expand the ancestors needed to reveal the target leaf row,
       // but must not flip the leaf itself away from 'disabled'.
@@ -293,6 +302,42 @@ describe('Client-side Scrolling – DatatableComponent.scrollToRow', () => {
       expect(() => datatable.scrollToRow(treeRows[0])).toThrowError(
         'Vertical scrolling is not enabled.'
       );
+    });
+
+    it('should scroll past the original scrollHeight after expanding a parent with many children', async () => {
+      // Build a tree where expanding Row 1 reveals 30 new children. Before expansion,
+      // the visible row count is small (5 roots) and the scroll container therefore has
+      // a scrollHeight equal to ~5 rows. After expansion the rendered DOM grows to
+      // ~35 rows, so the scroll container's scrollHeight must be large enough to reach
+      // the deeply nested target row.
+      const manyChildren: TreeRow[] = Array.from({ length: 30 }, (_, i) => ({
+        id: 100 + i,
+        parentId: 1,
+        name: `Child ${i}`,
+        treeStatus: 'disabled'
+      }));
+      const largeTree: TreeRow[] = [
+        { id: 1, parentId: null, name: 'Row 1', treeStatus: 'collapsed' },
+        ...manyChildren,
+        { id: 2, parentId: null, name: 'Row 2', treeStatus: 'disabled' },
+        { id: 3, parentId: null, name: 'Row 3', treeStatus: 'disabled' },
+        { id: 4, parentId: null, name: 'Row 4', treeStatus: 'disabled' },
+        { id: 5, parentId: null, name: 'Row 5', treeStatus: 'disabled' }
+      ];
+      rowsSig.set(largeTree);
+      await fixture.whenStable();
+
+      // Constrain the viewport so a scrollTop > 0 is required to reveal the target row.
+      bodyEl.style.height = '200px';
+      await fixture.whenStable();
+
+      // Pick the last child of Row 1 – it is not visible yet (Row 1 is collapsed) and
+      // its rendered position is well beyond the pre-expansion scrollHeight.
+      const target = manyChildren[manyChildren.length - 1];
+      datatable.scrollToRow(target, { block: 'start' });
+
+      // Tree order after expansion: Row 1, Child 0..29, Row 2..5 → target index = 30.
+      await vi.waitFor(() => expect(bodyEl.scrollTop).toBeCloseTo(expectedOffset(30)));
     });
   });
 });

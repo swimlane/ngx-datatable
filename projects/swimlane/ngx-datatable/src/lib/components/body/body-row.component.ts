@@ -6,7 +6,6 @@ import {
   computed,
   DoCheck,
   ElementRef,
-  HostBinding,
   HostListener,
   inject,
   input,
@@ -32,7 +31,7 @@ import { DataTableBodyCellComponent } from './body-cell.component';
         <div
           class="datatable-row-group"
           [class]="'datatable-row-' + colGroup.type"
-          [style.width.px]="_columnGroupWidths()[colGroup.type]"
+          [style.grid-column]="'span ' + colGroup.columns.length"
           [class.row-disabled]="disabled()"
         >
           @for (column of colGroup.columns; track column.$$id; let ii = $index) {
@@ -97,11 +96,6 @@ export class DataTableBodyRowComponent<TRow extends Row = any> implements DoChec
   });
 
   readonly rowHeight = input.required<number>();
-
-  @HostBinding('style.width.px')
-  get columnsTotalWidths(): number {
-    return this._columnGroupWidths().total;
-  }
 
   readonly activate = output<ActivateEvent<TRow>>();
   readonly treeAction = output<void>();

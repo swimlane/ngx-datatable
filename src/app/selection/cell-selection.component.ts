@@ -2,7 +2,6 @@ import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/cor
 import {
   ActivateEvent,
   DatatableComponent,
-  SelectEvent,
   TableColumn
 } from 'projects/swimlane/ngx-datatable/src/public-api';
 
@@ -37,7 +36,7 @@ import { DataService } from '../data.service';
         [footerHeight]="50"
         [rowHeight]="50"
         [selected]="selected"
-        (select)="onSelect($event)"
+        (selectedChange)="onSelect($event)"
         (activate)="onActivate($event)"
       />
     </div>
@@ -56,7 +55,7 @@ export class CellSelectionComponent {
     });
   }
 
-  onSelect(event: SelectEvent<Employee>) {
+  onSelect(event: Employee[]) {
     // eslint-disable-next-line no-console
     console.log('Event: select', event, this.selected);
   }

@@ -46,7 +46,11 @@ import { DataService } from '../data.service';
         (cdkDropListDropped)="drop($event)"
       >
         <ng-template rowDef>
-          <datatable-row-def cdkDrag cdkDragPreviewContainer="parent" />
+          <datatable-row-def
+            cdkDrag
+            cdkDragPreviewContainer="parent"
+            [preserveColumnWidthsOnClone]="true"
+          />
         </ng-template>
       </ngx-datatable>
     </div>

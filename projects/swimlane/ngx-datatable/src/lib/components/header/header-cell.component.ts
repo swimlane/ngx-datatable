@@ -68,7 +68,7 @@ import { nextSortDir } from '../../utils/sort';
           </span>
         </span>
       }
-      <span [class]="sortClass()" (click)="onSort()"> </span>
+      <span aria-hidden="true" [class]="sortClass()" (click)="onSort()"> </span>
     </div>
     @if (showResizeHandle()) {
       <span
@@ -87,15 +87,13 @@ import { nextSortDir } from '../../utils/sort';
     '[attr.resizeable]': 'showResizeHandle()',
     '[attr.title]': 'name()',
     '[attr.tabindex]': 'column().sortable ? 0 : -1',
+    '[attr.aria-sort]': 'ariaSort()',
     '[class]': 'columnCssClasses()',
     '[class.sortable]': 'column().sortable',
     '[class.resizeable]': 'showResizeHandle()',
     '[class.sort-active]': 'sortDir()',
     '[class.sort-asc]': 'sortDir() === "asc"',
-    '[class.sort-desc]': 'sortDir() === "desc"',
-    '[style.minWidth.px]': 'column().minWidth',
-    '[style.maxWidth.px]': 'column().maxWidth',
-    '[style.width.px]': 'column().width()'
+    '[class.sort-desc]': 'sortDir() === "desc"'
   }
 })
 export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
@@ -142,11 +140,25 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
 
   protected readonly isCheckboxable = computed(() => this.column().headerCheckboxable);
 
-  protected readonly sortClass = computed<string[] | undefined>(() => {
-    return this.calcSortClass(this.sortDir());
-  });
+  protected readonly sortClass = computed<string | undefined>(() =>
+    this.calcSortClass(this.sortDir())
+  );
   protected readonly sortDir = computed<SortDirection | undefined>(() => {
     return this.calcSortDir(this.sorts());
+  });
+
+  protected readonly ariaSort = computed(() => {
+    if (!this.column().sortable) {
+      return null;
+    }
+    switch (this.sortDir()) {
+      case 'asc':
+        return 'ascending';
+      case 'desc':
+        return 'descending';
+      default:
+        return 'none';
+    }
   });
 
   protected readonly cellContext = computed<HeaderCellContext>(() => {
@@ -217,16 +229,20 @@ export class DataTableHeaderCellComponent implements OnInit, OnDestroy {
     });
   }
 
-  calcSortClass(sortDir: SortDirection | undefined): string[] | undefined {
+  calcSortClass(sortDir: SortDirection | undefined): string | undefined {
     if (!this.cellContext().column.sortable) {
       return undefined;
     }
-    if (sortDir === 'asc') {
-      return ['sort-btn', 'sort-asc', this.sortAscendingIcon() ?? 'datatable-icon-up'];
-    } else if (sortDir === 'desc') {
-      return ['sort-btn', 'sort-desc', this.sortDescendingIcon() ?? 'datatable-icon-down'];
-    } else {
-      return ['sort-btn', this.sortUnsetIcon() ?? 'datatable-icon-sort-unset'];
+
+    const base = 'sort-btn';
+
+    switch (sortDir) {
+      case 'asc':
+        return `${base} sort-asc ${this.sortAscendingIcon() ?? 'datatable-icon-up'}`;
+      case 'desc':
+        return `${base} sort-desc ${this.sortDescendingIcon() ?? 'datatable-icon-down'}`;
+      default:
+        return `${base} ${this.sortUnsetIcon() ?? 'datatable-icon-sort-unset'}`;
     }
   }
 

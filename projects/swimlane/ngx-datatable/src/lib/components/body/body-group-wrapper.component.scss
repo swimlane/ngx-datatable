@@ -1,9 +1,11 @@
 :host {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
 }
 
 .datatable-group-header {
+  grid-column: 1 / -1;
   inset-inline-start: 0;
   position: sticky;
 }

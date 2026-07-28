@@ -20,7 +20,8 @@ export class DataTableGhostLoaderComponent {
   readonly columns = input.required<TableColumnInternal[]>();
   readonly pageSize = input.required<number, unknown>({ transform: numberAttribute });
   readonly rowHeight = input.required<number | 'auto' | ((row?: any) => number)>();
-  readonly ghostBodyHeight = input<number, unknown>(undefined, { transform: numberAttribute });
+  /** CSS height for the overlay (`'auto'` or `'400px'` from the body). */
+  readonly ghostBodyHeight = input<string | number | undefined>();
 
   protected readonly ghostRows = computed(() =>
     Array.from({ length: this.pageSize() }, (_, index) => index)

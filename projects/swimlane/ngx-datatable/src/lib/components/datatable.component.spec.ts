@@ -403,20 +403,85 @@ describe('DatatableComponent', () => {
     ]);
     component.columnMode.set('force');
     await fixture.whenStable();
+    const datatable = fixture.debugElement.query(By.directive(DatatableComponent))
+      .componentInstance as DatatableComponent;
     const headerCells = fixture.debugElement.queryAll(By.directive(DataTableHeaderCellComponent));
     const cellSizes = () => headerCells.map(cell => cell.nativeElement.clientWidth);
+    // The ResizeObserver measures the host asynchronously; wait for it before
+    // resizing, since the resize handler distributes using the measured width.
+    await expect.poll(() => datatable._innerWidth()).toBe(400);
+
     headerCells[1].triggerEventHandler('resize', {
       width: 150,
       column: headerCells[1].componentInstance.column()
     });
-
     await fixture.whenStable();
     expect(cellSizes()).toEqual([100, 150, 75, 75]);
+
     component.size.set(300);
+    await expect.poll(cellSizes).toEqual([75, 125, 50, 50]);
+  });
+
+  it('should distribute initial column widths by flexGrow in flex mode', async () => {
+    component.columns.set([
+      { prop: 'A', width: 100, flexGrow: 1 },
+      { prop: 'B', width: 100, flexGrow: 2 },
+      { prop: 'C', width: 100, flexGrow: 1 }
+    ]);
+    component.columnMode.set('flex');
     await fixture.whenStable();
-    fixture.debugElement.query(By.directive(DatatableComponent)).componentInstance.recalculate();
+    const headerCells = fixture.debugElement.queryAll(By.directive(DataTableHeaderCellComponent));
+    const cellSizes = () => headerCells.map(cell => cell.nativeElement.clientWidth);
+
+    // 400px split across flexGrow [1, 2, 1] => 100 / 200 / 100
+    await expect.poll(cellSizes).toEqual([100, 200, 100]);
+  });
+
+  it('should redistribute remaining width across the other flex columns after a column resize', async () => {
+    component.columns.set([
+      { prop: 'A', width: 100, flexGrow: 1 },
+      { prop: 'B', width: 100, flexGrow: 2 },
+      { prop: 'C', width: 100, flexGrow: 1 }
+    ]);
+    component.columnMode.set('flex');
     await fixture.whenStable();
-    expect(cellSizes()).toEqual([75, 125, 50, 50]);
+    const headerCells = fixture.debugElement.queryAll(By.directive(DataTableHeaderCellComponent));
+    const cellSizes = () => headerCells.map(cell => cell.nativeElement.clientWidth);
+
+    await expect.poll(cellSizes).toEqual([100, 200, 100]);
+
+    // Resize the second column to 160. The resized column is pinned to its new
+    // width and the remaining 240px is split across A/C by flexGrow (1:1).
+    headerCells[1].triggerEventHandler('resize', {
+      width: 160,
+      column: headerCells[1].componentInstance.column()
+    });
+    await fixture.whenStable();
+    expect(cellSizes()).toEqual([120, 160, 120]);
+  });
+
+  it('should keep a manually resized column fixed while rescaling the rest on window resize in flex mode', async () => {
+    component.columns.set([
+      { prop: 'A', width: 100, flexGrow: 1 },
+      { prop: 'B', width: 100, flexGrow: 2 },
+      { prop: 'C', width: 100, flexGrow: 1 }
+    ]);
+    component.columnMode.set('flex');
+    await fixture.whenStable();
+    const headerCells = fixture.debugElement.queryAll(By.directive(DataTableHeaderCellComponent));
+    const cellSizes = () => headerCells.map(cell => cell.nativeElement.clientWidth);
+
+    headerCells[1].triggerEventHandler('resize', {
+      width: 160,
+      column: headerCells[1].componentInstance.column()
+    });
+    await expect.poll(cellSizes).toEqual([120, 160, 120]);
+
+    // Shrink the table to 280px. Unlike force mode, the manually resized
+    // column stays at 160px and only the flex columns rescale: the remaining
+    // 120px is split across A/C by flexGrow (1:1).
+    component.size.set(280);
+    await expect.poll(cellSizes).toEqual([60, 160, 60]);
   });
 });
 
@@ -581,6 +646,113 @@ describe('DatatableComponent With Custom Templates', () => {
     expect(textContent({ row: 1, column: 2 }, fixture)).toContain('35');
     expect(textContent({ row: 2, column: 2 }, fixture)).toContain('50');
     expect(textContent({ row: 3, column: 2 }, fixture)).toContain('60');
+  });
+});
+
+describe('DatatableComponent With Ghost Loading', () => {
+  @Component({
+    imports: [DatatableComponent],
+    template: `
+      <ngx-datatable
+        columnMode="force"
+        [rows]="rows()"
+        [columns]="columns()"
+        [scrollbarV]="scrollbarV()"
+        [ghostLoadingIndicator]="ghostLoadingIndicator()"
+        [rowHeight]="rowHeight()"
+        [headerHeight]="headerHeight()"
+      />
+    `,
+    host: {
+      '[style.inline-size.px]': 'size()',
+      '[style.block-size.px]': 'height()'
+    }
+  })
+  class TestFixtureWithGhostLoadingComponent {
+    readonly columns = signal<TableColumn[]>([{ prop: 'name' }]);
+    readonly rows = signal<Record<string, any>[]>([]);
+    readonly scrollbarV = signal(true);
+    readonly ghostLoadingIndicator = signal(false);
+    readonly rowHeight = signal(50);
+    readonly headerHeight = signal(50);
+    readonly size = signal(400);
+    readonly height = signal(600);
+  }
+
+  let fixture: ComponentFixture<TestFixtureWithGhostLoadingComponent>;
+  let component: TestFixtureWithGhostLoadingComponent;
+  let datatable: DatatableComponent;
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(TestFixtureWithGhostLoadingComponent);
+    component = fixture.componentInstance;
+    datatable = fixture.debugElement.query(By.directive(DatatableComponent)).componentInstance;
+  });
+
+  it('should push enough undefined rows to fill pageSize when ghost loading with no data', async () => {
+    component.ghostLoadingIndicator.set(true);
+    component.scrollbarV.set(true);
+    component.rows.set([]);
+    await fixture.whenStable();
+
+    const internalRows = datatable._internalRows();
+    const pageSize = datatable.pageSize();
+    const undefinedCount = internalRows.filter(r => r === undefined).length;
+
+    expect(undefinedCount).toBe(Math.max(pageSize, 1));
+  });
+
+  it('should push only one undefined row when data already fills the viewport', async () => {
+    const rows = Array.from({ length: 20 }, (_, i) => ({ name: `Row ${i}` }));
+    component.rows.set(rows);
+    await fixture.whenStable();
+
+    component.ghostLoadingIndicator.set(true);
+    await fixture.whenStable();
+
+    const internalRows = datatable._internalRows();
+    const undefinedCount = internalRows.filter(r => r === undefined).length;
+
+    expect(undefinedCount).toBe(1);
+    expect(internalRows.length).toBe(rows.length + 1);
+  });
+
+  it('should push enough undefined rows to fill remaining viewport when partial data is loaded', async () => {
+    component.ghostLoadingIndicator.set(true);
+    component.scrollbarV.set(true);
+    await fixture.whenStable();
+
+    const pageSize = datatable.pageSize();
+    const partialRows = Array.from({ length: 3 }, (_, i) => ({ name: `Row ${i}` }));
+    component.rows.set(partialRows);
+    await fixture.whenStable();
+
+    const internalRows = datatable._internalRows();
+    const undefinedCount = internalRows.filter(r => r === undefined).length;
+
+    expect(undefinedCount).toBe(Math.max(pageSize - partialRows.length, 1));
+    expect(internalRows.length).toBe(partialRows.length + undefinedCount);
+  });
+
+  it('should not add undefined rows when ghostLoadingIndicator is false', async () => {
+    component.ghostLoadingIndicator.set(false);
+    await fixture.whenStable();
+
+    const internalRows = datatable._internalRows();
+    const undefinedCount = internalRows.filter(r => r === undefined).length;
+
+    expect(undefinedCount).toBe(0);
+  });
+
+  it('should not add undefined rows when scrollbarV is false', async () => {
+    component.ghostLoadingIndicator.set(true);
+    component.scrollbarV.set(false);
+    await fixture.whenStable();
+
+    const internalRows = datatable._internalRows();
+    const undefinedCount = internalRows.filter(r => r === undefined).length;
+
+    expect(undefinedCount).toBe(0);
   });
 });
 

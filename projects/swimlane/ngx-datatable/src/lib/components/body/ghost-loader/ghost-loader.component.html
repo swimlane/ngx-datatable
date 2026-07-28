@@ -1,4 +1,4 @@
-<div class="ghost-loader ghost-cell-container" [style.height.px]="ghostBodyHeight()">
+<div class="ghost-loader ghost-cell-container" [style.height]="ghostBodyHeight()">
   @for (item of ghostRows(); track item) {
     <div class="ghost-element datatable-body-row" [style.height]="rowHeightComputed()">
       @for (col of columns(); track col) {

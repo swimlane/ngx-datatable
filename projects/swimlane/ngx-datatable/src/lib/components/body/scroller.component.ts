@@ -2,15 +2,14 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
   inject,
   input,
   OnDestroy,
   OnInit,
-  output,
-  Renderer2
+  output
 } from '@angular/core';
 
+import { ScrollContainerDirective } from '../../directives/scroll-container.directive';
 import { ScrollToRowOptions } from '../../types/public.types';
 
 export interface ScrollEventInternal {
@@ -25,12 +24,11 @@ export interface ScrollEventInternal {
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     'class': 'datatable-scroll',
-    '[style.height.px]': 'scrollHeight()',
-    '[style.minWidth.px]': 'scrollWidth()'
+    '[style.height.px]': 'scrollHeight()'
   }
 })
 export class ScrollerComponent implements OnInit, OnDestroy {
-  private renderer = inject(Renderer2);
+  private scrollContainer = inject(ScrollContainerDirective);
 
   readonly scrollbarV = input(false, {
     transform: booleanAttribute
@@ -39,7 +37,6 @@ export class ScrollerComponent implements OnInit, OnDestroy {
     transform: booleanAttribute
   });
   readonly scrollHeight = input<number>();
-  readonly scrollWidth = input<number>();
 
   readonly scroll = output<ScrollEventInternal>();
 
@@ -47,19 +44,18 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   scrollXPos = 0;
   prevScrollYPos = 0;
   prevScrollXPos = 0;
-  element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
-  parentElement?: HTMLElement;
 
-  private _scrollEventListener: any = null;
+  private _removeScrollListener?: () => void;
   private _scrollRafId: number | null = null;
+
+  get scrollTop(): number {
+    return this.scrollContainer.scrollTop;
+  }
 
   ngOnInit(): void {
     // manual bind so we don't always listen
     if (this.scrollbarV() || this.scrollbarH()) {
-      const renderer = this.renderer;
-      this.parentElement = renderer.parentNode(this.element);
-      this._scrollEventListener = this.onScrolled.bind(this);
-      this.parentElement?.addEventListener('scroll', this._scrollEventListener);
+      this._removeScrollListener = this.scrollContainer.listenToScroll(this.onScrolled.bind(this));
     }
   }
 
@@ -68,29 +64,23 @@ export class ScrollerComponent implements OnInit, OnDestroy {
       cancelAnimationFrame(this._scrollRafId);
       this._scrollRafId = null;
     }
-    if (this._scrollEventListener) {
-      this.parentElement?.removeEventListener('scroll', this._scrollEventListener);
-      this._scrollEventListener = null;
-    }
+    this._removeScrollListener?.();
+    this._removeScrollListener = undefined;
   }
 
   setOffset(offsetY: number): void {
-    if (this.parentElement) {
-      this.parentElement.scrollTop = offsetY;
-    }
+    this.scrollContainer.setScrollTop(offsetY);
   }
 
   scrollTo(top: number, options?: ScrollToRowOptions): void {
-    if (this.parentElement) {
-      this.parentElement.scrollTo({ top, behavior: options?.behavior });
-    }
+    this.scrollContainer.scrollTo(top, options);
   }
 
-  onScrolled(event: MouseEvent): void {
+  onScrolled(event: Event): void {
     if (this._scrollRafId !== null) {
       return;
     }
-    const dom: Element = event.currentTarget as Element;
+    const dom = event.currentTarget as Element;
     this._scrollRafId = requestAnimationFrame(() => {
       this._scrollRafId = null;
       this.scrollYPos = dom.scrollTop;

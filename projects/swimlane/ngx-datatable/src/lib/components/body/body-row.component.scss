@@ -1,5 +1,10 @@
+@use '../shared';
+
 :host {
-  display: flex;
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  grid-template-rows: minmax(0, 1fr);
   outline: none;
 
   :host-context(ngx-datatable.fixed-row) & {
@@ -8,6 +13,10 @@
 }
 
 .datatable-row-group {
-  display: flex;
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-template-rows: subgrid;
   position: relative;
 }
+
+@include shared.pinned-columns();

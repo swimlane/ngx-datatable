@@ -1,9 +1,7 @@
-import { NgStyle } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  inject,
   input,
   output,
   TemplateRef
@@ -11,7 +9,6 @@ import {
 
 import { DatatableDraggableDirective } from '../../directives/datatable-draggable.directive';
 import { OrderableDirective } from '../../directives/orderable.directive';
-import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 import {
   ColumnResizeEventInternal,
   InnerSortEvent,
@@ -28,21 +25,18 @@ import {
   SortPropDir,
   SortType
 } from '../../types/public.types';
-import { columnGroupWidths, columnsByPin, columnsByPinArr } from '../../utils/column';
+import { columnsByPinArr } from '../../utils/column';
 import { toPublicColumn } from '../../utils/column-helper';
 import { DataTableHeaderCellComponent } from './header-cell.component';
 
 @Component({
   selector: 'datatable-header',
-  imports: [OrderableDirective, NgStyle, DataTableHeaderCellComponent, DatatableDraggableDirective],
+  imports: [OrderableDirective, DataTableHeaderCellComponent, DatatableDraggableDirective],
   template: `
-    @let _columnGroupWidths = this._columnGroupWidths();
     <div
       role="row"
       orderable
       class="datatable-header-inner"
-      [class.horizontal-overflow]="innerWidth() < _columnGroupWidths.total"
-      [style.width.px]="_columnGroupWidths.total"
       (reorder)="onColumnReordered($event)"
       (targetChanged)="onTargetChanged($event)"
     >
@@ -51,7 +45,7 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
           <div
             class="datatable-row-group"
             [class]="'datatable-row-' + colGroup.type"
-            [ngStyle]="_styleByGroup()[colGroup.type]"
+            [style.grid-column]="'span ' + colGroup.columns.length"
           >
             @for (column of colGroup.columns; track column.$$id) {
               <datatable-header-cell
@@ -88,14 +82,11 @@ import { DataTableHeaderCellComponent } from './header-cell.component';
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    'class': 'datatable-header',
-    '[style.height.px]': 'headerHeight()',
-    '[style.width]': 'headerWidth()'
+    class: 'datatable-header',
+    '[style.height.px]': 'headerHeight()'
   }
 })
 export class DataTableHeaderComponent {
-  private scrollbarHelper = inject(ScrollbarHelper);
-
   readonly lastColumnId = computed(() => this.columns().at(-1)?.$$id);
 
   readonly sortAscendingIcon = input<string>();
@@ -105,7 +96,6 @@ export class DataTableHeaderComponent {
   readonly dealsWithGroup = input<boolean>();
   readonly targetMarkerTemplate = input<TemplateRef<unknown>>();
   readonly enableClearingSortState = input(false);
-  readonly innerWidth = input.required<number>();
   readonly sorts = input.required<SortPropDir[]>();
   readonly sortType = input.required<SortType>();
   readonly allRowsSelected = input<boolean>();
@@ -129,28 +119,6 @@ export class DataTableHeaderComponent {
 
   readonly _columnsByPin = computed(() => {
     return columnsByPinArr(this.columns());
-  });
-  readonly _columnGroupWidths = computed(() => {
-    const colsByPin = columnsByPin(this.columns());
-    return columnGroupWidths(colsByPin, this.columns());
-  });
-  readonly _styleByGroup = computed(() => {
-    return {
-      left: this.calcStylesByGroup('left'),
-      center: this.calcStylesByGroup('center'),
-      right: this.calcStylesByGroup('right')
-    };
-  });
-
-  readonly headerWidth = computed(() => {
-    if (this.scrollbarH()) {
-      const width = this.verticalScrollVisible()
-        ? this.innerWidth() - this.scrollbarHelper.width
-        : this.innerWidth();
-      return width + 'px';
-    }
-
-    return '100%';
   });
 
   onColumnResized({ width, column }: { width: number; column: TableColumnInternal }): void {
@@ -260,13 +228,5 @@ export class DataTableHeaderComponent {
     }
 
     return sorts;
-  }
-
-  calcStylesByGroup(group: 'center' | 'right' | 'left'): NgStyle['ngStyle'] {
-    const widths = this._columnGroupWidths();
-
-    return {
-      width: `${widths[group]}px`
-    };
   }
 }
