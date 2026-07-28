@@ -173,7 +173,7 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
                       template: rowDefTemplate,
                       rowTemplate: bodyRow,
                       row: group,
-                      index: i
+                      index: indexes().first + i
                     };
                     disabled: disabled
                   "

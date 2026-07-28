@@ -1,4 +1,4 @@
-import { EventEmitter } from '@angular/core';
+import { Component, EventEmitter, TemplateRef, viewChild } from '@angular/core';
 import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -6,10 +6,24 @@ import { ScrollContainerDirective } from '../../directives/scroll-container.dire
 import { ScrollbarHelper } from '../../services/scrollbar-helper.service';
 import { toInternalColumn } from '../../utils/column-helper';
 import { DATATABLE_COMPONENT_TOKEN } from '../../utils/table-token';
+import { DatatableRowDefComponent, DatatableRowDefDirective } from './body-row-def.component';
 import { DataTableBodyRowComponent } from './body-row.component';
 import { DataTableBodyComponent } from './body.component';
 import { DataTableGhostLoaderComponent } from './ghost-loader/ghost-loader.component';
 import { ScrollerComponent } from './scroller.component';
+
+@Component({
+  selector: 'row-def-template-host',
+  imports: [DatatableRowDefDirective, DatatableRowDefComponent],
+  template: `
+    <ng-template #tpl rowDef>
+      <datatable-row-def />
+    </ng-template>
+  `
+})
+class RowDefTemplateHost {
+  readonly tpl = viewChild.required<TemplateRef<unknown>>('tpl');
+}
 
 /**
  * The body is rendered in isolation here, without the surrounding `role="table"`
@@ -147,6 +161,45 @@ describe('DataTableBodyComponent', () => {
       expect(
         fixture.debugElement.queryAll(By.directive(DataTableGhostLoaderComponent))
       ).toHaveLength(5);
+    });
+
+    it('should pass auto height to ghost overlay when scrollbarV is false', async () => {
+      fixture.componentRef.setInput('columns', toInternalColumn([{ name: 'num', prop: 'num' }]));
+      fixture.componentRef.setInput('scrollbarV', false);
+      fixture.componentRef.setInput('virtualization', false);
+      fixture.componentRef.setInput('rowHeight', 50);
+      fixture.componentRef.setInput('ghostLoadingIndicator', true);
+      fixture.componentRef.setInput('pageSize', 5);
+      fixture.componentRef.setInput('rowCount', 0);
+      fixture.componentRef.setInput('rows', []);
+      await fixture.whenStable();
+
+      const overlay = fixture.debugElement.query(By.css('ghost-loader.ghost-overlay'));
+      expect(overlay.componentInstance.ghostBodyHeight()).toBe('auto');
+      expect(
+        (overlay.nativeElement as HTMLElement).querySelector<HTMLElement>('.ghost-cell-container')!
+          .style.height
+      ).toBe('auto');
+    });
+
+    it('should pass pixel height to ghost overlay when scrollbarV is true', async () => {
+      fixture.componentRef.setInput('columns', toInternalColumn([{ name: 'num', prop: 'num' }]));
+      fixture.componentRef.setInput('scrollbarV', true);
+      fixture.componentRef.setInput('virtualization', false);
+      fixture.componentRef.setInput('rowHeight', 50);
+      fixture.componentRef.setInput('ghostLoadingIndicator', true);
+      fixture.componentRef.setInput('bodyHeight', 200);
+      fixture.componentRef.setInput('pageSize', 5);
+      fixture.componentRef.setInput('rowCount', 0);
+      fixture.componentRef.setInput('rows', []);
+      await fixture.whenStable();
+
+      const overlay = fixture.debugElement.query(By.css('ghost-loader.ghost-overlay'));
+      expect(overlay.componentInstance.ghostBodyHeight()).toBe('200px');
+      expect(
+        (overlay.nativeElement as HTMLElement).querySelector<HTMLElement>('.ghost-cell-container')!
+          .style.height
+      ).toBe('200px');
     });
   });
 
@@ -319,6 +372,38 @@ describe('DataTableBodyComponent', () => {
       ).not.toThrow();
       // First-ever shift-click without a prior anchor selects just the clicked row.
       expect(component.selected()).toEqual([rows[2]]);
+    });
+  });
+
+  describe('rowDef virtualization index', () => {
+    it('should pass absolute row index into custom rowDef rows after scroll', async () => {
+      const rowDefHost = TestBed.createComponent(RowDefTemplateHost);
+      rowDefHost.detectChanges();
+
+      const rows = Array.from({ length: 20 }, (_, i) => ({ num: i }));
+      fixture.componentRef.setInput('rowDefTemplate', rowDefHost.componentInstance.tpl());
+      fixture.componentRef.setInput('rows', rows);
+      fixture.componentRef.setInput('columns', toInternalColumn([{ name: 'num', prop: 'num' }]));
+      fixture.componentRef.setInput('scrollbarV', true);
+      fixture.componentRef.setInput('virtualization', true);
+      fixture.componentRef.setInput('rowHeight', 50);
+      fixture.componentRef.setInput('bodyHeight', 200);
+      fixture.componentRef.setInput('pageSize', 5);
+      fixture.componentRef.setInput('rowCount', rows.length);
+      fixture.componentRef.setInput('offset', 0);
+      await fixture.whenStable();
+
+      fixture.debugElement
+        .query(By.directive(ScrollerComponent))
+        .triggerEventHandler('scroll', { scrollYPos: 250, scrollXPos: 0 });
+      await fixture.whenStable();
+
+      expect(component.indexes().first).toBe(5);
+
+      const bodyRows = fixture.debugElement.queryAll(By.directive(DataTableBodyRowComponent));
+      expect(bodyRows.length).toBeGreaterThan(0);
+      // Same index is forwarded to onActivate → selectRow; viewport-local i=0 must be absolute 5.
+      expect(bodyRows[0].componentInstance.rowIndex().index).toBe(5);
     });
   });
 });
