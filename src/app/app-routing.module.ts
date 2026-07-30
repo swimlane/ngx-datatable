@@ -283,10 +283,5 @@ export const routes: Routes = [
     path: 'inline-html-summary',
     loadComponent: () =>
       import('./summary/inline-html-summary.component').then(c => c.InlineHtmlSummaryComponent)
-  },
-  {
-    path: 'summary-row-actions',
-    loadComponent: () =>
-      import('./summary/summary-row-actions.component').then(c => c.SummaryRowActionsComponent)
   }
 ];

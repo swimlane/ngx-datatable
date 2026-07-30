@@ -72,6 +72,20 @@ describe('DataTableBodyCellComponent', () => {
     expect(cellText).toEqual('Hello');
   });
 
+  it('should have min width when column has minWidth', async () => {
+    const columns = toInternalColumn([{ name: 'Min Width Column', prop: 0, minWidth: 500 }]);
+    component.setInput('column', columns[0]);
+
+    expect(await harness.bodyCellWidth()).toBe(500);
+  });
+
+  it('should honour maxWidth when provided', async () => {
+    const columns = toInternalColumn([{ name: 'Min Width Column', prop: 0, maxWidth: 10 }]);
+    component.setInput('column', columns[0]);
+
+    expect(await harness.bodyCellWidth()).toBe(10);
+  });
+
   describe('checkboxable', () => {
     beforeEach(() => {
       component.setInput('row', { id: 1 });

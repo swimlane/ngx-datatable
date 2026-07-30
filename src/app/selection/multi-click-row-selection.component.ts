@@ -2,6 +2,7 @@ import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/cor
 import {
   ActivateEvent,
   DatatableComponent,
+  SelectEvent,
   TableColumn
 } from 'projects/swimlane/ngx-datatable/src/public-api';
 
@@ -43,7 +44,7 @@ import { DataService } from '../data.service';
           [limit]="5"
           [selected]="selected"
           (activate)="onActivate($event)"
-          (selectedChange)="onSelect($event)"
+          (select)="onSelect($event)"
         />
       </div>
 
@@ -75,7 +76,7 @@ export class MultiClickRowSelectionComponent {
     this.dataService.load('company.json').subscribe(data => this.rows.set(data));
   }
 
-  onSelect(selected: Employee[]) {
+  onSelect({ selected }: SelectEvent<Employee>) {
     this.selected.splice(0, this.selected.length);
     this.selected.push(...selected);
   }

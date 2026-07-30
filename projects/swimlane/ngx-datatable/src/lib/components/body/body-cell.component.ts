@@ -89,6 +89,10 @@ import { ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, ARROW_UP, ENTER } from '../../util
     '[class]': 'columnCssClasses()',
     '[class.active]': 'isFocused() && !disabled()',
     '[class.row-disabled]': 'disabled()',
+    '[style.width.px]': 'column().width()',
+    '[style.minWidth.px]': 'column().minWidth',
+    '[style.maxWidth.px]': 'column().maxWidth',
+    '[style.height]': 'height()',
     '(focus)': 'onFocus()',
     '(blur)': 'onBlur()',
     '(click)': 'onClick($event)',
@@ -142,6 +146,14 @@ export class DataTableBodyCellComponent<TRow extends Row = any> implements DoChe
       value: this.value(),
       rowHeight: this.rowHeight()
     });
+  });
+
+  protected readonly height = computed(() => {
+    const height = this.rowHeight();
+    if (isNaN(height)) {
+      return height;
+    }
+    return height + 'px';
   });
 
   protected readonly sanitizedValue = computed(() => {
