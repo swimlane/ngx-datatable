@@ -1,1 +1,0 @@
-import {y,aZ as _e,aY as se}from'./main-3I3WXCLY.js';var l$1=(()=>{class t{constructor(){this.client=y(_e);}load(e){return this.client.get(`assets/data/${e}`)}static{this.\u0275fac=function(n){return new(n||t)};}static{this.\u0275prov=se({token:t,factory:t.\u0275fac,providedIn:"root"});}}return t})();export{l$1 as l};
