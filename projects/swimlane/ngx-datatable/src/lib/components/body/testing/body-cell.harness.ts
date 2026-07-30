@@ -45,4 +45,10 @@ export class BodyCellHarness extends ComponentHarness {
       await button.click();
     }
   }
+
+  async bodyCellWidth(): Promise<number> {
+    const cell = await this.host();
+    const width = await cell?.getProperty('offsetWidth');
+    return width ? Number(width) : 0;
+  }
 }

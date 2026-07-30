@@ -2,31 +2,9 @@
 
 ## HEAD (unreleased)
 
-### Features
-
 - Enhancement: Added support for Angular 22
-- Feature: Lay out columns with a shared CSS grid (header/body via subgrid) and unify scrolling into a single scroll container
-- Feature: Re-measure dimensions via `ResizeObserver` instead of `window:resize`
-- Feature: Add `DatatableSummaryRowDirective` for custom summary row templates
-- Feature: `datatable-row-def` can optionally preserve measured column widths when cloned (`preserveColumnWidthsOnClone`)
-
-### Bug Fixes
-
-- Fix: Keep prior selection when shift-clicking after ctrl-click (#582)
-- Fix: Fill viewport with ghost loader rows on initial load
-- Fix: Wait for DOM updates before scrolling to an expanded tree row
-- Fix: Compute correct tree level when a child precedes its parent in tree rows
-- Fix: Ensure custom sort icons are applied
-- Fix: Allow sorting on mobile devices when reorderable is enabled
-- Fix: Add missing `aria-sort` on header cells
-- Fix: Fixing scroller Issue in datatable when multiple columns are there in datatable
-
-### Breaking Changes
-
 - Breaking: Removed support for Angular 19 and earlier versions
-- Breaking: Removed deprecated `sort` output; use `(sortsChange)` or `[(sorts)]` instead
-- Breaking: Removed deprecated `select` output; use `(selectedChange)` or `[(selected)]` instead
-- Breaking: Removed the visibility observer; recalculation is driven by `ResizeObserver` / layout
+- Fix: Fixing scroller Issue in datatable when multiple columns are there in datatable
 
 ## 24.0.0
 

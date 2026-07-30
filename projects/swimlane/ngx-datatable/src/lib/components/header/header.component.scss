@@ -1,19 +1,12 @@
 @use '../shared';
 
 :host {
-  display: grid;
-  grid-template-columns: subgrid;
-  grid-column: 1 / -1;
-  grid-row: 1;
-  position: sticky;
-  inset-block-start: 0;
-  z-index: 11;
+  display: block;
+  overflow: hidden;
 }
 
 .datatable-header-inner {
-  display: grid;
-  grid-template-columns: subgrid;
-  grid-column: 1 / -1;
+  display: flex;
 
   :host-context(ngx-datatable.fixed-header) & {
     white-space: nowrap;
@@ -21,8 +14,7 @@
 }
 
 .datatable-row-group {
-  display: grid;
-  grid-template-columns: subgrid;
+  display: flex;
 }
 
 @include shared.pinned-columns();

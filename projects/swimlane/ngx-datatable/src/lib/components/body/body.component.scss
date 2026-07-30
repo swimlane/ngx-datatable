@@ -1,28 +1,25 @@
 :host {
   position: relative;
   z-index: 10;
-  display: grid;
-  grid-template-columns: subgrid;
-  grid-column: 1 / -1;
-  grid-row: 2;
-  min-block-size: 0;
+  display: block;
+  overflow: hidden;
+
+  :host-context(ngx-datatable.scroll-horz) & {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; // Required for iOS optimization
+  }
 }
 
-datatable-scroller,
-.datatable-row-render-wrapper {
-  display: grid;
-  grid-template-columns: subgrid;
-  grid-column: 1 / -1;
-  align-content: start;
+datatable-scroller {
+  display: block;
 
   :host-context(ngx-datatable.fixed-row) & {
     white-space: nowrap;
   }
 }
 
-.custom-loading-indicator-wrapper,
-ghost-loader {
-  grid-column: 1 / -1;
+:host-context(ngx-datatable.scroll-vertical) :host {
+  overflow-y: auto;
 }
 
 [hidden] {

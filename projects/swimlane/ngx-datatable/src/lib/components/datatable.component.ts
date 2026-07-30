@@ -1,5 +1,4 @@
 import {
-  afterNextRender,
   AfterViewInit,
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -12,6 +11,7 @@ import {
   DoCheck,
   effect,
   ElementRef,
+  HostListener,
   inject,
   input,
   IterableDiffer,
@@ -28,7 +28,7 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { ScrollContainerDirective } from '../directives/scroll-container.directive';
+import { VisibilityDirective } from '../directives/visibility.directive';
 import { NGX_DATATABLE_CONFIG, NgxDatatableConfig } from '../ngx-datatable.config';
 import { ScrollbarHelper } from '../services/scrollbar-helper.service';
 import {
@@ -50,6 +50,7 @@ import {
   RowOrGroup,
   ScrollEvent,
   ScrollToRowOptions,
+  SelectEvent,
   SelectionType,
   SortEvent,
   SortPropDir,
@@ -57,23 +58,17 @@ import {
   TreeStatus
 } from '../types/public.types';
 import { TableColumn } from '../types/table-column.type';
-import {
-  columnGroupWidths,
-  columnsByPin,
-  columnsByPinArr,
-  gridColumnTemplate
-} from '../utils/column';
 import { toInternalColumn, toPublicColumn } from '../utils/column-helper';
 import { adjustColumnWidths, forceFillColumnWidths } from '../utils/math';
 import { numberOrUndefinedAttribute } from '../utils/number-or-undefined-attribute';
 import { sortGroupedRows, sortRows } from '../utils/sort';
 import { DATATABLE_COMPONENT_TOKEN } from '../utils/table-token';
+import { throttleable } from '../utils/throttle';
 import { expandToRow, groupRowsByParents, optionalGetterForProp } from '../utils/tree';
 import { DatatableGroupHeaderDirective } from './body/body-group-header.directive';
 import { DatatableRowDefDirective } from './body/body-row-def.component';
 import { DataTableBodyComponent } from './body/body.component';
 import { ProgressBarComponent } from './body/progress-bar.component';
-import { DatatableSummaryRowDirective } from './body/summary/summary-row.directive';
 import { DataTableColumnDirective } from './columns/column.directive';
 import { DataTableFooterComponent } from './footer/footer.component';
 import { DatatableFooterDirective } from './footer/footer.directive';
@@ -83,7 +78,7 @@ import { DatatableRowDetailDirective } from './row-detail/row-detail.directive';
 @Component({
   selector: 'ngx-datatable',
   imports: [
-    ScrollContainerDirective,
+    VisibilityDirective,
     DataTableHeaderComponent,
     DataTableBodyComponent,
     DataTableFooterComponent,
@@ -110,8 +105,7 @@ import { DatatableRowDetailDirective } from './row-detail/row-detail.directive';
     '[class.cell-selection]': 'selectionType() === "cell"',
     '[class.single-selection]': 'selectionType() === "single"',
     '[class.multi-selection]': 'selectionType() === "multi"',
-    '[class.multi-click-selection]': 'selectionType() === "multiClick"',
-    '[class.horizontal-overflow]': '_innerWidth() < totalColumnGroupWidths()'
+    '[class.multi-click-selection]': 'selectionType() === "multiClick"'
   }
 })
 export class DatatableComponent<TRow extends Row = any>
@@ -456,6 +450,42 @@ export class DatatableComponent<TRow extends Row = any>
   readonly activate = output<ActivateEvent<TRow>>();
 
   /**
+   * A cell or row was selected.
+   * @deprecated Use two-way binding on `selected` instead.
+   *
+   * Before:
+   * ```html
+   * <ngx-datatable [selected]="mySelection" (select)="onSelect($event)"></ngx-datatable>
+   * ```
+   *
+   * After:
+   * ```html
+   * <ngx-datatable [selected]="mySelection" (selectedChange)="onSelect({selected: $event})"></ngx-datatable>
+   * <!-- or -->
+   * <ngx-datatable [(selected)]="mySelection"></ngx-datatable>
+   * ```
+   */
+  readonly select = output<SelectEvent<TRow>>();
+
+  /**
+   * Column sort was invoked.
+   * @deprecated Use two-way binding on `sorts` instead.
+   *
+   * Before:
+   * ```html
+   * <ngx-datatable [sorts]="mySorts" (sort)="onSort($event)"></ngx-datatable>
+   * ```
+   *
+   * After:
+   * ```html
+   * <ngx-datatable [sorts]="mySorts" (sortsChange)="onSort({sorts: $event})"></ngx-datatable>
+   * <!-- or -->
+   * <ngx-datatable [(sorts)]="mySorts"></ngx-datatable>
+   * ```
+   */
+  readonly sort = output<SortEvent>();
+
+  /**
    * The table was paged either triggered by the pager or the body scroll.
    */
   readonly page = output<PageEvent>();
@@ -509,11 +539,6 @@ export class DatatableComponent<TRow extends Row = any>
   groupHeader?: DatatableGroupHeaderDirective;
 
   /**
-   * Custom summary row template gathered from the ContentChild
-   */
-  readonly summaryRowDirective = contentChild(DatatableSummaryRowDirective);
-
-  /**
    * Footer template gathered from the ContentChild
    * @internal
    */
@@ -528,11 +553,9 @@ export class DatatableComponent<TRow extends Row = any>
     read: ElementRef<HTMLElement>
   });
 
-  /**
-   * The `role="table"` element. This is the css-grid that owns both the
-   * horizontal and vertical scroll (Option A: single scroll container).
-   */
-  private readonly _scrollContainer = viewChild.required(ScrollContainerDirective);
+  private readonly _bodyElement = viewChild.required(DataTableBodyComponent, {
+    read: ElementRef<HTMLElement>
+  });
 
   /** @internal */
   readonly _rowDefTemplate = contentChild(DatatableRowDefDirective, {
@@ -558,10 +581,6 @@ export class DatatableComponent<TRow extends Row = any>
   element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
   readonly _innerWidth = computed(() => this.dimensions().width);
   readonly pageSize = computed(() => this.calcPageSize());
-  private readonly viewportRowCount = computed(() => {
-    const size = Math.ceil(this.bodyHeight() / (this.rowHeight() as number));
-    return Math.max(size, 0);
-  });
   readonly _isFixedHeader = computed(() => {
     const headerHeight: number | string = this.headerHeight();
     return typeof headerHeight === 'string' ? (headerHeight as string) !== 'auto' : true;
@@ -601,10 +620,8 @@ export class DatatableComponent<TRow extends Row = any>
     }
 
     if (this.ghostLoadingIndicator() && this.scrollbarV() && !this.externalPaging()) {
-      const ghostRowCount = Math.max(this.viewportRowCount() - rows.length, 1);
-      for (let i = 0; i < ghostRowCount; i++) {
-        rows.push(undefined);
-      }
+      // in case where we don't have predefined total page length
+      rows.push(undefined); // undefined row will render ghost cell row at the end of the page
     }
 
     return rows;
@@ -651,16 +668,6 @@ export class DatatableComponent<TRow extends Row = any>
   );
 
   /**
-   * The shared `grid-template-columns` definition for the combined css-grid.
-   * It is exposed once as a custom property on the scroll container so the
-   * header and every body row align to the same column tracks via `var()`,
-   * instead of each row binding its own (identical) template string.
-   */
-  readonly _gridTemplateColumns = computed(() =>
-    gridColumnTemplate(columnsByPinArr(this._internalColumns()))
-  );
-
-  /**
    * Computed signal that returns the corrected offset value.
    * It ensures the offset is within valid bounds based on rowCount and pageSize.
    */
@@ -669,11 +676,6 @@ export class DatatableComponent<TRow extends Row = any>
     const rowCount = this.rowCount();
     const pageSize = this.pageSize();
     return Math.max(Math.min(offset, Math.ceil(rowCount / pageSize) - 1), 0);
-  });
-
-  readonly totalColumnGroupWidths = computed(() => {
-    const colsByPin = columnsByPin(this._internalColumns());
-    return columnGroupWidths(colsByPin, this._internalColumns()).total;
   });
 
   _subscriptions: Subscription[] = [];
@@ -687,28 +689,18 @@ export class DatatableComponent<TRow extends Row = any>
   protected verticalScrollVisible = false;
   private readonly dimensions = signal<Pick<DOMRect, 'width' | 'height'>>({ height: 0, width: 0 });
 
-  /** Re-measures the table whenever the host element's size changes. */
-  private resizeObserver?: ResizeObserver;
-
-  /** Pending debounce timer for the {@link resizeObserver} callback. */
-  private resizeDebounce?: ReturnType<typeof setTimeout>;
-
   constructor() {
-    effect(() => this.recalculateColumns());
-
-    afterNextRender(() => {
-      this.resizeObserver = new ResizeObserver(entries => {
-        const borderBox = entries[entries.length - 1]?.borderBoxSize?.[0];
-        if (!borderBox) {
-          return;
-        }
-        clearTimeout(this.resizeDebounce);
-        this.resizeDebounce = setTimeout(() => {
-          this.dimensions.set({ width: borderBox.inlineSize, height: borderBox.blockSize });
-        }, 5);
-      });
-      this.resizeObserver.observe(this.element);
+    // TODO: This should be a computed signal.
+    // Effect to handle recalculate when limit or count changes
+    effect(() => {
+      // Track limit and count changes
+      this.limit();
+      this.count();
+      // Recalculate without tracking other signals
+      untracked(() => this.recalculateDims());
     });
+
+    effect(() => this.recalculateColumns());
   }
 
   /*
@@ -718,6 +710,13 @@ export class DatatableComponent<TRow extends Row = any>
     const rowDiffers = this.checkRowListChanges() ? this.rowDiffer.diff(this.rows()) : null;
     if (rowDiffers || this.disableRowCheck()) {
       this._rowDiffCount.update(count => count + 1);
+      if (rowDiffers) {
+        queueMicrotask(() => {
+          this.recalculate();
+          this.cd.markForCheck();
+        });
+      }
+
       this.cd.markForCheck();
     }
   }
@@ -727,18 +726,26 @@ export class DatatableComponent<TRow extends Row = any>
    * view has been fully initialized.
    */
   ngAfterViewInit(): void {
-    // emit page for virtual server-side kickoff
-    if (this.externalPaging() && this.scrollbarV()) {
-      queueMicrotask(() =>
+    // this has to be done to prevent the change detection
+    // tree from freaking out because we are readjusting
+    if (typeof requestAnimationFrame === 'undefined') {
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      this.recalculate();
+
+      // emit page for virtual server-side kickoff
+      if (this.externalPaging() && this.scrollbarV()) {
         this.page.emit({
           count: this.count(),
           pageSize: this.pageSize(),
           limit: this.limit(),
           offset: 0,
           sorts: this.sorts()
-        })
-      );
-    }
+        });
+      }
+    });
   }
 
   /**
@@ -791,16 +798,28 @@ export class DatatableComponent<TRow extends Row = any>
   }
 
   /**
-   * @deprecated No-op. Dimensions are kept current by a `ResizeObserver` on the
-   * host element; this will be removed in a future release.
+   * Recalc's the sizes of the grid.
+   *
+   * Updated automatically on changes to:
+   *
+   *  - Columns
+   *  - Rows
+   *  - Paging related
+   *
+   * Also can be manually invoked or upon window resize.
    */
-  recalculate(): void {}
+  recalculate(): void {
+    this.recalculateDims();
+  }
 
   /**
-   * @deprecated No-op. The `window:resize` listener was replaced by a
-   * `ResizeObserver`; this will be removed in a future release.
+   * Window resize handler to update sizes.
    */
-  onWindowResize(): void {}
+  @HostListener('window:resize')
+  @throttleable(5)
+  onWindowResize(): void {
+    this.recalculate();
+  }
 
   /**
    * Recalulcates the column widths based on column width
@@ -815,7 +834,8 @@ export class DatatableComponent<TRow extends Row = any>
     if (!width) {
       return [];
     }
-    this.verticalScrollVisible = this._scrollContainer().verticalScrollVisible;
+    const { scrollHeight, clientHeight } = this._bodyElement().nativeElement;
+    this.verticalScrollVisible = scrollHeight > clientHeight;
     if (this.scrollbarV() || this.scrollbarVDynamic()) {
       width = width - (this.verticalScrollVisible ? this.scrollbarHelper.width : 0);
     }
@@ -841,10 +861,14 @@ export class DatatableComponent<TRow extends Row = any>
   }
 
   /**
-   * @deprecated No-op. Dimensions are kept current by a `ResizeObserver` on the
-   * host element; this will be removed in a future release.
+   * Recalculates the dimensions of the table size.
+   * Internally calls the page size and row count calcs too.
+   *
    */
-  recalculateDims(): void {}
+  recalculateDims(): void {
+    const dims = this.element.getBoundingClientRect();
+    this.dimensions.set(dims);
+  }
 
   /**
    * Body triggered a page event.
@@ -876,6 +900,12 @@ export class DatatableComponent<TRow extends Row = any>
   onBodyScroll(event: ScrollEvent): void {
     this._offsetX = event.offsetX;
     this.scroll.emit(event);
+
+    // Sync header scroll position directly via DOM to avoid Angular CD lag
+    const headerEl = this._headerElement()?.nativeElement;
+    if (headerEl) {
+      headerEl.scrollLeft = event.offsetX;
+    }
   }
 
   /**
@@ -895,6 +925,9 @@ export class DatatableComponent<TRow extends Row = any>
 
     if (this.selectAllRowsOnPage()) {
       this.selected.set([]);
+      this.select.emit({
+        selected: this.selected()
+      });
     }
   }
 
@@ -902,8 +935,12 @@ export class DatatableComponent<TRow extends Row = any>
    * Recalculates the sizes of the page
    */
   calcPageSize(): number {
+    // Keep the page size constant even if the row has been expanded.
+    // This is because an expanded row is still considered to be a child of
+    // the original row.  Hence calculation would use rowHeight only.
     if (this.scrollbarV() && this.virtualization()) {
-      return this.viewportRowCount();
+      const size = Math.ceil(this.bodyHeight() / (this.rowHeight() as number));
+      return Math.max(size, 0);
     }
 
     // if limit is passed, we are paging
@@ -1026,6 +1063,9 @@ export class DatatableComponent<TRow extends Row = any>
     // clean selected rows
     if (this.selectAllRowsOnPage()) {
       this.selected.set([]);
+      this.select.emit({
+        selected: this.selected()
+      });
     }
 
     this.sorts.set(event.sorts);
@@ -1041,6 +1081,7 @@ export class DatatableComponent<TRow extends Row = any>
       offset: this.correctedOffset(),
       sorts: this.sorts()
     });
+    this.sort.emit(event);
   }
 
   /**
@@ -1081,6 +1122,17 @@ export class DatatableComponent<TRow extends Row = any>
         this.selected.set([]);
       }
     }
+
+    this.select.emit({
+      selected: this.selected()
+    });
+  }
+
+  /**
+   * A row was selected from body
+   */
+  onBodySelect(selected: TRow[]): void {
+    this.select.emit({ selected });
   }
 
   /**
@@ -1098,8 +1150,6 @@ export class DatatableComponent<TRow extends Row = any>
   }
 
   ngOnDestroy() {
-    this.resizeObserver?.disconnect();
-    clearTimeout(this.resizeDebounce);
     this._subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
@@ -1151,7 +1201,7 @@ export class DatatableComponent<TRow extends Row = any>
       optionalGetterForProp(this.treeToRelation())
     );
     this._rowDiffCount.update(v => v + 1);
-    // We need a setTimeout to wait until the DOM was updated
-    setTimeout(() => this.scrollToRowTree(row, options, true));
+    // We need a microTask here to let Angular update the DOM
+    queueMicrotask(() => this.scrollToRowTree(row, options, true));
   }
 }
