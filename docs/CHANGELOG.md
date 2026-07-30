@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 25.0.0
+## HEAD (unreleased)
 
 ### Features
 
