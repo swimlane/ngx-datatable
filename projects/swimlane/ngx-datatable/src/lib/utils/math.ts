@@ -66,7 +66,8 @@ const scaleColumns = (colsByGroup: TableColumnGroup, maxWidth: number, totalFlex
           column.width.set(column.minWidth);
           hasMinWidth[column.prop] = true;
         } else {
-          column.width.set(newWidth);
+          // Never allow negative tracks (aligns with forceFillColumnWidths).
+          column.width.set(Math.max(0, newWidth));
         }
       }
     }
@@ -80,14 +81,25 @@ const scaleColumns = (colsByGroup: TableColumnGroup, maxWidth: number, totalFlex
     return;
   }
 
-  // adjust the first column that can be auto-resized respecting the min/max widths
-  for (const col of columns.filter(c => c.canAutoResize).sort((a, b) => a.width() - b.width())) {
+  // Prefer flexGrow > 0 columns that can absorb delta; skip zero-width /
+  // flexGrow-0 columns so leftover float/minWidth noise cannot go negative.
+  for (const col of columns
+    .filter(c => c.canAutoResize && (c.flexGrow ?? 0) > 0)
+    .sort((a, b) => a.width() - b.width())) {
     if (
       (delta > 0 && (!col.maxWidth || col.width() + delta <= col.maxWidth)) ||
-      (delta < 0 && (!col.minWidth || col.width() + delta >= col.minWidth))
+      (delta < 0 &&
+        col.width() + delta >= 0 &&
+        (!col.minWidth || col.width() + delta >= col.minWidth))
     ) {
-      col.width.update(value => value + delta);
+      col.width.update(value => Math.max(0, value + delta));
       break;
+    }
+  }
+
+  for (const col of columns) {
+    if (col.width() < 0) {
+      col.width.set(0);
     }
   }
 };

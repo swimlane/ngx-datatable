@@ -69,7 +69,7 @@ export const gridColumnTemplate = (cols: PinnedColumns[]): string => {
 };
 
 const gridColumnTrack = (column: TableColumnInternal): string => {
-  const width = `${column.width()}px`;
+  const width = `${Math.max(0, column.width())}px`;
   const min = column.minWidth ? `${column.minWidth}px` : undefined;
   const max = column.maxWidth ? `${column.maxWidth}px` : undefined;
   if (min && max) {

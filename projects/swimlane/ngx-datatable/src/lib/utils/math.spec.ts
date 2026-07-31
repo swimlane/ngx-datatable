@@ -183,6 +183,51 @@ describe('Math function', () => {
         adjustColumnWidths(cols, 500);
         expect(cols.map(c => c.width())).toEqual([100, 200, 200]);
       });
+
+      it('should never produce negative widths for flexGrow 0 + canAutoResize true', () => {
+        const cols = toInternalColumn([
+          { prop: 'expand', width: 58, canAutoResize: false },
+          { prop: 'status', flexGrow: 1.5, minWidth: 160, canAutoResize: true },
+          { prop: 'name', flexGrow: 1, canAutoResize: true },
+          { prop: 'duration', width: 100, flexGrow: 0, canAutoResize: true }
+        ]);
+
+        adjustColumnWidths(cols, 500);
+
+        for (const col of cols) {
+          expect(col.width()).toBeGreaterThanOrEqual(0);
+        }
+      });
+
+      it('should not produce negative widths when minWidths exceed available space', () => {
+        const cols = toInternalColumn([
+          { prop: 'expand', width: 58, canAutoResize: false },
+          { prop: 'status', flexGrow: 1.5, minWidth: 160, canAutoResize: true },
+          { prop: 'name', flexGrow: 1, canAutoResize: true },
+          { prop: 'duration', width: 100, flexGrow: 0, canAutoResize: true }
+        ]);
+
+        adjustColumnWidths(cols, 200);
+
+        for (const col of cols) {
+          expect(col.width()).toBeGreaterThanOrEqual(0);
+        }
+      });
+
+      it('should distribute remaining width across flexGrow columns with locked siblings', () => {
+        const cols = toInternalColumn([
+          { prop: 'locked', width: 100, canAutoResize: false },
+          { prop: 'flexA', width: 50, flexGrow: 1, canAutoResize: true },
+          { prop: 'flexB', width: 50, flexGrow: 3, canAutoResize: true }
+        ]);
+
+        adjustColumnWidths(cols, 500);
+
+        expect(cols[0].width()).toBe(100);
+        expect(cols[1].width()).toBeCloseTo(100, 5);
+        expect(cols[2].width()).toBeCloseTo(300, 5);
+        expect(cols.reduce((sum, c) => sum + c.width(), 0)).toBeCloseTo(500, 5);
+      });
     });
   });
 });
