@@ -197,6 +197,8 @@ describe('Math function', () => {
         for (const col of cols) {
           expect(col.width()).toBeGreaterThanOrEqual(0);
         }
+        expect(cols[3].width()).toBe(100);
+        expect(cols.reduce((sum, c) => sum + c.width(), 0)).toBeCloseTo(500, 5);
       });
 
       it('should not produce negative widths when minWidths exceed available space', () => {
@@ -212,6 +214,7 @@ describe('Math function', () => {
         for (const col of cols) {
           expect(col.width()).toBeGreaterThanOrEqual(0);
         }
+        expect(cols[3].width()).toBe(100);
       });
 
       it('should distribute remaining width across flexGrow columns with locked siblings', () => {
@@ -226,6 +229,21 @@ describe('Math function', () => {
         expect(cols[0].width()).toBe(100);
         expect(cols[1].width()).toBeCloseTo(100, 5);
         expect(cols[2].width()).toBeCloseTo(300, 5);
+        expect(cols.reduce((sum, c) => sum + c.width(), 0)).toBeCloseTo(500, 5);
+      });
+
+      it('should keep width when flexGrow is unset (flex column demo Age case)', () => {
+        const cols = toInternalColumn([
+          { prop: 'name', flexGrow: 3, canAutoResize: true },
+          { prop: 'gender', flexGrow: 1, canAutoResize: true },
+          { prop: 'age', width: 100, canAutoResize: true }
+        ]);
+
+        adjustColumnWidths(cols, 500);
+
+        expect(cols[2].width()).toBe(100);
+        expect(cols[0].width()).toBeCloseTo(300, 5);
+        expect(cols[1].width()).toBeCloseTo(100, 5);
         expect(cols.reduce((sum, c) => sum + c.width(), 0)).toBeCloseTo(500, 5);
       });
     });

@@ -42,9 +42,13 @@ const scaleColumns = (colsByGroup: TableColumnGroup, maxWidth: number, totalFlex
       // when manually resized, switch off auto-resize
       column.canAutoResize = false;
     }
-    if (!column.canAutoResize) {
+    // flexGrow 0/undefined keeps its width (e.g. Age [width]="100" in flex mode).
+    // Zeroing these left them invisible until consumers set canAutoResize=false.
+    if (!column.canAutoResize || (column.flexGrow ?? 0) <= 0) {
       remainingWidth -= column.width();
-      totalFlexGrow -= column.flexGrow ?? 0;
+      if (!column.canAutoResize) {
+        totalFlexGrow -= column.flexGrow ?? 0;
+      }
     } else {
       column.width.set(0);
     }
@@ -53,25 +57,31 @@ const scaleColumns = (colsByGroup: TableColumnGroup, maxWidth: number, totalFlex
   const hasMinWidth: Record<TableColumnProp, boolean> = {};
 
   // resize columns until no width is left to be distributed
-  do {
-    const widthPerFlexPoint = remainingWidth / totalFlexGrow;
-    remainingWidth = 0;
+  if (totalFlexGrow > 0) {
+    do {
+      const widthPerFlexPoint = remainingWidth / totalFlexGrow;
+      remainingWidth = 0;
 
-    for (const column of columns) {
-      // if the column can be resize and it hasn't reached its minimum width yet
-      if (column.canAutoResize && !hasMinWidth[column.prop]) {
-        const newWidth = column.width() + (column.flexGrow ?? 0) * widthPerFlexPoint;
-        if (column.minWidth !== undefined && newWidth < column.minWidth) {
-          remainingWidth += newWidth - column.minWidth;
-          column.width.set(column.minWidth);
-          hasMinWidth[column.prop] = true;
-        } else {
-          // Never allow negative tracks (aligns with forceFillColumnWidths).
-          column.width.set(Math.max(0, newWidth));
+      for (const column of columns) {
+        // if the column can be resize and it hasn't reached its minimum width yet
+        if (
+          column.canAutoResize &&
+          (column.flexGrow ?? 0) > 0 &&
+          !hasMinWidth[column.prop]
+        ) {
+          const newWidth = column.width() + (column.flexGrow ?? 0) * widthPerFlexPoint;
+          if (column.minWidth !== undefined && newWidth < column.minWidth) {
+            remainingWidth += newWidth - column.minWidth;
+            column.width.set(column.minWidth);
+            hasMinWidth[column.prop] = true;
+          } else {
+            // Never allow negative tracks (aligns with forceFillColumnWidths).
+            column.width.set(Math.max(0, newWidth));
+          }
         }
       }
-    }
-  } while (remainingWidth !== 0);
+    } while (remainingWidth !== 0);
+  }
 
   // Adjust for any remaining offset in computed widths vs maxWidth
   const totalWidthAchieved = columns.reduce((acc, col) => acc + col.width(), 0);

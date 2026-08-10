@@ -21,6 +21,7 @@
 - Fix: Add missing `aria-sort` on header cells
 - Fix: Fixing scroller Issue in datatable when multiple columns are there in datatable
 - Fix: Prevent flex mode from emitting negative column widths that invalidate CSS `grid-template-columns` (v25+)
+- Fix: Keep explicit column `width` in flex mode when `flexGrow` is unset (no longer requires `canAutoResize=false`)
 
 ### Breaking Changes
 
