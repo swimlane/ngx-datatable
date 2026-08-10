@@ -4,6 +4,7 @@ import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/
 import { By } from '@angular/platform-browser';
 import { vi } from 'vitest';
 
+import { columnsByPinArr, gridColumnTemplate } from '../../utils/column';
 import { toInternalColumn } from '../../utils/column-helper';
 import { DataTableHeaderComponent } from './header.component';
 import { HeaderHarness } from './testing/header.harness';
@@ -13,6 +14,13 @@ describe('DataTableHeaderComponent', () => {
   let componentRef: ComponentRef<DataTableHeaderComponent>;
   let harness: HeaderHarness;
 
+  const applyMockGridTemplate = (): void => {
+    fixture.nativeElement.style.width = 'max-content';
+    fixture.nativeElement.style.gridTemplateColumns = gridColumnTemplate(
+      columnsByPinArr(componentRef.instance.columns())
+    );
+  };
+
   beforeEach(async () => {
     // Delay auto-detect until required inputs are set (avoids NG0950).
     TestBed.configureTestingModule({
@@ -20,7 +28,6 @@ describe('DataTableHeaderComponent', () => {
     });
     fixture = TestBed.createComponent(DataTableHeaderComponent);
     fixture.componentRef.setInput('columns', []);
-    fixture.componentRef.setInput('innerWidth', 200);
     fixture.componentRef.setInput('sorts', []);
     fixture.componentRef.setInput('sortType', 'single');
     fixture.componentRef.setInput('headerHeight', 50);
@@ -29,6 +36,10 @@ describe('DataTableHeaderComponent', () => {
 
     harness = await TestbedHarnessEnvironment.harnessForFixture(fixture, HeaderHarness);
     componentRef = fixture.componentRef;
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   it('should render with given column headers', async () => {
@@ -52,10 +63,10 @@ describe('DataTableHeaderComponent', () => {
         { prop: 'col2', name: 'Column 2', width: 200 }
       ])
     );
+    applyMockGridTemplate();
     // there is setTimeout in columns setter so we need to wait for it
     vi.advanceTimersByTime(0);
     expect(await harness.getHeaderRowWidth()).toBeCloseTo(500);
-    vi.useRealTimers();
   });
 
   it('should place header cells based on column pinning group', async () => {
@@ -92,6 +103,7 @@ describe('DataTableHeaderComponent', () => {
       const { column, newValue } = event;
       column.width.set(newValue);
       componentRef.setInput('columns', [...componentRef.instance.columns()]);
+      applyMockGridTemplate();
     });
 
     const initialWidth = await harness.getColumnWidth(0);
@@ -250,28 +262,5 @@ describe('DataTableHeaderComponent', () => {
     expect(await harness.getColumnName(0)).toBe('Column 2');
     expect(await harness.getColumnName(1)).toBe('Column 1');
     expect(await harness.getColumnName(2)).toBe('Column 3');
-
-    vi.useRealTimers();
-  });
-
-  it('should not apply translateX to center group (scroll sync via native scrollLeft)', async () => {
-    componentRef.setInput(
-      'columns',
-      toInternalColumn([
-        { prop: 'col1', name: 'Column 1', width: 100, frozenLeft: true },
-        { prop: 'col2', name: 'Column 2', width: 200 },
-        { prop: 'col3', name: 'Column 3', width: 150 },
-        { prop: 'col4', name: 'Column 4', width: 200, frozenRight: true }
-      ])
-    );
-
-    const leftGroupStyle = await harness.getTransformStyle('left');
-    expect(leftGroupStyle).toBe('width: 100px;');
-
-    const centerGroupStyle = await harness.getTransformStyle('center');
-    expect(centerGroupStyle).toBe('width: 350px;');
-
-    const rightGroupStyle = await harness.getTransformStyle('right');
-    expect(rightGroupStyle).toBe('width: 200px;');
   });
 });

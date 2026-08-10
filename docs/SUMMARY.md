@@ -7,16 +7,14 @@
   - [Themeing](introduction/themes.md)
   - [Getting Started](introduction/getting-started.md)
   - [Change Detection](introduction/cd.md)
+  - [Column Modes](introduction/column-modes.md)
 - API
   - Table
     - [Inputs](api/table/inputs.md)
     - [Outputs](api/table/outputs.md)
     - [Methods](api/table/methods.md)
-    - [Internals](api/table/internals.md)
   - Column
     - [Inputs](api/column/inputs.md)
-    - [Modes](api/column/modes.md)
-    - [Internals](api/column/internals.md)
   - Row Detail
     - [Inputs](api/detail/inputs.md)
     - [Outputs](api/detail/outputs.md)

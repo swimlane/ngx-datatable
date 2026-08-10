@@ -36,7 +36,6 @@ import { DatatableRowDetailDirective } from '../row-detail/row-detail.directive'
   }
 })
 export class DataTableRowWrapperComponent<TRow extends Row = any> implements DoCheck {
-  readonly innerWidth = input.required<number>();
   readonly rowDetail = input<DatatableRowDetailDirective>();
   readonly detailRowHeightFn = input.required<(row?: TRow, index?: number) => number>();
   readonly row = input.required<TRow>();

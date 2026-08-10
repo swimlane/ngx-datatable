@@ -11,12 +11,12 @@ export const selectRows = <TRow>(selected: TRow[], row: TRow, comparefn: any) =>
 };
 
 export const selectRowsBetween = <TRow>(
-  selected: TRow[],
   rows: (TRow | undefined)[],
   index: number,
   prevIndex: number
 ): TRow[] => {
   const reverse = index < prevIndex;
+  const rangeRows: TRow[] = [];
 
   for (let i = 0; i < rows.length; i++) {
     const row = rows[i];
@@ -37,13 +37,11 @@ export const selectRowsBetween = <TRow>(
     }
 
     if ((reverse && lesser) || (!reverse && greater)) {
-      // if in the positive range to be added to `selected`, and
-      // not already in the selected array, add it
       if (i >= range.start && i <= range.end && row) {
-        selected.push(row);
+        rangeRows.push(row);
       }
     }
   }
 
-  return selected;
+  return rangeRows;
 };

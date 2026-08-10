@@ -2,9 +2,14 @@
   display: grid;
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
+
+  &.sticky {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
 }
 
-.datatable-row-detail {
+.datatable-body-row {
   grid-column: 1 / -1;
-  overflow-y: hidden;
 }

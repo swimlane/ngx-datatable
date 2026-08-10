@@ -20,7 +20,7 @@ import {
   TemplateRef,
   TrackByFunction,
   untracked,
-  ViewChild,
+  viewChild,
   viewChildren
 } from '@angular/core';
 
@@ -39,7 +39,6 @@ import {
   SelectionType
 } from '../../types/public.types';
 import { TableColumn } from '../../types/table-column.type';
-import { columnGroupWidths, columnsByPin } from '../../utils/column';
 import { ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, ARROW_UP, ENTER } from '../../utils/keys';
 import { RowHeightCache } from '../../utils/row-height-cache';
 import { selectRows, selectRowsBetween } from '../../utils/selection';
@@ -77,7 +76,6 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
     }
     @let scrollbarV = this.scrollbarV();
     @let columns = this.columns();
-    @let columnGroupWidths = this.columnGroupWidths();
     @let bodyHeight = this._bodyHeight();
     @let rows = this.rows();
     @let rowCount = this.rowCount();
@@ -95,16 +93,15 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
         [scrollbarV]="scrollbarV"
         [scrollbarH]="scrollbarH()"
         [scrollHeight]="scrollHeight()"
-        [scrollWidth]="columnGroupWidths?.total"
-        [class.horizontal-overflow]="innerWidth() < (columnGroupWidths?.total ?? 0)"
         (scroll)="onBodyScroll($event)"
       >
-        @if (summaryRow() && summaryPosition() === 'top') {
+        @if ((summaryRow() || summaryRowTemplate()) && summaryPosition() === 'top') {
           <datatable-summary-row
+            [class.sticky]="summaryRowTemplate()"
             [rowHeight]="summaryHeight()"
-            [innerWidth]="innerWidth()"
             [rows]="rows"
             [columns]="columns"
+            [template]="summaryRowTemplate()"
           />
         }
         <ng-template
@@ -122,7 +119,6 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
                 ? true
                 : null
             "
-            [innerWidth]="innerWidth()"
             [rowDetail]="rowDetail()"
             [detailRowHeightFn]="detailRowHeightFn()"
             [row]="row"
@@ -162,7 +158,7 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
           </datatable-row-wrapper>
         </ng-template>
 
-        <div [style.transform]="renderOffset()">
+        <div class="datatable-row-render-wrapper" [style.transform]="renderOffset()">
           @for (group of rowsToRender(); track rowTrackingFn(i, group); let i = $index) {
             @if (!group && ghostLoadingIndicator()) {
               <ghost-loader [columns]="columns" [pageSize]="1" [rowHeight]="rowHeight()" />
@@ -177,7 +173,7 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
                       template: rowDefTemplate,
                       rowTemplate: bodyRow,
                       row: group,
-                      index: i
+                      index: indexes().first + i
                     };
                     disabled: disabled
                   "
@@ -203,8 +199,6 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
                       ? true
                       : null
                   "
-                  [innerWidth]="innerWidth()"
-                  [style.width]="groupedRows() ? columnGroupWidths.total : undefined"
                   [groupHeader]="groupHeader()"
                   [groupHeaderRowHeight]="getGroupHeaderRowHeight(group, i)"
                   [disabled]="disabled"
@@ -233,12 +227,12 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
           }
         </div>
       </datatable-scroller>
-      @if (summaryRow() && summaryPosition() === 'bottom') {
+      @if ((summaryRow() || summaryRowTemplate()) && summaryPosition() === 'bottom') {
         <datatable-summary-row
           [rowHeight]="summaryHeight()"
-          [innerWidth]="innerWidth()"
           [rows]="rows"
           [columns]="columns"
+          [template]="summaryRowTemplate()"
         />
       }
     }
@@ -247,7 +241,6 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
         [scrollbarV]="scrollbarV"
         [scrollbarH]="scrollbarH()"
         [scrollHeight]="scrollHeight()"
-        [style.width]="scrollbarH() ? columnGroupWidths?.total + 'px' : '100%'"
         (scroll)="onBodyScroll($event)"
       >
         <ng-content select="[empty-content]" />
@@ -257,9 +250,7 @@ import { DataTableSummaryRowComponent } from './summary/summary-row.component';
   styleUrl: './body.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    'class': 'datatable-body',
-    '[style.height]': '_bodyHeight()',
-    '[style.width]': '_bodyWidth()'
+    class: 'datatable-body'
   }
 })
 export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, OnChanges {
@@ -285,11 +276,11 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   readonly groupedRows = input<Group<TRow>[]>();
   // TODO: Find a better way to handle default expansion state with signal input
   @Input() groupExpansionDefault?: boolean;
-  readonly innerWidth = input.required<number>();
   readonly virtualization = input<boolean>();
   readonly summaryRow = input<boolean>();
   readonly summaryPosition = input.required<string>();
   readonly summaryHeight = input.required<number>();
+  readonly summaryRowTemplate = input<TemplateRef<void>>();
   readonly rowDraggable = input<boolean>();
   readonly rowDragEvents = input.required<OutputEmitterRef<DragEventData>>();
   readonly disableRowCheck = input<(row: TRow) => boolean | undefined>();
@@ -320,7 +311,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   }>();
   readonly treeAction = output<{ row: TRow }>();
 
-  @ViewChild(ScrollerComponent) scroller!: ScrollerComponent;
+  private readonly scroller = viewChild(ScrollerComponent);
   private readonly rowWrappers = viewChildren(DataTableRowWrapperComponent);
 
   /**
@@ -358,23 +349,12 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
   readonly rowHeightsCache = computed(() => this.computeRowHeightsCache());
   readonly offsetY = signal(0);
   readonly indexes = computed(() => this.computeIndexes());
-  readonly columnGroupWidths = computed(() => {
-    const colsByPin = columnsByPin(this.columns());
-    return columnGroupWidths(colsByPin, this.columns());
-  });
   rowTrackingFn: TrackByFunction<RowOrGroup<TRow> | undefined>;
   destroyRef = inject(DestroyRef);
   readonly rowExpansions = signal<TRow[]>([]);
   readonly groupExpansions = signal<Group<TRow>[]>([]);
 
   _rows!: (TRow | undefined)[];
-  readonly _bodyWidth = computed(() => {
-    if (this.scrollbarH()) {
-      return this.innerWidth() + 'px';
-    } else {
-      return '100%';
-    }
-  });
   readonly _bodyHeight = computed(() => {
     if (this.scrollbarV()) {
       return this.bodyHeight() + 'px';
@@ -478,7 +458,8 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
    */
   updateOffsetY(offset?: number): void {
     // scroller is missing on empty table
-    if (!this.scroller) {
+    const scroller = this.scroller();
+    if (!scroller) {
       return;
     }
 
@@ -491,7 +472,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
       offset = 0;
     }
 
-    this.scroller.setOffset(offset ?? 0);
+    scroller.setOffset(offset ?? 0);
   }
 
   /**
@@ -567,12 +548,18 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
 
   scrollToIndex(index: number, options?: ScrollToRowOptions): void {
     if (this.virtualization()) {
+      const scroller = this.scroller();
+      if (!scroller) {
+        return;
+      }
+
       const cache = this.rowHeightsCache();
       const rowTop = cache.query(index - 1);
       const rowBottom = cache.query(index);
       const rowHeight = rowBottom - rowTop;
-      const viewportHeight = this.scroller.parentElement?.clientHeight ?? 0;
-      const currentScrollTop = this.scroller.parentElement?.scrollTop ?? 0;
+      // virtualization always provides a numeric bodyHeight
+      const viewportHeight = this.bodyHeight() as number;
+      const currentScrollTop = scroller.scrollTop;
       const block = options?.block ?? 'start';
 
       let top: number;
@@ -598,7 +585,7 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
           break;
       }
 
-      this.scroller.scrollTo(Math.max(0, top), options);
+      scroller.scrollTo(Math.max(0, top), options);
     } else {
       this.rowWrappers()[index]?.scrollIntoView(options);
     }
@@ -865,8 +852,14 @@ export class DataTableBodyComponent<TRow extends Row = any> implements OnInit, O
 
     // TODO: this code needs cleanup. Casting it to KeyboardEvent is not correct as it could also be other types.
     if (multi || chkbox || multiClick) {
-      if ((event as KeyboardEvent).shiftKey) {
-        selected = selectRowsBetween([], this.rows(), index, this.prevIndex!);
+      if ((event as KeyboardEvent).shiftKey && this.prevIndex !== undefined) {
+        const rangeSelection = selectRowsBetween(this.rows(), index, this.prevIndex);
+        selected = [...this.selected()];
+        for (const rangeRow of rangeSelection) {
+          if (this.getRowSelectedIdx(rangeRow, selected) < 0) {
+            selected.push(rangeRow);
+          }
+        }
       } else if (
         (event as KeyboardEvent).key === 'a' &&
         ((event as KeyboardEvent).ctrlKey || (event as KeyboardEvent).metaKey)

@@ -13,7 +13,7 @@ export const optionalGetterForProp = (prop: TableColumnProp | undefined): Option
  *
  * Note: Expecting each item has a property called parentId
  * Note: This algorithm will fail if a list has two or more items with same ID
- * NOTE: This algorithm will fail if there is a deadlock of relationship
+ * Note: Cyclic relationships are broken by treating one node in the cycle as a root
  *
  * For example,
  *
@@ -52,19 +52,48 @@ export const groupRowsByParents = <TRow extends Row>(
     const treeRows = rows.filter(row => !!row).map(row => new TreeNode(row));
     const uniqIDs = new Map(treeRows.map(node => [to(node.row), node]));
 
-    const rootNodes = treeRows.reduce((root, node) => {
-      const fromValue = from(node.row);
-      const parent = uniqIDs.get(fromValue);
-      if (parent) {
-        node.row.level = parent.row.level! + 1; // TODO: should be reflected by type, that level is defined
-        node.parent = parent;
-        parent.children.push(node);
+    const resolved = new Set<TreeNode<TRow>>();
+    const resolveLevel = (node: TreeNode<TRow>, visited: Set<TreeNode<TRow>>): number => {
+      if (resolved.has(node)) {
+        return node.row.level!;
+      }
+      if (visited.has(node)) {
+        return Infinity;
+      }
+      visited.add(node);
+
+      const parent = uniqIDs.get(from(node.row));
+      if (parent && parent !== node) {
+        const parentLevel = resolveLevel(parent, visited);
+        if (parentLevel !== Infinity) {
+          node.row.level = parentLevel + 1;
+        } else {
+          node.row.level = 0;
+        }
       } else {
         node.row.level = 0;
-        root.push(node);
       }
-      return root;
-    }, [] as TreeNode<TRow>[]);
+
+      visited.delete(node);
+      resolved.add(node);
+      return node.row.level;
+    };
+
+    for (const node of treeRows) {
+      if (!resolved.has(node)) {
+        resolveLevel(node, new Set());
+      }
+    }
+
+    for (const node of treeRows) {
+      const parent = uniqIDs.get(from(node.row));
+      if (parent && parent !== node && node.row.level! > 0) {
+        node.parent = parent;
+        parent.children.push(node);
+      }
+    }
+
+    const rootNodes = treeRows.filter(n => !n.parent);
 
     return rootNodes.flatMap(child => child.flatten());
   } else {
