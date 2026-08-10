@@ -5,6 +5,7 @@
 ### Features
 
 - Enhancement: Added support for Angular 22
+- Breaking: Removed support for Angular 19 and earlier versions
 - Feature: Lay out columns with a shared CSS grid (header/body via subgrid) and unify scrolling into a single scroll container
 - Feature: Re-measure dimensions via `ResizeObserver` instead of `window:resize`
 - Feature: Add `DatatableSummaryRowDirective` for custom summary row templates
