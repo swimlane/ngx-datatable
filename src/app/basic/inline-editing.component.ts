@@ -7,10 +7,16 @@ import {
 
 import { Employee } from '../data.model';
 import { DataService } from '../data.service';
+import { AutofocusDirective } from './autofocus.directive';
 
 @Component({
   selector: 'inline-editing-demo',
-  imports: [DatatableComponent, DataTableColumnDirective, DataTableColumnCellDirective],
+  imports: [
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    AutofocusDirective
+  ],
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
@@ -43,7 +49,12 @@ import { DataService } from '../data.service';
             ngx-datatable-cell-template
           >
             @if (editing[rowIndex + '-name']) {
-              <input type="text" [value]="value" (blur)="updateValue($event, 'name', rowIndex)" />
+              <input
+                type="text"
+                autofocus
+                [value]="value"
+                (blur)="updateValue($event, 'name', rowIndex)"
+              />
             } @else {
               <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true">
                 {{ value }}
@@ -64,6 +75,7 @@ import { DataService } from '../data.service';
               </span>
             } @else {
               <select
+                autofocus
                 [value]="value"
                 (blur)="editing[rowIndex + '-gender'] = false"
                 (change)="updateValue($event, 'gender', rowIndex)"
