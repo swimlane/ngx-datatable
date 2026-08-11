@@ -2,6 +2,8 @@
 
 ## HEAD (unreleased)
 
+## 25.1.0
+
 ### Features
 
 - Enhancement: Added support for Angular 22
